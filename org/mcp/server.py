@@ -52,6 +52,9 @@ INBOX_DIR = Path(__file__).resolve().parent / "inbox"
 INBOX_DIR.mkdir(exist_ok=True)
 LIVENESS_FILE = Path(__file__).resolve().parent / "liveness.json"
 BROKER_SCRIPT = Path(__file__).resolve().parent / "broker.py"
+# NFRA_CMTQUE commit-worker daemon (MSTR internal-ops lane, LD-0246/0248).
+COMMIT_WORKER = Path(__file__).resolve().parents[2] / ".tools" / "commit-worker.sh"  # repo/.tools/
+CQ_HB_STALE_SEC = 30
 BROKER_PORT = int(os.environ.get("OPAL_BROKER_PORT", "7800"))
 BROKER_URL = f"http://127.0.0.1:{BROKER_PORT}"
 POLL_INTERVAL_S = 2.0  # seconds between broker polls
@@ -262,6 +265,65 @@ def _ensure_broker() -> bool:
 
     except Exception as e:
         log.warning(f"Failed to launch broker: {e}")
+        return False
+
+
+def _commit_worker_alive() -> bool:
+    """True iff a live commit-worker holds worker.pid with a fresh heartbeat (mirrors
+    cq_worker_alive() in commit_queue_lib.sh). Heartbeat-freshness is the primary,
+    win32-safe signal; the worker.pid singleton is the real double-launch guard.
+    (NFRA_CMTQUE TO-6 phase-1; authored by 0.7.0_AE_CloudOps~B, wired by MSTR.)"""
+    try:
+        gitdir = subprocess.check_output(
+            ["git", "rev-parse", "--absolute-git-dir"],
+            cwd=str(ORG_ROOT.parent), text=True, timeout=5,  # never let a hung git block register
+        ).strip()
+    except Exception:
+        return False
+    qroot = Path(gitdir) / "commit-queue"
+    pidf, hbf = qroot / "worker.pid", qroot / "worker.hb"
+    if not pidf.exists() or not hbf.exists():
+        return False
+    try:
+        pid = int(pidf.read_text().strip())
+        hb = int(hbf.read_text().strip())
+    except (ValueError, OSError):
+        return False
+    if time.time() - hb >= CQ_HB_STALE_SEC:        # stale heartbeat -> not alive
+        return False
+    try:
+        os.kill(pid, 0)                            # POSIX liveness; raises on win32 -> hb governs
+        return True
+    except (OSError, ProcessLookupError):
+        return sys.platform == "win32"
+
+
+def _ensure_commit_worker() -> bool:
+    """Start the commit-worker daemon if it's not already live. Mirrors _ensure_broker().
+    Best-effort: a launch failure NEVER blocks registration (the caller wraps it, and the
+    safe-commit D6 fallback-to-mutex + the WorkerDown alarm cover a transient miss).
+    Race-safe: the worker.pid singleton makes a concurrent double-launch a safe no-op."""
+    if _commit_worker_alive():
+        return True
+    log.info("Starting commit-worker daemon...")
+    try:
+        if sys.platform == "win32":
+            CREATE_NEW_PROCESS_GROUP = 0x00000200
+            DETACHED_PROCESS = 0x00000008
+            subprocess.Popen(
+                ["bash", str(COMMIT_WORKER), "--daemon"],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL,
+                creationflags=CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS,
+            )
+        else:
+            subprocess.Popen(
+                ["bash", str(COMMIT_WORKER), "--daemon"],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL,
+                start_new_session=True,
+            )
+        return True
+    except Exception as exc:
+        log.warning("commit-worker launch failed: %s", exc)
         return False
 
 
@@ -527,6 +589,15 @@ async def register_agent(
                 _poll_task = loop.create_task(_poll_broker_loop())
         else:
             broker_status = "registration failed"
+
+    # Ensure the commit-queue worker is up (best-effort; mirrors _ensure_broker). A launch
+    # failure NEVER blocks registration -- the safe-commit D6 fallback-to-mutex + the
+    # WorkerDown alarm cover a transient miss. Ungated (warm before the TO-6 flip; the
+    # worker.pid singleton keeps it a single idle daemon). NFRA_CMTQUE TO-6 phase-1.
+    try:
+        _ensure_commit_worker()
+    except Exception:
+        pass
 
     instance_note = ""
     if _instance_suffix(agent_serial):
