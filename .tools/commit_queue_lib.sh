@@ -36,9 +36,18 @@ set -uo pipefail
 # .git/worktrees/<name>, always a real dir; mirrors safe-commit's lock location).
 # --------------------------------------------------------------------------
 cq_root() {
+  # Memoize per-PWD: cq_root is called ~dozens of times per queue op (every
+  # cq_*_dir helper). Re-spawning `git rev-parse` each time is slow (process-
+  # creation overhead dominates on a loaded host) AND wasteful of local compute.
+  # Cache keyed on $PWD so a cd (e.g. the worker cd'ing into a request cwd)
+  # correctly recomputes; a subshell inherits + re-validates the cache.
+  if [ -n "${_CQ_ROOT:-}" ] && [ "${_CQ_ROOT_PWD:-}" = "$PWD" ]; then
+    printf '%s' "$_CQ_ROOT"; return 0
+  fi
   local gitdir
   gitdir="$(git rev-parse --absolute-git-dir 2>/dev/null)" || return 1
-  printf '%s/commit-queue' "$gitdir"
+  _CQ_ROOT="$gitdir/commit-queue"; _CQ_ROOT_PWD="$PWD"
+  printf '%s' "$_CQ_ROOT"
 }
 
 cq_requests_dir()   { printf '%s/requests'   "$(cq_root)"; }
