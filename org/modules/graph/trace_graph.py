@@ -263,6 +263,7 @@ def build_graph(workspace_root: Path) -> TraceGraph:
     from .extract_eventbridge import extract_eventbridge_edges, extract_lambda_ec2_edges
     from .extract_lambda_routes import extract_lambda_routes
     from .extract_sfn import extract_sfn_invoke_edges
+    from .extract_event_invoke import extract_event_invoke_edges
 
     g = TraceGraph(built_at=time.time())
 
@@ -292,6 +293,12 @@ def build_graph(workspace_root: Path) -> TraceGraph:
     # passes so it links to existing lambda:* nodes; creates any it needs. Brings SFN-orchestrated
     # dependents into comp-blast/comp-iam blast radius (bounded invoke-edge projection; deep SFN = comp-aws).
     extract_sfn_invoke_edges(g, workspace_root)
+
+    # Pass 8 (NFRA_GRAPHUNI): the OTHER Lambda-invoke mechanisms -- event-source-mappings (SQS/stream) +
+    # SNS(protocol=lambda) -> Lambda. LIVE-derived (read-only boto), NOT static .tf: deploys are TF-only so
+    # declared front-runs live, and a .tf parse would emit declared-not-applied phantom edges. Graceful
+    # no-op without creds. Completes the non-code invoke-edge coverage in comp-blast/comp-iam blast radius.
+    extract_event_invoke_edges(g, workspace_root)
 
     return g
 
