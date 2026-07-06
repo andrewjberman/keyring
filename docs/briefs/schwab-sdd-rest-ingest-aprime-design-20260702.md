@@ -53,3 +53,44 @@ Headless Playwright+Chromium driving the LMS-gateway OAuth flow (CV Kimi-VL + th
 
 ## 7. Prereqs already resolved (stand regardless)
 S3→box code-deploy IAM path (SchwabOpsCodeRead, applied+verified, tag canonical-schwab-ec2-v1.0.0) · console-session task pattern · daily-bridge design · the parity/completeness discipline. Only "how the box gets a complete set" changed: GUI-download → SDD REST.
+
+## 8. PREREQ-A LIVE-GROUNDED + firm-sep DenyPlane draft (0.6.2, 2026-07-06 — for the CTO IAM gate)
+
+**PREREQ-A (S3→box code-deploy path) = RESOLVED, live-confirmed 2026-07-06** (Rule 22a, IAM grounded
+on live `get-role-policy`, NOT the comp-iam DESIRED view — the role is not TF-managed so DESIRED can't
+see it). SI2 box `i-0f3d57a97f14727af` (`quartz-si2-spike`, running) → instance-profile
+`quartz-si2-spike-profile` → role `quartz-si2-spike-role`, inline `quartz-si2-spike-inline` grants:
+- `s3:GetObject` on `opal-data-schwab/_ops/canonical-schwab-si2/*`  ← the code-deploy path EXISTS.
+- `s3:ListBucket` on `opal-data-schwab`; `s3:PutObject` on `01_raw/*` + `01_raw_quartz_validation/*`.
+- `secretsmanager:{GetSecretValue,PutSecretValue}` on `schwab/*`  ← covers the capturer's
+  `schwab/sdd/session` write + the ingest's read (§2.1/§2.2). (§6b least-privilege refinement: could
+  scope to `schwab/sdd/*`, non-blocking.)
+
+The ADVI_SCHWABAUTO TO's "grants ONLY ListBucket+PutObject, NO GetObject" premise is STALE (07-02;
+GetObject added since, matching §7). **No GetObject TF to author — that would be redundant.**
+
+**REAL OPEN IAM (arch-gate §6b requires; NOT present today):** the explicit firm-sep DenyPlane. The
+role is Allow-only/schwab-scoped (no cross-firm Allow ⇒ no leak today), but §6b mandates the explicit
+Deny belt. Draft (clone of `infra/aws/terraform/bd-pipeline/bd-silver-merge.tf:74-83` `DenyCotPlane`,
+extended to bd+cot+inf — A/B-agnostic, identical statements whichever role it attaches to):
+
+```hcl
+# FIRM-SEP belt (NEVER#1): the schwab ingest role can NEVER touch another firm's plane. Explicit Deny wins.
+{ Sid = "DenyBdPlane",  Effect = "Deny", Action = ["s3:*"],
+  Resource = ["arn:aws:s3:::opal-data-bd",  "arn:aws:s3:::opal-data-bd/*"]  },
+{ Sid = "DenyCotPlane", Effect = "Deny", Action = ["s3:*"],
+  Resource = ["arn:aws:s3:::opal-data-cot", "arn:aws:s3:::opal-data-cot/*"] },
+{ Sid = "DenyInfPlane", Effect = "Deny", Action = ["s3:*"],
+  Resource = ["arn:aws:s3:::opal-data-inf", "arn:aws:s3:::opal-data-inf/*"] }
+```
+
+**STRUCTURAL DECISION for the CTO (my README bar — I do not decide IAM-management-model unilaterally):**
+`quartz-si2-spike-role` + `-profile` are HAND-MADE, NOT Terraform-managed (comp-iam `service
+canonical-schwab` surfaces only `canonical-schwab-{runner,automation-start,events-invoke-ssm}` roles;
+the spike role is absent). Per CLAUDE.md "Terraform manages EC2 infra," landing the DenyPlane in TF
+means either **(A, recommended)** import/adopt `quartz-si2-spike-role` into the `canonical-schwab-ec2`
+module + add the DenyPlane there (clean productionization), or **(B)** a NEW TF-managed `schwab-ingest`
+role the REST ingest assumes, leaving the spike role for SI2-download only. Statements are identical
+either way; only the attachment target differs. **Staged-for-gate; no apply until CTO arch-signs +
+COO/CTO RAVC (arch-gate binding, §6a/§6b). No live SDD REST call regardless until CTO has seen the
+capturer + the liveness alarm (§6b).**
