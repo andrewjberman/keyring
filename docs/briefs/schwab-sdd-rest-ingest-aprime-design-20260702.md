@@ -84,13 +84,25 @@ extended to bd+cot+inf — A/B-agnostic, identical statements whichever role it 
   Resource = ["arn:aws:s3:::opal-data-inf", "arn:aws:s3:::opal-data-inf/*"] }
 ```
 
-**STRUCTURAL DECISION for the CTO (my README bar — I do not decide IAM-management-model unilaterally):**
-`quartz-si2-spike-role` + `-profile` are HAND-MADE, NOT Terraform-managed (comp-iam `service
-canonical-schwab` surfaces only `canonical-schwab-{runner,automation-start,events-invoke-ssm}` roles;
-the spike role is absent). Per CLAUDE.md "Terraform manages EC2 infra," landing the DenyPlane in TF
-means either **(A, recommended)** import/adopt `quartz-si2-spike-role` into the `canonical-schwab-ec2`
-module + add the DenyPlane there (clean productionization), or **(B)** a NEW TF-managed `schwab-ingest`
-role the REST ingest assumes, leaving the spike role for SI2-download only. Statements are identical
-either way; only the attachment target differs. **Staged-for-gate; no apply until CTO arch-signs +
-COO/CTO RAVC (arch-gate binding, §6a/§6b). No live SDD REST call regardless until CTO has seen the
-capturer + the liveness alarm (§6b).**
+**GROUNDING CORRECTION (0.6.2, 2026-07-06 — supersedes an earlier wrong claim in this section + the
+now-deleted DenyPlane .tf.draft + CTO 135619Z Gate-1's "Option A import" premise):** I earlier claimed
+`quartz-si2-spike-role` is HAND-MADE / non-TF (→ needs an "Option A vs B" import). That was WRONG, from
+two errors both falsified by grounding on `terraform state` + `plan`:
+1. comp-iam `service canonical-schwab` missed it because its `tf_resource` is `schwab_si2` (query matched
+   the `canonical-schwab-*` name prefix). The role IS TF-managed in `infra/aws/terraform/canonical-schwab-ec2/iam.tf`
+   (0.6.0's DATA_SSOTMG.CUTOVER-1), ALREADY IMPORTED (`terraform state list` shows `aws_iam_role.schwab_si2`,
+   `schwab_si2_inline`, the instance-profile + the SSM attachment all in state).
+2. My "live has no Sids / no ListBucket prefix-condition" (the supposed live-vs-TF drift) was a JMESPATH
+   PROJECTION ARTIFACT — `get-role-policy --query 'Statement[].{Effect,Action,Resource}'` dropped the
+   Sid+Condition fields. They ARE present live. Proof: `terraform plan` (pre-edit) = "No changes.
+   Your infrastructure matches the configuration." The module is CLEAN.
+
+**CORRECTED GATE-1 (no import, no A/B):** the §6b DenyPlane is a 3-statement ADDITION to the existing
+`aws_iam_role_policy.schwab_si2_inline` in `iam.tf` (append the DenyBd/Cot/Inf statements above, verbatim).
+PROVEN zero-churn (added the 3, ran plan, restored iam.tf pristine): `Plan: 0 to add, 1 to change, 0 to
+destroy` — the ONLY change is `schwab_si2_inline` gaining the 3 Deny statements; every existing Allow
+(SchwabRawList/Write/OpsCodeRead/Secrets) UNCHANGED. Never-widen-safe (a Deny only narrows). CROSS-DOMAIN:
+`iam.tf` is 0.6.0's file (CUTOVER-1) — coordinate the addition with 0.6.0. **No apply until CTO re-confirms
+the corrected approach + 0.6.0 nods; then commit + safe-apply (HALT-gated) + ledger + post-apply confirm
+the DenyPlane on live get-role-policy (without projecting fields away). No live SDD REST call regardless
+until CTO has seen the capturer + the liveness alarm (§6b).**
