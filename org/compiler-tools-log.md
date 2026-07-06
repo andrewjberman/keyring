@@ -13163,3 +13163,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_02.client_p... | PASS |
 | 2026-07-06 | 0.4.0_DS_ClientPlatform | session-capstone (base-lane + 49F un-freeze) | (see per-window logs) | session-close capstone -- indexes the 4 base-lane sub-logs; no new tool runs (composition only, per speed contract) | N/A |
 | 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-06 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.1_AE_PartnerETL/de... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_03.account_... | PASS |
+| 2026-07-06 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/st... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io gold_dispatch.sh | FAIL |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-blast | comp-blast account_gains | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/gold-runner-code-review/... | PASS |
+| 2026-07-06 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_C_02.client_performance.py | PASS |
+| 2026-07-06 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_C_03.account_performance.py | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | NFRA_GRAPHUNI (invoke-edge completeness) | aws lambda/sns/s3/events live-verify, comp-blast before/after, comp-surface-check, comp-build, ds-commit-gate | LIVE-grounded invoke-edge extension: 11 edges (3 ESM + 1 SNS + 7 S3), caught 49f phantom + 7 core-lambda S3 gap; EventBridge-in-modules ~14-edge gap verified + banked as deliberate TO | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
