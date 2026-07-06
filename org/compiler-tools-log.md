@@ -13149,3 +13149,7 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-06 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/server.py --file org/tier0/ledg... | PASS |
 | 2026-07-06 | 0.4.0_DS_ClientPlatform | 49F-unfreeze-P0 (D_03 + dtype-family + served-flip) | ds-commit-gate/comp-pipescript/aws-read-only-verify | ds-commit-gate C_07+D_03 (PASS); comp-pipescript io D_03 (D_03->D_04 firm_mix edge); read-only pd.read_parquet/json on served+dim artifacts = Rule-22a EXERCISE verify (dim bool, served data_as_of=07-02, AUA sane) -- caught the code-vs-artifact gap | PASS |
 | 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-pipescript | comp-pipescript deployed data/inf/scripts/gold/INF_B_02.canonical_lots.py | PASS |
+| 2026-07-06 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_B_03.account_gains.py | PASS |
+2026-07-06 | 0.4.0_DE_ClientPlatform | comp-which, comp-grep | ADVI_INFFEE investigation (residual root-cause) + INF/49F render-verifies; comp-grep pinned INF_D_04:798-802 residual producer | no gap
+| 2026-07-06 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
