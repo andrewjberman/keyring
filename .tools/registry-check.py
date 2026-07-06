@@ -36,6 +36,18 @@ CLOSED = {"complete", "completed", "closed", "cancelled", "canceled",
           "merged", "superseded", "done", "inactive-closed",
           "shipped", "decommissioned", "archived", "dropped"}
 HOT_HOURS = 72
+# Sticky "as-of" pin for the HOT/COLD cutoff. When present (one ISO date on the
+# first non-comment line), it overrides real-now so a fabric dormancy (holiday,
+# weekend) does not spuriously age every project past 72h and report the whole
+# registry COLD -- a false "everything stalled" signal. Precedence:
+#   --as-of CLI  >  REGISTRY_HOTCOLD_ASOF env  >  this pin file  >  real now.
+# Delete the file to un-pin. (Andrew-direct 2026-07-06: pin 7/2 as the head after
+# the 07-04 Independence Day dormancy.)
+ASOF_PIN_FILE = os.path.join("org", "projects", ".hotcold_asof")
+# US-Eastern (EDT, summer) end-of-day offset -- a pinned calendar date is anchored
+# to 23:59:59 Eastern so late-evening EDT commits that roll past 00:00Z still count
+# as that working day (Andrew's clock is Eastern; the 07-02 20:43 EDT burst is 07-03 UTC).
+_EASTERN_EDT = datetime.timezone(datetime.timedelta(hours=-4))
 
 
 def _is_closed_status(st: str) -> bool:
@@ -130,9 +142,50 @@ def git_latest(code: str):
     return (p[0], p[1] if len(p) > 1 else "?", p[2] if len(p) > 2 else "")
 
 
-def build_rows():
+def resolve_asof(argv):
+    """Effective 'now' for the HOT/COLD cutoff + a pin label (None if unpinned).
+
+    Precedence: --as-of YYYY-MM-DD (CLI) > REGISTRY_HOTCOLD_ASOF (env) >
+    ASOF_PIN_FILE (sticky) > real datetime.now(utc). A pinned date is anchored to
+    END-OF-DAY US-Eastern so every commit made on that calendar day counts as
+    age~0 => HOT. Fails SAFE to real-now (with a stderr WARN) on an unparseable pin.
+    """
+    raw, src = None, None
+    for i, a in enumerate(argv):                       # 1. CLI --as-of
+        al = a.lower()
+        if al == "--as-of" and i + 1 < len(argv):
+            raw, src = argv[i + 1], "CLI --as-of"
+            break
+        if al.startswith("--as-of="):
+            raw, src = a.split("=", 1)[1], "CLI --as-of"
+            break
+    if not raw:                                        # 2. env
+        env = os.environ.get("REGISTRY_HOTCOLD_ASOF", "").strip()
+        if env:
+            raw, src = env, "env REGISTRY_HOTCOLD_ASOF"
+    if not raw:                                        # 3. sticky pin file
+        try:
+            with open(ASOF_PIN_FILE, encoding="utf-8") as fh:
+                for ln in fh:
+                    ln = ln.strip()
+                    if ln and not ln.startswith("#"):
+                        raw, src = ln, f"pin {ASOF_PIN_FILE}"
+                        break
+        except OSError:
+            pass
+    if not raw:                                        # 4. default: real now
+        return datetime.datetime.now(datetime.timezone.utc), None
+    m = re.match(r"(\d{4})-(\d{2})-(\d{2})", raw.strip())
+    if not m:
+        sys.stderr.write(f"WARN: unparseable as-of '{raw}' from {src}; using real now\n")
+        return datetime.datetime.now(datetime.timezone.utc), None
+    y, mo, dy = (int(x) for x in m.groups())
+    eod = datetime.datetime(y, mo, dy, 23, 59, 59, tzinfo=_EASTERN_EDT)
+    return eod.astimezone(datetime.timezone.utc), f"{raw.strip()} ({src})"
+
+
+def build_rows(now):
     reg = load_registry()
-    now = datetime.datetime.now(datetime.timezone.utc)
     rows, malformed = [], []
     for f in sorted(glob.glob(os.path.join(PROJ_DIR, "*.json"))):
         code = os.path.basename(f)[:-5]
@@ -166,7 +219,7 @@ def build_rows():
     rows.sort(key=lambda r: r["dt"] or "", reverse=True)
     hot = [r for r in rows if r["age_h"] is not None and r["age_h"] < HOT_HOURS]
     cold = [r for r in rows if r["age_h"] is None or r["age_h"] >= HOT_HOURS]
-    return hot, cold, malformed, now
+    return hot, cold, malformed
 
 
 def short_owner(owner):
@@ -285,13 +338,17 @@ def emit(title, rs, now, macros_by_code, start=1):
 
 
 def main():
-    args = [a.lower() for a in sys.argv[1:]]
+    argv = sys.argv[1:]
+    args = [a.lower() for a in argv]
     allmode = any(a in ("-all", "--all", "all") for a in args)
     jsonmode = "--json" in args
-    hot, cold, malformed, now = build_rows()
+    real_now = datetime.datetime.now(datetime.timezone.utc)
+    now, pin_label = resolve_asof(argv)
+    hot, cold, malformed = build_rows(now)
 
     if jsonmode:
-        out = {"hot": hot, "cold": cold if allmode else [], "malformed": malformed}
+        out = {"hot": hot, "cold": cold if allmode else [], "malformed": malformed,
+               "as_of": now, "as_of_pinned": pin_label}
         print(json.dumps(out, indent=2, default=str))
         return
 
@@ -300,7 +357,11 @@ def main():
     macros_by_code = {r["code"]: r for r in (hot + cold) if r["macro"]}
 
     cold_hint = "showing HOT + COLD below" if allmode else f"run /registry-check -all for the {len(cold)} cold"
-    print(f"REGISTRY  {now.strftime('%Y-%m-%dT%H:%MZ')}  |  {len(malformed)} malformed  |  {cold_hint}")
+    header = f"REGISTRY  {real_now.strftime('%Y-%m-%dT%H:%MZ')}"
+    if pin_label:
+        header += f"  |  AS-OF PINNED {pin_label}"
+    header += f"  |  {len(malformed)} malformed  |  {cold_hint}"
+    print(header)
     n = emit("HOT  (worked <72h, not closed)", hot, now, macros_by_code)
     if allmode:
         emit("COLD  (>72h since work, still not closed)", cold, now, macros_by_code, n)
@@ -312,7 +373,8 @@ def main():
     if malformed:
         tail += f" | {len(malformed)} MALFORMED"
     print(tail)
-    print(f"REGISTRY-CHECK-RESULT hot={len(hot)} cold={len(cold)} malformed={len(malformed)}")
+    print(f"REGISTRY-CHECK-RESULT hot={len(hot)} cold={len(cold)} "
+          f"malformed={len(malformed)} asof_pinned={1 if pin_label else 0}")
 
 
 if __name__ == "__main__":
