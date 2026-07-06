@@ -4,7 +4,7 @@
 **Deploy:** Lever A: cot-bd-session-trigger cookie-first daily OIDC-login-OTP skip (ADVI_COTETL/BDAPIMIG, CTO ruling 2026-07-06, Andrew-direct #1). -target-scoped apply (isolates from pre-existing cot-detection-layer.tf:48 SNS-email-sub drift, held out as tracked follow-up for a cot-pipeline reconciliation apply).
 **Authored by:** 0.7.0_AE_CloudOps~A
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
-**Window:** 7.5h (EXTENDED from 6.0h by COO ledger-owner call 20260706T1942Z -- DOCUMENTED CORRECTION, not gaming: the correct window for a rule-mandated-belt-deferred cert is "until the 02:00Z cot daily + cert" ~03:00Z, not 6h. An interim RED before the 02:00Z daily is EXPECTED-not-stranded per the Status note above.)
+**Window:** 8.0h (EXTENDED from 6.0h by COO ledger-owner call 20260706T1942Z, applied to the STATE SIDECAR 20260706T2350Z -- the earlier markdown-only edit was cosmetic; `check` reads the .open_deploys json, now =8.0h. DOCUMENTED CORRECTION, not gaming: the correct window for a rule-mandated-belt-deferred cert is "until the 02:00Z cot daily + cert" -> 8.0h=~03:31Z. An interim RED before the 02:00Z daily is EXPECTED-not-stranded per the Status note above.)
 
 ---
 
