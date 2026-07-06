@@ -90,47 +90,53 @@ cw_metric() {
 }
 
 # ---- singleton ----------------------------------------------------------
-# ATOMIC singleton via mkdir-lock (MSTR singleton-race fix 2026-07-06, LD-0249). The old
-# check-then-write was a TOCTOU race: N simultaneous launches all read "no worker" + all
-# survived -> swarm. `mkdir` is ATOMIC on POSIX AND Windows (exactly one launcher creates
-# the dir; the rest get EEXIST), and Rule-16-clean (no flock). Winner writes pid+hb + holds
-# the lock for its lifetime; losers exit clean. A held lock is RECLAIMED only if the holder
-# is genuinely dead (hb older than CQ_LOCK_STALE_SEC=120s -- STRICTLY > the client-alive 30s,
-# so a slow-but-ALIVE worker mid-commit is never reclaimed onto = no concurrency=2).
+# ATOMIC singleton via mkdir-lock (MSTR singleton-race fix, LD-0249; hardened after MSTR's
+# loaded-box re-run found the v1 grace-loop still raced -> 2-3 survivors). `mkdir` is atomic
+# on POSIX AND Windows (exactly one launcher creates the dir; the rest EEXIST), Rule-16-clean.
+#
+# THE INVARIANT (load-INDEPENDENT, the v2 fix): on a mkdir-fail, a loser EXITS unless the
+# lock is PROVABLY ABANDONED. A lock is abandoned ONLY if BOTH (a) it is OLD (age > 120s) AND
+# (b) its holder's hb is STALE (> 120s). A fresh winner's lock is young (< 120s) -> losers
+# EXIT immediately, NEVER waiting for the winner to write its hb (that hb-wait was the v1 bug:
+# a CPU-starved winner missed the grace -> losers reclaimed a LIVE holder). No live worker can
+# be starved 120s continuously on a functioning box, so a live holder is never reclaimed ->
+# no concurrency=2. Reclaim of a truly-dead lock is ATOMIC (mv-rename: exactly one loser wins
+# the takeover; the rest retry mkdir), so even the reclaim path yields exactly 1 survivor.
 cw_acquire_singleton() {
   cq_init || { log "cq_init failed"; exit 1; }
   local lockdir pidf hbf tries=0
-  local max_tries="${CQ_LOCK_ACQUIRE_TRIES:-150}"
-  local grace="${CQ_LOCK_STARTUP_GRACE_S:-8}"
+  local max_tries="${CQ_LOCK_ACQUIRE_TRIES:-300}"
+  local stale="$CQ_LOCK_STALE_SEC"     # 120s: BOTH lock-age and hb must exceed this to reclaim
   lockdir="$(cq_worker_lock)"; pidf="$(cq_worker_pid)"; hbf="$(cq_worker_hb)"
   while ! mkdir "$lockdir" 2>/dev/null; do
     local hb now hb_age lock_mtime lock_age
+    now="$(cq_now_epoch)"
     hb="$(cat "$hbf" 2>/dev/null || echo 0)"; [ -n "$hb" ] || hb=0
-    now="$(cq_now_epoch)"; hb_age=$(( now - hb ))
-    # holder ALIVE (hb within the reclaim threshold) -> we are redundant -> exit clean.
-    if [ "$hb_age" -lt "$CQ_LOCK_STALE_SEC" ]; then
-      log "another worker holds worker.lock (hb ${hb_age}s) -- exiting (singleton)"
-      exit 0
-    fi
-    # hb stale/absent: genuinely-dead holder, OR a winner mid-startup (won mkdir, no hb yet).
-    # Distinguish by lock AGE with a startup grace so we never reclaim a just-won lock.
+    hb_age=$(( now - hb ))
     if command -v stat >/dev/null 2>&1; then lock_mtime="$(stat -c %Y "$lockdir" 2>/dev/null || echo 0)"; else lock_mtime=0; fi
     lock_age=$(( now - lock_mtime ))
-    if [ "$lock_mtime" != 0 ] && [ "$lock_age" -lt "$grace" ]; then
-      sleep 1; tries=$(( tries + 1 ))
-      [ "$tries" -ge "$max_tries" ] && { log "singleton: gave up waiting for winner"; exit 0; }
+    # RECLAIM iff PROVABLY abandoned: stat ok AND lock OLD (>stale) AND hb STALE (>stale).
+    if [ "$lock_mtime" != 0 ] && [ "$lock_age" -ge "$stale" ] && [ "$hb_age" -ge "$stale" ]; then
+      # atomic single-winner takeover: only one loser's mv succeeds (rename is atomic);
+      # it removes the dead lock, then everyone retries mkdir (exactly one wins that too).
+      if mv "$lockdir" "${lockdir}.dead.$$" 2>/dev/null; then
+        rm -rf "${lockdir}.dead.$$" 2>/dev/null || true
+        log "reclaimed abandoned worker.lock (age ${lock_age}s, hb ${hb_age}s)"
+      fi
+      tries=$(( tries + 1 ))
+      [ "$tries" -ge "$max_tries" ] && { log "singleton: gave up reclaiming after ${tries}"; exit 0; }
       continue
     fi
-    # genuinely stale -> reclaim the lock + retry mkdir.
-    log "reclaiming stale worker.lock (hb ${hb_age}s, lock ${lock_age}s -- holder dead)"
-    rm -rf "$lockdir" 2>/dev/null || true
-    tries=$(( tries + 1 ))
-    [ "$tries" -ge "$max_tries" ] && { log "singleton: gave up after ${tries} tries"; exit 0; }
+    # NOT provably abandoned -> a fresh/live holder owns it -> we lose -> EXIT (load-independent;
+    # we do NOT wait for the winner's hb).
+    log "worker.lock held (age ${lock_age}s, hb ${hb_age}s) -- exiting (singleton)"
+    exit 0
   done
-  # WON the atomic lock -> THE singleton. Write pid + hb IMMEDIATELY (shrinks the no-hb
-  # window a concurrent loser sees before it exits).
-  printf '%s' "$$" > "$pidf"
+  # WON the atomic lock -> THE singleton. Write hb FIRST (belt-and-suspenders: shrink the no-hb
+  # window), then pid. Correctness does NOT depend on this timing (the young-lock->exit above
+  # protects us regardless), but a prompt hb speeds legit reclaim of a real future death.
   cq_heartbeat
+  printf '%s' "$$" > "$pidf"
 }
 
 cw_release_singleton() {
@@ -455,7 +461,51 @@ cw_status() {
   if cq_worker_alive; then echo "worker: ALIVE (pid $(cat "$(cq_worker_pid)" 2>/dev/null))"; else echo "worker: DOWN (client would fall back to mutex)"; fi
   local d
   for d in requests processing results dlq; do
-    printf '  %-11s %s\n' "$d" "$(ls -1 "$root/$d" 2>/dev/null | grep -c . || echo 0)"
+    printf '  %-11s %s\n' "$d" "$(ls -1 "$root/$d" 2>/dev/null | grep -c .)"
+  done
+}
+
+# ---- --peek -------------------------------------------------------------
+# Cheap, readable scan of PENDING commit state -- the queue as a real-time oracle
+# (the KuzuDB/graph-SQS model: near-empty because the warm worker drains it, so a
+# scan is O(depth)~microseconds). An agent runs this BEFORE committing or to CHECK
+# STATE: who is committing what, right now, and how deep is the backlog. Decodes each
+# request into {state, age, agent, subject, paths}. FIFO order; in-flight (processing)
+# shown first. Read-only; no git-index touch.
+_cw_peek_subject() {  # $1=reqfile -> the -m subject (first line)
+  local f="$1" prev="" v
+  while IFS= read -r v; do
+    v="$(cq_b64dec "$v")"
+    [ "$prev" = "-m" ] && { printf '%s' "${v%%$'\n'*}"; return; }
+    prev="$v"
+  done < <(cq_field_all "$f" CARG)
+}
+_cw_peek_paths() {   # $1=reqfile -> space-joined pathspec
+  local f="$1" line out=""
+  while IFS= read -r line; do out="$out $(cq_b64dec "$line")"; done < <(cq_field_all "$f" PATH)
+  printf '%s' "${out# }"
+}
+cw_peek() {
+  local root now state f; root="$(cq_root)" || { echo "not in a git repo"; return 1; }
+  now="$(cq_now_epoch)"
+  local nreq nproc ndlq
+  nreq="$(ls -1 "$root/requests"/*.req 2>/dev/null | grep -c .)"
+  nproc="$(ls -1 "$root/processing"/*.req 2>/dev/null | grep -c .)"
+  ndlq="$(ls -1 "$root/dlq"/*.req 2>/dev/null | grep -c .)"
+  printf 'commit-queue: worker %s | pending %s | in-flight %s | dlq %s\n' \
+    "$(cq_worker_alive && echo LIVE || echo DOWN)" "$nreq" "$nproc" "$ndlq"
+  if [ "$nreq" -eq 0 ] && [ "$nproc" -eq 0 ]; then echo "  (empty -- nothing pending)"; return 0; fi
+  printf '  %-5s %-6s %-24s %s\n' STATE AGE AGENT "SUBJECT | PATHS"
+  for state in processing requests; do
+    for f in $(ls -1 "$root/$state"/*.req 2>/dev/null | sort); do   # sort = FIFO (ISO-ts prefix)
+      [ -f "$f" ] || continue
+      local mt age author agent subj paths
+      mt="$(stat -c %Y "$f" 2>/dev/null || echo "$now")"; age=$(( now - mt ))
+      author="$(cq_b64dec "$(cq_field "$f" AUTHOR)")"; agent="${author%% <*}"
+      subj="$(_cw_peek_subject "$f")"; paths="$(_cw_peek_paths "$f")"
+      printf '  %-5s %-6s %-24s %.40s | %s\n' \
+        "$([ "$state" = processing ] && echo RUN || echo pend)" "${age}s" "$agent" "$subj" "$paths"
+    done
   done
 }
 
@@ -580,7 +630,8 @@ case "${1:-}" in
   --drain-once) cw_drain_once ;;
   --selftest)   cw_selftest ;;
   --status)     cw_status ;;
+  --peek)       cw_peek ;;
   ""|--daemon)  cw_daemon ;;
-  *) echo "usage: commit-worker.sh [--daemon|--drain-once|--selftest|--status]" >&2; exit 2 ;;
+  *) echo "usage: commit-worker.sh [--daemon|--drain-once|--selftest|--status|--peek]" >&2; exit 2 ;;
 esac
 fi
