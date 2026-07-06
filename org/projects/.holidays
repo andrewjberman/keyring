@@ -1,0 +1,11 @@
+# NON-working holidays (US-Eastern) for /registry-check working-time HOT/COLD.
+# One ISO date (YYYY-MM-DD) per non-comment line. Weekends (Sat/Sun) are auto-detected;
+# list only holidays here. A listed date does NOT age a project (like a weekend), so the
+# HOT/COLD cutoff "appropriately accounts for the holiday weekend" with no manual pin.
+# Maintain as holidays approach. US market/federal calendar. Andrew-direct 2026-07-06.
+#
+# 2026 (remaining, from July):
+2026-07-03   # Independence Day observed (July 4 falls on Saturday)
+2026-09-07   # Labor Day
+2026-11-26   # Thanksgiving
+2026-12-25   # Christmas

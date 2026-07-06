@@ -12,10 +12,17 @@ PARSED OUT into three one-line fields:
 Ordered by most recent ASCRIBED commit (a commit whose message references the
 project code), newest first. Read-only -- pure filesystem + git, no MCP, no writes.
 
+HOT/COLD is measured in WORKING time (US-Eastern): weekends + the dates in
+org/projects/.holidays are NON-working and do NOT age a project, so a Thursday
+project is still HOT the next working day across a holiday weekend -- no manual
+pin needed. Optional overrides: --as-of YYYY-MM-DD / REGISTRY_HOTCOLD_ASOF env /
+org/projects/.hotcold_asof pin move the cutoff anchor off real-now.
+
 Usage:
-  registry-check.py            HOT only (worked <72h, not closed)
-  registry-check.py -all       HOT + COLD (cold = >72h since work, still not closed)
-  registry-check.py --json     machine-readable rows (respects -all)
+  registry-check.py            HOT only (worked <72 working-h, not closed)
+  registry-check.py -all       HOT + COLD (cold = >72 working-h since work, not closed)
+  registry-check.py --json     machine-readable rows (respects -all; incl. holidays)
+  registry-check.py --as-of YYYY-MM-DD   anchor the cutoff to a specific date
 
 Schema-tolerant: handles both the rich JSON schema (name/description/phase) and
 the thin schema (status/current_phase/macro). MALFORMED JSONs are SURFACED, not
@@ -35,19 +42,28 @@ import sys
 CLOSED = {"complete", "completed", "closed", "cancelled", "canceled",
           "merged", "superseded", "done", "inactive-closed",
           "shipped", "decommissioned", "archived", "dropped"}
-HOT_HOURS = 72
-# Sticky "as-of" pin for the HOT/COLD cutoff. When present (one ISO date on the
-# first non-comment line), it overrides real-now so a fabric dormancy (holiday,
-# weekend) does not spuriously age every project past 72h and report the whole
-# registry COLD -- a false "everything stalled" signal. Precedence:
-#   --as-of CLI  >  REGISTRY_HOTCOLD_ASOF env  >  this pin file  >  real now.
-# Delete the file to un-pin. (Andrew-direct 2026-07-06: pin 7/2 as the head after
-# the 07-04 Independence Day dormancy.)
+HOT_HOURS = 72   # HOT = worked within 72 WORKING hours (3 working days); non-working time excluded.
+
+# US-Eastern timezone (Andrew's clock). Prefer zoneinfo (DST-correct EST/EDT); fall back to a
+# fixed EDT offset if the tz database is unavailable on the runner.
+try:
+    from zoneinfo import ZoneInfo
+    _EASTERN = ZoneInfo("America/New_York")
+except Exception:                                    # pragma: no cover - tzdata-less runner
+    _EASTERN = datetime.timezone(datetime.timedelta(hours=-4))
+
+# HOLIDAY-AWARENESS -- this is what makes registry-check "appropriately account for the holiday
+# weekend": HOT/COLD age is measured in WORKING time. Weekends (Sat/Sun in US-Eastern) PLUS the
+# dates listed in this file are NON-working and do NOT age a project. So a project last worked
+# Thu 07-02 is still HOT on Mon 07-06 -- 07-03 (Independence Day observed) + 07-04/05 (weekend)
+# are non-working -- with NO manual pin, and it self-corrects for every future weekend/holiday.
+# Andrew-direct 2026-07-06. Maintain the list as holidays approach.
+HOLIDAYS_FILE = os.path.join("org", "projects", ".holidays")
+
+# OPTIONAL as-of override (unset by default now that working-time handles the holiday case).
+# When present (one ISO date, first non-comment line) it overrides real-now as the cutoff anchor.
+# Precedence: --as-of CLI > REGISTRY_HOTCOLD_ASOF env > this pin file > real now.
 ASOF_PIN_FILE = os.path.join("org", "projects", ".hotcold_asof")
-# US-Eastern (EDT, summer) end-of-day offset -- a pinned calendar date is anchored
-# to 23:59:59 Eastern so late-evening EDT commits that roll past 00:00Z still count
-# as that working day (Andrew's clock is Eastern; the 07-02 20:43 EDT burst is 07-03 UTC).
-_EASTERN_EDT = datetime.timezone(datetime.timedelta(hours=-4))
 
 
 def _is_closed_status(st: str) -> bool:
@@ -180,11 +196,47 @@ def resolve_asof(argv):
         sys.stderr.write(f"WARN: unparseable as-of '{raw}' from {src}; using real now\n")
         return datetime.datetime.now(datetime.timezone.utc), None
     y, mo, dy = (int(x) for x in m.groups())
-    eod = datetime.datetime(y, mo, dy, 23, 59, 59, tzinfo=_EASTERN_EDT)
+    eod = datetime.datetime(y, mo, dy, 23, 59, 59, tzinfo=_EASTERN)
     return eod.astimezone(datetime.timezone.utc), f"{raw.strip()} ({src})"
 
 
-def build_rows(now):
+def load_holidays():
+    """Set of ISO date strings (YYYY-MM-DD) that are NON-working holidays (US-Eastern)."""
+    hol = set()
+    try:
+        with open(HOLIDAYS_FILE, encoding="utf-8") as fh:
+            for ln in fh:
+                ln = ln.strip()
+                if ln and not ln.startswith("#"):
+                    m = re.match(r"\d{4}-\d{2}-\d{2}", ln)
+                    if m:
+                        hol.add(m.group(0))
+    except OSError:
+        pass
+    return hol
+
+
+def working_hours_between(start, end, holidays):
+    """Hours in [start, end] that fall on a WORKING day in US-Eastern (Mon-Fri, minus
+    `holidays`). Weekends + holidays contribute ZERO, so a multi-day holiday/weekend does
+    not age a project -- the mechanism that makes HOT/COLD 'account for the holiday weekend'.
+    Walks the span day-by-day in Eastern local time so DST + date boundaries are exact."""
+    if start is None or end is None or end <= start:
+        return 0.0
+    s, e = start.astimezone(_EASTERN), end.astimezone(_EASTERN)
+    total, cur = 0.0, s
+    while cur < e:
+        next_midnight = (cur.replace(hour=0, minute=0, second=0, microsecond=0)
+                         + datetime.timedelta(days=1))
+        seg_end = min(e, next_midnight)
+        d = cur.date()
+        if d.weekday() < 5 and d.isoformat() not in holidays:   # Mon-Fri, not a holiday
+            total += (seg_end - cur).total_seconds() / 3600.0
+        cur = seg_end
+    return total
+
+
+def build_rows(now, holidays):
     reg = load_registry()
     rows, malformed = [], []
     for f in sorted(glob.glob(os.path.join(PROJ_DIR, "*.json"))):
@@ -203,9 +255,9 @@ def build_rows(now):
         what = d.get("name") or rname or code
         where = d.get("phase") or d.get("current_phase") or rnarr or subj or ""
         why = d.get("description") or rnarr or ""
-        age_h = None
+        age_h = None   # WORKING-hours age: weekends + holidays excluded (holiday-aware).
         if dt:
-            age_h = (now - datetime.datetime.fromisoformat(dt)).total_seconds() / 3600
+            age_h = working_hours_between(datetime.datetime.fromisoformat(dt), now, holidays)
         rows.append({
             "code": code, "status": st or "unknown", "dt": dt, "owner": owner,
             "age_h": age_h,
@@ -344,11 +396,13 @@ def main():
     jsonmode = "--json" in args
     real_now = datetime.datetime.now(datetime.timezone.utc)
     now, pin_label = resolve_asof(argv)
-    hot, cold, malformed = build_rows(now)
+    holidays = load_holidays()
+    hot, cold, malformed = build_rows(now, holidays)
 
     if jsonmode:
         out = {"hot": hot, "cold": cold if allmode else [], "malformed": malformed,
-               "as_of": now, "as_of_pinned": pin_label}
+               "as_of": now, "as_of_pinned": pin_label,
+               "working_time": True, "holidays": sorted(holidays)}
         print(json.dumps(out, indent=2, default=str))
         return
 
@@ -360,11 +414,14 @@ def main():
     header = f"REGISTRY  {real_now.strftime('%Y-%m-%dT%H:%MZ')}"
     if pin_label:
         header += f"  |  AS-OF PINNED {pin_label}"
+    header += f"  |  WORKING-TIME (skips weekends + {len(holidays)} holiday(s))"
     header += f"  |  {len(malformed)} malformed  |  {cold_hint}"
     print(header)
-    n = emit("HOT  (worked <72h, not closed)", hot, now, macros_by_code)
+    print("  (HOT/COLD = WORKING-hours since last commit, non-working time excluded; "
+          "'Last commit' shows calendar age)")
+    n = emit("HOT  (worked <72 working-h, not closed)", hot, now, macros_by_code)
     if allmode:
-        emit("COLD  (>72h since work, still not closed)", cold, now, macros_by_code, n)
+        emit("COLD  (>72 working-h since work, still not closed)", cold, now, macros_by_code, n)
     if malformed:
         print(f"\nWARN: MALFORMED JSON ({len(malformed)}) -- unparseable, fix these:")
         for m in malformed:
@@ -374,7 +431,8 @@ def main():
         tail += f" | {len(malformed)} MALFORMED"
     print(tail)
     print(f"REGISTRY-CHECK-RESULT hot={len(hot)} cold={len(cold)} "
-          f"malformed={len(malformed)} asof_pinned={1 if pin_label else 0}")
+          f"malformed={len(malformed)} asof_pinned={1 if pin_label else 0} "
+          f"working_time=1 holidays={len(holidays)}")
 
 
 if __name__ == "__main__":
