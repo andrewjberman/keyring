@@ -35,6 +35,17 @@ import os
 import re
 import sys
 import tempfile
+import time
+
+# Override escape-valve (CTO safeguard 2026-07-06): an inline `# log-open-ok: <reason>` on the open()
+# statement suppresses the finding for a DELIBERATE strict read, AUDITED (mirrors the comp-rail
+# `# rail-checked:` pattern). Lets a future heuristic-coincidence (the class of the 2 tightened FPs)
+# proceed NOW while the heuristic is tightened async, instead of hard-blocking the 1338-caller gate.
+OVERRIDE_RE = re.compile(r"#\s*log-open-ok:\s*(?P<reason>.*)$")
+# this file lives at <WS>/org/modules/graph/compproof/log_open_lint.py -> 5 dirnames up = <WS>
+_WS = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))))
+OVERRIDE_AUDIT_LOG = os.path.join(_WS, "org", "mcp", "log-open-ok-override.log")
 
 # Explicit multi-writer log paths named in the incident + the COO GO. Substring match (case-insensitive).
 # Specific tokens only (NOT a bare "telemetry" -- that matched a HAR-capture docstring in the 07-06 sweep;
@@ -145,6 +156,32 @@ def _path_node(call: ast.Call, is_attr_open: bool) -> ast.AST | None:
     return _kw(call, "file")
 
 
+def _override_on(lines: list, start: int, end: int) -> str | None:
+    """If any physical line of the open() statement carries a `# log-open-ok: <reason>` marker, return
+    the reason (an audited deliberate override); else None. Spans the whole call (start..end_lineno) so a
+    multi-line `with open(\\n ...)` can carry the marker on any of its lines."""
+    for i in range(start, end + 1):
+        if 0 < i <= len(lines):
+            m = OVERRIDE_RE.search(lines[i - 1])
+            if m:
+                return m.group("reason").strip() or "(no reason given)"
+    return None
+
+
+def _audit_overrides(overrides: list, path: str = OVERRIDE_AUDIT_LOG) -> None:
+    """Append each `# log-open-ok:` override to the audit log (the comp-rail `# rail-checked:` pattern) --
+    a repeat override for one intent is the signal to tighten the heuristic. Best-effort: auditing must
+    NEVER break the gate. Writes errors=replace (dogfood -- this IS a multi-writer append log)."""
+    try:
+        ts = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        with open(path, "a", encoding="utf-8", errors="replace") as fh:
+            for v in overrides:
+                fh.write("%s  log-open-ok  file=%s line=%d reason=%s\n"
+                         % (ts, v["file"], v["line"], v["override_reason"]))
+    except OSError:
+        pass
+
+
 def _func_is_log_parser(fn: ast.AST) -> str | None:
     """A function that READS a multi-writer log -- caught by name (parse_rail / parse_rolling_log /
     parse_telemetry) or by a docstring that names a known log file. This is the signal that catches the
@@ -204,9 +241,15 @@ def check_source(src: str, filename: str = "<src>") -> list[dict]:
         if not reason:
             continue
         ln = getattr(node, "lineno", 0)
-        out.append({"file": filename, "line": ln, "col": getattr(node, "col_offset", 0),
-                    "path_reason": reason,
-                    "snippet": lines[ln - 1].strip() if 0 < ln <= len(lines) else ""})
+        end = getattr(node, "end_lineno", ln) or ln
+        rec = {"file": filename, "line": ln, "col": getattr(node, "col_offset", 0),
+               "path_reason": reason,
+               "snippet": lines[ln - 1].strip() if 0 < ln <= len(lines) else ""}
+        ov = _override_on(lines, ln, end)          # audited escape-valve (CTO safeguard 1)
+        if ov is not None:
+            rec["overridden"] = True
+            rec["override_reason"] = ov
+        out.append(rec)
     return out
 
 
@@ -256,6 +299,20 @@ def _selftest() -> int:
                "    with open(path, encoding='utf-8') as fh: return fh.read()\n")
     assert not check_source(catalog), "'catalog' must NOT trip the log-parser name heuristic (word-boundary)"
 
+    # --- override escape-valve (CTO safeguard 1): '# log-open-ok: <reason>' suppresses + audits ---
+    ovsrc = ("def parse_rail(path):\n"
+             "    'comp-which-rail.log -> rows'\n"
+             "    with open(path, encoding='utf-8') as fh:  # log-open-ok: byte-safe upstream, deliberate\n"
+             "        return fh.read()\n")
+    ovres = check_source(ovsrc)
+    assert ovres and ovres[0].get("overridden") and "deliberate" in ovres[0]["override_reason"], \
+        "a '# log-open-ok:' marker must OVERRIDE the finding + capture the reason"
+    noov = check_source("def parse_rail(path):\n    'comp-which-rail.log'\n    open(path, encoding='utf-8').read()\n")
+    assert noov and not noov[0].get("overridden"), "no marker -> not overridden (still a live finding)"
+    # --- crash-tolerance (CTO safeguard 2 basis): malformed source degrades gracefully, never raises ---
+    syn = check_source("def broken(:\n")
+    assert syn and "SYNTAX ERROR" in syn[0]["path_reason"], "malformed source -> graceful record, no raise"
+
     # --- the em-dash RUNTIME demo: prove WHY the lint matters (the exact crash it prevents) ---
     fd, tmp = tempfile.mkstemp(suffix=".log")
     try:
@@ -277,8 +334,9 @@ def _selftest() -> int:
 
     print("SELF-TEST PASS: AST 12/12 (flag: RAIL_LOG read / literal log / join(RAIL_LOG) / *routing* name /"
           " parse_rail param-path / parse_telemetry glob-var; clean: errors= / write-mode / binary /"
-          " non-log path / load_config param / load_catalog word-boundary) | em-dash runtime demo"
-          " (unhardened read CRASHES on 0xe2, errors=replace reads clean) -- the exact fabric-brick prevented")
+          " non-log path / load_config param / load_catalog word-boundary) | override valve (log-open-ok"
+          " suppresses+captures / no-marker stays live) | crash-tolerance (malformed -> graceful) |"
+          " em-dash runtime demo (unhardened read CRASHES on 0xe2, errors=replace reads clean)")
     return 0
 
 
@@ -299,18 +357,34 @@ def main(argv: list | None = None) -> int:
         ap.print_help()
         return 0
     total = 0
+    overrides = []
     for f in a.files:
         if not os.path.exists(f):
             print("SKIP: %s (not found)" % f)
             continue
-        for v in check_file(f):
+        try:
+            found = check_file(f)
+        except Exception as e:            # CRASH-FAIL-OPEN (CTO safeguard 2): a lint bug must NEVER block
+            print("WARN (log-open-lint): internal error on %s -- failing open, not blocking: %r"
+                  % (f, e), file=sys.stderr)
+            continue
+        for v in found:
+            if v.get("overridden"):       # audited escape-valve -- excluded from the block count
+                overrides.append(v)
+                continue
             total += 1
             print("%s:%d:%d  strict-utf8 log read, no errors= -- %s\n    %s"
                   % (v["file"], v["line"], v["col"], v["path_reason"], v["snippet"]))
+    if overrides:
+        _audit_overrides(overrides)
+        for v in overrides:
+            print("OVERRIDE (log-open-ok): %s:%d -- %s [audited]"
+                  % (v["file"], v["line"], v["override_reason"]), file=sys.stderr)
     if total:
         tag = "ADVISORY" if a.advisory else "BLOCKED"
-        print("\n%s: %d strict-utf8 log-read(s) without errors= -- add errors=\"replace\" "
-              "(a multi-writer log will eventually carry a non-UTF-8 byte and crash the read)." % (tag, total))
+        print("\n%s: %d strict-utf8 log-read(s) without errors= -- add errors=\"replace\" (or an audited "
+              "`# log-open-ok: <reason>` override) -- a multi-writer log will eventually carry a non-UTF-8 "
+              "byte and crash the read." % (tag, total))
         return 0 if a.advisory else 1     # advisory NEVER blocks (announce-then-enforce)
     if not a.advisory:                    # advisory is silent-when-clean (0 noise on unrelated commits)
         print("OK: no unguarded strict-utf8 log reads.")
@@ -318,4 +392,11 @@ def main(argv: list | None = None) -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    # top-level CRASH-FAIL-OPEN (CTO safeguard 2): exit 1 ONLY on a genuine finding; ANY unexpected error
+    # in the tool itself fails open (exit 0) so it can NEVER break the 1338-caller shared gate.
+    try:
+        _rc = main()
+    except Exception as _e:  # noqa: BLE001
+        print("WARN (log-open-lint): unexpected error -- failing open, not blocking: %r" % _e, file=sys.stderr)
+        _rc = 0
+    sys.exit(_rc)
