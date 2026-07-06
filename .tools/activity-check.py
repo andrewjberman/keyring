@@ -1,21 +1,24 @@
 #!/usr/bin/env python3
-"""activity-check.py -- recent-commit activity by active agent + where it is directed.
+"""activity-check.py -- REAL-TIME "who's active right now" view, by recency.
+
+The point of this tool is TEMPORAL, not a rolling-period summary: it answers "what is
+happening right now, today" -- so agents are ordered by RECENCY (most recently active
+FIRST), NOT by who has the most commits over the window (Andrew-direct 2026-07-06). Each
+agent's card leads with "last commit Xm ago" and lists their 5 MOST RECENT commits.
 
 ACTIVE AGENT = a git author whose name is a fabric serial (N.N.N_ROLE_*) with >=1 commit
-in the last --days (default 7). For each active agent this surfaces their 5 MOST RECENT
-commits (project-code resolved), and three aggregations (each top-4 + "Other"):
-  * MACROS   -- which macros get the most PROJECT-DIRECTED commits
-  * PROJECTS -- which projects get the most commits
-  * AGENTS   -- which agents commit the most (ALL commits, directed or not)
+in the last --days (default 7 -- this is only how far BACK to look; ordering is by recency,
+so a busy-but-idle-for-days agent sinks to the bottom and whoever just committed floats up).
 
-Directed vs all: a project/macro pie only counts commits whose message references a known
-project code -- an exec "drive cycle N" / "/govern" / "log" commit is directed at no
-project, so it is excluded from the MACRO + PROJECT charts but still counts for the AGENT
-chart (it is a real commit by that agent).
+--summary appends the (opt-in) 7d AGGREGATE (top macros / projects / agents by count) --
+NOT shown by default, since the default view is intentionally real-time, not a period roll-up.
+Directed vs all: a project/macro aggregate only counts commits whose message references a
+known project code; an exec "drive cycle N" / "log" commit is directed at no project.
 
 Usage:
-  python .tools/activity-check.py                 # text summary, 7-day window
-  python .tools/activity-check.py --days 3         # tighter window
+  python .tools/activity-check.py                 # REAL-TIME view: agents by recency, newest first
+  python .tools/activity-check.py --days 2         # tighter look-back
+  python .tools/activity-check.py --summary        # + the opt-in 7d aggregate roll-up
   python .tools/activity-check.py --json           # machine-readable (the dashboard consumes this)
 
 Read-only: pure git + filesystem, no MCP. The HTML dashboard companion is
@@ -145,18 +148,25 @@ def build(days: int) -> dict:
     agents = []
     for name, cs in by_agent.items():
         cs.sort(key=lambda x: x["iso"], reverse=True)
-        recent = []
+        recent, last_dt = [], None
         for c in cs[:5]:
             try:
                 dt = datetime.fromisoformat(c["iso"]).astimezone(timezone.utc)
                 age = fmt_age(dt, now)
+                if last_dt is None:
+                    last_dt = dt                          # most-recent commit (cs sorted desc)
             except ValueError:
                 age = "?"
             recent.append({"sha": c["sha"], "age": age, "subj": c["subj"],
                            "code": c["code"] or "(none)", "macro": c["macro"] or "(none)"})
         agents.append({"agent": name, "role": role_from_name(name),
-                       "n_window": len(cs), "recent": recent})
-    agents.sort(key=lambda a: (-a["n_window"], a["agent"]))
+                       "n_window": len(cs), "recent": recent,
+                       "last_age": recent[0]["age"] if recent else "?",
+                       "last_iso": last_dt.isoformat() if last_dt else ""})
+    # REAL-TIME focus (Andrew-direct 2026-07-06): order by RECENCY -- the most recently
+    # active agent first -- NOT by 7d commit count. The --days window is only how far back
+    # to look for each agent's recent commits; who floats to the top is "who committed last".
+    agents.sort(key=lambda a: a["last_iso"], reverse=True)
 
     return {
         "as_of": now.strftime("%Y-%m-%d %H:%MZ"),
@@ -188,19 +198,21 @@ def main():
         return
 
     p = lambda s: print(to_ascii(s))
-    p(f"ACTIVITY-CHECK  {data['as_of']}  |  {data['n_active_agents']} active agents  "
-      f"|  {data['n_commits']} commits / {days}d  |  {data['n_directed']} project-directed")
-    p("")
-    p("TOP MACROS (directed):    " + ", ".join(f"{s['label']} {s['value']}" for s in data["pie_macro"]))
-    p("TOP PROJECTS (directed):  " + ", ".join(f"{s['label']} {s['value']}" for s in data["pie_project"]))
-    p("TOP AGENTS (all commits): " + ", ".join(f"{s['label']} {s['value']}" for s in data["pie_agent"]))
+    p(f"ACTIVITY-CHECK  {data['as_of']}  |  {data['n_active_agents']} agents, MOST-RECENTLY-ACTIVE FIRST  "
+      f"|  looked back {days}d  ({data['n_commits']} commits)")
+    p("  (real-time view: agents ordered by their LATEST commit; lead line = time since it)")
     p("")
     for a in data["agents"]:
-        p(f"{a['agent']}  ({a['n_window']} commits/{days}d, role {a['role']})")
+        p(f"{a['agent']}  --  last commit {a['last_age']} ago   (role {a['role']}, {a['n_window']} commits/{days}d)")
         for c in a["recent"]:
             tag = c["code"] if c["code"] != "(none)" else "(no project)"
             p(f"    {c['age']:>4}  [{tag}]  {c['subj'][:74]}")
         p("")
+    if "--summary" in args:  # the 7d AGGREGATE, opt-in only (default view is real-time)
+        p(f"-- {days}d aggregate summary --")
+        p("TOP MACROS (directed):    " + ", ".join(f"{s['label']} {s['value']}" for s in data["pie_macro"]))
+        p("TOP PROJECTS (directed):  " + ", ".join(f"{s['label']} {s['value']}" for s in data["pie_project"]))
+        p("TOP AGENTS (all commits): " + ", ".join(f"{s['label']} {s['value']}" for s in data["pie_agent"]))
 
 
 if __name__ == "__main__":
