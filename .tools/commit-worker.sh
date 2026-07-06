@@ -52,9 +52,16 @@
 
 set -uo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# ${BASH_SOURCE[0]} (not $0) so SCRIPT_DIR resolves correctly whether this file is
+# executed OR sourced (CW_SOURCE_ONLY=1 by a test / TO-2's fallback -- when sourced,
+# $0 is the sourcing shell, not this script).
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=commit_queue_lib.sh
 source "$SCRIPT_DIR/commit_queue_lib.sh"
+# SHARED sensitive-leak gate (TO-5): single source of the leak patterns + detector,
+# also sourced by safe-commit's fallback (TO-2) -> no security-gate copy-drift.
+# shellcheck source=commit_gate_lib.sh
+source "$SCRIPT_DIR/commit_gate_lib.sh"
 
 # ---- config -------------------------------------------------------------
 WORKER_POLL_SEC="${CQ_WORKER_POLL_SEC:-1}"      # idle poll interval
@@ -63,10 +70,8 @@ BACKOFF_BASE_S="${CQ_BACKOFF_BASE_S:-1}"
 BACKOFF_CAP_S="${CQ_BACKOFF_CAP_S:-15}"
 ORPHAN_MAX_AGE_SEC="${CQ_ORPHAN_MAX_AGE_SEC:-120}"  # processing/ orphan -> DLQ
 
-# ---- sensitive-leak gate regexes (ported verbatim from safe-commit.sh) ---
-_LEAK_ALWAYS_RE='\.(har|pem|p12|pfx|jks|keystore|ppk)$|(^|/)id_(rsa|dsa|ecdsa|ed25519)([./]|$)|(^|/)\.(netrc|pgpass)$'
-_LEAK_IF_IGNORED_RE='\.(env|key|crt|cer)$|(cookie|secret|credential|password|apikey|api_key|private_key|access_token|auth_token)|(^|/)(\.aws|\.ssh|\.gnupg|sources)/'
-_LEAK_EXCLUDE_RE='\.env\.(template|example|sample|dist)$'
+# sensitive-leak patterns + detector now live in commit_gate_lib.sh (cg_sensitive_hits) --
+# single source shared with safe-commit's fallback (TO-5, CTO no-drift directive).
 
 log() { printf '%s commit-worker[%s]: %s\n' "$(cq_now_iso)" "$$" "$*" >&2; }
 
@@ -129,21 +134,19 @@ cw_is_transient() {
   return 1
 }
 
-# ---- sensitive-leak gate (in-worker) ------------------------------------
-# Given the current IN_SCOPE staged set, echo the offending files (one/line).
-# Mirrors safe-commit.sh:236-261 exactly.
-cw_sensitive_hits() {
-  local in_scope="$1" f
-  while IFS= read -r f; do
-    [ -z "$f" ] && continue
-    printf '%s\n' "$f" | grep -qiE "$_LEAK_EXCLUDE_RE" && continue
-    if printf '%s\n' "$f" | grep -qiE "$_LEAK_ALWAYS_RE"; then
-      printf '%s\n' "$f"
-    elif printf '%s\n' "$f" | grep -qiE "$_LEAK_IF_IGNORED_RE" \
-         && git check-ignore --no-index -q -- "$f" 2>/dev/null; then
-      printf '%s\n' "$f"
+# ---- cargs value extractor ----------------------------------------------
+# Echo the value following <flag> in REQ_CARGS (e.g. --author, -m). Used for the
+# R4 author single-source (env must derive from the SAME value git uses) and for
+# crash-recovery landed-commit matching. rc 1 if the flag is absent.
+cw_cargs_value() {
+  local flag="$1" i=0
+  while [ "$i" -lt "${#REQ_CARGS[@]}" ]; do
+    if [ "${REQ_CARGS[$i]}" = "$flag" ] && [ "$((i+1))" -lt "${#REQ_CARGS[@]}" ]; then
+      printf '%s' "${REQ_CARGS[$((i+1))]}"; return 0
     fi
-  done <<< "$in_scope"
+    i=$((i+1))
+  done
+  return 1
 }
 
 # ---- process ONE claimed request ----------------------------------------
@@ -171,6 +174,14 @@ cw_process() {
     return
   fi
 
+  # PRE_HEAD stamp (CTO v1: crash-recovery determinism). Record the requester's
+  # pre-commit HEAD into the processing record BEFORE committing, so a startup
+  # sweep can tell landed-from-not-landed after a worker crash (never double-commit,
+  # never lose a landed commit to the DLQ).
+  local pre_head
+  pre_head="$(cd "$REQ_CWD" 2>/dev/null && git rev-parse HEAD 2>/dev/null || true)"
+  printf 'PRE_HEAD %s\n' "$pre_head" >> "$proc" 2>/dev/null || true
+
   # Everything below runs in a subshell so cd + env exports don't leak between
   # requests (concurrency=1 makes this belt-and-suspenders, but keeps each
   # request hermetic). The subshell echoes a status line the parent parses.
@@ -183,12 +194,14 @@ cw_process() {
     for kv in "${REQ_ENVS[@]:-}"; do [ -n "$kv" ] && export "$kv"; done
 
     # (C) R4: make the pre-commit hook (owned-paths / COMP) see the REQUESTER.
-    # The hook keys on `git var GIT_AUTHOR_IDENT`; export it from req.author so
-    # attribution is the requester, not the worker. --author (in CARGS) sets the
-    # final commit author to the same value; the two agree.
-    local a_name a_email
-    a_name="${REQ_AUTHOR%% <*}"
-    a_email="${REQ_AUTHOR#*<}"; a_email="${a_email%>}"
+    # The hook keys on `git var GIT_AUTHOR_IDENT` (author, NOT committer). Export
+    # GIT_AUTHOR_* SINGLE-SOURCED from the SAME --author value git will use for the
+    # commit (CTO confirm 2a: env and --author must never diverge) -- parse it from
+    # CARGS, fall back to the AUTHOR field only if --author is somehow absent.
+    local auth_src a_name a_email
+    auth_src="$(cw_cargs_value --author)"; [ -n "$auth_src" ] || auth_src="$REQ_AUTHOR"
+    a_name="${auth_src%% <*}"
+    a_email="${auth_src#*<}"; a_email="${a_email%>}"
     export GIT_AUTHOR_NAME="$a_name"
     export GIT_AUTHOR_EMAIL="$a_email"
 
@@ -199,9 +212,9 @@ cw_process() {
     local in_scope
     in_scope="$(git diff --cached --name-only -- "${REQ_PATHS[@]}" 2>/dev/null || true)"
 
-    # (F) SENSITIVE-LEAK GATE (fail-closed). Override: SAFE_COMMIT_ALLOW_SENSITIVE.
+    # (F) SENSITIVE-LEAK GATE (fail-closed) via the SHARED detector. Override: SAFE_COMMIT_ALLOW_SENSITIVE.
     local hits
-    hits="$(cw_sensitive_hits "$in_scope")"
+    hits="$(cg_sensitive_hits "$in_scope")"
     if [ -n "$hits" ]; then
       local n; n="$(printf '%s\n' "$hits" | grep -c .)"
       if [ -n "${SAFE_COMMIT_ALLOW_SENSITIVE:-}" ]; then
@@ -279,26 +292,62 @@ cw_process() {
   esac
 }
 
-# ---- startup sweep: crash-orphans in processing/ ------------------------
+# ---- startup sweep: crash-orphans in processing/ (PRE_HEAD deterministic) ---
 # A request in processing/ with no worker = a prior worker crashed mid-flight.
-# CONSERVATIVE: we do NOT auto-requeue (a crash in the ~ms between `git commit`
-# returning and writing the result would double-commit on requeue). Instead,
-# aged orphans -> DLQ + error result + alarm; a human/ops decides. (Hardening
-# path for deterministic recovery: stamp PRE_HEAD before commit + compare HEAD
-# author/message on recovery -- noted for TO-1 hardening / CTO arch-gate.)
+# Using the PRE_HEAD stamp (CTO v1), recovery is a clean binary under concurrency=1:
+#   - HEAD advanced AND the top commit's author+subject MATCH the orphan  -> it LANDED
+#       -> recover the hash, write a committed-result, NO requeue (never double-commit,
+#          never lose a landed commit to the DLQ).
+#   - HEAD == PRE_HEAD (unchanged)                                        -> did NOT land
+#       -> safe to REQUEUE (mv back to requests/); it will be retried.
+#   - HEAD advanced but does NOT match (another commit intervened), or no PRE_HEAD/parse
+#     fail                                                                -> AMBIGUOUS
+#       -> conservative DLQ + error result (never blind-requeue -- the cardinal
+#          never-double-commit invariant wins over convenience).
 cw_startup_sweep() {
-  local proc_dir; proc_dir="$(cq_processing_dir)"
-  local f base age now mt
-  now="$(cq_now_epoch)"
+  local proc_dir reqs_dir f
+  proc_dir="$(cq_processing_dir)"; reqs_dir="$(cq_requests_dir)"
   for f in "$proc_dir"/*.req; do
     [ -f "$f" ] || continue
-    mt="$(stat -c %Y "$f" 2>/dev/null || echo "$now")"
-    age=$(( now - mt ))
-    base="$(basename "$f")"
-    local rid; rid="$(cq_field "$f" REQID)"
-    log "startup-sweep orphan $base (age ${age}s) -> DLQ (conservative, no auto-requeue)"
-    [ -n "$rid" ] && cq_write_result "$rid" error 1 "" "crash-orphan recovered to DLQ; re-run your commit" "" ""
-    cq_dlq "$f"; cw_metric dlq_depth 1
+    if ! cw_parse_request "$f"; then
+      log "startup-sweep: CORRUPT orphan $(basename "$f") -> DLQ"
+      cq_dlq "$f"; cw_metric dlq_depth 1; continue
+    fi
+    local pre_head cur_head
+    pre_head="$(cq_field "$f" PRE_HEAD)"
+    cur_head="$(cd "$REQ_CWD" 2>/dev/null && git rev-parse HEAD 2>/dev/null || true)"
+
+    if [ -n "$cur_head" ] && [ -n "$pre_head" ] && [ "$cur_head" = "$pre_head" ]; then
+      # proven NOT landed -> safe requeue
+      if mv "$f" "$reqs_dir/$(basename "$f")" 2>/dev/null; then
+        log "startup-sweep: orphan $REQ_ID proven-not-landed (HEAD==PRE_HEAD) -> REQUEUED"
+      else
+        cq_write_result "$REQ_ID" error 1 "" "crash-orphan requeue failed; re-run" "" ""
+        cq_dlq "$f"; cw_metric dlq_depth 1
+        log "startup-sweep: orphan $REQ_ID requeue mv failed -> DLQ"
+      fi
+    elif [ -n "$cur_head" ] && [ "$cur_head" != "$pre_head" ]; then
+      # HEAD advanced -- did THIS request land? match author + subject.
+      local want_author want_msg top_author top_msg
+      want_author="$(cw_cargs_value --author || true)"
+      want_msg="$(cw_cargs_value -m || true)"; want_msg="${want_msg%%$'\n'*}"
+      top_author="$(cd "$REQ_CWD" 2>/dev/null && git log -1 --format='%an <%ae>' 2>/dev/null || true)"
+      top_msg="$(cd "$REQ_CWD" 2>/dev/null && git log -1 --format='%s' 2>/dev/null || true)"
+      if [ -n "$want_author" ] && [ "$top_author" = "$want_author" ] && [ "$top_msg" = "$want_msg" ]; then
+        cq_write_result "$REQ_ID" committed 0 "$cur_head" "" "recovered: commit landed before crash" ""
+        rm -f "$f" 2>/dev/null || true; cw_metric recovered_committed 1
+        log "startup-sweep: orphan $REQ_ID LANDED pre-crash -> recovered hash $cur_head (no requeue)"
+      else
+        cq_write_result "$REQ_ID" error 1 "" "crash-orphan: HEAD advanced by another commit; re-run" "" ""
+        cq_dlq "$f"; cw_metric dlq_depth 1
+        log "startup-sweep: orphan $REQ_ID AMBIGUOUS (HEAD moved, no author/subject match) -> DLQ"
+      fi
+    else
+      # no PRE_HEAD or cwd/HEAD unresolvable -> conservative DLQ (never blind-requeue)
+      cq_write_result "$REQ_ID" error 1 "" "crash-orphan indeterminate (no PRE_HEAD or HEAD unreadable); re-run" "" ""
+      cq_dlq "$f"; cw_metric dlq_depth 1
+      log "startup-sweep: orphan $REQ_ID indeterminate -> DLQ"
+    fi
   done
 }
 
@@ -413,7 +462,44 @@ cw_selftest() {
     printf '%s' "$guard" | grep -qi "singleton" || { echo "FAIL: guard did NOT refuse a live holder (out=$guard)"; exit 1; }
     echo "  singleton/concurrency=1 guard=OK (acquire refused while a live pid held worker.pid)"
 
-    echo "PASS: commit-worker selftest (round-trip + R4-attribution + msg-fidelity + sensitive-fail-closed + singleton)"
+    # (4) CRASH-RECOVERY (PRE_HEAD determinism). Both branches -- never double-commit,
+    # never lose a landed commit.
+    local rauthor='0.7.0_AE_CloudOps~B <0.7.0_AE_CloudOps@opal.agent>'
+
+    # (4a) LANDED orphan: enqueue, claim, stamp PRE_HEAD, ACTUALLY make the commit
+    # (simulating "worker committed then crashed before writing the result"), sweep.
+    local pre_a rid_a proc_a rmsg_a='recover me A'
+    pre_a="$(git rev-parse HEAD)"
+    rid_a="$(cq_enqueue "$tmp" 0 "$rauthor" 4 "--author" "$rauthor" "-m" "$rmsg_a" 1 "reccA.txt" 0)"
+    proc_a="$(cq_claim_oldest)"
+    printf 'PRE_HEAD %s\n' "$pre_a" >> "$proc_a"
+    echo A > reccA.txt; git add -f reccA.txt >/dev/null 2>&1
+    git -c gc.auto=0 commit -q --author "$rauthor" -m "$rmsg_a" -- reccA.txt >/dev/null 2>&1 </dev/null
+    cw_startup_sweep >/dev/null 2>&1
+    local ra_status ra_hash
+    ra_status="$(cq_field "$(cq_result_path "$rid_a")" STATUS)"
+    ra_hash="$(cq_field "$(cq_result_path "$rid_a")" COMMIT_HASH)"
+    [ "$ra_status" = "committed" ]          || { echo "FAIL recovery-LANDED status=$ra_status"; exit 1; }
+    [ "$ra_hash" = "$(git rev-parse HEAD)" ] || { echo "FAIL recovery-LANDED hash mismatch"; exit 1; }
+    [ ! -f "$proc_a" ]                       || { echo "FAIL recovery-LANDED: processing not cleared"; exit 1; }
+    [ -z "$(ls "$(cq_requests_dir)" 2>/dev/null)" ] || { echo "FAIL recovery-LANDED: REQUEUED a landed commit (double-commit risk)"; exit 1; }
+    echo "  crash-recovery LANDED=OK (recovered hash ${ra_hash:0:12}, NO requeue)"
+
+    # (4b) NOT-LANDED orphan: enqueue, claim, stamp PRE_HEAD=current HEAD, NO commit,
+    # sweep -> must REQUEUE (HEAD unchanged = proven not landed), no result, no dup.
+    local pre_b rid_b proc_b
+    pre_b="$(git rev-parse HEAD)"
+    rid_b="$(cq_enqueue "$tmp" 0 "$rauthor" 4 "--author" "$rauthor" "-m" "not landed B" 1 "reccB.txt" 0)"
+    proc_b="$(cq_claim_oldest)"
+    printf 'PRE_HEAD %s\n' "$pre_b" >> "$proc_b"
+    cw_startup_sweep >/dev/null 2>&1
+    ls "$(cq_requests_dir)"/*"$rid_b"* >/dev/null 2>&1 || { echo "FAIL recovery-NOTLANDED: not requeued"; exit 1; }
+    [ ! -f "$proc_b" ]                              || { echo "FAIL recovery-NOTLANDED: still in processing"; exit 1; }
+    cq_result_ready "$rid_b" && { echo "FAIL recovery-NOTLANDED: wrote a result (should just requeue)"; exit 1; }
+    rm -f "$(cq_requests_dir)"/*"$rid_b"* 2>/dev/null || true
+    echo "  crash-recovery NOT-LANDED=OK (requeued, HEAD==PRE_HEAD, no double-commit)"
+
+    echo "PASS: commit-worker selftest (round-trip + R4-attribution + msg-fidelity + sensitive-fail-closed + singleton + crash-recovery)"
   )
   local rc=$?
   rm -rf "$tmp" 2>/dev/null || true
@@ -421,6 +507,9 @@ cw_selftest() {
 }
 
 # ---- dispatch -----------------------------------------------------------
+# CW_SOURCE_ONLY=1 loads the functions WITHOUT dispatching -- lets tests (and
+# TO-2's safe-commit fallback) source the worker's helpers without launching a daemon.
+if [ "${CW_SOURCE_ONLY:-}" != "1" ]; then
 case "${1:-}" in
   --drain-once) cw_drain_once ;;
   --selftest)   cw_selftest ;;
@@ -428,3 +517,4 @@ case "${1:-}" in
   ""|--daemon)  cw_daemon ;;
   *) echo "usage: commit-worker.sh [--daemon|--drain-once|--selftest|--status]" >&2; exit 2 ;;
 esac
+fi
