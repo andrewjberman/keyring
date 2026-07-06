@@ -1,72 +1,71 @@
 #!/usr/bin/env bash
-# ADHC_OWNPTH.007 -- safe-commit.sh
-# Wraps `git commit --only -- <pathspec>` with a staged-index vs pathspec
-# contamination check. Aborts on mismatch unless --force is passed (logs bypass).
+# NFRA_CMTQUE TO-2 -- safe-commit.sh: THIN ENQUEUE CLIENT (+ legacy mkdir-mutex fallback).
+# LANDED 2026-07-06 (CVO-verified PASS 9a53b84ea, MSTR go, LD-0247-adjacent). The queue
+# path is DORMANT: SAFE_COMMIT_USE_QUEUE defaults OFF -> the legacy path runs -> byte-for-
+# byte the pre-queue behavior for all ~1338 callers (verified by the compat matrix). The
+# TO-6 cutover flips the flag ON after the load-test + CVO-verify + CTO-consult. Do NOT
+# set SAFE_COMMIT_USE_QUEUE=1 outside the TO-6 canary until then.
 #
-# Usage:
-#   .tools/safe-commit.sh [--force] [--author "name <email>"] [-m "msg"] -- <path1> [path2...]
-#   .tools/safe-commit.sh --help
+# INTERFACE: byte-for-byte identical to the pre-queue safe-commit.sh (arg parse + exit
+# codes {0 commit / 1 contamination|sensitive / 2 usage|not-repo / 3 timeout / git rc
+# passthrough}). The ONLY caller-visible change, and ONLY on the (dormant) queue path, is
+# the success stdout (a synthesized "[branch hash] subject [commit-queue]" line instead of
+# git's multi-line summary -- CVO-verified 0 callers parse safe-commit stdout). No caller change.
 #
-# Audit log (FORCE-BYPASS only): org/git-author-override-audit.log
-#   Format: {ISO8601} FORCE-BYPASS  {agent}  {N_extra}  ({first 5 extras truncated})
+# TWO PATHS:
+#   QUEUE  (SAFE_COMMIT_USE_QUEUE=1 AND a live worker): build a commit-request, enqueue
+#          to the local durable queue, BLOCK for the result, reproduce exit/reason. The
+#          single concurrency=1 worker owns the git index -> no mutex, no 60s storm, no
+#          contamination race. This path is DORMANT by default (flag off) until the
+#          TO-6 canary/cutover flips it.
+#   LEGACY (default, OR the D6 fallback when the flag is on but the worker is DOWN):
+#          today's mkdir-mutex + stage + sensitive-gate + contamination + git commit,
+#          PRESERVED byte-for-byte -- except the sensitive-leak gate now calls the SHARED
+#          cg_sensitive_hits (commit_gate_lib.sh, TO-5) so there is ONE gate impl, no
+#          copy-drift between the worker and this fallback (CTO directive).
+#
+# So: worker down / flag off -> today's exact behavior (never a regression); worker up +
+# flag on -> the queue. A dead worker degrades to today, never blocks (D6).
 
 set -euo pipefail
 
 show_help() {
   cat <<'EOF'
-safe-commit.sh -- git commit wrapper with index-contamination guard.
+safe-commit.sh -- git commit wrapper. Enqueue-client (concurrency=1 worker) with a
+legacy mkdir-mutex fallback. Byte-for-byte CLI-compatible with the pre-queue version.
 
 USAGE:
   .tools/safe-commit.sh [--force] [git-commit-options...] -- <path1> [path2...]
   .tools/safe-commit.sh --help
 
-BEHAVIOR (commit-mutex v2 -- stage-inside-lock, MSTR-approved 2026-05-29):
+BEHAVIOR:
   DO NOT pre-`git add` -- this wrapper stages your declared pathspec itself.
-  1. Acquires a per-worktree mkdir-mutex (serializes concurrent agents).
-  2. Captures the BASELINE staged set at lock-entry (peers' / pre-staged files).
-  3. Stages your declared pathspec inside the lock: git add -f -- <pathspec>
-     (force so a new file under a gitignored prefix needs no separate add).
-  4. Contamination = files staged by THIS run that are outside the pathspec
-     AND not in the baseline. Peers' baseline files are IGNORED (git commit
-     --only can never commit them anyway). If contamination found, abort
-     exit 1 (or --force bypass with FORCE-BYPASS audit entry).
-  5. Runs: git commit --only [git-commit-options] -- <pathspec>
-     scoped to the listed paths regardless of index state. Mutex released
-     on EXIT (trap). Stale lock reclaimed via dead-PID or age>=timeout.
+  With SAFE_COMMIT_USE_QUEUE=1 and a live commit-worker, the request is enqueued to a
+  durable local queue and a single serial worker commits it (no lock contention, no
+  60s timeout-storm). Otherwise (default, or worker down) it uses the legacy per-worktree
+  mkdir-mutex + stage + sensitive-leak gate + contamination check + git commit --only.
 
-SECURITY -- the -f overrides .gitignore (read this before committing near secrets):
-  Step 3 uses `git add -f`, which FORCE-adds files EVEN IF gitignored. So passing a
-  DIRECTORY pathspec (e.g. `-- workflows/`) silently sweeps in gitignored secrets/PII
-  under it -- HARs with live cookies, .env, keys, client data. .gitignore does NOT
-  protect you here; a leaked live credential/PII in git history is UNRECOVERABLE.
-  RULE: pass EXPLICIT file paths near a sources/HAR/.env/secret tree -- never a bare
-  directory. The SENSITIVE-LEAK GATE below fail-CLOSED-blocks a would-be leak
-  (unambiguous secret types always; contextual patterns when also gitignored). To
-  double-check any commit: `git show --name-only HEAD` before pushing.
-
-COMMIT MESSAGE with shell-special chars (parens/brackets/backticks/$):
-  This wrapper quotes the forwarded message correctly (git commit --only "${COMMIT_ARGS[@]}").
-  BUT a message like  -m "fn() [pure]"  can still break at YOUR shell / the calling layer if
-  the -m value's quoting is lost there -- the OUTER shell parses `fn()` as subshell syntax
-  ("syntax error near unexpected token )") BEFORE this script runs. The break is UPSTREAM of
-  safe-commit, not inside it. Fix: single-quote the message, or use  -F <file>  / a heredoc
-  for any message containing parens, brackets, backticks, or $.
+SECURITY -- the -f overrides .gitignore (read before committing near secrets):
+  Staging uses `git add -f`, which FORCE-adds files EVEN IF gitignored. A DIRECTORY
+  pathspec (e.g. `-- workflows/`) silently sweeps in gitignored secrets/PII (HARs with
+  live cookies, .env, keys). The SENSITIVE-LEAK GATE fail-CLOSED-blocks a would-be leak
+  (unambiguous secret types always; contextual patterns when also gitignored). Pass
+  EXPLICIT file paths near a sources/HAR/.env tree -- never a bare directory.
 
 OPTIONS:
-  --force              Bypass contamination check; log to audit trail.
+  --force              Bypass contamination check (legacy path); log to audit trail.
   --help               Show this help and exit.
   -- <pathspec...>     Files to commit. Required. Forwarded to git commit --only.
 
 ENV:
-  SAFE_COMMIT_AUDIT_LOG        Override audit log path (default: <repo>/org/git-author-override-audit.log).
-  SAFE_COMMIT_ALLOW_SENSITIVE  Set to a reason string to override the sensitive-leak gate
-                               for a genuine sanitized fixture (audited). Leave UNSET normally.
+  SAFE_COMMIT_USE_QUEUE        1 -> use the commit-queue worker when it's live (default 0).
+  SAFE_COMMIT_QUEUE_TIMEOUT    seconds to await a worker result before erroring (default 120).
+  SAFE_COMMIT_AUDIT_LOG        Override audit log path.
+  SAFE_COMMIT_ALLOW_SENSITIVE  Reason string to override the sensitive-leak gate (audited).
 
 EXAMPLES:
   safe-commit.sh --author "0.7.0_AE_CloudOps <0.7.0_AE_CloudOps@opal.agent>" \
-    -m "infra(cloudops): bump shared-infra" \
-    -- infra/aws/terraform/shared-infra/main.tf
-
+    -m "infra(cloudops): bump shared-infra" -- infra/aws/terraform/shared-infra/main.tf
   safe-commit.sh --force --author "..." -m "emergency hotfix" -- path/to/file
 EOF
 }
@@ -76,6 +75,9 @@ if [ $# -eq 0 ]; then
   exit 0
 fi
 
+# --------------------------------------------------------------------------
+# Arg parse -- PRESERVED byte-for-byte from the pre-queue safe-commit.sh.
+# --------------------------------------------------------------------------
 FORCE=0
 COMMIT_ARGS=()
 PATHSPEC=()
@@ -119,64 +121,7 @@ REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || {
 AUDIT_LOG="${SAFE_COMMIT_AUDIT_LOG:-$REPO_ROOT/org/git-author-override-audit.log}"
 ISO_TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
-# RV-0017 F-006 Pattern A -- mkdir-mutex commit-serialization (Rule 16 Git-Bash
-# compatible; flock not available). Serializes safe-commit.sh body across all
-# concurrent agents in this repo so the shared-index contamination race
-# (git diff --cached returning a peer's staged paths) cannot trip lane-violation
-# BLOCKs that aren't real. Lock held from staged-index capture through commit +
-# pre-commit hook completion. Stale-lock reclaim via kill -0 on holder PID.
-# Worktree-safe: $REPO_ROOT/.git is a FILE (gitdir pointer) in a linked worktree,
-# so mkdir "$REPO_ROOT/.git/commit-queue.lock" fails ENOTDIR and the lock can
-# NEVER be acquired (spins to timeout -> agents fall back to unserialized/force
-# commits -> commit storm). --absolute-git-dir resolves the per-worktree gitdir,
-# which is ALWAYS a real directory (main: .git ; worktree: .git/worktrees/<name>),
-# giving correct per-index serialization in every checkout. (Fix: worktree commit-storm 2026-05-29)
-LOCK_DIR="${SAFE_COMMIT_LOCK_DIR:-$(git rev-parse --absolute-git-dir 2>/dev/null)/commit-queue.lock}"
-LOCK_TIMEOUT_SEC="${SAFE_COMMIT_LOCK_TIMEOUT:-60}"
-LOCK_ACQUIRED=0
-elapsed=0
-while ! mkdir "$LOCK_DIR" 2>/dev/null; do
-  # Stale-lock detection #1: holder PID dead -> reclaim immediately.
-  if [ -f "$LOCK_DIR/pid" ]; then
-    holder_pid="$(cat "$LOCK_DIR/pid" 2>/dev/null || true)"
-    if [ -n "$holder_pid" ] && ! kill -0 "$holder_pid" 2>/dev/null; then
-      rm -rf "$LOCK_DIR" 2>/dev/null || true
-      continue
-    fi
-  fi
-  # Stale-lock detection #2 (ADHC commit-mutex v2): age-based break. Covers the
-  # PID-reuse hole -- a crashed holder whose PID was recycled by a different live
-  # process would read as alive under kill -0 and deadlock the fabric forever.
-  # If the lock dir is >= LOCK_TIMEOUT_SEC old, break it. mtime via `stat -c %Y`
-  # (Git-Bash 3.6.7 default, Rule 16 OK); `find -mmin` guarded fallback.
-  lock_mtime=""
-  if command -v stat >/dev/null 2>&1; then
-    lock_mtime="$(stat -c %Y "$LOCK_DIR" 2>/dev/null || true)"
-  fi
-  if [ -n "$lock_mtime" ]; then
-    now_s="$(date +%s)"
-    if [ $((now_s - lock_mtime)) -ge "$LOCK_TIMEOUT_SEC" ]; then
-      rm -rf "$LOCK_DIR" 2>/dev/null || true
-      continue
-    fi
-  elif find "$LOCK_DIR" -maxdepth 0 -mmin +1 2>/dev/null | grep -q .; then
-    # stat unavailable -> 1-minute mmin fallback
-    rm -rf "$LOCK_DIR" 2>/dev/null || true
-    continue
-  fi
-  elapsed=$((elapsed + 1))
-  if [ "$elapsed" -ge "$LOCK_TIMEOUT_SEC" ]; then
-    echo "ERROR: safe-commit mutex held >${LOCK_TIMEOUT_SEC}s by PID $(cat "$LOCK_DIR/pid" 2>/dev/null || echo unknown)." >&2
-    echo "       Other agent's commit stuck or hung. Inspect $LOCK_DIR." >&2
-    exit 3
-  fi
-  sleep 1
-done
-echo "$$" > "$LOCK_DIR/pid"
-LOCK_ACQUIRED=1
-trap '[ "$LOCK_ACQUIRED" -eq 1 ] && rm -rf "$LOCK_DIR" 2>/dev/null || true' EXIT
-
-# Extract agent name from --author "agent <email>" for audit log attribution
+# Extract agent name from --author "agent <email>" for audit attribution + the request.
 RAW_AUTHOR=""
 n=${#COMMIT_ARGS[@]}
 i=0
@@ -193,16 +138,124 @@ done
 AGENT="${RAW_AUTHOR%% <*}"
 AGENT="${AGENT:-UNKNOWN}"
 
-# ADHC commit-mutex v2 (MSTR-approved 2026-05-29): stage-inside-lock + baseline-diff.
-# WHY: the mutex alone (LD-0138) serializes safe-commit bodies but NOT the `git add`
-# callers ran separately, nor a peer's out-of-band add on the shared index -- so
-# `git diff --cached` saw peers' staged files and false-aborted (empirically 2x
-# 2026-05-29). Fix: (1) capture BASELINE first (foreign/pre-staged files present at
-# lock-entry); (2) stage our OWN declared pathspec INSIDE the lock (callers no longer
-# pre-`git add`); (3) contamination = (staged-now \ baseline) \ pathspec -- i.e. ONLY
-# files THIS run staged outside its own pathspec. Peers' baseline files are excluded
-# (and `git commit --only` structurally can never commit them anyway). The guard still
-# catches a genuine self-scope error; it stops policing peers.
+# --------------------------------------------------------------------------
+# Source the shared libs (queue primitives + the SHARED sensitive-leak gate).
+# The libs run `set -uo pipefail` at load -> re-assert -euo after to keep this
+# script's intended options (the legacy path relies on -e as a safety net).
+# --------------------------------------------------------------------------
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=commit_gate_lib.sh
+source "$SCRIPT_DIR/commit_gate_lib.sh"
+# shellcheck source=commit_queue_lib.sh
+source "$SCRIPT_DIR/commit_queue_lib.sh"
+set -euo pipefail
+
+# ==========================================================================
+# QUEUE PATH -- only when explicitly enabled AND a live worker is present.
+# Dormant by default (flag off) until the TO-6 canary/cutover.
+# ==========================================================================
+if [ "${SAFE_COMMIT_USE_QUEUE:-0}" = "1" ] && cq_worker_alive; then
+  # forward the per-commit env the worker's gate needs.
+  ENV_LIST=()
+  [ -n "${SAFE_COMMIT_ALLOW_SENSITIVE:-}" ] && ENV_LIST+=("SAFE_COMMIT_ALLOW_SENSITIVE=${SAFE_COMMIT_ALLOW_SENSITIVE}")
+  [ -n "${SAFE_COMMIT_AUDIT_LOG:-}" ] && ENV_LIST+=("SAFE_COMMIT_AUDIT_LOG=${SAFE_COMMIT_AUDIT_LOG}")
+
+  REQID="$(cq_enqueue "$PWD" "$FORCE" "$RAW_AUTHOR" \
+    "${#COMMIT_ARGS[@]}" "${COMMIT_ARGS[@]}" \
+    "${#PATHSPEC[@]}" "${PATHSPEC[@]}" \
+    "${#ENV_LIST[@]}" "${ENV_LIST[@]}")" || {
+      echo "ERROR: commit-queue enqueue failed; falling back to legacy path." >&2
+      REQID=""
+  }
+
+  if [ -n "$REQID" ]; then
+    # BLOCK for the result -- an orderly FIFO drain by a warm worker (no 60s storm).
+    QTIMEOUT="${SAFE_COMMIT_QUEUE_TIMEOUT:-120}"
+    waited=0
+    while ! cq_result_ready "$REQID"; do
+      sleep 1
+      waited=$((waited + 1))
+      if [ "$waited" -ge "$QTIMEOUT" ]; then
+        echo "ERROR: commit-queue worker returned no result for $REQID in ${QTIMEOUT}s." >&2
+        echo "       Request is enqueued -- do NOT blindly retry (double-commit risk):" >&2
+        echo "       verify with 'git log -1'; inspect the queue at $(cq_root)." >&2
+        exit 3
+      fi
+    done
+
+    RP="$(cq_result_path "$REQID")"
+    R_STATUS="$(cq_field "$RP" STATUS)"
+    R_EXIT="$(cq_field "$RP" EXIT_CODE)"
+    R_HASH="$(cq_field "$RP" COMMIT_HASH)"
+    R_REASON="$(cq_b64dec "$(cq_field "$RP" REASON)")"
+    R_STDERR="$(cq_b64dec "$(cq_field "$RP" STDERR)")"
+    rm -f "$RP" 2>/dev/null || true   # consume the result -> results/ stays clean
+
+    if [ "$R_STATUS" = "committed" ]; then
+      # synthesized git-style first line (subject from -m; branch + short hash).
+      SUBJECT=""
+      k=0
+      while [ $k -lt ${#COMMIT_ARGS[@]} ]; do
+        if [ "${COMMIT_ARGS[$k]}" = "-m" ] && [ $((k + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
+          SUBJECT="${COMMIT_ARGS[$((k + 1))]%%$'\n'*}"; break
+        fi
+        k=$((k + 1))
+      done
+      BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo HEAD)"
+      echo "[$BRANCH ${R_HASH:0:9}] ${SUBJECT} [commit-queue]"
+      exit 0
+    else
+      # rejected (gate/hook/nothing-to-commit) or error -> reproduce reason + exit code.
+      [ -n "$R_REASON" ] && echo "$R_REASON" >&2
+      [ -n "$R_STDERR" ] && echo "$R_STDERR" >&2
+      exit "${R_EXIT:-1}"
+    fi
+  fi
+  # REQID empty -> enqueue failed -> fall through to the legacy path (D6).
+fi
+
+# ==========================================================================
+# LEGACY PATH (default; also the D6 fallback for worker-down / enqueue-fail).
+# PRESERVED byte-for-byte from the pre-queue safe-commit.sh, EXCEPT the
+# sensitive-leak detection now calls the SHARED cg_sensitive_hits (no drift).
+# ==========================================================================
+LOCK_DIR="${SAFE_COMMIT_LOCK_DIR:-$(git rev-parse --absolute-git-dir 2>/dev/null)/commit-queue.lock}"
+LOCK_TIMEOUT_SEC="${SAFE_COMMIT_LOCK_TIMEOUT:-60}"
+LOCK_ACQUIRED=0
+elapsed=0
+while ! mkdir "$LOCK_DIR" 2>/dev/null; do
+  if [ -f "$LOCK_DIR/pid" ]; then
+    holder_pid="$(cat "$LOCK_DIR/pid" 2>/dev/null || true)"
+    if [ -n "$holder_pid" ] && ! kill -0 "$holder_pid" 2>/dev/null; then
+      rm -rf "$LOCK_DIR" 2>/dev/null || true
+      continue
+    fi
+  fi
+  lock_mtime=""
+  if command -v stat >/dev/null 2>&1; then
+    lock_mtime="$(stat -c %Y "$LOCK_DIR" 2>/dev/null || true)"
+  fi
+  if [ -n "$lock_mtime" ]; then
+    now_s="$(date +%s)"
+    if [ $((now_s - lock_mtime)) -ge "$LOCK_TIMEOUT_SEC" ]; then
+      rm -rf "$LOCK_DIR" 2>/dev/null || true
+      continue
+    fi
+  elif find "$LOCK_DIR" -maxdepth 0 -mmin +1 2>/dev/null | grep -q .; then
+    rm -rf "$LOCK_DIR" 2>/dev/null || true
+    continue
+  fi
+  elapsed=$((elapsed + 1))
+  if [ "$elapsed" -ge "$LOCK_TIMEOUT_SEC" ]; then
+    echo "ERROR: safe-commit mutex held >${LOCK_TIMEOUT_SEC}s by PID $(cat "$LOCK_DIR/pid" 2>/dev/null || echo unknown)." >&2
+    echo "       Other agent's commit stuck or hung. Inspect $LOCK_DIR." >&2
+    exit 3
+  fi
+  sleep 1
+done
+echo "$$" > "$LOCK_DIR/pid"
+LOCK_ACQUIRED=1
+trap '[ "$LOCK_ACQUIRED" -eq 1 ] && rm -rf "$LOCK_DIR" 2>/dev/null || true' EXIT
 
 # (1) BASELINE: what was already staged at lock-entry (foreign + any caller pre-add).
 BASELINE="$(git diff --cached --name-only 2>/dev/null || true)"
@@ -214,16 +267,10 @@ if [ -n "$BASELINE" ]; then
   done <<< "$BASELINE"
 fi
 
-# (2) Stage our declared pathspec inside the lock. -f so a new file under a
-# gitignored prefix (e.g. .tools/) is staged without a separate caller `git add -f`
-# (the caller listed it explicitly = intent). Idempotent for already-tracked/staged.
+# (2) Stage our declared pathspec inside the lock (-f past .gitignore).
 git add -f -- "${PATHSPEC[@]}" 2>/dev/null || true
 
-# (3) IN_SCOPE: git-expanded files matching our declared pathspec. Use git's own
-# pathspec expansion so directories and globs work uniformly — `git diff --cached
-# --name-only -- <dir>` expands dir → dir/file1, dir/file2,... matching the names
-# returned by git diff --cached. A literal-string PATHSPEC_SET would miss every
-# expanded filename under a directory pathspec (dir != dir/file.json).
+# (3) IN_SCOPE: git-expanded files matching our declared pathspec.
 IN_SCOPE="$(git diff --cached --name-only -- "${PATHSPEC[@]}" 2>/dev/null || true)"
 declare -A IN_SCOPE_SET=()
 if [ -n "$IN_SCOPE" ]; then
@@ -233,31 +280,12 @@ if [ -n "$IN_SCOPE" ]; then
   done <<< "$IN_SCOPE"
 fi
 
-# ADHC_OWNPTH.007b -- SENSITIVE-LEAK GATE (fabric-wide, 2026-07-02; 0.7.0 near-miss: a
-# `safe-commit -- workflows/` directory pathspec would have force-added raw HARs carrying
-# LIVE cookies + client-holdings PII). The `git add -f` above OVERRIDES .gitignore, so a
-# DIRECTORY pathspec silently force-adds gitignored secrets/PII into git history -- which is
-# UNRECOVERABLE (persists in history + any push/clone even after a later delete). Refuse
-# fail-CLOSED when a to-be-committed (in-scope) file is either (a) an unambiguous secret
-# type, or (b) gitignored-per-rules (git check-ignore --no-index) AND matches a sensitive
-# pattern. Combining {gitignored} with {sensitive} for the contextual set keeps false-
-# positives near-zero (a TRACKED cookie_utils.py is not ignored -> never fires). Audited
-# override for a genuine sanitized fixture: SAFE_COMMIT_ALLOW_SENSITIVE="reason".
-_LEAK_ALWAYS_RE='\.(har|pem|p12|pfx|jks|keystore|ppk)$|(^|/)id_(rsa|dsa|ecdsa|ed25519)([./]|$)|(^|/)\.(netrc|pgpass)$'
-_LEAK_IF_IGNORED_RE='\.(env|key|crt|cer)$|(cookie|secret|credential|password|apikey|api_key|private_key|access_token|auth_token)|(^|/)(\.aws|\.ssh|\.gnupg|sources)/'
-_LEAK_EXCLUDE_RE='\.env\.(template|example|sample|dist)$'
+# SENSITIVE-LEAK GATE (fail-closed) via the SHARED detector (TO-5, no copy-drift).
 LEAK_HITS=()
 if [ -n "$IN_SCOPE" ]; then
   while IFS= read -r f; do
-    [ -z "$f" ] && continue
-    printf '%s\n' "$f" | grep -qiE "$_LEAK_EXCLUDE_RE" && continue
-    if printf '%s\n' "$f" | grep -qiE "$_LEAK_ALWAYS_RE"; then
-      LEAK_HITS+=("$f")
-    elif printf '%s\n' "$f" | grep -qiE "$_LEAK_IF_IGNORED_RE" \
-         && git check-ignore --no-index -q -- "$f" 2>/dev/null; then
-      LEAK_HITS+=("$f")
-    fi
-  done <<< "$IN_SCOPE"
+    [ -n "$f" ] && LEAK_HITS+=("$f")
+  done <<< "$(cg_sensitive_hits "$IN_SCOPE")"
 fi
 if [ "${#LEAK_HITS[@]}" -gt 0 ]; then
   mkdir -p "$(dirname "$AUDIT_LOG")"
@@ -300,7 +328,6 @@ N_EXTRA="${#EXTRA[@]}"
 
 if [ "$N_EXTRA" -gt 0 ]; then
   if [ "$FORCE" -eq 1 ]; then
-    # First 5 extras for audit detail, truncate the rest
     SHOW_N=$N_EXTRA
     [ $SHOW_N -gt 5 ] && SHOW_N=5
     DETAIL=""
@@ -338,9 +365,7 @@ if [ "$N_EXTRA" -gt 0 ]; then
   fi
 fi
 
-# B5 D8-AE Part B: advisory surface-check gate (QUERY-only, ms; never blocks the commit).
-# Runs comp-surface-check in advisory mode so any SEV1/SEV2 touch surfaces visibly
-# without stopping the commit. SURFACE_ACK is not required in advisory mode.
+# Advisory surface-check gate (QUERY-only; never blocks).
 if command -v comp-surface-check >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
   _sc_args=()
   while IFS= read -r _f; do
@@ -353,19 +378,13 @@ if command -v comp-surface-check >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
   fi
 fi
 
-# B6 NFRA_COMPUNIFY S2: advisory comp-coverage-check gate (the COMPUNIFY enforcement gate).
-# When the commit touches the comp-tool coverage ledger OR adds/changes a .tools/comp-* tool,
-# re-validate the coverage map: every tool one home, every overlap declared, no phantom Trino
-# seam, inventory complete, tools_index projection current. ADVISORY (never blocks -- mirrors
-# B5; announce-then-enforce). Blocking ramp = drop the `|| true` + honor the tri-state exit.
-# Rule-16 clean (command -v / echo / grep / sed -- all in Git Bash 3.6.7).
+# Advisory comp-coverage-check gate (COMPUNIFY; never blocks).
 if command -v comp-coverage-check >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
   if echo "$IN_SCOPE" | grep -qE 'comp-coverage-map\.yaml|\.tools/comp-'; then
     comp-coverage-check check 2>&1 | sed 's/^/  [coverage-check] /' || true
   fi
 fi
 
-# Proceed with the actual scoped commit. Use plain invocation (not exec) so the
-# EXIT trap fires after commit completion and releases the mutex.
+# Proceed with the actual scoped commit (plain invocation so the EXIT trap fires).
 git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}"
 exit $?

@@ -15,8 +15,11 @@
 
 set -uo pipefail
 
-CUR="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/safe-commit.sh"
-V2="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/safe-commit.v2.sh"
+# CUR = the frozen pre-queue golden (byte-exact reference of the behavior we must preserve);
+# V2  = the LANDED safe-commit.sh (queue-client; flag-off must == golden). Durable regression:
+# re-run any time to prove the landed client's legacy path never drifts from the golden.
+CUR="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/safe-commit.legacy-golden.sh"
+V2="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/safe-commit.sh"
 GATE_LIB_OK=1
 AUTHOR='0.7.0_AE_CloudOps~B <0.7.0_AE_CloudOps@opal.agent>'
 FAILS=0
