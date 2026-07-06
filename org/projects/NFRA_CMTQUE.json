@@ -1,0 +1,17 @@
+{
+  "project_code": "NFRA_CMTQUE",
+  "macro_code": "NFRA",
+  "name": "Commit Queue",
+  "description": "Async git-commit serialization pipeline. Converts commit serialization from a synchronous per-agent mkdir-mutex on a shared index (which chokes the fabric under high commit concurrency -- head-of-line-blocked sessions, a 60s-timeout 'commit storm', and a fragile shared-index contamination guard) to an asynchronous single-consumer queue modeled on the graph-update SQS/Lambda pattern, adapted for a LOCAL repo (the consumer is a local commit-worker daemon, not a cloud Lambda, because the git repo is on-disk). Agents enqueue a commit-request via the byte-for-byte-preserved safe-commit.sh interface (1338 callers) and a single concurrency=1 worker owns all git-index access -- structurally eliminating the contamination race, the timeout-storm, and blocked sessions, while preserving every gate (sensitive-leak, owned-paths, ds-gate, author identity, atomic per-agent commit).",
+  "prds": [
+    {"path": "docs/architecture/NFRA_CMTQUE_PRD.md", "label": "Commit Queue PRD (Andrew-direct)", "date": "2026-07-06"}
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete (1.0.0_SA_CTO 2026-07-06, Andrew-direct), COO decomposition pending. 6 TO candidates framed (worker daemon / thin enqueue client / local durable queue / observability+alarms / retire-contamination-guard+wire-gates / phased-cutover). Executor pre-instantiated: 0.7.0_AE_CloudOps~B.",
+  "blocking": "COO task order issuance to 0.7.0_AE_CloudOps~B.",
+  "created": "2026-07-06",
+  "pods": ["0.7"],
+  "pipeline": "fabric-infra (local commit-worker daemon + local durable queue; CloudWatch for observability only)",
+  "thread_counter": 0,
+  "threads": []
+}
