@@ -13004,3 +13004,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/log_open_li... | PASS |
 | 2026-07-06 | 0.4.0_DS_ClientPlatform | BD-unfreeze-P0 + incr-vs-full-sweep | ds-commit-gate/comp-pipescript/comp-grep | ds-commit-gate x6 (PASS, caught legacy migrations); comp-pipescript consumers A_00 (blast); comp-grep+native-Grep consumer-inventory + A_00-unique mechanism triage; aws ETag/head-object Rule-22a deploy+chain-progress verify | PASS |
 | 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/ds-commit-gate.sh | PASS |
+| 2026-07-06 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0245.md | PASS |
+| 2026-07-06 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | NFRA_TOOLHEALTH/log-open-lint | tool_probe --run/--ensure-fresh, comp_tool_health --effective-feed, log_open_lint --self-test/sweep(8396), ds-commit-gate block-mode | TH-A closed (cadence+F-1, CVO-validated); utf-8-log lint shipped to ds-commit-gate BLOCK-MODE (0-FP/8396, audited override + crash-fail-open) | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
