@@ -12841,3 +12841,39 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-02 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ws4-gating-table-derive-sch... | PASS |
 - 2026-07-02 0.8.0_AE_CloudComp (NFRA_TOOLHEALTH emit-wiring DEPLOY): executed CTO Option A end-to-end -- ds-commit-gate PASS (comp_tool_health, tool_activity_emit, freshness lambda), safe-apply -chdir globgrph targeted 9-add/0-change/0-destroy (freshness lambda+alarm), comp-iam service (4 scoped stmts), comp-surface-check PASS all commits, deploy_ledger open/close-leg x6/close (ledger CLOSED all legs proven). Commits d44cfcfd6/1e679a766/a0e340134/5ff57c225/f1dcfc61a. Catalog un-frozen + cloud freshness alarm LIVE + SessionEnd hook (detached emit verified lands). code_heat sibling confirmed same-class + handed to COO~B.
 | 2026-07-02 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.1_AE_PartnerETL/lo... | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_P0_stale_portal_serving_check | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-validate | comp-validate D_04.client_portal_summary --artifact /tmp/tmp.sgqr0pLrFf/cd.json | FAIL |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/49-schwab-conv/SKILL.md | PASS |
+| 2026-07-02 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.1_AE_PartnerETL/lo... | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_P0_stale_portal_serving_check | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/gold_freshness_co... | PASS |
+| 2026-07-06 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/.spot-check... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-07-06 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/registry-check.py --file org/pro... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript --list | FAIL |
+| 2026-07-06 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0042.md | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INTEGRATIONS.json --f... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-validate | comp-validate D_00c.portal_leaderboard --artifact C:/Users/ANDREW~1/AppData/Local/Temp/... | FAIL |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-validate | comp-validate D_04.client_portal_summary --artifact C:/Users/ANDREW~1/AppData/Local/Tem... | FAIL |
+| 2026-07-06 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0241.md | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed data/inf/scripts/silver/convert_transactions_to_silver.py | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-validate | comp-validate D_04 --artifact C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-Andr... | FAIL |
+| 2026-07-06 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service bd-49f-auto-login | PASS |
+| 2026-07-06 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/gold_freshness_co... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-06 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file lib/served_vintage.py | PASS |
+
+| 2026-07-06T1326Z | 1.0.0_SA_CTO | registry-check.py (as-of pin x4), ds-commit-gate, safe-commit x3, git reconciliation | Monday boot: registry pin + P2 close + backlog reconcile. No comp-graph/blast -- governance+reporting-tool+TO-close, no data/infra surface. |
+| 2026-07-06 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
