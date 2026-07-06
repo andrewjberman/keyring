@@ -289,6 +289,9 @@ def main(argv: list | None = None) -> int:
                                              "known-multi-writer log path (the COMPLEARN corpus-brick class)")
     ap.add_argument("files", nargs="*", help="python files to lint")
     ap.add_argument("--self-test", action="store_true", help="AST cases + the em-dash runtime demo")
+    ap.add_argument("--advisory", action="store_true",
+                    help="announce-then-enforce mode: print findings as ADVISORY + ALWAYS exit 0 (never "
+                         "block). For a shared gate before block-mode promotion; silent when clean.")
     a = ap.parse_args(argv)
     if a.self_test:
         return _selftest()
@@ -305,10 +308,12 @@ def main(argv: list | None = None) -> int:
             print("%s:%d:%d  strict-utf8 log read, no errors= -- %s\n    %s"
                   % (v["file"], v["line"], v["col"], v["path_reason"], v["snippet"]))
     if total:
-        print("\nBLOCKED: %d strict-utf8 log-read(s) without errors= -- add errors=\"replace\" "
-              "(a multi-writer log will eventually carry a non-UTF-8 byte and crash the read)." % total)
-        return 1
-    print("OK: no unguarded strict-utf8 log reads.")
+        tag = "ADVISORY" if a.advisory else "BLOCKED"
+        print("\n%s: %d strict-utf8 log-read(s) without errors= -- add errors=\"replace\" "
+              "(a multi-writer log will eventually carry a non-UTF-8 byte and crash the read)." % (tag, total))
+        return 0 if a.advisory else 1     # advisory NEVER blocks (announce-then-enforce)
+    if not a.advisory:                    # advisory is silent-when-clean (0 noise on unrelated commits)
+        print("OK: no unguarded strict-utf8 log reads.")
     return 0
 
 
