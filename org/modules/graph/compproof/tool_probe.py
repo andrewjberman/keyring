@@ -24,7 +24,14 @@ functional miss (didn't reach, or reached-but-unusable-under-load) -> EFFECTIVE=
 the highest-value verdict, the one only this axis surfaces). Unknown iff a probe could not be run/VOID
 and none failed.
 
-Author: 0.8.0_AE_CloudComp~D (NFRA_TOOLHEALTH.TH-A, COO~B GO 2026-07-02). Reuses B1 un-forked.
+TRIGGER (CTO GO 2026-07-06): CONSUMPTION-DRIVEN, host=LOCAL, NOT a cron / NOT SessionEnd / NOT cloud.
+A consumer (a governance / tool-R&D review about to READ the health data) calls `ensure_fresh` first:
+reuse the feed if <= 7d old, else run fresh THEN read (--force bypasses the ceiling). Fresh-when-consumed,
+cost-bounded to the review cadence -- the blind-run is the DEEP periodic characterization; tool_activity
+latency telemetry is the cheap continuous fast-detector. Layer them.
+
+Author: 0.8.0_AE_CloudComp~D (NFRA_TOOLHEALTH.TH-A, COO~B GO 2026-07-02; consumption-trigger 0.8.0 base,
+CTO GO 2026-07-06). Reuses B1 un-forked.
 """
 
 from __future__ import annotations
@@ -282,6 +289,67 @@ def emit_effective_feed(rows: list, path: str = EFFECTIVE_FEED) -> dict:
     return feed
 
 
+# ---- consumption-driven freshness gate (CTO GO 2026-07-06: run-on-consume, 7d ceiling) --------
+# NOT a cron / NOT SessionEnd / NOT cloud: a CONSUMER (a governance / tool-R&D review about to READ the
+# health data) calls ensure_fresh() first. Fresh-when-consumed, cost-bounded to the review cadence, never
+# a blind clock -- mirrors comp-kuzu's refresh-on-HEAD-advance (staleness-aware, not a fixed tick).
+
+DEFAULT_CEILING_DAYS = 7.0
+
+
+def _feed_probe_ts(feed_path: str = EFFECTIVE_FEED) -> int | None:
+    """The most-recent probe_ts (epoch) in the effective_feed rollup, or None if the feed is absent /
+    unreadable / carries no timestamped tool. This is the age anchor the staleness ceiling measures."""
+    if not os.path.exists(feed_path):
+        return None
+    try:
+        with open(feed_path, encoding="utf-8", errors="replace") as fh:
+            feed = json.load(fh)
+    except (OSError, ValueError):
+        return None
+    tss = [v.get("probe_ts") for v in feed.values()
+           if isinstance(v, dict) and isinstance(v.get("probe_ts"), (int, float))]
+    return int(max(tss)) if tss else None
+
+
+def feed_age_days(feed_path: str = EFFECTIVE_FEED, *, now_ts: float | None = None) -> float | None:
+    """Age (days) of the freshest probe in the feed. None => no feed => treat as infinitely stale."""
+    ts = _feed_probe_ts(feed_path)
+    if ts is None:
+        return None
+    now = now_ts if now_ts is not None else time.time()
+    return round((now - ts) / 86400.0, 3)
+
+
+def _is_stale(age_days: float | None, ceiling_days: float, force: bool) -> bool:
+    """The staleness DECISION (pure -> self-testable): force OR no-feed OR older-than-ceiling => stale."""
+    return bool(force) or age_days is None or age_days > ceiling_days
+
+
+def ensure_fresh(*, ceiling_days: float = DEFAULT_CEILING_DAYS, force: bool = False,
+                 feed_path: str = EFFECTIVE_FEED, probe_log: str = PROBE_LOG,
+                 corpus: list | None = None, now_ts: float | None = None) -> dict:
+    """The consumption-driven trigger (CTO GO 2026-07-06). A consumer about to READ the health data calls
+    this first: if the last probe is <= ceiling_days old, REUSE it (no run); if force / missing / older,
+    run the probe LIVE + re-emit, THEN the consumer reads. Returns {ran, age_days, reason, ...}."""
+    age = feed_age_days(feed_path, now_ts=now_ts)
+    stale = _is_stale(age, ceiling_days, force)
+    result = {"ran": False, "age_days": age, "ceiling_days": ceiling_days,
+              "forced": bool(force), "feed_path": feed_path}
+    if not stale:
+        result["reason"] = "fresh: last probe %.2fd old <= %.1fd ceiling -- reused (no run)" % (age, ceiling_days)
+        return result
+    corpus = corpus if corpus is not None else tool_corpus.probes()
+    rows = probe_all(corpus, now_ts=now_ts)
+    emit_probe_log(rows, probe_log)
+    emit_effective_feed(rows, feed_path)
+    result.update(ran=True, n_probes=len(rows), reason=(
+        "forced fresh run (ceiling bypassed)" if force else
+        "no prior feed -- first run" if age is None else
+        "stale: last probe %.2fd old > %.1fd ceiling -- ran fresh" % (age, ceiling_days)))
+    return result
+
+
 # ---- self-test (structural: isolation gate + scorer, no live run needed) --------------------
 
 def _selftest() -> int:
@@ -321,8 +389,15 @@ def _selftest() -> int:
     rolled = rollup_by_tool(mock)
     assert rolled["t"]["effective"] is False and rolled["t"]["fix_probes"] == ["t/2"], \
         "any in-class functional miss -> tool EFFECTIVE=no (FIX): %s" % rolled["t"]
+    # AC: the consumption-driven staleness gate (CTO GO) -- pure decision, no live run.
+    assert _is_stale(None, 7, False) is True, "no feed -> stale (must run)"
+    assert _is_stale(8.0, 7, False) is True, "older than ceiling -> stale"
+    assert _is_stale(3.0, 7, False) is False, "within ceiling -> fresh (reuse, no run)"
+    assert _is_stale(3.0, 7, True) is True, "force overrides a fresh feed -> run"
+    assert feed_age_days("/no/such/effective_feed.json") is None, "absent feed -> None (infinitely stale)"
     print("SELF-TEST PASS: strip 4/4 clean | isolation VOID-on-violation (author==solver + answer-leak) |"
-          " REACH x USABILITY -> EFFECTIVE (reuse score_run) | reach/usability vocab | per-tool FIX rollup")
+          " REACH x USABILITY -> EFFECTIVE (reuse score_run) | reach/usability vocab | per-tool FIX rollup |"
+          " staleness gate (no-feed/>ceiling/force => run, <=ceiling => reuse)")
     return 0
 
 
@@ -332,13 +407,31 @@ def main(argv=None) -> int:
                                  description="NFRA_TOOLHEALTH.TH-A per-tool EFFECTIVE probe (blind-run, isolation-gated)")
     ap.add_argument("--self-test", action="store_true", help="structural self-test (isolation + scorer), no live run")
     ap.add_argument("--run", action="store_true", help="run the probe corpus LIVE against the estate + emit")
-    ap.add_argument("--local-only", action="store_true", help="with --run: skip live_estate probes (local tools only)")
+    ap.add_argument("--ensure-fresh", action="store_true",
+                    help="consumption-driven trigger (CTO GO): run ONLY if the feed is missing/older than "
+                         "--ceiling-days; else reuse. What a consumer calls before reading the health data.")
+    ap.add_argument("--ceiling-days", type=float, default=DEFAULT_CEILING_DAYS,
+                    help="staleness ceiling for --ensure-fresh (default 7): feed older than this => run fresh")
+    ap.add_argument("--force", action="store_true",
+                    help="with --ensure-fresh: run now regardless of the staleness ceiling (ad-hoc R&D pass)")
+    ap.add_argument("--local-only", action="store_true", help="with --run/--ensure-fresh: skip live_estate probes (local tools only)")
     ap.add_argument("--probe-log", default=PROBE_LOG, help="append-only per-probe stream path")
     ap.add_argument("--effective-feed", default=EFFECTIVE_FEED, help="per-tool rollup JSON (TH-B --effective-feed input)")
     ap.add_argument("--json", action="store_true", help="print the rows + feed JSON")
     a = ap.parse_args(argv)
     if a.self_test:
         return _selftest()
+    if a.ensure_fresh:
+        corpus = [p for p in tool_corpus.probes() if not (a.local_only and p.get("live_estate"))]
+        res = ensure_fresh(ceiling_days=a.ceiling_days, force=a.force,
+                           feed_path=a.effective_feed, probe_log=a.probe_log, corpus=corpus)
+        if a.json:
+            print(json.dumps(res, indent=1, default=str))
+        else:
+            print("=== TH-A ensure-fresh: %s ===" % ("RAN" if res["ran"] else "REUSED"))
+            print("  %s" % res["reason"])
+            print("  feed: %s" % res["feed_path"])
+        return 0
     if a.run:
         corpus = [p for p in tool_corpus.probes() if not (a.local_only and p.get("live_estate"))]
         rows = probe_all(corpus)
