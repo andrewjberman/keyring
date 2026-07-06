@@ -12945,3 +12945,10 @@ comp-grep (portal role_breakdown/reconcile/cross-advisor-sum: 0 stale -> a58ff3a
 | 2026-07-06 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-06 | 0.6.2_AE_PartnerETL | SESSION-CLOSE consolidation | (no new tool runs since the 3 prior 07-06 0.6.2 lines) | Session-close log; all runs captured in the GATE-1 + ops-alerts + Monday-restart lines. |
 | 2026-07-06 | 0.6.2_AE_PartnerETL | ADVI_SCHWABAUTO.ae-fetch-by-date-selfheal-finish-the-box | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-06 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws opal-globgrph-incremental-updater | FAIL |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed data/inf/scripts/silver/convert_assets_v2_to_silver.py | PASS |
+| 2026-07-06 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/registry-check/render_da... | PASS |
+| 2026-07-06 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_CMTQUE_PRD.md --... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | (INF gold-hang co-investigation) | comp-pipescript deployed (convert_assets_v2), live S3 partition-check, source-grounding (run_script/gold_prof) | comp-pipescript MATCH + fresh 07-06 assets silver EXONERATED the converter (code-vs-execution-env split); grounded the no-timeout-on-silver-steps amplifier (L580-598) + gold_prof proc.wait no-timeout; 0.6.1's verbatim --chain-full logs disambiguated HUNG-conflation -> env-bump resolution restored. PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
