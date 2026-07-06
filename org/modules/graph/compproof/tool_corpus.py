@@ -86,16 +86,18 @@ TOOL_PROBES = [
         "tool_class": "artifact-freshness",
         # THE FIX-CATCH (grounded LIVE, Rule 22 -- NOT manufactured, and ROBUST not marginal). The whole-BD-
         # chain freshness scan is a real, heavily-reached-for in-class question. MEASURED TRUE latency
-        # 2026-07-06 (uncapped 200s run): elapsed 190.4s ending in rc=2 with EMPTY stdout -- i.e. comp-
-        # freshness does not merely run slow, it runs >3min and then FAILS with no usable answer at all.
-        # So EFFECTIVE=no is OVER-DETERMINED: too-slow AND fell-back (rc 2 not in usable_returncodes).
+        # 2026-07-06, TWO independent uncapped runs: 190s ending rc=2 EMPTY (author) and 144s rc=1 WITH a
+        # freshness table (CVO TH-V independent) -- both ~5-6x past any interactive SLA. So the ROBUST
+        # determinant is TOO-SLOW ALONE (144-190s >> the 30s cap => load-deterministic); the rc-fallback is
+        # an INTERMITTENT 2nd failure mode (rc varies 1<->2 run-to-run), NOT a reliable co-determinant.
         # usability_timeout_s=30 is a principled "usable in-the-moment" SLA (an interactive agent needing a
-        # freshness answer will not wait 30s+) sitting ~6x BELOW the 190s measured latency -- robust margin,
+        # freshness answer will not wait 30s+) sitting ~5-6x BELOW the measured latency -- robust margin,
         # NOT a 0.3%-over-cap datapoint (resolves CVO TH-V F-1 2026-07-06: the old 90s cap sat right at the
         # tool's ~90s+ apparent latency, making KEEP-vs-FIX load-non-deterministic). The 30s cap also cuts
-        # probe cost (killed at 30s, never waits the 190s failure). NET FINDING for the FIX candidate:
-        # comp-freshness `chain bd` is BROKEN for the whole-chain query (190s -> rc2 empty), not just slow --
-        # a real fix TO (optimize/paginate OR repair the chain error), the load-bearing catch this axis exists for.
+        # probe cost (killed at 30s, never waits the full runtime). NET FINDING for the FIX candidate:
+        # comp-freshness `chain bd` is UNRELIABLE for the whole-chain query -- sometimes slow-succeeds (144s
+        # rc1), sometimes slow-fails (190s rc2), ALWAYS well past interactive SLA -- a real fix TO
+        # (optimize/paginate OR repair the chain), the load-bearing catch this axis exists for.
         # NOTE: the earlier MDPF-coverage-gap hypothesis was RETIRED -- `comp-freshness --list` was grounded
         # LIVE 2026-07-02 and now carries 6 mdpf/aggregate_aua entries (added since 0.5.0's 06-25 FREEZE-DX
         # noted none). Rule 22: the doc-era prior was stale; no coverage FIX exists there today.
