@@ -246,7 +246,12 @@ def main():
     mod = load_engine(ws)
     _ENGINE["short_owner"] = getattr(mod, "short_owner", None)
 
-    hot, cold, malformed, now = mod.build_rows()
+    # Working-time engine (registry-check.py 2026-07-06, patch 6938340ce): build_rows now
+    # TAKES (now, holidays) and returns a 3-tuple. Compute both from the engine so this
+    # generator stays lockstep with /registry-check's holiday-aware classification.
+    now, _pin = mod.resolve_asof([])
+    holidays = mod.load_holidays()
+    hot, cold, malformed = mod.build_rows(now, holidays)
     rows = hot + (cold if args.all else [])
     codes = [r["code"] for r in rows]
     activity = git_activity(codes, args.days)
