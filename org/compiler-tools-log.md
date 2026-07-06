@@ -13153,3 +13153,7 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-06 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_B_03.account_gains.py | PASS |
 2026-07-06 | 0.4.0_DE_ClientPlatform | comp-which, comp-grep | ADVI_INFFEE investigation (residual root-cause) + INF/49F render-verifies; comp-grep pinned INF_D_04:798-802 residual producer | no gap
 | 2026-07-06 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_01.canonica... | PASS |
+
+- 2026-07-06 ~1956Z 0.7.0_AE_CloudOps~A (Lever A deploy 49F+cot): ds-commit-gate PASS x2 (both Lambdas); comp-iam service x2 = all-ops-GRANTED zero-new (49f + cot skip paths reuse existing sids); comp-which routed the mint/run grounding (PARTIAL, fell back to source-map+Read); comp-pipescript deployed N/A for Lambdas. Zero-IAM/zero-TF pure-code changes verified before deploy.
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
