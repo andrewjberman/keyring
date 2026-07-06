@@ -5,6 +5,7 @@ Companion to extract_sfn (Pass 7). Bridges the OTHER AWS Lambda-invoke mechanism
 comp-blast/comp-iam surface a Lambda's non-code invokers -- blast-radius COMPLETENESS:
   - event-source-mappings : SQS / DynamoDB-stream / Kinesis -> Lambda
   - SNS subscriptions (protocol=lambda) : SNS topic -> Lambda
+  - S3 bucket-notifications (LambdaFunctionConfigurations) : S3 bucket -> Lambda (ObjectCreated etc.)
 
 LIVE-DERIVED (Andrew-direct 2026-07-06), NOT a static .tf parse. Rationale: deploys are TERRAFORM-ONLY,
 so TF-declared front-runs live (declared >= deployed). A raw .tf parse therefore can carry a
@@ -19,7 +20,8 @@ live-accuracy requirement); absent creds it degrades to no-edges rather than sta
 Dual-direction edges (mirror extract_sfn's SFN_INVOKES/SFN_INVOKED_BY + the estate's CALLS/CALLED_BY):
   {SQS_QUEUE|DYNAMODB_STREAM|KINESIS_STREAM} -[EVENT_INVOKES]-> LAMBDA ; LAMBDA -[EVENT_INVOKED_BY]-> src
   SNS_TOPIC                                  -[SNS_INVOKES]->   LAMBDA ; LAMBDA -[SNS_INVOKED_BY]->   topic
-so comp-blast(Lambda) surfaces its queue/stream/topic invoker AND comp-blast(source) shows its Lambdas.
+  S3_BUCKET                                  -[S3_INVOKES]->    LAMBDA ; LAMBDA -[S3_INVOKED_BY]->    bucket
+so comp-blast(Lambda) surfaces its queue/stream/topic/bucket invoker AND comp-blast(source) shows its Lambdas.
 """
 
 from __future__ import annotations
@@ -141,6 +143,34 @@ def extract_event_invoke_edges(graph: TraceGraph, workspace_root: Path) -> None:
                               {"mechanism": "sns_subscription", "topic_arn": topic_arn, "region": region})
         except Exception:  # noqa: BLE001
             pass
+
+    # --- S3 bucket-notification -> Lambda (ObjectCreated etc.). Buckets are GLOBAL -> scan once, not
+    # per-region. Direct S3->Lambda only (an S3->EventBridge->Lambda write-trigger, e.g. served-guard, is
+    # an EventBridge edge, not this; the module comment even says it does NOT touch the notification config). ---
+    try:
+        s3 = boto3.client("s3", region_name=_REGIONS[0])
+        buckets = s3.list_buckets().get("Buckets", [])
+        reached_aws = True
+        for b in buckets:
+            bucket = b.get("Name")
+            if not bucket:
+                continue
+            try:
+                cfg = s3.get_bucket_notification_configuration(Bucket=bucket)
+            except Exception:  # noqa: BLE001 -- one inaccessible bucket must not abort the scan
+                continue
+            for lc in cfg.get("LambdaFunctionConfigurations", []):
+                fn = _fn_name(lc.get("LambdaFunctionArn"))
+                if not fn:
+                    continue
+                sid = f"s3bucket:{bucket}"
+                if (sid, fn) in seen:
+                    continue
+                seen.add((sid, fn))
+                _add_dual(graph, sid, "S3_BUCKET", bucket, fn, "S3_INVOKES", "S3_INVOKED_BY",
+                          {"mechanism": "s3_bucket_notification", "events": lc.get("Events"), "bucket": bucket})
+    except Exception:  # noqa: BLE001
+        pass
 
     if not reached_aws:
         _warn_unverified("no creds / AWS unreachable")
