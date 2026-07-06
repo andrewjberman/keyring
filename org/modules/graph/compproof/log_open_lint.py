@@ -37,9 +37,11 @@ import sys
 import tempfile
 
 # Explicit multi-writer log paths named in the incident + the COO GO. Substring match (case-insensitive).
+# Specific tokens only (NOT a bare "telemetry" -- that matched a HAR-capture docstring in the 07-06 sweep;
+# specific filenames keep the enclosing-function/docstring heuristic precise).
 KNOWN_MULTIWRITER_SUBSTR = (
     "comp-which-rail", "compiler-tools-log", "agent_telemetry", "-routing.jsonl",
-    "rail.log", "routing.log", "telemetry",
+    "rail.log", "routing.log",
 )
 # Generic log-file shapes: a path literal that ENDSWITH one of these is a log/stream file.
 LOG_FILE_SUFFIXES = (".log", ".jsonl")
@@ -47,9 +49,11 @@ LOG_FILE_SUFFIXES = (".log", ".jsonl")
 LOG_NAME_RE = re.compile(r"(?i)(^|_)(rail|routing|telemetry)(_|$)|_log$|log_?path$|(^|_)log$")
 # A FUNCTION that parses a multi-writer log: the real 07-06 crash sites (parse_rail / parse_rolling_log /
 # parse_telemetry) receive the log path via a bare PARAM, so the open()-site path is generic -- the log-ness
-# lives in the function's name/docstring. Distinctive tokens on an underscore boundary (so 'catalog' etc. do
-# NOT match on a bare 'log').
-LOG_PARSER_NAME_RE = re.compile(r"(?i)(^|_)(rail|rolling|telemetry|routing|log)(_|$)")
+# lives in the function's name/docstring. Distinctive tokens on an underscore boundary (so 'catalog' does
+# NOT match on a bare 'log'). NOTE 'routing' is deliberately NOT here (it matched a config-manifest loader
+# 'load_routing' in the 07-06 sweep); a genuine routing-LOG read is still caught by the '-routing.jsonl'
+# path-literal, so dropping the name token loses no real coverage.
+LOG_PARSER_NAME_RE = re.compile(r"(?i)(^|_)(rail|rolling|telemetry|log)(_|$)")
 
 
 def _str_looks_like_log(s: str) -> str | None:
