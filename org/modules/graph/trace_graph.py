@@ -262,6 +262,7 @@ def build_graph(workspace_root: Path) -> TraceGraph:
     from .extract_api import extract_api_edges
     from .extract_eventbridge import extract_eventbridge_edges, extract_lambda_ec2_edges
     from .extract_lambda_routes import extract_lambda_routes
+    from .extract_sfn import extract_sfn_invoke_edges
 
     g = TraceGraph(built_at=time.time())
 
@@ -286,6 +287,11 @@ def build_graph(workspace_root: Path) -> TraceGraph:
     # alongside BD gold. Previously `comp-pipescript inject` was a separate step that
     # got wiped on every comp-build rebuild (see V4.017 OPS Cat 2 finding).
     _inject_full_pipeline_into_graph(g, workspace_root)
+
+    # Pass 7 (NFRA_GRAPHUNI.SFNBRIDGE): Step Functions -> Lambda invoke edges. Runs after the Lambda
+    # passes so it links to existing lambda:* nodes; creates any it needs. Brings SFN-orchestrated
+    # dependents into comp-blast/comp-iam blast radius (bounded invoke-edge projection; deep SFN = comp-aws).
+    extract_sfn_invoke_edges(g, workspace_root)
 
     return g
 
