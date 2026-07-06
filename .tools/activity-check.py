@@ -197,7 +197,8 @@ def main():
         print(json.dumps(data, indent=2, ensure_ascii=True))
         return
 
-    p = lambda s: print(to_ascii(s))
+    def p(s):
+        print(to_ascii(s))
     p(f"ACTIVITY-CHECK  {data['as_of']}  |  {data['n_active_agents']} agents, MOST-RECENTLY-ACTIVE FIRST  "
       f"|  looked back {days}d  ({data['n_commits']} commits)")
     p("  (real-time view: agents ordered by their LATEST commit; lead line = time since it)")
