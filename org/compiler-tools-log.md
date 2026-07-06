@@ -12957,3 +12957,17 @@ comp-grep (portal role_breakdown/reconcile/cross-advisor-sum: 0 stale -> a58ff3a
 | 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/tool_activity_emit.p... | PASS |
 | 2026-07-06 | 0.8.0_AE_CloudComp | NFRA_TOOLHEALTH.TH-A | tool_probe --self-test/--run, comp_tool_health --effective-feed, ds-commit-gate x3 | TH-A EFFECTIVE probe landed: self-test 13-assert PASS; LIVE run surfaced the FIX-catch (comp-freshness KEEP->FIX via --effective-feed, isolation_ok 4/4); gate clean; fixed a live COMPLEARN corpus-load crash (3 strict-utf8 log-parser opens -> errors=replace) | PASS |
 | 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-06 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_CMTQUE_PRD.md | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/A_00.ac... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-pipescript | comp-pipescript io INF_A_00 | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~B | NFRA_CMTQUE | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit_queue_lib.sh --file org/t... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/tool_probe.... | PASS |
+| 2026-07-06 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript consumers A_00.accounts_dimension | PASS |
+| 2026-07-06 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-pipescript | comp-pipescript io INF_D_00c | PASS |
+
+## 2026-07-06 0.4.0_DE_ClientPlatform -- INF gold freeze runtime-hang diagnosis
+comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+platinum frozen 07-02) -- the scoping call for the whole investigation. comp-which routed "inf gold runner progress" -> comp-freshness/comp-pipescript/comp-platinum. Rule-21 rail correctly GATED a raw aws s3-ls gold-freshness eyeball -> re-ran via comp-freshness. Runtime root-cause (ps state/wchan/child-tree, /proc, dispatch-script source) required raw SSM -- process-level truth off-rail.
+| 2026-07-06 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
