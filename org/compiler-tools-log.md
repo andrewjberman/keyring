@@ -12971,3 +12971,36 @@ comp-grep (portal role_breakdown/reconcile/cross-advisor-sum: 0 stale -> a58ff3a
 ## 2026-07-06 0.4.0_DE_ClientPlatform -- INF gold freeze runtime-hang diagnosis
 comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+platinum frozen 07-02) -- the scoping call for the whole investigation. comp-which routed "inf gold runner progress" -> comp-freshness/comp-pipescript/comp-platinum. Rule-21 rail correctly GATED a raw aws s3-ls gold-freshness eyeball -> re-ran via comp-freshness. Runtime root-cause (ps state/wchan/child-tree, /proc, dispatch-script source) required raw SSM -- process-level truth off-rail.
 | 2026-07-06 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-06 | 0.6.1_AE_PartnerETL | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-07-06 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/tool_corpus.py | PASS |
+| 2026-07-06 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/activity-check/SKILL.md ... | PASS |
+| 2026-07-06 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/log_open_lint.py | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/log_open_li... | PASS |
+| 2026-07-06 | 0.6.1_AE_PartnerETL | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions inf-gold-freshness-guard --settle-retry-s... | PASS |
+| 2026-07-06 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/A_00.ac... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/tool_corpus.py | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~B | NFRA_CMTQUE | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit-worker.sh --file .tools/c... | PASS |
+| 2026-07-06 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/log_open_li... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/log_open_li... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/C_07.ad... | PASS |
+| 2026-07-06 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/ds-commit-gate.sh | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~B | NFRA_CMTQUE | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit-worker.sh --file .tools/c... | PASS |
+| 2026-07-06 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/B_02.ca... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~B | NFRA_CMTQUE | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-06 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/inf-go... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/A_00.ac... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file org/mcp/archive_messa... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/log_open_li... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | BD-unfreeze-P0 + incr-vs-full-sweep | ds-commit-gate/comp-pipescript/comp-grep | ds-commit-gate x6 (PASS, caught legacy migrations); comp-pipescript consumers A_00 (blast); comp-grep+native-Grep consumer-inventory + A_00-unique mechanism triage; aws ETag/head-object Rule-22a deploy+chain-progress verify | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
