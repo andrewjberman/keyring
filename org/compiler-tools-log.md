@@ -13157,3 +13157,9 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 
 - 2026-07-06 ~1956Z 0.7.0_AE_CloudOps~A (Lever A deploy 49F+cot): ds-commit-gate PASS x2 (both Lambdas); comp-iam service x2 = all-ops-GRANTED zero-new (49f + cot skip paths reuse existing sids); comp-which routed the mint/run grounding (PARTIAL, fell back to source-map+Read); comp-pipescript deployed N/A for Lambdas. Zero-IAM/zero-TF pure-code changes verified before deploy.
 | 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~B | NFRA_CMTQUE | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit-worker-concurrency-proof.... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_01b.role_au... | PASS |
+| 2026-07-06 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.1_AE_PartnerETL/de... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_02.client_p... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | session-capstone (base-lane + 49F un-freeze) | (see per-window logs) | session-close capstone -- indexes the 4 base-lane sub-logs; no new tool runs (composition only, per speed contract) | N/A |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
