@@ -1,26 +1,19 @@
 #!/usr/bin/env python3
-"""archive_messages.py -- offload DELIVERED broker messages to a persistent
-weekly archive, then (optionally) prune + VACUUM broker.db to reclaim space.
+"""archive_messages.py -- offload DELIVERED broker messages to a persistent weekly
+archive, then prune + VACUUM broker.db to reclaim space.
 
-WHY: broker.py accumulates delivered messages forever -- it prunes `agents`
-(dead PIDs) + `events` (MAX_EVENTS) but NEVER `messages`. Delivered rows are
-dead weight (no broker query ever reads delivered=1), so they pile up and every
-poll/health scan pays for them (the PID-21028 CPU spin). This offloads them to
-org/mcp/message_archive/messages_YYYY-Www.jsonl (append-only, grep-able), then
-prunes + VACUUMs.
+WHY: broker.py accumulates delivered messages forever (it prunes agents + events but
+NEVER messages). Delivered rows are dead weight (no broker query re-reads delivered=1),
+so they pile up and every poll/health scan pays for them (the 89MB choke, LD-0245). This
+offloads them to org/mcp/message_archive/messages_YYYY-Www.jsonl (append-only, grep-able),
+prunes, and VACUUMs.
 
-THREE modes (safety-graded):
-  --archive-only   COPY eligible messages to the archive. READ-ONLY on broker.db
-                   -- safe to run while the broker is live. Does NOT delete/vacuum.
-  (default)        archive + DELETE the archived rows + VACUUM. The DELETE is safe
-                   live (delivered rows aren't contended); the VACUUM needs
-                   EXCLUSIVE access -- run with the broker STOPPED, else it fails
-                   to lock (caught + reported, archive already safely written).
-  --dry-run        report eligible counts by week; no writes at all.
-
-SAFE INVARIANTS: archive-then-delete, verified count before any delete; NEVER
-touches undelivered (delivered=0) or messages newer than --retention-days; logs
-what it moved (no silent truncation).
+The reap POLICY (never-touch-in-flight / archive-then-delete-verified / reclaim-is-the-fix
+/ no-silent-truncation / dry-run|archive-only|full modes) is delegated to the SHARED
+.tools/reap_lib.py -- the SAME contract .tools/commit_queue_gc.py uses, so the two can
+never drift (LD-0246 synergy; reap_lib + refactor authored by 0.7.0_AE_CloudOps~B). This
+module only supplies the SQLite substrate callbacks; offload()'s signature/return/behavior
+are UNCHANGED -- broker.py's _maybe_archive_on_startup() calls it as-is.
 
 Usage:
   python org/mcp/archive_messages.py --dry-run
@@ -39,7 +32,12 @@ from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-MCP_DIR = Path(__file__).resolve().parent
+# reap_lib lives in .tools/ (owned-paths: org/mcp is the exec lane, .tools is AE's).
+_REPO = Path(__file__).resolve().parents[2]  # org/mcp/<file> -> repo root
+sys.path.insert(0, str(_REPO / ".tools"))
+from reap_lib import ReapSubstrate, reap  # noqa: E402
+
+MCP_DIR = Path(__file__).resolve().parent   # LIVE: org/mcp/
 DB_PATH = MCP_DIR / "broker.db"
 ARCHIVE_DIR = MCP_DIR / "message_archive"
 
@@ -56,92 +54,116 @@ def iso_week(sent_at: str) -> str:
 def offload(db_path: Path = DB_PATH, archive_dir: Path = ARCHIVE_DIR,
             retention_days: int = 0, dry_run: bool = False,
             archive_only: bool = False, do_vacuum: bool = True) -> dict:
-    """Offload delivered messages older than retention_days. retention_days=0
-    means archive ALL delivered (the broker never re-reads them)."""
+    """UNCHANGED public interface. Body now delegates the reap POLICY to reap_lib.reap()
+    with SQLite substrate callbacks. retention_days=0 archives ALL delivered."""
     cutoff = (datetime.now(timezone.utc) - timedelta(days=retention_days)).isoformat()
 
-    # read-only connection for the SELECT/archive phase (safe on the live broker)
-    ro = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True, timeout=30)
-    ro.row_factory = sqlite3.Row
-    total = ro.execute("SELECT COUNT(*) FROM messages").fetchone()[0]
-    rows = ro.execute(
-        "SELECT id, from_serial, to_serial, subject, body, sent_at, delivered "
-        "FROM messages WHERE delivered=1 AND sent_at < ? ORDER BY id",
-        (cutoff,),
-    ).fetchall()
-    ro.close()
-    n = len(rows)
-    kept = total - n
-    print(f"eligible (delivered=1, sent_at<{cutoff[:10]}): {n} of {total} total  (keeping {kept})")
+    # total (for the return dict + the "keeping N" log); RO, live-safe.
+    ro0 = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True, timeout=30)
+    total = ro0.execute("SELECT COUNT(*) FROM messages").fetchone()[0]
+    ro0.close()
 
-    wk_counts = Counter(iso_week(r["sent_at"]) for r in rows)
-    for w, c in sorted(wk_counts.items()):
-        print(f"   {w}: {c}")
+    def select_eligible() -> list:
+        # NEVER in-flight: delivered=1 only, older than the retention cutoff.
+        ro = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True, timeout=30)
+        ro.row_factory = sqlite3.Row
+        rows = ro.execute(
+            "SELECT id, from_serial, to_serial, subject, body, sent_at, delivered "
+            "FROM messages WHERE delivered=1 AND sent_at < ? ORDER BY id",
+            (cutoff,),
+        ).fetchall()
+        ro.close()
+        # weekly breakdown (preserved observable behavior)
+        wk = Counter(iso_week(r["sent_at"]) for r in rows)
+        print(f"eligible (delivered=1, sent_at<{cutoff[:10]}): {len(rows)} of {total} "
+              f"total  (keeping {total - len(rows)})")
+        for w, c in sorted(wk.items()):
+            print(f"   {w}: {c}")
+        return list(rows)
 
-    if dry_run:
-        return {"eligible": n, "total": total, "archived": 0, "dry_run": True}
-    if n == 0:
-        print("nothing to offload.")
-        return {"eligible": 0, "total": total, "archived": 0}
+    def total_count() -> int:
+        return total
 
-    # 1. ARCHIVE (append to weekly JSONL) -- verified before any delete
-    archive_dir.mkdir(parents=True, exist_ok=True)
-    by_week: dict[str, list] = {}
-    for r in rows:
-        by_week.setdefault(iso_week(r["sent_at"]), []).append(dict(r))
-    written = 0
-    for wk, msgs in sorted(by_week.items()):
-        fp = archive_dir / f"messages_{wk}.jsonl"
-        with open(fp, "a", encoding="utf-8") as f:
-            for m in msgs:
-                f.write(json.dumps(m, ensure_ascii=True) + "\n")
-                written += 1
-            f.flush()
-            os.fsync(f.fileno())
-    if written != n:
-        print(f"ERROR: wrote {written} != eligible {n}; NOT deleting.", file=sys.stderr)
-        sys.exit(1)
-    print(f"OK: archived {written} messages -> {archive_dir} ({len(by_week)} weekly files)")
+    def archive(rows: list) -> int:
+        archive_dir.mkdir(parents=True, exist_ok=True)
+        by_week: dict = {}
+        for r in rows:
+            by_week.setdefault(iso_week(r["sent_at"]), []).append(dict(r))
+        written = 0
+        for wk, msgs in sorted(by_week.items()):
+            fp = archive_dir / f"messages_{wk}.jsonl"
+            with open(fp, "a", encoding="utf-8") as f:
+                for m in msgs:
+                    f.write(json.dumps(m, ensure_ascii=True) + "\n")
+                    written += 1
+                f.flush()
+                os.fsync(f.fileno())
+        print(f"OK: archived {written} messages -> {archive_dir} ({len(by_week)} weekly files)")
+        return written
 
-    if archive_only:
-        print("archive-only: broker.db untouched (run without --archive-only, broker stopped, to prune+vacuum).")
-        return {"eligible": n, "total": total, "archived": written, "deleted": 0}
+    # DELETE + VACUUM share one rw connection (VACUUM needs it after the delete commits).
+    _rw: dict = {}
 
-    # 2. DELETE the archived rows (autocommit; chunked; by id)
-    rw = sqlite3.connect(str(db_path), timeout=30, isolation_level=None)
-    rw.execute("PRAGMA busy_timeout = 30000")
-    ids = [r["id"] for r in rows]
-    deleted = 0
-    rw.execute("BEGIN")
-    CH = 500
-    for i in range(0, len(ids), CH):
-        chunk = ids[i:i + CH]
-        rw.execute(f"DELETE FROM messages WHERE id IN ({','.join('?' * len(chunk))})", chunk)
-        deleted += len(chunk)
-    rw.execute("COMMIT")
-    print(f"OK: deleted {deleted} rows from broker.db")
+    def _rw_conn() -> sqlite3.Connection:
+        if "c" not in _rw:
+            c = sqlite3.connect(str(db_path), timeout=30, isolation_level=None)
+            c.execute("PRAGMA busy_timeout = 30000")
+            _rw["c"] = c
+        return _rw["c"]
 
-    # 3. VACUUM (reclaim file bytes -- the actual CPU fix). Needs exclusive lock.
-    if do_vacuum:
+    def delete(rows: list) -> int:
+        rw = _rw_conn()
+        ids = [r["id"] for r in rows]
+        deleted = 0
+        rw.execute("BEGIN")
+        ch = 500
+        for i in range(0, len(ids), ch):
+            chunk = ids[i:i + ch]
+            rw.execute(f"DELETE FROM messages WHERE id IN ({','.join('?' * len(chunk))})", chunk)
+            deleted += len(chunk)
+        rw.execute("COMMIT")
+        print(f"OK: deleted {deleted} rows from broker.db")
+        return deleted
+
+    def reclaim():
+        rw = _rw_conn()
         before = db_path.stat().st_size
         try:
             rw.execute("VACUUM")
             after = db_path.stat().st_size
-            print(f"OK: VACUUM {before/1e6:.1f}MB -> {after/1e6:.1f}MB")
+            msg = f"{before / 1e6:.1f}MB -> {after / 1e6:.1f}MB"
+            print(f"OK: VACUUM {msg}")
+            return msg
         except sqlite3.OperationalError as e:
-            print(f"WARN: VACUUM could not lock (broker still holding broker.db?): {e}", file=sys.stderr)
-            print("      Rows are archived + deleted; re-run VACUUM with the broker stopped to reclaim disk.", file=sys.stderr)
-    rw.close()
-    return {"eligible": n, "total": total, "archived": written, "deleted": deleted}
+            print(f"WARN: VACUUM could not lock (broker still holding broker.db?): {e}",
+                  file=sys.stderr)
+            print("      Rows are archived + deleted; re-run VACUUM with the broker stopped.",
+                  file=sys.stderr)
+            return None
+
+    substrate = ReapSubstrate(
+        name="broker", select_eligible=select_eligible, archive=archive,
+        delete=delete, total_count=total_count,
+        reclaim=(reclaim if do_vacuum else None),
+    )
+    try:
+        r = reap(substrate, dry_run=dry_run, archive_only=archive_only,
+                 do_reclaim=do_vacuum)
+    finally:
+        if "c" in _rw:
+            _rw["c"].close()
+
+    # map reap() result back to offload()'s backward-compatible dict shape.
+    return {"eligible": r["eligible"], "total": total,
+            "archived": r["archived"], "deleted": r.get("deleted", 0),
+            **({"dry_run": True} if r.get("dry_run") else {})}
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--retention-days", type=int, default=0,
-                    help="keep delivered msgs newer than this in the live DB (0 = archive all delivered)")
+    ap.add_argument("--retention-days", type=int, default=0)
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--archive-only", action="store_true",
-                    help="copy to archive only; do NOT delete/vacuum (live-safe)")
+    ap.add_argument("--archive-only", action="store_true")
     ap.add_argument("--no-vacuum", action="store_true")
     args = ap.parse_args()
     offload(retention_days=args.retention_days, dry_run=args.dry_run,
