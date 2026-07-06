@@ -7,10 +7,13 @@ dashboard -- one card per not-closed project, macro-colored, sized by a real
 ACTIVITY BAR (commits referencing the project in the last N days), sorted busiest
 -> quietest, with status pills + owner + last-touch.
 
-DATA-DRIVEN (not a snapshot): it loads the canonical engine (.tools/registry-check.py)
-and reuses its build_rows() -- so What/Where/Why/status/owner/age stay in ONE place
-(the engine), and this script only adds the activity bar + the presentation. The
-git-activity count is the one thing the text lens does not compute.
+DATA-DRIVEN (not a snapshot): it consumes the STABLE `registry-check.py --json -all`
+public contract -- so What/Where/Why/status/owner/age stay in ONE place (the engine),
+and this script only adds the activity bar + the presentation. It does NOT import the
+engine's internal functions (deliberate hardening: an engine refactor that changes an
+INTERNAL signature -- e.g. build_rows() -- cannot silently break this generator; only a
+--json schema change, the intended public contract, would). The git-activity count is
+the one thing the text lens does not compute.
 
 Usage:
   python .claude/skills/registry-check/render_dashboard.py
@@ -29,7 +32,6 @@ from __future__ import annotations
 import argparse
 import datetime
 import html
-import importlib.util
 import json
 import os
 import re
@@ -70,13 +72,25 @@ def find_workspace() -> Path:
     return Path(__file__).resolve().parents[3]
 
 
-def load_engine(ws: Path):
-    """Load the hyphenated .tools/registry-check.py as a module (reuse its logic)."""
+def get_rows(ws: Path):
+    """Fetch project rows via the STABLE `registry-check.py --json -all` public contract.
+
+    Decoupled by design: this does NOT import the engine module or call build_rows()
+    directly, so an engine refactor that changes an internal signature (as the
+    2026-07-06 working-time patch did) cannot silently break this generator. Only a
+    change to the --json schema -- the intended public contract -- would, and that is
+    a loud, deliberate break. Returns (hot, cold, malformed)."""
     eng = ws / ".tools" / "registry-check.py"
-    spec = importlib.util.spec_from_file_location("registry_check_engine", eng)
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return mod
+    r = subprocess.run(
+        [sys.executable, str(eng), "--json", "-all"],
+        capture_output=True, text=True, cwd=str(ws),
+    )
+    if r.returncode != 0 or not r.stdout.strip():
+        sys.stderr.write("ERROR: `registry-check.py --json -all` failed:\n"
+                         + (r.stderr or "")[:1000] + "\n")
+        sys.exit(1)
+    d = json.loads(r.stdout)
+    return d.get("hot", []), d.get("cold", []), d.get("malformed", [])
 
 
 def git_activity(codes, days: int) -> dict:
@@ -226,12 +240,18 @@ def build(rows, activity, section_label):
     return cards, macros_seen
 
 
-_ENGINE = {"short_owner": None}
-
-
 def _short_owner(owner):
-    fn = _ENGINE["short_owner"]
-    return fn(owner) if fn else (owner or "?")
+    """Serial -> role token. Verbatim mirror of registry-check.short_owner
+    (3.0.0_SA_CVO -> CVO, 0.6.0_AE_PartnerETL -> AE), inlined so this generator has
+    ZERO import-time coupling to the engine -- it consumes only the --json contract."""
+    if not owner or owner == "?":
+        return owner or "?"
+    parts = owner.split("_")
+    if len(parts) >= 3 and parts[1] == "SA":
+        return parts[2]            # SA_CTO -> CTO
+    if len(parts) >= 2:
+        return parts[1]            # 0.6.0_AE_PartnerETL -> AE
+    return owner[:12]
 
 
 def main():
@@ -242,17 +262,13 @@ def main():
     args = ap.parse_args()
 
     ws = find_workspace()
-    os.chdir(ws)                       # engine uses cwd-relative paths + git
-    mod = load_engine(ws)
-    _ENGINE["short_owner"] = getattr(mod, "short_owner", None)
+    os.chdir(ws)                       # git_activity runs git in this cwd
 
-    # Working-time engine (registry-check.py 2026-07-06, patch 6938340ce): build_rows now
-    # TAKES (now, holidays) and returns a 3-tuple. Compute both from the engine so this
-    # generator stays lockstep with /registry-check's holiday-aware classification.
-    now, _pin = mod.resolve_asof([])
-    holidays = mod.load_holidays()
-    hot, cold, malformed = mod.build_rows(now, holidays)
+    # Consume the STABLE --json public contract (holiday-aware working-time HOT/COLD is
+    # already applied engine-side); NO internal-signature coupling. See get_rows().
+    hot, cold, malformed = get_rows(ws)
     rows = hot + (cold if args.all else [])
+    now = datetime.datetime.now(datetime.timezone.utc)
     codes = [r["code"] for r in rows]
     activity = git_activity(codes, args.days)
 
