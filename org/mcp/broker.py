@@ -44,6 +44,14 @@ ARCHIVE_RETENTION_DAYS = 7          # keep undelivered + last-7d delivered in th
 ARCHIVE_MIN_BACKLOG = 500           # skip unless the aged-delivered backlog exceeds this
 _ARCHIVE_MARKER = DB_PATH.parent / ".last_message_archive"
 
+# Max-uptime self-restart: the startup archive-catch-up only fires when the broker
+# RESTARTS, but register_agent relaunches only a DOWN broker -- a healthy one can run
+# for weeks (CTO arch concern 2026-07-06, LD-0246). So after this uptime the broker
+# gracefully self-exits; the next agent call relaunches it via server.py _ensure_broker,
+# which fires the weekly archive catch-up. Guarantees the offload runs >=weekly
+# regardless of session churn (belt to the startup-catch-up suspenders).
+BROKER_MAX_UPTIME_S = ARCHIVE_INTERVAL_DAYS * 86400
+
 # ---------------------------------------------------------------------------
 # Database setup
 # ---------------------------------------------------------------------------
@@ -159,8 +167,20 @@ def _clean_stale():
 
 
 def _schedule_cleanup():
-    """Run stale cleanup every 30 seconds."""
+    """Run stale cleanup every 30 seconds; self-restart past max uptime."""
     _clean_stale()
+    # Max-uptime graceful self-restart so the weekly archive catch-up is guaranteed
+    # to fire even if the broker never crash-restarts (CTO arch concern, LD-0246).
+    if time.time() - _start_time > BROKER_MAX_UPTIME_S:
+        try:
+            _log_event("broker_uptime_restart", "",
+                       f"uptime > {ARCHIVE_INTERVAL_DAYS}d -- graceful self-restart for weekly archive")
+            db.commit()
+        except Exception:
+            pass
+        print("[opal-broker] max uptime reached -- exiting for weekly archive catch-up",
+              file=sys.stderr, flush=True)
+        os._exit(0)
     t = Timer(30.0, _schedule_cleanup)
     t.daemon = True
     t.start()
