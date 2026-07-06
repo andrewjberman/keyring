@@ -56,11 +56,20 @@ cq_results_dir()    { printf '%s/results'    "$(cq_root)"; }
 cq_dlq_dir()        { printf '%s/dlq'        "$(cq_root)"; }
 cq_worker_pid()     { printf '%s/worker.pid' "$(cq_root)"; }
 cq_worker_hb()      { printf '%s/worker.hb'  "$(cq_root)"; }
+cq_worker_lock()    { printf '%s/worker.lock' "$(cq_root)"; }
 
 # Heartbeat staleness threshold (seconds). Worker refreshes worker.hb each loop;
-# a hb older than this (or a dead pid) => worker considered down => client D6
-# fallback to the in-line mkdir-mutex path.
+# a hb older than this => worker considered NOT SERVING => client D6 fallback to
+# the in-line mkdir-mutex path.
 CQ_HB_STALE_SEC="${CQ_HB_STALE_SEC:-30}"
+
+# Singleton lock-RECLAIM threshold (seconds). A held worker.lock is reclaimed ONLY if
+# the holder's heartbeat is older than THIS. It MUST exceed the longest legitimate
+# hb-gap (a slow-box commit + retry backoff) so a slow-but-ALIVE worker is NEVER
+# reclaimed into a SECOND worker (that would be the concurrency=2 catastrophe). This is
+# deliberately > CQ_HB_STALE_SEC: "not serving" (client D6, 30s) is a softer verdict than
+# "dead enough to steal its lock" (120s). (MSTR singleton-race fix 2026-07-06, LD-0249.)
+CQ_LOCK_STALE_SEC="${CQ_LOCK_STALE_SEC:-120}"
 
 cq_init() {
   local root; root="$(cq_root)" || return 1
@@ -198,12 +207,12 @@ cq_dlq() {
 # heartbeat is fresh (< CQ_HB_STALE_SEC). rc 0 alive, rc 1 down.
 # --------------------------------------------------------------------------
 cq_worker_alive() {
-  local pidf hbf pid hb now age
-  pidf="$(cq_worker_pid)"; hbf="$(cq_worker_hb)"
-  [ -f "$pidf" ] || return 1
-  pid="$(cat "$pidf" 2>/dev/null || true)"
-  [ -n "$pid" ] || return 1
-  kill -0 "$pid" 2>/dev/null || return 1
+  # HB-FRESHNESS is the PRIMARY, Windows-safe signal: a live worker refreshes worker.hb
+  # every ~1s loop; a dead process CANNOT, so a fresh hb reliably means alive. kill-0 is
+  # NOT used -- it false-negatives live native-Windows pids (declaring a live worker dead),
+  # which is what let the singleton race spawn a swarm (MSTR 2026-07-06, LD-0249).
+  local hbf hb now age
+  hbf="$(cq_worker_hb)"
   [ -f "$hbf" ] || return 1
   hb="$(cat "$hbf" 2>/dev/null || true)"
   [ -n "$hb" ] || return 1

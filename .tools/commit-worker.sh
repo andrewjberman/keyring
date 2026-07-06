@@ -90,24 +90,57 @@ cw_metric() {
 }
 
 # ---- singleton ----------------------------------------------------------
+# ATOMIC singleton via mkdir-lock (MSTR singleton-race fix 2026-07-06, LD-0249). The old
+# check-then-write was a TOCTOU race: N simultaneous launches all read "no worker" + all
+# survived -> swarm. `mkdir` is ATOMIC on POSIX AND Windows (exactly one launcher creates
+# the dir; the rest get EEXIST), and Rule-16-clean (no flock). Winner writes pid+hb + holds
+# the lock for its lifetime; losers exit clean. A held lock is RECLAIMED only if the holder
+# is genuinely dead (hb older than CQ_LOCK_STALE_SEC=120s -- STRICTLY > the client-alive 30s,
+# so a slow-but-ALIVE worker mid-commit is never reclaimed onto = no concurrency=2).
 cw_acquire_singleton() {
-  local pidf; pidf="$(cq_worker_pid)"
-  if [ -f "$pidf" ]; then
-    local other; other="$(cat "$pidf" 2>/dev/null || true)"
-    if [ -n "$other" ] && [ "$other" != "$$" ] && kill -0 "$other" 2>/dev/null; then
-      log "another worker alive (pid $other) -- exiting (singleton)"
+  cq_init || { log "cq_init failed"; exit 1; }
+  local lockdir pidf hbf tries=0
+  local max_tries="${CQ_LOCK_ACQUIRE_TRIES:-150}"
+  local grace="${CQ_LOCK_STARTUP_GRACE_S:-8}"
+  lockdir="$(cq_worker_lock)"; pidf="$(cq_worker_pid)"; hbf="$(cq_worker_hb)"
+  while ! mkdir "$lockdir" 2>/dev/null; do
+    local hb now hb_age lock_mtime lock_age
+    hb="$(cat "$hbf" 2>/dev/null || echo 0)"; [ -n "$hb" ] || hb=0
+    now="$(cq_now_epoch)"; hb_age=$(( now - hb ))
+    # holder ALIVE (hb within the reclaim threshold) -> we are redundant -> exit clean.
+    if [ "$hb_age" -lt "$CQ_LOCK_STALE_SEC" ]; then
+      log "another worker holds worker.lock (hb ${hb_age}s) -- exiting (singleton)"
       exit 0
     fi
-  fi
-  cq_init || { log "cq_init failed"; exit 1; }
+    # hb stale/absent: genuinely-dead holder, OR a winner mid-startup (won mkdir, no hb yet).
+    # Distinguish by lock AGE with a startup grace so we never reclaim a just-won lock.
+    if command -v stat >/dev/null 2>&1; then lock_mtime="$(stat -c %Y "$lockdir" 2>/dev/null || echo 0)"; else lock_mtime=0; fi
+    lock_age=$(( now - lock_mtime ))
+    if [ "$lock_mtime" != 0 ] && [ "$lock_age" -lt "$grace" ]; then
+      sleep 1; tries=$(( tries + 1 ))
+      [ "$tries" -ge "$max_tries" ] && { log "singleton: gave up waiting for winner"; exit 0; }
+      continue
+    fi
+    # genuinely stale -> reclaim the lock + retry mkdir.
+    log "reclaiming stale worker.lock (hb ${hb_age}s, lock ${lock_age}s -- holder dead)"
+    rm -rf "$lockdir" 2>/dev/null || true
+    tries=$(( tries + 1 ))
+    [ "$tries" -ge "$max_tries" ] && { log "singleton: gave up after ${tries} tries"; exit 0; }
+  done
+  # WON the atomic lock -> THE singleton. Write pid + hb IMMEDIATELY (shrinks the no-hb
+  # window a concurrent loser sees before it exits).
   printf '%s' "$$" > "$pidf"
   cq_heartbeat
 }
 
 cw_release_singleton() {
-  local pidf; pidf="$(cq_worker_pid)"
-  local cur; cur="$(cat "$pidf" 2>/dev/null || true)"
-  [ "$cur" = "$$" ] && rm -f "$pidf" 2>/dev/null || true
+  local pidf lockdir cur
+  pidf="$(cq_worker_pid)"; lockdir="$(cq_worker_lock)"
+  cur="$(cat "$pidf" 2>/dev/null || true)"
+  if [ "$cur" = "$$" ]; then
+    rm -f "$pidf" 2>/dev/null || true
+    rm -rf "$lockdir" 2>/dev/null || true
+  fi
 }
 
 # ---- parse a request file into globals ----------------------------------
@@ -482,16 +515,18 @@ cw_selftest() {
     git log --all --oneline 2>/dev/null | grep -qi "leak test" && { echo "FAIL: secret got committed"; exit 1; }
     echo "  sensitive-leak gate fail-closed=OK (evil/.env rejected, not committed)"
 
-    # (3) SINGLETON / concurrency=1 guard: plant a KNOWN-LIVE pid ($$, alive + != a
-    # child worker's pid) in worker.pid; cw_acquire_singleton must refuse (print
-    # "another worker alive ... singleton" + exit). Run it in a subshell so its
-    # exit 0 doesn't end the test; capture its stderr.
+    # (3) SINGLETON / concurrency=1 guard (mkdir-lock model): simulate a HELD worker.lock
+    # with a fresh hb; cw_acquire_singleton must fail the mkdir + see the fresh hb + exit
+    # (print "singleton"). Run in a subshell so its exit 0 doesn't end the test. (The REAL
+    # concurrency race is exercised by .tools/commit-worker-concurrency-proof.sh -- 12 workers
+    # launched simultaneously, exactly 1 survives.)
     cq_init
-    printf '%s' "$PPID" > "$(cq_worker_pid)"   # a DIFFERENT live pid (not $$, which the guard treats as self)
+    mkdir -p "$(cq_worker_lock)" 2>/dev/null   # a HELD worker.lock (atomic gate)
+    cq_heartbeat                                # fresh hb -> incumbent looks live
     local guard; guard="$( ( cw_acquire_singleton ) 2>&1 )"
-    rm -f "$(cq_worker_pid)" 2>/dev/null || true
-    printf '%s' "$guard" | grep -qi "singleton" || { echo "FAIL: guard did NOT refuse a live holder (out=$guard)"; exit 1; }
-    echo "  singleton/concurrency=1 guard=OK (acquire refused while a live pid held worker.pid)"
+    rm -rf "$(cq_worker_lock)" 2>/dev/null; rm -f "$(cq_worker_hb)" 2>/dev/null || true
+    printf '%s' "$guard" | grep -qi "singleton" || { echo "FAIL: guard did NOT refuse a held lock + fresh hb (out=$guard)"; exit 1; }
+    echo "  singleton guard=OK (new worker exits when worker.lock held + hb fresh)"
 
     # (4) CRASH-RECOVERY (PRE_HEAD determinism). Both branches -- never double-commit,
     # never lose a landed commit.
