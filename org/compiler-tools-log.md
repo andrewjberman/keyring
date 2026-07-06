@@ -12940,3 +12940,4 @@ comp-grep (portal role_breakdown/reconcile/cross-advisor-sum: 0 stale -> a58ff3a
 | 2026-07-06 | 0.6.2_AE_PartnerETL | SESSION-CLOSE consolidation | (no new tool runs since the 3 prior 07-06 lines) | Session-close log; all tool runs captured in the GATE-1 + ops-alerts + Monday-restart lines above. |
 | 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-06 | 0.7.0_AE_CloudOps~A | ADVI_BDAPIMIG.AUTHCHAIN-F3F6 | comp-freshness/comp-grep/comp-glob/comp-iam | session: grounded 07-03 BD-txn freeze (sentinel-starvation) + content-guard-verified silver un-freeze @07-02 + F5/F6 alarm-absence + Lever A wiring | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | ADVI_BDAPIMIG.AUTHCHAIN-F3F6 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
