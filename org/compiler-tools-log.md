@@ -13176,3 +13176,70 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-06 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_C_03.account_performance.py | PASS |
 | 2026-07-06 | 0.8.0_AE_CloudComp | NFRA_GRAPHUNI (invoke-edge completeness) | aws lambda/sns/s3/events live-verify, comp-blast before/after, comp-surface-check, comp-build, ds-commit-gate | LIVE-grounded invoke-edge extension: 11 edges (3 ESM + 1 SNS + 7 S3), caught 49f phantom + 7 core-lambda S3 gap; EventBridge-in-modules ~14-edge gap verified + banked as deliberate TO | PASS |
 | 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-06 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gold_di... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_04.validate... | PASS |
+| 2026-07-06 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gold_di... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_06.client_m... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_07.advisor_... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io INF_C_05.client_tax_liability | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io INF_C_03.account_performance | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_03.account_... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-06 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-run... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript deployed INF_C_05.client_tax_liability | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript deployed INF_C_03.account_performance | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_08.advisor_... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_05.client_t... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_09.fee_stat... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam service bd-49f-runner | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-06 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gold_di... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00b.portal_... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions bd-49f-runner --settle-retry-seconds 45 -... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00c.portal_... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00d.cumulat... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00f.advisor... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_02.advisor_... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_02b.top_hol... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_02c.client_... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/bd-49f-... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_02d.firm_mi... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_03.composit... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_04.client_p... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_04b.client_... | PASS |
+| 2026-07-06 | 0.6.0_AE_PartnerETL | (no-TO) | comp-blast | comp-blast canonical_prices | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~B | NFRA_CMTQUE | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit-worker-concurrency-proof.... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_05.activity... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_05.client_t... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_06.cash_dra... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_06.client_t... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_07.concentr... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-blast | comp-blast load_accounts_dim | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-blast | comp-blast build_firm_tax_block | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_08.nmec_nmn... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam service bd-49f-freshness-probe | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_09.account_... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-fre... | PASS |
+| 2026-07-06 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00.portal_aggregates | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04.client_portal_summary | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_E_00.eclipse_... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00.portal_a... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_09.generate_p... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_build_canonic... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_run_c_chain.py | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+2026-07-06 | 0.4.0_DS_ClientPlatform~B | DI-1+DI-7 INF tax-panel fixes | comp-blast (account_gains, build_firm_tax_block/load_accounts_dim), comp-pipescript io (C_05,C_03,D_00,D_04 -- source-swaps + a1 silver read confirmed), comp-pipescript deployed (WARN: bd-default, no inf-tree coverage), comp-freshness (FAIL: needs registered id), ds-commit-gate (PASS all 4) | GAP: comp-pipescript deployed lacks inf-tree coverage for INF_-prefixed scripts; comp-freshness rejects ad-hoc s3 keys
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
