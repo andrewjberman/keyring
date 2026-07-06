@@ -23,7 +23,7 @@ import signal
 import sqlite3
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from threading import Timer
@@ -33,6 +33,16 @@ DB_PATH = Path(__file__).resolve().parent / "broker.db"
 
 # Max events to retain (older are pruned on cleanup cycle)
 MAX_EVENTS = 500
+
+# Weekly message-archive offload (org/mcp/archive_messages.py). The messages table
+# is never pruned by the cleanup cycle, so delivered rows (which no query re-reads)
+# accumulate unbounded and the daemon spins scanning them (89MB / 36,940-row choke
+# 2026-07-06, LD-0245). This runs the offload at startup, weekly-gated, BEFORE the
+# persistent connection opens so its VACUUM has exclusive access.
+ARCHIVE_INTERVAL_DAYS = 7
+ARCHIVE_RETENTION_DAYS = 7          # keep undelivered + last-7d delivered in the live DB
+ARCHIVE_MIN_BACKLOG = 500           # skip unless the aged-delivered backlog exceeds this
+_ARCHIVE_MARKER = DB_PATH.parent / ".last_message_archive"
 
 # ---------------------------------------------------------------------------
 # Database setup
@@ -457,6 +467,56 @@ class BrokerHandler(BaseHTTPRequestHandler):
 
 
 # ---------------------------------------------------------------------------
+# Startup hygiene: singleton guard + weekly message-archive catch-up
+# ---------------------------------------------------------------------------
+
+def _existing_broker_healthy() -> bool:
+    """True if a healthy broker already owns the port. Prevents redundant broker
+    processes that would hold broker.db + block maintenance VACUUMs (the 3-orphan
+    -broker issue 2026-07-06)."""
+    import urllib.request
+    try:
+        with urllib.request.urlopen(f"http://127.0.0.1:{PORT}/health", timeout=2) as r:
+            return r.status == 200
+    except Exception:
+        return False
+
+
+def _maybe_archive_on_startup():
+    """Weekly-gated offload of delivered messages to org/mcp/message_archive/.
+    Runs BEFORE the persistent connection opens, so archive_messages' VACUUM has
+    exclusive access. No-op unless >ARCHIVE_INTERVAL_DAYS since last run AND the
+    aged-delivered backlog exceeds ARCHIVE_MIN_BACKLOG. Never raises into startup."""
+    try:
+        if _ARCHIVE_MARKER.exists():
+            try:
+                last = datetime.fromisoformat(_ARCHIVE_MARKER.read_text().strip())
+                if datetime.now(timezone.utc) - last < timedelta(days=ARCHIVE_INTERVAL_DAYS):
+                    return
+            except ValueError:
+                pass
+        cutoff = (datetime.now(timezone.utc) - timedelta(days=ARCHIVE_RETENTION_DAYS)).isoformat()
+        ro = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True, timeout=5)
+        n = ro.execute(
+            "SELECT COUNT(*) FROM messages WHERE delivered=1 AND sent_at < ?", (cutoff,)
+        ).fetchone()[0]
+        ro.close()
+        if n < ARCHIVE_MIN_BACKLOG:
+            _ARCHIVE_MARKER.write_text(datetime.now(timezone.utc).isoformat())
+            return
+        sys.path.insert(0, str(DB_PATH.parent))
+        import archive_messages
+        print(f"[opal-broker] weekly archive: offloading {n} delivered messages...",
+              file=sys.stderr, flush=True)
+        archive_messages.offload(retention_days=ARCHIVE_RETENTION_DAYS, do_vacuum=True)
+        _ARCHIVE_MARKER.write_text(datetime.now(timezone.utc).isoformat())
+    except Exception as exc:
+        # Startup archival must never block the broker from serving.
+        print(f"[opal-broker] startup archive skipped: {type(exc).__name__}: {exc}",
+              file=sys.stderr, flush=True)
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
@@ -466,6 +526,18 @@ _start_time = time.time()
 def main():
     global db, _start_time, _INITIAL_PARENT_PID
     _start_time = time.time()
+
+    # Singleton guard: exit cleanly if a healthy broker already owns the port
+    # (do this BEFORE opening broker.db so a redundant launch never holds a
+    # connection that would block the archive VACUUM).
+    if _existing_broker_healthy():
+        print(f"[opal-broker] a healthy broker already owns :{PORT} -- exiting (singleton)",
+              file=sys.stderr, flush=True)
+        return
+
+    # Weekly message-archive catch-up (before the persistent connection opens).
+    _maybe_archive_on_startup()
+
     db = _init_db()
 
     # Capture launching parent PID for the watchdog. Allow override via env
