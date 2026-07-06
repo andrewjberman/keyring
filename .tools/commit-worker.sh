@@ -69,6 +69,11 @@ COMMIT_MAX_ATTEMPTS="${CQ_COMMIT_MAX_ATTEMPTS:-5}"
 BACKOFF_BASE_S="${CQ_BACKOFF_BASE_S:-1}"
 BACKOFF_CAP_S="${CQ_BACKOFF_CAP_S:-15}"
 ORPHAN_MAX_AGE_SEC="${CQ_ORPHAN_MAX_AGE_SEC:-120}"  # processing/ orphan -> DLQ
+# Supervision (TO-6, mirrors the broker): graceful self-restart past max-uptime so
+# the ensure-if-down relaunch picks up code updates + guarantees the GC cadence runs;
+# a dead launching parent (non-detached launch) exits clean (orphan hygiene).
+CQ_WORKER_MAX_UPTIME_S="${CQ_WORKER_MAX_UPTIME_S:-86400}"   # 1 day
+CQ_GC_INTERVAL_S="${CQ_GC_INTERVAL_S:-3600}"               # results/dlq reap cadence
 
 # sensitive-leak patterns + detector now live in commit_gate_lib.sh (cg_sensitive_hits) --
 # single source shared with safe-commit's fallback (TO-5, CTO no-drift directive).
@@ -352,14 +357,40 @@ cw_startup_sweep() {
 }
 
 # ---- daemon main loop ---------------------------------------------------
+# results/dlq reap via the shared reap_lib (commit_queue_gc.py). Best-effort; a GC
+# failure never affects the worker (the queue is untouched -- reap is off the hot path).
+cw_run_gc() {
+  if command -v python >/dev/null 2>&1 && [ -f "$SCRIPT_DIR/commit_queue_gc.py" ]; then
+    python "$SCRIPT_DIR/commit_queue_gc.py" </dev/null >/dev/null 2>&1 || true
+  fi
+}
+
 cw_daemon() {
   cw_acquire_singleton
   trap 'cw_release_singleton; exit 0' TERM INT
   trap 'cw_release_singleton' EXIT
-  log "daemon up (concurrency=1); root=$(cq_root)"
+  local start_ts launch_ppid last_gc now
+  start_ts="$(cq_now_epoch)"; launch_ppid="$PPID"; last_gc="$start_ts"
+  log "daemon up (concurrency=1); root=$(cq_root); ppid=$launch_ppid; max_uptime=${CQ_WORKER_MAX_UPTIME_S}s"
   cw_startup_sweep
   while true; do
     cq_heartbeat; cw_metric worker_liveness 1
+    now="$(cq_now_epoch)"
+    # (i) parent-watchdog (mirrors broker; conservative -- only a DEFINITIVE non-detached
+    # parent death exits. A detached launch reparents to PID 1, so this is inert there.)
+    if [ "$launch_ppid" != "1" ] && [ -n "$launch_ppid" ] && ! kill -0 "$launch_ppid" 2>/dev/null; then
+      log "launching parent $launch_ppid gone -> exit clean (ensure-if-down relaunches)"
+      exit 0
+    fi
+    # (ii) max-uptime graceful self-restart (picks up code updates; ensure relaunches).
+    if [ $(( now - start_ts )) -ge "$CQ_WORKER_MAX_UPTIME_S" ]; then
+      log "max-uptime ${CQ_WORKER_MAX_UPTIME_S}s reached -> graceful self-restart (ensure relaunches)"
+      cw_run_gc
+      exit 0
+    fi
+    # (iii) periodic results/dlq GC (shared reap).
+    if [ $(( now - last_gc )) -ge "$CQ_GC_INTERVAL_S" ]; then cw_run_gc; last_gc="$now"; fi
+    # (iv) drain one request (concurrency=1).
     local proc
     if proc="$(cq_claim_oldest)"; then
       cw_process "$proc"
