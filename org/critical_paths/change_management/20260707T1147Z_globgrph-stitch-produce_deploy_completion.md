@@ -39,3 +39,13 @@
   the original workflow landing e32896edd). L3's "source.zip present" proof is TRUE but content-invalid
   -- L4 (the actual content-validity gate) correctly caught it and stays OPEN. Window still open
   (opened 11:47Z, red 15:47Z).
+- 20260707T141500Z **L4 code fix LANDED (COO, 4074fdf5a) -- now blocked on a genuine external gate.**
+  COO landed the portal cross-repo checkout fix directly (BASE_EXEC lane, MSTR-directed). Independently
+  verified (not self-report): `git show 4074fdf5a` matches the described diff exactly; `gh secret list`
+  confirms only `GHA_ROLE_ARN` exists, no `secrets.PORTAL_REPO_PAT` -- Opal-Capital/portal is a PRIVATE
+  repo the default GITHUB_TOKEN cannot read, so the new checkout step will fail until that PAT is
+  provisioned (GitHub org-secret admin action, Andrew-only). COO surfacing to Andrew directly. Per COO
+  instruction, holding re-trigger until the secret lands (a retrigger now would just fail at the new
+  step with no new information). This is a hard external gate (CLAUDE.md Agent Autonomy exception) --
+  window may go RED at 15:47Z waiting on Andrew/org-admin action; not a stranded/silent block, already
+  escalated loud.
