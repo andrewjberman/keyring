@@ -76,3 +76,26 @@ None on my Item-1/Item-2 CSE-P2 work (unaffected). This finding is a NEW, separa
 3. My AC4 recognizer (`NFRA_CSE_P2_ac4_lambda_writes_s3.py`) correctly continues to report this as
    `extra_in_live` and does NOT silently reconcile -- no code change needed there per CTO's explicit
    instruction to keep the discrepancy visible.
+
+## Addendum -- invocation-count grounding (CTO-flagged, cheap, sizes the escalation)
+
+CTO asked (non-blocking, "flag if you land on it incidentally") for a CloudWatch invocation-count
+signal to size live/dead-route severity before their Andrew escalation. Pulled it directly:
+
+```
+aws cloudwatch get-metric-statistics --namespace AWS/Lambda --metric-name Invocations \
+  --dimensions Name=FunctionName,Value=bd-client-detail --region us-east-1 \
+  --start-time 2025-01-01T00:00:00 --end-time 2026-07-07T00:00:00 --period 2592000 --statistics Sum
+```
+Monthly buckets: Jan 2026: 9 | Feb 2026: 34 | Mar 2026: ~1-5 (tapering) | **Apr/May/Jun/Jul 2026: ZERO**
+(no datapoints at all in three full months).
+
+`aws lambda get-function --function-name bd-client-detail`: `LastModified: 2026-04-06T15:08:11Z` --
+one day before `gold/clients/` stopped being written (2026-04-07). Reads as a coincident event: a
+4/6 redeploy/migration likely retired the Fargate gold-layer producer AND coincides with traffic
+dropping to zero on this route.
+
+**Reported to CTO immediately** (before their Andrew escalation): this reframes the finding toward
+dead-code/orphaned-route cleanup rather than an active incident serving stale data to live advisors.
+Not fully conclusive -- did not check API Gateway access logs or confirm the portal frontend no
+longer calls this route, only the Lambda-side invocation metric. Directionally strong.
