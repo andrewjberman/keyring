@@ -60,9 +60,30 @@ halt_gate_resolve_serial() {
         return 0
       fi
     fi
+
+    # Secondary (session-keyed, clobber-PROOF): the register_agent PostToolUse hook
+    # (hook_register_orphan_cleanup.py) writes a per-(session,serial) marker
+    # `${sid}.${serial}.orphan-cleaned` -- it encodes THIS agent's serial in the filename and is scoped
+    # to THIS session, so it resolves the true invoker even when the .serial file above is absent, WITHOUT
+    # falling to the shared .agent_context (which is last-writer-wins across concurrent agents and silently
+    # mis-attributes -- the safe-ec2-deploy deployed_by mis-derivation, 5x on 2026-07-07 recorded another
+    # agent's serial into the EC2 manifest ledger). If several markers exist (an agent re-registered under
+    # >1 serial this session) the NEWEST wins = the current active serial. Real serials carry no '/', so
+    # the hook's '/'->'_' safe_serial is byte-identical to the serial.
+    local marker
+    marker="$(ls -t "${repo_root}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}."*.orphan-cleaned 2>/dev/null | head -1)"
+    if [ -n "$marker" ]; then
+      serial="$(basename "$marker")"
+      serial="${serial#"${CLAUDE_CODE_SESSION_ID}".}"
+      serial="${serial%.orphan-cleaned}"
+      if [ -n "$serial" ]; then
+        printf '%s\n' "$serial"
+        return 0
+      fi
+    fi
   fi
 
-  # Fallback: legacy .comp-graph/.agent_context (per-workspace-shared; clobber-prone)
+  # Fallback: legacy .comp-graph/.agent_context (per-workspace-shared; clobber-prone) -- LAST resort only
   [ -f "$ctx" ] || return 1
   serial="$(grep -m1 '^SERIAL=' "$ctx" 2>/dev/null | sed 's/^SERIAL=//' | tr -d '\r' | sed 's/[[:space:]]*$//')"
   [ -n "$serial" ] || return 1
