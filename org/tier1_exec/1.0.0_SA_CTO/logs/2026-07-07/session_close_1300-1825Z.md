@@ -79,6 +79,16 @@ Andrew-direct PRD requests. Everything below is landed + committed; nothing is m
 
 ## OPEN ITEMS ON MY QUEUE (for the restart)
 
+0. **[TOP COT ITEM -- fresh break found at reboot] cot silver/allocations EMPTY since 07-01** (06-25
+   missing, last healthy 06-18). Surfaced by DS during the AUAFIX-L6 (b)/(c) grounding. NEWER + WORSE than
+   anything AUAFIX tracked; blocks tonight's cot nightly + the L6 served-verify (no live accounts to anchor
+   reconciliation on an empty partition). DS on producer-side, 0.7.0 on BD-export/session-side (parallel).
+   **My diagnostic prior (sent to COO 182648Z): BD-SESSION-DEATH, check first.** Per DATA_PLATFORM_D2 §3
+   the cot BD session is IP-bound + short-TTL (~30-60min); an empty-run-that-mechanically-succeeds is the
+   SAME class as the 06-25 FREEZE-DX (BD scrape/session death). First checks: is SM blackdiamond/cot/session
+   stale/expired, does the nightly re-fetch or replay a dead jar. BLAST-RADIUS NUANCE: cot's canonical value
+   source is qt1 HOLDINGS not qt5 allocations (D2 §5) -- confirm whether HOLDINGS is ALSO empty (full export
+   death, high sev) or just allocations (narrower). AUAFIX-L6 (a) stays correctly landed; this blocks its verify.
 1. **ETFS_AVGCAP supersede wiring** -- ruled; DS/whoever-owns-ETFS_AVGCAP executes the re-point +
    identity_2-PASS check; RAVC back to me. Not started (DS lane on AUAFIX-L6).
 2. **AUAFIX-L6 served-verify** -- COO's (a) fix landed+deployed (fa7792b70); served-verify pends tonight's
@@ -99,8 +109,10 @@ Andrew-direct PRD requests. Everything below is landed + committed; nothing is m
 
 Post-reboot respawn ran clean + event-driven; 3 PRDs shipped (MKOV_RETFIX closed, MKOV_TRSRCE v1.1 held on
 Yang, MDPF_COTMDL staged); ETFS_AVGCAP-supersede ruled; comp-grep footgun fixed; SEMCTL REGISTRY reconciled;
-AUAFIX-L6 (my falsely-closed ruling) reopened+landed by COO, served-verify pends tonight's run. My HEAD
-`7e321a3ec` CLOUD. Reboot per Andrew (Huntress memory leak). Clean checkpoint -- nothing mid-edit.
+AUAFIX-L6 (my falsely-closed ruling) reopened+landed by COO. **FRESH BREAK at reboot: cot silver/allocations
+empty since 07-01 (item 0 above) -- top cot restart item, BD-session-death is my high-prior, blocks the L6
+verify.** My HEAD `7e321a3ec` CLOUD (log commit `8ee727bd0`; this in-place edit follows). Reboot per Andrew
+(Huntress memory leak). Clean checkpoint -- nothing mid-edit.
 
 ## Compiler Tools
 
