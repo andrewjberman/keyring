@@ -39,7 +39,7 @@ from comp_ladder import Node as LadderNode, fidelity_check  # noqa: E402,F401
 #   COMPUNIFY coverage-sweep. A recognizer needing an off-enum value emits Concept(untyped)+low +
 #   a coverage-gap CSE -- it NEVER invents a value (LAW 1).
 # ===========================================================================
-SCHEMA_VERSION = "0.1"
+SCHEMA_VERSION = "0.2"   # 0.1->0.2 (CTO-ratified 2026-07-07): FLOWS_TO edge KIND (EdgeKind enum) + condition
 MIGRATION_NOTE = (
     "Add a primitive -> version-bump + COMPUNIFY coverage-sweep (which compilers must now handle "
     "it); a gap is a tracked coverage-gap, not a silent skip. Remove/rename -> version-bump + a "
@@ -134,6 +134,17 @@ class Qualifier(enum.Enum):
     OWNERSHIP = "ownership"
 
 
+class EdgeKind(enum.Enum):
+    """GOVERNED edge-KIND discriminator (schema 0.2, CTO-ratified 2026-07-07). The closed TSGRAPH FLOWS_TO
+    set -- preserves the field-grain lineage capability (passthrough/rename/recompute-guarded = the spread-
+    bug the regex can't see; CTO-parity-signed 961/961). LAW 1: a recognizer emits a governed value or
+    Concept(untyped)+low, NEVER an invented string -- so kind is an ENUM (off-enum REJECTS), not a free str.
+    Extensible via the same version-governance (a new kind = a version-bump + coverage-sweep)."""
+    PASSTHROUGH = "passthrough"
+    RENAME = "rename"
+    RECOMPUTE_GUARDED = "recompute_guarded"
+
+
 class ProducerKind(enum.Enum):
     GIT = "git"
     AGENT = "agent"
@@ -155,6 +166,7 @@ LOW_CONFIDENCE_MAX = 0.34
 
 _ENTITY_VALUES = frozenset(e.value for e in Entity)
 _REL_VALUES = frozenset(r.value for r in Relationship)
+_EDGEKIND_VALUES = frozenset(k.value for k in EdgeKind)   # schema 0.2 -- governed edge-KIND set
 _VERB_VALUES = frozenset(t.value for t in Transformation)
 _QUAL_VALUES = frozenset(q.value for q in Qualifier)
 _PRODUCER_VALUES = frozenset(p.value for p in ProducerKind)
@@ -174,6 +186,12 @@ class RelationshipDelta:
     rtype: str            # a Relationship value
     target: EntityRef
     verb: str = Transformation.CREATE.value   # create|delete|modify the edge itself
+    # schema 0.2 (CTO-ratified 2026-07-07): the FLOWS_TO KIND capability. Both OPTIONAL (most edges set
+    # neither). `kind` = a GOVERNED EdgeKind value (off-enum REJECTS, LAW 1); `condition` = an optional
+    # captured LEXICAL guard expression (evidence-like, not a type -- it decompresses to the AST node
+    # showing the recompute+guard). A kind'd edge still passes comp_ladder fidelity (decompress invariant).
+    kind: str = ""        # an EdgeKind value, or "" (no kind -- e.g. compiler #1 code edges)
+    condition: str = ""   # optional predicate/guard expression (lexical), or ""
 
 
 @dataclass
@@ -348,6 +366,12 @@ def validate(cse: CSE, *, check_fidelity: bool = True) -> tuple:
         rtype = edge.rtype if isinstance(edge, RelationshipDelta) else (edge or {}).get("rtype")
         if rtype not in _REL_VALUES:
             errors.append(f"transformation.edges[{i}].rtype {rtype!r} off-enum")
+        # schema 0.2: if a KIND is set it must be a GOVERNED EdgeKind value (off-enum REJECTS, LAW 1).
+        # "" = no kind (permitted -- most edges). condition is a free lexical string (evidence-like, no check).
+        ekind = edge.kind if isinstance(edge, RelationshipDelta) else (edge or {}).get("kind", "")
+        if ekind and ekind not in _EDGEKIND_VALUES:
+            errors.append(f"transformation.edges[{i}].kind {ekind!r} off-enum (EdgeKind is governed-closed; "
+                          f"a new kind is a version-bump, never an invented string -- LAW 1)")
 
     # producer.kind on-enum + head.marker_head present (AC6)
     if (cse.producer or {}).get("kind") not in _PRODUCER_VALUES:
@@ -557,6 +581,17 @@ def _self_test(live_nodes=None, live_edges=None) -> bool:
           not un, f"unmapped: {un}")
     check(f"10 AC4 edge_type totality vs {src} ({len(live_edges or LIVE_EDGE_TYPES_20260707)} types)",
           not ue, f"unmapped: {ue}")
+    # schema 0.2 -- the FLOWS_TO edge KIND (governed EdgeKind enum + optional condition)
+    def _mk_kinded(kind):
+        c = _mk_cse()
+        c.transformation["edges"] = [RelationshipDelta(Relationship.FLOWS_TO.value,
+                                     EntityRef(Entity.FIELD.value, "field:x"), kind=kind,
+                                     condition="if guarded")]
+        return c
+    ok, e = validate(_mk_kinded(EdgeKind.RECOMPUTE_GUARDED.value))
+    check("11 governed edge-kind (RECOMPUTE_GUARDED) ACCEPTED + decompresses (0.2)", ok, str(e))
+    ok, e = validate(_mk_kinded("smuggled_kind"))
+    check("12 off-enum edge-kind REJECTED (governed-closed, LAW 1)", not ok)
     # CTO guidance: mid-band typed = inference smell (non-blocking, just report)
     smell = inference_smell(_mk_cse(conf=0.5))
     print(f"  [INFO] inference-smell tracker: typed+mid-band(0.5) flagged = {smell} (LAW-1 honesty signal)")
