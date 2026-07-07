@@ -12,11 +12,14 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | git | CLOUD commit: ratelimit.py + config RL_* + server.py middleware + lock-test | hash pushed |  | OPEN |
-| L2 | ec2-baked-asset | m365-mcp-gateway app/ on-instance via safe-ec2-deploy | SSM md5 of running ratelimit.py+server.py+config.py |  | OPEN |
-| L3 | activation | gateway restart picks up the middleware; /health ok + /mcp 401 unchanged | SSM systemctl active + live probes |  | OPEN |
+| L1 | git | CLOUD commit: ratelimit.py + config RL_* + server.py middleware + lock-test | hash pushed | 495b2b213 pushed to CLOUD | CLOSED 20260707T081627Z |
+| L2 | ec2-baked-asset | m365-mcp-gateway app/ on-instance via safe-ec2-deploy | SSM md5 of running ratelimit.py+server.py+config.py | SSM i-07dccb...: ratelimit.py=115c0d30d7f4d5dcf333296e706d6e2e server.py=ae677b5b994c8cac96c4c8e9e1c00469 config.py=852cc0d95ef6f3f17d140aa6d7fdde25 -- md5-IDENTICAL to local | CLOSED 20260707T081850Z |
+| L3 | activation | gateway restart picks up the middleware; /health ok + /mcp 401 unchanged | SSM systemctl active + live probes | SSM systemctl active + /health=200 + /mcp unauth=401 (middleware loaded + wraps cleanly, no app breakage; import error would have downed the service) | CLOSED 20260707T081850Z |
 | L4 | verify | CVO live-cert: 429-on-over-rate (per-IP + per-identity) + Retry-After + 413-on-oversize + legit passes + fail-open/closed + XFF right-most keying | CVO cert msg |  | OPEN |
 
 ## Log
 
 - 20260707T081546Z OPENED by 0.7.0_AE_CloudOps~A with 4 leg(s)
+- 20260707T081627Z LEG L1 closed: 495b2b213 pushed to CLOUD
+- 20260707T081850Z LEG L2 closed: SSM i-07dccb...: ratelimit.py=115c0d30d7f4d5dcf333296e706d6e2e server.py=ae677b5b994c8cac96c4c8e9e1c00469 config.py=852c
+- 20260707T081850Z LEG L3 closed: SSM systemctl active + /health=200 + /mcp unauth=401 (middleware loaded + wraps cleanly, no app breakage; import error w
