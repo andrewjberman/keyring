@@ -1,0 +1,16 @@
+{
+  "project_code": "NFRA_MOTIF",
+  "macro_code": "NFRA",
+  "name": "Semantic composition (C2 motifs + C3 systems) -- the vertical compression engine that discovers architecture, absorbing the TSGRAPH detector-library",
+  "description": "Andrew-direct 2026-07-07 (SEMCTL component; after FEDOBS). ABSORB-THEN-GENERALIZE, NOT rebuild (CVO #4): P1 ABSORBS NFRA_TSGRAPH's D1-D7 detector library (CVO-certed this session -- silent-display-fork / cross-firm-asymmetry / dead-component are recurring architectural idioms = the first real C2 motif catalog, each already carrying a lossless decompression path to lexical evidence). Reuses NFRA_GRAPHDEPTH's size-invariant CONTAINS-rollup engine (complete, CVO #6) for the C1->C2->C3 compression -- no new compression engine. MOTIF is VERTICAL (compress a connected subgraph into a typed capability), the clean cut against FEDOBS's horizontal correlation. RECEIVES the re-homed NFRA_TSGRAPH P2-2 cluster-MATERIALIZE (it IS MOTIF's C2-in-graph by nature -- the cluster edges MOTIF's C2 layer owns/needs; grounding fix CVO #3b: comp-cluster is extract-complete [15 pages/91 clusters] but NOT yet graph-materialized) -> sequence P2-2 EARLY as a MOTIF-accelerator; MOTIF-P1 consumes the CLI extraction until P2-2 lands. Every C2/C3 node PASSES comp-ladder fidelity_check (decompress to evidence, or it is a latent LAW-2 violation + the build fails). Output = stable motifs + emergent C3 systems as PROMOTE candidates. PRD docs/architecture/NFRA_MOTIF_PRD.md.",
+  "prds": [{"path": "docs/architecture/NFRA_MOTIF_PRD.md", "label": "NFRA_MOTIF PRD (CTO-authored)", "date": "2026-07-07"}],
+  "status": "forming",
+  "phase": "FORMING -- registered 2026-07-07. After FEDOBS. P1 = absorb the TSGRAPH D1-D7 detector-library as the first C2 catalog + reuse GRAPHDEPTH CONTAINS-rollup. VERTICAL compression. RECEIVES the TSGRAPH P2-2 cluster-materialize re-home = a committed deliverable, sequenced EARLY as a MOTIF-accelerator (TSGRAPH close condition-a). Binds comp-ladder fidelity_check.",
+  "blocking": "Gated on CSE-P1 + FEDOBS-P1. C2-in-graph gated on the re-homed TSGRAPH P2-2 graph-materialize (sequence early). Absorb-not-rebuild (TSGRAPH detectors + GRAPHDEPTH rollup exist).",
+  "created": "2026-07-07",
+  "pods": ["0.4"],
+  "thread_counter": 0,
+  "threads": [],
+  "depends_on": ["NFRA_CSE", "NFRA_FEDOBS", "NFRA_TSGRAPH", "NFRA_GRAPHDEPTH"],
+  "depends_on_note": "DS/DE graph-lane. Absorbs the TSGRAPH D1-D7 detector-library (the first C2 catalog) + reuses GRAPHDEPTH CONTAINS-rollup. VERTICAL (compress subgraph->capability), the cut against FEDOBS horizontal. Receives the re-homed TSGRAPH P2-2 graph-materialize (the gating P2-2 is an AE/0.7 task inside NFRA_TSGRAPH, sequenced early as a MOTIF-accelerator)."
+}

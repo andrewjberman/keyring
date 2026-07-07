@@ -1,0 +1,16 @@
+{
+  "project_code": "NFRA_FEDOBS",
+  "macro_code": "NFRA",
+  "name": "Federated Observation plane (horizontal) -- Trino cross-producer correlation over the CSE log, unifying five already-shipped observers",
+  "description": "Andrew-direct 2026-07-07 (SEMCTL component; parallel with COMPILERKIT after CSE-P1). THE SINGLE BIGGEST DE-RISK (CVO #1): ~80% ALREADY SHIPPED as five observation compilers -- NFRA_COMPDRIFT (complete), NFRA_COMPDIFF (complete, the FREEZE-MONITOR that caught the 3x inf/cot/bd frozen-but-fresh bug), NFRA_PIPESCRIPT (complete), NFRA_DEBTSCAN (active), NFRA_GRAPHS-D8 (active). FEDOBS is the federation QUERY-LAYER that correlates their outputs across producers over time -- it does NOT re-implement observation. P1 stands up Trino over the Iceberg CSE log + the runtime graph and WIRES the 5 existing observers' findings into one plane (+ NFRA_OPLMCP audit-lake as the near-free agent producer), verifying a query joining two observers' findings with C0-history + C1-current (the horizontal correlation the 5 individually cannot do). Strictly READ-ONLY on semantic truth (only PROMOTE materializes) + HORIZONTAL ('does X co-evolve with Y across systems') -- the clean cut against MOTIF's vertical compression (CVO #7). Output = measured signals (directive-effectiveness, compiler-coverage, co-evolution) feeding the Feedback Contract; NFRA_COMPPROOF is the measurement-discipline precedent. RECEIVES the re-homed NFRA_TOOLHEALTH EFFECTIVE-axis (tool-effectiveness-over-agentOps = a federated measurement by nature). PRD docs/architecture/NFRA_FEDOBS_PRD.md.",
+  "prds": [{"path": "docs/architecture/NFRA_FEDOBS_PRD.md", "label": "NFRA_FEDOBS PRD (CTO-authored)", "date": "2026-07-07"}],
+  "status": "forming",
+  "phase": "FORMING -- registered 2026-07-07. Starts against CSE-P1 (parallel with COMPILERKIT). P1 = Trino over the CSE log + federate the 5 shipped observers' findings. Read-only/horizontal. RECEIVES the TOOLHEALTH EFFECTIVE-axis re-home (tool/directive-effectiveness library) = a committed deliverable (TOOLHEALTH close condition-a).",
+  "blocking": "Gated on CSE-P1 (the log + contract). Federate-not-build (5 observers shipped). Read-only on semantic truth. Houses the re-homed TOOLHEALTH EFFECTIVE-measurement.",
+  "created": "2026-07-07",
+  "pods": ["0.7", "0.4"],
+  "thread_counter": 0,
+  "threads": [],
+  "depends_on": ["NFRA_CSE", "NFRA_COMPDRIFT", "NFRA_COMPDIFF", "NFRA_PIPESCRIPT", "NFRA_DEBTSCAN", "NFRA_GRAPHS", "NFRA_OPLMCP"],
+  "depends_on_note": "AE = Trino/Iceberg; DS/DE = query library. Federates the 5 shipped observers (COMPDRIFT/COMPDIFF/PIPESCRIPT complete + DEBTSCAN/GRAPHS-D8 active) + the OPLMCP audit-lake -- does NOT re-implement observation. HORIZONTAL (co-evolution across systems), the cut against MOTIF's vertical. Receives the re-homed TOOLHEALTH EFFECTIVE-axis."
+}

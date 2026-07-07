@@ -1,0 +1,16 @@
+{
+  "project_code": "NFRA_PROMOTE",
+  "macro_code": "NFRA",
+  "name": "Promotion Engine / Directive plane (capstone, last) -- closes the Feedback Contract by generalizing the forming COMPLEARN / TH-C loop (human-ratified, reversible, inspectable)",
+  "description": "Andrew-direct 2026-07-07 (SEMCTL component; LAST -- the only plane that writes back). GENERALIZE THE FORMING LOOP, NOT greenfield (CVO #3a/#5): P1 generalizes NFRA_TOOLHEALTH's TH-C CLAUSE-A (CVO-certed dispatch: verdict -> typed advisory commission [FIX/RETIRE/PROMOTE] -> CTO ratifier -> zero auto-mutation -> 3-axis grounding = literally the five promotion invariants) and generalizes NFRA_COMPLEARN's activation charter as the reference loop (effectively PROMOTE-P0). CRITICAL grounding fix: ground ONLY on the EXERCISED clause-A dispatch + get the measure-arm from FEDOBS -- do NOT depend on the pending TH-C EFFECTIVE axis (TOOLHEALTH Phase-2 building), or PROMOTE inherits an unbuilt dependency. Enforces the five invariants (measure-before-promote, anti-Goodhart, human-ratify, reversible, inspectable), builds four reversible materializers (P2: recognizer->COMPILERKIT, primitive->CSE schema, routing directive->router, knowledge-node->graph), wires post-promotion monitoring + auto-demote (P3). Deliberately LAST -- gated behind the observe/measure/validate arms (the exact COMPLEARN failure of a consumer wired ahead of its measurement). Owns the materializer side of the hot-registration seam; unify its honesty invariants with NFRA_GLDINV (CVO #5c). PRD docs/architecture/NFRA_PROMOTE_PRD.md.",
+  "prds": [{"path": "docs/architecture/NFRA_PROMOTE_PRD.md", "label": "NFRA_PROMOTE PRD (CTO-authored)", "date": "2026-07-07"}],
+  "status": "forming",
+  "phase": "FORMING -- registered 2026-07-07. LAST (only write-back plane). P1 generalizes TH-C clause-A + the COMPLEARN-activation charter (PROMOTE-P0). Grounds on the EXERCISED clause-A + FEDOBS measure-arm, NOT the pending TH-C EFFECTIVE axis. Five promotion invariants are the gate. Names the hot-registration seam (materializer side) with COMPILERKIT.",
+  "blocking": "Gated on CSE-P1 + FEDOBS (measure-arm) + MOTIF (candidates). LAST by design. Ground on clause-A (exercised), NOT the pending TH-C EFFECTIVE axis. Unify honesty invariants with NFRA_GLDINV (a cross-project invariant-library TO).",
+  "created": "2026-07-07",
+  "pods": ["1.0", "0.4", "0.7"],
+  "thread_counter": 0,
+  "threads": [],
+  "depends_on": ["NFRA_CSE", "NFRA_FEDOBS", "NFRA_MOTIF", "NFRA_TOOLHEALTH", "NFRA_COMPLEARN"],
+  "depends_on_note": "CTO = ratify owner (cross-plane); AE/DS = materializers. Generalizes the CVO-certed TH-C clause-A + the COMPLEARN-activation charter. Grounds on the EXERCISED clause-A dispatch + FEDOBS measure-arm (NOT the pending TH-C EFFECTIVE axis). Materializer side of the hot-registration seam pairs with NFRA_COMPILERKIT registry side."
+}
