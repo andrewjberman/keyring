@@ -928,6 +928,10 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "NFRA_COMPDIFF (comp-xray) engine + freeze-monitor. AE owns build (0.8.0_AE per NFRA_COMPDIFF.P1 TO); CTO ruled the dir = org/modules/compdiff/ (2026-06-29). Mirrors the org/modules/graph/comp_*.py comp-tool-implementation precedent (AE builds comp-tools in org/modules/, ANY_EXEC_OR_AE; more specific than org/modules/** ANY_EXEC). Grant added by COO to honor CTO's dir-ruling — comp-xray engine lives with the other comp-tools, not infra/aws/."
 
+  "org/modules/graph/potion/**":
+    lane: ANY_EXEC_OR_AE
+    note: "NFRA_COMPROUTE Charter-1 POTION semantic-matcher (vendored embed module + distilled model): potion_embed.py, potion_shadow_rank.py, MANIFEST.json, model/model.safetensors, model/tokenizer.json. AE (0.8.0_AE_CloudComp) owns the comp-route build per the CTO POTION design + manifest-gate PASS 20260707T071747Z (5 supply-chain conditions bound: pin-by-hash + provenance + offline-only + data-not-code + fail-safe-to-lexical). Mirrors the org/modules/compdiff/** + graph/tsgraph_spike/** + heatmap/** comp-tool graph-subdir precedent (AE builds comp-tools in org/modules/, ANY_EXEC_OR_AE; a comp-tool SUBDIR does not match comp_*.py). Added 2026-07-07 by 2.0.0_SA_COO (SoD: COO lands the grant, grantee 0.8.0~E does not commit own grant). Longest-match overrides org/modules/** ANY_EXEC."
+
   "workflows/**":
     lane: ANY_EXEC_OR_AE
     note: "/workflows/ -- Andrew-direct convention (2026-07-02): the research + design home for evolving automated processes (deep reverse-engineering + fork models; distinct from the terse .claude/skills runbooks). First occupant workflows/ycharts/stress-test/. Cross-cutting research, authored by whichever agent owns the process being modeled -> ANY_EXEC_OR_AE (execs + AEs). Grant added by COO per 0.7.0_AE SoD-flag + the yaml's repeat-override=coverage-gap rule; CC CTO. GOTCHA: NEVER safe-commit the workflows/ DIR pathspec (safe-commit git-add-f force-adds gitignored files) -- commit only explicit .md paths. Raw HARs/PII under workflows/**/sources/ are gitignored + live in private S3, never git."
