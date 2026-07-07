@@ -542,16 +542,25 @@ TRAINING_QUEUE = os.path.join(WS, "org", "mcp", "comproute-routing.jsonl")  # ~E
 
 
 def _agent_role() -> str:
-    """Best-effort agent role for the surface prior (ctx). From the comp-graph context serial; empty
-    -> cold-start neutral prior (never a filter). Read-only, never raises."""
+    """The caller's agent role for the surface_prior + affinity ctx (NFRA_COMPROUTE role-passing,
+    CTO arch-gate 20260707T084735Z). PRECEDENCE (authoritative -> best-effort -> cold-start):
+      1. OPAL_AGENT_SERIAL env -- the INVOKING process's OWN identity (per-process authoritative;
+         comp-which inherits the agent session's env). The correct caller-role, not stale-prone.
+      2. .comp-graph/.agent_context SERIAL= -- SHARED last-writer file (best-effort; can be stale in a
+         multi-agent workspace). Bounded blast for surface_prior (additive + subordinate to the vetted
+         band -> a stale role only mis-weights the ambiguous tail, never top-1/E1). Fallback only.
+      3. "" -- cold-start neutral (never a filter). Fail-safe: never raises.
+    The env-authoritative source (1) also satisfies charter-2's affinity prereq (affinity conditioned on
+    a stale role = silent-wrong; the per-process serial is authoritative)."""
     try:
-        ctxf = os.path.join(WS, ".comp-graph", ".agent_context")
-        serial = ""
-        if os.path.exists(ctxf):
-            for line in open(ctxf, encoding="utf-8"):
-                if line.startswith("SERIAL="):
-                    serial = line.split("=", 1)[1].strip()
-                    break
+        serial = os.environ.get("OPAL_AGENT_SERIAL", "").strip()   # authoritative per-process identity
+        if not serial:
+            ctxf = os.path.join(WS, ".comp-graph", ".agent_context")
+            if os.path.exists(ctxf):
+                for line in open(ctxf, encoding="utf-8"):
+                    if line.startswith("SERIAL="):
+                        serial = line.split("=", 1)[1].strip()      # shared best-effort fallback
+                        break
         segs = set(re.split(r"[_~.]+", serial))
         for tok in ("MSTR", "CTO", "COO", "CVO", "DS", "DE", "DT", "AE", "RD"):
             if tok in segs:
@@ -686,7 +695,7 @@ def _default_router(q, qtok, hits, term, list_intent):
         import comp_capability_provider as _capmap
         import comp_which_signals as _sig
         provider = _capmap.get_provider()
-        ctx = {"role": "", "working_set": [], "trajectory": [],
+        ctx = {"role": _agent_role(), "working_set": [], "trajectory": [],  # role-passing (was ""): authoritative env-serial > .agent_context > cold-start
                "intent_class": _sig.classify_query_intent(q)}
         r = _shape_b_relevance_route(comp_route, _sig, provider, q, ctx)  # Charter-1 FLIP: POTION semantic + Shape-B (fail-safe -> lexical)
         _emit_training_row(getattr(r, "training_row", {}))  # flywheel: every LIVE route -> COMPLEARN (~E ingest)
