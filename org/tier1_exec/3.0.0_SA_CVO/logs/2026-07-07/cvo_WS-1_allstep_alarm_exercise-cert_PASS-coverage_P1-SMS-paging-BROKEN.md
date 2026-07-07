@@ -52,6 +52,23 @@ The P1 is worse than first flagged, and the obvious email fix has a grounded cav
 - **Proposed durable fix = SQS-consumer Lambda → SES email. GROUNDED CAVEAT (verifier catch):** 0.7.0's premise "email has no sandbox failure mode" is FALSE — `sesv2 get-account` ProductionAccessEnabled=**false**, Max24HourSend=200 → SES IS in sandbox (verified-recipients-only, same class as SMS). BUT `andrew@opalinvest.com` is `VerifiedForSending=true` (and the ETFS reporter delivers to it live), so a forward to a **verified** identity (andrew@ / any address in `list-email-identities`) works TODAY; a forward to an **unverified** address (Slack inbound-email, new distro) rebuilds the failure one layer over. Fix must target a verified identity, or exit SES sandbox for arbitrary destinations.
 - **Sequencing:** advisory-routed — (ii) SQS-consumer→verified-SES-email = durable primary (agent-completable today), (iii) TF-declare the SMS sub, SMS/SES-sandbox-exit = parallel Andrew-console track. **Build-GO deferred to COO** (dispatch lane). **Cert bar for the fix:** end-to-end exercise-proof — alarm fire → message DEMONSTRABLY ARRIVES at the human-read endpoint (NotificationsFailed=0 + the email lands at the verified address), NOT "Lambda deployed"/config-read.
 
+## P1-FIX CERT (0.7.0 SQS-consumer, shared-infra-v1.37.0) — MECHANICAL PASS, ENDPOINT DELIVERY NOT CERTIFIED (message absent from Andrew's mailbox)
+
+0.7.0 built `partner-etl-ops-sqs-consumer` (SQS→SES email→andrew@opalinvest.com), exercised via a real labeled-TEST SNS publish through the live topic, and — to their credit — honestly flagged their evidence ceiling (SES Send/Bounce/Reject, no configuration-set Delivery event). I took the bar to the true endpoint.
+
+**MECHANICAL CHAIN — PASS (independently confirmed on live AWS):**
+- ESM now LIVE on `partner-etl-ops-queue` (uuid 2f476f55, Enabled → the consumer) — the zero-consumer gap I found is CLOSED.
+- SQS drained 0/0 (the 8-message backlog cleared).
+- SES Send=9, Bounce=0 (no datapoint), Reject=0 — 9 messages left SES clean (8 backlog + 1 test).
+- Lambda Invocations=9, Errors=0.
+The pipe from the topic up through SES works and the stranded backlog drained. Real, verified improvement over "pages nobody."
+
+**ENDPOINT DELIVERY — NOT CERTIFIED (the reason the bar exists):** The M365 gateway is authenticated as Andrew@opalinvest.com (the forward recipient), so I checked the actual mailbox. The 9 SES-sent messages (~16:29Z) are **ABSENT from Andrew's mailbox as of ~16:34Z** — newest item is 16:15:58Z, predating the send; the listing includes Andrew's own Sent items (spans folders, not Inbox-only), so a Junk-foldered copy would show too and does not. `search_email` for the alarm terms → empty. **SES "Send" did NOT equal inbox arrival — demonstrated live.** This is exactly the failure class SES-Send metrics hide and that this whole P1 is about; my earlier "works today to a verified address" was true at the SES-acceptance layer but the true-endpoint check refined it.
+
+**INFERRED root cause (Rule 22 — hypothesis, NOT confirmed; no message-trace/quarantine access):** cross-domain sender `noreply@opalinvest.dev` → `andrew@opalinvest.com` with DKIM `NOT_STARTED` on the SES identity → DMARC misalignment → EOP quarantines a machine-generated alarm from a look-alike-but-different domain, no SES-level bounce. Plausible, not proven.
+
+**DISPOSITION:** P1 stays OPEN. Mechanical chain PASS; delivery uncertified. Next: (a) I re-verify the mailbox shortly to rule out ingestion latency vs a drop; (b) 0.7.0/Andrew check M365 Junk + run a message-trace on SES MessageId 778dae49-fd50-54ad-990a-cc8ed6536be4 to confirm the mechanism; (c) durable fix if quarantined — send from an **opalinvest.COM** verified identity (intra-domain, trusted) instead of opalinvest.dev, and/or complete DKIM+DMARC for the sending domain. **Cert bar reaffirmed:** delivery certs only when a test message DEMONSTRABLY appears where a human reads it (inbox, not quarantine).
+
 ## Compiler Tools
 
 Raw `aws` CloudWatch/SNS/SQS inspection only — rail-checked markers carried (no comp-tool surfaces alarm-history, SNS delivery metrics, SMS-sandbox state, or SQS attributes; comp-routes=CF/apigw, comp-iam=IAM, comp-freshness=S3). Gap candidate: an alarm/SNS-delivery inspection comp-tool ("does this alarm actually page anyone") — recurring cert need, no rail today.
