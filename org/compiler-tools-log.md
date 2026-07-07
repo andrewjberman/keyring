@@ -13695,3 +13695,45 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.4.0_DS_ClientPlatform~B | comp-kuzu --json / ds-commit-gate / safe-commit.sh | NFRA_CSE_P2_ac4_lambda_writes_s3.py | PASS (1 advisory) | AC4 round-trip build: recognizer+materialize+live-diff, fidelity PASS, 6/6 match, bd-client-detail EXTRA_IN_LIVE finding |
 | 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
 | 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-07 | 0.6.1_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/bronze/pull_inflection_performance_rest.py | FAIL |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3.mdpf-custody-flip-close | comp-blast | comp-blast mdpf_custody_flip | FAIL |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3.mdpf-custody-flip-close | comp-blast | comp-blast compute_partner_custody_total_schwab | FAIL |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3.mdpf-custody-flip-close | comp-blast | comp-blast build_non_model_aua | FAIL |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3.mdpf-custody-flip-close | comp-blast | comp-blast build_mdpf_wse_49f_non_model_aua | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/cot-pipeline/cot-de... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/inf-go... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/stitch-source-push.yml | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-xref | comp-xref smartx_allocations | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-xref | comp-xref aggregate_smartx_by_transaction_dates | FAIL |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-xref | comp-xref parquet_path_fix | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/lo... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0255.md | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/inf-go... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/record-terraform-de... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript --resource smartx_ingestion | FAIL |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | pipescript | pipescript --resource smartx | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | pipescript | pipescript smartx | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/inf-go... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_recognizers_code.py | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/inf-go... | PASS |
+| 2026-07-07 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.1_AE_PartnerETL/lo... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws resource opal-data-portal-v2 | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/inf-go... | PASS |
+| 2026-07-07 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | session-summary | COMPILERKIT-P1 batch-1 structural diff (trace_graph.build_graph vs parity_run) + P2 framework review + firm-scope batch-1/wire batch-2 -- comp-which 2x inconclusive (near-tie), comp-kuzu found wrong graph substrate (AWS CloudEdge, not code-trace) before trace_graph.build_graph() answered it directly; ds-commit-gate caught 2 ruff F541s, fixed | MIXED |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
