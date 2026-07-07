@@ -33,13 +33,16 @@ for _p in (_HERE, os.path.join(_HERE, "potion")):
 class SemanticRelevanceProvider:
     """relevance(intent, cap) -> (score_in_0_1, matched_terms), a drop-in for query_match in the posterior."""
 
-    def __init__(self, embedder, cap_texts: dict, cap_keywords: dict, name_boost: float = 0.15):
+    def __init__(self, embedder, cap_texts: dict, cap_keywords: dict, name_boost: float = 0.15,
+                 blend: bool = False):
         from potion_embed import cosine  # noqa: PLC0415
         self._cos = cosine
         self._emb = embedder
         self._nb = float(name_boost)
+        self._blend = bool(blend)
         self._kw = {k: set(str(x).lower() for x in (v or [])) for k, v in cap_keywords.items()}
         self._cap_vecs = {cid: embedder.embed(txt or cid) for cid, txt in cap_texts.items()}
+        self._keywords_by_id = {k: list(v or []) for k, v in cap_keywords.items()}
 
     def relevance(self, intent: str, cap):
         cid = getattr(cap, "id", "")
@@ -47,7 +50,16 @@ class SemanticRelevanceProvider:
         if cv is None:
             return 0.0, ()
         iv = self._emb.embed(intent or "")
-        score = max(0.0, self._cos(iv, cv))     # [0,1] band (negative cosine -> irrelevant)
+        sem = max(0.0, self._cos(iv, cv))        # [0,1] band (negative cosine -> irrelevant)
+        # BLEND (CTO ruling: semantic-primary + STRONG-LEXICAL PRESERVE, NOT pure-semantic-replacement --
+        # pure-semantic demoted comp-pii top-1, CVO~B c330fdebf). max(lexical, semantic): where lexical is
+        # STRONG it self-preserves (keeps the lexical top-1); where lexical is ~0 (oblique) semantic drives
+        # (keeps the 11->4 oblique lift). Satisfies BOTH per-case gates 1+2 by construction -- MEASURED.
+        score = sem
+        if self._blend:
+            from comp_route import query_match  # noqa: PLC0415
+            lex, _lm = query_match(intent or "", self._keywords_by_id.get(cid, []))
+            score = max(sem, lex)
         itoks = set((intent or "").lower().split())
         names = self._kw.get(cid, set()) | {cid.replace("comp-", "")}
         matched = tuple(sorted(itoks & names))
@@ -74,12 +86,14 @@ def _cap_texts_and_keywords():
     return texts, kws
 
 
-def build_provider(name_boost: float = 0.15, model_dir: str = "") -> Optional[SemanticRelevanceProvider]:
+def build_provider(name_boost: float = 0.15, model_dir: str = "",
+                   blend: bool = False) -> Optional[SemanticRelevanceProvider]:
     """FAIL-SAFE factory: returns a SemanticRelevanceProvider, or None if the POTION embedder can't load
-    (-> route() uses lexical + the alarm already fired). No crash."""
+    (-> route() uses lexical + the alarm already fired). No crash. blend=True -> max(lexical,semantic)
+    strong-lexical-preserve (CTO's ruled LIVE-flip shape)."""
     from potion_embed import load_embedder  # noqa: PLC0415
     emb = load_embedder(model_dir=model_dir)
     if emb is None:
         return None
     texts, kws = _cap_texts_and_keywords()
-    return SemanticRelevanceProvider(emb, texts, kws, name_boost=name_boost)
+    return SemanticRelevanceProvider(emb, texts, kws, name_boost=name_boost, blend=blend)

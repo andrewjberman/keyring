@@ -367,6 +367,42 @@ def rank_diagnostic(role="AE", relevance_provider=None):
     }
 
 
+def per_case_table(role="AE", relevance_provider=None, arm_label="arm"):
+    """CVO~B per-case BLEND re-cert table (c330fdebf / pre-spec 073552Z): for EACH tail case, LEXICAL
+    (rank, top1-correct) vs the ARM (rank, top1-correct), flagging any lexical-top-1 DEMOTION (gate #1)
+    and confirming the oblique LIFT is preserved (gate #2). Per-case, NOT median/mean (CTO banned
+    aggregate for this gate)."""
+    provider = _sh.capmap.get_provider()
+    rows = []
+    demotions = lifts_kept = 0
+    for q, accept in _TAIL:
+        rl, _ = _route_arm(q, provider, None, role, relevance_provider=None)
+        ra, _ = _route_arm(q, provider, None, role, relevance_provider=relevance_provider)
+        if not rl.ranked or (rl.ranked[0].vetted and rl.kind != "fallback"):
+            continue
+
+        def rank_of(r):
+            ids = [s.cap.id for s in r.ranked]
+            pos = [i for i, cid in enumerate(ids) if cid in accept]
+            return (pos[0] + 1) if pos else None
+        lr, ar = rank_of(rl), rank_of(ra)
+        lt1, at1 = (lr == 1), (ar == 1)
+        demoted = bool(lt1 and not at1)                       # gate #1: lexical top-1 lost
+        lifted = bool(lr is not None and ar is not None and lr > 3 and ar <= 4)  # gate #2: oblique lift
+        if demoted:
+            demotions += 1
+        if lifted:
+            lifts_kept += 1
+        rows.append({"q": q[:46], "lex_rank": lr, "lex_top1": lt1,
+                     "%s_rank" % arm_label: ar, "%s_top1" % arm_label: at1,
+                     "DEMOTED": demoted, "lifted": lifted})
+    return {"role": role, "arm": arm_label, "tail_n": len(rows),
+            "lexical_top1_demotions": demotions,     # MUST be 0 for the blend to pass gate #1
+            "oblique_lifts_kept": lifts_kept,
+            "gate1_no_lexical_top1_demoted": (demotions == 0),
+            "rows": rows}
+
+
 def flip_gate(role="AE", name_boost=0.15):
     """The 3-criterion SEMANTIC-RELEVANCE flip-gate (POTION design sec-4; CTO order: run AFTER CVO~B's
     residual cert). Compares LEXICAL vs SEMANTIC relevance (both affinity-off) over the full corpus:
@@ -389,6 +425,26 @@ def flip_gate(role="AE", name_boost=0.15):
     struct_ok = all(sem[t]["struct_gate_pass"] for t in ("canon", "diverse", "heldout"))
     any_gain = any((g or 0) > 0 for g in net_gain.values())
     any_regress = any((g or 0) < 0 for g in net_gain.values())
+    # PER-CASE regression scan (CVO~B c330fdebf: the tier-aggregate MASKS a top-1 swap -- semantic can
+    # demote a genuine lexical top-1 (comp-pii 1->3) while gaining another, netting unchanged. A no-
+    # regression gate MUST be per-case, not median/mean). Scan the union of the labeled corpus + the tail
+    # (where semantic actually moves a non-vetted top-1); report EACH lexical-right->semantic-wrong loss.
+    provider = _sh.capmap.get_provider()
+    seen, per_case_reg, per_case_gain = set(), [], []
+    corpus = [(q, acc) for q, acc, _t, _k in _labeled_cases() if acc] + list(_TAIL)
+    for q, accept in corpus:
+        if q in seen:
+            continue
+        seen.add(q)
+        rl, _ = _route_arm(q, provider, None, role, relevance_provider=None)
+        rs, _ = _route_arm(q, provider, None, role, relevance_provider=rp)
+        lt = rl.ranked[0].cap.id if (rl.ranked and rl.kind != "fallback") else None
+        stop = rs.ranked[0].cap.id if (rs.ranked and rs.kind != "fallback") else None
+        lex_hit, sem_hit = (lt in accept), (stop in accept)
+        if lex_hit and not sem_hit:
+            per_case_reg.append({"q": q[:48], "lexical_top": lt, "semantic_top": stop, "correct": sorted(accept)})
+        elif sem_hit and not lex_hit:
+            per_case_gain.append({"q": q[:48], "semantic_top": stop, "correct": sorted(accept)})
     return {
         "role": role, "name_boost": name_boost,
         "precision_at_1_lexical": {t: p1(lex, t) for t in ("canon", "diverse", "heldout")},
@@ -398,6 +454,11 @@ def flip_gate(role="AE", name_boost=0.15):
                                            ("regression" if any_regress else "neutral")),
         "criterion_2_zero_structural_regression": struct_ok,
         "criterion_3_e1_struct_holds_semantic": struct_ok,   # e1 cases are read-intent struct-only
+        "per_case_top1_regressions": per_case_reg,   # PER-CASE no-regression gate (CVO~B): the honest signal
+        "per_case_top1_gains": per_case_gain,
+        "per_case_verdict": ("%d top-1 REGRESSION(s) + %d gain(s) -- the tier-aggregate masks these; a "
+                             "PER-CASE no-regression gate is REQUIRED for the live flip (CVO~B)"
+                             % (len(per_case_reg), len(per_case_gain))),
         "honest_verdict": (
             "REGRESSION -> do NOT flip" if any_regress else
             ("net precision GAIN + zero-regression + E1-holds -> flip-favorable" if any_gain and struct_ok else
@@ -511,6 +572,10 @@ def main():
                     help="POTION Charter-1: use the semantic relevance provider (full-posterior) for --rank")
     ap.add_argument("--flip-gate", action="store_true",
                     help="POTION 3-criterion flip-gate: lexical vs semantic precision + struct-regression (run AFTER CVO residual cert)")
+    ap.add_argument("--blend", action="store_true",
+                    help="use the BLEND relevance (max(lexical,semantic)+name-boost, CTO's ruled flip shape)")
+    ap.add_argument("--per-case", action="store_true",
+                    help="CVO~B per-case table: lexical vs arm rank/top1 per tail case (demotion gate)")
     ap.add_argument("--name-boost", type=float, default=0.15,
                     help="lexical-exact-NAME secondary boost for the semantic arm (default 0.15)")
     ap.add_argument("--verbose", action="store_true")
@@ -524,6 +589,22 @@ def main():
         return
     if args.flip_gate:
         print(json.dumps(flip_gate(role=args.role, name_boost=args.name_boost), indent=1))
+        return
+    if args.per_case:
+        from comp_potion_relevance import build_provider
+        rp = build_provider(name_boost=args.name_boost, blend=args.blend)
+        label = "blend" if args.blend else "semantic"
+        if rp is None:
+            print("ALARM: semantic provider unavailable (fail-safe)")
+            return
+        res = per_case_table(role=args.role, relevance_provider=rp, arm_label=label)
+        print(json.dumps({k: v for k, v in res.items() if k != "rows"}, indent=1))
+        print("  %-46s | lex_rk lex_t1 | %s_rk %s_t1 | flag" % ("intent", label, label))
+        for r in res["rows"]:
+            flag = "DEMOTED!" if r["DEMOTED"] else ("lift" if r["lifted"] else "")
+            print("  %-46s |   %-4s %-5s |  %-4s %-5s | %s"
+                  % (r["q"], r["lex_rank"], r["lex_top1"], r["%s_rank" % label],
+                     r["%s_top1" % label], flag))
         return
     if args.rank:
         rp = None
