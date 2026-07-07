@@ -205,10 +205,12 @@ class Recognizer(ABC):
         """Yield each located lexical match as a Site (source, locus=file:line, evidence=literal bytes)."""
 
     @abstractmethod
-    def emit(self, site: Site, tree: EnrichedTree) -> list:
+    def emit(self, site: Site, tree: EnrichedTree, *, marker_head: str) -> list:
         """Emit CSE(s) for a site via emit_cse: a C0 typed Entity subject + C1 Relationship edges, each
-        with file:line provenance. Off-enum -> degrade() (LAW 1), NEVER a guess. Return [] if the site
-        does not resolve (the SDK records it as unresolved -- honest, not silent)."""
+        with file:line provenance. Pass `marker_head` straight into emit_cse (it is the GLOBGRPH marker-HEAD
+        at emission -- required per AC6; the SDK threads it here so emit() never has to source it). Off-enum
+        -> degrade() (LAW 1), NEVER a guess. Return [] if the site does not resolve (the SDK records it as
+        unresolved -- honest, not silent)."""
 
     def degrade(self, site: Site, *, marker_head: str) -> CSE:
         """LAW-1 honest-degrade: an unrecognizable/under-resolved site becomes Concept(untyped)+low, never
@@ -234,7 +236,7 @@ class Recognizer(ABC):
                 cov.unresolved.append((site.locus, f"capability {tree.capability.name} < requires "
                                                     f"{self.requires.name} (honest-degrade)"))
                 continue
-            cses = self.emit(site, tree)
+            cses = self.emit(site, tree, marker_head=marker_head)
             if cses:
                 cov.resolved += 1
                 out.extend(cses)
@@ -329,13 +331,13 @@ class _SampleS3KeyConstRecognizer(Recognizer):
             yield Site(source=tree.source, locus=locus_at(tree.text, m.start()),
                        evidence=m.group(0), payload={"const": m.group(1), "uri": m.group(2)})
 
-    def emit(self, site: Site, tree: EnrichedTree):
+    def emit(self, site: Site, tree: EnrichedTree, *, marker_head: str):
         bucket = site.payload["uri"].split("://", 1)[1].split("/")[0]
         prov = Provenance(source=site.source, locus=site.locus, recognizer=self.concept, evidence=site.evidence)
         return [emit_cse(
             verb=Transformation.CREATE.value,
             subject=EntityRef(Entity.S3BUCKET.value, f"s3:{bucket}"),
-            edges=[], provenance=prov, confidence=1.0, marker_head="testhead",
+            edges=[], provenance=prov, confidence=1.0, marker_head=marker_head,
             producer_kind=self.producer_kind, compiler_id=self.compiler_id, artifact_class=self.artifact_class,
         )]
 
@@ -352,12 +354,12 @@ class _SampleResolvedRecognizer(Recognizer):
         if "flows" in tree.text:
             yield Site(source=tree.source, locus="L1", evidence="flows", payload={})
 
-    def emit(self, site, tree):
+    def emit(self, site, tree, *, marker_head: str):
         # would emit a FLOWS_TO edge if it had resolution; never reached on a low-tier tree
         prov = Provenance(source=site.source, locus=site.locus, recognizer=self.concept, evidence=site.evidence)
         return [emit_cse(verb=Transformation.CREATE.value,
                          subject=EntityRef(Entity.FUNCTION.value, "fn:x"), edges=[], provenance=prov,
-                         confidence=1.0, marker_head="testhead", producer_kind=self.producer_kind,
+                         confidence=1.0, marker_head=marker_head, producer_kind=self.producer_kind,
                          compiler_id=self.compiler_id, artifact_class=self.artifact_class)]
 
 
