@@ -561,6 +561,28 @@ def _agent_role() -> str:
     return ""
 
 
+# NFRA_COMPROUTE DRV wire-for-shadow (2026-07-07): the learned-affinity (w_h) term is WIRED but OFF by
+# default. --live-affinity (or COMP_WHICH_LIVE_AFFINITY=1) enables it for the affinity-on shadow/eval;
+# the LIVE comp-which decision stays affinity-COLD until the DRV FLIP (post CVO~B cert + CTO gate) -- the
+# flip is then a one-line default change, not new plumbing. Confirmed STEP-0: comp-which default already
+# routes via comp_route (DR2 flip 94b64a5af, CVO~B cert 4c1d93be5); this is the affinity-ON second flip.
+_LIVE_AFFINITY = os.environ.get("COMP_WHICH_LIVE_AFFINITY", "").strip().lower() in ("1", "true", "on", "yes")
+
+
+def _affinity_provider():
+    """The live-affinity provider ONLY when enabled (default OFF -> None -> affinity-cold live decision).
+    Fail-safe: any error -> None (a learned-term failure NEVER breaks the enforcing rail)."""
+    if not _LIVE_AFFINITY:
+        return None
+    try:
+        if _GRAPH_MODS not in sys.path:     # self-sufficient: don't depend on caller having added the path
+            sys.path.insert(0, _GRAPH_MODS)
+        import comp_route_affinity
+        return comp_route_affinity.CachedAffinityProvider()
+    except Exception:
+        return None
+
+
 def _posterior_route(q: str):
     """Run the surface-aware posterior. Returns a RouteResult, or None on ANY failure (fail-safe)."""
     try:
@@ -570,7 +592,7 @@ def _posterior_route(q: str):
         import comp_capability_provider as _capmap
         provider = _capmap.get_provider()
         ctx = {"role": _agent_role(), "working_set": [], "trajectory": []}
-        return comp_route.route(q, ctx, provider)  # affinity_provider=None -> cold-start (query+prior+margin)
+        return comp_route.route(q, ctx, provider, affinity_provider=_affinity_provider())  # DRV: OFF by default (cold); --live-affinity enables
     except Exception:
         return None
 
@@ -633,7 +655,7 @@ def _default_router(q, qtok, hits, term, list_intent):
         provider = _capmap.get_provider()
         ctx = {"role": "", "working_set": [], "trajectory": [],
                "intent_class": _sig.classify_query_intent(q)}
-        r = comp_route.route(q, ctx, provider, extractors=_sig.EXTRACTORS)
+        r = comp_route.route(q, ctx, provider, extractors=_sig.EXTRACTORS, affinity_provider=_affinity_provider())
         _emit_training_row(getattr(r, "training_row", {}))  # flywheel: every LIVE route -> COMPLEARN (~E ingest)
     except Exception:  # fail-safe -> legacy cascade
         return None
@@ -681,6 +703,12 @@ def main() -> int:
             _s.reconfigure(errors="replace")
         except Exception:
             pass
+    # DRV wire-for-shadow: strip --live-affinity BEFORE the question is joined (else it pollutes q).
+    # Enables the learned-affinity term for this invocation only; the LIVE default stays OFF.
+    if "--live-affinity" in sys.argv[1:]:
+        global _LIVE_AFFINITY
+        _LIVE_AFFINITY = True
+        sys.argv = [sys.argv[0]] + [a for a in sys.argv[1:] if a != "--live-affinity"]
     if len(sys.argv) < 2 or not sys.argv[1].strip():
         print('comp-which "<your question>"  -- maps a natural-language question to the canonical comp-* call.')
         print('  e.g. comp-which "what produces canonical_prices.parquet?"')
