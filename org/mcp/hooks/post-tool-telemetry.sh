@@ -62,12 +62,21 @@ fi
 if [[ -n "${SESSION_ID}" ]]; then
     AGENT="$(cat "org/mcp/sessions/${SESSION_ID}.serial" 2>/dev/null || echo "")"
 fi
-# Fallback chain per canonical §7.4
+SERIAL_SOURCE="session-id-keyed"
+# session-keyed clobber-PROOF secondary BEFORE the shared .agent_context fallback (register_agent hook
+# writes org/mcp/sessions/${SESSION_ID}.${serial}.orphan-cleaned -- serial-in-filename, this-session-scoped;
+# fixes the mis-attribution where an absent .serial fell to .agent_context last-writer -- CloudOps 5x defect twin).
+if [[ -z "${AGENT:-}" && -n "${SESSION_ID}" ]]; then
+    _MK="$(ls -t "org/mcp/sessions/${SESSION_ID}."*.orphan-cleaned 2>/dev/null | head -1 || true)"
+    if [[ -n "${_MK}" ]]; then
+        AGENT="$(basename "${_MK}")"; AGENT="${AGENT#"${SESSION_ID}".}"; AGENT="${AGENT%.orphan-cleaned}"
+        SERIAL_SOURCE="session-id-keyed-marker"
+    fi
+fi
+# Fallback chain per canonical §7.4 (OPAL_AGENT_SERIAL env preferred over the shared .agent_context file)
 if [[ -z "${AGENT:-}" ]]; then
     AGENT="${OPAL_AGENT_SERIAL:-$(awk -F= '/^SERIAL=/{print $2}' .comp-graph/.agent_context 2>/dev/null)}"
     SERIAL_SOURCE="fallback"
-else
-    SERIAL_SOURCE="session-id-keyed"
 fi
 if [[ -z "${AGENT:-}" ]]; then
     AGENT="_unknown_lane_check_needed"
