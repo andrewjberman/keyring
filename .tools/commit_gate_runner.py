@@ -97,6 +97,7 @@ import comp_constants_cli   # noqa: E402
 import manifest_check_cli   # noqa: E402
 import shell_cli            # noqa: E402
 import log_open_lint        # noqa: E402
+import ses_sender_lint_cli as ses_sender_lint  # noqa: E402
 
 # Rule-16 in-scope path prefixes for the shell scan (mirrors ds-commit-gate.sh _SHELL_SCOPE).
 _SHELL_SCOPE = (".tools/", "org/mcp/", "org/threads/", "infra/aws/lambda/ci/", "infra/aws/terraform/")
@@ -174,6 +175,34 @@ def _log_open_lint_one(f: str) -> int:
     return 0
 
 
+def _ses_sender_lint_one(f: str) -> int:
+    """CLAUDE.md Rule 23 (ses-sender-lint TO, 2026-07-07): flag any SES sender not on
+    opalinvest.dev -- a Python send_email/send_raw_email Source= literal or EMAIL_FROM/
+    SES_SENDER env-default, or a Terraform EMAIL_FROM/SES_SENDER literal. BLOCK mode: the
+    check is cheap + deterministic (a hardcoded string literal, no false-positive surface)
+    and the failure mode it prevents is a SILENT nondeterministic delivery quarantine
+    (the 2026-07-07 partner-etl-ops-alerts incident) -- worth blocking on first sight rather
+    than waiting for a WARN to be noticed."""
+    try:
+        findings = ses_sender_lint.check_file(f)
+    except OSError:
+        return 0
+    if not findings:
+        return 0
+    for fd in findings:
+        _echo(
+            f"{fd['file']}:{fd['line']}  non-opalinvest.dev SES sender ({fd['kind']}): {fd['value']!r}",
+            sys.stderr,
+        )
+    _echo(
+        f"BLOCKED: {len(findings)} SES sender(s) not on opalinvest.dev in {f} (CLAUDE.md Rule 23) -- "
+        f"opalinvest.com is unauthenticated (nondeterministic quarantine risk), opalcapital.com is "
+        f"unverified. Use an opalinvest.dev sender.",
+        sys.stderr,
+    )
+    return 1
+
+
 def _shell_scan_one(f: str) -> int:
     """Mirrors `shell_cli.py scan <f>` exactly (same cmd_scan function -> identical printed
     findings/summary), then the wrapper's own BLOCKED line on an ERROR-class finding."""
@@ -224,6 +253,9 @@ def process_files(files: list[str]) -> int:
             if _log_open_lint_one(f) != 0:
                 return 1
 
+            if _ses_sender_lint_one(f) != 0:
+                return 1
+
             checked += 1
 
         elif f.endswith(".sh"):
@@ -236,6 +268,14 @@ def process_files(files: list[str]) -> int:
             # this call sits OUTSIDE the _shell_in_scope block) -- does NOT bump `checked`.
             if _manifest_check_one(f) != 0:
                 return 1
+
+        elif f.endswith(".tf"):
+            # NEW file type for this gate (ses-sender-lint TO, 2026-07-07) -- Terraform
+            # doesn't need py_compile/ruff/etc, just the SES-sender scan (requirement 2:
+            # Lambda EMAIL_FROM/SES_SENDER env values live in .tf, not .py).
+            if _ses_sender_lint_one(f) != 0:
+                return 1
+            checked += 1
         else:
             continue
 
