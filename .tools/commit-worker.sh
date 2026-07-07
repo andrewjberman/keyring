@@ -80,13 +80,56 @@ CQ_GC_INTERVAL_S="${CQ_GC_INTERVAL_S:-3600}"               # results/dlq reap ca
 
 log() { printf '%s commit-worker[%s]: %s\n' "$(cq_now_iso)" "$$" "$*" >&2; }
 
-# ---- observability stub (TO-4 wires real CloudWatch put-metric-data) ------
-# Best-effort local metric sink; TO-4 replaces the body with `aws cloudwatch
-# put-metric-data`. Never fails the worker.
+# ---- observability (TO-4): real CloudWatch put-metric-data ---------------
+# Namespace Opal/CommitQueue, dimension Repo=<gitdir basename> (design sec7.1).
+# Local metrics.log sink kept as a zero-cost secondary record. The aws call is
+# BACKGROUNDED (fire-and-forget) so a slow/throttled CloudWatch API never
+# stalls the serial commit loop -- "never fails the worker" now also means
+# "never blocks the worker". worker_liveness + queue_depth are sampled every
+# daemon-loop iteration (WORKER_POLL_SEC, default 1s) -- rate-limited to
+# CQ_METRIC_MIN_INTERVAL_S (default 20s, well inside every alarm's 60s period)
+# so the daemon isn't invoking put-metric-data every second; the per-request
+# event metrics (committed/rejected/dlq/recovered/latency) fire unthrottled,
+# once per completed request.
+CW_METRIC_MIN_INTERVAL_S="${CQ_METRIC_MIN_INTERVAL_S:-20}"
+CW_METRIC_NS="Opal/CommitQueue"
+
 cw_metric() {
   local name="$1" value="$2"
   local sink; sink="$(cq_root)/metrics.log"
   printf '%s %s %s\n' "$(cq_now_iso)" "$name" "$value" >> "$sink" 2>/dev/null || true
+
+  local cw_name unit
+  case "$name" in
+    worker_liveness)     cw_name="WorkerLiveness";    unit="Count" ;;
+    queue_depth)         cw_name="QueueDepth";         unit="Count" ;;
+    committed)           cw_name="Committed";          unit="Count" ;;
+    rejected_count)      cw_name="RejectedCount";       unit="Count" ;;
+    dlq_depth)           cw_name="DlqDepth";            unit="Count" ;;
+    recovered_committed) cw_name="RecoveredCommitted";  unit="Count" ;;
+    commit_latency_ms)   cw_name="CommitLatencyMs";     unit="Milliseconds" ;;
+    *) return 0 ;;  # unrecognized local name -- never emit garbage to CloudWatch
+  esac
+
+  # rate-limit only the two per-loop-iteration gauges.
+  case "$name" in
+    worker_liveness|queue_depth)
+      local rl_file rl_last rl_now
+      rl_file="$(cq_root)/.cw_rl_${name}"
+      rl_now="$(cq_now_epoch)"
+      rl_last="$(cat "$rl_file" 2>/dev/null || echo 0)"
+      case "$rl_last" in ''|*[!0-9]*) rl_last=0 ;; esac
+      [ $(( rl_now - rl_last )) -ge "$CW_METRIC_MIN_INTERVAL_S" ] || return 0
+      printf '%s' "$rl_now" > "$rl_file" 2>/dev/null || true
+      ;;
+  esac
+
+  local repo; repo="$(basename "$(git rev-parse --show-toplevel 2>/dev/null)" 2>/dev/null)"
+  [ -n "$repo" ] || repo="unknown"
+  ( aws cloudwatch put-metric-data --namespace "$CW_METRIC_NS" \
+      --metric-name "$cw_name" --value "$value" --unit "$unit" \
+      --dimensions "Repo=${repo}" >/dev/null 2>&1 || true ) &
+  disown 2>/dev/null || true
 }
 
 # ---- singleton ----------------------------------------------------------
@@ -150,13 +193,14 @@ cw_release_singleton() {
 }
 
 # ---- parse a request file into globals ----------------------------------
-# Sets: REQ_ID REQ_CWD REQ_FORCE REQ_AUTHOR REQ_CARGS[] REQ_PATHS[] REQ_ENVS[]
+# Sets: REQ_ID REQ_CWD REQ_FORCE REQ_AUTHOR REQ_ENQUEUE_TS REQ_CARGS[] REQ_PATHS[] REQ_ENVS[]
 cw_parse_request() {
   local f="$1"
   REQ_ID="$(cq_field "$f" REQID)"
   REQ_CWD="$(cq_b64dec "$(cq_field "$f" CWD)")"
   REQ_FORCE="$(cq_field "$f" FORCE)"
   REQ_AUTHOR="$(cq_b64dec "$(cq_field "$f" AUTHOR)")"
+  REQ_ENQUEUE_TS="$(cq_field "$f" ENQUEUE_TS)"
   REQ_CARGS=(); REQ_PATHS=(); REQ_ENVS=()
   local line
   # NB: no -n guard on CARG/PATH -- an empty grep result yields 0 read iterations
@@ -315,6 +359,19 @@ cw_process() {
   # (H) classify the subshell verdict and emit result / DLQ.
   local verd="${outcome%%|*}"; local rest="${outcome#*|}"
   local rc2="${rest%%|*}"; local reason="${rest#*|}"
+
+  # CommitLatencyMs (design sec7.1: "on each result", ALL outcomes incl reject/error --
+  # a rejected/errored request still occupied the queue for enqueue_ts->now). Skip
+  # silently on an unparseable/missing ENQUEUE_TS rather than emit a garbage value.
+  if [ -n "${REQ_ENQUEUE_TS:-}" ]; then
+    local enq_epoch now_epoch
+    enq_epoch="$(cq_iso_to_epoch "$REQ_ENQUEUE_TS" 2>/dev/null || true)"
+    if [ -n "$enq_epoch" ]; then
+      now_epoch="$(cq_now_epoch)"
+      cw_metric commit_latency_ms $(( (now_epoch - enq_epoch) * 1000 ))
+    fi
+  fi
+
   case "$verd" in
     OK)
       cq_write_result "$REQ_ID" committed 0 "$reason" "" "" ""

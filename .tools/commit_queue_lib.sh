@@ -90,6 +90,14 @@ cq_b64dec() { printf '%s' "${1-}" | base64 -d 2>/dev/null; }
 # --------------------------------------------------------------------------
 cq_now_iso()   { date -u +%Y%m%dT%H%M%SZ; }
 cq_now_epoch() { date +%s; }
+# cq_iso_to_epoch <YYYYMMDDTHHMMSSZ> -> epoch seconds, or empty on a malformed/
+# empty input (caller must check). `date -d` needs dashes/colons -- reinsert
+# them via bash substring expansion (builtin, Rule-16-safe) before parsing.
+cq_iso_to_epoch() {
+  local ts="$1"
+  [ "${#ts}" -eq 16 ] || return 1
+  date -u -d "${ts:0:4}-${ts:4:2}-${ts:6:2}T${ts:9:2}:${ts:11:2}:${ts:13:2}Z" +%s 2>/dev/null
+}
 cq_gen_reqid() {
   local r="${RANDOM:-0}${RANDOM:-0}"
   printf '%s_%s_%s' "$(cq_now_epoch)" "$$" "$r"
