@@ -63,6 +63,7 @@ import comp_route_shadow as _sh                     # noqa: E402  (fixture + rou
 from comp_route_affinity import CachedAffinityProvider  # noqa: E402
 
 _REPORT = os.path.join(_HERE, "compproof", "comproute_c1_report.json")
+_TAIL_REPORT = os.path.join(_HERE, "compproof", "comproute_c1_tail_report.json")
 
 # ---------------------------------------------------------------------------------------------------
 # HELD-OUT corpus (~E-authored; the router was NOT developed against these). Labels are SETS -- any
@@ -88,6 +89,39 @@ _HELDOUT_E1 = [
     "what lambdas read from the opal-data-bd bucket",
     "what reads from the opal-data-bd bucket",
     "which functions consume the cot silver tables",
+]
+
+# ---------------------------------------------------------------------------------------------------
+# NON-VETTED TAIL corpus (NFRA_COMPPROOF C1 basis-b, CTO MEASURE-FIRST ruling 20260707T062419Z; CVO~B
+# cert-design 20260707T062743Z). The ambiguous/vague intents where NO extractor vets -> route falls to
+# the base posterior -> affinity ACTS. This is the ONLY tier where affinity-on can change a decision, so
+# it is where affinity's tail-efficacy SIGN is measured (moved != improved). Labels are accept-SETS,
+# ~E-authored, CVO~B-honesty-gated. Deliberately oblique/keyword-avoiding phrasings (a strong tool
+# keyword makes the extractor vet -> affinity-immune -> not tail). run_tail_eval AUTO-FILTERS to the
+# affinity-actable (base-band OR fallback in the OFF arm) subset -- a case that vets is reported excluded,
+# NOT scored (vetted == affinity cannot touch it). NOTE (honest caveat): the labelable-non-vetted band is
+# INTRINSICALLY NARROW -- clear-labelable intents tend to carry a tool keyword and thus vet; truly vague
+# intents lack a clean label. So N is small and labels are softer than the fixture BY THE NATURE OF THE
+# TAIL; the change-DIRECTION (toward/away/neutral) is reported alongside precision as the label-robust signal.
+# ---------------------------------------------------------------------------------------------------
+_TAIL = [
+    ("should I trust yesterday's numbers or did they not update", {"comp-freshness"}),
+    ("who depends on the thing this job spits out", {"comp-pipescript"}),
+    ("are we keeping the real values or the masked ones", {"comp-pii"}),
+    ("is my output going to be accepted downstream", {"comp-validate"}),
+    ("did the overnight thing actually do its job", {"comp-freshness"}),
+    ("what feeds this and what eats what it produces", {"comp-pipescript"}),
+    ("could a client end up seeing a raw identifier", {"comp-pii"}),
+    ("is the snapshot I am staring at from today", {"comp-freshness"}),
+    ("before I hand this off is it going to pass their checks", {"comp-validate"}),
+    ("what else leans on this output of mine", {"comp-pipescript"}),
+    ("are the private bits actually hidden or still in the clear", {"comp-pii"}),
+    ("will they accept what I am about to give them", {"comp-validate"}),
+    ("has the source moved on since I last looked", {"comp-freshness"}),
+    ("who else is downstream of what this produces", {"comp-pipescript"}),
+    ("is there a raw value sitting where it should be scrubbed", {"comp-pii"}),
+    ("help me understand the dependencies here", {"comp-blast", "comp-trace"}),   # CVO~B example probe
+    ("trace the thing through the system", {"comp-trace"}),                        # CVO~B example probe
 ]
 
 
@@ -218,6 +252,73 @@ def evaluate(role="AE", arms=("off", "on"), verbose=False):
     return result
 
 
+def run_tail_eval(role="AE", verbose=False):
+    """NFRA_COMPPROOF C1 basis-b: measure affinity's tail-efficacy SIGN on the NON-VETTED tail.
+    AUTO-FILTERS _TAIL to the affinity-actable subset (base-band OR fallback in the OFF arm; a vetted
+    case is affinity-immune -> excluded). On that subset: precision@1 OFF vs ON + the label-robust
+    change-DIRECTION decomposition (toward-label / away-label / neutral wrong->wrong). The SIGN:
+      positive delta (toward>away)  -> affinity IMPROVES the tail -> flip-authorization evidence.
+      zero/negative                 -> affinity moves-but-does-not-improve -> HOLD flip; w_h/affinity
+                                       calibration is a SEPARATE pre-flip gate (CTO ruling)."""
+    provider = _sh.capmap.get_provider()
+    ap = CachedAffinityProvider()
+    excluded_vetted = 0
+    scored = 0
+    p1_off = p1_on = 0
+    toward = away = neutral = 0
+    rows = []
+    for q, accept in _TAIL:
+        r_off, ic = _route_arm(q, provider, None, role)
+        r_on, _ = _route_arm(q, provider, ap, role)
+        toff = r_off.ranked[0] if r_off.ranked else None
+        # affinity-immune (vetted, non-fallback) -> not tail; exclude.
+        if toff is not None and toff.vetted and r_off.kind != "fallback":
+            excluded_vetted += 1
+            continue
+        scored += 1
+        off_id = "FALLBACK" if r_off.kind == "fallback" else (toff.cap.id if toff else None)
+        ton = r_on.ranked[0] if r_on.ranked else None
+        on_id = "FALLBACK" if r_on.kind == "fallback" else (ton.cap.id if ton else None)
+        off_hit = off_id in accept
+        on_hit = on_id in accept
+        p1_off += int(off_hit)
+        p1_on += int(on_hit)
+        direction = None
+        if off_id != on_id:
+            if on_hit and not off_hit:
+                toward += 1
+                direction = "toward"
+            elif off_hit and not on_hit:
+                away += 1
+                direction = "away"
+            else:
+                neutral += 1
+                direction = "neutral(wrong->wrong)"
+        rows.append({"q": q[:60], "accept": sorted(accept), "off": off_id, "on": on_id,
+                     "off_hit": off_hit, "on_hit": on_hit, "direction": direction})
+        if verbose:
+            print("  off=%-14s on=%-14s exp=%-22s %s"
+                  % (off_id, on_id, sorted(accept), direction or ("=hit" if off_hit else "=miss")))
+    delta = (_pct(p1_on, scored) or 0) - (_pct(p1_off, scored) or 0) if scored else None
+    sign = ("positive" if (toward > away) else ("negative" if (away > toward) else "zero"))
+    return {
+        "role": role, "tail_authored": len(_TAIL), "excluded_vetted_affinity_immune": excluded_vetted,
+        "tail_scored_affinity_actable": scored,
+        "precision_at_1_off_pct": _pct(p1_off, scored), "precision_at_1_on_pct": _pct(p1_on, scored),
+        "precision_delta_pts": (round(delta, 1) if delta is not None else None),
+        "changes_toward_label": toward, "changes_away_label": away,
+        "changes_neutral_wrong_to_wrong": neutral,
+        "tail_efficacy_sign": sign,
+        "verdict": ("POSITIVE tail-efficacy -> affinity IMPROVES the ambiguous tail -> flip-authorization evidence"
+                    if sign == "positive" else
+                    ("NEGATIVE tail-efficacy -> affinity DEGRADES the tail -> HOLD flip (calibration gate)"
+                     if sign == "negative" else
+                     "ZERO tail-efficacy -> affinity MOVES but does NOT improve the tail (moved != improved) "
+                     "-> HOLD the value-flip; w_h/affinity calibration is a SEPARATE pre-flip gate")),
+        "rows": rows,
+    }
+
+
 def affinity_reach_diagnostic(role="AE"):
     """THE load-bearing C1 finding, made reproducible: quantify WHERE affinity can act. A top routed
     in the VETTED band [1.0,2.0) is affinity-IMMUNE (the band structurally pre-empts the base posterior
@@ -313,6 +414,8 @@ def main():
     ap.add_argument("--roles", default="", help="comma-list -> role-sensitivity sweep (e.g. AE,DS,CTO,)")
     ap.add_argument("--diagnostic", action="store_true",
                     help="reproduce the affinity-reach finding (vetted vs base-band tops; off->on changes)")
+    ap.add_argument("--tail", action="store_true",
+                    help="basis-b: measure affinity's tail-efficacy SIGN on the non-vetted tail corpus")
     ap.add_argument("--verbose", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
@@ -321,6 +424,45 @@ def main():
         return
     if args.diagnostic:
         print(json.dumps(affinity_reach_diagnostic(role=args.role), indent=1))
+        return
+    if args.tail:
+        # ALWAYS a role SWEEP -- the tail-efficacy sign is role-dependent (affinity is per-role), so a
+        # single-role headline would misrepresent. AE/DS/CTO + cold-start floor.
+        roles = tuple(r.strip() for r in args.roles.split(",")) if args.roles else ("AE", "DS", "CTO", "")
+        per_role = {}
+        for r in roles:
+            res = run_tail_eval(role=r, verbose=args.verbose)
+            per_role[r or "(cold-start)"] = {k: v for k, v in res.items() if k != "rows"}
+        signs = [v["tail_efficacy_sign"] for v in per_role.values()]
+        overall = ("robust-positive" if all(s == "positive" for s in signs) else
+                   ("mixed-role-dependent" if "positive" in signs else
+                    ("negative" if "negative" in signs else "zero")))
+        sweep = {
+            "corpus": "non-vetted tail (NFRA_COMPPROOF C1 basis-b)",
+            "per_role": per_role,
+            "overall_sign": overall,
+            "flip_recommendation": (
+                "ROLE-DEPENDENT / not-robust: tail-efficacy is positive only at some roles and the "
+                "positive is small-N + composition-fragile -> do NOT authorize the value-flip on this "
+                "alone; route to w_h/affinity calibration (CTO's separate pre-flip gate) + CVO~B "
+                "honesty-gate on the labels + the high-affinity-tool concentration"
+                if overall == "mixed-role-dependent" else
+                ("HOLD value-flip: zero tail-efficacy (affinity moves but does not improve) -> "
+                 "w_h/affinity calibration is the separate pre-flip gate" if overall == "zero" else
+                 ("HOLD: negative tail-efficacy" if overall == "negative" else
+                  "flip-authorization evidence: robust positive across roles"))),
+            "honesty_caveats": [
+                "labelable non-vetted band is intrinsically narrow (N per role ~11); labels softer than fixture BY NATURE OF THE TAIL",
+                "any positive concentrates on a few toward-changes; leave-one-out fragile -> CVO~B honesty-gate",
+                "base tail precision is very low regardless of arm -> the router itself is weak on oblique phrasings (separate router-quality finding, independent of affinity)",
+            ],
+        }
+        if args.json:
+            os.makedirs(os.path.dirname(_TAIL_REPORT), exist_ok=True)
+            with open(_TAIL_REPORT, "w", encoding="utf-8") as fh:
+                json.dump(sweep, fh, indent=1)
+            print("OK: wrote %s" % _TAIL_REPORT)
+        print(json.dumps(sweep, indent=1))
         return
     if args.roles:
         roles = tuple(r.strip() for r in args.roles.split(","))

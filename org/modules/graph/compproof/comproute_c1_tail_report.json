@@ -1,0 +1,68 @@
+{
+ "corpus": "non-vetted tail (NFRA_COMPPROOF C1 basis-b)",
+ "per_role": {
+  "AE": {
+   "role": "AE",
+   "tail_authored": 17,
+   "excluded_vetted_affinity_immune": 6,
+   "tail_scored_affinity_actable": 11,
+   "precision_at_1_off_pct": 9.1,
+   "precision_at_1_on_pct": 27.3,
+   "precision_delta_pts": 18.2,
+   "changes_toward_label": 2,
+   "changes_away_label": 0,
+   "changes_neutral_wrong_to_wrong": 4,
+   "tail_efficacy_sign": "positive",
+   "verdict": "POSITIVE tail-efficacy -> affinity IMPROVES the ambiguous tail -> flip-authorization evidence"
+  },
+  "DS": {
+   "role": "DS",
+   "tail_authored": 17,
+   "excluded_vetted_affinity_immune": 6,
+   "tail_scored_affinity_actable": 11,
+   "precision_at_1_off_pct": 0.0,
+   "precision_at_1_on_pct": 0.0,
+   "precision_delta_pts": 0,
+   "changes_toward_label": 0,
+   "changes_away_label": 0,
+   "changes_neutral_wrong_to_wrong": 3,
+   "tail_efficacy_sign": "zero",
+   "verdict": "ZERO tail-efficacy -> affinity MOVES but does NOT improve the tail (moved != improved) -> HOLD the value-flip; w_h/affinity calibration is a SEPARATE pre-flip gate"
+  },
+  "CTO": {
+   "role": "CTO",
+   "tail_authored": 17,
+   "excluded_vetted_affinity_immune": 6,
+   "tail_scored_affinity_actable": 11,
+   "precision_at_1_off_pct": 9.1,
+   "precision_at_1_on_pct": 9.1,
+   "precision_delta_pts": 0.0,
+   "changes_toward_label": 0,
+   "changes_away_label": 0,
+   "changes_neutral_wrong_to_wrong": 6,
+   "tail_efficacy_sign": "zero",
+   "verdict": "ZERO tail-efficacy -> affinity MOVES but does NOT improve the tail (moved != improved) -> HOLD the value-flip; w_h/affinity calibration is a SEPARATE pre-flip gate"
+  },
+  "(cold-start)": {
+   "role": "",
+   "tail_authored": 17,
+   "excluded_vetted_affinity_immune": 6,
+   "tail_scored_affinity_actable": 11,
+   "precision_at_1_off_pct": 9.1,
+   "precision_at_1_on_pct": 0.0,
+   "precision_delta_pts": -9.1,
+   "changes_toward_label": 0,
+   "changes_away_label": 1,
+   "changes_neutral_wrong_to_wrong": 6,
+   "tail_efficacy_sign": "negative",
+   "verdict": "NEGATIVE tail-efficacy -> affinity DEGRADES the tail -> HOLD flip (calibration gate)"
+  }
+ },
+ "overall_sign": "mixed-role-dependent",
+ "flip_recommendation": "ROLE-DEPENDENT / not-robust: tail-efficacy is positive only at some roles and the positive is small-N + composition-fragile -> do NOT authorize the value-flip on this alone; route to w_h/affinity calibration (CTO's separate pre-flip gate) + CVO~B honesty-gate on the labels + the high-affinity-tool concentration",
+ "honesty_caveats": [
+  "labelable non-vetted band is intrinsically narrow (N per role ~11); labels softer than fixture BY NATURE OF THE TAIL",
+  "any positive concentrates on a few toward-changes; leave-one-out fragile -> CVO~B honesty-gate",
+  "base tail precision is very low regardless of arm -> the router itself is weak on oblique phrasings (separate router-quality finding, independent of affinity)"
+ ]
+}
