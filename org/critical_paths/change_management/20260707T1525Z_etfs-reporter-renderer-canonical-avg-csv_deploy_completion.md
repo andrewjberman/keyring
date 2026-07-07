@@ -16,4 +16,4 @@
 - Production `daily/{partner}/` slices + `monthly/*.json` for Apr–Jun remain unbackfilled (DS lane, flagged in the Andrew report; renderer self-heals for July+ on the normal 1st-of-month run).
 - SES email attaches PDF only; attaching CSVs would need an orchestrator Lambda change (TF cycle) — optional follow-up, not part of this deploy.
 
-**Status: CLOSED — no half-landed legs.**
+**Status:** CLOSED — no half-landed legs (4/4 legs closed, exercised F5). Format-corrected by 2.0.0_SA_COO 2026-07-07T15:31Z so the deploy-ledger gate parser recognizes this as terminal — content unchanged, this was a marker-format gap, not an actual half-landed deploy.
