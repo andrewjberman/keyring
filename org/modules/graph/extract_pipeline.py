@@ -1416,6 +1416,25 @@ def build_multi_pipeline_dag(workspace_root: Path) -> PipelineDAG:
 # Bridge: inject pipeline edges into the trace graph
 # ---------------------------------------------------------------------------
 
+def parse_mdpf_dispatch(ws_root: Path) -> dict[str, str]:
+    """DEBTSCAN reachability FP-root-fix recognizer #1 (DS~A-authored 2026-07-07): {script_basename:
+    relpath} for every mdpf script dispatched by mdpf-daily-dispatch.sh -- an EC2 STAGE runner (run_step
+    LABEL <relpath>.py + a few X_SCRIPT="${SCRIPTS_DIR}/..." vars), NOT the gold CATALOG heredoc format.
+    Pure-lexical file parse (COMPILERKIT-scope-clean). inject_pipeline_edges emits
+    mdpf-daily-runner -[TRIGGERS]-> gold:<basename> for each -> edges the build_mdpf_*/aggregate/patch/
+    wsb/wsd/wse block that reads isolated (CVO root-caused as a recognizer-gap, not real orphan debt)."""
+    f = ws_root / "infra" / "aws" / "ec2" / "mdpf-daily-runner" / "mdpf-daily-dispatch.sh"
+    if not f.exists():
+        return {}
+    content = f.read_text(encoding="utf-8", errors="replace")
+    scripts: dict[str, str] = {}
+    for m in re.finditer(r'run_step\s+\S+\s+(\S+\.py)\b', content):
+        scripts[Path(m.group(1)).stem] = m.group(1)
+    for m in re.finditer(r'\w+_SCRIPT="\$\{SCRIPTS_DIR\}/(\S+\.py)"', content):
+        scripts[Path(m.group(1)).stem] = m.group(1)
+    return scripts
+
+
 def inject_pipeline_edges(dag: PipelineDAG, workspace_root: Path, _graph=None):
     """Inject pipeline DAG edges into the comp-trace graph cache.
     This lets comp-trace walk through pipeline dependencies during
@@ -1534,6 +1553,37 @@ def inject_pipeline_edges(dag: PipelineDAG, workspace_root: Path, _graph=None):
                     source=dispatcher_id, target=script_node_id,
                     edge_type="TRIGGERS",
                     metadata={"source": "dispatch_catalog"},
+                ))
+                edges_added += 1
+
+    # DEBTSCAN reachability FP-root-fix (recognizer #1, DS~A-authored 2026-07-07): the MDPF EC2 dispatch
+    # runner (mdpf-daily-dispatch.sh) invokes the build_mdpf_*/aggregate/patch/wsb/wsd/wse block via
+    # run_step; the reachability sweep didn't parse that source, so those scripts read as isolated orphans
+    # (CVO root-caused = a recognizer-gap, NOT real debt -- better than N suppression classes). Emit
+    # mdpf-daily-runner -[TRIGGERS]-> gold:<script> for each dispatched script -> edged at the ROOT (same
+    # closed-vocabulary TRIGGERS as the gold-dispatch catalog; survives the portal-stitch EDGE_TYPE_MAP).
+    mdpf_scripts = parse_mdpf_dispatch(workspace_root)
+    if mdpf_scripts:
+        mdpf_dispatcher_id = "gold:mdpf-daily-runner"
+        if mdpf_dispatcher_id not in g.nodes:
+            g.add_node(Node(
+                id=mdpf_dispatcher_id, node_type="GOLD_SCRIPT",
+                label="mdpf-daily-runner",
+            ))
+        for _basename in mdpf_scripts:
+            script_node_id = f"gold:{_basename}"
+            if script_node_id not in g.nodes:
+                continue  # only edge scripts the trace-graph already carries
+            edge_exists = any(
+                e.source == mdpf_dispatcher_id and e.target == script_node_id
+                and e.edge_type == "TRIGGERS"
+                for e in g.edges
+            )
+            if not edge_exists:
+                g.add_edge(Edge(
+                    source=mdpf_dispatcher_id, target=script_node_id,
+                    edge_type="TRIGGERS",
+                    metadata={"source": "mdpf_dispatch"},
                 ))
                 edges_added += 1
 
