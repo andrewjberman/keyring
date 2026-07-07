@@ -8,8 +8,21 @@ compiler #1's dispatch recognizer):
                                catalog gold script. AC2 parity target = today's dispatcher-TRIGGERS C1.
   MdpfDispatchRecognizer    -- MDPF EC2 stage-runner (run_step + *_SCRIPT vars); live-proven (e4eca6c36).
 
+Batch-2 (the S3-key pair, DS~A-authored, adapted from deliverables/COMPILERKIT_recognizers_batch2.py --
+already built against this file's live SDK contract, no marker_head adaptation needed this time):
+  S3KeyConstRecognizer      -- lib/s3_layout.py constant/key-function catalog (ast Assign+FunctionDef).
+  S3KeyReadWriteRecognizer  -- per-script READS/WRITES classification (callee-co-occurrence), vocabulary
+                               reused byte-identical from the deployed extract_pipeline.py classifier.
+
 Adapted from DS~A's draft (deliverables/COMPILERKIT_recognizers_batch1.py) to the THREADED marker_head
 contract (SDK fix 7af2db209): emit(site, tree, *, marker_head) -- recognize() threads it, no tree.meta hop.
+
+FIRM-SCOPING (CTO ruling 2026-07-07, off AE~D's batch-1 structural parity diff + DS~A's batch-2 confirmed-
+live collision find): any subject/target ref that a basename alone would collide across firms (bd/cot both
+ship a "gold_dispatch.sh"; ~35 bd/cot gold script FILENAMES are byte-identical) must be firm-scoped, derived
+from provenance.source via the SAME safe_deploy_core.PIPELINE_MAP authority DS/DT/AE already commit against
+-- never a second hand-maintained map, never guessed. One `_firm_from_source` here (the canonical landed
+module) shared by every recognizer in this file, mirroring DS~A's batch-2 helper exactly.
 """
 
 from __future__ import annotations
@@ -26,6 +39,27 @@ from comp_recognizer_sdk import (  # noqa: E402
     Recognizer, RecognizerRegistry, emit_cse, Site, EnrichedTree, EntityRef, RelationshipDelta,
     Provenance, Entity, Relationship, Transformation, FrontEndCapability, locus_at,
 )
+# REUSE the deployed extractor's vocabulary (zero-API-call, deterministic) so batch-2's read/write verdict
+# is the SAME decision as today's production DAG, not a parallel reimplementation that can drift.
+from extract_pipeline import (  # noqa: E402
+    _extract_fstring_template, _find_aliases, _WRITE_CALLEES, _READ_CALLEES,
+)
+
+_TOOLS = os.path.join(_HERE, "..", "..", "..", ".tools")
+if os.path.isdir(_TOOLS):
+    sys.path.insert(0, os.path.abspath(_TOOLS))
+from safe_deploy_core import PIPELINE_MAP  # noqa: E402
+
+
+def _firm_from_source(source: str) -> str:
+    """Derive the firm label from a repo-relative source path via PIPELINE_MAP (bd/inf/cot) -- never
+    guessed. Returns 'unscoped' if source doesn't match a known data/{pipeline}/ prefix -- honest-degrade
+    for the ref-scoping question (mirrors LAW 1's never-a-guess spirit without touching CSE confidence)."""
+    norm = source.replace("\\", "/")
+    for data_dir, (_bucket, label) in PIPELINE_MAP.items():
+        if norm.startswith(f"data/{data_dir}/"):
+            return label
+    return "unscoped"
 
 
 class DispatchCatalogRecognizer(Recognizer):
@@ -54,12 +88,13 @@ class DispatchCatalogRecognizer(Recognizer):
 
     def emit(self, site, tree, *, marker_head):
         script = Path(site.payload["filename"]).stem
+        firm = _firm_from_source(site.source)
         prov = Provenance(source=site.source, locus=site.locus, recognizer=self.concept, evidence=site.evidence)
         return [emit_cse(
             verb=Transformation.CREATE.value,
-            subject=EntityRef(Entity.SERVICE.value, f"dispatch:{Path(site.source).stem}"),
+            subject=EntityRef(Entity.SERVICE.value, f"dispatch:{firm}:{Path(site.source).stem}"),
             edges=[RelationshipDelta(Relationship.TRIGGERS.value,
-                                     EntityRef(Entity.MODULE.value, f"gold:{script}"))],
+                                     EntityRef(Entity.MODULE.value, f"gold:{firm}:{script}"))],
             provenance=prov, confidence=1.0, marker_head=marker_head,
             producer_kind=self.producer_kind, compiler_id=self.compiler_id, artifact_class=self.artifact_class,
         )]
@@ -84,25 +119,125 @@ class MdpfDispatchRecognizer(Recognizer):
                            evidence=m.group(0).strip(), payload={"relpath": m.group(1)})
 
     def emit(self, site, tree, *, marker_head):
+        # firm is hardcoded, not derived via _firm_from_source: this recognizer's concept is inherently
+        # mdpf-scoped by construction (its one real source is mdpf's own dispatcher, not under any
+        # data/{pipeline}/ prefix PIPELINE_MAP would resolve) -- honest, not a guess.
         script = Path(site.payload["relpath"]).stem
         prov = Provenance(source=site.source, locus=site.locus, recognizer=self.concept, evidence=site.evidence)
         return [emit_cse(
             verb=Transformation.CREATE.value,
             subject=EntityRef(Entity.SERVICE.value, "mdpf-daily-runner"),
             edges=[RelationshipDelta(Relationship.TRIGGERS.value,
-                                     EntityRef(Entity.MODULE.value, f"gold:{script}"))],
+                                     EntityRef(Entity.MODULE.value, f"gold:mdpf:{script}"))],
             provenance=prov, confidence=1.0, marker_head=marker_head,
             producer_kind=self.producer_kind, compiler_id=self.compiler_id, artifact_class=self.artifact_class,
         )]
 
 
-# The compiler-#1 recognizer set (batch-1). register_all() wires them into a registry (the SDK hot-register
-# seam). More recognizers append here as DS~A lands them (S3-key-const, read/write-classifier, ...).
+class S3KeyConstRecognizer(Recognizer):
+    """Batch-2 (DS~A) -- compiler #1's ast mechanism over lib/s3_layout.py's constant assignments
+    (ACCOUNTS_DIMENSION = '...') AND key-generating functions (def advisor_fee_detail_key(...) ->
+    f'...{}...'). Mirrors extract_pipeline._parse_s3_layout's two ast.walk branches exactly. Emits a C0
+    S3Bucket entity per key -- no edges; read/write EDGES are S3KeyReadWriteRecognizer's job."""
+    artifact_class = "python"
+    concept = "s3-key-const"
+    requires = FrontEndCapability.LEXICAL_AST
+    compiler_id = "code-compiler"
+
+    def iter_sites(self, tree: EnrichedTree):
+        import ast
+        mod = tree.root if isinstance(tree.root, ast.Module) else ast.parse(tree.text)
+        for node in ast.walk(mod):
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    if isinstance(target, ast.Name) and isinstance(node.value, ast.Constant):
+                        name, value = target.id, node.value.value
+                        if isinstance(value, str) and "/" in value and name.isupper():
+                            yield Site(source=tree.source, locus=f"L{node.lineno}",
+                                       evidence=f"{name} = {value!r}",
+                                       payload={"name": name, "value": value, "kind": "const"})
+            if isinstance(node, ast.FunctionDef):
+                if node.name.startswith("legacy_") or node.name.startswith("_"):
+                    continue
+                for child in ast.walk(node):
+                    if isinstance(child, ast.Return) and child.value:
+                        template = _extract_fstring_template(child.value)
+                        if template and "/" in template:
+                            yield Site(source=tree.source, locus=f"L{node.lineno}",
+                                       evidence=f"def {node.name}(...): return {template!r}",
+                                       payload={"name": node.name, "value": template, "kind": "func"})
+                            break
+
+    def emit(self, site: Site, tree: EnrichedTree, *, marker_head: str):
+        firm = _firm_from_source(site.source)
+        prov = Provenance(source=site.source, locus=site.locus, recognizer=self.concept, evidence=site.evidence)
+        return [emit_cse(
+            verb=Transformation.CREATE.value,
+            subject=EntityRef(Entity.S3BUCKET.value, f"s3key:{firm}:{site.payload['value']}"),
+            edges=[], provenance=prov, confidence=1.0, marker_head=marker_head,
+            producer_kind=self.producer_kind, compiler_id=self.compiler_id, artifact_class=self.artifact_class,
+        )]
+
+
+class S3KeyReadWriteRecognizer(Recognizer):
+    """Batch-2 (DS~A) -- compiler #1's callee-co-occurrence mechanism: per-script classification of each
+    imported S3-key constant as READ or WRITE. Needs tree.meta['s3_constants'] = {const_name: s3_path}
+    threaded in by the caller (the front-end's authoritative-map-assembly step -- see parity_run_batch2).
+    KNOWN GAP (DS~A-flagged, not silent): does not port extract_pipeline's multi-line-call collapse or the
+    Key=/Prefix=/f-string special-case matchers (lines 400-421) -- base callee-name+alias-on-one-line
+    co-occurrence only (the dominant case)."""
+    artifact_class = "python"
+    concept = "s3-key-read-write"
+    requires = FrontEndCapability.RAW_TEXT
+    compiler_id = "code-compiler"
+
+    def iter_sites(self, tree: EnrichedTree):
+        consts = tree.meta.get("s3_constants", {})
+        if not consts:
+            return
+        alias_map = {name: _find_aliases(name, tree.text) | {name} for name in consts}
+        for lineno, line in enumerate(tree.text.splitlines(), start=1):
+            stripped = line.strip()
+            if stripped.startswith(("#", "from ", "import ")):
+                continue
+            for name, s3_path in consts.items():
+                if not any(a in line for a in alias_map[name]):
+                    continue
+                kind = None
+                for callee in _WRITE_CALLEES:
+                    if callee in line and re.search(rf"{re.escape(callee)}\s*\(", line):
+                        kind = "write"
+                        break
+                if kind is None:
+                    for callee in _READ_CALLEES:
+                        if callee in line and re.search(rf"{re.escape(callee)}\s*\(", line):
+                            kind = "read"
+                            break
+                if kind:
+                    yield Site(source=tree.source, locus=f"L{lineno}", evidence=stripped,
+                               payload={"const": name, "s3_path": s3_path, "kind": kind})
+
+    def emit(self, site: Site, tree: EnrichedTree, *, marker_head: str):
+        rel = Relationship.WRITES.value if site.payload["kind"] == "write" else Relationship.READS.value
+        firm = _firm_from_source(site.source)
+        script = Path(tree.source).stem
+        prov = Provenance(source=site.source, locus=site.locus, recognizer=self.concept, evidence=site.evidence)
+        return [emit_cse(
+            verb=Transformation.CREATE.value,
+            subject=EntityRef(Entity.MODULE.value, f"gold:{firm}:{script}"),
+            edges=[RelationshipDelta(rel, EntityRef(Entity.S3BUCKET.value, f"s3key:{firm}:{site.payload['s3_path']}"))],
+            provenance=prov, confidence=1.0, marker_head=marker_head,
+            producer_kind=self.producer_kind, compiler_id=self.compiler_id, artifact_class=self.artifact_class,
+        )]
+
+
+# The compiler-#1 recognizer set. register_all() wires them into a registry (the SDK hot-register seam).
 BATCH1 = [DispatchCatalogRecognizer, MdpfDispatchRecognizer]
+BATCH2 = [S3KeyConstRecognizer, S3KeyReadWriteRecognizer]
 
 
 def register_all(registry: RecognizerRegistry) -> None:
-    for cls in BATCH1:
+    for cls in BATCH1 + BATCH2:
         registry.register(cls())
 
 
@@ -164,6 +299,73 @@ def parity_run(marker_head: str = "parity") -> dict:
     return report
 
 
+# ---------------------------------------------------------------------------
+# Batch-2 AC2 parity runner -- different tree-construction shape than batch-1 (LEXICAL_AST over
+# s3_layout.py + the front-end "authoritative-map-assembly" step DS~A's docstring flags: run
+# S3KeyConstRecognizer over a firm's s3_layout.py FIRST to build the const->s3_path map, then thread it
+# via EnrichedTree.meta["s3_constants"] into that firm's gold-script trees for S3KeyReadWriteRecognizer).
+# Scope this pass: BD only (matches DS~A's own validated test scope) -- cot/inf extension is a flagged
+# next step, not silently assumed covered.
+# ---------------------------------------------------------------------------
+_S3_LAYOUT_SOURCES = {"bd": "data/black_diamond/scripts/gold/lib/s3_layout.py"}
+_S3_GOLD_SCRIPT_SOURCES = {
+    "bd": [
+        "data/black_diamond/scripts/gold/A_00.accounts_dimension.py",
+        "data/black_diamond/scripts/gold/A_01.advisor_assignments.py",
+    ],
+}
+
+
+def parity_run_batch2(marker_head: str = "parity") -> dict:
+    import ast
+    import cse_schema as cse
+    ws = os.path.abspath(os.path.join(_HERE, "..", "..", ".."))
+    report = {"firms": {}, "total_edges": 0, "all_fidelity_ok": True, "scope_note":
+              "BD only this pass -- cot/inf s3_layout.py extension not yet run (flagged, not silent)"}
+    const_rec = S3KeyConstRecognizer()
+    rw_rec = S3KeyReadWriteRecognizer()
+    for firm, layout_src in _S3_LAYOUT_SOURCES.items():
+        ap = os.path.join(ws, layout_src)
+        if not os.path.exists(ap):
+            continue
+        with open(ap, encoding="utf-8", errors="replace") as fh:
+            layout_text = fh.read()
+        t_layout = EnrichedTree(source=layout_src, capability=FrontEndCapability.LEXICAL_AST,
+                                 text=layout_text, root=ast.parse(layout_text))
+        const_cses, const_cov = const_rec.recognize(t_layout, marker_head=marker_head)
+        # authoritative-map assembly: const name -> s3_path, keyed off the raw payload (not the firm-scoped
+        # subject ref) since S3KeyReadWriteRecognizer's alias-matching works off the SOURCE constant name.
+        s3_constants = {}
+        for site in const_rec.iter_sites(t_layout):
+            s3_constants[site.payload["name"]] = site.payload["value"]
+        firm_rec = {"const_n_edges": len(const_cses), "const_fidelity_ok":
+                    all(cse.cse_fidelity_ok(c)[0] for c in const_cses), "scripts": {}, "rw_n_edges": 0,
+                    "rw_fidelity_ok": True}
+        for script_src in _S3_GOLD_SCRIPT_SOURCES.get(firm, []):
+            sp = os.path.join(ws, script_src)
+            if not os.path.exists(sp):
+                continue
+            with open(sp, encoding="utf-8", errors="replace") as fh:
+                script_text = fh.read()
+            t_script = EnrichedTree(source=script_src, capability=FrontEndCapability.RAW_TEXT,
+                                     text=script_text, meta={"s3_constants": s3_constants})
+            rw_cses, rw_cov = rw_rec.recognize(t_script, marker_head=marker_head)
+            fok = all(cse.cse_fidelity_ok(c)[0] for c in rw_cses)
+            firm_rec["scripts"][script_src] = {
+                "n_edges": len(rw_cses), "fidelity_ok": fok,
+                "edges": [(c.transformation["subject"].ref, c.transformation["edges"][0].rtype,
+                           c.transformation["edges"][0].target.ref, c.provenance.locus) for c in rw_cses],
+                "unresolved": len(rw_cov.unresolved),
+            }
+            firm_rec["rw_n_edges"] += len(rw_cses)
+            firm_rec["rw_fidelity_ok"] = firm_rec["rw_fidelity_ok"] and fok
+        report["firms"][firm] = firm_rec
+        report["total_edges"] += firm_rec["const_n_edges"] + firm_rec["rw_n_edges"]
+        report["all_fidelity_ok"] = (report["all_fidelity_ok"] and firm_rec["const_fidelity_ok"]
+                                      and firm_rec["rw_fidelity_ok"])
+    return report
+
+
 if __name__ == "__main__":
     rep = parity_run()
     print("=== COMPILERKIT-P1 batch-1 AC2 parity run (recognizers over REAL dispatch source) ===")
@@ -177,5 +379,20 @@ if __name__ == "__main__":
             if s["n_edges"] > 6:
                 print(f"        ... +{s['n_edges'] - 6} more")
     print(f"\n  TOTAL: {rep['total_edges']} edges; all_fidelity_ok={rep['all_fidelity_ok']}")
-    print("  NOTE: full structural diff vs the live extract_pipeline dispatch C1 = the next parity slice.")
-    sys.exit(0 if rep["all_fidelity_ok"] and rep["total_edges"] > 0 else 1)
+
+    rep2 = parity_run_batch2()
+    print("\n=== COMPILERKIT-P1 batch-2 AC2 parity run (S3-key const + read/write over REAL source) ===")
+    print(f"  SCOPE NOTE: {rep2['scope_note']}")
+    for firm, fr in rep2["firms"].items():
+        print(f"\n  firm={firm}: const_edges={fr['const_n_edges']} fidelity_ok={fr['const_fidelity_ok']}")
+        for src, s in fr["scripts"].items():
+            print(f"    {src}: {s['n_edges']} edges, fidelity_ok={s['fidelity_ok']}, unresolved={s['unresolved']}")
+            for subj, rel, tgt, loc in s["edges"]:
+                print(f"        {subj} --{rel}--> {tgt}  @{loc}")
+    print(f"\n  BATCH-2 TOTAL: {rep2['total_edges']} edges; all_fidelity_ok={rep2['all_fidelity_ok']}")
+
+    all_ok = (rep["all_fidelity_ok"] and rep["total_edges"] > 0
+              and rep2["all_fidelity_ok"] and rep2["total_edges"] > 0)
+    print("\n  NOTE: full structural diff vs the live extract_pipeline dispatch C1 = done separately "
+          "(see NFRA_COMPILERKIT deliverables/P1-batch1-structural-parity-diff-20260707.md).")
+    sys.exit(0 if all_ok else 1)
