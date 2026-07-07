@@ -161,15 +161,16 @@ def _blank_tier():
             "read_cases": 0, "struct_leaks": 0, "scored": 0}
 
 
-def run_arm(arm, role, verbose=False):
-    """Run ONE arm ('off'|'on') over the full corpus; return per-tier aggregates + per-case rows."""
+def run_arm(arm, role, verbose=False, relevance_provider=None):
+    """Run ONE arm ('off'|'on') over the full corpus; return per-tier aggregates + per-case rows.
+    relevance_provider (POTION Charter-1) swaps the stage-2 relevance lexical->semantic when passed."""
     provider = _sh.capmap.get_provider()
     cap_write = {c.id: bool(getattr(c, "write_path", False)) for c in provider.capabilities()}
     affinity_provider = CachedAffinityProvider() if arm == "on" else None
     tiers = {t: _blank_tier() for t in ("canon", "diverse", "heldout")}
     rows = []
     for q, accept, tier, kind in _labeled_cases():
-        r, ic = _route_arm(q, provider, affinity_provider, role)
+        r, ic = _route_arm(q, provider, affinity_provider, role, relevance_provider=relevance_provider)
         top, surf = _surfaced(r)
         agg = tiers[tier]
         agg["n"] += 1
@@ -366,6 +367,46 @@ def rank_diagnostic(role="AE", relevance_provider=None):
     }
 
 
+def flip_gate(role="AE", name_boost=0.15):
+    """The 3-criterion SEMANTIC-RELEVANCE flip-gate (POTION design sec-4; CTO order: run AFTER CVO~B's
+    residual cert). Compares LEXICAL vs SEMANTIC relevance (both affinity-off) over the full corpus:
+      (1) net precision@1 GAIN (semantic vs lexical) -- charter-1 alone may NOT meet this (correct cap
+          near-top but not top-1 -> precision unchanged; that is HONEST, top-1 is charter-2's job).
+      (2) ZERO structural-gate regression -- read-intent never surfaces a write_path cap under semantic.
+      (3) E1 bucket phrasings -- the heldout-e1 read probes still surface 0 write_path under semantic.
+    Reports HONESTLY: reachability-improving + E1-fixed + zero-regression is a SAFE base improvement even
+    if precision@1 awaits charter-2 -- do NOT spin near-top as top-1 (CTO)."""
+    from comp_potion_relevance import build_provider
+    rp = build_provider(name_boost=name_boost)
+    if rp is None:
+        return {"error": "semantic provider unavailable (fail-safe) -- cannot run flip-gate"}
+    lex = _summarize(run_arm("off", role, relevance_provider=None)[0])
+    sem = _summarize(run_arm("off", role, relevance_provider=rp)[0])
+    def p1(s, t):
+        return s[t]["precision_at_1_pct"]
+    net_gain = {t: (None if (p1(sem, t) is None or p1(lex, t) is None)
+                    else round(p1(sem, t) - p1(lex, t), 1)) for t in ("canon", "diverse", "heldout")}
+    struct_ok = all(sem[t]["struct_gate_pass"] for t in ("canon", "diverse", "heldout"))
+    any_gain = any((g or 0) > 0 for g in net_gain.values())
+    any_regress = any((g or 0) < 0 for g in net_gain.values())
+    return {
+        "role": role, "name_boost": name_boost,
+        "precision_at_1_lexical": {t: p1(lex, t) for t in ("canon", "diverse", "heldout")},
+        "precision_at_1_semantic": {t: p1(sem, t) for t in ("canon", "diverse", "heldout")},
+        "net_precision_gain_pts": net_gain,
+        "criterion_1_net_precision_gain": ("gain" if any_gain and not any_regress else
+                                           ("regression" if any_regress else "neutral")),
+        "criterion_2_zero_structural_regression": struct_ok,
+        "criterion_3_e1_struct_holds_semantic": struct_ok,   # e1 cases are read-intent struct-only
+        "honest_verdict": (
+            "REGRESSION -> do NOT flip" if any_regress else
+            ("net precision GAIN + zero-regression + E1-holds -> flip-favorable" if any_gain and struct_ok else
+             "SAFE + reachability-improving but precision@1 UNCHANGED (top-1 pending charter-2); "
+             "E1-holds + zero-regression -> a base-safe reachability improvement, NOT a top-1 delivery "
+             "(CTO judges the flip on this honest state)")),
+    }
+
+
 def affinity_reach_diagnostic(role="AE"):
     """THE load-bearing C1 finding, made reproducible: quantify WHERE affinity can act. A top routed
     in the VETTED band [1.0,2.0) is affinity-IMMUNE (the band structurally pre-empts the base posterior
@@ -468,6 +509,8 @@ def main():
                          "(re-run post-base-fix for the residual = charter-2's target)")
     ap.add_argument("--semantic", action="store_true",
                     help="POTION Charter-1: use the semantic relevance provider (full-posterior) for --rank")
+    ap.add_argument("--flip-gate", action="store_true",
+                    help="POTION 3-criterion flip-gate: lexical vs semantic precision + struct-regression (run AFTER CVO residual cert)")
     ap.add_argument("--name-boost", type=float, default=0.15,
                     help="lexical-exact-NAME secondary boost for the semantic arm (default 0.15)")
     ap.add_argument("--verbose", action="store_true")
@@ -478,6 +521,9 @@ def main():
         return
     if args.diagnostic:
         print(json.dumps(affinity_reach_diagnostic(role=args.role), indent=1))
+        return
+    if args.flip_gate:
+        print(json.dumps(flip_gate(role=args.role, name_boost=args.name_boost), indent=1))
         return
     if args.rank:
         rp = None
