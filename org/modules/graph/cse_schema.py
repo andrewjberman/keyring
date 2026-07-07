@@ -580,11 +580,35 @@ def _pull_live_types():
     import json
     import subprocess
 
+    # Resolve the workspace root (walk up for .tools/comp-kuzu) so the wrapper is invokable
+    # regardless of CWD. comp-kuzu is a bash wrapper (.tools/comp-kuzu) around kuzu_cli.py; invoke
+    # it via bash (resolves its venv/env) -- more reliable than spawning the bare PATH name on
+    # Windows. Falls back to kuzu_cli.py via the current interpreter if the wrapper path is absent.
+    _ws = os.path.abspath(os.path.dirname(__file__))
+    for _ in range(8):
+        if os.path.isfile(os.path.join(_ws, ".tools", "comp-kuzu")):
+            break
+        _ws = os.path.dirname(_ws)
+    _wrapper = os.path.join(_ws, ".tools", "comp-kuzu")
+    _cli = os.path.join(_ws, "infra", "aws", "globgrph", "kuzu_cli.py")
+
     def _q(cypher):
-        try:
-            out = subprocess.run(["comp-kuzu", "--json", cypher], capture_output=True, text=True, timeout=180)
-        except Exception as ex:
-            raise LivePullError(f"comp-kuzu invocation failed: {ex}")
+        cmds = []
+        if os.path.isfile(_wrapper):
+            cmds.append(["bash", _wrapper, "--json", cypher])
+        if os.path.isfile(_cli):
+            cmds.append([sys.executable, _cli, "--json", cypher])
+        out = None
+        last = None
+        for cmd in cmds:
+            try:
+                out = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
+                if out.stdout.find("[") >= 0:
+                    break
+            except Exception as ex:
+                last = ex
+        if out is None:
+            raise LivePullError(f"comp-kuzu invocation failed (no wrapper/cli found or spawnable): {last}")
         # --json prints a provenance preamble then a JSON array; slice from the first '['.
         s = out.stdout
         i = s.find("[")
