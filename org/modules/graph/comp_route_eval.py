@@ -367,6 +367,72 @@ def rank_diagnostic(role="AE", relevance_provider=None):
     }
 
 
+# Adversarial READ intents deliberately worded to SEMANTICALLY associate with write_path caps
+# (comp-aws-derive rebuilds the estate graph; comp-build rebuilds caches) -- the inverse of the
+# comp-secrets false-friend (CTO 075741Z): a semantic embedder could pull a WRITE cap for a READ intent.
+# The E1 theorem (read-never-surfaces-write_path) must hold under the semantic+shape-B blend.
+_E1_ADVERSARIAL_READ = [
+    "what lambdas read from the opal-data-bd bucket",
+    "show me the current estate graph topology",
+    "what is in the trace graph cache right now",
+    "which functions read the cot silver tables",
+    "what does the estate graph say this lambda depends on",
+    "is the cloud graph up to date or does it need attention",
+    "what reads from the inflection output bucket",
+]
+
+
+def e1_blend_confirm(role="AE", name_boost=0.15):
+    """CTO flip-gate structural confirm (075741Z): read-never-surfaces-write_path (E1 theorem) MUST hold
+    under the semantic + SHAPE-B blend. EXERCISES (not asserts) adversarial READ intents worded to
+    semantically pull a write_path cap; confirms 0 write_path caps are surfaced (top-1 OR within-margin)
+    for any read/navigate intent. Structurally Stage-A pre-filters write_path caps before _score_one, so
+    the relevance signal never scores them -- this run PROVES it under the live blend."""
+    from comp_potion_relevance import build_provider
+    rp = build_provider(name_boost=name_boost, blend=True)
+    if rp is None:
+        return {"error": "semantic provider unavailable"}
+    provider = _sh.capmap.get_provider()
+    cap_write = {c.id: bool(getattr(c, "write_path", False)) for c in provider.capabilities()}
+    n_wp = sum(1 for v in cap_write.values() if v)
+    # NAME-heuristic backstop: the live provider tags only comp-build write_path, but write-CAPABLE caps
+    # (comp-aws-derive/comp-build/comp-lambdamap rebuild-write) could exist untagged -> also flag any
+    # surfaced cap whose id implies a write/derive/rebuild action, so the confirm is not blind to a
+    # tagging gap. (A hit here is a manifest-tagging FINDING for the surface owner, not an E1 pass/fail.)
+    _WRITEISH = ("derive", "rebuild", "-write")
+    leaks, name_flags, rows, read_intents = [], [], [], 0
+    probes = list(_E1_ADVERSARIAL_READ) + list(_HELDOUT_E1) + [q for q, _ in _TAIL]
+    for q in probes:
+        r, ic = _route_arm(q, provider, None, role, relevance_provider=rp)
+        if ic not in ("read", "navigate"):
+            rows.append({"q": q[:48], "ic": ic, "checked": False})
+            continue
+        read_intents += 1
+        within = [s.cap.id for s in r.within_margin]
+        top = r.ranked[0].cap.id if (r.ranked and r.kind != "fallback") else None
+        surfaced = set(within) | ({top} if top else set())
+        wp = [c for c in surfaced if cap_write.get(c, False)]
+        nameish = [c for c in surfaced if any(k in c for k in _WRITEISH)]
+        if wp:
+            leaks.append({"q": q[:48], "write_path_surfaced": wp})
+        if nameish:
+            name_flags.append({"q": q[:48], "writeish_name_surfaced": nameish})
+        rows.append({"q": q[:48], "ic": ic, "top": top, "write_path_surfaced": wp, "checked": True})
+    return {
+        "role": role, "blend": "semantic + shape-B preserve",
+        "write_path_caps_in_registry": n_wp,
+        "read_navigate_intents_exercised": read_intents,
+        "write_path_surfacings": len(leaks),
+        "writeish_name_surfacings_backstop": len(name_flags),
+        "e1_theorem_holds_under_blend": (len(leaks) == 0 and len(name_flags) == 0),
+        "leaks": leaks,
+        "name_flags": name_flags,
+        "mechanism": "Stage-A read-eligible pre-filter (comp_route.py:321) drops write_path caps BEFORE "
+                     "the relevance scoring -> semantic never scores a write_path cap for a read intent",
+        "rows": rows,
+    }
+
+
 def posterior_preserve_measure(role="AE", name_boost=0.15, shape="A"):
     """The two CTO-ruled structural preserve shapes (075102Z), measured per-case BOTH WAYS. Preserve the
     current lexical-POSTERIOR top-1 (comp-pii is PRIOR-driven, so a lexical-only pin misses it -- CVO~B
@@ -648,6 +714,8 @@ def main():
                     help="CVO~B per-case table: lexical vs arm rank/top1 per tail case (demotion gate)")
     ap.add_argument("--preserve", action="store_true",
                     help="CTO's TWO structural preserve shapes (A narrow / B broad), per-case both-ways")
+    ap.add_argument("--e1-blend", action="store_true",
+                    help="CTO flip-gate confirm: read-never-surfaces-write_path (E1) holds under the semantic+shape-B blend")
     ap.add_argument("--name-boost", type=float, default=0.15,
                     help="lexical-exact-NAME secondary boost for the semantic arm (default 0.15)")
     ap.add_argument("--verbose", action="store_true")
@@ -661,6 +729,10 @@ def main():
         return
     if args.flip_gate:
         print(json.dumps(flip_gate(role=args.role, name_boost=args.name_boost), indent=1))
+        return
+    if args.e1_blend:
+        res = e1_blend_confirm(role=args.role, name_boost=args.name_boost)
+        print(json.dumps({k: v for k, v in res.items() if k != "rows"}, indent=1))
         return
     if args.preserve:
         for shp in ("A", "B"):
