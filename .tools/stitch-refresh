@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+# =============================================================================
+# stitch-refresh -- LOCAL producer for the NFRA_GLOBGRPH cross-layer stitch graph.
+# =============================================================================
+#
+# Replaces the cloud stitch-produce (GH-Action source-zip -> S3 -> nightly CodeBuild).
+# Andrew-direct 2026-07-07: for a SOLO contributor whose local working tree IS the
+# canonical state, the derivation should read the local repo directly -- the entire
+# cloud apparatus existed only to get repo source to a repo-less cloud runner, a
+# problem that does not exist when you run where the source already lives. This
+# deletes the GH-Action + CodeBuild + EventBridge + GHA-OIDC roles + the
+# PORTAL_REPO_PAT / .gitmodules-second-checkout saga.
+#
+# What it does (identical to the retired CodeBuild buildspec, minus the cloud):
+#   1. python3 derive_stitch.py  -- reads the LOCAL repo (portal + pipeline scripts +
+#      graph modules) + fetches the AWS-resource snapshot from S3 -> stitch_graph.json.
+#   2. build the marker (schema-identical to the old buildspec; producer=stitch-local).
+#   3. publish artifact FIRST (complete), marker LAST (the atomic commit point) to
+#      s3://opal-313476888478-globgrph/stitch/ -- the SAME keys + schema the future
+#      0.8.0 comp-debt ensure_fresh consumer expects (contract preserved).
+#
+# derive_stitch exit-code semantics (relied on here):
+#   2 = grain-sentinel FAIL (no artifact written -> refuse to publish, hard abort)
+#   1 = wrote artifact but has pre-existing AWS-snapshot dangling edges (soft; a
+#       globgrph item-2a snapshot-completeness property, NOT a stitch defect -> publish)
+#   0 = clean
+#
+# Invoked on-demand or by the post-commit hook (stitch-refresh-post-commit.sh) when a
+# commit touches something the code-layer derive reads. Rule 16: Git Bash 3.6.7 default
+# utils only.
+# =============================================================================
+set -u
+
+WS="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+BUCKET="opal-313476888478-globgrph"
+ART_KEY="stitch/stitch_graph.json"
+MRK_KEY="stitch/stitch_marker.json"
+TMP="${TMPDIR:-/tmp}"
+ART="$TMP/stitch_graph.json"
+MRK="$TMP/stitch_marker.json"
+
+cd "$WS" || { echo "ERROR: cannot cd to workspace root $WS" >&2; exit 1; }
+
+# 1) derive -- reads local repo + fetches the AWS snapshot from S3.
+python3 infra/aws/globgrph/derive_stitch.py --out "$ART"
+rc=$?
+if [ "$rc" = "2" ]; then
+  echo "ERROR: grain-sentinel FAIL -- refusing to publish a grain-violating stitch (no artifact)." >&2
+  exit 2
+fi
+if [ ! -s "$ART" ]; then
+  echo "ERROR: no stitch artifact produced (rc=$rc)." >&2
+  exit 1
+fi
+if [ "$rc" = "1" ]; then
+  echo "WARN: publishing with pre-existing AWS-snapshot dangling edges (rc=1) -- a globgrph snapshot-completeness property, not a stitch defect."
+fi
+
+# 2) marker -- schema-identical to the retired CodeBuild buildspec; producer=stitch-local.
+GIT_SHA="$(git rev-parse HEAD 2>/dev/null || echo unknown)"
+python3 - "$ART" "$MRK" "$GIT_SHA" <<'PY'
+import json, hashlib, sys, datetime
+art, mrk, git_sha = sys.argv[1], sys.argv[2], sys.argv[3]
+g = json.load(open(art, encoding="utf-8"))
+meta = g.get("meta", {})
+sha = hashlib.sha256(open(art, "rb").read()).hexdigest()
+marker = {
+    "built_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    "aws_snapshot": meta.get("aws_snapshot"),
+    "git_sha": git_sha,
+    "producer": "stitch-local",
+    "total_nodes": meta.get("total_nodes"),
+    "total_edges": meta.get("total_edges"),
+    "artifact_sha256": sha,
+}
+json.dump(marker, open(mrk, "w", encoding="utf-8"), indent=2)
+print("marker:", json.dumps(marker))
+PY
+[ -s "$MRK" ] || { echo "ERROR: marker build failed." >&2; exit 1; }
+
+# 3) publish -- artifact FIRST (complete), marker LAST (the commit point). 0.8.0 contract.
+aws s3 cp "$ART" "s3://$BUCKET/$ART_KEY" --quiet || { echo "ERROR: artifact upload failed." >&2; exit 1; }
+aws s3 cp "$MRK" "s3://$BUCKET/$MRK_KEY" --quiet || {
+  echo "ERROR: marker upload failed (artifact landed; marker is the commit point, so a consumer stays BEHIND -- safe, not half-published)." >&2
+  exit 1
+}
+echo "OK: stitch published local (artifact-first, marker-last) -> s3://$BUCKET/$ART_KEY (nodes/edges in marker)"
