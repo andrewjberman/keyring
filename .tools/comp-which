@@ -636,6 +636,39 @@ def _posterior_backstop(q: str, term) -> bool:
     return True
 
 
+def _shape_b_relevance_route(comp_route, _sig, provider, q, ctx):
+    """NFRA_COMPROUTE Charter-1 LIVE FLIP (CTO-authorized 20260707T080634Z, CVO~B E1 PASS 0fd19f02c):
+    the POTION semantic-relevance + SHAPE-B preserve blend. Swaps the stage-2 LEXICAL relevance for POTION
+    semantic cosine (fixes the oblique-intent rank-11 burial -> the correct cap becomes reachable ~rank-4)
+    with the SHAPE-B current-posterior confident-top-1 PRESERVE (guards semantic's security false-friends,
+    e.g. comp-secrets for a PII-masking intent -- comp-pii stays top-1). Structural gates UNCHANGED; E1
+    holds BY CONSTRUCTION (Stage-A drops write_path caps PRE-relevance -- CTO source-verified).
+    FAIL-SAFE (CTO condition-2, NON-NEGOTIABLE): POTION load-fail -> build_provider returns None + ALARM ->
+    LEXICAL route (valid-if-weaker); ANY 2-pass error -> LEXICAL route; the semantic swap NEVER crashes
+    comp-which. Vetted-top cases are relevance-subordinate -> the blend == lexical there (0 regression)."""
+    def _route(rp):
+        return comp_route.route(q, ctx, provider, extractors=_sig.EXTRACTORS,
+                                affinity_provider=_affinity_provider(), relevance_provider=rp)
+    try:
+        from comp_potion_relevance import build_provider
+        blend = build_provider(blend=True)          # None on POTION load-fail (alarm emitted) -> lexical
+        if blend is None:
+            return _route(None)
+        r_lex = _route(None)                        # PASS 1 (lexical) -> current-posterior top-1 (Shape-B)
+        top = getattr(r_lex, "ranked", None) or []
+        if top and (not getattr(top[0], "vetted", False)) and getattr(r_lex, "kind", "") != "fallback":
+            l1 = top[0].cap.id
+            sep = (top[0].score - top[1].score) if len(top) > 1 else top[0].score
+            gaps = [top[i].score - top[i + 1].score for i in range(min(len(top), 20) - 1)]
+            med = sorted(gaps)[len(gaps) // 2] if gaps else 0.0
+            blend.set_pin(l1 if sep > med else None)   # confident current top-1 -> preserve; else no pin
+        else:
+            blend.set_pin(None)                     # vetted top -> relevance subordinate -> no pin
+        return _route(blend)                        # PASS 2 (semantic + Shape-B preserve)
+    except Exception:
+        return _route(None)                         # ANY failure -> lexical (fail-safe; outer try -> cascade)
+
+
 def _default_router(q, qtok, hits, term, list_intent):
     """NFRA_COMPROUTE DR2 FLIP (CVO~B DRV cert 4c1d93be5, shadow-GREEN): comp_route is now the DEFAULT
     router. Runs comp_route.route() + the SignalExtractors (curated/surface-first VETTED, fuzzy soft/
@@ -655,7 +688,7 @@ def _default_router(q, qtok, hits, term, list_intent):
         provider = _capmap.get_provider()
         ctx = {"role": "", "working_set": [], "trajectory": [],
                "intent_class": _sig.classify_query_intent(q)}
-        r = comp_route.route(q, ctx, provider, extractors=_sig.EXTRACTORS, affinity_provider=_affinity_provider())
+        r = _shape_b_relevance_route(comp_route, _sig, provider, q, ctx)  # Charter-1 FLIP: POTION semantic + Shape-B (fail-safe -> lexical)
         _emit_training_row(getattr(r, "training_row", {}))  # flywheel: every LIVE route -> COMPLEARN (~E ingest)
     except Exception:  # fail-safe -> legacy cascade
         return None
