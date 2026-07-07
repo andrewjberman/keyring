@@ -102,6 +102,19 @@ surfaces:
       served_buckets: ["opal-data-mdpf", "opal-data-portal-v2"]
       serving_lambdas: ["opal-portal-data-proxy"]
 
+  # ---- SEV2: internal compiler mechanism (not a product/dashboard surface -- no firm/AWS-backend
+  # carve applies; watched purely via the carve-text path-token extraction comp-surface-check's
+  # load_surfaces() already does for any surface, product or not) ----
+  - id: compilerkit.promote_seam
+    severity: SEV2
+    firms: n/a
+    carve:
+      frontend_root: "N/A -- not a product surface; an internal COMPILERKIT compiler mechanism"
+      backend_chain: "the PROMOTE-materialized-recognizer -> live-COMPILERKIT hot-registration seam: org/modules/graph/comp_recognizer_sdk.py (RecognizerRegistry.register/deregister/reload; the PROMOTE_SEAM named constant) <- consumed by org/modules/graph/comp_recognizers_code.py + comp_recognizers_ticket.py. A silent break here means a promoted recognizer fails to take effect (or a bad promotion fails to reverse) with no signal."
+      backend_depth: n/a
+      frontend_depth: n/a
+    why: "NFRA_SEMCTL.GOV-B (CTO/COO 2026-07-07): comp_recognizer_sdk.py's own PROMOTE_SEAM docstring names this as a critical surface (\"a silent no-op registration... is CAUGHT\"); this entry is comp-surface-check actually watching it, per GOV-B req#2. SEV2 (warn on touch, not block-with-ack) -- an internal compiler-registry mechanism, not client-facing."
+
 monitor:
   severity_resolution: "a node carved into MULTIPLE surfaces takes the MAX severity of its containing surfaces (block-with-ack wins over warn). LOAD-BEARING, not theoretical: model_portfolios.headline (SEV1) and model_portfolios.aum (SEV2) share substantially the same aum.ts backend chain -- without this rule comp-surface-check behavior on those shared nodes is ambiguous. [v0.3 CTO carve-review]"
   commit_gate:
