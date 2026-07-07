@@ -231,8 +231,45 @@ class S3KeyReadWriteRecognizer(Recognizer):
         )]
 
 
+class GoldDirectInvokeRecognizer(Recognizer):
+    """Compiler #1 -- the gold_dispatch DIRECT-invoke leg (DEBTSCAN reachability FP-root-fix #2; DS~A-authored
+    logic in extract_pipeline.parse_gold_direct_invoke, commit 75d93eaf7, SDK-ported here). Catches the
+    `python3 "$SCRIPTS/<x>.py"` invokes OUTSIDE the CATALOG heredoc (the Wed-conditional gldinc_ss4c_weekly
+    leg + co-dispatched diagnostics: diag_gold_silver_recon / gold_prof / runner-telemetry) that both the
+    CATALOG recognizer AND the daily CHAIN parse miss -> they read isolated (the ss4c-dangle). REPRODUCES the
+    current-C1 edges the legacy parse_gold_direct_invoke + inject_pipeline_edges emit, so the parity-oracle no
+    longer regresses BD's direct-invoke edges. Disjoint from the CATALOG pattern (a CATALOG row is
+    `ID|file.py|flags`, never a `python3 $SCRIPTS/` line) and from the dispatch loop (which invokes via the
+    `$filename` VARIABLE, not a literal `.py`) -> no double-count. Same regex as the legacy, byte-for-byte."""
+
+    artifact_class = "bash"
+    concept = "gold-direct-invoke"
+    requires = FrontEndCapability.RAW_TEXT
+    compiler_id = "code-compiler"
+
+    _INVOKE = re.compile(r'python3\s+"?\$\{?SCRIPTS\}?/(\S+?\.py)"?')   # == extract_pipeline.parse_gold_direct_invoke
+
+    def iter_sites(self, tree):
+        for m in self._INVOKE.finditer(tree.text):
+            yield Site(source=tree.source, locus=locus_at(tree.text, m.start()),
+                       evidence=m.group(0).strip(), payload={"relpath": m.group(1)})
+
+    def emit(self, site, tree, *, marker_head):
+        script = Path(site.payload["relpath"]).stem
+        firm = _firm_from_source(site.source)
+        prov = Provenance(source=site.source, locus=site.locus, recognizer=self.concept, evidence=site.evidence)
+        return [emit_cse(
+            verb=Transformation.CREATE.value,
+            subject=EntityRef(Entity.SERVICE.value, f"dispatch:{firm}:{Path(site.source).stem}"),
+            edges=[RelationshipDelta(Relationship.TRIGGERS.value,
+                                     EntityRef(Entity.MODULE.value, f"gold:{firm}:{script}"))],
+            provenance=prov, confidence=1.0, marker_head=marker_head,
+            producer_kind=self.producer_kind, compiler_id=self.compiler_id, artifact_class=self.artifact_class,
+        )]
+
+
 # The compiler-#1 recognizer set. register_all() wires them into a registry (the SDK hot-register seam).
-BATCH1 = [DispatchCatalogRecognizer, MdpfDispatchRecognizer]
+BATCH1 = [DispatchCatalogRecognizer, MdpfDispatchRecognizer, GoldDirectInvokeRecognizer]
 BATCH2 = [S3KeyConstRecognizer, S3KeyReadWriteRecognizer]
 
 
@@ -254,6 +291,11 @@ _REAL_SOURCES = {
         "data/cot/scripts/gold/gold_dispatch.sh",
     ],
     "mdpf-ec2-dispatch": ["infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh"],
+    # BD only -- matches the legacy parse_gold_direct_invoke's BD-only scope (what current C1 actually
+    # contains). cot's gold_dispatch.sh also has direct invokes (gldinc_p1_shadow + diagnostics) but they
+    # are NOT in current C1 (legacy never parsed cot) -> emitting them would be a superset, not a
+    # reproduction. cot direct-invoke is a flagged deferred extension (mirrors batch-2's cot deferral).
+    "gold-direct-invoke": ["data/black_diamond/scripts/gold/gold_dispatch.sh"],
 }
 
 
