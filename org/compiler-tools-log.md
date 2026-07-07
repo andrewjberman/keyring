@@ -13393,3 +13393,99 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3_BUCKET' AND NOT EXISTS { MATCH (n)-... | PASS |
 | 2026-07-07 | 3.0.0_SA_CVO~B | comp_route_eval.py (--self-test/--arm both/--diagnostic/--roles/--tail) + leave-out re-measure + CachedAffinityProvider probe + live aws (iam get-role-policy/sts assume-role/sqs receive-message) | DRV-flip tail-efficacy sign-cert (HOLD-FLIP) + C1 label bless + AGENTBUS control-1 live re-verify | reproduced ~E evals exactly; leave-out exposed CVO-contamination (AE +18.2->+0.0) + cold-start -11.1; live AccessDenied partition deny confirmed | comp-grep auto-logged separately |
 | 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'AuthContext' RETURN n.no... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE NOT EXI... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (e.props CONTAI... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='FLOWS_TO' AND e.props CO... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (rc:CloudNode) WHERE rc.node_type='ReactComponent' RETURN rc.nod... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='IN... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (p:CloudNode) WHERE p.node_type='Page' RETURN p.node_id AS id, p... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (rc:CloudNode) WHERE rc.node_type='ReactComponent' OPTIONAL MATC... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='PR... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e1:CloudEdge]->(m:CloudNode)-[e2:CloudEdge]->(b:C... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (ep:CloudNode) WHERE ep.node_type='Endpoint' OPTIONAL MATCH (h:C... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (rc:CloudNode) WHERE rc.node_type='ReactComponent' OPTIONAL MATC... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FL... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FL... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (e.edge_type='F... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (ep:CloudNode) WHERE ep.node_type='Endpoint' OPTIONAL MATCH (h:C... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e1:CloudEdge]->(b:CloudNode)-[e2:CloudEdge]->(c:C... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (jr:CloudNode)-[e:CloudEdge]->(f:CloudNode) WHERE e.edge_type='R... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPPROOF.json --file... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/NFRA_SCTY_C... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (p:CloudNode)-[e:CloudEdge]-(x:CloudNode) WHERE p.node_type='Pag... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (jr:CloudNode)-[e:CloudEdge]->(f:CloudNode) WHERE e.edge_type='R... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (jr:CloudNode)-[e:CloudEdge]->(f:CloudNode) WHERE e.edge_type='R... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route_eval.py | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/tsgraph_detectors.ya... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/D3_canon_mot... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/conf... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_detectors.yaml | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/comp_debt_st... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws derive --help | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/potion/MANIFEST.json ... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FL... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FL... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (rc:CloudNode) WHERE rc.node_type='ReactComponent' OPTIONAL MATC... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (ep:CloudNode) WHERE ep.node_type='Endpoint' OPTIONAL MATCH (h:C... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (jr:CloudNode)-[e:CloudEdge]->(f:CloudNode) WHERE e.edge_type='R... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | NFRA_COMPAWS | comp-iam | comp-iam gaps | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/conf... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_potion_relevance... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | NFRA_COMPAWS | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/item2a.tf | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws derive --out C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route_eval.py | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws derive --out C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_potion_relevance... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (d)-[r:TRIGGERS]->(s) WHERE... | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (s) WHERE s.node_id IN ['go... | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db CALL show_tables() RETURN name, type | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH ()-[r:CloudEdge]->(s:CloudN... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (s:CloudNode) WHERE s.node_... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | NFRA_COMPAWS | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/suppression_... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/runbooks/m365-gateway-readonly-sco... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json --file ... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_potion_relevance... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route_eval.py | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/scty-p... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check | FAIL |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/conf... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check | FAIL |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/comp_detect.py --fil... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json --file ... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+- 2026-07-07 0.7.0_AE_CloudOps~A: SCTY_PREMCP P1 app-stack (6 controls). ds-commit-gate PASS (all .py edits: config/token_broker/ratelimit/server); safe-ec2-deploy x2 (L2-p1, C1/C2) + SSM md5 on-box verify; deploy_ledger open/close (C1/C2 CLOSED, L2-p1 L4 ext-gate). Rail respected (native Grep/Read + rail-checked where no comp-tool fit; operational SSM off-rail). Gap: safe-ec2-deploy auto-record mis-derives deployed_by 5x.
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
