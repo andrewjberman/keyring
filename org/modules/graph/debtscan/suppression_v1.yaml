@@ -289,61 +289,68 @@ suppression_classes:
   # ---------- Reachability by-design-EDGELESS family (CVO adjudication 2026-07-07) ----------
   # The 07-07 comp-debt standing-scan surfaced 23 residuals; the dispatch-GAP ones (MDPF-runner /
   # ss4c-weekly / lambda-reads) are RECOGNIZER-fixed (DS~A lane), NOT suppressed. These three cover
-  # the genuinely by-design-EDGELESS scripts: a gate/util/one-shot correctly has NO output-edge.
-  # NAMED-not-globbed where practical (active-flag contract: a NEW validator/util surfaces for its
-  # own adjudication, never auto-masked). Full grounding: cvo_NFRA_DEBTSCAN_comp-debt_23-residual_adjudication.md.
+  # the genuinely by-design-EDGELESS scripts: a gate/util/one-shot correctly sits ISOLATED (0-edge) in
+  # the daily-dispatch DAG. ENGINE MECHANISM (verified vs comp_debt.py:_suppressed_by, 2026-07-07):
+  # the D1 sweep only ever surfaces ISOLATED (0-edge, BOTH directions) script-level GOLD_SCRIPT nodes;
+  # a class clears one iff (node_type in affected_types) AND (a name_patterns entry re.search-matches the
+  # node_id, `gold:`-prefix included). The engine reads ONLY id/affected_types/filter=="isolated_only"/
+  # name_patterns -- `reason`/`cannot_mask`/`review_note`/`evidence` are DOC-ONLY (CTO cond-1 auditability),
+  # and `filter` here is omitted (the engine's only live filter token is "isolated_only", which the sweep
+  # already implies). The cannot-mask guarantee is therefore NAMING, not any output-vs-input distinction:
+  # only a ground-truthed name clears; a NEW validator/util surfaces as a residual for its own adjudication
+  # (active-flag contract). Full grounding: cvo_NFRA_DEBTSCAN_comp-debt_23-residual_adjudication.md.
 
   - id: FP_VALIDATION_SCRIPT
     reason: >
-      A validator/gate script produces NO scheduled S3 pipeline output BY DESIGN -- it gates
-      (rc=1 fail-closed), it does not publish. So a 0-output-edge reading is EXPECTED, not orphan.
+      A validator/gate script is by design ISOLATED in the daily-dispatch DAG -- it gates (rc=1
+      fail-closed) and publishes no scheduled S3 output, so a 0-edge reading is EXPECTED, not orphan.
       CVO ground-truthed (2026-07-07): I certed validate_schwab_native_custody tonight (a fail-closed
-      MDPF custody gate, zero S3 write); the others are the same family.
+      MDPF custody gate, zero S3 write); the other three are the same family.
     affected_types: [GOLD_SCRIPT]
     name_patterns:   # NAMED (not a validate_*/*_gate glob) -- a NEW validator adjudicates separately
       - validate_schwab_native_custody
       - validate_platinum_consistency
       - sl_nightly_gate
       - verify_wsd2
-    filter: no_output_edge_only   # suppress ONLY the missing-OUTPUT finding -- an un-DISPATCHED validator
-                                  # surfaces as a no-INPUT/unreachable finding (a different type) -> not masked
     cannot_mask: >
-      a real orphan (a script that SHOULD publish but does not) is not one of these named gates; and an
-      un-dispatched validator is a no-INPUT finding this output-only filter does not touch.
+      NAMED-specific -- ONLY these 4 ground-truthed by-design gates clear (each is an isolated-by-design
+      gate: certed schwab). Any OTHER validator, incl. one that SHOULD be dispatched but is not, does not
+      match -> it surfaces as a residual for its own adjudication (active-flag contract). So no real orphan
+      can hide behind this class -- broadening to a validate_* glob (which COULD auto-mask a future
+      un-ruled validator) was deliberately declined.
     evidence: CVO comp-debt adjudication 2026-07-07 (schwab gate certed tonight)
 
   - id: FP_BACKFILL_SCRIPT
     reason: >
-      A one-shot historical backfill / one-time data patch is EDGELESS in the DAILY-dispatch graph
-      BY DESIGN (it ran once, it is not a daily chain member). So a 0-dispatch-edge reading is a
-      reachability FP, not a live orphan. SCOPE: this suppresses the REACHABILITY finding only. It
-      does NOT assert the backfill is non-obsolete -- whether a specific one-time patch (e.g. a
-      patch_mdpf_* whose fix is now superseded) is REMOVABLE is a SEPARATE cleanup/obsolescence
-      dimension, not a reachability finding; route those to a cleanup-sweep, not this class.
+      A one-shot historical backfill / one-time data patch is ISOLATED in the DAILY-dispatch DAG BY
+      DESIGN (it ran once; it is not a daily chain member), so a 0-edge reading is a reachability FP,
+      not a live orphan. SCOPE: this clears the REACHABILITY residual ONLY. It does NOT assert the
+      backfill is non-obsolete -- whether a specific one-time patch (e.g. a patch_mdpf_* whose fix is
+      now superseded) is REMOVABLE is a SEPARATE cleanup/obsolescence dimension, not a reachability
+      finding; route those to a cleanup-sweep, not this class.
     affected_types: [GOLD_SCRIPT]
-    name_patterns:   # naming convention IS the structural one-shot signal (cf. FP_DIAG_ADHOC's E_* )
+    name_patterns:   # regex (engine uses re.search); naming convention IS the one-shot signal (cf. FP_DIAG_ADHOC E_*)
       - ".*_backfill.*"
       - "patch_mdpf_.*"
-    filter: no_dispatch_edge_only
     cannot_mask: >
-      a script that SHOULD be daily-dispatched is not named *_backfill/patch_* (those names signal
-      one-shot intent by construction); a genuinely-orphan daily script has a normal gold name and
-      does not match. (If a new one-shot naming appears, it is an explicit auditable edit here.)
-    review_note: obsolescence of a specific patch_mdpf_* is a SEPARATE cleanup dimension -- not masked-as-fine
+      a script that SHOULD be daily-dispatched is not named *_backfill/patch_mdpf_* -- those names signal
+      one-shot intent BY CONSTRUCTION; a genuinely-orphaned daily script carries a normal gold name and
+      does not match. A new one-shot naming would be an explicit, auditable edit here.
+    review_note: obsolescence of a specific patch_mdpf_* is a SEPARATE cleanup dimension -- not masked-as-fine-forever
     evidence: CVO comp-debt adjudication 2026-07-07
 
   - id: FP_UTIL
     reason: >
-      A shared util/lib function (leading-underscore internal-helper) is imported by dispatched
-      scripts, not itself a dispatch target -- so it has no dispatch/output edge by design.
-      CVO ground-truthed: _trading_day_calendar is imported by build_mdpf_etf_ownership_timeseries
-      (dispatched) -- a NYSE-calendar helper, benign.
+      A shared util/lib helper (leading-underscore internal) is imported by dispatched scripts, not
+      itself a dispatch target -- so it sits isolated in the daily DAG by design. CVO ground-truthed:
+      _trading_day_calendar is imported by build_mdpf_etf_ownership_timeseries (dispatched) -- a
+      NYSE-calendar helper, benign.
     affected_types: [GOLD_SCRIPT]
-    name_patterns:   # NAMED specific -- a new util adjudicates separately
+    name_patterns:   # NAMED specific (engine re.search) -- a new util adjudicates separately
       - _trading_day_calendar
     cannot_mask: >
-      a real orphan is a standalone script; a leading-underscore helper imported by a live consumer
-      is reachable transitively -- this named entry covers exactly the ground-truthed util.
+      a real orphan is a standalone script; a leading-underscore helper imported by a live consumer is
+      reachable transitively. This single named entry covers exactly the one ground-truthed util -- no glob.
     evidence: CVO comp-debt adjudication 2026-07-07 (imported build_mdpf_etf_ownership_timeseries)
 
 # ---------------------------------------------------------------------------
