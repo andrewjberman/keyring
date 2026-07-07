@@ -13573,3 +13573,9 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/fedobs/README.md --f... | PASS |
 | 2026-07-07 | 0.4.0_DS_ClientPlatform~A | NFRA_DEBTSCAN+TSGRAPH+COMPILERKIT | comp-kuzu + derive_stitch + comp_detect/canon_motif/comp_debt | D1 stitch regen->73 dispatcher edges live (structural promote); 3 tool-builds independent-census-validated; rail-checked raw for silver-dim mtimes | PASS |
 | 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE.P1 | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE.P1 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t ORDER BY t LIMIT 3 | FAIL |
+- 2026-07-07 0.7.0_AE_CloudOps~A: mis-attribution twins fix + C3-WAF CC. Rail respected (native Grep/Read for code-symbol lookups; git check-ignore/ls-files + install-telemetry-hook header surfaced the canonical-vs-install-target lane boundary; operational git/SSM off-rail). bash -n on both hook fixes (clean). No comp-graph deploy tool this window (infra-script fixes, not an EC2/Lambda deploy).
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
