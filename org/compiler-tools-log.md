@@ -13509,3 +13509,67 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | NFRA_TOOLHEALTH.TH-C.clause-B | comp_route.route (live) | clause-B causal chain: comp-depth PROMOTE -> surface_prior(w_s) +0.9 bump -> live route flip top1 comp-chainrun->comp-depth (rank 6->0), role=AE; neg-control holds | PASS |
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/comp_detect.py | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_ladder.py | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_ladder.py | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/hooks/post-tool-telemetry.sh | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/canon_motif_... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/post-tool-telemetry.sh | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPILERKIT_PRD.... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/canon_motif_scorer.py | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | SCTY_PREMCP | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/m365-mcp-gateway/wa... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-canon-motif | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | SCTY_PREMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TOOLHEALTH.json --fil... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPILERKIT.json --fi... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/comp_debt.py | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_CSE_algebra_sche... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (s:CloudNode) WHERE s.node_... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_... | FAIL |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_CSE.CSE-P1.ae-store-consult | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-cse-store-readiness-ae... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_CSE.CSE-P1.ae-store-consult | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cse_schema.py | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/ajb.ps1 --file org/tier0/ledger/... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-fedobs-p1-core-design-... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/comp_debt.py | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route_outcome.py | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route_affinity_i... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route_outcome.py | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE.P1 | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT n.type AS t ORDER BY t | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE.P1 | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE.P1 | comp-kuzu | comp-kuzu CALL table_info('CloudNode') RETURN * | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE.P1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t ORDER BY t | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE.P1 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS t ORDER BY t | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/fedobs/README.md --f... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | pipescript | pipescript --list | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | pipescript | pipescript --resource opal-data-portal-v2 | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | pipescript | pipescript mdpf --json | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | pipescript | pipescript --resource opal-data-portal-v2 | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | pipescript | pipescript --resource opal-data-mdpf | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | pipescript | pipescript --resource opal-portal-market-data | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | pipescript | pipescript --resource opal-data-bd | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | pipescript | pipescript --resource opal-data-cot | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | pipescript | pipescript --resource opal-data-inf | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t ORDER BY t | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS t ORDER BY t | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_FEDOBS.P1.ae-fedobs-core | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/fedobs/README.md --f... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | NFRA_DEBTSCAN+TSGRAPH+COMPILERKIT | comp-kuzu + derive_stitch + comp_detect/canon_motif/comp_debt | D1 stitch regen->73 dispatcher edges live (structural promote); 3 tool-builds independent-census-validated; rail-checked raw for silver-dim mtimes | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
