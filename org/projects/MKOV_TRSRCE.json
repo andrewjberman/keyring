@@ -1,0 +1,14 @@
+{
+  "project_code": "MKOV_TRSRCE",
+  "macro_code": "MKOV",
+  "name": "Source Published Bloomberg TR Indices for Market Overview Benchmarks",
+  "description": "Andrew-direct 2026-07-07 (\"use the standard [net EAFE] one moving forward, make sure that gets implemented\"). Follow-on to MKOV_RETFIX, independent of it. Swaps Yang's PKL benchmark tickers from price-index + synthesized-dividend to the published Bloomberg TR index (SPX->SPXT, RTY->RU20INTR, MXEA->NDDUEAFE net EAFE; LBUSTRUU unchanged). Closes the 6-32bp residual vs Bloomberg (methodology delta, not tracking error) and the EAFE gross/net gap in one change. Full consumer audit (pipescript market-overview + model-portfolios threads) confirms: in-scope consumers are the tiered generator (period_returns), precompute_market_metrics/index.js (second surface), and yang-model-portfolio-benchmarks (not previously named -- surfaced by this audit); confirmed OUT of scope (price-based, not return-based, conditional on the price series staying untouched): market-rsi-tiered-generator, market-regime-classifier, yang-generate-etf-returns (separate PKL), yang-time-machine-rollback. Non-negotiable requirement: the price field must stay sourced from the unchanged price-index tickers so RSI/regime/chart consumers are unaffected. Full historical backfill required (no silent splice at cutover -- 211,856 existing DDB items). PRD docs/architecture/MKOV_TRSRCE_PRD.md.",
+  "prds": [{"path": "docs/architecture/MKOV_TRSRCE_PRD.md", "label": "MKOV_TRSRCE PRD (CTO-authored, Andrew-direct)", "date": "2026-07-07"}],
+  "status": "active",
+  "phase": "PHASE 0 -- PRD authored 2026-07-07, full consumer audit complete (pipescript-grounded). Andrew wants this implemented, not left as a candidate.",
+  "blocking": "COO decomposition + GO. TO-1 (Yang terminal: ticker confirmation + full-history pull) is the starting gate -- human/terminal-dependent, not agent-executable. TO-2 (ingest+backfill) and TO-3 (re-verification) sequence after TO-1.",
+  "created": "2026-07-07",
+  "pods": ["0.1", "0.2"],
+  "thread_counter": 0,
+  "threads": []
+}
