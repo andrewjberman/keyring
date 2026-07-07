@@ -1,0 +1,19 @@
+{
+ "component": "NFRA_COMPROUTE Charter-1 POTION semantic embedder (vendored)",
+ "model": "minishlab/potion-base-2M",
+ "hf_repo": "minishlab/potion-base-2M",
+ "hf_revision": "389b9f64be5aa4ae7a6bc6fe95ef20ce485ae5da",
+ "license": "MIT",
+ "distiller": "model2vec (POTION static distillation of baai/bge-base-en-v1.5)",
+ "build_tool_only": {"package": "model2vec", "version": "0.8.2", "note": "used OFFLINE at build to distill/verify; NOT imported at route-time"},
+ "data_not_code_confirmation": "runtime loads ONLY model.safetensors (safetensors pure-data table, no pickle/code-exec) + tokenizer.json (tokenizers rust); encode reimplemented in numpy, byte-verified cos=1.0 vs model2vec.encode; ZERO model2vec import at route-time; no torch.load/pickle on the load path (torch.load exists only in model2vec.train, off-path)",
+ "offline": "no network / no HF fetch at route-time; loads from these vendored files only",
+ "runtime_dim": 64,
+ "model_files_sha256": {
+  "model.safetensors": "f95ffde02ad06f63ae38eb9d400038cd5ccaf8411ec3cb650c6025113f96cbb8",
+  "tokenizer.json": "e67e803f624fb4d67dea1c730d06e1067e1b14d830e2c2202569e3ef0f70bb50"
+ },
+ "model_files_bytes": {"model.safetensors": 7559256, "tokenizer.json": 683666},
+ "shadow_residual_rank": {"corpus": "C1 non-vetted tail (n=11)", "lexical_rank_median": 11, "semantic_rank_median_2M": 6, "semantic_rank_median_8M": 5, "note": "2M vs 8M measured; 2M vendored per smallest-that-achieves-the-drop"},
+ "author": "0.8.0_AE_CloudComp~E", "date": "2026-07-07"
+}

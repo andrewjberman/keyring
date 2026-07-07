@@ -228,8 +228,16 @@ def query_match(intent: str, keywords: Iterable[str]) -> tuple[float, tuple[str,
 
 def _score_one(cap, intent: str, ctx_d: dict, weights: Weights,
                provider: CapabilityMapProvider,
-               affinity_provider: Optional[AffinityProvider]) -> Scored:
-    q, matched = query_match(intent, cap.keywords)
+               affinity_provider: Optional[AffinityProvider],
+               relevance_provider=None) -> Scored:
+    # RELEVANCE (w_q): POTION semantic cosine + lexical-exact-NAME boost when a relevance_provider is
+    # supplied (NFRA_COMPROUTE Charter-1, CTO POTION design -- "swap ONLY the stage-2 relevance input");
+    # else the default LEXICAL query_match token-overlap. OPT-IN + fail-safe: live comp-which passes
+    # relevance_provider=None (unchanged lexical); a POTION load-failure yields None here -> lexical.
+    if relevance_provider is not None:
+        q, matched = relevance_provider.relevance(intent, cap)
+    else:
+        q, matched = query_match(intent, cap.keywords)
     key = provider.affinity_key(cap) if hasattr(provider, "affinity_key") else getattr(cap, "affinity_key", cap.surface)
     # PRIOR (w_s): provider-owned role_surface_affinity lookup, keyed by the SURFACE (affinity_key).
     # ADDITIVE, never a filter; cold-start -> 0.0.
@@ -298,7 +306,8 @@ def _fallback_suggestion(intent: str) -> str:
 def route(intent: str, ctx, provider: CapabilityMapProvider,
           affinity_provider: Optional[AffinityProvider] = None,
           weights: Optional[Weights] = None,
-          extractors: Optional[list] = None) -> RouteResult:
+          extractors: Optional[list] = None,
+          relevance_provider=None) -> RouteResult:
     """Decide which capability serves `intent` in `ctx`. Serves BOTH roles from one engine:
 
     - BACKSTOP (legacy, extractors=None + no intent_class): pure posterior (query + surface_prior +
@@ -321,7 +330,8 @@ def route(intent: str, ctx, provider: CapabilityMapProvider,
     if intent_class in ("read", "navigate"):
         caps = [c for c in caps if _read_eligible(c)]
 
-    scored = [_score_one(c, intent, ctx_d, weights, provider, affinity_provider) for c in caps]
+    scored = [_score_one(c, intent, ctx_d, weights, provider, affinity_provider, relevance_provider)
+              for c in caps]
 
     # STAGE B -- fold the vetted/soft signal extractors into the band (opt-in; None => pure posterior).
     vetted_by_cap: dict = {}

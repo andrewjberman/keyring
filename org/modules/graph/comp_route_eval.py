@@ -125,13 +125,14 @@ _TAIL = [
 ]
 
 
-def _route_arm(intent, provider, affinity_provider, role):
-    """The router path, identical to comp_route_shadow._primary EXCEPT the affinity arm + role vary.
-    A clean A/B: same extractors, same intent classifier, same route() engine."""
+def _route_arm(intent, provider, affinity_provider, role, relevance_provider=None):
+    """The router path, identical to comp_route_shadow._primary EXCEPT the affinity arm + role +
+    relevance signal vary. A clean A/B: same extractors, same intent classifier, same route() engine.
+    relevance_provider (POTION Charter-1) swaps the stage-2 lexical relevance for semantic when passed."""
     ic = _sh.sig.classify_query_intent(intent)
     ctx = {"role": role, "working_set": [], "trajectory": [], "intent_class": ic}
     r = _sh.comp_route.route(intent, ctx, provider, affinity_provider=affinity_provider,
-                             extractors=_sh.sig.EXTRACTORS)
+                             extractors=_sh.sig.EXTRACTORS, relevance_provider=relevance_provider)
     return r, ic
 
 
@@ -319,7 +320,7 @@ def run_tail_eval(role="AE", verbose=False):
     }
 
 
-def rank_diagnostic(role="AE"):
+def rank_diagnostic(role="AE", relevance_provider=None):
     """CHARTER-1 sizing instrument (CVO~B verdict 39462886a): the correct-cap BASE RANK + score-gap-to-top
     + within-affinity-swing reachability on the affinity-actable tail. This is the number that scopes the
     two COMPROUTE charters and, run AGAIN after the base oblique-precision fix (Charter-1), gives the
@@ -333,7 +334,7 @@ def rank_diagnostic(role="AE"):
     within_swing = 0
     rows = []
     for q, accept in _TAIL:
-        r, _ic = _route_arm(q, provider, None, role)
+        r, _ic = _route_arm(q, provider, None, role, relevance_provider=relevance_provider)
         if not r.ranked or (r.ranked[0].vetted and r.kind != "fallback"):
             continue
         ids = [s.cap.id for s in r.ranked]
@@ -465,6 +466,10 @@ def main():
     ap.add_argument("--rank", action="store_true",
                     help="charter-1 sizing: correct-cap base rank + within-w_h reachability on the tail "
                          "(re-run post-base-fix for the residual = charter-2's target)")
+    ap.add_argument("--semantic", action="store_true",
+                    help="POTION Charter-1: use the semantic relevance provider (full-posterior) for --rank")
+    ap.add_argument("--name-boost", type=float, default=0.15,
+                    help="lexical-exact-NAME secondary boost for the semantic arm (default 0.15)")
     ap.add_argument("--verbose", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
@@ -475,7 +480,14 @@ def main():
         print(json.dumps(affinity_reach_diagnostic(role=args.role), indent=1))
         return
     if args.rank:
-        res = rank_diagnostic(role=args.role)
+        rp = None
+        if args.semantic:
+            from comp_potion_relevance import build_provider
+            rp = build_provider(name_boost=args.name_boost)
+            if rp is None:
+                print("ALARM: semantic provider unavailable -> measuring LEXICAL (fail-safe)")
+        res = rank_diagnostic(role=args.role, relevance_provider=rp)
+        res["relevance"] = "semantic(POTION)" if rp is not None else "lexical"
         print(json.dumps({k: v for k, v in res.items() if k != "rows"}, indent=1))
         if args.verbose:
             for r in res["rows"]:
