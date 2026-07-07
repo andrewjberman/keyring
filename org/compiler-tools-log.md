@@ -13647,3 +13647,51 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 2026-07-07 ~1240Z 0.8.0_AE_CloudComp: DEBTSCAN/TSGRAPH session -- comp_detect fold-tool+enforcement (TSGRAPH CLOSED, CVO b4ffd39), comp-canon-motif scorer+shim, comp-debt orchestrator (2 families, DS~A-validated), MDPF recognizer #1 live-verified, recognizer #2 dangles (open), extract_lambda_ec2_edges cross-platform fix. comp-kuzu/_canonical/_provenance reused; comp-manifest-check clean.
 | 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0254.md | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/suppression_... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript --resource opal-data-mdpf | FAIL |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --resource opal-data-mdpf | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md --file org/tie... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r:WRITES_S3]->(b) RETURN a.node_id, a.node_type, type(r), b.node_i... | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r]->(b) WHERE a.node_type = 'CloudNode' RETURN DISTINCT type(r) LI... | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) RETURN DISTINCT r.edge_type LIMIT 60 | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type = 'WRITES_S3' RETURN a.node_id... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type = 'WRITES_S3' AND a.node_type ... | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0043.md | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a) WHERE a.node_id CONTAINS 'lambda' RETURN DISTINCT a.node_type LIMIT 20 | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type = 'WRITES_S3' AND a.node_type ... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r:TRIGGERS]->(b) WHERE b.id IN ['gold:gldinc_ss4c_weekly'] OR a.id... | FAIL |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.kind = 'TRIGGERS' AND (b.id CONTAINS 'ss... | FAIL |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudEdge') RETURN * | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type = 'TRIGGERS' AND a.id CONTAINS... | FAIL |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type = 'TRIGGERS' RETURN count(*) | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPILERKIT.json --fi... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudNode') RETURN * | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type = 'TRIGGERS' RETURN a.node_id,... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type = 'WRITES_S3' AND a.nod... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0043.md | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-xref | comp-xref gldinc_ss4c_weekly | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3.mdpf-custody-flip-close | comp-pipescript | comp-pipescript io schwab_native_ingest | FAIL |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3.mdpf-custody-flip-close | pipescript | pipescript --list | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3.mdpf-custody-flip-close | pipescript | pipescript canonical-schwab | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3.mdpf-custody-flip-close | comp-pipescript | comp-pipescript io canonical-schwab | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_pipeline.py | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0043.md | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | comp-kuzu --json / ds-commit-gate / safe-commit.sh | NFRA_CSE_P2_ac4_lambda_writes_s3.py | PASS (1 advisory) | AC4 round-trip build: recognizer+materialize+live-diff, fidelity PASS, 6/6 match, bd-client-detail EXTRA_IN_LIVE finding |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
