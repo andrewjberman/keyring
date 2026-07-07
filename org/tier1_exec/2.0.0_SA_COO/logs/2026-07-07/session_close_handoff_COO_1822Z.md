@@ -58,6 +58,8 @@ While grounding L6's remaining parts, DS found cot silver/allocations has been 0
 
 **This affects the L6 served-verify expectation too**: with holdings/allocations in this state, tonight's 02:00 UTC natural chain run may not produce the clean ~$365.7M figure L6 was tracking toward -- check both threads together on restart, don't treat them as independent.
 
+**Tonight's wipeout risk is covered** (last update before checkpoint, ~18:37Z): AE+DS coordinated directly -- DS is landing the 1-line B_01 defensive guard NOW (independent of the CTO ruling, their gold lane, low-risk), so tonight's nightly produces a correct-but-still-missing-allocations result instead of a cube wipeout. The real template fix stays properly gated on CTO's ruling, not rushed. AE is prepping a CTO options-doc (incl. digging BD's historical-resnapshot capability, to determine backfill-vs-permanent-gap) so the ruling is fast once surfaced.
+
 **Correcting my own process note**: I initially told Andrew this looked like a calendar-lag non-issue and was in the process of writing that into this handoff when AE's finding landed. Leaving this full arc in rather than editing it out, since the self-correction sequence (COO underclaims → DS self-corrects → AE finds the real mechanism + self-corrects their own premature closure) is itself useful context for next session on how thoroughly this got chased down before the reboot cut it off.
 
 ---
