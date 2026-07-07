@@ -49,3 +49,11 @@
   step with no new information). This is a hard external gate (CLAUDE.md Agent Autonomy exception) --
   window may go RED at 15:47Z waiting on Andrew/org-admin action; not a stranded/silent block, already
   escalated loud.
+- 20260707T160700Z **Window expired as anticipated (RED at 15:47Z, `deploy_ledger.py check --red` now
+  reports PAST-WINDOW).** State unchanged since 14:15Z entry -- still blocked solely on `secrets.PORTAL_REPO_PAT`
+  provisioning, no COO-resolvable lever remains (code fix landed + verified, re-trigger held correctly to
+  avoid a no-information failed run). Re-escalating the ask to Andrew directly in-session rather than
+  re-attesting the same unchanged gate. Non-catastrophic overrun: L1-L3 are genuinely closed+proven, only
+  L4 (a nightly artifact refresh, not a served/client-facing surface) is pending -- no live risk from the
+  overrun itself, this is a deploy-ledger SLA miss on a low-stakes artifact, not a half-landed production
+  change.
