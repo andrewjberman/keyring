@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# comp-canon-motif -- NFRA_DEBTSCAN TO-D3 canon-motif scorer (registered PATH entry).
+#
+# Thin PATH shim to the AE-owned implementation: the scorer lives in infra/aws/globgrph
+# (co-located with the kuzu marker-head machinery _canonical/_provenance it reuses; the DEBTSCAN
+# tree org/modules/graph/debtscan is exec-owned so the committed file lives in the AE lane). Reads
+# canon-patterns.yaml (CTO canon) + suppression_v1.yaml; scores each canon class off the RIGHT
+# surface (SERVED_LINEAGE+AUTH kuzu-lib, DEPLOY deploy-ledger, PIPELINE comp-pipescript); 0 mutations.
+#
+# Usage:
+#   comp-canon-motif                 scorecard (dominant/outlier + gates -> AC4 novel-candidates)
+#   comp-canon-motif --json          machine-readable scorecard
+#   comp-canon-motif --ledger        write the dated standing-scan ledger (debtscan/canon_motif/<date>.json)
+#   comp-canon-motif --allow-stale   score even if the graph is not marker-current (advisory)
+#   comp-canon-motif --self-test     structural self-test (no graph read)
+_ws="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+exec python "$_ws/infra/aws/globgrph/canon_motif_scorer.py" "$@"
