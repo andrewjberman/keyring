@@ -278,6 +278,18 @@ class RecognizerRegistry:
         if self._on_register:
             self._on_register(PROMOTE_SEAM + ".reload", r.artifact_class, r.concept)
 
+    def deregister(self, artifact_class: str, concept: str) -> None:
+        """Hot-de-register (NFRA_SEMCTL.GOV-B req#3 -- reversibility): remove a promoted recognizer
+        without restart. Fail-loud on a missing key (never a silent no-op -- a de-register call that
+        targeted the wrong key must be visible, not swallowed) and surface the removal through the SAME
+        PROMOTE-seam hook as register()/reload() (no silent remove, mirroring no silent add)."""
+        key = (artifact_class, concept)
+        if key not in self._by_key:
+            raise KeyError(f"recognizer {key} not registered -- cannot de-register what isn't live")
+        del self._by_key[key]
+        if self._on_register:
+            self._on_register(PROMOTE_SEAM + ".deregister", artifact_class, concept)
+
     def recognizers_for(self, artifact_class: str, capability: FrontEndCapability) -> list:
         """Capability-matched dispatch set: recognizers for this artifact_class whose requires <= capability.
         A recognizer needing more resolution than the tree offers is NOT dispatched here -- it would only
@@ -428,6 +440,23 @@ def _self_test() -> bool:
     ck("PROMOTE-seam surfaced each registration (no silent add)",
        surfaced == [(PROMOTE_SEAM, "python", "s3-key-const"), (PROMOTE_SEAM, "python", "cross-file-flows-to")],
        f"surfaced={surfaced}")
+
+    # 4b. reversibility (NFRA_SEMCTL.GOV-B req#3): a promoted recognizer can be hot-de-registered, and the
+    # removal is surfaced through the same seam (no silent remove) -- proves a bad PROMOTE materialization
+    # is reversible. A de-register of a key that isn't live fails LOUD (KeyError), never a silent no-op.
+    reg.deregister("python", "s3-key-const")
+    matched_after = reg.recognizers_for("python", FrontEndCapability.LEXICAL_AST)
+    ck("de-registered recognizer is gone from dispatch (reversible promotion)",
+       matched_after == [], f"matched_after={[x.concept for x in matched_after]}")
+    ck("de-registration surfaced through the PROMOTE-seam (no silent remove)",
+       surfaced[-1] == (PROMOTE_SEAM + ".deregister", "python", "s3-key-const"), f"surfaced={surfaced}")
+    degregister_failed_loud = False
+    try:
+        reg.deregister("python", "not-a-real-concept")
+    except KeyError:
+        degregister_failed_loud = True
+    ck("de-registering an unregistered key fails LOUD, not a silent no-op", degregister_failed_loud)
+    reg.register(r)   # restore for the harness step below
 
     # 5. run_recognizers harness over a front-end.
     out = run_recognizers(reg, _FakeFrontEnd([tree]), scope=None, marker_head="head1")
