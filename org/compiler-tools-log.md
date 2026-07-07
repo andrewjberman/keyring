@@ -13489,3 +13489,17 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 - 2026-07-07 0.7.0_AE_CloudOps~A: SCTY_PREMCP P1 app-stack (6 controls). ds-commit-gate PASS (all .py edits: config/token_broker/ratelimit/server); safe-ec2-deploy x2 (L2-p1, C1/C2) + SSM md5 on-box verify; deploy_ledger open/close (C1/C2 CLOSED, L2-p1 L4 ext-gate). Rail respected (native Grep/Read + rail-checked where no comp-tool fit; operational SSM off-rail). Gap: safe-ec2-deploy auto-record mis-derives deployed_by 5x.
 | 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPILERKIT_PRD.... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/comp_detect.py --fil... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | SCTY_PREMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/halt-gate-check.sh | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | SCTY_PREMCP | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/m365-mcp-gateway/wa... | PASS |
+2026-07-07 0.8.0_AE_CloudComp~E: comp-surface-check check (PASS, both live comp-which flips 57d967417/87bc48d3f); comp_route_eval suite (--rank/--tail/--diagnostic/--flip-gate/--per-case/--preserve/--e1-blend, the C1+Charter-1 shadow-eval, reproducible); comp-route-affinity emit/self-test (222 entries, calibration item-1/2 self-tests PASS); ds-commit-gate every .py. Charter-1 POTION semantic-matcher + role-passing both LIVE on comp-which.
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
