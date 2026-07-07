@@ -1,6 +1,6 @@
 ---
 name: kill
-description: Clear recurring machine cruft in two modes without ever touching a live Claude agent session or the fabric comms infra. `/kill scripts` reaps orphan bash.exe / python.exe / py.exe processes that are NOT descendants of a live claude session and NOT fabric comms infra (server.py / broker.py / agent-poller.py / inbox-watch.sh) -- the leftover gold runs, dead watchers, and abandoned diagnostics that build up as memory pressure. `/kill apps` reaps bloat GUI apps (Microsoft Edge, Chrome, Teams, Tailscale, Copilot, Spotify, Slack, Discord, Zoom, ...) that are not a Claude/Playwright-automation browser and not a session host. `/kill all` does both. DRY-RUN by default -- shows exactly what it would kill and how much memory it reclaims; append `go` (e.g. `/kill apps go`) to actually kill. Engine: `.tools/kill-maint.ps1` (PowerShell, ASCII-only, protect-set = live-claude descendant tree + comms-infra cmdline whitelist + hard-deny system/EDR list). Built for the Windows host that keeps accumulating zombie scripts + bloat under the multi-agent load (the Huntress/Rio memory-pressure class). Any agent may run the dry-run; killing is an operator action.
+description: Clear recurring machine cruft in three modes without ever touching a live Claude agent session, the fabric comms infra, or a repo file. `/kill scripts` reaps orphan bash.exe / python.exe / py.exe processes that are NOT descendants of a live claude session and NOT fabric comms infra (server.py / broker.py / agent-poller.py / inbox-watch.sh) -- the leftover gold runs, dead watchers, and abandoned diagnostics that build up as memory pressure. `/kill apps` reaps bloat GUI apps (Microsoft Edge, Chrome, Teams, Tailscale, Copilot, Spotify, Slack, Discord, Zoom, ...) that are not a Claude/Playwright-automation browser and not a session host. `/kill storage` reclaims disk from KNOWN junk-accumulation areas via an allowlist-only rm -rf (dead Claude scratchpad session dirs, user + Windows temp, crash dumps; opt-in: package caches, workspace __pycache__, recycle bin, docker prune) -- never a live session's scratchpad, never a path outside the vetted junk roots. `/kill all` runs scripts+apps (NOT storage -- recursive deletion is always explicit). DRY-RUN by default -- shows exactly what it would kill/delete and how much it reclaims; append `go` (e.g. `/kill apps go`, `/kill storage go`) to apply. Engines: `.tools/kill-maint.ps1` (processes) + `.tools/kill-storage.ps1` (disk). Built for the Windows host that keeps accumulating zombie scripts, bloat apps, and temp/scratchpad junk under the multi-agent load (the Huntress/Rio memory + disk pressure class). Any agent may run a dry-run; killing/deleting is an operator action.
 ---
 
 # /kill -- machine-cruft reaper (zombie scripts + bloat apps)
@@ -19,12 +19,14 @@ and the memory it reclaims, and kills nothing. You add `go` to pull the trigger.
 
 | Invocation | What it does |
 |---|---|
-| `/kill` or `/kill all` | Dry-run BOTH modes -- show the full plan, kill nothing. |
+| `/kill` or `/kill all` | Dry-run the PROCESS modes (scripts + apps) -- show the plan, kill nothing. **Does NOT include storage** (recursive deletion is always invoked explicitly). |
 | `/kill scripts` | Dry-run: orphan `bash.exe` / `python.exe` / `pythonw.exe` / `py.exe` not tied to a live claude session and not comms infra. |
 | `/kill apps` | Dry-run: bloat GUI apps (Edge, Chrome, Teams, Tailscale, Copilot, Spotify, Slack, Discord, Zoom, ...). |
-| `/kill <mode> go` | Same selection, but **actually kills** (`go` / `force` / `--execute` are synonyms). |
-| `... --webview2` | ALSO target `msedgewebview2.exe` (embedded in Windows Search / Outlook / widgets -- respawns; off by default). |
-| `... --onedrive` | ALSO target OneDrive. **WARNING: the Schwab pipeline delivers data through OneDrive folders** -- only with an explicit reason. |
+| `/kill storage` | Dry-run: allowlist-only disk reclaim (dead Claude scratchpad, user/Windows temp, crash dumps). See the storage section below. |
+| `/kill <mode> go` | Same selection, but **actually kills/deletes** (`go` / `force` / `--execute` are synonyms). |
+| `... --webview2` | (apps) ALSO target `msedgewebview2.exe` (embedded in Windows Search / Outlook / widgets -- respawns; off by default). |
+| `... --onedrive` | (apps) ALSO target OneDrive. **WARNING: the Schwab pipeline delivers data through OneDrive folders** -- only with an explicit reason. |
+| `... --caches` `--pycache` `--recyclebin` `--docker` `--docker-volumes` | (storage) opt-in extra categories -- see the storage section. |
 
 ## What is PROTECTED (never killed, both modes)
 
@@ -60,32 +62,84 @@ process still resolving its parent link during spawn is never mistaken for an or
   `mscopilot`/`copilot`, `Spotify`, `Slack`, `Discord`, `Zoom`, `WhatsApp`, `Skype`,
   ...), minus every protection above. `--webview2` / `--onedrive` extend the list.
 
+## `/kill storage` -- allowlist-only disk reclaim (recursive delete)
+
+Storage is a different, more dangerous animal than the process modes: it does
+`rm -rf`, which is **unrecoverable** and on the CLAUDE.md human-confirmation list. So
+it inverts the safety model -- instead of "delete everything except the protected set"
+(a denylist), it **only ever deletes paths that live strictly UNDER a vetted junk root**
+(an allowlist). Engine: `.tools/kill-storage.ps1`.
+
+**Default categories** (bare `/kill storage`, no flags):
+
+| Category | What | Guard |
+|---|---|---|
+| `claude-scratch` | Dead Claude scratchpad session dirs under `%LOCALAPPDATA%\Temp\claude\` | Skips the CURRENT session id AND any dir written within `-StaleHours` (default 2h) -- protects every live session. |
+| `user-temp` | Items under `%TEMP%` older than `-TempAgeDays` (default 1d) | Excludes the `claude` subdir (handled above); in-use files fail-skip. |
+| `win-temp` | Items under `C:\Windows\Temp` older than the age floor | May need admin; locked items skip. |
+| `crash-dumps` | `%LOCALAPPDATA%\CrashDumps` contents | -- |
+
+**Opt-in categories** (data-loss or slow-to-rebuild -- off by default):
+
+| Flag | Adds | Why opt-in |
+|---|---|---|
+| `--caches` | pip / bun / npm package caches | Regenerable, but re-download costs time. |
+| `--pycache` | workspace `__pycache__` dirs | **Some `.pyc` are git-tracked in this repo** -- deleting shows as working-tree deletions. |
+| `--recyclebin` | empties the Recycle Bin | Final deletion of whatever you binned. |
+| `--docker` | `docker container/image/builder prune -f` | Only STOPPED containers / DANGLING images / build cache -- a running ka_testing container is untouched. Skipped with a notice if the daemon is down. |
+| `--docker-volumes` | ALSO `docker volume prune -f` | **Deletes unused volume DATA.** Never without intent. |
+
+**The hard safety gate** (`Assert-Deletable`, checked at plan time AND re-checked at
+delete time): every target must resolve to a path that is a *strict descendant* of one
+of the 7 allowlisted junk roots (never a root itself), and must not be a reparse
+point / junction / symlink (which could redirect the delete elsewhere). The workspace
+repo is NOT a junk root -- the only repo deletion ever permitted is a dir literally
+named `__pycache__` under `--pycache`. Anything failing the gate is skipped, never
+deleted. This is what makes a path-construction bug unable to nuke source or served data.
+
+Validated on this host: default dry-run = ~7.3 GB reclaimable (user-temp ~4.0 GB,
+win-temp ~2.0 GB, 244-of-251 dead scratchpad dirs ~1.5 GB) with the current session +
+6 other live sessions correctly protected.
+
 ## How to run it (agent instructions)
 
-1. **Parse the invocation.** Mode = `scripts` | `apps` | `all` (default `all`).
-   Execute = true iff the args contain `go`, `force`, or `--execute`. Opt-ins:
-   `--webview2`, `--onedrive`.
-2. **Always dry-run first.** Run the engine WITHOUT `-Execute` and show the plan
-   (summary-by-process + reclaimable MB + the target list). This is fast and safe.
-   ```
-   & .tools/kill-maint.ps1 -Mode <mode> [-IncludeWebView2] [-IncludeOneDrive]
-   ```
+1. **Parse the invocation.** Mode = `scripts` | `apps` | `all` | `storage`
+   (default `all`, which = scripts+apps, NEVER storage). Execute = true iff the args
+   contain `go`, `force`, or `--execute`. Opt-ins: apps -> `--webview2`, `--onedrive`;
+   storage -> `--caches`, `--pycache`, `--recyclebin`, `--docker`, `--docker-volumes`.
+2. **Always dry-run first.** Run the correct engine WITHOUT `-Execute` and show the plan.
+   - Process modes (`scripts` / `apps` / `all`):
+     ```
+     & .tools/kill-maint.ps1 -Mode <scripts|apps|all> [-IncludeWebView2] [-IncludeOneDrive]
+     ```
+   - Storage mode:
+     ```
+     & .tools/kill-storage.ps1 [-Caches] [-Pycache] [-RecycleBin] [-Docker] [-DockerVolumes]
+     ```
 3. **If an execute token was given**, run again WITH `-Execute` and report the
-   killed/failed/reclaimed summary:
+   killed/deleted/reclaimed summary. For `storage`, because it is recursive deletion,
+   ALWAYS present the dry-run plan first and confirm the operator's `go` maps to this
+   run before executing -- do not chain dry-run -> execute silently.
    ```
-   & .tools/kill-maint.ps1 -Mode <mode> -Execute [-IncludeWebView2] [-IncludeOneDrive]
+   & .tools/kill-maint.ps1 -Mode <mode> -Execute [...]      # processes
+   & .tools/kill-storage.ps1 -Execute [...]                 # disk
    ```
    If no execute token, present the dry-run plan and tell the operator to append
-   `go` (e.g. `/kill apps go`) to apply.
-4. **Report** the before/after: what was protected (count), what was killed, MB
-   reclaimed. Keep it tight; ASCII only.
+   `go` (e.g. `/kill apps go`, `/kill storage --caches go`) to apply.
+4. **Report** the before/after: what was protected (count), what was killed/deleted, MB
+   reclaimed, anything skipped (locked/in-use). Keep it tight; ASCII only.
 
 ## Safety model / notes
 
-- **Recoverable by design.** Killing a bloat app or an orphan script is reversible
-  (relaunch). This is NOT in the CLAUDE.md human-confirmation-required set (which is
-  recursive delete / destructive git / drop tables / delete S3 / stop EC2). The
+- **Process modes are recoverable by design.** Killing a bloat app or an orphan script
+  is reversible (relaunch), and is NOT in the CLAUDE.md human-confirmation set. The
   dry-run-first flow is the guardrail: you see the exact PID list before anything dies.
+- **Storage mode is NOT recoverable** -- `rm -rf` is exactly the recursive-deletion case
+  that IS on the CLAUDE.md human-confirmation list. Its guardrails are stronger to match:
+  allowlist-only (never deletes outside the 7 vetted junk roots), never a root itself,
+  reparse-point/junction guard, current-session + live-session scratchpad protection, and
+  a re-validation at delete time. Present the dry-run and get an explicit `go` -- never
+  auto-run storage, never chain dry-run into execute without the operator seeing the plan.
 - **Tailscale is a Windows service** (`tailscaled` under `services.exe`). Stopping the
   process may be restarted by the SCM and/or briefly drop tailnet connectivity -- fine
   if you don't route AWS/remote access through it, but know that's what happens.
