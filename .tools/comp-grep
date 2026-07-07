@@ -97,6 +97,18 @@ def main() -> int:
         rx = re.compile(re.escape(pattern), flags)  # plain-string fallback
         used_pattern = re.escape(pattern)
 
+    # BRE-vs-ERE footgun guard (2026-07-07, 0.7.0's 2 false-"0 matches" incidents):
+    # comp-grep uses Python `re` (bare `|`/`(`/`)` = alternation/group). Agents raised on
+    # grep/egrep BRE muscle-memory often write `\|`/`\(`/`\)` expecting alternation/grouping
+    # -- in Python re that instead matches a LITERAL backslash-then-char, so the pattern
+    # silently never matches and "0 matches" gets read as "confirmed absence" (exactly the
+    # failure Rule 21's trust premise cannot tolerate). Warn loudly, do not silently reinterpret.
+    if re.search(r"\\[|()]", pattern):
+        print("comp-grep: WARNING: pattern contains '\\|' / '\\(' / '\\)' -- Python re (what "
+              "comp-grep uses) treats these as LITERAL characters, not BRE/egrep alternation/"
+              "grouping. If you meant alternation, use a BARE pipe: 'foo|bar', not 'foo\\|bar'. "
+              "A 0-match result below may be this, not a real absence.")
+
     files, err = _comprail.gitignore_aware_files(WS, pathspec)
     if files is None:
         # never silently empty -> loud BLOCKED so the agent does not read absence as "no matches"
