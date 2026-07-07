@@ -52,6 +52,9 @@ INBOX_DIR = Path(__file__).resolve().parent / "inbox"
 INBOX_DIR.mkdir(exist_ok=True)
 LIVENESS_FILE = Path(__file__).resolve().parent / "liveness.json"
 BROKER_SCRIPT = Path(__file__).resolve().parent / "broker.py"
+# NFRA_CMTQUE commit-worker daemon (MSTR internal-ops lane, LD-0246/0251; singleton v2 verified).
+COMMIT_WORKER = Path(__file__).resolve().parents[2] / ".tools" / "commit-worker.sh"  # repo/.tools/
+CQ_HB_STALE_SEC = 30
 BROKER_PORT = int(os.environ.get("OPAL_BROKER_PORT", "7800"))
 BROKER_URL = f"http://127.0.0.1:{BROKER_PORT}"
 POLL_INTERVAL_S = 2.0  # seconds between broker polls
@@ -262,6 +265,59 @@ def _ensure_broker() -> bool:
 
     except Exception as e:
         log.warning(f"Failed to launch broker: {e}")
+        return False
+
+
+def _commit_worker_alive() -> bool:
+    """True iff a live commit-worker holds worker.pid with a fresh heartbeat (mirrors
+    cq_worker_alive() in commit_queue_lib.sh). Heartbeat-freshness is the primary,
+    win32-safe signal; the atomic mkdir worker.lock is the real singleton guard.
+    (NFRA_CMTQUE TO-6 phase-1; authored by 0.7.0_AE_CloudOps~B, wired by MSTR.)"""
+    try:
+        gitdir = subprocess.check_output(
+            ["git", "rev-parse", "--absolute-git-dir"],
+            cwd=str(ORG_ROOT.parent), text=True, timeout=5,  # never let a hung git block register
+        ).strip()
+    except Exception:
+        return False
+    qroot = Path(gitdir) / "commit-queue"
+    pidf, hbf = qroot / "worker.pid", qroot / "worker.hb"
+    if not pidf.exists() or not hbf.exists():
+        return False
+    try:
+        hb = int(hbf.read_text().strip())
+    except (ValueError, OSError):
+        return False
+    return (time.time() - hb) < CQ_HB_STALE_SEC     # fresh heartbeat -> alive
+
+
+def _ensure_commit_worker() -> bool:
+    """Start the commit-worker daemon if it's not already live. Mirrors _ensure_broker().
+    Best-effort: a launch failure NEVER blocks registration (the caller wraps it, and the
+    safe-commit D6 fallback-to-mutex + the WorkerDown alarm cover a transient miss).
+    Race-safe: the worker's atomic mkdir worker.lock makes a concurrent multi-launch a
+    single-winner no-op (singleton v2 independently verified -- 12 racing -> 1 winner)."""
+    if _commit_worker_alive():
+        return True
+    log.info("Starting commit-worker daemon...")
+    try:
+        if sys.platform == "win32":
+            CREATE_NEW_PROCESS_GROUP = 0x00000200
+            DETACHED_PROCESS = 0x00000008
+            subprocess.Popen(
+                ["bash", str(COMMIT_WORKER), "--daemon"],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL,
+                creationflags=CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS,
+            )
+        else:
+            subprocess.Popen(
+                ["bash", str(COMMIT_WORKER), "--daemon"],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL,
+                start_new_session=True,
+            )
+        return True
+    except Exception as exc:
+        log.warning("commit-worker launch failed: %s", exc)
         return False
 
 
@@ -527,6 +583,18 @@ async def register_agent(
                 _poll_task = loop.create_task(_poll_broker_loop())
         else:
             broker_status = "registration failed"
+
+    # Ensure the commit-queue worker is up -- GATED on SAFE_COMMIT_USE_QUEUE=1 (the TO-6
+    # canary/cutover sessions only). Gated (not ungated) = no idle daemon before the flip +
+    # blast radius capped to queue-enabled lanes. The singleton is atomic-verified (12 racing
+    # -> 1 winner, LD-0251) so ungated would also be safe -- gating is deliberate defense-in-
+    # depth. Best-effort + wrapped: a launch failure NEVER blocks registration (safe-commit D6
+    # fallback-to-mutex + WorkerDown alarm cover a miss). NFRA_CMTQUE TO-6 phase-1.
+    if os.environ.get("SAFE_COMMIT_USE_QUEUE") == "1":
+        try:
+            _ensure_commit_worker()
+        except Exception:
+            pass
 
     instance_note = ""
     if _instance_suffix(agent_serial):
