@@ -367,6 +367,76 @@ def rank_diagnostic(role="AE", relevance_provider=None):
     }
 
 
+def posterior_preserve_measure(role="AE", name_boost=0.15, shape="A"):
+    """The two CTO-ruled structural preserve shapes (075102Z), measured per-case BOTH WAYS. Preserve the
+    current lexical-POSTERIOR top-1 (comp-pii is PRIOR-driven, so a lexical-only pin misses it -- CVO~B
+    1c50b519d), under one of two STRUCTURAL + label-blind fire-conditions:
+      SHAPE A (NARROW): fire when the current top-1 is a LEXICAL CO-LEADER (its lexical relevance is at
+        the lexical-max -- lexical SURFACED it into contention; the prior merely broke the tie). Fires for
+        comp-pii (lexical co-leader 0.286==max); does NOT fire on flat-lexical oblique (lexical-max==0).
+      SHAPE B (BROAD): fire when the current-posterior top-1 is CONFIDENT (separation > the live median
+        posterior gap). Risk: over-blocks a flat-lexical-prior-WRONG oblique case.
+    3 per-case gates: (1) every lexical-correct top-1 preserved, (2) 11->4 oblique lift HELD, (3) no
+    over-pin blocking a semantic-correct route. Whichever shape is per-case-clean WINS; HOLD if neither."""
+    from comp_potion_relevance import build_provider
+    from comp_route import query_match
+    rp = build_provider(name_boost=name_boost, blend=True)
+    if rp is None:
+        return {"error": "semantic provider unavailable"}
+    provider = _sh.capmap.get_provider()
+    kw = {c.id: list(getattr(c, "keywords", []) or []) for c in provider.capabilities()}
+    demotions, over_pins, lift_ranks, rows = 0, 0, [], []
+    for q, accept in _TAIL:
+        rl, _ = _route_arm(q, provider, None, role, relevance_provider=None)   # LEXICAL posterior
+        if not rl.ranked or (rl.ranked[0].vetted and rl.kind != "fallback"):
+            continue
+        nv = rl.ranked                                                          # non-vetted here
+        l1 = nv[0].cap.id
+        if shape == "A":                                                        # NARROW: lexical co-leader
+            lexs = {cid: query_match(q, k)[0] for cid, k in kw.items()}
+            lmax = max(lexs.values()) if lexs else 0.0
+            confident = (lmax > 0.0 and lexs.get(l1, 0.0) >= lmax)
+        else:                                                                   # BROAD (B): posterior-confident
+            sep = (nv[0].score - nv[1].score) if len(nv) > 1 else nv[0].score
+            gaps = [nv[i].score - nv[i + 1].score for i in range(min(len(nv), 20) - 1)]
+            med_gap = sorted(gaps)[len(gaps) // 2] if gaps else 0.0
+            confident = sep > med_gap
+        rp.set_pin(l1 if confident else None)
+        rs, _ = _route_arm(q, provider, None, role, relevance_provider=rp)        # pinned SEMANTIC posterior
+        s_top = rs.ranked[0].cap.id if (rs.ranked and rs.kind != "fallback") else None
+        # semantic WITHOUT the pin, to detect over-pin (pin blocking a semantic-correct route)
+        rp.set_pin(None)
+        rsu, _ = _route_arm(q, provider, None, role, relevance_provider=rp)
+        su_top = rsu.ranked[0].cap.id if (rsu.ranked and rsu.kind != "fallback") else None
+        lex_correct_top1 = (l1 in accept)
+        if lex_correct_top1 and s_top not in accept:
+            demotions += 1                                                      # gate1 FAIL: lost a lexical-correct top-1
+        if confident and (l1 not in accept) and (su_top in accept) and (s_top not in accept):
+            over_pins += 1                                                      # CTO symmetric: pin blocked a semantic-correct route
+        # gate2 lift: correct-cap rank under the pinned semantic
+        ids = [s.cap.id for s in rs.ranked]
+        pos = [i for i, cid in enumerate(ids) if cid in accept]
+        if pos:
+            lift_ranks.append(pos[0] + 1)
+        rows.append({"q": q[:44], "lex_top1": l1, "confident_pin": confident,
+                     "pinned_semantic_top1": s_top, "unpinned_semantic_top1": su_top,
+                     "correct": sorted(accept), "lex_correct_top1": lex_correct_top1})
+    med_lift = sorted(lift_ranks)[len(lift_ranks) // 2] if lift_ranks else None
+    return {
+        "role": role,
+        "shape": ("A (narrow: lexical co-leader)" if shape == "A" else "B (broad: posterior-confident)"),
+        "mechanism": "current-posterior top-1 preserve, structural + label-blind + live-margin",
+        "tail_n": len(rows),
+        "gate1_lexical_top1_demotions": demotions,          # MUST be 0
+        "gate1_pass": (demotions == 0),
+        "over_pins_blocking_semantic_correct": over_pins,   # CTO symmetric gate: MUST be 0
+        "no_over_pin_pass": (over_pins == 0),
+        "gate2_oblique_lift_median_rank": med_lift,          # should stay ~4 (was lexical 11)
+        "per_case_clean": (demotions == 0 and over_pins == 0),
+        "rows": rows,
+    }
+
+
 def per_case_table(role="AE", relevance_provider=None, arm_label="arm"):
     """CVO~B per-case BLEND re-cert table (c330fdebf / pre-spec 073552Z): for EACH tail case, LEXICAL
     (rank, top1-correct) vs the ARM (rank, top1-correct), flagging any lexical-top-1 DEMOTION (gate #1)
@@ -576,6 +646,8 @@ def main():
                     help="use the BLEND relevance (max(lexical,semantic)+name-boost, CTO's ruled flip shape)")
     ap.add_argument("--per-case", action="store_true",
                     help="CVO~B per-case table: lexical vs arm rank/top1 per tail case (demotion gate)")
+    ap.add_argument("--preserve", action="store_true",
+                    help="CTO's TWO structural preserve shapes (A narrow / B broad), per-case both-ways")
     ap.add_argument("--name-boost", type=float, default=0.15,
                     help="lexical-exact-NAME secondary boost for the semantic arm (default 0.15)")
     ap.add_argument("--verbose", action="store_true")
@@ -589,6 +661,19 @@ def main():
         return
     if args.flip_gate:
         print(json.dumps(flip_gate(role=args.role, name_boost=args.name_boost), indent=1))
+        return
+    if args.preserve:
+        for shp in ("A", "B"):
+            res = posterior_preserve_measure(role=args.role, name_boost=args.name_boost, shape=shp)
+            print(json.dumps({k: v for k, v in res.items() if k != "rows"}, indent=1))
+            if args.verbose:
+                print("  %-44s | lex_top1        pin? pinned_sem_top1 correct" % "intent")
+                for r in res.get("rows", []):
+                    dem = " DEMOTED" if (r["lex_correct_top1"] and r["pinned_semantic_top1"]
+                                        not in r["correct"]) else ""
+                    print("  %-44s | %-15s %-4s %-15s %s%s"
+                          % (r["q"], r["lex_top1"], r["confident_pin"], r["pinned_semantic_top1"],
+                             r["correct"], dem))
         return
     if args.per_case:
         from comp_potion_relevance import build_provider

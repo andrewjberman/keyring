@@ -30,6 +30,15 @@ for _p in (_HERE, os.path.join(_HERE, "potion")):
         sys.path.insert(0, _p)
 
 
+def _median(xs):
+    xs = sorted(xs)
+    n = len(xs)
+    if not n:
+        return 0.0
+    m = n // 2
+    return xs[m] if n % 2 else (xs[m - 1] + xs[m]) / 2.0
+
+
 class SemanticRelevanceProvider:
     """relevance(intent, cap) -> (score_in_0_1, matched_terms), a drop-in for query_match in the posterior."""
 
@@ -40,6 +49,7 @@ class SemanticRelevanceProvider:
         self._emb = embedder
         self._nb = float(name_boost)
         self._blend = bool(blend)
+        self._pin_cap = None                     # the CURRENT-POSTERIOR confident top-1 to preserve (set externally per intent)
         self._kw = {k: set(str(x).lower() for x in (v or [])) for k, v in cap_keywords.items()}
         self._cap_vecs = {cid: embedder.embed(txt or cid) for cid, txt in cap_texts.items()}
         self._keywords_by_id = {k: list(v or []) for k, v in cap_keywords.items()}
@@ -51,21 +61,34 @@ class SemanticRelevanceProvider:
             return 0.0, ()
         iv = self._emb.embed(intent or "")
         sem = max(0.0, self._cos(iv, cv))        # [0,1] band (negative cosine -> irrelevant)
-        # BLEND (CTO ruling: semantic-primary + STRONG-LEXICAL PRESERVE, NOT pure-semantic-replacement --
-        # pure-semantic demoted comp-pii top-1, CVO~B c330fdebf). max(lexical, semantic): where lexical is
-        # STRONG it self-preserves (keeps the lexical top-1); where lexical is ~0 (oblique) semantic drives
-        # (keeps the 11->4 oblique lift). Satisfies BOTH per-case gates 1+2 by construction -- MEASURED.
+        # BLEND (CTO ruling: semantic-primary + STRONG-LEXICAL PRESERVE; pure-semantic demoted comp-pii
+        # top-1, CVO~B c330fdebf). Mechanism = LEXICAL-CONFIDENT-ARGMAX PIN, structural + self-calibrating
+        # (CTO steer 074614Z -- the pin-condition is the LIVE candidate distribution's own median lexical
+        # gap, NOT a fixture-baked constant -> a structural property like the vetted band, within CVO~B
+        # gate#4). A cap is pinned to relevance 1.0 (so the posterior keeps it top-1) ONLY when it is the
+        # UNIQUE lexical argmax AND separates from the 2nd-best by MORE than the median gap of the live
+        # positive-lexical distribution (a CONFIDENT lexical winner). This is NOT "pin argmax always"
+        # (that OVER-PINS -- it would pin a weak/coincidental lexical winner + lose a case semantic got
+        # right, e.g. comp-trace). Confident-pin: preserves the strong lexical top-1 (gate#1: comp-pii),
+        # leaves weak-lexical + oblique cases to SEMANTIC (gate#2: 11->4 lift kept + semantic wins where
+        # lexical is only coincidentally top). max(lexical,semantic) was REJECTED (competitor semantic +
+        # prior overtook the lexical#1). Symmetric gate (CTO): must also NOT pin a lexical-confident-WRONG
+        # cap -- enumerated + measured per-case both ways.
         score = sem
-        if self._blend:
-            from comp_route import query_match  # noqa: PLC0415
-            lex, _lm = query_match(intent or "", self._keywords_by_id.get(cid, []))
-            score = max(sem, lex)
+        if self._blend and cid == self._pin_cap:
+            score = 1.0                          # externally-set CURRENT-POSTERIOR confident top-1 (preserve)
         itoks = set((intent or "").lower().split())
         names = self._kw.get(cid, set()) | {cid.replace("comp-", "")}
         matched = tuple(sorted(itoks & names))
         if matched:                              # lexical-exact-NAME secondary boost
             score = min(1.0, score + self._nb)
         return score, matched
+
+    def set_pin(self, cap_id):
+        """Set the CURRENT-POSTERIOR confident top-1 to preserve for the next intent (CVO~B 1c50b519d:
+        comp-pii's lexical was TIED -- its top-1 is PRIOR-driven, so a lexical-separation pin misses it;
+        the preserve must key on the current lexical-POSTERIOR argmax). None -> no pin (pure semantic)."""
+        self._pin_cap = cap_id
 
 
 def _cap_texts_and_keywords():
