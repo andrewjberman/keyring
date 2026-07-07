@@ -13936,3 +13936,74 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/git-hooks/mstr-ledger-check.sh -... | PASS |
 | 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/git-hooks/mstr-ledger-check.sh -... | PASS |
 | 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/logs/2026-0... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/logs/2026-0... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io B_01.holdings_lots | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0044.md | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/kill/SKILL.md --file .to... | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/kill/SKILL.md --file .to... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0044.md | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io A_01.advisor_assignments.py | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io D_02.advisor_client_detail.py | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_COTPPLADVFIX_PRD... | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/kill/SKILL.md --file .to... | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/MDPF_COTMDL.json | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTPPLADVFIX.json --f... | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/MDPF_COTMDL.json --file or... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | comp-pipescript | comp-pipescript io A_01.advisor_assignments.py | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | comp-blast | comp-blast build_advisor_assignments_history | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io B_00.canonical_holdings.py | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io B_01.holdings_lots.py | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io B_02.canonical_lots.py | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io B_03.account_gains.py | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io build_canonical_prices_v2.py | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | comp-pipescript | comp-pipescript io A_01.advisor_assignments.py | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/A_01.advisor_assi... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | pipescript | pipescript --list | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | pipescript | pipescript --help | PASS |
+| 2026-07-07 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check BooksTab | FAIL |
+| 2026-07-07 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-07-07 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check BooksTab | FAIL |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-platinum | comp-platinum --help | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-platinum | comp-platinum summary | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-platinum | comp-platinum page DistributionTab --firm cot | PASS |
+| 2026-07-07 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check BooksTab | FAIL |
+| 2026-07-07 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_02.advisor_clie... | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed --firm cot | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_02.advisor_clie... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_02.advisor_clie... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_02.advisor_clie... | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_04.client_porta... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_SEMCTL_HONESTY_I... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_SEMCTL_HONESTY_I... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_04.client_porta... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_04.client_porta... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-blast | comp-blast WRITES_S3 | FAIL |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check --help | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_recognizers_tsx.py | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --help | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check scan --help | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check list --help | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check contract-selfcheck --help | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/cse_store.py --file ... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(n) AS c | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN count(e) AS c | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS node_count | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile --file or... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | NFRA_COMPILERKIT.P1.framework-sdk-parity-oracle | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+- 2026-07-07 0.4.0_DS_ClientPlatform ADVI_COTPPLADVFIX.TO-1: comp-pipescript io A_01 (x2, IO unchanged, consumers C_08/D_00c/D_02) + comp-blast build_advisor_assignments_history (bd-resolve, source-grounded override sites instead) + live-S3 grounding (account_team/rel_architect_lookup MISSING -> A_01 safe injection site) + commit-gate x7 (all PASS) + /code-review Workflow on D_02 (18 agents, hardening findings; #1 false-positive). GAP: cot 1-pipescript-thread under-instrumentation -> comp-blast/deployed resolve A_01->bd; deploy-verify fell back to raw s3 byte-compare.
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | ADVI_COTPPLADVFIX.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
