@@ -13343,3 +13343,53 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | NFRA_TOOLHEALTH.TH-C | comp-tool-health-gate | comp-tool-health-gate --self-test (differential close-loop proof: failing-signal->fix-commission where healthy->NONE) | PASS (11/11) |
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | NFRA_TOOLHEALTH.TH-C | comp-tool-health | comp-tool-health --self-test + --json (TH-B substrate health + verdict counts before building TH-C on it) | PASS (12/12) |
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type='RENDERS' RETURN a.node_type A... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type='INSTANTIATES' RETURN a.node_t... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type='FETCHES' RETURN a.node_type A... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (k:CloudNode) WHERE k.node_type='ReactQueryKey' AND NOT EXISTS { MATCH ... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (c:CloudNode) WHERE c.node_type='ReactComponent' AND NOT EXISTS { MATCH... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='Endpoint' AND NOT EXISTS { MATCH ()-[e... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (jr)-[r:CloudEdge]->(f:CloudNode) WHERE r.edge_type='RENDERS' AND f.nod... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (f:CloudNode) WHERE f.node_type='Field' AND (f.props CONTAINS ': any' O... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type='FLOWS_TO' AND r.props CONTAIN... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b:CloudNode) WHERE r.edge_type='FLOWS_TO' AND NOT r... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type='FLOWS_TO' AND (r.props CONTAI... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db CALL show_tables() RETURN * | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.id CO... | FAIL |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db CALL table_info('CloudNode') RETU... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db CALL table_info('CloudEdge') RETU... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH ()-[e:CloudEdge]->() RETURN... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (a:CloudNode)-[e:CloudEdge]... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (a:CloudNode)-[e:CloudEdge]... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (a:CloudNode)-[e:CloudEdge ... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route_eval.py --... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.kind AS kind, count(*) AS c ORDER BY c ... | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu CALL table_info('CloudNode') RETURN * | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu CALL table_info('CloudEdge') RETURN * | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c ... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS t, count(*) AS c ORDE... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='Field' RETURN n.node_id AS id, ... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='FLOWS_TO' RETURN e.props... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FL... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE NOT EXISTS { MATCH (n)-[:CloudEdge]-() } RETURN n.n... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='GOLD_SCRIPT' RETURN count(*) AS gold_s... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id='gold:INF_A_02.fee_rate_history' OR n.nod... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge {edge_type:'TRIGGERS'}]->(b:CloudNode) WHERE... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='PROP_PASSES' RETURN e.pr... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='PR... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3_BUCKET' AND NOT EXISTS { MATCH (n)-... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | comp_route_eval.py (--self-test/--arm both/--diagnostic/--roles/--tail) + leave-out re-measure + CachedAffinityProvider probe + live aws (iam get-role-policy/sts assume-role/sqs receive-message) | DRV-flip tail-efficacy sign-cert (HOLD-FLIP) + C1 label bless + AGENTBUS control-1 live re-verify | reproduced ~E evals exactly; leave-out exposed CVO-contamination (AE +18.2->+0.0) + cold-start -11.1; live AccessDenied partition deny confirmed | comp-grep auto-logged separately |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
