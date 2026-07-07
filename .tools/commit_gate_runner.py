@@ -56,8 +56,12 @@ from types import SimpleNamespace
 # parity baseline actually does on this platform. `_echo()` below is the separate path for
 # THIS wrapper's own bash-`echo`-equivalent lines, which must stay bare-LF (bash's echo does
 # not CRLF-translate) -- conflating the two was an earlier bug caught by the parity fixtures.
-sys.stdout.reconfigure(line_buffering=True)
-sys.stderr.reconfigure(line_buffering=True)
+for _stream in (sys.stdout, sys.stderr):
+    # defensive: a test harness or embedding caller may have replaced stdout/stderr with
+    # something that doesn't support reconfigure() (e.g. io.StringIO) -- this must not
+    # crash a plain `import commit_gate_runner` in that context.
+    with contextlib.suppress(AttributeError):
+        _stream.reconfigure(line_buffering=True)
 
 
 def _echo(msg: str, stream) -> None:
