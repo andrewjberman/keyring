@@ -44,10 +44,28 @@ A live ~$3M understatement in served Cottonwood AUA, found this session (a 2026-
 
 ---
 
+## NEW TOP-PRIORITY ITEM (found in the final minutes of session, supersedes the L6 served-verify blocker): cot holdings/allocations root cause -- awaiting CTO ruling
+
+While grounding L6's remaining parts, DS found cot silver/allocations has been 0-rows on every trading day since 06-22 (verified against the actual deployed market-holiday calendar -- not a weekend/holiday artifact, confirmed real). Initial framing (mine) mistakenly treated this as blocking L6's served-verify; DS then self-corrected that it doesn't (a guard skips the AUA exclusion on an empty set) and flagged it might be a dormant/deprecated channel per Andrew's read. Holdings freshness (`as_of 2026-07-03`, comp-freshness WARN) initially looked like normal BD lag through the 07-03/04/05 holiday+weekend cluster -- also seemed like a non-issue.
+
+**Then `0.7.0_AE_CloudOps` found the actual, source-grounded root cause**, which changes this from "probably fine" to "a real active regression needing a ruling":
+- The 06-22 `ADVI_COTETL.AUAFIX-DATEMODE-B` fix (flipped the BD query date-mode from `CurrentDay`→`Custom` to un-freeze the served AUA) has an undocumented side effect the producer's OWN code comment explicitly warns about (`data/cot/scripts/bronze/cot_bronze_ingest.py:334-336`): Custom-stamping the pull dates **NULLS qt1 holdings measures and ZEROS qt5 allocations rows**. Both templates (`templates/holdings.json`, `templates/allocations.json`) were re-provisioned to Custom on exactly 06-22 -- the precise date both tables broke. `unrealized` (also touched by DATEMODE-B) was separately re-provisioned 06-30 and is fine; only holdings+allocations are affected.
+- `holdings.json` is additionally a 547-byte stub (no real query body) relying entirely on a server-side persisted template that the Custom-stamp nulls out.
+- **AE self-corrected their own work too**: had marked `AUAFIX-DATEMODE-B` `complete` ~1h earlier based on the served AUA figure alone, without checking the two tables the fix actually re-provisioned. Reverted that closure on their own initiative once the mechanism was found.
+- **The core tension**: `CurrentDay` froze the AUA (the original problem DATEMODE-B fixed); `Custom` nulls/zeros holdings+allocations. The producer code implies `CurrentDay`-no-stamp was "proven-good" for these two snapshot-type tables specifically -- contradicting DATEMODE-B's blanket Custom choice. AE is explicitly NOT unilaterally re-flipping the template (that class of unilateral change is what caused this) and is holding for a CTO ruling on the correct per-table date-mode.
+
+**Dispatched to CTO ~18:35Z as the top-priority ruling ask for next session** (`[URGENT] Ruling needed` subject). DS's separate finding (a real but currently-dormant B_01 wipeout-on-unfreeze risk if the chain unfreezes while allocations stays empty) is decoupled and still holds regardless of the date-mode ruling -- worth a defensive 1-line fix once CTO rules, DS's call on timing.
+
+**This affects the L6 served-verify expectation too**: with holdings/allocations in this state, tonight's 02:00 UTC natural chain run may not produce the clean ~$365.7M figure L6 was tracking toward -- check both threads together on restart, don't treat them as independent.
+
+**Correcting my own process note**: I initially told Andrew this looked like a calendar-lag non-issue and was in the process of writing that into this handoff when AE's finding landed. Leaving this full arc in rather than editing it out, since the self-correction sequence (COO underclaims → DS self-corrects → AE finds the real mechanism + self-corrects their own premature closure) is itself useful context for next session on how thoroughly this got chased down before the reboot cut it off.
+
+---
+
 ## Other open threads, by urgency
 
-### Awaiting a peer response (event-driven, no COO action needed unless it stalls)
-- **ETFS_AVGCAP vs MDPF_ASSETS WS-D.2 methodology overlap**: real overlap confirmed this session (two different per-partner ETF-ownership computations for the same 4 ETFs/3 partners). CTO's lean is "ETFS_AVGCAP supersedes WS-D.2" but wants an empirical diff first (49F figure, same date, both methods) before ruling. **Dispatched to CVO ~18:02Z, response not yet received as of this checkpoint.** If it lands mid-session-gap, CVO reports directly to CTO for same-day ruling -- check for that thread on restart.
+### Resolved this session, just needs wiring (not urgent)
+- **ETFS_AVGCAP vs MDPF_ASSETS WS-D.2 methodology overlap**: CTO RULED SUPERSEDE ~18:23Z -- CVO's empirical diff came back an exact $0.00 convergence on 49F (identical computation), and ETFS_AVGCAP is strictly better on the Inflection leg too. Two consequences for COO lane, both no-rush: (1) ETFS_AVGCAP is now load-bearing for the production MDPF aggregator and needs a real contract entry (fold into `MDPF_ASSETS_WSA_CONTRACT.md` or a light PRD) before its methodology deliverable locks independently; (2) `MDPF_COTMDL`'s Cohort-3 ETF-ownership leg should source from ETFS_AVGCAP extended to a 3rd partner, NOT build a parallel estimate -- note this dependency when decomposing MDPF_COTMDL's later TOs.
 
 ### Staged, deliberately not dispatched (owner-focus judgment call, confirmed correct by CTO)
 - **MDPF_COTMDL.TO-1** (verify Portfolio Strategy field populated for Cottonwood, new PRD this session) -- assigned to `0.4.0_DS_ClientPlatform`, same lane as AUAFIX-L6. Staged behind it on purpose. GO once L6 lands or DS signals spare bandwidth. TO: `org/tier1_exec/2.0.0_SA_COO/task_orders/MDPF_COTMDL.TO-1.verify-portfolio-strategy-populated.md`.
@@ -93,5 +111,6 @@ A live ~$3M understatement in served Cottonwood AUA, found this session (a 2026-
 2. `org/XXX.md` startup protocol.
 3. Commit the uncommitted `SCTY_PREMCP.secrets-rotation-runbook.md` closure (see Immediate Action above).
 4. `CronList` -- confirm `/drive` cron survived; re-arm if not.
-5. `/drive` -- will naturally pick up: AUAFIX-L6 served-verify status check (if past 02:00 UTC), any CVO response on the ETFS_AVGCAP diff, any Andrew response on the NFRA_MOTIF/ADVI_INFFEE asks.
-6. Check `python .tools/fabric-check.py --blocks` fresh -- 8 agents were live at checkpoint; confirm which survived the reboot vs need MSTR respawn (expect most/all to need respawn -- a device reboot kills everything, unlike the DS-family-only outage earlier this session).
+5. Check for CTO's ruling on the cot holdings/allocations date-mode question FIRST -- this is the top-priority open item, supersedes the L6 served-verify check in importance (they're linked anyway, see above).
+6. `/drive` -- will naturally pick up: the cot date-mode ruling status, AUAFIX-L6 served-verify status check (if past 02:00 UTC, treat jointly with #5), any Andrew response on the NFRA_MOTIF/ADVI_INFFEE asks.
+7. Check `python .tools/fabric-check.py --blocks` fresh -- 8 agents were live at checkpoint; confirm which survived the reboot vs need MSTR respawn (expect most/all to need respawn -- a device reboot kills everything, unlike the DS-family-only outage earlier this session).
