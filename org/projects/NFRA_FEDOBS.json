@@ -6,7 +6,7 @@
   "prds": [{"path": "docs/architecture/NFRA_FEDOBS_PRD.md", "label": "NFRA_FEDOBS PRD (CTO-authored)", "date": "2026-07-07"}],
   "status": "active",
   "phase": "P1 COMPLETE 2026-07-07 (~1319Z, post-reboot restart session) -- all 3 core legs independently certed, none self-reported: AC1 two-observer x C1 join (CTO-accepted, 2408 findings), AC2 read-only-on-truth boundary (CVO PASS 11:57Z), obs_findings Glue-binding + live join re-verify (CVO independent re-run PASS, commit 0c095d6a2). TO NFRA_FEDOBS.P1 flipped complete. RECEIVED the TOOLHEALTH EFFECTIVE-axis re-home per plan. Remaining: Phase B (live-AWS applied-state 6th observer + desired-vs-applied drift-join, recurring emit) -- follow-on, not gating P1 close.",
-  "blocking": "Phase B follow-on (6th observer / drift-join / recurring emit) -- not yet scoped into a TO. Byproduct SEV1 finding (undeclared buckets opal-data-portal-v2, opal-portal-market-data -- LIVE-no-DECLARED) routed to COO for disposition.",
+  "blocking": "Phase B follow-on (6th observer / drift-join / recurring emit) -- not yet scoped into a TO. Byproduct SEV1 finding (undeclared buckets opal-data-portal-v2, opal-portal-market-data -- LIVE-no-DECLARED) CLOSED 2026-07-07 (0.7.0_AE_CloudOps, shared-infra-v1.35.0, both resources imported 0-diff, deploy ledger infrpt-p2-tf-import-drift 3/3 legs proven).",
   "created": "2026-07-07",
   "pods": ["0.7", "0.4"],
   "thread_counter": 0,
