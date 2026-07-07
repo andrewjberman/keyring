@@ -1607,8 +1607,14 @@ def inject_pipeline_edges(dag: PipelineDAG, workspace_root: Path, _graph=None):
     # DEBTSCAN reachability FP-root-fix (recognizer #2, DS~A-authored 2026-07-07): BD gold_dispatch.sh runs
     # some legs (the Wed-conditional ss4c-weekly oracle) as DIRECT `python3 "$SCRIPTS/X.py"` invokes, NOT
     # CHAIN_ members -- the daily chain-parse misses them so they read isolated. Emit
-    # gold_dispatch -[TRIGGERS]-> gold:<script> for each direct-invoke -> edged at the ROOT. The
-    # not-in-g.nodes guard means the 3 co-caught diagnostics only edge if they're real nodes (no spurious).
+    # gold_dispatch -[TRIGGERS]-> gold:<script> for each direct-invoke -> edged at the ROOT.
+    # ss4c-dangle fix (0.8.0, 2026-07-07): a direct-invoke target that is a real file on disk (verified via
+    # relpath, not just a chain-catalog member) was previously skipped by a not-in-g.nodes guard meant to
+    # block spurious nodes -- gldinc_ss4c_weekly.py IS real (data/black_diamond/scripts/gold/), just never a
+    # CHAIN_ member, so no other recognizer ever created its node and the TRIGGERS edge silently dropped
+    # (dangling-edge on stitch-load, ss4c read as isolated 0-in/0-out). Fix: create the node here when the
+    # on-disk file is verified to exist, instead of skipping -- the file-existence check IS the anti-spurious
+    # guard (stronger than "already a node", since it also recovers real non-cataloged direct-invokes).
     direct_invokes = parse_gold_direct_invoke(workspace_root)
     if direct_invokes:
         gd_id = "gold:gold_dispatch"
@@ -1616,10 +1622,16 @@ def inject_pipeline_edges(dag: PipelineDAG, workspace_root: Path, _graph=None):
             g.add_node(Node(
                 id=gd_id, node_type="GOLD_SCRIPT", label="gold_dispatch",
             ))
-        for _basename in direct_invokes:
+        for _basename, _relpath in direct_invokes.items():
             script_node_id = f"gold:{_basename}"
             if script_node_id not in g.nodes:
-                continue  # only edge scripts the trace-graph already carries (no spurious nodes)
+                _abs_path = workspace_root / "data" / "black_diamond" / "scripts" / "gold" / _relpath
+                if not _abs_path.is_file():
+                    continue  # not a real script -- genuinely spurious, skip
+                g.add_node(Node(
+                    id=script_node_id, node_type="GOLD_SCRIPT",
+                    label=_basename, file_path=str(_abs_path.relative_to(workspace_root)),
+                ))
             edge_exists = any(
                 e.source == gd_id and e.target == script_node_id
                 and e.edge_type == "TRIGGERS"
