@@ -13737,3 +13737,81 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | session-summary | COMPILERKIT-P1 batch-1 structural diff (trace_graph.build_graph vs parity_run) + P2 framework review + firm-scope batch-1/wire batch-2 -- comp-which 2x inconclusive (near-tie), comp-kuzu found wrong graph substrate (AWS CloudEdge, not code-trace) before trace_graph.build_graph() answered it directly; ds-commit-gate caught 2 ruff F541s, fixed | MIXED |
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service infrastructure-daily-snapshot | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_stitch.py | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit-worker.sh --file .tools/c... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/infrastructure-daily-s... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0256.md | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/shared-infra-resour... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/shared-infra-resour... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --resource opal-data-cot | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/dynamo... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-kit-striplist-gate | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/lo... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yaml | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/shared-infra-resour... | PASS |
+| 2026-07-07 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/49-schwab-conv/SKILL.md | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/shared-infra-resour... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-blast | comp-blast ds-commit-gate.sh | FAIL |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_FEDOBS.json | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_recognizers_tick... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service opal-infrastructure-monitor | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/infrastructure_monitor... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/shared-infra-resour... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check list | PASS |
+| 2026-07-07 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/schwab-sdd-rest-ingest-apri... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --file org/modules/graph/comp_recognizer_sdk.py | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/lo... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_recognizer_sdk.p... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_recognizer_sdk.py | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/critical-surfaces.yaml | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-blast | comp-blast render_month_end | FAIL |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --resource render_month_end | FAIL |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/etfs/scripts/presentation/render_m... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-07 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-07 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | pipescript | pipescript market-overview | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3 | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/mdpf-daily-runner/mdpf-ca... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit_gate_runner.py | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/mdpf-pipeline/ssm.t... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-07 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | pipescript | pipescript --resource opal-portal-market-data | PASS |
+| 2026-07-07 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | pipescript | pipescript model-portfolios | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/mdpf-pipeline/ssm.tf | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/settings.json --file .claude/sk... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/settings.json --file .claude/sk... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-blast | comp-blast bd-client-detail | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md --file docs/architecture/49F_... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md --file docs/architecture/49F_... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3 | comp-freshness artifact x16, comp-grep x8, comp-glob x3, comp-which x1, comp-pipescript deployed (bg sweep; mdpf gap again) | catch-up re-run grounded + executed; comp-tools found the WS-B/WS-E vintage asymmetry that made literal full-chain re-run unsafe; MDPF graph-coverage gap re-confirmed (comp-blast/pipescript blind to mdpf scripts) |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit_gate_runner.py | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/mdpf-pipeline/CHANG... | PASS |
