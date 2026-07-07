@@ -1,0 +1,16 @@
+{
+  "project_code": "ADVI_COTPPLADVFIX",
+  "macro_code": "ADVI",
+  "name": "Cottonwood advisor dimension + real Books tab (single-advisor bridge)",
+  "description": "Andrew-direct 2026-07-07. Cottonwood has no functional advisor-matching mechanism, so their dashboard is a shallow/flat view with no proper /Books tab and no client-view nesting. ROOT CAUSE (source + live-served grounded): the cot gold runner was cloned from 49F/bd and its advisor layer is keyed 100% on 49F team-role columns (architect/implementor/consultant/local_ops/additional_advisor); cot_silver_merge.py produces NONE of them, so A_01.advisor_assignments yields all-Unassigned, and served opal-data-cot/gold/entities/advisors/ + platinum/advisors/ are BOTH EMPTY -- the already-built D_02->D_04->shared BooksTab stack has zero advisors to nest clients under. FIX (intermediary, Andrew's directive): for the cot pipeline ONLY, inject a single synthetic 'Cottonwood Capital Advisors' advisor at A_01 so every client nests under it -> a proper advisor-drill Books tab NOW. Two legs: DS data-layer injection (cot A_01) + DE frontend flag-flip (cottonwood/layout.ts books.enabled/advisorDrill.enabled). D_02/D_04 unchanged (already Cottonwood-aware; D_02 hardcodes FIRM_NAME='Cottonwood Capital Advisors'). SUPERSEDES ADVI_COTMVP Item B's deferred 'Option B' (firm-level-only Books view -> real advisor-drill). Evolution path documented: single synthetic advisor -> 2 founder rep-code advisors (~96% AUA) -> full rep/team/relationship matching from the allocations BD template dims. PRD docs/architecture/ADVI_COTPPLADVFIX_PRD.md.",
+  "prds": [{"path": "docs/architecture/ADVI_COTPPLADVFIX_PRD.md", "label": "ADVI_COTPPLADVFIX PRD (CTO-authored, Andrew-direct)", "date": "2026-07-07"}],
+  "status": "active",
+  "phase": "PHASE 0 -- PRD authored 2026-07-07 (Andrew-direct). Root cause source+served grounded (49F-role model vs empty cot role data -> zero served advisor entities). Two legs: TO-1 DS inject single 'Cottonwood Capital Advisors' synthetic advisor in cot A_01.advisor_assignments (validate on scheduled nightly: exactly one advisor book, all clients nested, book AUA == firm headline); TO-2 DE flip cottonwood/layout.ts Books/advisorDrill flags + verify shared BooksTab renders single-advisor firm. TO-3 doc-only evolution brief. Gold-runner code-review (wf_61db2e92-8e9) running to scope the 49F-inherited deprecated-view cleanup (later phase, not a gate).",
+  "blocking": "COO decomposition + GO (TO-1 DS -> TO-2 DE sequenced; TO-2 gated on TO-1's served advisor entity). Q1 for COO: reconcile ADVI_COTMVP Item B state -- supersede if firm-level-only Books view not shipped.",
+  "created": "2026-07-07",
+  "pods": ["0.4"],
+  "depends_on": ["ADVI_COTMVP", "ADVI_COTETL"],
+  "depends_on_note": "Supersedes ADVI_COTMVP Item B (deferred advisor-drill Option B) -- COO reconciles at decomposition. Shares the cot gold chain with ADVI_COTETL but no file overlap with the in-flight cot DATEMODE/holdings-freshness work (A_01 gold vs cot_bronze_ingest bronze). Parallel to MDPF_COTMDL (distinct surface: Model Portfolios page vs Advisor Intelligence Books tab).",
+  "thread_counter": 0,
+  "threads": []
+}
