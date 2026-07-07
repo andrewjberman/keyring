@@ -13928,3 +13928,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/git-hooks/stitch-refresh-post-co... | PASS |
 | 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-grep/pipescript/comp-platinum/comp-build/git-portal | 3-PRD research (MKOV_RETFIX/TRSRCE/MDPF_COTMDL) + comp-grep BRE-footgun diagnosis+fix | PASS (found+fixed comp-grep \| footgun; flagged COMPONENT graph-coverage gap on market-performance dir) |
 | 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform | (no-TO) | pipescript | pipescript --resource allocations | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+2026-07-07 | 0.0.0_AB_MSTR | session_close_reboot_handoff_1822Z | fabric-check.py (startup liveness + CPU reads), registry/to/activity-check engines (fabric status), prd-delta.py (BUILT this session -- validated 33 projects, PRD-discovery bug caught+fixed) | PASS | Huntress/Rio-leak reboot handoff; grounded the CMTQUE/fork thread in source -> ds-commit-gate.sh (now commit-gate.sh) was the real fork culprit, 82% reduction landed
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/git-hooks/mstr-ledger-check.sh -... | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/git-hooks/mstr-ledger-check.sh -... | PASS |
+| 2026-07-07 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
