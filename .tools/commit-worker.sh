@@ -19,7 +19,7 @@
 #   - author identity (--author passed verbatim, in commit_args)
 #   - --force + FORCE-BYPASS / SENSITIVE-BLOCK audit (worker writes the audit log)
 #   - atomic per-agent commit (git commit --only, one commit per request)
-#   ds-commit-gate (py_compile/ruff) stays AGENT-SIDE fail-fast (don't enqueue a
+#   commit-gate (py_compile/ruff) stays AGENT-SIDE fail-fast (don't enqueue a
 #   non-compiling .py); TO-5 formalizes the worker re-assert.
 #
 # CONTAMINATION GUARD RETIRED (D5): a single index-writer means git diff --cached can

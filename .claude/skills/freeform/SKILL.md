@@ -12,7 +12,7 @@ grep/aws-inspection gate). It does **NOT** touch any SAFETY / CORRECTNESS gate. 
 ARMED while freeform is on:
 
 - `safe-commit.sh` / `safe-apply.sh` / `safe-ec2-deploy.sh` (deploy discipline)
-- owned-paths gate, surface-check (SEV1), ds-commit-gate, never-widen sign-off, HALTGT
+- owned-paths gate, surface-check (SEV1), commit-gate, never-widen sign-off, HALTGT
 - every destructive-op human-confirmation (recursive delete, `reset --hard`, drop table, stop EC2)
 
 freeform = **exploration SPEED**, never a license to bypass deploy / ownership / safety. If you

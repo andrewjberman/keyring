@@ -58,7 +58,7 @@ For my TO directory (`org/tier2_senior/{serial}/task_orders/*.md` for Tier-2; `o
 2. **Select highest-priority dispatched/in_progress TO** (or fall back to pending if no in-progress)
 3. **Execute substantive work** on selected TO per its AC contract:
    - Read TO body + linked PRD + acceptance criteria
-   - Run pre-commit gate per CLAUDE.md Rule 14 (.tools/ds-commit-gate.sh for `.py` edits)
+   - Run pre-commit gate per CLAUDE.md Rule 14 (.tools/commit-gate.sh for `.py` edits)
    - Follow the deploy cycle per TO's classification (DS: Rule 13 S3 upload + comp-pipescript deployed MATCH; AE: safe-ec2-deploy.sh + EC2_MANIFEST.json; etc.)
    - Use `.tools/safe-commit.sh` per Rule 14a for commits
 4. **If TO completes this tick**:
@@ -188,7 +188,7 @@ Cross-referenced behavioral rules that /work inherits:
 
 - **Track in-flight TOs by artifact, not SLA** (`feedback_track_inflight_to_by_artifact_not_sla`): verify TO is progressing by commit/log on origin, never by "within SLA."
 - **Surface phase artifacts during multi-phase execution** (`feedback_surface_phase_artifacts_during_execution`): send tracking exec each phase's terminal artifact (commit/deploy/emit/verdict) as you hit it; don't run heads-down to RAVC2.
-- **Pre-commit gate for every `.py` edit** (CLAUDE.md Rule 14): `.tools/ds-commit-gate.sh <files>` before `git add`/`git commit`. Three checks must exit 0.
+- **Pre-commit gate for every `.py` edit** (CLAUDE.md Rule 14): `.tools/commit-gate.sh <files>` before `git add`/`git commit`. Three checks must exit 0.
 - **Commit via `.tools/safe-commit.sh`** (CLAUDE.md Rule 14a): pathspec-scoped to declared paths; aborts on contamination from concurrent agents.
 - **Silver tier scope discipline** (CLAUDE.md Rule 17): silver = clean shape + preserved content; NO field-slimming, fillna, dropna, row-filtering. Business logic → gold.
 - **`from __future__ import annotations` first import** (CLAUDE.md Rule 15): every `data/*/scripts/{gold,silver,bronze}/*.py` MUST begin with this for PEP-604 syntax on Python 3.9 runners.

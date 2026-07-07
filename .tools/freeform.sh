@@ -5,7 +5,7 @@
 #   (comp-which-first) + the future NFRA_COMPRAIL grep/aws-inspection GATE. While armed, the agent
 #   may grep/glob/aws-inspect freely (off the graph rail) to move fast.
 # WHAT IT DOES NOT TOUCH: every SAFETY/CORRECTNESS gate -- safe-commit, owned-paths, surface-check,
-#   ds-commit-gate, never-widen, HALTGT, destructive-op confirmations. freeform = exploration SPEED,
+#   commit-gate, never-widen, HALTGT, destructive-op confirmations. freeform = exploration SPEED,
 #   NOT a license to bypass deploy/ownership/safety. Those stay fully armed.
 # PROPERTIES: per-session (keyed by session id) | TIME-BOXED + auto-expiring (can't silently become
 #   the permanent default) | LOGGED (every window on the record, comp-tool-hud.log) | Andrew-authorized.

@@ -15,7 +15,7 @@ You are operating in a pre-approved cloud-ops profile. The wildcards in `.claude
 - `terraform *` (any binary path: `.tools/terraform.exe`, `terraform`, `terraform.exe`) — plan, apply, refresh, init, import, state ops
 - `.tools/*` — full canonical set (the wildcard covers all; named for reference):
   - **Compiler tools**: `comp-blast`, `comp-pipescript`, `comp-iam`, `comp-routes`, `comp-transform`, `comp-cache`, `comp-validate`, `comp-platinum`, `comp-pii`, `comp-trace`, `comp-build`, `comp-registry sync`
-  - **Commit + deploy discipline**: `safe-commit.sh`, `safe-apply.sh`, `safe-deploy.sh`, `safe-ec2-deploy.sh`, `ds-commit-gate.sh`, `halt-gate-check.sh`, `record-terraform-deploy.sh`
+  - **Commit + deploy discipline**: `safe-commit.sh`, `safe-apply.sh`, `safe-deploy.sh`, `safe-ec2-deploy.sh`, `commit-gate.sh`, `halt-gate-check.sh`, `record-terraform-deploy.sh`
   - **Misc**: `jq`, `terraform.exe`, `git-hooks/install-*.sh`
 - EC2 lifecycle ops via SSM (`aws ssm send-command`, `aws ssm get-command-invocation`, `aws ssm list-commands`)
 - S3 list / cp / sync via Bash and PowerShell
@@ -44,7 +44,7 @@ If your task hits a tool the user has not pre-approved, ask once briefly — don
 - Anything that drops/empties a database table, deletes S3 objects in opal-data-* buckets, or modifies CI/CD pipelines without an authoring TO
 - **Bare `terraform apply` — banned by Rule 18.** Use `.tools/safe-apply.sh` (HALT-gate checkpoint immediately pre-irreversible-apply; STOP-class inbox messages hard-block; `HALT_OVERRIDE="<reason>"` audited bypass).
 - **Bare `git commit` — banned by Rule 14a.** Use `.tools/safe-commit.sh --author "..." -m "..." -- <paths>` (concurrent-agent index-contamination guard).
-- **`.py` edits without `.tools/ds-commit-gate.sh` — banned by Rule 14.** Three sub-gates must exit 0: `py_compile` + `ds-precommit-check.py` (AST + `coerce_silver_ids` enforcement + Rule-15 future-annotations check) + `ruff check --target-version py39`.
+- **`.py` edits without `.tools/commit-gate.sh` — banned by Rule 14.** Three sub-gates must exit 0: `py_compile` + `ds-precommit-check.py` (AST + `coerce_silver_ids` enforcement + Rule-15 future-annotations check) + `ruff check --target-version py39`.
 - **Silver-tier field-slimming / null-handling / business-row-filtering — banned by Rule 17.** Silver = clean shape, preserved content. Business logic belongs in gold.
 
 For these, surface the command + the reason + ask before running.
@@ -68,7 +68,7 @@ CLAUDE.md is canonical for all the deployment + commit + code-quality rules. Sna
 | **11** | `verify-ec2.sh` before EC2 work | Drift check between local source + deployed code |
 | **12** | S3 is artifact store for EC2 code | Write locally -> S3 -> EC2 pulls. No inline Python in SSM. |
 | **13** | DS owns commit→QA-deploy cycle for gold/silver/bronze; `.tools/safe-deploy.sh` enforces atomically | Pre-push hook auto-fires; bypass `--allow-stale --reason "..."` audits to `org/safe-deploy-bypass-audit.log` |
-| **14** | Pre-commit gate `.tools/ds-commit-gate.sh` for every `.py` edit | py_compile + ds-precommit-check.py + ruff |
+| **14** | Pre-commit gate `.tools/commit-gate.sh` for every `.py` edit | py_compile + ds-precommit-check.py + ruff |
 | **14a** | Commit via `.tools/safe-commit.sh` | `--force` audits to `org/git-author-override-audit.log` |
 | **15** | `from __future__ import annotations` as FIRST import in every `data/*/scripts/{gold,silver,bronze}/*.py` | Enables PEP-604 on Python 3.9 runners |
 | **16** | Local-runtime bash scripts use Git Bash 3.6.7 utilities only | `pgrep`/`pkill`/`flock`/`pidof`/`setsid`/`wget` MISSING; use `ps`/`awk`/`grep`/`timeout` |
@@ -119,7 +119,7 @@ After ANY `iam.tf` change → `comp-iam gaps`. After any new boto3 call → `com
 ```
 Wrapper aborts if staged index contains files outside declared pathspec (concurrent-agent contamination guard). `--force` bypasses but audits to `org/git-author-override-audit.log`. Never use bare `git commit -a`. Three CLASS-C sweep incidents 2026-04-27 prove the structural guard is required. **Concurrent-agent contamination is common during multi-agent MCP windows** — when safe-commit aborts on contamination, run `git reset HEAD -- <extras>` to unstage strays, then retry. Feature, not bug.
 
-**Every `.py` edit via `.tools/ds-commit-gate.sh <files>` BEFORE `git add` (Rule 14):**
+**Every `.py` edit via `.tools/commit-gate.sh <files>` BEFORE `git add` (Rule 14):**
 - `python -m py_compile`
 - `.tools/ds-precommit-check.py` — AST undefined-name scanner + silver `coerce_silver_ids()` enforcement + Rule-15 `from __future__ import annotations` check
 - `ruff check --target-version py39` (pin 0.15.11)

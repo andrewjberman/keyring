@@ -104,7 +104,7 @@ Work the reports in chain order, one at a time. For each report:
      behind a disabled feature flag) / genuinely clean -- record it in the FIX_LOG no-fix section with why.
 3. **Apply the safe fixes**, respecting the pipeline's rules (silver = dedup+dtype only; `from __future__
    import annotations`; no emojis/non-ASCII in AWS-run code; ground the MECHANISM, not just the symptom).
-4. **Gate + commit + deploy** via the pipeline's cycle: `.tools/ds-commit-gate.sh <file>` ->
+4. **Gate + commit + deploy** via the pipeline's cycle: `.tools/commit-gate.sh <file>` ->
    `.tools/safe-commit.sh --author "<serial> <...>" -m "<msg>" -- <file>` -> `HALT_ACK=1 git push origin
    <branch>` (the safe-deploy pre-push hook auto-deploys gold code). **Batch commits** across a few
    reports for speed (git is slow); push periodically so nothing strands. VERIFY a served-facing deploy
