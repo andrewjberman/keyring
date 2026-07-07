@@ -13303,3 +13303,43 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/NFRA_SCTY_C... | PASS |
 2026-07-07 0.6.0_AE_PartnerETL [session 49f-unfreeze+durables]: comp-blast canonical_prices (grounded bd-price-update JOB1 redundant w/ S_00 -- all 18 consumers post-S_00 gold); comp-freshness bd chain (un-freeze verify silver@07-02); comp-pipescript io N/A on .sh dispatcher (orchestration not column-transform, noted); 1 infra/.tf grep rail-gated -> re-ran via comp-blast (compliant).
 | 2026-07-07 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/NFRA_SCTY_C... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_INTEGRATIONS_STA... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_INTEGRATIONS_STA... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TOOLHEALTH/TH-C-DESIG... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/blas... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (d)-[r:TRIGGERS]->(s) WHERE s.name CONTAINS 'INF_' RETURN count(r) AS i... | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INTEGRATIONS.json --f... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route_eval.py --... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_tool_health_gate.py | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH ()-[r:CloudEdge]->() RETURN r.edge_type AS t, count(*) AS c ORDER BY c ... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE r.edge_type='FLOWS_TO'... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE r.edge_type='HAS_TYPE'... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH ()-[r:CloudEdge]->() WHERE r.edge_type='FLOWS_TO' AND r.props CONTAINS ... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH ()-[r:CloudEdge]->() WHERE r.edge_type='FLOWS_TO' AND r.props CONTAINS ... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route_eval.py | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH ()-[r:CloudEdge]->() WHERE r.edge_type='FLOWS_TO' AND r.props CONTAINS ... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type='FLOWS_TO' AND r.props CONTAIN... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_tool_health_gate.py | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b:CloudNode) WHERE r.edge_type='HAS_TYPE' AND b.nam... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='Field' AND n.props CONTAINS '"any"' RE... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE (n.node_type='Prop' OR n.node_type='Field') AND (n.... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type='READS_FIELD' RETURN a.node_ty... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) WHERE r.edge_type='PROP_PASSES' RETURN a.name, b... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH ()-[r:CloudEdge]->() WHERE r.edge_type='HOOK_DEP' RETURN count(*) AS ho... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='Hook' RETURN n.name, n.props LIMIT 4 | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (c:CloudNode) WHERE c.node_type='ReactComponent' AND NOT EXISTS { MATCH... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b:CloudNode) WHERE b.node_type='ReactQueryKey' AND ... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | NFRA_TOOLHEALTH.TH-C | comp-tool-health-gate | comp-tool-health-gate --self-test (differential close-loop proof: failing-signal->fix-commission where healthy->NONE) | PASS (11/11) |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | NFRA_TOOLHEALTH.TH-C | comp-tool-health | comp-tool-health --self-test + --json (TH-B substrate health + verdict counts before building TH-C on it) | PASS (12/12) |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
