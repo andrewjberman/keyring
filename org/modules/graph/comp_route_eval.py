@@ -319,6 +319,52 @@ def run_tail_eval(role="AE", verbose=False):
     }
 
 
+def rank_diagnostic(role="AE"):
+    """CHARTER-1 sizing instrument (CVO~B verdict 39462886a): the correct-cap BASE RANK + score-gap-to-top
+    + within-affinity-swing reachability on the affinity-actable tail. This is the number that scopes the
+    two COMPROUTE charters and, run AGAIN after the base oblique-precision fix (Charter-1), gives the
+    POST-FIX RESIDUAL RANK -- Charter-2's real target (CVO~B: 'measure the residual before charter-2 is
+    sized; it may be much smaller than rank-11'). Baseline now: median rank ~11 of ~57, 10/11 within w_h.
+    Affinity (bounded by w_h) can only tie-break a cap already close in SCORE, so a small residual gap ->
+    intent-conditioned affinity has standalone value; a large residual -> base must surface it first."""
+    provider = _sh.capmap.get_provider()
+    w = _sh.comp_route.Weights()
+    ranks, gaps = [], []
+    within_swing = 0
+    rows = []
+    for q, accept in _TAIL:
+        r, _ic = _route_arm(q, provider, None, role)
+        if not r.ranked or (r.ranked[0].vetted and r.kind != "fallback"):
+            continue
+        ids = [s.cap.id for s in r.ranked]
+        scores = [s.score for s in r.ranked]
+        pos = [i for i, cid in enumerate(ids) if cid in accept]
+        if not pos:
+            continue
+        i0 = pos[0]
+        rank = i0 + 1
+        gap = round(scores[0] - scores[i0], 3)
+        reachable = gap <= w.w_h
+        ranks.append(rank)
+        gaps.append(gap)
+        within_swing += int(reachable)
+        rows.append({"q": q[:50], "correct_cap": ids[i0], "base_rank": rank,
+                     "gap_to_top": gap, "reachable_within_w_h": reachable})
+    n = len(ranks)
+    med = sorted(ranks)[n // 2] if n else None
+    mean = round(sum(ranks) / n, 1) if n else None
+    return {
+        "role": role, "w_h": w.w_h, "tail_scored": n,
+        "correct_cap_base_rank_median": med, "correct_cap_base_rank_mean": mean,
+        "within_affinity_swing_gap_le_w_h": ("%d/%d" % (within_swing, n)) if n else None,
+        "reading": ("correct tool is rank-buried (~%s of ~57) but SCORE-reachable (%d/%d within w_h=%.2f) "
+                    "-> base-precision is the primary lever; affinity's block is signal-DIRECTION not "
+                    "surfacing. Re-run post-Charter-1 for the residual rank = Charter-2's real target."
+                    % (med, within_swing, n, w.w_h)) if n else "no scored tail cases",
+        "rows": rows,
+    }
+
+
 def affinity_reach_diagnostic(role="AE"):
     """THE load-bearing C1 finding, made reproducible: quantify WHERE affinity can act. A top routed
     in the VETTED band [1.0,2.0) is affinity-IMMUNE (the band structurally pre-empts the base posterior
@@ -416,6 +462,9 @@ def main():
                     help="reproduce the affinity-reach finding (vetted vs base-band tops; off->on changes)")
     ap.add_argument("--tail", action="store_true",
                     help="basis-b: measure affinity's tail-efficacy SIGN on the non-vetted tail corpus")
+    ap.add_argument("--rank", action="store_true",
+                    help="charter-1 sizing: correct-cap base rank + within-w_h reachability on the tail "
+                         "(re-run post-base-fix for the residual = charter-2's target)")
     ap.add_argument("--verbose", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
@@ -424,6 +473,15 @@ def main():
         return
     if args.diagnostic:
         print(json.dumps(affinity_reach_diagnostic(role=args.role), indent=1))
+        return
+    if args.rank:
+        res = rank_diagnostic(role=args.role)
+        print(json.dumps({k: v for k, v in res.items() if k != "rows"}, indent=1))
+        if args.verbose:
+            for r in res["rows"]:
+                print("  rank=%2d gap=%.3f reachable=%s  %-16s | %s"
+                      % (r["base_rank"], r["gap_to_top"], r["reachable_within_w_h"],
+                         r["correct_cap"], r["q"]))
         return
     if args.tail:
         # ALWAYS a role SWEEP -- the tail-efficacy sign is role-dependent (affinity is per-role), so a
