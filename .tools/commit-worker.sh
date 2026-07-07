@@ -319,6 +319,36 @@ cw_process() {
       fi
     fi
 
+    # (F2) NFRA_CMTQUE TO-5F -- worker-side commit-gate RE-ASSERT (py_compile/ds-precommit-
+    # check/ruff/comp-constants/manifest-check/log-open-lint, CLAUDE.md Rule 14). Previously
+    # this gate was AGENT-SIDE-ONLY fail-fast (an agent runs commit-gate.sh BEFORE enqueuing,
+    # so a well-behaved caller never enqueues a non-compiling .py) -- but that made the gate
+    # advisory-in-effect for the worker: a caller that skips its own pre-check (bug, or a
+    # non-standard enqueue path) would land uncompiling/undefined-name code with NOTHING
+    # catching it here, since git itself has no opinion on Python syntax. The worker now
+    # re-asserts the SAME gate on its own in-scope file set as a structural backstop,
+    # defense-in-depth (not a duplicate-effort tax -- a compliant caller's own pre-run gate
+    # exits 0 near-instantly on an already-clean file; the cost only bites a caller that
+    # skipped the check, exactly the case this closes). A gate failure is DETERMINISTIC
+    # (same class as the sensitive-leak/owned-paths rejections above) -> a normal
+    # client-visible REJECTED result, never DLQ.
+    if [ -n "$in_scope" ]; then
+      local gate_files=() gf
+      while IFS= read -r gf; do [ -n "$gf" ] && gate_files+=("$gf"); done <<< "$in_scope"
+      if [ "${#gate_files[@]}" -gt 0 ]; then
+        local gate_out gate_rc
+        gate_out="$(bash "$SCRIPT_DIR/commit-gate.sh" "${gate_files[@]}" 2>&1)" && gate_rc=0 || gate_rc=$?
+        if [ "$gate_rc" -ne 0 ]; then
+          # unstage -- mirrors the sensitive-leak gate above (F): a REJECTED request must
+          # never leave its files sitting staged for the NEXT request to (mis-)inherit.
+          local gf2
+          for gf2 in "${gate_files[@]}"; do git reset -q HEAD -- "$gf2" 2>/dev/null || true; done
+          echo "REJ|1|commit-gate blocked: $(printf '%s' "$gate_out" | tr '\n' ' ' | cut -c1-500)"
+          exit 0
+        fi
+      fi
+    fi
+
     # (G) commit, with bounded retry on TRANSIENT faults only.
     # CRITICAL: capture via FILES (not $(git commit ...)) + `-c gc.auto=0` + </dev/null.
     # `git commit` can spawn a DETACHED `gc --auto` child that inherits a command-
