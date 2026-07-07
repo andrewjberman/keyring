@@ -106,3 +106,51 @@ destroy` — the ONLY change is `schwab_si2_inline` gaining the 3 Deny statement
 the corrected approach + 0.6.0 nods; then commit + safe-apply (HALT-gated) + ledger + post-apply confirm
 the DenyPlane on live get-role-policy (without projecting fields away). No live SDD REST call regardless
 until CTO has seen the capturer + the liveness alarm (§6b).**
+
+## 9. GATE-3 RECON RESULT (0.6.2, 2026-07-07 — CTO ROE-nod'd: read-only, location/key/format, no
+session perturbation, SSM S3->box console-session pattern N/A here since this was direct read-only
+SSM against the running box, no schtasks/interactive-session touch)
+
+**Objective:** locate the live SDD auth material (§2.1's "Windows Cred Manager / the app's in-memory
+OAuth token") so the Gate-2 capturer knows exactly what to read.
+
+**FINDING — Windows Credential Manager is NOT the location.** `cmdkey /list` on the box (Administrator
+console, the account SI2 runs as) shows exactly one generic entry (`WindowsLive:target=virtualapp/didlogical`,
+unrelated — a Windows/MSA artifact, not Schwab). The §2.1 design language anticipating Cred Manager was
+a reasonable guess pre-recon; it's wrong. **Rescope the capturer away from Cred Manager entirely.**
+
+**ACTUAL LOCATION — SI2Desktop.Container embeds a WebView2 (Chromium) control** and the LMS-gateway SSO
+flow (`sws-gateway.schwab.com`) runs inside it. Standard Chromium profile at:
+```
+C:\Users\Administrator\AppData\Local\Apps\2.0\AJ358CTY.E5K\BP9BJTJZ.6BX\
+  schw..tion_2227d0d3394dbd7e_001a.0004_3c191691c3bd481c\
+  Schwab.SI.SI2Desktop.Container.exe.WebView2\EBWebView\Default\
+```
+Two concrete capturer targets identified (existence/format only — contents NOT read, staying inside the
+ROE bound; no live-session-material access before CTO sees the capturer per §6b):
+1. **`Cookies`** (SQLite, ~20KB, last-write tracks live app activity) — the standard Chromium cookie jar;
+   this is the §2.1 "FULL-AUTH-JAR" target (all cookies, not just one token). Chromium cookies are
+   DPAPI-encrypted at rest under the OS user profile — the capturer will need to decrypt in-process
+   (as the same Windows user SI2 runs as, via `CryptUnprotectData`/the Chromium `os_crypt` key in
+   `Local State`), not just copy the file.
+2. **`Local Storage\leveldb\*.log`** (leveldb KV store, actively written — newest entry 6/29 5:49:48PM
+   PM, same session window as the Cookies file) — the likely OAuth access_token/refresh_token
+   persistence point (standard pattern for browser-hosted OAuth SPA flows, e.g. MSAL.js/oidc-client
+   using localStorage). `Session Storage` also has a fresh entry (5:52:14PM) — check both; sessionStorage
+   is ephemeral-per-tab so Local Storage is the more durable candidate for what survives a capturer
+   read between app restarts.
+3. `Login Data` (Chromium saved-passwords store) also present but likely irrelevant — SI2 auth is SSO,
+   not a saved-password autofill; not pursuing unless the other two prove insufficient.
+
+**NOT pursued (deliberately, ROE-bound):** did not open/query the Cookies SQLite DB, did not read the
+leveldb log contents, did not attempt DPAPI decryption. This recon establishes WHERE + WHAT FORMAT, not
+the actual live session material — that's Gate-2 capturer-build territory, gated on CTO seeing the
+capturer + liveness alarm per §6b.
+
+**Gate-2 capturer implication:** the capturer needs (a) SQLite read + DPAPI/os_crypt decrypt for
+`Cookies`, (b) a leveldb reader (or shell out to a small Go/Python leveldb lib) for `Local Storage`,
+run as/impersonating the same Windows Administrator console-session user SI2 runs as (DPAPI keys are
+per-user). This is a different (more standard, well-precedented — Chromium cookie/localStorage
+extraction is a common, well-documented pattern) build than the Cred-Manager assumption in §2.1 — likely
+SIMPLER, since there are mature libraries for both SQLite-Chromium-cookie and leveldb reads, vs. the
+undocumented Cred Manager blob format that would have been needed otherwise.
