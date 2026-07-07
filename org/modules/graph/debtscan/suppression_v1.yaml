@@ -250,6 +250,7 @@ suppression_classes:
   # ---------- Reachability family (TO-D1 iteration, CVO adjudication 0.70) ----------
 
   - id: FP_INF_DISPATCHER_CATALOG
+    active: false  # RETIRED 2026-07-07 by 2.0.0_SA_COO: retire_when SATISFIED -- the stitch now carries 73 dispatcher->gold TRIGGERS edges (DS~A rebuild 07:43Z over 0.8.0's grain-complete regen; the 84bb8377b fix materialized). FPs #7/#8 (INF_A_02.fee_rate_history + INF_A_-1.materialize_txn_cache) now carry inbound TRIGGERS -> retire STRUCTURALLY (edged), NOT by this blanket mask. A 0-edge INF_* gold script AFTER this is a REAL orphan again. Persists on tonight's 02:00Z nightly (0.7.0's durable IAM+container fix). D1 reachability promotes ~1.0 on structural correctness.
     reason: >
       A gold script whose ONLY connection is inf dispatcher-catalog membership (orion-gold-dispatch.sh
       pipe-delimited catalog + CHAIN_* sets) read as 0-edge orphaned because the catalog was not parsed
@@ -278,7 +279,9 @@ suppression_classes:
     affected_types: [S3_BUCKET]
     name_patterns:
       - "opal-data-etfs"
-      - "opal-data-aaii-v2"
+      # opal-data-aaii-v2 DROPPED 2026-07-07 by 2.0.0_SA_COO: CVO adjudicated FP #4 as a REAL orphan
+      # (zero code refs, still isolated on the fresh 07-07 Nessie) -- this suppression was MASKING a
+      # CVO-confirmed real orphan (the recall-hole the >=0.80 precision gate exists to prevent). Unmasked.
       - "opal-data-mdpf"
     retire_when: "extractor records bucket-qualified keys for mdpf reads (TOOL-02 follow-on)"
     evidence: CVO adjudication 2026-06-12 FP #5; mdpf DAG injection landed TO-D1-iteration
