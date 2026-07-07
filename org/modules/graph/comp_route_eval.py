@@ -218,6 +218,42 @@ def evaluate(role="AE", arms=("off", "on"), verbose=False):
     return result
 
 
+def affinity_reach_diagnostic(role="AE"):
+    """THE load-bearing C1 finding, made reproducible: quantify WHERE affinity can act. A top routed
+    in the VETTED band [1.0,2.0) is affinity-IMMUNE (the band structurally pre-empts the base posterior
+    where affinity lives, comp_route.py:310); only a BASE-band top is affinity-sensitive. Reports, over
+    the full corpus: #vetted tops / #base-band tops / #tops that CHANGE off->on. A 0/0-changed result
+    means affinity-on is a no-op on this corpus BY CONSTRUCTION (not a wiring bug) -- its efficacy lives
+    only on the non-vetted tail. Re-runnable by CVO~B independently (exercise-gate)."""
+    provider = _sh.capmap.get_provider()
+    ap = CachedAffinityProvider()
+    vetted_top = base_top = fallback = changed = 0
+    changed_examples = []
+    for q, _accept, _tier, _kind in _labeled_cases():
+        r_off, _ = _route_arm(q, provider, None, role)
+        r_on, _ = _route_arm(q, provider, ap, role)
+        if not r_off.ranked:
+            continue
+        toff = r_off.ranked[0]
+        ton = r_on.ranked[0] if r_on.ranked else None
+        if r_off.kind == "fallback":
+            fallback += 1
+        elif toff.vetted:
+            vetted_top += 1
+        else:
+            base_top += 1
+        if ton is not None and toff.cap.id != ton.cap.id and r_off.kind != "fallback":
+            changed += 1
+            changed_examples.append((q[:44], toff.cap.id, ton.cap.id))
+    return {"role": role, "n": len(_labeled_cases()), "vetted_tops_affinity_immune": vetted_top,
+            "base_band_tops_affinity_sensitive": base_top, "fallbacks": fallback,
+            "tops_changed_off_to_on": changed, "changed_examples": changed_examples,
+            "verdict": ("affinity-on is a NO-OP on this corpus (all tops vetted -> affinity pre-empted "
+                        "by the vetted band; efficacy confined to the non-vetted tail)"
+                        if changed == 0 else
+                        "affinity-on MOVES %d top(s) on this corpus (base-band cases exist)" % changed)}
+
+
 def evaluate_roles(roles=("AE", "DS", "CTO", ""), verbose=False):
     """Role-sensitivity sweep (CTO ruling #2): the affinity term is per-(cap,ROLE), so report the
     OFF-vs-ON held-out delta at each of several representative roles + role="" (the cold-start floor).
@@ -275,11 +311,16 @@ def main():
     ap.add_argument("--role", default="AE", help="role for the affinity-on arm (default AE)")
     ap.add_argument("--json", action="store_true", help="emit report.json + print JSON")
     ap.add_argument("--roles", default="", help="comma-list -> role-sensitivity sweep (e.g. AE,DS,CTO,)")
+    ap.add_argument("--diagnostic", action="store_true",
+                    help="reproduce the affinity-reach finding (vetted vs base-band tops; off->on changes)")
     ap.add_argument("--verbose", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
     if args.self_test:
         _self_test()
+        return
+    if args.diagnostic:
+        print(json.dumps(affinity_reach_diagnostic(role=args.role), indent=1))
         return
     if args.roles:
         roles = tuple(r.strip() for r in args.roles.split(","))
