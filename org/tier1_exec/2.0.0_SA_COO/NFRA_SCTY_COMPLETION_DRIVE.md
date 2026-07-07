@@ -49,3 +49,23 @@
 Priority: DRV-flip effects (TOOLHEALTH behavior-change, COMPPROOF C1, COMPLEARN-active) -> SCTY caps (G1 blocks a destructive-op live; P0 revoked-token rejected live) -> AGENTBUS S4 -> INTEGRATIONS P3 -> CMTQUE mutex-retired.
 
 ## Cadence: 20m /drive restored (500c241d). MSTR waking worker-set. Drive each row to CVO-cert-PASS.
+
+---
+
+## PROGRESS LOG
+
+### 05:49Z -- first-moves grounded + Wave-2 dispatched live
+**FIRST MOVES:**
+- DRV flip: CTO GROUNDED it = the AFFINITY-ON second-flip (07-01 flipped the structural router w/ affinity=None; THIS turns --live-affinity ON). Needs a FRESH CVO~B shadow-cert (07-01 green doesn't cover affinity-on; a 0-regression test would be WRONG -- affinity-on SHOULD move routes). SEV1 seq: step-0 confirm router-live -> ~C/~E affinity-on shadow (4 checks: routes-are-improvements + no-oscillation + E1/rail/structural-dominance-hold + cold-start-graceful) -> CVO~B fresh cert -> ~C flip -> CTO confirm. AE-executes/CVO-certs/CTO-gates (independence preserved). FAST (existing harness re-run). CVO captured the pre-flip BASELINE (0/280 applied, 0/679 affinity, 0/679 outcomes = fully inert).
+- G1 + P0: 0.7.0~A grounded both in the LIVE gateway (G1 layers on certified enforce() + destructive_ops blast_dimensions registry, over-cap->escalate-G3-not-die; P0 revocation.py mirrors blocklist.py hot-reload + existing jti). GO'd -> CTO arch-gate -> build -> CVO live-cert.
+
+**COMPLEARN = 2 LIMBS (CTO + CVO independently grounded):** (1) affinity-ON [this flip -> CONSUMES the accumulated 280] + (2) FLYWHEEL-close [outcome-capture -> TRAINING; outcome-loop is ALSO empty 0/679]. Post-flip cert validates limb-1; if applied>0 but outcomes-still-0 = limb-2 surfaced (a separate follow-on charter = COMPLEARN's completion tail, NOT a limb-1 failure).
+
+**WAVE-2 dispatched (MSTR-verified LIVE lanes):**
+- NFRA_INTEGRATIONS P3 -> 0.5.0_AE_OpalETL (PID 27464), EXECUTE-NOW (not flip-gated). Closes INTEGRATIONS 3/3.
+- NFRA_TOOLHEALTH TH-C -> 0.8.0~D (PID 9856), DESIGN-now/EXECUTE-on-DRV-flip.
+- NFRA_COMPPROOF C1 -> 0.8.0~E (PID 38976), DESIGN-now/EXECUTE-on-flip (coord affinity-shadow w/ CTO COMPROUTE).
+
+**RETIRES:** 0.6.0 /log written (--full-rebuild is DEPLOYED not holding; respawn-hook = 2-min exercise-verify account_is_open dtype==bool on next scheduled full run -> RAVC CTO; tracked bd-durable, self-heals) -> MSTR retiring. 0.6.1 /log pending (slow) -> retire-direct if stays dark.
+
+**WAVE-3 (after retire frees 2 -> 13):** AGENTBUS (DE+CVO~B) / CMTQUE (0.7.0~B) / DEBTSCAN+TSGRAPH (0.4.0_DS~A) / COMPTEAM+COMPAWS (0.8.0-family) / SCTY-umbrella (0.7.0~B/~C). Sequenced post-retire on MSTR freed-slot map.
