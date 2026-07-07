@@ -71,6 +71,21 @@ The pipe from the topic up through SES works and the stranded backlog drained. R
 
 **DISPOSITION:** P1 stays OPEN. Mechanical chain PASS; delivery uncertified. Next: (a) I re-verify the mailbox shortly to rule out ingestion latency vs a drop; (b) 0.7.0/Andrew check M365 Junk + run a message-trace on SES MessageId 778dae49-fd50-54ad-990a-cc8ed6536be4 to confirm the mechanism; (c) durable fix if quarantined — send from an **opalinvest.COM** verified identity (intra-domain, trusted) instead of opalinvest.dev, and/or complete DKIM+DMARC for the sending domain. **Cert bar reaffirmed:** delivery certs only when a test message DEMONSTRABLY appears where a human reads it (inbox, not quarantine).
 
+## RESOLUTION — root cause GROUNDED (both directions proven) + a fast no-DNS fix
+
+Collaborative convergence with 0.7.0 (they corrected my sender error; I confirmed their mechanism + found the fast fix). **I was wrong on the sender twice** (inferred noreply@opalinvest.dev from ETFS-orchestrator context without reading THIS Lambda; owned). Ground truth, all independently verified this session:
+- **Actual sender = `andrew@opalinvest.com`** — read the deployed code myself: `infra/aws/lambda/partner-etl-ops-sqs-consumer/lambda_function.py:41` `EMAIL_SENDER="andrew@opalinvest.com"`, `Source=EMAIL_SENDER` L119.
+- **andrew@opalinvest.com auth:** SES Verified=true but DKIM=NOT_STARTED, SigningEnabled=false (unsigned).
+- **opalinvest.com DNS (my own nslookup):** SPF `v=spf1 include:mailgun.org include:spfa.cpmails.com include:spf.protection.outlook.com ~all` — SES NOT included → SPF fail for SES-origin mail; DMARC `p=none` (monitor-only). So it's EOP's own anti-impersonation heuristic (external infra claiming to BE the tenant's exact own address, zero SPF/DKIM alignment = spoof signature), not a DMARC-policy reject. Silent quarantine, no SES bounce — matches the symptom exactly.
+
+**Both directions PROVEN against Andrew's live mailbox:**
+- **FAILING path (the consumer):** `search_email` for the alarm subjects → EMPTY. From:andrew@opalinvest.com forwards absent (quarantined).
+- **WORKING path (existence proof):** `search_email "Opal ETF Ownership Month-End Report"` → TWO emails IN the mailbox, both **From: noreply@opalinvest.dev** (2026-05 @06-25T23:30Z, 2026-06 @07-01T14:02Z). The ETFS reporter's opalinvest.dev sender (DKIM-SUCCESS via the verified domain → DMARC-aligned) reliably delivers to andrew@opalinvest.com's inbox.
+
+**FAST FIX (grounded, no DNS/IT dependency, deployable today) — handed to 0.7.0:** change the consumer's `EMAIL_SENDER` from `andrew@opalinvest.com` to `noreply@opalinvest.dev` (recipient unchanged). It's the exact sender proven-in-mailbox above. This unblocks the pager NOW — the opalinvest.com-domain SES-verify + DKIM-CNAME + SPF-include DNS chain (GoDaddy/IT-gated, per 0.7.0) is downgraded from BLOCKING to a nice-to-have (only needed if mail must legitimately come From:@opalinvest.com). The message-trace is no longer gating the fix (the working-vs-failing sender proof is stronger for the fix direction than the trace's quarantine-reason would be).
+
+**RE-CERT BAR:** after 0.7.0 switches the sender + redeploys + fires a test, I confirm the forward APPEARS in Andrew's mailbox (search_email) → then endpoint-delivery certs PASS and this P1 closes. Until then: mechanical chain PASS, delivery uncertified, P1 OPEN.
+
 ## Compiler Tools
 
 Raw `aws` CloudWatch/SNS/SQS inspection only — rail-checked markers carried (no comp-tool surfaces alarm-history, SNS delivery metrics, SMS-sandbox state, or SQS attributes; comp-routes=CF/apigw, comp-iam=IAM, comp-freshness=S3). Gap candidate: an alarm/SNS-delivery inspection comp-tool ("does this alarm actually page anyone") — recurring cert need, no rail today.
