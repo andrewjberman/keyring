@@ -327,6 +327,12 @@ def extract_lambda_ec2_edges(graph: TraceGraph, workspace_root: Path):
         return
 
     for fn_name, entry in source_map.items():
+        # Skip metadata keys (_comment / _README / _schema etc.): their VALUES are prose, not source
+        # paths. Calling is_dir() on a 200-char comment string is silently-False on Windows but throws
+        # OSError ENAMETOOLONG (Errno 36, > NAME_MAX) and is FATAL on Linux -- the cross-platform bug the
+        # 0.7.0 stitch-CodeBuild caught 2026-07-07 (works on a local Windows run, dies in Linux CI).
+        if fn_name.startswith("_"):
+            continue
         # Source map entries can be dicts with 'source' key or plain strings
         if isinstance(entry, dict):
             source_path = entry.get("source") or entry.get("path") or ""
@@ -337,14 +343,23 @@ def extract_lambda_ec2_edges(graph: TraceGraph, workspace_root: Path):
             continue
 
         abs_path = workspace_root / source_path
-        # Accept both directory (look for lambda_function.py) and direct file path
-        if abs_path.is_dir():
+        # Accept both directory (look for lambda_function.py) and direct file path. Guard the stat:
+        # a pathological source_path (too long / invalid) must be SKIPPED cross-platform, never fatal
+        # (the same defense-in-depth: don't let one bad map value kill the whole graph build on Linux).
+        try:
+            _is_dir = abs_path.is_dir()
+        except OSError:
+            continue
+        if _is_dir:
             candidates = list(abs_path.glob("lambda_function.py")) + list(abs_path.glob("index.py"))
             if not candidates:
                 continue
             abs_path = candidates[0]
 
-        if not abs_path.exists():
+        try:
+            if not abs_path.exists():
+                continue
+        except OSError:
             continue
 
         try:

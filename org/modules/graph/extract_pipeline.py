@@ -1435,6 +1435,23 @@ def parse_mdpf_dispatch(ws_root: Path) -> dict[str, str]:
     return scripts
 
 
+def parse_gold_direct_invoke(ws_root: Path) -> dict[str, str]:
+    """DEBTSCAN reachability FP-root-fix recognizer #2 (DS~A-authored, 0.8.0-grounded 2026-07-07):
+    {basename: relpath} for every `python3 "$SCRIPTS/<script>.py"` DIRECT invoke in BD gold_dispatch.sh --
+    the Wed-conditional legs (gldinc_ss4c_weekly, :1397) that are NOT CHAIN_ members, so the daily
+    _parse_dispatch misses them + they read isolated. inject_pipeline_edges emits
+    gold_dispatch -[TRIGGERS]-> gold:<basename> for each. (gldinc-ss4c.tf is only the canary+alarms, not
+    the dispatcher -- the dispatch IS this gold_dispatch Wed leg.)"""
+    f = ws_root / "data" / "black_diamond" / "scripts" / "gold" / "gold_dispatch.sh"
+    if not f.exists():
+        return {}
+    content = f.read_text(encoding="utf-8", errors="replace")
+    scripts: dict[str, str] = {}
+    for m in re.finditer(r'python3\s+"?\$\{?SCRIPTS\}?/(\S+?\.py)"?', content):
+        scripts[Path(m.group(1)).stem] = m.group(1)
+    return scripts
+
+
 def inject_pipeline_edges(dag: PipelineDAG, workspace_root: Path, _graph=None):
     """Inject pipeline DAG edges into the comp-trace graph cache.
     This lets comp-trace walk through pipeline dependencies during
@@ -1584,6 +1601,35 @@ def inject_pipeline_edges(dag: PipelineDAG, workspace_root: Path, _graph=None):
                     source=mdpf_dispatcher_id, target=script_node_id,
                     edge_type="TRIGGERS",
                     metadata={"source": "mdpf_dispatch"},
+                ))
+                edges_added += 1
+
+    # DEBTSCAN reachability FP-root-fix (recognizer #2, DS~A-authored 2026-07-07): BD gold_dispatch.sh runs
+    # some legs (the Wed-conditional ss4c-weekly oracle) as DIRECT `python3 "$SCRIPTS/X.py"` invokes, NOT
+    # CHAIN_ members -- the daily chain-parse misses them so they read isolated. Emit
+    # gold_dispatch -[TRIGGERS]-> gold:<script> for each direct-invoke -> edged at the ROOT. The
+    # not-in-g.nodes guard means the 3 co-caught diagnostics only edge if they're real nodes (no spurious).
+    direct_invokes = parse_gold_direct_invoke(workspace_root)
+    if direct_invokes:
+        gd_id = "gold:gold_dispatch"
+        if gd_id not in g.nodes:
+            g.add_node(Node(
+                id=gd_id, node_type="GOLD_SCRIPT", label="gold_dispatch",
+            ))
+        for _basename in direct_invokes:
+            script_node_id = f"gold:{_basename}"
+            if script_node_id not in g.nodes:
+                continue  # only edge scripts the trace-graph already carries (no spurious nodes)
+            edge_exists = any(
+                e.source == gd_id and e.target == script_node_id
+                and e.edge_type == "TRIGGERS"
+                for e in g.edges
+            )
+            if not edge_exists:
+                g.add_edge(Edge(
+                    source=gd_id, target=script_node_id,
+                    edge_type="TRIGGERS",
+                    metadata={"source": "gold_dispatch_direct"},
                 ))
                 edges_added += 1
 
