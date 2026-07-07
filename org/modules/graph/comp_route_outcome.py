@@ -160,6 +160,41 @@ def _self_test() -> bool:
     return ok
 
 
+def accrual_check(routes: list, runs: list, k_ready: int = 20, n_min: int = 5,
+                  classify=None) -> dict:
+    """Charter-2 re-measure TRIGGER (COO 20260707T111717Z: err toward MORE evidence -- a thin corpus ->
+    noisy tail-measure -> wrong flip). READY when the accrued route->run corpus has >= k_ready evidenced
+    (cap,role,intent) triples (n >= n_min) -- AND, the sharper criterion, enough that INTERSECT the tail
+    corpus's (cap,intent-class) targets (else the affinity has nothing to tie-break ON the tail, so the
+    sign can't move regardless of raw count). NOT a manual poll: run this from a periodic sweep (COO
+    /drive); on READY -> emit the IC cache + re-run --tail/--rank -> RAVC CVO the re-gate."""
+    cap = capture_outcomes(routes, runs, classify=classify)
+    evidenced = [key for key, v in cap["entries"].items() if v.get("n", 0) >= n_min]
+    tail_targets = set()
+    try:                                             # tail (cap,intent-class) targets, best-effort
+        sys.path.insert(0, _HERE)
+        import comp_route_eval as _ev
+        _cls = classify
+        for q, accept in getattr(_ev, "_TAIL", []):
+            ic = _cls(q) if _cls else ""
+            for c in accept:
+                tail_targets.add(f"{c}{_SEP}{ic}")
+    except Exception:  # noqa: BLE001
+        pass
+    tail_hits = sum(1 for key in evidenced
+                    if _SEP.join([key.split(_SEP)[0], key.split(_SEP)[2]]) in tail_targets) if tail_targets else None
+    ready = len(evidenced) >= k_ready and (tail_hits is None or tail_hits >= max(3, k_ready // 4))
+    return {
+        "joined_outcomes": cap["counts"], "evidenced_triples_n_ge_%d" % n_min: len(evidenced),
+        "k_ready": k_ready, "tail_relevant_evidenced": tail_hits,
+        "READY": ready,
+        "verdict": ("READY -> emit IC cache + re-run --tail/--rank -> RAVC CVO the re-gate" if ready else
+                    "NOT-READY -> keep accruing (%d/%d evidenced triples%s); re-check from the periodic sweep"
+                    % (len(evidenced), k_ready,
+                       "" if tail_hits is None else ", %s tail-relevant" % tail_hits)),
+    }
+
+
 if __name__ == "__main__":
     if "--self-test" in sys.argv:
         sys.exit(0 if _self_test() else 1)
@@ -191,6 +226,11 @@ if __name__ == "__main__":
     except Exception:  # noqa: BLE001
         pass
     joinable = [r for r in routes if r.get("ts_epoch") and r.get("serial")]
+    if "--accrual-check" in sys.argv:
+        res = accrual_check(joinable, runs, classify=classify)
+        res["routes_joinable_post_fix"] = len(joinable)
+        print(json.dumps(res, indent=1))
+        sys.exit(0 if res["READY"] else 2)   # exit 2 = NOT-READY (a periodic sweep can branch on it)
     out = capture_outcomes(joinable, runs, classify=classify)
     out["routes_total"] = len(routes)
     out["routes_joinable_post_fix"] = len(joinable)
