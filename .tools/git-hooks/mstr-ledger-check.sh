@@ -178,6 +178,7 @@ while IFS= read -r path; do
   [ -z "$path" ] && continue
   case "$path" in
     org/tier0/ledger/*|org/tier0/cycles/*|org/tier0/reviews/*|org/tier0/ratifications/*|org/tier0/sessions/*) : ;;
+    org/tier0_exec/*/logs/*) : ;;  # MSTR's own session logs (org/tier0_exec/0.0.0_AB_MSTR/logs/**) are RECORDS, not strategic commitments -- the /log skill writes them here per org/XXX.md; the actual decisions are ledgered separately as LD-*. Closes the allowlist gap that misclassified every MSTR session-close /log as strategic (Andrew sovereign-authorized 2026-07-07; LD-0258).
     org/compiler-tools-log.md|org/git-author-override-audit.log|org/mcp/comp_ferry_queue.json) : ;;  # record-append / MSTR-owned execution-tracking (every-agent /log + author-override audit + the comp-ferry queue, LD-0119) -- tracking under an existing LD, not a new strategic commitment (MSTR gate-hygiene fix 2026-06-29)
     *) STRATEGIC=1 ;;
   esac
