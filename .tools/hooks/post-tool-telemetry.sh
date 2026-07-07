@@ -63,20 +63,17 @@ if [[ -n "${SESSION_ID}" ]]; then
     AGENT="$(cat "org/mcp/sessions/${SESSION_ID}.serial" 2>/dev/null || echo "")"
 fi
 SERIAL_SOURCE="session-id-keyed"
-# 2026-07-07 sweep (COO TO): session-keyed clobber-PROOF secondary BEFORE the shared .agent_context
-# fallback. The register_agent PostToolUse hook writes org/mcp/sessions/${sid}.${serial}.orphan-cleaned
-# (serial in the filename, THIS-session-scoped) -> resolves the true agent when the .serial file is
-# absent WITHOUT the shared .agent_context (last-writer-wins across concurrent agents -> a mis-attributed
-# telemetry row lands in the wrong agent's JSONL -> corrupts the /drive movement-read). Newest marker
-# wins. Same fix as halt-gate-check.sh (aba336c09). `|| true` keeps the empty-glob safe under set -e.
+# session-keyed clobber-PROOF secondary BEFORE the shared .agent_context fallback (register_agent hook
+# writes org/mcp/sessions/${SESSION_ID}.${serial}.orphan-cleaned -- serial-in-filename, this-session-scoped;
+# fixes the mis-attribution where an absent .serial fell to .agent_context last-writer -- CloudOps 5x defect twin).
 if [[ -z "${AGENT:-}" && -n "${SESSION_ID}" ]]; then
-    _MK="$(ls -t "${SCRIPT_DIR}/../../org/mcp/sessions/${SESSION_ID}."*.orphan-cleaned 2>/dev/null | head -1 || true)"
+    _MK="$(ls -t "org/mcp/sessions/${SESSION_ID}."*.orphan-cleaned 2>/dev/null | head -1 || true)"
     if [[ -n "${_MK}" ]]; then
         AGENT="$(basename "${_MK}")"; AGENT="${AGENT#"${SESSION_ID}".}"; AGENT="${AGENT%.orphan-cleaned}"
         SERIAL_SOURCE="session-id-keyed-marker"
     fi
 fi
-# Fallback chain per canonical §7.4 -- shared .agent_context, LAST resort only (clobber-prone).
+# Fallback chain per canonical §7.4 (OPAL_AGENT_SERIAL env preferred over the shared .agent_context file)
 if [[ -z "${AGENT:-}" ]]; then
     AGENT="${OPAL_AGENT_SERIAL:-$(awk -F= '/^SERIAL=/{print $2}' .comp-graph/.agent_context 2>/dev/null)}"
     SERIAL_SOURCE="fallback"
