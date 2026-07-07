@@ -7,8 +7,8 @@
     {"path": "docs/architecture/ADVI_INFFEE_PRD.md", "label": "Inflection fee-classification audit + revision PRD (Andrew-direct)", "date": "2026-07-06"}
   ],
   "status": "active",
-  "phase": "Phase 0: PRD complete (1.0.0_SA_CTO 2026-07-06, Andrew-direct live smoke), COO decomposition pending. 3 TOs sequenced TO-1(audit, 0.6.1_AE) -> TO-2(gold revise, 0.4.0_DS~A) -> TO-3(frontend, 0.4.0_DE). Origin brief f700e34cd (0.4.0_DE).",
-  "blocking": "COO task order issuance (TO-1 -> TO-2 -> TO-3 sequenced; owners Andrew-specified).",
+  "phase": "TO-1 (billing-dim audit, 0.6.1_AE) COMPLETE + COO-accepted (commits 2e86bad0c, 548ac81f1). Findings OVERTURN the PRD's own default-recommended canonical grain: root cause is mostly MISSING PRICE DATA for 268 real fee-paying custody accounts (a data-quality gap), not truly-unbilled accounts as first suspected; audit recommends counting by HOLDINGS, not by custody record, contra the PRD default. TO-2 (gold revise, 0.4.0_DS~A) and TO-3 (frontend, 0.4.0_DE) NOT yet started -- gated on TO-2 first, must work from the corrected diagnosis above, not the original PRD framing.",
+  "blocking": "GO TO-2 (0.4.0_DS~A) against the corrected diagnosis (holdings-grain, missing-price-data root cause); TO-3 gated on TO-2's output format. No filed TO exists yet for any of the three items in the tracker -- TO-1 was executed+accepted informally; formalize TO-2/TO-3 as filed TOs when dispatched.",
   "created": "2026-07-06",
   "pods": ["0.4", "0.6"],
   "pipeline": "inf (Inflection gold INF_D_04 client_portal_summary + build_billing_dim silver + Books/Distribution frontend)",

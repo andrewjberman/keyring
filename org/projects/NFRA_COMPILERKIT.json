@@ -6,7 +6,7 @@
   "prds": [{"path": "docs/architecture/NFRA_COMPILERKIT_PRD.md", "label": "NFRA_COMPILERKIT PRD (CTO-authored)", "date": "2026-07-07"}],
   "status": "active",
   "phase": "P1 ACTIVE. SDK skeleton LANDED (`comp_recognizer_sdk.py`, 11/11 self-test). Compiler #1 (code) batch-1 wired onto the SDK (commit a4f3d302e -- DispatchCatalogRecognizer + MdpfDispatchRecognizer adapted to the threaded marker_head contract; 133 fidelity-clean TRIGGERS edges, 0 unresolved, orion 67 + BD 28 + cot 27 + mdpf 11, all AC6-fidelity-ok); batch-2 queued. Compiler #2 (TSGRAPH-TSX) not yet re-platformed onto the shared SDK. CTO ruling #3 on record: live-AWS (boto3 runtime) = a FEDOBS observer, NOT a compiler (keeps fidelity pure); desired-vs-applied = a FEDOBS join, not COMPILERKIT scope.",
-  "blocking": "Compiler #1 line-grain provenance uplift (has file+sha, needs file:LINE) + compiler #2 SDK migration + full structural diff vs live extract_pipeline dispatch C1 (next slice, DS~A/0.8.0~D). P2 (config compiler) + P3 (ticket compiler) not started.",
+  "blocking": "Compiler #1 line-grain provenance uplift (has file+sha, needs file:LINE) + compiler #2 SDK migration + full structural diff vs live extract_pipeline dispatch C1 (next slice, DS~A/0.8.0~D). P2 (config compiler, ConfigS3RefRecognizer + EnvSecretRefRecognizer, 11/11 PASS vs real files, commit 66f7bcd14) and P3 (ticket compiler, TicketRequirementImplementsRecognizer -- first org-intent->code cross-plane edges via TO XML requirement blocks, commit 6789fe028) BOTH LANDED 2026-07-07 -- registry note was stale by a few hours. Compiler #2's SDK migration (TSGRAPH TSX extractor onto the shared framework) is the one true not-started item.",
   "created": "2026-07-07",
   "pods": ["0.7", "0.4"],
   "thread_counter": 0,

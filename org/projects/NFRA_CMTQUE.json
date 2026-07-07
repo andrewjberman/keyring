@@ -7,8 +7,8 @@
     {"path": "docs/architecture/NFRA_CMTQUE_PRD.md", "label": "Commit Queue PRD (Andrew-direct)", "date": "2026-07-06"}
   ],
   "status": "active",
-  "phase": "Phase 0: PRD complete (1.0.0_SA_CTO 2026-07-06, Andrew-direct), COO decomposition pending. 6 TO candidates framed (worker daemon / thin enqueue client / local durable queue / observability+alarms / retire-contamination-guard+wire-gates / phased-cutover). Executor pre-instantiated: 0.7.0_AE_CloudOps~B.",
-  "blocking": "COO task order issuance to 0.7.0_AE_CloudOps~B.",
+  "phase": "3 TOs issued; TO-4 (observability/alarms) and TO-5F (contamination-guard retirement + worker gate re-assert) are both COMPLETE, closed 2026-07-07 with live-exercised evidence (not config-read): TO-4 proved a real worker-killed alarm fire + DLQ alarm fire + a real SNS subscriber; TO-5F proved owned-paths rejection, non-compiling-.py rejection (catching 2 real self-fixed bugs), and confirmed the legacy contamination apparatus was never ported into the queue path. TO-1/TO-2/TO-3 landed via direct commits without their own formal TO files. THE CORE GOAL IS NOT YET REALIZED: the commit queue is fully built + tested but has never been switched on fabric-wide -- every agent commit still runs through the old lock-based system. The load test (TO-6R) proving many-agent concurrent commits work is built but deliberately locked pending explicit leadership sign-off, gated on a scheduled low-activity window; the 1,338-caller fabric-wide rollout hasn't started. As of 2026-07-07, leadership confirmed the queue is still dormant and made finishing this cutover a priority.",
+  "blocking": "TO-6R (load test) gated on a CPU/quiet-activity window sign-off (COO self-monitoring, not yet cleared as of this pass). Fabric-wide rollout of the 1,338 commit-trigger call sites is the actual remaining goal-critical work, sequenced after TO-6R.",
   "created": "2026-07-06",
   "pods": ["0.7"],
   "pipeline": "fabric-infra (local commit-worker daemon + local durable queue; CloudWatch for observability only)",

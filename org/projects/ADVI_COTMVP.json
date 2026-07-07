@@ -5,7 +5,7 @@
   "title": "Cottonwood dashboard fix (MVP) -- 5 items, 2 lanes",
   "name": "Cottonwood Dashboard Fix (MVP)",
   "description": "Andrew-sovereign fix to the Cottonwood (COT) partner dashboard -- 5 items across 2 lanes (pod4 DE owns S0 browser-repro + B firm-level Books view + D2 schema-guard hardening + D3 young-tenant year/quarter UX; the DS D1 producer leg was stood down as premise-falsified, Rule-22). CTO PRD docs/architecture/ADVI_COTMVP_PRD.md, grounded in CVO's breaks-audit.",
-  "status": "active",
+  "status": "complete",
   "owner": "0.4.0_DE_ClientPlatform",
   "pods": [
     "0.4"
@@ -25,6 +25,11 @@
     "AUTH_COTTON"
   ],
   "history": [
+    {
+      "date": "2026-07-07T17:50Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "STATUS FLIPPED active -> complete (COO /prd-delta registry-hygiene pass). Every live PRD deliverable (S0, B, D2, D3) shows landed-and-verified evidence; D1 was explicitly stood down (not a gap, see 2026-06-26T18:36Z entry below). Project simply hadn't gone through a formal closeout/status-flip. Non-gating follow-up remains tracked separately, outside this PRD's 5-item scope: client-directory name-resolution gap on a subset + 2 zero-AUA households (filed against the DS data-completeness thread, not this project)."
+    },
     {
       "date": "2026-07-01T14:21Z",
       "agent": "2.0.0_SA_COO",
