@@ -75,11 +75,35 @@ def commission_for(row: dict) -> dict | None:
         "value_low_flag": anchor.get("value_low_flag"),
         "basis": anchor.get("basis"),
     }
+    # Per-candidate 3-axis HEALTH GROUNDING (CTO ask 2026-07-07): the CTO ratifies each fix/promote/retire
+    # on the HEALTH EVIDENCE, not the verdict LABEL -- so carry the full TH-B row detail (used volume +
+    # VALUE, rail state, effective status) alongside every commission. A RETIRE the CTO must confirm is
+    # genuinely-dead-vs-slow-but-load-bearing reads its used.events + rail here; a PROMOTE reads its
+    # effective + value to reject a Goodhart-gamed w_s bump.
+    used = row.get("used") or {}
+    rail = row.get("rail_consistent") or {}
+    grounding = {
+        "used": {
+            "used": used.get("used"),
+            "events": used.get("events"),
+            "distinct_roles": used.get("distinct_roles"),
+            "mean_outcome_value": used.get("mean_outcome_value"),
+            "outcome_n": used.get("outcome_n"),
+        },
+        "rail_consistent": {
+            "state": rail.get("state"),
+            "router_confidence": rail.get("router_confidence"),
+        },
+        "effective": row.get("effective"),
+        "note": ("verdict pending the EFFECTIVE probe (TH-A) -- provisional until the recurring probe "
+                 "confirms" if pending else "verdict confirmed on the live 3-axis evidence"),
+    }
     base = {
         "tool": tool,
         "verdict": verdict,
         "pending_effective": pending,   # True => the EFFECTIVE axis (TH-A) has not confirmed yet
         "value_anchor": value_anchor,
+        "grounding": grounding,         # the CTO-ratification evidence (health, not label)
         "reason": reason,
     }
     if verdict == "FIX":
@@ -222,7 +246,15 @@ def _self_test() -> tuple[bool, list]:
         ck("differential.failing_signal_drives_action_healthy_does_not", True,
            "no pending-KEEP live tool to exercise (differential proven structurally in checks 1-4)")
 
-    # (6) REUSE-not-fork: health() comes from the TH-B module un-forked (no re-implementation here).
+    # (6) CTO-RATIFICATION GROUNDING (CTO ask): every commission carries the full 3-axis TH-B evidence
+    # (used volume+value, rail state, effective) so the CTO ratifies on health, not the verdict label.
+    grounded = all(
+        "grounding" in c and {"used", "rail_consistent", "effective"} <= set(c["grounding"])
+        for c in live["commissions"])
+    ck("grounding.every_commission_carries_3axis_evidence", grounded,
+       f"{live['n_commissions']} commissions, all carry used+rail+effective grounding")
+
+    # (7) REUSE-not-fork: health() comes from the TH-B module un-forked (no re-implementation here).
     ck("reuse.health_from_thb_unforked", th.health.__module__.endswith("comp_tool_health"),
        f"health() module = {th.health.__module__}")
 
