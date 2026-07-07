@@ -523,19 +523,31 @@ def render_open_deploys() -> str:
     if not sentinels:
         return "OPEN-DEPLOYS: none -- nothing half-landed"
     from datetime import datetime, timezone
-    out = [f"OPEN-DEPLOYS: {len(sentinels)} deploy ledger(s) OPEN (half-landed risk):"]
+    lines = []
+    n_risk = 0  # PAST-WINDOW open deploys = the genuine half-landed risk
     for sp in sentinels:
         try:
             st = json.loads(sp.read_text(encoding="utf-8"))
             opened = datetime.fromisoformat(st["opened_at"])
             age_h = (datetime.now(timezone.utc) - opened).total_seconds() / 3600.0
-            stranded = [leg["id"] for leg in st["legs"] if not leg.get("proof")]
-            flag = "PAST-WINDOW" if age_h > st.get("window_hours", 4) else "in-window"
-            out.append(f"  [{flag}] {st['slug']} age={age_h:.1f}h "
-                       f"stranded={stranded} author={st['author']}")
+            open_legs = [leg["id"] for leg in st["legs"] if not leg.get("proof")]
+            # "stranded" (a half-landed RISK) means the deploy OVERRAN its window with legs still
+            # open. An IN-WINDOW open leg is just PENDING -- expected to close within the (possibly
+            # COO-extended) window_hours -- NOT stranded. This honors a documented window-extension
+            # (e.g. a rule-deferred cert belt held to the scheduled nightly) instead of re-flagging
+            # it as stranded every sweep. window_hours already carries any COO extension.
+            if age_h > st.get("window_hours", 4):
+                n_risk += 1
+                lines.append(f"  [PAST-WINDOW] {st['slug']} age={age_h:.1f}h "
+                             f"stranded={open_legs} author={st['author']}  <- OVERRUN: close or roll back")
+            else:
+                lines.append(f"  [in-window] {st['slug']} age={age_h:.1f}h "
+                             f"pending={open_legs} author={st['author']}")
         except Exception as e:  # never let a corrupt sentinel kill the check
-            out.append(f"  [UNREADABLE] {sp.name} err={e}")
-    return "\n".join(out)
+            lines.append(f"  [UNREADABLE] {sp.name} err={e}")
+    hdr = (f"OPEN-DEPLOYS: {len(sentinels)} open"
+           + (f" ({n_risk} PAST-WINDOW = half-landed RISK)" if n_risk else " (all in-window, none stranded)") + ":")
+    return "\n".join([hdr] + lines)
 
 
 def main():
