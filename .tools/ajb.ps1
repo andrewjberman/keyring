@@ -299,6 +299,17 @@ function ajb {
         # ignores (see org/mcp/server.py:299-300). Skipped in -Headless mode so
         # autonomous spawns never stall on the Y prompt.
         $claudeArgs = @('--dangerously-skip-permissions')
+        # HEADLESS = no user present to answer a fork -> HARD-REMOVE the user-BLOCKING tools so an
+        # autonomous agent can never strand on an unanswerable prompt (the 0.6.1 2026-07-07
+        # frozen-user-fork retire). --skip-permissions covers permission prompts, NOT these
+        # deliberate user-CHOICE tools. Exempt-by-INTERACTIVITY (a non-headless session keeps them),
+        # NOT by identity -- even MSTR, if headless, must not strand. Disable the plan-mode PAIR
+        # (Enter+Exit): removing Exit ALONE would strand an agent stuck-in-plan-mode (CTO catch).
+        # A headless agent routes decisions to its exec via the broker instead. (CTO-cleared
+        # 20260707 w/ 2 refinements: interactivity-not-identity + plan-mode-pair; Andrew-direct.)
+        if ($Headless) {
+            $claudeArgs += @('--disallowedTools', 'AskUserQuestion', 'EnterPlanMode', 'ExitPlanMode')
+        }
         if (-not $Headless) {
             $claudeArgs += @('--dangerously-load-development-channels', 'server:opal-agent-comms')
         }
