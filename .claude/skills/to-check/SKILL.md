@@ -17,6 +17,18 @@ Filters compose: `--all --assignee DS` shows all workspace TOs assigned to any D
 
 Mechanically: `python .tools/to-check.py` (add flags as needed).
 
+## DEFAULT: every invocation ALSO renders + surfaces the dashboard (Andrew-direct 2026-07-07)
+
+**The dashboard renderer is PART OF THE INVOCATION, not an optional companion.** Unless the
+user explicitly says text-only (`--no-render` / "just the text"), running `/to-check` does BOTH,
+in order:
+1. the text lens -- `python .tools/to-check.py` (respecting `--all` / `--project` / `--assignee`);
+2. the live dashboard -- `python .claude/skills/to-check/render_to_dashboard.py` (pass through the
+   same scope flags), THEN **`SendUserFile` the resulting `Desktop/Opal_TaskOrder_Dashboard.html`
+   with `display: render`** so the user sees it inline.
+
+Exception (text-only, no render): the user says so.
+
 ## The format
 
 ```
@@ -99,8 +111,8 @@ TO workload. Use `/to-check --all` for a workspace-wide active-TO audit.
 
 ## Branded HTML dashboard (live card + activity-bar view)
 
-The visual companion to the text lens (the TO variant of `/registry-check`'s
-`render_dashboard.py`) -- emits a single Opal-branded HTML dashboard of active TOs:
+The visual dashboard the invocation renders by default (see "DEFAULT" above; the TO variant of
+`/registry-check`'s `render_dashboard.py`) -- emits a single Opal-branded HTML dashboard of active TOs:
 (1) **TO load by agent** -- a leaderboard, one bar per agent sized by TO count,
 segmented by status (active/pending/blocked) = the who-carries-how-much /
 bottleneck read; (2) **by project** -- a card per project with a status-segmented

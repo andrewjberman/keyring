@@ -20,6 +20,18 @@ each project as a numbered header plus three tight one-line fields.
 
 Mechanically: `python .tools/registry-check.py` (add `-all` / `--json`).
 
+## DEFAULT: every invocation ALSO renders + surfaces the dashboard (Andrew-direct 2026-07-07)
+
+**The dashboard renderer is PART OF THE INVOCATION, not an optional companion.** Unless the
+user explicitly says text-only (`--no-render` / "just the text"), running `/registry-check`
+does BOTH, in order:
+1. the text lens -- `python .tools/registry-check.py` (respecting `-all`);
+2. the live dashboard -- `python .claude/skills/registry-check/render_dashboard.py` (pass through
+   `-all` / `--days`), THEN **`SendUserFile` the resulting `Desktop/Opal_Project_Dashboard.html`
+   with `display: render`** so the user sees it inline.
+
+Exceptions (text-only, no render): `--json` (machine-readable), or the user says so.
+
 ## The format
 
 Vertical field-per-line record (Andrew-direct 2026-06-08 — every field on its
@@ -89,12 +101,12 @@ Andrew's 2026-06-25 ask to render the board "/draw style" as a branded SVG.
 
 ## Branded HTML dashboard (live card + activity-bar view)
 
-For a scannable **dashboard** -- one card per not-closed project, macro-colored,
-**sized by a real ACTIVITY BAR** (commits referencing the project in the last N
-days), sorted busiest -> quietest, with status pills + owner + last-touch -- use
-the companion renderer **`render_dashboard.py`** (this skill dir). Born from
+The scannable **dashboard** the invocation renders by default (see "DEFAULT" above) --
+one card per not-closed project, macro-colored, **sized by a real ACTIVITY BAR** (commits
+referencing the project in the last N days), sorted busiest -> quietest, with status pills +
+owner + last-touch. Renderer **`render_dashboard.py`** (this skill dir). Born from
 Andrew's 2026-07-01 ask ("nice cards, easy to read, bars for how much activity...
-a dashboard view of everything we've got going on").
+a dashboard view of everything we've got going on"); made a default-of-invocation 2026-07-07.
 
 ```bash
 python .claude/skills/registry-check/render_dashboard.py            # HOT, 7d window -> Desktop/Opal_Project_Dashboard.html
