@@ -105,7 +105,7 @@ def recognize_pipeline_map(safe_deploy_path: str) -> list:
     c0 = []
     src = os.path.relpath(safe_deploy_path, WS)
     for m in re.finditer(r'"([a-z_]+)":\s*\("([a-z0-9\-]+)",\s*"([a-z]+)"\)', text):
-        tree, bucket, firm = m.group(1), m.group(2), m.group(3)
+        bucket, firm = m.group(2), m.group(3)
         line = text[: m.start()].count("\n") + 1
         c0.append(Node(f"pmap:{firm}->{bucket}", "C0", "PipelineMapEntry", f"{firm} -> {bucket} (own-firm bucket)",
                        provenance={"source": src, "locus": f"L{line}", "evidence": m.group(0)}))
