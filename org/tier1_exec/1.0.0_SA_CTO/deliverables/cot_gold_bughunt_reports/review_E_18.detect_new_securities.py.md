@@ -1,0 +1,18 @@
+# REVIEW -- E_18.detect_new_securities.py
+
+- script: `data/cot/scripts/gold/E_18.detect_new_securities.py`
+- verdict: **issues-found**
+- runs_in_incremental: False
+- findings: 2
+
+## Finding 1 -- [low/empty-null-handling/both]
+- **Location:** `data/cot/scripts/gold/E_18.detect_new_securities.py:184 (loop) + normalize_key 118-129, fed by groupby(dropna=False) at 170-176`
+- **Mechanism:** unique_pairs is built with groupby(['ticker','asset_name'], dropna=False), so a holding row that has BOTH a null/blank ticker AND a NaN asset_name survives as a single (NaN, NaN) group. In the loop, `if asset_name:` (line 184) and `if asset_name:` inside normalize_key (line 120/124) treat a float('nan') as TRUTHY, so normalize_key falls through to the NAME:: branch and builds pk='NAME::NAN' (str(nan).upper()='NAN'), and _normalize_asset_name(NaN) returns 'nan'. Result: a spurious stub {ticker:'NAME::NAN', asset_class:'unknown', asset_name_raw:'nan', needs_review:True} is created and (under --upload) put_item'd into bd-securities.
+- **Failure scenario:** A synthetic cash-sleeve lot from B_01 (is_open=True, line 1055-1059) that carries no real ticker and no asset_name, or any tickerless holding whose asset_name silver-merged to NaN, collapses into the single (NaN,NaN) group -> one junk 'NAME::NAN' stub with asset_name_raw='nan'. Single junk dictionary row; not a served number, and E_18 is not in any chain, so no crash/abort. Trivial data-hygiene defect only.
+- **Proposed fix:** Guard the name before use: `if pd.notna(asset_name) and str(asset_name).strip():` (and mirror inside normalize_key with `pd.notna(asset_name)` instead of bare `if asset_name:`), and skip a pair that has neither a usable ticker nor a usable name rather than minting a NAME::NAN stub.
+
+## Finding 2 -- [low/other/both]
+- **Location:** `data/cot/scripts/gold/E_18.detect_new_securities.py:35 (BD_SECURITIES_TABLE='bd-securities'); used in load_known_tickers (64), _scan_db_asset_names (99/106), put_item (215)`
+- **Mechanism:** This COT diagnostic reads holdings + the resolution table from its OWN bucket (S3_BUCKET defaults to opal-data-cot via lib.config) but reads/writes securities-classification records to a DynamoDB table literally named 'bd-securities' (the bd firm's name). Under the CLAUDE.md firm-separation NEVER rule, a COT script targeting a bd-named table is notable. GROUNDING CAVEAT: the in-chain sibling B_01b.classify_new_securities.py (line 43) uses the IDENTICAL 'bd-securities' table, so this is a pipeline-wide clone pattern, and ticker->asset_class classification is plausibly a firm-agnostic shared dictionary by design. I could NOT ground this as cross-firm contamination vs intentional-shared; reporting as an unconfirmed smell for owner confirmation, not an asserted defect.
+- **Failure scenario:** IF 'bd-securities' is bd's firm-private classification table (not a shared dictionary), then running E_18 --upload -- or the nightly in-chain B_01b -- injects COT-only securities' stubs into bd's table, contaminating another firm's classification data. Requires owner confirmation of the table's intended scope; no observable failure if the table is a shared cross-firm securities dictionary.
+- **Proposed fix:** Confirm whether bd-securities is an intentional cross-firm shared securities-classification dictionary. If it is firm-scoped, repoint COT to a cot-securities table (parameterize the table name via lib.config / env like BD_S3_BUCKET is). No code change if shared-by-design. Note E_18 itself is unreferenced by gold_dispatch.sh and run_gold_layer.sh, so its --upload only fires on manual invocation.

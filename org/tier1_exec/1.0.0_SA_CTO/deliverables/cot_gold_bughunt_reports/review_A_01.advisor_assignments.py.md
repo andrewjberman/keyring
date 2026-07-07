@@ -1,0 +1,24 @@
+# REVIEW -- A_01.advisor_assignments.py
+
+- script: `data/cot/scripts/gold/A_01.advisor_assignments.py`
+- verdict: **issues-found**
+- runs_in_incremental: False
+- findings: 3
+
+## Finding 1 -- [medium/schema-column/full]
+- **Location:** `build_advisor_assignments_history, lines 443-451 (baseline_history effective_date, specifically line 446)`
+- **Mechanism:** The baseline-supplement path sets effective_date via `pd.to_datetime(baseline['start_date'] if 'start_date' in baseline.columns else pd.NaT)`. The accounts dimension it reads (ACCOUNTS_DIMENSION = gold/dimensions/accounts_dimension_latest.parquet, produced by A_00) has NO `start_date` column: A_00 renames start_date -> account_open_date and DROPS start_date (A_00 lines 534-536), and the final output_cols list (A_00 lines 555-586) contains only account_open_date + first_transaction_date. So `'start_date' in baseline.columns` is always False and the ternary unconditionally yields pd.NaT.
+- **Failure scenario:** For any account present in accounts_dimension but absent from silver/transactions (e.g. a snapshot/relationship-only account A_00 pulled in with no trades yet, A_00 lines 480-481), A_01 emits a baseline SCD record with is_current=True but effective_date=NaT (and end_date=NaT). The dimension's stated purpose is date-range joins against 03c/04a ('for any date, who was the advisor'); a NaT effective_date never satisfies effective_date <= date, so these accounts silently vanish from every date-scoped advisor/fee attribution and carry a null inception date on the served history. Silent, no crash. (cot impact is dampened because those roles are all 'Unassigned' anyway, but the null-dated current record is still wrong.)
+- **Proposed fix:** Reference the column A_00 actually emits: use baseline['account_open_date'] (coalesce with baseline['first_transaction_date']) instead of the non-existent 'start_date' when constructing baseline_history.effective_date.
+
+## Finding 2 -- [low/empty-null-handling/full]
+- **Location:** `load_transactions, line 197 (pd.concat) and line 217 (df['trade_date'])`
+- **Mechanism:** After the parallel load, `df = pd.concat(dfs, ignore_index=True)` is called with no guard on dfs being empty. Individual _load_one failures are caught and only WARN-logged (lines 190-193), so a total read failure leaves dfs == []. pd.concat([], ignore_index=True) raises ValueError: No objects to concatenate. Line 217 then does df['trade_date'] = pd.to_datetime(df['trade_date']) with no check that the column survived the needed-cols filter.
+- **Failure scenario:** If silver/transactions/ returns zero .parquet keys (misconfigured prefix, pre-ingest state, or an empty first run) OR a transient S3 outage makes every parallel _load_one raise (all caught+warned -> dfs stays empty), line 197 raises ValueError and A_01 exits non-zero. Gold compute steps run with NO timeout and HARD-FAIL the chain on any non-zero exit, so the whole nightly full chain aborts. Separately, if even one file loads but silver omits a 'trade_date' column, line 217 KeyErrors with the same chain-abort effect. cot currently has ~1,764 files so this is latent, not live.
+- **Proposed fix:** Guard before concat: `if not dfs: log('WARN: no transaction files loaded'); return pd.DataFrame(columns=needed_cols + ['_file_date','_intra_pos'])` (or raise a clear, actionable error), and verify 'trade_date' in df.columns before the pd.to_datetime call so an empty/absent-column input fails loud rather than as an opaque ValueError/KeyError.
+
+## Finding 3 -- [low/other/full]
+- **Location:** `build_history_for_account (237-290) + _make_record (293-307); _normalize_multi_role_splits (310-369)`
+- **Mechanism:** build_history_for_account and _make_record implement a per-account iterative SCD builder but are never called by main() -- main() uses the vectorized state_hash builder at lines 409-421. They are dead code carried over from the 49F/bd clone. _normalize_multi_role_splits (the inherited 49F multi-role fee-averaging) skips any name whose lowercased value is 'unassigned'/''/'nan'; for Cottonwood every ROLE_COL is absent from silver, so post-normalization all roles are 'Unassigned' and by_person is always empty.
+- **Failure scenario:** No crash and no wrong number: _normalize_multi_role_splits reports 'affected: 0' on every cot run (permanent no-op), and the dead SCD functions never execute. The risk is maintenance/misleading-surface only: these are exactly the dead-for-cot 49F-role artifacts flagged in the review context (multi-role normalization + unused role-SCD helpers) for a firm with no role data.
+- **Proposed fix:** Delete or explicitly deprecate build_history_for_account/_make_record (unused), and annotate/gate _normalize_multi_role_splits as inapplicable to cot (no role columns in silver) so the script honestly reflects what runs.

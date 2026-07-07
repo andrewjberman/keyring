@@ -1,0 +1,36 @@
+# REVIEW -- diag_gold_silver_recon.py
+
+- script: `data/cot/scripts/gold/diag_gold_silver_recon.py`
+- verdict: **issues-found**
+- runs_in_incremental: False
+- findings: 5
+
+## Finding 1 -- [high/other/both]
+- **Location:** `diag_gold_silver_recon.py:69 (_classify, dead) + all check_* functions (e.g. 106-114, 124-133, 175-184, 193-199, 224-231, 242-254)`
+- **Mechanism:** The delta-reconciliation apparatus is dead code. `_classify` (line 69) and the four thresholds WARN/FAIL_ROW/AUA_DELTA_PCT (lines 41-44) are defined but grep-confirmed NEVER referenced. Every domain reads ONE artifact and assigns silver_rows == gold_rows == n from that single read, then sets status purely on `n > 0`. No domain reads the silver source-of-truth independently and no silver-vs-gold delta is ever computed. Despite the module docstring ('compare row counts, AUA sums, and flow totals'), the harness is a presence check, not a reconciliation.
+- **Failure scenario:** An upstream merge in B_00/B_01 silently drops 30% of holdings rows (an inner-join key-dtype mismatch or a stale canonical read). Gold holdings under-counts silver by 30%. check_canonical_holdings reads only the gold file, sets silver_rows=gold_rows=that undercounted n (>0), status OK. overall_status OK, exit 0. The WP-10b CloudWatch alert this harness exists to raise (acceptance #1) never fires -- a materially-wrong gold layer is certified GREEN by the recon.
+- **Proposed fix:** Either (a) make each domain read its silver source-of-truth independently and compute delta_pct via the existing `_classify`+thresholds, or (b) delete the dead `_classify`/threshold code and rename the artifact/domain semantics to 'presence check' so AE/operators do not trust a FAIL-free manifest as evidence of gold<->silver parity.
+
+## Finding 2 -- [high/other/both]
+- **Location:** `diag_gold_silver_recon.py:64-66 (_latest_partition) consumed by check_canonical_holdings/nna/holdings_lots/positions_cube/_prefix_check`
+- **Mechanism:** No vintage/freshness assertion. `_latest_partition` returns the lexicographically-max `.parquet` key and status is `len(df) > 0`. The partition's DATE is never parsed or compared to silver's latest date or to today. A gold prefix that stopped advancing still contains rows, so it reports OK forever. This is orthogonal to finding #1: even with real deltas, a co-frozen silver+gold (delta 0) would still pass -- so staleness is invisible either way.
+- **Failure scenario:** gold/canonical/holdings/ last wrote 2026-06-01 (a stuck canonical seal, or a run where the upstream dim was skipped), while silver/allocations advanced to 2026-07-07. _latest_partition returns 2026-06-01.parquet, len(df)>0, status OK. The recon reports the pipeline healthy for 5 weeks of stale gold -- exactly the drift WP-10b was built to detect.
+- **Proposed fix:** Parse the ISO date out of each latest key, compare it to silver's max allocation date (and/or today minus a business-day tolerance), and emit WARN/FAIL when the gold partition lags beyond tolerance.
+
+## Finding 3 -- [medium/empty-null-handling/both]
+- **Location:** `diag_gold_silver_recon.py:298-301 (check_nna_aua_by_advisor) + 320-322 (check_aua_snapshot_architect); FAIL paths at 245-246/253 and 261-262/269`
+- **Mechanism:** Cloned from the 49F/bd harness without de-scoping for cot's empty advisor/role layer. cot's silver produces no role columns, so the advisor-grouped view gold/views/nna_aua_by_advisor.parquet and the role snapshot gold/artifacts/snapshots/aua_by_architect.json are legitimately absent or zero-row. `_single_key_check` returns FAIL on a NoSuchKey read AND on n==0; `_snapshot_json_check` returns FAIL on absent/empty. So these two domains FAIL on every cot run. Inconsistent with check_advisor_fee_detail (line 207), which correctly returns WARN (not FAIL) when its partition is absent.
+- **Failure scenario:** Every nightly cot recon: nna_aua_by_advisor and aua_by_architect are empty by design -> both FAIL -> overall_status FAIL (line 435) -> recon exits 1 -> dispatcher prints 'WARN: FAIL domains detected' and the S3 manifest carries FAIL for CloudWatch (line 1265-1275). The WP-10b alarm fires 100% of nights on a benign condition, so a genuine FAIL (e.g. holdings dropped to zero rows) is buried in the standing-red noise and ignored.
+- **Proposed fix:** For cot, remove the 49F advisor/architect/role checks from CHECKS (advisor layer is empty by design), or downgrade absent/empty inputs on those inherited domains to WARN/SKIP so overall_status is not pinned to FAIL every run.
+
+## Finding 4 -- [medium/other/both]
+- **Location:** `diag_gold_silver_recon.py:54-66 (_list_parquet_keys / _latest_partition) for prefix gold/timeseries/holdings_lots/ (check_holdings_lots, 169-185)`
+- **Mechanism:** `_latest_partition` assumes every `.parquet` under a prefix is date-named, so keys[-1] == newest date. But B_01 also emits backfill files named backfill_YYYY-MM-DD_to_YYYY-MM-DD.parquet (B_01.holdings_lots.py:44). A filename starting with lowercase 'b' (0x62) sorts AFTER any digit-leading date name (0x32), so if a backfill artifact lands in the same prefix the diag scans, keys[-1] returns the backfill file, not the latest daily snapshot -- reporting the wrong row/market_value numbers as 'latest'. Conditional on backfills landing under gold/timeseries/holdings_lots/ (the daily production path is gold/timeseries/holdings_lots/{date}.parquet; the backfill target prefix is not confirmed from source).
+- **Failure scenario:** An operator runs B_01 --full and a backfill_2026-01-01_to_2026-07-07.parquet is written under gold/timeseries/holdings_lots/. On the next recon, _latest_partition returns that backfill file; check_holdings_lots reports its (multi-month) row count and market_value_sum as the latest-partition numbers, and any downstream reader of the manifest sees an inflated/incorrect 'latest' MV.
+- **Proposed fix:** Filter to strictly date-named keys before selecting the max -- e.g. keep only keys matching r'/\d{4}-\d{2}-\d{2}\.parquet$' and sort by the parsed date -- so non-date artifacts (backfill_*, _tmp, shadow) cannot win the lexicographic max.
+
+## Finding 5 -- [low/numeric-sign-units/both]
+- **Location:** `diag_gold_silver_recon.py:124-126,132 (check_canonical_nna, silver_nna_sum)`
+- **Mechanism:** check_canonical_nna sums the `nna` column across all relationship rows in the latest partition. Per the producer (C_01.canonical_nna.py:219, :633) the legacy `nna` column is CUMULATIVE (cum_inflows - cum_outflows) and 'gains-seeded zero-flow', not a per-period flow. Summing a cumulative-to-date column across relationships yields a magnitude with no clean interpretation. It is informational only (status keys on row count, not the sum) and never served, so no chain/served impact.
+- **Failure scenario:** AE or an operator reads silver_nna_sum from the recon manifest as 'firm net new assets' and gets a figure that is a cross-relationship sum of cumulative balances (inflated relative to true period NNA), leading to a misread in the CloudWatch/diagnostic view.
+- **Proposed fix:** Either drop silver_nna_sum from this check, or compute it from the daily-flow column (e.g. nna_daily) rather than the cumulative `nna`, and label the field to reflect that it is a cumulative-sum diagnostic.

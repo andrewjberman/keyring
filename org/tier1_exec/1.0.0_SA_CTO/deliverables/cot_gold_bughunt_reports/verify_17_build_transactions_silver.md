@@ -1,0 +1,20 @@
+# VERIFY #17 -- target: build_transactions_silver.py
+
+- is_real: **True**
+- confidence: **confirmed**
+- corrected_severity: critical
+
+## Reasoning
+REAL defect; concrete triggering path traced end-to-end and adversarial refutations fail. Mechanism (all source-confirmed):
+
+1) PRODUCER DIVERGENCE (the linchpin): The bd/49F transactions-silver producer data/black_diamond/archive/scripts_core/build_transactions_silver.py:235-239 EXPLICITLY force-casts ID columns including account_id to string ("String ID columns (prevent mixed-type parquet issues)") BEFORE its object-only loop. That defensive cast is direct in-source evidence that BD DataMining delivers account_id as numeric/mixed. cot_silver_merge.py:398-400 has ONLY the object-only loop (`if df[col].dtype=='object'`) and DROPS the explicit ID cast, so a numeric BD account_id survives as int64/float64 in COT silver/transactions. This is exactly the divergence the flag posits.
+
+2) B_01 NEVER NORMALIZES BEFORE THE LOOP: load_transactions (L231-313) normalizes trade_date/asset_name/asset_id/cusip but NOT account_id. df['account_id'] flows silver -> group_meta (L2525) -> work_items (L2543) -> lot dicts ('account_id': account_id, L2155) -> pd.DataFrame(all_lots) (L2578), preserving numeric dtype. The accounts_dim merge at L2612 is numeric-on-numeric (A_00 never casts account_id either -- only a local set-site at L480), so it neither raises nor coerces to string; account_id reaches the loop numeric.
+
+3) THE MISMATCH: Gate-3 set L2645 = set(...astype(str).str.strip()...) = STRINGS. Loop acct_id L2669 = df[open_mask].groupby('account_id').index = RAW numeric. Test L2685-2686 `acct_id not in _unrl_accts_with_positions` (numpy.int64 vs set-of-str) is always True -> silver_absent True for EVERY account -> L2688 `if bd_zeroed or bd_diminished or silver_absent` force-closes ALL open lots (is_open=False; units/MV/cost/gain zeroed). Silent, chain exits 0; served holdings_lots cube -> ~0 open lots -> downstream C_*/D_* serve ~empty. Fires under NORMAL operation whenever silver/unrealized is present (Gate-3 succeeds), independent of the DATEMODE/allocations issue.
+
+4) INCONSISTENCY PROOF: B_01 defensively .astype(str).str.strip() account_id at 20+ sites (L551,604,774,837,892,957,1150,2202,2334,2403, and even the Gate-3 set itself L2645). The L2669 reconciliation loop is the LONE site comparing raw df['account_id'] against a stringified set -- the precise gap.
+
+Refutations defeated: (a) 'merge crashes first' -- accounts_dim shares the numeric dtype (A_00 doesn't cast), merge succeeds, silent path holds; (b) '49F clone runs this in prod fine' -- 49F's producer explicitly stringifies account_id, so 49F Rule 3 is safe; cot's producer omits it -> this CORROBORATES the flag rather than refuting it; (c) 'team treats the cube as currently non-wiped (tonight-risk framing)' -- the CVO finding (commit 89a5c11d4) explicitly lists as a RESIDUAL UNKNOWN that B_01's empty/no-op behavior was never read or verified, and the team's known 'wipeout' work is a SEPARATE mechanism (DATEMODE-B empty-allocations -> Rule 1 bd_zeroed), not this account_id-dtype Rule 3 path.
+
+RESIDUAL (honest): the single fact I could not ground without S3 is the LIVE dtype of COT silver/transactions.account_id. Everything else is source-confirmed and the code path is concretely constructible. All available source evidence -- the bd producer's explicit 'prevent mixed-type' cast that cot omits -- strongly indicates it IS numeric, so the trigger is live. A one-line S3 check (dtype of account_id in the latest silver/transactions partition) fully closes it; if BD were found to deliver account_id as text for COT it would flip to refuted, but the producer-divergence evidence makes that unlikely. Severity critical: silent, full served-holdings corruption ($0 AUA / empty cube) with no crash. Recommended fix (report-only per fanout scope): normalize the loop key, e.g. iterate over df['account_id'].astype(str).str.strip() or wrap acct_id in str().strip() before the membership test, matching every other account_id site in the file.

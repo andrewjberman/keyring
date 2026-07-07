@@ -1,0 +1,30 @@
+# REVIEW -- D_03.composition_artifacts.py
+
+- script: `data/cot/scripts/gold/D_03.composition_artifacts.py`
+- verdict: **issues-found**
+- runs_in_incremental: True
+- findings: 4
+
+## Finding 1 -- [medium/other/both]
+- **Location:** `D_03.composition_artifacts.py:152-162 (_find_latest_holdings_lots) + Step 1 branch 617-637`
+- **Mechanism:** _find_latest_holdings_lots() returns the lexicographically-latest non-'backfill' .parquet under gold/timeseries/holdings_lots/ with NO freshness/date check. cot is snapshot-first: B_01.main() returns 0 WITHOUT writing when no lots exist (verified B_01.holdings_lots.py:3122-3124), so the intended live path is the _load_holdings_from_canonical fallback that only fires when this helper returns None. Nothing enforces that the holdings_lots prefix stays empty, and D_03 never compares the chosen key's date to data_as_of or to canonical/holdings.
+- **Failure scenario:** A single stray non-backfill parquet lands in gold/timeseries/holdings_lots/ (a pre-conversion historical write, a manual/one-off backfill file whose basename lacks the literal token 'backfill', or a resurrected bd-path run). _find_latest_holdings_lots() returns it, so D_03 reads that MONTHS-STALE snapshot instead of the fresh canonical/holdings, builds firm_composition.json plus every relationship composition.json from stale holdings, and stamps data_as_of from the stale filename so the artifact looks internally consistent. Result: silent stale served numbers on the primary Books composition surface, with no warning and no chain error.
+- **Proposed fix:** After selecting the holdings_lots key, parse its date from the filename and compare to _find_latest_canonical_holdings(); prefer the canonical snapshot when it is newer (or when the two diverge beyond a small tolerance). Alternatively gate the holdings_lots path behind an explicit cot flag and default to canonical.
+
+## Finding 2 -- [low/empty-null-handling/both]
+- **Location:** `D_03.composition_artifacts.py:438-440 (_build_composition unclassified) + classify_series:117-137`
+- **Mechanism:** classify_series maps every empty ETFClassifier result to 'cash' or 'other' (line 123-129), so asset_class is ALWAYS one of equity/fixed_income/alternatives/cash/other and is never ''/None/NaN. The unclassified filter df['asset_class'].isin(['', None]) | df['asset_class'].isna() therefore matches zero rows on every run.
+- **Failure scenario:** A genuinely-unknown security (no ETFClassifier hit and a name lacking CASH/SWEEP/MONEY MARKET/MMKT tokens) is bucketed into the 'other' asset class. The served unclassified object is permanently {count:0, market_value:0}, so the portal's unclassified indicator always reads zero even when unknown holdings exist; that money is silently folded into the 'Other' mix bucket. No crash, but the PRD-promised unclassified field is dead/misleading.
+- **Proposed fix:** Either remove the dead unclassified block, or have classify_series preserve '' for true unknowns (excluding '' from _ASSET_CLASS_LABELS) and compute unclassified count/mv from those rows.
+
+## Finding 3 -- [low/unguarded-read/both]
+- **Location:** `D_03.composition_artifacts.py:184-202 (_load_holdings_from_canonical, reads at 192-197) and the canonical/holdings read at 632-637`
+- **Mechanism:** The live cot path reads ACCOUNTS_DIMENSION and the canonical/holdings parquet via bare s3.get_object/read_parquet with NO try/except, whereas every other dimension read in the script is guarded with graceful fallback: Step 3 rel_architect_lookup->client_dimension (675-693), Step 4b account_performance (312-329), Step 6b account_team (803-808), Step 8 mix_daily_summary/client_performance (476-497). A missing or columnless accounts_dimension_latest.parquet raises NoSuchKey/pyarrow KeyError which is uncaught -> main() exits non-zero -> the no-timeout gold chain hard-fails.
+- **Failure scenario:** An ad-hoc `python D_03.composition_artifacts.py --upload` (a documented usage, header lines 47-50) or `--single D_03` run in a fresh/partial environment before A_00 has produced accounts_dimension_latest.parquet -> NoSuchKey -> the entire D_03 run aborts instead of degrading the way the guarded sibling reads do. In the full nightly A_00 precedes D_03 so the file is normally present (hence low), but the safety net is missing exactly where the primary firm artifact is built.
+- **Proposed fix:** Wrap the canonical-path accounts_dimension and holdings reads in the same try/except-with-actionable-error pattern used by Step 3/4b, so an absent dimension yields a clear diagnostic (or graceful skip) rather than an uncaught crash.
+
+## Finding 4 -- [low/numeric-sign-units/both]
+- **Location:** `D_03.composition_artifacts.py:832-843 (_build_one_non_arch, canonical_aua=None) vs Step 6 _build_one_advisor:766-772 (canonical_aua=a_aua)`
+- **Mechanism:** Architect advisor composition (Step 6) and firm composition (Step 5) are normalized so total_market_value == account_performance canonical AUA, but non-architect advisor composition (Step 6b) passes canonical_aua=None, leaving total_market_value at the RAW holdings sum -- which the script's own Step-4b comment (lines 714-717) states 'diverges from account_performance total_aua'. Inconsistent denominator across advisor artifacts of the same schema.
+- **Failure scenario:** If cot ever populates account_team role columns (consultant/local_ops/implementor/additional_advisor -- currently absent, so Step 6b emits zero advisors today per the fanout context), those advisors' composition.json total_market_value would be un-normalized and materially different from architect advisors' and from the firm headline, producing an apples-to-oranges served total. Dormant for cot now (no role data) but a latent magnitude inconsistency inherited from the 49F/bd clone.
+- **Proposed fix:** Pass the per-advisor canonical AUA (sum over that advisor's relationships of rel_aua) into Step 6b, mirroring Step 6's adv_aua_lookup; or explicitly document that non-architect composition is intentionally un-normalized.
