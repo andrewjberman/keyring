@@ -86,6 +86,18 @@ Collaborative convergence with 0.7.0 (they corrected my sender error; I confirme
 
 **RE-CERT BAR:** after 0.7.0 switches the sender + redeploys + fires a test, I confirm the forward APPEARS in Andrew's mailbox (search_email) → then endpoint-delivery certs PASS and this P1 closes. Until then: mechanical chain PASS, delivery uncertified, P1 OPEN.
 
+## ENDPOINT DELIVERY — CERTED PASS (2026-07-07 ~16:48Z). P1 CLOSED on the email path.
+
+0.7.0 deployed the sender fix (shared-infra-v1.39.0, EMAIL_SENDER → noreply@opalinvest.dev) and fired a fresh TEST2 through the LIVE topic (SNS MessageId 211f10d6..., SES MessageId 0100019f3d796258... — they added send-ID logging per the earlier note). **I confirmed it in Andrew's actual mailbox:**
+- Subject `[partner-etl-ops-alerts] TEST2: partner-etl-ops-sqs-consumer sender-fix recert (not a real incident)`, **From: noreply@opalinvest.dev**, received **2026-07-07T16:46:52Z**, isRead=false (unread, in the mail listing), bodyPreview = the actual forwarded SNS payload ("Received a message on opal-partner-etl-ops-alerts... Topic: arn:...opal-partner-etl-ops-alerts...").
+- Found via BOTH `search_email` and `list_recent_email` — it's in the mailbox, not quarantine.
+
+**This is the strongest bar met: a real alarm message physically arrived where a human reads it** (vs the andrew@-sender forwards that never appeared). SNS→SQS→Lambda→SES→**inbox**, end-to-end, exercised and delivery-verified. The opalinvest.dev sender is DKIM-signed via the verified domain → DMARC-aligned → durable delivery (corroborated by the two ETFS reports already in-inbox).
+
+**P1 CLOSED (email paging path).** Residual NICE-TO-HAVES (non-blocking, off critical path): (1) SNS SMS sandbox-exit / number-verify → restores SMS as a 2nd channel (Andrew console); (2) opalinvest.com SES domain-verify + DKIM + SPF-include → only if alerts must legitimately come From:@opalinvest.com (GoDaddy/IT). Neither is needed — the pager reaches Andrew now.
+
+Full arc (the value of stopping below the requested bar): request came at "AlarmAction Succeeded" → I found SMS dark (NotificationsFailed) → SQS zero-consumer → the "fixed" email never reached the inbox (SES Send ≠ delivery) → root-caused to unauthenticated From:andrew@ quarantine → grounded the working sender in-mailbox → one-line fix → delivery-verified in the inbox. Two self-corrections on the sender along the way (owned + reground each time).
+
 ## Compiler Tools
 
 Raw `aws` CloudWatch/SNS/SQS inspection only — rail-checked markers carried (no comp-tool surfaces alarm-history, SNS delivery metrics, SMS-sandbox state, or SQS attributes; comp-routes=CF/apigw, comp-iam=IAM, comp-freshness=S3). Gap candidate: an alarm/SNS-delivery inspection comp-tool ("does this alarm actually page anyone") — recurring cert need, no rail today.
