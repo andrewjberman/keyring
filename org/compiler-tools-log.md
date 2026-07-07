@@ -13503,3 +13503,9 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.7.0_AE_CloudOps~B | SCTY_PREMCP | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/m365-mcp-gateway/wa... | PASS |
 2026-07-07 0.8.0_AE_CloudComp~E: comp-surface-check check (PASS, both live comp-which flips 57d967417/87bc48d3f); comp_route_eval suite (--rank/--tail/--diagnostic/--flip-gate/--per-case/--preserve/--e1-blend, the C1+Charter-1 shadow-eval, reproducible); comp-route-affinity emit/self-test (222 entries, calibration item-1/2 self-tests PASS); ds-commit-gate every .py. Charter-1 POTION semantic-matcher + role-passing both LIVE on comp-which.
 | 2026-07-07 | 0.8.0_AE_CloudComp~E | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/post-tool-telemetry.sh | PASS |
+| 2026-07-07 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPILERKIT_PRD.... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | NFRA_TOOLHEALTH.TH-C.clause-B | comp_route.route (live) | clause-B causal chain: comp-depth PROMOTE -> surface_prior(w_s) +0.9 bump -> live route flip top1 comp-chainrun->comp-depth (rank 6->0), role=AE; neg-control holds | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
