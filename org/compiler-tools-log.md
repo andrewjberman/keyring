@@ -14249,3 +14249,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/01_current_architecture.s... | PASS |
 | 2026-07-08 | 0.7.0_AE_CloudOps | NFRA_SEMCTL.FINALIZE semctl gate | commit-gate/Grep/safe-commit | dual-signed semctl NODE_TYPE_LAYER gate landed (d2ab31596); condition-2 layer-enum touch-point audit (Grep, globgrph+.tools) = NODE_TYPE_LAYER sole site, no new fail-closed risk | PASS |
 | 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/01_current_architecture.s... | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_SYSTEM_PRD.md --... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE.loop-close-tail | comp-blast | comp-blast NFRA_PROMOTE_P1_promotion_engine.py | FAIL |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_SYSTEM_PRD.md --... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/README.md --file ... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE.loop-close-tail | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json --file ... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/01_current_architecture.s... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/website/.terraform.... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_04.client_portal_summary.py | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+2026-07-08 0.5.0_AE_OpalETL NFRA_WEBSITE.TO-1: terraform init/validate/plan (15-add/0-change/0-destroy, plan-only) + live-DNS grounding (Cloudflare NOT proxying) + live collision-check (4 fresh names free, rail-checked) + owned-paths hook (blocked EC2_MANIFEST -> handed 0.7.0~A). Scaffold ec1148124, RAVC'd COO.
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_SYSTEM.json --file or... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
