@@ -14076,3 +14076,5 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
 | 2026-07-08 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P3-followons | commit-gate / terraform / live-ECR+lambda(Rule22a) | commit-gate 2 .py PASS; safe-apply timeout 0/1/0 + 0-diff; ecr describe-images (verify-vs-self-report: :latest=my build ecb2b4ae newest, not 0.5.0 cdeca1f3); get-function-configuration Timeout=300 | PASS |
 | 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | session-close | (consolidation) | session-close handoff -- no new tool runs beyond the 3 boundary logs already recorded | N/A |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
