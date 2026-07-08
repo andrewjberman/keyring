@@ -14494,3 +14494,57 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-08 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-08 | 1.0.0_SA_CTO | (multi) | prd-delta + comp-tools/graph reads + delegated smoke | PASS | flagship-close + 6-PRD infra-org wave + /prd-delta 31-proj sweep; git-show hung x2 (used Grep/reads) |
 | 2026-07-08 | 1.0.0_SA_CTO | --help | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TERRAFORM.json --file... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pipescript | comp-pipescript io nonexistent_gold | FAIL |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pipescript | comp-pipescript io | FAIL |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INTEGRATIONS.json | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/smartx/API/AUTHENTICATION.md --fil... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check list | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pipescript | comp-pipescript io client_portal_summary | FAIL |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pipescript | comp-pipescript io portal_summary | FAIL |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/website/iam_patrici... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pipescript | comp-pipescript io zzzzznope | FAIL |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pipescript | comp-pipescript io client_portal_summary | FAIL |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pipescript | comp-pipescript io portal_summary | FAIL |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pipescript | comp-pipescript io zzzzznope | FAIL |
+| 2026-07-08 | 1.0.0_SA_CTO | --help | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_EDGES_PRD.md --f... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/website/iam_patrici... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --schema | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/kuzu_cli.py --file o... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/schwab/AWS_SNOWFLAKE_ARCHITECTURE.... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_INTEGRATIONS_STA... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_EDGES.json --file org... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/00_synthesis.md --file inf... | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | --help | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_INTEGRATIONS_STA... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P1.edge-reification-motif-ladder | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-tooltip | comp-tooltip --help | FAIL |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io portal_summary | FAIL |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-tooltip | comp-tooltip --help | FAIL |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --schema | PASS |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_LOCALROOT.json --file... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-drift | comp-drift coverage | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-drift | comp-drift sweep | VERDICT |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_LOCALROOT.json --file... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(n) AS n | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(n) | PASS |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_system.py | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yam... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type, count(*) AS c ORDER BY c DESC LIMIT 14 | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/07_maturity.md | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | NFRA_TOOLCHECK_P1P2+SYSTEM_P3 | comp-system/comp_coverage_view/comp-pipescript/comp-kuzu/commit-gate | self-test 7/7 + spot-verify diff=0 (06 numbers==live) + P2 optimizations real-invoke + retire+register --verify green | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
