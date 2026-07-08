@@ -78,6 +78,8 @@ class FlowsToRecognizer(Recognizer):
     concept = "field-flows-to"
     requires = FrontEndCapability.RESOLVED_SEMANTIC
     compiler_id = "tsx-compiler"
+    emits = (Entity.FIELD.value, Relationship.FLOWS_TO.value,
+             EdgeKind.PASSTHROUGH.value, EdgeKind.RENAME.value, EdgeKind.RECOMPUTE_GUARDED.value)
 
     def iter_sites(self, tree: EnrichedTree) -> Iterable[Site]:
         # front-end delivers the resolved FLOWS_TO edges via meta["flowsto_edges"] (list of the
@@ -131,6 +133,7 @@ class TypeDeclRecognizer(Recognizer):
     concept = "tsx-type-decl"
     requires = FrontEndCapability.RESOLVED_SEMANTIC
     compiler_id = "tsx-compiler"
+    emits = (Entity.TYPE.value, Entity.FIELD.value, Relationship.CONTAINS.value)
 
     def iter_sites(self, tree: EnrichedTree) -> Iterable[Site]:
         by_type: dict = {}

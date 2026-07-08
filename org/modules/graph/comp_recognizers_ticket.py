@@ -82,6 +82,7 @@ class TicketRequirementImplementsRecognizer(Recognizer):
     requires = FrontEndCapability.RAW_TEXT
     compiler_id = "ticket-compiler"
     producer_kind = ProducerKind.TICKET.value
+    emits = (Entity.REQUIREMENT.value, Entity.COMPONENT.value, Relationship.IMPLEMENTS.value)
 
     def iter_sites(self, tree: EnrichedTree):
         for m in _REQUIREMENT_BLOCK_RE.finditer(tree.text):

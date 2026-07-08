@@ -51,8 +51,8 @@ from cse_schema import (  # noqa: E402
 # recognizer does `from comp_recognizer_sdk import Recognizer, emit_cse, EntityRef, RelationshipDelta, ...`.
 __all__ = [
     "FrontEndCapability", "Site", "Coverage", "EnrichedTree", "FrontEnd", "Recognizer",
-    "RecognizerRegistry", "PROMOTE_SEAM", "emit_cse", "run_recognizers", "locus_at", "locus_span",
-    "detect_collapse",
+    "RecognizerRegistry", "PROMOTE_SEAM", "emit_cse", "run_recognizers", "derive_compiler_emits",
+    "locus_at", "locus_span", "detect_collapse",
     # re-exported CSE IR vocabulary (authored against cse_schema; surfaced here for one-import authoring)
     "EntityRef", "RelationshipDelta", "Provenance", "Entity", "Relationship", "Transformation",
     "Qualifier", "ProducerKind", "CSE",
@@ -200,6 +200,16 @@ class Recognizer(ABC):
     compiler_id: str = "compilerkit"
     producer_kind: str = ProducerKind.INFRA.value
 
+    # emits: the CSE algebra primitive VALUES this recognizer declares it can emit -- a tuple of
+    # Entity/Relationship/EdgeKind values (e.g. (Entity.FIELD.value, Relationship.FLOWS_TO.value)). This is
+    # the SDK-DECLARED source that replaces a hand-maintained coverage-sweep compiler_emits() (NFRA_CSE.P2
+    # seam, DS~B): derive_compiler_emits() reads these declarations so the sweep is drift-proof + auto-current
+    # as producers are SDK-refactored. Entity.CONCEPT is NOT listed here -- every recognizer emits it BY
+    # CONSTRUCTION (the LAW-1 honest-degrade target), so derive_compiler_emits() adds it for every compiler.
+    # A declaration must be TRUE: a recognizer declaring an emit it cannot actually produce is exactly the
+    # I1/I3 dishonesty comp-honesty flags -- so an emits value must correspond to a real emit path.
+    emits: tuple = ()
+
     @abstractmethod
     def iter_sites(self, tree: EnrichedTree) -> Iterable[Site]:
         """Yield each located lexical match as a Site (source, locus=file:line, evidence=literal bytes)."""
@@ -324,6 +334,37 @@ def run_recognizers(registry: RecognizerRegistry, front_end: FrontEnd, scope, *,
 
 
 # ---------------------------------------------------------------------------
+# derive_compiler_emits -- the SDK-DECLARED replacement for a hand-maintained coverage-sweep compiler_emits()
+# (NFRA_CSE.P2 req#3 seam, DS~B). Reads each REGISTERED recognizer's `emits` declaration + compiler_id and
+# produces {compiler_id: {entities, relationships, edge_kinds}} -- the exact shape the sweep consumes -- so
+# the "which compiler emits which primitive" registry is derived from the framework, drift-proof + auto-
+# current as producers are SDK-refactored (no second hand-maintained map). Entity.CONCEPT is added for every
+# compiler (the LAW-1 honest-degrade target, emitted by construction). A declared value is classified into
+# its family by enum membership. This is ADDITIVE over the sweep's estate-derivation: it covers the
+# SDK-refactored compilers; a primitive whose only producer is not-yet-SDK-refactored stays the sweep's
+# explicit attribution (e.g. Entity.SYMBOL -> the live extract_api extractor) until that producer is
+# refactored + declares it here. That incremental replacement IS the seam-migration (DS~B line 112-113).
+# ---------------------------------------------------------------------------
+def derive_compiler_emits(registry: RecognizerRegistry) -> dict:
+    out: dict = {}
+    for r in registry.all():
+        slot = out.setdefault(r.compiler_id, {"entities": set(), "relationships": set(), "edge_kinds": set()})
+        slot["entities"].add(Entity.CONCEPT.value)   # honest-degrade target, emitted by construction
+        for v in getattr(r, "emits", ()) or ():
+            if v in cse._ENTITY_VALUES:
+                slot["entities"].add(v)
+            elif v in cse._REL_VALUES:
+                slot["relationships"].add(v)
+            elif v in getattr(cse, "_EDGEKIND_VALUES", frozenset()):
+                slot["edge_kinds"].add(v)
+            else:
+                raise ValueError(f"recognizer {r.compiler_id}/{r.concept} declares emits value {v!r} that is "
+                                 f"not a known Entity/Relationship/EdgeKind value (a false/typo'd declaration "
+                                 f"-- the I1/I3 dishonesty the honesty bar forbids)")
+    return out
+
+
+# ---------------------------------------------------------------------------
 # SELF-TEST -- proves the interface end-to-end on a sample lexical recognizer (the shape DS~A builds).
 #   python comp_recognizer_sdk.py         # runs + prints every assertion; exit 0 iff all PASS.
 # ---------------------------------------------------------------------------
@@ -336,6 +377,7 @@ class _SampleS3KeyConstRecognizer(Recognizer):
     requires = FrontEndCapability.LEXICAL_AST
     compiler_id = "code-compiler"
     producer_kind = ProducerKind.INFRA.value
+    emits = (Entity.S3BUCKET.value,)
 
     def iter_sites(self, tree: EnrichedTree):
         import re
@@ -361,6 +403,7 @@ class _SampleResolvedRecognizer(Recognizer):
     concept = "cross-file-flows-to"
     requires = FrontEndCapability.RESOLVED_SEMANTIC
     compiler_id = "code-compiler"
+    emits = (Entity.FUNCTION.value, Relationship.FLOWS_TO.value)
 
     def iter_sites(self, tree: EnrichedTree):
         if "flows" in tree.text:
@@ -469,6 +512,28 @@ def _self_test() -> bool:
     first, _d3 = detect_collapse(Coverage(attempted=10, resolved=2), baseline_resolved=0)
     ck("collapse-detector flags a silent resolve-drop, not a healthy run / first run",
        collapsed and not healthy and not first, f"collapsed={collapsed} healthy={healthy} first={first}")
+
+    # 7. derive_compiler_emits (NFRA_CSE.P2 seam): SDK-declared `emits` -> the {cid:{entities,relationships,
+    # edge_kinds}} shape the coverage-sweep consumes, drift-proof (reads Recognizer.emits, not a hand map);
+    # CONCEPT added for every compiler (the honest-degrade target). reg has r (emits S3BUCKET) + rr (emits
+    # FUNCTION + FLOWS_TO), both code-compiler.
+    emap = derive_compiler_emits(reg)
+    cc = emap.get("code-compiler", {})
+    ck("derive_compiler_emits: SDK-declared emits -> coverage-sweep seam shape (drift-proof, +CONCEPT)",
+       cc.get("entities") == {Entity.S3BUCKET.value, Entity.FUNCTION.value, Entity.CONCEPT.value}
+       and cc.get("relationships") == {Relationship.FLOWS_TO.value} and cc.get("edge_kinds") == set(),
+       f"code-compiler emits={cc}")
+    bad_emit = False
+    try:
+        class _BadEmit(_SampleS3KeyConstRecognizer):
+            emits = ("NotAPrimitive",)
+        breg = RecognizerRegistry()
+        breg.register(_BadEmit())
+        derive_compiler_emits(breg)
+    except ValueError:
+        bad_emit = True
+    ck("derive_compiler_emits REJECTS a false/typo'd emits declaration (I1/I3 honesty on the declaration)",
+       bad_emit)
 
     passed = sum(1 for x in results if x)
     print(f"\n=== comp_recognizer_sdk self-test: {passed}/{len(results)} PASS ===")

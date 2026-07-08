@@ -70,6 +70,7 @@ class DispatchCatalogRecognizer(Recognizer):
     concept = "gold-dispatch-catalog"
     requires = FrontEndCapability.RAW_TEXT
     compiler_id = "code-compiler"
+    emits = (Entity.SERVICE.value, Entity.MODULE.value, Relationship.TRIGGERS.value)
 
     _CATALOG = re.compile(r"read -r -d '' CATALOG << 'CATALOG_END'(.*?)CATALOG_END", re.DOTALL)
     _ROW = re.compile(r"^\s*(\S+)\|(\S+\.py)\|", re.MULTILINE)   # ID|filename|flags
@@ -108,6 +109,7 @@ class MdpfDispatchRecognizer(Recognizer):
     concept = "mdpf-ec2-dispatch"
     requires = FrontEndCapability.RAW_TEXT
     compiler_id = "code-compiler"
+    emits = (Entity.SERVICE.value, Entity.MODULE.value, Relationship.TRIGGERS.value)
 
     _RUN_STEP = re.compile(r"run_step\s+\S+\s+(\S+\.py)\b")
     _VAR = re.compile(r'\w+_SCRIPT="\$\{SCRIPTS_DIR\}/(\S+\.py)"')
@@ -143,6 +145,7 @@ class S3KeyConstRecognizer(Recognizer):
     concept = "s3-key-const"
     requires = FrontEndCapability.LEXICAL_AST
     compiler_id = "code-compiler"
+    emits = (Entity.S3BUCKET.value,)
 
     def iter_sites(self, tree: EnrichedTree):
         import ast
@@ -190,6 +193,7 @@ class S3KeyReadWriteRecognizer(Recognizer):
     concept = "s3-key-read-write"
     requires = FrontEndCapability.RAW_TEXT
     compiler_id = "code-compiler"
+    emits = (Entity.MODULE.value, Entity.S3BUCKET.value, Relationship.READS.value, Relationship.WRITES.value)
 
     def iter_sites(self, tree: EnrichedTree):
         consts = tree.meta.get("s3_constants", {})
@@ -246,6 +250,7 @@ class GoldDirectInvokeRecognizer(Recognizer):
     concept = "gold-direct-invoke"
     requires = FrontEndCapability.RAW_TEXT
     compiler_id = "code-compiler"
+    emits = (Entity.SERVICE.value, Entity.MODULE.value, Relationship.TRIGGERS.value)
 
     _INVOKE = re.compile(r'python3\s+"?\$\{?SCRIPTS\}?/(\S+?\.py)"?')   # == extract_pipeline.parse_gold_direct_invoke
 

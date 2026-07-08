@@ -88,6 +88,7 @@ class ConfigS3RefRecognizer(Recognizer):
     concept = "config-s3-ref"
     requires = FrontEndCapability.LEXICAL_AST
     compiler_id = "config-compiler"
+    emits = (Entity.ARTIFACT.value, Entity.S3BUCKET.value, Relationship.REFERENCES.value)
 
     def iter_sites(self, tree: EnrichedTree) -> Iterable[Site]:
         root = tree.root if tree.root is not None else yaml.compose(tree.text)
@@ -138,6 +139,7 @@ class EnvSecretRefRecognizer(Recognizer):
     concept = "config-secret-ref"
     requires = FrontEndCapability.RAW_TEXT
     compiler_id = "config-compiler"
+    emits = (Entity.ARTIFACT.value, Entity.SECRETREF.value, Relationship.REFERENCES.value)
 
     def iter_sites(self, tree: EnrichedTree) -> Iterable[Site]:
         for lineno, line in enumerate(tree.text.splitlines(), start=1):
