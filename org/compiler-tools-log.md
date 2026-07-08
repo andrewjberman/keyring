@@ -14072,3 +14072,7 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
 | 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE.P3 | comp-kuzu / comp-glob / comp-grep / python | show_connection(CloudEdge) dangle-reconcile + audit-lake/deploy-ledger grounding + P3 emission-contract self-test 14/14 (AC5 4/4) | PASS |
 | 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P3-followons | commit-gate / terraform / live-ECR+lambda(Rule22a) | commit-gate 2 .py PASS; safe-apply timeout 0/1/0 + 0-diff; ecr describe-images (verify-vs-self-report: :latest=my build ecb2b4ae newest, not 0.5.0 cdeca1f3); get-function-configuration Timeout=300 | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
