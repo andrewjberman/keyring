@@ -112,6 +112,60 @@ class FlowsToRecognizer(Recognizer):
         )]
 
 
+class TypeDeclRecognizer(Recognizer):
+    """0.3 TYPE emission (cse_schema 0.3, Entity.TYPE first-class; 42b569a52). Emits one Entity.TYPE node per
+    distinct DECLARING type in compiler #2's resolved FLOWS_TO field refs -- a `type:file#Type#field` field
+    ref decomposes to the declaring `type:file#Type`, which is a first-class TYPE in 0.3. Each TYPE node
+    CONTAINS-> the fields it declares (the field refs that appear in real FLOWS_TO edges), so the graph gets
+    Type -CONTAINS-> Field -FLOWS_TO-> Field -- a coherent field-lineage. GROUNDED: every emitted TYPE appears
+    as the declaring scope of a field in a REAL FLOWS_TO edge, with the real via file:line as provenance.
+
+    NO Entity.SYMBOL here (LAW 1): live_flowsto.json carries ZERO symbol: refs (only type:/out:), so any SYMBOL
+    claim from this artifact would be a guess. symbol:->Entity.SYMBOL is a code-extractor (extract_api) concern
+    outside the TSX FLOWS_TO artifact -- surfaced to COO/DS~B as a coverage boundary, never fake-emitted.
+
+    Additive + orthogonal: this does NOT touch the certified FLOWS_TO parity oracle (parity_run_tsx registers
+    ONLY FlowsToRecognizer). It is the 0.3-governance follow-on so DS~B's req#3 coverage-sweep clears TYPE."""
+
+    artifact_class = "tsx"
+    concept = "tsx-type-decl"
+    requires = FrontEndCapability.RESOLVED_SEMANTIC
+    compiler_id = "tsx-compiler"
+
+    def iter_sites(self, tree: EnrichedTree) -> Iterable[Site]:
+        by_type: dict = {}
+        for edge in tree.meta.get("flowsto_edges", []):
+            props = edge.get("props")
+            props = json.loads(props) if isinstance(props, str) else (props or {})
+            m = _VIA_RE.search(props.get("via", "") or "")
+            for ref in (edge.get("src"), edge.get("dst")):
+                if not ref or not ref.startswith("type:") or ref.count("#") < 2:
+                    continue
+                decl = "#".join(ref.split("#")[:2])   # type:file#Type -- the declaring TYPE
+                rec = by_type.setdefault(decl, {"fields": set(), "via": None})
+                rec["fields"].add(ref)
+                if rec["via"] is None and m:
+                    rec["via"] = (m.group("file"), m.group("line"))
+        for decl, rec in by_type.items():
+            tname = decl.split("#")[-1]
+            file = decl.split(":", 1)[1].split("#")[0]
+            src, loc = (rec["via"][0], f"L{rec['via'][1]}") if rec["via"] else (file, "L0")
+            yield Site(source=src, locus=loc,
+                       evidence=f"type {tname} (declares {len(rec['fields'])} field(s) in the TSX FLOWS_TO lineage)",
+                       payload={"decl": decl, "fields": sorted(rec["fields"])})
+
+    def emit(self, site: Site, tree: EnrichedTree, *, marker_head: str) -> list:
+        prov = Provenance(source=site.source, locus=site.locus, recognizer=self.concept, evidence=site.evidence)
+        edges = [RelationshipDelta(Relationship.CONTAINS.value, EntityRef(Entity.FIELD.value, f))
+                 for f in site.payload["fields"]]
+        return [emit_cse(
+            verb=Transformation.CREATE.value,
+            subject=EntityRef(Entity.TYPE.value, site.payload["decl"]),
+            edges=edges, provenance=prov, confidence=1.0, marker_head=marker_head,
+            producer_kind=self.producer_kind, compiler_id=self.compiler_id, artifact_class=self.artifact_class,
+        )]
+
+
 class TsxFlowsToFrontEnd(FrontEnd):
     """Compiler #2's front-end, whole-project lifecycle (SDK hard-part #2). In production the persistent
     ts-morph Project resolves TSX field flows via TypeChecker.getSymbol and emits the FLOWS_TO edge set;
@@ -141,11 +195,12 @@ def _ws_root() -> str:
     return os.path.abspath(os.path.join(_HERE, "..", "..", ".."))
 
 
-TSX_RECOGNIZERS = [FlowsToRecognizer]
+TSX_RECOGNIZERS = [FlowsToRecognizer, TypeDeclRecognizer]   # TypeDecl added for 0.3 TYPE emission (additive)
 
 
 def register_all(registry: RecognizerRegistry) -> None:
-    """Wire compiler #2's recognizer(s) into a registry (the SDK hot-register seam)."""
+    """Wire compiler #2's recognizers into a registry (the SDK hot-register seam) -- the FULL TSX compiler
+    (FLOWS_TO field-lineage + 0.3 TYPE declarations)."""
     for cls in TSX_RECOGNIZERS:
         registry.register(cls())
 
@@ -163,7 +218,8 @@ def parity_run_tsx(marker_head: str = "parity", flowsto_path: str = "") -> dict:
 
     fe = TsxFlowsToFrontEnd(flowsto_path)
     reg = RecognizerRegistry()
-    register_all(reg)
+    reg.register(FlowsToRecognizer())   # FLOWS_TO-ONLY: this is the CERTIFIED 961/961 oracle -- TypeDecl is
+    # a separate additive capability (type_decl_run), never perturbing the closed FLOWS_TO structural proof.
     out = run_recognizers(reg, fe, scope=flowsto_path or None, marker_head=marker_head)
     cses, cov = out["cses"], out["coverage"]
 
@@ -225,6 +281,30 @@ def parity_run_tsx(marker_head: str = "parity", flowsto_path: str = "") -> dict:
     }
 
 
+def type_decl_run(marker_head: str = "types", flowsto_path: str = "") -> dict:
+    """0.3 TYPE emission proof -- SDK-routed TypeDeclRecognizer over the resolved TSX artifact. Reports the
+    Entity.TYPE nodes emitted (one per distinct declaring type), their CONTAINS->field edges, fidelity, and
+    that every subject is Entity.TYPE + validates under schema 0.3. This is what clears DS~B's req#3
+    coverage-sweep for TYPE from the TSX compiler. Separate registry from parity_run_tsx (never perturbs the
+    certified FLOWS_TO oracle)."""
+    import cse_schema as cse
+
+    fe = TsxFlowsToFrontEnd(flowsto_path)
+    reg = RecognizerRegistry()
+    reg.register(TypeDeclRecognizer())
+    out = run_recognizers(reg, fe, scope=flowsto_path or None, marker_head=marker_head)
+    cses, cov = out["cses"], out["coverage"]
+    return {
+        "n_type_nodes": len(cses),
+        "all_subject_is_TYPE": all(c.transformation["subject"].etype == Entity.TYPE.value for c in cses),
+        "n_contains_edges": sum(len(c.transformation["edges"]) for c in cses),
+        "all_fidelity_ok": all(cse.cse_fidelity_ok(c)[0] for c in cses),
+        "schema_version": cse.SCHEMA_VERSION,
+        "coverage_resolved": cov.resolved,
+        "coverage_unresolved": len(cov.unresolved),
+    }
+
+
 if __name__ == "__main__":
     rep = parity_run_tsx()
     print("=== COMPILERKIT-P1 compiler #2 (TSGRAPH-TSX) AC2 parity-oracle -- SDK-routed ===")
@@ -250,6 +330,20 @@ if __name__ == "__main__":
           and rep["n_conditions_out"] == rep["n_conditions_in"] == 23
           and rep["out_kind_dist"].get("recompute_guarded") == 482
           and "recompute/guarded" not in rep["out_kind_dist"])
-    print(f"\n=== compiler #2 parity-oracle: {'PASS' if ok else 'FAIL'} "
+    print(f"\n=== compiler #2 FLOWS_TO parity-oracle: {'PASS' if ok else 'FAIL'} "
           f"(961/961 field-flows reproduced onto the CSE IR through the SDK) ===")
-    sys.exit(0 if ok else 1)
+
+    # 0.3 governance follow-on: Entity.TYPE emission (additive; does NOT touch the FLOWS_TO oracle above)
+    trep = type_decl_run()
+    print("\n=== COMPILERKIT compiler #2 -- 0.3 Entity.TYPE emission (TypeDeclRecognizer, SDK-routed) ===")
+    print(f"  Entity.TYPE nodes emitted: {trep['n_type_nodes']}  (CONTAINS->field edges: {trep['n_contains_edges']})")
+    print(f"  every subject is Entity.TYPE: {trep['all_subject_is_TYPE']} | schema_version: {trep['schema_version']}")
+    print(f"  all_fidelity_ok: {trep['all_fidelity_ok']} | coverage resolved={trep['coverage_resolved']} "
+          f"unresolved={trep['coverage_unresolved']}")
+    print("  NOTE: NO Entity.SYMBOL emitted -- live_flowsto.json has zero symbol: refs (LAW 1, not faked); "
+          "SYMBOL is a code-extractor concern surfaced to COO/DS~B, not fake-cleared here.")
+    tok = (trep["n_type_nodes"] == 136 and trep["all_subject_is_TYPE"] and trep["all_fidelity_ok"]
+           and trep["coverage_unresolved"] == 0 and trep["schema_version"] == "0.3")
+    print(f"=== 0.3 TYPE emission: {'PASS' if tok else 'FAIL'} "
+          f"(136 declaring types -> Entity.TYPE, CONTAINS->field, fidelity-clean, validates @0.3) ===")
+    sys.exit(0 if (ok and tok) else 1)
