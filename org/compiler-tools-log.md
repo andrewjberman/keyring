@@ -14379,3 +14379,70 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-08 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/data-platform-d2b-bd-rest-e... | PASS |
 2026-07-08 | 0.7.0_AE_CloudOps | NFRA_SEMCTL.FINALIZE coupled @0.4 pass | comp-kuzu (C1 30/30 + baseline + L3 round-trip/path + final joint, re-finalize x2), comp-glob, comp-which, commit-gate, safe-commit, deploy_ledger (open+5x close-leg+close), live-AWS grounding (codebuild/ecr/ecs/cloudwatch) | PASS -- C3 materialize (7 nodes/36 CONTAINS semctl, 0 unresolved) + @0.4 deploy + PROMOTE emit, ledger CLOSED 5/5
 | 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.node_type LIMIT 1 | FAIL |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS total | FAIL |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-tooltip | comp-tooltip summary | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-tooltip | comp-tooltip summary | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tooltip_cli.py | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/freshness_alarm/lamb... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-pipescript | comp-pipescript --list | FAIL |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-constants | comp-constants check --lane bd | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/data-platform-d2b-bd-rest-e... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-drift | comp-drift coverage | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-pipescript | comp-pipescript stats | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-validate | comp-validate --help | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-transform | comp-transform --help | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-pii | comp-pii --help | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-drift | comp-drift sweep | FAIL |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-transform | comp-transform schema-check MetricsRow | FAIL |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-cache | comp-cache scan | FAIL |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-types | comp-types --help | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-pii | comp-pii scan | FAIL |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-types | comp-types index | FAIL |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-cache | comp-cache map | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/website/iam_patrici... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='C3System' RETURN n.node_id AS c3_node_id | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-drift | comp-drift coverage | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-drift | comp-drift sweep | FAIL |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-validate | comp-validate --help | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-validate | comp-validate --list | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/README.md --file org/crit... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/CREDENTIAL_HANDOFF.md | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/freshness_... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id='system:firm-conditional-display:25558d98' RETURN '... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id CONTAINS 'dc2-test1-offpeak' OR n.node_id CONTAINS ... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode) WHERE s.node_type='C3System' OPTIONAL MATCH (s)-[e:CloudE... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pipescript | comp-pipescript deployed orion-gold-dispatch.sh | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pipescript | comp-pipescript deployed orion-gold-dispatch.sh --firm inf | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/orion-gold-dispat... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/cse_emit_frontend_co... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/cse_emit_promote.py | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/CREDENTIAL_HANDOFF.md | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam service derive_runner | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/API/AUTHENTICATION.m... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/API/tools/__pycache_... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-endpoints-prd-proposal... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/_canonical.py --file... | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | --help | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_ENDPOINTS_PRD.md... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_ENDPOINTS.json --file... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08T20:01Z | 2.0.0_SA_COO | multi (Cottonwood promote / NFRA_WEBSITE / BD-fees / NFRA_ENDPOINTS) | independent aws verify (describe-SG no-22 + get-user-policy firm-sep + curl EIP 200), aws dynamodb (opal-users-v2 FIRM# L3 fix), aws ssm list-command-invocations (gold runtime/trigger), comp-which (routing), comp-freshness (via DS~B) | applied-truth grounding on the public-box SG + external IAM + the promote; item2d self-corrected config->code grounding | PASS |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
