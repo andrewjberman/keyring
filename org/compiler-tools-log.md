@@ -14136,3 +14136,63 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-08T03:20Z | 2.0.0_SA_COO | ADVI_COTPPLADVFIX | comp-which, comp-pipescript io (B_00-B_03), deploy_ledger check --red, fabric-check | Group B transaction-engine consumer trace for the "49F dead-weight" architecture Q + drive-cycle triage; cot under-instrumented (advi-cot=1 thread) so L3-lambda/registry/runtime all source+live-grounded (rail-checked aws) | PASS |
 | 2026-07-07 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/logs/2026-0... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN count(*) AS edges | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INFRPT.json | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='CLUSTERS' RETURN count(e... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (p:CloudNode) WHERE p.node_type='PanelCluster' RETURN count(p) A... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() WHERE e.edge_type IN ['CONTAINS_DRILLDOWN',... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.layer AS layer, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_MOTIF.json --file org... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['LAMBDA_LAYER','SCHEDULE','SSM_DOCU... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P2.c3-system-emergence | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SH... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P2.c3-system-emergence | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type IN ... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P2.c3-system-emergence | comp-kuzu | comp-kuzu --json MATCH (p:CloudNode) WHERE p.node_type='PanelCluster' RETURN p.node_id ... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='PanelCluster' RETURN count(*) AS clusters | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/kuzu_nessie_load.py | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='PanelCluster' RETURN count(n) A... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='CLUSTERS' RETURN count(e... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P2.c3-system-emergence | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='CLUSTERS' RETURN count(e... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/_canonical.py | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='PanelCluster' RETURN count(n) A... | FAIL |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='PanelCluster' RETURN count(n) A... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='CLUSTERS' RETURN count(e... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/freshguard... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='PanelCluster' RETURN count(*) AS clusters | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='PanelCluster' RETURN count(*) AS clusters | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P2.c3-system-emergence | comp-kuzu | comp-kuzu --json MATCH (p:CloudNode) WHERE p.node_type='PanelCluster' RETURN count(p) A... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P2.c3-system-emergence | comp-kuzu | comp-kuzu --json MATCH (pc:CloudNode)-[e:CloudEdge]->(rc:CloudNode) WHERE e.edge_type='... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P2.c3-system-emergence | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='PanelCluster' RETURN count(*) AS c | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P2.c3-system-emergence | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P2.c3-system-emergence | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/_provenance.py | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_MOTIF.json | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | NFRA_GLOBGRPH.FRESHGUARD + item2e | comp-kuzu/safe-apply/commit-gate/deploy_ledger | FRESHGUARD P1 comp-kuzu finalize (exercised HEAD-current, deterministic), leg-3 watchdog + item2e trail targeted safe-applies (isolated from other-lane drift), leg-4 core commit-gated | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
