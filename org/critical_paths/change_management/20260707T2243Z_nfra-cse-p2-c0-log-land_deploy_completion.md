@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-07-07T22:43:58.392276+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20260708T003940Z
 **Deploy:** NFRA_CSE.P2 req#1: land the append-only C0 CSE event log (globgrph.cse) on the existing Nessie store -- image rebuild (COPY-only add) + ecs run-task command-override (no new IAM/TF); one-marker C0/C1 consistency
 **Authored by:** 0.5.0_AE_OpalETL
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -12,11 +12,16 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | git | CLOUD commit cse_store.py + derive_runner marker tuple + Dockerfile COPY | hashes pushed origin/CLOUD |  | OPEN |
-| L2 | activation | CodeBuild globgrph-derive-build rebuild -> ECR opal-globgrph-derive-runner:latest (bakes cse_store/cse_schema/comp_ladder) | build SUCCEEDED + new :latest digest |  | OPEN |
-| L3 | activation | ecs run-task command-override python /app/cse_store.py --ensure -> create globgrph.cse table | warehouse/globgrph/cse_* table dir present live |  | OPEN |
-| L4 | verify | ecs run-task --ingest real code-producer CSEs + 4-table marker stamp | cse rows queryable live + _branch_head.main.json carries cse snapshot |  | OPEN |
+| L1 | git | CLOUD commit cse_store.py + derive_runner marker tuple + Dockerfile COPY | hashes pushed origin/CLOUD | d1d18acde (cse_store.py writer) + 9aef7cf26 (Dockerfile bake + ledger) both git merge-base --is-ancestor origin/CLOUD = ON ORIGIN (confirmed post-fetch) | CLOSED 20260708T002756Z |
+| L2 | activation | CodeBuild globgrph-derive-build rebuild -> ECR opal-globgrph-derive-runner:latest (bakes cse_store/cse_schema/comp_ladder) | build SUCCEEDED + new :latest digest | CodeBuild globgrph-derive-build:d3e2d484 status=SUCCEEDED phase=COMPLETED -> ECR opal-globgrph-derive-runner:latest rebuilt with cse_store.py+cse_schema.py+comp_ladder.py baked + derive_runner marker-tuple change | CLOSED 20260708T003130Z |
+| L3 | activation | ecs run-task command-override python /app/cse_store.py --ensure -> create globgrph.cse table | warehouse/globgrph/cse_* table dir present live | ecs run-task --ensure exit=0; LIVE ground: warehouse/globgrph/cse_b557721f-8b81-4ec2-9289-fe5f44c3f272/ table dir present + marker re-stamped writer=cse_store with 4 tables incl cse (metadata_location set, snapshot_id=None pre-ingest) | CLOSED 20260708T003558Z |
+| L4 | verify | ecs run-task --ingest real code-producer CSEs + 4-table marker stamp | cse rows queryable live + _branch_head.main.json carries cse snapshot | ecs run-task --ingest exit=0; LIVE ground (Rule 22, read-back not self-report): cse Iceberg metadata total-records=6 added-records=6; marker cse snapshot_id=2529781351634669655 (4-table one-marker); parquet source=git/event_date=2026-07-07 read back = 6 real WRITES_S3 CSEs (correct ARN subjects + writes edges + template-folded targets + real file:line provenance + marker_head=c71502c3.. + firm scope bd/cot/inf); bd-client-detail correctly ABSENT (DS~B negative case) | CLOSED 20260708T003940Z |
 
 ## Log
 
 - 20260707T224358Z OPENED by 0.5.0_AE_OpalETL with 4 leg(s)
+- 20260708T002756Z LEG L1 closed: d1d18acde (cse_store.py writer) + 9aef7cf26 (Dockerfile bake + ledger) both git merge-base --is-ancestor origin/CLOUD = 
+- 20260708T003130Z LEG L2 closed: CodeBuild globgrph-derive-build:d3e2d484 status=SUCCEEDED phase=COMPLETED -> ECR opal-globgrph-derive-runner:latest rebu
+- 20260708T003558Z LEG L3 closed: ecs run-task --ensure exit=0; LIVE ground: warehouse/globgrph/cse_b557721f-8b81-4ec2-9289-fe5f44c3f272/ table dir presen
+- 20260708T003940Z LEG L4 closed: ecs run-task --ingest exit=0; LIVE ground (Rule 22, read-back not self-report): cse Iceberg metadata total-records=6 add
+- 20260708T003940Z CLOSED -- all 4 legs proven
