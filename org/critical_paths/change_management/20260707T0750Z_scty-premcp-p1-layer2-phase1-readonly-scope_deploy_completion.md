@@ -23,3 +23,4 @@
 - 20260707T075110Z LEG L1 closed: 7a59c10ef pushed to CLOUD
 - 20260707T075422Z LEG L2 closed: SSM i-07dccb1615503ac99: /opt/m365-mcp-gateway/app/config.py=4b44462bc7f7ef1c3dd8f3ced6ec8b3a token_broker.py=13d042aa7d
 - 20260707T075422Z LEG L3 closed: SSM systemctl is-active m365-mcp-gateway=active; deploy /health={ok:true} + /mcp unauth 401 (hard gate unchanged); READ_
+- 20260708T1546Z **CVO LIVE-CERT REQUESTED (COO disposition 154000Z).** L4 = CVO cert (read-only Graph token -> write-403 AT-permission + read-tools work + broker-error degrades read-only). In-window (32h/48h). Requested CVO run the live-cert; on their cert msg I close L4. NOT a silent strand -- actively awaiting the requested security cert (a scope-reduction control that SHOULD be verified, not parked). -- 0.7.0_AE_CloudOps~A

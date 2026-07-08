@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-07-07T11:47:21.032748+00:00
-**Status:** OPEN
+**Status:** RESOLVED-PARKED (external gate: secrets.PORTAL_REPO_PAT, Andrew-only GitHub org-secret) -- infra L1-L3 landed+proven; L4 first-produce-verify deferred to a fresh attempt when the PAT clears. Escalated loud (Andrew via COO); NOT a silent strand, NOT a half-landed deploy (infra fully landed).
 **Deploy:** NFRA_GLOBGRPH stitch-produce: nightly-fresh cross-layer stitch (durable kuzu_stitch_db scratch-stale fix; COO NEAR-TERM, CTO domain-flag). 2-leg hybrid: GHA source-push + EventBridge->CodeBuild produce -> stitch_graph.json+marker; 0.8.0 builds the comp-debt ensure_fresh consumer.
 **Authored by:** 0.7.0_AE_CloudOps
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -15,7 +15,7 @@
 | L1 | git | CLOUD commit stitch-produce.tf (684c38511) + stitch-source-push.yml | hashes pushed origin/CLOUD | stitch-produce.tf + stitch-source-push.yml pushed origin/CLOUD @ 684c38511 (git merge-base --is-ancestor confirmed) | CLOSED 20260707T132725Z |
 | L2 | activation | safe-apply LEG-2 (9 resources: GHA+CodeBuild+events roles, CodeBuild project, EventBridge rule+target) | plan 9add/0chg/0destroy applied + 0-diff | safe-apply (HALTGT, targeted) Apply complete 9 added/0 changed/0 destroyed: stitch_source_gha+policy, stitch_produce_codebuild+policy, stitch_produce CodeBuild project, stitch_produce_events+policy, EventBridge rule+target. (Was correctly HALTGT-blocked mid-run by the FEDOBS coordination; resumed after.) | CLOSED 20260707T115731Z |
 | L3 | activation | LEG-1 workflow lands + GH-Action publishes stitch-source/source.zip | source.zip present in S3 | s3://opal-313476888478-globgrph/stitch-source/source.zip present (156994678 bytes, 2026-07-07 09:08:30) -- GHA stitch-source-push.yml published | CLOSED 20260707T132726Z |
-| L4 | verify | first CodeBuild run produces a VALID stitch (node-counts validated vs known-good) + marker #1 published | stitch_graph.json+marker in S3, sane node counts |  | OPEN |
+| L4 | verify | first CodeBuild run produces a VALID stitch (node-counts validated vs known-good) + marker #1 published | stitch_graph.json+marker in S3, sane node counts |  | PARKED (external gate: PORTAL_REPO_PAT) |
 
 ## Log
 
@@ -57,3 +57,10 @@
   L4 (a nightly artifact refresh, not a served/client-facing surface) is pending -- no live risk from the
   overrun itself, this is a deploy-ledger SLA miss on a low-stakes artifact, not a half-landed production
   change.
+- 20260708T1545Z **FORMALLY PARKED (COO-directed disposition, 154000Z).** Status -> RESOLVED-PARKED,
+  external_gate=secrets.PORTAL_REPO_PAT (Andrew-only GitHub org-secret; still not provisioned). L1-L3
+  infra genuinely landed+proven; L4 first-produce-verify cannot run until the PAT clears (a GHA checkout
+  of the PRIVATE Opal-Capital/portal repo). No agent/CVO lever remains -- code fix 4074fdf5a landed+verified;
+  a re-trigger now fails at the checkout with no new info. Sentinel removed so `check --red` stops the
+  RED-strand alert (dispositioned + escalated, not silent). RESUMPTION: when Andrew provisions
+  PORTAL_REPO_PAT, re-trigger opal-stitch-produce CodeBuild + open a FRESH ledger. COO + Andrew notified. -- 0.7.0_AE_CloudOps
