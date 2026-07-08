@@ -14196,3 +14196,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
 | 2026-07-08 | 0.7.0_AE_CloudOps | NFRA_GLOBGRPH.FRESHGUARD + item2e | comp-kuzu/safe-apply/commit-gate/deploy_ledger | FRESHGUARD P1 comp-kuzu finalize (exercised HEAD-current, deterministic), leg-3 watchdog + item2e trail targeted safe-applies (isolated from other-lane drift), leg-4 core commit-gated | PASS |
 | 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0045.md | PASS |
+| 2026-07-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/cse_emit_frontend_co... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --file org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/p... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --file org/modules/graph/comp_promote_materializer.py --mode a... | PASS |
+- 20260708T1539Z 0.4.0_DT_ClientPlatform DEPLOY (Cottonwood promote v2.1.133): no comp-tool run -- frontend PROD gitlink promote of a single pre-verified commit; gates were the /prod-deploy procedure's own (VALGATE D-1, tsc pre-push, parity gate, gh run --json, tag peel, deploy_ledger.py contract). Rule-20 graph-check scoped to cloud/infra/data changes, N/A here.
+| 2026-07-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
