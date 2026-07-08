@@ -615,6 +615,11 @@ tools:
     granularity: file
     concern: "Rule-16 bare-util scan in new .sh (Git-Bash-3.6.7-missing pgrep/pkill/flock/pidof/setsid/wget)"
     touches_resource: []
+  - tool: comp-honesty
+    surface: GIT
+    granularity: claim
+    concern: "honesty/completion GATE over the GOV-A invariants (I1 honest-missing / I2 measure-per-case / I3 control-fires-when-exercised); claim+evidence (or --file src.py) -> per-invariant PASS/FAIL/N-A, makes NFRA_SEMCTL_HONESTY_INVARIANTS.md runnable (N-A is LOUD, never a silent pass)"
+    touches_resource: []
   - tool: comp-types
     surface: GIT
     granularity: type
@@ -851,6 +856,9 @@ meta_tools:
     not_homed_reason: "the COMPDRIFT state-drift VERB spans ALL drift-topology seams (seam-1..7), not one surface/seam -- a seam-axis-wide loop tool (sibling to COMPLEARN's comp-learns-* use-verb). Seam taxonomy ALIGNED: comp-drift's per-hop seams ARE the seam IDs this map references (one taxonomy, confirmed zero-drift). Provisional pending ~D P2; ~D confirms the final grain/home."
   - { tool: comp-v5-composite-test, role: test-harness,       not_homed_reason: "comp-tool regression test harness; not an estate inspection" }
   - { tool: comp-which-routing-test, role: test-harness,      not_homed_reason: "comp-which routing regression test harness; not an estate inspection" }
+  - { tool: comp-tool-health,        role: tool-health,        not_homed_reason: "NFRA_TOOLHEALTH TH-B: fused per-comp-tool 3-axis HEALTH query (used/rail_consistent/effective -> KEEP|FIX|PROMOTE|RETIRE) over the COMPLEARN substrate; value-anchored (outcome value + rail quality, never invocation count); read-only advisory (CTO ratifies). Meta-ABOUT-tools, not a surface inspection. Engine comp_tool_health.py. Owner 0.8.0_AE_CloudComp~D" }
+  - { tool: comp-tool-health-gate,   role: enforcement-gate,   not_homed_reason: "NFRA_TOOLHEALTH TH-C: close-the-loop ACCEPTANCE GATE -- each non-KEEP TH-B verdict -> a typed ADVISORY commission the CTO ratifies (FIX->fix-TO / PROMOTE->surface_prior bump / RETIRE->deprecation-candidate); never auto-mutating. Reuses comp_tool_health.health() un-forked. A meta gate over the tooling substrate. Engine comp_tool_health_gate.py. Owner 0.8.0_AE_CloudComp~D" }
+  - { tool: comp-canon-motif,        role: debtscan-scorer,    not_homed_reason: "NFRA_DEBTSCAN TO-D3 canon-motif SCORER: scores each canon class off the RIGHT surface (SERVED_LINEAGE+AUTH kuzu-lib / DEPLOY deploy-ledger / PIPELINE comp-pipescript) -> dominant/outlier scorecard + gates -> AC4 novel-candidates; 0 mutations. A meta scorer spanning surfaces, not one surface. PLACED-FROM-HEADER by CTO (exec-lane unblock of the coverage-check drift); DEBTSCAN owner to VERIFY/refine grain+concern." }
 
 # =============================================================================
 # GAP CENSUS (PRD deliverable 2) -- every (surface|seam) x level node with NO tool.

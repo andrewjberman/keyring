@@ -554,6 +554,18 @@ entries:
     anti_pattern: "committing a .sh with a bare pgrep/pkill/flock (CLAUDE.md Rule 16)"
     status: canonical
 
+  - id: meta.honesty.invariant_gate
+    use_case: "Does a completeness/GREEN claim honor the GOV-A honesty floor (I1/I2/I3)?"
+    canonical_call: "comp-honesty <case.json> | comp-honesty --file <src.py> [--evidence <ev.json>] | comp-honesty --self-test"
+    tool: comp-honesty
+    mode: rebuild
+    layer: meta
+    cost: "~1s/case"
+    freshness: "live claim+evidence check"
+    rebuild_trigger: "n/a"
+    anti_pattern: "asserting a claim GREEN without exercising the honesty bar -- silent-missing / aggregate-hides-per-case / dead-guard"
+    status: canonical
+
   - id: meta.registry.drift
     use_case: "REGISTRY narrative vs project-JSON drift (phase/commit-citation/status mismatch)."
     canonical_call: "comp-registry sync ROW=N | --project CODE | --all"
@@ -832,6 +844,7 @@ tools_index:
   comp-lambdamap: { does: "Lambda deployed-SHA vs live CodeSha256 + 3-leg deploy-parity", subcommands: [check, sha, derive, parity], entries: [cloud.lambdamap.deployed_sha, cloud.lambdamap.parity] }
   comp-drift:    { does: "Estate propagation-drift ORCHESTRATOR -- walks drift-topology.yaml CALLING the seam engines (comp-heat/pipescript/lambdamap/iam/kuzu/iceberg_parity/code_heat_parity/tool_activity_parity/trino_catalog_parity/freshness), NEVER re-implementing a check. seam-6 (ICEBERG->TRINO) fully COVERED (P3c: trino_catalog_parity.py closes the 3 iceberg legs). sweep ALSO folds drift_producer.py's infra/repo drift legs (P4: manifest+surface always, terraform-plan under --deep). 'did X propagate intact local->git->cloud->nessie->kuzu->iceberg->trino->served?' / 'where is the estate unguarded?' / 'is the estate in parity?'. Tri-state exit + never-silent-MATCH (UNVERIFIABLE on an unreadable seam)", subcommands: [coverage, "<target>", sweep, "--deep", "--json"], entries: [drift.coverage.ledger, drift.target.chain_walk, drift.sweep.parity_board] }
   comp-shell:    { does: "Bare Git-Bash-missing-util scan in new .sh (Rule 16)", subcommands: [scan], entries: [meta.shell.bare_util_scan] }
+  comp-honesty:  { does: "Honesty/completion GATE over GOV-A I1/I2/I3: claim+evidence -> per-invariant PASS/FAIL/N-A; makes NFRA_SEMCTL_HONESTY_INVARIANTS.md runnable. N-A is LOUD, never a silent pass", subcommands: ["<case.json>", "--file", "--evidence", "--self-test"], entries: [meta.honesty.invariant_gate] }
   comp-registry: { does: "REGISTRY narrative vs project-JSON drift", subcommands: ["sync ROW=N", "--project", "--all"], entries: [meta.registry.drift] }
   comp-coverage: { does: "Compiler/task-order coverage report", subcommands: ["<args>"], entries: [meta.coverage.report] }
   comp-graph:    { does: "Freshness status across all graphs (local trace caches + cloud artifacts) + clear; uniform --fresh/--force contract (graph_cache.py)", subcommands: [status, clear, "--json"], entries: [meta.freshness.status] }
