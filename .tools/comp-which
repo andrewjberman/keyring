@@ -255,6 +255,20 @@ RULES = [
       "comp-xray schema <parquet|s3://>", "comp-xray freeze-monitor"],
      "is a served VALUE genuinely moving or FROZEN-BUT-FRESH (value frozen while the timestamp keeps "
      "advancing) -- the content-MOTION lens, NOT wrapper freshness; also code/config/schema motion"),
+    # comp-system = the SYSTEM CURRENT-STATE compiler (NFRA_SYSTEM P3). Placed BEFORE comp-freshness with
+    # distinctive "compiled system / system current-state / system maturity" vocab so a SYSTEM-state question
+    # wins over the bare "current" data-freshness keyword. The distinction: comp-system = the current
+    # STATE/maturity/health of the COMPILED SYSTEM across all scope classes (-> 06_current_state); comp-freshness
+    # = is upstream DATA fresh enough to run a chain. base COO GO 2026-07-08 (NFRA_SYSTEM P3 curated top-route).
+    (["current state of the system", "current state of the compiled system", "compiled system state",
+      "system current state", "system current-state", "state of the compiled system", "state of the system",
+      "system maturity", "system health", "maturity of the system", "06 current state", "06_current_state",
+      "the runtime index", "compiled-system current state", "current-state of the compiled system",
+      "system across scope classes", "compiled system health"],
+     "system current-state compiler",
+     ["comp-system", "comp-system --stdout", "comp-system --check"],
+     "the live current-state/maturity/health of the COMPILED SYSTEM across all scope classes (06_current_state) "
+     "-- NOT data-pipeline freshness (comp-freshness) or graph-cache vintages (comp-graph)"),
     # LD-0208 fix (C): vetted routes for the high-value long tail the audit named as
     # misrouted (freshness/validate/pii). Tight keyword lists -> no over-match; the
     # manifest backstop covers the rest of the catalog now that its key is fixed.
