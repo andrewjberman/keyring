@@ -14234,3 +14234,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 2026-07-08 0.5.0_AE_OpalETL NFRA_PROMOTE.P3: cse_emit_frontend_coevolution --self-test 7/7 + promote_monitor --self-test 12/12 + cse_store validate_batch @0.3 (257 CSEs, in-VPC) + fedobs Trino probe (baseline 0 -> 54 live frontend pairs, Rule 22) + commit-gate (E702 caught/fixed) + deploy_ledger (fecoevo-store-persist CLOSED). Standing loop CVO-certed c13a73cdd.
 | 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cse_schema.py | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cse_schema.py | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_WEBSITE.json --file o... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_promote_material... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/01_current_architecture.s... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | NFRA_SEMCTL.FINALIZE semctl gate | commit-gate/Grep/safe-commit | dual-signed semctl NODE_TYPE_LAYER gate landed (d2ab31596); condition-2 layer-enum touch-point audit (Grep, globgrph+.tools) = NODE_TYPE_LAYER sole site, no new fail-closed risk | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
