@@ -95,7 +95,7 @@ SURFACE_KEYS = ("LOCAL", "GIT", "AWS-CLOUD", "MS-CLOUD", "TRINO", SEAM_KEY, META
 # meta-measurement (comp-perf). Present-for-completeness (routable=False) still keeps inventory whole.
 _ROUTABLE_META_ROLES = frozenset({
     "estate-router", "cache-management", "meta-report", "governance",
-    "compdrift-loop", "complearn-loop",
+    "compdrift-loop", "complearn-loop", "fedobs-reflective-reader",
 })
 
 # Minimal stopword set for keyword extraction (query_match wants a rich bag-of-words,

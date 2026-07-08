@@ -114,15 +114,32 @@ RULES = [
      "file-symbol inventory (comp-symbols)",
      ["comp-symbols <file>", "comp-symbols <file> --grep <pat>", "comp-symbols <file> --kind func|class|const|import"],
      "what a source FILE defines -- its functions/classes/constants/imports + line numbers (forward AST inventory; input=a FILE, opposite of comp-xref's graph-wide occurrence + comp-blast's blast-radius)"),
-    (["portal", "component", "endpoint", "scoped route", "/api/", ".tsx", "tsx",
-      "frontend", "renders", "rendering", "getadvisor", "which lambda serves", "serves /api",
-      # real-NL feed vocabulary (paraphrase-probe 2026-06-26): an agent asks "what FEEDS/
-      # HANDS DATA TO the X panel/card/widget/tab", not "which producer feeds a component".
-      "panel", "card", "widget", "feeds", "hands data", "hands data to", "feeds the",
-      "what feeds", "data to the"],
-     "portal component / route",
+    # NFRA_TOOLCHECK P3 req#1b (COO~B 2026-07-08): the prior single combined rule named
+    # comp-transform + comp-routes + pipescript from the SAME hit at the SAME confidence for
+    # ANY "portal"/"component"/"endpoint" match -- an automatic 3-way tie (guaranteed
+    # disambiguation) even when the query carries enough specific vocabulary to decide
+    # confidently ("what hands data to the X panel" should be comp-transform alone, not a
+    # 3-way disambiguation). Split into DISTINCT-vocabulary rules per tool so a specifically-
+    # worded query scores strongly on ONE rule alone (weak-single-hit routes confidently);
+    # only a genuinely generic "portal"/"component"/"endpoint" query (no distinguishing verb)
+    # still falls to the catch-all below, which legitimately disambiguates.
+    (["hands data", "hands data to", "feeds the", "what feeds", "data to the", "feeds",
+      "renders", "rendering", "getadvisor", "panel", "card", "widget", "schema-check",
+      "prop shape", "component renders", "field missing"],
+     "portal component data-feed (comp-transform)",
+     ["comp-transform schema-check <Component>"],
+     "which producer feeds a portal component's fields (props/schema shape)"),
+    (["which lambda serves", "serves /api", "/api/", "scoped route", "behind /api",
+      "lambda is behind", "lambda behind", "cloudfront behavior", "cf behavior",
+      "serving path", "route serves"],
+     "portal endpoint serving route (comp-routes)",
+     ["comp-routes behaviors"],
+     "which lambda/CF behavior serves a portal endpoint route"),
+    (["portal", "component", "endpoint", ".tsx", "tsx", "frontend"],
+     "portal component / route (generic -- ambiguous, disambiguates by design)",
      ["comp-transform schema-check <Component>", "comp-routes behaviors", "pipescript <thread>"],
-     "which producer/endpoint feeds a portal component + the serving/CF route"),
+     "generic portal/component/endpoint mention with no feed/serve-specific vocabulary -- "
+     "genuinely ambiguous among data-feed vs serving-route vs named-thread; surfaces all three"),
     (["lambda", "function", "handler", "what does this lambda", "what does the lambda"],
      "lambda",
      ["comp-iam service <fn>", "comp-aws", "pipescript --resource <fn>"],
@@ -138,10 +155,15 @@ RULES = [
     (["breaks", "blast", "what depends", "if i change", "impact of changing", "downstream of",
       # real-NL impact vocabulary: "what would a CHANGE TO X AFFECT", "what does changing X
       # break" -- agents say affect/change-to, not "impact of changing". (paraphrase 2026-06-26)
-      "affect", "affects", "affected", "change to", "a change to", "changing"],
+      "affect", "affects", "affected", "change to", "a change to", "changing",
+      # NFRA_TOOLCHECK P3 req#2a (2026-07-08): "if I RENAME X what else FALLS OVER" was routing
+      # only via a stopword-coincidence fuzzy hit ({"if","i","what"}) that the req#2a fuzzy-
+      # backstop stopword fix correctly stopped counting -- surfacing that "rename"/"falls
+      # over" had NO real curated coverage at all. Add the actual vocabulary.
+      "rename", "falls over", "what else falls", "what falls over", "what else breaks"],
      "blast radius",
      ["comp-blast <fn-or-artifact>"],
-     "what breaks if you change X (pass a function name, not a script name)"),
+     "what breaks if you change/rename X (pass a function name, not a script name)"),
     # comp-dups = NFRA_DEBTSCAN dups dimension (CVO 2026-06-26; manifest entry COO 4d56eb0db).
     # Distinctive dup/dead-twin vocab so a "find duplicate resources" query routes to the tool,
     # not the grep fallback. Advisory/read-only.
@@ -187,7 +209,10 @@ RULES = [
      "named-thread traversal",
      ["pipescript <name>", "pipescript --list"],
      "every resource + deps + data-flow in a named pipeline/thread (no silent Unknown)"),
-    (["deployed", "stale", "latest code", "s3 etag", "runner has", "is the runner on"],
+    (["deployed", "stale", "latest code", "s3 etag", "runner has", "is the runner on",
+      # NFRA_TOOLCHECK P3 req#2a (2026-07-08): "does the etl-runner have the newest code or is
+      # it behind" previously routed only via a stopword-coincidence fuzzy hit; real vocabulary.
+      "newest code", "runner have", "have the newest", "is it behind", "or is it behind"],
      "deploy freshness",
      ["comp-pipescript deployed [script]"],
      "is the deployed runner on the latest code (MATCH/STALE/MISSING)"),
@@ -267,10 +292,33 @@ RULES = [
     (["stale files", "stale dir", "dead directories", "dead dirs", "dead code", "archive candidate",
       "archive candidates", "safe to archive", "what's cold", "whats cold", "cold subtrees",
       "repo hygiene", "estate hygiene", "uncommitted", "uncommitted changes", "writes not committed",
-      "not committed", "what have i written", "written but not committed", "unsaved work"],
+      "not committed", "what have i written", "written but not committed", "unsaved work",
+      # NFRA_TOOLCHECK P3 req#2a (2026-07-08): "which directories are dead and safe to DELETE"
+      # (word order reversed from "dead directories" + "archive"->"delete") previously routed
+      # only via a stopword-coincidence fuzzy hit; real vocabulary covering the reversed order.
+      "are dead", "dead and safe", "safe to delete", "directories are dead"],
      "estate object write-freshness / hygiene (comp-heat)",
      ["comp-heat freshness [path]", "comp-heat drift"],
      "what's stale/dead/safe-to-archive (cold subtrees) or written-but-not-committed (drift) -- repo/estate OBJECT hygiene; DISTINCT from comp-freshness (data-pipeline S3/DDB)"),
+    # NFRA_TOOLCHECK P3 req#1a (COO~B 2026-07-08): comp-fedobs was UNREACHABLE -- it had NO
+    # curated rule at all, so a "co-evolution / directive-effectiveness / compiler-coverage"
+    # question fell through to whatever generic rule happened to share a stray token (e.g. its
+    # own "blast-radius" ANALOGY in the co-evolution use_case sentence collided with the
+    # comp-blast "blast radius" rule). Distinctive FEDOBS-only vocabulary so it wins outright.
+    (["co-evolution", "coevolution", "co evolution", "consistently change together",
+      "change together", "co-occurring", "co-occurring in a producer session",
+      "cses co-occurring", "compiler-coverage", "compiler coverage", "coverage gaps",
+      "recognizer gaps", "recognizer coverage", "directive-effectiveness",
+      "directive effectiveness", "promoted directive", "measure-before-promote",
+      "measure before promote", "federated observation", "reflective observation",
+      "fedobs", "cse log", "c0 cse", "motif composes", "signal motif",
+      "reduce the churn", "did the directive reduce"],
+     "FEDOBS reflective-observation surface (co-evolution / compiler-coverage / directive-effectiveness)",
+     ["comp-fedobs", "comp-fedobs coevolution", "comp-fedobs coverage", "comp-fedobs direff",
+      "comp-fedobs provenance"],
+     "which artifacts/systems change together (co-evolution), recognizer/compiler-coverage "
+     "gaps, or whether a promoted directive measurably reduced its targeted churn -- served "
+     "vintage read over the C0 CSE log"),
     # NFRA_COMPUNIFY S2: the COMPUNIFY gate. Distinctive coverage/placement/non-redundancy vocab
     # so "does every comp-tool have one home / is every overlap declared / gate the coverage map"
     # routes to the enforcement gate, not the grep fallback.
@@ -353,9 +401,17 @@ def _manifest_matches(q: str, qtok: set, top: int = 3):
     # LD-0208 fix (A): the manifest stores rows under `entries:`, not `use_cases:`.
     # Reading the wrong key iterated [] and matched NOTHING -> the whole fuzzy backstop
     # was dead, leaving ~28 long-tail tools unreachable via the router.
+    # NFRA_TOOLCHECK P3 req#2a fuzzy-backstop hardening (COO~B 2026-07-08): overlap used to
+    # count RAW tokens incl. stopwords ("a", "the", "which", "on", ...), so any two entries
+    # with long descriptive text could hit overlap>=2/3 on pure function-word coincidence --
+    # a real latent false-positive (surfaced by making comp-fedobs's rich concern text
+    # routable: it "matched" an unrelated PII query purely on {"a","this","the"}). Strip
+    # stopwords from BOTH sides before counting -- overlap now requires SUBSTANTIVE shared
+    # vocabulary, tightening every tool's fuzzy match, not just fedobs's.
+    qtok_sig = qtok - _STOP
     for e in (data or {}).get("entries", []) if isinstance(data, dict) else []:
         text = " ".join(str(e.get(k, "")) for k in ("use_case", "id", "tool"))
-        overlap = len(qtok & _tokens(text))
+        overlap = len(qtok_sig & (_tokens(text) - _STOP))
         if overlap >= 2:
             out.append((overlap, e.get("tool", "?"), e.get("canonical_call", ""), e.get("use_case", "")[:90]))
     out.sort(key=lambda x: -x[0])
@@ -513,6 +569,9 @@ def _run_primitive(kind: str, term: str) -> int:
     sibling comp-grep/comp-glob via sys.executable (NOT a bash launcher -> Windows-safe)."""
     script = os.path.join(WS, ".tools", "comp-grep" if kind == "grep" else "comp-glob")
     call = "comp-%s %s" % (kind, term)
+    if _ROUTE_ONLY:
+        print("comp-which-route-only: NO-ROUTE (would run: %s)" % call)
+        return 0
     print('comp-which -- no rich comp-tool fits this exact search; running the ON-RAILS primitive:')
     print("  $ %s" % call)
     print("  (on the rail: repo-scoped + .gitignore-aware + logged. If a rich tool SHOULD")
@@ -576,6 +635,9 @@ def _agent_role() -> str:
 # flip is then a one-line default change, not new plumbing. Confirmed STEP-0: comp-which default already
 # routes via comp_route (DR2 flip 94b64a5af, CVO~B cert 4c1d93be5); this is the affinity-ON second flip.
 _LIVE_AFFINITY = os.environ.get("COMP_WHICH_LIVE_AFFINITY", "").strip().lower() in ("1", "true", "on", "yes")
+
+# NFRA_TOOLCHECK P3 req3d (0.8.0~A) -- side-effect-free preview mode; see --route-only in main().
+_ROUTE_ONLY = False
 
 
 def _affinity_provider():
@@ -762,6 +824,14 @@ def main() -> int:
         global _LIVE_AFFINITY
         _LIVE_AFFINITY = True
         sys.argv = [sys.argv[0]] + [a for a in sys.argv[1:] if a != "--live-affinity"]
+    # NFRA_TOOLCHECK P3 req3d (0.8.0~A, HUD lane): a side-effect-free preview mode. main()'s
+    # ROUTE/ROUTE-SURFACE print paths are already side-effect-free; only _run_primitive() shells
+    # out live. This flag guards that one spot so the HUD's PreToolUse hook can safely ask
+    # "would this route, and to what" without ever triggering a real grep/glob subprocess.
+    if "--route-only" in sys.argv[1:]:
+        global _ROUTE_ONLY
+        _ROUTE_ONLY = True
+        sys.argv = [sys.argv[0]] + [a for a in sys.argv[1:] if a != "--route-only"]
     if len(sys.argv) < 2 or not sys.argv[1].strip():
         print('comp-which "<your question>"  -- maps a natural-language question to the canonical comp-* call.')
         print('  e.g. comp-which "what produces canonical_prices.parquet?"')
