@@ -349,11 +349,21 @@ def parity_run(marker_head: str = "parity") -> dict:
 # Scope this pass: BD only (matches DS~A's own validated test scope) -- cot/inf extension is a flagged
 # next step, not silently assumed covered.
 # ---------------------------------------------------------------------------
-_S3_LAYOUT_SOURCES = {"bd": "data/black_diamond/scripts/gold/lib/s3_layout.py"}
+_S3_LAYOUT_SOURCES = {
+    "bd": "data/black_diamond/scripts/gold/lib/s3_layout.py",
+    # cot EXTEND (DS~A-proven GREEN, probe bddd84344; ruling #2 approved): bd-identical central s3_layout.py,
+    # firm-scope keeps it distinct (ZERO cot/bd ref overlap despite byte-identical A_00/A_01 basenames), bd
+    # baseline UNCHANGED -> purely additive, parity-oracle 1->2 firms.
+    "cot": "data/cot/scripts/gold/lib/s3_layout.py",
+}
 _S3_GOLD_SCRIPT_SOURCES = {
     "bd": [
         "data/black_diamond/scripts/gold/A_00.accounts_dimension.py",
         "data/black_diamond/scripts/gold/A_01.advisor_assignments.py",
+    ],
+    "cot": [
+        "data/cot/scripts/gold/A_00.accounts_dimension.py",
+        "data/cot/scripts/gold/A_01.advisor_assignments.py",
     ],
 }
 
@@ -363,7 +373,8 @@ def parity_run_batch2(marker_head: str = "parity") -> dict:
     import cse_schema as cse
     ws = os.path.abspath(os.path.join(_HERE, "..", "..", ".."))
     report = {"firms": {}, "total_edges": 0, "all_fidelity_ok": True, "scope_note":
-              "BD only this pass -- cot/inf s3_layout.py extension not yet run (flagged, not silent)"}
+              "bd+cot (inf read/write DEFERRED -- accept-parity per ruling #3: deployed extract_pipeline has "
+              "no inf read/write coverage, so matching it IS parity; inf CONST fires but is a C0 node set)"}
     const_rec = S3KeyConstRecognizer()
     rw_rec = S3KeyReadWriteRecognizer()
     for firm, layout_src in _S3_LAYOUT_SOURCES.items():
