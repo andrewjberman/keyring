@@ -14331,3 +14331,46 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/bootstrap-stack.s... | PASS |
 | 2026-07-08 | 0.8.0_AE_CloudComp~D | NFRA_SYSTEM.P1 | comp_coverage_view/comp-which/comp-honesty | class-3 audit grounding: --verify green (37/56), comp-which routed, comp-honesty --self-test 9/9, comp-fedobs served-vintage read | PASS |
 | 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam reconcile opal-website-wp-role | FAIL |
+| 2026-07-08 | 1.0.0_SA_CTO | --help | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLCHECK_PRD.md... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/bd_endpoint_swe... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/bd_endpoint_swe... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/create-wp-admin.sh | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='C2Motif' RETURN 'C2Motif' AS t, count(n) AS c UN... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TOOLCHECK.json --file... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/website/dlm.tf --fi... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/hooks/post-tool-telemetry.sh | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-drift | comp-drift coverage | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-constants | comp-constants | FAIL |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-constants | comp-constants check --lane bd | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-tooltip | comp-tooltip --help | FAIL |
+| 2026-07-08 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['C3System','C2Motif'] RETURN n.node... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/hooks/post-tool-telemetry.sh | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node_type, cou... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-drift | comp-drift coverage | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='C2Motif' RETURN 'C2Motif' AS t, count(n) AS c UN... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['C3System','C2Motif'] RETURN n.node... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-drift | comp-drift sweep | FAIL |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node_type AS t... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[r]->() WHERE r.layer='semctl' RETURN 'semctl_edges_all' AS t, count... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (s)-[r1]->(m)-[r2]->(c1) WHERE s.node_id='system:firm-conditional-displ... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[r:CONTAINS]->(m) WHERE n.node_type IN ['C2Motif','C3System'] RETUR... | FAIL |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node_id, n.nod... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer = 'UNCATEGORIZED' RETURN count(n) AS uncategorized_cnt | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[r:CloudEdge]->(m) WHERE n.node_type IN ['C2Motif','C3System'] AND ... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[r:CloudEdge]->(m) WHERE n.node_type IN ['C2Motif','C3System'] AND ... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[r:CloudEdge]->(m) WHERE n.node_type = 'C2Motif' AND r.edge_type = ... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[r:CloudEdge]->(m) WHERE n.node_type='C2Motif' AND r.edge_type='CON... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'silent-display-fork' RETURN n.n... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-constants | comp-constants check --lane bd | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type = 'PROMOTE' OR n.layer = 'cse' RETURN n... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | --help | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_PLATFORM_D2_BLAC... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='semctl' RETURN 'nodes_semctl' AS t, count(n) AS c UN... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+2026-07-08 0.5.0_AE_OpalETL NFRA_PROMOTE R4: cse_emit_promote --self-test 9/9 + cse_store validate_batch @0.4 (in-VPC L4 CSE_APPENDED count=1 source=promote) + fedobs Trino probe (L5 PROMOTE CSE queryable @0.4 + in cse_directive_effectiveness, Rule 22) + commit-gate. Coupled @0.4 atomic pass L4+L5 complete.
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
