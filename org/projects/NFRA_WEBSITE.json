@@ -4,13 +4,22 @@
   "name": "Migrate the Opal Capital website (WordPress) to AWS",
   "description": "Andrew-direct 2026-07-01. Lift-and-shift the Opal Capital marketing website into the Opal AWS estate; keep GoDaddy as the DNS/registrar (records-only cutover, no zone move). GROUNDED against two provided backups (updraft backup.zip = UpdraftPlus set 2026-06-30; opalcapital.zip = full tree + 16MB opal_202606.sql): WordPress built with Bricks builder (bricks + bricks-opal child + AutomaticCSS); 16MB DB, ~13MB media, 18 plugins (gravityforms/omnisend/wp-mail-smtp/litespeed-cache/redirection/seopress/pdf-embedder/safe-svg/ACPT + security wps-hide-login/wps-limit-login/password-protected/turnstile + updraftplus/migrate-guru). Small low-traffic corporate site. TARGET (recommended): EC2 in the Opal VPC (Terraform-managed), OpenLiteSpeed+PHP8+MariaDB-local (16MB DB doesn't warrant RDS), Elastic IP (GoDaddy apex A-record -> EIP = the clean keep-GoDaddy path), Let's Encrypt/Certbot TLS, UpdraftPlus->S3 backups, SG-locked + SSM. Alternatives documented: Lightsail (simpler, off-VPC), EC2+RDS (overkill for 16MB), EC2+CloudFront+ACM (GoDaddy-apex-ALIAS nuance). Static-export REJECTED (Gravity Forms + dynamic backend). Migration: Terraform provision -> WP stack -> UpdraftPlus restore -> re-activate licenses (Bricks/ACSS/GravityForms/Omnisend) -> configure -> STAGE+CVO-verify -> lower TTL -> GoDaddy record cutover -> Certbot -> post-verify -> rollback-window (old host stays live). ~$20-40/mo. PRD docs/architecture/NFRA_WEBSITE_PRD.md.",
   "prds": [
-    {"path": "docs/architecture/NFRA_WEBSITE_PRD.md", "label": "WEBSITE PRD v1.0 (CTO-authored)", "date": "2026-07-01"}
+    {
+      "path": "docs/architecture/NFRA_WEBSITE_PRD.md",
+      "label": "WEBSITE PRD v1.0 (CTO-authored)",
+      "date": "2026-07-01"
+    }
   ],
   "status": "active",
-  "phase": "Phase 0: PRD complete (CTO 2026-07-01), grounded against the two backups + 3 house-style SVG diagrams rendered to Desktop (current/target/migration). HELD AT PRD -- Andrew PARKED it 2026-07-01 ('wait on website for now, just leave it in PRDs'). NO decomposition until Andrew greenlights the hosting approach + the 5 open decisions (hosting EC2-vs-Lightsail-vs-RDS; email SES-vs-existing-SMTP; is-Cloudflare-currently-proxying; CloudFront-now-or-later; exact GoDaddy record shape). Ready-to-decompose on his GO (first-wave W1 provision+restore-to-staging -> W2 DNS/TLS/email/backups/hardening+CVO-verify -> W3 cutover+rollback).",
-  "blocking": "HELD by Andrew at PRD stage (2026-07-01) -- do NOT decompose/dispatch until he greenlights. On GO: COO decomposes W1/W2/W3 + Andrew confirms the 5 open decisions. Leash: lift-and-shift (no redesign); keep GoDaddy DNS (records only, no zone move); never destroy the old host until the AWS site is CVO-verified live; harden the public WP surface.",
+  "phase": "Phase 1: DECOMPOSED + W1 GO'd 2026-07-08 (Andrew-direct un-park; was HELD at PRD since 2026-07-01). The 5 PRD open-decisions are resolved by Andrew's emails: hosting=EC2-in-VPC (no RDS/Fargate/Lightsail), CloudFront=NO (apex A->EIP), GoDaddy records-only; SMTP-provider + Cloudflare-proxying confirmed DURING the build (not blockers). TO-1 (W1) = WordPress-on-AWS PLATFORM build: EC2 t3 in the Opal VPC + Elastic IP + SG/SSM (no open 22) + S3 backups + OpenLiteSpeed/PHP8/MariaDB-local + base WordPress + a WP-admin account for Patricia Barboza (TWLC). KEY refinement vs the PRD SS7: TWLC's DEVELOPER does the CONTENT migration (Patricia wants WP-admin); Opal provides the PLATFORM + admin handoff (not the UpdraftPlus restore). Dedicated AE (Andrew): 0.7.0_AE_CloudOps~A = OWNER (respawn via MSTR), 0.5.0_AE_OpalETL = online first-mover (TF scaffold + signal grounding now). W2 (TLS/SMTP/backups/hardening + CVO staging-verify) + W3 (GoDaddy apex-A cutover + rollback-window) follow.",
+  "blocking": "TO-1 (W1) platform build in flight -- 0.7.0_AE_CloudOps~A (owner, respawn-requested to MSTR) + 0.5.0_AE_OpalETL (online first-mover). HARD LEASH (PRD): lift-and-shift (no redesign); keep GoDaddy DNS records-only (cutover=W3); NEVER destroy/touch the old host until the AWS site is CVO-verified live; harden + network-isolate the public WP surface (firm-sep -- never any data-estate IAM). Reply to Patricia (TWLC) is ANDREW's to send (COO drafted it). Next: W1 close -> TWLC dev migrates -> W2 CVO staging-verify -> W3 cutover.",
   "created": "2026-07-01",
-  "pods": ["0.7", "3.0", "1.0", "2.0"],
+  "pods": [
+    "0.7",
+    "3.0",
+    "1.0",
+    "2.0"
+  ],
   "pipeline": "n/a (website hosting migration; WordPress on EC2)",
   "thread_counter": 0,
   "threads": [],
