@@ -898,6 +898,41 @@ def live_ssm_documents():
         return nodes
     return nodes
 
+def live_codebuild_projects():
+    """CODEBUILD_PROJECT nodes (aws_codebuild_project) -- the CI/build-runner surface the graph
+    never scanned. Fills the opal-drift-producer NODEGAP finding (2026-07-08, design doc
+    org/tier2_senior/0.7.0_AE_CloudOps/deliverables/NFRA_GLOBGRPH.NODEGAP.codebuild-recognizer-design.md).
+    CTO arch-gate GO 20260708T202059Z + CVO count re-sign b9a04eb8f (NODE_TYPE_LAYER 'aws')."""
+    c = _boto("codebuild")
+    nodes = []
+    try:
+        names = []
+        tok = None
+        while True:
+            kw = {"nextToken": tok} if tok else {}
+            resp = c.list_projects(**kw)
+            names += resp.get("projects", [])
+            tok = resp.get("nextToken")
+            if not tok:
+                break
+        # batch_get_projects caps at 100 names/call; chunk defensively so this doesn't silently
+        # truncate if the estate's CodeBuild footprint grows past today's single project.
+        for i in range(0, len(names), 100):
+            resp = c.batch_get_projects(names=names[i:i + 100])
+            for p in resp.get("projects", []):
+                nm = p["name"]
+                src = p.get("source", {}) or {}
+                nodes.append({
+                    "id": nm, "type": "CODEBUILD_PROJECT",
+                    "arn": p.get("arn"), "name": nm,
+                    "service_role": p.get("serviceRole"),
+                    "source_type": src.get("type"),
+                    "timeout_minutes": p.get("timeoutInMinutes"),
+                })
+    except Exception:
+        return nodes
+    return nodes
+
 def live_schedules():
     """SCHEDULE nodes (aws_scheduler_schedule) -- EventBridge Scheduler, a DISTINCT service
     from classic Events rules (live_eventbridge); carries the target arn for TRIGGERS."""
@@ -1128,6 +1163,7 @@ CLASSES = {
     "security_group":(live_security_groups, ["aws_security_group"]),
     "vpc_endpoint":  (live_vpc_endpoints,   ["aws_vpc_endpoint"]),
     "ssm_document":  (live_ssm_documents,   ["aws_ssm_document"]),
+    "codebuild_project": (live_codebuild_projects, ["aws_codebuild_project"]),
     "scheduler":     (live_schedules,       ["aws_scheduler_schedule"]),
     "lambda_layer":  (live_lambda_layers,   ["aws_lambda_layer_version"]),
     # OPLMCP.07 AC2 -- ALB-stack (additive; outside the certified-13 + WAVE-4 score baseline)
