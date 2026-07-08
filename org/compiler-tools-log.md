@@ -14027,3 +14027,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
 2026-07-07 | 0.5.0_AE_OpalETL | NFRA_CSE.P2+FEDOBS.P2 | comp-kuzu, deploy_ledger, Trino(REST), aws-s3/iceberg-metadata read-back, comp-grep, safe-commit | landed globgrph.cse C0 log (6 CSEs, 4-table marker, ledger 4/4) grounded via read-back + Trino auto-discovery; 3 FEDOBS-P2 measure signals live over the log (ERR:NONE)
 | 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cse_schema.py | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPILERKIT.json | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/fedobs/fedobs_trino_... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/shared-infra-resour... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE.P2 | comp-kuzu / kuzu_cli.py | MATCH (n:CloudNode)/(a)-[e:CloudEdge]->(b) export + show_tables + counts (AC4 fullgraph round-trip live cert + 2 follow-on characterizations) | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
