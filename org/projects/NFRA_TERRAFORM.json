@@ -3,13 +3,28 @@
   "macro_code": "NFRA",
   "name": "Terraform-manage the full AWS estate + a complete, maintainable infra/aws/terraform",
   "description": "Andrew-direct 2026-07-08. (1) Assess ALL AWS resources + make sure everything is properly Terraformed; (2) make infra/aws/terraform properly maintained + representing all resource groups. Terraform is the mandated deploy mechanism, but there is no verified guarantee that EVERY live AWS resource is under TF, that TF-state matches live (0 drift), that there are no orphans, and that infra/aws/terraform cleanly represents all resource groups. Un-managed resources are invisible-to-review, drift-prone, deploy/recovery risks. END-STATE: every live resource is TF-managed (in state, 0-diff) OR documented-EXEMPT (bootstrap/state/third-party-by-design); infra/aws/terraform represents all resource groups maintainably; a STANDING coverage gate prevents regression. HIGHEST-RISK project class (live AWS + TF state) -- assess-first read-only, imports+TF-adopts-live primary (0 live change), NEVER destroy/replace a live resource without explicit human sign-off, safe-apply for every apply, firm-separation preserved, ground on LIVE AWS not comp-iam-DESIRED-alone. PRD docs/architecture/NFRA_TERRAFORM_PRD.md.",
-  "prds": [{"path": "docs/architecture/NFRA_TERRAFORM_PRD.md", "label": "NFRA_TERRAFORM PRD (CTO-authored, Andrew-direct)", "date": "2026-07-08"}],
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_TERRAFORM_PRD.md",
+      "label": "NFRA_TERRAFORM PRD (CTO-authored, Andrew-direct)",
+      "date": "2026-07-08"
+    }
+  ],
   "status": "active",
-  "phase": "PHASE 0 -- PRD CTO-authored 2026-07-08 (Andrew-direct), awaiting COO (base) decomposition. 4 PHASES: P1 COVERAGE ASSESSMENT (read-only unblocker; enumerate every live AWS resource + reconcile vs TF state -> per-service/per-resource-group coverage matrix: managed-clean/managed-drifted/unmanaged/orphaned/exempt; ground on LIVE AWS not comp-iam-DESIRED-alone; fan-out-worthy); P2 REMEDIATION (unmanaged->terraform-import@0-diff, drifted->prefer-TF-adopts-live, orphaned->investigate-not-blind-destroy; safe-apply-gated, per-resource-group, incremental; NO destroy/replace without human sign-off); P3 ORGANIZATION (infra/aws/terraform represents all resource groups, maintainable module structure, source-maps complete); P4 STANDING MAINTENANCE (coverage gate extends lambda-source-map CI drift-detection to ALL resource types + on-demand coverage query comp-tf-coverage; must FIRE on a test unmanaged resource, GOV-A I3). Builds on TERRAFORM_PIPELINE_STRATEGY + LAMBDA_TERRAFORM_MAP + EC2_MANIFEST + AWS_INFRASTRUCTURE_MANIFEST + prior audits.",
-  "blocking": "None to the PRD. COO (base) decomposition + GO (Andrew-direct: base COO owns the infra/deploy lane). Sequence P1 (assess, read-only unblocker) -> P2 (remediate, safe-apply-gated) -> P3 (organize) -> P4 (maintain). CTO arch-gates each phase (coverage method / remediation-safety / org structure / maintenance gate); CVO certs LIVE-grounded assessment + 0-diff-APPLIED==DESIRED remediation (Rule 22a exercised) + gate-FIRES (I3). Executors = AE infra lanes (0.7.0/0.8.0, infra/ owned-paths). 4 open decisions (SS9): exempt criteria / drift-reconciliation default / P4 gate mechanism / P3 reorg aggressiveness.",
+  "phase": "Phase 1: DECOMPOSED + TO-1 (P1 coverage assessment) GO'd 2026-07-08 (base COO, Andrew-direct NFRA-first mandate via /drive; PRD 168c5d7b1). TO-1 = READ-ONLY estate-wide coverage matrix (MANAGED-CLEAN/DRIFTED/UNMANAGED/ORPHANED/EXEMPT per resource group), GROUNDED ON LIVE AWS not comp-iam-DESIRED-alone (comp-iam can't see unmanaged). Executor 0.7.0_AE_CloudOps~B (idle CloudOps, fan-out-worthy). SS9 resolved: Q1 exempt-rule=circular-state-backend OR external-by-design(justified,CTO-ratifies), Q2 drift-default=TF-adopts-live-primary/apply-to-fix=CTO+COO-never-widen, Q4 P3=adopt-in-place+module-map-first, Q3 P4-gate=CI+periodic/comp-aws-extension. Sequence: P1 coverage(running) -> P2 remediation(HIGHEST-RISK, import@0-diff, human-sign-off-gated) -> P3 org(module-map) -> P4 standing coverage gate. CTO arch-gates each; CVO certs LIVE-grounded + 0-diff-APPLIED==DESIRED + gate-fires.",
+  "blocking": "P1 coverage assessment in flight (0.7.0~B). P2 remediation is the highest-risk phase (no destroy/replace on a live resource without EXPLICIT human sign-off). Trilogy: TERRAFORM=estate (this), LOCALROOT=structure (base COO), SYSTEM=content (COO~B).",
   "created": "2026-07-08",
-  "pods": ["1.0", "2.0", "3.0", "0.7", "0.8"],
-  "depends_on": ["NFRA_INTEGRATIONS", "NFRA_SYSTEM"],
+  "pods": [
+    "1.0",
+    "2.0",
+    "3.0",
+    "0.7",
+    "0.8"
+  ],
+  "depends_on": [
+    "NFRA_INTEGRATIONS",
+    "NFRA_SYSTEM"
+  ],
   "depends_on_note": "Builds on the TF strategy + source-maps + prior audits; makes them comprehensive + standing. USES comp-aws/comp-iam (TF-declared DESIRED side) + comp-iam reconcile (drift) + live AWS (APPLIED side). COMPLEMENTS NFRA_SYSTEM (the TF estate is part of the graph-infra scope class NFRA_SYSTEM documents; NFRA_TERRAFORM makes the infra real-and-managed). Precedes NFRA_LOCALROOT (the local-root structural organization follows the cloud-resource mapping).",
   "thread_counter": 0,
   "threads": []
