@@ -14290,3 +14290,44 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/README.md --file ... | PASS |
 | 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE.loop-close-tail | comp-kuzu/comp-glob/comp-blast/commit-gate | session summary: comp-kuzu ground-truthed C1 node_id form (0 full-form / 30-30 stripped) for the 0.7.0 materialize fix; comp-blast NOT-FOUND (self-contained deliverable); self-tests 13/13 + 5/5 | PASS |
 | 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE.loop-close-tail | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id IN ['endpoint:apiRequest','endpoint:getAAIILatest',... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-chainrun | comp-chainrun spec | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-drift | comp-drift coverage | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast | FAIL |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-trace | comp-trace | FAIL |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-diff | comp-diff --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-xref | comp-xref --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-routes | comp-routes stats | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-transform | comp-transform stats | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache map | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-pii | comp-pii | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-iam | comp-iam | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-lambdamap | comp-lambdamap --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-tooltip | comp-tooltip --help | FAIL |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-incrparity | comp-incrparity --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-constants | comp-constants --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-types | comp-types --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-adapter-audit | comp-adapter-audit --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-coverage | comp-coverage --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-perf | comp-perf --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-registry | comp-registry --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-cluster | comp-cluster --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-graph | comp-graph --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu | FAIL |
+| 2026-07-08 | 1.0.0_SA_CTO | --help | comp-manifest-check | comp-manifest-check --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | --help | comp-surface-check | comp-surface-check --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | --help | comp-aws | comp-aws --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | --help | comp-xray | comp-xray --help | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | --help | comp-parity | comp-parity --help | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json --file ... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile --file in... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/bootstrap-stack.s... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | NFRA_SYSTEM.P1 | comp_coverage_view/comp-which/comp-honesty | class-3 audit grounding: --verify green (37/56), comp-which routed, comp-honesty --self-test 9/9, comp-fedobs served-vintage read | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
