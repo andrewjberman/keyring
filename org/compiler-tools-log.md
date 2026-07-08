@@ -14122,3 +14122,9 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/cse_emit_agent.py | PASS |
 2026-07-08 | 0.5.0_AE_OpalETL | NFRA_CSE.P3-AC5+FEDOBS.P3 | cse_store validate_batch, Trino(REST), aws-s3/iceberg-metadata read-back, comp-kuzu, safe-commit | landed 4 CSE producers (git/graph_head/deploy/agent) into globgrph.cse -> AC5 grounded (4 partitions, 84 rows); closed FEDOBS-P3 reflective surface (CVO-certed); all via derive task-def S3-bootstrap, no rebuild/TF
 | 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_CSE.json --file org/t... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+2026-07-08 | 0.5.0_AE_OpalETL | NFRA_CSE.P3-AC5-cert+dangling-close | Trino(REST run-task, ARN-aware anti-join), aws-logs(PowerShell) | CSE-P3 AC5 CVO-certed (dc7e5de1d); dangling chain 27->377->6535->ARN-aware-13 closed (join-key mismatch grounded, 7 real graph_nodes gaps routed)
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
