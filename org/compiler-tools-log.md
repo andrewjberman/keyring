@@ -14078,3 +14078,47 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | session-close | (consolidation) | session-close handoff -- no new tool runs beyond the 3 boundary logs already recorded | N/A |
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-fedobs --file infra/aws/glo... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/fedobs/fedobs_observ... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-cluster | comp-cluster --coverage | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FL... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FL... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FL... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (rc:CloudNode) WHERE rc.node_type='ReactComponent' OPTIONAL MATC... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (ep:CloudNode) WHERE ep.node_type='Endpoint' OPTIONAL MATCH (h:C... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e1:CloudEdge]->(b:CloudNode)-[e2:CloudEdge]->(c:C... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (jr:CloudNode)-[e:CloudEdge]->(f:CloudNode) WHERE e.edge_type='R... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FL... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FL... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.props CONTAIN... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN count(e) AS cloudedge_count --json | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FL... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FL... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FL... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/fedobs/fedobs_observ... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-fedobs --file org/modules/g... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_FEDOBS.json --file or... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/fedobs/fedobs_observ... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yam... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/cse_emit_graphhead.py | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_recognizer_sdk.p... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_MOTIF.json | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/cse_emit_graphhead.py | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | NFRA_MOTIF.P1.absorb-detectors-c2-catalog | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/cse_emit_deploy.py | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/cse_emit_agent.py | PASS |
+2026-07-08 | 0.5.0_AE_OpalETL | NFRA_CSE.P3-AC5+FEDOBS.P3 | cse_store validate_batch, Trino(REST), aws-s3/iceberg-metadata read-back, comp-kuzu, safe-commit | landed 4 CSE producers (git/graph_head/deploy/agent) into globgrph.cse -> AC5 grounded (4 partitions, 84 rows); closed FEDOBS-P3 reflective surface (CVO-certed); all via derive task-def S3-bootstrap, no rebuild/TF
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
