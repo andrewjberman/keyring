@@ -14069,3 +14069,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | NFRA_SEMCTL.GOV-A | comp-honesty(built)/comp-coverage-view/comp-coverage-check | build+self-test the honesty checker; verify rail registration + ledger completeness | PASS |
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE.P3 | comp-kuzu / comp-glob / comp-grep / python | show_connection(CloudEdge) dangle-reconcile + audit-lake/deploy-ledger grounding + P3 emission-contract self-test 14/14 (AC5 4/4) | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
