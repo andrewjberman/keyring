@@ -14205,3 +14205,21 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --file org/modules/graph/comp_promote_materializer.py --mode a... | PASS |
 - 20260708T1539Z 0.4.0_DT_ClientPlatform DEPLOY (Cottonwood promote v2.1.133): no comp-tool run -- frontend PROD gitlink promote of a single pre-verified commit; gates were the /prod-deploy procedure's own (VALGATE D-1, tsc pre-push, parity gate, gh run --json, tag peel, deploy_ledger.py contract). Rule-20 graph-check scoped to cloud/infra/data changes, N/A here.
 | 2026-07-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_promote_material... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_promote_material... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_PROMOTE.json --file o... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_PROMOTE.P1.generalize-promotion-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/fedobs/promote_monit... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --file org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/p... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --file org/modules/graph/comp_promote_materializer.py --mode a... | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/critical-surfaces.yaml | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --file org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/p... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --file org/modules/graph/comp_promote_materializer.py --mode a... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | NFRA_PROMOTE.P2 | comp-surface-check | R3 verify: manifest store + comp_promote_materializer map to compilerkit.promote_seam (WARN/SEV2, committed yaml, Rule-22a) | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
