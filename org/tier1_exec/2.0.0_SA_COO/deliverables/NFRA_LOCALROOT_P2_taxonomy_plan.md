@@ -64,6 +64,7 @@ CTO's arch-note: website/ + system/ + aws/terraform/ must reconcile into ONE sch
 
 `infra/README.md` = THE entry-point:
 - **Section A — knowledge-class homes:** one row per class (§2) → its `/infra` home + a one-line "what lives here."
+- **Section A.1 — the arch-doc ROUTING RULE (stated, not a judgment call; CTO refinement 2026-07-08):** two arch-doc homes coexist by design — `infra/architectural_docs/` = *infra-specific decision records* (an infra/estate decision); `docs/architecture/` = *PRDs / specs / the broad architecture corpus*. The index states this as a RULE so a NEW arch doc has a determined home (infra decision-record → `infra/architectural_docs/`; PRD/spec/broad → `docs/architecture/`) — preventing the two-homes-becomes-scatter vector LOCALROOT exists to kill.
 - **Section B — referenced-in-place:** git (decision history), the live graph (runtime substrate, via comp-tools), org/ (agent org), docs/architecture (the arch corpus), doctrine — each with the pointer + "SSOT lives here, not copied."
 - **Section C — the runtime current-state:** link to `infra/system/06_current_state` (the comp-system compiler output — SYSTEM P3; reuse it, don't build a second index).
 Static structural index (hand-maintained, low-churn) + the runtime current-state compiled by SYSTEM's comp-system. No second index mechanism.
