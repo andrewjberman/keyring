@@ -840,6 +840,7 @@ meta_tools:
   - { tool: comp-perf,              role: meta-measurement,   not_homed_reason: "tool-performance measurement; meta, not a graph-query use-case (manifest-excluded)" }
   - { tool: pipescript,             role: estate-router,      not_homed_reason: "the HUMAN ENTRY over the whole estate -- a named-thread traversal SUPERSET that ROUTES to homed sub-resolvers (comp-pipescript/globgrph/stitch/portal); a router+discovery surface, not a single-surface tool" }
   - { tool: comp-learns-status,     role: complearn-loop,     not_homed_reason: "COMPLEARN loop status; the sibling use-verb program (comp-learns-run RETIRED 2026-07-08, NFRA_TOOLCHECK P2 CTO-ruled)" }
+  - { tool: comp-system,            role: system-compiler,    not_homed_reason: "NFRA_SYSTEM current-state COMPILER: reads across ALL scope classes/surfaces (a cross-surface aggregator, not a single-surface tool) -> emits infra/system/06_current_state; the dynamic SYSTEM half + LOCALROOT runtime index + P4-maturity source. Grounded-against-live, no fabrication. Registered 2026-07-08 (NFRA_SYSTEM P3)" }
   # comp-drift -- registered govern-side (COO~B task-1, supporting ~D's COMPDRIFT orchestrator P2). PROVISIONAL
   # home pending ~D's final P2 shape; full govern characterization per COO~B (declared_grain/concern/distinct_from).
   - tool: comp-drift
