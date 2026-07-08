@@ -14446,3 +14446,9 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
 | 2026-07-08T20:01Z | 2.0.0_SA_COO | multi (Cottonwood promote / NFRA_WEBSITE / BD-fees / NFRA_ENDPOINTS) | independent aws verify (describe-SG no-22 + get-user-policy firm-sep + curl EIP 200), aws dynamodb (opal-users-v2 FIRM# L3 fix), aws ssm list-command-invocations (gold runtime/trigger), comp-which (routing), comp-freshness (via DS~B) | applied-truth grounding on the public-box SG + external IAM + the promote; item2d self-corrected config->code grounding | PASS |
 | 2026-07-08 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(n) AS c | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-kuzu --file infra/aws/globg... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-tooltip | comp-tooltip --help | FAIL |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-tooltip | comp-tooltip summary | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | (verify/toolcheck/nfra-edges) | comp-kuzu/self-tests/comp-drift/freshness/validate/pipescript/constants/tooltip/blast | session: comp-kuzu grounded+Phase-2-verified the collision fix; 6 DS graph tools real-invoke-verified for NFRA_TOOLCHECK (all WORK); self-tests P1 10/10 P2 7/7 collision-gate | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
