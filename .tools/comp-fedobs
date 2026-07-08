@@ -1,0 +1,129 @@
+#!/usr/bin/env python3
+"""comp-fedobs -- the NFRA_FEDOBS reflective-observation surface (reader).
+
+Exposes the FEDOBS-P2 measure signals (co-evolution / compiler-coverage / directive-effectiveness)
+over the C0 CSE log as answerable REFLECTIVE questions -- the standing surface agents + humans query,
+and the SAME served artifact NFRA_MOTIF (co-occurrence) + NFRA_PROMOTE (directive-effectiveness +
+compiler-coverage) consume as standing inputs. READS the served observations (SS3: read-model, no
+recompute); the in-VPC producer (fedobs_observe.py, scheduled AS the fedobs read-only role) refreshes
+it. Every observation is provenance-linked -- decompresses to the source CSEs' file:line evidence (AC3).
+
+Usage:
+  comp-fedobs                      # all 3 signals + vintage + provenance note
+  comp-fedobs coevolution|coverage|direff|provenance   # one signal
+  comp-fedobs --json               # raw served JSON
+  comp-fedobs --uri s3://...       # a non-default served artifact (e.g. a scratch/test surface)
+
+Read-only. Served surface: s3://opal-313476888478-globgrph/warehouse/fedobs_signals/observations/
+fedobs_observations.json. Provenance header = the vintage (computed_at + marker_head) -- stale is a signal.
+NFRA_FEDOBS.P3 (0.5.0_AE_OpalETL). Producer: infra/aws/globgrph/fedobs/fedobs_observe.py.
+"""
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import json
+import sys
+
+DEFAULT_URI = "s3://opal-313476888478-globgrph/warehouse/fedobs_signals/observations/fedobs_observations.json"
+_ALIASES = {"coevolution": "coevolution", "coevo": "coevolution", "co-evolution": "coevolution",
+            "coverage": "compiler_coverage", "compiler-coverage": "compiler_coverage",
+            "compiler_coverage": "compiler_coverage",
+            "direff": "directive_effectiveness", "directive-effectiveness": "directive_effectiveness",
+            "directive_effectiveness": "directive_effectiveness",
+            "provenance": "provenance_instrument", "prov": "provenance_instrument"}
+
+
+def _load(uri: str) -> dict:
+    if uri.startswith("s3://"):
+        import boto3
+        _, _, rest = uri.partition("s3://")
+        bkt, _, key = rest.partition("/")
+        body = boto3.client("s3", "us-east-1").get_object(Bucket=bkt, Key=key)["Body"].read()
+        return json.loads(body)
+    with open(uri, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _vintage(doc: dict) -> str:
+    # SERVED-ARTIFACT vintage, NOT live (CTO ruling): the observation is as-of the last producer run.
+    ts = doc.get("computed_at")
+    when = (dt.datetime.fromtimestamp(ts, dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+            if ts else "?")
+    mh = str(doc.get("marker_head", "?"))[:12]
+    n = doc.get("cse_log_total")
+    return (f"SERVED vintage (NOT live) as-of {when}  marker_head={mh}  "
+            f"source={doc.get('source_table','?')}  cse_log_total={n if n is not None else '?'}")
+
+
+def _print_signal(name: str, sig: dict, cse_log_total=None) -> None:
+    print(f"\n== {name} ==  ({sig.get('consumer','?')})")
+    if sig.get("error"):
+        print(f"  ERROR: {json.dumps(sig['error'])}")
+        return
+    cols = sig.get("columns") or []
+    rows = sig.get("rows") or []
+    n = sig.get("row_count", len(rows))
+    if n == 0:
+        # HONEST-THINNESS (CTO I1): a thin/empty signal is LOUD, never a silent empty that reads as
+        # a real "nothing X". The log is still filling -- report the denominator, not a false negative.
+        tot = cse_log_total if cse_log_total is not None else "?"
+        print(f"  THIN/EMPTY: 0 {name} rows over {tot} CSE(s) -- the C0 log is still filling; this is "
+              f"NOT a real 'nothing here' negative. Signal matures as CSE-P3 adds producers.")
+        if sig.get("provenance"):
+            print(f"  provenance: {sig['provenance']}")
+        return
+    print("  " + " | ".join(cols))
+    for r in rows[:50]:
+        print("  " + " | ".join("" if v is None else str(v) for v in r))
+    print(f"  rows={n}" + ("" if cse_log_total is None else f"  (over {cse_log_total} CSEs)"))
+    if sig.get("provenance"):
+        print(f"  provenance: {sig['provenance']}")
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description="comp-fedobs -- FEDOBS reflective-observation surface")
+    ap.add_argument("signal", nargs="?", default="all",
+                    help="all (default) | coevolution | coverage | direff | provenance")
+    ap.add_argument("--uri", default=DEFAULT_URI, help="served observations URI")
+    ap.add_argument("--json", action="store_true", help="print the raw served JSON")
+    args = ap.parse_args()
+
+    try:
+        doc = _load(args.uri)
+    except Exception as e:
+        print(f"ERROR: comp-fedobs could not read the served observations ({args.uri}): {e}")
+        print("  The in-VPC producer (fedobs_observe.py) may not have run yet, or you lack GetObject.")
+        return 1
+
+    if args.json:
+        print(json.dumps(doc, indent=2))
+        return 0
+
+    print(f"comp-fedobs -- FEDOBS reflective observations  [{_vintage(doc)}]")
+    signals = doc.get("signals", {})
+    total = doc.get("cse_log_total")
+    key = _ALIASES.get(args.signal.lower(), args.signal.lower())
+    if args.signal == "all":
+        for name in ("coevolution", "compiler_coverage", "directive_effectiveness"):
+            if name in signals:
+                _print_signal(name, signals[name], total)
+        pi = doc.get("provenance_instrument") or {}
+        print(f"\n== provenance_instrument ==  (AC3 decompression: {pi.get('note','')})")
+        print(f"  {len(pi.get('rows') or [])} CSE evidence rows -- `comp-fedobs provenance` for the full trace.")
+    elif key == "provenance_instrument":
+        pi = doc.get("provenance_instrument") or {}
+        print(f"\n== provenance_instrument ==  ({pi.get('note','')})")
+        print("  " + " | ".join(pi.get("columns") or []))
+        for r in (pi.get("rows") or [])[:50]:
+            print("  " + " | ".join("" if v is None else str(v) for v in r))
+    elif key in signals:
+        _print_signal(key, signals[key])
+    else:
+        print(f"ERROR: unknown signal '{args.signal}'. Options: all | coevolution | coverage | direff | provenance")
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
