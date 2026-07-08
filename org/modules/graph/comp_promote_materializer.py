@@ -22,10 +22,11 @@ Arch-ratified design 4d0886493 (CTO ruled all 4 Qs). The 4 refinements, folded:
   R3 -- the promoted-recognizer store is a git-versioned NAMED CRITICAL SURFACE (critical-surfaces.yaml
         compilerkit.promote_seam); a write goes through comp-surface-check at commit-time. This loader is
         READ-ONLY over that store (no shared-state contention with DS~B's write-only producer).
-  R4 -- MATERIALIZED/DEMOTED emission: a lifecycle CSE trail (promote_materialize_cse.jsonl), the same
-        inspectable-trail pattern as P1's emit_lifecycle_cse. The FULLY-governed 5th producer emission
-        contract (ProducerKind.PROMOTE, validated through cse_schema) is a PROPOSED cross-plane governed
-        migration -- authored + RAVC'd to the CTO algebra plane, NOT landed unilaterally here.
+  R4 -- MATERIALIZED/DEMOTED emission: a FIRST-CLASS schema-validated CSE via the governed ProducerKind.PROMOTE
+        (cse_schema @0.4, landed 995419d28 -- CTO-arch-gated + CVO-re-signed 72d8fa58b + COO SoD). Emitted
+        through cse_schema.validate_or_raise (fail-closed) to the inspectable promote_materialize_cse.jsonl
+        trail -- RETIRING the pre-@0.4 lifecycle trail-record interim. Design/proof: the deliverables-side
+        proposal NFRA_PROMOTE_P2_GOVB_R4_promote_emission_contract.py (12/12, the governed-propose artifact).
 
 CVO NON-NEGOTIABLES, built to from the start (exercised in the self-test red-fixture):
   (1) HOT-REGISTRATION EXERCISED, not config-read: a promoted recognizer register()s LIVE, is returned by
@@ -60,7 +61,9 @@ from comp_recognizer_sdk import (  # noqa: E402
     EnrichedTree, EntityRef, Entity, FrontEndCapability, PROMOTE_SEAM, Provenance, Recognizer,
     RecognizerRegistry, Site, Transformation, emit_cse, locus_at,
 )
-from cse_schema import LOW_CONFIDENCE_MAX, ProducerKind  # noqa: E402
+from cse_schema import (  # noqa: E402
+    CSE as CSEvent, LOW_CONFIDENCE_MAX, ProducerKind, Qualifier, SCHEMA_VERSION, validate_or_raise,
+)
 
 # DS~B's git-versioned manifest (the R3 named critical surface). READ-ONLY here -- DS~B is the sole writer.
 MANIFEST = os.path.join(WS, "org", "tier2_senior", "0.4.0_DS_ClientPlatform",
@@ -71,10 +74,13 @@ SURFACE_EVENT_LOG = os.path.join(_HERE, "promote_surface_events.jsonl")
 # The MATERIALIZED/DEMOTED lifecycle CSE trail (R4 -- inspectable; producer_kind label PROMOTE/MATERIALIZER).
 MATERIALIZE_CSE_LOG = os.path.join(_HERE, "promote_materialize_cse.jsonl")
 
-# The producer-kind LABEL for the promotion-lifecycle CSE. ProducerKind.PROMOTE is not yet a governed enum
-# value (adding it is a cross-plane cse_schema migration -> CTO); until then the lifecycle CSE is a trail
-# record (not a validate()-gated cse_schema.CSE), exactly as P1/DS~B emit their lifecycle CSEs.
-PROMOTE_PRODUCER_LABEL = "PROMOTE/MATERIALIZER"
+# R4 LANDED (@0.4, 995419d28 -- CTO-arch-gated + CVO-re-signed 72d8fa58b + COO SoD): ProducerKind.PROMOTE is
+# now a GOVERNED enum value, so the MATERIALIZED/DEMOTED transition emits a FIRST-CLASS schema-validated CSE
+# (through cse_schema.validate_or_raise) -- this RETIRES the pre-@0.4 lifecycle trail-record interim. The
+# subject is Concept(untyped)+low (a recognizer has no Entity.RECOGNIZER -> honest-degrade, LAW 1). The LOW
+# band is the SUBJECT's TYPE-confidence, NOT the promotion EVENT's certainty (CTO arch-gate note) -- FEDOBS
+# consumers must not discount a promote CSE for its LOW band.
+_PROMOTE_TYPE_CONFIDENCE = 0.2   # low-band (<= LOW_CONFIDENCE_MAX): the Concept subject's type-confidence
 
 # The KNOWN recognizer TEMPLATES (R2: a promoted recognizer is a parameterized instance of one of these,
 # NOT generated code). artifact_class = the plane the idiom's detector runs over (frontend TS/TSX).
@@ -208,17 +214,56 @@ def _has_key(registry: RecognizerRegistry, artifact_class: str, concept: str) ->
     return any(x.artifact_class == artifact_class and x.concept == concept for x in registry.all())
 
 
-def _emit_lifecycle_cse(verb: str, recognizer_id: str, commission_id: str, load_marker: str,
-                        detail: str) -> dict:
-    """R4: the MATERIALIZED/DEMOTED lifecycle CSE (inspectable trail; producer label PROMOTE/MATERIALIZER)."""
-    cse = {"cse_kind": "promotion_materialize", "verb": verb, "subject_ref": recognizer_id,
-           "producer_kind": PROMOTE_PRODUCER_LABEL, "commission_id": commission_id,
-           "vintage": {"live_as_of": load_marker}, "detail": detail,
-           "note": "lifecycle CSE trail (the inspectable record); the governed cse_schema.CSE via a 5th "
-                   "ProducerKind.PROMOTE emission-contract is a PROPOSED cross-plane migration (CTO)."}
-    with open(MATERIALIZE_CSE_LOG, "a", encoding="utf-8") as fh:
-        fh.write(json.dumps(cse) + "\n")
+def _build_promote_cse(lifecycle_verb: str, recognizer_id: str, commission_id: str,
+                       coupling_ratio, marker: str) -> CSEvent:
+    """Build a FIRST-CLASS schema-validated promotion CSE via the governed ProducerKind.PROMOTE (@0.4).
+    materialize -> verb create; demote -> verb delete (the exact-inverse transition pair). fail-closed:
+    validate_or_raise REJECTS a malformed promote CSE -- the 5th-producer emission-contract, enforced."""
+    tverb = Transformation.CREATE.value if lifecycle_verb == "materialize" else Transformation.DELETE.value
+    prov = Provenance(
+        source="org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/promote_recognizer_manifest.json",
+        locus=recognizer_id, recognizer="promote_materializer",
+        evidence=f"commission={commission_id} coupling_ratio={coupling_ratio} (ratified warrant)")
+    cse = CSEvent(
+        event_id=f"{ProducerKind.PROMOTE.value}:{recognizer_id}:{tverb}",
+        schema_version=SCHEMA_VERSION,
+        producer={"kind": ProducerKind.PROMOTE.value, "ref": commission_id},
+        compiler={"id": "promote-materializer", "artifact_class": "promoted_recognizer", "version": SCHEMA_VERSION},
+        # Concept(untyped) subject -> LOW confidence (S3.5): a recognizer has no typed cloud Entity.
+        transformation={"verb": tverb, "subject": EntityRef(Entity.CONCEPT.value, recognizer_id), "edges": []},
+        provenance=prov,
+        execution_meta={"timestamp": "", "actor": "comp_promote_materializer", "run_id": commission_id},
+        head={"marker_head": marker},
+        qualifiers={Qualifier.CONFIDENCE.value: _PROMOTE_TYPE_CONFIDENCE, Qualifier.SCOPE.value: PROMOTE_SEAM})
+    validate_or_raise(cse)   # first-class + schema-validated -- a malformed promote CSE RAISES (fail-closed)
     return cse
+
+
+def _emit_lifecycle_cse(verb: str, recognizer_id: str, commission_id: str, load_marker: str,
+                        detail: str, coupling_ratio=None) -> dict:
+    """R4 LANDED (@0.4): emit a FIRST-CLASS schema-validated promotion CSE (ProducerKind.PROMOTE), replacing
+    the pre-@0.4 lifecycle trail-record interim. The emission goes through cse_schema.validate_or_raise
+    (fail-closed) BEFORE the inspectable trail write -- a malformed promote CSE never reaches the trail."""
+    cse = _build_promote_cse(verb, recognizer_id, commission_id, coupling_ratio, load_marker)
+    record = {
+        "cse_kind": "promotion_materialize",
+        "event_id": cse.event_id,
+        "schema_version": cse.schema_version,               # 0.4
+        "producer_kind": cse.producer["kind"],              # "promote" -- governed ProducerKind.PROMOTE
+        "verb": cse.transformation["verb"],                 # create | delete
+        "lifecycle_verb": verb,                             # materialize | demote
+        "subject_ref": recognizer_id,
+        "commission_id": commission_id,
+        "confidence": cse.qualifiers[Qualifier.CONFIDENCE.value],
+        "provenance": {"source": cse.provenance.source, "locus": cse.provenance.locus,
+                       "evidence": cse.provenance.evidence},
+        "vintage": {"live_as_of": load_marker},
+        "detail": detail,
+        "schema_validated": True,   # emitted through cse_schema.validate_or_raise (first-class 5th producer @0.4)
+    }
+    with open(MATERIALIZE_CSE_LOG, "a", encoding="utf-8") as fh:
+        fh.write(json.dumps(record) + "\n")
+    return record
 
 
 # ---------------------------------------------------------------------------
@@ -271,9 +316,13 @@ def demote_live(concept: str, registry: RecognizerRegistry, *, artifact_class: s
     still = registry.recognizers_for(artifact_class, FrontEndCapability.RESOLVED_SEMANTIC)
     if any(x.concept == concept for x in still):
         raise RuntimeError(f"DEMOTE-FAILED (LOUD): {concept} deregistered but STILL in the dispatch set.")
-    marker = _load_marker(_read_manifest())
-    cse = _emit_lifecycle_cse("demote", recognizer_id or f"recognizer:{concept}", commission_id or "", marker,
-                              "recognizer hot-deregistered from the LIVE registry (exact inverse of load)")
+    man = _read_manifest()
+    marker = _load_marker(man)
+    rid = recognizer_id or f"recognizer:{concept}"
+    cr = ((man.get("recognizers") or {}).get(rid, {}).get("warrant") or {}).get("coupling_ratio")
+    cse = _emit_lifecycle_cse("demote", rid, commission_id or "", marker,
+                              "recognizer hot-deregistered from the LIVE registry (exact inverse of load)",
+                              coupling_ratio=cr)
     return True, cse, "DEMOTED -> hot-deregistered from the live registry (reversible; fail-loud on absence)"
 
 
@@ -308,7 +357,8 @@ def materialize_live(concept: str, registry: RecognizerRegistry | None = None,
         raise RuntimeError(f"PROMOTION-FAILED (LOUD): {rid} did not reach the live dispatch set.")
     marker = _load_marker(manifest)
     cse = _emit_lifecycle_cse("materialize", rid, commission_id, marker,
-                              "recognizer hot-registered LIVE + verified in the dispatch set (exercised)")
+                              "recognizer hot-registered LIVE + verified in the dispatch set (exercised)",
+                              coupling_ratio=(entry.get("warrant") or {}).get("coupling_ratio"))
     return {"recognizer_id": rid, "concept": r.concept, "artifact_class": r.artifact_class,
             "live_as_of": marker, "registry": registry, "surfaced": surfaced}, cse, \
         "MATERIALIZED -> hot-registered into the LIVE registry (exercised dispatch; reversible)"
@@ -395,15 +445,30 @@ def self_test() -> int:
     res2, _, reason2 = materialize_live("silent-display-fork", registry=fresh, commission_id="WRONG-COMMISSION")
     chk("3b commission mismatch REFUSED (load authorized by the entry's ratifier, not any commission)",
         res2 is None and "mismatch" in reason2.lower())
+    # R4 positive (@0.4): materialize_live under the REAL ratifier commission hot-registers + emits a
+    # FIRST-CLASS schema-validated CREATE promote CSE (through validate_or_raise; the create-verb path).
+    real_comm = (_read_manifest().get("recognizers") or {}).get(
+        "recognizer:silent-display-fork", {}).get("commission_id")
+    fresh2 = RecognizerRegistry(on_register=make_surface_hook([]))
+    mres, mcse, _ = materialize_live("silent-display-fork", registry=fresh2, commission_id=real_comm)
+    chk("R4b materialize_live (real commission) hot-registers + emits a validated CREATE promote CSE",
+        mres is not None and isinstance(mcse, dict) and mcse.get("schema_validated") is True
+        and mcse.get("verb") == "create" and mcse.get("producer_kind") == ProducerKind.PROMOTE.value)
 
     # ---- NON-NEGOTIABLE 2: REVERSIBILITY EXERCISED (actual rollback + fail-loud gate-block). ----
     before = _in_dispatch(registry, sdf) if sdf else False
-    demote_live("silent-display-fork", registry, artifact_class="typescript",
-                commission_id="CVO-EXERCISE", recognizer_id="recognizer:silent-display-fork")
+    _, demote_cse, _ = demote_live("silent-display-fork", registry, artifact_class="typescript",
+                                   commission_id="CVO-EXERCISE", recognizer_id="recognizer:silent-display-fork")
     after = any(x.concept == "silent-display-fork"
                 for x in registry.recognizers_for("typescript", FrontEndCapability.RESOLVED_SEMANTIC))
     chk("2  reversibility EXERCISED: demote deregisters -> recognizers_for NO LONGER returns it (rollback)",
         before and not after)
+    # R4 LANDED (@0.4): the demote emitted a FIRST-CLASS schema-validated ProducerKind.PROMOTE CSE (through
+    # validate_or_raise -- a malformed one would have RAISED here), not the pre-@0.4 trail-record interim.
+    chk("R4 schema-validated emission (@0.4): demote emits ProducerKind.PROMOTE CSE (validated, verb=delete)",
+        isinstance(demote_cse, dict) and demote_cse.get("schema_validated") is True
+        and demote_cse.get("producer_kind") == ProducerKind.PROMOTE.value
+        and demote_cse.get("schema_version") == "0.4" and demote_cse.get("verb") == "delete")
     # the exercised FAIL-LOUD gate-block: deregister of a not-live key raises (never a silent no-op).
     failed_loud = False
     try:
