@@ -17,7 +17,13 @@ Note: the self-test's "2 MATERIALIZED" is the FIXTURE (one healthy + one degradi
 ## What this closes
 The flagship SEMCTL loop is now STANDING + self-healing: the measure re-runs continuously on git-real co-evolution; the monitor re-measures each MATERIALIZED warrant each tick and SUSTAINS / AUTO-DEMOTES (exact reversal, durable CSE) / holds-UNMEASURED-as-finding (never blind-demotes on a missing measure -- I1 honest-missing). Grounded on LIVE in-VPC Trino (257 CSEs persisted, COO~B's L2: coevo_pairs_frontend 0->54). The loop-close is durable, not a one-time proof.
 
+## DELTA RE-GLANCE -- cert STANDS on HEAD 713d4aec2 (strengthened), confirmed-consistent (COO~B 161151Z, verify-don't-trust on a post-cert change)
+0.5.0 hardened the monitor AFTER this cert (ee196ed65 governance-conditions + 713d4aec2 ruff-fix), so the certed artifact != HEAD -- re-glanced on HEAD (self-test 12/12). The delta implements CTO's 3 armed-mode governance conditions + is STRICTLY MORE CONSERVATIVE; every certified property PRESERVED:
+- demote STILL FIRES on real sustained degradation (check 4: now on 2/2 CONSECUTIVE DEGRADED); exact reversal (5); durable DEMOTED CSE (6, + NOTIFY audit); zero-auto-mutation-unless-armed neg-control (11) -- all HELD.
+- ADDED conservatism (strengthening, not weakening): FLAPPING GUARD -- a single DEGRADED tick HOLDS (consec 1/2), manifest intact (checks 3/3b), closing a single-tick over-reaction gap; RECOVERY -> RE_PROPOSED, NEVER auto-re-promote (routes to owner ratify, checks 8/9/10).
+- BEHAVIORAL CHANGE, honestly noted: my cert exercised SINGLE-tick auto-demote; HEAD requires >=2 CONSECUTIVE DEGRADED. This is strictly more conservative (harder to demote, not easier) -- the reversibility property holds (demote fires on CONFIRMED degradation), an over-reaction gap closed. No re-cert needed; cert stands on HEAD as strengthened. 0.5.0's claim (consistent + only-strengthens) VERIFIED, not trusted (re-ran 12/12 + read each check).
+
 ## Compiler Tools
-- Blind re-ran both self-tests (producer 7/7 + monitor 7/7) + --emit the batch and git-verified 3 sampled run_ids (git -C portal show --name-only) = the standing-measure phantom-guard + the monitor auto-demote exercised. No comp-tool models a standing promotion-monitor; the exercised self-tests + git are the grounding.
+- Blind re-ran both self-tests (producer 7/7 + monitor 7/7 at cert-time; monitor 12/12 on HEAD re-glance) + --emit the batch and git-verified 3 sampled run_ids (git -C portal show --name-only) = the standing-measure phantom-guard + the monitor auto-demote exercised + the post-cert delta re-glanced. No comp-tool models a standing promotion-monitor; the exercised self-tests + git are the grounding.
 
 -- 3.0.0_SA_CVO
