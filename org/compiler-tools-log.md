@@ -14264,3 +14264,29 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-08 0.5.0_AE_OpalETL NFRA_WEBSITE.TO-1: terraform init/validate/plan (15-add/0-change/0-destroy, plan-only) + live-DNS grounding (Cloudflare NOT proxying) + live collision-check (4 fresh names free, rail-checked) + owned-paths hook (blocked EC2_MANIFEST -> handed 0.7.0~A). Scaffold ec1148124, RAVC'd COO.
 | 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_SYSTEM.json --file or... | PASS |
 | 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam service opal-website-wp-role | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/RUNBOOK.md | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE.loop-close-tail | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_LOCALROOT_PRD.md... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id STARTS WITH 'c1:D1:out:portal/src/pages/AdvisorInte... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE.loop-close-tail | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id IN ['c1:D1:out:portal/src/pages/AdvisorIntelligence... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE.loop-close-tail | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id CONTAINS 'ClientsTab.tsx:291' OR n.node_id CONTAINS... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS nodes | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE.loop-close-tail | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id IN [] RETURN count(n) AS resolved, count(DISTINCT n... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id STARTS WITH 'c1:' RETURN 'c1_prefix' AS probe, coun... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE.loop-close-tail | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id IN ['endpoint:apiRequest','endpoint:getAAIILatest',... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id CONTAINS 'ClientsTab.tsx' AND n.node_id CONTAINS '2... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id CONTAINS 'DataAsOf' RETURN n.node_id AS id, n.node_... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id CONTAINS 'apiRequest' OR n.node_id CONTAINS 'getAAI... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-08 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id IN ['endpoint:apiRequest','endpoint:getAAIILatest',... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/cse_emit_promote.py | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE.loop-close-tail | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-08 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/README.md --file ... | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE.loop-close-tail | comp-kuzu/comp-glob/comp-blast/commit-gate | session summary: comp-kuzu ground-truthed C1 node_id form (0 full-form / 30-30 stripped) for the 0.7.0 materialize fix; comp-blast NOT-FOUND (self-contained deliverable); self-tests 13/13 + 5/5 | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SEMCTL.FINALIZE.loop-close-tail | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
