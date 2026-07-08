@@ -146,6 +146,33 @@ def _is_duplicate(workspace: Path, dedup_key: str, window_secs: int = 30) -> boo
     return False
 
 
+# NFRA_TOOLCHECK.P1/P2 (CTO refinement 2026-07-08, 0.8.0_AE_CloudComp~D): a nonzero exit is NOT a tool
+# FAILURE for a tool whose exit code is a CONTRACTED VERDICT -- a tri-state integrity/parity result, or a
+# gate firing on a real violation. Blanket-mapping nonzero -> "FAIL" (the old line) is what produced the
+# false comp-drift 50% (its exit-2 = UNVERIFIABLE tri-state, working-as-designed, miscounted) and the
+# gate-firing over-count. For these tools a nonzero exit records "VERDICT": result_class() maps an
+# unrecognized label to 0.5-NEUTRAL (not 0.0-fail) AND the raw "| FAIL |" log-mining stops counting it, so
+# both the health USED/EFFECTIVE axis and the fail-% stop miscounting. Regular tools keep PASS/FAIL -- a
+# nonzero IS a failure for a tool with no verdict-exit contract. NOTE (CTO): a genuine crash of a VERDICT
+# tool is indistinguishable from an honest verdict by exit-code alone; "VERDICT" honestly marks the row
+# "not-a-clean-fail" rather than asserting PASS -- it neither hides a crash as success nor libels a working
+# verdict as a failure. Set sourced from the comp-tools.yaml exit-contracts + the NFRA_TOOLCHECK P1 matrix.
+VERDICT_EXIT_TOOLS = frozenset({
+    "comp-drift", "comp-lambdamap", "comp-xray", "comp-parity",          # tri-state (integrity / parity / scope)
+    "comp-validate", "comp-manifest-check", "comp-surface-check", "comp-honesty",  # gate-firing (real violation found)
+})
+
+
+def _classify_result(tool: str, exit_code: int) -> str:
+    """PASS on exit 0; a contracted non-zero VERDICT (tri-state / gate-fired) for a VERDICT_EXIT_TOOL;
+    else FAIL. This is the single-point fix for the exit-code miscount (was: nonzero -> FAIL for all)."""
+    if exit_code == 0:
+        return "PASS"
+    if tool in VERDICT_EXIT_TOOLS:
+        return "VERDICT"
+    return "FAIL"
+
+
 def _append_log(workspace: Path, tool: str, args: str, exit_code: int,
                 serial: str, to_id: str) -> None:
     """Append one structured row to compiler-tools-log.md."""
@@ -154,7 +181,16 @@ def _append_log(workspace: Path, tool: str, args: str, exit_code: int,
         return
 
     date = datetime.now().strftime("%Y-%m-%d")
-    result = "PASS" if exit_code == 0 else "FAIL"
+    result = _classify_result(tool, exit_code)
+
+    # Synthetic-fixture marking (NFRA_TOOLCHECK P2, log-signal-honesty): a DELIBERATE test-fixture run --
+    # one engineered to FAIL to exercise a tool's failure path (e.g. `comp-validate definitely_not_a_thing`,
+    # ADHC_COMPIL.012) -- sets COMP_SYNTHETIC_FIXTURE=1 so its row is tagged "(SYNTHETIC TEST FIXTURE)". The
+    # fail-% mining + health analysis then EXCLUDE it, so a synthetic fail is no longer indistinguishable
+    # from a real one (was 1/1302 marked -> the raw fail-% over-counted). Fixtures opt in via the env var;
+    # a normal run is never tagged. The tag lives in the RESULT cell (grep-excludable by the miner).
+    if os.environ.get("COMP_SYNTHETIC_FIXTURE", "").strip().lower() in ("1", "true", "yes", "on"):
+        result = f"{result} (SYNTHETIC TEST FIXTURE)"
 
     # Truncate long arg strings for readability
     command = f"{tool} {args}".strip()
