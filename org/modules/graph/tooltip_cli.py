@@ -1,4 +1,4 @@
-"""comp-tooltip — Portal tooltip pattern detector and migration audit.
+"""comp-tooltip - Portal tooltip pattern detector and migration audit.
 
 Scans portal/src/ for tooltip rendering patterns, classifies them against
 the canonical spec (dark navy bg, white text, subtle border), and reports
@@ -9,14 +9,13 @@ white text (full opacity values, /70 labels), subtle white/10 or white/20
 border, rounded-lg, shadow, optional color swatches.
 
 Usage:
-    comp-tooltip scan          — full scan, all variants
-    comp-tooltip canonical     — show only canonical (already correct) sites
-    comp-tooltip drift         — show only non-conforming sites (migration targets)
-    comp-tooltip migrated      — show only sites using <DataTooltip> (post-migration)
-    comp-tooltip summary       — counts by variant
+    comp-tooltip scan          - full scan, all variants
+    comp-tooltip canonical     - show only canonical (already correct) sites
+    comp-tooltip drift         - show only non-conforming sites (migration targets)
+    comp-tooltip migrated      - show only sites using <DataTooltip> (post-migration)
+    comp-tooltip summary       - counts by variant
 """
 import sys
-import os
 import re
 from pathlib import Path
 from collections import defaultdict
@@ -78,10 +77,10 @@ def classify_line(line, file_content_around):
             return 'HELPER_INLINE'
         return None
 
-    # Check for shadow — the key differentiator between tooltip and UI chrome
+    # Check for shadow - the key differentiator between tooltip and UI chrome
     has_shadow = bool(re.search(SHADOW, line))
 
-    # Old "canonical" silver bg — these are ALSO migration targets now.
+    # Old "canonical" silver bg - these are ALSO migration targets now.
     # The correct canonical is dark navy via DataTooltip component.
     if re.search(BG_CANONICAL, line):
         if re.search(BORDER_PRIMARY, line):
