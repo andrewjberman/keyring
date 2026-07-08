@@ -505,23 +505,52 @@ def _auto_resolve_script_id(raw_id, pipeline_hint=None):
     if inf_cid:
         return inf_dag, inf_cid
 
-    # Not found anywhere — aggregate close matches across all pipelines
+    # Not found anywhere -- aggregate close matches across all pipelines. NFRA_TOOLCHECK P2
+    # (discoverability, 0.8.0_AE_CloudComp~D 2026-07-08): match the raw token against BOTH the IDs
+    # AND the script FILENAMES/descriptors, so a DESCRIPTIVE guess ("client_portal_summary") or a
+    # PARTIAL ("portal_summary") resolves to its ID -- the 21% name-resolution friction (agents can't
+    # guess the bare-ID convention). Was: fuzzy on IDs only. Error-path only -> zero success-path change.
     all_ids = []
-    if bd_dag:
-        all_ids.extend(bd_dag.scripts.keys())
-    if inf_dag:
-        all_ids.extend(inf_dag.scripts.keys())
+    id_by_desc = {}   # descriptor token (filename stem + each dotted part) -> canonical id
+
+    def _index_dag(_dag):
+        if not _dag:
+            return
+        for _sid, _sio in _dag.scripts.items():
+            all_ids.append(_sid)
+            _fn = (getattr(_sio, "filename", "") or "").replace(".py", "")
+            for _tok in filter(None, [_fn] + _fn.split(".")):   # full stem + each dotted part (id, descriptor)
+                id_by_desc.setdefault(_tok.lower(), _sid)
+
+    _index_dag(bd_dag)
+    _index_dag(inf_dag)
     try:
         if not inf_only:
-            all_ids.extend(_build_dag("bd-silver").scripts.keys())
+            _index_dag(_build_dag("bd-silver"))
         if not bd_only:
-            all_ids.extend(_build_dag("inf-silver").scripts.keys())
+            _index_dag(_build_dag("inf-silver"))
     except Exception:
         pass
 
-    close = get_close_matches(raw, all_ids, n=3, cutoff=0.45)
-    if close:
-        print(f"Script not found: {raw}. Did you mean: {', '.join(close)}?")
+    rlow = raw.lower()
+    suggestions = []
+    # (1) SUBSTRING: the raw token appears in (or contains) a filename/descriptor -> that id.
+    for _desc, _sid in id_by_desc.items():
+        if len(rlow) >= 3 and (rlow in _desc or _desc in rlow) and _sid not in suggestions:
+            suggestions.append(_sid)
+    # (2) FUZZY on ids (edit-distance) -- the original behavior, preserved.
+    for _m in get_close_matches(raw, all_ids, n=3, cutoff=0.45):
+        if _m not in suggestions:
+            suggestions.append(_m)
+    # (3) FUZZY on descriptors -> their ids (catches a near-miss descriptive guess).
+    for _m in get_close_matches(rlow, list(id_by_desc.keys()), n=3, cutoff=0.5):
+        _sid = id_by_desc.get(_m)
+        if _sid and _sid not in suggestions:
+            suggestions.append(_sid)
+
+    if suggestions:
+        print(f"Script not found: {raw}. Did you mean: {', '.join(suggestions[:5])}?  "
+              f"(matched by id or filename/descriptor)")
     else:
         print(f"Unknown script: {raw}")
         bd_valid = sorted(bd_dag.scripts.keys()) if bd_dag else []
