@@ -3,13 +3,28 @@
   "macro_code": "NFRA",
   "name": "Standard, grounded vendor-endpoint catalog across every /data source",
   "description": "Andrew-direct 2026-07-08. Generalize the data/black_diamond/API/ catalog pattern (stood up this session, COO-directed, for the Cottonwood mgmt-fee investigation) into a STANDING organizational process -- the canonical mandatory structure for every /data/{source}/API/ (Orion, Eclipse, SmartX, Schwab, future). MOTIVATION: uncataloged vendor knowledge produced a real WRONG CONCLUSION this session ('no BD billing query type exists', overturned only because Andrew pushed); Orion shows the same ingredients (real probe scripts uncataloged, a parallel billing-dim investigation undiscoverable). The BD catalog proved the value (structured domains/endpoints/payloads/741-field-dictionary made the wrong conclusion fast to correct + the $1M mgmt-fee finding legible/reusable). 2 VARIANTS: REST-vendor (BD/SmartX/Orion -- domains/endpoints/payloads/dictionary) + file-feed (Schwab -- dictionary/schema, no endpoint catalog). Plus: the discovery-methodology playbook (bundle-grep + HAR-capture + roster-is-a-floor), firm-sep for shared tools (no firm defaults -- the commit-gate caught bd_endpoint_sweep.py this session), the grounding+errata correction discipline. Documentation + organizational-process project. PRD docs/architecture/NFRA_ENDPOINTS_PRD.md.",
-  "prds": [{"path": "docs/architecture/NFRA_ENDPOINTS_PRD.md", "label": "NFRA_ENDPOINTS PRD (CTO-authored, Andrew-direct)", "date": "2026-07-08"}],
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_ENDPOINTS_PRD.md",
+      "label": "NFRA_ENDPOINTS PRD (CTO-authored, Andrew-direct)",
+      "date": "2026-07-08"
+    }
+  ],
   "status": "active",
-  "phase": "PHASE 0 -- PRD CTO-authored 2026-07-08 (Andrew-direct, off DS~A's proposal brief docs/briefs/nfra-endpoints-prd-proposal-20260708.md + the data/black_diamond/API/ reference instance). Awaiting COO decomposition. THE CONVENTION: 2 variants CTO-ratified per vendor -- REST-vendor (README+AUTHENTICATION+domains/{domain}/DOMAIN.md+endpoints/README.md+endpoints/payloads/field_dictionary+tools/+findings/) + file-feed (Schwab's dictionary/schema pattern, no endpoint catalog). Plus the discovery playbook (bundle-grep JS/webpack for routes + live HAR capture+parse + roster-is-a-floor-not-a-ceiling), firm-sep-no-defaults for shared tools (NEVER#1), the grounded-claims + errata-correction discipline (a correction notes the superseded claim + why it existed, not silent-delete). SEQUENCING: Orion FIRST (highest value -- probe scripts uncataloged) -> SmartX retrofit (lowest effort) -> Eclipse stand-up (zero today, D3 open question) -> Schwab assess (file-feed variant, explicit CTO call).",
-  "blocking": "None to the PRD. COO decomposition + GO (recommend the data-pipeline lane, base COO). Per-vendor TOs: Orion (1st, DS~A available) / SmartX retrofit / Eclipse stand-up / Schwab assess. CTO arch-gates the convention + the variant-per-vendor call + each catalog's completeness (grounded not assumed); CVO certs the catalog claims are real captures (roster-is-a-floor honesty). 3 open decisions (SS12): Schwab variant / field-dictionary depth bar / catalog-to-runtime-graph.",
+  "phase": "Phase 1: DECOMPOSED + TO-1 (Orion) GO'd 2026-07-08 (base COO, Andrew-direct via CTO decomp d7b8c9ba2). Standardize the proven data/black_diamond/API/ vendor-catalog pattern across every /data source. TO-1 (DS~A, PENDING+GO) = Orion vendor-endpoint catalog (REST-vendor variant): retrofit the existing UNCATALOGED probe work (data/inf/manual_api probe_inflec_billing.py + api-recon -- a parallel fee-data investigation, the exact class that just bit BD) into the canonical structure, grounded in real captures, firm-sep-no-defaults tool, errata discipline. SS12 open-decisions RESOLVED at decomp: Q2 field-dictionary depth = need-driven (required where field-depth is used, route-catalog otherwise); Q3 catalog<->runtime-graph = note-not-build-in-v1; Q1 Schwab file-feed variant = deferred to the Schwab-assess TO. SEQUENCE: Orion (TO-1, GO'd) -> SmartX retrofit -> Eclipse stand-up -> Schwab file-feed assess. CTO arch-gates the convention + variant-per-vendor + each catalog's grounded-completeness; CVO certs claims are REAL captures (roster-is-a-floor honesty).",
+  "blocking": "TO-1 (Orion) build in flight -- 0.4.0_DS_ClientPlatform~A (available + warm off the BD reference instance). Follow-on per-vendor TOs (SmartX/Eclipse/Schwab) authored after Orion + convention refinements fold back. Binding conventions (PRD): 2 variants CTO-ratified per vendor (REST-vendor vs file-feed); firm-sep-NO-DEFAULTS on shared tools (NEVER#1); grounded-claims-only + errata (note superseded, no silent delete). RAVC to CTO on the decomp (this).",
   "created": "2026-07-08",
-  "pods": ["1.0", "2.0", "3.0", "0.4", "0.6"],
-  "depends_on": ["NFRA_INTEGRATIONS", "NFRA_LOCALROOT"],
+  "pods": [
+    "1.0",
+    "2.0",
+    "3.0",
+    "0.4",
+    "0.6"
+  ],
+  "depends_on": [
+    "NFRA_INTEGRATIONS",
+    "NFRA_LOCALROOT"
+  ],
   "depends_on_note": "COMPLEMENTS NFRA_INTEGRATIONS (closed -- the MCP external-source FRAMEWORK; NFRA_ENDPOINTS is the vendor-API KNOWLEDGE catalog: the framework calls, the catalog documents). MIRRORS the /infra knowledge-centralization (NFRA_LOCALROOT/NFRA_SYSTEM) but for the /data vendor-integration surface -- same stop-the-scatter instinct applied to vendor endpoints. Reference instance = data/black_diamond/API/ (this session).",
   "thread_counter": 0,
   "threads": []
