@@ -3,13 +3,29 @@
   "macro_code": "NFRA",
   "name": "Centralize the knowledge base structurally in /infra (the local-root organization plan)",
   "description": "Andrew-direct 2026-07-08. Audit the ajb_workspace filesystem, specifically /infra, and make sure everything is optimized for recording the true nature of the cloud + resources. Come up with a PLAN to better centralize the knowledge base -- at least on a STRUCTURAL level -- in /infra. Follows from NFRA_TERRAFORM. PROBLEM: knowledge of the true nature of the cloud+resources is SCATTERED with no centralized structural home -- across logs (org/logs, daily, git_logs, sessions), runtime compilation (the graph/.comp-graph/marker-oracle/tool_activity), git (decisions in commits), docs (~313 architecture + briefs + deployment), infra/aws (~30 loose docs), org/ (projects/TOs/critical_paths/modules), and the fabric memory. Tribal knowledge with no structural owner -> slow, lossy, does not scale. END-STATE: /infra is the well-organized STRUCTURAL knowledge base -- a clear taxonomy (one SSOT per knowledge class), homeless tribal knowledge CONSOLIDATED into /infra, rightly-placed knowledge (git/graph/org) REFERENCED-in-place not duplicated, an anti-scatter convention. STRUCTURAL project (the shelves + homes + SSOTs + index), NOT a content-rewrite. PRD docs/architecture/NFRA_LOCALROOT_PRD.md.",
-  "prds": [{"path": "docs/architecture/NFRA_LOCALROOT_PRD.md", "label": "NFRA_LOCALROOT PRD (CTO-authored, Andrew-direct)", "date": "2026-07-08"}],
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_LOCALROOT_PRD.md",
+      "label": "NFRA_LOCALROOT PRD (CTO-authored, Andrew-direct)",
+      "date": "2026-07-08"
+    }
+  ],
   "status": "active",
-  "phase": "PHASE 0 -- PRD CTO-authored 2026-07-08 (Andrew-direct), awaiting COO decomposition (owner TBD -- Andrew to direct, SS9 Q1). 4 PHASES: P1 FILESYSTEM AUDIT (read-only unblocker; map the workspace fs centered on /infra + inventory WHERE each knowledge class lives + assess scatter/duplication/gaps/orphans + how /infra records the cloud+resources today); P2 THE CENTRALIZATION PLAN (the core deliverable -- target /infra structure + knowledge taxonomy (class->home->SSOT->static/runtime->references) + consolidation/migration plan + the index design; structural not content-rewrite); P3 STRUCTURAL EXECUTION (establish /infra structure + SSOTs + index, migrate homeless knowledge, wire references; git-tracked reversible moves, never break a live reference; AE-lane); P4 STANDING ANTI-SCATTER CONVENTION (new knowledge lands in the right home; light advisory check; ties live parts to NFRA_SYSTEM runtime-current-state). GUIDING DISTINCTION: CENTRALIZE the homeless tribal knowledge; REFERENCE-in-place the rightly-placed (git=decision-SSOT, graph=live-substrate-SSOT, org=agent-org) -- /infra indexes them, does not absorb/duplicate.",
-  "blocking": "None to the PRD. COO decomposition + GO (owner TBD -- Andrew to direct: base COO as infra-structural parent of NFRA_TERRAFORM, or COO~B bundled with the NFRA_SYSTEM knowledge program). Sequence P1 (audit) -> P2 (plan, CTO-arch-gated before execution) -> P3 (execute) -> P4 (convention). P1/P2 parallel-able with the trilogy; P3 coordinates with NFRA_SYSTEM P2 (/infra/system) + NFRA_TERRAFORM P3 (/infra/aws/terraform) so the three land one coherent /infra. CTO arch-gates each phase; CVO certs fs-grounded / no-forked-SSOT / no-broken-reference / convention-FIRES. 4 open decisions (SS9): decomp owner / /infra top-level taxonomy / consolidate-vs-reference line / index mechanism.",
+  "phase": "Phase 1/2: DECOMPOSED + P2 taxonomy DIRECTION settled 2026-07-08 (base COO, Andrew-direct via CTO 168c5d7b1). Owner base COO (SS9 Q1). P1 fs-audit SEEDED (live /infra already substantially organized -- reconcile+index, not greenfield); P2 taxonomy DIRECTION = HYBRID (by-knowledge-class top-level homes infra/aws=estate + infra/system=content + security/linting/orchestration/testing function-classes; project-docs-homes infra/website/ as a governed sub-pattern; infra/README.md static index + infra/system/06_current_state runtime). Resolves CTO arch-note: website/system/aws-terraform are instances of ONE scheme, not independent precedents. SS9 resolved: Q1 owner=base-COO, Q3 reference-in-place-default/consolidate-homeless-only, Q4 static-index+runtime-current-state, Q2 direction-above-ratified-in-P2. COO~B UNBLOCKED: infra/system/ = top-level STABLE home (compiler in org/modules/graph, output infra/system/06_current_state per CTO Q1); index-register in infra/README.md. P3 execution = AE infra-lane (owned-paths) coordinated w/ COO~B + TERRAFORM-P3 + SYSTEM-P2. CTO arch-gates P2 before execution; CVO certs no-forked-SSOT.",
+  "blocking": "P2 full taxonomy plan (complete per-class SSOT table + migration map + index design) = COO's next deliverable, CTO-arch-gated before P3. P3 execution coordinates the shared infra/ lane with COO~B (SYSTEM-P2) + TERRAFORM-P3 so the three land ONE coherent /infra. Trilogy: LOCALROOT=structure (this), SYSTEM=content (COO~B, /infra/system), TERRAFORM=estate (base COO, /infra/aws/terraform).",
   "created": "2026-07-08",
-  "pods": ["1.0", "2.0", "3.0", "0.7", "0.8", "0.4"],
-  "depends_on": ["NFRA_TERRAFORM", "NFRA_SYSTEM"],
+  "pods": [
+    "1.0",
+    "2.0",
+    "3.0",
+    "0.7",
+    "0.8",
+    "0.4"
+  ],
+  "depends_on": [
+    "NFRA_TERRAFORM",
+    "NFRA_SYSTEM"
+  ],
   "depends_on_note": "THE TRILOGY: NFRA_LOCALROOT = the STRUCTURE (how /infra is organized as the centralized knowledge base + the SSOT taxonomy + anti-scatter convention + index -- the librarian); NFRA_SYSTEM = the CONTENT (how the system works, in /infra/system -- the books); NFRA_TERRAFORM = the CLOUD RESOURCES managed + /infra/aws/terraform represents them (the estate). LOCALROOT follows into from TERRAFORM (cloud mapped -> /infra structurally represents it). No re-owning; SYSTEM + TERRAFORM populate components of LOCALROOT's structure.",
   "thread_counter": 0,
   "threads": []
