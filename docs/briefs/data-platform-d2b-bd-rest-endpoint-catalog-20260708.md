@@ -1,6 +1,6 @@
 # DATA_PLATFORM D2b -- Black Diamond REST Endpoint + Payload Catalog
 
-**Status:** v0.2 DRAFT -- the sweep RAN (off-box, no EC2 needed -- see sec.2 correction). **DECISIVE FINDING: Billing is a separate BD app/API (`billing.bdreporting.com`), NOT a DataMining query type.** Its Accounts-Receivable fee-charge endpoints are enumerated (sec.6) but return 403/405/500 under the current session -- role/shape unresolved, not "doesn't exist". CTO arch-gate + CVO reconcile pending.
+**Status:** v0.3 -- **RESOLVED with real numbers.** DataMining DOES carry a genuine fee-CHARGE query type: **queryTypeId 6, "BI Billing"** (Andrew discovered it live 2026-07-08; it never showed up in the historical template roster because it had simply never been used on this account before, correcting v0.2's premature "no billing query type exists" verdict -- see sec.3.2). Built + ran a probe query selecting its `Fees` measure: **$1,006,622.12 total fees, 618 of 806 accounts, posted for period-end 07/31/2026** -- the concrete answer to Christa's "mgmt fees hit BD today." The separate `billing.bdreporting.com` Accounts-Receivable app (sec.6) still exists and is real, but is NOT needed for this -- DataMining qt6 already answers it. CTO arch-gate + CVO reconcile pending.
 **TO:** `org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/DATA_PLATFORM.D2b.bd-rest-endpoint-catalog.md`
 **Author:** 0.4.0_DS_ClientPlatform (Andrew-direct 2026-07-08). **Consult:** 0.7.0_AE_CloudOps (on-box). **Verify:** 3.0.0_SA_CVO.
 **Sibling of:** `DATA_PLATFORM_D2_BLACK_DIAMOND_ARCH_SPEC.md` (the DataMining model) + `DATA_PLATFORM_D4_smartx_endpoint_sweep.md` (the endpoint-sweep pattern this applies to BD).
@@ -12,7 +12,7 @@
 
 ## 1. Origin
 
-Christa Bass (Financial Advisor, Cottonwood) emailed Andrew 2026-07-08: *"Mgmt fees hit Black Diamond today!"* A DS probe (COO GO, Andrew-direct) ground-truthed the cot bronze: the management-fee **CHARGES are absent** from every partition. cot ingests only qt1-5 (holdings/transactions/realized/unrealized/allocations); **none is a billing query type.** The billing fields we *do* carry (allocations/realized/unrealized) are billing **CONFIG** (fee-schedule rates, discount %, billing-config names) -- the *rate a client would be billed*, not the fee *charged*. Transactions' only fee-shaped rows are custodian ADR/expense/debit-card items (`Transaction Fee`/`Account Fee` = 0). So the mgmt-fee charges post into a BD **Billing** surface we do not query -- which is exactly why the Cottonwood Books tab renders `fee_earning_aua` / `implied_revenue` / `distribution` = 0. Closing that gap **starts** with cataloging the surface (this doc) -> finding the billing query type -> wiring it in (a follow-on build TO).
+Christa Bass (Financial Advisor, Cottonwood) emailed Andrew 2026-07-08: *"Mgmt fees hit Black Diamond today!"* A DS probe (COO GO, Andrew-direct) ground-truthed the cot bronze: the management-fee **CHARGES are absent** from every partition. cot ingests only qt1-5 (holdings/transactions/realized/unrealized/allocations); none of the 5 carries a fee-charge fact -- only CONFIG (fee-schedule rates, discount %, billing-config names, the *rate a client would be billed*, not the fee *charged*). Transactions' only fee-shaped rows are custodian ADR/expense/debit-card items (`Transaction Fee`/`Account Fee` = 0). **RESOLVED (sec.3):** BD DOES have a 6th query type, `BI Billing` (queryTypeId 6), carrying a genuine `Fees` measure -- it simply had never been used/persisted on this account before, so it was invisible to a template-history-based roster (sec.3.2). A probe query against it (sec.3.3) confirms **$1,006,622.12 in fees posted across 618 accounts for the period ending 07/31/2026** -- the concrete, grounded answer to Christa's email. This is exactly why the Cottonwood Books tab renders `fee_earning_aua`/`implied_revenue`/`distribution` = 0: cot's ETL simply never configured qt6 as a 6th ingested table. Closing that gap is a follow-on D2c build TO (wire qt6 into `cot_bronze_ingest.py` as a 6th table).
 
 ## 2. Auth model (grounded -- D2 sec.3, CORRECTED 2026-07-08)
 
@@ -37,11 +37,9 @@ Two-credential split. Effective session TTL ~30-60 min (cf_bm + idsrv idle, conf
 | GET | `/datamining/request/v1/run/{runId}/status` | Bearer | `{statusMessage, isComplete}` -- poll; error-while-incomplete bail |
 | GET | `/Api/DataMining/ExportResults/{guid}` | Cookie | xlsx bytes (`Sheet1`=data, `Timestamps`=as-of meta) |
 
-### 3.1 Query types (the table families) -- CONFIRMED CLOSED: there is no Billing query type
+### 3.1 Query types (the table families) -- 6 confirmed, incl. the real billing type
 
-**The real roster endpoint is `GET /datamining/request/v1/template` (list, no params)** -- NOT a numeric `/querytype/{id}` catalog (that guess 404s everywhere). It returns every template ever persisted on the account. Grounded 2026-07-08 against the FULL roster (hundreds of templates, Andrew's live BD session, HAR-captured + live-replayed): the only `queryType` values that have EVER existed on this Cottonwood account are:
-
-`Transactions, Allocation, Snapshot, RealizedGainLoss, UnrealizedGainLoss, NotAQueryType` (the last = abandoned/misconfigured template attempts, not a real type).
+**The real roster endpoint is `GET /datamining/request/v1/template` (list, no params)** -- NOT a numeric `/querytype/{id}` catalog (that guess 404s everywhere). It returns every template ever PERSISTED on the account -- a HISTORY, not the full catalog of query types BD offers. That distinction matters (see 3.2): a query type with zero prior usage is invisible to this endpoint until someone builds one.
 
 | queryTypeId | queryType name | Table | Ingested? | Leaf grain | Key measures |
 |---|---|---|---|---|---|
@@ -50,9 +48,26 @@ Two-credential split. Effective session TTL ~30-60 min (cf_bm + idsrv idle, conf
 | 3 | RealizedGainLoss | realized | YES | Tax Lot (closed) | Units, Cost Basis, Proceeds, ST/LT G/L, Total Gain Loss, Disallowed Loss |
 | 4 | UnrealizedGainLoss | unrealized | YES | Tax Lot (open) | Units, Cost Basis, Amortization, MV, ST/LT G/L, Accrual |
 | 5 | Allocation | allocations | YES | Account (allocation rollup) | Market Value (Child Facts) |
-| -- | (none) | **BILLING** | **N/A -- no such query type exists** | -- | -- |
+| **6** | **BI Billing** | -- | **NO (the gap)** | **Account x Month** | **BMV, EMV, Additions, Withdrawals, Net Additions/Flows incl/excl Fees, Contributions, Withdrawals, `Fees`, Net Gain, Income, New Accounts** |
 
-**CLOSED, not pending:** Andrew independently confirmed this live (2026-07-08) by building a "Billing Snapshot" template himself in the BD UI (`queryTypeId:1`, i.e. Snapshot) and selecting every billing-labeled dimension available (`Portfolio - Billing Configuration Name`, `Fee Schedule Rate/Type/Level`, `Basis Points`, `Flat Fee`, `Billing Discount Percentage`, etc. -- 8 Portfolio-level + 28 Account-level fields). **The Snapshot query type's ENTIRE fact/measure catalog is `{Market Value, Accrual, Units, Unaccrued Market Value}` -- zero billing/fee-charge measures exist for Snapshot, structurally.** Same for the other 4 (their facts are gain/loss/MV only -- see table above). **There is no fact anywhere in DataMining that carries a posted fee charge.** Everything billing-shaped in DataMining is Portfolio/Account-level CONFIGURATION (rate/schedule/discount), never a charge. This closes the "hunt within DataMining" thread definitively -- see sec.6 for where the charges actually live.
+Query types 1-5 (Snapshot/Transactions/Realized/Unrealized/Allocation) carry billing-labeled DIMENSIONS only (fee-schedule rate, discount %, config names) -- descriptive config, never a charge (confirmed by Andrew building a "Billing Snapshot" template on qt1 selecting every billing-labeled field available; qt1's entire fact catalog is `{Market Value, Accrual, Units, Unaccrued Market Value}`, zero fee-charge measures -- same story for qt2-5, see the table above). **qt6 "BI Billing" is different: it has a genuine `Fees` measure (id 55, `mappedColumn: biFees`, `sourceColumn: fees`)** at Account x Month grain, alongside flow-reconciliation measures (Net Additions incl/excl Fees, Net Flows incl/excl Fees) -- this is the real fee-CHARGE surface, and it lives inside DataMining after all.
+
+### 3.2 Why the first-pass "no billing query type exists" verdict was wrong
+
+The v0.2 draft of this doc concluded the DataMining hunt was closed based on the template-roster HISTORY showing only 5 query types ever used. That was a real methodological gap, not a re-guess: **qt6 had never been used on this account before Andrew built it live on 2026-07-08**, so it was invisible to a roster built from PAST templates. The roster endpoint answers "what has been queried," not "what query types exist" -- those are different questions, and conflating them produced a false-negative. Lesson for future sweeps: a template-history roster is a floor on the real catalog, never a ceiling; a query type with zero historical usage requires either a UI walkthrough (as Andrew did) or a true catalog/spec endpoint (BD has none published, sec.5) to discover.
+
+### 3.3 CONFIRMED: the real charge magnitude (grounded on a live query + export, 2026-07-08)
+
+Built a probe template (queryTypeId=6, `Custom` dateRangeType 05/09/2026-07/08/2026, dims: Return Date/Month/Year/Account Number/AccountID/Account Name, fact: `Fees`), created it (`templateId 242684`), ran it (`runId 242685`, completed), and downloaded the export (`Api/DataMining/ExportResults`, 87,676 bytes, 2,188 rows) -- all off-box, from Andrew's local machine, using the existing session (per the sec.2 correction).
+
+| Return Date (period-end) | Account-months | Nonzero-fee rows | Fee total |
+|---|---|---|---|
+| 05/29/2026 | 596 | 0 | $0.00 |
+| 06/30/2026 | 789 | 60 | $2,293.34 |
+| **07/31/2026** | 803 | **558** | **$1,004,328.78** |
+| **TOTAL** | 2,188 | 618 | **$1,006,622.12** |
+
+**This is the concrete answer to Christa's "Mgmt fees hit Black Diamond today":** a quarterly fee-billing run posted for the period ending 07/31/2026, hitting 558 of 806 distinct accounts (a small June-only subset of 60 accounts is on a different/monthly cycle), totaling **$1,006,622.12**. BD dates the charge to the period-END (07/31/2026) even though it posted today (07-08) -- consistent with a forward-dated quarterly accrual/billing convention, not a data anomaly. Sample rows (account/date/amount) are in the commit history of this doc's authoring session; the full 2,188-row export was not persisted (ephemeral local probe, per the read-only-probe scope) -- re-running the same template (`templateId 242684`, left persisted on the BD account, same as Andrew's own test templates) reproduces it exactly.
 
 ## 4. A-la-carte querying (the tool)
 
@@ -66,18 +81,15 @@ python3 bd_endpoint_sweep.py --probe /datamining/request/v1/querytype   # GET an
 
 Output -> `s3://opal-data-cot/code/bronze/endpoint_catalog/` (`endpoint_sweep_result.json`, `querytype_catalog.json`, `billing_catalog.json`, `probe/{path}.json`). The `--probe` primitive is the athletic ad-hoc query: hit any BD path, capture the payload -- no template, no ETL.
 
-## 5. Completeness basis + PENDING (the on-box sweep) -- D4 method
+## 5. Completeness basis -- D4 method, and where it actually landed
 
-Per the D4 discipline (basis (a) spec-proven vs basis (b) observed/probed): the BD REST surface has **no known published spec** (a swagger/openapi spec-hunt is the first sweep step). So the catalog is **basis (b) -- observed + actively probed**; a 404 in the sweep = *as-of-date absent*, NOT *provably-cannot-exist*. The PENDING live sweep (AE, on-box, fresh session) fills:
+Per the D4 discipline (basis (a) spec-proven vs basis (b) observed/probed): the BD REST surface has **no known published spec** (a swagger/openapi spec-hunt confirms this -- only OIDC discovery is published, auth-only). So this catalog is **basis (b) -- observed + actively probed**, same as D4's SmartX catalog. The numeric-id sweep tool (`bd_endpoint_sweep.py`, sec.4) tests this basis mechanically but has a real blind spot the resolution (sec.3.2) exposed: a query type's DIMENSIONS/FACTS only surface once something has actually queried it, so a pure catalog sweep of ids 1..25 undercounts -- it found nothing at qt6 because nothing in the tool's guessed URL patterns matched BD's real `Query/DimensionsFacts` (POST, body `{queryTypeId}`) shape. **The reliable discovery path turned out to be the live BD UI itself** (Andrew building test templates + a HAR capture of the resulting network calls), not blind endpoint guessing -- worth folding into the tool as a documented limitation, not a tool rewrite (sec.4's `--probe` primitive already covers the "hit one endpoint, dump payload" case; it just needs the right path, which the UI/HAR method supplies).
 
-- **spec-hunt** -- swagger/openapi/OIDC-discovery candidates (is any part spec-published?).
-- **query-type enumeration** -- ids 1..25 -> name + dim/fact counts -> **surfaces BILLING + every unused query type**.
-- **endpoint exhaustion sweep** -- candidate DataMining + billing paths -> per-path status/bytes/ctype/sample.
-- **billing focus** -- the billing dimension/fact catalog + a small billing pull -> the mgmt-fee CHARGE fields/accounts/magnitude (answers the Christa/COO delta, Rule 22-grounded on the live response).
+**Still open, lower priority now that the billing question is answered:** the D2 sec.7 qt1/holdings enriched-template dump (never run) -- fold into a future on-box or off-box pass if useful; not gating anything.
 
-**On completion:** fill sec.3.1 (the full query-type roster) + a per-endpoint payload table + the billing-charge finding; then CTO arch-gate + CVO reconcile -> v1.0. Fold in the still-un-run D2 sec.7 enriched-template dump (same on-box window, if session-refresh still needs the EC2 -- see sec.2 correction).
+## 6. A SECOND, SEPARATE billing surface exists too (`billing.bdreporting.com`) -- real, but NOT needed for the Christa answer
 
-## 6. WHERE THE BILLING CHARGES ACTUALLY LIVE -- a separate federated app (`billing.bdreporting.com`), not DataMining
+**Superseded by sec.3.3:** this section documents a genuinely separate BD federated app that is real and worth knowing about, but qt6 "BI Billing" (found afterward, sec.3.2/3.3) already answers the fee-charge question directly through DataMining -- no role grant or second app needed. Keeping this section because the AR/Accounts-Receivable surface below may still be useful for reconciliation/outstanding-invoice use cases DataMining's qt6 doesn't cover (qt6 gives posted fee amounts; AR's `unreconciled`/`outstanding` endpoints likely cover collection status, a different question).
 
 Found via a static-analysis technique (grep the SPA's own JS bundle for embedded route/host strings -- the same discovery method D4 used for SmartX): `bd3.bdreporting.com`'s federated-header bundle (`bd-federated-header/main.*.js`) carries a module-name map with distinct keys `Billing:"billing"`, `BillingManagement:"billing_management"`, `BD3Billing:"bd3_billing"` -- separate federated modules from Data Mining. A CSP/config literal in the DataMining page repeats `billing.bdreporting.com` 11x; Pendo's agent config additionally confirms `billing.dev.bdreporting.local` / `billing.staging.bdreporting.local` (dev/staging siblings) -> production is **`billing.bdreporting.com`**.
 
@@ -101,4 +113,4 @@ Found via a static-analysis technique (grep the SPA's own JS bundle for embedded
 
 **Current state (read-only GETs against 3 of these, 2026-07-08):** `fees/overview` -> 403, `fees/outstanding` -> 403, `dashboard/revenue` -> 500 (real BD error envelope: `{title,status,detail,traceId}` -- confirms the route exists and is being hit, not a 404 ghost). **403 most likely means the current session's role (Andrew.Opal, provisioned for DataMining/reporting) lacks Billing-module permission** -- a plausible, ordinary permission boundary, not a technical dead-end. 405 on a couple of routes confirms they're real but want a different HTTP verb (POST with a body, same pattern as DataMining's `v1/run`).
 
-**This is the closing answer to "what is Christa talking about":** Black Diamond's management-fee CHARGES live in this separate Accounts-Receivable module, entirely outside the DataMining API cot's ETL (or any DataMining a-la-carte query) can reach. Closing the loop needs EITHER (a) a Billing-module role grant for the session identity, then a correct request shape (POST body, matching the DataMining `v1/run` pattern) against `fees/overview`/`txns/active`, OR (b) Andrew capturing a HAR of himself actually clicking into the live Billing UI (which will show the exact authorized request shape a real client sends -- the fastest path to a working a-la-carte call). Once either lands, the follow-on D2c build TO (wiring a Billing puller into cot's ETL, or standing up an a-la-carte Billing probe) has a real, confirmed contract to build against.
+**Status:** parked, not blocking. If a future need requires collection/reconciliation status (vs. the posted-charge amount qt6 already gives), revisit closing AR access (role grant or a HAR of the live Billing UI) then.
