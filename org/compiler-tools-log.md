@@ -14452,3 +14452,19 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-tooltip | comp-tooltip summary | PASS |
 | 2026-07-08 | 0.4.0_DS_ClientPlatform~B | (verify/toolcheck/nfra-edges) | comp-kuzu/self-tests/comp-drift/freshness/validate/pipescript/constants/tooltip/blast | session: comp-kuzu grounded+Phase-2-verified the collision fix; 6 DS graph tools real-invoke-verified for NFRA_TOOLCHECK (all WORK); self-tests P1 10/10 P2 7/7 collision-gate | PASS |
 | 2026-07-08 | 0.4.0_DS_ClientPlatform~B | NFRA_SYSTEM.P1.audit-investigation | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/bootstrap-stack.sh | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/kuzu_incremental_ref... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/bootstrap-stack.sh | PASS |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/API/AUTHENTICATION.md --file d... | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/kuzu_incremental_ref... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO~B | (no-TO) | comp-tooltip | comp-tooltip summary | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO~B | (no-TO) | comp-tooltip | comp-tooltip --help | FAIL |
+| 2026-07-08 | 3.0.0_SA_CVO~B | (no-TO) | comp-constants | comp-constants check --lane bd | FAIL |
+| 2026-07-08 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/API/tools/__pycache__/orion_en... | PASS |
+| 2026-07-08 | 3.0.0_SA_CVO | (no-TO) | comp-iam | comp-iam | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pipescript | comp-pipescript deployed comp-tooltip | PASS |
+| 2026-07-08 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-08 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-drift | comp-drift comp-tooltip | VERDICT |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-1 | comp-iam | comp-iam service opal-website-wp-role (pre-apply firm-sep; PARTIAL -- inline policy not expanded, grounded via live get-role-policy + simulate-principal-policy per Rule 22a) | PARTIAL |
+| 2026-07-08 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
