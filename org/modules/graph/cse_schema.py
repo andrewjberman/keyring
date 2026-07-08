@@ -39,7 +39,11 @@ from comp_ladder import Node as LadderNode, fidelity_check  # noqa: E402,F401
 #   COMPUNIFY coverage-sweep. A recognizer needing an off-enum value emits Concept(untyped)+low +
 #   a coverage-gap CSE -- it NEVER invents a value (LAW 1).
 # ===========================================================================
-SCHEMA_VERSION = "0.2"   # 0.1->0.2 (CTO-ratified 2026-07-07): FLOWS_TO edge KIND (EdgeKind enum) + condition
+SCHEMA_VERSION = "0.3"   # 0.1->0.2: FLOWS_TO EdgeKind + condition. 0.2->0.3 (CTO-ratified 2026-07-07,
+# Option A): add Entity.TYPE + Entity.SYMBOL first-class. TypeDecl/symbol: were parked in CONCEPT (the
+# honest-degrade target) but are lexically-CERTAIN -- the AC4 full-graph round-trip (NFRA_CSE_P2_ac4_
+# fullgraph_parity.py) surfaced the CONCEPT/S3.5 collision (807 nodes + 4269 edges couldn't round-trip
+# at honest conf=1.0). CONCEPT stays the PURE honest-degrade target; TypeDecl/symbol now carry a certain type.
 MIGRATION_NOTE = (
     "Add a primitive -> version-bump + COMPUNIFY coverage-sweep (which compilers must now handle "
     "it); a gap is a tracked coverage-gap, not a silent skip. Remove/rename -> version-bump + a "
@@ -78,6 +82,9 @@ class Entity(enum.Enum):
     GRAPHSCOPE = "GraphScope"
     TOOL = "Tool"
     TIER = "Tier"
+    TYPE = "Type"                      # 0.3: a type/interface/struct declaration (TypeDecl) -- lexically
+    SYMBOL = "Symbol"                  # certain code entities, first-class (were parked in CONCEPT; see
+    #                                    the SCHEMA_VERSION note). As concrete as FUNCTION/MODULE/FIELD/HOOK.
 
 
 class Relationship(enum.Enum):
@@ -240,7 +247,7 @@ CLOUDNODE_TYPE_TO_ENTITY: dict = {
     "Component": Entity.COMPONENT, "ReactComponent": Entity.REACTCOMPONENT, "PanelCluster": Entity.COMPONENT,
     "Module": Entity.MODULE, "Page": Entity.COMPONENT, "Hook": Entity.HOOK, "DataFetch": Entity.FUNCTION,
     "Endpoint": Entity.ENDPOINT, "ServedURL": Entity.ENDPOINT, "ReactQueryKey": Entity.DATASET,
-    "Field": Entity.FIELD, "Prop": Entity.FIELD, "TypeDecl": Entity.CONCEPT,
+    "Field": Entity.FIELD, "Prop": Entity.FIELD, "TypeDecl": Entity.TYPE,   # 0.3: was CONCEPT (S3.5 collision)
     "JSXElement": Entity.JSXELEMENT, "JSXRender": Entity.JSXELEMENT,
     "MS_SITE": Entity.ORGANIZATION, "MS_LIBRARY": Entity.DATASET, "MS_FOLDER": Entity.DATASET,
     "MS_FILE": Entity.ARTIFACT, "MS_USER": Entity.PERSON, "MS_GROUP": Entity.ORGANIZATION,
@@ -251,8 +258,9 @@ CLOUDNODE_TYPE_TO_ENTITY: dict = {
 # (b) node id PREFIX -> Entity (CTO S4 nid-prefix scheme)
 CLOUDNODE_PREFIX_TO_ENTITY: dict = {
     "s3:": Entity.S3BUCKET, "component:": Entity.REACTCOMPONENT, "endpoint:": Entity.ENDPOINT,
-    "gold:": Entity.DATASET, "field:": Entity.FIELD, "rqk:": Entity.DATASET, "symbol:": Entity.CONCEPT,
-    "type:": Entity.COMPONENT, "stmt:": Entity.IAMSTATEMENT, "role:": Entity.IAMROLE,
+    "gold:": Entity.DATASET, "field:": Entity.FIELD, "rqk:": Entity.DATASET, "symbol:": Entity.SYMBOL,  # 0.3: was CONCEPT
+    "type:": Entity.TYPE, "stmt:": Entity.IAMSTATEMENT, "role:": Entity.IAMROLE,   # type:->TYPE (0.3, was
+    # COMPONENT -- a type: IS a Type, coherent with symbol:->SYMBOL; CTO fast-follow; masked by node_type precedence)
     "lambda:": Entity.LAMBDA, "bucket:": Entity.S3BUCKET, "hook:": Entity.HOOK, "module:": Entity.MODULE,
     "tool:": Entity.TOOL, "tier:": Entity.TIER, "scope:": Entity.GRAPHSCOPE,
 }
