@@ -30,7 +30,7 @@
 #   comp-grep / comp-glob                 -- the ON-RAILS SEARCH PRIMITIVES comp-which RUNS when
 #                                            no rich tool fits (the never-dead-end); a search
 #                                            primitive, not a graph-query rich tool you route TO
-excluded_not_graph_use_cases: [comp-learns-run, comp-learns-status, comp-perf, comp-v5-composite-test, comp-manifest-check, comp-surface-check, comp-to, comp-grep, comp-glob, comp-fedobs]  # comp-manifest-check = D6 manifest-ENFORCEMENT gate; comp-surface-check = D8 critical-surface commit-gate (polices critical-surfaces.yaml at commit, auto in safe-commit) -- both ENFORCEMENT gates, not graph-query use-cases (so excluded here; they're in CLAUDE.md's invoke-table). comp-to = session-context setter (writes the race-free per-session TO_ID for the comp auto-logger); a startup/context primitive like comp-which/comp-grep/comp-glob, not a graph-query use-case. comp-grep/comp-glob = the on-rails search PRIMITIVES comp-which RUNS when no rich tool fits (the never-dead-end targets); search primitives, not graph-query rich tools you route TO -- now formally accounted so the registry is COMPLETE (every .tools/comp-* is in tools_index, in entries as comp-which the router, or here with a reason). comp-grep/comp-glob registry-accounting added 3.0.0_SA_CVO 2026-06-26 comp-tools campaign (LD-0208 coverage reconcile 2026-06-25, CTO)
+excluded_not_graph_use_cases: [comp-learns-run, comp-learns-status, comp-perf, comp-v5-composite-test, comp-manifest-check, comp-surface-check, comp-to, comp-grep, comp-glob]  # comp-manifest-check = D6 manifest-ENFORCEMENT gate; comp-surface-check = D8 critical-surface commit-gate (polices critical-surfaces.yaml at commit, auto in safe-commit) -- both ENFORCEMENT gates, not graph-query use-cases (so excluded here; they're in CLAUDE.md's invoke-table). comp-to = session-context setter (writes the race-free per-session TO_ID for the comp auto-logger); a startup/context primitive like comp-which/comp-grep/comp-glob, not a graph-query use-case. comp-grep/comp-glob = the on-rails search PRIMITIVES comp-which RUNS when no rich tool fits (the never-dead-end targets); search primitives, not graph-query rich tools you route TO -- now formally accounted so the registry is COMPLETE (every .tools/comp-* is in tools_index, in entries as comp-which the router, or here with a reason). comp-grep/comp-glob registry-accounting added 3.0.0_SA_CVO 2026-06-26 comp-tools campaign (LD-0208 coverage reconcile 2026-06-25, CTO)
 
 contract:
   default: QUERY        # comp-kuzu (cloud/cross-layer) or cached comp-trace/comp-blast (trace)
@@ -566,6 +566,42 @@ entries:
     anti_pattern: "asserting a claim GREEN without exercising the honesty bar -- silent-missing / aggregate-hides-per-case / dead-guard"
     status: canonical
 
+  - id: meta.fedobs.co_evolution
+    use_case: "Which artifacts/systems consistently CHANGE TOGETHER (CSEs co-occurring in a producer session) -- the coupling/blast-radius signal MOTIF composes into C2."
+    canonical_call: "comp-fedobs coevolution | comp-fedobs"
+    tool: comp-fedobs
+    mode: read
+    layer: meta
+    cost: "~ms (served-artifact read, no recompute)"
+    freshness: "SERVED-ARTIFACT vintage -- as-of the last fedobs_observe run; read the comp-fedobs vintage header (computed_at + marker_head). NOT live -- a stale surface is VISIBLE in the header, never quoted as current."
+    rebuild_trigger: "served surface stale -> re-run fedobs_observe.py in-VPC (scheduled task-def / ad-hoc run-task)"
+    anti_pattern: "quoting a co-evolution answer without its observation-vintage; reading a THIN signal (0 pairs over N CSEs, log still filling) as a real negative -- comp-fedobs reports thinness LOUD, honor it"
+    status: canonical
+
+  - id: meta.fedobs.coverage_gaps
+    use_case: "Where are the recognizer / compiler-coverage GAPS -- the Concept(untyped)+confidence:low rate per artifact_class (feeds COMPILERKIT recognizer gaps + a new-primitive PROMOTE candidate)."
+    canonical_call: "comp-fedobs coverage"
+    tool: comp-fedobs
+    mode: read
+    layer: meta
+    cost: "~ms (served-artifact read)"
+    freshness: "SERVED-ARTIFACT vintage (as-of the last fedobs_observe run); read the vintage header. NOT live."
+    rebuild_trigger: "served surface stale -> re-run fedobs_observe.py in-VPC"
+    anti_pattern: "reading a 0.0 untyped-low rate as 'no gaps' WITHOUT the total_cses denominator -- 0.0 over N>0 = an HONEST measured zero; 0/0 = missing data. comp-fedobs distinguishes them"
+    status: canonical
+
+  - id: meta.fedobs.directive_effectiveness
+    use_case: "Did a promoted directive MEASURABLY reduce the churn/pattern it targeted (the measure-before-promote warrant PROMOTE gates on) -- per-period transformation-pattern rate."
+    canonical_call: "comp-fedobs direff"
+    tool: comp-fedobs
+    mode: read
+    layer: meta
+    cost: "~ms (served-artifact read)"
+    freshness: "SERVED-ARTIFACT vintage (as-of the last fedobs_observe run); read the vintage header. NOT live. The before/after MEASURE binds at Wave-4 when PROMOTE materializes real directives; the per-period baseline is live now."
+    rebuild_trigger: "served surface stale -> re-run fedobs_observe.py in-VPC"
+    anti_pattern: "quoting a directive-effect without its observation-vintage; treating the pre-PROMOTE baseline as an effectiveness verdict (no directive to measure against yet)"
+    status: canonical
+
   - id: meta.registry.drift
     use_case: "REGISTRY narrative vs project-JSON drift (phase/commit-citation/status mismatch)."
     canonical_call: "comp-registry sync ROW=N | --project CODE | --all"
@@ -845,6 +881,7 @@ tools_index:
   comp-drift:    { does: "Estate propagation-drift ORCHESTRATOR -- walks drift-topology.yaml CALLING the seam engines (comp-heat/pipescript/lambdamap/iam/kuzu/iceberg_parity/code_heat_parity/tool_activity_parity/trino_catalog_parity/freshness), NEVER re-implementing a check. seam-6 (ICEBERG->TRINO) fully COVERED (P3c: trino_catalog_parity.py closes the 3 iceberg legs). sweep ALSO folds drift_producer.py's infra/repo drift legs (P4: manifest+surface always, terraform-plan under --deep). 'did X propagate intact local->git->cloud->nessie->kuzu->iceberg->trino->served?' / 'where is the estate unguarded?' / 'is the estate in parity?'. Tri-state exit + never-silent-MATCH (UNVERIFIABLE on an unreadable seam)", subcommands: [coverage, "<target>", sweep, "--deep", "--json"], entries: [drift.coverage.ledger, drift.target.chain_walk, drift.sweep.parity_board] }
   comp-shell:    { does: "Bare Git-Bash-missing-util scan in new .sh (Rule 16)", subcommands: [scan], entries: [meta.shell.bare_util_scan] }
   comp-honesty:  { does: "Honesty/completion GATE over GOV-A I1/I2/I3: claim+evidence -> per-invariant PASS/FAIL/N-A; makes NFRA_SEMCTL_HONESTY_INVARIANTS.md runnable. N-A is LOUD, never a silent pass", subcommands: ["<case.json>", "--file", "--evidence", "--self-test"], entries: [meta.honesty.invariant_gate] }
+  comp-fedobs:   { does: "NFRA_FEDOBS reflective-observation SURFACE (reader): the 3 measure signals (co-evolution / compiler-coverage / directive-effectiveness) over the C0 CSE log as answerable reflective questions; the standing surface MOTIF (co-occurrence) + PROMOTE (directive-effectiveness + compiler-coverage) consume. Served-artifact read (SS3), provenance-linked (AC3 -> source-CSE file:line), served-vintage header, thin-signal LOUD (I1)", subcommands: [coevolution, coverage, direff, provenance, "--json", "--uri"], entries: [meta.fedobs.co_evolution, meta.fedobs.coverage_gaps, meta.fedobs.directive_effectiveness] }
   comp-registry: { does: "REGISTRY narrative vs project-JSON drift", subcommands: ["sync ROW=N", "--project", "--all"], entries: [meta.registry.drift] }
   comp-coverage: { does: "Compiler/task-order coverage report", subcommands: ["<args>"], entries: [meta.coverage.report] }
   comp-graph:    { does: "Freshness status across all graphs (local trace caches + cloud artifacts) + clear; uniform --fresh/--force contract (graph_cache.py)", subcommands: [status, clear, "--json"], entries: [meta.freshness.status] }
