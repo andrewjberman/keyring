@@ -16,21 +16,53 @@ set -euo pipefail
 
 HOOK_INPUT="$(cat)"
 
-# Resolve jq + classifier deterministically. Claude Code's PostToolUse hook shell
-# does NOT load the user profile, so workspace .tools/ is NOT on PATH and a bare
-# `jq` call fails 127 -> `set -e` kills the script BEFORE any jsonl/error write
-# (silent telemetry death -- root cause of the 05-26->05-29 freeze, AE diag
-# 2026-05-29). Resolve relative to this script's location (always .tools/hooks/ at
-# runtime), then fall back to PATH for Linux/Mac dev. Same pattern as
-# .tools/hooks/block-bare-inbox-watch.sh.
+# Resolve jq ROBUSTLY. Claude Code's PostToolUse hook shell does NOT load the user
+# profile, so workspace .tools/ is NOT on PATH. The OLD resolution depended on
+# SCRIPT_DIR = $(cd $(dirname $0)) resolving to .tools/hooks/ -- but that cd fails
+# INTERMITTENTLY in the PostToolUse shell (SCRIPT_DIR falls back to "."), so
+# ${SCRIPT_DIR}/../jq.exe pointed at the wrong place AND `command -v jq` also failed
+# -> the else branch STARVED telemetry (NFRA_TOOLCHECK: TELEMETRY_HOOK_NO_JQ x252,
+# script_dir=. -- an intermittent USED-axis starvation, NOT a genuine missing jq).
+# FIX (NFRA_TOOLCHECK.P1 req#1, 0.8.0_AE_CloudComp~D 2026-07-08): a resolution LADDER
+# that does NOT depend on SCRIPT_DIR -- most-robust first:
+#   (1) $CLAUDE_PROJECT_DIR/.tools/jq.exe  (the SAME var settings.json uses to launch this hook)
+#   (2) .tools/jq.exe                       (cwd-relative; the hook runs from the workspace root)
+#   (3) ${SCRIPT_DIR}/../jq.exe             (works when dirname DID resolve)
+#   (4) command -v jq                       (Linux/Mac dev on PATH)
+# and even when jq is GENUINELY absent everywhere, the pure-bash GUARDED-JQ-FALLBACK
+# below STILL emits a telemetry line (CLAUDE.md r16 canonical guarded-util pattern,
+# org/mcp/inbox-watch.sh) -- the USED-axis is never starved again.
 SCRIPT_DIR="$(cd "$(dirname "$0")" 2>/dev/null && pwd)" || SCRIPT_DIR="."
-if [ -x "${SCRIPT_DIR}/../jq.exe" ]; then
-    JQ="${SCRIPT_DIR}/../jq.exe"
-elif command -v jq >/dev/null 2>&1; then
-    JQ="jq"
-else
-    # jq genuinely unavailable -- log once and exit cleanly (never silent-crash).
-    echo "$(date -u +%FT%TZ) TELEMETRY_HOOK_NO_JQ session_id=${CLAUDE_CODE_SESSION_ID:-} script_dir=${SCRIPT_DIR}" >> org/mcp/hook_errors.log 2>/dev/null || true
+JQ=""
+for _cand in "${CLAUDE_PROJECT_DIR:-}/.tools/jq.exe" ".tools/jq.exe" "${SCRIPT_DIR}/../jq.exe"; do
+    # -x on a non-existent path is simply false, so an empty $CLAUDE_PROJECT_DIR (-> /.tools/jq.exe) is skipped.
+    if [ -x "${_cand}" ]; then JQ="${_cand}"; break; fi
+done
+if [ -z "${JQ}" ] && command -v jq >/dev/null 2>&1; then JQ="jq"; fi
+
+if [ -z "${JQ}" ]; then
+    # GUARDED-JQ-FALLBACK: jq genuinely unavailable at every candidate. DO NOT starve the
+    # USED-axis (the old code exit-0'd here, writing NOTHING). Emit a best-effort telemetry
+    # line with PURE BASH. Privacy invariant HOLDS: we extract ONLY tool_name + session_id
+    # (never tool args/outputs). Fail-open (set +e -- telemetry is non-critical, never crash).
+    set +e
+    _sid="${CLAUDE_CODE_SESSION_ID:-}"
+    if [ -z "${_sid}" ]; then
+        _sid="$(printf '%s' "${HOOK_INPUT}" | sed -n 's/.*"session_id"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -1)"
+    fi
+    _tool="$(printf '%s' "${HOOK_INPUT}" | sed -n 's/.*"tool_name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -1)"
+    [ -z "${_tool}" ] && _tool="_unknown_"
+    _agent=""
+    [ -n "${_sid}" ] && _agent="$(cat "org/mcp/sessions/${_sid}.serial" 2>/dev/null)"
+    [ -z "${_agent}" ] && _agent="${OPAL_AGENT_SERIAL:-$(awk -F= '/^SERIAL=/{print $2}' .comp-graph/.agent_context 2>/dev/null)}"
+    [ -z "${_agent}" ] && _agent="_unknown_lane_check_needed"
+    _ts="$(date -u +%FT%T.%3NZ 2>/dev/null || date -u +%FT%TZ)"
+    _tsu="$(date +%s 2>/dev/null)"
+    _jpath="org/mcp/agent_telemetry/${_agent}.jsonl"
+    mkdir -p "$(dirname "${_jpath}")" 2>/dev/null
+    printf '{"ts":"%s","ts_unix":%s,"serial":"%s","tool_name":"%s","kind":"work","serial_source":"nojq-fallback","session_id":"%s"}\n' \
+        "${_ts}" "${_tsu:-0}" "${_agent}" "${_tool}" "${_sid}" >> "${_jpath}" 2>/dev/null
+    echo "${_ts} TELEMETRY_HOOK_NO_JQ_FALLBACK_EMITTED session_id=${_sid} tool=${_tool} serial=${_agent}" >> org/mcp/hook_errors.log 2>/dev/null
     exit 0
 fi
 export JQ   # classify-tool-kind.sh honors $JQ (same PATH-less hook-shell condition)
