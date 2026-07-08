@@ -1223,6 +1223,10 @@ paths:
   "infra/ec2/**":
     lane: SHARED_CLOUD_OPS
 
+  "infra/system/**":
+    lane: ANY_EXEC_OR_AE
+    note: "NFRA_SYSTEM / NFRA_LOCALROOT docs-home -- the SYSTEM CONTENT knowledge-class home + the comp-system 06_current_state runtime output. DOCS-HOMES-EXEC-COMMITTABLE carve (CTO ruling 2026-07-08 + NFRA_LOCALROOT-P2 §4, CTO arch-gate GO 225633Z c345f4038): infra/{system,project-docs} = exec/owner-committable DOCUMENTATION (distinct from infra/aws CODE = AE-owned). ANY_EXEC_OR_AE gives exec (COO~B via 2.0.0_SA_COO tilde-strip owns+commits the SYSTEM docs + the 06 output per SoD) + retains the AE set (0.8.0~D's comp-system compiler stages the 06). Longest-match (16) overrides infra/** (8) CLOUD_OPS_OR_ETL. SoD: grantor-landed by 2.0.0_SA_COO (base), grantee COO~B commits. Added 2026-07-08 by 2.0.0_SA_COO."
+
   "infra/**":
     lane: CLOUD_OPS_OR_ETL
     note: "General infra catch-all"
