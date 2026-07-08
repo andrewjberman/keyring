@@ -14047,3 +14047,17 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile --file in... | PASS |
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | CSE-0.3-emit | commit-gate/comp-grep | TypeDecl gate + locate DS~B coverage-sweep; TSX 961/961 oracle intact + 136 Entity.TYPE emitted | PASS |
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/infra-... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/shared-infra-resour... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-honesty --file org/modules/... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-coverage | comp-coverage | FAIL |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+2026-07-08 | 0.5.0_AE_OpalETL | FEDOBS.P2-CVO-harness+0.3 | cse_store(--table/--drop self-test), Trino(REST cse_test baseline), aws-s3/marker read, CodeBuild, aws-logs(PowerShell), safe-commit | stood up isolated cse_test (0.3, marker-clean) + idempotent DISTINCT-event-id signals for CVO measure-honesty cert; caught+fixed :latest divergence (nested-COPY + concurrent Dockerfile) pre-nightly; 0.3 migration=(c) leave genesis immutable
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
