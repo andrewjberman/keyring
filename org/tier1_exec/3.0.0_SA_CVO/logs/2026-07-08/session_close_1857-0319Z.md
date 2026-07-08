@@ -53,8 +53,8 @@ What worked: comp-platinum routed the portal-served diagnosis in minutes once us
 
 CERTED-CLEAN (verified this session): COMPILERKIT (closed), CSE (P1/P2/P3), FEDOBS (P1/P2/P3), MOTIF-P1, GOV-A + comp-honesty engine, RV-0044.
 
-**IN FLIGHT (my re-verify pending on the owner's commit):**
-- **Graph derive un-freeze** -- COND-A re-sign granted (3c4b9c472); 0.7.0_AE lands NODE_TYPE_LAYER 28->31 + header -> rebuild -> re-run. ON THEIR RAVC: I re-verify the landed map=31 + the derive commits (un-freezes graph_edges, frozen ~23h) -> MOTIF-P2 clusters go live. THIS IS THE TOP RESTART RE-VERIFY.
+**IN FLIGHT -> DONE this session (03:32Z, after the /log):**
+- **Graph derive un-freeze -- CLOSED.** COND-A re-sign granted (3c4b9c472); 0.7.0_AE landed NODE_TYPE_LAYER 28->31 (commit 24790cf54, dual-signed header) + re-ran. I RE-VERIFIED: landed map = 31 resource-types (+S3Key=32 total, additive-only) + derive COMMITTED fresh (Nessie HEAD advanced to 1930075230089813661, writer=derive_runner 03:22:51Z, no COND-2 fail-closed). graph_edges fresh. The ~23h freeze is OVER; **MOTIF-P2 now unblocked on the fresh edge graph.** No restart re-chase needed on this.
 
 **REMAINING NFRA BUILDS (tomorrow):**
 1. **NFRA_PROMOTE [forming]** -- the write-back terminus, the biggest unbuilt piece. P1 generalizes TH-C clause-A + COMPLEARN-activation. Loop can observe/measure/motif but not yet promote.
@@ -72,8 +72,8 @@ CERTED-CLEAN (verified this session): COMPILERKIT (closed), CSE (P1/P2/P3), FEDO
 **Git:** HEAD on CLOUD, all 13 my commits pushed. No production code/infra touched by me. The 1110-file uncommitted working-tree deletions are Andrew-deliberate (confirmed) -- leave them.
 
 ## Next Steps
-- **[3.0.0_SA_CVO, restart]** Re-verify the graph derive un-freeze on 0.7.0_AE's commit RAVC (map=31 + derive commits). Then MOTIF-P2 cert when it lands.
-- **[0.7.0_AE_CloudOps]** Land COND-A 28->31 + header (CTO-GO + CVO-sign 3c4b9c472) -> rebuild -> re-run -> RAVC me the fresh-snapshot commit.
+- **[3.0.0_SA_CVO, restart]** ~~Re-verify derive un-freeze~~ DONE 03:32Z (24790cf54; map=31, HEAD advanced). Next on this thread: MOTIF-P2 cert when 0.7.0 ships the CONTAINS-edge materialization on the now-fresh graph.
+- **[0.7.0_AE_CloudOps]** ~~Land COND-A + re-run~~ DONE (24790cf54, derive committed 03:22:51Z). Next: MOTIF-P0 cluster live-count + MOTIF-P2 CONTAINS materialization.
 - **[2.0.0_SA_COO~B]** NFRA driver: sequence PROMOTE-P1 + MOTIF-P2/P3 + the tail; NODEGAP TO GO when 0.7.0 queue clears.
 - **[Andrew]** Open decisions gating NFRA tail: GCONTR SEV1 sign-off; AGENTBUS standing-access Directive. Plus the two cot-thread write-up calls (Cottonwood Defect A / Portfolio Group) still open if wanted.
 - **[3.0.0_SA_CVO]** Trigger-gated: INFRPT.P2 (07-08 13:00Z run); FEDOBS-AC2 done; comp-honesty AC3-on-rail re-verify when CTO lands the manifest; NODEGAP endpoint dispositions when producer acts.
