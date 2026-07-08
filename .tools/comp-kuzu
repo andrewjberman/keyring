@@ -6,6 +6,12 @@
 #        comp-kuzu --db-path PATH "..."
 # DB is rebuilt via: python3 infra/aws/globgrph/kuzu_load.py [--force]
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+# NFRA_GLOBGRPH: prefer the INCREMENTAL local-projection refresh (local analog of the cloud
+# incremental_updater) over the full ~55K-row reload on a BEHIND query -- 92x faster (3.9s vs
+# 356.7s), count-guarded + full-reload fallback (never worse). CTO arch-gate GO 195732Z; content-
+# exact exercise-confirmed. The nightly full-derive's whole-table overwrite still forces a full
+# rebuild (large-delta fallback) = the daily ground-truth reset. Unset this to revert to full-only.
+export GLOBGRPH_KUZU_INCREMENTAL_REFRESH=1
 python "$WORKSPACE/infra/aws/globgrph/kuzu_cli.py" "$@"
 _exit=$?
 python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-kuzu" "$*" $_exit 2>/dev/null
