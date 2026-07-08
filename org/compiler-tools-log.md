@@ -14010,3 +14010,17 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_recognizers_code.py | PASS |
 | 2026-07-07 | 0.4.0_DS_ClientPlatform~A | NFRA_COMPILERKIT.P1 | comp-to + 6 python recognizer harnesses (re-verify) + comp-cluster(ref, MOTIF pre-stage) | recognizer-side re-verified GREEN post-restart; comp-pipescript/kuzu/validate N/A (no gold script authored/run this session) |
 | 2026-07-07 | 0.4.0_DS_ClientPlatform~A | NFRA_COMPILERKIT.P1.framework-sdk-parity-oracle | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-07 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/cse_seed/cse_seed_20... | PASS |
+| 2026-07-07 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-07 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_recognizers_code.py | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_recognizers_conf... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service opal-infrastructure-monitor | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-07-07 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/fedobs/fedobs_views.sql | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/publish_contract_int... | PASS |
+| 2026-07-07 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | NFRA_COMPILERKIT.P1/P2/P3 | comp-grep/comp-glob | firm-scope ruling + parse_gold_direct_invoke + ss4c site + inf catalog dup + parity-file locate | PASS |
+| 2026-07-07 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
