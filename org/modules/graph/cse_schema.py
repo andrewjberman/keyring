@@ -39,11 +39,13 @@ from comp_ladder import Node as LadderNode, fidelity_check  # noqa: E402,F401
 #   COMPUNIFY coverage-sweep. A recognizer needing an off-enum value emits Concept(untyped)+low +
 #   a coverage-gap CSE -- it NEVER invents a value (LAW 1).
 # ===========================================================================
-SCHEMA_VERSION = "0.3"   # 0.1->0.2: FLOWS_TO EdgeKind + condition. 0.2->0.3 (CTO-ratified 2026-07-07,
+SCHEMA_VERSION = "0.4"   # 0.1->0.2: FLOWS_TO EdgeKind + condition. 0.2->0.3 (CTO-ratified 2026-07-07,
 # Option A): add Entity.TYPE + Entity.SYMBOL first-class. TypeDecl/symbol: were parked in CONCEPT (the
 # honest-degrade target) but are lexically-CERTAIN -- the AC4 full-graph round-trip (NFRA_CSE_P2_ac4_
 # fullgraph_parity.py) surfaced the CONCEPT/S3.5 collision (807 nodes + 4269 edges couldn't round-trip
 # at honest conf=1.0). CONCEPT stays the PURE honest-degrade target; TypeDecl/symbol now carry a certain type.
+# 0.3->0.4 (CTO-arch-gated + CVO-re-signed 2026-07-08, R4 GOV-B): +ProducerKind.PROMOTE (governed 5th-producer
+# emission-contract for the promote-materializer's MATERIALIZED/DEMOTED recognizer transition; back-compat additive).
 MIGRATION_NOTE = (
     "Add a primitive -> version-bump + COMPUNIFY coverage-sweep (which compilers must now handle "
     "it); a gap is a tracked coverage-gap, not a silent skip. Remove/rename -> version-bump + a "
@@ -163,6 +165,11 @@ class ProducerKind(enum.Enum):
     API = "api"
     APPROVAL = "approval"
     GRAPH_HEAD = "graph_head"
+    PROMOTE = "promote"    # 0.4 (CTO-arch-gated + CVO-re-signed 2026-07-08, R4 GOV-B): the governed 5th-producer
+    #                        emission-contract -- the promote-materializer's MATERIALIZED/DEMOTED recognizer
+    #                        transition. Subject = Concept(untyped)+LOW (no Entity.RECOGNIZER; the promotion's
+    #                        certainty is carried by the event+verb+commission_id, not confidence). See
+    #                        org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_PROMOTE_P2_GOVB_R4_promote_emission_contract.py
 
 
 # confidence is a FLOAT in [0,1] (CTO contract S2: `confidence: float`). The LAW-1 untyped-honest
