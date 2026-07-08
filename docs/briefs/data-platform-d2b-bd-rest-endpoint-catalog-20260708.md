@@ -4,7 +4,7 @@
 **TO:** `org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/DATA_PLATFORM.D2b.bd-rest-endpoint-catalog.md`
 **Author:** 0.4.0_DS_ClientPlatform (Andrew-direct 2026-07-08). **Consult:** 0.7.0_AE_CloudOps (on-box). **Verify:** 3.0.0_SA_CVO.
 **Sibling of:** `DATA_PLATFORM_D2_BLACK_DIAMOND_ARCH_SPEC.md` (the DataMining model) + `DATA_PLATFORM_D4_smartx_endpoint_sweep.md` (the endpoint-sweep pattern this applies to BD).
-**Tool:** `data/cot/scripts/bronze/bd_endpoint_sweep.py` (the a-la-carte query harness + sweep engine).
+**Tool:** `data/black_diamond/API/tools/bd_endpoint_sweep.py` (the a-la-carte query harness + sweep engine; relocated 2026-07-08 to the shared vendor-neutral catalog, see `data/black_diamond/API/README.md`).
 
 > **Purpose (Andrew-direct 2026-07-08):** a **dedicated catalog of every BD REST endpoint + its payload**, so we can query the BD database **a-la-carte, purpose-based, outside the scheduled ETL** -- instead of relying only on the 5 fixed view-pulls. D2 documented the DataMining *flow* for the 5 query types cot ingests; it never swept the full surface. This is the "D4-for-BD" catalog.
 
@@ -71,7 +71,7 @@ Built a probe template (queryTypeId=6, `Custom` dateRangeType 05/09/2026-07/08/2
 
 ## 4. A-la-carte querying (the tool)
 
-`data/cot/scripts/bronze/bd_endpoint_sweep.py` -- run ON-BOX (cot-exporter, fresh session):
+`data/black_diamond/API/tools/bd_endpoint_sweep.py` -- run from anywhere with a valid session (off-box OK, see sec.2 correction):
 
 ```
 python3 bd_endpoint_sweep.py                    # full catalog pass (spec-hunt + querytypes + sweep + billing)
