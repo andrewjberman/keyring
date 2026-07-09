@@ -48,6 +48,38 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 _MANIFEST = _THIS_DIR / "graph-call-manifest.yaml"
 _CONFIG = _THIS_DIR / "manifest_check_config.yaml"
 
+# --- REGISTERED-IMPLIES-REACHABLE completeness invariant (NFRA_TOOLCHECK P3 follow-on) ----------
+# CVO-endorsed 20260709T084324Z; CTO arch-gate 20260709T085322Z option (b); CTO verdict 085827Z:
+# b2 (substrate-scoped) + ramp-EXEMPT.
+#
+# The invariant: every manifest tools_index tool must be routable=True in the capability provider,
+# else comp_route.py's candidate filter drops it BEFORE scoring and no curated rule or vocabulary
+# can ever surface it (the comp-fedobs + comp-system unreachable class -- both caught only by the
+# LIVE oracle AFTER merge).
+#
+# THE GENERAL PATTERN (CTO, on the record 20260709T090333Z -- reusable beyond this gate):
+#
+#     A GLOBAL invariant folded into a PER-FILE gate triggers on the files that can INTRODUCE
+#     the defect. Complete prevention, bounded blast-radius.
+#
+# b2 SUBSTRATE-SCOPED is that pattern applied here. The class can be introduced ONLY by editing one
+# of the three files below, so scoping loses ZERO prevention (you cannot register an unroutable tool
+# without touching one of them) while an unrelated commit never blocks on a break it did not cause.
+# The alternative (b1, evaluate unconditionally) buys no extra prevention and adds a fabric-wide-halt
+# failure mode -- not hypothetical: comp-coverage-check was RED at HEAD on one agent's unplaced tool
+# while every OTHER agent's safe-commit printed its FAIL. Applies directly to the planned
+# coverage-map-placement gate (a .tools/ commit must have a map home): same substrate-scoping.
+#
+# RAMP-EXEMPT: the advisory->blocking ramp exists for HEURISTIC checks with a false-positive class
+# to shake out. This is a deterministic structural fact -- a tool is in the router's candidate set
+# or it is not. A deterministic gate left on advisory prevents nothing until the flip. Blocks
+# immediately, like py_compile.
+_ROUTABLE_SUBSTRATE = (
+    "org/modules/graph/graph-call-manifest.yaml",    # tools_index -- registers the tool
+    "org/modules/graph/comp-coverage-map.yaml",      # tools[]/meta_tools[] -- sets the role
+    "org/modules/graph/comp_capability_provider.py",  # _ROUTABLE_META_ROLES -- opts the role in
+)
+
 
 # ----------------------------------------------------------------------------- detection surface
 # Category B -- REBUILD tokens that have a cheaper QUERY canonical. Each maps to the manifest
@@ -348,6 +380,68 @@ def render(findings: list[Finding], mode: str) -> None:
 
 
 # -------------------------------------------------------------------------------------- commands
+def _load_routable_engine():
+    """Import .tools/comp-routable-check (extensionless -> load by path).
+
+    IMPORTED, never reimplemented: exactly ONE definition of the invariant. A forked copy would
+    drift from the engine agents run directly, and a completeness gate that disagrees with its
+    own tool is worse than no gate.
+    """
+    import importlib.machinery
+    import importlib.util
+
+    path = _WORKSPACE / ".tools" / "comp-routable-check"
+    loader = importlib.machinery.SourceFileLoader("comp_routable_check", str(path))
+    spec = importlib.util.spec_from_loader("comp_routable_check", loader)
+    mod = importlib.util.module_from_spec(spec)
+    loader.exec_module(mod)
+    return mod
+
+
+def _touches_routable_substrate(files) -> bool:
+    norm = {str(f).replace("\\", "/") for f in (files or [])}
+    return any(any(n.endswith(s) for s in _ROUTABLE_SUBSTRATE) for n in norm)
+
+
+def _routable_invariant(files) -> int:
+    """0 = invariant holds, or not applicable to these files. 1 = BLOCK.
+
+    b2: only a commit touching the manifest / coverage-map / provider can introduce the defect.
+    Ramp-exempt: blocks regardless of advisory|blocking mode.
+    Fail-closed: an unevaluable invariant is not a passing one.
+    """
+    if not _touches_routable_substrate(files):
+        return 0
+    try:
+        rc = _load_routable_engine()
+        _targets, unreachable, _uncatalogued, exempted = rc.check()
+    except Exception as e:  # fail-closed -- a gate that cannot evaluate must not read as "passed"
+        print(
+            f"\nBLOCKED: the routable-invariant could not be evaluated ({e}).\n"
+            f"  An unevaluable completeness gate does not read as 'passed'. The capability "
+            f"provider's load-robustness is commit-critical by design."
+        )
+        return 1
+
+    for tool, reason in exempted:
+        print(f"  routable-exempt: {tool} -- {reason}")
+
+    if not unreachable:
+        return 0
+
+    print(f"\nBLOCKED: {len(unreachable)} registered tool(s) are UNREACHABLE via comp-which:")
+    for tool, why, kind in unreachable:
+        print("  - %-22s %s%s" % (tool, why, f" (kind={kind})" if kind else ""))
+    print(
+        "  A tools_index tool with routable=False is dropped by comp_route.py's candidate filter\n"
+        "  BEFORE scoring -- no curated rule or vocabulary can surface it. FIX: add its\n"
+        "  coverage-map role to comp_capability_provider._ROUTABLE_META_ROLES, or declare\n"
+        "  `routing_exempt: <reason>` on its coverage-map entry. Then re-run\n"
+        "  `python .tools/comp-which-routing-test.py`."
+    )
+    return 1
+
+
 def cmd_check(args: argparse.Namespace) -> int:
     manifest = load_manifest()
     cfg = load_config()
@@ -358,6 +452,11 @@ def cmd_check(args: argparse.Namespace) -> int:
     dep_sigs = deprecated_signatures(manifest)
 
     files = args.file or []
+    # Completeness invariant FIRST: deterministic + ramp-exempt. A registered-but-unreachable tool
+    # must never merge, regardless of what the heuristic scanners below do or do not find.
+    if _routable_invariant(files):
+        return 1
+
     all_findings: list[Finding] = []
     for f in files:
         p = Path(f)
@@ -548,6 +647,12 @@ def main() -> int:
 
     p_tally = sub.add_parser("tally", help="summarize the advisory-hit tally (D6 ramp evidence)")
     p_tally.set_defaults(func=cmd_tally)
+
+    # On-demand evaluation, independent of a changed-file list (pass the substrate so the b2 scope
+    # predicate always matches). The commit path reaches it via `check`.
+    p_routable = sub.add_parser(
+        "routable", help="assert every tools_index tool is a live routing target")
+    p_routable.set_defaults(func=lambda _a: _routable_invariant(_ROUTABLE_SUBSTRATE))
 
     args = parser.parse_args()
     if not getattr(args, "cmd", None):
