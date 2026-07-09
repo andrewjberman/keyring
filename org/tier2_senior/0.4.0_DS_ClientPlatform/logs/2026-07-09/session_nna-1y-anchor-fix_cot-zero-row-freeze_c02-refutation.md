@@ -4,7 +4,7 @@
 **secondary_archetypes:** IMPLEMENT, COORDINATE
 
 **Agent:** 0.4.0_DS_ClientPlatform
-**Date:** 2026-07-09 (~18:55Z - 20:55Z)
+**Date:** 2026-07-09 (~18:55Z - 21:35Z; see ADDENDUM at end -- the period-roll defect ALREADY FIRED in production)
 **Branch:** CLOUD
 
 ---
@@ -262,3 +262,104 @@ amended safety broadcast -- TWO poisoned SSM docs. 0.6.0: the COTTONWOOD probe t
   re-freezes $1.837B. Every local signal endorses the cleanup.
 - **I was wrong twice tonight** and both were the same failure: I read a docstring (`cot_bronze_ingest.py:80`)
   and wrote it as mechanism. On C_02 I read the source before writing. That is the entire delta.
+
+---
+
+## ADDENDUM (post-log, ~21:00-21:35Z): the period-roll defect ALREADY FIRED in production
+
+Written after the log above was committed (`48943c343`). Andrew asked why a deployed fix needed the nightly
+to prove it. Chasing that question produced the headline finding of the session.
+
+### 1. The rule I was over-applying
+
+"NEVER trigger ad-hoc gold runs to validate" forbids **triggering the production gold run** (it writes S3,
+overwrites served artifacts, races the nightly). It does **not** forbid **executing the code read-only.**
+I had collapsed the two. Verified the no-write property by READING `_save_json` (`gold_utils.py:68-82`:
+`if dry_run: return` before `put_object`) rather than trusting the flag's name -- the same `DryRun` trap MSTR
+found in two SSM docs tonight. CVO independently found the guarantee is STRONGER: `_save_json` is called only
+from `main():1360`, unreachable from `build_employee_leaderboard():798`, so a harness calling the builder
+**cannot reach `put_object` at all.**
+
+### 2. Value limb PROVEN, tonight, not tomorrow
+
+Real `build_employee_leaderboard`, real S3 inputs, read-only, wall-clock `2026-07-09` deliberately injected:
+`1Y 0/158 divergent` (was 65); `window_bounds` byte-matches served canonical on all 5 windows;
+`entry_count > 0` on all 9; tripwire silent.
+
+Also verified the assumption under my own "wait for the nightly": `run-gold-layer.sh:88-90` +
+`gold_dispatch.sh:526` `aws s3 sync s3://$BUCKET/code/gold/` at run start. **Pull-at-runtime, nothing baked.**
+So the nightly is now load-bearing for **DELIVERY ONLY**. CVO re-scoped the withhold (`842dd9040`).
+
+### 3. THE FINDING: it was never latent -- it fired
+
+Per CVO's `[A]` remedy ("add a period-roll case"), ran pre-fix vs post-fix at a simulated quarter-end as-of:
+pre-fix `MTD=0, QTD=0` (silent empty windows, no raise); post-fix `MTD=154, QTD=156`. Then stopped reasoning
+forward and read the **versioned served bytes**:
+
+```
+s3://opal-data-bd/platinum/firm/leaderboard.json  (S3 versioning)
+  2026-07-01 .. 2026-07-02   QTD entry_count = 0   -- EIGHT consecutive served writes, 39.8h continuous
+  2026-07-02T17:42:00Z       QTD entry_count = 151 -- self-recovered when data_as_of crossed into Q3
+```
+**Clients were served ZERO advisors in the QTD window for 39.8 hours.** YTD/MAX/1Y/3Y held 155-156 throughout,
+so the tab rendered a FULL leaderboard with an empty QTD -- worse than a blank page, which gets reported.
+CTO confirmed independently (SEV1-historical); CVO walked every version and found 8 writes, not my 2.
+
+### 4. Exposure bounded at BOTH ends -- by source, not by the artifact
+
+The served-history oracle has a **lifecycle horizon**: `expire-noncurrent-platinum-14d` / `-gold-14d`, so only
+~15 days of served bytes survive (42 versions, oldest 2026-06-24). CVO ruled 2026-04-01 "permanently
+unprovable." **It is not.** A git pickaxe over the defect's own text has no lifecycle policy:
+
+```
+git log --reverse -S 'w_start = today - pd.Timedelta' -- data/black_diamond/scripts/gold/
+  a3b2d2099  2026-04-06   <- the wall-clock anchor is BORN, five days AFTER the April roll
+  2af63847d  2026-07-09   <- the fix
+```
+`2026-04-01` = **excluded at source, not unobserved.** Every boundary in `[2026-04-06 .. 2026-07-09]`:
+one quarter roll (07-01, fired), three month rolls (MTD is slimmed out of the served artifact by
+`D_04:2166` -> never reaches a client), zero year rolls. **Total client impact, ever: ONE event.**
+CVO retracted (`6b58f0f7a`).
+
+> *"Did clients see it"* decomposes into *"did the artifact show it"* AND *"did the code that produces it
+> exist."* Read-the-artifact fails at detection AND at forensics. The **emit-time tripwire** fixes detection;
+> the **pickaxe** fixes forensics. **When the bytes are gone, ask when the bug was born.**
+
+### 5. Two of MY OWN instruments lied during this check
+
+- `aws s3 cp "s3://..." "$SPW\$f.log"` -> **exit 0, wrote nothing** (MSYS path mangling). My `&& echo "pulled"`
+  printed success. Caught only because the parse found no file. Re-ran streaming to stdout with `wc -c`
+  asserted **before** parsing.
+- `git log --until=2026-04-02 -1 --format=%H -- <path>` -> **empty SHA**, so `git show ":path"` silently
+  rendered the **index** version and printed plausible `latest_date = perf['date'].max()` lines. I almost
+  reported *"April's code was already data-anchored."* **Discarded rather than reported.**
+
+**An empty variable interpolated into a ref is an instrument that answers confidently about nothing.** Both
+would have produced a wrong finding in the reassuring direction.
+
+### 6. New, filed, mine, NOT fixed (in-window; touches a served key)
+
+`prior_week` is structurally broken. `build_firm_dashboard:359-369`'s `if size_kb > 200:` split branch writes
+the raw **9-window gold** `employee_lb` to `platinum/firm/leaderboard.json`; `build_leaderboard`'s rotation
+~2000 lines later faithfully copies *that* to `.prior_week`, then overwrites with the trimmed 5-window object.
+The sequencing comment is correct about its own two lines and blind to the earlier write. Live proof:
+`dashboard.json = 577 B` with `"split": true`; `prior_week = 3,362,611 B` == the gold artifact exactly.
+Consequences: **structurally guaranteed zero week-over-week delta** (`exec_summary/trigger_eval.py:8-9` cannot
+fire on a real change), a 9-vs-5 shape mismatch, and a **transient wrong-shaped served artifact** between the
+two writes. Conditional on a 200KB threshold -- it appeared silently the day the payload crossed it.
+**Not mirrored to `cot/D_04:2533`** (same rotation code, separate firm, own evidence required).
+
+### 7. Also measured (client-facing plane, previously unmeasured)
+
+`bd gold/dimensions/accounts_dimension_latest.parquet`: `account_type` non-null = **0 / 10,545** (cot was
+0/828). Same `sorted(alloc_keys)[-1]` defect, 12.7x scale, on the 49F plane. Corroborates 0.6.0's point that
+`gap_pct`'s operands are **not independent** (`certified_aua` <- stubbed allocations; `gold_aua` <- `C_03` <-
+the dimension those stubs nulled). The ~$115M `gold_aua` drop remains **0.6.0's `INFERRED` claim**, not mine.
+
+### Compiler Tools (addendum)
+
+| Tool | Target | Result | Note |
+|---|---|---|---|
+| `aws s3api list-object-versions` | `platinum/firm/leaderboard.json` | PASS | the served-history oracle; **has a 15-day lifecycle horizon** -- CTO is registering `comp-served-history`, and it must PRINT its horizon rather than return empty |
+| `git log -S` (pickaxe) | `w_start = today - pd.Timedelta` | PASS | bounded the exposure window from below; **no lifecycle policy** -- the forensic oracle that survives when bytes do not |
+| `comp-pipescript io` | `A_01` (via 0.6.0) | PASS | `A_01`'s docstring claims a `silver/allocations` read it does not perform -- a false record, my lane, filed |

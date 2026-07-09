@@ -15214,3 +15214,39 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.AUAFIX-L6 | comp-pipescript io/deployed, comp-blast | io D_00c (caught D_04 as the real publisher -> window_bounds reaches served), io D_04, deployed D_00c/D_04/C_05x2 MATCH + independent sha256, blast build_employee_leaderboard | PASS; GAP: `comp-pipescript io C_03` silently resolved to [bd-gold] when asked about COT's C_03 -- bare script ids cross the firm boundary with no warning (routed to CTO) |
 | 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/m365-mcp-gateway/ot... | PASS |
 | 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-graph | comp-graph status | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace --check | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-graph | comp-graph status --json | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-graph | comp-graph status | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_SEMCTL.json --file or... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cli.py --file org/mod... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/PENDING_bd4... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/contracts/g... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/alarm-reachability-check.py | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io C_02 | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/PENDING_bd4... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/SES_PRODUCTION_ACCESS_CAS... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/alarm-reachability-check.py | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0267.md | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/cse_emit_promote.py ... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/NFRA_TERRAFORM_P2_lambda_exec... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-pipescript | comp-pipescript io D_04.client_portal_summary | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/2026-07-09_L... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/SES_PRODUCTION_ACCESS_CAS... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ptnr-structure-prd-request-... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/fabric-check.py | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript advi-inf | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | aws s3api list-object-versions, git log -S (pickaxe) | served-history oracle found QTD entry_count=0 across 8 writes / 39.8h on 2026-07-01..02 (already-served client-facing outage); pickaxe bounded the exposure window from below (anchor born a3b2d2099 2026-04-06) | PASS; GAP: the served-history oracle has a 15-day LIFECYCLE HORIZON (expire-noncurrent-platinum-14d) -- CTO's proposed `comp-served-history` must PRINT its horizon and refuse, never return empty. git has no such horizon: when the bytes are gone, ask when the bug was born |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
