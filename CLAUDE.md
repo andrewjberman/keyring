@@ -87,7 +87,8 @@ All in `.tools/` (PATH). Full catalog + tools_index: `org/modules/graph/graph-ca
 ## Git
 
 - Working branch: `CLOUD`. Portal submodule: `DEV`/`PROD`. Terraform binary: `.tools/terraform.exe`.
-- `MSYS_NO_PATHCONV=1` ONLY for Terraform imports / ARN-path args. **NEVER for `git push`** (breaks the VALGATE hook) **or the aws launcher** — for leading-`/` aws args use PowerShell or ARN-form identifiers.
+- `MSYS_NO_PATHCONV=1` ONLY for Terraform imports / ARN-path args, and for **`git show <ref>:<path>` when BOTH the ref and the path contain a `/`** — MSYS reads it as a POSIX path-list and mangles it (`git show origin/CLOUD:.tools/x.py` → `fatal: ambiguous argument 'origin\CLOUD;.tools\x.py'`). `HEAD:.tools/x.py` and `origin/CLOUD:CLAUDE.md` are both fine; measured 2026-07-09. **NEVER for `git push`** (breaks the VALGATE hook) **or the aws launcher** — for leading-`/` aws args use PowerShell or ARN-form identifiers.
+- **Put the control on the RETRIEVAL, not the pattern.** `git show <bad-ref> | grep -c foo` prints `0` — grep counted zero matches *in an error message*. `| wc -l` (a 900-line file is not 3 lines) catches it; `grep -c` never can. Same class as `objects=0` on unwritable filenames and `outcome:"ok"` on a 403.
 
 ## Portal
 
