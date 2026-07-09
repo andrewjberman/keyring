@@ -439,6 +439,37 @@ def _is_terminal_status(status: str) -> bool:
     return any(head.startswith(tok) for tok in TERMINAL_STATUS_TOKENS)
 
 
+def _entry_prose_drift(state: dict) -> tuple:
+    """DRIFT-A: the rendered entry claims a TERMINAL state while a live sentinel
+    still exists for the same slug.
+
+    The .md is a RENDERING of the sentinel (_render_entry/_write_entry) and `close`
+    unlinks the sentinel -- so a live sentinel whose entry reads CLOSED means the
+    entry was hand-edited and the tool was never run. Layer 1 reads only the
+    sentinel; Layer 2 skips sentinel-covered entries. Nothing compared the two, so
+    this quadrant was structurally invisible in BOTH directions:
+
+      benign   -- prose CLOSED over a proven-but-unclosed sentinel: a false RED that
+                  blares for days while every human reading the repo sees CLOSED
+                  (anchor: advi-breaks-to3-49f-431167-unrealized-facts-restore, a
+                  hand-edit swept into unrelated commit 149fd762b -- 60 files, 0
+                  sentinels -- and left the gate crying wolf for 214h).
+      dangerous -- prose CLOSED over a GENUINELY UNPROVEN leg: the operator reads
+                  "nothing stranded" while a leg never carried proof at all.
+
+    Returns (is_drift, md_status, unproven_leg_ids).
+    """
+    try:
+        md = (WORKSPACE / state["entry_path"]).resolve()
+    except (KeyError, OSError):
+        return (False, None, [])
+    status = _md_status(md)
+    if status is None or not _is_terminal_status(status):
+        return (False, status, [])
+    unproven = [leg["id"] for leg in state["legs"] if not leg.get("proof")]
+    return (True, status, unproven)
+
+
 def _qualifies_as_held(state: dict) -> tuple:
     """CTO's CONJUNCTIVE guardrails for a HELD / SOVEREIGN-GATED deploy ledger -- ALL required, and
     verified STRUCTURALLY off the legs (NEVER off a status string), so a real half-landed strand can
@@ -585,6 +616,19 @@ def cmd_check(args) -> int:
             covered.add((WORKSPACE / state["entry_path"]).resolve())
         except (KeyError, OSError):
             pass
+
+        # --- Layer 3: entry-vs-sentinel DRIFT (report-only; never a RED, never exit-1) ---
+        # Deliberately non-blaring: it reports a RECORD inconsistency, not a stranded deploy,
+        # and must not be able to false-alarm the fabric. Escalation to RED is a governance
+        # call (COO/CTO), not this tool's to make unilaterally.
+        drifted, md_status, unproven = _entry_prose_drift(state)
+        if drifted:
+            sev = (f"DANGEROUS -- leg(s) {unproven} carry NO proof; the entry says otherwise"
+                   if unproven else
+                   "benign -- every leg is proven; the close was never run through the tool")
+            print(f"DRIFT: {state['slug']} entry reads terminal ('{md_status[:38]}') "
+                  f"while its sentinel is LIVE -- {sev}. "
+                  f"Fix: deploy_ledger.py close-leg/close (never hand-edit the entry).")
 
         # HELD / SOVEREIGN-GATED: structurally verified off the legs (all apply legs proven + only
         # verify open + a named structured gate). A KNOWN-HELD ledger is NOT a half-landed RED -- it
