@@ -151,3 +151,56 @@ half-landed deploy.
    both re-mint-recovered; benign now, fragile on a longer sweep).
 6. **[comp-tool coverage]** `cot_bronze_ingest.py` has no `comp-pipescript`/`comp-blast` node -- second
    time this has blocked a Rule-20 pre-change dependency check on a client-facing producer.
+
+---
+
+## Addendum -- freshness-integrity tonight-slice (COO /drive GO 094410Z, CTO-ruled)
+
+**archetype:** IMPLEMENT | **window:** ~09:45Z -> ~10:05Z | used the gold-gated idle capacity.
+
+Closed my own finding: bound `bd-49f-freshness-probe` to CONTENT. Ledger
+`20260709T0957Z_bd-49f-freshness-probe-content-assertion` CLOSED, 4/4 legs proven.
+
+**Framing correction (material).** COO dispatched "SilverAgeHours mtime -> content". Source says the
+ALARM rides **`TradingDayLag`**, and its `max_as_of` was parsed from the **object KEY NAME**
+(`lambda_function.py:209-218`) -- a FILENAME proxy, weaker than mtime. Fixing `SilverAgeHours` alone
+would have changed an unalarmed metric and left the alarm exactly as blind. Rollout lesson: read what
+the ALARM consumes, not what the docstring says.
+
+**Fix.** Anchor `max_as_of` on the newest partition PROVEN to hold >0 rows; row count from the parquet
+footer (thrift-compact `FileMetaData.num_rows`) via ONE suffix-ranged GET (~64KB). No full download,
+no new dependency (probe stays pure stdlib+boto3 -- FIRM-SEP forbids growing its surface). Metric
+names unchanged, so the alarms needed no TF change; only their input became truthful. Added
+`SilverRowCount` / `SilverNewestPartitionDegenerate` / `SilverRowCountUnknown`. Fail-OPEN on an
+unparseable footer (unknown != empty), never on a proven-empty one. IAM: `s3:GetObject` on
+`opal-data-bd/silver/*` only.
+
+**Cert bar -- exercised on the REAL known-bad artifacts (CTO condition):**
+| bar | result |
+|---|---|
+| real 46,277B 0-row stub | reads **0 rows** |
+| repaired 07-08 partition | reads **6,870 rows** |
+| pre-repair inventory replay (live stub objects) | OLD filename lag=**0 GREEN** vs NEW content lag=**4 REDS** (threshold 2) -- would have fired on day one |
+| repaired estate | no false page (alloc 1, unreal 1, txn 0, realized 0, fees 2) |
+
+LIVE in AWS: `silver/allocations 2026-07-09 -> 0 rows (DEGENERATE stub) -- skipped, not an as_of anchor`.
+APPLIED truth off live `get-function-configuration` (CodeSha256 `lIfp0ZeJ...`) + live `get-role-policy`.
+
+**Second self-caught defect this session.** `self.i += self.varint()` in the BINARY skip is wrong --
+Python evaluates the left `self.i` BEFORE `varint()` advances it, so the length prefix's own bytes are
+never skipped and every later field header lands one byte early. It crashed on the real stub's 15-char
+`portfolio_group` column. Both bugs I shipped tonight were in MY probe, not the vendor's data, and both
+were surfaced by exercising the real artifact rather than a fixture. Tests 12/12.
+
+**Handed to the daylight program:** (1) `infra/aws/lambda/cot-pipeline/bd-cot-freshness-probe/lambda_function.py:211`
+carries the IDENTICAL filename-anchored `max_as_of` -- first rollout target, this code drops straight in
+(not touched: cot lane). (2) `comp-freshness` itself is still mtime-bound. (3) `SilverNewestPartitionDegenerate`
+is emitted but deliberately NOT alarmed tonight -- allocations' newest partition IS degenerate right now
+(the self-healing 07-09 stub) and would page Andrew at ~05:00 ET for a known, remediated condition;
+recommend alarming after tonight's runner heals it. (4) Unrelated pre-existing IAM gaps surfaced by the
+mandated `comp-iam gaps`: `astn-wsjft-orchestrator` missing `s3:GetObject`+`s3:PutObject`,
+`etfs-reports-orchestrator` missing `s3:PutObject` -- routed to COO, not my lane.
+
+Commits `f45e63189`, `e0909399b`. Compiler tools: `comp-iam service bd-49f-freshness-probe` (pre-change,
+grounded that the role had ListBucket only), `comp-iam gaps` (post-iam.tf), `comp-glob` (found the cot
+sibling). 49F itself remains gold-gated; post-gold served-property RAVC to CTO closes it.

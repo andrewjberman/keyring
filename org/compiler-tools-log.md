@@ -14700,3 +14700,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/manifest_check_cli.py | PASS |
 | 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-freshness/comp-grep/comp-glob/comp-pipescript/comp-blast/comp-which | GAP: comp-pipescript io+deployed and comp-blast all NOT-FOUND for cot_bronze_ingest.py (2nd time blocking a Rule-20 pre-change dep check on a client-facing producer); comp-freshness chain bd returned PASS on 7 consecutive 0-row stub partitions mid-freeze -> elevated as the freshness-integrity reference case |
 | 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-iam | comp-iam service bd-49f-freshness-probe | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/secrets-allo... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-fre... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-iam | comp-iam gaps | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which-routing-test.py | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-iam service + comp-iam gaps | comp-iam service bd-49f-freshness-probe grounded the role as ListBucket-only BEFORE adding the content assertion (needed s3:GetObject); comp-iam gaps post-apply confirmed the probe clean + surfaced 3 PRE-EXISTING gaps in other lanes (astn-wsjft-orchestrator GetObject/PutObject, etfs-reports-orchestrator PutObject) -> routed COO |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
