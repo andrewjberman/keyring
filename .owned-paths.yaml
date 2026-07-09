@@ -542,13 +542,19 @@ lanes:
       - 0.7.0_AE_CloudOps
       - 0.7.0_AE_CloudOps~B
       - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp~C
+      - 0.8.0_AE_CloudComp~D
+      - 0.8.0_AE_CloudComp~A
+      - 0.8.0_AE_CloudComp~B
+      - 0.8.0_AE_CloudComp~E
+      - 0.8.0_AE_CloudComp
       - 0.4.0_DS_ClientPlatform
       - 0.4.0_DS_ClientPlatform~A
       - 0.4.0_DS_ClientPlatform~B
       - 0.4.0_DS_ClientPlatform~C
       - 0.4.0_DS_ClientPlatform~D
       - 0.4.0_DS_ClientPlatform~E
-    description: "ANY_EXEC_OR_AE + DS 0.4.0 (incl. tilde lanes) for the comp-manifest-check tool family. DS owns the NFRA_GRAPHS.D6 deliverable per CTO dispatch, but manifest_check_cli.py resolved to *_cli.py (ANY_EXEC_OR_AE) and manifest_check_config.yaml fell through to org/modules/** (ANY_EXEC) — neither includes DS, forcing 2 audited ANY_EXEC overrides 2026-06-11 (27e5fe7c5, 98d3c4fe9). Same gap class as the 6ce03b7f7 graph_*.py base-AE add, one file-set over. Added 2026-06-12 by 2.0.0_SA_COO per MSTR RV-0033 F-002 corrective."
+    description: "ANY_EXEC_OR_AE + DS 0.4.0 (incl. tilde lanes) for the comp-manifest-check tool family. 0.8.0_AE_CloudComp family (base + ~A-~E) added 2026-07-09 by 1.0.0_SA_CTO (grantor -- grantee does not commit its own grant, SoD): the lane DECLARES 'ANY_EXEC_OR_AE + DS' but was a STALE COPY (created 06-12) that never inherited ANY_EXEC_OR_AE's later 0.8.0 adds (~C/~D 06-30, base 07-02), a forked list silently drifting from its declared source for a month -- it owned-paths-blocked 0.8.0's own NFRA_COMP* manifest_check_cli.py landing (the routable-completeness gate). Synced to ANY_EXEC_OR_AE current membership. DURABLE FIX FILED to the owned-paths-hook owner: the hook should COMPOSE lane references (this lane = ANY_EXEC_OR_AE + DS) rather than copy them, so it can never drift again -- exactly the declared-vs-enforced fork-drift class the routable gate 0.8.0 just built kills, one layer up in governance. DS owns the NFRA_GRAPHS.D6 deliverable per CTO dispatch, but manifest_check_cli.py resolved to *_cli.py (ANY_EXEC_OR_AE) and manifest_check_config.yaml fell through to org/modules/** (ANY_EXEC) — neither includes DS, forcing 2 audited ANY_EXEC overrides 2026-06-11 (27e5fe7c5, 98d3c4fe9). Same gap class as the 6ce03b7f7 graph_*.py base-AE add, one file-set over. Added 2026-06-12 by 2.0.0_SA_COO per MSTR RV-0033 F-002 corrective."
 
   NFRA_PIPESCRIPT_TOOL:
     permitted_agents:
