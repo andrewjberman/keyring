@@ -1,0 +1,18 @@
+#!/bin/bash
+# comp-system -- the NFRA_SYSTEM current-state COMPILER (cross-surface aggregator).
+# Reads across ALL scope classes/surfaces and emits infra/system/06_current_state.{md,json},
+# grounded-against-live with an honest UNKNOWN anchor for every non-groundable class.
+#
+# Subcommands (flags, positionally free -- see org/modules/graph/comp_system.py):
+#   comp-system                # compile -> write infra/system/06_current_state.{md,json}
+#   comp-system --stdout       # compile -> print the markdown (no write)
+#   comp-system --json         # compile -> print the json model
+#   comp-system --check        # is 06 stale vs the current HEAD marker? (auto-refresh oracle)
+#   comp-system --self-test    # prove the no-fabrication invariant (grounded|UNKNOWN, shape-locked)
+#
+# Rule-16 clean: uses only cd / dirname / pwd / python (all present in Git Bash 3.6.7).
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_system.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-system" "$*" $_exit 2>/dev/null
+exit $_exit
