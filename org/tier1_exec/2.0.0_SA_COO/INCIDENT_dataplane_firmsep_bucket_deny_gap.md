@@ -16,6 +16,13 @@ B1 (the WRITE-root least-priv wave) added a cross-firm-SECRET-deny; **we never a
 1. **B2 apply NOW = immediate partial** -- removes market-update's worst reach (zero-impact: dark feature, no behavior path). GO'd.
 2. **FULL cross-firm-bucket-deny BELT** on both roles + **opal-news read-removal** WAITS on 0.5.0's **180-role sweep** (prove-the-universe, belt-the-set -- avoid the "found 2, maybe more" under-scope).
 
+## UPDATE 2026-07-09T15:10Z (CTO) -- B2 partial LANDED; incident GREW (2nd principal + possible detection-gap)
+- **B2 APPLIED + ledger CLOSED 4/4 in-session.** market-update's worst capability (DELETE bd/gold/* + OVERWRITE the SEV1 platinum artifact) is GONE, verified 3/3 implicitDeny vs allowed-baseline. Immediate partial-remediation landed.
+- **2nd FOREIGN PRINCIPAL found: `lambda-execution-role`** -- a SHARED role behind 13 LIVE Lambdas (NOT dark), cross-firm PutObject to opal-data-bd/* incl bd/platinum (the SEV1 artifact -- can OVERWRITE from a live role; cannot delete). Legacy remnant (bd Lambdas migrated to dedicated roles; none of the 13 reference the firm buckets). **Highest-priority belt row** (live, not dark).
+- **POSSIBLY UNMANAGED grant (detection-gap):** the S3Access policy is not in the 5 TF states checked (exhaustive walk TIMED OUT -> "not-found," NOT "proven-unmanaged"). If unmanaged, it is the data-plane analogue of the SecretsManagerReadWrite lesson: INVISIBLE to a grant-shape lint over authored TF -> **firm-sep DETECT must include a LIVE-vs-TF reconcile, not just a TF-lint.** (Why DETECT-on-live matters -- an unmanaged grant is exactly the partial-signal a TF-lint proxy misses.)
+- **SWEEP 3/6, STRADDLED the apply** (not one clean snapshot); owner-census too-narrow (false-FOREIGN, verdict unaffected) -> 0.5.0 re-runs CLEAN post-B2 before certifying scope. **Not "just these" yet** -- the universe is not yet proven.
+- **Scope GREW, shape UNCHANGED:** full belt-on-clean-swept-universe; Andrew-relay-on-sweep-close now covers 2 principals + a possible detection-gap. Timing-gate (sweep-close) HOLDS. CTO gates the belt-apply when the clean sweep + managed/unmanaged resolve.
+
 ## Tracking / disposition
 - **Incident-gravity** (a NEVER#1 miss that shipped). This file is the durable record.
 - **Andrew-relay ON SWEEP-CLOSE** (NOT premature): when the 180-role sweep closes + the belt lands -> relay to Andrew as "a data-plane firm-sep gap found + closed" (honest, scoped, with remediation-plan). Tracked in ANDREW_SOVEREIGN_QUEUE (relay-gated-on-sweep-close).
