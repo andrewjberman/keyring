@@ -404,6 +404,38 @@ RULES = [
      "the COMPLEARN loop's served DEMAND/GAP/COST read -- tool demand, gap heat, coverage gaps, cost, "
      "from the live globgrph Trino federation (tool_activity x code_heat x iceberg). Reads SERVED state, "
      "never recomputes"),
+    # ---- near-tie hardening TRANCHE 2 (COO~B GO 2026-07-09) ------------------------------------
+    # Four more tools that never won rank-1 on their own use_case. Diagnosed first: comp-build /
+    # comp-chainrun / comp-incrparity all lost to comp-aws (semantic pull, no rule of their own);
+    # comp-diff lost to comp-blast because its OWN catalog text says "blast radius" -- the
+    # description-is-routing-input doctrine again, but by CONCEPT rather than by NAME. So each gets
+    # distinctive vocabulary here; comp-diff's rule deliberately does NOT claim "blast radius"
+    # (comp-blast owns that intent) and keys on the UNCOMMITTED/STAGED axis instead, which is what
+    # actually distinguishes it.
+    (["rebuild the trace graph", "rebuild the trace-graph", "trace graph cache", "trace-graph cache",
+      "rebuild the cache", "rebuild the graph cache", "after adding files", "write-path rebuild",
+      "refresh the trace cache"],
+     "rebuild the trace-graph cache (comp-build)",
+     ["comp-build", "comp-build --check"],
+     "REBUILD the trace-graph cache (the WRITE path) after adding files -- distinct from any QUERY"),
+    (["atomic bundle", "atomic-bundle", "snapshot and diff gold", "snapshot/diff gold",
+      "pre/post change", "pre and post change", "multi-commit refactor",
+      "producer+consumer refactor", "producer and consumer refactor", "chainrun", "chain run snapshot"],
+     "atomic-bundle gold snapshot/diff (comp-chainrun)",
+     ["comp-chainrun snapshot", "comp-chainrun diff"],
+     "snapshot + diff gold artifacts around an ATOMIC multi-commit producer+consumer refactor"),
+    (["uncommitted changes", "uncommitted/staged", "staged changes", "my staged changes",
+      "before i commit", "before commit", "what my changes affect", "changes not yet committed",
+      "working-tree changes"],
+     "uncommitted/staged change impact (comp-diff)",
+     ["comp-diff", "comp-diff --staged", "comp-diff --ref HEAD~3"],
+     "map the CHANGES in your working tree / staged index (or a ref range) onto the graph -- the "
+     "UNCOMMITTED-change axis. DISTINCT from comp-blast, which takes a named symbol, not a diff"),
+    (["incremental parity", "windowed cache", "full-recompute", "full recompute oracle",
+      "incremental cache vs", "incremental bd-pipeline", "incremental pipeline parity"],
+     "incremental-vs-full parity (comp-incrparity)",
+     ["comp-incrparity"],
+     "INCREMENTAL BD-pipeline parity: the windowed incremental cache vs the full-recompute oracle"),
     # NFRA_TOOLCHECK P3 (COO~B GO 2026-07-09): comp-system was UNREACHABLE -- the SAME class as the
     # comp-fedobs fix above, recurring for a newer tool. Two causes, both fixed: (1) its meta_tools
     # role "system-compiler" was absent from comp_capability_provider._ROUTABLE_META_ROLES, so
