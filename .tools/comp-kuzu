@@ -12,6 +12,12 @@ WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
 # exact exercise-confirmed. The nightly full-derive's whole-table overwrite still forces a full
 # rebuild (large-delta fallback) = the daily ground-truth reset. Unset this to revert to full-only.
 export GLOBGRPH_KUZU_INCREMENTAL_REFRESH=1
+# NFRA_GLOBGRPH #17: rebuild-winner LIVENESS -- a DIED rebuild winner (crash/kill/OOM/wedge) no
+# longer stales the shared surface fabric-wide for the full 900s. The winning AGENT heartbeats the
+# lock; losers steal a STALE-heartbeat lock in ~90s. Safe-by-design (per-unique tmp + ownership-
+# check-at-swap; self-test 26/26 incl the real-interleaving false-positive-steal). CTO GO 043605Z
+# (flip ON now, monitored first-post-nightly + revert-ready). Unset (or =0) to revert to pre-#17.
+export GLOBGRPH_KUZU_REBUILD_LIVENESS=1
 python "$WORKSPACE/infra/aws/globgrph/kuzu_cli.py" "$@"
 _exit=$?
 python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-kuzu" "$*" $_exit 2>/dev/null
