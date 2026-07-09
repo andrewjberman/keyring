@@ -61,6 +61,34 @@ both of which have a CONFIRMED subscriber and have never delivered a single
 notification. No subscription-state check can find those; only the delivery
 metric can.
 
+THIS IS A CENSUS. IT IS NOT A DELETE-LIST. (CTO 2026-07-09T211337Z)
+-------------------------------------------------------------------
+An earlier ruling -- "each unreachable alarm gets a subscriber or gets deleted" --
+was SUSPENDED once the cause was established:
+
+    2026-07-01T02:46:02Z .. 02:47:05Z   Unsubscribe x7   Andrew_Berman, aws-cli, 63s
+      bd-allocation-file-missing   ec2-auto-shutdown-alerts   etfs-reports-alerts
+      find-insure-budget-alerts    opal-bd-49f-cookie-alerts  opal-bd-cot-cookie-alerts
+      opal-critical-surface-alerts
+    DeleteTopic: 0.  SetSubscriptionAttributes: 0.
+
+**The sovereign removed those subscriptions deliberately.** They are not a bug and
+not a regression. Acting on this tool's output by deleting alarms would have
+destroyed two dozen controls Andrew switched off on purpose, and the evidence of
+why. A zero-subscriber topic means "this alarm currently reaches nobody" -- it does
+NOT tell you whether that is an accident, a decommission, or an oversight. **This
+tool reports reachability. It never adjudicates intent.**
+
+And the loop that closes on it: those topics delivered CLEANLY, zero failures,
+until 02:46Z on 07-01 -- **email was the working limb.** LD-0233 recorded the email
+decommission as safe because "SMS still reaches him." SMS has never delivered once
+(sandbox, Pending number, $1 spend limit). The working limb was removed on the
+strength of a fallback that has never carried a message. Six days later the five
+`bd-served-vintage-stale-*` alarms fired into a topic that could reach nobody, then
+latched, so they could not re-notify even if a subscriber returned. The first topic
+unsubscribed was `bd-allocation-file-missing` -- named for the exact failure mode
+this all produced.
+
 Read-only. Paginates everything (an unpaginated sweep prints a clean bill of
 health it never earned). ASCII only.
 """
@@ -185,12 +213,16 @@ def main() -> int:
     # regression, destroys the evidence and the control together.
     r1 = [(arn.rsplit(":", 1)[-1], d) for arn, (t, c, d, f) in topics.items() if t == 0 and d > 0]
     if r1:
-        print(f"R1 ({len(r1)} topics): SUBSCRIBER REGRESSION -- zero subscriptions now, but DELIVERED")
-        print(f"    inside the {args.window_days}d window. Subscribers were REMOVED, not absent.")
-        print("    Do NOT adjudicate the attached alarms as never-wired. Establish what removed them.")
+        print(f"R1 ({len(r1)} topics): SUBSCRIBERS REMOVED -- zero subscriptions now, but DELIVERED")
+        print(f"    inside the {args.window_days}d window. They were removed, not absent.")
+        print("    Establish WHO removed them before adjudicating. On 2026-07-01T02:46Z the answer")
+        print("    was: the sovereign, deliberately, from the CLI, in 63 seconds. Not a regression.")
         for name, d in sorted(r1):
             print(f"    {name:<36} delivered={d:g} in-window, subscriptions=0 now")
         print()
+    print("  THIS IS A CENSUS, NOT A DELETE-LIST. It reports reachability; it never adjudicates")
+    print("  intent. A zero-subscriber topic may be an accident, a decommission, or an oversight.")
+    print()
 
     unreachable = len(e1) + len(e2) + len(e3)
     print(f"UNREACHABLE ALARMS (nodes, not edges): {unreachable} of {len(alarms)} "
