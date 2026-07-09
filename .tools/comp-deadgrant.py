@@ -130,15 +130,27 @@ def last_run(fn):
 
 
 def all_live_secret_names(regions):
-    """The RESOURCE side of the match. Empty is not a clean sweep."""
+    """The RESOURCE side of the match. The SEARCH SPACE must itself be a proven universe.
+
+    `list-secrets` EXCLUDES secrets pending deletion by default. A consumer that still names one
+    has a DEAD reach (GetSecretValue on a scheduled-deletion secret fails), and it is exactly the
+    kind of reader this tool exists to find -- so excluding those names would let the failure
+    escape the search. `--include-planned-deletion` closes it: 76 live + 2 pending = 78 in this
+    account on 2026-07-09. (CTO's catch: method-1 exhaustiveness holds IFF the name inventory is
+    complete; the search SPACE must be a proven universe, one level down from the sweep itself.)
+
+    Empty is not a clean sweep.
+    """
     names = set()
     for r in regions:
-        rc, out, _ = aws("secretsmanager", "list-secrets", "--max-items", "500",
-                         "--query", "SecretList[].Name", "--output", "text", region=r)
-        if rc == 0 and out:
-            names |= {n for n in out.replace("\t", "\n").split("\n") if n.strip()}
+        for extra in (["--include-planned-deletion"], []):
+            rc, out, _ = aws("secretsmanager", "list-secrets", *extra, "--max-items", "500",
+                             "--query", "SecretList[].Name", "--output", "text", region=r)
+            if rc == 0:
+                names |= {n for n in out.replace("\t", "\n").split("\n") if n.strip()}
+                break          # the flag is supported; the first call is the complete listing
     if not names:
-        sys.exit("comp-deadgrant: zero live secrets resolved. Refusing to sweep against an empty universe.")
+        sys.exit("comp-deadgrant: zero secrets resolved. Refusing to sweep against an empty universe.")
     return names
 
 
@@ -200,7 +212,30 @@ def main() -> int:
         # call site names a constant, and a doc example is not a live secret so it cannot false-fire.
         # `SecretId=` parsing is retained ONLY to detect CONSTRUCTED names -- a completeness signal,
         # not the enumeration.
+        # A NAME IS NOT A READ. Resource-matching finds a secret name wherever it appears -- including
+        # inside a COMMENT. `bd-realized-trigger`'s only mention of `opal/bd/credentials` is the
+        # docstring "Credentials are fetched at runtime on the EC2 from opal/bd/credentials"; it has
+        # no secretsmanager client at all. v2 reported it as a dead reach. A comment must not raise a
+        # security finding. So: the artifact must contain an actual CALL SITE in non-vendor code
+        # before any name is attributed to it. (v1's bias was the mirror image -- it demanded a quoted
+        # literal AT the call site and missed constants. Reach = call-site presence AND resource-match.)
         region, names, constructed, silent = None, set(), [], None
+        has_call = False
+        for info in z.infolist():
+            if info.is_dir() or not info.filename.endswith((".py", ".js", ".mjs", ".ts")):
+                continue
+            if VENDOR.search(info.filename):
+                continue
+            try:
+                probe = z.read(info).decode("utf-8", errors="replace")
+            except Exception:
+                continue
+            if re.search(r"get_secret_value|GetSecretValueCommand|getSecretValue", probe):
+                has_call = True
+                break
+        if not has_call:
+            continue
+
         for info in z.infolist():
             if info.is_dir() or not info.filename.endswith((".py", ".js", ".mjs", ".ts")):
                 continue
