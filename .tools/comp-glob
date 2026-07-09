@@ -63,8 +63,16 @@ def main() -> int:
                 max_list = int(argv[i])
             except Exception:
                 max_list = MAX_LIST_DEFAULT
-        elif glob_pat is None and _looks_glob(a):
-            glob_pat = a  # first glob-looking positional = the pattern (native-Glob ergonomics)
+        elif glob_pat is None and (_looks_glob(a) or not os.path.exists(os.path.join(WS, a))):
+            # First glob-looking positional = the pattern (native-Glob ergonomics). ALSO: a bare
+            # positional that is not an existing path is a BASENAME pattern, not a pathspec.
+            # Before this, `comp-glob comp_ladder.py` (no metachar) was consumed as a PATHSPEC,
+            # the pathspec did not exist, and the tool printed "OK: comp-glob -- 0 file(s)" -- a
+            # CONFIDENT WRONG ANSWER about a git-tracked file, i.e. exactly the silent dead-end
+            # Rule 21 promises comp-glob never produces. The basename fnmatch below then makes
+            # `comp_ladder.py` behave as `**/comp_ladder.py`, which is what an agent typing it means.
+            # (DS~B, NFRA_EDGES P2, routed via COO~B 2026-07-09.)
+            glob_pat = a
         else:
             pathspec.append(a)
         i += 1
@@ -88,6 +96,20 @@ def main() -> int:
         print(_comprail.ascii_safe(f))
 
     print("")
+    if total == 0:
+        # NEVER "OK: 0 file(s)" -- that reads as "confirmed absent" and is the confident-wrong
+        # answer the rail exists to prevent. 0 hits is an honest NOT-FOUND-HERE, with the next
+        # move stated (Rule 21: never a dead-end).
+        print("NO MATCH: comp-glob -- 0 file(s) for pattern=%s pathspec=%s"
+              % (glob_pat or "-", ",".join(pathspec) or "."))
+        print("  This is NOT a confirmation the file is absent -- it is 0 hits in the")
+        print("  .gitignore-aware working set. Next: widen the pattern (`%s*`), search content"
+              % (glob_pat or "name"))
+        print("  instead (`comp-grep <text>`), or check whether the path is gitignored")
+        print("  (`git check-ignore -v <path>`) -- 16 of the .tools/comp-* files are.")
+        _comprail.log_rail(RAIL_LOG, "RUN-GLOB", "comp-glob", glob_pat or (",".join(pathspec) or "."),
+                           "count=0 pattern=%s" % (glob_pat or "-"))
+        return 0
     foot = "OK: comp-glob -- %d file(s)" % total
     if truncated:
         foot += " [showing first %d; --max to raise or narrow the pathspec/pattern]" % max_list
