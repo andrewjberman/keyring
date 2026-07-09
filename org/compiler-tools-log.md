@@ -14735,3 +14735,29 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | FAIL |
 | 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P2 | (window summary) | comp-glob x4 + comp-grep x3 + comp-kuzu D1-D7 live (canonical, HEAD-current) + commit-gate x2 + safe-commit x3 | PARTIAL -- 2 GAPS FOUND: comp-glob bare-basename silent-0 (fixed 8dfdaa8d1); safe-commit/commit-gate cannot commit a .py DELETION (py_compile fail-closed on missing file) |
 | 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | --help | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_EDGES_PRD.md | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-denytest.py --file org/crit... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/FILED_marke... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_capability_provi... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/region-misma... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | FAIL |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-denytest.py | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit_gate_runner.py --file org... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/FILED_regio... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_capability_provi... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id = 'system:firm-conditional-display:25558d98' RETURN... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | FAIL |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | FAIL |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | FAIL |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | FAIL |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P3 | (window summary) | comp-to + comp-glob x2 + comp-grep x2 + comp-kuzu (D6 structural + P3 emergence, canonical HEAD-current) + commit-gate x3 + safe-commit x3 | PASS -- comp-grep on kuzu_nessie_load.py:190 yielded the store edge-identity key verbatim (the load-bearing contract item); comp-glob's new "0 hits is NOT a confirmation of absence" caveat (my reported dead-end, fixed 8dfdaa8d1) fired correctly. GAP FOUND: frozen-spec materialize (derive_runner.py:1320-1360) replays a fixed edge list -- deletions loud, ADDITIONS SILENT; AC5 is per-entity freshness, not set-completeness (routed to COO~B) |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
