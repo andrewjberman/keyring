@@ -1,0 +1,150 @@
+#!/usr/bin/env python3
+"""comp-routable-check -- the REGISTERED-IMPLIES-REACHABLE completeness invariant (commit-time).
+
+THE CLASS THIS PREVENTS (three observed instances, all caught only by the LIVE oracle AFTER merge):
+a comp-tool is registered in the manifest `tools_index` -- it has a canonical_call, a use_case, a
+declared comp-which routing string -- and is nonetheless UNREACHABLE via comp-which, because the
+capability provider marks it `routable=False` and `comp_route.py`'s candidate filter
+
+    caps = [c for c in provider.capabilities() if getattr(c, "routable", True)]
+
+drops it BEFORE any scoring. No curated rule, no vocabulary, and no amount of fuzzy backstop can
+resurrect a candidate that was never in the set. "Registered as a comp-tool" is then only half-true:
+catalogued, but undiscoverable by the mandated router.
+
+  instance 1  comp-fedobs   (role fedobs-reflective-reader)  -- NFRA_TOOLCHECK P3 req#1a, 5fc507a42
+  instance 2  comp-system   (role system-compiler)           -- NFRA_TOOLCHECK P3,       5d21baa6f
+  instance 3  <the next cross-surface tool someone registers in meta_tools[]>
+
+Both landed instances were found by `comp-which-routing-test.py` -- a LIVE oracle, run after the
+tool had already merged and been announced as available. This gate moves the catch to commit time,
+which is where a completeness invariant belongs: the provider's own comment already STATES the
+invariant ("the routable set must match comp-which's actual routing targets",
+comp_capability_provider.py:88) -- it simply was never enforced.
+
+WHY IT KEEPS HAPPENING: a tool homed on one surface lands in the coverage map's `tools[]` and gets
+`routable=True` unconditionally. A CROSS-SURFACE aggregator has no single surface home, so it is
+correctly filed under `meta_tools[]` -- where routability is opt-in via `_ROUTABLE_META_ROLES`.
+Every new meta_tools[]-homed tool therefore ships unreachable-by-default, and nothing says so.
+
+CHECKS
+  FAIL  a tools_index tool (excluding the run-primitives + the router itself) that is absent from
+        the provider, or present with routable=False. This is the unreachable-tool defect.
+  WARN  a routable capability absent from tools_index -- reachable by the router but missing from
+        the human/agent catalog. Advisory only (the catalog is curated; not every capability is a
+        catalog entry), reported so the reverse gap is never silent.
+
+Read-only, deterministic, ASCII-only. Run from the workspace root:
+    comp-routable-check [--json] [--strict]
+Exit 0 = invariant holds. Exit 1 = at least one unreachable tool. `--strict` also fails on WARN.
+
+Author: 0.8.0_AE_CloudComp (NFRA_TOOLCHECK P3 follow-on; CVO-endorsed 20260709T084324Z, routed to
+1.0.0_SA_CTO for the arch-gate + commit-path wiring decision).
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+
+WS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MANIFEST = os.path.join(WS, "org", "modules", "graph", "graph-call-manifest.yaml")
+
+# The router itself + the on-rails RUN-primitives it falls back to. comp-which routes TO rich
+# tools, never to these, so they are legitimately not routing targets. Mirrors the EXCLUDE set in
+# .tools/comp-which-routing-test.py -- keep the two in sync.
+EXCLUDE = {"comp-grep", "comp-glob", "comp-which"}
+
+
+def _load():
+    import yaml
+    for p in (os.path.join(WS, "org", "modules", "graph"),
+              os.path.join(WS, "infra", "aws", "globgrph")):
+        if p not in sys.path:
+            sys.path.insert(0, p)
+    import comp_capability_provider as capmap
+
+    with open(MANIFEST, encoding="utf-8") as f:
+        manifest = yaml.safe_load(f)
+    tools_index = set((manifest.get("tools_index") or {}).keys())
+    caps = {c.id: c for c in capmap.get_provider().capabilities()}
+    return tools_index, caps
+
+
+def check():
+    tools_index, caps = _load()
+    targets = tools_index - EXCLUDE
+
+    unreachable = []   # in the catalog, but the router can never surface it
+    for tool in sorted(targets):
+        cap = caps.get(tool)
+        if cap is None:
+            unreachable.append((tool, "ABSENT-FROM-PROVIDER", ""))
+        elif not getattr(cap, "routable", True):
+            unreachable.append((tool, "ROUTABLE=FALSE", getattr(cap, "kind", "?")))
+
+    routable = {i for i, c in caps.items() if getattr(c, "routable", True)}
+    uncatalogued = sorted(routable - tools_index)
+
+    return targets, unreachable, uncatalogued
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(prog="comp-routable-check", description=__doc__.splitlines()[0])
+    ap.add_argument("--json", action="store_true", help="machine-readable output")
+    ap.add_argument("--strict", action="store_true", help="also fail on the WARN (uncatalogued) class")
+    args = ap.parse_args()
+
+    try:
+        targets, unreachable, uncatalogued = check()
+    except Exception as e:  # a broken provider/manifest must FAIL LOUD, never pass silently
+        if args.json:
+            print(json.dumps({"result": "ERROR", "error": str(e)}))
+        else:
+            print("ERROR: comp-routable-check could not evaluate the invariant: %s" % e)
+            print("  (failing closed -- an unevaluable completeness gate is not a passing one)")
+        return 1
+
+    failed = bool(unreachable) or (args.strict and bool(uncatalogued))
+
+    if args.json:
+        print(json.dumps({
+            "result": "FAIL" if failed else "PASS",
+            "tools_index_targets": len(targets),
+            "unreachable": [{"tool": t, "why": w, "kind": k} for t, w, k in unreachable],
+            "uncatalogued_routable": uncatalogued,
+        }, indent=2))
+        return 1 if failed else 0
+
+    print("comp-routable-check -- registered-implies-reachable (tools_index -> provider.routable)")
+    print("  tools_index routing targets: %d  (excluding %s)" % (len(targets), ", ".join(sorted(EXCLUDE))))
+
+    if unreachable:
+        print("\n  FAIL: %d registered tool(s) are UNREACHABLE via comp-which:" % len(unreachable))
+        for tool, why, kind in unreachable:
+            print("    - %-22s %s%s" % (tool, why, (" (kind=%s)" % kind) if kind else ""))
+        print("\n  Each is catalogued in graph-call-manifest.yaml tools_index but comp_route.py's")
+        print("  candidate filter drops it before scoring, so NO curated rule or vocabulary can")
+        print("  surface it. FIX: if the tool is homed in comp-coverage-map.yaml meta_tools[], add")
+        print("  its `role` to comp_capability_provider._ROUTABLE_META_ROLES; if it is homed in")
+        print("  tools[], confirm the provider actually projects it. Then re-run")
+        print("  `python .tools/comp-which-routing-test.py` -- it should go GREEN.")
+    else:
+        print("  OK: every registered tool is a live routing target.")
+
+    if uncatalogued:
+        tag = "FAIL" if args.strict else "WARN"
+        print("\n  %s: %d routable capability(ies) absent from tools_index (router-reachable," % (tag, len(uncatalogued)))
+        print("       but missing from the catalog agents browse):")
+        for t in uncatalogued:
+            print("    - %s" % t)
+        if not args.strict:
+            print("       (advisory -- the catalog is curated; --strict to enforce)")
+
+    print("\nRESULT: %s" % ("FAIL" if failed else "PASS"))
+    return 1 if failed else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
