@@ -69,6 +69,17 @@ COO_INBOX = WORKSPACE / "org" / "mcp" / "inbox" / "2.0.0_SA_COO"
 LEG_KINDS = {"git", "s3-prefix", "activation", "ec2-baked-asset", "verify", "tf-lambda"}
 DEFAULT_WINDOW_HOURS = 4.0
 
+# HELD / SOVEREIGN-GATED state (CTO-designed 2026-07-09; the dormant-sovereign-hold doctrine encoded
+# into the never-half-land gate). An APPLY/DEPLOY leg is any leg whose work MUTATES state (git push,
+# code landed, TF apply, activation, baked asset); a VERIFY leg is a post-deploy live-state check. The
+# distinction is load-bearing: HELD requires EVERY apply leg proven + ONLY verify legs open, so a real
+# half-landed strand (an open apply leg) can NEVER claim HELD to escape the RED. See _qualifies_as_held.
+APPLY_LEG_KINDS = LEG_KINDS - {"verify"}
+GATE_TYPES = {"sovereign", "external"}          # (c) the structured gate class -- NOT free prose
+DEFAULT_HELD_STALE_DAYS = 4.0                    # a HELD hold older than this escalates to HELD-STALE
+HELD_STATUS = "HELD-SOVEREIGN-GATED"
+HELD_NUDGE_SUPPRESS_HOURS = 24.0                # re-nudge a HELD-STALE hold at most once/day
+
 # Gate-bypass scan (false-clean hardening 2026-06-17, CTO-author / AE-review /
 # COO-track). The sentinel-only `check --red` enumerates ONLY .open_deploys/*.json,
 # so a HAND-AUTHORED markdown deploy-completion ledger (no sentinel) is structurally
@@ -119,7 +130,9 @@ def _render_entry(state: dict) -> str:
         "# Deploy Completion Record",
         f"**Date opened:** {state['opened_at']}",
         f"**Status:** {state['status']}"
-        + (f" -- closed {state.get('closed_at')}" if state.get("closed_at") else ""),
+        + (f" -- closed {state.get('closed_at')}" if state.get("closed_at") else "")
+        + (f" -- gate: {state['gate'].get('type')} / {state['gate'].get('ref')}"
+           f" (held since {state.get('held_at')})" if state.get("gate") else ""),
         f"**Deploy:** {state['title']}",
         f"**Authored by:** {state['author']}",
         "**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)",
@@ -288,6 +301,81 @@ def cmd_close(args) -> int:
     return 0
 
 
+def cmd_hold(args) -> int:
+    """Mark a ledger HELD / SOVEREIGN-GATED (or --release it). Encodes the dormant-sovereign-hold
+    doctrine: a deploy whose apply legs are all proven but whose post-deploy VERIFY legs are blocked
+    on a named sovereign/external gate is NOT half-landed -- it should not cry-wolf RED. The hold is
+    granted ONLY on the structural guardrails (_qualifies_as_held); a half-landed strand is refused."""
+    state = _load(args.slug)
+    if args.release:
+        had_gate = bool(state.pop("gate", None))
+        state.pop("held_at", None)
+        state.pop("last_held_nudge_at", None)
+        state["status"] = "OPEN"
+        state["log"].append(f"{_ts()} HOLD RELEASED -> OPEN" + ("" if had_gate else " (was not held)"))
+        _save(state)
+        _write_entry(state)
+        print(f"OK: HOLD released on '{args.slug}' -> status OPEN "
+              "(verify legs must still close before CLOSE).")
+        return 0
+    if not args.gate_type or not args.gate_ref:
+        sys.exit("ERROR: setting a hold requires --gate-type {sovereign|external} and --gate-ref "
+                 "'<specific dependency>' (or use --release).")
+    if args.gate_type not in GATE_TYPES:
+        sys.exit(f"ERROR: --gate-type must be one of {sorted(GATE_TYPES)}")
+    if not args.gate_ref.strip():
+        sys.exit("ERROR: --gate-ref must NAME the specific dependency (e.g. 'Andrew cross-region PAT'), "
+                 "not prose -- a vague 'waiting on something' is refused.")
+    # Provisionally attach the gate, THEN verify the conjunction -- REFUSE if an apply leg is open
+    # (the anti-escape-hatch, enforced at set-time as well as at check-time).
+    trial = dict(state)
+    trial["gate"] = {"type": args.gate_type, "ref": args.gate_ref.strip()}
+    ok, reason = _qualifies_as_held(trial)
+    if not ok:
+        sys.exit(f"REFUSED: cannot HELD '{args.slug}' -- {reason}.\n"
+                 "A HELD/SOVEREIGN-GATED state requires ALL apply/deploy legs closed-with-proof and "
+                 "ONLY verify legs open. A half-landed deploy stays RED -- close or roll back the open "
+                 "apply leg first.")
+    state["gate"] = trial["gate"]
+    state.setdefault("held_at", _now().isoformat())    # preserve the original hold-start on a re-hold
+    state["status"] = HELD_STATUS
+    state["log"].append(f"{_ts()} HELD-SOVEREIGN-GATED gate={args.gate_type}/{args.gate_ref.strip()[:80]}")
+    _save(state)
+    _write_entry(state)
+    print(f"OK: '{args.slug}' -> {HELD_STATUS} (gate={args.gate_type}/{args.gate_ref.strip()}).\n"
+          "Reads KNOWN-HELD (no half-landed RED) but stays VISIBLE + tracked in `check`; escalates to "
+          f"HELD-STALE after {DEFAULT_HELD_STALE_DAYS}d (tunable via `check --held-stale-days`).\n"
+          f"Release with `deploy_ledger.py hold --slug {args.slug} --release`.")
+    return 0
+
+
+def _held_nudge_alert(state: dict, held_days: float) -> None:
+    """A HELD-STALE NUDGE -- DISTINCT from the half-landed _red_alert. A legitimate sovereign/external
+    -gated hold that has sat past the staleness threshold: not a stranded deploy, but it needs a human
+    to nudge the gate or reconsider. Alert-not-block; softer, clearly-labelled subject."""
+    COO_INBOX.mkdir(parents=True, exist_ok=True)
+    gate = state.get("gate") or {}
+    open_verify = [lg["id"] for lg in state["legs"] if not lg.get("proof")]
+    subject = f"HELD-STALE__sovereign-gated_hold__{state['slug']}"
+    fname = f"{_ts()}_deploy-ledger_{subject}.md"
+    body = (
+        f"# Message from deploy_ledger.py (HELD-STALE nudge, on behalf of {state['author']})\n"
+        f"**To:** 2.0.0_SA_COO\n**Date:** {_ts()}\n"
+        f"**Subject:** HELD-STALE: sovereign/external-gated deploy hold '{state['slug']}' held "
+        f"{held_days:.1f}d -- NUDGE THE GATE OR RECONSIDER (NOT a half-landed deploy)\n\n"
+        f"Deploy: {state['title']}\nAuthor: {state['author']}\n"
+        f"Gate: {gate.get('type')} / {gate.get('ref')}\n"
+        f"Held since: {state.get('held_at')} ({held_days:.1f} days)\n"
+        f"Open (verify-only) legs: {', '.join(open_verify)}\n"
+        f"Entry: {state['entry_path']}\n\n"
+        "This is a LEGITIMATE hold (all apply/deploy legs proven; only post-deploy verify pends) -- NOT "
+        "a stranded/half-landed deploy, so it is not a half-landed RED. But it has now sat past the "
+        "staleness threshold: nudge the named gate so the verify legs can close, or reconsider whether "
+        f"the hold still applies. Release with `deploy_ledger.py hold --slug {state['slug']} --release`.\n")
+    (COO_INBOX / fname).write_text(body, encoding="utf-8", newline="\n")
+    print(f"HELD-STALE: nudge delivered to COO inbox: {fname}")
+
+
 def _red_alert(state: dict, age_h: float) -> None:
     """RED delivery: write the alert file directly into the COO inbox dir --
     the COO's persistent inbox Monitor streams it as an [INBOX] event. RED is
@@ -349,6 +437,47 @@ def _is_terminal_status(status: str) -> bool:
     not false-terminal an open ledger."""
     head = status.lstrip().upper()
     return any(head.startswith(tok) for tok in TERMINAL_STATUS_TOKENS)
+
+
+def _qualifies_as_held(state: dict) -> tuple:
+    """CTO's CONJUNCTIVE guardrails for a HELD / SOVEREIGN-GATED deploy ledger -- ALL required, and
+    verified STRUCTURALLY off the legs (NEVER off a status string), so a real half-landed strand can
+    NOT claim HELD to escape the RED. Returns (qualifies: bool, reason: str). HELD is NOT terminal
+    (unlike CLOSED): a HELD ledger stays visible + tracked, it just is not a stranded-deploy RED.
+      (a) every APPLY/DEPLOY leg (kind != 'verify') is CLOSED-WITH-PROOF -- an open apply leg IS a
+          genuinely half-landed deploy -> DISQUALIFIED (stays RED). THIS is the anti-escape-hatch.
+      (b) at least one leg is open AND every open leg is a 'verify' leg (only post-deploy checks pend;
+          a fully-proven ledger must close(), not HELD).
+      (c) a NAMED, STRUCTURED gate: state['gate'] = {'type' in GATE_TYPES, 'ref': <non-empty>} -- a
+          machine-checkable dependency, NOT prose. A vague 'waiting on something' cannot qualify."""
+    legs = state.get("legs") or []
+    open_legs = [lg for lg in legs if not lg.get("proof")]
+    if not open_legs:
+        return False, "no open legs -- close() the ledger, do not HELD it"
+    open_apply = [lg["id"] for lg in open_legs if lg.get("kind") != "verify"]
+    if open_apply:                                    # (a) + (b): the load-bearing anti-escape-hatch
+        return False, ("open APPLY/DEPLOY leg(s) %s -- a half-landed deploy cannot be HELD (stays RED)"
+                       % open_apply)
+    gate = state.get("gate")                          # (c) structured gate
+    if not isinstance(gate, dict):
+        return False, "no structured gate (need gate.type + gate.ref -- not prose)"
+    if gate.get("type") not in GATE_TYPES:
+        return False, "gate.type must be one of %s (got %r)" % (sorted(GATE_TYPES), gate.get("type"))
+    if not (gate.get("ref") or "").strip():
+        return False, "gate.ref is empty -- name the SPECIFIC dependency, not prose"
+    return True, ("all apply legs proven; only verify open; structured %s gate (%s)"
+                  % (gate["type"], gate["ref"]))
+
+
+def _held_age_days(state: dict, now: datetime) -> float | None:
+    """Days since the ledger entered HELD (state['held_at']); None if unknown/unparseable."""
+    ha = state.get("held_at")
+    if not ha:
+        return None
+    try:
+        return (now - datetime.fromisoformat(ha)).total_seconds() / 86400.0
+    except (ValueError, TypeError):
+        return None
 
 
 def _unindexed_open_ledgers(covered: set) -> list:
@@ -438,26 +567,62 @@ def _red_alert_unindexed(md: Path, reason: str, age_h: float) -> None:
 def cmd_check(args) -> int:
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     now = _now()
-    any_open = False
+    exit_flag = False       # any NON-HELD open ledger / HELD-STALE / bypass -> check exits 1
+    held_count = 0          # KNOWN-HELD (sovereign/external-gated, non-stale) -> visible, NOT a RED
     covered: set = set()
+    stale_days = getattr(args, "held_stale_days", None) or DEFAULT_HELD_STALE_DAYS
 
     # --- Layer 1: tracked sentinels (the original, sound, in-window scan) ---
     sentinels = [sp for sp in sorted(STATE_DIR.glob("*.json"))
                  if not sp.name.startswith(".")]
     for sp in sentinels:
         state = json.loads(sp.read_text(encoding="utf-8"))
-        any_open = True
         opened = datetime.fromisoformat(state["opened_at"])
         age_h = (now - opened).total_seconds() / 3600.0
         window = args.window_hours or state.get("window_hours", DEFAULT_WINDOW_HOURS)
         open_legs = [leg["id"] for leg in state["legs"] if not leg.get("proof")]
-        flag = "PAST-WINDOW" if age_h > window else "in-window"
-        print(f"OPEN: {state['slug']} age={age_h:.1f}h window={window}h [{flag}] "
-              f"stranded={open_legs} author={state['author']}")
         try:
             covered.add((WORKSPACE / state["entry_path"]).resolve())
         except (KeyError, OSError):
             pass
+
+        # HELD / SOVEREIGN-GATED: structurally verified off the legs (all apply legs proven + only
+        # verify open + a named structured gate). A KNOWN-HELD ledger is NOT a half-landed RED -- it
+        # stays visible + tracked and only escalates to HELD-STALE past the staleness threshold. The
+        # guardrails read the LEGS, so a half-landed strand (an open APPLY leg) can never reach here.
+        held_ok, held_reason = _qualifies_as_held(state)
+        if held_ok:
+            gate = state["gate"]
+            held_days = _held_age_days(state, now)
+            if held_days is not None and held_days > stale_days:
+                exit_flag = True    # a legit hold sat too long -> a DISTINCT nudge (not the half-land RED)
+                print(f"HELD-STALE: {state['slug']} held={held_days:.1f}d (>{stale_days}d) "
+                      f"gate={gate['type']}/{gate['ref']} open-verify={open_legs} "
+                      f"author={state['author']} -- nudge the gate or reconsider")
+                if args.red:
+                    last = state.get("last_held_nudge_at")
+                    if last and (now - datetime.fromisoformat(last)).total_seconds() < HELD_NUDGE_SUPPRESS_HOURS * 3600:
+                        print(f"  (HELD-STALE nudge suppressed -- last {last}, re-nudges each {HELD_NUDGE_SUPPRESS_HOURS}h)")
+                    else:
+                        _held_nudge_alert(state, held_days)
+                        state["last_held_nudge_at"] = now.isoformat()
+                        _save(state)
+            else:
+                held_count += 1
+                hd = f"{held_days:.1f}d" if held_days is not None else "?"
+                print(f"HELD: {state['slug']} [{HELD_STATUS}] held={hd} gate={gate['type']}/{gate['ref']} "
+                      f"open-verify={open_legs} author={state['author']} "
+                      "-- apply legs proven, only verify open; tracked-not-stranded")
+            continue
+
+        # NOT held -> the original OPEN / stranded logic (preserves the exit-1-on-any-open contract).
+        # A ledger that CLAIMS a hold (a gate is set) but does NOT qualify (e.g. an open apply leg) is
+        # flagged LOUDLY -- the anti-escape-hatch fired: a half-landed strand can't hide behind a gate.
+        exit_flag = True
+        gate_note = f" [HELD-CLAIM REJECTED: {held_reason}]" if state.get("gate") else ""
+        flag = "PAST-WINDOW" if age_h > window else "in-window"
+        print(f"OPEN: {state['slug']} age={age_h:.1f}h window={window}h [{flag}] "
+              f"stranded={open_legs} author={state['author']}{gate_note}")
         if args.red and age_h > window:
             last_red = state.get("last_red_at")
             if last_red and (now - datetime.fromisoformat(last_red)).total_seconds() < window * 3600:
@@ -491,14 +656,19 @@ def cmd_check(args) -> int:
         if args.red and changed:
             _save_unindexed_red_state(red_state)
 
-    if not any_open and not bypass:
-        print("OK: no open deploy ledgers + no unindexed open ledgers -- nothing half-landed")
+    if not exit_flag and not bypass:
+        if held_count:
+            print(f"OK: no stranded/open deploys; {held_count} HELD-SOVEREIGN-GATED "
+                  "(visible + tracked, apply-proven, NOT half-landed)")
+        else:
+            print("OK: no open deploy ledgers + no unindexed open ledgers -- nothing half-landed")
         return 0
     return 1
 
 
 def cmd_list(args) -> int:
-    return cmd_check(argparse.Namespace(window_hours=None, red=False))
+    return cmd_check(argparse.Namespace(window_hours=None, red=False,
+                                        held_stale_days=DEFAULT_HELD_STALE_DAYS))
 
 
 def main() -> int:
@@ -534,9 +704,25 @@ def main() -> int:
     p.add_argument("--slug", required=True)
     p.set_defaults(fn=cmd_close)
 
+    p = sub.add_parser("hold", help="mark a ledger HELD/SOVEREIGN-GATED (apply legs proven, only verify "
+                                    "open, blocked on a NAMED sovereign/external gate) -> stops the "
+                                    "half-landed RED cry-wolf but stays visible + tracked; --release to clear")
+    p.add_argument("--slug", required=True)
+    p.add_argument("--gate-type", choices=sorted(GATE_TYPES),
+                   help="the gate class: 'sovereign' (Andrew/human sign-off) or 'external' "
+                        "(a third-party / cross-system dependency)")
+    p.add_argument("--gate-ref",
+                   help="the SPECIFIC named dependency (e.g. 'Andrew cross-region PAT') -- not prose; "
+                        "a vague 'waiting on something' is refused")
+    p.add_argument("--release", action="store_true", help="clear the hold -> back to OPEN")
+    p.set_defaults(fn=cmd_hold)
+
     p = sub.add_parser("check", help="report OPEN ledgers; exit 1 if any; --red alerts COO")
     p.add_argument("--red", action="store_true")
     p.add_argument("--window-hours", type=float, default=None)
+    p.add_argument("--held-stale-days", type=float, default=DEFAULT_HELD_STALE_DAYS,
+                   help="a HELD/SOVEREIGN-GATED ledger older than this escalates to HELD-STALE "
+                        "(a distinct nudge, not the half-landed RED); default %(default)s")
     p.set_defaults(fn=cmd_check)
 
     p = sub.add_parser("list", help="alias for check (no RED)")
