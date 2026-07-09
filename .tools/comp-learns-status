@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# comp-learns-status -- RECLAIMED (NFRA_COMPLEARN P1, 0.8.0_AE_CloudComp~E, 2026-06-30).
+#
+# WAS: a dead forwarder to `python -m comp.framework.status` (the decommissioned CL-fabric
+# comp.framework.*). NOW: the fabric-native read-only tool DEMAND/GAP/COST surface -- renders the
+# served status JSON that comp_learns_produce.py materializes from the LIVE globgrph Trino
+# federation (Behavior=tool_activity x Change=code_heat x Estate=iceberg). Reads SERVED state,
+# does not recompute (PRD SS3). Substrate/observability only -- the value-anchored SCORER
+# (comp-learns-run) is P2, gated on the COMPUNIFY map + CTO's Goodhart gate.
+#
+# Tracked implementation: infra/aws/globgrph/comp_learns_status.py (this shim is the PATH entry;
+# .tools/ is gitignored, mirroring comp-trace / comp-blast / etc.).
+#
+# Usage:
+#   comp-learns-status                 # full dashboard from the served surface
+#   comp-learns-status <view>          # one view (gap_heat|coverage_gaps|tool_demand|...)
+#   comp-learns-status --json          # raw served JSON
+#   comp-learns-status --source <s3://...|LOCAL.json>
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if git_top="$(git -C "${SCRIPT_DIR}" rev-parse --show-toplevel 2>/dev/null)"; then
+    WORKSPACE_ROOT="${git_top}"
+else
+    WORKSPACE_ROOT="/c/Users/AndrewBerman/Desktop/ajb_workspace"
+fi
+
+PYTHON="${COMP_LEARNS_PYTHON:-python}"
+exec "${PYTHON}" "${WORKSPACE_ROOT}/infra/aws/globgrph/comp_learns_status.py" "$@"

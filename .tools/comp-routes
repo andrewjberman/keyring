@@ -1,0 +1,13 @@
+#!/bin/bash
+# comp-routes — trace the full serving path from S3 artifact to frontend component
+# Usage: comp-routes trace getEmployeeLeaderboard | behaviors | origins | rewrites | api-routes | endpoints | components | auth-map | stats
+#
+# NOTE (Git Bash / MSYS): Do NOT pass leading-slash URL paths directly as arguments.
+# MSYS converts /api/scoped/... to a Windows path. Use the endpoint function name instead:
+#   GOOD: comp-routes trace getAdvisorFeeEfficiency
+#   BAD:  comp-routes trace /api/scoped/advisor-intelligence/platinum/firm/fee_efficiency.json
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/routes_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-routes" "$*" $_exit 2>/dev/null
+exit $_exit

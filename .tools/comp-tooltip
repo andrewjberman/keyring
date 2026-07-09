@@ -1,0 +1,8 @@
+#!/bin/bash
+# comp-tooltip - Portal tooltip pattern detector and migration audit
+# Usage: comp-tooltip scan | canonical | drift | migrated | summary
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/tooltip_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-tooltip" "$*" $_exit 2>/dev/null
+exit $_exit

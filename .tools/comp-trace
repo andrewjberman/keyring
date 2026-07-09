@@ -1,0 +1,8 @@
+#!/bin/bash
+# comp-trace — trace data paths through the full stack
+# Usage: comp-trace AdvisorsTab.tsx [--direction up|down|both] [--depth N] [--json]
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/cli.py" trace "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-trace" "$*" $_exit 2>/dev/null
+exit $_exit

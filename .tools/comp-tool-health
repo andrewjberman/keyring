@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# comp-tool-health -- NFRA_TOOLHEALTH TH-B: the fused per-tool 3-axis HEALTH query.
+#
+# ONE query -> per comp-tool {used, rail_consistent, effective, verdict in KEEP|FIX|PROMOTE|RETIRE}
+# over the LIVE COMPLEARN substrate (tool_activity USED + comproute-routing RAIL-CONSISTENT);
+# EFFECTIVE is fed by TH-A's recurring blind-run probe (pending -- 2-live-axis skeleton for now).
+# Value-anchored (COMPLEARN SS5): scores on OUTCOME value + rail quality, NEVER invocation count.
+# Read-only, advisory (the CTO ratifies retire/fix/promote). REUSES comp_learns_score un-forked.
+#
+# Tracked implementation: org/modules/graph/comp_tool_health.py (this shim is the PATH entry;
+# .tools/ is gitignored, mirroring comp-learns-status / comp-blast / etc.).
+#
+# Usage:
+#   comp-tool-health                    # the fused health table (worst-first)
+#   comp-tool-health --verdict FIX      # filter (KEEP|FIX|PROMOTE|RETIRE)
+#   comp-tool-health --tool comp-blast  # one tool, full 3-axis detail
+#   comp-tool-health --json | --goodhart-audit | --self-test
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if git_top="$(git -C "${SCRIPT_DIR}" rev-parse --show-toplevel 2>/dev/null)"; then
+    WORKSPACE_ROOT="${git_top}"
+else
+    WORKSPACE_ROOT="/c/Users/AndrewBerman/Desktop/ajb_workspace"
+fi
+
+PYTHON="${COMP_TOOL_HEALTH_PYTHON:-python}"
+exec "${PYTHON}" "${WORKSPACE_ROOT}/org/modules/graph/comp_tool_health.py" "$@"

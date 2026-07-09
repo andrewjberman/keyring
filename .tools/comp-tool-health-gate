@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# comp-tool-health-gate -- NFRA_TOOLHEALTH TH-C: the close-the-loop ACCEPTANCE GATE.
+#
+# Makes the TH-B health verdict DRIVE a demonstrable downstream action (not display): each ACTIONABLE
+# (non-KEEP) verdict -> a TYPED, ADVISORY commission the CTO ratifies (FIX->fix-TO / PROMOTE->concrete
+# COMPROUTE surface_prior bump / RETIRE->deprecation-candidate). Advisory-only, never auto-mutating.
+# Reuses comp_tool_health.health() un-forked. Clause A (dispatch) here; clause B (COMPPROOF-D1 behavior
+# delta) executes on the DRV-flip green.
+#
+# Tracked implementation: org/modules/graph/comp_tool_health_gate.py (this shim is the PATH entry;
+# .tools/ is gitignored, mirroring comp-tool-health / comp-blast / etc.).
+#
+# Usage:
+#   comp-tool-health-gate                 # the advisory commission ledger (worst-first)
+#   comp-tool-health-gate --verdict FIX   # filter (FIX|PROMOTE|RETIRE)
+#   comp-tool-health-gate --json          # machine-readable
+#   comp-tool-health-gate --emit PATH     # write the served commission ledger
+#   comp-tool-health-gate --self-test     # the differential close-loop proof
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if git_top="$(git -C "${SCRIPT_DIR}" rev-parse --show-toplevel 2>/dev/null)"; then
+    WORKSPACE_ROOT="${git_top}"
+else
+    WORKSPACE_ROOT="/c/Users/AndrewBerman/Desktop/ajb_workspace"
+fi
+
+PYTHON="${COMP_TOOL_HEALTH_PYTHON:-python}"
+exec "${PYTHON}" "${WORKSPACE_ROOT}/org/modules/graph/comp_tool_health_gate.py" "$@"

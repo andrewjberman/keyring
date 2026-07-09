@@ -1,0 +1,8 @@
+#!/bin/bash
+# comp-blast — show blast radius of a change
+# Usage: comp-blast D_00.portal_aggregates.py --function build_employee_leaderboard [--json]
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/cli.py" blast "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-blast" "$*" $_exit 2>/dev/null
+exit $_exit

@@ -1,0 +1,8 @@
+#!/bin/bash
+# comp-iam -- IAM permission cross-reference for Lambda and EC2 scripts
+# Usage: comp-iam gaps | roles | services | service <name> | role <name> | stats
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/iam_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-iam" "$*" $_exit 2>/dev/null
+exit $_exit

@@ -1,0 +1,8 @@
+#!/bin/bash
+# comp-transform — trace client-side data flow inside React components
+# Usage: comp-transform trace PartnerAnalytics | fields | chains | unused | schema-check | all | stats
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/transform_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-transform" "$*" $_exit 2>/dev/null
+exit $_exit

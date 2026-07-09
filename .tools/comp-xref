@@ -1,0 +1,8 @@
+#!/bin/bash
+# comp-xref — compare trace graph against baseline snapshot
+# Usage: comp-xref [--save] [--json]
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/cli.py" xref "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-xref" "$*" $_exit 2>/dev/null
+exit $_exit

@@ -1,0 +1,8 @@
+#!/bin/bash
+# comp-cache — React Query cache key analysis across components
+# Usage: comp-cache map | collisions | key <query>
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/cache_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-cache" "$*" $_exit 2>/dev/null
+exit $_exit

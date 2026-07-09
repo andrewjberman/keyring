@@ -1,0 +1,8 @@
+#!/bin/bash
+# comp-platinum — full-stack trace from portal page to gold script
+# Usage: comp-platinum page PartnerAnalytics | reverse gold/artifacts/foo.json | tab-audit | summary
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/platinum_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-platinum" "$*" $_exit 2>/dev/null
+exit $_exit
