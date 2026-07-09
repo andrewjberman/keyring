@@ -267,7 +267,7 @@ def render_summary(report: dict) -> str:
     elif report["verdict"] == "NO_PROJECT_FILE":
         lines.append("")
         lines.append(f"No org/projects/{report['macro']}.json found AND no task orders matched this macro.")
-        lines.append(f"  Hint: did you mean a full project code like ADHC_COMPIL_V4 instead of a prefix like ADHC?")
+        lines.append("  Hint: did you mean a full project code like ADHC_COMPIL_V4 instead of a prefix like ADHC?")
         lines.append(f"  Run `ls org/projects/{report['macro']}*.json` to find related projects.")
     return "\n".join(lines)
 
