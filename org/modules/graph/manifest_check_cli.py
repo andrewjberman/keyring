@@ -80,6 +80,52 @@ _ROUTABLE_SUBSTRATE = (
     "org/modules/graph/comp_capability_provider.py",  # _ROUTABLE_META_ROLES -- opts the role in
 )
 
+# ---------------------------------------------------------------------------------------------
+# THE COMPLETENESS GATE FAMILY (CTO GO 20260709T094832Z; CVO-endorsed; COO~B concur)
+#
+# Three invariants, one shape: each is introduced only by an identifiable substrate, each was
+# previously caught (if at all) only AFTER merge, and each blocks the AUTHOR at the moment they
+# introduce it rather than red-bannering every other agent.
+#
+#   member 1  routable    registered  -> the router CAN score it   (candidate-set membership)
+#   member 2  placement   a comp-tool -> has exactly one map home   (no UNPLACED / DOUBLE-PLACED)
+#   member 3  self-routes catalogued  -> comp-which actually RETURNS it for its own use_case
+#
+# GOVERNING RULE (CTO, verbatim -- do not soften):
+#     "every hard-blocking member asserts a DETERMINISTIC fact; anything threshold-shaped REPORTS."
+#
+# COMPLEMENTARITY, and the reason member 3 exists at all: members 1 and 2 assert NECESSARY
+# conditions. A green necessary-check is NOT proof of the property. Membership does not imply
+# reachability -- on 2026-07-09 comp-routable-check returned PASS over all 42 tools while the live
+# oracle showed three of them unreachable, because vocabulary, not membership, was the defect.
+# The family covers the DETERMINISTIC sub-classes; the LIVE ORACLE stays load-bearing for the
+# vocabulary sub-class it structurally cannot see. Complementary, never redundant. Do not read a
+# green gate as proof that a tool is reachable.
+#
+# COMMITTING-TREE UNIVERSE (CTO ratified 20260709T094435Z). Every member derives its universe from
+# the files being COMMITTED, never from os.listdir of the working directory. We share ONE worktree,
+# so a directory listing sees other agents' untracked, mid-authoring files: agent A's half-written
+# .tools/comp-foo would block agent B's unrelated commit -- b1's fabric-wide blast radius through
+# the back door, crying wolf at everyone except the author. (comp-coverage-check has exactly this
+# defect today; fix filed to COO~B.)
+# ---------------------------------------------------------------------------------------------
+
+# member 2: only a .tools/comp-* add/rename/modify, or a coverage-map edit that removes a home,
+# can create an UNPLACED or DOUBLE-PLACED tool.
+_PLACEMENT_MAP = "org/modules/graph/comp-coverage-map.yaml"
+
+# member 3: what the ROUTER scores against. A tools_index `does` edit is only ever the QUERY for
+# its own tool, so it bounds to that tool (cost option (i), measured 1357ms/tool). Everything else
+# here is part of the CORPUS the router ranks against, so it can move ANY tool's verdict and must
+# re-check the full set (~57s). Boundaries read at source, not assumed:
+#   * comp-which's fuzzy backstop iterates the manifest's `entries:` key, not tools_index
+#   * the capability provider builds its keywords from comp-coverage-map concern text
+_SELFROUTE_CORPUS = (
+    "org/modules/graph/comp-coverage-map.yaml",       # provider keyword corpus
+    "org/modules/graph/comp_capability_provider.py",  # candidate set
+    ".tools/comp-which",                              # the router itself
+)
+
 
 # ----------------------------------------------------------------------------- detection surface
 # Category B -- REBUILD tokens that have a cheaper QUERY canonical. Each maps to the manifest
@@ -442,6 +488,176 @@ def _routable_invariant(files) -> int:
     return 1
 
 
+def _norm(files):
+    return [str(f).replace("\\", "/") for f in (files or [])]
+
+
+def _committed_comp_tools(files):
+    """member 2's universe: comp-tool names named by the COMMIT itself (never os.listdir)."""
+    tools = set()
+    for f in _norm(files):
+        if "/.tools/" in "/" + f and "/" not in f.split(".tools/", 1)[-1]:
+            base = f.split(".tools/", 1)[-1]
+            base = base.rsplit(".", 1)[0] if "." in base else base
+            if base.startswith("comp-") or base == "pipescript":
+                tools.add(base)
+    return tools
+
+
+def _section_pair(path, section):
+    """(old, new) value of `section` -- old from HEAD, new from the working tree. (None, None)
+    when HEAD has no such file (a brand-new file: the caller must treat it as 'everything').
+
+    BOTH SIDES ARE DECODED AS UTF-8 AND NEWLINE-NORMALIZED, deliberately. Two ways this silently
+    breaks, both found by the verification matrix rather than by reading:
+      * ENCODING -- `git show` with text=True decodes via the LOCALE codec (cp1252 here), while the
+        working file is UTF-8. The manifest contains an em-dash, so a byte-identical file compared
+        unequal on every run.
+      * NEWLINES -- `git show` emits LF; the working tree is CRLF under autocrlf.
+    Either one makes a CLEAN tree read as "everything changed", so the per-tool bound silently
+    degrades to the full ~57s sweep while the gate still reports green. The bound would have been
+    a claim, not a fact. (Observed: a clean manifest touch cost 33.8s instead of ~0.)
+    """
+    import subprocess as _sp
+
+    import yaml as _yaml
+    old = _sp.run(["git", "show", f"HEAD:{path}"], capture_output=True, cwd=str(_WORKSPACE)).stdout
+    if not old:
+        return None, None
+    def _norm_text(b):
+        s = b.decode("utf-8", "replace") if isinstance(b, bytes) else b
+        return s.replace("\r\n", "\n").replace("\r", "\n")
+    with open(_WORKSPACE / path, "rb") as fh:
+        new_raw = fh.read()
+    old_doc = _yaml.safe_load(_norm_text(old)) or {}
+    new_doc = _yaml.safe_load(_norm_text(new_raw)) or {}
+    return old_doc.get(section), new_doc.get(section)
+
+
+def _dict_diff_keys(path, section):
+    """Keys of a MAPPING section whose value changed vs HEAD. None = unbounded (new file, or the
+    section is not a mapping -- e.g. `entries:` is a LIST, so it has no per-key bound)."""
+    o, n = _section_pair(path, section)
+    if o is None and n is None:
+        return None
+    if not isinstance(o, dict) or not isinstance(n, dict):
+        return None
+    return {k for k in set(o) | set(n) if o.get(k) != n.get(k)}
+
+
+def _section_changed(path, section):
+    """True if a section changed vs HEAD, for ANY shape (list or mapping). True on a new file."""
+    o, n = _section_pair(path, section)
+    if o is None and n is None:
+        return True
+    return o != n
+
+
+def _placement_invariant(files) -> int:
+    """member 2 -- a comp-tool has exactly ONE map home. UNPLACED and DOUBLE-PLACED both block."""
+    norm = _norm(files)
+    tools = _committed_comp_tools(files)
+    map_touched = any(f.endswith(_PLACEMENT_MAP) for f in norm)
+    if not tools and not map_touched:
+        return 0
+    try:
+        import yaml as _yaml
+
+        sys.path.insert(0, str(_THIS_DIR))
+        import comp_coverage_check as ccc
+
+        with open(_WORKSPACE / _PLACEMENT_MAP, encoding="utf-8") as fh:
+            led = _yaml.safe_load(fh)
+        if map_touched:
+            # a map edit can REMOVE a home -> the commit's own file list cannot name the victim.
+            for section in ("tools", "meta_tools"):
+                changed = _dict_diff_keys(_PLACEMENT_MAP, section)
+                if changed is None:
+                    tools |= {t.get("tool") for t in (led.get(section) or []) if t.get("tool")}
+        if not tools:
+            return 0
+        problems = ccc._check_inventory_completeness(led, inventory=set(tools))
+    except Exception as e:  # fail-closed
+        print(f"\nBLOCKED: the placement invariant could not be evaluated ({e}).")
+        return 1
+    if not problems:
+        return 0
+    print("\nBLOCKED: comp-tool placement (each tool needs exactly ONE coverage-map home):")
+    for p in problems:
+        print("  - %s" % p)
+    print("  FIX: add the tool to comp-coverage-map.yaml tools[] (surface-homed) or meta_tools[]")
+    print("  (cross-surface/tooling-layer), never both.")
+    return 1
+
+
+def _selfroute_invariant(files) -> int:
+    """member 3 -- a catalogued tool must SURFACE for its own use_case.
+
+    HARD-BLOCK on MISS (deterministic, role-invariant, margin-free). WARN on NEARTIE (the tool
+    surfaces only inside comp-which's within-margin list -- threshold-shaped, so reporting only).
+    """
+    norm = _norm(files)
+    corpus_touched = any(f.endswith(s) for s in _SELFROUTE_CORPUS for f in norm)
+    manifest_touched = any(f.endswith("org/modules/graph/graph-call-manifest.yaml") for f in norm)
+    if not corpus_touched and not manifest_touched:
+        return 0
+    # EVERYTHING that can raise lives inside the guard -- a fail-closed gate whose scope
+    # computation can throw is fail-OPEN in disguise (it crashes with a traceback instead of a
+    # verdict). Found by the verification matrix, not by reading.
+    try:
+        MAN = "org/modules/graph/graph-call-manifest.yaml"
+        targets = None  # None = the full set
+        if manifest_touched and not corpus_touched:
+            # `entries:` is the fuzzy-backstop CORPUS (a LIST) -> an edit there can move ANY tool's
+            # verdict, so it is unbounded. `tools_index[t].does` is only ever the QUERY for tool t
+            # -> bounded to the changed tools (cost option (i), ~1357ms per tool).
+            if not _section_changed(MAN, "entries"):
+                changed = _dict_diff_keys(MAN, "tools_index")
+                if changed is not None:
+                    targets = sorted(changed)
+        if targets == []:
+            return 0  # manifest touched, but no tools_index entry actually changed
+
+        import importlib.machinery
+        import importlib.util
+
+        import yaml as _yaml
+        p = _WORKSPACE / ".tools" / "comp-which-routing-test.py"
+        loader = importlib.machinery.SourceFileLoader("cwrt", str(p))
+        spec = importlib.util.spec_from_loader("cwrt", loader)
+        mod = importlib.util.module_from_spec(spec)
+        loader.exec_module(mod)
+        with open(_WORKSPACE / MAN, encoding="utf-8") as fh:
+            manifest = _yaml.safe_load(fh)
+        verdicts = mod.self_route_verdicts(manifest, tools=targets)
+    except Exception as e:  # fail-closed
+        print(f"\nBLOCKED: the self-route invariant could not be evaluated ({e}).")
+        return 1
+
+    misses = sorted(t for t, (v, _r, _q) in verdicts.items() if v == "MISS")
+    nearties = sorted(t for t, (v, _r, _q) in verdicts.items() if v == "NEARTIE")
+    for t in nearties:
+        print("  self-route WARN: %s surfaces only inside comp-which's near-tie list (never rank-1)" % t)
+    if not misses:
+        return 0
+    print("\nBLOCKED: %d catalogued tool(s) do NOT surface for their own use_case:" % len(misses))
+    for t in misses:
+        print("  - %-22s comp-which returns nothing naming it" % t)
+    print("  A tool the mandated router cannot return is undiscoverable, however well it is")
+    print("  catalogued. FIX: give it distinctive curated vocabulary in .tools/comp-which, and do")
+    print("  NOT let its catalog text name a sibling tool -- a description is routing input, and")
+    print("  naming a sibling hands it your intent. Then: python .tools/comp-which-routing-test.py")
+    return 1
+
+
+def _completeness_invariants(files) -> int:
+    """The family. Any member blocking blocks the commit. See the design comment above."""
+    for member in (_routable_invariant, _placement_invariant, _selfroute_invariant):
+        if member(files):
+            return 1
+    return 0
+
+
 def cmd_check(args: argparse.Namespace) -> int:
     manifest = load_manifest()
     cfg = load_config()
@@ -452,9 +668,10 @@ def cmd_check(args: argparse.Namespace) -> int:
     dep_sigs = deprecated_signatures(manifest)
 
     files = args.file or []
-    # Completeness invariant FIRST: deterministic + ramp-exempt. A registered-but-unreachable tool
-    # must never merge, regardless of what the heuristic scanners below do or do not find.
-    if _routable_invariant(files):
+    # Completeness family FIRST: deterministic + ramp-exempt. A registered-but-unreachable tool,
+    # an unplaced tool, or a tool the router cannot return must never merge -- regardless of what
+    # the heuristic scanners below do or do not find, and regardless of advisory|blocking mode.
+    if _completeness_invariants(files):
         return 1
 
     all_findings: list[Finding] = []
@@ -653,6 +870,16 @@ def main() -> int:
     p_routable = sub.add_parser(
         "routable", help="assert every tools_index tool is a live routing target")
     p_routable.set_defaults(func=lambda _a: _routable_invariant(_ROUTABLE_SUBSTRATE))
+
+    p_comp = sub.add_parser(
+        "completeness", help="run the completeness family (routable + placement + self-routes)")
+    p_comp.add_argument("--only", choices=["routable", "placement", "self-routes"],
+                        help="run a single member")
+    p_comp.set_defaults(func=lambda a: (
+        _routable_invariant(_ROUTABLE_SUBSTRATE) if a.only == "routable"
+        else _placement_invariant([_PLACEMENT_MAP]) if a.only == "placement"
+        else _selfroute_invariant([".tools/comp-which"]) if a.only == "self-routes"
+        else _completeness_invariants(list(_ROUTABLE_SUBSTRATE) + [".tools/comp-which"])))
 
     args = parser.parse_args()
     if not getattr(args, "cmd", None):
