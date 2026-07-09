@@ -1,0 +1,12 @@
+#!/bin/bash
+# comp-tagauthz -- are a resource's TAGS load-bearing for AUTHORIZATION?
+# Usage: comp-tagauthz pairs
+#        comp-tagauthz check --default-tags-tree infra/aws/terraform/shared-infra
+#
+# CTO standing arch rule (20260709T195725Z): "A Terraform tree that sets default_tags must not
+# manage resources whose tags carry authorization." The retracted gate asked "does the plan change
+# only tags?" -- which measures ATTRIBUTE SURFACE. This asks whether the plan changes the VALUE of a
+# tag key that appears in a policy Condition -- which measures AUTHORIZATION.
+# Exit: 0 = no collision | 2 = COLLISION (do not default_tag) | 1 = error
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+exec python "$WORKSPACE/.tools/comp-tagauthz.py" "$@"
