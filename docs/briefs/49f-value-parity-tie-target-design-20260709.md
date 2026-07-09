@@ -88,6 +88,28 @@ DEMONSTRATION step (below) confirms or corrects it against live data.
 
 ## The demonstration plan (run once BD's export resumes + a few live days accumulate)
 
+**CTO steer (2026-07-09, folded in per COO 084228Z) -- the demonstration must
+DISTINGUISH, not pre-judge, which of two drivers is responsible, because they
+get OPPOSITE treatment:**
+
+- **(a) a genuine, bounded, DECOMPOSABLE timing/valuation gap** -- e.g. a
+  settlement-date lag, an accrual/pricing-source difference that recurs
+  predictably -- **a measured tolerance is LEGITIMATE.** The guard can absorb
+  this the same way the inf/cot guards absorb their own float-repr epsilon,
+  just at a larger, demonstrated-stable magnitude.
+- **(b) accounts with holdings MISSING FROM (or mismatched against)
+  `accounts_dimension`** -- **RECONCILE THE COVERAGE, do NOT tolerance it.**
+  A value-parity guard whose "tolerance" is really an unreconciled account-
+  coverage gap is PAPERING OVER a real data-completeness defect -- the same
+  anti-pattern as widening a threshold to silence a true positive (this
+  session's recurring lesson, CTO's framing). If this is the driver, it needs
+  its own remediation (closing the accounts_dimension coverage gap), and the
+  guard's tolerance should cover ONLY whatever (a)-class residual remains
+  after (b) is fixed -- not the coverage gap itself.
+
+**The steps below are designed to produce that distinction as their output,
+not to assume account-coverage (my hypothesis #1) is correct going in.**
+
 1. Pick a recent date where BOTH `gold/canonical/holdings/{date}.parquet` and
    a fresh `client_performance.parquet` total_aua exist.
 2. Compute `positions.market_value` (direct sum, matches Terraform anchor)
@@ -99,15 +121,35 @@ DEMONSTRATION step (below) confirms or corrects it against live data.
    (its `acct.merge(..., how='outer')` + `gold_only`/`silver_only` coverage
    split, `E_00.py:174,196-199`) to compare `canonical_holdings` accounts
    against `accounts_dimension` accounts directly -- reusing the SHAPE of
-   E_00's analysis, pointed at the right pair. Quantify: how much of the
-   gap is "gold_only" accounts (in holdings, absent from account_gains/
-   dimension) vs. a smaller residual.
-4. If account-coverage explains the gap to within a declared tolerance
-   (recommend starting narrow, e.g. 0.1-0.5% of AUA, tightened once the
-   decomposition is proven stable across several days) -- that decomposition
-   IS `known_gap(date)`, computed fresh each day, not a fixed constant.
-5. If a residual remains unexplained after account-coverage, investigate
-   timing/vintage (hypothesis 2) before concluding the reconcile is unsound.
+   E_00's analysis, pointed at the right pair. Quantify SEPARATELY:
+   - **(b)-class:** the dollar value attributable to accounts in holdings but
+     ABSENT from accounts_dimension (or present with a mismatched/missing
+     join key) -- this is the coverage-gap component, a candidate for (b).
+   - **(a)-class:** the residual gap among accounts that DO join successfully
+     -- timing/valuation/accrual differences on correctly-matched accounts,
+     a candidate for (a).
+4. **Route based on which class dominates:**
+   - If the gap is overwhelmingly (b) (account-coverage) -- do NOT propose a
+     tolerance band for it. Report the coverage gap as its own finding +
+     flag the accounts_dimension completeness issue for its own fix. The
+     guard's tie-target then becomes `gold_aua == positions.market_value
+     (restricted to accounts_dimension-covered accounts) + small (a)-residual`,
+     OR the guard stays UNVERIFIABLE/gated until coverage is fixed -- CTO's
+     call at the gate, not mine to decide unilaterally.
+   - If the gap is overwhelmingly (a) (decomposable timing/valuation, high
+     account-join coverage) -- proceed with a measured tolerance derived from
+     the (a)-class residual's observed stability across several days.
+   - If it's a genuine MIX -- report both magnitudes separately; do not
+     average them into one blended "the gap is X%" number that obscures
+     which part is legitimate vs which part is a defect.
+5. If a residual remains unexplained after both (a) and (b) are quantified,
+   investigate timing/vintage (hypothesis 2 from above) more deeply before
+   concluding the reconcile is unsound.
+
+**Do not pre-judge the (a)-vs-(b) split before running this** -- my working
+hypothesis (account-coverage/likely-(b)) is the thing to TEST, not assert.
+CTO rules the (a)-vs-(b) call at the gate once the live demonstration draws
+the line.
 
 ## The guard implementation shape (once demonstrated)
 
@@ -138,7 +180,14 @@ lands and `write_aua_certification` resumes computing `certified_aua` live,
 this design is ready to demonstrate immediately -- no further design work
 needed, only live-data execution of steps 1-5.
 
-## Open item for CTO (flag, not decided here)
+## Open item for CTO -- SUPERSEDED by the (a)-vs-(b) steer above (2026-07-09)
+
+CTO confirmed + sharpened this into the demonstration plan's explicit routing
+logic (see "Route based on which class dominates" above): (b)-class
+(account-coverage) gets reconciled, not tolerated; (a)-class (genuine
+decomposable timing/valuation) gets a measured tolerance. CTO rules the call
+at the gate once the live demonstration draws the line -- not pre-decided
+here. Original note preserved below for the reasoning trail:
 
 The account-coverage-gap hypothesis (my #1) would mean the "known gap" is
 really a DATA-COMPLETENESS issue (accounts_dimension missing accounts that
