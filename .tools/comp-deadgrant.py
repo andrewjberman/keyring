@@ -49,6 +49,19 @@ BY CONSTRUCTION -- the literal survives as the env default even when the call si
 and a doc example cannot false-fire because it is not a live secret. `SecretId=` parsing is retained
 ONLY to flag CONSTRUCTED names (a completeness signal, reported as uninspectable), never to enumerate.
 
+AXIS C -- WHAT THIS TOOL CANNOT PROVE, AND THEREFORE DOES NOT CLAIM
+------------------------------------------------------------------
+Axis A (a dead reach) and axis B (a fail-silent reader) are both decidable from the artifact and
+live IAM. They are NOT sufficient. `opal-smartx-ingestion-pipeline` passes both and is not a
+degrade: the getters that would break are never invoked, and the ones that ARE invoked handle the
+null config with a designed hardcoded fallback (378 log events, 0 AttributeError, real output).
+
+  AXIS C -- the swallowing path actually EXECUTES, and something downstream DEPENDS on its output.
+
+Only rows passing A and B and C are degrades. This tool emits CANDIDATES, never verdicts, and says
+so in its own output. Ground axis C per row against the CloudWatch log and the SERVED artifact.
+(`schwab-anonymizer` fails axis B -- it raises. `smartx` fails axis C -- unreachable.)
+
 LIVE vs LATENT
 --------------
 A dead grant on a Lambda that has not run in six months is a dormant capability, not a broken
@@ -364,14 +377,27 @@ def main() -> int:
         if i % 25 == 0:
             print(f"  ... {i}/{len(fns)}", flush=True)
 
-    print("\n================ LIVE-DEGRADE UNIVERSE (dead reach x fail-silent reader) ================")
+    # AXIS C. This tool proves AXIS A (a dead reach) and AXIS B (the reader swallows it). It CANNOT
+    # prove AXIS C -- that the swallowing path actually EXECUTES and something downstream depends on
+    # its output. `opal-smartx-ingestion-pipeline` passes A and B and is NOT a degrade: the getters
+    # that would break are never invoked, and the ones that are invoked handle the null config with a
+    # designed hardcoded fallback (378 log events, 0 AttributeError, real output). Its author -- me --
+    # hand-verified it and still bound "is a degrade" to the proxy "reads it AND cannot" instead of to
+    # the property "the degraded path runs and has a dependent consumer."
+    #
+    # So these are CANDIDATES, never verdicts. A tool that cannot prove the property must not name it.
+    print("\n=========== CANDIDATES: axis A (dead reach) x axis B (fail-silent reader) ===========")
+    print("  AXIS C IS UNVERIFIED BY THIS TOOL and is required before any row is a finding:")
+    print("    does the swallowing path EXECUTE, and does anything downstream DEPEND on its output?")
+    print("  Ground each row against its CloudWatch log and its SERVED artifact. Do not route raw rows.\n")
     live = [r for r in rows if r["sev"] == "LIVE" and r["fail_silent"]]
     for r in live:
-        print(f"  !! {r['fn']} ({r['role']}) -> {r['secret']}: {r['why']}; "
+        print(f"  ?? CANDIDATE {r['fn']} ({r['role']}) -> {r['secret']}: {r['why']}; "
               f"ran {r['days_since_run']}d ago; reader SWALLOWS the failure")
+        print("       axis C: UNVERIFIED -- confirm the path runs and a consumer depends on it")
     if not live:
         print("  none")
-    print(f"\n  dead-reach rows: {len(rows)}   LIVE+fail-silent: {len(live)}   "
+    print(f"\n  dead-reach rows: {len(rows)}   axis-A x axis-B candidates: {len(live)}   "
           f"uninspectable: {len(uninspectable)} (never silently dropped)")
     for fn, why in uninspectable[:12]:
         print(f"     uninspectable: {fn} -- {why}")
