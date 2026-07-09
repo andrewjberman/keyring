@@ -124,12 +124,37 @@ def reaped_recently() -> set:
         return set()
 
 
-def unread_inbox(serial: str) -> tuple[int, float]:
-    """(count, newest_mtime) of unread top-level *.md in inbox/{serial}/.
-    The stream Monitor mv's delivered messages to read/, so top-level *.md left in
-    the inbox = messages NOT yet processed by the lane's Monitor. A pile of these on
-    a telemetry-quiet lane = the lane is DEAF (dead Monitor + no self-tick to re-arm)."""
-    d = os.path.join(INBOX_DIR, serial)
+def lane_inbox_dir(serial: str) -> str:
+    """The CANONICAL inbox dir a serial's mail is actually delivered to.
+
+    Mirrors the two writers, and it MUST keep mirroring them:
+      - server.py send_message   -> INBOX_DIR/<base>/~<suffix>/   (nested, per-tilde isolation)
+      - inbox-watch.sh WATCH_DIR -> INBOX_BASE/<base>/~<suffix>/  (the lane's Monitor)
+
+    A base (non-tilde) serial resolves to INBOX_DIR/<serial>/.
+
+    DEFECT-3 (this fix). The old code read `INBOX_DIR/<serial>` for EVERY serial, so for a lane
+    `A~B` it read the FLAT dir `inbox/A~B/` -- which exists on disk for many lanes (legacy,
+    pre-2026-04-20 per-tilde isolation) and which NOTHING HAS WRITTEN TO SINCE. It is a decoy:
+    always present, always 0 unread, so a lane could never be classified DEAF.
+
+    This is NOT "the enumerator was blind." It read a directory that is guaranteed to answer
+    'healthy'. An instrument reporting confidently on something other than what it claims to
+    measure -- the same class as a 0-row parquet that passes `exists` and `bytes > N`.
+
+    Incident: 2026-07-09. `0.4.0_DS_ClientPlatform~B` sat with 3 undelivered messages -- one a
+    sovereign cancellation -- in `inbox/0.4.0_DS_ClientPlatform/~B/`. `--blocks` read
+    `inbox/0.4.0_DS_ClientPlatform~B/`, found 0, and printed `deaf=2`. The answer was 3, and the
+    missing lane held a GO to edit the producer of a frozen client-facing AUA.
+    """
+    if "~" in serial:
+        base, suffix = serial.split("~", 1)
+        return os.path.join(INBOX_DIR, base, "~" + suffix)
+    return os.path.join(INBOX_DIR, serial)
+
+
+def _count_md(d: str) -> tuple[int, float]:
+    """(count, newest_mtime) of top-level *.md files directly in dir `d`."""
     count = 0
     newest = 0.0
     try:
@@ -144,6 +169,86 @@ def unread_inbox(serial: str) -> tuple[int, float]:
     except OSError:
         pass
     return count, newest
+
+
+def unread_inbox(serial: str) -> tuple[int, float]:
+    """(count, newest_mtime) of unread top-level *.md in the serial's CANONICAL inbox dir.
+    The stream Monitor mv's delivered messages to read/, so top-level *.md left in
+    the inbox = messages NOT yet processed by the lane's Monitor. A pile of these on
+    a telemetry-quiet lane = the lane is DEAF (dead Monitor + no self-tick to re-arm)."""
+    return _count_md(lane_inbox_dir(serial))
+
+
+def legacy_flat_orphans(serial: str) -> int:
+    """Top-level *.md stranded in the FLAT dir `inbox/<base>~<suffix>/` for a lane.
+
+    NOT merely a legacy artifact -- it is STILL BEING WRITTEN. `.tools/operator.py:539-541` does
+    `inbox_dir = inbox_root / agent; inbox_dir.mkdir(parents=True, exist_ok=True)` where `agent`
+    is the TO's `<issued_to>`, which org/XXX.md REQUIRES to carry the `~lane` suffix. So the live
+    dispatch path writes a lane's GO to the flat dir AND CREATES IT ON DEMAND.
+
+    Non-zero => real mail stranded where no Monitor watches and no `check_inbox` reads. Counted,
+    NEVER treated as delivered: reading the decoy as a live inbox is what this fix exists to stop,
+    and folding these into `unread` would pin the lane DEAF forever (see is_deaf / the WARN text).
+    0 for base serials -- their flat dir IS the canonical one."""
+    if "~" not in serial:
+        return 0
+    flat = os.path.join(INBOX_DIR, serial)
+    if os.path.abspath(flat) == os.path.abspath(lane_inbox_dir(serial)):
+        return 0
+    return _count_md(flat)[0]
+
+
+def enumerate_inbox_lanes() -> tuple[set, int, int, int]:
+    """Every inbox identity on disk, across BOTH dir conventions.
+
+    Returns (serials, n_base, n_nested, n_legacy_flat).
+
+    The old code walked only `os.listdir(INBOX_DIR)`, so a lane whose ONLY dir is the nested
+    `inbox/<base>/~<suffix>/` (the canonical, actively-written one) was never a candidate at all.
+    Lanes that also happen to own a legacy flat dir were candidates -- but were then read at the
+    decoy path. Both roads led to `0 unread`.
+    """
+    serials: set = set()
+    n_base = n_nested = n_flat = 0
+    try:
+        top = os.listdir(INBOX_DIR)
+    except OSError:
+        return serials, 0, 0, 0
+    for dn in top:
+        dp = os.path.join(INBOX_DIR, dn)
+        if not os.path.isdir(dp):
+            continue
+        if "~" in dn:                       # FLAT lane dir: inbox/<base>~<suffix>/ -- unwatched,
+            serials.add(dn)                 # and still created on demand by operator.py:541
+            n_flat += 1
+            continue
+        serials.add(dn)                     # base serial: inbox/<base>/
+        n_base += 1
+        try:
+            for sub in os.listdir(dp):      # nested lanes: inbox/<base>/~<suffix>/
+                if sub.startswith("~") and os.path.isdir(os.path.join(dp, sub)):
+                    serials.add(dn + sub)
+                    n_nested += 1
+        except OSError:
+            pass
+    return serials, n_base, n_nested, n_flat
+
+
+def is_deaf(unread: int, age_any: float, serial: str, reaped: set) -> bool:
+    """DEAF predicate, factored out so the positive control can exercise BOTH directions.
+
+    A guard that only ever fires on the failing input is untested: an enumerator that finds 0
+    deaf lanes and an enumerator that cannot see lanes print the same 0. The self-test asserts
+    this returns True on a genuinely-deaf lane AND False on a live one.
+    """
+    return (unread > 0 and SESSION_ALIVE_S < age_any < DEAF_RECENT_S
+            and serial not in reaped)
+
+
+# Denominator for the deaf verdict, published by gather() and printed by --blocks.
+# "A verdict without its universe is not a verdict" (CTO 205745Z, render_open_deploys).
+ENUM_STATS: dict = {"enumerated": 0, "base": 0, "nested": 0, "legacy_flat": 0, "orphans": 0}
 
 
 PROJECTS_DIR = os.path.join(ROOT, "org", "projects")
@@ -310,13 +415,14 @@ def gather() -> list[dict]:
                 serials.add(fn[:-len(".jsonl")])
     except OSError:
         pass
-    try:
-        for dn in os.listdir(INBOX_DIR):
-            dp = os.path.join(INBOX_DIR, dn)
-            if os.path.isdir(dp) and any(f.endswith(".md") for f in os.listdir(dp)):
-                serials.add(dn)
-    except OSError:
-        pass
+    # UNION every inbox identity on disk -- BOTH dir conventions, base + nested ~lanes.
+    # Unconditional (no "has a top-level .md" precondition): the relevance filter below is what
+    # drops dormant lanes, and it does so on telemetry+registration, not on a directory listing
+    # taken at the wrong path. A lane must be ENUMERABLE before it can be judged.
+    inbox_serials, n_base, n_nested, n_flat = enumerate_inbox_lanes()
+    serials.update(inbox_serials)
+    ENUM_STATS.update({"enumerated": len(inbox_serials), "base": n_base,
+                       "nested": n_nested, "legacy_flat": n_flat, "orphans": 0})
 
     reaped = reaped_recently()
     rows = []
@@ -327,6 +433,9 @@ def gather() -> list[dict]:
         hb = float(info.get("last_seen_epoch") or 0)
         registered = serial in liveness
         unread, unread_newest = unread_inbox(serial)
+        # Mail stranded in the legacy flat decoy dir: counted for EVERY enumerated lane (before
+        # the relevance filter), never counted as delivered. Non-zero = a real reachability hole.
+        ENUM_STATS["orphans"] += legacy_flat_orphans(serial)
 
         last_any = tel["last_any"]
         last_work = tel["last_work"]
@@ -351,12 +460,12 @@ def gather() -> list[dict]:
 
         decl_state, detail = classify_declared(summary)
 
-        # DEAF: unread messages piling in the top-level inbox while telemetry is quiet
+        # DEAF: unread messages piling in the CANONICAL inbox while telemetry is quiet
         # (>600s) = the lane's Monitor isn't delivering + it's not self-ticking to re-arm.
         # Post-LD-0157 (no /work self-tick) this is the reachability failure mode for a
-        # lane whose persistent Monitor died (esp. ~A lanes the broker can't push to).
-        deaf = (unread > 0 and SESSION_ALIVE_S < age_any < DEAF_RECENT_S
-                and serial not in reaped)  # exclude intentionally-reaped lanes (COO tuning)
+        # lane whose persistent Monitor died -- OR, per 2026-07-09, was never armed at all.
+        # ("Absent" and "died" are different states and only one of them respawns.)
+        deaf = is_deaf(unread, age_any, serial, reaped)  # reaped lanes excluded (COO tuning)
 
         # coherence: does declared status match objective telemetry?
         coherence = "OK"
@@ -613,8 +722,134 @@ def render_open_deploys() -> str:
     return "\n".join([hdr] + lines)
 
 
+def enum_denominator() -> str:
+    """Machine-parseable universe of the deaf verdict, appended to FABRIC-CHECK-RESULT."""
+    e = ENUM_STATS
+    return (f"enumerated={e['enumerated']} base_serials={e['base']} nested_lanes={e['nested']} "
+            f"legacy_flat={e['legacy_flat']} flat_orphans={e['orphans']}")
+
+
+def deaf_denominator_line(nd: int = 0) -> str:
+    """Human line stating the deaf numerator OVER its universe.
+
+    `deaf=0` from a check that enumerated 39 lanes and `deaf=0` from a check that enumerated
+    none are the same string and opposite facts. Print the denominator so a reader can tell
+    them apart -- the same rule render_open_deploys() already applies to deploy sentinels.
+    """
+    e = ENUM_STATS
+    line = (f"DEAF-COVERAGE: deaf={nd} over {e['enumerated']} enumerated inboxes "
+            f"({e['base']} base serials, {e['nested']} nested ~lanes, "
+            f"{e['legacy_flat']} flat-lane dirs)")
+    if e["orphans"]:
+        # The WARN names the WRITER, not the lane (COO requirement, 232922Z). A reader who sees
+        # `flat_orphans=4` reaches for the obvious local fix -- delete the files, "clean up" the
+        # dirs -- which DESTROYS THE ONLY EVIDENCE the dispatch path is broken and leaves
+        # operator.py:539 writing the next one. The loud->quiet inversion: the obvious remedy
+        # removes the symptom that is the sole evidence of the defect.
+        line += (
+            f"\nWARN: flat_orphans={e['orphans']} -- message(s) written to an UNWATCHED path "
+            f"(inbox/<base>~<lane>/). No Monitor watches it; no check_inbox reads it."
+            f"\n      FIX THE WRITER (.tools/operator.py:539 -- `inbox_root / agent` resolves a "
+            f"~lane serial to the flat dir and mkdir's it on demand)."
+            f"\n      Do NOT delete these files: they are the only evidence the dispatch path is broken."
+            f"\n      Do NOT hand-deliver them into a live agent either -- a queued GO has no expiry, "
+            f"and delivering a stale authorization executes it. Report to the sender; they decide."
+        )
+    return line
+
+
+def self_test() -> int:
+    """Positive control. Both directions, on a synthetic inbox tree.
+
+    CTO 231518Z: "assert the enumerator finds a known-live lane ... it must report a lane that IS
+    deaf, and must NOT report one that is live." A guard exercised only on its failing input is
+    indistinguishable from a guard that always fires -- and one exercised only on its passing
+    input is indistinguishable from a guard that never fires. Both directions or it proves nothing.
+    """
+    import shutil
+    import tempfile
+    global INBOX_DIR
+    saved = INBOX_DIR
+    tmp = tempfile.mkdtemp(prefix="fabcheck-selftest-")
+    passed = failed = 0
+
+    def check(name, got, want):
+        nonlocal passed, failed
+        if got == want:
+            passed += 1
+            print(f"  ok   {name}")
+        else:
+            failed += 1
+            print(f"  FAIL {name}: got {got!r}, want {want!r}")
+
+    try:
+        INBOX_DIR = tmp
+        base = os.path.join(tmp, "A_AGENT")
+        os.makedirs(os.path.join(base, "~B"))
+        os.makedirs(os.path.join(base, "~C"))
+        os.makedirs(os.path.join(tmp, "A_AGENT~B"))          # legacy flat decoy, same lane
+        os.makedirs(os.path.join(tmp, "D_AGENT~E"))          # legacy-flat-only lane
+        os.makedirs(os.path.join(tmp, "Z_AGENT"))            # plain base serial
+
+        # --- path resolution mirrors server.py + inbox-watch.sh ---
+        check("lane_inbox_dir(lane) -> nested",
+              lane_inbox_dir("A_AGENT~B"), os.path.join(tmp, "A_AGENT", "~B"))
+        check("lane_inbox_dir(base) -> flat",
+              lane_inbox_dir("Z_AGENT"), os.path.join(tmp, "Z_AGENT"))
+
+        # --- THE REGRESSION: mail in the canonical nested dir must be SEEN ---
+        with open(os.path.join(base, "~B", "m1.md"), "w") as f:
+            f.write("x")
+        check("nested unread is seen (the 2026-07-09 miss)", unread_inbox("A_AGENT~B")[0], 1)
+
+        # --- THE DECOY: mail in the flat dir must NOT be read as delivered ---
+        with open(os.path.join(tmp, "A_AGENT~B", "stranded.md"), "w") as f:
+            f.write("x")
+        check("flat decoy not counted as delivered", unread_inbox("A_AGENT~B")[0], 1)
+        check("flat decoy surfaced as an orphan", legacy_flat_orphans("A_AGENT~B"), 1)
+        check("base serial has no orphan concept", legacy_flat_orphans("Z_AGENT"), 0)
+
+        # --- ENUMERATION: nested lanes exist as candidates at all ---
+        serials, n_base, n_nested, n_flat = enumerate_inbox_lanes()
+        check("enumerator finds nested lane ~B", "A_AGENT~B" in serials, True)
+        check("enumerator finds nested lane ~C (known-live, no mail)", "A_AGENT~C" in serials, True)
+        check("enumerator finds legacy-flat-only lane", "D_AGENT~E" in serials, True)
+        check("enumerator finds base serial", "Z_AGENT" in serials, True)
+        check("nested lane count", n_nested, 2)
+        check("base serial count", n_base, 2)          # A_AGENT, Z_AGENT
+        check("legacy flat count", n_flat, 2)          # A_AGENT~B, D_AGENT~E
+
+        # --- POSITIVE CONTROL, BOTH DIRECTIONS, on the deaf predicate ---
+        quiet = (SESSION_ALIVE_S + DEAF_RECENT_S) / 2.0   # telemetry-quiet but recently a session
+        check("DEAF fires on a genuinely deaf lane", is_deaf(1, quiet, "A_AGENT~B", set()), True)
+        check("DEAF silent on a LIVE lane (fresh telemetry)", is_deaf(1, 5.0, "A_AGENT~B", set()), False)
+        check("DEAF silent on a lane with no mail", is_deaf(0, quiet, "A_AGENT~B", set()), False)
+        check("DEAF silent on an intentionally-reaped lane",
+              is_deaf(1, quiet, "A_AGENT~B", {"A_AGENT~B"}), False)
+        check("DEAF silent on a long-dead lane (beyond window)",
+              is_deaf(1, DEAF_RECENT_S + 1, "A_AGENT~B", set()), False)
+
+        # --- the pre-fix path proves the bug was real, not theoretical ---
+        legacy_read = _count_md(os.path.join(INBOX_DIR, "A_AGENT~B"))[0]
+        canonical_read = _count_md(lane_inbox_dir("A_AGENT~B"))[0]
+        check("pre-fix path read the decoy (1 stranded, not the 1 real msg)", legacy_read, 1)
+        check("post-fix path reads the canonical dir", canonical_read, 1)
+        os.remove(os.path.join(tmp, "A_AGENT~B", "stranded.md"))
+        check("pre-fix path on a clean decoy returns 0 while real mail waits",
+              (_count_md(os.path.join(INBOX_DIR, "A_AGENT~B"))[0],
+               _count_md(lane_inbox_dir("A_AGENT~B"))[0]), (0, 1))
+    finally:
+        INBOX_DIR = saved
+        shutil.rmtree(tmp, ignore_errors=True)
+
+    print(f"\nself-test: {passed} passed, {failed} failed")
+    return 1 if failed else 0
+
+
 def main():
     args = sys.argv[1:]
+    if "--self-test" in args:
+        sys.exit(self_test())
     rows = gather()
     if "--json" in args:
         print(json.dumps({"rows": rows, "ts": time.time()}, indent=2))
@@ -630,7 +865,8 @@ def main():
                   + [("STALE-VERIFY", r) for r in b["STALE_VERIFY"]])
         if not triage:
             print("FABRIC-CHECK: no deaf / blocks / sovereign-requests / stale-verify. Fabric flowing.")
-            print("FABRIC-CHECK-RESULT deaf=0 blocked=0 sovereign=0 stale_verify=0")
+            print(f"FABRIC-CHECK-RESULT deaf=0 blocked=0 sovereign=0 stale_verify=0 {enum_denominator()}")
+            print(deaf_denominator_line())
             # DEFECT-2 FIX (COO 212646Z): OPEN-DEPLOYS is the NEVER-law deploy-completion gate
             # (e38cc2b16). It was printed ONLY on the triage-NON-empty path, so in --blocks mode a
             # CLEAN agent-axis returned here and the deploy gate NEVER RAN. Its visibility was
@@ -647,7 +883,9 @@ def main():
             extra = f" unread={r.get('unread', 0)}" if tag == "DEAF" else ""
             print(f"  [{tag}] {r['serial']} [{r['live']}]{extra} :: {s[:150]}")
         print(f"FABRIC-CHECK-RESULT deaf={len(b['DEAF'])} blocked={len(b['BLOCKED'])} "
-              f"sovereign={len(b['SOVEREIGN'])} stale_verify={len(b['STALE_VERIFY'])}")
+              f"sovereign={len(b['SOVEREIGN'])} stale_verify={len(b['STALE_VERIFY'])} "
+              f"{enum_denominator()}")
+        print(deaf_denominator_line(len(b["DEAF"])))
         print(render_open_deploys())
         return
     print(render(rows))
