@@ -100,16 +100,56 @@ gold artifact is 3.3 MB. The split fires today, so the defect is live today.
 same rotation code. cot is a **completely separate firm pipeline** — it must be checked in its own tree, on its
 own evidence. I am flagging the class, not asserting the cot instance.
 
-## 4. DS's first `INFERRED` — I can now say *why* it must stay inferred
+## 4. ~~DS's first `INFERRED` must stay inferred~~ — **RETRACTED. I was wrong. DS corrected me.**
 
-*"Whether the 2026-04-01 / 2026-01-01 rolls also fired."* **Untestable.** `list-object-versions` on
-`leaderboard.json` returns **42 versions, oldest `2026-06-24T23:55:54Z`.** Noncurrent versions are expired.
-**The evidence has been destroyed by lifecycle policy.** The mechanism predicts those rolls fired; the bytes
-cannot confirm it and never will.
+**What I wrote (wrong):** *"Whether the 2026-04-01 / 2026-01-01 rolls also fired — untestable. The evidence has
+been destroyed by lifecycle policy... unprovable after the fact."*
 
-That is itself a finding: **the forensic window for a served-artifact defect on this key is ~15 days.** A
-self-healing defect with a quarterly period and a fortnightly evidence horizon is, by construction,
-*unprovable after the fact*. It can only ever be caught at emit time — which is limb (6), again.
+**Why it is wrong.** I concluded "unprovable" from the **artifact** oracle's ~15-day horizon and stopped. But
+*"did clients see it?"* decomposes into **"did the artifact show it?"** *and* **"did the code that produces it
+exist?"** When the artifact oracle expires, **source history is a second oracle — and git has no lifecycle
+policy.**
+
+**Verified independently (I did not take DS's word).** The fix `2af63847d` removed
+`w_start = today - pd.Timedelta(days=days)` and `mtd_start = pd.Timestamp(year=today.year, ...)`. Pickaxing
+that text for its **birth**:
+
+    git log --reverse -S "w_start = today" -- data/black_diamond/scripts/gold/
+      a3b2d2099  2026-04-06  feat(ADVI_GLDRST.020): port publisher Lambdas to EC2 gold scripts 11a/11b
+
+**The wall-clock anchor was born 2026-04-06.** The `2026-04-01` quarter roll precedes it by **five days**. The
+defect **did not exist**. `2026-04-01` did not fire — **excluded at source, not unobserved.** `2026-01-01`
+likewise, by a wider margin.
+
+**So the exposure window is `[2026-04-06 .. 2026-07-09]`, closed at both ends by commits.** Every boundary
+inside it:
+
+| boundary | in window | served? | fired? |
+|---|---|---|---|
+| quarter (QTD) | **2026-07-01** only | yes | **YES — 8 writes, 39.8h** |
+| month (MTD) | 05-01, 06-01, 07-01 | **no** — MTD is not among the served windows | n/a |
+| year (YTD) | none | — | — |
+
+Confirmed against the served bytes: `available_windows` = `[1Y, 3Y, MAX, QTD, YTD]`. **MTD never reaches a
+client.** YTD's start (Jan 1) and MAX's (2021-01-01) can never exceed the data end, so neither can empty.
+
+**Total client-facing impact, ever: ONE event.** Not "unknown, possibly quarterly, forever." The bound is
+*tighter* than the one I was forced into, and it is knowable.
+
+**The generalisable point — and it corrects my own closing paragraph below.** Read-the-artifact fails at
+**detection** *and* at **forensics**. The emit-time tripwire fixes detection; **the pickaxe fixes forensics.**
+*When the bytes are gone, ask when the bug was born.* We have exactly one emit-time assertion in the estate
+(`D_00c:1247-1253`) and exactly one forensic oracle with no expiry (git). **A cert record that says
+"unprovable" when the answer is knowable is its own false record** — which is precisely tonight's rule, and I
+broke it in a document enforcing it.
+
+**DS's own near-miss, worth banking.** Their first probe was
+`git log --until=2026-04-02 -1 --format=%H -- D_00.portal_aggregates.py`, which returned an **empty SHA**; the
+follow-on `git show ":path"` then silently rendered the **index** version and printed plausible data-anchored
+lines. They almost reported *"April's code was already fixed."* **An empty variable interpolated into a ref is
+an instrument that answers confidently about nothing.** They discarded it for the pickaxe, which asks about
+*existence* rather than *content*. That failure mode — a probe that degrades into a different, plausible
+question instead of erroring — is the same shape as reading the wrong artifact.
 
 ## grounding
 
