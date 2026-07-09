@@ -186,16 +186,64 @@ def _completeness_batch(substrate: list) -> int:
 
 
 # VENDORED TREES -- never gate-subjects. THIS EXCLUSION IS LOAD-BEARING: without it, shebang-aware
-# dispatch starts linting pip, pygmentize, tqdm and every other console-script in a venv/lambda bundle.
-# We do not own that code, ruff has never seen it, and blocking a commit on it would be a fabric-wide
-# halt caused by a vendored file. CTO condition-2 (20260709T115004Z): the boundary must be exercised
-# from BOTH sides -- a first-party violation blocks, a vendored violation does not.
-_VENDORED_MARKERS = ("/bin/", "/.venv/", "/venv/", "/site-packages/", "/node_modules/", "/package/")
+# dispatch starts linting pip, pygmentize, tqdm and every other console-script in a venv/lambda
+# bundle. We do not own that code, ruff has never seen it, and blocking a commit on it would be a
+# fabric-wide halt caused by a vendored file.
+#
+# STRUCTURAL, NOT NAME-BASED (CTO GO 20260709T122537Z, forward-hardening). The first cut used a
+# path-marker DENYLIST -- ("/bin/", "/package/", ...) -- which is itself a PROXY for "we don't own
+# this code". Demonstrated hole: a first-party tool at `.tools/bin/comp-future` or
+# `org/modules/graph/package/comp_future` was SILENTLY EXCLUDED, because the marker matched while
+# ownership did not. `/bin/` and `/package/` are entirely ordinary directory names; `/package/` was
+# in that list only because one vendored lambda bundle happens to use it. One `mkdir bin/` from a
+# silent coverage hole -- the same silent-coverage-loss class as the ordering bug caught in the
+# predicate below.
+#
+# So bind the PROPERTY: a tree is vendored when it is PACKAGE-MANAGED, evidenced by an artifact only
+# a package manager creates --
+#     * an ancestor holding `pyvenv.cfg`      (a virtualenv)
+#     * an ancestor holding any `*.dist-info` (a pip-installed bundle: the lambda `package/` dirs)
+#     * an ancestor literally named `site-packages` or `node_modules`
+# Grounded prove-the-universe: all 97 tracked python files under the old name-markers are captured by
+# these three signals; 0 unidentifiable. No first-party file is.
+#
+# FAILS-SAFE-TOWARD-INCLUSION (CTO's design invariant, not a nice-to-have): any uncertainty --
+# unreadable dir, unknown layout -- resolves to NOT-vendored, i.e. the file IS gated. A misconfig
+# therefore over-INCLUDES (loud: a commit blocks and someone investigates) and can never silently
+# exclude (invisible: a file quietly stops being checked). That asymmetry is exactly why the
+# denylist was the wrong shape.
+_VENDOR_DIRNAMES = ("site-packages", "node_modules")
+_vendor_cache: dict = {}
+
+
+def _dir_is_vendor_root(d: str) -> bool:
+    if d in _vendor_cache:
+        return _vendor_cache[d]
+    try:
+        if os.path.basename(d) in _VENDOR_DIRNAMES:
+            hit = True
+        elif os.path.isfile(os.path.join(d, "pyvenv.cfg")):
+            hit = True
+        else:
+            hit = any(n.endswith(".dist-info") for n in os.listdir(d))
+    except OSError:
+        hit = False          # fails-safe: uncertainty -> NOT vendored -> the file is gated
+    _vendor_cache[d] = hit
+    return hit
 
 
 def _is_vendored(f: str) -> bool:
-    n = "/" + f.replace("\\", "/").lstrip("/")
-    return any(m in n for m in _VENDORED_MARKERS)
+    """True only when a PACKAGE MANAGER owns the tree. Never inferred from a directory's name."""
+    d = os.path.dirname(f.replace("\\", "/"))
+    seen = 0
+    while d and d not in (".", "/") and seen < 40:
+        if _dir_is_vendor_root(d):
+            return True
+        parent = os.path.dirname(d)
+        if parent == d:
+            break
+        d, seen = parent, seen + 1
+    return False
 
 
 def _is_python_source(f: str) -> bool:
