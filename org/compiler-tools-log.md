@@ -14713,3 +14713,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
 | 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-iam service + comp-iam gaps | comp-iam service bd-49f-freshness-probe grounded the role as ListBucket-only BEFORE adding the content assertion (needed s3:GetObject); comp-iam gaps post-apply confirmed the probe clean + surfaced 3 PRE-EXISTING gaps in other lanes (astn-wsjft-orchestrator GetObject/PutObject, etfs-reports-orchestrator PutObject) -> routed COO |
 | 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/lo... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/PENDING_bd4... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-firmsep-sweep | comp-firmsep-sweep --help | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --help | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | FAIL |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | FAIL |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | FAIL |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-denytest --file .tools/comp... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/bd-49f... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/manifest_check_cli.py | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/_canonical.py | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_coverage_check.py | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-glob | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/phaseB1-beha... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | FAIL |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P2 | (window summary) | comp-glob x4 + comp-grep x3 + comp-kuzu D1-D7 live (canonical, HEAD-current) + commit-gate x2 + safe-commit x3 | PARTIAL -- 2 GAPS FOUND: comp-glob bare-basename silent-0 (fixed 8dfdaa8d1); safe-commit/commit-gate cannot commit a .py DELETION (py_compile fail-closed on missing file) |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
