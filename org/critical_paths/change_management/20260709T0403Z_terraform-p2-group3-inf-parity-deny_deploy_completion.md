@@ -27,3 +27,43 @@
 - 20260709T040923Z LEG L4 closed: DENY-TEST EXERCISED via aws iam simulate-principal-policy (behavior, not config-read). s3:GetObject+s3:PutObject vs opal
 - 20260709T040923Z LEG L5 closed: INF-OWN-ACCESS-INTACT, exercised. (i) inf-gold-layer-ec2-role s3:GetObject+PutObject on opal-data-inf/gold/probe.json = 
 - 20260709T040924Z CLOSED -- all 5 legs proven
+
+---
+
+## ADDENDUM (post-close, per CTO light-condition 040449Z) -- the CORRECTED pre-apply grounding
+
+Appended after CLOSE, not backdated: CTO required the corrected sweep evidence live in the ledger record
+rather than only in the correction message, so the strengthened (a) is on the permanent record.
+
+**Gate (a), APPLIED baseline -- the CORRECTED sweep (the one the apply actually rests on):**
+- `ROLES PROCESSED: 27 / 27` -- **asserted in-loop against the expected count**, not assumed.
+- `INLINE POLICIES SEEN: 82` (the first sweep saw only 79 -- it skipped roles).
+- **`opal-data-bd` / `opal-data-cot` references across all 82 inline policies: ZERO.**
+- Managed attachments: AWSLambdaBasicExecutionRole (21), AmazonSSMManagedInstanceCore (4), none (2);
+  neither AWS-managed policy grants `opal-data-*` S3.
+- 23 of 27 roles reference their own bucket (`opal-data-inf`). The 4 that do not: inf-assets-trigger,
+  inf-ec2-launch-monitor, inf-ec2-retry-launch, inf-eventbridge-ssm.
+=> CONCLUSION (load-bearing): no inf role held any legitimate bd/cot access, so the Deny could not
+   over-restrict a real access path. Now grounded on the COMPLETE role/policy set.
+
+**The bug that made the FIRST sweep wrong (named, so it is not repeated):**
+`while read -r role; do aws ...; done < roles.txt` -- the `aws` CLI **consumes the loop's stdin**, silently
+skipping iterations. It produced a confident, wrong census (79 policies / 22 own-bucket roles) and
+manufactured a PHANTOM finding against `inf-unified-account-dim-daily-role` (a role that is entirely healthy).
+Guard: iterate from an array (no stdin redirect), redirect `</dev/null` on every `aws` call inside the loop,
+and **assert processed-count == expected-count INSIDE the loop**. A sweep that can silently skip iterations
+must prove its own completeness.
+
+**Mis-run check, named (CTO condition):** one verification `awk` one-liner used an off-by-one field index
+(`$3`/`$5` against fields that were `$2`/`$4`) and therefore printed EVERY line under a "must be ZERO" header
+-- it would have read as a clean pass to a skimming reader. The **authoritative** check was the
+`grep -vE 'bd=0 cot=0'` filter, which returned nothing (= zero foreign-bucket refs), corroborated by direct
+inspection of all 82 emitted lines. The numbers in this addendum come from the checks that actually work.
+An earlier ARN-count loop likewise printed 0s from broken shell escaping and was re-run with fixed-string
+`grep -F` rather than allowed to stand as a pass.
+
+**What this addendum does NOT change:** gate (b) (27 add / 0 change / 0 destroy) and gate (c) (Deny Resource
+== {bd, bd/*, cot, cot/*}, ZERO opal-data-inf) are both PLAN-derived, and (c) was independently re-grounded by
+CTO reading `cross-firm-deny.tf`'s locals directly. The check that could actually have broken the inf pipeline
+never depended on the buggy sweep. Both GOs were re-affirmed explicitly post-correction (CTO 040449Z,
+COO 040419Z) -- neither sent `[STOP]`.
