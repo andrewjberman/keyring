@@ -55,10 +55,23 @@ Observed on 2026-07-09:
   09:14:57Z  runner emits bronze/2026-07-09/_BRONZE_COMPLETE.json               (run_date, not as_of)
 ```
 
-Attribution is **reproduced, not inferred**: running BD's real 07-08 export through `pd.read_excel` +
+Attribution is **reproduced, not inferred**, and it now rests on two independent legs:
+
+**(a) Schema reproduction.** Running BD's real 07-08 export through `pd.read_excel` +
 `bd-allocation-processor:62` (`col.lower().replace(' ','_').replace('.','_')`) + its `:74` rename yields
 **all 92 observed columns in exact order**, including the pandas duplicate-header fingerprint
 (`Flat Fee.1` → `flat_fee_1`). Nothing else in the estate produces that signature.
+
+**(b) Timing exclusion.** `bd-silver-merge` fires **only** on the bronze sentinel. The sentinel for that run
+landed at `09:14:57Z`; `silver/allocations/2026-07-08.parquet` was written at `09:14:13Z` — **44 seconds
+before its own trigger existed.** `bd-silver-merge` therefore cannot be its author. `bd-allocation-processor`,
+firing on the raw xlsx `ObjectCreated` event at `09:13:23Z`, can and did.
+
+**Corroboration that does NOT exist, and must not be sought:** CloudTrail cannot confirm this write. The
+`opal-organization-trail` data-event selector on `opal-data-bd` is `readWriteType = ReadOnly`, and
+`opal-served-key-write-trail` is scoped to `platinum/firm/` only. **The write is forensically invisible,
+permanently.** An empty `lookup-events` query means *never captured*, not *never happened* — do not let a clean
+zero be read as disconfirmation. (Mapped by `0.5.0_AE_OpalETL`, 2026-07-09.)
 
 ---
 
@@ -111,14 +124,45 @@ agent does not own) — routed to CTO/COO for correction rather than edited here
   this file as an explicit suppression and escalate to CTO before acting.
 - Owners notified: `2.0.0_SA_COO`, `0.5.0` (NFRA_DEBTSCAN residuals), `1.0.0_SA_CTO`.
 
+## Measured blast radius (read side)
+
+Object READS on `opal-data-bd/silver/allocations/*`, 2026-05-11T19:40Z → 2026-07-09T21:20Z
+(`0.5.0_AE_OpalETL`, CloudTrail forensic tables, `comp-whoread`):
+
+| principal | reads | distinct keys | window |
+|---|---|---|---|
+| `bd-exporter-ec2-role` | 27,097 | 121 | 05-11 → 07-09 |
+| `<IAMUser Andrew_Berman>` | 2,269 | 120 | 05-12 → 07-09 |
+| `mdpf-daily-runner-ec2-role` | 211 | 104 | 05-18 → 06-29 |
+| `bd-49f-freshness-probe-role` | 24 | 2 | 07-09 → 07-09 |
+| `smartx-ingestion-lambda-role` | 12 | 7 | 05-13 → 05-19 |
+| `bd-silver-merge-role` | 10 | 5 | 07-06 → 07-09 |
+| `canonical-schwab-runner-role` | 1 | 1 | 06-29 |
+
+Notes, each of which matters:
+- The four source-confirmed gold consumers (`C_02`, `A_00`, `A_03`, `A_02`) execute on the bd-exporter EC2 and
+  therefore appear as `bd-exporter-ec2-role`. They are inside the top row, not missing.
+- **`bd-silver-merge-role` reading this prefix is EXPECTED and contradicts nothing.** That Lambda only
+  orchestrates `merge-daily-incremental.py` (`:27`, `:41`), which reads existing silver partitions to perform
+  its incremental merge. Reading ≠ writing the lagged as_of file; see the timing exclusion above.
+- **`mdpf-daily-runner` and `smartx-ingestion` are cross-pipeline consumers** outside the gold set. Both stopped
+  reading before 06-29. Recorded so a future reachability pass does not treat this prefix as gold-only.
+
+**Caveats, held explicitly (`0.5.0`):** object coverage on this bucket begins 2026-05-11T19:40Z, so any consumer
+that read only before that date is invisible here — **absence of a reader is NOT proven absence.** A consumer
+reading via manifest/redirect indirection could also evade the literal prefix filter. This table is a **floor on
+the consumer set, never a ceiling.**
+
 ## Release condition
 
 This suppression may be lifted only when **both** hold, verified on live artifacts:
 
 1. The `bd-49f-runner` sentinel keys off the snapshot `end`/`as_of` (or `bd-silver-merge` consumes the
    runner's per-table `as_of` map at `:215` instead of parsing the sentinel path), **and**
-2. `silver/allocations/{as_of}.parquet` is observed being written by `bd-silver-merge` with 94 columns and
-   `_ingested_at` / `_source_file` provenance, with `row_count > 0`.
+2. `silver/allocations/{as_of}.parquet` is observed being **WRITTEN** by `bd-silver-merge` — keyed on `as_of`,
+   not `run_date` — with 94 columns, `_ingested_at` / `_source_file` provenance, and `row_count > 0`.
+   (The condition is about **writes**. `bd-silver-merge` already *reads* this prefix; that is not evidence it
+   converts the lagged file.)
 
 Until then, this Lambda is the only thing standing between the 49F plane and a permanent frozen AUA.
 
