@@ -3,6 +3,9 @@
 **Author:** 1.0.0_SA_CTO  |  **Date:** 2026-07-09  |  **Requested by:** Andrew ("worth writing a brief about")
 **Class:** PII / re-identification. **DISTINCT from firm-separation (NEVER#1)** -- see "Why this is its own class".
 **Status:** exposure LIVE and OPEN as of 2026-07-09T18:10Z. Remediation designed + CTO-GO'd, **not yet applied.**
+**Update 18:2xZ:** Q3 (access history) ANSWERED -- **unrecoverable**; the bucket was never covered by S3 data
+events. Section 5a. Q1 (leg 4) is now the load-bearing decision, and is DESTRUCTIVE-SOVEREIGN: nothing under
+`03_mappings/` is deleted, lifecycle'd, re-keyed, or moved without Andrew's explicit word (MSTR, fabric-law).
 **Sources:** 0.5.0_AE_OpalETL msg `20260709T172741Z` (180/180 live simulate) + `NFRA_FIRMSEP_belt-consistency-standard-3layer-20260709.md` Layer-3 META.
 
 ---
@@ -94,8 +97,60 @@ Conflating the two would have hidden this. It surfaced only because `0.7.0_AE_Cl
 - **"Provably unused" is a claim about today's code, not about the grant.** The grant is what persists. A future
   DynamoDB row, a future handler, or a compromised role converts route-absence into access with **no IAM change and
   no review**. That is precisely the property a grant is supposed to *prevent*, and here it does not.
-- **No evidence of access.** Not asserted as "no access occurred" -- S3 data-event logging on this bucket was not
-  verified as part of this brief. **That is an open item, not a clean bill of health** (see Section 7, Q3).
+- **No evidence of access -- and none is recoverable.** Q3 is now ANSWERED (CTO, live, 2026-07-09T18:2xZ, on
+  MSTR's not-sovereign-gated instruction). **It is not possible to determine whether the re-identification key was
+  ever read.** See Section 5a. This is stated as unanswerable, never as "no access occurred."
+
+## 5a. Q3 ANSWERED -- the audit trail does not watch the key (and the error recurs a THIRD time)
+
+Run 2026-07-09T18:2xZ per MSTR's standing instruction that Q3 is read-only and not sovereign-gated. Live, my own
+verification. **The answer is: the evidence does not exist and cannot be reconstructed.**
+
+| Probe (live) | Result |
+|---|---|
+| `s3api get-bucket-logging --bucket opal-data-schwab` | **empty -- server access logging DISABLED** |
+| `cloudtrail describe-trails` | 2 trails: `opal-organization-trail` (multi-region, `IsLogging=True`, delivering), `opal-served-key-write-trail` |
+| `cloudtrail get-event-selectors --trail-name opal-organization-trail` | S3 `AWS::S3::Object` DataResources = **exactly** `arn:aws:s3:::opal-data-bd/`, `arn:aws:s3:::opal-data-inf/` |
+| `opal-served-key-write-trail` advanced selectors | `readOnly=false` **writes only**, scoped to `opal-data-{inf,bd,cot}/platinum/firm/` |
+| `cloudtrail list-event-data-stores` (us-east-1, us-east-2) | **none** -- no CloudTrail Lake second source |
+| `s3api get-bucket-logging --bucket opal-data-bd` (control) | also empty -- data events are the *only* object-level source in this estate |
+
+**Therefore:**
+- `opal-data-schwab` has **never** been covered by S3 object-level data events. A `GetObject` is a **data** event,
+  not a management event, so `cloudtrail lookup-events` (which serves management events, captured here via
+  `ReadWriteType=All`) **cannot** recover it. There is no server-access-log fallback. There is no Lake store.
+- **"Was `03_mappings/` ever read?" is UNANSWERABLE.** Not "no." The distinction is the whole point: an
+  unanswerable question must never be reported as a negative finding.
+- **The value-decay concern is moot** -- there is no retention window expiring, because nothing was ever captured.
+  MSTR's instinct to run it first was right; the outcome removes the time pressure and *hardens* Q1 rather than
+  relieving it.
+
+**This is the enumerate-what-you-know error, a THIRD time, now in the DETECT/audit layer itself:**
+
+| # | Layer | Enumerated | Missed |
+|---|---|---|---|
+| 1 | The **belt** (`cross-firm-bucket-read-deny`) | `opal-data-{bd,cot,inf}` literally | `opal-data-schwab` -- read through the gap within the hour |
+| 2 | The **universe sweep** (180 roles x N buckets) | 3 firm buckets | 14 of 17 `opal-data-*` |
+| 3 | **The audit trail** (`opal-organization-trail` data events) | `opal-data-{bd,inf}` | `opal-data-schwab` **and 15 others** |
+
+The control that would have told us whether the key was read **is subject to the same defect as the control that
+was supposed to stop it being read.** We enumerated the buckets we were thinking about, in the prevention layer and
+in the detection layer, independently, and got the same blind spot in both.
+
+**This is the strongest argument for leg 4.** If we cannot detect a read of the key, and cannot retroactively prove
+one never happened, then the risk this asset carries **cannot be bounded by observation** -- only by not having it.
+
+### 5b. NEW finding (byproduct, firm-sep relevant): asymmetric forensic coverage
+
+The org trail's read-only data-event selector covers `opal-data-bd/` and `opal-data-inf/` -- **not `opal-data-cot/`.**
+Cottonwood object reads are **not** forensically logged anywhere (the served-key-write-trail catches cot, but only
+`readOnly=false` **writes**, and only under `platinum/firm/`). So a cross-firm READ *into* cot -- exactly the NEVER#1
+class -- would leave no data-event record.
+
+The firm-sep standard's **Layer 3 (standing live-simulate DETECT)** proves *who may read*. It does not, and cannot,
+show *who did read*. Those are different questions and today only the first has an answer. Routed to COO + 0.7.0 as
+a DETECT-layer gap; folds into the Layer-3 section of `NFRA_FIRMSEP_belt-consistency-standard-3layer-20260709.md`.
+Not a violation; a coverage asymmetry with a firm-sep blast radius.
 
 ## 6. Remediation -- 3 legs GO'd (unapplied), 1 new
 
@@ -125,9 +180,15 @@ the same "root over belt" instinct that Layer-3 of the firm-sep standard was ref
   for 30 days, then irreversible. Nothing is deleted without your word.
 - **Q2 -- Leg 1 trade-off ratification.** Confirm firm-onboarding may require an IAM change (my recommendation), or
   direct me to preserve the wildcard and mitigate at the bucket policy instead.
-- **Q3 -- Access history.** Do you want a CloudTrail S3 data-event lookback on `03_mappings/` before remediation?
-  It is the only way to convert "no evidence of access" into "no access occurred." If data events were never
-  enabled on this bucket, the answer is unrecoverable and we should say so plainly rather than imply a clean read.
+- **~~Q3 -- Access history.~~ ANSWERED 2026-07-09T18:2xZ (CTO, live). No decision needed from you.** The lookback
+  was run on MSTR's not-sovereign-gated instruction. **Data events were never enabled on `opal-data-schwab`**
+  (selectors enumerate `opal-data-{bd,inf}` only), server access logging is off, and no CloudTrail Lake store
+  exists. Whether `03_mappings/` was ever read is **unrecoverable**. Reported as unanswerable, not as a clean read.
+  See Section 5a -- it is the third instance of the enumerate-what-you-know error, and it is what makes Q1 urgent
+  rather than optional.
+- **Q4 -- NEW, follow-on (not sovereign; routing for your awareness).** Should we *enable* S3 data events on the
+  PII bucket (and, per 5b, on `opal-data-cot`)? Cost is non-trivial at object-event volume; the decision interacts
+  with Q1 (if the key is deleted, the forensic need drops sharply). Recommend deciding Q1 first, then this.
 
 ## 8. The doctrine this bought
 
@@ -149,8 +210,20 @@ Three refinements, each earned by an error caught in flight. All three are alrea
 3. **The error recurs one level up every time you correct it.** 0.5.0 corrected a grant-shape error by enumerating
    the role universe -- then chose the *bucket* universe from three names they already knew. I corrected *their*
    enumeration -- and found the bucket-policy Deny list was itself short by one, and the prefix list short by six.
-   There is no terminal level. The only durable answer is the **standing live-simulate DETECT** (Layer 3), whose
-   bucket axis is `aws s3api list-buckets`, not a name you remember.
+   Then I went to the audit trail to see who had read the key, **and found the data-event selector enumerating
+   `opal-data-{bd,inf}`** (Section 5a). Three independent layers -- prevention, proof, detection -- authored at
+   different times by different agents, each enumerating the buckets its author happened to be thinking about, each
+   landing the same blind spot on the same bucket.
+
+   There is no terminal level, and correcting the enumeration is not the fix -- **removing the dependence on
+   enumeration is.** The only durable answers are the ones whose universe is derived, not remembered: the standing
+   live-simulate DETECT (Layer 3) whose bucket axis is `aws s3api list-buckets`; a root-scope grant instead of an
+   enumerate-Deny; and, where an asset's risk cannot be bounded by observation at all, **not keeping the asset.**
+
+4. **A control you cannot observe is not a bounded risk.** We can prove *who may read* `03_mappings/` (live
+   simulate). We cannot discover *who did* (no data events, ever). Prevention and detection are different
+   questions, and an estate can pass the first while having no answer to the second. Where both are absent, the
+   remaining lever is the existence of the asset. That is leg 4, and Section 5a is why it is not optional.
 
 ---
 
@@ -161,6 +234,12 @@ Three refinements, each earned by an error caught in flight. All three are alrea
 - CTO independent live verification 2026-07-09T18:0xZ: `s3api list-buckets` (17), `s3api get-bucket-policy` (2
   Denys), `s3 ls` (9 prefixes; `01_raw` current `2026-07-07`, `03_mappings` last `2025-12-11`),
   `iam simulate-principal-policy` (4 roles x 3 actions), source read `schwab_anonymizer.py:58,101-135,222,246-256,325,371`.
+- CTO Q3 live verification 2026-07-09T18:2xZ (per MSTR `20260709T181429Z`, Q3 not sovereign-gated):
+  `s3api get-bucket-logging` (schwab + bd control, both DISABLED), `cloudtrail describe-trails` (2),
+  `cloudtrail get-trail-status` (`IsLogging=True`, delivering), `cloudtrail get-event-selectors` (both trails),
+  `cloudtrail list-event-data-stores` (us-east-1 + us-east-2, none).
+- MSTR `20260709T181429Z`: relay to Andrew; Q1 held DESTRUCTIVE-SOVEREIGN; legs 1-3 not to be opportunistically
+  applied ahead of the sovereign leg (leg 4 could moot the belt design); Q3 to be run immediately.
 - Standard: `org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_FIRMSEP_belt-consistency-standard-3layer-20260709.md`.
 - Memory: `memory/feedback_firm_sep_detect_must_live_simulate_not_tf_lint.md`.
 
