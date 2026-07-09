@@ -15256,3 +15256,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-grep/comp-glob | fabric-check deploy-gate: comp-grep over skill bodies proved NOTHING parses --json (only --blocks) -> declined to change a machine-readable schema without a consumer audit; comp-grep "DryRun" over infra returned TWO docs, which WAS the finding (the twin that rotates a session credential). Gap: no comp-tool maps CLI-flag -> code-path -> emitted-section, which is exactly the Defect-2 class. | PASS |
 | 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io A_00.accounts_dimension.py | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/BD_RPSAUTO.json --file org... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io A_04.client_dimension.py | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-tagauthz.py --file .tools/c... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/BD_RPSAUTO.json --file org... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/bd-account-type-filter-sema... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check | VERDICT |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript deployed D_00.portal_aggregates.py | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check list-watched-files | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io INF_09 | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (session-close) | comp-grep, git log -S, aws s3api list-object-versions | comp-grep WARNED that a `\|` pattern's 0-match may be the query not the absence (only tool-caught instrument error tonight); pickaxe bounded the QTD exposure to ONE event (anchor born 2026-04-06); version-history oracle proved the outage (8 writes/39.8h) | PASS; GAPS: (1) `comp-pipescript io <ID>` crosses the bd/cot firm boundary silently on a bare script id; (2) the served-history oracle has a 15-day lifecycle horizon -- `comp-served-history` must PRINT it, never return empty |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
