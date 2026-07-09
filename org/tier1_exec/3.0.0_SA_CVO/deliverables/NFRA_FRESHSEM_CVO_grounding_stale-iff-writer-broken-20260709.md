@@ -37,17 +37,28 @@ The graph -- at BOTH levels (cloud Nessie/Iceberg, local Kuzu projection) -- is 
      header (`:330-331`) -- NOT fed into `needs_refresh` (the rebuild decision) NOR the `WARN: BEHIND`
      label. The signal that separates "healthy-lag" from "writer-broken" is computed and discarded at the
      two points where the decision is actually made.
-   - **(b) LIVE-NULL -- the load-bearing dependency (0.7.0 flagged; CVO live-confirmed).** leg-4 is
-     CODE-LANDED but DEPLOY-INCOMPLETE (0.7.0 todo #23): the producers (`derive_runner`,
-     `incremental_updater`) do not yet STAMP per-table vintage. **Live marker check
-     (`s3://opal-313476888478-globgrph/warehouse/_branch_head.main.json`, writer=`incremental_updater`,
-     committed 2026-07-09T10:34:01Z): `last_write_iso` = `None` for graph_nodes, graph_edges,
-     graph_contracts -- all three NULL.** So the writer-health STALE gate CANNOT read a live signal today.
-     **HARD PREREQUISITE: leg-4 deploy-finish (#23) must land -> `last_write_iso` goes live -> THEN the
-     decouple-stale-from-refresh build can bind it.** (My own grounding gap, owned: the finding first
-     asserted the oracle "already exists" from code-presence -- DESIRED -- without the live-populated
-     check -- APPLIED; Rule-22a applies to a finding's premise, not only a cert. 0.7.0 caught it; I
-     live-confirmed it above.)
+   - **(b) LIVE-NULL -- the load-bearing dependency (0.7.0 flagged; CVO live-confirmed + source-grounded).**
+     **Live marker check (`s3://opal-313476888478-globgrph/warehouse/_branch_head.main.json`,
+     writer=`incremental_updater`, committed 2026-07-09T10:34:01Z): `last_write_iso` = `None` for
+     graph_nodes, graph_edges, graph_contracts -- all three NULL.** The comp-kuzu header states it in its
+     own words: "last-write UNRECORDED (pre-leg-4 stamp) -- vintage unverifiable" x3.
+     **PRECISE MECHANISM (source-grounded, corrects an earlier shallower framing): leg-4 is
+     SOURCE-INCOMPLETE, not deploy-incomplete.** The centralized `_provenance.stamp_marker` (`:182`, the
+     only stamp that writes `last_write_iso`) has **ZERO call sites**. All 3 writers still call their OWN
+     local pre-leg-4 stamp, each writing `{metadata_location, snapshot_id}` only: `cse_store.stamp_marker`
+     (`cse_store.py:416`), `derive_runner.stamp_branch_head_marker` (`derive_runner.py:402`),
+     `incremental_updater.stamp_branch_head_marker` (`lambda_function.py:561`). So the field is written by
+     NO deployed writer -- incremental OR derive -- and CANNOT self-heal on any write until the wiring
+     lands (a 10:34Z incremental run already proved it). **HARD PREREQUISITE: leg-4 wiring-finish
+     (freshguard-leg4-writer-wiring-finish ledger, NEVER#6-tracked) -- wire all 3 writers to the
+     centralized `stamp_marker` (approach A, the design intent; 3-copy would re-triplicate the drift leg-4
+     exists to fix) + coordinated deploy (derive image + Lambda) -> `last_write_iso` goes live -> THEN the
+     decouple build can bind it.** (My grounding, owned, TWICE one-level-too-shallow this turn and both
+     corrected at source: (i) asserted the oracle "already exists" from code-presence -- DESIRED -- without
+     the live-populated check -- APPLIED; (ii) framed the live-NULL as "pre-leg-4 code deployed /
+     deploy-lag" -- correctly hedged INFERRED-pending-0.7.0's-artifact-check -- when the true mechanism is
+     0-call-sites SOURCE-incompleteness. Rule-22a/22 on a finding's premise: ground the mechanism at
+     SOURCE, and hedge an inference until the owner resolves it.)
 
 ## The gap (what Andrew's thesis requires that the code does not yet do)
 
@@ -66,7 +77,7 @@ The graph -- at BOTH levels (cloud Nessie/Iceberg, local Kuzu projection) -- is 
 |---|---|
 | Cheap catch-up (delta not full-derive) | DONE -- DELTA-default-on CERTED (Tier-1) |
 | Continuous local currency (no on-query catch-up) | IN FLIGHT -- 0.7.0 incremental stitching |
-| Per-table writer-health signal (`last_write_iso`) | SCHEMA-PRESENT but **LIVE-NULL** -- leg-4 code-landed, DEPLOY-INCOMPLETE (0.7.0 #23); live marker 2026-07-09T10:34Z = None all 3 tables. **HARD PREREQUISITE** for the stale-gate |
+| Per-table writer-health signal (`last_write_iso`) | SCHEMA-PRESENT but **LIVE-NULL** -- leg-4 **SOURCE-INCOMPLETE**: centralized `stamp_marker` (`_provenance.py:182`) has 0 call sites; all 3 writers use local pre-leg-4 stamps (`cse_store.py:416`/`derive_runner.py:402`/`lambda_function.py:561`). Live marker 2026-07-09T10:34Z = None all 3 tables. **HARD PREREQUISITE** (freshguard-leg4-writer-wiring-finish ledger) for the stale-gate |
 | Cloud writer-health monitors | EXIST + validated GREEN (SQS/Lambda/derive-alarm) |
 | **Refresh trigger gated on writer-health (not pin-position)** | **MISSING -- the finding** |
 | **Header "stale/WARN" gated on writer-health (not pin-position)** | **MISSING -- the finding** |
