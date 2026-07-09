@@ -12,10 +12,16 @@ TTL, canonical query tool, and rebuild command.
 `comp-graph clear [name|all]` drops a local trace-layer cache so the next call
 rebuilds it (gitignored cache only -- never touches the cloud artifacts).
 
-Freshness model (uniform; graph_cache.py is the executable contract):
-  - (default) QUERY the cache if within its TTL -- the cheap warm path.
-  - --fresh   re-derive if STALE (TTL expired OR source files changed).
+Freshness contract -- THREE states (CTO GO 20260709T201214Z):
+  - (default) serve the cache iff that tool's freshness PREDICATE says fresh.
+  - --check   REPORT staleness, never rebuild.  0 = fresh | 2 = stale | 1 = tool error.
   - --force   always re-derive.
+  - --fresh   DEPRECATED no-op alias of default (warns; removed next cycle).
+
+There is no single universal predicate, and this tool must not invent one: the trace graph binds
+per-node CONTENT-SHA drift (age is never evaluated on the default path), while graph_cache binds a
+stat-only fingerprint AND a TTL. `status` prints each tool's ACTUAL predicate, and takes the trace
+verdict by CALLING the enforcer (`cli.trace_freshness`) rather than re-modelling it.
 
 Usage:
     comp-graph status                # freshness table for every graph
@@ -43,7 +49,26 @@ from org.modules.graph import graph_cache as gc  # noqa: E402
 
 _CACHE_DIR = _WORKSPACE / ".comp-graph"
 _GLOBGRPH_DIR = _WORKSPACE / "infra" / "aws" / "globgrph"
-_TRACE_TTL = 300  # cli.py _get_graph 5-min cache
+
+# `_TRACE_TTL = 300` USED TO LIVE HERE. It was a hand-copied second expression modelling a predicate
+# the enforcing code does not use: `cli.py::_get_graph`'s default path binds per-node content-SHA
+# drift and NEVER evaluates age (the TTL `elif` hangs off `if check_freshness:`). Exercised at
+# (age=4000s, drift=0) the old verdict said "STALE (next call rebuilds)" while `_get_graph` SERVED
+# the cache -- wrong in both directions. We now CALL the enforcer (`cli.trace_freshness`) and print
+# what it returns. MSTR 20260709T200348Z, ratified: a control's reported value and its enforcing
+# value must be the SAME EXPRESSION, not two expressions that agree today.
+# CTO GO 20260709T201214Z; 0.7.0_AE_CloudOps (tool owner) co-signed 20260709T205010Z.
+
+# The freshness contract's POPULATION, derived from each tool's actual capability -- never inherited
+# from the manifest's `rebuild-when-query` token list, which under-collected (it named one launcher
+# for a cli.py that backs five) and mis-collected (`comp-aws derive` has no cached read at all).
+# Silence about the classes recreates the false-uniformity claim one category over, so status names
+# all three (CTO ruling; 0.7.0's framing).
+_CONTRACT_TOOLS = ["comp-trace", "comp-blast", "comp-diff", "comp-xref", "comp-platinum",
+                   "comp-system"]
+_REBUILD_VERB = ["comp-build"]          # default IS the rebuild; --check probes. No warm cached read.
+_PURE_PRODUCERS = ["comp-aws derive", "comp-stitch-refresh"]
+_QUERY_ONLY = ["comp-kuzu"]
 
 
 def _fmt_age(seconds) -> str:
@@ -76,6 +101,33 @@ def _now() -> float:
     return time.time()
 
 
+def _trace_cli():
+    """Import the ENFORCER. Lazy: cli.py pulls the trace-graph machinery, and `comp-graph clear`
+    must not pay for it."""
+    from org.modules.graph import cli as _cli
+    return _cli
+
+
+def _trace_freshness():
+    """Call the enforcing predicate. Fail-closed: if we cannot ASK the enforcer, we do not invent a
+    verdict -- an unevaluable status is UNVERIFIABLE, never FRESH."""
+    try:
+        return _trace_cli().trace_freshness()
+    except Exception as e:  # noqa: BLE001
+        return "UNVERIFIABLE", f"cannot reach the enforcer ({type(e).__name__}: {e})", 0, []
+
+
+def _trace_predicate() -> str:
+    try:
+        return _trace_cli().TRACE_PREDICATE
+    except Exception:  # noqa: BLE001
+        return "UNKNOWN (enforcer unreachable)"
+
+
+#: comp-platinum's predicate, named from graph_cache's own contract rather than restated here.
+_GC_PREDICATE = f"stat-only (max-mtime, file-count) fingerprint AND age < {gc.DEFAULT_TTL}s TTL"
+
+
 def _ttl_verdict(exists: bool, age, ttl) -> str:
     if not exists:
         return "MISSING"
@@ -95,16 +147,19 @@ def _collect():
 
     # --- Local trace layer (.comp-graph/) -----------------------------------
     # Trace graph (comp-trace / comp-blast / comp-diff / comp-xref).
+    # VERDICT COMES FROM THE ENFORCER, not from a TTL we keep a copy of. See the _TRACE_TTL note.
     gpath = _CACHE_DIR / "graph.json"
     ba = _json_built_at(gpath) if gpath.exists() else None
     age = (now - ba) if ba else None
+    verdict, detail, _n, _drift = _trace_freshness()
     records.append({
         "group": "local", "name": "graph",
-        "desc": "trace graph (comp-trace/comp-blast/comp-diff)",
+        "desc": "trace graph (comp-trace/comp-blast/comp-diff/comp-xref)",
         "path": str(gpath.relative_to(_WORKSPACE)),
         "exists": gpath.exists(), "built_at": ba, "age": age,
-        "ttl": _TRACE_TTL, "verdict": _ttl_verdict(gpath.exists(), age, _TRACE_TTL),
-        "query": "comp-trace / comp-blast", "rebuild": "comp-build --force",
+        "ttl": None, "verdict": verdict, "detail": detail,
+        "predicate": _trace_predicate(),
+        "query": "comp-trace / comp-blast", "rebuild": "comp-build",
     })
 
     # xref baseline (snapshot; no TTL).
@@ -141,6 +196,7 @@ def _collect():
             "exists": True, "built_at": meta.get("built_at"), "age": age,
             "ttl": gc.DEFAULT_TTL,
             "verdict": _ttl_verdict(True, age, gc.DEFAULT_TTL),
+            "predicate": _GC_PREDICATE,
             "query": "comp-platinum", "rebuild": "comp-platinum ... --force",
         })
     if not plat:
@@ -214,16 +270,45 @@ def cmd_status(args):
             ttl = f"TTL {r['ttl']}s" if r["ttl"] else "no-TTL"
             note = ""
             if verdict == "STALE":
-                note = "  (next call rebuilds)"
+                note = f"  (next call rebuilds: {r['rebuild']})"
             elif verdict == "MISSING":
                 note = f"  (build: {r['rebuild']})"
-            print(f"  {r['name']:<20} {verdict:<8} {('built ' + age + ' ago') if r['exists'] and r['age'] is not None else ('present' if r['exists'] else 'absent'):<18} {ttl:<9} {r['desc']}{note}")
+            elif verdict == "UNVERIFIABLE":
+                note = "  (could not evaluate -- NOT a pass)"
+            print(f"  {r['name']:<20} {verdict:<12} {('built ' + age + ' ago') if r['exists'] and r['age'] is not None else ('present' if r['exists'] else 'absent'):<18} {ttl:<9} {r['desc']}{note}")
+            # State the PREDICATE and the DENOMINATOR the verdict came from. A verdict whose basis
+            # is invisible is a verdict a reader cannot check -- and this row's old verdict was
+            # computed from a TTL its own tool never evaluates.
+            if r.get("predicate"):
+                print(f"  {'':<20} predicate: {r['predicate']}")
+            if r.get("detail"):
+                print(f"  {'':<20} evaluated: {r['detail']}")
         print()
 
-    print("FRESHNESS CONTRACT (uniform across rebuild-capable graph tools):")
-    print("  (default)  QUERY cached within TTL -- the cheap warm path")
-    print("  --fresh    re-derive if STALE (TTL expired OR source files changed)")
+    # The contract states the CONTRACT. It does NOT state a universal ("cached within TTL") that is
+    # false for both of its members: the trace graph binds content-SHA drift and never reads age;
+    # graph_cache binds a stat-only fingerprint AND a TTL. Each tool's ACTUAL predicate is printed
+    # per-row above. CTO 20260709T201214Z.
+    print("FRESHNESS CONTRACT (3 states):")
+    print("  (default)  serve the cache iff that tool's freshness PREDICATE says fresh")
+    print("  --check    REPORT staleness, never rebuild.   0 = fresh | 2 = stale | 1 = tool error")
     print("  --force    always re-derive")
+    print("  --fresh    DEPRECATED no-op alias of default (warns; removed next cycle) -- the")
+    print("             NFRA_GRAPHUNI P2/D2 head-pin made default honor the fingerprint and")
+    print("             collapsed FRESH into DEFAULT. Proven no-op, with a control.")
+    print()
+    # Naming the classes IS the denominator rule applied to a status surface: a page that lists
+    # "rebuild-capable graph tools" while silently omitting the pure producers asserts a universal
+    # over a set it never states.
+    print("POPULATION (derived from each tool's actual capability, not a token list):")
+    print("  contract tools  (warm cached read + rebuild; default/--check/--force):")
+    print("     %s" % ", ".join(_CONTRACT_TOOLS))
+    print("  rebuild+probe verb (no warm cached read -- its DEFAULT is the rebuild; --check probes):")
+    print("     %s" % ", ".join(_REBUILD_VERB))
+    print("  pure producers  (always re-derive; no cached query path -- --force/--fresh collapse):")
+    print("     %s" % ", ".join(_PURE_PRODUCERS))
+    print("  query-only      (no rebuild path of its own; cannot own a --force):")
+    print("     %s" % ", ".join(_QUERY_ONLY))
 
 
 def cmd_clear(args):

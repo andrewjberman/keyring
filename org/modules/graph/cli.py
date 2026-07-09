@@ -145,27 +145,55 @@ def _require_query(args, parser, name: str = "query") -> None:
         parser.error(f"the following arguments are required: {name}")
 
 
+#: The trace graph's freshness PREDICATE, exactly as `_get_graph` enforces it: per-node content-SHA
+#: drift. NOT a TTL -- the default serve path never evaluates age (the `elif` on the TTL hangs off
+#: `if check_freshness:`, so an un-drifted cache is served at ANY age).
+TRACE_PREDICATE = "content-SHA drift per indexed node (no TTL on the default path)"
+
+
+def trace_freshness() -> tuple:
+    """THE enforcing predicate, as a VALUE. Returns (verdict, detail, denominator, drift).
+
+    verdict in {"FRESH", "STALE", "MISSING", "UNVERIFIABLE"}.
+
+    Every surface that REPORTS trace-graph freshness must call this, and every surface that ACTS on
+    it (`_get_graph`) evaluates the same `check_node_freshness`. MSTR 20260709T200348Z, ratified:
+    "a control's reported value and its enforcing value must be the same expression, not two
+    expressions that agree today." `comp-graph status` previously re-modelled this with a
+    hand-copied `_TRACE_TTL = 300` and was wrong in BOTH directions -- exercised at
+    (age=4000s, drift=0) it said "STALE (next call rebuilds)" while `_get_graph` SERVED the cache.
+    """
+    if not _CACHE_FILE.exists():
+        return "MISSING", "no cached graph -- run comp-build", 0, []
+    try:
+        g = TraceGraph.load(_CACHE_FILE)
+        drift = check_node_freshness(g, _WORKSPACE)
+    except Exception as e:  # noqa: BLE001 -- cannot evaluate is never "fresh"
+        return "UNVERIFIABLE", f"{type(e).__name__}: {e}", 0, []
+    indexed = sum(1 for n in g.nodes.values() if n.source_sha)
+    if not drift:
+        return "FRESH", f"{indexed} indexed nodes; no SHA drift", indexed, []
+    return "STALE", f"{len(drift)} of {indexed} indexed nodes drifted", indexed, drift
+
+
 def _freshness_probe() -> int:
     """THE enforcing predicate, reported. 0 = fresh | 2 = stale | 1 = tool error.
 
     Names the universe it swept (CTO standing rule 20260709T192409Z: a gate that cannot state its
     denominator cannot be trusted to have a numerator).
     """
-    try:
-        if not _CACHE_FILE.exists():
-            print("--check: no cached graph -- run comp-build. (STALE)", file=sys.stderr)
-            return 2
-        g = TraceGraph.load(_CACHE_FILE)
-        drift = check_node_freshness(g, _WORKSPACE)
-    except Exception as e:  # noqa: BLE001 -- a probe that cannot evaluate is an ERROR, never "fresh"
-        print(f"--check: UNVERIFIABLE ({type(e).__name__}: {e})", file=sys.stderr)
-        return 1
-    indexed = sum(1 for n in g.nodes.values() if n.source_sha)
-    if not drift:
-        print(f"--check: clean ({indexed} indexed nodes; no SHA drift)")
+    verdict, detail, _n, drift = trace_freshness()
+    if verdict == "FRESH":
+        print(f"--check: clean ({detail})")
         return 0
-    emit_stale_warn(drift)
-    print(f"--check: STALE ({len(drift)} of {indexed} indexed nodes drifted)", file=sys.stderr)
+    if verdict == "UNVERIFIABLE":
+        print(f"--check: UNVERIFIABLE ({detail})", file=sys.stderr)
+        return 1
+    if verdict == "MISSING":
+        print(f"--check: {detail}. (STALE)", file=sys.stderr)
+        return 2
+    emit_stale_warn(drift)      # keep comp-build --check's node-level listing (no info regression)
+    print(f"--check: STALE ({detail})", file=sys.stderr)
     return 2
 
 
