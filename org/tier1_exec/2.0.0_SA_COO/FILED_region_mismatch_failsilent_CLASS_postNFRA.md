@@ -35,6 +35,11 @@ A LIVE degrade = **dead-reach (A) x fail-silent (B) x reachable-with-dependent-c
 ## LAMBDA UNIVERSE PROVEN + ESTATE OPEN (CTO CLASS-brief 132817Z, honest scope)
 **LAMBDA universe PROVEN (stabilized, v5 no-new-TP + 4 FP removed): 3 LIVE = security-sweep (SEV2), daily-agenda (SEV2), trending (SEV3); NO SEV1; + yang latent + schwab safe + auth-path SEV1-latent.** CTO's Andrew CLASS-brief FILED: `org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_DATAINTEGRITY_dead-reach-fail-silent-class-brief-20260709.md` -- states the class (AxBxC), the 3 findings+fixes, the auth-path instance, and DECLARES the estate OPEN (not "proven" about a set the instrument can't see). Goes to Andrew alongside the credential-close (CTO relays).
 
+## RESOLUTIONS (CTO 134141Z, from CVO's cert):
+- **trending-image -> <=SEV3-chronic (resolved):** raises on a hardcoded-us-east-2 client CODE bug, outputs a DynamoDB icon_type. LIVE only if the frontend consumes icon_type / safe if not -- low-stakes consumer-check, caps at SEV3. (Was the fail-mode-disagreement PENDING.)
+- **opal-layer3-ec2-role -> RESOLVED INERT/latent:** no running EC2 carries the instance profile (opal-portal-ec2-profile). The one honest-UNRESOLVED row now cleared -- not left dangling.
+- **RELAY:** base COO (me) is the SINGLE Andrew-relayer of both milestones (credential-close + this class-brief); sent via PushNotification 134xxxZ. Sovereign items (canary, Rule-14) go MSTR/Andrew-direct SEPARATE.
+
 ## ESTATE-CLOSURE STEP (post-NFRA, program-scope -- CTO assignment to the class-tracker):
 comp-deadgrant enumerates `lambda list-functions` ONLY -> structurally BLIND to EC2/ECS/Batch/CodeBuild/human/CI. So the estate universe is OPEN. **Owner = 0.5.0's comp-deadgrant ESTATE-MODE (non-Lambda dead-reach enumeration)** + the 3 Image-Lambda ECR extractions. UNRESOLVED now: opal-layer3-ec2-role (0.5.0 refused to bind it to RoleLastUsed-206d = suggestive, not proof). Assign + run post-NFRA; the estate universe closes when that enumeration runs.
 
