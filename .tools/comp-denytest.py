@@ -139,7 +139,7 @@ def main() -> int:
 
     expected = EXPECTED[a.change_type]
     print(f"change-type = {a.change_type}  ->  DERIVED expected verdict = {expected}")
-    print(f"(the author does not choose this; it is derived from the change type)\n")
+    print("(the author does not choose this; it is derived from the change type)\n")
     if a.context:
         print(f"condition context supplied: {a.context}\n")
 
