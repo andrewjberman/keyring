@@ -12,7 +12,37 @@ These are **different grains, complementary, not redundant** -- but uncoordinate
 
 ## The master-principle framing
 
-A Terraform **declaration** (an IAM grant, an SNS subscription) is a PROXY for the **effective live state** (the grant a `simulate` returns; a subscription that actually delivers). *The estate is not what Terraform says it is.* Proven THREE times in one session -- `SecretsManagerReadWrite` (AWS-managed), an **unmanaged inline `S3Access`** we wrote by hand (absent from all 44 pulled states; `terraform plan` clean TODAY while a foreign principal held `PutObject` on `opal-data-bd`), `AmazonS3ReadOnlyAccess` (AWS-managed). Each was invisible to every lint/plan/drift over our own TF; each found ONLY by a live simulate. See `memory/feedback_firm_sep_detect_must_live_simulate_not_tf_lint.md`.
+A Terraform **declaration** (an IAM grant, an SNS subscription) is a PROXY for the **effective live state** (the grant a `simulate` returns; a subscription that actually delivers). *The estate is not what Terraform says it is.*
+
+> **CORRECTION 2026-07-09 (0.5.0 source-confirmed; CTO independently re-verified live). This paragraph previously
+> conflated two different invisibilities, and the loose half propagated into five dispatches, a Tier-0 concurrence,
+> and a committed brief. The error originated here, in my document.**
+>
+> There are **two distinct failure modes**, and only one of them is a Terraform-coverage problem:
+>
+> 1. **UNMANAGED grant -- invisible to Terraform itself.** The inline `S3Access` on `lambda-execution-role`: absent
+>    from all 44 pulled states, `terraform plan` clean TODAY while a firmless role held `PutObject` on
+>    `opal-data-bd`. TF genuinely cannot see it. *This is a coverage defect.*
+> 2. **AWS-MANAGED policy -- fully Terraform-managed, but its CONTENT is opaque to a grant-shape LINT over our own
+>    TF.** `AmazonS3ReadOnlyAccess` on `opal-news-lambda-role` is **declared** (`news-pipeline/iam.tf:171-174`),
+>    **in state**, and **live-attached** -- desired == applied == live, **zero drift**. `plan` was clean because TF
+>    was managing it *correctly*, not because it was blind. *This is NOT a coverage defect.* (Same for
+>    `AmazonDynamoDBFullAccess`, `iam.tf:179`.)
+>
+> **"Invisible to a lint" is not "invisible to Terraform."** The consequence is load-bearing and must not be lost:
+> **100% Terraform coverage would NOT have prevented the PII exposure.** `AmazonS3ReadOnlyAccess` was already at
+> 100% coverage and reached `03_mappings/` the entire time. And the belt missed `opal-data-schwab` because
+> `cross-firm-bucket-read-deny.tf:58-62` **enumerates bd/cot/inf literally** -- causally independent of TF coverage.
+>
+> **Therefore: NFRA_TERRAFORM's close MUST NOT be recorded as closing the PII / grant-reach class.** They are
+> **orthogonal controls and neither substitutes for the other**: Terraform coverage bounds *drift, review, and
+> audit*; only the standing **live-simulate DETECT** (Layer 3, `s3api list-buckets`-derived bucket axis) bounds what
+> a grant **reaches**. Reading the TERRAFORM close as closing the reach class is false comfort on a PII
+> re-identification asset -- the same error, one level up. (CTO arch-gate, standing.)
+
+What survives, and is independently verified: an **unmanaged grant** is invisible to every lint/plan/drift over our
+own TF, and an **AWS-managed policy's content** is invisible to a grant-shape lint over our own TF. Both were found
+**ONLY by a live simulate**. See `memory/feedback_firm_sep_detect_must_live_simulate_not_tf_lint.md`.
 
 ## The 3-layer standard
 
