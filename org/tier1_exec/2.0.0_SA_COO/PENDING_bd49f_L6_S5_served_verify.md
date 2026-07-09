@@ -1,6 +1,37 @@
 # PENDING VERIFICATION -- bd-49f L6 served-property exercise (S5)
 
-**STATUS:** OPEN. Fires AFTER the ~04:00Z 2026-07-10 scheduled gold. **Trigger owner: 2.0.0_SA_COO (/drive tick) + MSTR (respawn-executor).**
+---
+
+# >>> STOP. READ THIS BEFORE THE SPEC. SOVEREIGN PROHIBITION, 2026-07-09T~22:35Z. <<<
+
+**49 FINANCIAL IS OUT OF SCOPE BY SOVEREIGN INSTRUCTION. THIS DOCUMENT IS SUSPENDED PENDING ANDREW'S ANSWER TO ONE QUESTION (below). DO NOT EXECUTE IT ON THE STRENGTH OF ITS OWN INSTRUCTIONS.**
+
+> **Andrew, verbatim (2026-07-09):** *"i do not want to deal with 49 right now, their data and setup is ambiguous and a fucking mess, **it is not our problem and not something that we should pursue unless i explicitly ask for it.**"*
+
+**Relayed by `1.0.0_SA_CTO` as a STANDING PROHIBITION, fabric-wide:**
+> **No agent works 49 Financial, Schwab, RPS, `schwab/silver/*`, `opal-data-schwab`, or bd custody, for any reason, without Andrew's explicit ask. Standing. This supersedes every dispatch issued on those subjects.**
+
+**IF YOU ARE A FRESH AGENT WHO WAS RESPAWNED TO RUN THIS SPEC: you were dispatched BEFORE the prohibition existed. The dispatch does not survive it. STOP, and ask the COO or CTO whether Andrew has answered the question below.** *An unread prohibition and no prohibition are the same prohibition.*
+
+## THE UNRESOLVED COLLISION -- surfaced to Andrew, NOT resolved by any agent
+
+This document's verify is 49F work. **But `bd-49f-empty-stub-asof-lag-root-fix` is an OPEN deploy ledger (`open-verify=['L6']`, apply legs proven), NEVER#6 binds on it, and the 49F `certified_aua` is FROZEN at `$1,837,159,865.68` on a CLIENT-FACING portal.**
+
+**Two defensible, opposite readings:**
+- *Cancel means cancel.* The verify is pursuit. Stand it down; close the ledgers `out of scope, sovereign`.
+- *Cancel means stop investigating, not stop watching a live client-facing number.* NEVER#6 binds regardless of scope.
+
+> **NOBODY PICKS. A sovereign utterance means what it ANSWERS, not what it LANDS NEXT TO.** He was answering *"should we chase the RPS/Schwab mess."* **He was not asked about an open deploy ledger on a frozen client-facing AUA.** "Andrew probably meant X" is the exact move MSTR refused to make with `"no its alright"` (which answered a question about an Outlook draft and was **not** a lift of the YCharts prohibition).
+
+**The question put to him:** *"49F is out of scope. Two open deploy ledgers and one scheduled 04:30Z verification are 49F work, and 49F's served AUA is frozen at $1,837,159,865.68 on a client portal. Do we stand those down too, or does the freeze stay watched?"*
+
+**Until he answers:** the ledgers are **neither closed nor advanced.** They remain visible in `deploy_ledger check --red`. No 49F investigation proceeds. **`BD_RPSAUTO` is CANCELLED** (`status: cancelled`, out of scope, sovereign). **The Schwab `Business Date` question to Andrew is WITHDRAWN and nobody re-raises it.**
+
+**ALSO PROHIBITED, unconditionally, on its own separate footing:** `ycharts_*` and **ANY** external vendor API, without Andrew's explicit per-use word. **Availability in the toolset is NOT authorization.** The valuation-instant question this spec's cousins reach for is **UNDETERMINED and stays that way.**
+
+---
+
+**STATUS:** **SUSPENDED** (was: OPEN). Fires AFTER the ~04:00Z 2026-07-10 scheduled gold **only if Andrew answers the collision question above in the affirmative.** **Trigger owner: 2.0.0_SA_COO (/drive tick) + MSTR (respawn-executor).**
 **Ledger slug:** `bd-49f-empty-stub-asof-lag-root-fix` (ledger `20260709T0855Z`, HELD-external, L6 open).
 **Why this doc exists:** the ledger is HELD-external and will NOT read RED until it STALEs at 4d (2026-07-13). Without an explicit trigger, the 49F client-facing served un-freeze goes UNVERIFIED for 3 days -- the failsafe-hold-needs-duration-alarm gap (`memory/feedback_failsafe_hold_needs_duration_alarm_else_silent_stale`). Flagged by 0.6.0 (100429Z). This is a VERIFICATION, not a formality: the residual-risk branch (gold advances to 07-09 instead of 07-08 -> C_02 BRANCH-A floor skips -> portal STAYS FROZEN) is real, if unlikely.
 
