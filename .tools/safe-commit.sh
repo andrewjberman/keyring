@@ -385,6 +385,38 @@ if command -v comp-coverage-check >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
   fi
 fi
 
+# UNIVERSAL FAIL-CLOSED commit-gate re-assert (CTO-called 2026-07-09, ADHC_COMMITGATE
+# universal-enforcement). THE DEFECT this closes: the gate (commit-gate.sh -> py_compile +
+# ruff + the universal lints) was ENFORCED (blocking) only on the QUEUE-worker path
+# (commit-worker.sh F2) + the pipeline-scoped safe-deploy pre-push -- so a failing
+# NON-pipeline .py committed via THIS legacy path (the default) with nothing stopping it
+# (git has no opinion on Python; the agent-side commit-gate.sh is advisory). A ruff-F541
+# .tools/*.py landed exactly this way (18c92b9ac). Re-asserting the SAME gate here, fail-
+# closed, on ALL in-scope files makes enforcement UNIVERSAL, matching the worker path.
+# CTO (verbatim, 0.5.0's principle): "a gate that reports failure into a pipeline whose exit
+# status is swallowed is a gate that does not gate; the gate that stops you is the one whose
+# exit code reaches a decision." The CHECK-SET stays file-type-appropriate INSIDE the runner
+# (ds-precommit silver-ids self-scopes to data/*/scripts/silver/*.py via _path_is_silver_builder;
+# a .tools/*.py runs py_compile + ruff + the universal lints only -> NO silver-ids false-fail,
+# verified). --force does NOT bypass a gate FAILURE (only the contamination/sensitive checks
+# carry audited bypasses -- a non-compiling/ruff-failing file is never intentional).
+if [ -n "$IN_SCOPE" ]; then
+  GATE_FILES=()
+  while IFS= read -r _gf; do [ -n "$_gf" ] && GATE_FILES+=("$_gf"); done <<< "$IN_SCOPE"
+  if [ "${#GATE_FILES[@]}" -gt 0 ]; then
+    if ! GATE_OUT="$(bash "$SCRIPT_DIR/commit-gate.sh" "${GATE_FILES[@]}" 2>&1)"; then
+      # Unstage the in-scope files (mirror the sensitive/contamination reject: a BLOCKED
+      # request must never leave its files staged for a later invocation to (mis-)inherit).
+      for _gf in "${GATE_FILES[@]}"; do git reset -q HEAD -- "$_gf" 2>/dev/null || true; done
+      echo "ERROR: BLOCKED -- commit-gate failed (py_compile / ruff / lint). Commit aborted; files unstaged." >&2
+      printf '%s\n' "$GATE_OUT" | sed 's/^/  [commit-gate] /' >&2
+      echo "  Fix the reported issue(s) and re-commit. This gate is UNIVERSAL + fail-closed on ALL .py" >&2
+      echo "  (Rule 14); --force does NOT bypass a gate failure (it only overrides the contamination check)." >&2
+      exit 1
+    fi
+  fi
+fi
+
 # Proceed with the actual scoped commit (plain invocation so the EXIT trap fires).
 git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}"
 exit $?
