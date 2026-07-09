@@ -90,6 +90,15 @@ _ROUTABLE_SUBSTRATE = (
 #   member 1  routable    registered  -> the router CAN score it   (candidate-set membership)
 #   member 2  placement   a comp-tool -> has exactly one map home   (no UNPLACED / DOUBLE-PLACED)
 #   member 3  self-routes catalogued  -> comp-which actually RETURNS it for its own use_case
+#   member 4  existence   registered  -> the tool EXISTS on disk AND is tracked (it actually RUNS)
+#
+# member 4 exists because members 1+3 together still bind a PROXY. They prove the router names the
+# tool; they do not prove the named command exists. On 2026-07-09 comp-system passed member 1 AND
+# member 3 -- comp-which returned it RANK-1 for its own use_case -- while .tools/comp-system had
+# never existed in the object graph (0 objects, all refs). The rail routed agents to
+# `command not found`. "Routable" and "runnable" are different facts; only member 4 asserts the
+# second. It also closes the 16-gitignored-tools class at its root (present-for-the-author,
+# absent-from-a-fresh-clone), which no member could previously see.
 #
 # GOVERNING RULE (CTO, verbatim -- do not soften):
 #     "every hard-blocking member asserts a DETERMINISTIC fact; anything threshold-shaped REPORTS."
@@ -650,9 +659,118 @@ def _selfroute_invariant(files) -> int:
     return 1
 
 
+# member 4: only a tools_index edit (registers a tool) or a `.tools/comp-*` delete/rename (removes
+# the executable) can create a REGISTERED-BUT-ABSENT tool.
+_EXISTENCE_SUBSTRATE = (
+    "org/modules/graph/graph-call-manifest.yaml",
+)
+
+
+def _tool_path_status(tool: str, tracked_basenames: set) -> tuple:
+    """(on_disk, in_git) for a registered tool name. A tool ships as `.tools/<name>` or, for the
+    python-shebang tools, `.tools/<name>.py` / `.tools/<name>.sh`."""
+    on_disk = in_git = False
+    for suffix in ("", ".py", ".sh"):
+        cand = f"{tool}{suffix}"
+        if (_WORKSPACE / ".tools" / cand).exists():
+            on_disk = True
+        if cand in tracked_basenames:
+            in_git = True
+    return on_disk, in_git
+
+
+def _existence_invariant(files) -> int:
+    """0 = invariant holds, or not applicable. 1 = BLOCK.
+
+    REGISTERED-IMPLIES-EXISTS. member 1 asserts a registered tool is a live ROUTING TARGET
+    (candidate-set membership in the capability provider). Nothing asserted that the tool is a
+    live EXECUTABLE. Those are different properties, and on 2026-07-09 they diverged: comp-system
+    was registered in all three routable-substrate registries, passed member 1, and comp-which
+    returned it RANK-1 for its own use_case -- while `.tools/comp-system` had never existed in the
+    repo's object graph (0 objects across all refs). An agent following the Rule-21 rail got
+    `command not found`. Routability bound a PROXY (presence in the provider) for the PROPERTY
+    (the command runs).
+
+    TWO conditions, because `.gitignore:183` ignores `.tools/` wholesale and every tool there is
+    force-added:
+      on_disk  -- the author's own tree can run it
+      in_git   -- a FRESH CLONE can run it (the 16-gitignored-tools class, at its root)
+    A tool present-but-untracked is the more dangerous half: it works for the author and for
+    nobody else, so it passes every check the author runs.
+
+    DETERMINISTIC (CTO's hard-block bar: "every hard-blocking member asserts a DETERMINISTIC fact").
+    Universe is derived from the files being COMMITTED, never os.listdir -- we share one worktree.
+    Ramp-exempt. Fail-closed: an unevaluable invariant is not a passing one.
+    """
+    norm = _norm(files)
+    manifest_touched = any(f.endswith(s) for s in _EXISTENCE_SUBSTRATE for f in norm)
+    tools_touched = any("/.tools/" in "/" + f for f in norm)
+    if not manifest_touched and not tools_touched:
+        return 0
+
+    try:
+        MAN = "org/modules/graph/graph-call-manifest.yaml"
+        # NOT load_manifest() -- that returns the `entries:` list keyed by id, not the raw doc.
+        # Reading tools_index off it yields None -> an empty universe -> a gate that sweeps nothing
+        # and exits 0. (Caught by the legible-PASS line printing "0 registered tool(s)": a mute
+        # green would have shipped this. The gate that binds nothing is the defect this family
+        # exists to prevent, and it appeared first inside the member built to prevent it.)
+        registered = sorted((load_yaml(_MANIFEST).get("tools_index") or {}).keys())
+
+        # Bound to the tools_index keys this commit actually changed. A `.tools/` touch (a delete
+        # or rename can orphan ANY registered tool) is unbounded by construction.
+        targets = registered
+        if manifest_touched and not tools_touched:
+            changed = _dict_diff_keys(MAN, "tools_index")
+            if changed is not None:
+                targets = sorted(changed)
+        if not targets:
+            return 0
+
+        import subprocess as _sp
+        r = _sp.run(["git", "ls-files", ".tools/"], capture_output=True, text=True,
+                    cwd=str(_WORKSPACE))
+        if r.returncode != 0:
+            raise RuntimeError(f"git ls-files failed: {r.stderr.strip()[:120]}")
+        tracked = {Path(p).name for p in r.stdout.split()}
+    except Exception as e:  # fail-closed
+        print(
+            f"\nBLOCKED: the existence-invariant could not be evaluated ({e}).\n"
+            f"  An unevaluable completeness gate does not read as 'passed'."
+        )
+        return 1
+
+    missing, untracked = [], []
+    for tool in targets:
+        if not tool.startswith("comp-"):
+            continue  # `pipescript` and friends are not `.tools/comp-*`-shaped
+        on_disk, in_git = _tool_path_status(tool, tracked)
+        if not on_disk:
+            missing.append(tool)
+        elif not in_git:
+            untracked.append(tool)
+
+    if not missing and not untracked:
+        return 0
+
+    print("\nBLOCKED: registered tool(s) do not EXIST as a runnable, tracked executable:")
+    for tool in missing:
+        print(f"  - {tool:<22} registered in tools_index, but .tools/{tool} is NOT ON DISK")
+    for tool in untracked:
+        print(f"  - {tool:<22} on disk but NOT TRACKED by git -- absent from a fresh clone")
+    print(
+        "  comp-which will route an agent to this tool and the call will fail. Registration is\n"
+        "  not shipping. FIX: create the launcher (see .tools/comp-manifest-check for the shim\n"
+        "  shape) and force-add it -- `.gitignore` ignores .tools/ wholesale, so a plain `git add`\n"
+        "  silently no-ops. safe-commit.sh stages with `git add -f` for an explicit FILE pathspec."
+    )
+    return 1
+
+
 def _completeness_invariants(files) -> int:
     """The family. Any member blocking blocks the commit. See the design comment above."""
-    for member in (_routable_invariant, _placement_invariant, _selfroute_invariant):
+    for member in (_routable_invariant, _placement_invariant, _selfroute_invariant,
+                   _existence_invariant):
         if member(files):
             return 1
     return 0
@@ -855,6 +973,28 @@ def cmd_tally(args: argparse.Namespace) -> int:
     return 0
 
 
+def _report(member: str, rc: int) -> int:
+    """On-demand surface only: make a GREEN legible. rc passes through untouched.
+
+    A blocking member prints its own diagnosis, so a non-zero rc is already loud. It is the PASS
+    that was mute -- and a mute pass reads exactly like a member that no-op'd out on its scope
+    predicate. Name the universe that was actually swept, so the reader can tell the difference.
+    """
+    if rc:
+        return rc
+    n = len(load_yaml(_MANIFEST).get("tools_index") or {})
+    scope = {
+        "routable": f"{n} registered tool(s) are live routing targets",
+        "existence": f"{n} registered tool(s) exist on disk AND are git-tracked",
+        "placement": "every committed comp-tool has exactly one coverage-map home",
+        "self-routes": f"{n} catalogued tool(s) self-route via comp-which",
+        "completeness": (f"routable + placement + self-routes + existence, "
+                         f"over {n} registered tool(s)"),
+    }.get(member, member)
+    print(f"PASS: {scope}.")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(prog="comp-manifest-check")
     sub = parser.add_subparsers(dest="cmd")
@@ -875,19 +1015,35 @@ def main() -> int:
 
     # On-demand evaluation, independent of a changed-file list (pass the substrate so the b2 scope
     # predicate always matches). The commit path reaches it via `check`.
+    #
+    # ON-DEMAND IS LOUD ON PASS; the commit path stays silent. A standalone green that prints
+    # NOTHING is indistinguishable from a member that no-op'd out on its scope predicate -- the
+    # operator running `comp-manifest-check completeness` to answer AC1 ("a coverage check confirms
+    # no orphan tool/use-case") cannot tell "swept 42 tools, all green" from "did nothing, exit 0".
+    # The commit path must stay quiet (it runs on every commit); the human-facing surface must not.
     p_routable = sub.add_parser(
         "routable", help="assert every tools_index tool is a live routing target")
-    p_routable.set_defaults(func=lambda _a: _routable_invariant(_ROUTABLE_SUBSTRATE))
+    p_routable.set_defaults(func=lambda _a: _report(
+        "routable", _routable_invariant(_ROUTABLE_SUBSTRATE)))
+
+    p_exist = sub.add_parser(
+        "existence", help="assert every tools_index tool exists on disk AND is git-tracked")
+    p_exist.set_defaults(func=lambda _a: _report(
+        "existence", _existence_invariant(list(_EXISTENCE_SUBSTRATE) + [".tools/"])))
 
     p_comp = sub.add_parser(
-        "completeness", help="run the completeness family (routable + placement + self-routes)")
-    p_comp.add_argument("--only", choices=["routable", "placement", "self-routes"],
+        "completeness",
+        help="run the completeness family (routable + placement + self-routes + existence)")
+    p_comp.add_argument("--only",
+                        choices=["routable", "placement", "self-routes", "existence"],
                         help="run a single member")
-    p_comp.set_defaults(func=lambda a: (
+    p_comp.set_defaults(func=lambda a: _report(a.only or "completeness", (
         _routable_invariant(_ROUTABLE_SUBSTRATE) if a.only == "routable"
         else _placement_invariant([_PLACEMENT_MAP]) if a.only == "placement"
         else _selfroute_invariant([".tools/comp-which"]) if a.only == "self-routes"
-        else _completeness_invariants(list(_ROUTABLE_SUBSTRATE) + [".tools/comp-which"])))
+        else _existence_invariant(list(_EXISTENCE_SUBSTRATE) + [".tools/"]) if a.only == "existence"
+        else _completeness_invariants(
+            list(_ROUTABLE_SUBSTRATE) + [".tools/comp-which", ".tools/"]))))
 
     args = parser.parse_args()
     if not getattr(args, "cmd", None):
