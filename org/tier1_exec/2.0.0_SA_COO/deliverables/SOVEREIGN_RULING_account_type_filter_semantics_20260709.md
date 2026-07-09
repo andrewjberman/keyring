@@ -47,15 +47,65 @@ the normal state) and the `DryRun` parameter. CTO: *"it is becoming the most exp
 
 ## BINDING SEQUENCE — (A) LANDS BEFORE ANY `A_00` ENRICHMENT FIX
 
-1. **NOW, already authorized, unchanged by this ruling:** `row_count > 0` + **ABSTAIN** + a **loud alarm** in
-   `A_00`. Keeps the column null; makes the producer loud. **Loud-and-null is the correct state.**
-2. **THEN (A):** repoint the value source to `account_owner_type` (`D_00.portal_aggregates` → `_dim_values()` →
-   `gold/artifacts/filters/dimensions.json`). **DS lane, Rule 13.**
+> ### CORRECTED 2026-07-09T22:15Z. THE ORIGINAL REVISION OF THIS SECTION SAID STEP 1 LANDS **"NOW."** THAT WAS WRONG AND DANGEROUS, AND IT WAS MINE.
+> `0.4.0_DS~B` refused the dispatch and named the hazard (`221212Z`). **`safe-deploy.sh` (pre-push hook, Rule 13)
+> auto-deploys `data/black_diamond/scripts/{gold,silver,bronze}/*.py` → `opal-data-bd/code`.** A commit+push of
+> `A_00` or `D_00` **puts new code into the ~04:00Z scheduled gold** — the exact run gated for the 49F un-freeze,
+> whose success is already a coin flip on `perf.date.max()`. `comp-pipescript deployed` currently reports
+> `4 MATCH, 0 STALE`.
+>
+> **And step 2 edits `D_00` — the script that holds the served AUA** (`_resolve_served_aua`, the BRANCH-A
+> last-good hold, `b5a95c9f5`). **A filter fix has no business riding into the freeze-plane's producer on the
+> night we are trying to un-freeze it.** Nothing here is "just a doc change."
+
+**NOTHING IN THIS SEQUENCE LANDS BEFORE THE ~04:00Z WINDOW CLOSES AND `0.6.0` HAS REPORTED WHETHER THE UN-FREEZE
+FIRED.** Every step below is a real deploy to a live code prefix and each opens a `deploy_ledger.py open` entry
+(NEVER#6 binds; a begun deploy finishes in-session or rolls back).
+
+0. **GATE:** 04:00Z window closed + `0.6.0`'s un-freeze report in + **CTO has ratified the ABSTAIN verb (below).**
+1. **THEN:** `row_count > 0` + **ABSTAIN-FROM-THE-ENRICHMENT-JOIN** + a **loud alarm** in `A_00`. Keeps the
+   columns null; makes the producer loud. **Loud-and-null.** Exercise **both directions** — it must alarm on the
+   0-row stub *and* stay silent on the real `07-08` partition — then commit, push (auto-deploys), verify
+   `comp-pipescript deployed` MATCH, close the ledger.
+2. **THEN (A):** repoint the value source to `adim['account_owner_type']` (`D_00.portal_aggregates` →
+   `_dim_values()` → `gold/artifacts/filters/dimensions.json`). **DS lane, Rule 13.** Verify on the **SERVED**
+   `filters/dimensions.json` after the **next scheduled gold** that `account_type.values == {Sole, Joint, Trust}`.
+   **Never an ad-hoc gold run (NEVER#4).**
 3. **ONLY AFTER (A) IS SERVED** does populating `account_type` become safe. Until then the **CTO prohibition
    stands**: nothing populates `account_type`. It will look like an obvious one-line win to whoever touches
    `A_00` next. **It is not.**
 
 **Inverting 2 and 3 re-creates the exact defect this ruling exists to prevent.**
+
+---
+
+## THE `ABSTAIN` VERB IS UNRATIFIED AND ONE READING TAKES OUT THE ESTATE. CTO MUST RATIFY IN WRITING.
+
+`0.4.0_DS~B` refused to write code against it, correctly. *Abstain from **what**?*
+
+- **Reading 1 — intended, safe.** Abstain from the **allocation-enrichment join**. `account_type` /
+  `account_registration_type` stay null — **byte-identical to today's output** — and the producer alarms loudly.
+  **Zero downstream change.** This is **loud-and-null.**
+- **Reading 2 — catastrophic.** Abstain from **writing `accounts_dimension_latest.parquet` at all**, because the
+  guard failed. `comp-pipescript io A_00` says that artifact feeds **17 scripts**: `A_01, A_04, B_00, B_01, B_02,
+  C_00, C_01, C_02, C_03, C_05, C_06, C_07, D_00, D_00b, D_00f, D_01, D_04`. **It would take out the entire bd
+  gold DAG**, including `C_02`'s certification and `D_00`'s served output. This is **loud-and-gone.**
+
+> **The guard's trigger condition — a 0-row allocations partition — IS TRUE RIGHT NOW, and true on most recent
+> dates. Reading 2 does not fail rarely. It fails TONIGHT, on the first run.**
+
+**THE TEXT CTO MUST RATIFY, VERBATIM:**
+> `A_00` abstains from the **allocation enrichment join only**. It **ALWAYS** writes
+> `accounts_dimension_latest.parquet`. On `row_count == 0` it leaves `account_type` /
+> `account_registration_type` null, emits a loud alarm, and **proceeds**. It **never** skips the dimension write.
+
+**This is the same shape as the P3 `req1` verb:** *a one-word instruction whose two readings differ by an
+estate.* It is also this session's own thesis, turned on my own artifact — **I wrote a word that names a
+behaviour without specifying which behaviour**, exactly as `comp-freshness` names "freshness" without specifying
+which property. **A verb is a wrapper. Ratify the property.**
+
+The prohibition's *reason* goes in the code at the site (the way `_drift_warn_alert` carries CTO's promotion
+conditions), so it outlives everyone's memory of why it exists.
 
 ---
 
