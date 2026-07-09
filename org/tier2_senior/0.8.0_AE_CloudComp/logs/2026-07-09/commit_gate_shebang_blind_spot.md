@@ -167,3 +167,72 @@ Python edit*; the words describe the proxy the gate used to bind. Amendment is C
 2. **[1.0.0_SA_CTO]** heldout tier (p@1 50% / recall@surf 70%) -- the selector's real gap. Curated
    vocabulary is saturated; it is a COMPROUTE-posterior investment. COO~B holds it as the next lever.
 3. **[me, on GO]** nothing outstanding.
+
+---
+
+## Addendum: forward-hardening -- the proxy hiding inside the correction (`18a84f5bf`)
+
+The shipped exclusion (`4c99c9dd9`) was a path-marker **denylist** -- `/bin/`, `/package/`, `/.venv/`
+-- itself a **proxy** for "we don't own this code." Demonstrated, not argued: a first-party tool at
+`.tools/bin/comp-future` or `org/modules/graph/package/comp_future` was **silently excluded**. The
+marker matched; ownership did not. One `mkdir bin/` from a silent coverage hole.
+
+**CTO specified the fix as a first-party ROOT ALLOWLIST. I grounded it before building, and it
+breaks.** All 97 tracked python files under the old name-markers live **under** first-party roots
+(`data/seeking-alpha/.venv/`, `infra/aws/lambda/*/package/`, `tools/analytics_venv/`). `data/` and
+`infra/` are unambiguously ours. "First-party root always-included" would have re-included all 97 and
+started **linting pip** -- the catastrophic side, reintroduced by the hardening meant to prevent it.
+
+**Built instead: bind the ownership FACT, structurally.** A tree is vendored iff it is
+package-managed -- an ancestor holds `pyvenv.cfg`, or holds any `*.dist-info`, or is literally
+`site-packages`/`node_modules`. Zero directory-name matching. Prove-the-universe: **97/97 captured, 0
+unidentifiable, 0 first-party matched.** `pyvenv.cfg` *is* the ownership fact, not a proxy for it.
+
+**Fails-safe-toward-inclusion, in the code:** any uncertainty (`OSError`, unknown layout) -> NOT
+vendored -> the file **is** gated. A misconfig over-includes (loud) and can never silently exclude
+(invisible). That asymmetry is why the denylist was the wrong shape.
+
+**Verified 8/8 at the landed HEAD:** both probes BLOCK on a deliberate F541; a venv console-script and
+a dist-info lambda bundle with the *same* violation stay unlinted; a real `safe-commit` of
+`.tools/bin/comp-future` blocks with the probe commit absent across all refs; green-launch unchanged;
+**0 files reclassified** vs the shipped denylist -- closes the latent hole, moves nothing live.
+
+### The lesson, corrected
+
+The easy framing is "executor grounds architect." That over-credits the executor and mis-locates what
+happened. **CTO's instinct was right** -- the denylist bound a proxy. **His instrument was another
+path-proxy, one level up.** The grounding didn't overturn his judgment; it found the property his
+judgment was reaching for.
+
+> **A proxy can hide inside a CORRECTION to a proxy, and only enumerating the universe separates them.**
+
+CTO banked it that way, and added the sharper corollary for himself: *"ground the load-bearing claim +
+prove the universe" is a discipline I owe on my OWN rulings, not just the executor's builds.*
+
+### CTO's residual, grounded -- real mechanism, live host, zero exposure
+
+The single non-fails-safe path is a **positive** `*.dist-info` match: a `.dist-info` inside a
+first-party tree would make it look package-managed. CTO argued this requires a Rule-3 violation
+(`pip install -t .` into source). **It exists today:**
+
+```
+  infra/aws/lambda/daily_agenda_generator/package        10 pkgs   pure vendor bundle
+  infra/aws/lambda/layers/pyiceberg-nessie-deps/python   47 pkgs   pure vendor bundle (a LAYER, correct)
+  infra/aws/lambda/infrastructure_monitor                29 pkgs   MIXED with first-party source
+```
+`infrastructure_monitor/` holds `lambda_function.py` + `openai_cost_tracker.py` alongside 16
+`.dist-info` packages -- **CLAUDE.md Rule 3**, plainly. Exposure today is **zero**: `.py` is gated
+unconditionally, and no extensionless Python lives there.
+
+**Recommended fixing the violation, not adding a belt.** A first-party allowlist overriding a positive
+`.dist-info` match would reintroduce a path-proxy *in order to tolerate a rule violation* -- correct
+gate, wrong tree, and a proxy in the predicate with no memory of why. Routed to CTO; the tree is
+0.7.0_AE_CloudOps's (the same one CVO's SES-sender sweep touched).
+
+### Commits
+
+| hash | what |
+|---|---|
+| `70c3903f0` | cleared the 3 ruff violations hiding behind the blind spot (debt-first, so the widened gate launches GREEN) |
+| `4c99c9dd9` | shebang-aware dispatch -- 15 first-party files newly covered, 0 `.py` lost |
+| `18a84f5bf` | vendor detection binds the property (package-managed), not a path-name denylist |
