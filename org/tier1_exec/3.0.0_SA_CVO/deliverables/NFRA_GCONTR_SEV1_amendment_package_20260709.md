@@ -119,6 +119,42 @@ re-read the SERVED artifact after the 2026-07-10 nightly (D_00c ~09:53Z / D_04 ~
 
 ---
 
+---
+
+## Item 4 — the `ratified_at` field in this YAML is a STALE PROXY on all five rows
+
+Folded in here at COO's direction (2026-07-09, `/drive` cycle 5) rather than opened as a separate thread:
+*the YAML is a claim about the table; the table is the truth.*
+
+Every row in `contracts/graph_contracts.yaml` reads `PENDING-*-SIGNOFF`:
+
+| row | YAML `ratified_at` | LIVE table (AE in-VPC `contract_engine` read, COO 150336Z) |
+|---|---|---|
+| `benchmark` | `PENDING-ANDREW-SIGNOFF` | **RATIFIED**, Andrew-signed, real 16-char hash, since 06-16 |
+| `peers` | `PENDING-CTO-COO-SIGNOFF` | **RATIFIED**, CTO+COO |
+| `aum` | `PENDING-CTO-COO-SIGNOFF` | **RATIFIED**, CTO+COO |
+| `headline` | `PENDING-ANDREW-SIGNOFF` | genuinely unsigned |
+| `advisor_intelligence` | `PENDING-ANDREW-SIGNOFF` | genuinely unsigned |
+
+**A reader of this file concludes 0/5 ratified. The live table says 3/5.** The loader stamps `ratified_at`
+in the LIVE table on in-VPC write and never writes back to the YAML, so this field can only ever be stale —
+it is structurally incapable of being correct. It is not a status; it is a default string.
+
+**Consequence, and it already fired:** prior-CVO bound TO-3's status to this field on 2026-07-09, concluded
+the rows were unauthored, and re-authored all five rows that already existed (deliverable removed in
+`d39ae51d9` — including an `aum` row with the wrong `canonical_writer`). One row-set nearly overwrote a
+correct, ratified one because a proxy was read as the property.
+
+**Remediation (no Andrew signature required — mechanical):**
+1. A blocking header comment now sits at the top of the YAML directing readers to the live table. *(landed)*
+2. Recommend AE make `--load-contracts` **write `ratified_at` back** into the YAML after an in-VPC write, or
+   else **remove the field from the YAML entirely** so it cannot be misread. A field that can only be stale
+   should not exist in the authoring source. **Routing note: this is an AE/CTO call, not a CVO edit** — the
+   loader is not my lane.
+3. Until then: **ground ratification on `globgrph.graph_contracts`, never on this file.**
+
+---
+
 ## Sequencing
 
 1. **Now:** items 1 + 2 authored and ready. Item 3's text is authored; its ratification is held.
