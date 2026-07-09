@@ -14896,3 +14896,29 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript model-portfolios | PASS |
 | 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P4 | (window summary) | comp-grep x5 + comp-kuzu x4 + comp-glob x2 + commit-gate x6 (1 BLOCK) + safe-commit x6 | PASS -- comp-grep on cse_store.py yielded the partition-column fact verbatim (producer.kind IS the immutable log's partition key), which upgraded CTO's no-bump ruling from CONDITIONAL to CATEGORICAL. comp-grep also WARNED that my escaped alternation is literal in Python re, so a 0-match could have been the pattern, not absence -- fail-loud tooling. commit-gate BLOCKED once on a real dead import (ruff) after I simplified the substrate guard: fixed, not suppressed. |
 | 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/market-updat... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GCONTR.json --file or... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/contracts/graph_cont... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/FILED_marke... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | --help | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-firmsep-sweep | comp-firmsep-sweep --secret github-token --json C:/Users/ANDREW~1/AppData/Local/Temp/cl... | FAIL |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/ANDREW_SOVE... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GCONTR.json | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/market-overview/iam... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check | VERDICT |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name CONTAINS 'contract' OR n.node_type CONTAINS 'contract'... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check contract-selfcheck | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/ANDREW_SOVE... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GCONTR.json --file or... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/cross-firm-b... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/contracts/v... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 + CTO follow-ons | SESSION-CLOSE roll-up: comp-which-routing-test, comp-routable-check(NEW), comp-manifest-check completeness(NEW), comp-coverage-check, comp_route_eval, comp-glob, comp-grep, comp-shell, comp-honesty, commit-gate/safe-commit, deploy_ledger, safe-apply | 25 commits. Oracle 42/42; RANK1 42/NEARTIE 0/MISS 0; --strict PASS; coverage PASS both universes; deploy-ledger CLOSED GREEN 7/7 (inf value-parity phantom $1.44M alarm dead, proven on a real scheduled invoke). Commit-time prevent layer LIVE + scoped to what the e2e matrix proves. Universal commit-gate now shebang-aware + ownership-bound (15 first-party python tools, incl. comp-which + 3 gates, were bypassing py_compile/ruff entirely). GAPS: heldout p@1 50%/recall@surf 70% untouched -> COMPROUTE posterior, NOT a catalog tranche; canon p@1 100% is the TAUTOLOGICAL tier, never quote as "solved"; git show + text=True decodes via the Windows locale codec; os.path.isfile false-negatives on 217-char paths. |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/cross-firm-b... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type = 'CODEBUILD_PROJECT' RETURN n.node_id, n.node_ty... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
