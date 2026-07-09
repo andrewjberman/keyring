@@ -69,6 +69,7 @@ WHAT THIS DOES **NOT** GUARANTEE (read before trusting it)
 from __future__ import annotations
 
 import argparse
+import json
 import shutil
 import subprocess
 import sys
@@ -113,10 +114,106 @@ def simulate(principal: str, resource: str, action: str, context: list[str]) -> 
     return verdict
 
 
+
+# ---------------------------------------------------------------------------
+# v2: DERIVE the change type from the terraform plan, so the author declares nothing.
+#
+# v1 removed the author's choice of VERDICT. It did not remove the choice of CHANGE TYPE:
+# declaring `allow-removal` for a deny-add still mis-framed the test, and only failed
+# because the live verdict disagreed. That is fail-loud, not impossible-by-default.
+# Here the tool reads the change AND the criterion off the plan itself.
+#
+#   Produce the input with:  terraform show -json <planfile> > plan.json
+# ---------------------------------------------------------------------------
+POLICY_TYPES = {"aws_iam_role_policy", "aws_iam_policy"}
+REAL_ACTIONS = {"create", "update", "delete"}
+
+
+def _doc(blob):
+    """A policy attribute that is not a policy document must not crash the derivation."""
+    if not blob:
+        return None
+    try:
+        d = json.loads(blob)
+    except (TypeError, ValueError):
+        return None
+    return d if isinstance(d, dict) and "Statement" in d else None
+
+
+def _stmts(doc):
+    if not doc:
+        return []
+    s = doc["Statement"]
+    return s if isinstance(s, list) else [s]
+
+
+def _res(stmt):
+    r = stmt.get("Resource") or []
+    return set([r] if isinstance(r, str) else r)
+
+
+def _key(stmt):
+    return (stmt.get("Sid"), stmt.get("Effect"), json.dumps(stmt.get("Action"), sort_keys=True))
+
+
+def derive_from_plan(path: str):
+    """Return (change_type, principals, evidence). Refuses to guess."""
+    with open(path, encoding="utf-8") as fh:
+        plan = json.load(fh)          # parse-assert: a truncated plan cannot parse
+    found, evidence = [], []
+    for rc in plan.get("resource_changes", []):
+        if rc.get("type") not in POLICY_TYPES:
+            continue
+        ch = rc.get("change", {})
+        if not (set(ch.get("actions", [])) & REAL_ACTIONS):
+            continue                   # no-op / read: not a change
+        before = _doc((ch.get("before") or {}).get("policy"))
+        after = _doc((ch.get("after") or {}).get("policy"))
+        role = (ch.get("after") or ch.get("before") or {}).get("role")
+
+        b_by, a_by = {_key(s): s for s in _stmts(before)}, {_key(s): s for s in _stmts(after)}
+        added_deny = [s for k, s in a_by.items() if k not in b_by and s.get("Effect") == "Deny"]
+        shrunk_allow = [
+            (b_by[k], s) for k, s in a_by.items()
+            if k in b_by and s.get("Effect") == "Allow" and _res(b_by[k]) - _res(s)
+        ]
+        narrowed = [
+            (b_by[k], s) for b, s in shrunk_allow for k in [_key(s)]
+            if any("*" in x.rsplit(":", 1)[-1] for x in _res(b_by[k]) - _res(s)) and _res(s)
+        ]
+
+        if added_deny:
+            found.append("deny-add")
+            evidence.append(f"{rc['address']}: + Deny stmt Sid={added_deny[0].get('Sid')} "
+                            f"Resource={sorted(_res(added_deny[0]))}")
+        elif narrowed:
+            found.append("wildcard-narrow")
+            evidence.append(f"{rc['address']}: Allow wildcard replaced by an allowlist")
+        elif shrunk_allow:
+            b, a = shrunk_allow[0]
+            found.append("allow-removal")
+            evidence.append(f"{rc['address']}: - Resource {sorted(_res(b) - _res(a))} from Allow "
+                            f"Sid={a.get('Sid')}")
+        else:
+            continue
+        if role:
+            evidence.append(f"    role -> {role}")
+    kinds = set(found)
+    if not kinds:
+        raise SystemExit("comp-denytest --from-plan: no IAM policy change found in the plan. "
+                         "Nothing to verify; refusing to guess a change type.")
+    if len(kinds) > 1:
+        raise SystemExit(f"comp-denytest --from-plan: plan mixes change types {sorted(kinds)}. "
+                         "Split it; one exercise cannot carry two criteria.")
+    return kinds.pop(), evidence
+
+
 def main() -> int:
     p = argparse.ArgumentParser(prog="comp-denytest")
-    p.add_argument("--change-type", required=True,
-                   choices=sorted(set(EXPECTED) | NEEDS_ALLOWLIST))
+    p.add_argument("--change-type", choices=sorted(set(EXPECTED) | NEEDS_ALLOWLIST),
+                   help="v1 mode. Prefer --from-plan, which derives this so you cannot mis-declare it.")
+    p.add_argument("--from-plan", metavar="PLAN_JSON",
+                   help="v2: derive --change-type from `terraform show -json <planfile>`")
     p.add_argument("--principal", action="append", required=True,
                    help="repeatable; the roles the change was applied to")
     p.add_argument("--resource", action="append", required=True,
@@ -130,6 +227,25 @@ def main() -> int:
     p.add_argument("--also-allowed", action="append", default=[],
                    help="resource ARNs that must remain 'allowed' (no collateral deny)")
     a = p.parse_args()
+
+    if a.from_plan:
+        derived, evidence = derive_from_plan(a.from_plan)
+        if a.change_type and a.change_type != derived:
+            print(
+                f"FAIL: you declared --change-type {a.change_type}, but the plan says "
+                f"{derived}. The plan wins -- this is exactly the mis-declaration that v1 "
+                f"could only catch after the fact, never prevent.",
+                file=sys.stderr,
+            )
+            return 1
+        a.change_type = derived
+        print("=== change type DERIVED FROM THE PLAN (the author declared nothing) ===")
+        for e in evidence:
+            print(f"  {e}")
+        print()
+    if not a.change_type:
+        print("FAIL: supply --from-plan (preferred) or --change-type.", file=sys.stderr)
+        return 1
 
     if a.change_type in NEEDS_ALLOWLIST:
         print("FAIL: --change-type wildcard-narrow cannot be reduced to one verdict.\n"
