@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-07-09T08:55:22.049731+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / L6 served-plane GOLD-GATED (~04:00Z 2026-07-10 scheduled gold; CTO no-ad-hoc-gold). ACTIONABLE POST-GOLD -> run the S5 served-property exercise per org/tier1_exec/2.0.0_SA_COO/PENDING_bd49f_L6_S5_served_verify.md (PASS requires certified_aua != frozen 1837159865.68). MSTR durable-memory owns respawn-executor (project_pending_trigger_bd49f_s5_served_verify). (held since 2026-07-09T09:19:24.085690+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: sovereign / SUSPENDED 2026-07-09T22:35Z -- Andrew: 49F OUT OF SCOPE, do not pursue unless explicitly asked. DO NOT RUN THE S5 EXERCISE. The PENDING doc is SUSPENDED (f5d6b345f) and carries a STOP header above its spec. Awaiting Andrew's answer to ONE question: does the cancellation reach this OPEN ledger + the 04:30Z served-verify, given the certified_aua is frozen at 1837159865.68 on a CLIENT-FACING portal? Ledger is NEITHER closed NOR advanced until he answers. Nobody picks a reading. (held since 2026-07-09T09:19:24.085690+00:00)
 **Deploy:** ADVI_BDAPIMIG: 49F frozen-AUA ROOT fix -- snapshot as-of lag (BD_SNAPSHOT_ASOF_LAG_BDAYS=1) + content-grounded empty-stub guards in the shared bronze pull (CTO GO 083650Z)
 **Authored by:** 0.6.0_AE_PartnerETL
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -27,3 +27,4 @@
 - 20260709T090258Z LEG L4 closed: LIVE non-mutating exercise, CW stream 2026/07/09/[$LATEST]13719c00d6ab4ced9877b85c94dd2505: invoked date=2026-07-10 -> l
 - 20260709T091924Z HELD-SOVEREIGN-GATED gate=external/L6 served-plane end-state is GOLD-GATED: D_00 produces the served AUA only insid
 - 20260709T101908Z HELD-SOVEREIGN-GATED gate=external/L6 served-plane GOLD-GATED (~04:00Z 2026-07-10 scheduled gold; CTO no-ad-hoc-gol
+- 20260709T225955Z HELD-SOVEREIGN-GATED gate=sovereign/SUSPENDED 2026-07-09T22:35Z -- Andrew: 49F OUT OF SCOPE, do not pursue unless ex

@@ -240,6 +240,33 @@ Cross-check with `get_live_agents()` + `get_org_summary()` for broker-side regis
 
 **The load-bearing reason /drive exists. Two non-negotiables every tick:**
 
+> ### ⚠ TELEMETRY MANUFACTURES ABSENCES. NEVER CONVICT A LANE ON `0 work-calls` ALONE. (2026-07-09, source-confirmed)
+> **`org/mcp/agent_telemetry/*.jsonl` has BLACKOUT WINDOWS.** Measured, in `2.0.0_SA_COO.jsonl`:
+> ```
+> 22:14 1 | 22:15 4 | 22:16 4 | 22:17 2 | 22:18 0 | 22:19 0 | 22:20 0 | 22:21 0 | 22:22 0 | 22:23 0 | 22:24 3
+>                                        ^^^^^^^^^^ SIX MINUTES. ZERO LINES OF EVERY CLASS. ^^^^^^^^^^
+> ```
+> Inside that hole: **6 `ycharts_*` calls and 4 `send_message` calls with broker delivery receipts.** `send_message`
+> has **4,948** records elsewhere in the same file. **The hook stopped writing. It did not selectively omit a class.**
+> Independently confirmed against the m365-gateway audit lake, which captured all six invocations to the second.
+> **MECHANISM: UNDETERMINED.**
+>
+> **Therefore an absent telemetry record is uninformative about EVERY tool class — not just vendor calls.**
+> `0 work-calls this tick` is **NOT** a reliable negative and never was. **A lane that looks PARKED may be a lane
+> the hook stopped watching.**
+>
+> **BINDING on this step:** `0 work-calls` **only opens an inquiry**. Before you nudge, re-dispatch, or escalate
+> `[STUCK]`, corroborate with **at least one telemetry-independent signal**:
+> - **commits** (`git log --author=…`) — a different writer entirely;
+> - **undelivered files** in `org/mcp/inbox/<serial>/` top-level (the Monitor mv's on delivery — independent of the hook);
+> - **broker `get_agent_status` last-seen**, or a delivery receipt from `send_message`.
+>
+> **Two signals agreeing convict. One absence convicts nothing.** *"An absent record is an empty set. A forbidden
+> set is empty, and so is an unrecorded one."* (`3.0.0_SA_CVO`) This applies to `fabric-check`'s `DEAF` and
+> `STALE-VERIFY` limbs too — both read the same hook.
+>
+> **The COO nudged lanes on this signal all night before it was found. How often it was wrong is UNDETERMINED.**
+
 **(A) MOVEMENT check — never attest a hot TO ADVANCING off the owner's WORD; verify it actually MOVED since the last tick.** For each owner of a hot/active TO, compare against the *prior* tick (the last `drive_log` + `org/mcp/.last-drive-{coo_serial}`):
 
 ```bash
