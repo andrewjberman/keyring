@@ -19,6 +19,7 @@ param(
   [int]$TempAgeDays  = 1,    # temp: delete items older than this
   [switch]$Caches,           # opt-in: pip / bun / npm caches
   [switch]$Pycache,          # opt-in: workspace __pycache__ (WARNING: some .pyc are git-tracked)
+  [switch]$WorkspaceScratch, # opt-in: regenerable workspace scratch dirs (.runtmp/.playwright-mcp/...)
   [switch]$RecycleBin,       # opt-in: empty the Recycle Bin
   [switch]$Docker,           # opt-in: docker container/image/builder prune (stopped/dangling only)
   [switch]$DockerVolumes,    # opt-in: ALSO docker volume prune (WARNING: deletes unused volume DATA)
@@ -47,9 +48,33 @@ $SAFE_ROOTS = @(
 $WORKSPACE = Canon 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
 $CUR_SESSION = $env:CLAUDE_CODE_SESSION_ID
 
+# Regenerable workspace scratch roots (-WorkspaceScratch). We delete only their CHILDREN,
+# never the dir itself: skills reference .runtmp as a scratch path and expect it to exist.
+# Enumerated literally + verified git-ignored at run time (see Assert-ScratchRoot) -- the
+# enumeration is the allowlist, and an unlisted dir is never reachable.
+$WS_SCRATCH_NAMES = @('.runtmp', '.playwright-mcp', '.frontend-dev', '.ruff_cache')
+
+# A dir qualifies as a scratch root only if it is a DIRECT child of the workspace, is in
+# the literal allowlist, is not a reparse point, and git confirms it is IGNORED. The
+# git check is the belt: if someone ever tracks one of these, we refuse to touch it.
+# (This guard is deliberately stronger than -Pycache's, which can delete tracked .pyc.)
+function Assert-ScratchRoot($name) {
+  if ($WS_SCRATCH_NAMES -notcontains $name) { return $false }
+  $p = Canon (Join-Path $WORKSPACE $name)
+  if (-not $p -or -not (Test-Path -LiteralPath $p)) { return $false }
+  if ((Split-Path $p -Parent) -ne $WORKSPACE) { return $false }          # direct child only
+  $it = Get-Item -LiteralPath $p -Force -ErrorAction SilentlyContinue
+  if ($it -and ($it.Attributes -band [IO.FileAttributes]::ReparsePoint)) { return $false }
+  & git -C $WORKSPACE check-ignore -q -- $name 2>$null                    # 0 = ignored
+  $ignored = ($LASTEXITCODE -eq 0)
+  $global:LASTEXITCODE = 0            # don't leak git's rc -- it makes a clean dry-run look failed
+  if (-not $ignored) { return $false }                                    # tracked/unignored -> refuse
+  return $true
+}
+
 # A target is deletable only if it is a STRICT descendant of a safe root (not the
 # root itself) and is not a reparse point (junction/symlink that could redirect).
-function Assert-Deletable($fullPath, [switch]$AllowWorkspacePycache) {
+function Assert-Deletable($fullPath, [switch]$AllowWorkspacePycache, [switch]$AllowWorkspaceScratch) {
   $c = Canon $fullPath
   if (-not $c) { return $false }
   $item = Get-Item -LiteralPath $c -Force -ErrorAction SilentlyContinue
@@ -62,6 +87,14 @@ function Assert-Deletable($fullPath, [switch]$AllowWorkspacePycache) {
     if ($c.Length -gt $WORKSPACE.Length -and $c.ToLower().StartsWith(($WORKSPACE.ToLower()+'\')) `
         -and (Split-Path $c -Leaf) -eq '__pycache__') { return $true }
   }
+  if ($AllowWorkspaceScratch) {
+    # permitted ONLY for STRICT descendants of an allowlisted, git-ignored scratch root
+    foreach ($n in $WS_SCRATCH_NAMES) {
+      $r = Canon (Join-Path $WORKSPACE $n)
+      if (-not $r) { continue }
+      if ($c.Length -gt $r.Length -and $c.ToLower().StartsWith(($r.ToLower()+'\'))) { return $true }
+    }
+  }
   return $false
 }
 
@@ -72,8 +105,8 @@ function Size-Of($path) {
   $s = (Get-ChildItem -LiteralPath $path -Recurse -File -Force -ErrorAction SilentlyContinue | Measure-Object Length -Sum).Sum
   if ($s) { [math]::Round($s/1MB,1) } else { 0 }
 }
-function Add-Target($path, $cat, $reason, [switch]$WsPycache) {
-  if (-not (Assert-Deletable $path -AllowWorkspacePycache:$WsPycache)) { return } # HARD gate
+function Add-Target($path, $cat, $reason, [switch]$WsPycache, [switch]$WsScratch) {
+  if (-not (Assert-Deletable $path -AllowWorkspacePycache:$WsPycache -AllowWorkspaceScratch:$WsScratch)) { return } # HARD gate
   $targets.Add([PSCustomObject]@{ Category=$cat; Path=$path; MB=(Size-Of $path); Reason=$reason })
 }
 
@@ -123,6 +156,22 @@ if ($Caches) {
 if ($Pycache) {
   Get-ChildItem $WORKSPACE -Recurse -Directory -Filter '__pycache__' -Force -ErrorAction SilentlyContinue | ForEach-Object {
     Add-Target $_.FullName 'pycache' 'workspace __pycache__ (may include tracked .pyc)' -WsPycache
+  }
+}
+
+# 6b. workspace scratch dirs (opt-in). Children only -- the dir itself survives, because
+#     .claude/skills/{cloud-ops,deck-gen,find,prod-deploy} reference .runtmp as a scratch path.
+#     Each root must be allowlisted by literal name AND confirmed git-ignored (Assert-ScratchRoot).
+if ($WorkspaceScratch) {
+  foreach ($n in $WS_SCRATCH_NAMES) {
+    if (-not (Assert-ScratchRoot $n)) {
+      Write-Output ("  SKIP scratch root '{0}': absent, tracked, not git-ignored, or a reparse point" -f $n)
+      continue
+    }
+    $root = Canon (Join-Path $WORKSPACE $n)
+    Get-ChildItem -LiteralPath $root -Force -ErrorAction SilentlyContinue | ForEach-Object {
+      Add-Target $_.FullName ('ws-scratch/'+$n) 'regenerable workspace scratch (dir itself preserved)' -WsScratch
+    }
   }
 }
 
@@ -176,7 +225,7 @@ Write-Output ""
 Write-Output "--- deleting ---"
 $freed = 0; $del = 0; $skip = 0
 foreach ($t in $targets) {
-  if (-not (Assert-Deletable $t.Path -AllowWorkspacePycache:($t.Category -eq 'pycache'))) { $skip++; Write-Output ("  SKIP: {0} failed re-validation" -f $t.Path); continue } # re-assert at delete time
+  if (-not (Assert-Deletable $t.Path -AllowWorkspacePycache:($t.Category -eq 'pycache') -AllowWorkspaceScratch:($t.Category -like 'ws-scratch/*'))) { $skip++; Write-Output ("  SKIP: {0} failed re-validation" -f $t.Path); continue } # re-assert at delete time
   try {
     Remove-Item -LiteralPath $t.Path -Recurse -Force -ErrorAction Stop
     $del++; $freed += $t.MB
