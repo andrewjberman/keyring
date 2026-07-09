@@ -154,6 +154,24 @@ def all_live_secret_names(regions):
     return names
 
 
+def handler_file(fn):
+    """The ENTRYPOINT's file. A deployed zip may ship stale copies of itself.
+
+    `daily-agenda-generator` contains BOTH `lambda_function.py` (region us-east-1, the live handler)
+    and `package/lambda_function.py` (region us-east-2, a stale build copy). Taking whichever client
+    construction the file walk saw last gave the RIGHT verdict for the WRONG mechanism -- it reported
+    NO_SECRET(us-east-2) where the Lambda's own log proves AccessDenied(us-east-1). A right answer
+    with an invented mechanism is exactly what Rule 22 forbids, so the region is attributed from the
+    configured Handler, and a disagreement between copies is itself reported.
+    """
+    rc, out, _ = aws("lambda", "get-function-configuration", "--function-name", fn,
+                     "--query", "Handler", "--output", "text")
+    if rc or not out or out == "None":
+        return None
+    mod = out.rsplit(".", 1)[0]              # `lambda_function.lambda_handler` -> `lambda_function`
+    return [f"{mod.replace('.', '/')}{ext}" for ext in (".py", ".js", ".mjs", ".ts")]
+
+
 def env_of(fn):
     rc, out, _ = aws("lambda", "get-function-configuration", "--function-name", fn,
                      "--query", "Environment.Variables", "--output", "json")
@@ -220,6 +238,9 @@ def main() -> int:
         # before any name is attributed to it. (v1's bias was the mirror image -- it demanded a quoted
         # literal AT the call site and missed constants. Reach = call-site presence AND resource-match.)
         region, names, constructed, silent = None, set(), [], None
+        name_idents, write_calls = {}, set()
+        entry = handler_file(fn) or []
+        regions_seen = {}                    # file -> region, to catch stale copies disagreeing
         has_call = False
         for info in z.infolist():
             if info.is_dir() or not info.filename.endswith((".py", ".js", ".mjs", ".ts")):
@@ -244,15 +265,33 @@ def main() -> int:
                 txt = z.read(info).decode("utf-8", errors="replace")
             except Exception:
                 continue
-            for nm in live_names:                       # resource-match, EVERY file incl. vendored
-                if nm in txt:
-                    names.add(nm)
+            # A name must be BOUND, not merely MENTIONED. v3 required a call site somewhere in the
+            # artifact, but then attributed every resource-matched name to it -- so a name in a
+            # COMMENT still fired: `inf-otp-relay` was flagged on `twilio/credentials`, which appears
+            # only in "# validation against the twilio/credentials auth token", and
+            # `bd-realized-trigger` on a docstring. A binding is `X = '<name>'` or `SecretId='<name>'`.
+            for nm in live_names:
+                if nm not in txt:
+                    continue
+                for ln in txt.split("\n"):
+                    if nm not in ln:
+                        continue
+                    st = ln.strip()
+                    if st.startswith(("#", "//", "*")):
+                        continue                        # a comment is not a read
+                    if "SecretId" in ln or "=" in ln:   # a binding or a direct argument
+                        names.add(nm)
+                        for m in re.finditer(r"([A-Za-z_][A-Za-z0-9_]*)\s*=", ln):
+                            name_idents.setdefault(nm, set()).add(m.group(1))
+                        break
             if vend:
                 continue                                # SDK chatter below this line is noise
-            for m in CLIENT.finditer(txt):
-                region = m.group(1) or region
-            for m in JS_CLIENT.finditer(txt):
-                region = m.group(1) or region
+            for m in list(CLIENT.finditer(txt)) + list(JS_CLIENT.finditer(txt)):
+                if m.group(1):
+                    regions_seen[info.filename] = m.group(1)
+                    # the ENTRYPOINT's region wins; other copies are stale build artifacts
+                    if info.filename in entry or region is None:
+                        region = m.group(1) if info.filename in entry else (region or m.group(1))
             for m in re.finditer(r"SecretId\s*[=:]\s*([^,)}\n]{1,80})", txt):
                 v = m.group(1).strip()
                 if v.startswith(("'", '"')):
@@ -261,6 +300,8 @@ def main() -> int:
                         names.add(lit)                  # a name we cannot resolve = possibly deleted
                 elif "${" in v or v.startswith("`") or "+" in v or ".format" in v:
                     constructed.append(f"{info.filename}: {v[:50]}")
+            for m in re.finditer(r"(?:put_secret_value|create_secret)\s*\(\s*(?:SecretId|Name)\s*=\s*([^,)\s]+)", txt):
+                write_calls.add(m.group(1).strip().strip("'\""))
             for m in re.finditer(r"get_secret_value|GetSecretValueCommand", txt):
                 tail = txt[m.start():m.start() + 700]
                 if "except" in tail or "catch" in tail:
@@ -273,24 +314,39 @@ def main() -> int:
         if constructed:
             uninspectable.append((fn, f"CONSTRUCTED SecretId -- resource-match may be incomplete: "
                                       f"{constructed[0]}"))
+        if len(set(regions_seen.values())) > 1:
+            uninspectable.append((fn, f"STALE COPY IN THE DEPLOYED ZIP -- client regions disagree "
+                                      f"across files: {regions_seen}. Entrypoint {entry[0] if entry else '?'} "
+                                      f"wins; the others are dead code shipped to production."))
         if not names:
             continue
         lam_region = role_arn.split(":")[3] if role_arn.count(":") > 3 else "us-east-1"
         eff = region or "us-east-1"
+        read_names = set()
+        for nm2, ids in name_idents.items():
+            if not (ids & write_calls):
+                read_names.add(nm2)
         for name in sorted(names):
             arn = resolve(name, eff)
             if arn is None:
                 verdict, why = "DEAD", f"NO_SECRET in {eff}"
             else:
+                # ACTION ATTRIBUTION. `inf-jwt-trigger` only ever WRITES `orion/eclipse_jwt/current`
+                # (put_secret_value / create_secret); its role has PutSecretValue but no read. Testing
+                # GetSecretValue there reported a dead reach on a FIRM CREDENTIAL that does not exist.
+                # Test the action the code actually performs on THAT name.
+                idents = name_idents.get(name, set()) | {name}
+                act = ("secretsmanager:PutSecretValue" if (idents & write_calls) and name not in read_names
+                       else "secretsmanager:GetSecretValue")
                 rc, out, _ = aws("iam", "simulate-principal-policy",
                                  "--policy-source-arn", f"arn:aws:iam::{a.account}:role/{role}",
-                                 "--action-names", "secretsmanager:GetSecretValue",
+                                 "--action-names", act,
                                  "--resource-arns", arn, "--query",
                                  "EvaluationResults[].EvalDecision", "--output", "text")
                 if rc or not out:
                     verdict, why = "UNKNOWN", "no verdict (never a pass)"
                 elif out != "allowed":
-                    verdict, why = "DEAD", f"NO_GRANT ({out}) in {eff}"
+                    verdict, why = "DEAD", f"NO_GRANT ({out}) on {act.split(':')[1]} in {eff}"
                 else:
                     verdict, why = "OK", f"allowed in {eff}"
             if verdict == "OK":
