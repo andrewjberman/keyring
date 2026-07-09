@@ -185,6 +185,55 @@ def _completeness_batch(substrate: list) -> int:
     return 0
 
 
+# VENDORED TREES -- never gate-subjects. THIS EXCLUSION IS LOAD-BEARING: without it, shebang-aware
+# dispatch starts linting pip, pygmentize, tqdm and every other console-script in a venv/lambda bundle.
+# We do not own that code, ruff has never seen it, and blocking a commit on it would be a fabric-wide
+# halt caused by a vendored file. CTO condition-2 (20260709T115004Z): the boundary must be exercised
+# from BOTH sides -- a first-party violation blocks, a vendored violation does not.
+_VENDORED_MARKERS = ("/bin/", "/.venv/", "/venv/", "/site-packages/", "/node_modules/", "/package/")
+
+
+def _is_vendored(f: str) -> bool:
+    n = "/" + f.replace("\\", "/").lstrip("/")
+    return any(m in n for m in _VENDORED_MARKERS)
+
+
+def _is_python_source(f: str) -> bool:
+    """True when the gate should treat `f` as Python.
+
+    THE DEFECT THIS CLOSES: the dispatch keyed on `f.endswith(".py")` -- the FILENAME (a proxy) --
+    for "this file is Python" (the property). Every extensionless python-by-shebang script therefore
+    bypassed py_compile / ruff / the AST scan entirely. 28 such files are tracked; 14 are first-party
+    .tools/ scripts including comp-which (the mandated router) and THREE gates (comp-routable-check,
+    comp-coverage-check, comp-kit-striplist-gate). It hid live violations -- comp-honesty's E401+E702
+    and loop-quiescence's F541, the latter being the exact rule of the 18c92b9ac audited bypass whose
+    remediation was certified "closed". CLAUDE.md Rule 14 says "every .py edit passes commit-gate";
+    the gate must key on what the file IS, not what it is named.
+
+    STRICTLY ADDITIVE. A `.py` file keeps its existing treatment UNCONDITIONALLY -- including a
+    vendored one, which the old `f.endswith(".py")` already gated. Applying the vendored exclusion to
+    `.py` as well would have QUIETLY REMOVED 87 files from enforcement while this change advertised
+    itself as widening it (measured: gate saw 4769 .py before; a vendored-first predicate saw 4697).
+    Narrowing a gate inside a commit that claims to widen it is precisely the kind of silent
+    coverage loss these gates exist to prevent. So: the exclusion guards ONLY the new shebang path,
+    where the danger lives (vendored console-scripts -- pip, pygmentize, tqdm -- are extensionless).
+    """
+    if f.endswith(".py"):
+        return True                  # unchanged from the pre-existing dispatch; never narrowed
+    if _is_vendored(f):
+        return False                 # the new shebang path only: do not start linting pip
+    if not os.path.isfile(f):        # a deletion: nothing to read, and the loop skips it anyway
+        return False
+    if os.path.splitext(f)[1]:       # any other extension (.sh/.tf/.md/...) keeps its own dispatch
+        return False
+    try:
+        with open(f, "rb") as fh:
+            first = fh.readline(256)
+    except OSError:
+        return False
+    return first.startswith(b"#!") and b"python" in first.lower()
+
+
 def _manifest_check_one(f: str) -> int:
     """Mirrors `manifest_check_cli.py check --file <f>` exactly (blocking only on an
     ERROR-class finding in blocking mode, per that script's own config-driven mode).
@@ -286,7 +335,7 @@ def process_files(files: list[str]) -> int:
         # scope computation.)
         if not os.path.exists(f):
             continue
-        if f.endswith(".py"):
+        if _is_python_source(f):
             try:
                 py_compile.compile(f, doraise=True)
             except py_compile.PyCompileError as e:
@@ -349,9 +398,11 @@ def process_files(files: list[str]) -> int:
     # was wired for only 1 of its 4 substrate classes. Fail-closed inside cmd_check.
     if _completeness_batch(substrate) != 0:
         return 1
-    # Count only substrate files the per-suffix loop did NOT already count, so a provider .py
-    # (checked as .py AND as substrate) is reported once, not twice.
-    checked += sum(1 for f in substrate if not f.endswith((".py", ".sh", ".tf")))
+    # Count only substrate files the dispatch loop did NOT already count, so a file that is BOTH a
+    # gate subject and substrate (the provider .py; any extensionless .tools/comp-* python script)
+    # is reported once, not twice.
+    checked += sum(1 for f in substrate
+                   if not (_is_python_source(f) or f.endswith((".sh", ".tf"))))
 
     _echo(f"OK: pre-commit gate clean for {checked} file(s)", sys.stdout)
     return 0
