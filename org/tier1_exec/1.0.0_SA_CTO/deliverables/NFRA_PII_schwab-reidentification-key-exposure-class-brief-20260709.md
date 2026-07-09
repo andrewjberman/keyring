@@ -2,10 +2,32 @@
 
 **Author:** 1.0.0_SA_CTO  |  **Date:** 2026-07-09  |  **Requested by:** Andrew ("worth writing a brief about")
 **Class:** PII / re-identification. **DISTINCT from firm-separation (NEVER#1)** -- see "Why this is its own class".
-**Status:** exposure LIVE and OPEN as of 2026-07-09T18:10Z. Remediation designed + CTO-GO'd, **not yet applied.**
+> ## STOP -- READ THIS BEFORE ACTING ON ANYTHING BELOW (2026-07-09T18:35Z)
+>
+> **ALL REMEDIATION IS KILLED-SOVEREIGN. DO NOT APPLY ANY LEG OF THIS BRIEF.**
+>
+> Andrew ruled this class **"not a priority"** (direct, 2026-07-09T~18:23Z). Legs 1-3 were killed before any
+> mutation: `0.5.0_AE_OpalETL` confirms **zero applied, zero planned, zero in-flight** -- no diff was ever
+> authored. Leg 4 remains **BLOCKED-SOVEREIGN** (destructive on PII). The no-read fence on `03_mappings/` is
+> **absolute and intact**.
+>
+> **Any "GO'd" or "CTO-GO'd" language below is HISTORICAL. It is not authorization.** The GO existed; it was
+> superseded by the sovereign. Do not resurrect it.
+>
+> **Provenance correction:** MSTR's 18:14:29Z hold ("legs 1-3 unapplied pending Q1") was **SELF-RETRACTED by MSTR
+> at 18:18:14Z as "over-broad and WRONG."** Any citation of that hold in this document is a record of what was
+> said, not a live fence. The live fence is Andrew's kill, which supersedes both.
+>
+> This banner exists because `0.5.0` read this brief cold at 18:2xZ, found a retracted Tier-0 hold presented as
+> live provenance next to legs marked "GO'd," and stopped to ground it rather than execute. Had the timing been
+> thirty minutes different, a committed document would have authorized a killed change. **A durable artifact that
+> outlives its authorization is itself a defect.**
+
+**Status:** exposure LIVE and OPEN as of 2026-07-09T18:10Z, **and it stays open by sovereign decision.** All
+remediation KILLED-SOVEREIGN 2026-07-09T~18:23Z (Andrew, relayed via MSTR + COO). Nothing applied, ever.
 **Update 18:2xZ:** Q3 (access history) ANSWERED -- **unrecoverable**; the bucket was never covered by S3 data
-events. Section 5a. Q1 (leg 4) is now the load-bearing decision, and is DESTRUCTIVE-SOVEREIGN: nothing under
-`03_mappings/` is deleted, lifecycle'd, re-keyed, or moved without Andrew's explicit word (MSTR, fabric-law).
+events. Section 5a. Q1 (leg 4) is the load-bearing decision if this is ever reopened, and is DESTRUCTIVE-SOVEREIGN:
+nothing under `03_mappings/` is deleted, lifecycle'd, re-keyed, moved, **or read** without Andrew's explicit word.
 **Sources:** 0.5.0_AE_OpalETL msg `20260709T172741Z` (180/180 live simulate) + `NFRA_FIRMSEP_belt-consistency-standard-3layer-20260709.md` Layer-3 META.
 
 ---
@@ -156,12 +178,26 @@ Not a violation; a coverage asymmetry with a firm-sep blast radius.
 
 Legs 1-3 were CTO-GO'd 2026-07-09 (surgical; my gate). Leg 4 falls out of finding 3.3 and is **new**.
 
-| # | Leg | Shape | Owner | State |
+> **EVERY ROW BELOW IS KILLED-SOVEREIGN. The "State" column is history, not a work queue.**
+
+| # | Leg | Shape | Owner | State (2026-07-09T18:35Z) |
 |---|---|---|---|---|
-| 1 | `partners-lambda-role` | Narrow `ReadPartnerBuckets` `Resource` from `opal-data-*` to the **5 enumerated firm buckets** | 0.5.0 | GO'd, unapplied |
-| 2 | `opal-news-lambda-role` | **Detach `AmazonS3ReadOnlyAccess`** (the root); scope to `opal-data-news-v2` | 0.5.0 | GO'd, unapplied |
-| 3 | Class-level | Prefix-scoped grants, or physically separate the re-id key from the anonymized data | 0.5.0 + CTO design | GO'd, unapplied |
-| 4 | **Dormant-artifact disposition** | Decide whether `03_mappings/` should **exist at all**. If the anonymizer is retired: delete/cold-archive the key under KMS with a separate key policy. If it is dormant-but-intended: it needs an owner, a retention policy, and a home that is not the live ingest bucket. | **Andrew decision -> CTO/AE** | **NEW, unrouted** |
+| 1 | `partners-lambda-role` | Narrow `ReadPartnerBuckets` `Resource` from `opal-data-*` to the **5 firm buckets** (derive them from live DynamoDB `FIRM#*/META.s3Bucket`, never from a list in a document -- including this one) | 0.5.0 | **KILLED-SOVEREIGN. Never applied.** |
+| 2 | `opal-news-lambda-role` | **Detach `AmazonS3ReadOnlyAccess`** (the root); scope to `opal-data-news-v2` | 0.5.0 | **KILLED-SOVEREIGN. Never applied.** |
+| 3 | Class-level | Prefix-scoped grants, or physically separate the re-id key from the anonymized data | 0.5.0 + CTO design | **KILLED-SOVEREIGN. Never applied.** |
+| 4 | **Dormant-artifact disposition** | Decide whether `03_mappings/` should **exist at all**. If the anonymizer is retired: delete/cold-archive the key under KMS with a separate key policy. If dormant-but-intended: it needs an owner, a retention policy, and a home that is not the live ingest bucket. | **Andrew decision -> CTO/AE** | **BLOCKED-SOVEREIGN, never routed** |
+
+**Residual exposure, unsoftened (0.5.0 live-grounded 18:2xZ):** legs 1-2 never landed. `partners`
+`ReadPartnerBuckets` `Resource` is still `opal-data-*`; `opal-news` still carries `AmazonS3ReadOnlyAccess`. **Both
+unsanctioned reaches to `03_mappings/` remain ALLOWED**, bounded by route-absence only. This is a knowingly-accepted
+open exposure, not an oversight. The restrictive controls applied *before* the kill remain intact and are not
+reverted (`cross-firm-bucket-read-deny` + `cross-firm-secret-deny` on opal-news; `cross-firm-bucket-write-deny` on
+lambda-execution).
+
+**FILED, NOT DRIVEN (0.5.0, same class, out of scope by sovereign ruling):** `opal-news-lambda-role` also carries
+AWS-managed **`AmazonDynamoDBFullAccess`** (`dynamodb:*` on `*`). A news-curation role holds `DeleteTable` on
+`opal-users-v2` today. Same shape as the S3ReadOnly finding, same role, same invisibility to TF drift. Recorded
+here so it is not rediscovered from scratch; **not** authorization to act.
 
 **The honest trade-off on leg 1**, which is presumably why the wildcard exists: an enumerated resource list means
 **onboarding a new firm requires an IAM change**, not just a DynamoDB row. The wildcard buys that convenience and
@@ -238,8 +274,18 @@ Three refinements, each earned by an error caught in flight. All three are alrea
   `s3api get-bucket-logging` (schwab + bd control, both DISABLED), `cloudtrail describe-trails` (2),
   `cloudtrail get-trail-status` (`IsLogging=True`, delivering), `cloudtrail get-event-selectors` (both trails),
   `cloudtrail list-event-data-stores` (us-east-1 + us-east-2, none).
-- MSTR `20260709T181429Z`: relay to Andrew; Q1 held DESTRUCTIVE-SOVEREIGN; legs 1-3 not to be opportunistically
-  applied ahead of the sovereign leg (leg 4 could moot the belt design); Q3 to be run immediately.
+- MSTR `20260709T181429Z`: relay to Andrew; Q1 held DESTRUCTIVE-SOVEREIGN; legs 1-3 held pending Q1; Q3 to run now.
+  **-> SELF-RETRACTED by MSTR at `20260709T181814Z`** ("my legs-1-3 hold was over-broad and WRONG"): legs 1-2 were
+  never contingent on Q1, and an IAM Deny is cheap + reversible. **This hold is NOT live. Do not cite it as a fence.**
+- **Andrew, direct, ~`20260709T182300Z`: "this is not a priority."** Supersedes everything above. All legs killed.
+  Confirmed by `0.5.0_AE_OpalETL` `20260709T183355Z`: zero applied / planned / in-flight; no S3 object-plane call
+  ever made against `opal-data-schwab`; `03_mappings/` never read.
+- 0.5.0 leg-1 grounding note (banked): they re-derived the 5 firm buckets from **live DynamoDB** rather than from
+  this brief's list, "because the brief's list is itself an enumeration." Their first scan keyed on `pk` and
+  returned **0 records**; had they trusted it they would have narrowed the grant to nothing and broken the partner
+  API for all six firms. Live keys are `PK`/`SK` (source-confirmed `lambda_function.py:300-312`).
+  **"A zero-result is a claim about the query, not about the world."** That is the enumerate-what-you-know lesson
+  landing a fourth time -- inside the remediation authored to fix it.
 - Standard: `org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_FIRMSEP_belt-consistency-standard-3layer-20260709.md`.
 - Memory: `memory/feedback_firm_sep_detect_must_live_simulate_not_tf_lint.md`.
 
