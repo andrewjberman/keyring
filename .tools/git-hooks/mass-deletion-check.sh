@@ -48,9 +48,9 @@
 # NEVER add --no-renames: it reports that same move as 12 deletions.
 #
 # Ramp (CTO): WARN for 48h with attribution printed, then flip to BLOCK.
-#   WARN  until 2026-07-11T19:30Z  -- prints, never blocks
-#   BLOCK after                    -- blocks unless attributed or overridden
-# Flip is DATE-DRIVEN so it happens whether or not anyone remembers.
+# Flip is DATE-DRIVEN (BLOCK_AFTER_EPOCH below) so it happens whether or not
+# anyone remembers. Override either way with MASS_DELETE_MODE=warn|block.
+# Self-check the ramp state at any time:  bash .tools/git-hooks/mass-deletion-check.sh --mode
 #
 # Bypass (audited): FORCE_DELETE=1 git commit ...
 # Attribute (the intended path): add a trailer to the commit message --
@@ -64,8 +64,50 @@ set -e
 
 MSG_FILE="${1:-}"
 THRESHOLD="${MASS_DELETE_THRESHOLD:-25}"
-BLOCK_AFTER_EPOCH=1783452600   # 2026-07-11T19:30:00Z -- end of the 48h WARN ramp
+
+# End of the 48h WARN ramp. SINGLE SOURCE OF TRUTH: the human-readable date is
+# DERIVED from this epoch at runtime, never hardcoded alongside it.
+#
+# INCIDENT (mine, 2026-07-09T19:47Z, caught 7 min after push): I first shipped
+# 1783452600 here and a hardcoded "2026-07-11T19:30Z" in the messages. That epoch
+# is 2026-07-07T19:30Z -- two days in the PAST -- so the gate went live BLOCKING
+# on a shared worktree, against CTO's explicit WARN ramp, while the printed string
+# cheerfully said WARN. Two sources of truth, and the one humans read was the one
+# that lied.
+#
+# The deeper error: my test matrix passed 10/10 because every ramp case forced
+# MASS_DELETE_MODE=warn|block explicitly. I exercised the OVERRIDE and never the
+# DEFAULT. A test that only drives the path you control cannot fail on the path
+# everyone else takes. Same class as the negative-control error CVO caught me in
+# the same hour: rigor of form, wrong instrument.
+BLOCK_AFTER_EPOCH=1783798200   # verified: date -u -d @1783798200 -> 2026-07-11T19:30:00Z
+BLOCK_AFTER_ISO="$(date -u -d "@$BLOCK_AFTER_EPOCH" +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo "epoch $BLOCK_AFTER_EPOCH")"
+
 AUDIT_LOG="org/mass-deletion-audit.log"
+
+# Resolve the effective mode. Extracted as a function precisely BECAUSE the
+# date-driven default is the path nobody exercises -- `--mode` makes it
+# assertable without constructing a commit. (The bug above shipped because the
+# only ramp tests forced MASS_DELETE_MODE explicitly.)
+_effective_mode() {
+  local now; now="$(date -u +%s 2>/dev/null || echo 0)"
+  case "${MASS_DELETE_MODE:-}" in
+    block) echo block; return ;;
+    warn)  echo warn;  return ;;
+  esac
+  if [ "$now" -gt "$BLOCK_AFTER_EPOCH" ] 2>/dev/null; then echo block; else echo warn; fi
+}
+
+# Self-check surface: `bash mass-deletion-check.sh --mode`
+if [ "${1:-}" = "--mode" ]; then
+  echo "mass-deletion gate"
+  echo "  now              : $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  echo "  ramp flips at    : $BLOCK_AFTER_ISO"
+  echo "  MASS_DELETE_MODE : ${MASS_DELETE_MODE:-<unset, date-driven>}"
+  echo "  effective mode   : $(_effective_mode)"
+  echo "  threshold        : $THRESHOLD deleted tracked files"
+  exit 0
+fi
 
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
 [ -n "$ROOT" ] || exit 0
@@ -111,17 +153,9 @@ if [ -n "$TRAILER" ]; then
   fi
 fi
 
-NOW="$(date -u +%s 2>/dev/null || echo 0)"
 ISO="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo unknown)"
 AGENT="$(git config user.name 2>/dev/null || echo unknown)"
-MODE="warn"
-if [ "${MASS_DELETE_MODE:-}" = "block" ]; then
-  MODE="block"
-elif [ "${MASS_DELETE_MODE:-}" = "warn" ]; then
-  MODE="warn"
-elif [ "$NOW" -gt "$BLOCK_AFTER_EPOCH" ] 2>/dev/null; then
-  MODE="block"
-fi
+MODE="$(_effective_mode)"
 
 _audit() {  # $1 = verdict
   mkdir -p "$(dirname "$ROOT/$AUDIT_LOG")" 2>/dev/null || true
@@ -179,7 +213,7 @@ if [ "$MODE" = "block" ]; then
 fi
 
 _audit "WARNED"
-echo "WARN: mass-deletion gate is in WARN mode (ramp ends 2026-07-11T19:30Z, then BLOCKS)." >&2
+echo "WARN: mass-deletion gate is in WARN mode (ramp ends $BLOCK_AFTER_ISO, then BLOCKS)." >&2
 echo "      This commit PROCEEDS. Attribute it now and the flip is a no-op for you." >&2
 echo "" >&2
 exit 0

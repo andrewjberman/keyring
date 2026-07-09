@@ -59,6 +59,8 @@ fi
 
 chmod +x "$HOOK"
 echo "OK: commit-msg mass-deletion gate installed at .git/hooks/commit-msg"
-echo "    mode: WARN until 2026-07-11T19:30Z, then BLOCK (date-driven flip)"
-echo "    threshold: ${MASS_DELETE_THRESHOLD:-25} deleted tracked files"
+# Ask the CHECK for its state rather than restating it -- a second copy of the
+# ramp date here is exactly how the 2026-07-09 wrong-epoch bug printed "WARN"
+# while the gate was actually BLOCKING.
+bash "$ROOT/$CHECK" --mode 2>/dev/null | sed 's/^/    /'
 echo "    attribute: 'Authorized-Deletion: LD-####' trailer | bypass: FORCE_DELETE=1 (audited)"
