@@ -144,10 +144,56 @@ def _comp_constants_check(f: str, config: dict) -> int:
     return 0
 
 
+_COMPLETENESS_SUBSTRATE_EXACT = (
+    "org/modules/graph/graph-call-manifest.yaml",     # tools_index -- registers the tool
+    "org/modules/graph/comp-coverage-map.yaml",       # tools[]/meta_tools[] -- sets the role
+    "org/modules/graph/comp_capability_provider.py",  # _ROUTABLE_META_ROLES -- opts the role in
+    ".tools/comp-which",                              # the router itself (member-3's corpus)
+)
+
+
+def _is_completeness_substrate(f: str) -> bool:
+    """True for any staged path that can INTRODUCE a completeness defect.
+
+    Suffix-independent BY DESIGN: the substrate is two YAML files, one .py, the extensionless
+    router, and any .tools/comp-* (a new comp-tool -- member 2's trigger). Keying this off the
+    file EXTENSION is what made the family unreachable for 3 of its 4 substrate classes.
+    """
+    n = f.replace("\\", "/")
+    if any(n.endswith(s) for s in _COMPLETENESS_SUBSTRATE_EXACT):
+        return True
+    if n.startswith(".tools/") or "/.tools/" in n:
+        tail = n.split(".tools/", 1)[-1]
+        return "/" not in tail and (tail.startswith("comp-") or tail.split(".")[0] == "pipescript")
+    return False
+
+
+def _completeness_batch(substrate: list) -> int:
+    """ONE cmd_check over the whole commit's substrate (CTO ruling: batch, not per-file).
+
+    Per-file would re-run member-3's full 42-tool sweep once per substrate file. _completeness_-
+    invariants() already takes a list, so the corpus bound is computed once for the commit.
+    """
+    if not substrate:
+        return 0
+    ns = SimpleNamespace(file=list(substrate), mode=None, completeness_only=True)
+    rc = manifest_check_cli.cmd_check(ns)
+    if rc == 1:
+        _echo("BLOCKED: comp-manifest-check completeness family (registered-implies-reachable / "
+              "one-map-home / self-routes)", sys.stderr)
+        return 1
+    return 0
+
+
 def _manifest_check_one(f: str) -> int:
     """Mirrors `manifest_check_cli.py check --file <f>` exactly (blocking only on an
-    ERROR-class finding in blocking mode, per that script's own config-driven mode)."""
-    ns = SimpleNamespace(file=[f], mode=None)
+    ERROR-class finding in blocking mode, per that script's own config-driven mode).
+
+    `skip_completeness` -- the family is dispatched ONCE, batched, by _completeness_batch();
+    running it again per .py file would re-run member-3's 42-tool sweep for every source file
+    in the commit.
+    """
+    ns = SimpleNamespace(file=[f], mode=None, skip_completeness=True)
     rc = manifest_check_cli.cmd_check(ns)
     if rc == 1:
         _echo(f"BLOCKED: comp-manifest-check flagged non-canonical graph access in {f} (blocking mode)", sys.stderr)
@@ -221,7 +267,25 @@ def process_files(files: list[str]) -> int:
     # optimization changes nothing observable -- cmd_check never mutates it).
     cc_config = comp_constants_cli._load_config(comp_constants_cli.DEFAULT_CONFIG_PATH)
 
+    # COMPLETENESS SUBSTRATE (NFRA_TOOLCHECK, CTO GO 104602Z). The completeness family lives in
+    # manifest_check_cli._completeness_invariants, but the per-suffix dispatch below only ever fed
+    # it .py/.sh/.tf -- so a commit that REGISTERS a tool (a YAML manifest/coverage-map edit) or
+    # adds a .tools/comp-* (extensionless) never reached it. The gate built to block comp-fedobs
+    # and comp-system would not have seen either: both are born by editing YAML. Collected here and
+    # dispatched ONCE after the loop (batched -- member-3's corpus bound is computed over the whole
+    # commit, not re-run per substrate file at ~38s each).
+    substrate = [f for f in files if _is_completeness_substrate(f)]
+
     for f in files:
+        # A DELETION has no file on disk. py_compile/ruff would raise FileNotFoundError -- an
+        # UNCAUGHT exception (only PyCompileError is handled), so the gate CRASHED with a traceback
+        # instead of deciding, and there was no sanctioned path to commit a .py deletion through
+        # the wrapper. A deleted file is not a gate subject: nothing to compile, nothing to lint.
+        # (DS~B hit this deleting a driver during EDGES P2; routed by COO~B 2026-07-09. Same
+        # crash-instead-of-decide shape as the fail-open-in-disguise found in the family's own
+        # scope computation.)
+        if not os.path.exists(f):
+            continue
         if f.endswith(".py"):
             try:
                 py_compile.compile(f, doraise=True)
@@ -278,6 +342,16 @@ def process_files(files: list[str]) -> int:
             checked += 1
         else:
             continue
+
+    # THE COMPLETENESS FAMILY -- dispatched ONCE, over the whole commit's substrate, AFTER the
+    # per-suffix loop. Suffix-independent: this is the call the YAML manifest/coverage-map edits
+    # and the extensionless .tools/comp-* files could never reach before, which is why the family
+    # was wired for only 1 of its 4 substrate classes. Fail-closed inside cmd_check.
+    if _completeness_batch(substrate) != 0:
+        return 1
+    # Count only substrate files the per-suffix loop did NOT already count, so a provider .py
+    # (checked as .py AND as substrate) is reported once, not twice.
+    checked += sum(1 for f in substrate if not f.endswith((".py", ".sh", ".tf")))
 
     _echo(f"OK: pre-commit gate clean for {checked} file(s)", sys.stdout)
     return 0

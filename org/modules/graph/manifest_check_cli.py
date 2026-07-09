@@ -671,8 +671,16 @@ def cmd_check(args: argparse.Namespace) -> int:
     # Completeness family FIRST: deterministic + ramp-exempt. A registered-but-unreachable tool,
     # an unplaced tool, or a tool the router cannot return must never merge -- regardless of what
     # the heuristic scanners below do or do not find, and regardless of advisory|blocking mode.
-    if _completeness_invariants(files):
-        return 1
+    #
+    # skip_completeness / completeness_only let commit_gate_runner dispatch the family ONCE per
+    # commit (batched over the whole substrate) instead of once per source file -- member-3's
+    # 42-tool sweep must not run N times. Absent both flags (the standalone CLI), behaviour is
+    # unchanged: run the family, then the heuristic scan.
+    if not getattr(args, "skip_completeness", False):
+        if _completeness_invariants(files):
+            return 1
+    if getattr(args, "completeness_only", False):
+        return 0
 
     all_findings: list[Finding] = []
     for f in files:
