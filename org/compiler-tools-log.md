@@ -14962,3 +14962,105 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nna-1y-cross-route-divergen... | PASS |
 - 2026-07-09 (0.7.0_AE_CloudOps session ~1734Z): comp-kuzu (P3 AC-1 21/21 reachable + leg-4 reader-half per-table-vintage header live; advisor-NNA 1Y sweep); comp-grep (leg-4 stamp single-source proof + GCONTR D_00c/C_07 producer + inference-toggle trace); deploy_ledger.py (leg-4 L1/L2/L3 closed, L4 held); commit-gate/safe-apply (leg-4 Lambda 0/1/0 HALTGT-clean). No new coverage gap; the GCONTR loader fail-open (my 06-16 DIG) was hardened this session (b72cfb4e8).
 | 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | --help | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/next-session-drive-active-p... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0262.md | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0262.md | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws --resource yang-model-portfolio-benchmarks | FAIL |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --resource yang-model-portfolio-benchmarks | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/contracts/v... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws classes | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws score --help | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws metrics --help | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws diff --help | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-graph | comp-graph status | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check tally | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/pii-incident9-tail-filed-so... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check routable | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed D_00c | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS cls, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws score --class s3 | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-platinum | comp-platinum page | FAIL |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-platinum | comp-platinum page ClientsTab --firm bd | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-platinum | comp-platinum page ClientsTab --firm bd --force | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-platinum | comp-platinum --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-platinum | comp-platinum page --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace page --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws page --help | FAIL |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast page --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-diff | comp-diff --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-diff | comp-diff page --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-xref | comp-xref --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-xref | comp-xref page --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu page --help | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws score --class iam-ec2 | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws score --class iam-ec2 | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws score --class stepfunctions | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io A_01.advisor_assignments.py | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io A_00.accounts_dimension.py | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-blast | comp-blast build_employee_leaderboard | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_DEBTSCAN.json --file ... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/advi-b... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/pii-incident9-tail-filed-so... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --stdout | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/scty-p... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-deadgrant | comp-deadgrant --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-system | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_00c.p... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed D_00c | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/NFRA_TERRAFORM_P2_lambda_exec... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_04.cl... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPAWS.json --file o... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_04.cl... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPAWS.json --file o... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed D_00c D_04 | FAIL |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE label(n) IN ['C2Motif','C3System'] RETURN label(n) AS lbl, co... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN name | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/NFRA_TERRAFORM_P2_lambda_exec... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t ORDER BY t | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN name ORDER BY name | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-glob/comp-grep/comp-which/comp-pipescript io | 431167 RED disposition: comp-pipescript io A_01/A_00 KILLED a consumer-breakage hypothesis before assertion (splits arrive via advisor_assignments_history, not silver/allocations) -- kept the claim INFERRED per Rule 22; comp-which near-tied on the served-artifact question (gap: no tool maps gold artifact -> served S3 key -> consumer) | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .smart-lint-backup/backup-branch.txt --... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast --help | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-platinum | comp-platinum page ClientsTab --firm bd | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-graph | comp-graph status | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | FAIL |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws derive --fresh | FAIL |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
