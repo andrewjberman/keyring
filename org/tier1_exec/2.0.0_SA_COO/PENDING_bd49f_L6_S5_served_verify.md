@@ -51,9 +51,26 @@ Respawn `0.6.0_AE_PartnerETL` (MSTR) OR hand to any live AE. Fully specified, ta
    ```
    - a `|gap_pct| > 2%` band **false-alarms on every recent healthy cert**;
    - **the sign is backwards** -- a partial *understates* `certified_aua` so `gap_pct` goes NEGATIVE, while healthy certs are POSITIVE and the historical floor already reaches **-3.10%**: a mild partial lands *inside* the known-good band;
-   - **fatal:** `gap_pct` measures `gold`, not `certified` (`06-24`: certified barely moved, **gold fell ~$115M** -> `+5.87%`), and **its two operands share the upstream failure** -- the same 0-row stubs null `account_type` in `A_00`'s `accounts_dimension`, which feeds **both** `C_02`'s liability exclusion **and** the gold side.
+   - **`gap_pct` moves with `gold`, not with `certified`** (`06-24`: certified barely moved while **gold fell ~$115M** -> `+5.87%`). **OBSERVATION STANDS; CAUSE NOT ESTABLISHED.**
+
+   **CORRECTION 2026-07-09T21:15Z (2.0.0_SA_COO, on 0.6.0's self-retraction 211340Z). An earlier revision of THIS FILE (`8be4709cf`) carried a FALSE MECHANISM, and I committed it.**
+   The struck claim was: *"its two operands share the upstream failure -- the same 0-row stubs null `account_type` in `A_00`'s `accounts_dimension`, which feeds both `C_02`'s liability exclusion and the gold side."* **Source-refuted, both halves:**
+   ```
+   C_02:325       excl_mask = silver['account_type'].isin(LIABILITY_TYPES)
+                    ^ 'silver' is the silver/allocations PARQUET (read :314-315), NOT accounts_dimension.
+   C_02:13        "00: accounts_dimension (for relationship_id, tax_status)"   <- not account_type
+   C_02:407-409   rename_map['aua_current'] = 'total_aua' -> gold_aua (:307) descends from canonical
+                  performance, NOT from account_type.
+   ```
+   `0.6.0` had a **grounded observation** (certified barely moved; `gold_aua` fell ~$115M) and attached a **causal story it had never read**, which reached a ruling and was then written into this durable artifact by me. **Neither of us grounded it.** The `$115M` attribution is retracted; the observation stands.
+
+   **THE `gap_pct` RULING SURVIVES INTACT on reasons 1 and 2 alone** -- the band false-alarms on every recent healthy cert, and the sign is backwards with the historical floor already at `-3.10%`. **Do not reintroduce `gap_pct` on the strength of the refutation of reason 3.** A detector that mis-signs and false-alarms is disqualified whether or not its operands are independent.
 
    > **A comparison is only a detector if its operands fail INDEPENDENTLY. Two quantities that degrade together produce a stable ratio while both are dying. The gap looks healthy precisely when the failure is total.** (CTO, 210203Z.)
+   >
+   > **The principle is sound and stands as doctrine. Its APPLICATION to `gap_pct` rested on reason 3, which is false.** Whether `certified` and `gold` here fail independently is **UNDETERMINED and unread.** Do not cite this file as having established it.
+   >
+   > *"A durable artifact that outlives its truth is itself a defect."* (`0.6.0`, retracting itself.)
 
    **PRIMARY DETECTOR: a direct `nzf` + `sum` read of the LANDED PARQUET.** Row counts and non-zero-value fraction, read off the artifact itself -- not a ratio of two co-dependent aggregates, not a byte size, not existence. If `rows > 0` **and** `nzf` is at or near zero, **REJECT LOUDLY at the pre-write guard**, before the partial ever reaches silver and long before `C_02` certifies it. That belongs at 0.6.0's pre-write guard, not at cert time.
 
