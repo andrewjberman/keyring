@@ -14933,3 +14933,22 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/lo... | PASS |
 | 2026-07-09 | 0.4.0_DS_ClientPlatform~A | NFRA_ENDPOINTS.TO-2/TO-3 + ad-hoc inf/49F P0s | comp-pipescript io/deployed, comp-freshness | io INF_D_04/INF_C_01/C_02, deployed INF_C_01 (wrong-scope FAIL), freshness inf | PARTIAL -- comp-freshness inf was decisive (anchored both the inf-AUA and NNA staleness findings in one call); comp-pipescript deployed needs firm-scoping (defaulted to bd bucket for an inf script, silent wrong answer rather than an error) |
 | 2026-07-09 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/website/README.md -... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/news-pipeline/cross... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TERRAFORM.json --file... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/news-pipeline/cross... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/ANDREW_SOVE... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/NFRA_TERRAFORM_P1_delta_20260... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/INCIDENT_da... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/INCIDENT_da... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | --help | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE Patricia handoff | /code-review workflow (PARTIAL, stopped ~25% per Andrew); comp-iam N/A for standalone IAM user (models lambda service-roles only) -- live simulate-principal-policy/get-user-policy + wp_check_password + exercised login POST were the Rule-22a proofs; raw aws/SSM for EC2-tag/enforcer/login-profile state rode inline # rail-checked markers (outside comp coverage). |
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
