@@ -88,22 +88,101 @@ def _get_graph(force_rebuild: bool = False, check_freshness: bool = True) -> Tra
     return g
 
 
-def cmd_build(args):
-    # --check mode: verify cached graph against current FS without rebuilding
-    # (ADHC_COMPIL_V4.012 AC3). Exits 2 if any node has SHA drift; 0 if clean.
-    if getattr(args, 'check', False):
+# ------------------------------------------------------------------ freshness contract (NFRA_GRAPHS)
+# CTO GO 20260709T201214Z. THREE states, not four:
+#     (default)  serve the cache iff the tool's freshness predicate says fresh
+#     --check    REPORT staleness, never rebuild.   0 = fresh | 2 = stale | 1 = tool error
+#     --force    always re-derive
+#
+# `--fresh` is a PROVEN NO-OP alias of default and is DEPRECATED. NFRA_GRAPHUNI P2/D2's head-pin
+# correctly made DEFAULT honor the source fingerprint (killing the stale-cache-phantom class) and in
+# doing so collapsed FRESH into DEFAULT. Nobody retired the flag. It is accepted with a WARN rather
+# than silently aliased (a silent alias is a lying affordance) or silently dropped (it is
+# user-visible). Remove next cycle.
+#
+# THE PREDICATE IS ONE EXPRESSION, NOT TWO THAT AGREE TODAY (MSTR 20260709T200348Z): every surface
+# that reports trace-graph freshness calls `_freshness_probe()`, which calls the SAME
+# `check_node_freshness` that `_get_graph` uses to decide serve-vs-rebuild. A status surface that
+# re-models the predicate drifts from it silently -- `graph_status_cli._TRACE_TTL = 300` is exactly
+# that bug: the default path never consults a TTL at all.
+_FRESH_DEPRECATION = (
+    "WARN: --fresh is a no-op alias of default since the head-pin (NFRA_GRAPHUNI P2/D2) -- "
+    "default already rebuilds on source drift. Use default, or --force to rebuild. "
+    "This flag is removed next cycle."
+)
+
+
+class _ContractParser(argparse.ArgumentParser):
+    """argparse exits 2 on a USAGE error. The contract reserves 2 for STALE.
+
+    Found by exercise, not by reading: `comp-trace --check` (no positional) hit argparse's
+    "the following arguments are required: query" and exited 2 -- indistinguishable, to a CI job,
+    from "your cache is stale". The probe had never even run. A usage error is a TOOL FAILURE, which
+    the standard defines as 1 (CTO 20260709T195217Z: "1 means the tool failed, and ONLY that").
+    """
+
+    def error(self, message):  # noqa: A003
+        self.print_usage(sys.stderr)
+        self.exit(1, f"{self.prog}: error: {message}\n")
+
+
+def add_freshness_args(p) -> None:
+    """The uniform 3-state contract on a query parser."""
+    p.add_argument("--check", action="store_true",
+                   help="REPORT staleness, never rebuild (0=fresh 2=stale 1=error)")
+    p.add_argument("--force", action="store_true", help="Always re-derive, ignoring the cache")
+    p.add_argument("--fresh", action="store_true",
+                   help="DEPRECATED no-op alias of default (removed next cycle)")
+
+
+def _require_query(args, parser, name: str = "query") -> None:
+    """--check is a PROBE over the cache: it needs no target. Every other invocation does.
+
+    So the positional is nargs='?' and this enforces it -- rather than argparse enforcing it and
+    making `--check` impossible to call.
+    """
+    if not getattr(args, "check", False) and not getattr(args, name, None):
+        parser.error(f"the following arguments are required: {name}")
+
+
+def _freshness_probe() -> int:
+    """THE enforcing predicate, reported. 0 = fresh | 2 = stale | 1 = tool error.
+
+    Names the universe it swept (CTO standing rule 20260709T192409Z: a gate that cannot state its
+    denominator cannot be trusted to have a numerator).
+    """
+    try:
         if not _CACHE_FILE.exists():
-            print("comp-build --check: no cached graph found", file=sys.stderr)
-            print("  Run `comp-build` first.", file=sys.stderr)
-            sys.exit(2)
+            print("--check: no cached graph -- run comp-build. (STALE)", file=sys.stderr)
+            return 2
         g = TraceGraph.load(_CACHE_FILE)
         drift = check_node_freshness(g, _WORKSPACE)
-        if not drift:
-            indexed = sum(1 for n in g.nodes.values() if n.source_sha)
-            print(f"comp-build --check: clean ({indexed} indexed nodes; no SHA drift)")
-            sys.exit(0)
-        emit_stale_warn(drift)
-        sys.exit(2)
+    except Exception as e:  # noqa: BLE001 -- a probe that cannot evaluate is an ERROR, never "fresh"
+        print(f"--check: UNVERIFIABLE ({type(e).__name__}: {e})", file=sys.stderr)
+        return 1
+    indexed = sum(1 for n in g.nodes.values() if n.source_sha)
+    if not drift:
+        print(f"--check: clean ({indexed} indexed nodes; no SHA drift)")
+        return 0
+    emit_stale_warn(drift)
+    print(f"--check: STALE ({len(drift)} of {indexed} indexed nodes drifted)", file=sys.stderr)
+    return 2
+
+
+def _resolve_graph(args) -> TraceGraph:
+    """The single entry every query handler uses. Honors the 3-state contract; exits on --check."""
+    if getattr(args, "check", False):
+        sys.exit(_freshness_probe())
+    if getattr(args, "fresh", False):
+        print(_FRESH_DEPRECATION, file=sys.stderr)
+    return _get_graph(force_rebuild=getattr(args, "force", False))
+
+
+def cmd_build(args):
+    # --check: report staleness, never rebuild. Delegates to the shared probe so comp-build and the
+    # four query tools cannot disagree about what "stale" means (ADHC_COMPIL_V4.012 AC3).
+    if getattr(args, 'check', False):
+        sys.exit(_freshness_probe())
 
     g = _get_graph(force_rebuild=True, check_freshness=False)
     print(f"Graph built: {len(g.nodes)} nodes, {len(g.edges)} edges")
@@ -131,7 +210,7 @@ def cmd_build(args):
 
 
 def cmd_trace(args):
-    g = _get_graph()
+    g = _resolve_graph(args)
     query = args.query
 
     # Find matching nodes
@@ -214,7 +293,7 @@ def _is_producer_pipeline_match(node_id: str, pipeline: str | None) -> bool:
 
 
 def cmd_blast(args):
-    g = _get_graph()
+    g = _resolve_graph(args)
 
     # --all-producers sweep mode: list all producer nodes with zero downstream consumers
     if getattr(args, 'all_producers', False):
@@ -330,7 +409,7 @@ def cmd_diff(args):
     affected by files changed in git (staged, unstaged, or between refs)."""
     import subprocess
 
-    g = _get_graph()
+    g = _resolve_graph(args)
 
     # Get changed files from git
     if args.ref:
@@ -509,13 +588,21 @@ def cmd_xref(args):
     Symbol-lookup matches against node ids, labels, file paths, and edge
     sources/targets. Returns all references for agent disambiguation.
     """
+    # --check is mode-independent: it probes the cache, never rebuilds, in EITHER mode.
+    if getattr(args, "check", False):
+        sys.exit(_freshness_probe())
+    if getattr(args, "fresh", False):
+        print(_FRESH_DEPRECATION, file=sys.stderr)
+
     # ADHC_COMPIL_V4.014 — symbol cross-reference mode
     symbol = getattr(args, 'symbol', None)
     if symbol:
-        g = _get_graph()
+        g = _get_graph(force_rebuild=getattr(args, "force", False))
         _xref_symbol_lookup(g, symbol)
         return
 
+    # baseline-diff mode re-derives BY DESIGN: it compares the CURRENT graph against the saved
+    # snapshot, so serving a cache would compare the baseline against itself. --force is implied.
     g = _get_graph(force_rebuild=True)
 
     if args.save:
@@ -568,8 +655,10 @@ def cmd_xref(args):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Opal full-stack trace compiler")
-    sub = parser.add_subparsers(dest="command")
+    # _ContractParser: a usage error exits 1 (tool failure), never 2 (which the freshness contract
+    # reserves for STALE). parser_class propagates it to every subparser.
+    parser = _ContractParser(description="Opal full-stack trace compiler")
+    sub = parser.add_subparsers(dest="command", parser_class=_ContractParser)
 
     # build
     p_build = sub.add_parser("build", help="Force rebuild the trace graph")
@@ -578,7 +667,7 @@ def main():
 
     # trace
     p_trace = sub.add_parser("trace", help="Trace data path from a node")
-    p_trace.add_argument("query", help="File, component, or node to trace")
+    p_trace.add_argument("query", nargs="?", help="File, component, or node to trace")
     p_trace.add_argument("--direction",
                          choices=["up", "upstream", "down", "downstream", "both"],
                          default="both",
@@ -586,10 +675,11 @@ def main():
     p_trace.add_argument("--depth", type=int, default=10)
     p_trace.add_argument("--json", action="store_true")
     p_trace.add_argument("--all", action="store_true", help="Trace all matches")
+    add_freshness_args(p_trace)
 
     # blast
     p_blast = sub.add_parser("blast", help="Show blast radius of a change")
-    p_blast.add_argument("query",
+    p_blast.add_argument("query", nargs="?",
                          help="File, node, or prefix-qualified node "
                               "(e.g. lambda:fn-name, gold:D_04, component:AdvisorsTab.tsx)")
     p_blast.add_argument("--function", help="Specific function within the file")
@@ -605,6 +695,7 @@ def main():
     p_blast.add_argument("--all-producers", action="store_true",
                          help="Sweep all producer nodes in graph; list those with zero downstream consumers. "
                               "Use with --check-consumers and --pipeline.")
+    add_freshness_args(p_blast)
     p_blast.add_argument("--pipeline", choices=["inf", "bd", "all"], default=None,
                          help="Filter --all-producers sweep by pipeline (inf/bd/all).")
 
@@ -614,6 +705,7 @@ def main():
     p_diff.add_argument("--staged", action="store_true", help="Only staged changes")
     p_diff.add_argument("--depth", type=int, default=5)
     p_diff.add_argument("--json", action="store_true")
+    add_freshness_args(p_diff)
 
     # xref — dual-purpose: graph-diff (no-arg) + symbol-lookup (positional)
     p_xref = sub.add_parser(
@@ -627,13 +719,16 @@ def main():
     )
     p_xref.add_argument("--save", action="store_true", help="Save current graph as baseline (no-arg mode)")
     p_xref.add_argument("--json", action="store_true")
+    add_freshness_args(p_xref)
 
     args = parser.parse_args()
     if args.command == "build":
         cmd_build(args)
     elif args.command == "trace":
+        _require_query(args, parser)
         cmd_trace(args)
     elif args.command == "blast":
+        _require_query(args, parser)
         cmd_blast(args)
     elif args.command == "diff":
         cmd_diff(args)
