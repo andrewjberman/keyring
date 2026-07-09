@@ -15151,3 +15151,50 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
 2026-07-09T20:21Z | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-1 | aws ses send-email (success simulator + failure unverified) + SSM GFAPI routing read + rail-checked aws ses identity/dkim | exercised-failure caught the internal!=SES-verified trap; no comp-tool models SES/on-box-app-config (gap, marked)
 | 2026-07-09 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | pipescript | pipescript --resource silver/allocations | FAIL |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-diff | comp-diff --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-xref | comp-xref --help | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast --check | FAIL |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast build_employee_leaderboard --check-consumers | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/RUNBOOK.md | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace --check | FAIL |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace _get_graph --fresh | FAIL |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/kill-storage.ps1 --file org/tier... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace --check | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-diff | comp-diff --check | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-xref | comp-xref --check | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace | FAIL |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-tagauthz.py | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace --check | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/served-value-freeze-check.py | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-diff | comp-diff --check | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-xref | comp-xref --check | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace build_employee_leaderboard --force | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace build_employee_leaderboard | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast build_employee_leaderboard | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/safe-commit.sh | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io A_01 | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cli.py | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-platinum | comp-platinum page ClientsTab --firm bd --fresh | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-platinum | comp-platinum page ClientsTab --firm bd | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-platinum | comp-platinum page ClientsTab --firm bd --force | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io C_02 | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph_cache.py | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TOOLHEALTH.json --fil... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file archive/timeseries/10y.json --file arch... | PASS |
+2026-07-09 | 0.7.0_AE_CloudOps | comp-which (PARTIAL: no route for live ALB/perimeter shape -> gap filed+CTO-approved), comp-grep/comp-glob (PASS: gateway app, /otp call-sites, github-token consumers, stamp_marker, cmtque TF), commit-gate.sh (PASS all), safe-commit.sh (PASS; surfaced its own :271 swallowed-staging bug 3x under index contention -> fixed 8d1dca813), comp-freshness (PARTIAL: usage-only, superseded by S3 list_object_versions as a time series)
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
