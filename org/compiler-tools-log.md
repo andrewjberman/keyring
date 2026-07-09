@@ -15080,3 +15080,21 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json --file ... | PASS |
 | 2026-07-09 | 1.0.0_SA_CTO | comp-glob, comp-grep, comp-which, comp-system, safe-commit | PII brief + NFRA board ground-truth | comp-which routed to comp-system, a command that did not exist (FIXED 83daa2064); comp-grep 0-hit on "orion" misread as absence (catalog is data/inf/API); rail-checked live iam/cloudtrail primitives because comp-iam parses TF=DESIRED only. GAP FILED: no comp-tool answers live ALB/perimeter shape -> comp-routes perimeter APPROVED. |
 | 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .smart-lint-backup/backup-branch.txt --... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file logs/sessions/2025-11-17/aws_engineer/s... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_SOVRULING_an-mcp... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/sovereign-ruling-is-not-an-... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/lambda... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_coverage_check.py | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file logs/sessions/2025-12-15/react_designer... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-grep/comp-glob/comp-to | comp-grep AmazonS3ReadOnlyAccess -> iam.tf:171-174 (falsified the TO's dispatch premise: the attachment IS TF-managed); comp-glob GAP: .gitignore-aware, returns 0 hits on org/mcp/inbox/** and says so honestly; comp-iam deliberately NOT used (Rule 22a: parses TF=DESIRED, structurally blind to an UNMANAGED policy -- the exact thing TO-1 asks about). Grounded on live get-role-policy + terraform state pull x45 trees. GAP FILED: no comp-tool answers "which resources on principal X are unmanaged by Terraform". | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
