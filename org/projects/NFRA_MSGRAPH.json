@@ -6,6 +6,11 @@
   "description": "Andrew-direct 2026-06-26 (15:00Z). ELEVATED to a first-class macro (Andrew chose 'elevate MS to its own macro' 15:09Z via COO structure-decision) -- carves the MS vertical OUT of NFRA_EXPAND: absorbs Strand A (EXPAND_MSCLOUD, the SP/OneDrive Graph-API ingestion) + the MS-instance of Strand C (the heat-map), and ADDS a new MS comp-tools/index layer. THREE components: (1) INGESTION -- SharePoint sites/libraries + OneDrive trees into the single AWS Nessie/Iceberg globgrph via the m365 gateway delegated Graph API: nodes(site/library/folder/file)+edges(contains/owned-by/has-access/shared-with)+activity(lastModified/lastAccessed). HARD GUARDRAILS (inherited from EXPAND_MSCLOUD, Andrew load-bearing, enforced in code): STRUCTURE/METADATA/ACTIVITY ONLY never CONTENT (file bodies never graphed); OUTLOOK(email+calendar)+ALL personal/P2P comms(Teams chats/DMs) STRICTLY OFF-graph; access-topology (who-has-access/shared-with) RETAINED (org-internal access = security-valid, not privacy). (2) HEAT-MAP -- persistent MS hot/cold + clustering + persistent snapshots (Andrew: 'maybe hourly basis') feeding a HEAT-INDEX; reuses the HEATMAP engine (HEATMAP_OBJECT build-complete) over the MS slice of the expanded graph. (3) COMP-TOOLS + INDEX (the NEW layer, the headline deliverable) -- MS-specific comp-tools: a findability 'comp-which for the doc-cloud' + heat-index-directed tools, so AGENTS FIND WHAT THEY NEED FASTER when working in the MS space. Reuses: the globgrph derive pipeline + the live m365 gateway Graph API (NFRA_OPLMCP) + the HEATMAP analytics engine + the comp-tool/comp-which pattern (NFRA_COMPRAIL). PRD: CTO carves/extends from NFRA_EXPAND_PRD (NFRA_EXPAND retains Strand B auth-edge + Strand C non-MS repo/MCP heat-map).",
   "prds": [
     {
+      "path": "docs/architecture/NFRA_MSGRAPH_PRD.md",
+      "label": "NFRA_MSGRAPH PRD (its own; prds[] previously pointed only at NFRA_EXPAND_PRD.md)",
+      "date": "2026-06-26"
+    },
+    {
       "path": "docs/architecture/NFRA_EXPAND_PRD.md",
       "label": "BASE -- Strand A (MS ingestion) scope + guardrails + 5 design Qs; CTO carves the NFRA_MSGRAPH PRD from this",
       "date": "2026-06-25"

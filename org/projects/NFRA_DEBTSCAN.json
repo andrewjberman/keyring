@@ -8,6 +8,11 @@
       "path": "docs/architecture/NFRA_DEBTSCAN_PRD.md",
       "label": "DEBTSCAN PRD v0.1 (4 families, 3 phases, precision gates)",
       "date": "2026-06-12"
+    },
+    {
+      "path": "docs/architecture/NFRA_COMPDEBT_PRD.md",
+      "label": "NFRA_COMPDEBT PRD (comp-debt FUSION+GUARD; MSTR-designed, CTO arch-gated) -- DELIVERED under NFRA_DEBTSCAN (close 518d99988). Linked 2026-07-09 CTO pass: the PRD was orphaned (no project referenced it) though its implementation shipped here.",
+      "date": "2026-07-02"
     }
   ],
   "status": "complete",

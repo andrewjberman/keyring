@@ -12,7 +12,7 @@
   ],
   "status": "complete",
   "phase": "COMPLETE 2026-07-08 (NFRA-first drive, base COO). The vendor-endpoint catalog convention (data/{source}/API/) STANDARDIZED across all 4 vendors + PROVEN by the $1.006M BD qt6 fee finding it made reusable. BD (data/black_diamond/API/, 3 domains + 741-field dict) + Orion (data/inf/API/, envision/portfolio/eclipse) + SmartX (data/smartx/API/, model-api/performance/compliance) + Schwab (file-feed variant, D1-referenced). Eclipse folded into Orion (grounded). GATES BOTH MET: CTO grounded-completeness arch-gate PASS (spot-checked Eclipse-fold live + honesty-floor); CVO 4 per-vendor grounded-claims certs ALL PASS (BD/Orion/Schwab/SmartX -- real captures, roster-is-a-floor honesty, 2 negative-search vendors got second-angle scrutiny). The discovery playbook (bundle-grep/HAR/roster-is-a-floor), firm-sep-no-defaults tools, grounding+errata discipline all bound + exercised. NON-BLOCKING follow-on: DS~A applies CVO's SmartX wording precision (the 'zero live-code refs' overstatement -> 'no production-pipeline consumer'). Second of the Andrew-direct NFRA programs to the line.",
-  "blocking": "TO-1 (Orion) build in flight -- 0.4.0_DS_ClientPlatform~A (available + warm off the BD reference instance). Follow-on per-vendor TOs (SmartX/Eclipse/Schwab) authored after Orion + convention refinements fold back. Binding conventions (PRD): 2 variants CTO-ratified per vendor (REST-vendor vs file-feed); firm-sep-NO-DEFAULTS on shared tools (NEVER#1); grounded-claims-only + errata (note superseded, no silent delete). RAVC to CTO on the decomp (this).",
+  "blocking": "None -- COMPLETE. All 4 vendor catalogs VERIFIED PRESENT on disk by CTO 2026-07-09 (BD=data/black_diamond/API, Orion=data/inf/API [Orion is Inflection's platform; domains envision/portfolio/eclipse, Eclipse folded in], SmartX=data/smartx/API, Schwab=file-feed data/schwab/DATA_DICTIONARY.md). Prior `blocking` text ('TO-1 Orion build in flight') was STALE NARRATIVE, not live state -- corrected in the 2026-07-09 CTO ground-truth pass. RESIDUAL (metadata only): TO-1 file still carries <status>pending</status>; COO to flip (TO lives in the COO task_orders lane).",
   "created": "2026-07-08",
   "pods": [
     "1.0",
@@ -27,5 +27,6 @@
   ],
   "depends_on_note": "COMPLEMENTS NFRA_INTEGRATIONS (closed -- the MCP external-source FRAMEWORK; NFRA_ENDPOINTS is the vendor-API KNOWLEDGE catalog: the framework calls, the catalog documents). MIRRORS the /infra knowledge-centralization (NFRA_LOCALROOT/NFRA_SYSTEM) but for the /data vendor-integration surface -- same stop-the-scatter instinct applied to vendor endpoints. Reference instance = data/black_diamond/API/ (this session).",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "completed": "2026-07-08"
 }

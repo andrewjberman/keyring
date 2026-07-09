@@ -3,14 +3,37 @@
   "macro_code": "NFRA",
   "name": "System architectural home base -- audit, /infra/system docs, runtime-compiled current-state, maturity assessment",
   "description": "Andrew-direct 2026-07-08. Build a comprehensive, categorical, CURRENT documentation of how the whole SYSTEM works AND the state of how it works, living at infra/system/, as the center of gravity infra agents read FIRST. The system's knowledge is scattered across ~313 docs/architecture/*.md, ~105 org/modules/graph/ source files, dozens of per-component PRDs, and agent memory -- there is no center of gravity, so infra work re-derives the system every time. SCOPE (6 classes): (1) SUBSTRATE C0-C3 (CSE algebra, compression/decompression ladder, fidelity, LAW 1/2); (2) GRAPH INFRA (Nessie/Iceberg/Kuzu, derive_runner + marker-oracle, node/edge/layer taxonomy incl the new semctl layer, FRESHGUARD freshness guards); (3) COMP-TOOLS + COMP-WHICH (~30-tool catalog, comp-which selection logic, the COMPRAIL rail, tool families); (4) FEDERATED LAYER (FEDOBS Trino cross-producer correlation, the heat map, the observe->measure axis); (5) LEARNING LOOPS (COMPLEARN, MOTIF, PROMOTE, the closed federated-learning loop, GOV-A/B, the 5 PROMOTE invariants); (6) THE SYNTHESIS of how all layers interact. This is a documentation + evaluation project, not a build-new-feature project. PRD docs/architecture/NFRA_SYSTEM_PRD.md.",
-  "prds": [{"path": "docs/architecture/NFRA_SYSTEM_PRD.md", "label": "NFRA_SYSTEM PRD (CTO-authored, Andrew-direct)", "date": "2026-07-08"}],
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_SYSTEM_PRD.md",
+      "label": "NFRA_SYSTEM PRD (CTO-authored, Andrew-direct)",
+      "date": "2026-07-08"
+    }
+  ],
   "status": "complete",
   "phase": "COMPLETE 2026-07-08 (COO~B, Andrew-direct). All 4 phases CTO-arch-gate-PASSED + CVO-CERTIFIED. P1 AUDIT: 5-class fan-out + class-6 synthesis (CTO PASS + all 4 Q-rulings ratified; CVO class-6 grounding-cert 210856Z). P2 STRUCTURE: the infra/system/ tree (README + 00_synthesis..07_maturity; CTO arch-gate PASS grounded). P3 COMPILER: comp-system (org/modules/graph/comp_system.py 355b9bf53) -> infra/system/06_current_state.{md,json} -- grounded-against-live with NO-FABRICATION ENFORCED-IN-CODE (failure->UNKNOWN-VINTAGE, never a fabricated fallback), spot-verified, --check auto-refresh oracle, registered as a comp-tool (tools_index 37->38); CTO PASS + CVO no-fabrication cert 232905Z. P4 MATURITY: 07_maturity.md (207f44ab7) grounded-by-construction off the 06.json (a [BP] is a control, only when live evidence supports it; class-rollup BP=5 + 9 enumerated within-class residuals, not hidden); CTO PASS + CVO cert 233008Z. DELIVERABLE (CTO): the SYSTEM now documents its own architecture, compiles its own grounded current-state, and grades its own maturity WITHOUT fabricating -- it knows+reports its own honest current-state, staying honest as it evolves (auto-refreshing). The CONTENT pillar of the /infra trilogy (LOCALROOT structure + SYSTEM content + TERRAFORM estate), shared runtime index (06). base COO infra/system/** exec-committable carve LIVE (336731af4). | DECOMPOSED 2026-07-08 (COO~B, Andrew-direct via CTO 172332Z). 4 phase TOs authored (org/tier1_exec/2.0.0_SA_COO/task_orders/NFRA_SYSTEM.P1-P4). P1 AUDIT DISPATCHED as a 6-scope-class FAN-OUT (owner-lanes audit what they built, PRD SS7): substrate->0.4.0_DS~B, graph-infra->0.7.0_AE, comp-tools/comp-which/COMPRAIL->0.8.0~D, federated->0.5.0_AE, learning-loops->0.4.0_DS~B(+~D GOV-B), synthesis/interaction-map->COO~B -- NON-URGENT background-start (documentation+evaluation project, not a fire). P2 (record+structure, AE-lane -- infra/ owned-paths, CTO gate-blocked) / P3 (comp-system runtime-current-state compiler, the load-bearing differentiator) / P4 (honest maturity matrix, uses NFRA_TOOLHEALTH EFFECTIVE axis) STAGED + gated. | PRIOR: PHASE 0 -- PRD CTO-authored 2026-07-08 (Andrew-direct), awaiting COO decomposition. FOUR PARTS (Andrew-specified): Part 1 AUDIT & INVESTIGATION of the system as built (the load-bearing phase; comprehensive grounded inventory of all 6 scope classes + cross-layer interaction map + doc-consolidation index + gap list, Rule-22 grounded); Part 2 RECORD & STRUCTURE (create the infra/system/ tree + the static per-layer architecture docs + the center-of-gravity README); Part 3 RUNTIME-COMPILED CURRENT-STATE (a comp-system compiler that emits the current-state from the live substrate -- manifest/marker-oracle/graph/cert-ledgers/tool_activity -- so it is current-by-construction, never stale; static architecture + runtime-compiled current-state); Part 4 INTERPLAY & MATURITY (a maturity matrix built-proven/built-unproven/forming/designed-only cross-referenced with cert+usage+test evidence + the interplay/dependency assessment -> a grounded what's-next). Proposed /system structure: README + 00_synthesis + 01_substrate + 02_graph + 03_comp_tools + 04_federated + 05_learning + 06_current_state + 07_maturity.",
-  "blocking": "DECOMPOSED + P1 dispatched (fan-out, non-urgent). P2 gated on P1 (CTO-arch-gated audit); P3 on P1+P2; P4 on P1+P2 + CTO's Q3 maturity-taxonomy ratify. CTO arch-gates each phase; CVO certs (P1 grounded / P3 reads-live-truth / P4 no-inflated-verdict). 4 open decisions (SS9: comp-system home Q1 / static-vs-dynamic Q2 / maturity taxonomy Q3 / refresh cadence Q4) surfaced to CTO as P1 grounds. | ORIG: Sequence: Part 1 (audit) is the unblocker; Part 2 (structure/docs) grounds on Part 1; Part 3 (current-state compiler) + Part 4 (maturity) ground on Part 1+2. CTO arch-gates each phase (audit completeness, structure, compiler-reads-live-truth, maturity-method). CVO certs: audit grounded, compiler not aspirational, no maturity verdict inflated past evidence. Executors = the infra/graph/comp-tool lanes (0.7.0_AE, 0.8.0_AE, 0.4.0_DS~B) who own the surfaces they built. 4 open decisions (PRD SS9): comp-system home, static-vs-dynamic boundary, maturity taxonomy, refresh cadence.",
+  "blocking": "None to the close -- COMPLETE (infra/system/ tree verified on disk 2026-07-09: 00_synthesis -> 06_current_state.{md,json}). Prior `blocking` text ('DECOMPOSED + P1 dispatched') was STALE NARRATIVE. **P3 RESIDUAL DEFECT (CTO-found 2026-07-09, exercised):** the P3 deliverable's documented interface does not exist -- `.tools/comp-system` was never authored (62 sibling comp-* wrappers are tracked; this one is not). `comp-system --check` -> 'command not found', while graph-call-manifest.yaml:824 declares it the canonical_call and comp-which routes users to it. The ENGINE works (`python org/modules/graph/comp_system.py --check` -> rc=0, correctly reports '06 STALE ... regenerate (comp-system)' -- naming the command that cannot be run). Net: P3's 'current-by-construction, never stale' property is NOT achievable via its documented interface, and 06_current_state is STALE against HEAD right now. Fix = author the wrapper (git add -f; .tools/ is gitignored). Routed to COO -> 0.8.0_AE_CloudComp. Does NOT reopen the project; filed as a P3 residual with an exercise-gate (`comp-system --check` must return rc=0).",
   "created": "2026-07-08",
-  "pods": ["1.0", "2.0", "3.0", "0.7", "0.8", "0.4"],
-  "depends_on": ["NFRA_SEMCTL", "NFRA_CSE", "NFRA_FEDOBS", "NFRA_MOTIF", "NFRA_PROMOTE", "NFRA_COMPILERKIT", "NFRA_GLOBGRPH", "NFRA_TOOLHEALTH"],
+  "pods": [
+    "1.0",
+    "2.0",
+    "3.0",
+    "0.7",
+    "0.8",
+    "0.4"
+  ],
+  "depends_on": [
+    "NFRA_SEMCTL",
+    "NFRA_CSE",
+    "NFRA_FEDOBS",
+    "NFRA_MOTIF",
+    "NFRA_PROMOTE",
+    "NFRA_COMPILERKIT",
+    "NFRA_GLOBGRPH",
+    "NFRA_TOOLHEALTH"
+  ],
   "depends_on_note": "CONSUMES/CONSOLIDATES the docs of the semantic plane (SEMCTL/CSE/FEDOBS/MOTIF/PROMOTE/COMPILERKIT), the graph (GLOBGRPH/GRAPHS), the tools (COMPRAIL/COMPROUTE/COMPLEARN/COMPPROOF/TOOLHUD/PIPESCRIPT), and FRESHGUARD -- /system is their SYNTHESIS + current-state home, NOT a re-owning. COMPLEMENTS NFRA_TOOLHEALTH (Part 4 maturity uses/extends its EFFECTIVE axis) + NFRA_DEBTSCAN.",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "completed": "2026-07-08"
 }
