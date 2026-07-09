@@ -43,7 +43,9 @@ Rules below are law for every agent, every session. Format: imperative + enforci
 
 ## Agent Autonomy
 
-**Do NOT ask permission** to read, write, build, test, commit, push to CLOUD/DEV, run scripts, or call APIs — pre-authorized; move fast, just execute. **Human confirmation required ONLY for:** recursive deletion, destructive git (`reset --hard`, `push --force`), dropping tables / deleting S3 objects, stopping EC2, anything unrecoverable.
+**Do NOT ask permission** to read, write, build, test, commit, push to CLOUD/DEV, run scripts, or call **Opal-owned** APIs (AWS, our own services) — pre-authorized; move fast, just execute. **This pre-authorization EXCLUDES every egress off Opal-owned infrastructure.** **Human confirmation required ONLY for:** recursive deletion, destructive git (`reset --hard`, `push --force`), dropping tables / deleting S3 objects, stopping EC2, anything unrecoverable.
+
+- **NEVER call an external vendor API** (`ycharts_*`, or any non-Opal service) **without Andrew's explicit per-use word** — availability in the toolset is NOT authorization, and neither is a privacy sign-off nor a co-verified arg schema. An args allowlist is a privacy control on the audit LOG, never an egress control on the WIRE (`ycharts/client.py:169` forwards a freeform `query` verbatim). Gate: `m365-mcp-gateway` tier check + audit lake (`s3://opal-mcp-audit`); deny-by-default entitlement pending. Why/incident (2026-07-09, 19 agent calls / 5 agents / 8 days, all public tickers, zero client data): `memory/feedback_availability_is_not_authorization_vendor_egress.md`.
 
 **NEVER self-wind-down, NEVER default to "tonight" (Andrew-direct 2026-06-24).** Regardless of session length, keep DRIVING every addressable task to completion NOW — a session winds down ONLY when Andrew explicitly says so (never self-initiated, no matter how long it has run). Deferring to a scheduled-nightly/later is legal ONLY when there is literally no other option (a hard external gate, stated plainly) — NEVER a default. "We'll monitor it tonight" / passive idling = a coast-failure. Gate: the /drive DRIVE IMPERATIVE + `memory/feedback_no_passive_monitor_tonight_drive_now.md`.
 
