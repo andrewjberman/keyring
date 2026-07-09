@@ -108,6 +108,10 @@ def main() -> int:
                    help="repeatable; role(s) legitimately permitted (the firm's own). Anything else is a finding.")
     p.add_argument("--write", action="store_true",
                    help="also sweep PutSecretValue -- finds roles that cannot READ it but can OVERWRITE it")
+    p.add_argument("--write-only", action="store_true",
+                   help="sweep PutSecretValue ONLY (half the API calls). Use when the READ universe is already "
+                        "proven closed and you are isolating the WRITE dimension -- a role can be explicitDeny "
+                        "on read and still overwrite the secret.")
     p.add_argument("--account", default="313476888478")
     p.add_argument("--json", metavar="PATH", help="write the full per-role verdict table")
     a = p.parse_args()
@@ -115,7 +119,10 @@ def main() -> int:
     arn = secret_arn(a.secret)
     roles = all_roles()
     owners = set(a.owner)
-    actions = [READ] + ([WRITE] if a.write else [])
+    if a.write_only:
+        actions = [WRITE]
+    else:
+        actions = [READ] + ([WRITE] if a.write else [])
     print(f"secret : {a.secret}\n         {arn}")
     print(f"roles  : {len(roles)} in account   owners: {sorted(owners) or 'NONE DECLARED'}")
     print(f"actions: {actions}\n")
