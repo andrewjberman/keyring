@@ -125,7 +125,7 @@ def simulate(principal: str, resource: str, action: str, context: list[str]) -> 
 #
 #   Produce the input with:  terraform show -json <planfile> > plan.json
 # ---------------------------------------------------------------------------
-POLICY_TYPES = {"aws_iam_role_policy", "aws_iam_policy"}
+POLICY_TYPES = {"aws_iam_role_policy", "aws_iam_policy", "aws_iam_role_policy_attachment"}
 REAL_ACTIONS = {"create", "update", "delete"}
 
 
@@ -165,8 +165,30 @@ def derive_from_plan(path: str):
         if rc.get("type") not in POLICY_TYPES:
             continue
         ch = rc.get("change", {})
-        if not (set(ch.get("actions", [])) & REAL_ACTIONS):
+        acts = set(ch.get("actions", []))
+        if not (acts & REAL_ACTIONS):
             continue                   # no-op / read: not a change
+
+        # v3: a managed-policy DETACH removes every Allow that policy carried. The document is
+        # not in the plan (it is AWS-managed and lives outside our Terraform -- which is the whole
+        # reason SecretsManagerReadWrite was invisible to a grant-shape lint), so classify it by
+        # the resource type + action, not by diffing a document we cannot see.
+        if rc["type"] == "aws_iam_role_policy_attachment":
+            if "delete" in acts:
+                b = ch.get("before") or {}
+                found.append("allow-removal")
+                evidence.append(f"{rc['address']}: DETACH {b.get('policy_arn')} "
+                                f"from role {b.get('role')}")
+            continue
+
+        # A whole role-policy deleted (not shrunk) is likewise an Allow-removal.
+        if "delete" in acts and not ch.get("after"):
+            b = _doc((ch.get("before") or {}).get("policy"))
+            if any(s.get("Effect") == "Allow" for s in _stmts(b)):
+                found.append("allow-removal")
+                evidence.append(f"{rc['address']}: role-policy DELETED (carried Allow statements)")
+            continue
+
         before = _doc((ch.get("before") or {}).get("policy"))
         after = _doc((ch.get("after") or {}).get("policy"))
         role = (ch.get("after") or ch.get("before") or {}).get("role")
@@ -226,6 +248,13 @@ def main() -> int:
                         "expected verdict -- proves the change is the deciding control")
     p.add_argument("--also-allowed", action="append", default=[],
                    help="resource ARNs that must remain 'allowed' (no collateral deny)")
+    p.add_argument("--precheck", metavar="BASELINE_JSON",
+                   help="run BEFORE apply: assert each principal is CURRENTLY 'allowed' on each "
+                        "(action, resource) and write the baseline here. An allow-removal that was "
+                        "never allowed proves nothing.")
+    p.add_argument("--baseline", metavar="BASELINE_JSON",
+                   help="the file written by --precheck. REQUIRED for an allow-removal: without it "
+                        "a post-apply implicitDeny may be vacuous (the principal never had reach).")
     a = p.parse_args()
 
     if a.from_plan:
@@ -252,6 +281,53 @@ def main() -> int:
               "      Run it as TWO exercises: the dropped prefixes as 'allow-removal',\n"
               "      and the kept prefixes via --also-allowed.", file=sys.stderr)
         return 1
+
+    # --- non-vacuity: an implicitDeny only proves something if reach EXISTED beforehand. ---
+    if a.precheck:
+        base, bad = {}, []
+        for pr in a.principal:
+            for res in a.resource:
+                for act in a.action:
+                    v = simulate(pr, res, act, a.context)
+                    base[f"{pr}|{res}|{act}"] = v
+                    print(f"  PRECHECK {pr} {act} {res.rsplit(':', 1)[-1]} -> {v}")
+                    if v != "allowed":
+                        bad.append(f"{pr} is '{v}' (not 'allowed') on {act} {res}")
+        with open(a.precheck, "w", encoding="utf-8", newline="\n") as fh:
+            json.dump({"baseline": base}, fh, indent=1)
+        if bad:
+            print("\nFAIL: precheck -- these were not 'allowed' BEFORE the change, so removing an "
+                  "Allow cannot be proven by a post-apply implicitDeny:", file=sys.stderr)
+            for b in bad:
+                print(f"  !! {b}", file=sys.stderr)
+            return 1
+        print(f"\nPRECHECK PASS: reach exists today; baseline -> {a.precheck}")
+        print("  Now apply, then re-run with --baseline to prove the reach is gone.")
+        return 0
+
+    if a.change_type == "allow-removal":
+        if not a.baseline:
+            print("FAIL: an allow-removal REQUIRES --baseline (written by a pre-apply --precheck).\n"
+                  "      Without it, 'implicitDeny' is unfalsifiable: a principal that never had\n"
+                  "      reach yields the same verdict as one whose reach you just removed.\n"
+                  "      Proving a negative requires showing the positive existed.", file=sys.stderr)
+            return 1
+        try:
+            base = json.load(open(a.baseline, encoding="utf-8"))["baseline"]
+        except Exception as e:
+            print(f"FAIL: cannot read baseline {a.baseline}: {e}", file=sys.stderr)
+            return 1
+        missing = [f"{pr}|{res}|{act}" for pr in a.principal for res in a.resource
+                   for act in a.action if base.get(f"{pr}|{res}|{act}") != "allowed"]
+        if missing:
+            print("FAIL: the baseline does not record 'allowed' for every (principal, resource, "
+                  "action) under test -- it does not cover this exercise:", file=sys.stderr)
+            for m in missing:
+                print(f"  !! no pre-apply 'allowed' for {m}", file=sys.stderr)
+            return 1
+        print(f"=== baseline: reach was 'allowed' pre-apply for all "
+              f"{len(a.principal) * len(a.resource) * len(a.action)} combination(s). "
+              f"An implicitDeny now is a real removal.\n")
 
     expected = EXPECTED[a.change_type]
     print(f"change-type = {a.change_type}  ->  DERIVED expected verdict = {expected}")

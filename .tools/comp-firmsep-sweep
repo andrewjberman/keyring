@@ -1,0 +1,13 @@
+#!/bin/bash
+# comp-firmsep-sweep -- DETECT pillar leg 2: prove-the-universe on a firm credential.
+# Usage: comp-firmsep-sweep --secret <name> --owner <role> [--owner <role> ...] [--write|--write-only]
+#                           [--json report.json]
+# Simulates the secret against EVERY role in the account. Enumerates by SIMULATION, never by
+# grant shape -- a grant-shape lint cannot see an AWS-MANAGED Resource:"*" policy.
+# Exit 0 = universe closed. Exit 1 = a non-owner can reach it, OR the sweep was incomplete
+# (which is the same thing: you did not prove closure).
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/.tools/comp-firmsep-sweep.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-firmsep-sweep" "$*" $_exit 2>/dev/null
+exit $_exit

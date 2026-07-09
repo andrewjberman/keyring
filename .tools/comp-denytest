@@ -1,0 +1,12 @@
+#!/bin/bash
+# comp-denytest -- VERIFY pillar: prove an IAM change against LIVE evaluation.
+# Usage: comp-denytest --from-plan <plan.json> --principal <role> --resource <arn> --action <act>
+#        comp-denytest --change-type deny-add|allow-removal --principal ... (explicit; refused if it
+#                      contradicts the plan)
+# The expected verdict is DERIVED from the plan's change type -- deny-add => explicitDeny,
+# allow-removal => implicitDeny -- so an author can neither pick the criterion nor hold it wrong.
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/.tools/comp-denytest.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-denytest" "$*" $_exit 2>/dev/null
+exit $_exit
