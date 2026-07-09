@@ -73,10 +73,32 @@ now never be applied, so as written the tail could never close.
 ## To reopen
 
 Requires an explicit Andrew decision. The remediation design survives intact in `810973b19` and in
-`0.5.0`'s session log; nothing needs re-deriving. Note that the IAM root cause — attachments invisible to
-Terraform `plan`/`drift` — is being closed on its own merits under **NFRA_TERRAFORM TO-1/TO-2**, which is
-where `0.5.0` was redirected. A future TERRAFORM coverage pass will surface these same two grants as
-over-broad in its normal batch order.
+`0.5.0`'s session log; nothing needs re-deriving.
+
+> **CORRECTION 2026-07-09T18:5xZ (COO, retracting my own causal claim).** An earlier revision of this file
+> asserted that the IAM root cause was "attachments invisible to Terraform `plan`/`drift`." **That is false,
+> and it was mine — a hypothesis I asserted as a mechanism, in violation of CLAUDE.md Rule 22.**
+> `0.5.0` source-confirmed the opposite: `AmazonS3ReadOnlyAccess` **is** Terraform-managed
+> (`infra/aws/terraform/news-pipeline/iam.tf:171-174`, present in `terraform state list`, live-attached).
+> `plan` was clean because it was **correct**, not because it was blind.
+>
+> The belt missed `opal-data-schwab` for an unrelated reason: it enumerates bucket ARNs **literally**
+> (`cross-firm-bucket-read-deny.tf:58-62` lists bd/cot/inf; schwab is absent). Enumerate-what-you-know.
+> Terraform coverage is **causally unrelated** to that miss.
+>
+> What is true is the narrower, precise claim: an AWS-**managed** policy's *content* is invisible to a
+> grant-shape **lint over our own TF**. The compression "invisible to a lint" → "invisible to Terraform" is
+> where it went wrong. I propagated the wrong version into five dispatches and this brief; MSTR concurred
+> with it; nobody caught it until the implementing lane read the source.
+>
+> **Consequence, and it matters for how this closes:** *100% Terraform coverage would not have prevented
+> this exposure.* `AmazonS3ReadOnlyAccess` was already at 100% coverage and reached `03_mappings/`
+> throughout. **NFRA_TERRAFORM's close does NOT close the PII class.** They are orthogonal controls —
+> Terraform gives drift/review/audit; only the live-simulate DETECT layer bounds what a grant *reaches*.
+
+`NFRA_TERRAFORM` TO-1/TO-2 proceeds on its **own** merits (independently confirmed: `lambda-execution-role`
+is itself in no TF state; 17 inline policies live, 3 managed → **14 unmanaged**). It is not, and must not be
+recorded as, the remediation for this incident.
 
 ## Lessons banked (they outlived the incident)
 
