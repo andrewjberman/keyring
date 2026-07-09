@@ -14804,3 +14804,81 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P3 | (window summary) | comp-grep x4 + comp-kuzu x5 (canonical HEAD-current) + comp-blast x1 + comp-glob x2 + commit-gate x6 + safe-commit x6 | PASS -- comp-grep produced 3 source-verbatim catches (EmergentSystem absent from globgrph 0/63; `for se in spec_edges` = frozen replay; kuzu absent from derive_runner => the (a) check cannot run at derive time). comp-blast returned NOT-FOUND on a graph node_id (it indexes CODE nodes) and CORRECTLY refused to let that read as a "nothing breaks" clear -- wrong instrument, reported as such, not papered over. |
 | 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e]->() RETURN e.edge_type AS edge_type, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-07-09 | 2.0.0_SA_COO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e]->() WHERE e.layer = 'semctl' RETURN e.edge_type AS edge_type, co... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e]->() WHERE e.edge_type IN ['FLOWS_TO','RENDERS','CONTAINS'] RETUR... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-deadgrant | comp-deadgrant --json C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman... | FAIL |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/FILED_regio... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE a.layer = 'semctl' RETURN type(e) AS edge_type, coun... | FAIL |
+| 2026-07-09 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE a.layer = 'semctl' RETURN label(e) AS edge_type, cou... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE a.layer='semctl' OR b.layer='semctl' RETURN label(e)... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE a.layer='semctl' RETURN e LIMIT 1 | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE a.layer='semctl' RETURN e.edge_type AS edge_type, co... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type IN ['FLOWS_TO','RENDERS'] RETURN e.edge_... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/bin/comp-future | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type IN ['FLOWS_TO','RENDERS'] RETURN e.edge_... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit_gate_runner.py | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.layer='semctl' RETURN e.edge_type AS edge_type, co... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.layer <> a.layer RETURN e.layer AS edge_layer, a.l... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.layer='semctl' RETURN (a.layer='semctl') AS src_is... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/bin/comp-future | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile --file in... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-deadgrant | comp-deadgrant --json C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman... | FAIL |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/FILED_regio... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-deadgrant.py --file infra/s... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/login-path-s... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/FILED_regio... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/live-degrade... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (c3:CloudNode {node_id:'system:firm-conditional-display:25558d98'}) RET... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (c3:CloudNode {node_id:'system:firm-conditional-display:25558d98'})-[e1... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-deadgrant.py | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-deadgrant | comp-deadgrant --json C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman... | FAIL |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id IN ['out:portal/src/components/BenchmarkH... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type IN ['FLOWS... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/FILED_regio... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/deadgrant-re... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id IN ['out:portal/src/components/BenchmarkH... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type IN ['FLOWS... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (c:CloudNode {node_id:'system:firm-conditional-display:25558d98'}) RETU... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/FILED_regio... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (c:CloudNode {node_id:'system:firm-conditional-display:25558d98'}) RETU... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id IN ['out:portal/src/components/BenchmarkH... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type IN ['FLOWS... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (c:CloudNode {node_id:'system:firm-conditional-display:25558d98'}) RETU... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (c:CloudNode {node_id:'system:firm-conditional-display:25558d98'}) RETU... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/FILED_regio... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-deadgrant.py --file infra/s... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/FILED_regio... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/FILED_regio... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/_canonical.py --file... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/deadgrant-re... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/deadgrant-re... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | NFRA_EDGES.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/deadgrant-re... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+2026-07-09 | 1.0.0_SA_CTO | NFRA arch-gate wave (EDGES P3 / credential firm-sep / shebang-gate / data-integrity class / FRESHSEM decouple / P4 pre-read) | mostly GATING -- verified implementing agents' groundings + read source directly on critical surfaces (commit_gate_runner.py _is_python_source/_is_vendored :201/:219-246 on the universal-gate shebang change; NFRA_EDGES_P3 delegation). comp-kuzu graph-current header, comp-denytest/comp-deadgrant/comp-iam/comp-blast rode the implementing TOs. | PASS -- source-grounding confirmed strictly-additive on the universal gate; no repo-search rail overrides (native Read on cited paths).
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/deadgrant-re... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | --help | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
