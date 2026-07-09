@@ -56,6 +56,14 @@ MANIFEST = os.path.join(WS, "org", "modules", "graph", "graph-call-manifest.yaml
 # .tools/comp-which-routing-test.py -- keep the two in sync.
 EXCLUDE = {"comp-grep", "comp-glob", "comp-which"}
 
+# DECLARED INTENTIONAL-NON-ROUTABLE (2.0.0_SA_COO~B guidance, 20260709T084x): a tools_index tool MAY
+# be legitimately non-routable -- but only if it SAYS SO, in the coverage map, with a reason. The
+# escape is declarative, never a hardcoded name here: an entry carrying `routing_exempt: <reason>`
+# is exempted and REPORTED (an exemption is a visible fact on the record, never a silent pass).
+# An empty/whitespace reason does NOT exempt -- a declaration without a reason is not a declaration.
+EXEMPT_KEY = "routing_exempt"
+COVERAGE_MAP = os.path.join(WS, "org", "modules", "graph", "comp-coverage-map.yaml")
+
 
 def _load():
     import yaml
@@ -69,25 +77,43 @@ def _load():
         manifest = yaml.safe_load(f)
     tools_index = set((manifest.get("tools_index") or {}).keys())
     caps = {c.id: c for c in capmap.get_provider().capabilities()}
-    return tools_index, caps
+
+    with open(COVERAGE_MAP, encoding="utf-8") as f:
+        cmap = yaml.safe_load(f)
+    exempt = {}
+    for key in ("tools", "meta_tools"):
+        for entry in (cmap.get(key) or ()):
+            if not isinstance(entry, dict):
+                continue
+            tool, reason = entry.get("tool"), entry.get(EXEMPT_KEY)
+            if tool and isinstance(reason, str) and reason.strip():
+                exempt[tool] = reason.strip()
+    return tools_index, caps, exempt
 
 
 def check():
-    tools_index, caps = _load()
+    tools_index, caps, exempt = _load()
     targets = tools_index - EXCLUDE
 
     unreachable = []   # in the catalog, but the router can never surface it
+    exempted = []      # declared intentionally-non-routable, with a reason
     for tool in sorted(targets):
         cap = caps.get(tool)
+        routable = cap is not None and getattr(cap, "routable", True)
+        if routable:
+            continue
+        if tool in exempt:
+            exempted.append((tool, exempt[tool]))
+            continue
         if cap is None:
             unreachable.append((tool, "ABSENT-FROM-PROVIDER", ""))
-        elif not getattr(cap, "routable", True):
+        else:
             unreachable.append((tool, "ROUTABLE=FALSE", getattr(cap, "kind", "?")))
 
-    routable = {i for i, c in caps.items() if getattr(c, "routable", True)}
-    uncatalogued = sorted(routable - tools_index)
+    routable_ids = {i for i, c in caps.items() if getattr(c, "routable", True)}
+    uncatalogued = sorted(routable_ids - tools_index)
 
-    return targets, unreachable, uncatalogued
+    return targets, unreachable, uncatalogued, exempted
 
 
 def main() -> int:
@@ -97,7 +123,7 @@ def main() -> int:
     args = ap.parse_args()
 
     try:
-        targets, unreachable, uncatalogued = check()
+        targets, unreachable, uncatalogued, exempted = check()
     except Exception as e:  # a broken provider/manifest must FAIL LOUD, never pass silently
         if args.json:
             print(json.dumps({"result": "ERROR", "error": str(e)}))
@@ -114,11 +140,17 @@ def main() -> int:
             "tools_index_targets": len(targets),
             "unreachable": [{"tool": t, "why": w, "kind": k} for t, w, k in unreachable],
             "uncatalogued_routable": uncatalogued,
+            "declared_exempt": [{"tool": t, "reason": r} for t, r in exempted],
         }, indent=2))
         return 1 if failed else 0
 
     print("comp-routable-check -- registered-implies-reachable (tools_index -> provider.routable)")
     print("  tools_index routing targets: %d  (excluding %s)" % (len(targets), ", ".join(sorted(EXCLUDE))))
+
+    if exempted:
+        print("\n  DECLARED intentionally-non-routable (%d) -- exempt, but on the record:" % len(exempted))
+        for tool, reason in exempted:
+            print("    - %-22s %s" % (tool, reason[:88]))
 
     if unreachable:
         print("\n  FAIL: %d registered tool(s) are UNREACHABLE via comp-which:" % len(unreachable))
