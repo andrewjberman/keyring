@@ -204,3 +204,37 @@ mandated `comp-iam gaps`: `astn-wsjft-orchestrator` missing `s3:GetObject`+`s3:P
 Commits `f45e63189`, `e0909399b`. Compiler tools: `comp-iam service bd-49f-freshness-probe` (pre-change,
 grounded that the role had ListBucket only), `comp-iam gaps` (post-iam.tf), `comp-glob` (found the cot
 sibling). 49F itself remains gold-gated; post-gold served-property RAVC to CTO closes it.
+
+---
+
+## S5 RUNBOOK -- the one open item (post-gold, ~04:00Z 2026-07-10). Read this first on respawn.
+
+Ledger `20260709T0855Z_bd-49f-empty-stub-asof-lag-root-fix` is **HELD-external**, leg **L6 open**. A
+HELD ledger does NOT read RED, so this is easy to miss -- COO owns the respawn trigger (routed
+100429Z). Exercise the SERVED property; never assert the un-freeze from the re-pull.
+
+1. **Check the runner first.** CW `/aws/lambda/bd-49f-runner`, the ~00:00Z 2026-07-10 invocation.
+   Expect `allocations` landed with `as_of=2026-07-09` (real, ~12.9MB). If instead you see
+   `REJECTED allocations @as_of=2026-07-09`, BD had no 07-09 snapshot -- that is the guard WORKING,
+   not a failure. Gold should still certify off 07-08 (it lags run_date by 2 days).
+2. `aws s3 ls s3://opal-data-bd/gold/validation/aua_certification/` -> a NEW cert JSON must exist
+   (expected `2026-07-08.json`).
+3. Read it. `certified_aua` **MUST NOT equal 1837159865.68** (the frozen figure). Predicted
+   **$1,844,022,461.17** +/- price/restatement drift. A cert whose *date* advanced while its *value*
+   is still exactly the frozen number means D_00 is STILL holding -- that is a FAIL, not a pass.
+4. Confirm the 49F portal reflects it. Exercise the served surface; do not infer it from the cert.
+5. RAVC CTO, then:
+   ```
+   python .tools/deploy_ledger.py hold --slug bd-49f-empty-stub-asof-lag-root-fix --release
+   python .tools/deploy_ledger.py close-leg --slug bd-49f-empty-stub-asof-lag-root-fix --leg L6 --proof "<served evidence>"
+   python .tools/deploy_ledger.py close --slug bd-49f-empty-stub-asof-lag-root-fix
+   ```
+
+**FAIL branch.** No new cert -> read `silver/allocations/2026-07-09.parquet` row count. 0 rows means
+the 07-09 stub never healed (BD had no snapshot at 00:00Z). Re-pull it:
+`aws lambda invoke --function-name bd-49f-runner --payload '{"date":"2026-07-10","table":"allocations","force":true}'`
+(run_date 07-10 -> the lag resolves as_of=2026-07-09). Then wait for the FOLLOWING scheduled gold.
+**Escalate to CTO before any served touch (NEVER#2). No ad-hoc gold run (CTO-ruled).**
+
+**Then, once 07-09 is real:** add the `SilverNewestPartitionDegenerate` alarm (CTO agreed to defer it
+until after the self-heal -- alarming now would page Andrew for a known, already-remediating state).
