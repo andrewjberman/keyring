@@ -127,13 +127,45 @@ route to the deploy author to finish/rollback the stranded legs THIS cycle (the 
 a BLOCKED lane). The inf-ADVI P0 (2026-06-12) was one cutover bundle stranding THREE legs silently — this
 gate is the structural catch so it can never recur unseen.
 
-**Critical-surface alert poll — REMOVED 2026-07-01 (Andrew-direct).** The `opal-critical-surface-alerts-coo`
-SQS poll was stripped from this step. The alerts (cot-AUA / silver-holdings staleness, 49F frontier-lag, etc.)
-were UNCALIBRATED NOISE — e.g. `bd-cot-silver-stale-holdings` fired while `comp-freshness` showed cot silver
-fully FRESH (all 5 tables PASS, as_of 06-30) — and Andrew decommissioned the channel. Do NOT re-add this poll
-or act on that SQS unless Andrew confirms a recalibrated set is live. Genuine freshness verification grounds on
-the SERVED artifact via `comp-freshness`, never an alarm. (History: poll added 2026-06-25 after a cot 2-day
-silent-freeze; superseded here per Andrew-direct — the miscalibrated version caused more noise than signal.)
+**Critical-surface alert poll — REMOVED 2026-07-01 (Andrew-direct). The OPERATIVE HOLD STANDS; the RATIONALE
+below it was RETRACTED 2026-07-09 by its own author (2.0.0_SA_COO). Read both.**
+
+**OPERATIVE (unchanged, Andrew-gated):** the `opal-critical-surface-alerts-coo` SQS poll is stripped from this
+step. **Do NOT re-add this poll, and do NOT touch any SNS subscription, unless Andrew confirms.** CloudTrail
+(CTO, 2026-07-09): Andrew himself unsubscribed **seven** topics `2026-07-01T02:46:02Z → 02:47:05Z`, aws-cli,
+63 seconds, `DeleteTopic: 0`. That is a sovereign act. Three questions are with him; nothing moves until he
+answers. **542 messages, oldest 8.9 days, sit unread in that queue — do not drain and do not lose them.**
+
+**RETRACTED RATIONALE — and this entry was the arbiter of it, so read the retraction before citing the entry.**
+The original text called the alerts `UNCALIBRATED NOISE` because `bd-cot-silver-stale-holdings` fired while
+`comp-freshness` showed cot silver `fully FRESH`, and concluded: *"Genuine freshness verification grounds on the
+SERVED artifact via `comp-freshness`, never an alarm."* **That conclusion is FALSE for cot silver, source-confirmed:**
+```
+.tools/comp-freshness:299-317  _max_partition_date()  -- regex YYYY-MM-DD over `aws s3 ls` FILENAMES.
+                               docstring: "the MAX YYYY-MM-DD parsed from the object filenames"
+.tools/comp-freshness          grep -c 'num_rows|row_count|footer|pyarrow|read_parquet'  ==  0
+data/cot/.../gold_freshness_config.yaml:42,53,64,78,88   all 5 cot silver tables: as_of_source: silver-partition-key
+bd-cot-freshness-probe:211-220 (0.6.0, a60ce15ed)        resolves max_as_of from the OBJECT KEY, never row count
+LIVE (0.6.0, measured):  cot silver/allocations newest BY NAME = 2026-07-09 (0-row stub)
+                                                 newest WITH ROWS = 2026-06-18   -> content lag 15 TRADING DAYS
+```
+**`comp-freshness` in partition-key mode does not ground on the served artifact. It grounds on the artifact's
+NAME.** It is the *same proxy* as the alarm it was used to discredit, and it cannot distinguish a 0-row stub
+from a real partition. The tool applies the wrapper-vs-content lesson correctly in **content-mode** (`as_of_field`,
+`:614-617`, which names the cot freeze by name) and then, for partition-key mode, swaps mtime for the **filename**
+and calls it *"the same correctness"* (`:284`). **It is not.** A date-key is stamped by the writer exactly as mtime
+is; neither is a row. The config comment advertises the win as *"not mtime"* — a different wrapper, not the content.
+
+**Therefore:** whether the 06-30 alarm was miscalibrated is **UNDETERMINED and was never established** — the
+instrument used to convict it is blind to the same property. This entry **must not be cited as corroboration**
+that the seven unsubscribes were intended; it corroborates nothing. (It was written `bc66f94668`, 07-01T03:39Z,
+**53 minutes AFTER** Andrew's 02:46Z act — it is a post-hoc rationale, not a record of instruction.)
+
+**Standing rule that replaces the retracted one:** freshness grounds on **rows or values read out of the
+artifact** — never on its name, its mtime, its size, or its existence. When two freshness instruments disagree,
+**the disagreement is the signal**; resolve it by finding which one reads the property, not by preferring the
+familiar one. `bd-cot-silver-stale-{allocations,unrealized}` sit in `OK` today on a table dead since 2026-06-18.
+(History: poll added 2026-06-25 after a cot 2-day silent-freeze; hold retained per Andrew-direct.)
 
 **Act on its buckets THIS cycle — this is the load-bearing reason /drive runs (Andrew direct):**
 most fabric advancement is event-driven and self-healing, but the failure mode /drive exists to
