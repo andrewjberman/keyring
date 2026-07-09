@@ -15064,3 +15064,19 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | FAIL |
 | 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws derive --fresh | FAIL |
 | 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/archive/AGENT_INTEGRATION_GUI... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/bootstrap-stack.s... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check | VERDICT |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_SYSTEM.json --file or... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --fresh | FAIL |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-platinum | comp-platinum page --fresh | FAIL |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0262.md --file org/... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json --file ... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | comp-glob, comp-grep, comp-which, comp-system, safe-commit | PII brief + NFRA board ground-truth | comp-which routed to comp-system, a command that did not exist (FIXED 83daa2064); comp-grep 0-hit on "orion" misread as absence (catalog is data/inf/API); rail-checked live iam/cloudtrail primitives because comp-iam parses TF=DESIRED only. GAP FILED: no comp-tool answers live ALB/perimeter shape -> comp-routes perimeter APPROVED. |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
