@@ -110,7 +110,14 @@ RULES = [
     (["list the functions in", "list the symbols in", "list the classes in", "symbols in file",
       "functions in file", "classes in file", "what's defined in", "what is defined in", "defined in file",
       "what functions are in", "what constants does", "what imports does", "what does file", "symbol inventory",
-      "where is function", "where is the function", "list functions in", "what functions does the file"],
+      "where is function", "where is the function", "list functions in", "what functions does the file",
+      # NFRA_TOOLCHECK P3 follow-on (2026-07-09): comp-symbols entered tools_index (a5d121e60) and the
+      # self-routing oracle began scoring it against its OWN catalog text -- which it lost, because the
+      # rule carried only agent-phrasing vocabulary and none of the tool's descriptive vocabulary.
+      # Distinctive comp-symbols-only terms; deliberately NOT "symbol"+"graph" (comp-xref's lane).
+      "intra-file", "intra file", "module-constants", "module constants", "source file declares",
+      "file declares", "with line numbers", "ast.parse", "ast parse", "file-inventory",
+      "forward ast inventory", "what a source file defines", "declared symbols"],
      "file-symbol inventory (comp-symbols)",
      ["comp-symbols <file>", "comp-symbols <file> --grep <pat>", "comp-symbols <file> --kind func|class|const|import"],
      "what a source FILE defines -- its functions/classes/constants/imports + line numbers (forward AST inventory; input=a FILE, opposite of comp-xref's graph-wide occurrence + comp-blast's blast-radius)"),
@@ -333,6 +340,35 @@ RULES = [
      "which artifacts/systems change together (co-evolution), recognizer/compiler-coverage "
      "gaps, or whether a promoted directive measurably reduced its targeted churn -- served "
      "vintage read over the C0 CSE log"),
+    # NFRA_TOOLCHECK P3 follow-on (2026-07-09): comp-depth had NO curated rule at all. It was invisible
+    # to the self-routing oracle until it entered tools_index (a5d121e60), at which point it lost to
+    # comp-blast/comp-xref -- its own catalog text NAMES them ("where comp-blast/comp-trace/comp-xref are
+    # the BREADTH coordinate"), so their tokens hijacked the route. Distinctive DEPTH-only vocabulary;
+    # deliberately NOT "blast"/"impact"/"downstream" (comp-blast's) or "across the graph" (comp-xref's).
+    (["depth-scoped", "depth scoped", "depth coordinate", "what grain", "which grain", "node's grain",
+      "grain ladder", "contains-ladder", "contains ladder", "grain contract", "grain-calibrated",
+      "drill to grain", "roll up to grain", "rollup to grain", "coarse-to-fine", "coarse to fine",
+      "fine-to-coarse", "fine to coarse", "scope a traversal", "nodes at grain", "at what grain",
+      "marker-head graph", "graphdepth", "strata", "drilldown seams"],
+     "DEPTH-scoped graph querying (comp-depth) -- the GRAIN coordinate",
+     ["comp-depth grains <node-id>", "comp-depth scope <grain>", "comp-depth drill <node-id> --to <grain>",
+      "comp-depth rollup <node-id> --to <grain>"],
+     "the DEPTH/GRAIN coordinate of an investigation -- a node's grain + CONTAINS-ladder, every node at a "
+     "grain, coarse->fine drill / fine->coarse rollup. DISTINCT from the BREADTH tools (comp-blast impact, "
+     "comp-xref graph-wide occurrence): same marker-head graph, different axis"),
+    # NFRA_TOOLCHECK P3 follow-on (2026-07-09): comp-learns-status had NO curated rule -- same story.
+    # Distinctive COMPLEARN-only vocabulary. Deliberately NOT bare "coverage gaps" (that phrase is
+    # comp-fedobs's compiler-coverage rule) -- underscore forms + "complearn" keep the lanes apart.
+    (["complearn", "comp-learns", "comp learns", "learns status", "loop status",
+      "demand gap cost", "demand / gap / cost", "tool demand", "tool_demand", "gap heat", "gap_heat",
+      "coverage_gaps", "tool activity", "tool_activity", "code heat", "code_heat",
+      "comp_learns_produce", "served status json", "which tools do agents actually want",
+      "what tooling is in demand", "tool cost surface"],
+     "COMPLEARN loop status (comp-learns-status) -- the DEMAND / GAP / COST surface",
+     ["comp-learns-status", "comp-learns-status <view>", "comp-learns-status --json"],
+     "the COMPLEARN loop's served DEMAND/GAP/COST read -- tool demand, gap heat, coverage gaps, cost, "
+     "from the live globgrph Trino federation (tool_activity x code_heat x iceberg). Reads SERVED state, "
+     "never recomputes"),
     # NFRA_TOOLCHECK P3 (COO~B GO 2026-07-09): comp-system was UNREACHABLE -- the SAME class as the
     # comp-fedobs fix above, recurring for a newer tool. Two causes, both fixed: (1) its meta_tools
     # role "system-compiler" was absent from comp_capability_provider._ROUTABLE_META_ROLES, so
