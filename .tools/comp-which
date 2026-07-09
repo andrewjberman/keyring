@@ -132,16 +132,51 @@ RULES = [
     # still falls to the catch-all below, which legitimately disambiguates.
     (["hands data", "hands data to", "feeds the", "what feeds", "data to the", "feeds",
       "renders", "rendering", "getadvisor", "panel", "card", "widget", "schema-check",
-      "prop shape", "component renders", "field missing"],
+      "prop shape", "component renders", "field missing",
+      # NFRA_TOOLCHECK near-tie hardening tranche-1 (COO~B GO 2026-07-09): comp-transform lost
+      # rank-1 on its OWN use_case to comp-adapter-audit (semantic neighbour). Its own descriptive
+      # vocabulary, so it decides rather than rides the near-tie list.
+      "which response fields", "response fields does", "actually render", "unused-field",
+      "unused field audit", "field-render", "render schema"],
      "portal component data-feed (comp-transform)",
      ["comp-transform schema-check <Component>"],
      "which producer feeds a portal component's fields (props/schema shape)"),
     (["which lambda serves", "serves /api", "/api/", "scoped route", "behind /api",
       "lambda is behind", "lambda behind", "cloudfront behavior", "cf behavior",
-      "serving path", "route serves"],
+      "serving path", "route serves",
+      # near-tie hardening tranche-1: comp-routes lost rank-1 on its own use_case to comp-pii /
+      # comp-platinum. Its own chain vocabulary; deliberately NOT bare "pii" or "platinum".
+      "cloudfront -> behavior", "behavior -> origin", "origin -> lambda", "serving path for a url",
+      "serving path for an endpoint", "cloudfront behavior origin"],
      "portal endpoint serving route (comp-routes)",
      ["comp-routes behaviors"],
      "which lambda/CF behavior serves a portal endpoint route"),
+    # near-tie hardening tranche-1: comp-trace had NO curated rule at all -- it lost rank-1 on its
+    # own use_case to comp-platinum. Distinctive CHAIN/bidirectional vocabulary; deliberately NOT
+    # "what breaks if I change" (comp-blast's impact lane) or "across the graph" (comp-xref's
+    # occurrence lane) -- comp-trace is the PATH between two nodes, not the impact set.
+    (["dependency chain", "full dependency chain", "chain to/from", "chain to and from",
+      "to/from any repo node", "bidirectional dependency", "dependency path walk",
+      "path walk from", "upstream and downstream chain", "imports, fetches, reads/writes",
+      "trace the chain", "chain from any repo node"],
+     "bidirectional dependency PATH walk (comp-trace)",
+     ["comp-trace <node>", "comp-trace <node> --up", "comp-trace <node> --down"],
+     "the full dependency CHAIN to and from a repo node (imports / fetches / reads / writes) -- the "
+     "PATH between nodes. DISTINCT from comp-blast (the impact SET of a change) and comp-xref "
+     "(graph-wide OCCURRENCE of a symbol)"),
+    # near-tie hardening tranche-1: bare `pipescript` (the NAMED-THREAD estate traversal) had no
+    # rule of its own and lost rank-1 on its own use_case to comp-kuzu. Distinctive named-thread
+    # vocabulary; deliberately NOT "graph query"/"MATCH" (comp-kuzu's lane) and NOT per-script
+    # column/IO vocabulary (comp-pipescript io's lane).
+    (["named thread", "named-thread", "the news scanner", "news pipeline", "advi pipeline",
+      "what's in the pipeline", "whats in the pipeline", "every resource in that thread",
+      "every resource in the thread", "producers to served", "producers -> served",
+      "whole estate traversal", "which named thread", "estate thread", "thread traversal"],
+     "named-thread estate traversal (pipescript)",
+     ["pipescript <name>", "pipescript --list", "pipescript --resource <substr>"],
+     "every resource in a NAMED THREAD (news/advi/market/...) end-to-end -- producers -> served -> "
+     "frontend, with owning tool + debt/reachability flags, no silent Unknown. DISTINCT from "
+     "comp-kuzu (an arbitrary cross-layer graph QUERY) and comp-pipescript io (one script's columns)"),
     (["portal", "component", "endpoint", ".tsx", "tsx", "frontend"],
      "portal component / route (generic -- ambiguous, disambiguates by design)",
      ["comp-transform schema-check <Component>", "comp-routes behaviors", "pipescript <thread>"],
