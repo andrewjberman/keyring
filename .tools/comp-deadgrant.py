@@ -49,6 +49,22 @@ BY CONSTRUCTION -- the literal survives as the env default even when the call si
 and a doc example cannot false-fire because it is not a live secret. `SecretId=` parsing is retained
 ONLY to flag CONSTRUCTED names (a completeness signal, reported as uninspectable), never to enumerate.
 
+AXIS B IS A SYSTEM PROPERTY, AND THIS TOOL ONLY SEES THE GETTER
+---------------------------------------------------------------
+`fail_silent` here is a GETTER-LEVEL heuristic: it reads the `except` around the
+`get_secret_value` call. That is NOT the system's fail-mode, in EITHER direction:
+
+  * reader LOUD, system SILENT -- `opalinvest-auth-handler`: `jwt.ts` re-raises on a failed
+    secret read, and its caller `authenticateRequest` does `catch { return null }` -> a bare 401,
+    identical to a wrong password, no log. Component-loud, system-silent.
+  * reader SILENT, system LOUD -- `opal-trending-image-generator`: `get_openai_key()` swallows and
+    `return ''` (:144-146), but the handler two lines later does
+    `if not api_key: raise ValueError("OpenAI API key not found")` (:236-237), which surfaces as a
+    traceback + HTTP 500. Component-silent, system-loud. Live logs: 3 tracebacks, 9 ValueErrors.
+
+So a row's `fail_silent=True` means "the getter swallows," never "the feature degrades quietly."
+Resolve axis B at the CALLER CHAIN, per row, before calling anything a degrade.
+
 AXIS C -- WHAT THIS TOOL CANNOT PROVE, AND THEREFORE DOES NOT CLAIM
 ------------------------------------------------------------------
 Axis A (a dead reach) and axis B (a fail-silent reader) are both decidable from the artifact and
@@ -97,7 +113,7 @@ CLIENT = re.compile(r"boto3\.client\(\s*['\"]secretsmanager['\"]\s*(?:,\s*region
 JS_CLIENT = re.compile(r"new\s+SecretsManagerClient\(\s*\{[^}]*region:\s*['\"]([a-z0-9-]+)['\"]")
 # SecretId='literal' / SecretId: "literal"
 SECRET_ID = re.compile(r"SecretId\s*[=:]\s*['\"]([^'\"]{2,120})['\"]")
-# fail-silent: the handler swallows and returns a benign value
+# fail-silent AT THE GETTER. Not the system's fail-mode -- see the axis-B note in the docstring.
 SILENT = re.compile(r"return\s*(\{\}|''|\"\"|\[\]|None|null)|^\s*pass\b|get_mock|return\s+get_mock")
 LOUD = re.compile(r"\braise\b|\bthrow\b|sys\.exit")
 
@@ -393,7 +409,9 @@ def main() -> int:
     live = [r for r in rows if r["sev"] == "LIVE" and r["fail_silent"]]
     for r in live:
         print(f"  ?? CANDIDATE {r['fn']} ({r['role']}) -> {r['secret']}: {r['why']}; "
-              f"ran {r['days_since_run']}d ago; reader SWALLOWS the failure")
+              f"ran {r['days_since_run']}d ago; the GETTER swallows the failure")
+        print("       axis B: GETTER-LEVEL ONLY -- resolve the CALLER CHAIN (a caller may re-raise,")
+        print("               or may swallow a getter's raise). Component fail-mode != system fail-mode.")
         print("       axis C: UNVERIFIED -- confirm the path runs and a consumer depends on it")
     if not live:
         print("  none")
