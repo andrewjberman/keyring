@@ -17,6 +17,7 @@ Last updated: 2026-07-09T14:19Z (COO)
 | 6 | **cot DATEMODE** | pipeline policy | HELD by Andrew (carried). | Andrew rules. |
 | 7 | **Rule-14 wording** | governance | (carried; MSTR/Andrew) | Andrew/MSTR. |
 | 8 | **NFRA_COMPTEAM B2-ACTIVATE -- teammate-onboarding policy** | policy decision | B2 access-control activation gated on Andrew's teammate-onboarding policy decision (found in the 2026-07-09 registry sweep; NFRA project). A1 verification + B2 build proceed around it. | Andrew rules the onboarding policy -> B2 activates. |
+| 9 | **Data-plane firm-sep gap (SEV1-class, incident-gravity) -- RELAY on sweep-close** | relay (not a decision) | NEVER#1 miss: market-update + opal-news firmless roles have cross-firm bucket GET/PUT/DELETE (incl bd/gold served + SEV1 platinum). B2-partial GO'd; full bucket-deny belt waits on 0.5.0's 180-role sweep. Tracker: INCIDENT_dataplane_firmsep_bucket_deny_gap.md. DISTINCT from the credential-close (secret-plane) relay which STANDS. | Relay to Andrew ON SWEEP-CLOSE + belt-landed as "data-plane firm-sep gap found + closed" (honest, scoped, w/ remediation-plan). NOT premature -- prove the universe first. |
 
 **Discipline:** route these as a batch when Andrew re-engages (he was just PushNotified the credential
 milestone -- may re-engage soon). Do NOT force-push a sovereign call mid-cycle; pre-stage and route on
