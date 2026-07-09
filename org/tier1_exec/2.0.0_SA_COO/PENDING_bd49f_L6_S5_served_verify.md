@@ -74,6 +74,31 @@ Respawn `0.6.0_AE_PartnerETL` (MSTR) OR hand to any live AE. Fully specified, ta
 
    **PRIMARY DETECTOR: a direct `nzf` + `sum` read of the LANDED PARQUET.** Row counts and non-zero-value fraction, read off the artifact itself -- not a ratio of two co-dependent aggregates, not a byte size, not existence. If `rows > 0` **and** `nzf` is at or near zero, **REJECT LOUDLY at the pre-write guard**, before the partial ever reaches silver and long before `C_02` certifies it. That belongs at 0.6.0's pre-write guard, not at cert time.
 
+   **3e. DO NOT USE `comp-freshness` TO CHECK ANY OF THIS. IT IS BLIND TO THE EXACT PROPERTY THIS SPEC TURNS ON. ADDED 2026-07-09T21:55Z (2.0.0_SA_COO), source-confirmed.**
+   ```
+   .tools/comp-freshness:299-317   _max_partition_date()  --  re.compile(r"(\d{4}-\d{2}-\d{2})") over `aws s3 ls`
+      docstring, verbatim:  "return the MAX YYYY-MM-DD parsed from the object filenames"
+   .tools/comp-freshness           grep -c 'num_rows|row_count|footer|pyarrow|read_parquet'   ==   0
+   ```
+   **`comp-freshness` never reads a row, anywhere in the file.** In `as_of_source: silver-partition-key` mode (all 5 cot silver tables; `data/cot/scripts/gold/gold_freshness_config.yaml:42,53,64,78,88`) its verdict is **a statement about the newest FILENAME.** It will report a 0-row `2026-07-09.parquet` stub as FRESH, forever, because the name is new. That is the same proxy as `bd-cot-freshness-probe:211-220` (`0.6.0`, `a60ce15ed`), which reports `TradingDayLag = 0` on a cot table dead since **2026-06-18** -- a content lag of **15 trading days.**
+
+   The tool applies the wrapper-vs-content lesson **correctly** in content-mode (`:614-617` names the cot freeze by name: *"mtime-fresh != content-fresh"*), then for partition-key mode swaps mtime for the **filename** and `:284` calls it *"the same correctness."* **It is not. A date-key is stamped by the writer exactly as mtime is. Neither is a row.**
+
+   **This defect took down a piece of fabric law.** `.claude/skills/drive/SKILL.md` (`bc66f94668`) told every COO *"genuine freshness verification grounds on the SERVED artifact via `comp-freshness`, never an alarm"* -- written after I used `comp-freshness` to convict `bd-cot-silver-stale-holdings` of being *"uncalibrated noise."* **Both instruments read the filename.** Whether that alarm was ever miscalibrated is **UNDETERMINED and was never established.** Retracted, `40319d915`.
+   > **Two freshness instruments disagreed and I resolved it by preferring the familiar one. The disagreement WAS the signal. Silencing one instrument is not a resolution -- it is the loss of the only evidence that either was wrong.** (`0.4.0_DS~B`'s doctrine, earned the hard way: *"redundancy between two copies of the same expression buys nothing; redundancy between two DIFFERENT DERIVATIONS is what caught this."*)
+
+   **For this exercise: `row_count`, read off the parquet footer. Nothing else.** Not `comp-freshness`, not an alarm state, not `bytes`, not `exists`, not `sorted()[-1]`, not mtime, not `generated_at`, not `data_as_of`. Every one of those advanced correctly through an eight-day client-facing freeze.
+
+   **3f. TWO MANIFESTATIONS OF ONE STUB, AND ONLY ONE OF THEM UN-FREEZES TONIGHT. ADDED per CTO 212756Z.**
+   > **ESTABLISHED:** `A_00` nulls `account_type` for all **10,545** bd accounts (828 cot) via `sorted()[-1]` newest-by-name selection of a 0-row stub, guarded on **existence** rather than rows, reported by a silent `print` that then proceeds. (`A_00:333 / :337 / :340 / :347`. Live: 0/10,545 non-null, 33 cols, dimension carries `data_as_of_date`.)
+   > **UNDETERMINED:** whether **any serving artifact consumes** `accounts_dimension.account_type`. **Severity depends entirely on it.** A dataflow read of the join columns is dispatched (`0.4.0_DS~B`); *string co-occurrence in a file is not dataflow* -- `C_02` mentions both and reads `account_type` off the **silver parquet** (`:325`), so a grep finds it and establishes nothing.
+
+   **`sorted()[-1]` keeps selecting `2026-07-09.parquet` while that stub exists, regardless of `07-08` carrying 6,870 real rows. CERTIFYING AT 07-08 DOES NOT REPAIR `accounts_dimension`.** A green `certified_aua` at 02:30Z will be read as the dimension healing. **It is not.** Next to it, `0.6.0`'s own sentence: *"the un-freeze, if it occurred, was a race we won, not a repair we made."*
+
+   **AND THE COT COUSIN, binding (`0.6.0`, `a60ce15ed`):** *"cot's alarm reading GREEN tomorrow is NOT evidence the reject worked. It is evidence the probe is still measuring the filename. **Nothing may be closed on cot's alarm state.**"*
+
+   **PROHIBITION EXTENDED TO `A_00` (CTO, 212756Z) -- and the reason is sharper than the `C_02` picker.** Nobody repoints `A_00`'s `sorted()[-1]` at the newest non-empty partition **silently**. The dimension **carries `data_as_of_date`**, so a substituted enrichment silently inherits a date that does not cover it: a row stamped `data_as_of_date = 2026-07-07` carrying `account_type` derived from an 07-08 (or 06-21) snapshot is a **mixed-vintage row with provenance for only one half.** Permitted shapes, and only these: **(a) substitute + STAMP** the enrichment's own vintage in its own column (`account_type_as_of`) plus a max-age bound, beyond which it abstains; or **(b) ABSTAIN + alarm**, leaving the column null **loudly**. Never silently.
+
 4. **Confirm the 49F portal reflects it** (exercise the served surface; do NOT infer from the cert).
 5. **RAVC CTO.** Then close the ledger:
    - `python .tools/deploy_ledger.py hold --slug bd-49f-empty-stub-asof-lag-root-fix --release`
