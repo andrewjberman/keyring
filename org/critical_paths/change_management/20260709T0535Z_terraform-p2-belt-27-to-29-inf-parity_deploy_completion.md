@@ -1,0 +1,31 @@
+# Deploy Completion Record
+**Date opened:** 2026-07-09T05:35:36.386390+00:00
+**Status:** CLOSED -- nothing stranded -- closed 20260709T054113Z
+**Deploy:** NFRA_TERRAFORM-P2: 27->29 inf-parity belt amendment -- belt opal-inf-served-guard + opal-inf-value-parity (CVO scope-note; CTO GO 053205Z + COO GO 053141Z; served-guard-inf via JUSTIFIED -target)
+**Authored by:** 0.5.0_AE_OpalETL
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 4.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | git | CLOUD commit + push both root-level belt resources | hash pushed | 020ada202 pushed to CLOUD (112bab1b4..020ada202) | CLOSED 20260709T053649Z |
+| L2 | activation | inf-value-parity safe-apply(HALTGT) full plan | apply 1-add/0-change/0-destroy | inf-value-parity safe-apply(HALTGT) of the SAVED GATED PLAN: 'Apply complete! Resources: 1 added, 0 changed, 0 destroyed.' Sole resource aws_iam_role_policy.inf_value_parity_cross_firm_deny. | CLOSED 20260709T054113Z |
+| L3 | activation | served-guard-inf safe-apply(HALTGT) -target=aws_iam_role_policy.inf_guard_cross_firm_deny (JUSTIFIED deviation: full apply would sweep in an APPLY-GATED unrelated guard-Lambda redeploy) | belt created; the gated Lambda change remains UN-applied (expected, not drift) | served-guard-inf safe-apply(HALTGT) -target=aws_iam_role_policy.inf_guard_cross_firm_deny. JUSTIFIED DEVIATION (CTO 053205Z + COO 053141Z): the root's full plan carried an APPLY-GATED unrelated change (module.guard.aws_lambda_function.guard source_code_hash redeploy; root header gates on CTO GATE-2 + COO floor-GO). -target is safe here because the belt is a standalone aws_iam_role_policy with ZERO dependency on the Lambda (no -target entanglement). Belt created (id=opal-inf-served-guard:cross-firm-bucket-deny). Terraform emitted the expected 'Resource targeting is in effect / Applied changes may be incomplete' warnings. VERIFIED the gated change did NOT land: live opal-inf-served-guard CodeSha256 still kqvskAk1JG4U4g+yTQ8KAmQ/cUqMWoq/PL57PpCKHeM= and LastModified still 2026-06-30T20:07:44Z. Per CTO: the root plan will STILL show that gated change -- expected, not drift; verify the BELT, not whole-root 0-diff. | CLOSED 20260709T054113Z |
+| L4 | verify | landed: live get-role-policy on BOTH roles -- cross-firm-bucket-deny, Sid=DenyCrossFirmBuckets, scope {bd,cot} NOT inf | 2/2 present + correctly scoped | LANDED on both roles (live get-role-policy): opal-inf-served-guard and opal-inf-value-parity each carry inline policy cross-firm-bucket-deny with Sid=DenyCrossFirmBuckets, Effect=Deny, exactly 2 opal-data-bd ARNs + 2 opal-data-cot ARNs, and ZERO opal-data-inf. 2/2 present and correctly scoped. | CLOSED 20260709T054113Z |
+| L5 | verify | deny-test EXERCISED = explicitDeny (additive-Deny shape, group-3 criterion, inverse of group-4) + 0-explicitDeny-on-opal-data-inf sentinel | explicitDeny on bd+cot; sentinel 0/2 | DENY-TEST EXERCISED (simulate-principal-policy, single-resource-per-call per the CVO multi-ARN gotcha): both roles return explicitDeny on s3:GetObject AND s3:PutObject against BOTH opal-data-bd and opal-data-cot (8/8). explicitDeny is the CORRECT criterion here -- this is an additive-Deny (group-3 shape), the INVERSE of group-4's Allow-removal where implicitDeny was the proof. Pre-belt these were implicitDeny, so the flip proves the belt is the deciding control and is the Allow-drift defense working. OVER-RESTRICTION SENTINEL: explicitDeny on opal-data-inf = 0/2. | CLOSED 20260709T054113Z |
+| L6 | verify | served-guard CAPABILITY-close per joint NEVER#2 waiver (simulate its REAL API path, NO invoke) + value-parity FULL invoke (read-only) | guard own-bucket API path still allowed; value-parity invocation non-error | served-guard CAPABILITY-CLOSE per the joint CTO+COO NEVER#2 waiver -- NO INVOKE (served_guard copy_object/put_objects OVER the served key = moving served output). Exercised its REAL API path: GetObject=allowed, GetObjectVersion=allowed, PutObject on the served key=allowed, PutObject on _quarantine/served-guard/=allowed. ListBucketVersions/ListBucket initially read implicitDeny because my simulate omitted the s3:prefix context the module's policy CONDITIONS on; re-run WITH ContextKeyName=s3:prefix -> ListBucketVersions + ListBucket = allowed for BOTH platinum/firm/header_metrics.json and _quarantine/served-guard/*, and a CONTROL prefix (gold/canonical/) = implicitDeny, proving the condition is real and intact. Under-specified exercise, not a policy gap. VALUE-PARITY FULL INVOKE: StatusCode=200, no FunctionError, CloudWatch Errors=[]; it successfully read opal-data-inf (served key + silver anchor parquet) -> own-bucket access provably intact. DISCLOSED: the invoke published its normal SNS alert, and its verdict was a PRE-EXISTING data finding (served-vs-source AUA parity break, 202,246,989.07 vs 203,686,267.57) which the belt cannot cause (Deny is scoped to bd/cot; both artifacts are opal-data-inf and both were read successfully). Escalated separately. | CLOSED 20260709T054113Z |
+
+## Log
+
+- 20260709T053536Z OPENED by 0.5.0_AE_OpalETL with 6 leg(s)
+- 20260709T053649Z LEG L1 closed: 020ada202 pushed to CLOUD (112bab1b4..020ada202)
+- 20260709T054113Z LEG L2 closed: inf-value-parity safe-apply(HALTGT) of the SAVED GATED PLAN: 'Apply complete! Resources: 1 added, 0 changed, 0 destroyed
+- 20260709T054113Z LEG L3 closed: served-guard-inf safe-apply(HALTGT) -target=aws_iam_role_policy.inf_guard_cross_firm_deny. JUSTIFIED DEVIATION (CTO 0532
+- 20260709T054113Z LEG L4 closed: LANDED on both roles (live get-role-policy): opal-inf-served-guard and opal-inf-value-parity each carry inline policy cr
+- 20260709T054113Z LEG L5 closed: DENY-TEST EXERCISED (simulate-principal-policy, single-resource-per-call per the CVO multi-ARN gotcha): both roles retur
+- 20260709T054113Z LEG L6 closed: served-guard CAPABILITY-CLOSE per the joint CTO+COO NEVER#2 waiver -- NO INVOKE (served_guard copy_object/put_objects OV
+- 20260709T054113Z CLOSED -- all 6 legs proven
