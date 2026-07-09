@@ -32,6 +32,12 @@ A LIVE degrade = **dead-reach (A) x fail-silent (B) x reachable-with-dependent-c
 2. **daily-agenda-generator** (news-ingestion-lambda-role) -- **LIVE**: agenda built WITHOUT private-repo data. github-token/newsapi/openai grants in us-east-2; zero secrets there; lambda us-east-1. AccessDenied -> GitHub 404 -> private repo invisible. Ran 10h ago; CVO live-confirmed (simulate implicitDeny). FIX = repoint SecretsManagerAccess grant to us-east-1. Same class as inf $1.44M AUA. **Owner: news/agenda-plane (assign post-NFRA).**
 3. **yang-generate-volatility** -- LATENT (empty VIX on denial, but last ran 175d ago = not a live break). Stated precisely, not conflated.
 
+## LAMBDA UNIVERSE PROVEN + ESTATE OPEN (CTO CLASS-brief 132817Z, honest scope)
+**LAMBDA universe PROVEN (stabilized, v5 no-new-TP + 4 FP removed): 3 LIVE = security-sweep (SEV2), daily-agenda (SEV2), trending (SEV3); NO SEV1; + yang latent + schwab safe + auth-path SEV1-latent.** CTO's Andrew CLASS-brief FILED: `org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_DATAINTEGRITY_dead-reach-fail-silent-class-brief-20260709.md` -- states the class (AxBxC), the 3 findings+fixes, the auth-path instance, and DECLARES the estate OPEN (not "proven" about a set the instrument can't see). Goes to Andrew alongside the credential-close (CTO relays).
+
+## ESTATE-CLOSURE STEP (post-NFRA, program-scope -- CTO assignment to the class-tracker):
+comp-deadgrant enumerates `lambda list-functions` ONLY -> structurally BLIND to EC2/ECS/Batch/CodeBuild/human/CI. So the estate universe is OPEN. **Owner = 0.5.0's comp-deadgrant ESTATE-MODE (non-Lambda dead-reach enumeration)** + the 3 Image-Lambda ECR extractions. UNRESOLVED now: opal-layer3-ec2-role (0.5.0 refused to bind it to RoleLastUsed-206d = suggestive, not proof). Assign + run post-NFRA; the estate universe closes when that enumeration runs.
+
 ## The SWEEP (freshness-integrity program, NFRA-adjacent -- routed CTO+CVO 110417Z)
 Prove-the-universe: simulate secret-reads (+ logs:PutLogEvents region) across ALL roles -> flag region-mismatched / dead grants; cross-ref the fail-silent-reader census (0.5.0: 9/15 readers fail silent). Find every LIVE fail-silent data-integrity degrade, not the 3 stumbled on. daily-agenda = canonical reference instance.
 
