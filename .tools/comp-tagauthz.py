@@ -192,6 +192,44 @@ def tree_instance_ids(tree: str) -> set[str]:
     return ids
 
 
+def plan_instance_ids(plan_json_path: str) -> set[str]:
+    """EC2 instance IDs the terraform PLAN would create/update -- THE UNIVERSE IS THE PLAN, not an
+    operator's --candidate list (CTO 20260709T203543Z: a hand-typed candidate is enumerate-what-you-know
+    with extra steps). Fails closed: an unreadable/unparseable plan is a REFUSAL, not an empty set."""
+    import os
+
+    if not os.path.isfile(plan_json_path):
+        print(f"ERROR: --from-plan file does not exist: {plan_json_path}. Failing closed.", file=sys.stderr)
+        sys.exit(1)
+    try:
+        plan = json.load(open(plan_json_path, encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as e:
+        print(f"ERROR: could not parse plan JSON {plan_json_path}: {e}. Failing closed.", file=sys.stderr)
+        sys.exit(1)
+
+    changes = plan.get("resource_changes")
+    if changes is None:
+        print(f"ERROR: {plan_json_path} has no `resource_changes` key -- is this `terraform show -json`? "
+              "Failing closed.", file=sys.stderr)
+        sys.exit(1)
+
+    ids: set[str] = set()
+    for rc in changes:
+        if rc.get("type") != "aws_instance":
+            continue
+        ch = rc.get("change", {}) or {}
+        actions = ch.get("actions", [])
+        # a no-op or pure-delete apply writes no tags; anything that creates/updates might.
+        if set(actions) <= {"no-op", "delete"}:
+            continue
+        after = ch.get("after") or {}
+        before = ch.get("before") or {}
+        iid = after.get("id") or before.get("id")
+        if iid:
+            ids.add(iid)
+    return ids
+
+
 def ec2_tagged() -> list[dict]:
     out = sh(["aws", "ec2", "describe-instances", "--output", "json"])
     d = json.loads(out or "{}")
@@ -263,7 +301,9 @@ def cmd_check(args) -> int:
                 authz.setdefault(k, {}).setdefault(v, []).append(c["source"])
 
     cands = set(args.candidate or [])
-    scoped = bool(args.candidate or args.from_state)
+    if args.from_plan:
+        cands |= plan_instance_ids(args.from_plan)
+    scoped = bool(args.candidate or args.from_state or args.from_plan)
 
     # FAIL CLOSED. A gate that cannot evaluate must never pass. Without a tree there is nothing to
     # compare a candidate's tags against, and a rc=0 here would be indistinguishable from a real
@@ -358,6 +398,9 @@ def main() -> int:
                    help="an EC2 instance id this tree would manage (repeatable). Scopes the gate.")
     c.add_argument("--from-state", action="store_true",
                    help="use the instances the tree ALREADY manages as the candidate set")
+    c.add_argument("--from-plan", metavar="PLAN_JSON",
+                   help="derive the candidate set from a `terraform show -json` plan file "
+                        "(the PLAN is the universe -- the safe-apply wiring uses this)")
     args = ap.parse_args()
     return cmd_pairs(args) if args.cmd == "pairs" else cmd_check(args)
 

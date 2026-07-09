@@ -1,0 +1,7 @@
+#!/bin/bash
+# comp-whoread -- who ACTUALLY READ an S3 bucket, from CloudTrail S3 object data events (Athena).
+# Layer-3 simulate proves who MAY read; this proves who DID. Coverage window on line 1; fails closed
+# on a bucket with no object-level data events (empty != "never read", it means "never captured").
+# Usage: comp-whoread <bucket> [--prefix gold/] [--since 2026-06-01] [--action GetObject]
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+exec python "$WORKSPACE/.tools/comp-whoread.py" "$@"
