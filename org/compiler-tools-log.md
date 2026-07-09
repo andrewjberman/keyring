@@ -14683,3 +14683,20 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-routable-check --file org/m... | PASS |
 | 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-routable-check (NEW), comp-coverage-check, comp-which-routing-test | comp-routable-check BUILT (CVO-endorsed): GREEN 38/38 at HEAD; regression-proven RED on both pre-fix worlds (system-compiler -> comp-system; fedobs-reflective-reader -> comp-fedobs); CLI fail-path exit 1 verified + tree restored. Registered in comp-coverage-map meta_tools[] as enforcement-gate -> comp-coverage-check PASS (was RED on the new tool as UNPLACED). Routing oracle still PASS 38/38. Wiring into the commit path deferred to CTO arch-gate. |
 | 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/cot_bronze_inge... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-routable-check | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-firmsep-sweep.py --file org... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TOOLCHECK.json --file... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/manifest_check_cli.py | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/cot_bronze_inge... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-firmsep-sweep.py --file inf... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | --help | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/API/findings/2026-07... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/bd-unrealized-export-500k-r... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/manifest_check_cli.py | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-freshness/comp-grep/comp-glob/comp-pipescript/comp-blast/comp-which | GAP: comp-pipescript io+deployed and comp-blast all NOT-FOUND for cot_bronze_ingest.py (2nd time blocking a Rule-20 pre-change dep check on a client-facing producer); comp-freshness chain bd returned PASS on 7 consecutive 0-row stub partitions mid-freeze -> elevated as the freshness-integrity reference case |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
