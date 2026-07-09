@@ -58,6 +58,37 @@ query=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.command // .tool_input.patt
 gpath=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.path // ""' 2>/dev/null || true)
 [ -z "$query" ] && exit 0
 
+# --- LEADING-VERB GATE (NFRA_TOOLCHECK P3 req#3b, 2026-07-08): classification below scans the
+# WHOLE command string for a substring match, so a compound OPERATIONAL command (`git push &&
+# terraform plan`, `echo && ls`) can false-fire off an incidental token even though the command is
+# not a search at all. Gate on the command's actual LEADING verb (mirrors comp_which_signals.py's
+# classify_command COMPUTE_RX -- the SAME rail's canonical compute-vs-navigate split, kept native-
+# bash here so the hot PreToolUse path never shells out to python for the common operational case).
+# A leading operational verb skips classification UNLESS a LATER &&/;/newline-separated segment is
+# itself a standalone search-tool invocation (e.g. "cd X && grep -r foo ." IS a real search).
+if [ "$tool" = Bash ]; then
+  _lead="$(printf '%s' "$query" | sed -E 's/^[[:space:]]*//' | grep -oE '^[A-Za-z0-9_./-]+' | head -1)"
+  case "$_lead" in
+    python|python3|pip|pip3|npm|npx|node|bun|deno|terraform|tofu|git|pytest|make|docker|bash|sh|zsh|\
+    cargo|go|mvn|gradle|ruby|perl|java|dotnet|safe-*|comp-to|echo|ls|cd|mkdir|rm|cp|mv|touch|chmod|export)
+      if ! printf '%s' "$query" | tr '\n' ';' | grep -qE '(&&|;|\|)[[:space:]]*(grep|rg|egrep|fgrep|findstr|ack|ag|find)([^A-Za-z]|$)'; then
+        exit 0
+      fi
+      ;;
+  esac
+fi
+
+# --- PIPE-GREP EXEMPTION (NFRA_TOOLCHECK P3 req#3c, 2026-07-08): `cmd | grep` filters the LIVE
+# OUTPUT of another command (ps aux | grep, git log | grep, aws ... | grep) -- CLAUDE.md Rule 21
+# already deems this free at the rail-enforcement level ("pipe-greps (cmd | grep) = free"), so the
+# advisory nudge should not fire on it either. grep as the pipe-RECEIVER (a later stage), not the
+# leading/standalone search itself -- a leading `grep -rn foo . | head` is untouched, still a real
+# repo search. Mirrors the single-file negative-filter's "not the estate-search class this hook
+# targets" philosophy below.
+if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE '\|[[:space:]]*(grep|rg|egrep|fgrep|findstr|ack|ag)([[:space:]]|$)'; then
+  exit 0
+fi
+
 # --- NEGATIVE FILTER (CVO #3: the non-noise guarantee). Suppress when: ---
 #  (a) the search is scoped to a SINGLE FILE -> grepping a file's internals, NOT a
 #      relationship search (comp-pipescript io gives the I/O contract, not internals).
@@ -211,22 +242,62 @@ if [ "$_gate" = 1 ]; then
 fi
 
 # log every hit (CVO's before/after measurement), then advise per the class's throttle
-echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  HUD-HIT  tool=$tool  class=$class  q=$(printf '%s' "$query" | head -c 80)" >> "$WS/org/mcp/comp-tool-hud.log" 2>/dev/null || true
+#
+# TELEMETRY FIDELITY (NFRA_TOOLCHECK P3, 2026-07-09): the query is flattened to ONE line and the cap
+# raised 80 -> 200. The old `head -c 80` alone emitted the query RAW, so any multi-line command (the
+# common Bash-tool shape: `cd <ws>\n<real command>`) split a single HUD-HIT across several log lines
+# -- the entry recorded only its FIRST line (usually a bare `cd`), and the continuation lines were
+# unparseable noise. Measured on the live log: of 5190 BEFORE-window Bash entries, 3514 were
+# multi-line and 1517 were 80-char-truncated, leaving only 159 (3.1%) whose command was actually
+# recoverable. That made this log unable to serve the "CVO before/after measurement" its own comment
+# claims -- and it silently biases any false-fire count toward whatever the first line happens to be.
+# tr-to-space keeps the record single-line + greppable; 200 chars captures the operative verb + the
+# search segment. No consumer parses this file structurally (only freeform.sh APPENDS), so widening
+# is safe.
+echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  HUD-HIT  tool=$tool  class=$class  q=$(printf '%s' "$query" | tr '\n\r\t' '   ' | head -c 200)" >> "$WS/org/mcp/comp-tool-hud.log" 2>/dev/null || true
 if [ -n "$sid" ]; then
   d="$WS/org/mcp/sessions"; mkdir -p "$d" 2>/dev/null || true
+  # NFRA_TOOLCHECK P3 req#3a (2026-07-08, INVERTED): the LEAST-specific class (comp_which, the
+  # catch-all) used to fire on EVERY unclassified search -- backwards, since it's the class most
+  # prone to banner-blindness. PRECISE classes (portal/lambda/iam/...) used to fire ONCE-EVER per
+  # session -- also backwards, since a long session legitimately re-hits the same class against a
+  # different target and then goes permanently silent for the rest of the session. Swap the two
+  # mechanisms: comp_which now throttles HARD (once per session -- the old precise-class behavior);
+  # precise classes now RECUR every CLASS_EVERY-th hit (the old comp_which mechanism, reused), so
+  # they stay salient without going silent for the remainder of a long session.
   if [ "$class" = comp_which ]; then
-    # EVERY-TIME mandate (Andrew-direct: hard-nudge the native tools). COMPWHICH_EVERY=1 = fire on
-    # every unclassified native search; raise it later if CVO hud-telemetry shows banner-blindness.
-    COMPWHICH_EVERY=1
-    cf="$d/${sid}.compwhich.count"
-    n=$(cat "$cf" 2>/dev/null || echo 0); n=$(( n + 1 )); printf '%s' "$n" > "$cf" 2>/dev/null || true
-    [ $(( (n - 1) % COMPWHICH_EVERY )) -ne 0 ] && exit 0
-  else
     m="$d/${sid}.comphud.${class}.seen"
-    [ -f "$m" ] && exit 0          # specific class: advise ONCE per class per session
+    [ -f "$m" ] && exit 0
     : > "$m" 2>/dev/null || true
+  else
+    CLASS_EVERY=5
+    cf="$d/${sid}.comphud.${class}.count"
+    n=$(cat "$cf" 2>/dev/null || echo 0); n=$(( n + 1 )); printf '%s' "$n" > "$cf" 2>/dev/null || true
+    [ $(( (n - 1) % CLASS_EVERY )) -ne 0 ] && exit 0
   fi
 fi
+
+# NFRA_TOOLCHECK P3 req#3d (2026-07-08): the catch-all used to fire static "a tool exists, go use
+# comp-which" boilerplate regardless of whether comp-which would find anything for THIS query -- a
+# standing banner, easy to tune out. ACTUALLY run comp-which (via ~A's --route-only guard, so a
+# preview can never side-effect a real grep/glob subprocess) and surface the EXACT tool + call it
+# picked; if comp-which itself would fall back to grep/glob (no rich tool fits), suppress the nudge
+# entirely instead of repeating the generic banner -- a specific nudge is far less ignorable than a
+# standing one, and nudging toward nothing is worse than no nudge. Only touches the ADVISORY message
+# for comp_which -- the DENY-gate reason above already ran off the original generic $msg, untouched
+# (GATE-1 is live; not risking the security-relevant path on a live subprocess call). FAIL-SAFE: any
+# python/route error leaves $msg as the original generic boilerplate (never lose the advisory).
+if [ "$class" = comp_which ] && command -v python >/dev/null 2>&1; then
+  _route_out="$(timeout 5 python "$WS/.tools/comp-which" --route-only "$query" 2>/dev/null)" || _route_out=""
+  if printf '%s' "$_route_out" | grep -q "NO-ROUTE"; then
+    exit 0   # comp-which itself would fall back to grep/glob -- nothing specific to nudge toward
+  fi
+  _call_line="$(printf '%s' "$_route_out" | grep -m1 -E '^[[:space:]]*->' | sed -E 's/^[[:space:]]*->[[:space:]]*//')"
+  if [ -n "$_call_line" ]; then
+    msg="comp-tool on the HUD: comp-which routes this to -> ${_call_line}  (run it -- your search still proceeds). RULE (Andrew-direct 2026-06-18): comp-which/comp-tool is the DEFAULT for every search + inspection; raw grep/aws is the EXCEPTION, used ONLY when comp-which confirms no tool fits."
+  fi
+fi
+
 enc=$(printf '%s' "$msg" | "$JQ" -Rs . 2>/dev/null) || exit 0
 printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse","additionalContext":%s}}' "$enc"
 exit 0
