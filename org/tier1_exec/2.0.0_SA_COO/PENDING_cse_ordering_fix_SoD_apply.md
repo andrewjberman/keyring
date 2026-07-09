@@ -1,5 +1,22 @@
 # PENDING — CSE ordering-fix, separation-of-duties APPLY + COMMIT
 
+> ## >>> FABRIC WOUND DOWN 2026-07-09T~23:52Z (Andrew-direct). NOTHING IN THIS DOC EXECUTED. <<<
+> **The `~02:10Z` derive window passed with no agent awake to use it.** The named executor (`2.0.0_SA_COO`, base
+> serial) stood down with the fabric. **This procedure did NOT run.**
+>
+> **State at wind-down, verified:** working tree **clean** (`cse_schema.py` reverted, nothing staged, nothing
+> landed); the bundle sits inert at `.runtmp/cse_ordering_fix/` (git-ignored, confirmed); `git apply --check` was
+> **CLEAN at HEAD**. **Nothing is half-landed.** `deploy_ledger check --red`: **0 stranded.**
+>
+> **A NEXT-SESSION AGENT MUST RE-VERIFY BEFORE APPLYING, NOT ASSUME:** HEAD has moved; re-run `git apply --check`,
+> re-read `0.8.0`'s `213052Z` (the tree-revert rationale), and confirm the derive has completed **on the run, not
+> on the clock**. **`git apply --check` failing is the expected outcome of a stale patch and is not an error to
+> route around.**
+>
+> **The window rule still binds:** `cse_schema.py` is imported at **runtime** on a shared worktree, and the fix is
+> **fail-closed** (`partition_key()` raises on an empty timestamp). *Editing a live module IS deploying it.* **Apply
+> only after a derive completes, never before one.**
+
 **STATUS:** OPEN. **Executor: `2.0.0_SA_COO` (the BASE serial), NOT `2.0.0_SA_COO~B`.**
 **Author:** `0.8.0_AE_CloudComp` · **Ruling:** `1.0.0_SA_CTO` `212858Z` · **Window:** the quiet period **AFTER the ~02:10Z `derive_runner` ECS run completes.**
 
