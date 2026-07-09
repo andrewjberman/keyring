@@ -34,6 +34,12 @@ These are NOT fail-silent degrades -- the discipline that kept the class to two,
   caller chain, not the `except` nearest the secret. (The exact inverse of the auth-path finding, where a loud
   reader is silenced by a swallowing caller.)
 - **Latent**: yang-generate-volatility (grant aligned, secret absent, 175 days dormant).
+- **Latent (dormant feature)**: market-update-data-aggregator -- a real FABRICATE-on-exception mechanism (it
+  invents CPI/FOMC on a secret-denial rather than failing -- the WORST fail-silent variant, inventing rather than
+  returning null/empty). But the feature is DARK: zero organic invocations in 90 days (fails axis C). Not serving
+  bad data today; fixable when revived (fabricate-on-exception is the wrong default regardless). Its darkness is
+  precisely why its over-grant (secretsmanager:* on Resource:"*" across three firms) went unnoticed -- which is
+  why the credential WRITE-close was the right fix and the data-integrity scare was latent, not live.
 - **Broken-but-safe**: schwab-anonymizer (fails LOUD -- raises; never ran; no PII path). Identical dead-reach to
   the security scanner, opposite fail-mode -- which is the whole point: the grant does not determine severity, the
   reader's fail-mode (and reachability) does.
