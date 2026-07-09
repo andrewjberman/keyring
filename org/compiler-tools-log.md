@@ -15107,3 +15107,47 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-09T19:46Z | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-1 | deploy_ledger(check/close/open) + rail-checked aws/SSM exercises (SHOW GRANTS, 429/413 burst, restore-drill) | least-priv dead-control found by EXERCISE not code-read; comp-iam has no standalone-user/on-box-state view (gap, marked)
 | 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/archive/AGENT_INTEGRATION_GUI... | PASS |
 | 2026-07-09 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file logs/sessions/2026-02-13/aws_engineer/b... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file logs/sessions/2026-03-05/data_scientist... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file logs/daily/2025-11-18.md --file logs/da... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/deploy_ledger.py | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/git-hooks/install-mass-deletion-... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/archive/AGENT_INTEGRATION_GUI... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .smart-lint-backup/backup-branch.txt --... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file logs/sessions/2025-11-17/aws_engineer/s... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit_gate_runner.py | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/RUNBOOK.md | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file logs/sessions/2025-12-15/react_designer... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/C_05.cl... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file logs/sessions/2026-01-05/aws_engineer/c... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/NFRA_TERRAFORM_P2_lambda_exec... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/C_05.client_tax_l... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/project-consistency-check.py | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-graph | comp-graph status | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast build_employee_leaderboard | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file logs/sessions/2026-01-23/aws_engineer/S... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-graph | comp-graph status | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file logs/sessions/2026-02-13/aws_engineer/b... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file logs/sessions/2026-03-05/data_scientist... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/alarm-latch-sweep.py | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-tagauthz --file .tools/comp... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/SES_PRODUCTION_ACCESS_CAS... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/kill-storage.ps1 --file org/tier... | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/suppressed-error-lint.py | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/RUNBOOK.md | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+2026-07-09T20:21Z | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-1 | aws ses send-email (success simulator + failure unverified) + SSM GFAPI routing read + rail-checked aws ses identity/dkim | exercised-failure caught the internal!=SES-verified trap; no comp-tool models SES/on-box-app-config (gap, marked)
+| 2026-07-09 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
