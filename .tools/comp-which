@@ -333,6 +333,27 @@ RULES = [
      "which artifacts/systems change together (co-evolution), recognizer/compiler-coverage "
      "gaps, or whether a promoted directive measurably reduced its targeted churn -- served "
      "vintage read over the C0 CSE log"),
+    # NFRA_TOOLCHECK P3 (COO~B GO 2026-07-09): comp-system was UNREACHABLE -- the SAME class as the
+    # comp-fedobs fix above, recurring for a newer tool. Two causes, both fixed: (1) its meta_tools
+    # role "system-compiler" was absent from comp_capability_provider._ROUTABLE_META_ROLES, so
+    # comp_route.py:329's `routable` filter dropped it from the candidate set BEFORE scoring (a
+    # curated rule alone would have been a no-op); (2) it had no curated rule, so "the live
+    # current-state of the compiled system" mis-routed to comp-lambdamap-parity. Distinctive
+    # SYSTEM-only vocabulary (deliberately NOT bare "freshness"/"health" -- those belong to
+    # comp-freshness / comp-heat) so it wins outright without stealing their intents.
+    (["current-state of the compiled system", "current state of the compiled system",
+      "compiled system", "current-state compiler", "current state compiler",
+      "system current-state", "system current state", "current-state of the system",
+      "current state of the system", "06 current-state", "06_current_state", "06 current state",
+      "system maturity", "maturity rollup", "maturity grading", "maturity evidence",
+      "runtime index", "localroot runtime index", "localroot", "scope classes",
+      "dynamic system half", "comp-system", "state of the compiler system"],
+     "SYSTEM current-state compiler (maturity / runtime-index / 06 current-state)",
+     ["comp-system", "comp-system --stdout", "comp-system --json", "comp-system --check"],
+     "the LIVE current-state of the compiled system across all LOCALROOT scope classes (graph tiers, "
+     "comp-tool works/broken, cert status, materialized recognizers, vintage) -- compiles "
+     "infra/system/06_current_state.{md,json}; the P4-maturity + runtime-index source. Every number "
+     "grounded-against-live or UNKNOWN-VINTAGE (zero fabrication)"),
     # NFRA_COMPUNIFY S2: the COMPUNIFY gate. Distinctive coverage/placement/non-redundancy vocab
     # so "does every comp-tool have one home / is every overlap declared / gate the coverage map"
     # routes to the enforcement gate, not the grep fallback.

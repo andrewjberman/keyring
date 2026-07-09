@@ -96,6 +96,11 @@ SURFACE_KEYS = ("LOCAL", "GIT", "AWS-CLOUD", "MS-CLOUD", "TRINO", SEAM_KEY, META
 _ROUTABLE_META_ROLES = frozenset({
     "estate-router", "cache-management", "meta-report", "governance",
     "compdrift-loop", "complearn-loop", "fedobs-reflective-reader",
+    # system-compiler (comp-system, NFRA_SYSTEM P3): a cross-surface AGGREGATOR, so it is homed in
+    # meta_tools[] rather than on one surface -- but it IS a routing target (manifest tools_index
+    # declares its comp-which routing string). Omitting the role left comp_route.py:329's routable
+    # filter dropping it from the candidate set entirely, so no curated rule could ever surface it.
+    "system-compiler",
 })
 
 # Minimal stopword set for keyword extraction (query_match wants a rich bag-of-words,
