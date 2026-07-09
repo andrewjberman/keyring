@@ -14922,3 +14922,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/security/remediation/cross-firm-b... | PASS |
 | 2026-07-09 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type = 'CODEBUILD_PROJECT' RETURN n.node_id, n.node_ty... | PASS |
 | 2026-07-09 | 0.8.0_AE_CloudComp | NFRA_TOOLCHECK.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/ANDREW_SOVE... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp~D | gate-doctrine-builds | commit-gate/deploy_ledger-selftest/safe-commit-blocktest/comp_coverage_view/comp-kuzu | HELD 15/15 tamper-tested + commit-gate ruff-F541 BLOCK (HEAD-unchanged proof) + comp-system spot-verify diff=0 + catalog --verify green | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
