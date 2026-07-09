@@ -129,22 +129,42 @@ def is_ours(source: str) -> bool:
     return not any(a in source for a in aws_managed)
 
 
-def default_tag_keys(tree: str) -> list[str]:
-    """Parse provider-level default_tags keys out of a terraform tree's .tf files."""
+def default_tag_keys(tree: str) -> tuple[list[str], bool]:
+    """Parse provider-level default_tags keys out of a terraform tree's .tf files.
+
+    Returns (keys, block_present). The pair matters: `[]` alone is a null two worlds produce --
+    "this tree sets no default_tags" and "I failed to parse its default_tags" are different facts,
+    and only one of them is safe to pass on.
+    """
     import glob
     import os
 
+    if not os.path.isdir(tree):
+        print(f"ERROR: --default-tags-tree does not exist: {tree}", file=sys.stderr)
+        sys.exit(1)
+
+    tf_files = glob.glob(os.path.join(tree, "*.tf"))
+    if not tf_files:
+        print(f"ERROR: no .tf files under {tree} -- cannot evaluate. Failing closed.", file=sys.stderr)
+        sys.exit(1)
+
     keys: list[str] = []
-    for f in glob.glob(os.path.join(tree, "*.tf")):
+    block_present = False
+    for f in tf_files:
         txt = open(f, encoding="utf-8", errors="replace").read()
-        m = re.search(r"default_tags\s*\{(.*?)\n\s*\}", txt, re.S)
-        if not m:
-            continue
-        for line in m.group(1).splitlines():
-            km = re.match(r"\s*([A-Za-z0-9_-]+)\s*=", line)
-            if km and km.group(1) != "tags":
-                keys.append(km.group(1))
-    return sorted(set(keys))
+        # only a PROVIDER-level default_tags block counts; a comment mentioning it does not.
+        for m in re.finditer(r"^\s*default_tags\s*\{(.*?)\n\s*\}", txt, re.S | re.M):
+            block_present = True
+            for line in m.group(1).splitlines():
+                km = re.match(r"\s*([A-Za-z0-9_-]+)\s*=", line)
+                if km and km.group(1) != "tags":
+                    keys.append(km.group(1))
+
+    if block_present and not keys:
+        print(f"ERROR: {tree} declares a default_tags block but no keys parsed out of it. "
+              "An unparsed block is not an empty block. Failing closed.", file=sys.stderr)
+        sys.exit(1)
+    return sorted(set(keys)), block_present
 
 
 def tree_instance_ids(tree: str) -> set[str]:
@@ -242,18 +262,34 @@ def cmd_check(args) -> int:
             for v in vals:
                 authz.setdefault(k, {}).setdefault(v, []).append(c["source"])
 
-    dkeys = default_tag_keys(args.default_tags_tree) if args.default_tags_tree else []
-    if dkeys:
-        print(f"\ndefault_tags keys in {args.default_tags_tree}: {dkeys}")
-        collide = sorted(set(dkeys) & set(authz))
-        if collide:
-            print(f"  *** KEY COLLISION: {collide} are BOTH default_tags keys AND authorization keys.")
+    cands = set(args.candidate or [])
+    scoped = bool(args.candidate or args.from_state)
+
+    # FAIL CLOSED. A gate that cannot evaluate must never pass. Without a tree there is nothing to
+    # compare a candidate's tags against, and a rc=0 here would be indistinguishable from a real
+    # pass -- "no collision" and "I had nothing to compare against" are two worlds producing one null.
+    if scoped and not args.default_tags_tree:
+        print("ERROR: --default-tags-tree is REQUIRED when gating candidates "
+              "(--candidate / --from-state).\n"
+              "       Without it there is no tree whose default_tags could overwrite anything, so a\n"
+              "       PASS would mean 'nothing to compare against', not 'safe'. Failing closed (rc=1).",
+              file=sys.stderr)
+        return 1
+
+    dkeys, block_present = default_tag_keys(args.default_tags_tree) if args.default_tags_tree else ([], False)
+    if args.default_tags_tree:
+        if not block_present:
+            print(f"\n{args.default_tags_tree} sets NO provider default_tags block -- it cannot "
+                  "overwrite any resource's tags.")
         else:
-            print("  no key collision with authorization-bearing keys")
+            print(f"\ndefault_tags keys in {args.default_tags_tree}: {dkeys}")
+            collide = sorted(set(dkeys) & set(authz))
+            if collide:
+                print(f"  *** KEY COLLISION: {collide} are BOTH default_tags keys AND authorization keys.")
+            else:
+                print("  no key collision with authorization-bearing keys")
 
     rows = ec2_tagged()
-    cands = set(args.candidate or [])
-    scoped = args.candidate or args.from_state
 
     if args.from_state and args.default_tags_tree:
         cands |= tree_instance_ids(args.default_tags_tree)
@@ -298,12 +334,16 @@ def cmd_check(args) -> int:
 
     if bad:
         print(f"RESULT: {bad} CANDIDATE(s) whose ACCESS-GRANTING tag would be overwritten by "
-              f"{args.default_tags_tree}'s default_tags.")
+              f"{args.default_tags_tree}'s default_tags {dkeys}.")
         print("        default_tags MUST NOT apply to these. Per-resource `tags` override, or keep")
         print("        them out of a default_tags tree entirely. (CTO standing arch rule 195725Z.)")
         return 2
-    print(f"RESULT: none of the {len(cands)} candidate(s) has an access-granting tag this tree "
-          "would overwrite.")
+
+    # A PASS must state the denominator it passed against. If no tree existed, this sentence could
+    # not be written -- which is exactly why the tree is mandatory above.
+    what = (f"{args.default_tags_tree}'s default_tags {dkeys}" if block_present
+            else f"{args.default_tags_tree} (which sets NO default_tags)")
+    print(f"RESULT: none of the {len(cands)} candidate(s) carries a tag that {what} would overwrite.")
     return 0
 
 
