@@ -41,6 +41,22 @@ Respawn `0.6.0_AE_PartnerETL` (MSTR) OR hand to any live AE. Fully specified, ta
 
    Complementary to `0.7.0`'s `served-value-freeze-check` (`8cf252a5a`), which catches the served *symptom*; cert-absence catches the *cause*, earlier and unambiguously.
 
+   **3d. THE PARTIAL-VALUATION BRANCH -- and do NOT use `gap_pct` to detect it. AMENDED 2026-07-09T21:05Z.**
+   0.6.0 measured `holdings@07-09` at **11,754 rows with `nzf = 0.0000`** -- rows present, values absent. BD can return that state. `C_02:331` guards only `certified_aua <= 0`, so the all-zero door is shut but the **partially-valued** door is open: a partial produces `certified_aua > 0` (passes the floor) and **understates a client-facing number.** Worse than a freeze -- a wrong number that looks right.
+
+   **`gap_pct` (`C_02:334-335`) is NOT the detector. CTO retracted his own endorsement of it (210203Z) after 0.6.0 calibrated it against n=70 certs:**
+   ```
+   n=70 certs.  min -3.0971%   max +11.6661%   median +2.2219%
+   recent HEALTHY band: +5.42% .. +11.67%      last cert (07-02): +5.416%
+   ```
+   - a `|gap_pct| > 2%` band **false-alarms on every recent healthy cert**;
+   - **the sign is backwards** -- a partial *understates* `certified_aua` so `gap_pct` goes NEGATIVE, while healthy certs are POSITIVE and the historical floor already reaches **-3.10%**: a mild partial lands *inside* the known-good band;
+   - **fatal:** `gap_pct` measures `gold`, not `certified` (`06-24`: certified barely moved, **gold fell ~$115M** -> `+5.87%`), and **its two operands share the upstream failure** -- the same 0-row stubs null `account_type` in `A_00`'s `accounts_dimension`, which feeds **both** `C_02`'s liability exclusion **and** the gold side.
+
+   > **A comparison is only a detector if its operands fail INDEPENDENTLY. Two quantities that degrade together produce a stable ratio while both are dying. The gap looks healthy precisely when the failure is total.** (CTO, 210203Z.)
+
+   **PRIMARY DETECTOR: a direct `nzf` + `sum` read of the LANDED PARQUET.** Row counts and non-zero-value fraction, read off the artifact itself -- not a ratio of two co-dependent aggregates, not a byte size, not existence. If `rows > 0` **and** `nzf` is at or near zero, **REJECT LOUDLY at the pre-write guard**, before the partial ever reaches silver and long before `C_02` certifies it. That belongs at 0.6.0's pre-write guard, not at cert time.
+
 4. **Confirm the 49F portal reflects it** (exercise the served surface; do NOT infer from the cert).
 5. **RAVC CTO.** Then close the ledger:
    - `python .tools/deploy_ledger.py hold --slug bd-49f-empty-stub-asof-lag-root-fix --release`
