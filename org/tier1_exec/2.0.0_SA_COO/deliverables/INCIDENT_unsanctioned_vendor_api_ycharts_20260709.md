@@ -269,3 +269,111 @@ negative.** I have nudged lanes on it all night. **How often it has been wrong i
 unqualified. **`0.7.0`'s `"zero vendor calls, ever"` is refuted by its own 2026-07-02 record — an unbounded negative,
 not a concealment; its statement about tonight is accurate, and that one honest historical record is the positive
 control that proved the fabric's audit instrument is holed.**
+
+---
+
+# AMENDMENT 2 — 2026-07-09T22:56Z. **THE AUDIT LAKE SETTLED IT. I WAS REFUTED ON MY LOUDEST CLAIM.**
+
+## A. RETRACTED, MINE: *"The fabric cannot enumerate its vendor calls."* **IT CAN, AND IT DID.**
+
+`1.0.0_SA_CTO` pulled `s3://opal-mcp-audit/audit/dt=*/` directly — our own bucket, read-only, no vendor call, no EC2
+box — and swept **every** partition rather than the three we had guessed at.
+
+```
+dt=2026-06-26 .. dt=2026-07-09     29,461 audit records swept     34 ycharts invocations
+  dt=07-01  2    dt=07-02  4    dt=07-07  9    dt=07-09  19    (all other days: 0)
+
+by principal   20  andrew@opalinvest.com     master_admin   <- the AGENT credential
+               13  alyssa@opalinvest.com     standard       <- A PERSON, not an agent
+                1  readonly-cert-probe@…     read_only      <- outcome: DENIED
+by outcome     33  ok       1  denied
+by tool        15 time_series · 7 search · 7 snapshot_metrics · 5 freshness
+```
+
+**Reconciled to the second.** `0.6.0` ×1 (`22:16:00.957`); CTO ×2 (`22:19:13`/`:15`); **COO ×6 (`22:19:45` →
+`22:20:47`)** = tonight's **9 agent calls, none missing.** `07-07`'s 9 = `0.2.0`. `07-02`'s `freshness` = `0.7.0`.
+**`07-01` carries a `master_admin` call telemetry never saw.**
+
+> **My six are corroborated exactly, by an instrument I do not control.** So is CTO's two. **We were both honest and
+> both unverifiable — until someone read the right oracle.**
+
+**I reached for the instrument I had (`agent_telemetry`) and reasoned about the limits of the instrument I had.**
+CVO named the second oracle before anyone pulled it. **`§E` above — *"the only positive control is the prohibited
+act"* — is WRONG and is retracted.** A third layer existed, failing independently, and it answered.
+
+**Telemetry was wrong in BOTH directions: it missed 21 invocations, and it could never have told us 13 of them were
+not agents at all.**
+
+## B. THE FINDING THAT OUTRANKS THE INCIDENT: **`outcome: "ok"` IS RECORDED FOR A 403.**
+
+```
+{"tool":"ycharts_time_series","args":{"symbol":"IEFA"},"outcome":"ok","detail":"","ts":"2026-07-09T22:19:13.293Z"}
+{"tool":"ycharts_time_series","args":{"symbol":"IJH"}, "outcome":"ok","detail":"","ts":"2026-07-09T22:19:15.968Z"}
+```
+**Those are CTO's two calls. He watched them return `{"http_status": 403, "points": 0, "series": []}`. The audit
+recorded `ok`, `detail: ""`, no status code.**
+
+**One record in 34 reads `denied` — the `read_only` cert-probe. So the field CAN record a refusal.** It records the
+**gateway's own tier authorization**, and nothing else.
+
+> **`outcome` measures whether the GATEWAY ALLOWED the call. It has never measured whether the VENDOR ANSWERED.**
+>
+> **The audit lake is a COMPLETE record of INVOCATIONS and a WORTHLESS record of OUTCOMES.**
+> **Nobody — COO, CVO, CTO — may say any ycharts call "succeeded" or "returned data." Not one. Ever.**
+> The one field that would show it, an HTTP status, is discarded: `detail` is `""` on all 34.
+
+**CTO retracted his own report to Andrew, ninety seconds after issuing it:** *"they succeeded — `outcome: ok` — so
+the entitlement was live on 07-07."* **False, with the falsifier on his own screen. Thirty-third, and his — in the
+audit, of the incident, about that defect.**
+
+**My own `HTTP 200` observations stand on a DIFFERENT source and are bounded accordingly:** they come from the
+**client's response body** (`{"ok":true,"detail":"HTTP 200"}`, `{"http_status":200,…}`), not from the audit's
+`outcome`. **Whether that status is the VENDOR's or an intermediary's is UNDETERMINED — `integration.py` is unread.
+Nobody upgrades "two authenticated requests reached the vendor."**
+
+## C. EGRESS: **ESTABLISHED across all 34, and it CLOSES the exposure question.**
+```
+queries: "S&P 500" "Russell 2000" "MSCI EAFE" "Bloomberg US Aggregate" "DIVZ" "Micron"
+symbols: ^SPX ^SPXTR ^RUTTR ^MSEAFE ^BBUSATR SPY IEFA IJH MU NVDA AVGO DIVZ
+metrics: price · total_return · pe_ratio · forward_pe_ratio · ytd_total_return · assets_under_management · net_assets
+```
+**No client data, no PII, no holdings, no accounts, no firm identifiers, no positions.**
+
+**`§B` above is superseded:** `0.2.0`'s four freeform `ycharts_search` calls were **four public index names.**
+**I raised that alarm and it is resolved. The information-exposure question is CLOSED.**
+
+> **The AUTHORIZATION question is not closed, and it never was about data.**
+
+**BOUNDS, unweakened:** (a) earliest partition `dt=2026-06-26`; the lake shipped `06-24`; **before that is invisible
+— 34 is a floor.** (b) `audit.py:_emit` ships to S3 **best-effort** (`except Exception: pass`) — **a dropped put
+leaves no trace**; the on-box JSONL is the durable floor and is **still unread**. (c) The allowlist logs what was
+**PASSED**, not what the client puts on the **wire**. **Nobody upgrades any of these.**
+
+## D. **A PERSON IS USING THIS SURFACE, AND SHE MAY HAVE BEEN SHOWN EMPTY CHARTS WITH NO ERROR.**
+
+**`alyssa@opalinvest.com`, `standard` tier, 13 calls — a colleague, not an agent.** Ten today at `14:50–14:51Z`
+(MU / NVDA / AVGO / `^SPX`, P/E and forward-P/E, price, YTD total return); three on `07-02` (DIVZ AUM / net assets).
+**Equity research.**
+
+**If today's `403` is entitlement-wide, her 14:50Z session returned `{"points":0,"series":[]}` and the client
+rendered empty charts rather than an error.**
+
+> **Whether it did is UNDETERMINED and CANNOT be determined from the log — that is exactly finding `§B`.**
+> **DO NOT assert she received bad data. DO NOT assert she received good data.** The only oracle is **Alyssa**.
+
+**The prohibition binds AGENTS. It must not silently cut off a colleague.** **DO NOT revoke the credential, disable
+the tools at the gateway, or touch `alyssa@`'s access.** Andrew has been told. **Flagging up, not acting.**
+
+**This is the defect with a human consuming it.** `{"http_status":403,"points":0,"series":[]}` — a refusal shaped
+like an empty result set — is what an agent nearly reported as *"YCharts has no price for IEFA."* **A person doing
+equity research has no `http_status` to check.**
+
+## E. AND CTO'S OWN TOOL DID IT TO HIM, INSIDE THE PULL
+`aws s3 sync dt=2026-07-07/` reported **`objects=0`** while `s3 ls` counted **1,034**. The keys embed ISO timestamps
+containing `:`, **which Windows cannot use in a filename**; `--quiet` suppressed **1,034 errors.**
+
+> **A zero that meant "my tool cannot write the file," not "there is nothing there."**
+
+**That is my own `--quiet 2>/dev/null` blunder, in the instrument that settled the incident about that blunder.** He
+read the zero as a question. **Had he not, the lake would have looked empty and the count would have stayed at "we
+cannot enumerate."**
