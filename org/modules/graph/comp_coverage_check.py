@@ -687,7 +687,24 @@ def check(universe: str = "working") -> int:
         return UNVERIFIABLE
     code, violations, unverifiable = run_gate(led, seam_source)
     if code == PASS:
-        sys.stdout.write("PASS: comp-coverage-map.yaml is internally consistent -- every tool one home, every overlap declared, no phantom seam, inventory complete, projection current, grain stable.\n")
+        # STANDING RULE (CTO 20260709T192409Z, promoted from the member-4 vacuous-gate self-catch):
+        # "A gate that cannot state its denominator cannot be trusted to have a numerator." A green
+        # that names no universe is indistinguishable from a green that swept nothing. Six
+        # qualitative claims with no N behind them was exactly that shape. The commit path may be
+        # quiet; this operator surface may not.
+        n_tools = len(led.get("tools") or [])
+        n_meta = len(led.get("meta_tools") or [])
+        n_rules = len(led.get("schema", {}).get("gate_contract", {}).get("rules", []))
+        n_inv = len(_INVENTORY_OVERRIDE) if _INVENTORY_OVERRIDE is not None else n_tools + n_meta
+        sys.stdout.write(
+            "PASS: comp-coverage-map.yaml is internally consistent -- every tool one home, every "
+            "overlap declared, no phantom seam, inventory complete, projection current, grain stable.\n"
+        )
+        sys.stdout.write(
+            f"  swept: {n_tools + n_meta} homed tool(s) ({n_tools} tools[] + {n_meta} meta_tools[]) "
+            f"| {n_rules} gate_contract rule(s), 0 unverifiable | inventory universe='{universe}' "
+            f"({n_inv} tool(s))\n"
+        )
         return PASS
     if code == UNVERIFIABLE:
         for u in unverifiable:
