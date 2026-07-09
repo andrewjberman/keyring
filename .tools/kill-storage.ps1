@@ -226,14 +226,27 @@ Write-Output "--- deleting ---"
 $freed = 0; $del = 0; $skip = 0
 foreach ($t in $targets) {
   if (-not (Assert-Deletable $t.Path -AllowWorkspacePycache:($t.Category -eq 'pycache') -AllowWorkspaceScratch:($t.Category -like 'ws-scratch/*'))) { $skip++; Write-Output ("  SKIP: {0} failed re-validation" -f $t.Path); continue } # re-assert at delete time
+  $why = $null
   try {
     Remove-Item -LiteralPath $t.Path -Recurse -Force -ErrorAction Stop
     $del++; $freed += $t.MB
   } catch {
-    $skip++; Write-Output ("  SKIP: {0} ({1})" -f $t.Path, $_.Exception.Message.Split([Environment]::NewLine)[0])
+    # Remove-Item fails on paths >260 chars (MAX_PATH) -- endemic under node_modules. That is NOT
+    # a lock. Retry through the \\?\ extended-length prefix, which the .NET API honors, before
+    # reporting anything. (The old code called every failure "locked/in-use" -- a message that
+    # named a cause it had not measured. Same defect class this tool is used to clean up after.)
+    try {
+      [System.IO.Directory]::Delete(('\\?\' + $t.Path), $true)
+      $del++; $freed += $t.MB
+    } catch {
+      try { [System.IO.File]::Delete('\\?\' + $t.Path); $del++; $freed += $t.MB }
+      catch { $why = $_.Exception.Message.Split([Environment]::NewLine)[0] }
+    }
   }
+  if ($why) { $skip++; Write-Output ("  SKIP: {0} -- {1}" -f $t.Path, $why) }
 }
-Write-Output ("FILES: deleted {0}, skipped {1} (locked/in-use), ~{2} MB reclaimed." -f $del, $skip, [math]::Round($freed,0))
+# Report the count and the reasons; never assert a cause we did not measure.
+Write-Output ("FILES: deleted {0}, skipped {1} (reason printed per line above), ~{2} MB reclaimed." -f $del, $skip, [math]::Round($freed,0))
 
 if ($Docker) {
   Write-Output ""
