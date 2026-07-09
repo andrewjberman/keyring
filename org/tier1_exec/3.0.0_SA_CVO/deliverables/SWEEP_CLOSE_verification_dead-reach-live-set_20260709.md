@@ -26,11 +26,21 @@ class, self-caught in hand-verification). My orphan-drop = axis-C at the DENOMIN
 - **security-sweep** served proof: `s3://opal-data-portal-v2/security-reports/latest_ai_summary.txt` (52 B,
   today 08:02) = verbatim *"AI summary unavailable (could not fetch OpenAI key)."* Core detection intact
   (findings.json) -> SEV2 (enrich degraded, not core).
-- **trending-image NUANCE:** verbatim `ResourceNotFoundException ... GetSecretValue ... can't find the
-  specified secret` then `raise ValueError("OpenAI API key not found")`. **It crashes, it does not
-  fail-silent** -> fails axis B like schwab UNLESS a consumer depends on the fresh image (crash -> stale
-  user-facing image = the SEV3). Mechanism CVO-verified; the SEV3-LIVE-vs-broken-but-safe call is
-  owner-side (needs the consumer-dependency check). Runs under news-ingestion-lambda-role.
+- **trending-image RESOLVED on the DEPLOYED artifact (Handler `lambda_function.lambda_handler`, 2025-12-30):**
+  the raise-vs-return disagreement (my `raise` vs 0.5.0's `return ''`) reconciles -- BOTH right at different
+  levels: `get_openai_key()` (:138-146) `except -> return ''` (getter fail-silent), then the handler
+  (:234-237) `if not api_key: raise ValueError` -- **net RAISES** (live-log traceback confirms). Fails axis B
+  at the PRODUCER, like schwab. **Sharper root:** `secrets_client = boto3.client('secretsmanager',
+  region_name='us-east-2')` (:17) -- the client is HARDCODED to us-east-2 (0 secrets) -> ResourceNotFound on
+  any read; a code-wrong-region bug, NOT a grant issue (no grant fix helps), broken 191d. **Output is a
+  DynamoDB `icon_type` (us-east-2), not an S3 image.** SEV3-LIVE iff a frontend serves the STALE icon_type
+  (raises-into-stale-serving-consumer); broken-but-safe if unconsumed. **CTO finalizes the consumer call.**
+
+- **opal-layer3-ec2-role (#4, the non-Lambda UNRESOLVED gap) -- CLOSED from EC2/IAM:** openai-api-key grant
+  us-east-2-only (truly-dead); instance profile `opal-portal-ec2-profile` exists but **NO running EC2 carries
+  it** (describe-instances empty; RoleLastUsed 206d) -> axis C fails, no live consumer -> INERT/latent (stopped
+  instance = latent-at-worst). The estate gap both code-side instruments (Lambda-only) were blind to, closed
+  for this row from the non-Lambda side.
 
 ## ACCEPTED (grounded), NON-LIVE
 
@@ -44,6 +54,9 @@ class, self-caught in hand-verification). My orphan-drop = axis-C at the DENOMIN
 ## Sweep-close accounting
 
 Proven universe = dead-grant-8 (A, IAM-enumerable, minus dual/missing/orphan false-positives) + 0.5.0's
-no-grant + missing-secret enumerations, each row filtered through axis-B and axis-C. **CVO-confirmed LIVE
-set: 2 clean SEV2 + 1 SEV3-pending-consumer-nuance. No SEV1.** -> CTO SEV-triage -> Andrew class-brief.
-Separate minor: trending-image logs carry non-ASCII (emoji) -> CLAUDE.md violation, owner cleanup.
+no-grant + missing-secret enumerations + the non-Lambda EC2 check (layer3), each row filtered through
+axis-B and axis-C. **CVO-confirmed LIVE set: 2 clean SEV2 (daily-agenda, security-sweep); trending-image
+producer-RAISES (root: hardcoded us-east-2 client) pending CTO's stale-icon consumer call; opal-layer3-ec2
+INERT (no running consumer). No SEV1.** -> CTO SEV-finalize -> Andrew class-brief.
+Separate minors, owner cleanup: trending-image logs carry non-ASCII emoji (CLAUDE.md violation); the
+trending client is hardcoded to us-east-2 (a Rule-23-adjacent wrong-region literal, not a grant fix).
