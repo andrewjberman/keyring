@@ -69,9 +69,29 @@ in us-east-1 -> not dead. **Second-axis dead grants: 0.** (Caught my own instrum
 asserting -- no raw-as-finding.) So the complete A-axis dead-grant universe = **8** (us-east-2) + **0**
 (us-east-1-missing) = **8 truly-dead roles**.
 
+## SCOPE BOUND (CTO 130916Z) -- this is the dead-GRANT half, NOT the full dead-REACH
+
+A grant-enumeration is a PROXY for dead-reaches: a role that reads a secret it was NEVER granted
+(implicitDeny) has no grant to enumerate, so it is **structurally invisible** to "roles with a us-east-2
+grant." Confirmed live instance: `smartx-ingestion-lambda-role` (runs the `opal-smartx-ingestion-pipeline`
+Lambda) has **ZERO secretsmanager grants** (only AWSLambdaBasicExecutionRole) yet reads a secret -- a
+no-grant dead-reach, NOT in my 8. (This is the master-principle applied to my own instrument.) The full
+A-axis dead-REACH = my 8 (dead-grant half, IAM-enumerable) + 0.5.0's code-side getSecretValue call-site
+enumeration (the no-grant half). **Neither bounds the other.** My 8 is the bound for the dead-grant half only.
+
+## REFINEMENT 3 -- orphan-by-no-consumer: opal-smartx-lambda-role
+
+`opal-smartx-lambda-role` carries a truly-dead us-east-2 grant to `opal/smartx/config` (confirmed live,
+us-east-2 only) -- BUT **no Lambda runs under it** -> the dead grant is inert-BY-NO-CONSUMER (a third
+false-positive shape, beyond dual-grant and missing-secret). Caveat: Lambda consumers checked only; an
+EC2/other reader is possible (name implies Lambda) -- 0.5.0's B-axis confirms. If orphan-confirmed, it
+drops from the live-break candidates (grant real, consumer absent). NOTE: this is NOT the same entity as
+0.5.0's `opal-smartx-ingestion-pipeline` (a Lambda under the different, grant-less `smartx-ingestion-lambda-role`).
+
 ## ROUTE
 
-Complete A-axis denominator = **8 truly-dead roles** -> 0.5.0 intersects with comp-deadgrant (B-axis:
+Complete A-axis dead-GRANT denominator = **8 truly-dead roles** (of which opal-smartx-lambda-role is an
+orphan/inert candidate) -> 0.5.0 intersects with comp-deadgrant (B-axis:
 reads-it + fail-silent) -> the confirmed live/latent-degrade set -> CTO SEV-triage -> Andrew CLASS-brief on
 the reconciled universe. The count is the reconciled intersection, NOT the 8 and NOT the stumbled-on 3.
 Two-directionally-proven universe (pure-IAM denominator + code-side detector), the same rigor that closed
