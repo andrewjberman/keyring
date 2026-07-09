@@ -34,6 +34,7 @@ misrouted). Wire into the comp-tool test sweep; re-run after any comp-which/mani
 from __future__ import annotations
 
 import os
+import re
 import subprocess
 import sys
 
@@ -57,24 +58,69 @@ def _run_comp_which(q: str) -> str:
     return (r.stdout or "") + (r.stderr or "")
 
 
+_ARROW = re.compile(r"^\s*->\s*(\S+)")
+
+
+def self_route_query(manifest, tool):
+    """The tool's OWN richest sentence -- its manifest use_case if it has one, else its
+    tools_index `does`. This is the query TEST 1 scores it against."""
+    by_tool = {}
+    for e in (manifest.get("entries") or []):
+        by_tool.setdefault(str(e.get("tool", "")).split()[0], []).append(e)
+    ucs = by_tool.get(tool, [])
+    ti = manifest.get("tools_index", {})
+    return (ucs[0]["use_case"] if ucs else ti.get(tool, {}).get("does", "")).strip().rstrip("?.")
+
+
+def self_route_verdict(manifest, tool):
+    """(verdict, ranked, query) for ONE tool. verdict in {RANK1, NEARTIE, MISS}.
+
+    THE SPLIT (CTO ruling 20260709T094832Z, on measured evidence):
+      MISS    -- comp-which does not surface the tool AT ALL for its own use_case. DETERMINISTIC
+                 (run-to-run stable) and ROLE-INVARIANT (exercised across cold-start/AE/DS/RD:
+                 zero variance). Margin-free -> a gate MAY hard-block on it.
+      NEARTIE -- surfaces, but never as rank-1; it rode comp-which's within-margin disambiguation
+                 list. THRESHOLD-shaped: a small vocabulary or prior shift drops it out with
+                 nothing about the tool having changed. A gate must only WARN on it.
+      RANK1   -- the router decided on it.
+
+    Governing rule (CTO, verbatim): "every hard-blocking member asserts a DETERMINISTIC fact;
+    anything threshold-shaped REPORTS."
+    """
+    q = self_route_query(manifest, tool)
+    out = _run_comp_which(q)
+    ranked = [m.group(1) for m in (_ARROW.match(ln) for ln in out.split("\n")) if m]
+    if tool not in out:
+        return "MISS", ranked, q
+    if ranked and ranked[0] == tool:
+        return "RANK1", ranked, q
+    return "NEARTIE", ranked, q
+
+
+def self_route_verdicts(manifest, tools=None):
+    """{tool: (verdict, ranked, query)} over `tools` (default: every routable tools_index tool).
+
+    THE one definition of the self-routing property. comp-manifest-check's member-3 imports this
+    rather than reimplementing it -- a gate that forks its invariant drifts from the tool agents
+    actually run, and then disagrees with it.
+    """
+    ti = manifest.get("tools_index", {})
+    universe = [t for t in sorted(ti) if t not in EXCLUDE]
+    targets = [t for t in (tools if tools is not None else universe) if t in universe]
+    return {t: self_route_verdict(manifest, t) for t in targets}
+
+
 def test_self_routing(manifest, verbose=False):
     """Every routable tools_index tool must surface itself end-to-end when queried by its
     own richest use_case sentence (MSTR coverage-probe semantics)."""
-    ti = manifest.get("tools_index", {})
-    entries = manifest.get("entries", [])
-    by_tool = {}
-    for e in entries:
-        by_tool.setdefault(str(e.get("tool", "")).split()[0], []).append(e)
-    tools = [t for t in sorted(ti.keys()) if t not in EXCLUDE]
+    verdicts = self_route_verdicts(manifest)
+    tools = sorted(verdicts)
     fails = []
     for t in tools:
-        ucs = by_tool.get(t, [])
-        q = (ucs[0]["use_case"] if ucs else ti[t].get("does", "")).strip().rstrip("?.")
-        out = _run_comp_which(q)
-        routed = t in out
+        verdict, _ranked, q = verdicts[t]
         if verbose:
-            print("  [%s] %-22s q='%s'" % ("OK " if routed else "MISS", t, q[:58]))
-        if not routed:
+            print("  [%s] %-22s q='%s'" % ("OK " if verdict != "MISS" else "MISS", t, q[:58]))
+        if verdict == "MISS":
             fails.append("%s: comp-which did not surface it for q='%s'" % (t, q[:70]))
     return tools, fails
 
