@@ -99,6 +99,35 @@ Respawn `0.6.0_AE_PartnerETL` (MSTR) OR hand to any live AE. Fully specified, ta
 
    **PROHIBITION EXTENDED TO `A_00` (CTO, 212756Z) -- and the reason is sharper than the `C_02` picker.** Nobody repoints `A_00`'s `sorted()[-1]` at the newest non-empty partition **silently**. The dimension **carries `data_as_of_date`**, so a substituted enrichment silently inherits a date that does not cover it: a row stamped `data_as_of_date = 2026-07-07` carrying `account_type` derived from an 07-08 (or 06-21) snapshot is a **mixed-vintage row with provenance for only one half.** Permitted shapes, and only these: **(a) substitute + STAMP** the enrichment's own vintage in its own column (`account_type_as_of`) plus a max-age bound, beyond which it abstains; or **(b) ABSTAIN + alarm**, leaving the column null **loudly**. Never silently.
 
+   **3g. THE UNDETERMINED IS RESOLVED -- `D_00` DOES CONSUME IT -- AND "JUST FIX `A_00`" IS STRICTLY WORSE THAN LEAVING IT. ADDED 2026-07-09T22:05Z, `0.4.0_DS~B` dataflow trace (215947Z), grounded on the SERVED object.**
+
+   **YES.** `D_00.portal_aggregates` loads `account_type` from the dimension (`:355-360`), passes it to `_dim_values()` (`:822-824`, `series.dropna()`), and writes it into **`gold/artifacts/filters/dimensions.json`**. Served object, LastModified `2026-07-09T09:53:12Z` (today's gold):
+   ```
+   architect     values=56     region       values=19     implementor  values=50
+   account_type  values=0  <-- EMPTY       tax_status   values=3      state        values=49
+   ```
+   **One filter of six renders with zero options, live, client-facing.** Eight grep candidates -> **one** real served consumer. Both of CTO's traps sprang: `C_02` (`:319/:325`) reads `silver['account_type']`, and **`D_04` -- the other script whose involvement CTO pre-committed as P0 -- reads `silver_agg['account_type']` off the allocations parquet where the column IS populated. `D_04` is a grep false-positive.** And a trap nobody named: **`D_00b` loads `account_type` from the dimension (`:1314`) and never uses it** -- loads-and-discards. A "who loads it" method calls that a consumer; it emits nothing.
+
+   **SEVERITY: S2, NOT P0** -- argued DOWN by the lane that found it, against CTO's own pre-committed trigger. `_dim_values` populates a filter's **options list**: no AUA, no certification, no served total, no monetary value. *"An empty dropdown and a wrong $1.837B are not the same plane, and flattening them costs the word P0 its meaning."* Ranking is CTO's; the mechanism is settled.
+
+   **>>> THE ORDERING TRAP -- BINDING. DO NOT FIX `A_00` ALONE. <<<**
+   The filter draws its **values** from `adim['account_type']` but sets **`column: account_owner_type`**. Different columns, partially-overlapping domains:
+   ```
+   account_owner_type (the FILTERED column)  = {Joint, Sole, Trust}
+   account_type       (the VALUE source)     = {IRA, Brokerage, RothIRA, Joint, Trust, InheritedIRA, ...}
+   ```
+   Today the dropdown is **visibly empty** -- broken, obvious, unusable. **Populate `account_type` via the "obvious" `A_00` fix and it fills with `IRA` / `Brokerage` / `RothIRA` / `InheritedIRA` -- every one of which selects ZERO rows.** `Joint` and `Trust` would appear to work, **by coincidence.**
+
+   > **A visibly-broken control becomes a silently-wrong one. Fixing `A_00` alone is strictly worse than leaving it broken.**
+
+   Either both land together, **or the value source is repointed to `account_owner_type` first.** The label says *"Account Type"*, the column says ownership type -- **that is a served-surface semantics question, and it is not the fixer's to settle.** Route to CTO.
+
+   **This is the SECOND ordering trap tonight with the identical shape** (`fabric-check`: fixing the false-REDs alone would have made the deploy gate permanently silent, because a clean fabric is the normal state). **In both, the obvious local fix converts a loud failure into a quiet one.** Ask, every time: *does this fix remove the symptom that is currently the only evidence of the defect?*
+
+   **BOUNDS ON THE NEGATIVE (`0.4.0_DS~B`, unprompted -- a negative is a claim about the query).** The trace resolved every `account_type` reference in `bd/scripts/gold/*.py` to the frame it is read from. It would **NOT** surface: dynamic column access (`df[col]`, `regex=`, `**kwargs`); a `merge()` carrying the whole dimension downstream and writing it without naming the column; the **portal frontend** reading `filters/dimensions.json` directly; Lambdas / Athena / notebooks; **the entire cot tree** (the 828 cot accounts are UNTRACED); and whether `B_01`'s null-enriched `holdings_lots` reaches any served artifact -- **not verified, not claimed.**
+
+   **TWO MORE, UNASKED:** (1) **`account_registration_type` is equally null (0/10,545)** and rides the same enrichment -- the ask named one column, there are **two**. (2) `A_04` derives `client_dimension.account_types` from it: **0/3,771 non-blank, and no `D_*` script reads it.** A dead field that dies in the dimension.
+
 4. **Confirm the 49F portal reflects it** (exercise the served surface; do NOT infer from the cert).
 5. **RAVC CTO.** Then close the ledger:
    - `python .tools/deploy_ledger.py hold --slug bd-49f-empty-stub-asof-lag-root-fix --release`
