@@ -366,6 +366,20 @@ def main() -> int:
         # a role can still WRITE the secret it is only supposed to READ -- a guaranteed false FAIL
         # (and, on a read-removal, a possible false PASS). The action a collateral check cares about
         # is the one the consumer actually performs, so it must be stated, not inherited.
+        # v3.2 (CVO): do not merely default -- REFUSE. On an allow-removal the inherited action IS
+        # the action being removed, so a collateral check against it is definitionally wrong: it
+        # false-FAILS a correct change (visible), and on a read-removal it false-PASSES (silent --
+        # it ships the hole). The tool cannot guess which action the consumer performs.
+        bare = [e for e in a.also_allowed if "|" not in e]
+        if bare and a.change_type == "allow-removal":
+            print("FAIL: --also-allowed needs an explicit ACTION on an allow-removal.\n"
+                  f"      These inherited --action[0] ({a.action[0]}) -- which is the action being\n"
+                  f"      REMOVED, so the check is meaningless: {bare}\n"
+                  "      Pass 'ARN|ACTION' naming the action the CONSUMER actually performs\n"
+                  "      (e.g. 'arn:...:secret:foo-??????|secretsmanager:GetSecretValue').",
+                  file=sys.stderr)
+            return 1
+
         print("\n=== no collateral deny: these must remain 'allowed' ===")
         for pr in a.principal:
             for entry in a.also_allowed:
