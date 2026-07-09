@@ -35,6 +35,7 @@ import json
 import os
 import subprocess
 import sys
+import time
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 if _HERE not in sys.path:
@@ -311,10 +312,17 @@ def compile_model() -> dict:
     fed = _read_fedobs()
     header = {
         "generated_by": "comp-system (NFRA_SYSTEM P3)",
+        # PROVENANCE, not the staleness predicate. It truthfully records the HEAD this was compiled
+        # against; it no longer decides freshness (see check_stale: committing the artifact advances
+        # HEAD, so as_of==HEAD was unsatisfiable for the committed state).
         "as_of_head": _git_head(),
+        # THE PREDICATE's stored half -- computed by the SAME expression --check evaluates.
+        "source_fingerprint": _source_fingerprint(),
+        "emitted_at": time.time(),
         "grounding": "every value below is grounded against a live comp-tool/artifact/marker, or UNKNOWN-VINTAGE. "
                      "ZERO fabrication (CTO hard-line / GOV-A / Rule 22).",
-        "auto_refresh": "regenerate on HEAD-advance (marker-oracle): run comp-system --check then comp-system.",
+        "auto_refresh": "stale iff a source input drifted OR the compile exceeds the TTL: "
+                        "run comp-system --check (0=fresh 2=stale 1=error) then comp-system.",
     }
     diversity = {"metric": "observe-surface DIVERSITY (co-evolution pairs; CTO Q4: diversity not raw volume)",
                  "coevolution_pairs": fed.get("coevolution_pairs", UNKNOWN),
@@ -432,22 +440,97 @@ def self_test() -> int:
     return 0 if n == len(ok) else 1
 
 
+#: The repo substrate 06 summarizes. The fingerprint half of the predicate. Stat-only
+#: (max-mtime, file-count) via graph_cache -- one implementation, shared with the caches.
+_SOURCES = [
+    (os.path.join(WS, ".tools"), "comp-*"),
+    (os.path.join(WS, "org", "modules", "graph"), "*.yaml"),
+    (os.path.join(WS, "org", "tier2_senior", "0.4.0_DS_ClientPlatform", "deliverables"), "*.json"),
+]
+
+#: The TTL half. 06 is grounded-against-LIVE (kuzu node counts, git HEAD, live probes); no repo
+#: fingerprint can see those move, so age is the only signal for them. A day: the live values it
+#: carries are slow-moving, and a shorter TTL would re-manufacture the always-STALE defect this
+#: replaces. Printed by --check FROM this constant -- never a hand-copied duplicate.
+_TTL_SECONDS = 86400
+
+
+def _source_fingerprint():
+    """The enforcing expression, imported not forked (graph_cache is the one implementation)."""
+    import graph_cache as _gc
+    return list(_gc.source_fingerprint(_SOURCES))
+
+
+def _staleness(header: dict):
+    """(is_stale, reason). THE single predicate. --check reports it; the emit path stores what it
+    computes. Never two expressions that agree today."""
+    emitted_fp = header.get("source_fingerprint")
+    emitted_at = header.get("emitted_at")
+    cur_fp = _source_fingerprint()
+
+    if emitted_fp is None or emitted_at is None:
+        # A pre-predicate artifact (emitted under the as_of==HEAD oracle). Unverifiable against the
+        # new predicate -> STALE, and it self-heals on the next emit. Never a silent pass.
+        return True, "emitted before the fingerprint predicate existed; regenerate once to adopt it"
+
+    if list(emitted_fp) != cur_fp:
+        return True, ("source drift: fingerprint (max_mtime, file_count) %s -> %s"
+                      % (tuple(emitted_fp), tuple(cur_fp)))
+
+    age = time.time() - float(emitted_at)
+    if age >= _TTL_SECONDS:
+        return True, ("age %dh exceeds TTL %dh (live-grounded values may have moved)"
+                      % (age // 3600, _TTL_SECONDS // 3600))
+
+    return False, ("sources unchanged, age %dh < TTL %dh" % (age // 3600, _TTL_SECONDS // 3600))
+
+
 def check_stale() -> int:
-    """Auto-refresh oracle: is the emitted 06 stale vs the current HEAD marker?"""
-    head = _git_head()
-    if not os.path.exists(OUT_JSON):
-        print("06 not yet emitted -- run comp-system. (HEAD=%s)" % head)
-        return 1
+    """The --check PROBE. Reports staleness, never rebuilds.  0 = fresh | 2 = stale | 1 = tool error.
+
+    Exit codes per CTO 20260709T195217Z: 2 (not 1) for stale, mirroring
+    `terraform plan -detailed-exitcode`. Returning 1 on stale CONFLATED "your artifact is stale" with
+    "the probe crashed" -- a CI job cannot act on that, and will read a crashed probe as a stale
+    artifact or vice versa. 1 now means the tool failed, and ONLY that.
+
+    WHY THIS NO LONGER COMPARES as_of_head TO HEAD (the defect this replaces):
+      Emitting records as_of = HEAD-at-emit-time. LANDING the artifact requires a commit, and that
+      commit ADVANCES HEAD. So as_of was always the parent of the commit that shipped it, and the
+      oracle reported the freshly-regenerated artifact STALE against the very commit that shipped it.
+      Exercised 2026-07-09: `comp-system` -> `--check` said CURRENT (uncommitted); `safe-commit`
+      [735a4d86d]; `--check` said "STALE: emitted as_of=fe02f71e5 vs current HEAD=735a4d86d".
+      It could return 0 only on an uncommitted tree -- seconds wide on a 20-agent shared branch, and
+      any unrelated commit flipped it. A signal that is always RED carries no information; it is the
+      same defect as a check that never fires, at the opposite rail. `as_of == HEAD` was a PROXY for
+      "the artifact reflects the substrate it summarizes", and it was UNSATISFIABLE for the only
+      state that matters (committed).
+
+    THE PREDICATE NOW BINDS THE PROPERTY (CTO ruling; MSTR's ratified rule): stale iff
+      (a) an INPUT the artifact reads has changed since emit  -- source fingerprint drift, or
+      (b) the compile is older than _TTL                      -- covers the LIVE-grounded values
+          (kuzu counts, git HEAD, live probes) that no repo fingerprint can see.
+    `as_of_head` stays in the header as PROVENANCE (it truthfully records the HEAD compiled against);
+    it is simply no longer the staleness predicate.
+
+    ONE EXPRESSION, NOT TWO THAT AGREE TODAY (MSTR 20260709T200348Z): the fingerprint is
+    `graph_cache.source_fingerprint` -- the SAME function the caches enforce -- and the emit path
+    stores what THIS function computes. There is no parallel copy to drift.
+    """
     try:
+        if not os.path.exists(OUT_JSON):
+            print("06 STALE: not yet emitted -- run comp-system.")
+            return 2
         with open(OUT_JSON, encoding="utf-8") as fh:
-            emitted = json.load(fh).get("header", {}).get("as_of_head")
-    except Exception:  # noqa: BLE001
-        emitted = None
-    if emitted == head:
-        print("06 CURRENT (as_of HEAD=%s)" % head)
+            header = json.load(fh).get("header", {})
+        stale, reason = _staleness(header)
+    except Exception as e:  # noqa: BLE001 -- a probe that cannot evaluate is an ERROR, never "fresh"
+        print("06 UNVERIFIABLE: --check could not evaluate (%s: %s)" % (type(e).__name__, e))
+        return 1
+    if not stale:
+        print("06 CURRENT (%s)" % reason)
         return 0
-    print("06 STALE: emitted as_of=%s vs current HEAD=%s -- regenerate (comp-system)." % (emitted, head))
-    return 1
+    print("06 STALE: %s -- regenerate (comp-system)." % reason)
+    return 2
 
 
 def main() -> int:
