@@ -36,6 +36,20 @@ B1 (the WRITE-root least-priv wave) added a cross-firm-SECRET-deny; **we never a
 - **INCIDENT RESOLVED (both planes):** WRITE-plane closed+universe-proven (worst-case eliminated, write-foreign=1 belted, DeleteObject-foreign=none) + READ-plane closed (opal-news belted; opal-portal-bd/lambda-exec-layer3/partners SANCTIONED-by-design; opal-portal INF-read grounded). Relayed to Andrew (write-plane 17:02Z; read-plane = the positive follow-on).
 - **2 FOLLOW-ONS (not open gaps):** (1) partner-API single-layer isolation = defense-in-depth, post-NFRA durable fix (per-request scoped creds); (2) belt-CONSISTENCY review (CTO, off 0.7.0~B's TERRAFORM delta-memo) = the durable close (one uniform firm-sep belt standard vs per-incident patchwork).
 
+## UPDATE 2026-07-09T17:20Z -- BELT-CONSISTENCY RULING = the durable firm-sep close (CTO 172057Z)
+The 29-role INF cross-firm-deny (P2) and tonight's incident-#9 belts are COMPLEMENTARY GRAINS, not a redundant patchwork:
+- **INF 29-role belt = PER-FIRM PREVENTIVE** (deny a whole firm's role population cross-firm; auto-covers future new roles in that firm).
+- **Incident-#9 belts = PER-FIRMLESS-ROLE** (market-update/lambda-exec write, opal-news read -- the shared/firmless roles a per-firm belt structurally can't cover). Separate belt, not the same P2 job.
+
+**THE COHERENT STANDARD (3 layers, one program) -- the durable close:**
+- (a) PER-FIRM PREVENTIVE belt on ALL 3 firms. **GAP: bd + cot LACK it** (INF has it); currently covered only by tonight's point-in-time sweep, not a future-proof Deny. Extend INF's 29-role template to bd+cot. (NEVER#1 IAM-Deny-enforced, made uniform.)
+- (b) PER-FIRMLESS-ROLE adjudication (tonight's sweep -- keep; re-run on new firmless roles).
+- (c) STANDING live-simulate DETECT (comp-firmsep-sweep -- only live-simulate finds unmanaged/AWS-managed grants; TF-lint is blind. Proven 3x tonight).
+
+**OWNERSHIP:** CTO authors the unified belt-CONSISTENCY standard (arch + 3-layer). 0.7.0/0.5.0 implement bd+cot per-firm belt-extension + standing sweep (infra, multi-firm). **COO coordinates off THIS tracker** -- the bd+cot extension + standing-sweep are the firm-sep thread's durable-close legs (tracked here to completion). Master-principle: [[feedback_firmsep_belt_must_cover_all_cross_firm_planes]] (belt-all-planes) + its sibling belt-CONSISTENCY (uniform across FIRMS + grains, not per-incident patchwork) + [[feedback_partial_signal_read_as_whole_master_principle]] (a patchwork = each belt covers only what surfaced; gaps invisible until the next incident).
+
+**DURABLE-CLOSE LEGS (COO-tracked):** [ ] bd per-firm preventive belt (0.7.0/0.5.0, INF-template); [ ] cot per-firm preventive belt; [ ] standing comp-firmsep-sweep DETECT; [ ] partner-API per-request-scoped-creds (defense-in-depth, post-NFRA); pending CTO's authored standard.
+
 ## Tracking / disposition
 - **Incident-gravity** (a NEVER#1 miss that shipped). This file is the durable record.
 - **Andrew-relay ON SWEEP-CLOSE** (NOT premature): when the 180-role sweep closes + the belt lands -> relay to Andrew as "a data-plane firm-sep gap found + closed" (honest, scoped, with remediation-plan). Tracked in ANDREW_SOVEREIGN_QUEUE (relay-gated-on-sweep-close).
