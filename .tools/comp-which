@@ -404,6 +404,40 @@ RULES = [
      "the COMPLEARN loop's served DEMAND/GAP/COST read -- tool demand, gap heat, coverage gaps, cost, "
      "from the live globgrph Trino federation (tool_activity x code_heat x iceberg). Reads SERVED state, "
      "never recomputes"),
+    # ---- near-tie hardening TRANCHE 3, the last five (COO~B GO 2026-07-09) ---------------------
+    # Diagnosed first: none of the five names a sibling and none borrows a sibling's defining
+    # concept. They lose on THIN TEXT -- their use_case sentences are short, so a longer, richer
+    # neighbour (comp-constants / comp-platinum / comp-adapter-audit / comp-lambdamap) out-scores
+    # them semantically. The fix is their own distinctive vocabulary, not a shorter neighbour.
+    (["stand in for", "stand-in for", "never-widen", "never widen", "cutover", "cutover readiness",
+      "ready to stand in", "canonical pipeline ready", "served surfaces parity", "swap the served"],
+     "served-vs-canonical CUTOVER readiness (comp-parity)",
+     ["comp-parity", "comp-parity --firm bd"],
+     "is a canonical pipeline ready to STAND IN for the served surfaces -- a never-widen cutover "
+     "readiness check. DISTINCT from comp-incrparity (incremental cache vs full-recompute oracle)"),
+    (["gold script i/o", "gold script io", "chain membership", "deployed-match", "deployed match",
+      "script overlap", "column gaps", "what columns does the gold script", "io contract of"],
+     "gold-script I/O + chain membership + deployed-match (comp-pipescript)",
+     ["comp-pipescript io <script>", "comp-pipescript deployed <script>", "comp-pipescript postdeps <script>"],
+     "one GOLD SCRIPT's I/O contract (column gaps + portal consumers), its chain membership, and "
+     "whether the runner has its code (MATCH/STALE/MISSING)"),
+    (["registry narrative", "project-json drift", "project json drift", "phase mismatch",
+      "commit-citation", "commit citation", "status mismatch", "registry drift", "registry vs json"],
+     "REGISTRY-vs-project-JSON narrative drift (comp-registry)",
+     ["comp-registry sync", "comp-registry sync --project <CODE>", "comp-registry sync --all"],
+     "REGISTRY narrative vs the project JSON -- phase / commit-citation / status mismatch "
+     "(governance record drift, not code)"),
+    (["tooltip", "tooltips", "tooltip migration", "tooltip coverage", "portal tooltip"],
+     "portal tooltip coverage/migration audit (comp-tooltip)",
+     ["comp-tooltip", "comp-tooltip --page <Page>"],
+     "portal TOOLTIP coverage + migration audit -- which tooltips exist, which are missing"),
+    (["which components consume", "components consume this type", "typescript type",
+      "before editing an interface", "type consumers", "interface consumers", "consume this type",
+      "who uses this type"],
+     "TypeScript type consumers (comp-types)",
+     ["comp-types <TypeName>"],
+     "which portal components consume a TypeScript TYPE/interface -- read this before editing the "
+     "interface. Input is a TYPE name, not a component"),
     # ---- near-tie hardening TRANCHE 2 (COO~B GO 2026-07-09) ------------------------------------
     # Four more tools that never won rank-1 on their own use_case. Diagnosed first: comp-build /
     # comp-chainrun / comp-incrparity all lost to comp-aws (semantic pull, no rule of their own);
