@@ -247,7 +247,9 @@ def main() -> int:
                    help="a principal the change was NOT applied to; must NOT show the "
                         "expected verdict -- proves the change is the deciding control")
     p.add_argument("--also-allowed", action="append", default=[],
-                   help="resource ARNs that must remain 'allowed' (no collateral deny)")
+                   help="'ARN' or 'ARN|ACTION' -- must remain 'allowed' (no collateral deny). STATE the "
+                        "action: on a write-removal, inheriting --action[0] asserts the role can still "
+                        "WRITE a secret it only READs, which false-FAILs a correct change.")
     p.add_argument("--precheck", metavar="BASELINE_JSON",
                    help="run BEFORE apply: assert each principal is CURRENTLY 'allowed' on each "
                         "(action, resource) and write the baseline here. An allow-removal that was "
@@ -359,14 +361,26 @@ def main() -> int:
                 print(f"  [{'PASS' if ok else 'FAIL'}] {pr.split('/')[-1]:<32} -> {v} (must differ from {expected})")
 
     if a.also_allowed:
+        # v3.1: each entry is `ARN` or `ARN|ACTION`. Reusing --action[0] here is a TRAP: on a
+        # write-removal the tested action is PutSecretValue, so the collateral check would assert
+        # a role can still WRITE the secret it is only supposed to READ -- a guaranteed false FAIL
+        # (and, on a read-removal, a possible false PASS). The action a collateral check cares about
+        # is the one the consumer actually performs, so it must be stated, not inherited.
         print("\n=== no collateral deny: these must remain 'allowed' ===")
         for pr in a.principal:
-            for rs in a.also_allowed:
-                v = simulate(pr, rs, a.action[0], a.context)
+            for entry in a.also_allowed:
+                rs, _, act = entry.partition("|")
+                act = act or a.action[0]
+                v = simulate(pr, rs, act, a.context)
                 ok = v == "allowed"
                 if not ok:
-                    failures.append(f"COLLATERAL {pr.split('/')[-1]} lost {rs.split(':secret:')[-1]} -> {v}")
-                print(f"  [{'PASS' if ok else 'FAIL'}] {pr.split('/')[-1]:<32} {rs.split(':secret:')[-1][:34]:<34} -> {v}")
+                    failures.append(f"COLLATERAL {pr.split('/')[-1]} lost {act} on "
+                                    f"{rs.split(':secret:')[-1]} -> {v}"
+                                    + ("   (no ACTION given -- it inherited --action[0]; "
+                                       "pass 'ARN|ACTION' if you meant a different one)"
+                                       if not entry.partition('|')[2] else ""))
+                print(f"  [{'PASS' if ok else 'FAIL'}] {pr.split('/')[-1]:<30} {act:<30} "
+                      f"{rs.split(':secret:')[-1][:30]:<30} -> {v}")
 
     print()
     if failures:
