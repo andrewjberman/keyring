@@ -31,6 +31,11 @@ B1 (the WRITE-root least-priv wave) added a cross-firm-SECRET-deny; **we never a
 - **DEFENSE-IN-DEPTH tail (post-NFRA):** the PARTNER-API cross-firm isolation is APP-LAYER ONLY (is_authorized + allowedFirmIds over an opal-data-* grant, NO IAM backstop). Sanctioned read, but single-layer -- one is_authorized bug = cross-firm partner-data exposure with nothing beneath. Durable fix = per-request scoped creds (assume-role-per-firm). Folded into Andrew-awareness; filed post-NFRA.
 - **DURABLE CLOSE of the firm-sep thread (CTO-owned):** belt-CONSISTENCY review -- is the firm-sep belt program ONE uniform standard (all planes: secret+bucket; all firms; all depth/actions; proven-universe) or a per-incident PATCHWORK (itself a partial-signal-as-whole risk)? CTO assesses off 0.7.0~B's TERRAFORM delta-memo (INF-PARITY 29-role cross-firm-deny vs this bucket-deny -- same grain?). See [[feedback_firmsep_belt_must_cover_all_cross_firm_planes]] + [[feedback_partial_signal_read_as_whole_master_principle]].
 
+## UPDATE 2026-07-09T17:15Z -- READ-PLANE CLOSED -> BOTH PLANES CLOSED (incident resolved; 2 follow-ons)
+- **READ-PLANE CLOSED (e25c7c635):** opal-news cross-firm read-Deny APPLIED + ledger 3/3 closed. Every remaining firm-bucket reader is SANCTIONED + grounded. FIVE ledgers, all closed.
+- **INCIDENT RESOLVED (both planes):** WRITE-plane closed+universe-proven (worst-case eliminated, write-foreign=1 belted, DeleteObject-foreign=none) + READ-plane closed (opal-news belted; opal-portal-bd/lambda-exec-layer3/partners SANCTIONED-by-design; opal-portal INF-read grounded). Relayed to Andrew (write-plane 17:02Z; read-plane = the positive follow-on).
+- **2 FOLLOW-ONS (not open gaps):** (1) partner-API single-layer isolation = defense-in-depth, post-NFRA durable fix (per-request scoped creds); (2) belt-CONSISTENCY review (CTO, off 0.7.0~B's TERRAFORM delta-memo) = the durable close (one uniform firm-sep belt standard vs per-incident patchwork).
+
 ## Tracking / disposition
 - **Incident-gravity** (a NEVER#1 miss that shipped). This file is the durable record.
 - **Andrew-relay ON SWEEP-CLOSE** (NOT premature): when the 180-role sweep closes + the belt lands -> relay to Andrew as "a data-plane firm-sep gap found + closed" (honest, scoped, with remediation-plan). Tracked in ANDREW_SOVEREIGN_QUEUE (relay-gated-on-sweep-close).
