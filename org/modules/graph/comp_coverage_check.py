@@ -64,15 +64,58 @@ def _seam_ids(seam_source: dict) -> set[str]:
     return {s["seam_id"] for s in seam_source.get("seams", [])}
 
 
+def _tool_name(fname: str) -> str:
+    base = fname.rsplit(".", 1)[0] if "." in fname else fname
+    return base if (base.startswith("comp-") or base == "pipescript") else ""
+
+
 def _tools_dir_inventory() -> set[str]:
+    """WORKING-TREE universe -- every comp-* file on disk, tracked or not.
+
+    CORRECT for the OPERATOR question ("is the map consistent right now, including my uncommitted
+    work"). WRONG as a commit-time signal: we share one worktree, so this also sees OTHER agents'
+    untracked, mid-authoring files. That is how comp-denytest and comp-firmsep-sweep red-bannered
+    every agent on 2026-07-09 for files that existed in no commit -- a fabric-wide FAIL caused by
+    work nobody had committed. Use _committed_tools_inventory() for any gate. (CTO ruling 094435Z.)
+    """
     inv: set[str] = set()
     if not os.path.isdir(TOOLS_DIR):
         return inv
     for f in os.listdir(TOOLS_DIR):
-        base = f.rsplit(".", 1)[0] if "." in f else f
-        if base.startswith("comp-") or base == "pipescript":
-            inv.add(base)
+        t = _tool_name(f)
+        if t:
+            inv.add(t)
     return inv
+
+
+def _committed_tools_inventory() -> set[str]:
+    """COMMITTING-TREE universe -- only comp-* files git actually tracks.
+
+    Structurally excludes another agent's untracked scratch file, so a gate built on this can never
+    block agent B for agent A's work-in-progress. Falls back to the working tree if git is
+    unavailable -- a fallback that can only ever be MORE inclusive, never silently narrower.
+    """
+    import subprocess
+    try:
+        out = subprocess.run(["git", "ls-files", ".tools"], capture_output=True,
+                             cwd=os.path.dirname(TOOLS_DIR)).stdout
+        names = out.decode("utf-8", "replace").split("\n")
+    except Exception:
+        return _tools_dir_inventory()
+    inv: set[str] = set()
+    for raw in names:
+        rel = raw.strip().replace("\\", "/")
+        if not rel.startswith(".tools/"):
+            continue
+        tail = rel[len(".tools/"):]
+        if "/" in tail:
+            continue  # TOP-LEVEL ONLY -- mirror os.listdir; .tools/hooks/comp-tool-hud.sh is a
+            # hook, not a comp-tool, and counting it made the gate universe WIDER than the
+            # operator's (it flagged comp-tool-hud as UNPLACED). Caught by the side-by-side test.
+        t = _tool_name(tail)
+        if t:
+            inv.add(t)
+    return inv or _tools_dir_inventory()
 
 
 # ----------------------------------------------------------------------------- rule checkers
@@ -143,8 +186,18 @@ def _check_no_trino_phantom_seam(led: dict, **_: object) -> list[str]:
     return out
 
 
+# TWO CONSUMERS, TWO UNIVERSES (CTO 094435Z + COO~B 095352Z: parameterise, do not fork the tool).
+# The operator asks "is the map consistent RIGHT NOW, including my uncommitted work" -> working
+# tree. A GATE asks "does this COMMIT leave the map consistent" -> committing tree. Same rule,
+# different universe. Set by check(universe=...); an explicit `inventory=` argument still wins.
+_INVENTORY_OVERRIDE: set[str] | None = None
+
+
 def _check_inventory_completeness(led: dict, inventory: set[str] | None = None, **_: object) -> list[str]:
-    inv = _tools_dir_inventory() if inventory is None else inventory
+    if inventory is not None:
+        inv = inventory
+    else:
+        inv = _INVENTORY_OVERRIDE if _INVENTORY_OVERRIDE is not None else _tools_dir_inventory()
     if not inv:
         return ["inventory_completeness: UNVERIFIABLE -- could not enumerate .tools/ inventory"]
     homed = {t["tool"] for t in led.get("tools", [])}
@@ -617,7 +670,15 @@ def run_gate(led: dict, seam_source: dict, inventory: set[str] | None = None,
     return (FAIL if violations else PASS), violations, unverifiable
 
 
-def check() -> int:
+def check(universe: str = "working") -> int:
+    """universe='working' (default, the operator view) | 'commit' (the gate view: tracked files only).
+
+    A gate MUST pass universe='commit'. We share one worktree, so the default working-tree read
+    also sees other agents' untracked, mid-authoring comp-* files and will FAIL every agent for
+    work nobody committed. That is the root of the 2026-07-09 unplaced-banner churn.
+    """
+    global _INVENTORY_OVERRIDE
+    _INVENTORY_OVERRIDE = _committed_tools_inventory() if universe == "commit" else None
     try:
         led = _load(LEDGER)
         seam_source = _load(SEAM_SOURCE)
@@ -841,7 +902,8 @@ def main(argv: list[str]) -> int:
         return seam(edges_path, _arg(argv, "--rollup"), _arg(argv, "--scope"), _arg(argv, "--producer"))
     if cmd == "audit":
         return audit(_arg(argv, "--observed"))
-    return check()
+    # --universe commit == the GATE view (tracked files only). Default stays the operator view.
+    return check(universe=(_arg(argv, "--universe") or "working"))
 
 
 if __name__ == "__main__":
