@@ -268,7 +268,48 @@ if [ -n "$BASELINE" ]; then
 fi
 
 # (2) Stage our declared pathspec inside the lock (-f past .gitignore).
-git add -f -- "${PATHSPEC[@]}" 2>/dev/null || true
+#
+# The staging error must NOT be swallowed. A failed `git add` here -- index.lock
+# contention from a concurrent lane on the shared worktree -- used to pass
+# silently, and step (5)'s `git commit --only -- PATHSPEC` then aborted with
+#     pathspec 'X' did not match any file(s) known to git
+# pointing the agent at their OWN PATH instead of at the lock. The suppression
+# did not merely hide an error, it MANUFACTURED a false one -- and a misleading
+# claim is worse than a silent one (CTO 20260709T195435Z). Observed 3x on
+# 2026-07-09 while MSTR held the shared index; a bare retry fixed it every time.
+#
+# Retry ONLY on lock contention (transient -- other lanes commit in seconds).
+# Any other failure (bad pathspec, permissions) surfaces immediately: it is not
+# transient, and retrying only delays a true error behind a false one.
+ADD_ERR=""
+ADD_OK=0
+for attempt in 1 2 3 4 5; do
+  if ADD_ERR="$(git add -f -- "${PATHSPEC[@]}" 2>&1)"; then
+    ADD_OK=1
+    break
+  fi
+  case "$ADD_ERR" in
+    *index.lock*|*"Unable to create"*|*"File exists"*)
+      [ "$attempt" -lt 5 ] && sleep "$attempt"   # 1s,2s,3s,4s backoff (Rule 16: no flock)
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+if [ "$ADD_OK" -ne 1 ]; then
+  echo "ERROR: safe-commit could not stage the declared pathspec. Commit aborted." >&2
+  echo "       git add reported:" >&2
+  printf '       %s\n' "$ADD_ERR" >&2
+  echo "" >&2
+  echo "  If that mentions index.lock: a concurrent lane holds the shared index." >&2
+  echo "  Transient -- retry. (safe-commit already retried 5x over ~10s.)" >&2
+  echo "  Otherwise the pathspec itself is the problem, and THIS is the real error," >&2
+  echo "  not the 'pathspec did not match' you would previously have seen." >&2
+  exit 1
+fi
+# Re-emit git's own non-fatal chatter (e.g. CRLF warnings) that 2>&1 captured.
+[ -n "$ADD_ERR" ] && printf '%s\n' "$ADD_ERR" >&2
 
 # (3) IN_SCOPE: git-expanded files matching our declared pathspec.
 IN_SCOPE="$(git diff --cached --name-only -- "${PATHSPEC[@]}" 2>/dev/null || true)"
