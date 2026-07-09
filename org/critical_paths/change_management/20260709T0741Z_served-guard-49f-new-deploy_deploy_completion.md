@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-07-09T07:41:07.771252+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / next natural opal-data-bd/platinum/firm/header_metrics.json write (49f served-producer cadence) -> L4 end-to-end FIRE verify (CTO condition-2: Invocations>0, Errors=0, guard assessed) (held since 2026-07-09T07:43:27.814951+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: sovereign / SUSPENDED 2026-07-09T22:35Z (CTO ruling 230329Z) -- Andrew: 49F OUT OF SCOPE. DO NOT RUN THE L4 END-TO-END FIRE VERIFY on the next platinum/firm/header_metrics.json write. NEVER#6 binds on APPLIED LEGS, not on ASSURANCE: this deploy's legs LANDED; what is open is a READ we have not taken, not a WRITE we failed to make. A verification is knowledge, not state -- knowledge can wait for a sovereign, a stranded prefix cannot. NEITHER closed NOR advanced. Closing would assert a completeness we have not established; running would pursue a subject the sovereign closed. When Andrew answers: close 'out of scope, sovereign -- VERIFY NOT RUN' recorded as an EXPLICIT GAP, never as a pass; or run it. Nobody discovers this at 02:10Z. (held since 2026-07-09T07:43:27.814951+00:00)
 **Deploy:** 49f served-guard NEW deploy (closes the unguarded-49f-served-plane gap) -- CTO GATE-2 GO 070803Z, bd-EventBridge prereq met (0.5.0 e1a7089e8)
 **Authored by:** 0.7.0_AE_CloudOps
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -24,3 +24,4 @@
 - 20260709T074327Z LEG L2 closed: safe-apply complete 11-add/0-change/0-destroy: aws_lambda_function.guard + aws_iam_role + 4 role_policies (logs/s3/sns/s
 - 20260709T074327Z LEG L3 closed: APPLIED-TRUTH (Rule 22a): Lambda opal-49f-served-guard Active + CodeSha256=KClXSRHseUV2Yajfgog6l+9KJYDx1n8GwKM8RLi66Fg= 
 - 20260709T074327Z HELD-SOVEREIGN-GATED gate=external/next natural opal-data-bd/platinum/firm/header_metrics.json write (49f served-pr
+- 20260709T230939Z HELD-SOVEREIGN-GATED gate=sovereign/SUSPENDED 2026-07-09T22:35Z (CTO ruling 230329Z) -- Andrew: 49F OUT OF SCOPE. DO
