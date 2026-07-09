@@ -521,32 +521,95 @@ def render_open_deploys() -> str:
         p for p in state_dir.glob("*.json") if not p.name.startswith(".")
     ) if state_dir.exists() else []
     if not sentinels:
-        return "OPEN-DEPLOYS: none -- nothing half-landed"
+        # Carry the denominator here too: "0 scanned" is a DIFFERENT claim from "we found none",
+        # and a reader must be able to tell an empty universe from an unread one.
+        return "OPEN-DEPLOYS: 0 scanned, 0 held, 0 stranded -- no sentinels; nothing half-landed"
     from datetime import datetime, timezone
+
+    # HELD / SOVEREIGN-GATED alignment (CTO-assigned 2026-07-09; read-side only, NO new semantics).
+    # This reader used to classify on `age_h > window_hours` alone -- a PROXY -- while deploy_ledger
+    # classifies on the LEGS (the PROPERTY: every apply leg proven + only verify legs open + a named
+    # structured gate => HELD, tracked-not-stranded). Same sentinels, same cycle, OPPOSITE verdicts:
+    # fabric-check called 5 legitimately-HELD ledgers "OVERRUN: close or roll back" every cycle, so
+    # COO's own block-detector cried wolf 5x forever -- and the correct response to a detector that
+    # always cries wolf is to ignore it, which is precisely how a REAL half-landed deploy gets missed.
+    #
+    # We IMPORT deploy_ledger's _qualifies_as_held rather than re-implement it. A second copy of
+    # "is this stranded?" would be the same proxy-vs-property bug one layer up; single-sourcing means
+    # the two instruments cannot diverge again. _qualifies_as_held reads the LEGS, so a genuinely
+    # half-landed strand (an open APPLY leg) can never claim HELD to escape the RED.
+    _held_import_err = None
+    try:
+        if _TOOLS_DIR not in sys.path:
+            sys.path.insert(0, _TOOLS_DIR)
+        from deploy_ledger import (  # noqa: E402  -- single source of truth
+            DEFAULT_HELD_STALE_DAYS, HELD_STATUS, _held_age_days, _qualifies_as_held,
+        )
+    except Exception as e:  # fail LOUD, never silently fall back to the proxy
+        _held_import_err = e
+
+    now = datetime.now(timezone.utc)
     lines = []
-    n_risk = 0  # PAST-WINDOW open deploys = the genuine half-landed risk
+    n_risk = 0    # genuinely stranded: past window, NOT held  -> the half-landed risk
+    n_held = 0    # HELD-SOVEREIGN-GATED: apply-proven, verify open, named gate -> tracked
+    n_stale = 0   # a legit hold that sat too long -> a distinct nudge, not the half-land RED
+    if _held_import_err is not None:
+        lines.append(f"  [DEGRADED] cannot import deploy_ledger HELD semantics ({_held_import_err}) "
+                     "-- falling back to the age>window PROXY; HELD ledgers will read as stranded")
     for sp in sentinels:
         try:
             st = json.loads(sp.read_text(encoding="utf-8"))
             opened = datetime.fromisoformat(st["opened_at"])
-            age_h = (datetime.now(timezone.utc) - opened).total_seconds() / 3600.0
+            age_h = (now - opened).total_seconds() / 3600.0
             open_legs = [leg["id"] for leg in st["legs"] if not leg.get("proof")]
-            # "stranded" (a half-landed RISK) means the deploy OVERRAN its window with legs still
-            # open. An IN-WINDOW open leg is just PENDING -- expected to close within the (possibly
-            # COO-extended) window_hours -- NOT stranded. This honors a documented window-extension
-            # (e.g. a rule-deferred cert belt held to the scheduled nightly) instead of re-flagging
-            # it as stranded every sweep. window_hours already carries any COO extension.
+
+            held_ok = False
+            if _held_import_err is None:
+                held_ok, _held_reason = _qualifies_as_held(st)
+            if held_ok:
+                gate = st["gate"]
+                held_days = _held_age_days(st, now)
+                if held_days is not None and held_days > DEFAULT_HELD_STALE_DAYS:
+                    n_stale += 1
+                    lines.append(f"  [HELD-STALE] {st['slug']} held={held_days:.1f}d "
+                                 f"(>{DEFAULT_HELD_STALE_DAYS}d) gate={gate['type']}/{gate['ref']} "
+                                 f"open-verify={open_legs} author={st['author']}"
+                                 "  <- nudge the gate or reconsider the hold")
+                else:
+                    n_held += 1
+                    hd = f"{held_days:.1f}d" if held_days is not None else "?"
+                    lines.append(f"  [{HELD_STATUS}] {st['slug']} held={hd} "
+                                 f"gate={gate['type']}/{gate['ref']} open-verify={open_legs} "
+                                 f"author={st['author']}  -- apply legs proven; tracked-not-stranded")
+                continue
+
+            # NOT held -> the original logic, unchanged. "stranded" (a half-landed RISK) means the
+            # deploy OVERRAN its window with legs still open. An IN-WINDOW open leg is just PENDING.
+            # A ledger that CLAIMS a gate but does not qualify (e.g. an open apply leg) lands here --
+            # the anti-escape-hatch, identical to deploy_ledger's.
             if age_h > st.get("window_hours", 4):
                 n_risk += 1
+                claim = " [HELD-CLAIM REJECTED]" if st.get("gate") else ""
                 lines.append(f"  [PAST-WINDOW] {st['slug']} age={age_h:.1f}h "
-                             f"stranded={open_legs} author={st['author']}  <- OVERRUN: close or roll back")
+                             f"stranded={open_legs} author={st['author']}{claim}"
+                             "  <- OVERRUN: close or roll back")
             else:
                 lines.append(f"  [in-window] {st['slug']} age={age_h:.1f}h "
                              f"pending={open_legs} author={st['author']}")
         except Exception as e:  # never let a corrupt sentinel kill the check
             lines.append(f"  [UNREADABLE] {sp.name} err={e}")
-    hdr = (f"OPEN-DEPLOYS: {len(sentinels)} open"
-           + (f" ({n_risk} PAST-WINDOW = half-landed RISK)" if n_risk else " (all in-window, none stranded)") + ":")
+
+    # DENOMINATOR (CTO acceptance criterion 3, 205745Z): "a verdict without its universe is not a
+    # verdict." Always state how many sentinels were SCANNED alongside the verdict, so a reader can
+    # tell "0 stranded because we checked 5 and all are held" apart from "0 stranded because we
+    # checked nothing" -- the exact ambiguity that let this reader be silent-and-trusted.
+    note = []
+    if n_stale:
+        note.append(f"{n_stale} of the held are HELD-STALE -- nudge the gate")
+    if not n_risk and not n_held and not n_stale:
+        note.append("all in-window, none stranded")
+    hdr = (f"OPEN-DEPLOYS: {len(sentinels)} scanned, {n_held + n_stale} held, {n_risk} stranded"
+           + (f" ({'; '.join(note)})" if note else "") + ":")
     return "\n".join([hdr] + lines)
 
 
@@ -568,6 +631,15 @@ def main():
         if not triage:
             print("FABRIC-CHECK: no deaf / blocks / sovereign-requests / stale-verify. Fabric flowing.")
             print("FABRIC-CHECK-RESULT deaf=0 blocked=0 sovereign=0 stale_verify=0")
+            # DEFECT-2 FIX (COO 212646Z): OPEN-DEPLOYS is the NEVER-law deploy-completion gate
+            # (e38cc2b16). It was printed ONLY on the triage-NON-empty path, so in --blocks mode a
+            # CLEAN agent-axis returned here and the deploy gate NEVER RAN. Its visibility was
+            # COUPLED to an unrelated condition -- whether some agent happened to be DEAF/BLOCKED --
+            # and a clean fabric is the NORMAL state, so the gate was normally SILENT. "Fabric
+            # flowing" was printed by a path that had not read a single deploy sentinel: the message
+            # asserted more than the function verified. A detector going quiet is not a detector
+            # being correct. The gate now runs on EVERY --blocks pass, clean or not.
+            print(render_open_deploys())
             return
         print(f"FABRIC-CHECK TRIAGE ({len(triage)} items need COO attention):")
         for tag, r in triage:
