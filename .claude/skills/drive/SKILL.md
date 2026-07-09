@@ -258,14 +258,36 @@ Cross-check with `get_live_agents()` + `get_org_summary()` for broker-side regis
 > **BINDING on this step:** `0 work-calls` **only opens an inquiry**. Before you nudge, re-dispatch, or escalate
 > `[STUCK]`, corroborate with **at least one telemetry-independent signal**:
 > - **commits** (`git log --author=…`) — a different writer entirely;
-> - **undelivered files** in `org/mcp/inbox/<serial>/` top-level (the Monitor mv's on delivery — independent of the hook);
-> - **broker `get_agent_status` last-seen**, or a delivery receipt from `send_message`.
+> - **THE DECIDING SIGNAL — undelivered files** in `org/mcp/inbox/<serial>/` top-level (**and the nested
+>   `<serial>/~B/` lanes**, which `fabric-check` does not enumerate). The Monitor `mv`s a message to `read/` on
+>   delivery. **`0` undelivered + the newest `read/` file being a message you just sent = the agent is reading. This
+>   is the only signal that reports the property "this lane will receive its dispatch."**
+>
+> ### ⚠ AND `channel push` IS ITSELF A PROXY. IT CONVICTS NOTHING EITHER. (2026-07-09T23:14Z)
+> A `send_message` receipt reads `(filesystem + broker + channel push)` when healthy and `(filesystem + broker)` when
+> the broker has **no live MCP channel registered at send time.** It was adopted as a deafness detector at ~23:03Z
+> and **falsified within eleven minutes:**
+> ```
+> 23:11:52Z  CTO -> 0.4.0_DS~B   receipt: (filesystem + broker)      -> CTO concluded "still deaf", drafted an Andrew escalation
+> 23:12:55Z  COO reads the dir:  0 undelivered; CTO's 231152Z sits in read/, NEWEST BY MTIME
+>            MSTR had respawned DS~B at ~23:11Z. Its Monitor was armed BEFORE it re-registered on the broker.
+> ```
+> **`channel push` reports BROKER REGISTRATION. It does not report whether the Monitor will pick the file up.** A
+> freshly-respawned lane drains its inbox while its channel is still cold. **`(filesystem + broker)` is consistent
+> with BOTH "deaf" and "alive and already reading."** MECHANISM of the missing push: **UNDETERMINED.**
+>
+> **`channel push` present ⇒ reachable, confirmed. `channel push` absent ⇒ UNKNOWN — go read the inbox directory.**
+> If you build a warning on it, it must say `CHANNEL COLD (may be respawning) — verify inbox drain`, **never
+> `UNDELIVERED`.** *A warning that overstates is a warning that gets muted.*
 >
 > **Two signals agreeing convict. One absence convicts nothing.** *"An absent record is an empty set. A forbidden
 > set is empty, and so is an unrecorded one."* (`3.0.0_SA_CVO`) This applies to `fabric-check`'s `DEAF` and
-> `STALE-VERIFY` limbs too — both read the same hook.
+> `STALE-VERIFY` limbs too — both read the same hook, **and neither sees nested `~lane` inboxes** (it reported
+> `deaf=2` when the answer was `3`, missing the one lane whose resumption would have been destructive).
 >
-> **The COO nudged lanes on this signal all night before it was found. How often it was wrong is UNDETERMINED.**
+> **The COO nudged lanes on the telemetry signal all night before it was found, then adopted `channel push` as its
+> replacement and nearly escalated on THAT within the hour. How often either was wrong is UNDETERMINED.**
+> **Every detector in this step is a proxy. The directory is the property.**
 
 **(A) MOVEMENT check — never attest a hot TO ADVANCING off the owner's WORD; verify it actually MOVED since the last tick.** For each owner of a hot/active TO, compare against the *prior* tick (the last `drive_log` + `org/mcp/.last-drive-{coo_serial}`):
 

@@ -1,3 +1,32 @@
+# >>> STOP. THE RULING STANDS. ITS IMPLEMENTATION IS SUSPENDED. DO NOT EXECUTE THE SEQUENCE BELOW. <<<
+
+**SUSPENDED 2026-07-09T23:14Z (2.0.0_SA_COO), on `1.0.0_SA_CTO`'s scope ruling `231239Z`.**
+
+> **Andrew, verbatim (~22:23Z):** *"This has nothing to do with **black diamond**, schwab, or 49 Financial."*
+> **Andrew, verbatim:** *"i do not want to deal with 49 right now … not something that we should pursue unless i explicitly ask for it."*
+
+**`opal-data-bd` · `bd-49f-*` · `data/black_diamond/` · `partner_custody_total(49financial)` are ONE FIRM under THREE NAMES.** The whole fabric said *"bd"* for four hours and heard *"a pipeline."*
+
+**Both steps of the sequence below are `data/black_diamond/scripts/gold/*.py`:**
+- `A_00` — the `row_count > 0` + ABSTAIN + alarm guard. **CANCELLED** (CTO cancels his own `221611Z` verb ratification).
+- `D_00` — the filter value-source repoint. **CANCELLED.** `D_00` is **the served-AUA producer** holding the frozen `$1,837,159,865.68`.
+
+**`safe-deploy.sh` AUTO-DEPLOYS a bd gold-script push to `opal-data-bd/code`.** Executing either step pushes live code into the 04:00Z gated run, on the exact firm the sovereign closed.
+
+> **ANDREW'S RULING IS NOT RETRACTED.** He chose **(A)**, and **(A)** remains what we build **when bd returns to scope.**
+> **The DECISION stands. The IMPLEMENTATION is suspended. Those are different things, and this artifact must say so
+> before it says anything else.**
+
+**OUT OF SCOPE — no writes of any kind:** every file under `data/black_diamond/`, `schwab/`, `opal-data-bd`, `opal-data-schwab`. No edits, no pushes, no deploys, no ad-hoc runs, no ledger closes, no verifies. Both `bd-49f` ledgers are `gate=sovereign/SUSPENDED`.
+
+**STILL IN SCOPE, named so it is not suspended by association:** **cot is a DIFFERENT FIRM** (firm separation is law in both directions — the 02:00Z snapshot work, `A_00`'s cot analogue, `cot_bronze_ingest`); **inf / mdpf** (`0.5.0`'s per-partner gate is Andrew's active deliverable); **`freshguard-leg4`** (not 49F, L4 at 02:10Z stands); the fabric tools.
+
+**THE WATCH KEEPS RUNNING: observe, record, act on nothing.** *Standing it down is itself an act, and tonight's data exists only tonight.* Its **cot limb is in scope**; its **bd limb is pure observation.** No page, no fix, no ledger move. **If the un-freeze fires, we write it down and stop.** (CTO: *a read is knowledge; knowledge can wait. A write is state.*)
+
+**This is the THIRD durable artifact of mine tonight that outlived its authorization** — after the `drive/SKILL.md` tombstone and the `PENDING_bd49f_L6_S5` trigger doc. **A committed artifact that outlives its authorization is itself a defect.**
+
+---
+
 # SOVEREIGN RULING — 49F "Account Type" filter semantics
 
 **Ruled by:** Andrew Berman (sovereign), 2026-07-09T~22:10Z, via 2.0.0_SA_COO, both domains printed.
