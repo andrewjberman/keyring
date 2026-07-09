@@ -1227,6 +1227,14 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "NFRA_SYSTEM / NFRA_LOCALROOT docs-home -- the SYSTEM CONTENT knowledge-class home + the comp-system 06_current_state runtime output. DOCS-HOMES-EXEC-COMMITTABLE carve (CTO ruling 2026-07-08 + NFRA_LOCALROOT-P2 §4, CTO arch-gate GO 225633Z c345f4038): infra/{system,project-docs} = exec/owner-committable DOCUMENTATION (distinct from infra/aws CODE = AE-owned). ANY_EXEC_OR_AE gives exec (COO~B via 2.0.0_SA_COO tilde-strip owns+commits the SYSTEM docs + the 06 output per SoD) + retains the AE set (0.8.0~D's comp-system compiler stages the 06). Longest-match (16) overrides infra/** (8) CLOUD_OPS_OR_ETL. SoD: grantor-landed by 2.0.0_SA_COO (base), grantee COO~B commits. Added 2026-07-08 by 2.0.0_SA_COO."
 
+  "infra/README.md":
+    lane: ANY_EXEC_OR_AE
+    note: "The /infra index (DOCUMENTATION). Docs-homes-exec-committable carve, RECIPROCAL of the infra/system/** carve (336731af4): infra docs-homes = exec/owner-committable, infra/aws CODE stays AE-owned (LOCALROOT-P3 §4 rule, CTO docs-vs-code ruling 2026-07-08). Exact-file longest-match overrides infra/** (8) CLOUD_OPS_OR_ETL. SoD: grantor-landed by 2.0.0_SA_COO~B (the other COO), grantee 2.0.0_SA_COO commits the index edit (grantee doesn't self-land its grant). Added 2026-07-09 by 2.0.0_SA_COO~B."
+
+  "infra/architectural_docs/**":
+    lane: ANY_EXEC_OR_AE
+    note: "Infra architecture decision-records (DOCUMENTATION). Docs-homes-exec-committable carve (reciprocal of infra/system/**): infra arch-docs = exec/owner-committable, infra/aws CODE stays AE (LOCALROOT-P3 §4; CTO arch-doc routing rule = infra decision-record -> here, PRD/broad -> docs/architecture). Longest-match overrides infra/** CLOUD_OPS_OR_ETL; infra/aws/** (more specific) stays AE -- scope is TIGHT, only these two doc paths carve. SoD: grantor-landed by 2.0.0_SA_COO~B, grantee 2.0.0_SA_COO commits. Added 2026-07-09 by 2.0.0_SA_COO~B."
+
   "infra/**":
     lane: CLOUD_OPS_OR_ETL
     note: "General infra catch-all"
