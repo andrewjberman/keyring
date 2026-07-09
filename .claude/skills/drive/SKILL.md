@@ -282,8 +282,36 @@ Cross-check with `get_live_agents()` + `get_org_summary()` for broker-side regis
 >
 > **Two signals agreeing convict. One absence convicts nothing.** *"An absent record is an empty set. A forbidden
 > set is empty, and so is an unrecorded one."* (`3.0.0_SA_CVO`) This applies to `fabric-check`'s `DEAF` and
-> `STALE-VERIFY` limbs too — both read the same hook, **and neither sees nested `~lane` inboxes** (it reported
-> `deaf=2` when the answer was `3`, missing the one lane whose resumption would have been destructive).
+> `STALE-VERIFY` limbs too — both read the same hook.
+>
+> ### ⚠ CORRECTION 2026-07-09T23:29Z — `fabric-check` was NOT "blind to nested `~lane` inboxes." IT READ A DECOY.
+> An earlier revision of this box said the deaf-check *"does not enumerate nested `~lane` inboxes."* **Wrong
+> mechanism, and the true one lies where blindness merely omits** (`0.4.0_DS~B`, source-confirmed):
+> ```
+> server.py:1133       inbox = INBOX_DIR / to_folder.name / f"~{to_suffix}"   <- the WRITER,  nested
+> inbox-watch.sh:98    WATCH_DIR="$INBOX_BASE/$AGENT_DIR/~$SUFFIX"            <- the MONITOR, nested
+> fabric-check.py:132  d = os.path.join(INBOX_DIR, serial)     (pre-fix)      <- the READER,  FLAT
+> ```
+> For lane `A~B` the reader opened **`inbox/A~B/`** — a flat directory that **exists for 28 lanes, that nothing has
+> written to since per-tilde isolation, and that answers `0 unread` FOREVER.** **The watcher and the
+> watcher-of-watchers were reading different directories.** It reported `deaf=2` when the answer was `3`.
+>
+> **And the writer that creates the decoy is our own dispatcher:** `.tools/operator.py:539-541` builds
+> `inbox_root / agent` where `agent` is `<issued_to>` — which `org/XXX.md` **requires** to carry the `~lane`
+> suffix — and `mkdir`s it. **`operator.py --dispatch` writes a lane agent's GO to a path no Monitor watches, and
+> creates the decoy in the act.** How many TOs this has stranded is **UNDETERMINED**. Four survivors are known,
+> undelivered since 2026-05-29 (CL-fabric lanes; CL is paused, so the loss is bounded by the pause — **the
+> mechanism is not**).
+>
+> **FIXED** by `0.4.0_DS~B` (COO-reviewed, self-test 21/21 + 3 killing mutants, denominator on BOTH exit paths):
+> `DEAF-COVERAGE: deaf=N over 85 enumerated inboxes (43 base serials, 38 nested ~lanes, 28 legacy-flat dirs)`.
+> **`flat_orphans` is reported SEPARATELY from `unread`, and deliberately so:** folding them in would pin those
+> lanes `DEAF` forever, and `DEAF`'s prescribed remedy here is *"respawn."* **A respawn cannot drain a directory no
+> Monitor watches — the alarm would demand, forever, an action incapable of fixing the condition that raised it.**
+> That is **the latched alarm inverted**: one fires once and cannot speak when the remedy would work; this one
+> fires always and demands a remedy that cannot. **Both are an alarm decoupled from the action it demands, and the
+> second is worse, because it trains the reader to mute it.**
+> **Do NOT "clean up" `flat_orphans`. They are the only evidence the dispatch path is broken.**
 >
 > **The COO nudged lanes on the telemetry signal all night before it was found, then adopted `channel push` as its
 > replacement and nearly escalated on THAT within the hour. How often either was wrong is UNDETERMINED.**
@@ -306,7 +334,30 @@ git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l         
 
 **(B) DEPENDENCY-LIVENESS gate — before you STACK a dependency or fire a dispatch on an owner, verify that owner is LIVE + reachable FIRST.** A dependency stacked on a dead/DEAF/idle lane is dead-on-arrival — and you won't notice until the downstream silently never moves. So, BEFORE relying on / dispatching to any owner (especially a *downstream gated* owner whose timeline now blocks others):
 
+> ### ⚠ BINDING, FABRIC-WIDE (CTO ruling 2026-07-09T23:28Z): **SoD BY ROUTING IS NOT SoD. `delivered` IS NOT `READ`.**
+> **Before an SoD handoff, a dispatch, or any GO counts as ISSUED, the sender VERIFIES the recipient is reachable:**
+> **(a) `0` undelivered in its CANONICAL inbox dir** (`inbox/<base>/~<suffix>/` for a lane; `inbox/<serial>/` for a
+> base) **AND (b) an armed `inbox-watch.sh` process for THAT EXACT SERIAL** (`ps -ef | grep "inbox-watch.sh <serial> stream"`).
+>
+> **Absent both, the handoff HAS NOT OCCURRED and the sender still holds the work.**
+>
+> **`delivered` in a `send_message` receipt means the filesystem accepted the bytes. It has never meant anyone will
+> read them.** *A control that depends on a message being READ is a control that depends on a mechanism nobody
+> verified.*
+>
+> **Incident (2026-07-09):** CTO required `0.8.0` to hand its `cse_schema.py` commit to `2.0.0_SA_COO~B` for
+> separation of duties. That lane had **no watcher, no broker registration, and no work-call since `17:29:40Z`.**
+> **`author != committer` held on paper for four hours while the committer did not exist.** Five messages sat
+> undelivered — **one of them a SAFETY warning about the exact backtick defect the COO then committed into a
+> `deploy_ledger` gate note at 23:20Z.** *The warning was unreachable in a mailbox nobody could read, describing the
+> mistake being made.*
+>
+> **And NEVER "deliver" stranded flat-dir mail by moving it into the canonical dir.** Four `0.0.0_AB_MSTR` charters
+> — **including a `PROCEED … GO`** — have sat 41 days in unwatched paths. **Executing a 41-day-old GO is worse than
+> never delivering it.** Fix the writer (`operator.py:539`); preserve the orphans as evidence. (CTO, 23:28Z.)
+
 - Confirm **LIVE** in `get_live_agents()` (fresh last-seen) AND **not DEAF** in `fabric-check --blocks` (unread-inbox + quiet-telemetry = its Monitor isn't delivering → it CANNOT be tasked).
+- **AND, for any handoff you will RELY on: the two-part reachability test above.** `fabric-check`'s buckets are necessary, not sufficient — it read a decoy dir for 28 lanes until `2026-07-09`.
 - If **LIVE + reachable** → stack/dispatch; then movement-check it next tick (A).
 - If **DEAF / not-registered / dead** → do NOT stack the dependency and assume it'll happen. Respawn-request to MSTR (if it has live pending work) OR reroute the dependency to a live lane FIRST — *this* tick. Re-pointing a critical path at a dead lane is the silent-stall trap.
 - **Verify BEFORE firing, not after** — a dispatch into an unverified lane is not a driving action, it's a hope.
