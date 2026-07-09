@@ -31,6 +31,19 @@ already-closed layer3. It does NOT cover:
 - **axis-C per row** for the 16 live-region roles -- unnecessary for the degrade class (a live-region read is
   not a dead-reach whether or not a consumer runs).
 
+## Firm-sep grounding (CTO-routed) -- cot-gold-layer-ec2-role: SAME-FIRM, cleanup not escalation
+
+0.5.0 routed `cot-gold-layer-ec2-role` holding `blackdiamond/cot/credentials` + `/session` READ grants with
+0 instances (inert). CTO: the disposition FORKS on firm-membership (same-firm = least-priv cleanup;
+cross-firm = a NEVER#1 belt violation even inert -> escalate). **Grounded live, not name-inferred:**
+- `cot-gold-layer-ec2-role` = a **COT role**: grants `opal-data-cot` (COT bucket) + a `cross-firm-bucket-deny`
+  belt DENYING `opal-data-bd` + `opal-data-inf`.
+- `blackdiamond/cot/credentials` = a **COT credential**: managed in `cot-pipeline/iam.tf`, granted to cot roles
+  alongside `opal-data-cot`; the "blackdiamond" is the VENDOR, "cot" the owning firm (Cottonwood ingests BD).
+**-> SAME-FIRM: NEVER#1 not triggered, no belt violation.** Residual = least-privilege: the gold-layer role
+holds a vendor-login grant it plausibly doesn't need (ingestion is exporter/bronze, not gold), 0 instances ->
+remove the unused grant, post-NFRA cleanup. (Had it been a bd/inf role or non-cot credential -> escalate.)
+
 ## Estate-open, tightened
 
 Brief's estate line moves from "unenumerated" to: **IAM-denominator-bounded -- 17 non-Lambda secret-readers,
