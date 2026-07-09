@@ -1,0 +1,12 @@
+#!/bin/bash
+# comp-deadgrant -- DETECT leg 3: the LIVE-DEGRADE universe (dead secret grant x fail-silent reader).
+# Usage: comp-deadgrant [--live-days 30] [--json report.json]
+# A dead reach (NO_GRANT via region-mismatched grant, or NO_SECRET in the region the CLIENT targets)
+# met by a reader that swallows the failure = a production degrade nobody can see.
+# Severity is decided by the LAST INVOCATION (CloudWatch), never asserted from code.
+# Exit 1 = at least one LIVE degrade. Exit 0 = none.
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/.tools/comp-deadgrant.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-deadgrant" "$*" $_exit 2>/dev/null
+exit $_exit
