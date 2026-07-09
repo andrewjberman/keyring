@@ -33,6 +33,7 @@ from __future__ import annotations
 
 import os
 import pickle
+import sys
 import time
 from dataclasses import dataclass, field
 from enum import Enum
@@ -51,24 +52,52 @@ class Freshness(str, Enum):
     FORCE = "force"       # always re-derive
 
 
+FRESH_DEPRECATION = (
+    "WARN: --fresh is a no-op alias of default since the head-pin (NFRA_GRAPHUNI P2/D2) -- "
+    "default already rebuilds on TTL expiry or source drift. Use default, or --force to rebuild. "
+    "This flag is removed next cycle."
+)
+
+
 def resolve_freshness(force: bool = False, fresh: bool = False) -> Freshness:
-    """Map the --force / --fresh flag pair to a mode. --force wins over --fresh."""
+    """Map the --force / --fresh flag pair to a mode. --force wins over --fresh.
+
+    `--fresh` IS A NO-OP ALIAS OF DEFAULT and is deprecated. load() takes ONE branch for
+    DEFAULT/FRESH -- "hit iff cache exists, age < ttl, AND the fingerprint matches" -- and cached()
+    supplies the fingerprint for both modes. Exercised across every reachable state, with a control
+    that CAN see a difference:
+
+        warm, sources unchanged   default=HIT   fresh=HIT   IDENTICAL
+        within TTL, drifted       default=MISS  fresh=MISS  IDENTICAL
+        TTL expired, unchanged    default=MISS  fresh=MISS  IDENTICAL
+        CONTROL: force vs default default=HIT   force=MISS  DIFFER
+
+    Root cause is honest history: NFRA_GRAPHUNI P2/D2's head-pin CORRECTLY made DEFAULT honor the
+    source fingerprint (killing the stale-cache-phantom class, the 1347-vs-1337 catch) and in doing
+    so collapsed FRESH into DEFAULT. Nobody retired the flag.
+
+    It WARNS rather than silently aliasing (a silent alias is a lying affordance) or silently
+    dropping (it is user-visible). CTO 20260709T201214Z: "remove the lie without breaking the
+    contract." Removed next cycle.
+    """
     if force:
         return Freshness.FORCE
     if fresh:
-        return Freshness.FRESH
+        sys.stderr.write(FRESH_DEPRECATION + "\n")
+        return Freshness.FRESH   # behaviourally == DEFAULT; kept so the mode name stays truthful
     return Freshness.DEFAULT
 
 
 def add_freshness_args(parser) -> None:
-    """Attach the uniform --fresh / --force flags to an argparse parser/subparser.
+    """Attach the uniform freshness flags to an argparse parser/subparser.
 
-    Every rebuild-capable graph tool wires these the same way so the convention is
-    identical across the surface (NFRA_GRAPHS D3).
+    The contract is THREE states (CTO GO 20260709T201214Z): default / --check / --force. `--check`
+    is owned by each tool (it is a probe over that tool's own artifact); this helper attaches the
+    two shared routing flags.
     """
     parser.add_argument(
         "--fresh", action="store_true",
-        help="Re-derive if stale (TTL expired OR source files changed since the cache was built).",
+        help="DEPRECATED no-op alias of default (warns; removed next cycle).",
     )
     parser.add_argument(
         "--force", action="store_true",
