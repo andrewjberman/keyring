@@ -397,7 +397,17 @@ def process_files(files: list[str]) -> int:
 
             rc = ds_precommit_check.scan_file(f, verbose=False, strict=False)
             if rc != 0:
-                _echo(f"BLOCKED: undefined-name scan failed on {f}", sys.stderr)
+                # scan_file enforces THREE things (Rule 14): the AST undefined-name scan, the silver
+                # `coerce_silver_ids()` requirement, and the Rule-15 `from __future__ import
+                # annotations` check. Labelling every non-zero rc "undefined-name scan failed" names
+                # ONE of the three as the cause of all of them. The violation itself is printed above
+                # this line, so nothing is hidden -- but the summary contradicts it, and a reader who
+                # trusts the summary chases the wrong defect. (Cost a real detour on
+                # data/black_diamond/.../C_05: the summary said undefined-name; the actual violation
+                # was a missing __future__ import, and `ds-precommit-check` alone reported zero
+                # undefined names.) Name the CHECK, not one of its assertions.
+                _echo(f"BLOCKED: ds-precommit-check failed on {f} "
+                      f"(undefined-name / silver-ids / future-annotations -- see above)", sys.stderr)
                 return 1
 
             rc = _run_ruff(f)
