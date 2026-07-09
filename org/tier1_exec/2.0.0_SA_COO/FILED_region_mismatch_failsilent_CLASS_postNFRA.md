@@ -35,8 +35,9 @@ A LIVE degrade = **dead-reach (A) x fail-silent (B) x reachable-with-dependent-c
 ## LAMBDA UNIVERSE PROVEN + ESTATE OPEN (CTO CLASS-brief 132817Z, honest scope)
 **LAMBDA universe PROVEN (stabilized, v5 no-new-TP + 4 FP removed): 3 LIVE = security-sweep (SEV2), daily-agenda (SEV2), trending (SEV3); NO SEV1; + yang latent + schwab safe + auth-path SEV1-latent.** CTO's Andrew CLASS-brief FILED: `org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_DATAINTEGRITY_dead-reach-fail-silent-class-brief-20260709.md` -- states the class (AxBxC), the 3 findings+fixes, the auth-path instance, and DECLARES the estate OPEN (not "proven" about a set the instrument can't see). Goes to Andrew alongside the credential-close (CTO relays).
 
-## RESOLUTIONS (CTO 134141Z, from CVO's cert):
-- **trending-image -> <=SEV3-chronic (resolved):** raises on a hardcoded-us-east-2 client CODE bug, outputs a DynamoDB icon_type. LIVE only if the frontend consumes icon_type / safe if not -- low-stakes consumer-check, caps at SEV3. (Was the fail-mode-disagreement PENDING.)
+## RESOLUTIONS (CTO 134141Z + 134913Z FINAL, from CVO's cert):
+- **trending-image -> BROKEN-BUT-SAFE, OUT OF THE CLASS (FINAL):** crashes 500 every run into an UNCONSUMED icon_type (CVO consumer-check: portal_data_proxy never reads it; frontend falls back gracefully -> no user-visible degrade). A dead-producer / DECOMMISSION CANDIDATE (191d), separate cleanup -- NOT a fail-silent degrade. **So the fail-silent CLASS is cleanly TWO (security-sweep SEV2 + daily-agenda SEV2), not 2+1.** (My Andrew push already said "2 SEV2" -- trending was withheld as pending-at-push-time, so Andrew's picture is already correct; no follow-up.)
+- **ESTATE now IAM-BOUNDED (not just declared-open):** CTO GO'd CVO's non-Lambda principal enumeration (the IAM-denominator for the estate) -> estate-open goes from UNENUMERATED to IAM-BOUNDED. code-side estate-mode stays 0.5.0's post-NFRA follow-on.
 - **opal-layer3-ec2-role -> RESOLVED INERT/latent:** no running EC2 carries the instance profile (opal-portal-ec2-profile). The one honest-UNRESOLVED row now cleared -- not left dangling.
 - **RELAY:** base COO (me) is the SINGLE Andrew-relayer of both milestones (credential-close + this class-brief); sent via PushNotification 134xxxZ. Sovereign items (canary, Rule-14) go MSTR/Andrew-direct SEPARATE.
 
