@@ -31,6 +31,24 @@ have reproduced the author's error in code.
 So: parse `region_name=` off the client construction; default to the Lambda's region; resolve the
 secret IN THAT REGION; and distinguish NO_GRANT from NO_SECRET.
 
+THE FALSE NEGATIVE THIS TOOL SHIPPED WITH, AND WHY IT MATTERS MORE THAN THE FINDINGS
+------------------------------------------------------------------------------------
+v1 enumerated secrets by parsing `SecretId=` for a QUOTED LITERAL. It therefore returned
+**exit 0 -- "no live degrade"** on `daily-agenda-generator`, the exact Lambda it was written
+from, which has a verbatim `AccessDeniedException` in its own CloudWatch log. The reason:
+
+    GITHUB_SECRET = os.environ.get('GITHUB_SECRET', 'github-token')
+    secrets_client.get_secret_value(SecretId=GITHUB_SECRET)      # a CONSTANT, not a literal
+
+It also reported `MyTestSecret` and `STRING_VALUE` -- AWS SDK documentation examples inside
+`node_modules`. A tool built to hunt the enumerate-by-code-shape blind spot had the blind spot.
+
+So it now ENUMERATES BY THE RESOURCE: every live secret name, matched against every file (and the
+Lambda's env, where `config-as-data` hides the name). That is expression-form- and language-agnostic
+BY CONSTRUCTION -- the literal survives as the env default even when the call site names a constant,
+and a doc example cannot false-fire because it is not a live secret. `SecretId=` parsing is retained
+ONLY to flag CONSTRUCTED names (a completeness signal, reported as uninspectable), never to enumerate.
+
 LIVE vs LATENT
 --------------
 A dead grant on a Lambda that has not run in six months is a dormant capability, not a broken
@@ -59,7 +77,8 @@ if not AWS:
     sys.exit("comp-deadgrant: cannot locate the `aws` executable on PATH.")
 
 VENDOR = re.compile(r"(^|/)(botocore|boto3|urllib3|pydantic|openai|anthropic|requests|numpy|"
-                    r"pandas|dateutil|s3transfer|jmespath|charset_normalizer|idna|certifi)/")
+                    r"pandas|dateutil|s3transfer|jmespath|charset_normalizer|idna|certifi|"
+                    r"node_modules)/")
 # `boto3.client('secretsmanager', region_name='us-east-2')` -- capture the region if stated.
 CLIENT = re.compile(r"boto3\.client\(\s*['\"]secretsmanager['\"]\s*(?:,\s*region_name\s*=\s*['\"]([a-z0-9-]+)['\"])?")
 JS_CLIENT = re.compile(r"new\s+SecretsManagerClient\(\s*\{[^}]*region:\s*['\"]([a-z0-9-]+)['\"]")
@@ -110,6 +129,30 @@ def last_run(fn):
         return None
 
 
+def all_live_secret_names(regions):
+    """The RESOURCE side of the match. Empty is not a clean sweep."""
+    names = set()
+    for r in regions:
+        rc, out, _ = aws("secretsmanager", "list-secrets", "--max-items", "500",
+                         "--query", "SecretList[].Name", "--output", "text", region=r)
+        if rc == 0 and out:
+            names |= {n for n in out.replace("\t", "\n").split("\n") if n.strip()}
+    if not names:
+        sys.exit("comp-deadgrant: zero live secrets resolved. Refusing to sweep against an empty universe.")
+    return names
+
+
+def env_of(fn):
+    rc, out, _ = aws("lambda", "get-function-configuration", "--function-name", fn,
+                     "--query", "Environment.Variables", "--output", "json")
+    if rc or not out:
+        return {}
+    try:
+        return json.loads(out) or {}
+    except ValueError:
+        return {}
+
+
 def main() -> int:
     p = argparse.ArgumentParser(prog="comp-deadgrant")
     p.add_argument("--account", default="313476888478")
@@ -119,7 +162,9 @@ def main() -> int:
     a = p.parse_args()
 
     fns = lambdas()
+    live_names = all_live_secret_names(["us-east-1", "us-east-2"])
     now_ms = int(time.time() * 1000)
+    print(f"live secret names (both regions): {len(live_names)}")
     print(f"lambdas in account: {len(fns)}\n")
 
     rows, uninspectable, secret_cache = [], [], {}
@@ -141,34 +186,63 @@ def main() -> int:
         if z is None:
             uninspectable.append((fn, "artifact unreadable"))
             continue
-        region, ids, silent = None, set(), None
+        # ENUMERATE BY THE RESOURCE, NEVER BY THE CODE SHAPE.
+        #
+        # v1 of this tool parsed `SecretId=` for a QUOTED LITERAL -- and therefore missed the very
+        # Lambda it was written from: `daily-agenda-generator` binds
+        # `GITHUB_SECRET = os.environ.get('GITHUB_SECRET', 'github-token')` and calls
+        # `get_secret_value(SecretId=GITHUB_SECRET)`. A constant at the call site. The tool returned
+        # exit 0 ("no live degrade") on a case with verbatim AccessDenied in its own CloudWatch log.
+        # It also reported `MyTestSecret` / `STRING_VALUE` -- AWS SDK doc examples out of node_modules.
+        #
+        # Matching the RESOURCE (every live secret name, in every file) is expression-form- and
+        # language-agnostic by construction: the literal is present as the env default even when the
+        # call site names a constant, and a doc example is not a live secret so it cannot false-fire.
+        # `SecretId=` parsing is retained ONLY to detect CONSTRUCTED names -- a completeness signal,
+        # not the enumeration.
+        region, names, constructed, silent = None, set(), [], None
         for info in z.infolist():
-            if info.is_dir() or VENDOR.search(info.filename):
+            if info.is_dir() or not info.filename.endswith((".py", ".js", ".mjs", ".ts")):
                 continue
-            if not info.filename.endswith((".py", ".js", ".mjs", ".ts")):
-                continue
+            vend = bool(VENDOR.search(info.filename))
             try:
                 txt = z.read(info).decode("utf-8", errors="replace")
             except Exception:
                 continue
+            for nm in live_names:                       # resource-match, EVERY file incl. vendored
+                if nm in txt:
+                    names.add(nm)
+            if vend:
+                continue                                # SDK chatter below this line is noise
             for m in CLIENT.finditer(txt):
                 region = m.group(1) or region
             for m in JS_CLIENT.finditer(txt):
                 region = m.group(1) or region
-            for m in SECRET_ID.finditer(txt):
-                v = m.group(1)
-                if not v.startswith(("$", "{")) and " " not in v:
-                    ids.add(v)
-            if SECRET_ID.search(txt):
-                tail = txt[txt.find("SecretId"):][:700]
+            for m in re.finditer(r"SecretId\s*[=:]\s*([^,)}\n]{1,80})", txt):
+                v = m.group(1).strip()
+                if v.startswith(("'", '"')):
+                    lit = v.strip("'\"")
+                    if lit not in live_names:
+                        names.add(lit)                  # a name we cannot resolve = possibly deleted
+                elif "${" in v or v.startswith("`") or "+" in v or ".format" in v:
+                    constructed.append(f"{info.filename}: {v[:50]}")
+            for m in re.finditer(r"get_secret_value|GetSecretValueCommand", txt):
+                tail = txt[m.start():m.start() + 700]
                 if "except" in tail or "catch" in tail:
                     after = re.split(r"except|catch", tail, 1)[-1]
-                    silent = bool(SILENT.search(after)) and not LOUD.search(after[:200])
-        if not ids:
+                    s = bool(SILENT.search(after)) and not LOUD.search(after[:200])
+                    silent = s if silent is None else (silent or s)
+        for k, v in (env_of(fn) or {}).items():         # config-as-data: the name may live in env
+            if v in live_names:
+                names.add(v)
+        if constructed:
+            uninspectable.append((fn, f"CONSTRUCTED SecretId -- resource-match may be incomplete: "
+                                      f"{constructed[0]}"))
+        if not names:
             continue
         lam_region = role_arn.split(":")[3] if role_arn.count(":") > 3 else "us-east-1"
         eff = region or "us-east-1"
-        for name in sorted(ids):
+        for name in sorted(names):
             arn = resolve(name, eff)
             if arn is None:
                 verdict, why = "DEAD", f"NO_SECRET in {eff}"
