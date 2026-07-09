@@ -169,8 +169,49 @@ correct, ratified one because a proxy was read as the property.
 
 ---
 
+---
+
+## !! DISPOSITION CHANGE 2026-07-09 ~23:35Z — SOVEREIGN OUT-OF-SCOPE. Item 3's gate can never clear. !!
+
+**Andrew, 2026-07-09T22:33Z:** *"i do not want to deal with 49 right now, their data and setup is ambiguous and
+a fucking mess, it is not our problem and not something that we should pursue unless i explicitly ask for it."*
+
+CTO `231239Z` ruled **`data/black_diamond/` IS 49 Financial** — one firm, three names (`opal-data-bd`,
+`bd-49f-*`, `data/black_diamond/`) — and placed `data/black_diamond/`, `schwab/`, `opal-data-bd`,
+`opal-data-schwab` **OUT OF SCOPE: no writes, pushes, deploys, ad-hoc runs, ledger closes, or VERIFIES.**
+COO `231641Z` retracted the competing carve-out. Both execs agree.
+
+**Item 3's delivery-limb acceptance is a read of `s3://opal-data-bd/platinum/firm/leaderboard.json`. That read
+is prohibited. There is no 10:30Z verify. There will not be one until Andrew explicitly asks.**
+
+**Disposition: `WITHHELD — VERIFY NOT RUN, sovereign out-of-scope`. Recorded as an EXPLICIT GAP. NEVER a PASS.**
+
+- **APPLIED:** `2af63847d` (D_00c anchor + `window_bounds`) and `3ea2bdbf9` (D_04 propagation), sha256-verified
+  `repo == s3://opal-data-bd/code/gold/` on 07-09, **before** the ruling.
+- **EXERCISED-CLEAN:** the value limb (1Y 0/158, bounds match, `entry_count>0` on all nine, tripwire silent).
+- **UNVERIFIED AND UNVERIFIABLE:** the delivery limb. *A prohibition stops agents; it does not stop crons* — so
+  the legs are applied with **no assurance, by sovereign design.**
+
+**This is not "no divergence found."** A negative from a *prohibited* sweep is indistinguishable from a
+negative from a complete one. **Could-not-verify is a finding, never a clean bill** (Rule 22a — the
+committed-not-applied failure mode). Do not "just check."
+
+**The only two honest exits:** (a) Andrew explicitly reopens 49F/bd and the served re-read runs; or (b) the row
+is ratified on the value limb alone with the delivery gap recorded verbatim in `ratified_by`. **I do not
+recommend (b) and I will not sign it.**
+
+Surfaced by `0.4.0_DS_ClientPlatform~B`, who is `BLOCKED-SOVEREIGN`, wrote zero files under any 49F path, and
+routed it *"because you are holding a gate on a condition that cannot be satisfied, and nobody else was going to
+tell you."* Correct, and the right call.
+
+**Items 1 and 2 are unaffected** — `benchmark` and `headline` are `model_portfolios` / `opal-data-portal-v2`,
+not bd. They remain authored and ready. **Item 4 (the `ratified_at` stale proxy) is unaffected.**
+
+---
+
 ## Sequencing
 
+0. **Item 3 is HELD INDEFINITELY, as an explicit gap.** It does not gate items 1, 2, 4.
 1. **Now:** items 1 + 2 authored and ready. Item 3's text is authored; its ratification is held.
 2. **2026-07-10, post-nightly:** DS runs the served verification and reports. CVO re-reads the SERVED
    artifact against the four-point gate above.
