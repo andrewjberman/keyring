@@ -79,6 +79,7 @@ GATE_TYPES = {"sovereign", "external"}          # (c) the structured gate class 
 DEFAULT_HELD_STALE_DAYS = 4.0                    # a HELD hold older than this escalates to HELD-STALE
 HELD_STATUS = "HELD-SOVEREIGN-GATED"
 HELD_NUDGE_SUPPRESS_HOURS = 24.0                # re-nudge a HELD-STALE hold at most once/day
+DRIFT_WARN_SUPPRESS_HOURS = 24.0                # re-warn an entry-vs-sentinel DRIFT at most once/day
 
 # Gate-bypass scan (false-clean hardening 2026-06-17, CTO-author / AE-review /
 # COO-track). The sentinel-only `check --red` enumerates ONLY .open_deploys/*.json,
@@ -124,8 +125,23 @@ def _save(state: dict) -> None:
 
 
 def _render_entry(state: dict) -> str:
-    """The human-readable s10.6 change_management entry, regenerated from
-    state on every mutation so the .md and the sentinel can never drift."""
+    """The human-readable s10.6 change_management entry, regenerated from state on every
+    mutation THAT GOES THROUGH THIS TOOL.
+
+    GUARANTEES: `open` / `close-leg` / `close` / `hold` re-render the entry from the sentinel,
+    so a TOOL-driven mutation cannot leave the two inconsistent.
+
+    DOES NOT GUARANTEE that they agree. A HAND-EDIT of the .md is outside this tool's world:
+    it updates nothing the gate reads (the sentinel is the gate's only input), and `close`
+    unlinks the sentinel -- so a LIVE sentinel whose entry reads CLOSED means the entry was
+    hand-edited and the tool never ran. The previous wording here claimed the two "can never
+    drift". That was a FALSE INVARIANT asserted in a docstring: anyone reading the source
+    concluded drift was impossible by construction, and ledger
+    advi-breaks-to3-49f-431167-unrealized-facts-restore sat falsely RED for 214h behind exactly
+    that belief. A comment that over-claims an invariant is a detector that lies to its reader.
+    Layer 3 (_entry_prose_drift) DETECTS the drift this function cannot prevent.
+    Never hand-edit an entry.
+    """
     lines = [
         "# Deploy Completion Record",
         f"**Date opened:** {state['opened_at']}",
@@ -470,6 +486,41 @@ def _entry_prose_drift(state: dict) -> tuple:
     return (True, status, unproven)
 
 
+def _drift_warn_alert(state: dict, md_status: str, unproven: list) -> None:
+    """WARN delivery for a DANGEROUS entry-vs-sentinel drift: the rendered entry claims a
+    terminal state while the sentinel still carries an UNPROVEN leg -- a NEVER#6 bypass that
+    reads as compliance to anyone reading the repo.
+
+    Loud to a human, INERT to the pipeline (no RED, no exit_flag) -- CTO ruling 20260709T191228Z.
+    RED + exit 1 is gated on all three of:
+      (1) the detector EXERCISED -- fires on an injected DANGEROUS fixture, silent on an injected
+          benign one (both directions; extend the _is_terminal_status mutation to the unproven path);
+      (2) a measured 7-day window with ZERO false positives on live boards;
+      (3) an audited escape hatch matching `safe-commit --force` / `HALT_OVERRIDE`.
+    A hard-fail shipped with no false-positive data is how a gate earns an --no-verify habit.
+    """
+    COO_INBOX.mkdir(parents=True, exist_ok=True)
+    subject = f"WARN__deploy_ledger_ENTRY_SENTINEL_DRIFT__{state['slug']}"
+    fname = f"{_ts()}_deploy-ledger_{subject}.md"
+    body = (
+        f"# Message from deploy_ledger.py (on behalf of {state['author']})\n"
+        f"**To:** 2.0.0_SA_COO\n**Date:** {_ts()}\n"
+        f"**Subject:** WARN: ledger '{state['slug']}' entry reads TERMINAL while leg(s) "
+        f"{', '.join(unproven)} carry NO proof -- the record disagrees with the gate\n\n"
+        f"Deploy: {state['title']}\nAuthor: {state['author']}\n"
+        f"Entry: {state['entry_path']}\n"
+        f"Entry **Status:** {md_status}\n"
+        f"Unproven leg(s) in the sentinel: {', '.join(unproven)}\n\n"
+        "The change_management/*.md is a RENDERING of the .open_deploys sentinel; the sentinel is\n"
+        "the gate's only input, and `close` unlinks it. A live sentinel whose entry reads CLOSED\n"
+        "means the entry was hand-edited and the tool was never run. Here the entry ALSO claims a\n"
+        "close over leg(s) that never carried proof -- a NEVER#6 bypass wearing a compliance mask.\n\n"
+        "Fix: `deploy_ledger.py close-leg --proof ...` then `close`. NEVER hand-edit the entry.\n"
+        "WARN, not RED: alert-not-block, pending the CTO promotion gate.\n")
+    (COO_INBOX / fname).write_text(body, encoding="utf-8", newline="\n")
+    print(f"  WARN: drift alert delivered to COO inbox: {fname}")
+
+
 def _qualifies_as_held(state: dict) -> tuple:
     """CTO's CONJUNCTIVE guardrails for a HELD / SOVEREIGN-GATED deploy ledger -- ALL required, and
     verified STRUCTURALLY off the legs (NEVER off a status string), so a real half-landed strand can
@@ -600,6 +651,8 @@ def cmd_check(args) -> int:
     now = _now()
     exit_flag = False       # any NON-HELD open ledger / HELD-STALE / bypass -> check exits 1
     held_count = 0          # KNOWN-HELD (sovereign/external-gated, non-stale) -> visible, NOT a RED
+    drift_benign = 0        # Layer 3: entry claims terminal, sentinel live, every leg proven
+    drift_dangerous = 0     # Layer 3: entry claims terminal over a GENUINELY UNPROVEN leg (WARN)
     covered: set = set()
     stale_days = getattr(args, "held_stale_days", None) or DEFAULT_HELD_STALE_DAYS
 
@@ -617,18 +670,33 @@ def cmd_check(args) -> int:
         except (KeyError, OSError):
             pass
 
-        # --- Layer 3: entry-vs-sentinel DRIFT (report-only; never a RED, never exit-1) ---
+        # --- Layer 3: entry-vs-sentinel DRIFT (WARN-class; never a RED, never exit-1) ---
         # Deliberately non-blaring: it reports a RECORD inconsistency, not a stranded deploy,
         # and must not be able to false-alarm the fabric. Escalation to RED is a governance
-        # call (COO/CTO), not this tool's to make unilaterally.
+        # call (COO/CTO), not this tool's to make unilaterally. CTO 20260709T191228Z: DANGEROUS
+        # stays WARN until the detector is exercised + has a 7d zero-FP window + an audited
+        # bypass -- an unexercised hard-fail is how a gate earns an --no-verify habit.
         drifted, md_status, unproven = _entry_prose_drift(state)
         if drifted:
-            sev = (f"DANGEROUS -- leg(s) {unproven} carry NO proof; the entry says otherwise"
-                   if unproven else
-                   "benign -- every leg is proven; the close was never run through the tool")
-            print(f"DRIFT: {state['slug']} entry reads terminal ('{md_status[:38]}') "
-                  f"while its sentinel is LIVE -- {sev}. "
-                  f"Fix: deploy_ledger.py close-leg/close (never hand-edit the entry).")
+            if unproven:
+                drift_dangerous += 1
+                print(f"DRIFT-DANGEROUS [WARN]: {state['slug']} entry reads terminal "
+                      f"('{md_status[:38]}') while leg(s) {unproven} carry NO proof -- a NEVER#6 "
+                      f"bypass wearing a compliance mask. The record disagrees with the gate. "
+                      f"Fix: deploy_ledger.py close-leg/close (never hand-edit the entry).")
+                if args.red:
+                    last = state.get("last_drift_warn_at")
+                    if last and (now - datetime.fromisoformat(last)).total_seconds() < DRIFT_WARN_SUPPRESS_HOURS * 3600:
+                        print(f"  (drift WARN suppressed -- last {last}, re-warns each {DRIFT_WARN_SUPPRESS_HOURS}h)")
+                    else:
+                        _drift_warn_alert(state, md_status, unproven)
+                        state["last_drift_warn_at"] = now.isoformat()
+                        _save(state)
+            else:
+                drift_benign += 1
+                print(f"DRIFT: {state['slug']} entry reads terminal ('{md_status[:38]}') while its "
+                      f"sentinel is LIVE -- benign; every leg is proven, the close was never run "
+                      f"through the tool. Fix: deploy_ledger.py close (never hand-edit the entry).")
 
         # HELD / SOVEREIGN-GATED: structurally verified off the legs (all apply legs proven + only
         # verify open + a named structured gate). A KNOWN-HELD ledger is NOT a half-landed RED -- it
@@ -699,6 +767,13 @@ def cmd_check(args) -> int:
                     changed = True
         if args.red and changed:
             _save_unindexed_red_state(red_state)
+
+    # Layer-3 counter (CTO-specified): a standing, countable signal even when the board is otherwise
+    # clean. Never touches exit_flag -- a record inconsistency is not a stranded deploy.
+    if drift_benign or drift_dangerous:
+        print(f"DRIFT SUMMARY: {drift_dangerous} DANGEROUS (WARN; entry terminal over an unproven leg), "
+              f"{drift_benign} benign (nudge; entry terminal, all legs proven). "
+              "The .md is a RENDERING of the sentinel -- never hand-edit it.")
 
     if not exit_flag and not bypass:
         if held_count:
