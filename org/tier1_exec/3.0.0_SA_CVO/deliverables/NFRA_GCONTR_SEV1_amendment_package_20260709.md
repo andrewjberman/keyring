@@ -88,11 +88,25 @@ class (committed fix, never exercised, silent three days).
 **CVO position: the withhold is ENDORSED and binding on me.** I will not ratify this row until I have
 re-read the SERVED artifact after the 2026-07-10 nightly (D_00c ~09:53Z / D_04 ~10:18Z).
 
-**Post-nightly gate (all four must hold):**
+**Post-nightly gate (all four must hold) — now a DELIVERY gate, since the value limb passed:**
 1. `window_bounds` present on both routes and in agreement.
 2. `1Y.start == data_as_of - 365d`.
 3. Per-advisor NNA converges **0/N** canonical vs leaderboard across **every** window (not just 1Y).
 4. `entry_count > 0` for every served window.
+
+**Per-window discrimination must be reported, never a blanket green (limb 2a).** Measured at
+`data_as_of = 2026-07-07` (wall-clock `2026-07-09`):
+- **[A] STRUCTURALLY undiscriminating — MTD / QTD / YTD / MAX.** The mis-anchored and correct windows are
+  *identical* (both anchors share month/quarter/year). Zero power, and always will be **except at a period
+  roll**. Remedy: the suite must carry a period-roll as-of — re-running at a normal as-of can never bite.
+  This is exactly DS's latent period-roll defect, and it is invisible to any number of ordinary runs.
+- **[B] CONTINGENTLY undiscriminating — 3Y.** Windows differ (`2023-07-10` vs `2023-07-08`) but the delta
+  band is a Sat+Sun carrying **$0.00**. Coincides by calendar luck. Remedy: re-measure every run.
+- **[C] DISCRIMINATING — 1Y.** Windows differ; the band carries **$3,516,778.16**; pre-fix code yields
+  65/158 divergent on this exact data.
+
+Only **[C]** licenses a green. Conflating *"the check passed"* with *"the check could have failed"* is the
+defect this contract exists to prevent.
 
 ### What changed in the value_check text (already applied — row is unratified)
 
@@ -176,6 +190,18 @@ month-end blind spot (fixed and shipped in `ec33fe59d`, exit-4 `CLEAN-BUT-UNDISC
   (`2026-07-01T16:31:34Z`, `data_as_of 2026-06-30`).
 - **exercised:** 10 runs of `contracts/value_check_benchmark_period_defs.py` (pre- and post-fix), exit codes
   0/0/2/0 then 4/4/0/2/3/4 — the month-end blind spot that surfaced item 1.
+  **Item 3 VALUE limb EXERCISED 2026-07-09 ~21:0xZ** (DS 0.4.0, real deployed-identical `D_00c`, real S3
+  inputs, read-only): 1Y **0/158 divergent** vs served canonical (was 65/158); `window_bounds` match canonical
+  on all five; `entry_count > 0` on all nine windows; tripwire silent. CVO independently source-verified the
+  no-write property (`_save_json` is called from `main():1360` **only**, never from
+  `build_employee_leaderboard():798`, and is the sole write call in `D_00c` — `put_object` is *unreachable*
+  from that path, a structural guarantee, not a `dry_run` flag) and the runner's pull-at-runtime property
+  (`run-gold-layer.sh:88-90`, `gold_dispatch.sh:526` — `aws s3 sync`, nothing baked).
+  **Correction on the record:** this grounding block previously read `exercised: (deferred by design)`. That
+  was false — the value limb was **un-attempted**, not un-exercisable. Triggering the production gold run is
+  forbidden; running the fixed code locally read-only never was. **A cert record that calls a limb
+  un-exercisable when it was merely un-attempted is the same defect this package exists to catch.**
+  **The DELIVERY limb remains genuinely un-exercised, by design, until the nightly.**
 - **source:** `lambda_function.py:445-455`, `:475-483` (trailing 30/91 calendar days, ruling cited in-code);
   `bmkaud-ws3-methodology-walkthrough-20260601.md:34,:67,:68`; directive `631d8d0d9`;
   `gold_utils.py:102-103` (`_today()` = wall clock); `D_00c:817` (`latest_date`), `:830`
