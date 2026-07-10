@@ -118,7 +118,9 @@ def main() -> int:
         for r in (pi.get("rows") or [])[:50]:
             print("  " + " | ".join("" if v is None else str(v) for v in r))
     elif key in signals:
-        _print_signal(key, signals[key])
+        # FE1: pass total so the single-signal THIN path keeps the honest-thinness DENOMINATOR
+        # ("over N CSE(s)"), not the denominator-less "over ? CSE(s)" -- the all-path (:110) already does.
+        _print_signal(key, signals[key], total)
     else:
         print(f"ERROR: unknown signal '{args.signal}'. Options: all | coevolution | coverage | direff | provenance")
         return 1
