@@ -93,3 +93,30 @@ AC4 DEV smoke + /frontend-dev remain the post-commit verification stage (DT/CTO~
 TO stays `pending` -- not self-closed (arch-gate + DT promote + COO~C RAVC still open per the TO's do-not-self-close rule).
 Non-blocking Yang-flag on `eps_stability` (vs analyst-name `eps_stable_est`) carried forward -- built per
 Andrew's coverage rule, does not gate.
+
+## Session close -- RAVC outcome (COO~C 2026-07-10T214639Z)
+
+**SSCN_PFOE.001 COMPLETE + LIVE on PROD.** COO~C RAVC-ACCEPTED, served-verified end-to-end:
+CI Deploy-to-Production SUCCESS, tag peels to PROD head, deploy ledger CLOSED (4 legs), live
+`www.opalinvest.dev` bundle's SecurityScanner chunk carries the PFOE codes + DIVZ relabel,
+weights 16/16 vs Yang's Teams table.
+
+- **Shipped:** portal DEV `7db8f6b5` -> **PROD portal-v2.1.134** (DT DEV->PROD promote; I did not run it).
+- **TO flipped** `pending` -> `complete` on COO~C's explicit RAVC acceptance (not a premature self-close;
+  the do-not-self-close guard was satisfied by the RAVC owner accepting). Commit **CLOUD `f7d9d42bd`**,
+  `<ship_evidence>` recorded.
+- **Only open item:** Andrew's visual final smoke (his gate) -- near-zero risk given the served proof;
+  does not need RD. Any rework surfaced there, I turn fast.
+
+**Commits this session (all my author line):**
+- portal DEV `7db8f6b5` -- constants.ts (PFOE preset + union + DIVZ relabel), local/unpushed (DT pushed via promote)
+- workspace CLOUD `830bb665f` -- session log + page_inventory.xml
+- workspace CLOUD `f7d9d42bd` -- TO status -> complete
+
+**MCP traffic (window):** ~8 messages, all with COO~C/CTO~C. Significant: GO received (SSCN_PFOE.001);
+handback to DE (later mooted by Andrew's DE-waiver); GO-to-commit; hash routed to CTO~C (arch-gate glance)
++ COO~C; COO~C RAVC-ACCEPTED close; my ACKs. DE (0.3.0_DE) was never spawned -- Andrew waived the review.
+
+**Current state:** SecurityScanner ships 2 presets (DIVZ 13-factor, PFOE 16-factor) live on PROD v2.1.134.
+`constants.ts` is the single source; `PresetGroup` union now carries 7 members; `PRESETS` has ids
+`['divz','pfoe']`. No infra/backend/DS touched. Lane IDLE, no pending TOs.

@@ -15941,3 +15941,56 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 
 - 2026-07-10T2120Z 2.0.0_SA_COO tool-check sweep: CronList (no comp-dups cron) + bd-excluded git grep (chokepoint callers, family closed at 3) + merge-base ancestry x5 (comp-dispatch/comp-constants closes verified by hash). Commit-gate every-commit-breach scare RULED OUT at comp_constants_cli.py:202-205 (--file scopes scan_all to one file). comp-debt found = 3rd latent bd-scanner, HELD.
 | 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-denytest | comp-denytest --change-type wildcard-narrow --principal p --resource r --action a | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-denytest | comp-denytest --change-type allow-removal --principal p --resource r --action a | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-denytest | comp-denytest --principal p --resource r --action a | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-denytest | comp-denytest --from-plan C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBe... | FAIL |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-deadgrant.py | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~B | (no-TO) | comp-pipescript | comp-pipescript io INF_C_07 | PASS |
+| 2026-07-10 | 0.3.0_DT_TradingOperations | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/tool... | PASS |
+| 2026-07-10 | 0.3.0_DT_TradingOperations | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-fedobs --file infra/aws/glo... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_01.canonica... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_01.canonica... | PASS |
+| 2026-07-10 | 0.2.1_RD_Positioning | POSN_CUSTOM.001.custom-blend-state-summary-column | comp-transform | comp-transform schema-check Positioning | PASS |
+| 2026-07-10 | 0.2.1_RD_Positioning | POSN_CUSTOM.001.custom-blend-state-summary-column | comp-transform | comp-transform schema-check PositioningSummary | PASS |
+| 2026-07-10 | 0.3.4_RD_SecurityScanner | SSCN_PFOE.001.add-pfoe-preset-relabel-divz | comp-surface-check | comp-surface-check check --mode advisory --file org/tier3_junior/0.3.4_RD_SecurityScann... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_01.canonica... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-graph | comp-graph status | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-graph | comp-graph status --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-graph | comp-graph status --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_coverage_check.p... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-10 | 0.2.1_RD_Positioning | POSN_CUSTOM.001.custom-blend-state-summary-column | comp-transform | comp-transform schema-check HoldingsTab | PASS |
+| 2026-07-10 | 0.2.1_RD_Positioning | POSN_CUSTOM.001.custom-blend-state-summary-column | comp-transform | comp-transform schema-check PositioningSummary | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_01.canonica... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file org/module... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/_comprail.py --file .tools/comp-... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_comprail_s... | PASS |
+| 2026-07-10 | 0.2.1_RD_Positioning | POSN_CUSTOM.001.custom-blend-state-summary-column | comp-surface-check | comp-surface-check check --mode advisory --file org/tier3_junior/0.2.1_RD_Positioning/d... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 0.3.0_DT_TradingOperations | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.3.0_DT_TradingOperat... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_antipattern.py | VERDICT |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean.py | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file org/modules/graph/tests/_p4_probe_exem... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean2.py | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_control.py | VERDICT |
+| 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/POSN_CUSTOM.md --file... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-10 | 0.2.1_RD_Positioning | POSN_CUSTOM.001.custom-blend-state-summary-column | comp-surface-check | comp-surface-check check --mode advisory --file org/tier3_junior/0.2.1_RD_Positioning/l... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check routable | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking org/tier2_senior/0.4.0_DS_ClientPlatform/promp... | VERDICT |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 0.3.4_RD_SecurityScanner | SSCN_PFOE.001.add-pfoe-preset-relabel-divz | (session summary) | Phase1 Grep+served-audit; Phase2 comp-cache collisions + comp-transform schema-check SecurityScanner (rows auto-logged above) | PASS -- 0 mismatch, schema clean, 16/16 codes served; shipped PROD v2.1.134 |
+| 2026-07-10 | 0.3.4_RD_SecurityScanner | SSCN_PFOE.001.add-pfoe-preset-relabel-divz | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
