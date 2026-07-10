@@ -69,7 +69,14 @@ completely an agent is deaf, the more perfectly both limbs hold. And because `:1
   `COUNT` is structurally `0`. *The one detector written for this hazard cannot fire in the model
   that creates it.* Do not use it as a liveness oracle; Step 3.1 keeps it only to list **legacy** watchers.
 - **`/kill` explicitly exempts `inbox-watch.sh`** from orphan reaping ("NOT fabric comms infra"), so
-  nothing in the fabric reaps these. They accumulate — one per ended session.
+  nothing in the fabric reaps these.
+- **RATE: UNMEASURED. Do not claim "one per ended session"** — I wrote that and MSTR falsified it. The probe
+  proves **`TaskStop`** orphans the child; it proves nothing about ordinary session end. Counter-evidence:
+  `0.7.0_AE_CloudOps` died twice on 2026-07-10 and left **no** orphan child (`w=0`); `0.4.0_DS` base's session
+  end left pid 31391 for 7h17m; `1.0.0_SA_CTO`'s predecessor left pid 2124. **Session end SOMETIMES orphans; the
+  discriminator is unknown.** A fabric sweep at 02:20Z found exactly ONE orphan across 8 agents and a full night.
+  This does not soften the fix — a parent-liveness check closes the class at any rate — but **a reaper justified
+  by "they accumulate" is sized against a rate nobody has measured. Measure the rate before sizing the reaper.**
 
 **TRAP when you scan for orphans:** MSYS **`ps -p 1` FAILS**, so a naive ppid-liveness test marks
 every healthy detached eval-wrapper (`ppid=1` at birth) an ORPHAN. This produced **7 false positives**
