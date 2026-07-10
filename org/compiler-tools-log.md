@@ -15592,3 +15592,202 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md | PASS |
 - 2026-07-10 (2.0.0_SA_COO, drive cycle 25): fabric-check --blocks (deaf=0 blocked=0), deploy_ledger --red (0 stranded/5 HELD). Audited my OWN last edit first and found two defects. (1) I authored an F-004 -- "every DEAF verdict is INFERRED and must be labelled so" -- with NOTHING enforcing it; fabric-check emits DEAF unqualified. Its two `inferred` strings are docstrings about PROJECT-TAG inference; `grep -c "[DEAF]"` returns 0 because the bracket is built at print time. Could not fix: fabric-check is a T1 E4 tool and E4 tools may not be verified through themselves. THE RULE NOW STATES ITS OWN UNENFORCEMENT. (2) SEED 11's "nothing reaps them, they accumulate" is UNSUPPORTED -- kill-orphans:95 PATTERNS includes inbox-watch\.sh and :132-139 records it OVER-reaping live watchers; /kill's doc says never touched. TWO RECORDS, TWO STORIES: declarative drift, not an absent reaper. Why the 7h17m orphan survived stays UNDETERMINED -- do not infer "no reaper" from "an orphan lived". FAIL: my F-004 enforcement sweep was itself a MENTION COUNT (`def .*ack` matched `_safe_json_loads(backup_path)`); two of four limbs needed reading. THIRD mention-count trap in five hours. Confirmed by reading: there is NO ack primitive anywhere -- MSTR's rule (e), CTO's ratification, and my seed 13 all require an artifact the fabric cannot produce.
 | 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/watcher/SKILL.md --file ... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md --file or... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/back... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0046.md | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/freshg... | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0046.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/freshg... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md --file org/tier0/ledger/LD-02... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0276.md --file org/... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/watcher/SKILL.md --file ... | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0276.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/back... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0276.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/comp... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/back... | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0046.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/prob... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/prob... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/comp... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/freshg... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0046.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/freshg... | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0275.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0046.md | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/kill/SKILL.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/_provenance.py | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPASSURANCE.md... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPASSURANCE.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0271.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md --file or... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPASSURANCE.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/comp... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/XXX.md | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPASSURANCE.md | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0046.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/to7-... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-adapter-audit | comp-adapter-audit --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-adapter-audit | comp-adapter-audit getPlatinumFirmDashboard | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-adapter-audit | comp-adapter-audit getPlatinumClientSummary | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorSummary | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws derive --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws score --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws snapshot --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws metrics --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws diff --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws contract-diff --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws dual-managed --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws classes --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws iceberg-commit --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws classes | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws score | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws score | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws score --class s3 | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws score --class iam-ec2 | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws score --class lambda | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws score --class zzqq-nope | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws __bogus_subcmd_zzz__ | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws score --class zzqq | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws derive --resource arn:aws:elasticloadbalancing:us-east-1:313476888478:listener... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/adapter_audit_cli.py ... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-portal-thread | comp-portal-thread --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast --check | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast --force gold:INF_09.generate_partner_analytics | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast --check | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast --check | FAIL |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/adapter_audit_cli.py ... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast --force gold:INF_09.generate_partner_analytics | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_aws_cli.py --fil... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws score --class zzqq-nope | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws score --class lambda | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws score --class stepfunctions | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws derive --class sns | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-build | comp-build | FAIL |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-xref | comp-xref --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace --check | FAIL |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-xref | comp-xref --check | FAIL |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --check | FAIL |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_lambda_routes... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast --force | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPLEARN_amend_... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache --help | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-xref | comp-xref --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --check | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache map | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPLEARN/task_orders... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPLEARN.json --file... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_PASSCRAFT/task_orders... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/requ... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-ec... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-xref | comp-xref --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --check | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inf-advisor-of-record-custo... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cli.py --file org/mod... | PASS |
+| 2026-07-10 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inf-advisor-of-record-custo... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-trace | comp-trace --check | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-xref | comp-xref --check | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-diff | comp-diff --check | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~B | (no-TO) | comp-pipescript | comp-pipescript io INF_C_07 | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cache_cli.py --file o... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache map | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/tool... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_PASSCRAFT/task_orders... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(*) LIMIT 1 | FAIL |
+| 2026-07-10 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/website/iam.tf --fi... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-chainrun | comp-chainrun --help | PASS |
+| 2026-07-10 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPLEARN/task_orders... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-chainrun | comp-chainrun selfcheck | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-chainrun | comp-chainrun spec | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-chainrun | comp-chainrun snapshot --label pre --out /c/Users/ANDREW~1/AppData/Local/Temp/claude/C-... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/stal... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/boot... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-cluster | comp-cluster --help | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3b | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_learns_leg4_exer... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-cluster | comp-cluster --coverage | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-cluster | comp-cluster --list | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-cluster | comp-cluster --coverage | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-cluster | comp-cluster AdvisorIntelligence | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-chainrun | comp-chainrun selfcheck | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-chainrun | comp-chainrun snapshot --label pre --out C:/Users/ANDREW~1/AppData/Local/Temp/claude/C-... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-chainrun | comp-chainrun snapshot --label post --out C:/Users/ANDREW~1/AppData/Local/Temp/claude/C... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-chainrun | comp-chainrun diff C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman-De... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-chainrun | comp-chainrun diff C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman-De... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/chainrun_cli.py | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-chainrun | comp-chainrun selfcheck | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/website/iam.tf | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-constants | comp-constants --help | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~B | NFRA_COMPLEARN.AMD-P3a | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3b | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-constants | comp-constants list | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-constants | comp-constants check --file infra/aws/lambda/inf-portal-publisher/lambda_function.py | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-cluster --file infra/aws/gl... | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3b | (session summary) | AMD-P3b+P3c BUILD+STAGE: comp-to + comp-grep x4 (locate amendment/TOs/importers/owned-paths, denominators printed) + comp-surface-check; py exercises AC-L4 5/5 + AC-L3c 6/6 GREEN | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3b | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
