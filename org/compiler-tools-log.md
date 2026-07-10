@@ -15912,3 +15912,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-10 | 0.3.4_RD_SecurityScanner | SSCN_PFOE.001.add-pfoe-preset-relabel-divz | comp-transform | comp-transform schema-check SecurityScanner | PASS |
 | 2026-07-10 | 1.0.0_SA_CTO~A | (no-TO) | (none) | no direct comp-tool runs -- authored NFRA_PASSCRAFT/TOOLGRAPH framework + arch-gated builder diffs vs their own tests (TOOLPASS sec.6 assurance-oracle grounding) | SKIP |
 | 2026-07-10 | 1.0.0_SA_CTO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 0.2.1_RD_Positioning | POSN_CUSTOM.001.custom-blend-state-summary-column | comp-transform | comp-transform schema-check PositioningSummary | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_constants_cli.py | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-deadgrant.py | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_comp_const... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/dup_scan.py ... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/tool... | PASS |
+| 2026-07-10 | 0.2.1_RD_Positioning | POSN_CUSTOM.001.custom-blend-state-summary-column | comp-cache | comp-cache collisions | PASS |
+| 2026-07-10 | 0.2.1_RD_Positioning | POSN_CUSTOM.001.custom-blend-state-summary-column | comp-transform | comp-transform schema-check Positioning | PASS |
+| 2026-07-10 | 0.2.1_RD_Positioning | POSN_CUSTOM.001.custom-blend-state-summary-column | comp-transform | comp-transform schema-check PositioningSummary | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_constants_cli.py | PASS |
+| 2026-07-10 | 0.2.1_RD_Positioning | POSN_CUSTOM.001.custom-blend-state-summary-column | comp-cache | comp-cache collisions | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-pipescript | comp-pipescript deployed scratch-fixture-nonexistent | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-pipescript | comp-pipescript deployed cot-scratch-seam | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-pipescript | comp-pipescript deployed scratch-fixture-nonexistent | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-pipescript | comp-pipescript deployed cot-scratch-seam | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | NFRA_TOOLPASS | comp-grep/comp-constants/safe-commit/commit-gate/owned-paths/pytest | AE lane-committer sweep: canon-motif+comp-cluster+comp-constants closed (8 commits); `check --lane inf` ast-parsed bd source (sovereign breach) -> halted+disclosed -> CC2 structural guard b4868c28b | PASS (1 bounded breach, halted+structurally fixed) |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
