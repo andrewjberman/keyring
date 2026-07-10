@@ -287,6 +287,342 @@ class Operation:
     source_pattern: str            # e.g., 's3.delete_object'
     file_path: str
     line_number: int
+    # --- NFRA_COMPIAM_RESOURCE (0.8.0, 2026-07-10) -------------------------
+    # The RESOURCE the call actually touches. Before this, `Operation` had no
+    # resource field at all: comp-iam matched the ACTION NAME and never knew
+    # what the call addressed, so `s3:GetObject` on a bucket the role does not
+    # hold printed [GRANTED]. The verdict was invariant to the truth -- GRANTED
+    # when simulate-principal-policy said implicitDeny, and GRANTED after the
+    # grant landed (mdpf-daily-trigger / opal-data-portal-v2, ed415e268).
+    #
+    # resource_arn may contain '*' where a segment could not be statically
+    # resolved (a runtime variable). `resource_exact` records whether ANY '*'
+    # was introduced by resolution -- it governs whether a "no statement
+    # matched" result is DEFINITIVE (exact) or merely UNRESOLVABLE (inexact).
+    # Never fold an unresolvable resource into GRANTED.
+    resource_arn: Optional[str] = None   # e.g. 'arn:aws:s3:::opal-data-inf/gold/x.json'
+    resource_exact: bool = False         # True iff no '*' was introduced by us
+    resource_expr: str = ""              # raw source expr, e.g. 'Bucket=PLATINUM_BUCKET, Key=f"{P}/{as_of}.json"'
+
+
+# ---------------------------------------------------------------------------
+# NFRA_COMPIAM_RESOURCE -- resolving WHAT a call touches
+# ---------------------------------------------------------------------------
+# S3 splits its ARN space: object actions address `arn:aws:s3:::bucket/key`,
+# bucket actions address `arn:aws:s3:::bucket` (NO trailing slash). A policy
+# granting `bucket/*` does NOT grant s3:ListBucket, and vice versa. Modeling
+# them as one space is the same action-for-resource defect one level down.
+_S3_BUCKET_LEVEL_ACTIONS = {
+    's3:listbucket', 's3:listbucketversions', 's3:getbucketlocation',
+    's3:getbucketpolicy', 's3:listbucketmultipartuploads',
+}
+
+# `NAME = os.environ.get("X", "default")` / `os.getenv("X", "default")`
+_PY_ENV_CONST = re.compile(
+    r'^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*os\.(?:environ\.get|getenv)\s*\(\s*'
+    r'["\'][^"\']*["\']\s*,\s*["\']([^"\']*)["\']\s*\)', re.M)
+# `NAME = "literal"` (no interpolation, no f-string)
+_PY_LIT_CONST = re.compile(
+    r'^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*["\']([^"\'{}]*)["\']\s*(?:#.*)?$', re.M)
+# `{expr}` inside an f-string
+_FSTRING_FIELD = re.compile(r'\{([^{}!:]+)(?:![rsa])?(?::[^{}]*)?\}')
+# any residual Terraform interpolation, e.g. ${local.x}, ${aws_instance.y.id}
+_TF_ANY_INTERP = re.compile(r'\$\{[^}]*\}')
+_TF_LOCAL_INTERP = re.compile(r'\$\{local\.([A-Za-z_][A-Za-z0-9_]*)\}')
+# `name = "literal"` inside a `locals { }` block (string literals only)
+_TF_LOCAL_ASSIGN = re.compile(
+    r'^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*"([^"$]*)"\s*(?:#.*)?$', re.M)
+_TF_LOCALS_BLOCK = re.compile(r'^\s*locals\s*\{', re.M)
+
+
+def _build_py_const_map(content: str) -> dict[str, str]:
+    """Module-level string constants a call site can reference by name.
+
+    Deliberately narrow: env-with-literal-default and bare string literals. An
+    `os.environ["X"]` (no default) is NOT resolvable and must stay unresolved --
+    guessing it would manufacture a confident wrong ARN.
+    """
+    consts: dict[str, str] = {}
+    for m in _PY_LIT_CONST.finditer(content):
+        consts[m.group(1)] = m.group(2)
+    # env-with-default wins over a bare literal of the same name (later binding)
+    for m in _PY_ENV_CONST.finditer(content):
+        consts[m.group(1)] = m.group(2)
+    return consts
+
+
+def _balanced_call_args(text: str, open_paren: int, max_chars: int = 2000) -> str:
+    """Return the argument text between `open_paren` and its matching ')'.
+
+    Calls routinely span lines (`s3.get_object(Bucket=B, Key=k,\\n  Range=...)`),
+    so a line-local regex sees `Bucket=B, Key=k,` and silently loses nothing --
+    but a call whose Bucket sits on line 2 would be missed entirely. Walk the
+    real parens. Quote-aware so a ')' inside a string never closes the call.
+    """
+    depth = 0
+    i = open_paren
+    end = min(len(text), open_paren + max_chars)
+    quote = ''
+    while i < end:
+        c = text[i]
+        if quote:
+            if c == '\\':
+                i += 2
+                continue
+            if c == quote:
+                quote = ''
+        elif c in '"\'':
+            quote = c
+        elif c == '(':
+            depth += 1
+        elif c == ')':
+            depth -= 1
+            if depth == 0:
+                return text[open_paren + 1:i]
+        i += 1
+    return ''
+
+
+def _kwarg_expr(argtext: str, name: str) -> Optional[str]:
+    """Extract the raw expression bound to keyword `name` at paren/bracket depth 0."""
+    m = re.search(rf'\b{re.escape(name)}\s*=', argtext)
+    if not m:
+        return None
+    i = m.end()
+    depth = 0
+    quote = ''
+    out = []
+    while i < len(argtext):
+        c = argtext[i]
+        if quote:
+            out.append(c)
+            if c == '\\' and i + 1 < len(argtext):
+                out.append(argtext[i + 1])
+                i += 2
+                continue
+            if c == quote:
+                quote = ''
+        elif c in '"\'':
+            quote = c
+            out.append(c)
+        elif c in '([{':
+            depth += 1
+            out.append(c)
+        elif c in ')]}':
+            if depth == 0:
+                break
+            depth -= 1
+            out.append(c)
+        elif c == ',' and depth == 0:
+            break
+        else:
+            out.append(c)
+        i += 1
+    return ''.join(out).strip() or None
+
+
+def _resolve_py_expr(expr: Optional[str], consts: dict[str, str]) -> tuple[Optional[str], bool]:
+    """Resolve a call-site expression to a literal string.
+
+    Returns (value, exact). `exact=False` means we substituted '*' for at least
+    one segment we could not resolve -- the value is a PATTERN, not a key, and a
+    caller must not treat a failed match against it as definitive.
+    Returns (None, False) when nothing at all could be resolved.
+    """
+    if not expr:
+        return (None, False)
+    e = expr.strip()
+
+    # plain string literal
+    m = re.fullmatch(r'["\']([^"\']*)["\']', e)
+    if m:
+        return (m.group(1), True)
+
+    # bare NAME
+    if re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', e):
+        if e in consts:
+            return (consts[e], True)
+        return (None, False)
+
+    # f-string: resolve {NAME} fields we know, '*' the rest
+    fm = re.fullmatch(r'f["\'](.*)["\']', e, re.S)
+    if fm:
+        body = fm.group(1)
+        exact = True
+
+        def _sub(mm):
+            nonlocal exact
+            field = mm.group(1).strip()
+            if field in consts:
+                return consts[field]
+            exact = False
+            return '*'
+
+        val = _FSTRING_FIELD.sub(_sub, body)
+        val = re.sub(r'\*{2,}', '*', val)
+        return (val, exact)
+
+    # os.environ.get("X", "lit") inline at the call site
+    em = re.fullmatch(r'os\.(?:environ\.get|getenv)\s*\(\s*["\'][^"\']*["\']\s*,\s*["\']([^"\']*)["\']\s*\)', e)
+    if em:
+        return (em.group(1), True)
+
+    return (None, False)
+
+
+def _s3_arn(bucket: Optional[str], key: Optional[str], key_exact: bool,
+            bucket_level: bool) -> tuple[Optional[str], bool]:
+    """Build an S3 ARN. No bucket -> nothing checkable."""
+    if not bucket:
+        return (None, False)
+    if bucket_level:
+        return (f'arn:aws:s3:::{bucket}', True)
+    if key is None:
+        return (f'arn:aws:s3:::{bucket}/*', False)
+    return (f'arn:aws:s3:::{bucket}/{key}', key_exact)
+
+
+def _arn_bucket(arn: str) -> Optional[str]:
+    """'arn:aws:s3:::b/k' -> 'b'."""
+    if not arn.startswith('arn:aws:s3:::'):
+        return None
+    return arn[len('arn:aws:s3:::'):].split('/', 1)[0] or None
+
+
+def _iam_resource_matches(policy_res: str, arn: str) -> Optional[bool]:
+    """Does a policy Resource pattern cover `arn`?
+
+    THREE states, and the third is the whole point:
+      True  -- covered.
+      False -- definitively not covered.
+      None  -- INDETERMINATE: the policy string still holds an unresolved
+               Terraform interpolation (`${aws_instance.x.id}`), so we cannot
+               say. Treating None as True is exactly the defect this fixes,
+               one level down.
+    """
+    if policy_res == '*':
+        return True
+    if _TF_ANY_INTERP.search(policy_res):
+        return None
+    pat = re.escape(policy_res).replace(r'\*', '.*').replace(r'\?', '.')
+    # CASE-SENSITIVE. (CVO P0, 2026-07-10.) This line carried `re.IGNORECASE`, and
+    # S3 OBJECT KEYS ARE CASE-SENSITIVE -- IAM matches the resource-id verbatim.
+    # EXERCISED on the live plane against lambda-execution-role, whose grant is
+    # `arn:aws:s3:::opal-data-pm/*/processed/*`:
+    #     .../PFDE/processed/x.json  -> allowed
+    #     .../PFDE/PROCESSED/x.json  -> implicitDeny
+    #     .../PFDE/Processed/x.json  -> implicitDeny
+    # With IGNORECASE, a policy on `Public/*` matched a call to `public/secret.json`.
+    # DIRECTION OF HARM: a false GRANT *suppresses* UNGRANTED-RESOURCE -- the very
+    # verdict this tool exists to emit. The original defect (output independent of the
+    # resource) survived in this same expression as output independent of its CASE.
+    # Bucket names are lowercase by AWS constraint, so dropping IGNORECASE wholesale
+    # is conservative and loses nothing.
+    return re.fullmatch(pat, arn) is not None
+
+
+# `copy_object(Bucket=dst, Key=k, CopySource=src)` emits BOTH s3:CopyObject and
+# s3:GetObject -- but GetObject addresses the SOURCE, not `Bucket=`. Modeling it
+# from the kwargs would produce a confident WRONG ARN. Refuse to guess.
+_S3_AMBIGUOUS_METHODS = {'copy_object'}
+
+# Methods whose bucket/key arrive POSITIONALLY: name -> (bucket_idx, key_idx)
+_S3_POSITIONAL = {
+    'upload_file': (1, 2),      # upload_file(Filename, Bucket, Key)
+    'download_file': (0, 1),    # download_file(Bucket, Key, Filename)
+}
+
+
+def _split_top_level_args(argtext: str) -> list[str]:
+    """Split a call's argument text on top-level commas (quote/bracket aware)."""
+    out, buf, depth, quote = [], [], 0, ''
+    i = 0
+    while i < len(argtext):
+        c = argtext[i]
+        if quote:
+            buf.append(c)
+            if c == '\\' and i + 1 < len(argtext):
+                buf.append(argtext[i + 1])
+                i += 2
+                continue
+            if c == quote:
+                quote = ''
+        elif c in '"\'':
+            quote = c
+            buf.append(c)
+        elif c in '([{':
+            depth += 1
+            buf.append(c)
+        elif c in ')]}':
+            depth -= 1
+            buf.append(c)
+        elif c == ',' and depth == 0:
+            out.append(''.join(buf).strip())
+            buf = []
+        else:
+            buf.append(c)
+        i += 1
+    if buf:
+        out.append(''.join(buf).strip())
+    return [a for a in out if a]
+
+
+def _op_resource(service: str, method: str, actions: list[str], argtext: str,
+                 consts: dict[str, str]) -> tuple[Optional[str], bool, str]:
+    """Resolve the ARN a single boto3 call addresses. (arn, exact, raw_expr).
+
+    (None, False, expr) means UNRESOLVABLE -- which the verdict layer prints
+    rather than folding into GRANTED. Only S3 is modeled here; every other
+    service degrades to UNRESOLVABLE by design, and says so.
+    """
+    if not argtext:
+        return (None, False, '')
+    if service in ('s3', 's3_client'):
+        if method in _S3_AMBIGUOUS_METHODS:
+            return (None, False, f'{method}(...) -- source/dest ambiguous, not modeled')
+        b_expr = _kwarg_expr(argtext, 'Bucket')
+        k_expr = _kwarg_expr(argtext, 'Key')
+        if b_expr is None and method in _S3_POSITIONAL:
+            pos = _split_top_level_args(argtext)
+            bi, ki = _S3_POSITIONAL[method]
+            b_expr = pos[bi] if len(pos) > bi else None
+            k_expr = pos[ki] if len(pos) > ki else None
+        bucket, _bx = _resolve_py_expr(b_expr, consts)
+        key, key_exact = _resolve_py_expr(k_expr, consts)
+        bucket_level = bool(actions) and all(
+            a.lower() in _S3_BUCKET_LEVEL_ACTIONS for a in actions)
+        arn, exact = _s3_arn(bucket, key, key_exact, bucket_level)
+        parts = []
+        if b_expr:
+            parts.append(f'Bucket={b_expr}')
+        if k_expr and not bucket_level:
+            parts.append(f'Key={k_expr}')
+        return (arn, exact, ', '.join(parts))
+    return (None, False, f'resource not modeled for boto3 service {service!r}')
+
+
+V_GRANTED = 'GRANTED'
+V_GRANTED_BROAD = 'GRANTED-BROAD'
+V_UNGRANTED_RESOURCE = 'GRANTED-ACTION / UNGRANTED-RESOURCE'
+V_UNGRANTED = 'UNGRANTED'
+V_UNRESOLVABLE = 'UNRESOLVABLE-RESOURCE'
+
+# Verdicts that must never be read as "cleared".
+V_NOT_CLEARED = (V_GRANTED_BROAD, V_UNGRANTED_RESOURCE, V_UNGRANTED, V_UNRESOLVABLE)
+
+
+def _action_pattern_matches(pattern: str, action: str) -> bool:
+    """IAM action glob: '*', exact, 's3:*', 's3:Get*', 's3:*Object'."""
+    p, a = pattern.lower(), action.lower()
+    if pattern == '*' or p == a:
+        return True
+    if '*' in p:
+        return re.fullmatch(re.escape(p).replace(r'\*', '.*'), a) is not None
+    return False
+
+
+def _stmt_action_matches(stmt: "IamStatement", action: str) -> bool:
+    return any(_action_pattern_matches(a, action) for a in stmt.actions)
 
 
 @dataclass
@@ -363,6 +699,100 @@ class IamRole:
                     if re.fullmatch(pattern, action_lower):
                         return True
         return False
+
+    def resource_verdict(self, action: str, arn: Optional[str],
+                         exact: bool = True) -> tuple[str, Optional["IamStatement"], str]:
+        """Does this role grant `action` ON `arn`? Returns (verdict, stmt, note).
+
+        `grants()` above answers only "is the ACTION held anywhere," which is why
+        `s3:GetObject` against a bucket the role has never heard of printed
+        [GRANTED]. This answers the question the caller actually asked.
+
+        Verdicts:
+          GRANTED                            action AND resource match.
+          GRANTED-BROAD                      action matches a Resource:'*' statement.
+                                             NOT CLEARED -- no resource check can
+                                             falsify a wildcard role. Surfaced, never
+                                             silently folded into GRANTED.
+          GRANTED-ACTION / UNGRANTED-RESOURCE  the action is held on OTHER resources.
+                                             The defect this tool exists to catch.
+          UNGRANTED                          no matching action at all.
+          UNRESOLVABLE-RESOURCE              could not statically determine coverage.
+                                             A tool that cannot state what it could
+                                             not check has not checked.
+
+        SOUNDNESS: when `exact` is False the ARN is a PATTERN (a runtime key we
+        replaced with '*'). A failed match is then NOT evidence of absence -- the
+        real key may land inside a granted prefix. Only BUCKET-LEVEL absence is a
+        sound definitive claim there. Getting this backwards would trade the false
+        negative for a false positive.
+        """
+        allows = [s for s in self.statements
+                  if s.effect.lower() == 'allow' and _stmt_action_matches(s, action)]
+        if not allows:
+            return (V_UNGRANTED, None, '')
+
+        for s in allows:
+            if any(r == '*' for r in s.resources) and not s.is_resource_scoped_by_condition():
+                return (V_GRANTED_BROAD, s,
+                        "Resource:'*' -- no resource check can falsify this role")
+
+        if arn is None:
+            return (V_UNRESOLVABLE, None, 'call resource not statically resolvable')
+
+        indeterminate = ''
+        for s in allows:
+            if not s.resources:
+                # Parser could not see a Resource (e.g. an unquoted TF reference).
+                # Absence of evidence is not evidence of absence.
+                indeterminate = indeterminate or 'an Allow statement has no parseable Resource'
+                continue
+            for r in s.resources:
+                hit = _iam_resource_matches(r, arn)
+                if hit is True:
+                    return (V_GRANTED, s, '')
+                if hit is None:
+                    indeterminate = indeterminate or \
+                        'policy Resource holds an unresolved ${...} interpolation'
+        if indeterminate:
+            return (V_UNRESOLVABLE, None, indeterminate)
+
+        if exact:
+            return (V_UNGRANTED_RESOURCE, None,
+                    f'action held on other resources, not on {arn}')
+
+        # Inexact ARN: only bucket-level absence is sound.
+        bucket = _arn_bucket(arn)
+        if not bucket:
+            return (V_UNRESOLVABLE, None, 'non-S3 ARN with unresolved segments')
+        # CVO P1 (2026-07-10): the tri-state was applied to the POLICY's uncertainty
+        # and not to MY OWN. If the BUCKET segment holds a '*', it is there because
+        # THIS parser could not resolve it (`Bucket=f"{env}-data"`), not because the
+        # call addresses many buckets. The real bucket may well be one the role holds,
+        # so bucket-level absence proves nothing. Returning UNGRANTED-RESOURCE here
+        # would read as "you are missing a permission" and someone would add a grant
+        # that was never needed -- my own defect class, inverted into over-permission.
+        if '*' in bucket:
+            return (V_UNRESOLVABLE, None,
+                    f'bucket segment {bucket!r} was not statically resolvable -- '
+                    f'cannot claim absence')
+        held: set[str] = set()
+        for s in allows:
+            for r in s.resources:
+                b = _arn_bucket(r)
+                if not b:
+                    continue
+                if '*' in b:
+                    # a wildcard BUCKET segment could cover ours; cannot be definitive
+                    return (V_UNRESOLVABLE, None,
+                            f'policy bucket pattern {b!r} may cover {bucket!r}')
+                held.add(b.lower())
+        if bucket.lower() not in held:
+            return (V_UNGRANTED_RESOURCE, None,
+                    f'bucket {bucket!r} appears in NO Allow statement for {action} '
+                    f'(held: {sorted(held) or "none"})')
+        return (V_UNRESOLVABLE, None,
+                f'bucket {bucket!r} IS held; key not statically resolvable -- cannot confirm')
 
     def deny_matches(self, action: str) -> list["IamStatement"]:
         """Return Deny statements whose action pattern matches `action`.
@@ -535,6 +965,19 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
     lines = content.splitlines()
     ec2_shipped_lines = _compute_ec2_shipped_line_ranges(content)
 
+    # Module-level string constants, for resolving `Bucket=PLATINUM_BUCKET`.
+    consts = _build_py_const_map(content)
+
+    def _args_at(lineno: int, paren_idx: int) -> str:
+        """Argument text of a call whose '(' is at `paren_idx` of line `lineno` (1-based).
+
+        A window of following lines, NOT an absolute offset: `splitlines()` has
+        already eaten \\r\\n, so byte offsets into `content` would drift one per
+        line on CRLF files and silently mis-slice every multi-line call.
+        """
+        window = '\n'.join(lines[lineno - 1: lineno - 1 + 12])
+        return _balanced_call_args(window, paren_idx)
+
     # Track (file, service) pairs already flagged UNMODELED so we emit ONE
     # coverage sentinel per unmodeled service per file, not one per call.
     unmodeled_emitted: set = set()
@@ -586,11 +1029,16 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
                 if method in action_map:
                     actions = action_map[method]
                     if actions:
+                        _arn, _exact, _expr = _op_resource(
+                            service, method, actions, _args_at(lineno, m.end() - 1), consts)
                         ops.append(Operation(
                             iam_actions=actions,
                             source_pattern=f'{client_var}.{method}',
                             file_path=file_path,
                             line_number=lineno,
+                            resource_arn=_arn,
+                            resource_exact=_exact,
+                            resource_expr=_expr,
                         ))
 
         # Generic boto3 method calls even without tracked client var
@@ -610,11 +1058,16 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
                 continue
             action_map = _BOTO3_BY_SERVICE.get(service, {})
             if method in action_map and action_map[method]:
+                _arn, _exact, _expr = _op_resource(
+                    service, method, action_map[method], _args_at(lineno, m.end() - 1), consts)
                 ops.append(Operation(
                     iam_actions=action_map[method],
                     source_pattern=f"boto3.client('{service}').{method}",
                     file_path=file_path,
                     line_number=lineno,
+                    resource_arn=_arn,
+                    resource_exact=_exact,
+                    resource_expr=_expr,
                 ))
 
         # AWS CLI via subprocess: subprocess.run(['aws', 's3', 'rm', ...]) or os.system('aws s3 rm ...')
@@ -651,6 +1104,62 @@ _TF_POLICY_ATTACHMENT = re.compile(
     r'resource\s+"aws_iam_role_policy_attachment"\s+"(\w+)"\s*\{'
 )
 _TF_ROLE_REF = re.compile(r'role\s*=\s*aws_iam_role\.(\w+)\.(?:name|id)')
+# NFRA_COMPIAM_ROLEREF (0.8.0, 2026-07-10): an `aws_iam_role_policy` may attach to a
+# role by LITERAL NAME rather than by TF reference -- the cross-module attachment
+# pattern (`role = "lambda-execution-role"` in portfolio-management/, where the role
+# resource lives in shared-infra/). `_TF_ROLE_REF` matches only the reference form, so
+# the caller hit a bare `continue` and DROPPED the whole policy block, silently: no
+# counter, no stderr, no verdict. 21 of 330 blocks estate-wide, across 4 roles.
+#
+# That is what actually produced comp-iam's `GRANTED-ACTION / UNGRANTED-RESOURCE` on
+# opal-pm-optimization-loader's s3:DeleteObject: `OpalDataPMCacheBustAccess`
+# (portfolio-management/main.tf:323, Sid PMProcessedCacheDelete,
+# arn:aws:s3:::opal-data-pm/*/processed/*) IS Terraform-declared and IS inside the
+# scanned tree. The file was read. The statement was discarded.
+#
+# It is NOT a DESIRED-vs-APPLIED plane limitation. Attributing it to one would have
+# taught every reader to dismiss this class as a console-drift artifact. (CTO,
+# 2026-07-10: "a true explanation, applied to a symptom it did not produce.")
+# Role names are globally unique in AWS, so the literal form resolves GLOBALLY by
+# name; the reference form stays module-local (the collision guard depends on it).
+_TF_ROLE_LITERAL = re.compile(r'role\s*=\s*"([^"$]+)"')
+_TF_POLICY_NAME = re.compile(r'name\s*=\s*"([^"]+)"')
+
+# Attachment census. comp-iam must be able to STATE what it read and what it could
+# not attach -- the same rule it now enforces on resources. Populated by
+# _parse_terraform_iam(); read by the CLI banner.
+_ATTACH_STATS: dict = {
+    'attached': 0, 'dropped': 0, 'dropped_detail': [], 'tf_files': 0,
+    # Deny statements inside blocks we could not attach. CTO arch-gate 2026-07-10:
+    # printed on EVERY invocation until zero.
+    'deny_unparsed': 0, 'deny_reasons': set(), 'deny_detail': [],
+}
+
+
+def _drop_reason(block: str, role_name: Optional[str], roles: dict) -> str:
+    """Why a policy block could not be attached. Named, never lumped together."""
+    m = re.search(r'role\s*=\s*(.+)', block)
+    expr = (m.group(1).strip() if m else '').split('\n')[0]
+    if 'each.value' in expr or 'each.key' in expr:
+        return 'for_each -- `role = each.value` not resolved'
+    if '${' in expr:
+        return 'role name is an unresolved interpolation'
+    if role_name and role_name not in roles:
+        return f'literal role {role_name!r} has no aws_iam_role resource in the scanned trees'
+    if expr.startswith('aws_iam_role.'):
+        return 'TF reference does not resolve within its own module'
+    if 'var.' in expr or 'module.' in expr or 'local.' in expr:
+        return 'role name comes from a var/module/local'
+    return 'role reference form not recognised'
+
+# The Terraform trees comp-iam reads. Anything outside them is INVISIBLE to every
+# comp-iam verdict. Printed on every sweep so "it did not read your tree" is never
+# mistaken for "your role does not hold it".
+TF_SCAN_ROOTS = [
+    "infra/aws/terraform",
+    "infra/aws/multi-account/terraform",
+    "infra/aws/ec2",
+]
 _TF_JSONENCODE_EFFECT = re.compile(r'["\']effect["\']\s*:\s*["\'](Allow|Deny)["\']', re.IGNORECASE)
 _TF_JSONENCODE_ACTIONS = re.compile(
     r'["\']actions?["\']\s*:\s*\[([^\]]+)\]', re.IGNORECASE | re.DOTALL
@@ -708,6 +1217,51 @@ def _collect_module_var_defaults(module_dir: Path) -> dict[str, str]:
 def _resolve_tf_vars(value: str, var_defaults: dict[str, str]) -> str:
     """Substitute ${var.X} with its module default; leave any unresolved ref literal."""
     return _TF_VAR_INTERP.sub(lambda m: var_defaults.get(m.group(1), m.group(0)), value)
+
+
+def _collect_module_locals(module_dir: Path) -> dict[str, str]:
+    """Collect `locals { name = "literal" }` string values from every .tf in ONE module dir.
+
+    Policy Resources are written as `arn:aws:s3:::${local.inf_bucket}/gold/...`.
+    Without resolving locals, EVERY S3 resource ARN is an unresolved interpolation
+    and every resource verdict correctly-but-uselessly degrades to
+    UNRESOLVABLE-RESOURCE. Same-module scope only (TF locals are module-local).
+    Plain string literals only -- an interpolated local (`"${var.env}-bucket"`)
+    stays unresolved on purpose rather than being half-guessed.
+    """
+    out: dict[str, str] = {}
+    try:
+        tf_files = sorted(module_dir.glob("*.tf"))
+    except Exception:
+        return out
+    for f in tf_files:
+        try:
+            content = f.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+        for bm in _TF_LOCALS_BLOCK.finditer(content):
+            block = _extract_tf_block(content, bm.start())
+            for m in _TF_LOCAL_ASSIGN.finditer(block):
+                out.setdefault(m.group(1), m.group(2))
+    return out
+
+
+def _resolve_tf_locals(value: str, locals_map: dict[str, str]) -> str:
+    """Substitute ${local.X}; leave any unresolved ref literal (so it reads as indeterminate)."""
+    return _TF_LOCAL_INTERP.sub(lambda m: locals_map.get(m.group(1), m.group(0)), value)
+
+
+def _resolve_stmt_resources(stmts: list["IamStatement"], module_dir: Path,
+                            locals_cache: dict, var_cache: dict) -> list["IamStatement"]:
+    """Resolve ${local.X} / ${var.X} inside every statement's Resource list, in place."""
+    if module_dir not in locals_cache:
+        locals_cache[module_dir] = _collect_module_locals(module_dir)
+    if module_dir not in var_cache:
+        var_cache[module_dir] = _collect_module_var_defaults(module_dir)
+    lm, vm = locals_cache[module_dir], var_cache[module_dir]
+    for s in stmts:
+        s.resources = [_resolve_tf_vars(_resolve_tf_locals(r, lm), vm) for r in s.resources]
+    return stmts
 
 
 def _parse_iam_statements(policy_text: str, source_file: str) -> list[IamStatement]:
@@ -848,12 +1402,9 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
     # gate (0.5.0_AE surfaced it during the collision fix; CTO routed it to the comp-tools
     # campaign 2026-06-26). The module-keyed role_tf_to_name + loud collision guard (below)
     # make multi-root scanning safe -- a bare label reused across roots no longer mis-links.
-    aws_base = workspace_root / "infra" / "aws"
-    tf_roots = [
-        aws_base / "terraform",
-        aws_base / "multi-account" / "terraform",
-        aws_base / "ec2",            # rglob picks up each service's terraform/ subdir
-    ]
+    _ATTACH_STATS.update({'attached': 0, 'dropped': 0, 'dropped_detail': [], 'tf_files': 0,
+                          'deny_unparsed': 0, 'deny_reasons': set(), 'deny_detail': []})
+    tf_roots = [workspace_root / p for p in TF_SCAN_ROOTS]
     all_tf_files: list[Path] = []
     seen_tf: set[Path] = set()
     for root in tf_roots:
@@ -867,6 +1418,7 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
             if rf not in seen_tf:
                 seen_tf.add(rf)
                 all_tf_files.append(f)
+    _ATTACH_STATS['tf_files'] = len(all_tf_files)
     if not all_tf_files:
         return roles
     all_tf_files.sort()
@@ -882,6 +1434,7 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
     role_tf_to_name: dict[tuple[str, str], str] = {}  # (module_dir, tf_resource) -> role_name
     _label_to_roles: dict[str, set[str]] = {}  # bare tf_resource label -> {role_names} (collision detector)
     module_var_cache: dict[Path, dict[str, str]] = {}  # module dir -> {var: default} (lazy)
+    module_locals_cache: dict[Path, dict[str, str]] = {}  # module dir -> {local: literal} (lazy)
     for tf_file in all_tf_files:
         try:
             content = tf_file.read_text(encoding="utf-8", errors="replace")
@@ -942,22 +1495,50 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
         for m in _TF_POLICY_RESOURCE.finditer(content):
             block = _extract_tf_block(content, m.start())
             role_ref = _TF_ROLE_REF.search(block)
-            if not role_ref:
-                continue
-            tf_role = role_ref.group(1)
-            # Resolve the role ref WITHIN the same module (TF refs are module-local).
-            role_name = role_tf_to_name.get((str(tf_file.parent), tf_role))
+            if role_ref:
+                tf_role = role_ref.group(1)
+                # Resolve the role ref WITHIN the same module (TF refs are module-local).
+                role_name = role_tf_to_name.get((str(tf_file.parent), tf_role))
+            else:
+                # NFRA_COMPIAM_ROLEREF: `role = "literal-name"` -- the cross-module
+                # attachment. Role names are globally unique in AWS, so resolve by name.
+                lit = _TF_ROLE_LITERAL.search(block)
+                role_name = lit.group(1) if lit else None
             if not role_name or role_name not in roles:
+                # NEVER a silent drop. A tool that cannot state what it failed to
+                # attach cannot be trusted to have attached yours.
+                _ATTACH_STATS['dropped'] += 1
+                pol = _TF_POLICY_NAME.search(block)
+                why = _drop_reason(block, role_name, roles)
+                _ATTACH_STATS['dropped_detail'].append(
+                    f"{pol.group(1) if pol else '(unnamed)'} -> "
+                    f"{role_name or '(unresolvable role ref)'} [{rel}]  ({why})")
+                # CTO arch-gate 2026-07-10: a tool that cannot see a Deny must SAY SO.
+                # We could not ATTACH this block, but we can still PARSE it and learn
+                # whether it carried a Deny. NEVER#1's cross-firm belts are Deny
+                # statements attached via `role = each.value`; comp-iam's Deny overlay
+                # exists so an explicit Deny never reads as GRANTED, and it cannot warn
+                # on a Deny it never parsed. Silence reads as allowed.
+                for _s in _parse_iam_statements(block, rel):
+                    if _s.effect.lower() == 'deny':
+                        _ATTACH_STATS['deny_unparsed'] += 1
+                        _ATTACH_STATS['deny_reasons'].add(why)
+                        _ATTACH_STATS['deny_detail'].append(
+                            f"{pol.group(1) if pol else '(unnamed)'} "
+                            f"[{rel}] ({why})")
                 continue
 
             # Parse the policy JSON (embedded in jsonencode or heredoc)
             stmts = _parse_iam_statements(block, rel)
+            _resolve_stmt_resources(stmts, tf_file.parent, module_locals_cache, module_var_cache)
             roles[role_name].statements.extend(stmts)
+            _ATTACH_STATS['attached'] += 1
 
         # aws_iam_policy (standalone policy document)
         for m in re.finditer(r'resource\s+"aws_iam_policy"\s+"(\w+)"\s*\{', content):
             block = _extract_tf_block(content, m.start())
             stmts = _parse_iam_statements(block, rel)
+            _resolve_stmt_resources(stmts, tf_file.parent, module_locals_cache, module_var_cache)
             if not stmts:
                 continue
 

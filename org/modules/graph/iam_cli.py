@@ -13,6 +13,16 @@ Usage:
     comp-iam service <name>        # show operations for one service
     comp-iam role <name>           # show granted actions for one role
     comp-iam stats                 # summary counts
+    comp-iam resource-sweep        # estate-wide: ACTION held, RESOURCE not (exit 1 if flagged)
+
+Verdicts (NFRA_COMPIAM_RESOURCE, 2026-07-10). Before this, every mode matched the
+ACTION NAME and never compared the RESOURCE ARN, so `s3:GetObject [GRANTED]` printed
+for a call that returned AccessDenied. The verdict was invariant to the truth.
+    GRANTED                              action AND resource match
+    GRANTED-BROAD                        Resource:'*' -- EXCLUDED, NOT CLEARED
+    GRANTED-ACTION / UNGRANTED-RESOURCE  action held on OTHER resources
+    UNGRANTED                            no matching action
+    UNRESOLVABLE-RESOURCE                could not be checked -- and says so
 """
 
 import argparse
@@ -26,6 +36,7 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 sys.path.insert(0, str(_WORKSPACE))
 
 from org.modules.graph.extract_iam import build_iam_report, PermissionGap  # noqa: E402
+from org.modules.graph import extract_iam as EI  # noqa: E402
 
 
 def _build():
@@ -34,6 +45,18 @@ def _build():
 
 def cmd_gaps(args):
     profiles, roles, gaps = _build()
+
+    # CTO ruling 2026-07-10: `gaps` may NOT keep answering the ACTION-ONLY question
+    # in silence. Two surfaces of one binary that disagree is the weakest-copy
+    # problem inside a single tool -- `service`/`resource-sweep` now compare the
+    # RESOURCE; `gaps` still does not. Say so on the way in, not in a changelog.
+    _print_plane_banner()
+    print("SURFACE: gaps -- ACTION-ONLY. It does NOT compare resource ARNs.")
+    print("  A gap is absent here whenever the role holds the action ANYWHERE, even on")
+    print("  a bucket the call never touches. For the resource question use")
+    print("  `comp-iam resource-sweep` or `comp-iam service <fn>`.")
+    print("=" * 78)
+    print()
 
     service_filter = (args.service or "").lower()
 
@@ -192,6 +215,8 @@ def cmd_service(args):
             print(f"    ... and {len(roles) - 15} more (use 'comp-iam roles' to list all)")
         return
 
+    _print_plane_banner()
+    print()
     for profile in matches:
         print(f"SERVICE: {profile.name}  [{profile.service_type}]")
         print(f"  IAM role: {profile.iam_role or '(not mapped)'}")
@@ -204,6 +229,9 @@ def cmd_service(args):
 
         # Deduplicate operations by (action, file, line)
         seen = set()
+        role = roles.get(profile.iam_role) if profile.iam_role else None
+        tally: dict[str, int] = {}
+        n_checked = 0
         print(f"  OPERATIONS ({len(profile.operations)}):")
         for op in profile.operations:
             for action in op.iam_actions:
@@ -212,12 +240,38 @@ def cmd_service(args):
                     continue
                 seen.add(key)
 
-                role = roles.get(profile.iam_role) if profile.iam_role else None
-                granted = role.grants(action) if role else None
-                status = "GRANTED" if granted else ("MISSING" if granted is not None else "UNKNOWN")
+                if role is None:
+                    status, note = "UNKNOWN", "role not mapped"
+                else:
+                    status, _stmt, note = role.resource_verdict(
+                        action, op.resource_arn, op.resource_exact)
+                n_checked += 1
+                tally[status] = tally.get(status, 0) + 1
 
                 print(f"    {action}  [{status}]")
                 print(f"      via: {op.source_pattern} at {op.file_path}:{op.line_number}")
+                if op.resource_arn:
+                    star = "" if op.resource_exact else "   (pattern; '*' = runtime value)"
+                    print(f"      resource: {op.resource_arn}{star}")
+                if op.resource_expr:
+                    print(f"      from: {op.resource_expr}")
+                if note:
+                    print(f"      note: {note}")
+
+        # DENOMINATOR. A tool that cannot state what it could not check has not checked.
+        n_stmts = len(role.statements) if role else 0
+        print()
+        print(f"  RESOURCE CHECK: checked {n_checked} calls across {n_stmts} statements; "
+              f"{tally.get(EI.V_UNRESOLVABLE, 0)} unresolvable")
+        for v in (EI.V_GRANTED, EI.V_GRANTED_BROAD, EI.V_UNGRANTED_RESOURCE,
+                  EI.V_UNGRANTED, EI.V_UNRESOLVABLE, "UNKNOWN"):
+            if tally.get(v):
+                flag = ""
+                if v == EI.V_GRANTED_BROAD:
+                    flag = "   <- NOT CLEARED: a wildcard role cannot be falsified by a resource check"
+                elif v == EI.V_UNGRANTED_RESOURCE:
+                    flag = "   <- the action is held on OTHER resources"
+                print(f"    {tally[v]:>3}  {v}{flag}")
         print()
 
 
@@ -272,6 +326,206 @@ def cmd_stats(args):
             by_svc.setdefault(g.service, []).append(g.iam_action)
         for svc, actions in sorted(by_svc.items()):
             print(f"    {svc}: {', '.join(sorted(set(actions)))}")
+
+
+def _print_plane_banner():
+    """State the plane, the trees read, and what could not be attached.
+
+    A tool that cannot state which trees it read cannot be trusted to have read
+    yours (CTO, 2026-07-10). The attachment census exists because a bare
+    `continue` silently discarded 26 of 330 `aws_iam_role_policy` blocks -- and
+    one of them, OpalDataPMCacheBustAccess, produced this tool's only
+    UNGRANTED-RESOURCE flag. The first draft of this banner blamed that flag on
+    the DESIRED-vs-APPLIED plane gap. The plane gap is REAL and it did NOT cause
+    that flag: the policy is Terraform-declared, inside a scanned tree, and was
+    dropped by the role-reference parser. A true explanation attached to a symptom
+    it did not produce would have taught every reader to dismiss a scan bug as
+    console drift. Cite no measurement whose mechanism you have not established.
+    """
+    st = EI._ATTACH_STATS
+    print("=" * 78)
+    print("PLANE: DESIRED (Terraform). This does NOT read live AWS.")
+    print("  comp-iam parses Terraform. It cannot tell landed from planned, and it is")
+    print("  blind to any grant Terraform does not declare. A live")
+    print("  `simulate-principal-policy` is the APPLIED plane; exercising the call is")
+    print("  the only EXERCISED evidence. Rule 22a: DESIRED != APPLIED != EXERCISED.")
+    print("  That rule does NOT retire because this tool now compares resources.")
+    print()
+    print(f"  scanned {len(EI.TF_SCAN_ROOTS)} trees ({st['tf_files']} .tf files): "
+          f"{', '.join(EI.TF_SCAN_ROOTS)}")
+    print(f"  policy blocks attached {st['attached']}; "
+          f"NOT ATTACHED {st['dropped']}  (a role ref this parser cannot resolve)")
+    if st['dropped']:
+        print("  ^ statements comp-iam has NEVER SEEN. Its verdicts are computed WITHOUT")
+        print("    them, so a role may hold a grant this tool cannot find. Run")
+        print("    `comp-iam attach-census` for the list. NOT a plane limitation --")
+        print("    a parser limitation, and it is stated rather than swallowed.")
+    # CTO arch-gate 2026-07-10 (a): a tool that cannot see a Deny must SAY SO on every
+    # invocation, until N=0. NEVER#1's runtime limb IS an IAM Deny; the Deny overlay
+    # exists so an explicit Deny never reads as GRANTED. It cannot warn on a Deny it
+    # never parsed -- and an instrument that goes quiet about what it could not read
+    # has taught the reader that quiet means allowed.
+    if st['deny_unparsed']:
+        print()
+        print(f"  DENY-OVERLAY INCOMPLETE: {st['deny_unparsed']} deny statement(s) unparsed "
+              f"({'; '.join(sorted(st['deny_reasons']))})")
+        print("  ^ comp-iam CANNOT answer 'is this denied?'. Among these are NEVER#1's")
+        print("    cross-firm Deny belts. Asking this tool about a Deny it never parsed")
+        print("    returns SILENCE, and silence must not be read as allowed.")
+    print("=" * 78)
+
+
+def cmd_attach_census(args):
+    """List every aws_iam_role_policy block comp-iam could NOT attach to a role."""
+    _build()
+    st = EI._ATTACH_STATS
+    print("comp-iam attach-census -- policy blocks NOT attached to any role")
+    print("=" * 78)
+    print(f"scanned trees: {', '.join(EI.TF_SCAN_ROOTS)}")
+    print(f"{st['tf_files']} .tf files; {st['attached'] + st['dropped']} aws_iam_role_policy blocks")
+    print(f"  {st['attached']:>4}  attached")
+    print(f"  {st['dropped']:>4}  NOT ATTACHED  (invisible to every comp-iam verdict)")
+    print()
+    for d in st['dropped_detail']:
+        print(f"  {d}")
+    print()
+    print("Each line is a policy whose statements are absent from the role's grant set.")
+    if st['deny_unparsed']:
+        print()
+        print(f"DENY-OVERLAY INCOMPLETE: {st['deny_unparsed']} deny statement(s) unparsed")
+        for d in st['deny_detail']:
+            print(f"  DENY  {d}")
+        print()
+        print("A DENY here is worse than an ALLOW. comp-iam's Deny overlay exists so an")
+        print("explicit Deny never reads as GRANTED -- and it cannot warn on a Deny it")
+        print("never parsed. NEVER#1's runtime limb IS an IAM Deny. Asking this tool")
+        print("'is cross-firm access denied?' returns SILENCE. Silence is not allowed.")
+    return 1 if st['dropped'] else 0
+
+
+def cmd_resource_sweep(args):
+    """Estate-wide: which calls does a role hold the ACTION for, but not the RESOURCE?
+
+    Answers the question `comp-iam service` could not: `s3:GetObject [GRANTED]` for a
+    call that returns AccessDenied, because the verdict matched the action name and
+    never compared the resource ARN.
+
+    Driven by the ACTUAL call site's resolved ARN -- not by grepping source for bucket
+    names. A bucket NAMED in code is not a call MADE (log strings, sibling-deploy
+    constants, dead code); binding the check to a name pattern instead of to the call's
+    resource is `action` for `resource` one layer down, inside the sweep hunting it.
+    """
+    profiles, roles, _ = _build()
+    lambdas = [p for p in profiles if p.service_type == 'lambda']
+
+    flagged, broad_roles = [], set()
+    tally: dict[str, int] = {}
+    n_calls = n_lambdas = 0
+    unmapped = [p.name for p in lambdas if not (p.iam_role and p.iam_role in roles)]
+    # A lambda with a role but ZERO detected operations is NOT cleared -- it is an
+    # empty set. comp-iam scans ONE source file per lambda (the entry point named in
+    # lambda-source-map.json); a boto3 call in a sibling helper module is invisible.
+    # Measured 2026-07-10: opal-inf-value-parity's lambda_function.py is 58 lines and
+    # binds no boto3 client, while its sibling axes_s3.py does `boto3.client("s3")`
+    # and the dir names opal-data-{bd,cot,inf}. Reporting that lambda as "0 calls,
+    # 0 flags" without saying so is a clean bill from an empty set.
+    zero_op = [p.name for p in lambdas
+               if p.iam_role and p.iam_role in roles and not p.operations]
+
+    for p in lambdas:
+        role = roles.get(p.iam_role) if p.iam_role else None
+        if role is None:
+            continue
+        n_lambdas += 1
+        seen = set()
+        for op in p.operations:
+            for action in op.iam_actions:
+                key = (action, op.file_path, op.line_number)
+                if key in seen:
+                    continue
+                seen.add(key)
+                if args.s3_only and not action.lower().startswith('s3:'):
+                    continue
+                n_calls += 1
+                verdict, _stmt, note = role.resource_verdict(
+                    action, op.resource_arn, op.resource_exact)
+                tally[verdict] = tally.get(verdict, 0) + 1
+                if verdict == EI.V_UNGRANTED_RESOURCE:
+                    flagged.append((p.name, role.role_name, action, op, note))
+                elif verdict == EI.V_GRANTED_BROAD:
+                    broad_roles.add(role.role_name)
+
+    # ROLE-LEVEL census, a DIFFERENT population from the call-level tally above:
+    # roles that hold an s3 action on Resource:'*'. A wildcard role can never be
+    # flagged by a resource check whether or not we detected a call in its source.
+    # Reporting only the call-level number would understate the blind spot.
+    wildcard_s3_roles = set()
+    for rn, role in roles.items():
+        for s in role.statements:
+            if s.effect.lower() != 'allow' or not any(r == '*' for r in s.resources):
+                continue
+            if s.is_resource_scoped_by_condition():
+                continue
+            if any(EI._action_pattern_matches(a, 's3:GetObject') for a in s.actions):
+                wildcard_s3_roles.add(rn)
+                break
+
+    _print_plane_banner()
+    if flagged:
+        print(f"\nFLAGGED ({len(flagged)}) -- the action is held on OTHER resources:\n")
+        for name, rolename, action, op, note in flagged:
+            print(f"  {name}")
+            print(f"    role:     {rolename}")
+            print(f"    action:   {action}")
+            print(f"    resource: {op.resource_arn}"
+                  f"{'' if op.resource_exact else '   (pattern)'}")
+            print(f"    at:       {op.file_path}:{op.line_number}   [{op.source_pattern}]")
+            print(f"    why:      {note}")
+            print()
+    else:
+        print("\nFLAGGED (0)\n")
+
+    print("-" * 78)
+    print(f"DENOMINATOR: {n_lambdas} lambdas with a mapped role; {n_calls} calls checked"
+          f"{'  (s3 only)' if args.s3_only else ''}")
+    total = 0
+    for v in (EI.V_GRANTED, EI.V_GRANTED_BROAD, EI.V_UNGRANTED_RESOURCE,
+              EI.V_UNGRANTED, EI.V_UNRESOLVABLE):
+        total += tally.get(v, 0)
+        print(f"  {tally.get(v, 0):>4}  {v}")
+    # The denominator must CLOSE. A tally that does not sum to the checked count is
+    # the same class of defect as a verdict that ignores the resource.
+    assert total == n_calls, f"tally {total} != checked {n_calls}"
+    print(f"  {'----':>4}")
+    print(f"  {total:>4}  = calls checked  (closes)")
+    print(f"\n  {len(unmapped):>4}  lambdas SKIPPED -- no mapped role (not checked, NOT cleared)")
+    print(f"  {len(zero_op):>4}  lambdas with a role but ZERO detected calls "
+          f"(an EMPTY SET, NOT cleared)")
+    print("        ^ comp-iam scans ONE source file per lambda (the entry point in")
+    print("          lambda-source-map.json). A boto3 call in a sibling helper module")
+    print("          is invisible to it. e.g. opal-inf-value-parity: lambda_function.py")
+    print("          binds no boto3, while sibling axes_s3.py does.")
+    print(f"  {len(broad_roles):>4}  roles whose matched statement was Resource:'*' "
+          f"(among calls above)")
+    print(f"  {len(wildcard_s3_roles):>4}  roles hold an s3 action on Resource:'*' "
+          f"ANYWHERE -- of {len(roles)} roles total")
+    print("        ^ a DIFFERENT, larger population: a wildcard role cannot be")
+    print("          flagged by any resource check, whether or not we saw a call.")
+    print()
+    print("BOUNDS -- hold them:")
+    print("  (a) A wildcard role cannot be flagged by ANY resource check. Those roles")
+    print("      are EXCLUDED from the flag set and are NOT cleared. Own finding.")
+    print("  (b) An UNRESOLVABLE resource is not a pass. It is a call whose ARN is")
+    print("      computed at runtime; this tool states that it could not check it.")
+    print("  (c) A FLAGGED call is a CANDIDATE, not a failure. Confirm each on the")
+    print("      live plane, WITH a positive control on a resource the role DOES hold:")
+    print("      aws iam simulate-principal-policy --policy-source-arn <role> \\")
+    print("        --action-names <action> --resource-arns <exact key>")
+    if args.show_broad:
+        print("\nRoles holding s3 on Resource:'*' (NOT CLEARED):")
+        for r in sorted(wildcard_s3_roles):
+            print(f"  {r}")
+    return 1 if flagged else 0
 
 
 _DEFAULT_CENSUS = "docs/briefs/cmpaws-iam-axis-census-20260603.json"
@@ -382,6 +636,15 @@ def main():
     p_rec.add_argument('--census', default=None,
                        help='Path to the comp-aws live IAM census JSON (default: docs/briefs/cmpaws-iam-axis-census-*.json)')
 
+    sub.add_parser('attach-census',
+                   help='Policy blocks comp-iam could NOT attach to a role (exit 1 if any)')
+    p_rs = sub.add_parser('resource-sweep',
+                          help='Estate-wide: calls whose ACTION is held but RESOURCE is not')
+    p_rs.add_argument('--s3-only', action='store_true',
+                      help='Only s3:* actions (the modeled resource space)')
+    p_rs.add_argument('--show-broad', action='store_true',
+                      help='List the Resource:* roles (EXCLUDED, NOT CLEARED)')
+
     # Also add --service flag to gaps command
     p_gaps = sub.add_parser('gaps-filtered', help='Show gaps for one service')
     p_gaps.add_argument('service', nargs='?', default='', help='Filter by service name')
@@ -408,6 +671,10 @@ def main():
         cmd_stats(args)
     elif args.command == 'reconcile':
         cmd_reconcile(args)
+    elif args.command == 'resource-sweep':
+        sys.exit(cmd_resource_sweep(args))
+    elif args.command == 'attach-census':
+        sys.exit(cmd_attach_census(args))
     else:
         parser.print_help()
 
