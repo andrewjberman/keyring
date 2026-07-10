@@ -93,12 +93,51 @@ def _run(mode: str, path: str) -> tuple[int, str]:
 # R1 -- NEGATIVE CONTROL. The deliverable. This MUST go RED.
 # --------------------------------------------------------------------------
 def test_R1_negative_sev1_surface_must_red() -> None:
+    """The NAMED SURFACE is the load-bearing assertion, not `rc` and not the prose.
+
+    `rc == 2` is NOT the specific red: argparse exits 2 on a USAGE ERROR, so a
+    malformed invocation returns exactly the tool's RED code on ANY input, benign
+    or not (see test_rc2_is_ambiguous_usage_error_vs_red). And `"CRITICAL" in out`
+    is a word in the wrapper prose. Only the named surface is the property.
+    """
     rc, out = _run("blocking", SEV1_PATH)
-    assert rc != 0, f"SEV1 surface did not RED. rc={rc}\n{out}"
     assert rc == 2, f"expected rc=2, got {rc}\n{out}"
     assert "CRITICAL" in out, f"no CRITICAL verdict emitted\n{out}"
     assert "SEV1" in out, f"no SEV1 severity emitted\n{out}"
+    # THE PROPERTY. Survives a usage error, a broken interpreter, and a reworded banner.
     assert "model_portfolios.headline" in out, f"SEV1 surface not named\n{out}"
+    assert "model_portfolios.benchmark" in out, f"2nd SEV1 surface not named\n{out}"
+
+
+def test_rc2_is_ambiguous_usage_error_vs_red() -> None:
+    """`rc=2` IS THE TOOL'S RED **AND** ARGPARSE'S USAGE-ERROR CODE. They collide.
+
+    Found by 1.0.0_SA_CTO (031807Z), whose first exercise passed a POSITIONAL path
+    instead of `--file` and got rc=2 on a SEV1 path -- and, because he ran his
+    positive control, rc=2 on a benign path too. A usage error is also non-zero,
+    and here it is not merely non-zero: IT IS THE EXACT RED CODE.
+
+    So `assert rc == 2` alone is UNDISCRIMINATING between a verdict and a typo.
+    This test pins the collision so nobody weakens R1 back down to the rc check.
+    """
+    # positional path (the malformed call) -- argparse usage error, on BOTH inputs
+    bad_sev = subprocess.run([BASH, str(TOOL), "check", "--mode", "blocking", SEV1_PATH],
+                             capture_output=True, text=True, cwd=str(REPO))
+    bad_ben = subprocess.run([BASH, str(TOOL), "check", "--mode", "blocking", BENIGN_PATH],
+                             capture_output=True, text=True, cwd=str(REPO))
+
+    assert bad_sev.returncode == 2 and bad_ben.returncode == 2, (
+        "premise changed: a positional path no longer produces argparse's rc=2. "
+        f"sev={bad_sev.returncode} benign={bad_ben.returncode}"
+    )
+    # ...and rc=2 here means NOTHING about surfaces. The named-surface assertion is
+    # what separates a verdict from a typo. Neither malformed run names a surface.
+    for r in (bad_sev, bad_ben):
+        blob = r.stdout + r.stderr
+        assert "model_portfolios.headline" not in blob, (
+            "a usage error named a surface -- the discriminator is broken"
+        )
+        assert "CRITICAL" not in blob, "a usage error emitted CRITICAL"
 
 
 # --------------------------------------------------------------------------
