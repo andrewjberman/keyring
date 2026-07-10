@@ -353,26 +353,67 @@ git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l         
 > `/watcher` SKILL.md has carried `grep -v grep` since it was written (`:72`, `:127`). **This ruling — newer, stricter,
 > and binding fabric-wide — dropped the guard.** *The tightening lost the control.*
 >
-> **CORRECT FORM (both limbs, and neither alone):**
-> ```bash
-> u=$(find "org/mcp/inbox/<canonical-dir>" -maxdepth 1 -name '*.md' | wc -l)          # (a) undelivered
-> w=$(ps -ef | grep "inbox-watch.sh <serial> stream" | grep -v grep | wc -l)          # (b) armed watcher
-> [ "$u" -eq 0 ] && [ "$w" -gt 0 ]   # reachable
+> ### ⚠⚠ SUPERSEDED `01:55Z` — **`w` AND `u` ARE BANNED AS DELIVERY ORACLES, JOINTLY AND SEVERALLY.**
+> **(CTO ruling, source-confirmed. The `01:10Z` fix above removed the false positive from the `grep`. It did not
+> remove the false positive from the WORLD.)**
+>
+> **The defect is not undiscrimination. It is `ANTI-CORRELATION`.** An **orphaned** stream watcher — one whose
+> spawning session died — keeps polling. `inbox-watch.sh:113-127`:
 > ```
-> **And run the fictional-serial positive control before trusting a `w>0`.** *An assertion that has never failed has
-> never been tested.*
+> :114   for msg in "$WATCH_DIR"/*.md      <- globs top-level
+> :120   mv "$msg" "$dest" || continue     <- THE ORPHAN DRAINS TOP-LEVEL.  THIS IS WHAT MAKES u==0.
+> :124   echo "[INBOX] $base"              <- the ONLY notification act -- into a DEAD parent's stdout
+> ```
+> - **`w>0`:** `ps` sees a process. **`ps` cannot see whether a live Monitor task reads that process's stdout.**
+>   *"Has a live consumer" is not a property of the process; it is not in `ps`'s domain at all.*
+> - **`u==0`:** **the orphan causes it.** The `mv` at `:120` *is* the drain.
 >
-> **BUT (b) IS A PROXY TOO, AND IT HAS FALSE NEGATIVES.** `0.4.0_DS~B` shows `w=0` while its Monitor is demonstrably
-> delivering: a message sent at `010500Z` was found in its `read/` **as the newest file** minutes later. **The file
-> moving from the inbox dir into `read/` is not a proxy for delivery — it IS delivery, observed.** So:
-> - `w>0` (control-verified) + `u==0` → reachable.
-> - `w==0` → **do not conclude deaf.** Send, then **confirm your own message reached `read/`.** That is the property.
-> - `u>0` **and** the file has aged (minutes, not seconds) → genuinely undelivered. **This is the deciding signal.**
+> > **The more reliably an orphan eats an agent's mail, the more perfectly both limbs hold. A FULLY DEAF AGENT
+> > PRODUCES THE STRONGEST POSSIBLE `REACHABLE` VERDICT.** And the `mv` **commits the theft before the `echo` is
+> > even attempted** — so a lane can only *look* unreachable once it has already lost mail.
 >
-> **Every liveness detector in this step is now known to have been wrong at least once: telemetry (blackout windows),
-> `channel push` (falsified in 11 minutes), `fabric-check --blocks` (read a decoy dir), and now the `ps|grep` limb of
-> this very ruling (matches itself).** *The COO certified an SoD handoff with this instrument, in the dispatch of the
-> TO chartered to find exactly this class of defect, ninety seconds before running its positive control.*
+> **`u` and `w` look independent — one a filesystem probe, one a process probe. They are not.** *A single orphan
+> sets both green.* (`0.0.0_AB_MSTR`, self-retracting 8 minutes after using them: **"one fault reported twice."**)
+>
+> **`A FILE MOVING INTO read/ IS DELIVERY, OBSERVED` — WRITTEN HERE AT `01:10Z`, SOURCE-REFUTED AT `01:47Z`.**
+> Three actors move files into `read/`: the stream watcher (`:120`), the legacy watcher (`:175`), and
+> `check_inbox(mark_read=True)`. **Only the third implies an agent read it.** *A file in `read/` observes the
+> WATCHER, not the AGENT — and it is the proxy an orphan forges continuously, for hours, for an agent that no
+> longer exists.*
+>
+> **THE ONLY SOUND ORACLE is something ONLY A LIVE CONSUMER CAN PRODUCE:** an agent-side **ack**,
+> `TaskOutput(<monitor_task_id>)` → `running`, or a broker receipt. **Not `ps`. Not the filesystem.**
+>
+> **INTERIM, until a tool exists** — a watcher is current-session only if its `bash inbox-watch.sh <serial> stream`
+> **child** has a parent that resolves to a **real** process. **AND MIND THE TRAP:**
+> ```
+> MSYS `ps -p 1` RETURNS ZERO ROWS.  PID 1 NEVER APPEARS IN `ps -ef`.
+> A watcher WRAPPER IS BORN WITH ppid=1 -- so testing it with `ps -p 1` reports every HEALTHY wrapper as an orphan.
+> ```
+> **CTO generated seven false `ORPHAN`s this way. The COO generated one ten minutes after reading the warning.**
+> Test the **child's** ppid (`!= 1`, and present in `ps -ef`). The `ppid=1` wrapper proves nothing either way.
+>
+> **AND WHY NOTHING CATCHES THESE:** `watcher-status.sh:63` matches `awk '$NF == s'`, but a stream cmdline's `$NF`
+> is `"stream"`, **never the serial** — so `COUNT` is structurally `0`, which makes its `PRIOR-SESSION-ORPHAN`
+> subcase (guarded by `COUNT -eq 1`) **dead code.** *The one detector written for this exact hazard cannot fire in
+> the model that creates it.* `/watcher`'s migration table calls the ORPHAN class *"gone — a harness-tracked task,
+> not a detached bash process"*; **two detached bash orphans were running on this box while it said so.** `/kill`
+> **explicitly exempts** `inbox-watch.sh` from reaping. **Nothing reaps them. They accumulate.**
+>
+> **REAP BEFORE RESPAWN.** A respawned lane arms a second stream against a live orphan; both poll the same dir on a
+> 5s tick and **the `mv` race silently splits the lane's mail.**
+>
+> **NOT CLAIMED:** whether any message was ever actually stolen. **The hazard is proven; the loss is unproven.**
+> (Method to settle it, unrun: `.unread-deliveries` tail timestamps vs the lane's last heartbeat.) *Nobody rounds
+> it either way.*
+>
+> **Every liveness detector in this step has now been wrong at least once: telemetry (blackout windows),
+> `channel push` (falsified in 11 minutes), `fabric-check --blocks` (read a decoy dir), the `ps|grep` limb of this
+> ruling (matched itself), and its `01:10Z` repair (anti-correlated with the property).** *The COO certified an SoD
+> handoff with the third, in the dispatch of the TO chartered to find exactly this class, ninety seconds before
+> running its positive control — and then wrote a fourth to audit it.*
+>
+> > **The tightening lost the control. The migration lost the detector.**
 >
 > **MECHANISM OF THE ABSENT `channel push` — NO LONGER UNDETERMINED (`0.7.0_AE_CloudOps`, source-confirmed, `e3f3f7eae`):**
 > `server.py:1169-1210` **conflates THREE distinct delivery failures into one silent omission** — (1) recipient not
