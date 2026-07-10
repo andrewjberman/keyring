@@ -1,60 +1,73 @@
 # Deploy Completion Record
 **Date opened:** 2026-07-09T12:26:09.108694+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / L4 RE-SPECCED (CTO 232022Z) + TRIGGER-MODEL CORRECTED (0.7.0_AE_CloudOps 020930Z, grounded on live AWS).
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / L4 -- CRITERION CORRECTED TWICE. GATE ON THE **STAMP**, NOT THE INVOCATION. (0.7.0_AE_CloudOps 021930Z.)
 
-=== TWO CORRECTIONS TO THIS LEDGER'S OWN PRIOR GATE TEXT -- both were CLOCK assumptions on an EVENT trigger ===
-(C1) The derive is cron(0 2 * * ? *) = 02:00Z, NOT "~02:10Z". Rule opal-globgrph-derive-runner-nightly, ENABLED.
-(C2) incremental_updater is NOT "hourly". It is SQS-EVENT-DRIVEN: event-source-mapping on
-     arn:aws:sqs:us-east-1:313476888478:opal-globgrph-incremental-events (Enabled), and ZERO EventBridge rules
-     target arn:aws:lambda:us-east-1:313476888478:function:opal-globgrph-incremental-updater
-     (`aws events list-rule-names-by-target` returns empty). "Hourly" was an OBSERVED CADENCE, never a schedule.
-     Observed fires 07-09/10: 22:11,22:16,22:21,23:01,23:56,00:01,00:16,00:21,00:56,01:01,02:01Z -- irregular.
-     => DO NOT WAIT FOR A CLOCK. "~03:00Z" is unfounded. Gate on the EVENT, or you measure at the wrong moment
-     (the exact LD-0267(C) trap this re-spec exists to prevent).
+!! THE PRIOR GATE TEXT OF THIS LEDGER (ed5b2479a, ~15 min old, which CTO 021626Z ratified as "the authority
+   over my memo") CONTAINED A FALSE-PASS AND IT FIRED LIVE TONIGHT. Do not execute it. Superseded below. !!
 
-=== EVIDENCE ALREADY BANKED -- the derive limb of the criterion is SATISFIED and CAPTURED ===
-Tonight's derive stamped 4 tables at 2026-07-10T02:09:13Z (caught live by a marker-transition poller):
-    writer_id=derive_runner  tables=[cse,graph_contracts,graph_edges,graph_nodes]  cse=PRESENT
-    ETag "94ab4adc17ca85fc0d8681c5c8bfd09a"  LastModified 2026-07-10T02:09:13Z  size 1502
-Bucket versioning is OFF (Andrew-locked #5), so the next incremental stamp DESTROYS this object unrecoverably.
-Snapshot preserved off-bucket: scratchpad/leg4_derive_4table_marker_20260710T0209Z.json
-That snapshot is why limb (A) survives the clobber. WITHOUT IT, after the overwrite you CANNOT observe that the
-derive ever stamped 4, and the criterion becomes un-evaluable rather than failed.
+=== WHAT WENT WRONG (mine; the third correction to this same criterion) ===
+v1 clock:      "read 4 tables at ~02:20Z, close"          -> certifies a transient.        (CTO re-spec killed it)
+v2 clock:      "after the next HOURLY incremental, ~03:00Z" -> a clock on an SQS trigger.  (I killed it, ed5b2479a)
+v3 invocation: ">=1 incremental_updater INVOCATION completed at t > T_d AND marker still lists 4" -> FALSE-PASS.
 
-=== THE CRITERION, RESTATED IN EVENT TERMS (any lane may execute; do NOT close on a 4-table read) ===
-Let T_d = 2026-07-10T02:09:13Z (the derive's 4-table stamp, ETag above).
-PASS  iff (>=1 incremental_updater invocation COMPLETED at t > T_d) AND (live marker STILL lists all 4 tables).
-FAIL  iff (>=1 such invocation) AND (marker lists 3; cse ABSENT).            <-- EXPECTED TONIGHT, BY DESIGN.
-CANNOT-EVALUATE iff (zero such invocations). Then the ledger STAYS OPEN and you report exit 2. NEVER a PASS.
-      A quiet SQS queue is not evidence the merge works. It is evidence you did not test it.
+**AN INVOCATION IS NOT A STAMP.** Two source-confirmed paths where incremental_updater runs and never touches
+the marker:
+  (a) `incremental_updater/lambda_function.py:718` -- `stamp_branch_head_marker()` (:722) is called ONLY inside
+      `if all_nodes or all_deletes:`. A NO-OP BATCH INVOKES AND NEVER STAMPS.
+  (b) `_provenance.py:227` -- monotonicity guard: `if existing.committed_at_iso >= mine: MARKER_SKIP not-newer`.
+      A not-newer stamp is SKIPPED.
 
-=== EXACT READ COMMANDS ===
-# 1. Has >=1 incremental_updater invocation completed since T_d?
-aws cloudwatch get-metric-statistics --namespace AWS/Lambda --metric-name Invocations \
-  --dimensions Name=FunctionName,Value=opal-globgrph-incremental-updater \
-  --start-time 2026-07-10T02:09:13Z --end-time "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-  --period 300 --statistics Sum --query 'Datapoints[?Sum>`0`].[Timestamp,Sum]' --output text
-#    (empty output => CANNOT-EVALUATE. Stop. Do not close. Do not pass.)
+OBSERVED LIVE, TONIGHT, WITHIN 3 MINUTES OF THE CRITERION BEING WRITTEN:
+    T_d                = 2026-07-10T02:09:13Z  (derive_runner, 4 tables, cse PRESENT, ETag 94ab4adc17ca85fc0d8681c5c8bfd09a)
+    invocation         = 2026-07-10T02:12:00Z  (CloudWatch Invocations Sum=1, AFTER T_d)
+    marker at 02:19Z   = writer_id=derive_runner, committed_at_iso=2026-07-10T02:09:12.714167+00:00, n=4, cse PRESENT
+    SQS at 02:19Z      = ApproximateNumberOfMessages=0, NotVisible=0  (fully drained)
+=> v3 reads: ">=1 invocation" TRUE, "marker lists 4" TRUE  =>  **PASS**, on a merge that DOES NOT EXIST.
+The 02:12Z invocation was a no-op batch. It never stamped. The 4 tables are still the DERIVE's.
 
-# 2. Does the live marker still list all 4 cadence-configured tables?
-aws s3 cp s3://opal-313476888478-globgrph/warehouse/_branch_head.main.json - | python -c \
-  "import sys,json; d=json.load(sys.stdin); tm=d.get('table_metadata',{}) or {}; \
-   print('writer',d.get('writer_id'),'n',len(tm),sorted(tm),'cse','PRESENT' if 'cse' in tm else 'ABSENT')"
-#    n=4 & cse PRESENT => PASS (merge landed).   n=3 & cse ABSENT => FAIL, correctly, merge not landed.
+=== THE CORRECTED CRITERION -- gate on an incremental STAMP, observed on the marker itself ===
+An "incremental stamp after T_d" is EXACTLY:
+    marker.writer_id == "incremental_updater"  AND  marker.committed_at_iso > T_d
+(`_provenance.py:201,220,221` set both on every successful stamp -- they are the stamp's own record, written by
+the code path under test, and they are the only observable that distinguishes a stamp from a run.)
 
-# 3. Corroborate the reader-honesty fix b9f991994 is what surfaces it (must print ABSENT FROM MARKER, not silence).
+  PASS            incremental stamp after T_d  AND  marker lists all 4 (cse PRESENT)   -> the merge landed
+  FAIL            incremental stamp after T_d  AND  cse ABSENT                          -> clobber; EXPECTED today
+  CANNOT-EVALUATE no incremental stamp after T_d, REGARDLESS OF INVOCATION COUNT        -> exit 2, ledger OPEN
+                  ^ this is the state as of 2026-07-10T02:19Z. One invocation, zero stamps, queue drained.
 
-=== WHY IT STILL FAILS, AND WHY THAT IS THE DELIVERABLE ===
-stamp_marker rebuilds table_metadata from its caller's table_names and put_objects the WHOLE marker
-(_provenance.py:203-235); incremental_updater passes 3 (lambda_function.py:575), derive passes 4
-(derive_runner.py:413 / cse_store.py:91). So every incremental stamp ERASES cse. The merge fix is HELD by CTO
-pending compare-and-swap: put_object(IfMatch=<ETag of the read>) + bounded 412 retry + LOUD raise on exhaustion
-AND on ParamValidationError (stamp_marker is best-effort/never-raises, so an unsupported IfMatch would be
-swallowed into a WARN and SILENTLY STOP STAMPING). Probe built 8c0b67afd, UNRUN, hard-gated to first light:
-IfMatch must be confirmed in the DEPLOYED runtimes (Lambda bundled botocore + derive image pinned boto3), never
-inferred from the dev box. Three verdicts; IGNORED (param accepted and silently dropped) is the one that kills us.
+  A quiet SQS queue is not evidence the merge works. Neither is a busy one. Only a STAMP is evidence.
+  Silence from an untriggered instrument and silence from a passing one are byte-identical.
 
-L4 STAYS OPEN. Ledger STAYS OPEN. This is a REFUSAL, not a failure to finish. (held since 2026-07-09T13:11:12.866381+00:00)
+=== EXACT READ COMMANDS (any lane; T_d = 2026-07-10T02:09:13Z) ===
+aws s3 cp s3://opal-313476888478-globgrph/warehouse/_branch_head.main.json - | python -c "
+import sys,json,datetime as dt
+T_d = dt.datetime.fromisoformat('2026-07-10T02:09:13+00:00')
+d = json.load(sys.stdin); tm = d.get('table_metadata',{}) or {}
+w  = d.get('writer_id'); c = d.get('committed_at_iso')
+stamped = (w=='incremental_updater') and c and dt.datetime.fromisoformat(c) > T_d
+if not stamped:
+    print(f'CANNOT-EVALUATE: no incremental stamp after T_d (writer={w} committed_at={c}). Ledger stays OPEN.'); raise SystemExit(2)
+print(('PASS: merge landed' if 'cse' in tm else 'FAIL (expected): cse clobbered') + f\" -- n={len(tm)} {sorted(tm)}\")
+raise SystemExit(0 if 'cse' in tm else 1)
+"
+# exit 0 = PASS   exit 1 = FAIL (expected today)   exit 2 = CANNOT-EVALUATE (never a pass)
+# CloudWatch Invocations is a SUPPORTING signal ONLY -- it can NEVER establish the gate. Do not use it as one.
+
+=== EVIDENCE PRESERVED ===
+Versioning is OFF (Andrew-locked #5). The derive's 4-table object is destroyed by the next incremental stamp, so
+limb (A) survives only in the off-bucket snapshot: scratchpad/leg4_derive_4table_marker_20260710T0209Z.json
+(ETag 94ab4adc17ca85fc0d8681c5c8bfd09a). CTO 021626Z has elevated `_branch_head.history/{ts}.json` from
+"nice-to-have" to a PRECONDITION of the merge fix landing: you cannot ship a CAS whose success condition is
+unobservable after one subsequent write. The same ETag is the value `put_object(IfMatch=)` needs.
+
+=== THE MERGE FIX REMAINS HELD (unchanged) ===
+IfMatch CAS + bounded 412 retry + LOUD raise on exhaustion AND on ParamValidationError (stamp_marker is
+best-effort/never-raises, so an unsupported IfMatch is swallowed into a WARN and SILENTLY STOPS STAMPING).
+Probe 8c0b67afd UNRUN, hard-gated to first light, must exercise BOTH deployed runtimes. Verdict IGNORED (param
+accepted, silently dropped) is the one that kills us. Fold the history archive into the same CAS write.
+
+L4 STAYS OPEN. Today's honest verdict is CANNOT-EVALUATE, not FAIL, and not PASS. (held since 2026-07-09T13:11:12.866381+00:00)
 **Deploy:** FRESHGUARD leg-4 finish: wire all 3 writers (derive_runner/incremental_updater/cse_store) to the centralized _provenance.stamp_marker so per-table last_write_iso lands live. GROUNDED: leg-4 is SOURCE-INCOMPLETE (unwired), not merely undeployed -- the centralized stamp has ZERO call sites; all 3 writers stamp their own local marker with no last_write_iso field. HELD on CTO approach-gate (A centralize-import vs B 3-copy).
 **Authored by:** 0.7.0_AE_CloudOps
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -82,3 +95,4 @@ L4 STAYS OPEN. Ledger STAYS OPEN. This is a REFUSAL, not a failure to finish. (h
 - 20260709T232058Z HELD-SOVEREIGN-GATED gate=external/GATE RESTATED 2026-07-09T23:20Z (0.7.0 finding 231918Z; source + applied + exerc
 - 20260709T232435Z HELD-SOVEREIGN-GATED gate=external/L4 RE-SPECCED (CTO 232022Z) -- the old criterion ('last_write_iso populated on a
 - 20260710T021104Z HELD-SOVEREIGN-GATED gate=external/L4 RE-SPECCED (CTO 232022Z) + TRIGGER-MODEL CORRECTED (0.7.0_AE_CloudOps 020930Z
+- 20260710T021840Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION CORRECTED TWICE. GATE ON THE **STAMP**, NOT THE INVOCATION. (0.7
