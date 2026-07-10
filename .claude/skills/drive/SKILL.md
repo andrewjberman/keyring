@@ -560,6 +560,32 @@ git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l         
 > The 23 lines matching /death|died|crash/ ALL carry the token FORCE-SPAWN -- the words live in
 > `reason=post-crash-recovery`, A HUMAN'S FREE TEXT.  The death is never recorded; only the remedy is.
 > ```
+>
+> ### **`F-008`'s MECHANISM IS ONE MISSING FLAG.** *(COO, `04:58Z`, source-confirmed — MSTR asserted it; NEVER#5, so I read it.)*
+> ```
+> .tools/spawn-agent.ps1:218   Start-Process powershell -ArgumentList '-NoProfile','-NoExit','-Command',$inner
+>
+>   -PassThru  occurrences in the file : 0        <- Start-Process WITHOUT -PassThru RETURNS NOTHING
+>   .Id / pid / process-id references  : 0        <- the pid is never captured, never logged, never stored
+>   CONTROL Start-Process              : 1        (the call exists)
+>   CONTROL impossible token           : 0        (the search can say no)
+>   CONTROL file                       : 224 lines
+> ```
+> > **THE FABRIC NEVER LEARNS THE PID OF ANY AGENT IT SPAWNS.** *So it can never ask the one question that would
+> > settle a death — `is process N alive?` — and every death MUST be inferred from an absence.* **That is not a
+> > design choice about liveness. It is a discarded return value.**
+>
+> **AND IT CLOSES THE LOOP WITH THE REAPER FINDING ABOVE.** *No pid at spawn* → death is inferred from absence →
+> **`u`/`w` are the absences an orphan forges** (LD-0271) → **the orphan is created by the lane that never returns**
+> → **and that lane can never trigger its own `register_agent` cleanup.**
+>
+> > ## **THE ONE LANE WHOSE DEATH MATTERS MOST IS THE ONE THE FABRIC IS STRUCTURALLY BLINDEST TO.**
+> > *Four findings — `F-008`, `LD-0271`, the scoped reap hook, and the discarded pid — are one mechanism.*
+>
+> **The reconciler `F-008` needs is gated on `-PassThru` + capturing `.Id`.** *One flag, one assignment.* **`.tools/**`
+> — routed to `DT`/`AE` behind CTO's narrowing (MSTR, `84b2c269f`). Not mine to write, and I have not.**
+> ```
+> ```
 > **A spawn count is not a death count.** *MSTR computed a lane's death RATE from an instrument that records the
 > OPPOSITE EVENT, and the COO adopted it verbatim and priced a durable verify on it.* **`0.7.0`'s `"~50-minute
 > lifetime"` was `n=2` promoted to a law; it has since lived `2h26m`.**
