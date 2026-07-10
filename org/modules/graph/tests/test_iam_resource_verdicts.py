@@ -451,15 +451,50 @@ def test_deny_overlay_incompleteness_is_counted_and_never_silent():
     Written to stay true AFTER `for_each` resolution lands: it pins the INVARIANT
     (every unparsed Deny is enumerated with a named reason), not today's count of 2.
     """
-    E.build_iam_report(_WORKSPACE_ROOT)
+    _profiles, roles, _gaps = E.build_iam_report(_WORKSPACE_ROOT)
     st = E._ATTACH_STATS
-    # Every counted Deny is enumerated -- a count without a list is a claim.
-    assert len(st['deny_detail']) == st['deny_unparsed']
+
+    # R2 (COO, 2026-07-10). The assertion that used to live here was
+    #     assert len(st['deny_detail']) == st['deny_unparsed']
+    # `deny_unparsed += 1` and `deny_detail.append(...)` are unconditionally paired in
+    # the same branch, so it compared a counter to the length of the list that produced
+    # it. IT COULD NOT FAIL -- the identical vacuous shape CVO found in my attach-census
+    # test, reproduced by me in the very test written to fix that defect. A control that
+    # cannot fail is not a control, and knowing the name of the defect is not immunity.
+    #
+    # Re-derive the count from the Terraform, by a SEPARATE walk that does not read
+    # _ATTACH_STATS at all: a block is unattachable iff neither role-ref form resolves
+    # to a known role; count the Deny statements inside those blocks.
+    independent_denies = 0
+    for root in E.TF_SCAN_ROOTS:
+        rp = _WORKSPACE_ROOT / root
+        if not rp.exists():
+            continue
+        for f in rp.rglob('*.tf'):
+            if '.terraform' in f.parts:
+                continue
+            content = f.read_text(encoding='utf-8', errors='replace')
+            for m in E._TF_POLICY_RESOURCE.finditer(content):
+                block = E._extract_tf_block(content, m.start())
+                ref = E._TF_ROLE_REF.search(block)
+                lit = E._TF_ROLE_LITERAL.search(block)
+                resolvable = bool(ref) or (lit is not None and lit.group(1) in roles)
+                if resolvable:
+                    continue
+                for s in E._parse_iam_statements(block, str(f)):
+                    if s.effect.lower() == 'deny':
+                        independent_denies += 1
+
+    assert st['deny_unparsed'] == independent_denies, (
+        f"deny census {st['deny_unparsed']} disagrees with an independent walk "
+        f"({independent_denies}) -- the counter and the Terraform do not agree")
+    assert len(st['deny_detail']) == st['deny_unparsed']   # now non-vacuous: pinned above
+
     if st['deny_unparsed']:
         assert st['deny_reasons'], "an unparsed Deny must carry a named reason"
         assert all(r.strip() for r in st['deny_reasons'])
-        # Today the cross-firm belts are among them. When for_each resolution lands
-        # this count drops to 0 and the assertion above still holds -- by design.
+        # CONTENT, not count. When for_each resolution lands this goes to 0 and the
+        # implication holds vacuously -- by design.
         assert any('cross-firm' in d for d in st['deny_detail'])
 
 
