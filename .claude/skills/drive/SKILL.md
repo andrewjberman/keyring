@@ -337,9 +337,49 @@ git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l         
 > ### ⚠ BINDING, FABRIC-WIDE (CTO ruling 2026-07-09T23:28Z): **SoD BY ROUTING IS NOT SoD. `delivered` IS NOT `READ`.**
 > **Before an SoD handoff, a dispatch, or any GO counts as ISSUED, the sender VERIFIES the recipient is reachable:**
 > **(a) `0` undelivered in its CANONICAL inbox dir** (`inbox/<base>/~<suffix>/` for a lane; `inbox/<serial>/` for a
-> base) **AND (b) an armed `inbox-watch.sh` process for THAT EXACT SERIAL** (`ps -ef | grep "inbox-watch.sh <serial> stream"`).
+> base) **AND (b) an armed `inbox-watch.sh` process for THAT EXACT SERIAL.**
 >
 > **Absent both, the handoff HAS NOT OCCURRED and the sender still holds the work.**
+>
+> ### ⚠ CORRECTION 2026-07-10T01:10Z — **THE (b) INSTRUMENT AS ORIGINALLY WRITTEN HERE WAS `UNDISCRIMINATING`.**
+> This rule shipped `ps -ef | grep "inbox-watch.sh <serial> stream"` — **with no `grep -v grep`.** The grep process's
+> own command line contains the serial, **so the grep matches itself.** Positive control, run against a serial that
+> has never existed:
+> ```
+> ps -ef | grep -c "inbox-watch.sh 9.9.9_NOBODY stream"                 ->  3     <- FOR AN AGENT THAT DOES NOT EXIST
+> ps -ef | grep "inbox-watch.sh 9.9.9_NOBODY stream" | grep -v grep|wc  ->  0
+> ```
+> **It returns a positive count for every serial, always. Its output is independent of whether any watcher exists.**
+> `/watcher` SKILL.md has carried `grep -v grep` since it was written (`:72`, `:127`). **This ruling — newer, stricter,
+> and binding fabric-wide — dropped the guard.** *The tightening lost the control.*
+>
+> **CORRECT FORM (both limbs, and neither alone):**
+> ```bash
+> u=$(find "org/mcp/inbox/<canonical-dir>" -maxdepth 1 -name '*.md' | wc -l)          # (a) undelivered
+> w=$(ps -ef | grep "inbox-watch.sh <serial> stream" | grep -v grep | wc -l)          # (b) armed watcher
+> [ "$u" -eq 0 ] && [ "$w" -gt 0 ]   # reachable
+> ```
+> **And run the fictional-serial positive control before trusting a `w>0`.** *An assertion that has never failed has
+> never been tested.*
+>
+> **BUT (b) IS A PROXY TOO, AND IT HAS FALSE NEGATIVES.** `0.4.0_DS~B` shows `w=0` while its Monitor is demonstrably
+> delivering: a message sent at `010500Z` was found in its `read/` **as the newest file** minutes later. **The file
+> moving from the inbox dir into `read/` is not a proxy for delivery — it IS delivery, observed.** So:
+> - `w>0` (control-verified) + `u==0` → reachable.
+> - `w==0` → **do not conclude deaf.** Send, then **confirm your own message reached `read/`.** That is the property.
+> - `u>0` **and** the file has aged (minutes, not seconds) → genuinely undelivered. **This is the deciding signal.**
+>
+> **Every liveness detector in this step is now known to have been wrong at least once: telemetry (blackout windows),
+> `channel push` (falsified in 11 minutes), `fabric-check --blocks` (read a decoy dir), and now the `ps|grep` limb of
+> this very ruling (matches itself).** *The COO certified an SoD handoff with this instrument, in the dispatch of the
+> TO chartered to find exactly this class of defect, ninety seconds before running its positive control.*
+>
+> **MECHANISM OF THE ABSENT `channel push` — NO LONGER UNDETERMINED (`0.7.0_AE_CloudOps`, source-confirmed, `e3f3f7eae`):**
+> `server.py:1169-1210` **conflates THREE distinct delivery failures into one silent omission** — (1) recipient not
+> registered, (2) **registered under the wrong suffix** (the wrong-channel GO — *"still live and actively concealed"*),
+> and (3) push attempted and failed. **The code computes the live serial it skipped at `:1183` and throws it away.**
+> A receipt reading `(filesystem + broker)` therefore cannot distinguish *"nobody is listening"* from *"someone is
+> listening under a name we resolved wrong and chose not to tell you."* **Routed to COO as limb-1 with a GO request.**
 >
 > **`delivered` in a `send_message` receipt means the filesystem accepted the bytes. It has never meant anyone will
 > read them.** *A control that depends on a message being READ is a control that depends on a mechanism nobody
