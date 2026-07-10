@@ -210,6 +210,26 @@ def parse_registry() -> list[RegistryRow]:
                 blocking="",
                 prd_path="",  # embedded in phase cell for completed rows
             ))
+        elif current_table == "held":
+            # RG1 FIX: the Inactive/On-Hold table (HELD_HEADER_RE) set current_table='held' but had
+            # NO append branch, so every held-table row was parsed-context-set yet DROPPED from `rows`.
+            # Consequence: all_codes_in_registry (cmd_sync :568) excluded every held code -> each such
+            # project JSON was FALSELY reported ROW-MISSING. Schema: code | macro | name | held_since | reason.
+            if len(cells) < 5:
+                continue
+            rows.append(RegistryRow(
+                line_number=idx,
+                row_index=row_index_in_table,
+                table="held",
+                project_code=project_code,
+                macro_code=cells[1].strip("`").strip(),
+                name=cells[2],
+                phase_narrative=cells[4],   # the "Reason" cell (held-state narrative)
+                completed_date=cells[3],    # "Held Since" date
+                pods="",
+                blocking="",
+                prd_path="",
+            ))
 
     return rows
 
@@ -305,7 +325,7 @@ def detect_drift(row: RegistryRow, pj: ProjectJson) -> list[Drift]:
             project_code=row.project_code,
             row_line_number=row.line_number,
             drift_class="STATUS-MISMATCH",
-            description=f"JSON status='complete' but REGISTRY row in Active table (should move to Completed)",
+            description="JSON status='complete' but REGISTRY row in Active table (should move to Completed)",
             recommended_update="Move row from Active table to Completed table per Closure Discipline 3-step",
         ))
 
