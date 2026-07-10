@@ -15466,3 +15466,53 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check selfcheck | PASS |
 - 2026-07-10 (2.0.0_SA_COO, drive cycle 21): fabric-check --blocks (deaf=0 blocked=0), deploy_ledger --red (0 stranded/5 HELD), safe-commit (guard held: committed only its own pathspec while CVO's file was staged by a concurrent run). RAN THE SOVEREIGN-BROADCAST REACH AUDIT I had named as undone for 3 cycles: the vendor-egress [STOP] reached 9 inboxes, NOT 10 (CTO's number, which I republished 3x without counting), and 1.0.0_SA_CTO -- who relayed Andrew's directive -- NEVER RECEIVED IT. 2 recipients silent, one of them the author of an open deploy ledger. FAIL x2, both mine, both in the audit: (a) matcher keyed on the inbox-path form `A/~B` and searched a FILENAME where ~ renders _, reporting NO REPLY for a lane that had replied 7 times; (b) then `_0.4.0_DS_ClientPlatform_` matched `..._B_` and credited a session dead since 22:25Z with its tilde-lane's 7 replies (0.8.0's same-bucket/wrong-key-prefix rule). Fixed by grounding on the `# Message from` header -- the filename is a wrapper, the header is the property. And the surviving oracle is STILL weak: "named-the-prohibition" counts mention, not receipt. NOTHING IN THIS FABRIC EMITS AN ACK. Spec landed P4 seed 13 (073318186). Also: a timed-out safe-commit is NOT a rollback -- the commit had landed, the push timed out.
 | 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --file portal/src/components/BenchmarkHeatmap.tsx | VERDICT |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --file org/XXX.md | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0271.md | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking README.md | VERDICT |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_iam_resour... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file README.md | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking README.md | VERDICT |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking org/tier2_senior/0.4.0_DS_ClientPlatform/promp... | VERDICT |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking org/tier2_senior/0.4.0_DS_ClientPlatform/promp... | VERDICT |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking org/tier2_senior/0.4.0_DS_ClientPlatform/promp... | VERDICT |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_surface_ch... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-manifest-check | comp-manifest-check --help | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file README.md | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking README.md | VERDICT |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-manifest-check | comp-manifest-check routable | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-manifest-check | comp-manifest-check existence | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-09 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check CLAUDE.md | VERDICT |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --file CLAUDE.md | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | NFRA_TOOLCHECK.P4 | comp-surface-check | comp-surface-check check --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-09 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0273.md | PASS |
+- 2026-07-10 (2.0.0_SA_COO, drive cycle 22): fabric-check --blocks (deaf=0 blocked=0), deploy_ledger --red (0 stranded/5 HELD), comp-surface-check (rc=2 on 3/3 SEV1, rc=0 on benign -- IT PROVABLY SAYS NO), owned-paths-validate API. ANDREW-DIRECT P0 (CVO), verified independently every limb: comp-surface-check is CORRECT and is invoked at NO point in the portal lifecycle. Portal has ONE active hook (pre-push); no pre-commit exists; 0 of 3 CI workflows call comp-*. Root git is BLIND to portal file history (0 vs 16; controls: 6390 root commits, 2053 portal). So the safe-commit `|| true` remedy I ratified to CTO is a PLACEBO -- safe-commit is never in the path for a portal file. NEW VERDICT CLASS `UNINVOKED`: correct, never asked, PASSES EVERY CONTROL THE TOOL CAN BE GIVEN. Added R4 (INVOCATION) to P4 §4: a gate with no caller is not a gate. FAIL, mine: `git -C portal rev-parse --git-path hooks` returns a RELATIVE path; I grepped the ROOT's hooks dir and was one sentence from writing "CVO is wrong." Second wrong-directory error tonight. A ZERO FROM THE WRONG REPOSITORY LOOKS EXACTLY LIKE SAFETY. Seed 14: `.tools/**` is lane ANY -- 9.9.9_NOBODY may author safe-commit.sh AND owned-paths-validate.py while correctly DENIED on CLAUDE.md/.owned-paths.yaml/debtscan. The enforcer is in no lane. I am permitted to patch it and did not.
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
