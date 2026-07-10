@@ -1,29 +1,191 @@
-# 2.0.0_SA_COO — /drive Empirical Companion
+# 2.0.0_SA_COO — /drive Doctrine
 
-Operational steps: `.claude/skills/drive/SKILL.md`.
-Cross-agent learnings: `~/.claude/projects/.../memory/MEMORY.md` → Driver Discipline section.
-**This doc holds COO-side organization + scope discipline ONLY (no SKILL.md duplication).**
+Operational steps: `.claude/skills/drive/SKILL.md`. **That file is the imperative; this one is the why.**
+Cross-agent learnings: `memory/MEMORY.md` → Driver Discipline.
 
-## Chain-invoke at cycle end: `/allocation`
+**Why this doc exists.** On 2026-07-09/10 the COO appended every finding of a long session directly into
+`drive/SKILL.md`, taking it from 387 to 949 lines — 521 of them blockquoted incident prose, 678 of them inside a
+single step. Andrew, 2026-07-10: *"550 lines is way too much for a skill … all these notes are better suited for a
+log."* **A skill is loaded into every COO session; a doctrine doc is read when a rule is questioned.** Putting
+history in the skill taxes every future session to save the author one decision about where to file it.
 
-Every /drive cycle chain-invokes `.claude/skills/allocation/SKILL.md` at Step 8 — emits worker-set delta + MCPs MSTR for execution. /drive = demand signal; /allocation = supply signal. v0.1 Andrew sovereign 2026-05-26T13:42Z.
+---
 
-## Cycle-log discipline
+## §1 — The imperative, and its limit
 
-- Per-cycle path: `logs/{YYYY-MM-DD}/coo_drive_cycle_NN_{theme}.md` — one per /drive fire.
-- Never drop cycle logs at the COO folder root. Always under `logs/{YYYY-MM-DD}/`.
-- End-of-day / end-of-session: roll the day's per-cycle logs into `logs/{YYYY-MM-DD}/session_drive_NN_to_MM_{theme}.md` capturing range + theme. Preserve per-cycle files in `logs/{YYYY-MM-DD}/cycles/` (move, don't delete — audit-survivable).
-- Canonical session-consolidation anchor: `logs/2026-05-26/session_drive_67_to_89_ld0089_pavc_through_ac9_convergence.md`.
+**Resolve gates, don't attest them** (Andrew-direct 2026-06-23). Anchor: OPLMCP.02 sat *"gated on ~B-load (outage)"*
+for ~5 consecutive cycles while the outage was demonstrably clear and MSTR's respawn contingency sat un-pulled.
+The gate was COO-resolvable the whole time.
 
-## Scope + posture
+**But the imperative tells you to ASK whether a gate is real. It does not license you to assume it is not.**
 
-- **ws COO drives ws-fabric registry only (LD-0042).** Cross-fabric requests route via MSTR or joint CTO+COO consult.
-- **AC9-window / Tier-2-3-absent posture:** when workers offline (post-reboot or pending sovereign sign-off), route authoring-axis work to live Tier-1 (CTO/CVO/MSTR); do not dispatch NEXT-ACTION TOs to offline serials.
-- **Step 6 hard-gate paths:** ≥1 project-axis dispatch OR per-project monitoring-path attestation OR queue-hygiene to MSTR. "Standing by" is never terminal.
+*2026-07-10T05:08Z.* The COO ordered `0.7.0_AE_CloudOps` to run probe `8c0b67afd` immediately, calling it *"a READ
+on Opal-owned AWS, pre-authorized"* and warning that *"the window closes on a clock."* **Both premises were false.**
+The probe issues four `put_object` calls — one with a deliberately-wrong `IfMatch`, because the `IGNORED` verdict is
+only observable by watching a conditional PUT succeed when it must not — and its own docstring reads *"INTROSPECTION
+IS NOT EVIDENCE."* Its Lambda limb needs a new scratch function, i.e. the deploy the COO had explicitly excluded in
+the same message. And the next derive was **20h49m** away, not imminent.
 
-## Recurring pitfalls (memory pointers — do not restate)
+> **The COO asserted a mechanism from the artifact's NAME.** *"Probe" ⇒ "read."* **That is the same substitution as
+> `comp-iam`'s action-for-resource, `comp-freshness`'s filename-for-rows, and `send_message`'s delivered-for-read.**
+> CTO reached the same two falsifications independently and ruled: *"your dispatch with the false clock removed."*
+
+**Rule:** before charging a lane with a self-inflicted wait, **name the gate and check it at source.** Offer the lane
+an honourable answer (fatigue, context) — and if it refuses one because a hard gate exists, that is a better lane
+than the dispatch deserved.
+
+---
+
+## §2 — Sovereign scope, and why the filter must READ
+
+Andrew, 2026-07-09T22:33Z: *"i do not want to deal with 49 right now … not something that we should pursue unless i
+explicitly ask for it."* **CANCEL, do not park.**
+
+On 2026-07-10 the COO found **four projects whose entire scope is 49F/Black-Diamond/Schwab still `status: active`**
+in `/drive`'s own hot registry, eight days later. Step 2 filtered on `status` and nothing else. There is no
+prohibition flag in the schema — the `sovereign` field means **sponsor** (`ADVI_BDAPIMIG: sovereign=Andrew`) — and
+`fabric-check`'s `sovereign=0` counts *agent-state* decision requests, not project scope. **Neither instrument saw
+it.** The driver built to advance projects would have dispatched on cancelled work while its own health check
+printed green.
+
+**Three detectors, three failure directions, one question:**
+```
+grep -ciE '49f|schwab|black_diamond|rps' per JSON  -> 18 of 39.  Includes NFRA_COSTAWS (one passing mention)
+                                                      and every cot project. cot is a SEPARATE FIRM, IN SCOPE.
+jq -r '.title'                                     -> "?" for 15 of 18.  A MISSING FIELD. The key is `.name`.
+sed 's/^/  drive/SKILL.md: /'                      -> died on the slash, printed nothing.
+```
+A mention count **over-reports**. An absent field **under-reports**. An instrument error **reads as an absence**.
+
+> **Adjudicate by reading `.name` and `.description`. Print the denominator (39 active).**
+
+**Resolution.** The COO landed a refusal-to-queue (a refusal needs no sovereign permission and touches no 49F
+artifact) and escalated the *status flip*, because *"CANCEL" orders a write while "no writes to 49F/bd" forbids one*
+— the difference, not the intersection. **Andrew ruled 2026-07-10: *"just exclude those items, we will deal with
+them later."*** The four stay `active` in-file, permanently excluded. `MDPF_BASISSWITCH` stays untracked; committing
+it would be the write the sovereign declined.
+
+---
+
+## §3 — Freshness and alarms
+
+**The SQS poll (`opal-critical-surface-alerts-coo`) is stripped from Step 2b and stays stripped.** Andrew
+unsubscribed seven topics himself on 2026-07-01T02:46:02–02:47:05Z, aws-cli, 63 seconds, `DeleteTopic: 0`. **542
+messages, oldest 8.9 days, sit unread. Do not drain them. Do not touch any subscription.**
+
+**The rationale originally recorded for that removal was RETRACTED by its own author (2026-07-09).** It claimed the
+alerts were *"uncalibrated noise"* because `comp-freshness` showed cot silver FRESH while the alarm fired. But
+`comp-freshness` in partition-key mode parses `YYYY-MM-DD` **out of the object filename** (`:299-317`) and contains
+zero row-count reads. It is the *same proxy* as the alarm it was used to discredit, and cannot tell a 0-row stub from
+a real partition. `bd-cot-silver-stale-*` sat `OK` on a table dead since 2026-06-18.
+
+> **Freshness grounds on rows or values read out of the artifact — never its name, mtime, size, or existence.**
+> **When two freshness instruments disagree, the disagreement is the signal.** Resolve it by finding which one reads
+> the property, not by preferring the familiar one.
+
+### A raise is not loudness
+
+*2026-07-10T05:30Z.* The COO specified, and CTO ratified, *"a LOUD raise on `ParamValidationError`, else the CAS
+silently degrades to no-stamp."* `0.7.0` found the clause defeated by the caller contract:
+```
+derive_runner.py:1958-1962   except Exception as e: print(f"WARN: MARKER_STAMP_FAIL err={e}")
+incremental_updater:722      except Exception: logger.warning("MARKER_STAMP_FAIL ...")
+aws logs describe-metric-filters -> ZERO filters on any MARKER_* token
+```
+Both callers swallow **every** exception into the string a benign transient emits, and nothing alarms on it.
+
+> **A raiser cannot make itself heard. Only the caller decides whether an exception is an alarm or a shrug.**
+> *"Raise loudly" is not a specification; it is a wish about someone else's `except` block.*
+>
+> **And fail-closed with no alarm is worse than the bug** — a silent outage of the freshness oracle beats the
+> clobber it prevents. Precondition: **a metric-filter alarm on `MARKER_CAS_*` must exist before `GLOBGRPH_MARKER_CAS=on`.**
+
+### An absence wearing a reading's costume
+
+`derive_runner.py:743 @ 23c0bb6fb^`: `ts_str = data.get("committed_at", "")`. The marker has only ever carried
+`committed_at_iso`. **The staleness alarm read a key that never existed, took its default, and could never fire — a
+staleness detector inside FRESHGUARD, blind to staleness on the marker FRESHGUARD exists to watch.**
+
+> **`dict.get(key, default)` on a key that never existed is an absence wearing a reading's costume.**
+> **An alarm that has never fired and an alarm that cannot fire are byte-identical in every log we own.**
+
+---
+
+## §4 — Liveness: every detector in Step 2b has been wrong
+
+| Instrument | How it fails |
+|---|---|
+| telemetry `work-calls` | **blackout windows** — 6 minutes of zero lines of every class, with 6 vendor calls and 4 sends inside |
+| `channel push` token | measures the **sender's** `liveness.json`, never the recipient. `pushed=False` is a fact about you |
+| `fabric-check --blocks` | read a **decoy directory** for 28 lanes (`inbox/A~B/` flat, while writer+monitor use `inbox/A/~B/`) |
+| `ps -ef \| grep` | **matches its own grep**; and MSYS cannot see detached native-Windows processes. `ps -p 1` returns zero rows, so a healthy `ppid=1` wrapper reads as an orphan |
+| `u` undelivered = 0 | **an orphan causes it** — `inbox-watch.sh:120` `mv`s the message before `:124` announces it |
+| file in `read/` | observes the **watcher**, not the agent. `mv` preserves mtime, so no artifact on disk can date a delivery |
+
+> **`u` and `w` look independent — a filesystem probe and a process probe. They are not. A single orphan sets both
+> green.** The more reliably an orphan eats an agent's mail, the more perfectly both limbs hold: **a fully deaf agent
+> produces the strongest possible REACHABLE verdict.** This is `ANTI-CORRELATION`, not undiscrimination — it *passes*
+> a random-input control.
+>
+> **The only sound oracle is something only a live consumer can produce: an agent-side ACK. It does not exist.**
+
+**`F-008` — the fabric cannot detect that an agent died.** The spawn audit's vocabulary is `SPAWN · FORCE-SPAWN ·
+KILL · KILL-NOOP · FORCE-KILL · WARN · REJECT`. **There is no death event.** A kill is recorded; a spontaneous death
+is not. **A spawn count is not a death count**; a respawn is evidence someone *believed* a lane was dead.
+
+**Its mechanism is one missing flag.** `spawn-agent.ps1:218` calls `Start-Process` **without `-PassThru`**, and the
+file contains zero `.Id`/pid references. **The fabric never learns the pid of any agent it spawns**, so it can never
+ask *is process N alive?* — and every death must be inferred from an absence.
+
+**The orphan reaper closes the loop.** `hook_register_orphan_cleanup.py` is a PostToolUse hook on `register_agent`,
+scoped `kill-orphans --serial <S> --force` (Andrew-direct 2026-06-15, replacing a fabric-wide sweep that over-reaped
+live watchers). **The cleanup for a dead agent's orphan is gated on that dead agent coming back to life.** DS base
+never re-registered; its orphan lived 7h17m.
+
+> **The one lane whose death matters most is the one the fabric is structurally blindest to.** *The death cancels the
+> reaping.* **Do not widen the hook** — the narrow scope is Andrew's, and it is the fix for a real over-reap.
+
+**Do NOT run `/watcher rearm`.** `TaskStop` reaps the wrapper, not the grandchild; the repair procedure emits the
+orphan it is meant to clear, then arms a second stream to race it. **REAP BEFORE RESPAWN.**
+
+**Do NOT "clean up" `flat_orphans`.** They are the only evidence `operator.py:539` writes lane GOs to a path no
+Monitor watches. Folding them into `unread` would pin those lanes DEAF forever and demand a remedy incapable of
+fixing the condition — **an alarm decoupled from the action it demands trains the reader to mute it.**
+
+**Never deliver stranded flat-dir mail by moving it.** Four MSTR charters — including a `PROCEED … GO` — have sat 41
+days there. **Executing a 41-day-old GO is worse than never delivering it.**
+
+**Still open:** `kill-orphans`' header claims *"every reap is AUDITED (KILL-ORPHAN lines)."* **Zero exist.** Either it
+has never reaped or it never writes the line, **and those are byte-identical in the log.**
+
+---
+
+## §5 — Verification discipline (the rules that cost the most to learn)
+
+- **A citation without a vintage is not a citation.** `file:line` resolves at every commit, to different code. Cite `file:line @ <commit-ish>` or `@ working-tree`.
+- **Put the control on the RETRIEVAL, not the pattern.** `git show <bad-ref> | grep -c foo` prints `0` — grep counted zero matches *in an error message*. Print the denominator of every scan you reason from.
+- **A truncation is not biased toward comfort; it is biased toward whatever is off-screen.** A `head -9` once nearly destroyed a *true* finding three execs had adopted. A negative control cannot catch it — the control runs inside the same truncated window. **Only the denominator can.**
+- **The exit code is not a verdict channel.** `rc=1` is any uncaught exception; `rc=2` is also argparse. **Classify by the verdict token on stdout.** *An instrument's failure mode must not be one of its verdicts.*
+- **An assertion must carry its observation.** *A negative result that cannot show what it looked at is indistinguishable from a missing observation.*
+- **A verification performed against your memory of the artifact cannot fail.** Read the bytes.
+- **`HEAD` is not your commit, and a push range is not your commit.** In a shared working tree `HEAD` drifts under you. Verify with `git merge-base --is-ancestor <your-hash> origin/CLOUD`, plus a control that the predicate can say no.
+- **`safe-commit` commits the files you NAME, not the files you CHANGED, and returns `rc=0` either way.** Three agents swept the same dirty `CLAUDE.md` into unrelated commits in ninety minutes — one titled *"test subject."* **Verify the pathspec is clean before handing it to the wrapper.**
+- **A commit message is an execution vector AND an unverified self-report about the commit carrying it.** Author every non-trivial message via `-F <file>` from a quoted heredoc. **A succeeding substitution leaves no hole** — `date` injects a plausible timestamp — so a census of scars cannot bound a population of injections.
+- **When you retract a premise, audit what was built on it — including the things that were right.** `0.7.0` armed the poller that captured the derive transient *because of* a claim that was later retracted. Without that snapshot the leg-4 verdict is `UN-EVALUABLE`, not `FAIL`. **Re-ground the practice on its own merits, in writing, or the retraction takes the detector with it.**
+- **A test that patches the wrong seam talks to prod silently.** A function-local `import boto3` defeats a module-attribute patch; the "test" issued real S3 calls and was stopped only by `AccessDenied`. **A test that reaches production is not a test.**
+- **A rule that cannot yet be enforced must SAY it is unenforced** (`F-004`), or the next reader cites it as coverage.
+
+---
+
+## §6 — Cycle-log discipline
+
+- One log per `/drive` fire: `org/tier1_exec/2.0.0_SA_COO/drive_log_{YYYYMMDDTHHMMZ}.md`.
+- **Findings, incidents, and retractions go in the log — never appended to the skill.**
+- End-of-session: roll the day's logs into a session summary; **move**, never delete (audit-survivable).
+
+## §7 — Pitfall pointers (memory; do not restate here)
 
 - JSON > REGISTRY at Step 2 read: `feedback_drive_read_json_not_registry.md`
 - Verify in-flight by artifact, not SLA: `feedback_track_inflight_to_by_artifact_not_sla.md`
-- CORROBORATE-with-additive materializes immediately: `feedback_corroborate_with_additive_meta_materializes_immediately.md`
+- Read agent ACTIVITY, not project paths: `feedback_drive_read_agent_activity_not_project_paths.md`
 - Track by artifact during multi-phase TO execution: `feedback_surface_phase_artifacts_during_execution.md`
