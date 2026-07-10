@@ -15998,3 +15998,54 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-10 | 0.2.1_RD_Positioning | POSN_CUSTOM.001.custom-blend-state-summary-column | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-10 | 0.7.0_AE_CloudOps~C | NFRA_TOOLPASS | comp-grep/comp-heat/safe-commit/commit-gate/pytest | sweep delta: comp-fedobs FE1 (68d8e2cf9) + comp-glob/comp-grep GG1 chokepoint guard (ed1bafbcf, 2nd structural bd-guard) + comp-heat verified CLEAN (federated=HELD-UNEXERCISED) | PASS |
 | 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_pipeline.py -... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_iam.py --file... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/comp-tool-tests-quarantine.txt ... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS n | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' RETURN n.id LIMIT 5 | FAIL |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-xref | comp-xref --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --check | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n) RETURN count(n) AS total | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu --limit 3 MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' RETURN n.node_type | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_B_00.canonica... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace zzz_nonexistent_node_xyz | FAIL |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace gold:INF_09.generate_partner_analytics --direction both --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace gold:INF_09.generate_partner_analytics --direction up | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace gold:INF_09.generate_partner_analytics --direction down | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace INF_09 --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace gold:A_00.accounts_dimension --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace gold:A_00.accounts_dimension:some_function | FAIL |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/comp-tool-tests.yml | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace gold:INF_09.generate_partner_analytics --direction both --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace gold:A_00.accounts_dimension --direction down | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN count(n) AS total | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.NONEXISTENT_PROP_ZZZ LIMIT 1 | FAIL |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace s3:gold/dimensions/accounts_dimension_latest.parquet --direction both --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace AdvisorsTab.tsx --direction both --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace lambda:opal-portfolio-data --direction both --json | FAIL |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace gold:INF_C_02.client_performance --direction both --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.name CONTAINS 'bd-' RETURN n.node_type AS ... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-lambdamap | comp-lambdamap check | VERDICT |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace s3:gold/dimensions/accounts_dimension_latest.parquet --direction both --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace AdvisorsTab.tsx --direction both --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace AdvisorsTab.tsx --direction both | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace zzz_bogus | FAIL |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-xref | comp-xref --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cli.py | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-kit-striplist-gate | PASS |
+| 2026-07-10 | 0.3.0_DT_TradingOperations | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.3.0_DT_TradingOperat... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-trace | comp-trace served_vintage.py --direction both --json | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-xref | comp-xref --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 0.3.0_DT_TradingOperations | (no-TO) | deploy_ledger.py | open/close-leg/close x2 (sscn-pfoe-promote 4 legs + posn-custom-promote 5 legs) -- both CLOSED, NEVER#5 | PASS |
+| 2026-07-10 | 0.3.0_DT_TradingOperations | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
