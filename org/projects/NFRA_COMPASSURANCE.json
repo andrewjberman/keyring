@@ -1,0 +1,33 @@
+{
+  "project_code": "NFRA_COMPASSURANCE",
+  "macro_code": "NFRA",
+  "name": "The compiler-tool assurance layer -- productize the P4 audit into a standing per-tool harness",
+  "description": "Andrew-direct 2026-07-10 (via CVO brief -> CTO PRD). The 2026-07-09/10 NFRA_TOOLCHECK.P4 audit established that the directory-scoped SCANNERS generalize -- but the layer that tells you a scanner is WIRED / CATALOGUED / TESTED / TRUTHFULLY-DESCRIBED does not exist, uniformly across all ~60 tools. Every failure clustered OFF the scan: comp-surface-check is CORRECT and invoked by NO gate (17 commits touched SEV1 client-number surfaces since 06-01, gated by none); the universe is 60-on-disk / 63-by-predicate / ~42-catalogued while CLAUDE.md said ~30; 32 of 60 tools have NO test file (53%); NEVER#1 covers 2 of 3 firm-sep legs, NEVER#7's banned op runs ungated in both shells. COMPASSURANCE builds the assurance layer as a standing harness keyed on the RAIL_SET (R1-R7) the audit produced -- the 'comp-ladder': a (pipeline-layer x rail) matrix per tool, a scanner is ASSURED only when every cell has a GENERATED negative control shown able to go RED (mutant-killed). 0.8.0's mutation-tested comp-iam is the reference impl of one tool passing; the 32-untested census is the backlog. Author/verifier split is structural: CTO owns architecture, CVO stays off design to adversarially certify. PRD docs/architecture/NFRA_COMPASSURANCE.md.",
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_COMPASSURANCE.md",
+      "label": "NFRA_COMPASSURANCE PRD v0.1 (CTO-authored from CVO Andrew-direct brief; the 5 architectural rulings resolved in-doc)",
+      "date": "2026-07-10"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD v0.1 complete (CTO-authored, Andrew-direct via CVO brief). The 5 open architectural decisions are RULED in PRD sec.5: (R-1) COMPASSURANCE productizes P4, P4 stays open as the reference oracle until the harness reproduces its founding verdicts; (R-2) shares COMPILERKIT's layer taxonomy, seam is build-vs-assure; (R-3) the matrix lives as columns on the AC-0 predicate JSON, NO second home; (R-4) a red R1/R4/R7 cell BLOCKS a GREEN citation for SEV1/security/IAM tools, WARNS elsewhere; (R-5) E4-tool assurance is out-of-band and COMPASSURANCE cannot grade itself through itself. AC-7 vacuity gate: the harness must REJECT the old 'ran/exit-0/log-clean' assurance. Awaiting COO decomposition into TO-1..TO-6.",
+  "blocking": "COO task-order decomposition (TO-1 wiring registry + portal SEV1 gate; TO-2 R1 generated-control harness; TO-3 rule<->scan conformance; TO-4 catalog gate + CLAUDE.md ~30->63; TO-5 matrix columns on predicate JSON; TO-6 E4 out-of-band). HARD PREDECESSORS: NFRA_TOOLCHECK.P4 stays open as the reproduce-me oracle; the .tools/** daylight tranche (wiring + E4 fixes land in .tools/ + portal, human-awake window); the .tools/** -> BASE_EXEC lane narrowing (E4 assurance unbuildable while the enforcer is in no lane). RAIL_SET numbering: CVO publishes the single canonical set; the PRD amends to match (AC-0 for this project).",
+  "created": "2026-07-10",
+  "pods": [
+    "1.0",
+    "3.0",
+    "2.0",
+    "0.8",
+    "0.7",
+    "0.4"
+  ],
+  "depends_on": [
+    "NFRA_TOOLCHECK",
+    "NFRA_COMPILERKIT",
+    "NFRA_COMPRAIL"
+  ],
+  "depends_on_note": "PRODUCTIZES NFRA_TOOLCHECK.P4 (the manual reference audit + the RAIL_SET; P4 is the ground-truth oracle COMPASSURANCE must reproduce, and stays OPEN until it does). CONSUMES NFRA_COMPILERKIT's pipeline-layer taxonomy (the matrix vertical axis) + recognizer SDK; seam is build-vs-assure. BUILDS ON NFRA_COMPRAIL (rail vocabulary). The matrix's HOME is COO's AC-0 predicate JSON (63 rows) -- no second home, per the night's two-homes-drift lesson.",
+  "thread_counter": 0,
+  "threads": []
+}
