@@ -1784,6 +1784,18 @@ def cmd_deployed(args):
     if pipeline in ("cot-gold", "cot-silver", "cot-bronze", "cot"):
         S3_BUCKET = "opal-data-cot"
 
+    # Sovereign hold (CTO ruling 20260710T233307Z): the bd deploy-verify branch reads LOCAL bd
+    # SOURCE content -- hashlib.md5(local_path.read_bytes()) over data/black_diamond/scripts/{gold,
+    # silver}/*.py -- AND head-objects opal-data-bd. Both are held touches under the bd/49F
+    # prohibition. SKIP the bd branch for a normal agent invocation, NAMED as held (never a silent
+    # drop -- the pipescript no-silent-Unknown thesis). COMP_PIPESCRIPT_INCLUDE_HELD=1 re-enables it
+    # for the DS deploy-verify cycle (Rule 13) / when the hold lifts. Gating HERE -- before aws_bin
+    # and before any local read_bytes -- guarantees no held file is ever opened.
+    if S3_BUCKET == "opal-data-bd" and os.environ.get("COMP_PIPESCRIPT_INCLUDE_HELD") != "1":
+        print("  SKIP: opal-data-bd (bd) deploy-verify HELD under the sovereign prohibition -- "
+              "set COMP_PIPESCRIPT_INCLUDE_HELD=1 for the DS deploy-verify path.")
+        return 0
+
     # Resolve aws CLI once, full path -- avoids subprocess PATH-loss on some shells.
     aws_bin = shutil.which("aws") or shutil.which("aws.cmd") or shutil.which("aws.exe")
     if not aws_bin:
