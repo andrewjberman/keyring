@@ -392,9 +392,92 @@ def cmd_list(args: argparse.Namespace, config: dict) -> int:
     return 0
 
 
+# ---------------------------------------------------------------------------
+# CC2 sovereign-held-surface guard (NFRA_TOOLPASS).
+#
+# comp-constants ast-parses EVERY file in EVERY search_surface on any full run
+# (bare `check`, `--lane`, `new`, `index`). `--lane` scopes the COMPARISON
+# (cmd_check filters constants by lane), never the SCAN -- scan_all(only_file=None)
+# globs+parses all surfaces. So a config whose search_surfaces include a
+# sovereign-held path (e.g. data/black_diamond/) makes this tool a LATENT
+# bd-scanner for ANY caller. This guard makes the hold STRUCTURAL: it REFUSES
+# (exit 3) any full-scan invocation that would ast-parse a held surface, and any
+# `check --file` whose target is itself under a held path. `check --file <non-held>`
+# stays allowed (only_file scopes the scan to that one file). Override:
+# --allow-held-scan (loud stderr WARN; the wrapper logs the command string).
+# ---------------------------------------------------------------------------
+SOVEREIGN_HELD_MARKERS = (
+    "data/black_diamond/",
+    "schwab/silver/",
+    "opal-data-bd",
+    "opal-data-schwab",
+)
+
+
+def _held_surface_hits(config: dict) -> list[tuple[str, str]]:
+    """Return [(lane, glob_pattern), ...] for every search_surface glob naming a
+    sovereign-held path. Pure STRING check on the config patterns -- it does NOT
+    glob or read any file, so calling it never touches a held path."""
+    hits: list[tuple[str, str]] = []
+    for lane, patterns in (config.get("search_surfaces") or {}).items():
+        for pat in patterns or []:
+            norm = str(pat).replace("\\", "/")
+            if any(m in norm for m in SOVEREIGN_HELD_MARKERS):
+                hits.append((lane, str(pat)))
+    return hits
+
+
+def _held_path_hit(path_norm: str) -> str | None:
+    """Return the first held marker that path_norm falls under, else None."""
+    for m in SOVEREIGN_HELD_MARKERS:
+        if m in path_norm:
+            return m
+    return None
+
+
+def _sovereign_guard(args: argparse.Namespace, config: dict) -> None:
+    """REFUSE (exit 3) any invocation that would ast-parse a sovereign-held surface,
+    UNLESS --allow-held-scan is passed. Makes the bd hold structural, not procedural.
+
+    Runs BEFORE any scan, and decides purely from the config patterns + the --file
+    argument -- so a refusal never touches a held path itself."""
+    if getattr(args, "allow_held_scan", False):
+        held = _held_surface_hits(config)
+        if held:
+            sys.stderr.write(
+                "WARN: OVERRIDE -- sovereign-held-surface guard bypassed via --allow-held-scan; "
+                "scanning held surface(s): %s\n" % ", ".join(f"{ln}:{p}" for ln, p in held))
+        return
+    cmd = getattr(args, "cmd", "check") or "check"
+    if cmd == "list":
+        return  # config-only, no ast.parse
+    only_file = getattr(args, "file", None)
+    if cmd == "check" and only_file:
+        # scan is scoped to this one file; refuse only if the file itself is held.
+        norm = str(Path(only_file)).replace("\\", "/")
+        m = _held_path_hit(norm)
+        if m:
+            sys.stderr.write(
+                "REFUSE: SOVEREIGN-HELD -- --file target is under held path '%s'. comp-constants "
+                "will not ast-parse it. Pass --allow-held-scan to override (audited).\n" % m)
+            sys.exit(3)
+        return
+    # full-scan modes (bare check / --lane / new / index): scan_all globs+parses ALL surfaces.
+    held = _held_surface_hits(config)
+    if held:
+        surfaces = ", ".join(f"{ln}:{p}" for ln, p in held)
+        sys.stderr.write(
+            "REFUSE: SOVEREIGN-HELD -- comp-constants '%s' would ast-parse sovereign-held "
+            "search_surface(s): %s. Only `check --file <non-held>` is permitted under the hold. "
+            "Pass --allow-held-scan to override (audited).\n" % (cmd, surfaces))
+        sys.exit(3)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(prog="comp-constants")
     parser.add_argument("--config", default=str(DEFAULT_CONFIG_PATH))
+    parser.add_argument("--allow-held-scan", action="store_true",
+                        help="override the sovereign-held-surface guard (AUDITED -- logged by the wrapper)")
     sub = parser.add_subparsers(dest="cmd")
 
     p_check = sub.add_parser("check", help="drift detection (default)")
@@ -421,6 +504,7 @@ def main() -> int:
         args.func = cmd_check
 
     config = _load_config(Path(args.config))
+    _sovereign_guard(args, config)
     return args.func(args, config)
 
 
