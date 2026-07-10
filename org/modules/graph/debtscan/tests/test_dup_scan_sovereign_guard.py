@@ -138,3 +138,46 @@ def test_chokepoint_covers_comp_debt_caller(tmp_path, monkeypatch):
         "comp-debt's path MUST be bd-free -- the chokepoint guard covers the second caller"
     # prove the guard actually FIRED on comp-debt's path (not just 'no bd finding by chance')
     assert D.run_scan()["content"]["held_skipped_count"] == 1
+
+
+# ---- CTO coverage-gap close: graph_dead_confirm (the comp-blast leg) is unexercised by --------
+# ---- the --validate-dead fixture (it hardcodes graph_assume). Exercise it here, mocked. ------
+
+def _mock_blast(monkeypatch, stdout, rc=0):
+    class _R:
+        pass
+    r = _R()
+    r.stdout = stdout
+    r.stderr = ""
+    r.returncode = rc
+    monkeypatch.setattr(D.subprocess, "run", lambda *a, **k: r)
+    D._DEAD_CACHE.clear()
+
+
+def test_graph_dead_confirm_zero_consumers_is_confirmed_dead(tmp_path, monkeypatch):
+    _mock_blast(monkeypatch, "resource X: 0 downstream consumers")
+    assert D.graph_dead_confirm("res-zero", "lib/x.py") == "CONFIRMED_DEAD"
+
+
+def test_graph_dead_confirm_has_consumers_is_reachable(monkeypatch):
+    _mock_blast(monkeypatch, "resource Y: 12 downstream affected")
+    assert D.graph_dead_confirm("res-live", "lib/y.py") == "REACHABLE"
+
+
+def test_graph_dead_confirm_subprocess_error_never_confirms(monkeypatch):
+    """Rule 22: no usable graph result MUST NOT assert CONFIRMED_DEAD -- honest fallback only."""
+    def _boom(*a, **k):
+        raise FileNotFoundError("comp-blast not on PATH")
+    monkeypatch.setattr(D.subprocess, "run", _boom)
+    D._DEAD_CACHE.clear()
+    # dead-prior path -> INFERRED_DEAD_GRAPH_PENDING; non-prior -> UNKNOWN; NEVER CONFIRMED
+    assert D.graph_dead_confirm("res-err", "lib/normal.py") == "UNKNOWN"
+    D._DEAD_CACHE.clear()
+    v = D.graph_dead_confirm("res-err2", "lib/deprecated/old.py")
+    assert v in ("INFERRED_DEAD_GRAPH_PENDING", "UNKNOWN") and v != "CONFIRMED_DEAD"
+
+
+def test_graph_dead_confirm_not_found_output_does_not_confirm(monkeypatch):
+    _mock_blast(monkeypatch, "resource Z: not found")
+    v = D.graph_dead_confirm("res-nf", "lib/z.py")
+    assert v != "CONFIRMED_DEAD", "a 'not found' blast result must not assert CONFIRMED_DEAD"
