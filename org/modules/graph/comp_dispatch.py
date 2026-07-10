@@ -58,7 +58,19 @@ _GATES = [
     (re.compile(r"--incremental"), "incremental",
      "Scripts passed --incremental skip already-processed dates (per-script incremental logic).",
      "omit --incremental"),
+    (re.compile(r'!=\s*"bcd"|_par_mode\s*=\s*"bcd"|mode[^\n]*"bcd"'), "mode-skip",
+     "A dispatch MODE conditionally skips whole phases: cot's run_chain_parallel `if [ \"$mode\" != "
+     "\"bcd\" ]` skips PHASE_A (the A_* dimension scripts) when the A dimension is already done "
+     "(reached via `--chain bcd`). Grounded on the cot source; the shared bd structure was NOT read "
+     "(sovereign-held) -- verify there if/when in scope.", "run the full chain (omit the bcd mode)"),
 ]
+
+# gate detection is a CLOSED, presence-matched allowlist (the patterns above), NOT derived from the
+# source's control flow. A conditional skip built from a construct outside these patterns is NOT
+# surfaced -- so --gates DISCLOSES its own boundary (mirroring --undispatched's honest gap-disclosure),
+# rather than presenting the matched set as exhaustive. This is the completeness-honesty the tool
+# already applies to undispatched scripts, now applied to gates.
+_GATE_LABELS = ", ".join(label for _rx, label, _d, _o in _GATES)
 
 
 # --------------------------------------------------------------------------------------------
@@ -155,7 +167,10 @@ def analyze(firm_or_path: str) -> dict:
     return {
         "firm": firm, "path": os.path.relpath(path, _WS).replace(os.sep, "/"),
         "catalog": catalog, "chains": chains, "chains_raw": chains_raw, "groups": groups,
-        "gates": parse_gates(text), "undispatched": undispatched(path, catalog),
+        "gates": parse_gates(text),
+        "gates_detection": "bounded-allowlist",  # NOT exhaustive: a gate outside _GATES is not surfaced
+        "gates_known_patterns": [label for _rx, label, _d, _o in _GATES],
+        "undispatched": undispatched(path, catalog),
     }
 
 
@@ -192,9 +207,13 @@ def render(a: dict, args) -> str:
             L.append("  -> UNDISPATCHED (standalone diagnostic; not run by any chain)")
         return "\n".join(L)
     if args.gates:
-        L.append("\nCONDITIONAL GATES (what skips a run/script):")
+        L.append(f"\nCONDITIONAL GATES ({len(a['gates'])} of the known-pattern set matched -- what skips a run/script):")
         for g in a["gates"]:
             L.append(f"  {g['gate']:12s} {g['description']}\n               override: {g['override']}")
+        L.append(f"\n  NOTE: gate detection is a fixed presence-matched pattern-set ({_GATE_LABELS}); a "
+                 "conditional skip built from a construct OUTSIDE these patterns is NOT surfaced. This "
+                 "is a bounded detector, not an exhaustive read of the bash control flow -- cross-check "
+                 "the source for a novel gate (as --undispatched discloses its own gap).")
         return "\n".join(L)
     if args.undispatched:
         L.append(f"\nUNDISPATCHED ({len(a['undispatched'])} gold-dir scripts NOT in any chain -- standalone):")
@@ -210,8 +229,8 @@ def render(a: dict, args) -> str:
     L.append(f"\nCATALOG ({len(a['catalog'])} scripts): ID -> file [default_flags]")
     L += _annot(list(a["catalog"]), a["catalog"])
     if a["gates"]:
-        L.append(f"\nGATES ({len(a['gates'])}): " + ", ".join(g["gate"] for g in a["gates"])
-                 + "   (comp-dispatch <firm> --gates for detail)")
+        L.append(f"\nGATES ({len(a['gates'])} of a known-pattern set): " + ", ".join(g["gate"] for g in a["gates"])
+                 + "   (comp-dispatch <firm> --gates for detail + the detector-boundary note)")
     if a["undispatched"]:
         L.append(f"\nUNDISPATCHED ({len(a['undispatched'])}): " + ", ".join(a["undispatched"])
                  + "   (standalone diagnostics, not in any chain)")
