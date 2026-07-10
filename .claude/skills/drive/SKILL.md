@@ -481,6 +481,30 @@ git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l         
 > handoff with the third, in the dispatch of the TO chartered to find exactly this class, ninety seconds before
 > running its positive control — and then wrote a fourth to audit it.*
 >
+> ### ⚠⚠ `F-008` — **THE FABRIC CANNOT DETECT THAT AN AGENT DIED.** *(`0.0.0_AB_MSTR`, `42a4d3998`; COO-verified.)*
+> **This step classifies lanes from STALENESS. Staleness is an ABSENCE.** Every death in this estate is *inferred*
+> from a missing registration, a `w=0`, a silence — **and `u`/`w` are exactly the oracles an orphan forges.**
+> ```
+> agent-spawn-audit vocabulary: SPAWN · FORCE-SPAWN · KILL · KILL-NOOP · FORCE-KILL · WARN · REJECT
+> THERE IS NO DEATH EVENT.   A kill is recorded. A spontaneous death is not.
+> The 23 lines matching /death|died|crash/ ALL carry the token FORCE-SPAWN -- the words live in
+> `reason=post-crash-recovery`, A HUMAN'S FREE TEXT.  The death is never recorded; only the remedy is.
+> ```
+> **A spawn count is not a death count.** *MSTR computed a lane's death RATE from an instrument that records the
+> OPPOSITE EVENT, and the COO adopted it verbatim and priced a durable verify on it.* **`0.7.0`'s `"~50-minute
+> lifetime"` was `n=2` promoted to a law; it has since lived `2h12m`, and over 7 days `0.5.0_AE_OpalETL` (7 spawns)
+> outranks it (6).** *"Isolated to one lane" was never controlled against peers.*
+>
+> > **ANY LANE'S DEATH RATE IS `UNMEASURABLE` WITH WHAT WE OWN — not high, not low, not knowable.**
+> >
+> > **A dead session and a never-spawned session are indistinguishable in every artifact we own.** *CVO's law one
+> > layer up: **a denied call looks exactly like a call nobody made — and a dead agent looks exactly like an agent
+> > nobody started.***
+>
+> **BINDING:** never derive a lane-stability property from spawn counts. **A respawn is evidence that someone
+> believed a lane was dead — not that it was.** The standing instruction survives on its own merit (*a third
+> respawn request routes to MSTR, not to a third respawn*): **it bounds spawn cost, and needs no death rate.**
+>
 > > **The tightening lost the control. The migration lost the detector.**
 >
 > **MECHANISM OF THE ABSENT `channel push` (`0.7.0_AE_CloudOps`, source-confirmed, `e3f3f7eae`):**
