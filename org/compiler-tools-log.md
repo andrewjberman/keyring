@@ -15831,3 +15831,37 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/comp_learns_produce.... | PASS |
 | 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | (session summary) | P3d vintage-disclosure build: --self-test 6/6 AC-B4a/b/c/d GREEN; comp-grep grounded 2-catalog scope + consumer audit; comp-blast comp_learns_status.json NOT-FOUND (artifact not code node) | PASS |
 | 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~B | NFRA_COMPLEARN.AMD-P3a | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/tool_activity_freshn... | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/comp_learns_produce.py | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~B | NFRA_COMPLEARN.AMD-P3a | comp-iam | comp-iam service opal-globgrph-tool-activity-freshness | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-passcraft --file .tools/com... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/canon_motif_scorer.py | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_PASSCRAFT/task_orders... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/PASSCRAFT_RECON_REFER... | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/canon_motif_scorer.py | PASS |
+| 2026-07-10 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_toolgraph_census... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/POSN_CUSTOM.md --file... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~B | NFRA_COMPLEARN.AMD-P3a | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-cluster --file infra/aws/gl... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-diff | comp-diff --help | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-cluster | comp-cluster --coverage | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-cluster | comp-cluster AdvisorIntelligence --json | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_antipattern.py | VERDICT |
+| 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean.py | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file org/modules/graph/tests/_p4_probe_exem... | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean2.py | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_control.py | VERDICT |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-diff | comp-diff --check | FAIL |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/_canonical.py --file... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-diff | comp-diff --ref HEAD~1 | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | (session summary) | P3d arch-gate PASS + labeling; served-write deploy attempt -> DEFERRED on leg-4 coupling (deploy_ledger open->close-deferred, NEVER#6 clean); comp-grep grounded the Dockerfile COPY-set scope | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
