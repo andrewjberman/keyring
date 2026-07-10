@@ -871,7 +871,7 @@ entries:
     canonical_call: |
       comp-cluster AdvisorIntelligence    # panel->drilldown tree + per-cluster sources + cross-panel coupling
       comp-cluster --list                 # every page + cluster counts + coverage
-      comp-cluster --coverage             # page-tree coverage (119/119, visible unresolved)
+      comp-cluster --coverage             # page-tree coverage (assigned/total, visible unresolved named)
       comp-cluster <Page> --json          # structured
     tool: comp-cluster
     mode: query
