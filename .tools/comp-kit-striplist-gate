@@ -214,6 +214,39 @@ def _selftest() -> int:
         else:
             print('PASS: clean-kit fixture correctly PASSED the gate (0 hits)')
 
+    # --- Fixture 3: CONTENT-secret in ISOLATION (KSG1). The 'secrets' category has TWO detectors
+    #     -- _SECRET_CONTENT_RE (content, here) + _SECRET_FILE_RE (file-type, Fixture 4). Fixture 1
+    #     trips BOTH, so neutering EITHER alone left the selftest GREEN via the sibling. This fixture
+    #     is a content-secret ONLY (AKIA in a .py, which is NOT a secret file-type), so neutering
+    #     _SECRET_CONTENT_RE alone flips THIS fixture RED = per-sub-detector non-vacuity. ---
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td)
+        (root / 'cfg.py').write_text('token = "AKIAABCDEFGHIJKLMNOP"\n')  # content-secret; .py is NOT a secret file-type
+        hits = scan_tree(root)
+        content_hits = [h for h in hits if h[2] == 'secrets' and h[1] >= 1]   # lineno>=1 => content
+        filetype_hits = [h for h in hits if h[2] == 'secrets' and h[1] == 0]  # lineno==0 => file-type
+        if content_hits and not filetype_hits:
+            print('PASS: content-secret isolated -- caught by _SECRET_CONTENT_RE alone (no file-type path)')
+        else:
+            print(f'FAIL: content-secret isolation broken (content={len(content_hits)} filetype={len(filetype_hits)})')
+            ok = False
+
+    # --- Fixture 4: FILE-TYPE secret in ISOLATION (KSG1). An id_rsa file with BENIGN content (no
+    #     secret-shaped line), so 'secrets' fires ONLY via _SECRET_FILE_RE -- neutering it alone
+    #     flips THIS fixture RED. Together with Fixture 3, each secret sub-detector is now proven
+    #     independently (the whole-_classify_line neuter-audit could not isolate them). ---
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td)
+        (root / 'id_rsa').write_text('placeholder body -- benign, nothing matches the content patterns\n')
+        hits = scan_tree(root)
+        content_hits = [h for h in hits if h[2] == 'secrets' and h[1] >= 1]
+        filetype_hits = [h for h in hits if h[2] == 'secrets' and h[1] == 0]
+        if filetype_hits and not content_hits:
+            print('PASS: file-type-secret isolated -- caught by _SECRET_FILE_RE alone (no content path)')
+        else:
+            print(f'FAIL: file-type-secret isolation broken (filetype={len(filetype_hits)} content={len(content_hits)})')
+            ok = False
+
     return 0 if ok else 1
 
 
