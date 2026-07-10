@@ -16,11 +16,56 @@ Authoritative sources:
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
+
+# SOVEREIGN sec.8 HOLD (CLAUDE.md / memory: 49F/bd/Schwab standing hold). IAM1 (CTO 20260710T222627Z):
+# extract_iam.py read_text()s data/black_diamond gold + manifest-driven bd source on EVERY comp-iam
+# command (build_iam_report -> _build). That FALSIFIED sec.8's "comp-iam runs freely" clearance (a tool
+# that reads bd CONTENT, not just TF metadata). This is the 6th content-reader guard.
+#   - COMP_IAM_INCLUDE_HELD=1 SET -> bd gold/service SOURCE scanned (pipeline / explicit opt-in).
+#   - UNSET (default agent) -> a held-path SOURCE read is SKIPPED (returns None), loud-noted ONCE.
+# comp-iam KEEPS its bd ROLE / TF-IAM-policy analysis -- that is genuine sec.8-safe METADATA (the TF
+# policy documents), NOT the gold/service .py source. The decision is a pure str.startswith on the
+# relative path -- it NEVER opens a held file to decide (the load-bearing property of every prior guard).
+_HELD_SOURCE_PREFIXES = (
+    "data/black_diamond/",
+    "data/canonical/schwab/silver/",
+)
+_HELD_NOTE_EMITTED = {"done": False}
+
+
+def _rel_is_held(rel: str) -> bool:
+    return rel.replace("\\", "/").startswith(_HELD_SOURCE_PREFIXES)
+
+
+def _include_held() -> bool:
+    return os.environ.get("COMP_IAM_INCLUDE_HELD") == "1"
+
+
+def _read_source_if_allowed(abs_path: Path, workspace_root: Path) -> Optional[str]:
+    """read_text(abs_path) UNLESS it is a sec.8-held source path and the hold is in effect.
+    Returns the file text, or None when the read is refused (held + no opt-in) or on any OS error.
+    A held refusal is decided by the RELATIVE PATH string -- the held file is never opened to decide."""
+    try:
+        rel = str(abs_path.relative_to(workspace_root)).replace("\\", "/")
+    except ValueError:
+        rel = str(abs_path).replace("\\", "/")
+    if _rel_is_held(rel) and not _include_held():
+        if not _HELD_NOTE_EMITTED["done"]:
+            print("NOTE: held gold/service SOURCE NOT scanned: sovereign hold (agent context) -- "
+                  "comp-iam bd role/IAM-policy analysis is from TF metadata only. "
+                  "Set COMP_IAM_INCLUDE_HELD=1 for the full scan (pipeline/opt-in).", file=sys.stderr)
+            _HELD_NOTE_EMITTED["done"] = True
+        return None
+    try:
+        return abs_path.read_text(encoding="utf-8", errors="replace")
+    except Exception:
+        return None
 
 
 # ---------------------------------------------------------------------------
@@ -1703,9 +1748,8 @@ def _load_lambda_profiles(workspace_root: Path, roles: dict[str, IamRole]) -> li
         if not abs_path.exists():
             continue
 
-        try:
-            content = abs_path.read_text(encoding="utf-8", errors="replace")
-        except Exception:
+        content = _read_source_if_allowed(abs_path, workspace_root)  # sec.8 chokepoint (defense-in-depth)
+        if content is None:
             continue
 
         rel = str(abs_path.relative_to(workspace_root)).replace("\\", "/")
@@ -1744,9 +1788,8 @@ def _load_ec2_profiles(workspace_root: Path) -> list[ServiceProfile]:
     if gold_dir.exists():
         gold_ops = []
         for py_file in sorted(gold_dir.glob("[A-D]_*.py")):
-            try:
-                content = py_file.read_text(encoding="utf-8", errors="replace")
-            except Exception:
+            content = _read_source_if_allowed(py_file, workspace_root)  # sec.8 chokepoint
+            if content is None:
                 continue
             rel = str(py_file.relative_to(workspace_root)).replace("\\", "/")
             ops = _scan_python_for_operations(content, rel)
@@ -1786,17 +1829,15 @@ def _load_ec2_profiles(workspace_root: Path) -> list[ServiceProfile]:
 
         if abs_path.is_dir():
             for py_file in sorted(abs_path.rglob("*.py")):
-                try:
-                    content = py_file.read_text(encoding="utf-8", errors="replace")
-                except Exception:
+                content = _read_source_if_allowed(py_file, workspace_root)  # sec.8 chokepoint
+                if content is None:
                     continue
                 rel = str(py_file.relative_to(workspace_root)).replace("\\", "/")
                 ops.extend(_scan_python_for_operations(content, rel))
                 files_scanned.append(rel)
         elif abs_path.is_file() and abs_path.suffix == ".py":
-            try:
-                content = abs_path.read_text(encoding="utf-8", errors="replace")
-            except Exception:
+            content = _read_source_if_allowed(abs_path, workspace_root)  # sec.8 chokepoint
+            if content is None:
                 continue
             rel = str(abs_path.relative_to(workspace_root)).replace("\\", "/")
             ops = _scan_python_for_operations(content, rel)
