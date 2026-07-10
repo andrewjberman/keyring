@@ -15816,3 +15816,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3b | (session summary) | P3c LANDED (b2389745b, verify 7/7 GREEN + live comp-grep) + B4 D-4 design grounded via comp-grep (vintage parity cols, ~B-aligned) | PASS |
 | 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-coverage | comp-coverage report | PASS |
 | 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3b | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-coverage | comp-coverage report | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/RUNBOOK.md | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/POSN_CUSTOM.md --file... | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-toolgraph --file org/module... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/coverage_cli.py | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~B | NFRA_COMPLEARN.AMD-P3a | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/tool_activ... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-coverage | comp-coverage report | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~B | NFRA_COMPLEARN.AMD-P3a | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/tool_activity_emit_l... | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-passcraft --file .tools/com... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/canon_motif_scorer.py | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | comp-blast | comp-blast comp_learns_status.json | FAIL |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/comp_learns_produce.... | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | (session summary) | P3d vintage-disclosure build: --self-test 6/6 AC-B4a/b/c/d GREEN; comp-grep grounded 2-catalog scope + consumer audit; comp-blast comp_learns_status.json NOT-FOUND (artifact not code node) | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
