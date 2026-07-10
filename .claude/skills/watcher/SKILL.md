@@ -75,9 +75,20 @@ completely an agent is deaf, the more perfectly both limbs hold. And because `:1
   declarative drift, not an absent reaper.** I read the description and never opened the code (Rule 22), and I
   inferred *"no reaper"* from *"an orphan lived 7h17m"* — **absence-for-mechanism**, the substitution this whole
   section exists to name.
-- **Why pid 31391 survived is UNDETERMINED** and stays so until exercised: `kill-orphans` may never have run, or a
-  guard (`STALE_ONLY` / `--serial` / an age floor) may have excluded it. **Do not infer "no reaper" from "an orphan
-  lived."** Owed: run `kill-orphans` against a *synthetic* orphan and record what it does.
+- **RESOLVED 2026-07-10 by exercise (COO, `ab69e619b`, dry-run throughout): THE REAPER IS GATED ON THE DEAD AGENT'S
+  OWN RETURN.** `org/mcp/hook_register_orphan_cleanup.py` is a **PostToolUse hook firing after `register_agent`**,
+  scoped `kill-orphans --serial S --force`. **pid 31391 survived 7h17m because the only thing that would have reaped
+  it is the return of the agent that died** (DS-base `register` events after 18:28Z: **0**; control `0.7.0`: 2).
+- **AND THE BLIND SPOT WAS CREATED BY A CORRECT FIX.** That scoped hook *replaced* a fabric-wide `--stale --force`
+  sweep which had been **reaping LIVE watchers** (Andrew-direct 2026-06-15 — the exit-143 incident recorded at
+  `kill-orphans:131-139`). **The remedy for over-reaping produced under-reaping, and under-reaping is the mode that
+  FORGES liveness** — an unreaped orphan then manufactures `w>0 && u==0 REACHABLE` for the serial it outlived.
+  **The narrow version is right. Do not widen it.** A lane that dies and is never respawned leaves an orphan nothing
+  will ever collect; that is the residual, and the fix is the ACK, not a wider sweep.
+- **STILL UNDETERMINED — and it is the honest kind:** whether `kill-orphans` has ever fired *at all*. Its header
+  claims every reap is audited as `KILL-ORPHAN` lines in `agent-spawn-audit.log`. **Zero exist** (control: `KILL`=47,
+  total=693). *Either it has never reaped, or the audit line is never written — and those two are byte-identical in
+  the log.* **A negative result that cannot show its observation is indistinguishable from a missing observation.**
 - **AND `kill-orphans:131-139` MAY ANSWER THE exit-143 "UNDETERMINED" ABOVE.** It documents a 2026-06-15 incident
   where reading the wrong cmdline token made **every live stream watcher read as stale and get reaped on a peer's
   `register_agent`** — the exit-143 deaths this file calls *"source UNDETERMINED."* It says `--serial` fixed it.

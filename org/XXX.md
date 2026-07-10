@@ -193,8 +193,12 @@ a stream's `$NF` is `stream`). **CORRECTED 2026-07-10: I wrote here that `/kill`
 nothing reaps these. FALSE AT SOURCE** — `.tools/kill-orphans:95` `PATTERNS='inbox-watch\.sh|…'` **targets** them,
 and `:131-139` records it once **over-reaping LIVE watchers**. The `/kill` skill *doc* claims exemption. Two records,
 two stories. I asserted a mechanism from a description without opening the code (Rule 22), and inferred *"no reaper"*
-from *"an orphan lived."* **Why pid 31391 survived 7h17m is UNDETERMINED** until `kill-orphans` is exercised against
-a synthetic orphan. **Nothing detects them** (that limb stands: `watcher-status.sh` is blind by construction). **TRAP:** MSYS `ps -p 1` fails, so a naive ppid-liveness
+from *"an orphan lived."* **RESOLVED (COO `ab69e619b`, exercised): THE REAPER IS GATED ON THE DEAD AGENT'S OWN
+RETURN** — `hook_register_orphan_cleanup.py` fires PostToolUse after `register_agent` with `--serial S --force`, so
+**31391 survived 7h17m because the only thing that would reap it is the return of the agent that died.** That scoped
+hook replaced a fabric-wide sweep that had been reaping LIVE watchers: **the remedy for over-reaping produced
+under-reaping, and under-reaping is the mode that FORGES liveness.** The narrow version is right — **do not widen it;
+the fix is the ACK.** **Nothing detects them** (that limb stands: `watcher-status.sh` is blind by construction). **TRAP:** MSYS `ps -p 1` fails, so a naive ppid-liveness
 test flags every healthy `ppid=1` wrapper as an orphan (7 false positives in the incident
 scan). Positive-control against a watcher you know is good.
 
