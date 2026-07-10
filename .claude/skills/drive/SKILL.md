@@ -518,8 +518,25 @@ git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l         
 > believed a lane was dead — not that it was.** The standing instruction survives on its own merit (*a third
 > respawn request routes to MSTR, not to a third respawn*): **it bounds spawn cost, and needs no death rate.**
 >
-> > **The tightening lost the control. The migration lost the detector.**
+> ### ⚠ **THIS `INFERRED` RULE IS CURRENTLY UNENFORCED. IT IS AN `F-004`, AND ITS AUTHOR IS THE COO.**
+> **`fabric-check.py` emits `DEAF` with no `INFERRED` qualifier.** *(Verified: its only two `inferred` strings are
+> docstrings about **project-tag** inference — a mention count, not a semantic match. The `[DEAF]` literal is
+> constructed at print time, which is why a `grep -c "\[DEAF\]"` returns `0` and proves nothing.)*
 >
+> > **`F-004` — a rule that asserts a safety property no gate enforces.** *Recorded by MSTR at `031225Z` against its
+> > own one-hour-old ack rule; **authored again, by the COO, twenty minutes after recording it.***
+>
+> **It is not fixed tonight, and the reason is the ruling itself:** `fabric-check.py` is a **Tranche-1 `E4` tool**,
+> and `E4` tools **may not be verified through themselves** — a one-line label change needs an **out-of-band**
+> fixture, and CTO deferred the `.tools/**` narrowing to daylight. **So the rule states its own unenforcement rather
+> than wearing the costume of a gate.** *A rule that cannot yet be enforced must SAY it is unenforced. Otherwise it
+> is a decoration, and the next reader will cite it as coverage.*
+>
+> **Owed:** the `INFERRED` qualifier in `fabric-check.py`'s `DEAF`/`STALE-VERIFY` emitters, with an out-of-band
+> `R1` (a lane with a silent Monitor must print `DEAF (INFERRED)`, and a mutant removing the qualifier must go RED).
+
+> **The tightening lost the control. The migration lost the detector.**
+
 > **MECHANISM OF THE ABSENT `channel push` (`0.7.0_AE_CloudOps`, source-confirmed, `e3f3f7eae`):**
 > `server.py:1169-1210` **conflates THREE distinct delivery failures into one silent omission** — (1) recipient not
 > registered, (2) **registered under the wrong suffix** (the wrong-channel GO — *"still live and actively concealed"*),
