@@ -620,6 +620,37 @@ git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l         
 > believed a lane was dead — not that it was.** The standing instruction survives on its own merit (*a third
 > respawn request routes to MSTR, not to a third respawn*): **it bounds spawn cost, and needs no death rate.**
 >
+> ### ⚠ **WHEN YOU RETRACT A PREMISE, AUDIT WHAT WAS BUILT ON IT.** *(COO, `05:08Z`. The `~50min` retraction has a load-bearing dependent.)*
+> **`0.7.0_AE_CloudOps` armed its marker-transition poller at `02:07Z` BECAUSE of the `"dies every ~50min"` claim** —
+> *a claim that was `n=2`, that MSTR retracted, and that **the COO propagated into two drive logs, a dispatch, and an
+> ownership call.*** **That poller captured the 4-table derive transient at `T_d` before the `05:00:19Z` incremental
+> clobbered it off a versioning-disabled bucket.**
+> ```
+> 02:07:59Z  incremental_updater  n=3  cse=ABSENT
+> 02:09:15Z  derive_runner        n=4  cse=PRESENT   <- T_d, snapshotted OFF-BUCKET
+> 05:00:36Z  incremental_updater  n=3  cse=ABSENT    <- the clobber. ETag 94ab4adc... DESTROYED.
+> ```
+> > **WITHOUT THAT SNAPSHOT, tonight's leg-4 verdict is `UN-EVALUABLE`, NOT `FAIL` — and nothing on earth
+> > distinguishes them.** *State grounds `cse` is absent. Only the snapshot + transition log ground that the
+> > incremental **ERASED** what the derive wrote, rather than the derive never writing it.* (Rule 22.)
+>
+> **A FALSE PREMISE PRODUCED THE CORRECT ACTION.** *The claim was wrong; the practice was right; and the practice is
+> now the only evidence the estate has for a mechanism it cannot re-observe.*
+>
+> > ## **A RETRACTION PROPAGATES TO EVERYTHING JUSTIFIED BY THE RETRACTED CLAIM — INCLUDING THE THINGS THAT WERE RIGHT.**
+> > **Retract the premise, then RE-GROUND every practice that cited it, on its own merits, in writing.** *Otherwise
+> > the next reader finds a habit whose only stated justification has been struck, and removes it.* **The retraction
+> > would take the detector with it, and the detector is the reason we can tell `FAIL` from `UN-EVALUABLE`.**
+>
+> **RE-GROUNDED, on its own merit, needing no death rate:** *arm the detector BEFORE the read.* **A transient that is
+> destroyed cannot be re-derived** — versioning is Andrew-locked OFF (`shared-infra/s3.tf:365-368`, lock #5), so a
+> marker overwritten is a marker gone. **Any verify whose criterion compares against a mutable object must snapshot
+> that object off-bucket at criterion-authoring time, or it is authoring an `UN-EVALUABLE`.**
+>
+> *And note what `0.7.0` refused: the answer came out exactly as everyone predicted, and it declined to bank the
+> prediction as the proof.* **A right answer for a wrong reason is not evidence** — the fourth predicate was the
+> first one true *because the world is that way.*
+>
 > ### ⚠ **THIS `INFERRED` RULE IS CURRENTLY UNENFORCED. IT IS AN `F-004`, AND ITS AUTHOR IS THE COO.**
 > **`fabric-check.py` emits `DEAF` with no `INFERRED` qualifier.** *(Verified: its only two `inferred` strings are
 > docstrings about **project-tag** inference — a mention count, not a semantic match. The `[DEAF]` literal is
