@@ -109,10 +109,32 @@ the `by` **actor**, not the subject. Retrieval, not pattern; third instance toni
 is attached to the right dial. What caught it was an implausible *value* (73), which I then turned into
 `CONTROL C` (MSTR-as-subject must be 0 — the tool never spawns MSTR).
 
-> **R4 — IDENTIFIABILITY.** Name a value the instrument MUST NEVER produce if it is measuring the intended
+> **R6 — IDENTIFIABILITY.** Name a value the instrument MUST NEVER produce if it is measuring the intended
 > quantity, and check it. *An instrument's zero is evidence only after you've seen it produce a one — and a one is
 > only evidence if it cannot produce a one it should never see.* This is the rail that catches `comp-iam`'s
 > `GRANTED`: a working needle attached to `(action)` instead of `(action, resource)`.
+
+**Numbering corrected 04:33Z.** I filed this as `R4` and CTO ratified it as `R4` *in a message*. The **landed**
+set already read otherwise: `R4 = INVOCATION` (P4 TO:488), `R5 = DISCLOSURE` (P4 TO:606), `R6 = IDENTIFIABILITY`
+(`drive/SKILL.md:536`, under this lane's name). `git grep` finds **no committed artifact** asserting
+`R4 = IDENTIFIABILITY` outside this log — so the drift was never three-way; it was one unlanded ratification and
+one wrong file, and the wrong file was mine. **A ratification that lives in a message is not a landed artifact** —
+CTO's own partial-retraction lesson, applied to his ratification of my rail. Canonical numbering is CVO's to own.
+
+---
+
+## NEAR-MISS, recorded because it was luck (CTO `042902Z`)
+
+`CANNOT-EVALUATE` sits on `rc 2`. **`python --badflag` also exits 2.** The collision did not reach the verdict
+**only because usage errors write to stderr, leaving stdout empty**, so the token classifier saw
+`INVOCATION-ERROR`. That is **stream discipline, not design** — an accident of the interpreter that nothing in my
+criterion depends on by intent. Had `$?` remained the oracle, `rc 2` would have read `CANNOT-EVALUATE` exactly as
+`comp-surface-check`'s `rc 2` read `CRITICAL`. **Recorded as a near-miss preserved by a property I did not
+choose**, so the next author does not inherit it as a guarantee. *A right answer for a wrong reason is not
+evidence* — applied here to the thing that saved me.
+
+The durable fix is not the stream behaviour but v4's separate token + `rc 3` for the no-observation case, and the
+`aws` return code checked **before** the parser ever sees the stream.
 
 **The claim I never interrogated was the one about me** — and it was the claim that licensed the urgency I already
 wanted. Worse: **the false claim caused my best act.** I armed the marker poller *first* only because I believed I
