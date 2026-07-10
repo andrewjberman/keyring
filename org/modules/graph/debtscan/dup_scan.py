@@ -350,7 +350,22 @@ def _is_vendored(parts: tuple) -> bool:
     return False
 
 
-def _py_bodies(roots: list[str]) -> list[dict]:
+# SOVEREIGN sec.8 STRUCTURAL EXCLUSION (CLAUDE.md / memory: the 49F/bd/Schwab standing hold).
+# These prefixes are NEVER read into the corpus without an explicit --allow-held (for when Andrew
+# lifts). This makes the hold a CODE property, not agent discipline: comp-dups reads git-tracked .py
+# under the "data" root, which by default would read_text() 337 data/black_diamond/*.py + the schwab
+# silver tree on every bare/--json/--class/--nightly run. The guard excludes them BEFORE any read.
+_HELD_PREFIXES = ("data/black_diamond/", "data/canonical/schwab/silver/")
+
+
+def _is_held(rel: str) -> bool:
+    return rel.startswith(_HELD_PREFIXES)
+
+
+def _py_bodies(roots: list[str], allow_held: bool = False) -> tuple[list[dict], list[str]]:
+    """(bodies, held_skipped). Reads git-tracked first-party .py under `roots`; EXCLUDES sec.8
+    sovereign-held paths from the corpus (unless allow_held) and returns the skipped list so the
+    caller can LOUD-note the exclusion -- the hold must be visible, never silent."""
     # source from git-tracked files only: vendored layer/site-packages deps are untracked/build
     # artifacts, so this is the first-party corpus by construction (+ the _is_vendored belt).
     try:
@@ -360,9 +375,13 @@ def _py_bodies(roots: list[str]) -> list[dict]:
     except (OSError, subprocess.TimeoutExpired):
         tracked = []
     roots_t = tuple(roots)
-    out = []
+    out: list[dict] = []
+    held_skipped: list[str] = []
     for rel in tracked:
         if not rel.startswith(roots_t):
+            continue
+        if not allow_held and _is_held(rel):
+            held_skipped.append(rel)   # NEVER read: sec.8 sovereign hold, excluded before read_text()
             continue
         parts = tuple(rel.split("/"))
         if _is_vendored(parts):
@@ -380,7 +399,7 @@ def _py_bodies(roots: list[str]) -> list[dict]:
             continue
         out.append({"id": rel, "path": rel, "name": py.name, "doc": body,
                     "firm": _firm_of(rel), "lines": nlines})
-    return out
+    return out, held_skipped
 
 
 # ---- scans --------------------------------------------------------------------------------
@@ -427,8 +446,9 @@ def scan_tf_names(audit: SuppressionAudit) -> list[dict]:
     return findings
 
 
-def scan_content(audit: SuppressionAudit, dogfood_path: str) -> dict:
-    docs = _py_bodies(["lib", "data", "infra/aws/lambda", "org/modules/graph"])
+def scan_content(audit: SuppressionAudit, dogfood_path: str, allow_held: bool = False) -> dict:
+    docs, held_skipped = _py_bodies(["lib", "data", "infra/aws/lambda", "org/modules/graph"],
+                                    allow_held=allow_held)
 
     # TIER C1 -- EXACT body-dup groups (O(N), instant): a structurally-identical body under >1
     # DISTINCT filename = a copied module (the class the 5 trading_calendar copies + jwt_freshness
@@ -466,17 +486,24 @@ def scan_content(audit: SuppressionAudit, dogfood_path: str) -> dict:
         for score, j in bm.neighbors(di, top=15, min_score=0.0):
             dog.append({"norm": round(score / ceil, 3), "score": round(score, 1), "path": docs[j]["path"]})
     return {"exact_dups": exact, "dogfood": dog, "corpus_size": len(docs),
+            "held_skipped_count": len(held_skipped),
+            "held_note": (f"SOVEREIGN HOLD: {len(held_skipped)} held path(s) EXCLUDED from the corpus "
+                          f"({', '.join(_HELD_PREFIXES)}) -- not read (--allow-held to include when lifted)."
+                          if held_skipped else
+                          ("ALL held paths INCLUDED (--allow-held): sovereign hold overridden."
+                           if allow_held else "no held paths under scan roots")),
             "near_sweep_note": "exhaustive all-pairs near-sweep is tier-2 (bounded in production: "
                                "blocked-by-stem + max-df candidate gen); prototype proves the tier via "
                                "exact-dup groups + the one-doc dogfood"}
 
 
-def run_scan(class_filter: str | None = None) -> dict:
+def run_scan(class_filter: str | None = None, allow_held: bool = False) -> dict:
     """Run all tiers; return the result dict. class_filter narrows the suppression audit view
-    to one class (CROSS_FIRM|IAM_POLICY_SPLIT|SERVICE_SPLIT|ENV_TWIN) -- findings are unaffected."""
+    to one class (CROSS_FIRM|IAM_POLICY_SPLIT|SERVICE_SPLIT|ENV_TWIN) -- findings are unaffected.
+    allow_held=False (default) EXCLUDES sec.8 sovereign-held paths from the content corpus."""
     audit = SuppressionAudit()
     tf = scan_tf_names(audit)
-    content = scan_content(audit, "lib/trading_calendar.py")
+    content = scan_content(audit, "lib/trading_calendar.py", allow_held=allow_held)
     hidden = audit.hidden
     if class_filter:
         cf = class_filter.upper()
@@ -575,13 +602,20 @@ def main(argv=None) -> int:
                     help="filter the suppression audit to a class (CROSS_FIRM|IAM_POLICY_SPLIT|SERVICE_SPLIT|ENV_TWIN)")
     ap.add_argument("--validate-dead", action="store_true",
                     help="run the dead-confirm fixture validation (opal-users v1/v2 over the metric window)")
+    ap.add_argument("--allow-held", action="store_true",
+                    help="INCLUDE sec.8 sovereign-held paths (data/black_diamond/, schwab/silver) in the "
+                         "content corpus. Default EXCLUDES them. Use ONLY when Andrew has lifted the hold.")
     args = ap.parse_args(argv)
 
     if args.validate_dead:
         validate_dead_confirm()
         return 0
 
-    res = run_scan(class_filter=args.cls)
+    res = run_scan(class_filter=args.cls, allow_held=args.allow_held)
+    # LOUD sovereign-hold disclosure on every content-scanning run (never silent).
+    _hn = res.get("content", {}).get("held_note")
+    if _hn:
+        print(_hn, file=sys.stderr)
     if args.nightly:
         dated, latest = write_ledger(res)
         summ = write_summary(res)
