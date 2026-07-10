@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""vectorize_audit_cli.py — comp-perf vectorize-audit backend: pandas vectorization opportunity detection."""
+"""vectorize_audit_cli.py - comp-perf vectorize-audit backend: pandas vectorization opportunity detection."""
 from __future__ import annotations
 
 import ast
 import argparse
-import re
-import subprocess
 import sys
 from pathlib import Path
 
@@ -65,9 +63,7 @@ class _VectorizeVisitor(ast.NodeVisitor):
         self._in_loop_depth -= 1
 
     def visit_Call(self, node: ast.Call) -> None:
-        src = ast.unparse(node) if hasattr(ast, 'unparse') else ''
-
-        # Rule 1: groupby(...).apply(lambda...) — per-partition grouped apply
+        # Rule 1: groupby(...).apply(lambda...) -- per-partition grouped apply
         if self._is_groupby_apply_lambda(node):
             context = 'inside loop' if self._in_loop_depth > 0 else 'top-level (may be vectorizable)'
             sketch = self._make_sketch_groupby_apply(node)
@@ -91,7 +87,7 @@ class _VectorizeVisitor(ast.NodeVisitor):
                 'snippet': self._src_line(node.lineno),
                 'context': 'parallel per-partition loop',
                 'severity': 'INFO',
-                'refactor_sketch': 'Consider: load all partitions via list comp → pd.concat → single vectorized groupby.agg',
+                'refactor_sketch': 'Consider: load all partitions via list comp -> pd.concat -> single vectorized groupby.agg',
                 'detail': 'ThreadPoolExecutor.submit per partition is I/O parallel but CPU still serial-per-partition',
             })
 
@@ -192,7 +188,7 @@ def cmd_audit(args: argparse.Namespace) -> int:
         f'script_path: {script_path.relative_to(_WORKSPACE)}',
         f'total_findings: {len(findings)}',
         f'warn_count: {len(warns)}',
-        f'findings:',
+        'findings:',
     ]
     for f in findings:
         yaml_lines.append(f'  - rule: {f["rule"]}')
@@ -255,6 +251,13 @@ def cmd_chain(args: argparse.Namespace) -> int:
 
 
 def main() -> int:
+    # BELT (CP1, CLAUDE.md no-non-ASCII): make stdout/stderr uncrashable on a cp1252 console, so a
+    # future stray non-ASCII char degrades to a replacement glyph instead of a hard UnicodeEncodeError.
+    for _s in (sys.stdout, sys.stderr):
+        try:
+            _s.reconfigure(errors='replace')
+        except Exception:  # noqa: BLE001
+            pass
     parser = argparse.ArgumentParser(
         prog='comp-perf',
         description='Performance vectorization opportunity audit for gold scripts'
