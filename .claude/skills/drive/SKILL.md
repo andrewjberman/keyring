@@ -172,8 +172,21 @@ most fabric advancement is event-driven and self-healing, but the failure mode /
 catch is the **single block that holds up a whole project or the whole fabric**. fabric-check
 finds those. For each item in the triage:
 
-- **DEAF / UNREACHABLE** → the lane has unread inbox + quiet telemetry = its Monitor isn't
-  delivering and (post-LD-0157) it has no self-tick to re-arm. It CANNOT be tasked. **Decide
+> ### ⚠ EVERY `DEAF` / `DEAD` VERDICT THIS STEP EMITS IS **`INFERRED`**, AND MUST BE LABELLED SO UNTIL `F-008` SHIPS.
+> **This classifier is an ABSENCE-DETECTOR.** *That is not a criticism of it; it is the only instrument that exists.*
+> **But `F-008` establishes that a dead session and a never-spawned session are indistinguishable in every artifact
+> we own** — so `DEAF`/`DEAD` is a **hypothesis about why a lane is silent**, never an observation that it died.
+> **Write it as `DEAF (INFERRED)` in every log, dispatch, and escalation.** *(MSTR, `035637Z`; Rule 22: an
+> ungrounded causal claim is `INFERRED` and non-actionable as a cause — though the REMEDY, a respawn request, is
+> prudential under uncertainty and needs no cause.)*
+>
+> **And never derive a lane-stability property from spawn counts.** *A respawn is evidence that someone BELIEVED a
+> lane was dead — not that it was.* **The COO adopted `"0.7.0 dies every ~50min"` from MSTR, wrote it into two drive
+> logs, propagated it to `0.7.0`, and priced a durable verify's ownership on it. It was `n=2`. The lane then lived
+> `2h12m`.** *`0.5.0_AE_OpalETL` outranks it on the 7-day spawn count.*
+
+- **DEAF / UNREACHABLE** *(always `INFERRED` — see above)* → the lane has unread inbox + quiet telemetry = its
+  Monitor isn't delivering and (post-LD-0157) it has no self-tick to re-arm. It CANNOT be tasked. **Decide
   respawn-vs-reap (LD-0158 going-forward rule): respawn-request to MSTR ONLY if the lane has LIVE
   pending work** (a respawn re-arms its Monitor + drains the backlog); **if its unit is done + you've
   rerouted its work, REAP it** (a respawn of a done lane just idles + re-deafs). Reroute any
