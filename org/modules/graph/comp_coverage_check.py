@@ -740,6 +740,16 @@ _SELFCHECK_CASES = [
     ("undisposed_level", "gate-verdict", "FAIL"),
     ("multiparty_rollup_harness", "logic-assertion", "holds"),
     ("s4_grain_audit_harness", "logic-assertion", "holds"),
+    # ISOLATED per-checker cases (CVO 2026-07-10, CTO ruling 213553Z): each trips EXACTLY ONE checker,
+    # so neutering that checker flips ITS case. Before these, 6 of 12 checkers were VACUOUSLY covered --
+    # a broken checker left selfcheck 17/17 GREEN. The standing neuter-audit meta-test
+    # (tests/test_coverage_check_selfcheck_nonvacuous.py) enforces 12/12-flip forever.
+    ("iso_one_home", "gate-verdict", "FAIL"),
+    ("iso_seam_reference_integrity", "gate-verdict", "FAIL"),
+    ("iso_coverage_single_home", "gate-verdict", "FAIL"),
+    ("iso_no_trino_phantom_seam", "gate-verdict", "FAIL"),
+    ("iso_producer_attribution", "gate-verdict", "FAIL"),
+    ("iso_stable_grain", "gate-verdict", "FAIL"),
 ]
 
 
@@ -866,6 +876,61 @@ def selfcheck(emit_json: bool = False) -> int:
     ga = audit_grain({"comp-blast": ["function", "symbol"]}, {"comp-blast": ["function", "object"]})
     ga_ok = any(t == "comp-blast" and k == "TRAVERSES-UNDECLARED" for t, k, _ in ga)
     results.append(("S4 grain-audit harness (traverses-undeclared -> finding)", ga_ok))
+
+    # ---- ISOLATED per-checker cases: each trips EXACTLY ONE checker (verified: fires=={that rule}).
+    # Purpose: neutering a checker must flip ITS case. The pre-existing cases were contaminated (e.g.
+    # the grain_retyping edge_type is also producer-less + undisposed, so producer_attribution +
+    # disposition_complete caught it regardless of stable_grain), leaving 6 checkers vacuously covered.
+    # These fixtures are minimal-violation-only so the neuter-audit meta-test can prove 12/12 non-vacuity.
+
+    # iso-1 one_home: a two-home tool (surface AND seam) -- inventory carries it so ONLY one_home fires.
+    led_iso = copy.deepcopy(led)
+    led_iso["tools"].append({"tool": "comp-iso-onehome", "surface": "AWS-CLOUD", "seam": "seam-1",
+                       "granularity": "g", "concern": "c"})
+    code, _, _ = run_gate(led_iso, seam_source, inventory=inv | {"comp-iso-onehome"}, manifest_inv=manifest_inv)
+    results.append(("ISO one_home: two-home tool -> FAIL (only one_home)", code == FAIL))
+
+    # iso-2 seam_reference_integrity: a tool referencing a seam_id absent from drift-topology.yaml.
+    led_iso = copy.deepcopy(led)
+    led_iso["tools"].append({"tool": "comp-iso-seamref", "seam": "seam-GHOST-999",
+                       "granularity": "g", "concern": "c"})
+    code, _, _ = run_gate(led_iso, seam_source, inventory=inv | {"comp-iso-seamref"}, manifest_inv=manifest_inv)
+    results.append(("ISO seam_reference_integrity: absent seam ref -> FAIL (only seam_reference_integrity)", code == FAIL))
+
+    # iso-3 coverage_single_home: an axis storing a 'coverage' copy (must be READ from coverage_source).
+    led_iso = copy.deepcopy(led)
+    led_iso.setdefault("seams", {}).setdefault("axis", []).append({"seam_id": "seam-1", "coverage": "COVERED"})
+    code, _, _ = run_gate(led_iso, seam_source, inventory=inv, manifest_inv=manifest_inv)
+    results.append(("ISO coverage_single_home: axis stores coverage copy -> FAIL (only coverage_single_home)", code == FAIL))
+
+    # iso-4 no_trino_phantom_seam: a phantom per-layer catalog named 'aws' (layer is a graph_nodes COLUMN).
+    led_iso = copy.deepcopy(led)
+    led_iso.setdefault("trino_federation", {}).setdefault("catalogs", []).append({"name": "aws"})
+    code, _, _ = run_gate(led_iso, seam_source, inventory=inv, manifest_inv=manifest_inv)
+    results.append(("ISO no_trino_phantom_seam: phantom 'aws' catalog -> FAIL (only no_trino_phantom_seam)", code == FAIL))
+
+    # iso-5 producer_attribution: an edge_type with NO producer, UNIQUE relation, and its level DISPOSED
+    # (so disposition_complete + stable_grain stay clean -> ONLY producer_attribution fires).
+    led_iso = copy.deepcopy(led)
+    led_iso["grain_contract"].setdefault("edge_types", []).append(
+        {"edge_type": "ISO_NOPROD", "relation": "iso_noprod_rel", "levels": ["isolvl"]})
+    led_iso["grain_contract"].setdefault("level_dispositions", {})["ISO_NOPROD"] = {"isolvl": "n_a"}
+    code, _, _ = run_gate(led_iso, seam_source, inventory=inv, manifest_inv=manifest_inv)
+    results.append(("ISO producer_attribution: producer-less edge (disposed) -> FAIL (only producer_attribution)", code == FAIL))
+
+    # iso-6 stable_grain: split an EXISTING relation across two edge_types, BOTH with producer + a disposed
+    # level (so producer_attribution + disposition_complete stay clean -> ONLY stable_grain fires).
+    led_iso = copy.deepcopy(led)
+    _ex = next((e for e in led_iso["grain_contract"].get("edge_types", []) if e.get("relation") and e.get("producer")), None)
+    if _ex:
+        _dup = {"edge_type": _ex["edge_type"] + "_ISO", "relation": _ex["relation"],
+                "levels": ["isolvl2"], "producer": _ex.get("producer", "iso")}
+        led_iso["grain_contract"]["edge_types"].append(_dup)
+        led_iso["grain_contract"].setdefault("level_dispositions", {})[_dup["edge_type"]] = {"isolvl2": "n_a"}
+        code, _, _ = run_gate(led_iso, seam_source, inventory=inv, manifest_inv=manifest_inv)
+        results.append(("ISO stable_grain: split relation (complete edge) -> FAIL (only stable_grain)", code == FAIL))
+    else:
+        results.append(("ISO stable_grain: no producer'd relation to split -- fixture UNBUILDABLE", False))
 
     if len(results) != len(_SELFCHECK_CASES):  # guard: metadata must stay 1:1 with the appends
         sys.stderr.write(f"selfcheck INTERNAL: {len(results)} cases vs {len(_SELFCHECK_CASES)} metadata -- update _SELFCHECK_CASES\n")
