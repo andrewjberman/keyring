@@ -452,10 +452,50 @@ git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l         
 > skill doc says those processes are never touched.* **Two records, two stories** — the `comp-surface-check` defect
 > in the reaping plane. **`DECLARATIVE DRIFT`, not an absent reaper.**
 >
-> **`UNDETERMINED`, and it stays that way until exercised:** *why the `7h17m` orphan (`31391`) survived.* It may be
-> that `kill-orphans` never ran, or that a guard (`STALE_ONLY` / `SERIAL_FILTER` / an age floor) excluded it.
+> ### ✅ RESOLVED `04:36Z` — **THE CLEANUP FOR A DEAD AGENT'S ORPHAN IS GATED ON THAT DEAD AGENT COMING BACK TO LIFE.**
+> *(COO, exercised. `kill-orphans` is DRY-RUN by default; only `--force` kills. **No `--force` was ever passed.**)*
+> ```
+> kill-orphans           (dry-run, default)  -> lists 6 live watchers.  IT CAN SEE THEM.
+> kill-orphans --stale   (dry-run)           -> "No matching background scripts found."
+> KILL-ORPHAN lines in org/mcp/agent-spawn-audit.log -> 0     (CONTROL: " KILL " = 47, total = 693)
+>
+> org/mcp/hook_register_orphan_cleanup.py  -- a PostToolUse hook firing AFTER register_agent,
+>   scoped `kill-orphans --serial <S> --force`, registered in .claude/settings.json
+>   (1 ref; CONTROL: 1 PostToolUse block).  It REPLACED a fabric-wide `--stale --force` hook
+>   that reaped LIVE watchers (Andrew-direct, 2026-06-15: "it should only kill-orphans
+>   associated with the agent").
+>
+> DS base register events after 18:28Z : 0     <- 31391's agent NEVER CAME BACK
+> CONTROL: 0.7.0 events after 18:28Z    : 2     <- a lane that did
+> ```
+> **`31391` survived `7h17m` because the only thing that would have reaped it is the return of the agent that died.**
+>
+> **AND THE COO'S OWN HYPOTHESIS WAS WRONG, twenty minutes after writing the line above.** I speculated that
+> `--stale`'s `liveness.json` oracle would blind the reaper to a **post-respawn** orphan. *It does not.* The hook
+> passes `--serial <S> --force`, never `--stale`, and **at first register the new Monitor is not yet armed** (register
+> precedes `/watcher`) — so the only watchers it matches are the **dead session's**. **That case is handled.**
+> *I read a usage line, inferred a mechanism, and was one commit from publishing it as the finding.*
+>
+> > **THE SAFE SCOPING CREATED THE BLIND SPOT.** *The fabric-wide sweep was removed because it over-reaped live
+> > watchers; the scoped replacement fires only on an agent's own return.* **A lane that dies and is never respawned
+> > leaves an orphan that nothing will ever collect — and that orphan then forges `u`/`w` `REACHABLE` for the serial
+> > it outlived** (LD-0271). *The anti-correlation has a cause, and the cause is a correct fix.*
+>
+> **STILL `UNDETERMINED`, and now for a nameable reason:** whether `kill-orphans` has **ever fired at all**. Its own
+> header claims *"every reap is AUDITED to `org/mcp/agent-spawn-audit.log` (KILL-ORPHAN lines)."* **Zero exist.**
+> *Either it has never reaped, or the audit line is never written, and **those two are byte-identical in the log.***
+> Both hand-reaps tonight (CTO's `2124`, MSTR's `31391`) were manual — consistent with either.
+>
+> > **`0.7.0`'s clause, `042754Z`, and it is the general form of this whole block:** ***A NEGATIVE RESULT THAT CANNOT
+> > SHOW ITS OBSERVATION IS INDISTINGUISHABLE FROM A MISSING OBSERVATION.*** *`--stale`'s "No matching background
+> > scripts found" does not say whether it enumerated and found none, or could not enumerate.* **An assertion must
+> > carry its observation.**
+>
+> **Owed, and now precisely scoped:** a `KILL-ORPHAN` audit line proving the reaper has fired — **or the claim struck
+> from its own header.** *(`1.0.0_SA_CTO`; `.tools/**`, out-of-band `R1`.)*
+>
 > **Do not infer "no reaper" from "an orphan lived."** *That is the absence-for-mechanism substitution this whole
-> section exists to name.* **Owed: run `kill-orphans` against a synthetic orphan and record what it does.**
+> section exists to name — and it is exactly how the false claim entered this law.*
 >
 > **REAP BEFORE RESPAWN.** A respawned lane arms a second stream against a live orphan; both poll the same dir on a
 > 5s tick and **the `mv` race silently splits the lane's mail.**
