@@ -91,3 +91,11 @@ Andrew directed two more changes; the second is the HoldingsTab CSM view -- the 
 **Re-verification:** `bun run typecheck` exit 0; `bun run lint` exit 0 (0 warnings -- reset moved from an effect to the render-phase adjust-state pattern); `comp-transform schema-check HoldingsTab` + `PositioningSummary` + `Positioning` clean (HoldingsTab `getAUMSummary()->AUMSummaryResponse` INFO is pre-existing, out of scope). Scope now 5 files (adds `tabs/HoldingsTab.tsx`). AGG served path byte-unchanged (CSM is an additive branch).
 
 **Scope note:** this session now covers POSN_CUSTOM.001 AND the core of .002 (Andrew pulled .002's CSM view forward). NOT done in .002's full PRD scope: the model-weights column in the CSM table (AGG-style breakdown) -- Andrew's ask was weight recomputation; the extra column is flagged for the .002 DE pass. Mode B (Target Equity) remains deactivated pending spec.
+
+## Commits (RD self-commit -- SSCN pattern, CTO~C arch-gate; no DE spawn)
+
+Andrew smoked .001 himself (real user) = the visual validation; COO~C + CTO~C confirmed RD self-commit -> CTO~C arch-gate (no DE). Own author line throughout; NOT pushed; submodule pointer NOT bumped (DT flow).
+
+- **portal (DEV) 573b41ad** -- POSN_CUSTOM.001 + .002 CSM core. Scope-verified (`git -C portal show --stat`): EXACTLY the 5 Positioning files, zero non-Positioning, zero SEV1 surface (no ModelPortfolios/MDLP/MDPF). COO~C independently re-ran show --stat to confirm.
+- **parent (CLOUD) ea478b11d** -- deliverables (session log + page_inventory.xml). safe-commit [surface-check] OK.
+- **portal (DEV) 662e56ec** -- Andrew-direct smoke follow-up: engaging the "Custom" View toggle AUTO-DEFAULTS the HoldingsTab (Portfolio Composition + Holdings Breakdown) to the CSM portfolio. Edge-detected (adjust-state-on-prop-change with a prior-value guard) so the advisor can still switch to AGG/a model while Custom mode stays on; disengage -> AGG. Single file (HoldingsTab.tsx); typecheck 0, lint 0. Arch-gate target = HEAD 662e56ec.
