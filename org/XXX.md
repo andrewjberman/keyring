@@ -271,8 +271,33 @@ that the auto-logger reads with precedence env -> session-file -> shared `.agent
 `printf "...TO_ID=.." > .comp-graph/.agent_context` muscle-memory is RETIRED for TO_ID: that shared
 file is one global last-writer-wins across all concurrent agents, so it cross-attributed every
 comp run to whatever TO_ID the most-recent writer left (MSTR-FINDING 2026-06-22; corrupted the
-NFRA_COMPRAIL TO-5 per-TO coverage attribution). The `.serial` line in `.agent_context` is still
-fine to write (SERIAL is per-process); only TO_ID needed the race-free per-session source.
+NFRA_COMPRAIL TO-5 per-TO coverage attribution).
+
+**CORRECTED 2026-07-10 (CTO doctrine, CVO-exercised). This line previously read: "The `.serial` line in
+`.agent_context` is still fine to write (SERIAL is per-process); only TO_ID needed the race-free per-session
+source." THAT CLAUSE IS FALSE AND IT LICENSED A LIVE DEFECT.** It is true of the VALUE (one agent's serial does
+not change mid-session, unlike TO_ID) and **false of the STORAGE** (the file is one repo-root global that every
+agent's Step E *truncates*). Keep writing the `SERIAL=` line -- 11 consumers read it and the write itself is not
+the bug -- **but it is NOT a sound source of AGENT IDENTITY, and no gate, audit line, or attribution may resolve
+an actor from it.** The sound sources, both already present in every agent shell: **`$OPAL_AGENT_SERIAL`** (set
+at `.tools/ajb.ps1:286`, per-process) and **`org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial`** (race-free,
+written by Step 1b-A.1 above). Precedence reference impl: `org/modules/graph/comp_log_auto.py:62-77`.
+
+**The defect this clause authorized:** `.tools/git-hooks/headmove-guard.sh:55-64 @ 3e44606e7`
+(`__headmove_serial`) resolves the actor for a **destructive HEAD move** by grepping `^SERIAL=` out of this
+shared file, consulting `GIT_AUTHOR_NAME` only if the file is absent -- and Step E guarantees it is never absent.
+**Exercised live 2026-07-10T13:15Z (CVO, real function, real root): the guard named `1.0.0_SA_CTO` while
+`3.0.0_SA_CVO` was the actor and `$OPAL_AGENT_SERIAL` held the correct answer, unread.** `GIT_AUTHOR_NAME` is
+UNSET in an agent Bash-tool shell, so **the guard has no branch that can ever name the true actor**: file present
+-> whoever last ran Step E; file absent -> `UNKNOWN`. It is worse than an absent field. **An absent field is a
+gap; a confident wrong field is a false witness** -- and this one is ANTI-CORRELATED, naming the most-recently-
+*started* agent, who by construction has the fewest local commits worth force-discarding. **It names the
+innocent.** Scope is bounded: CVO enumerated 14 code consumers of this file and found **exactly one** that
+resolves an actor shared-only (the guard); 10 others have a sound tier present but **UNVERIFIED ORDER** --
+*absence of a sound tier is conclusive, presence of one is not.* Fix + mutant bar (M4, the demotion test: no env
+and no session-id MUST print `UNKNOWN`, never the shared serial): RV-0046 F-001 sibling, CVO SoD `131514Z`.
+**Harm is NOT demonstrated -- no existing audit line is shown to be actually misattributed. The defect is the
+finding.**
 
 **F. Reachability + the COO driver — arm ZERO loops at launch EXCEPT the COO auto-arms `/drive` (LD-0175 Andrew-direct 2026-06-10; COO carve-out Andrew-direct 2026-06-18):**
 
