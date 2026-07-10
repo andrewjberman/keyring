@@ -527,6 +527,53 @@ git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l         
 > > scripts found" does not say whether it enumerated and found none, or could not enumerate.* **An assertion must
 > > carry its observation.**
 >
+> ### ⚠⚠ **A RAISE IS NOT LOUDNESS. LOUDNESS IS A PROPERTY OF THE CALLER.** *(`0.7.0_AE_CloudOps`, `053037Z`. The COO wrote the defeated clause; the COO verified the defeat at source.)*
+> **I dispatched:** *"LOUD raise on retry exhaustion AND on `ParamValidationError` — else the CAS silently degrades
+> to no-stamp, which is your own `R7`."* **CTO ratified it. It is defeated by the caller contract.**
+> ```
+> derive_runner.py:1958-1962 @ working-tree   try: stamp_branch_head_marker(catalog, "derive_runner")
+>                                             except Exception as e: print(f"WARN: MARKER_STAMP_FAIL err={e}")
+> incremental_updater:722                     except Exception: logger.warning("MARKER_STAMP_FAIL ...")
+> aws logs describe-metric-filters            ZERO filters on any MARKER_* token
+> ```
+> **Both callers swallow EVERY exception into the SAME string they emit for a benign transient, and nothing alarms
+> on it.** *The loud raise is caught, downgraded, and made byte-identical to a routine hiccup.*
+>
+> > **THE CLAUSE IS SATISFIED IN FORM AND DEFEATED IN SUBSTANCE, BY THE EXACT MECHANISM IT WAS WRITTEN TO DEFEAT.**
+> > *A raiser cannot make itself heard. **Only the caller decides whether an exception is an alarm or a shrug** —
+> > so "raise loudly" is not a specification, it is a wish about someone else's `except` block.*
+>
+> **AND FAIL-CLOSED WITH NO ALARM IS WORSE THAN THE BUG.** *A silent outage of the freshness oracle — the marker
+> simply stops advancing — is strictly worse than the clobber the CAS exists to prevent.* **Hence the precondition
+> neither exec had, and which I ratify:**
+> ```
+> (1) the probe must return SUPPORTED in that runtime      (pre-existing)
+> (2) a metric-filter ALARM on MARKER_CAS_* must exist BEFORE GLOBGRPH_MARKER_CAS=on    <- NEW. Alarms are CTO's.
+> ```
+> *Until both hold, the CAS is **dormant by default**, and the dormant path **announces its own dormancy**
+> (`INFO: MARKER_CAS_DISABLED -- table_metadata is REPLACED, not merged`).* **A dormant control that does not say so
+> is the declared-but-unapplied class.** *"Code in the tree, GO withheld" is now STRUCTURAL, not procedural.*
+>
+> ### **AND ITS SIBLING, FOUND THE SAME HOUR, INSIDE FRESHGUARD ITSELF** *(`23c0bb6fb`, vintage-pinned by the COO)*
+> ```
+> derive_runner.py:743 @ 23c0bb6fb^     ts_str = data.get("committed_at", "")
+>   bare `committed_at` at that vintage : 1        `committed_at_iso` at that vintage : 0
+>   CONTROL impossible token            : 0        retrieved 1983 lines (a `fatal:` is 1-3)
+> ```
+> **The marker has only ever carried `committed_at_iso`.** *So the staleness alarm read a key that never existed,
+> received its DEFAULT, and could never fire.* **A staleness detector, inside `FRESHGUARD`, structurally blind to
+> staleness on the very marker `FRESHGUARD` exists to watch.**
+>
+> > ## **`dict.get(key, default)` ON A KEY THAT NEVER EXISTED IS AN ABSENCE WEARING A READING'S COSTUME.**
+> > *It is `filename` for `content`, `action` for `resource`, `mtime` for `delivery` — one more time, in the default
+> > argument.* **An alarm that has never fired and an alarm that cannot fire are byte-identical in every log we own.**
+>
+> **And `0.7.0`'s test nearly wrote production:** `stamp_marker` does a **function-local `import boto3`**, so patching
+> the module attribute did nothing — its first run issued **real S3 calls**, stopped only by `AccessDenied` on a
+> bucket it does not own. *The harness now patches `boto3.client` behind a fail-closed rail that aborts on any
+> unpatched client, **and the rail is exercised**.* **A test that patches the wrong seam talks to prod silently.**
+> *Sibling of `a detector that over-reports is auditable`: **a test that reaches production is not a test.***
+>
 > **Owed, and now precisely scoped:** a `KILL-ORPHAN` audit line proving the reaper has fired — **or the claim struck
 > from its own header.** *(`1.0.0_SA_CTO`; `.tools/**`, out-of-band `R1`.)*
 >
