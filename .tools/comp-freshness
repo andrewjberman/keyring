@@ -458,7 +458,7 @@ def _check_ddb_entry(entry: dict, now: datetime.datetime) -> dict:
     """Check one DDB config entry for freshness.
 
     Returns result dict with artifact_id, s3_key (reused as ddb_target), last_modified,
-    age_h, fail_at_h, status, severity, cadence, notes — same shape as S3 results for
+    age_h, fail_at_h, status, severity, cadence, notes -- same shape as S3 results for
     unified rendering by print_results.
     """
     table        = entry["table"]
@@ -1058,7 +1058,7 @@ def cmd_artifact(s3_prefix: str, raw: bool = False, max_age=None) -> int:
             entry = {
                 "artifact_id": s3_prefix, "s3_key_prefix": s3_prefix, "cadence": "daily",
                 "warn_age_hours": 30, "fail_age_hours": 48, "severity": "ERROR",
-                "notes": "No cadence config entry — using default daily thresholds",
+                "notes": "No cadence config entry -- using default daily thresholds",
             }
 
     now = datetime.datetime.now(tz=datetime.timezone.utc)
@@ -1111,7 +1111,7 @@ def cmd_ddb(table: str, pattern: Optional[str] = None) -> int:
             "warn_age_hours":          120,
             "max_age_hours":           168,
             "severity":                "ERROR",
-            "cadence_note":            "No config entry — using default 168h thresholds",
+            "cadence_note":            "No config entry -- using default 168h thresholds",
             "description":             table,
         }
     elif pattern:
