@@ -15865,3 +15865,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-diff | comp-diff --ref HEAD~1 | PASS |
 | 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | (session summary) | P3d arch-gate PASS + labeling; served-write deploy attempt -> DEFERRED on leg-4 coupling (deploy_ledger open->close-deferred, NEVER#6 clean); comp-grep grounded the Dockerfile COPY-set scope | PASS |
 | 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3d | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp | NFRA_PASSCRAFT.TO-1/TO-2 + NFRA_TOOLGRAPH.TO-1 | (session summary) | BUILT+exercised comp-toolgraph (census/edges/coupling-diff -- AC1 go-red proven, 14 undeclared ripples, denom=63) + comp-passcraft (recon anti-harness + TO-2 ToolAudit CSE emitter, NFRA_CSE @0.4, no-verdict-deriving-path); comp-which probed live (grammar-before-parse); ruff+self-test+pytest 24/24 all green | PASS |
+| 2026-07-10 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPLEARN/task_orders... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-constants | comp-constants list | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_passcraft.py --f... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-deadgrant | comp-deadgrant --json /c/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman... | FAIL |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-constants | comp-constants check --file infra/aws/lambda/inf-portal-publisher/lambda_function.py | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-constants | comp-constants check --file infra/aws/globgrph/canon_motif_scorer.py | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-constants | comp-constants check --lane inf | FAIL |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --ref HEAD~1 --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --staged | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
