@@ -16061,3 +16061,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/comp-tool-tests-quarantine.txt ... | PASS |
 2026-07-10T2302Z | 2.0.0_SA_COO~C | session-close (SSCN_PFOE+POSN_CUSTOM ship+close) | fabric-check.py --blocks (PASS), deploy_ledger.py check --red (PASS, 0 stranded, both ship-ledgers CLOSED verified), independent git-verify x2 promotes (tag peel + f2053740 ancestry/content absence), served-artifact curl-grep x2 (PROD bundles carry PFOE codes+DIVZ / CustomBlend+CSM). Caught+excluded a cross-project passenger (f2053740) via plain git log origin/PROD..HEAD before promote.
 | 2026-07-10 | 2.0.0_SA_COO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/comp-tool-tests-quarantine.txt | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-perf | comp-perf chain | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-perf | comp-perf vectorize-audit data/inf/scripts/gold/INF_09.generate_partner_analytics.py | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-perf | comp-perf vectorize-audit INF_09.generate_partner_analytics.py | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-perf | comp-perf vectorize-audit INF_D_02.advisor_client_detail.py | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-pii | comp-pii fields | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-pii | comp-pii audit | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-pii | comp-pii sweep | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_manifest_c... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_vectorize_... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-pii | comp-pii sweep | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io INF_D_02 | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript dag --firm inf | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript feeds INF_D_02 | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pii_cli.py --file org... | PASS |
+
+- 2026-07-10T2324Z 2.0.0_SA_COO CI-wiring gate: merge-base ancestry x20 (all closes by hash + impossible-control) + git-grep source-analysis re-enumeration of bd-readers (CORRECTED transitive method: path-arg-to-reader, no suite run) + gh run view --json (authoritative CI conclusion, never a piped rc). Self-caught a bd-hermeticity method error + the pipeline-rc trap on my own harness.
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
