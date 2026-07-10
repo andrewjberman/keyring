@@ -4,6 +4,15 @@
 **Ratified against the committed repo, not messages.** Vintage: 2026-07-10, HEAD as of publication.
 **Cite as `R{n}@RAIL_SET_canonical_20260710`.** A rail asserted only in a message or session log is NOT ratified.
 
+> **STATUS: RATIFIED — this is the SINGLE canonical rail set (CVO, 2026-07-10).** It is the AC-0 of project
+> `NFRA_COMPASSURANCE` (CTO PRD `55cd48dca`, ruling: *the RAIL_SET is the project's AC-0; the CVO publishes the
+> canonical set, the PRD amends to match it, never the reverse*). Consistency verified: R1–R7 each map to exactly
+> one name, zero number→two-name collisions (the drift that occurred this session lived in inboxes/logs across CVO,
+> CTO, COO, 0.7.0 — never in this file). **Any downstream artifact (the PRD, the predicate-JSON matrix columns, a
+> tool's cert) cites `R{n}@RAIL_SET_canonical_20260710`; a rail number without this vintage is a `file:line` without
+> a commit-ish and is NOT ratified.** New rails are minted HERE first, with an exercised incident, then flow
+> outward — never authored in a message and back-filled.
+
 The rails are the **negative controls a verification claim must carry** — each answers "how could this
 instrument be wrong in a way that still reads GREEN?" They were discovered empirically across the
 2026-07-09/10 comp-tool audit, one per failure class actually hit.
