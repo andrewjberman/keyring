@@ -124,6 +124,17 @@ entries:
     anti_pattern: "running this to answer a traversal -> query comp-kuzu instead"
     status: canonical
 
+  - id: cloud.derive.class
+    use_case: "Is this RESOURCE TYPE under Terraform control? Bounded per-class drift ledger (L1 grain: one class)."
+    canonical_call: "comp-aws derive --class <ClassName>   # L1 (type-managed?) -- distinct from --resource (L0, one ARN) and bare derive (L2, full edge graph)"
+    tool: comp-aws
+    write_path: false
+    layer: cloud
+    cost: "seconds (one class)"
+    freshness: "live"
+    anti_pattern: "bare `comp-aws derive` (8-min full rebuild) to answer a single-type managed? question"
+    status: canonical
+
   # ---- TRACE GRAPH (repo/code) — comp-trace / comp-blast (cached) ----
   - id: trace.blast.what_breaks
     use_case: "What breaks if I change this function/file/artifact (repo blast radius)?"
@@ -467,6 +478,28 @@ entries:
     freshness: "live vs aws-shapes oracle"
     rebuild_trigger: "n/a — cert scoring re-derives"
     anti_pattern: "asserting a cert pass without the independent oracle score"
+    status: canonical
+
+  - id: cloud.contract_diff
+    use_case: "Value-layer never-widen diff vs graph_contracts (NFRA_GCONTR Q1+Q2, ADVISORY)."
+    canonical_call: "comp-aws contract-diff [--since <ref>] [--current <ref>] [--json]"
+    tool: comp-aws
+    write_path: false
+    layer: cloud
+    cost: "seconds"
+    freshness: "snapshot-relative"
+    anti_pattern: "confusing this ADVISORY value-diff with the certified score -- contract-diff never blocks"
+    status: canonical
+
+  - id: cloud.score.reconcile
+    use_case: "Classify each UNRECONCILED cert entry as EXISTS (fixture gap) or ABSENT (compiler phantom); write a gap report. SEPARATE NETWORKED PASS (hits live AWS). Never amends the fixture -- a human merges it."
+    canonical_call: "comp-aws score --reconcile-fixture [--report-out <path>]"
+    tool: comp-aws
+    write_path: false
+    layer: cloud
+    cost: "networked (live AWS)"
+    freshness: "live"
+    anti_pattern: "bare `comp-aws score` (offline, vs the frozen fixture) when you need to classify phantoms -- that is the reconcile pass"
     status: canonical
 
   - id: cloud.classes.list
@@ -867,7 +900,7 @@ entries:
 #   python org/modules/graph/comp_coverage_view.py --verify   # CI guard: exit 2 on drift
 tools_index:
   comp-kuzu:     { does: "Cypher query the loaded Kuzu graph (cloud + cross-layer); the FAST default read-path", subcommands: ["<cypher>", "--db-path", "--json", "--limit"], entries: [cloud.lookup.nodes_by_type, cloud.reachability.transitive, cloud.blast.what_breaks, xlayer.fullstack.firm_component_to_bucket] }
-  comp-aws:      { does: "Live-AWS + Terraform-state cloud-graph compiler (the WRITE-PATH + cert)", subcommands: [derive, score, snapshot, metrics, diff, dual-managed, classes, iceberg-commit], entries: [cloud.derive.refresh, cloud.score.cert, cloud.classes.list, cloud.metrics.summary, cloud.diff.snapshot, cloud.dual_managed.conflict, cloud.snapshot.archive, cloud.iceberg.persist] }
+  comp-aws:      { does: "Live-AWS + Terraform-state cloud-graph compiler (the WRITE-PATH + cert)", subcommands: [derive, score, snapshot, metrics, diff, contract-diff, dual-managed, classes, iceberg-commit], entries: [cloud.derive.refresh, cloud.derive.class, cloud.score.cert, cloud.score.reconcile, cloud.classes.list, cloud.metrics.summary, cloud.diff.snapshot, cloud.contract_diff, cloud.dual_managed.conflict, cloud.snapshot.archive, cloud.iceberg.persist] }
   comp-trace:    { does: "Bidirectional dependency walk from any repo node (cached)", subcommands: ["<node>", "--direction", "--depth", "--json"], entries: [trace.walk.dependency_chain] }
   comp-blast:    { does: "Downstream blast radius + upstream callers (cached)", subcommands: ["<node|file>", "--function", "--check-consumers"], entries: [trace.blast.what_breaks] }
   comp-platinum: { does: "Full-stack component->gold trace, FIRM-AWARE (cached, NFRA_GRAPHS D2)", subcommands: [page, reverse, tab-audit, summary, "--firm", "--fresh/--force"], entries: [trace.fullstack.component_to_gold, trace.platinum.reverse] }
