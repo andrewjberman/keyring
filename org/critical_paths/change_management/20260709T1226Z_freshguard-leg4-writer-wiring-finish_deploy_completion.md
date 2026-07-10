@@ -124,6 +124,24 @@ b9f991994 (read-path honesty) EXERCISED for the first time -- observable ONLY wh
 The silent omission it replaced would have printed NOTHING for cse at this exact moment. That visible failure IS
 the deliverable of b9f991994.
 
+SCOPE OF b9f991994 -- STATE IT OR A FUTURE READER MISREADS IT (CTO 050651Z). It is TWO facts, not one:
+  (a) UNDEPLOYED. APPLIED truth: opal-globgrph-incremental-updater CodeSha256=9dC0bal9JcpQ9D0CuBaeXOT1E9LY80btOGR6lsHmzTA=
+      (LastModified 2026-07-09T13:07:33Z) == the ledger's own L3 value, built at 86ab291f8, which is an ANCESTOR of
+      b9f991994. The deployed zip and the derive image both predate the read-path fix.
+  (b) AND NO DEPLOYED WRITER CALLS IT ANYWAY. `_per_table_vintage_lines` has exactly ONE call site in the repo --
+      _provenance.py:378, inside the human provenance header (dev-box / comp-kuzu). CVO's FRESHSEM grounding agrees:
+      last_write_iso is consumed ONLY by _per_table_vintage_lines, display-only.
+  => Being undeployed carries NO prod risk here, because prod never calls it. Do NOT 'fix' this with a rushed deploy,
+     and do NOT read the R-LIVE/R2/R-NULL rails as evidence of live prod behaviour.
+     It is EXERCISED-IN-DEV, UNDEPLOYED, UNCALLED-IN-PROD. Three states, all named.
+
+INDEPENDENT SECOND READ (CTO's read returned empty on a wrong key; he correctly refused to call that a confirm):
+  Bucket=opal-313476888478-globgrph   Key=warehouse/_branch_head.main.json
+  There is no `branch_head` key anywhere. Run the stored v4 command in this gate-ref verbatim.
+  A failed read is INVOCATION-ERROR, rc 3, and is NOT a verdict.
+
+EDITOR NOTE: this gate-ref is stored with CRLF line endings. An exact-substring edit anchored on 
+ will not match.
 === THE CRITERION IS NOW SPENT FOR THIS T_d. A RE-TEST NEEDS A NEW ONE. ===
 FAIL is the CORRECT and EXPECTED result and it DOES NOT CLOSE L4: the stamp_marker merge + CAS has not landed.
 After the merge fix deploys, this criterion CANNOT be re-run against T_d=2026-07-10T02:09:13Z -- that window is
@@ -174,3 +192,4 @@ L4 STAYS OPEN. This is a REFUSAL, not a failure to finish. (held since 2026-07-0
 - 20260710T041752Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v3. Gate on the STAMP; classify by the VERDICT TOKEN, not the ex
 - 20260710T042550Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v4. A VERDICT REQUIRES AN OBSERVATION. (0.7.0_AE_CloudOps 043200
 - 20260710T050407Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v4. A VERDICT REQUIRES AN OBSERVATION. (0.7.0_AE_CloudOps 043200
+- 20260710T050904Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v4. A VERDICT REQUIRES AN OBSERVATION. (0.7.0_AE_CloudOps 043200
