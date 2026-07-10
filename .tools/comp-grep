@@ -63,6 +63,7 @@ def main() -> int:
 
     ignore_case = False
     files_only = False
+    include_held = False
     max_matches = MAX_MATCHES_DEFAULT
     positional = []
     i = 0
@@ -72,6 +73,8 @@ def main() -> int:
             ignore_case = True
         elif a in ("-l", "--files"):
             files_only = True
+        elif a == "--include-held":
+            include_held = True  # audited directed override of the sovereign-held guard (GG1)
         elif a == "--max":
             i += 1
             try:
@@ -109,12 +112,15 @@ def main() -> int:
               "grouping. If you meant alternation, use a BARE pipe: 'foo|bar', not 'foo\\|bar'. "
               "A 0-match result below may be this, not a real absence.")
 
-    files, err = _comprail.gitignore_aware_files(WS, pathspec)
+    files, held_note, err = _comprail.gitignore_aware_files(WS, pathspec, include_held=include_held)
     if files is None:
         # never silently empty -> loud BLOCKED so the agent does not read absence as "no matches"
         print("comp-grep: BLOCKED: %s" % err)
         _comprail.log_rail(RAIL_LOG, "RUN-GREP-ERR", "comp-grep", pattern, 'q="%s"' % err)
         return 2
+    if held_note:
+        # sovereign-held guard (GG1): LOUD -- an excluded held path is NOT 'confirmed absent'
+        print("comp-grep: %s" % held_note)
 
     scanned = 0
     matches = []  # (path, lineno, text)

@@ -187,13 +187,51 @@ def _under(f: str, ps: str) -> bool:
     return f == s or f.startswith(s + "/")
 
 
-def gitignore_aware_files(ws: str, pathspec):
-    """The .gitignore-aware working set across the parent repo AND nested git repos
-    (portal etc.), pathspec-filtered. Returns (list, err). err is non-None ONLY on a hard
-    git failure -> callers must surface it LOUD (never read absence as 'no matches')."""
+# ---- NFRA_COMPRAIL sovereign-held guard (GG1) -----------------------------------------------
+# A bare / broad invocation returns the WHOLE repo working set and the caller then READS every
+# file -- including the section-8 sovereign-held trees (data/black_diamond/, canonical schwab
+# silver). gitignore_aware_files EXCLUDES those prefixes BY DEFAULT via a string-prefix predicate
+# (it NEVER opens a held file to decide) and hands the caller a LOUD note, so a bare search cannot
+# silently read bd AND an excluded held path is NEVER reported as "confirmed absent" (that would
+# make the never-dead-end rail LIE). data/inf + data/cot are IN-SCOPE firms -- deliberately NOT
+# excluded. --include-held (caller flag) is the audited directed override. Mirrors the
+# comp-constants CC2 guard: enforce the hold at the shared chokepoint, string-only, never read to decide.
+HELD_PREFIXES = ("data/black_diamond/", "data/canonical/schwab/silver/")
+
+
+def _is_held(path: str) -> bool:
+    """String-prefix test against the section-8 sovereign-held prefixes. NEVER opens/reads the file."""
+    p = _norm(path)
+    return any(p == pre.rstrip("/") or p.startswith(pre) for pre in HELD_PREFIXES)
+
+
+def _names_held(pathspec) -> bool:
+    """True if a pathspec entry is AT or INSIDE a held prefix (a DIRECTED held search)."""
+    for ps in (pathspec or []):
+        s = _norm(ps)
+        if s in ("", "."):
+            continue
+        for pre in HELD_PREFIXES:
+            pn = pre.rstrip("/")
+            if s == pn or s.startswith(pn + "/"):
+                return True
+    return False
+
+
+def gitignore_aware_files(ws: str, pathspec, include_held: bool = False):
+    """The .gitignore-aware working set across the parent repo AND nested git repos (portal etc.),
+    pathspec-filtered, with the section-8 sovereign-held trees EXCLUDED BY DEFAULT (GG1).
+
+    Returns (files, held_note, err):
+      * err       -- non-None ONLY on a hard git failure -> callers surface it LOUD (never read
+                     absence as 'no matches'). On err, files is None.
+      * held_note -- non-None when the sovereign-held guard acted: a LOUD line the caller MUST
+                     print, so an excluded held path is never mistaken for 'confirmed absent' and
+                     an --include-held override is never silent. None when no held path was involved.
+      * files     -- the working set MINUS held prefixes (unless include_held)."""
     parent, err = _ls_files(ws)
     if parent is None:
-        return None, err
+        return None, None, err
     nested = _gitlinks(ws)
     nested_set = set(_norm(n) for n in nested)
     # drop the bare gitlink pointer entries from the parent set (they are not files)
@@ -209,4 +247,20 @@ def gitignore_aware_files(ws: str, pathspec):
             files += sub
     if pathspec:
         files = [f for f in files if any(_under(f, ps) for ps in pathspec)]
-    return files, None
+    # sovereign-held guard (string-prefix on the path list -- never opens a held file)
+    held = [f for f in files if _is_held(f)]
+    if include_held:
+        note = (("WARN: OVERRIDE --include-held -- searching %d sovereign-HELD path(s) "
+                 "(sovereign hold bypassed; audited)." % len(held)) if held else None)
+        return files, note, None
+    if held:
+        files = [f for f in files if not _is_held(f)]
+        if _names_held(pathspec):
+            note = ("WARN: %d sovereign-HELD path(s) matched your pathspec but were NOT searched "
+                    "(sovereign hold) -- NOT confirmed absent. Pass --include-held to search them."
+                    % len(held))
+        else:
+            note = ("note: %d sovereign-held path(s) EXCLUDED from the working set (sovereign hold) "
+                    "-- NOT searched, not confirmed absent; --include-held to search them." % len(held))
+        return files, note, None
+    return files, None, None

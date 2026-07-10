@@ -49,6 +49,7 @@ def main() -> int:
         return 0
 
     glob_pat = None
+    include_held = False
     max_list = MAX_LIST_DEFAULT
     pathspec = []
     i = 0
@@ -57,6 +58,8 @@ def main() -> int:
         if a == "--glob":
             i += 1
             glob_pat = argv[i] if i < len(argv) else None
+        elif a == "--include-held":
+            include_held = True  # audited directed override of the sovereign-held guard (GG1)
         elif a == "--max":
             i += 1
             try:
@@ -77,7 +80,7 @@ def main() -> int:
             pathspec.append(a)
         i += 1
 
-    files, err = _comprail.gitignore_aware_files(WS, pathspec)
+    files, held_note, err = _comprail.gitignore_aware_files(WS, pathspec, include_held=include_held)
     if files is None:
         print("comp-glob: BLOCKED: %s" % err)
         _comprail.log_rail(RAIL_LOG, "RUN-GLOB-ERR", "comp-glob", glob_pat or (",".join(pathspec) or "."),
@@ -96,6 +99,9 @@ def main() -> int:
         print(_comprail.ascii_safe(f))
 
     print("")
+    if held_note:
+        # sovereign-held guard (GG1): LOUD -- excluded held paths are NOT 'confirmed absent'
+        print("comp-glob: %s" % held_note)
     if total == 0:
         # NEVER "OK: 0 file(s)" -- that reads as "confirmed absent" and is the confident-wrong
         # answer the rail exists to prevent. 0 hits is an honest NOT-FOUND-HERE, with the next
