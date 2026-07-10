@@ -281,6 +281,8 @@ def cmd_check(args: argparse.Namespace, config: dict) -> int:
     scanned = scan_all(config, only_file=only_file)
 
     drifts: list[tuple[str, Site, str]] = []
+    checked_sites = 0          # CC1: how many tracked-constant sites we actually compared
+    checked_names: set[str] = set()
     for c in config.get("constants", []):
         name = c["name"]
         canonical_value = c.get("canonical_value")
@@ -295,6 +297,8 @@ def cmd_check(args: argparse.Namespace, config: dict) -> int:
         if only_file is not None:
             sites_for_const = scanned.get((name, None), []) + sites_for_const
         for s in sites_for_const:
+            checked_sites += 1
+            checked_names.add(name)
             if not _values_equivalent(s.value, canonical_value):
                 drifts.append((name, s, canonical_value))
 
@@ -302,6 +306,14 @@ def cmd_check(args: argparse.Namespace, config: dict) -> int:
         if only_file is None:
             scope = f" (lane={only_lane})" if only_lane else ""
             print(f"OK: no drift detected across {len(config.get('constants', []))} constant(s){scope}")
+        elif checked_sites:
+            # CC1: --file previously printed NOTHING on a clean result, so rc0 was silently
+            # ambiguous between "checked, all clean" and "no tracked constant here". Disambiguate.
+            print(f"OK: no drift -- checked {checked_sites} tracked constant-site(s) "
+                  f"({len(checked_names)} constant(s)) in {args.file}")
+        else:
+            print(f"OK: no tracked constants found in {args.file} -- "
+                  f"0 of {len(config.get('constants', []))} config constant(s) appear here, nothing to check")
         return 0
 
     print(f"DRIFT: {len(drifts)} site(s) diverge from canonical_value\n")
