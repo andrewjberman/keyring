@@ -5,7 +5,7 @@
 # Usage: comp-cluster <Page>            # e.g. comp-cluster AdvisorIntelligence
 #        comp-cluster --list            # every page + cluster counts + coverage
 #        comp-cluster <Page> --json     # structured JSON
-#        comp-cluster --coverage        # page-tree coverage (119/119) only
+#        comp-cluster --coverage        # page-tree coverage (assigned/total, unresolved named) only
 #        comp-cluster --db-path PATH ... # query a frozen-vintage DB (default = canonical)
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
 python "$WORKSPACE/infra/aws/globgrph/comp_cluster_cli.py" "$@"
