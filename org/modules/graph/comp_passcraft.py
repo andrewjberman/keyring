@@ -366,7 +366,165 @@ def render_taxonomy():
 
 
 # ============================================================================================
-# self-test -- AC1 (no verdict) + AC4 (known-defective -> no flag, surfaces lead probes) + AC5.
+# TO-2: the ToolAudit CSE EMITTER -- serializes a HAND-AUTHORED verdict into an NFRA_CSE-conformant
+# envelope so a hand-run pass FEEDS the graph instead of evaporating (the source for TOOLGRAPH's
+# Assurance plane + PASSCRAFT.TO-3 backfill). ANTI-HARNESS ONE LAYER UP (PRD sec.0):
+#   verdict / class / per-rail assessment are INPUTS the caller hand-authors; NOTHING here derives
+#   them. Unlike the recon pack (PRE-verdict, no verdict key at all), a ToolAudit is POST-verdict and
+#   LEGITIMATELY carries `verdict`. So the emitter's anti-harness proof is NOT "no verdict key" but
+#   "no verdict-DERIVING code path": emit REQUIRES a hand-authored verdict + class and FAILS CLOSED
+#   without them; there is no compute step. R0 is DEFERRED (TO-R0, off CVO's lane) -- class is R1
+#   self-classification only; no QUESTION-class tag is folded here.
+# ============================================================================================
+_TOOLAUDIT_CLASSES = ("OBSERVED", "INFERRED", "NOT-CHECKED")   # R1 self-classification (R0 deferred)
+_RAIL_VERDICTS = ("pass", "fail", "n/a", "unknown")
+_CLASS_CONFIDENCE = {"OBSERVED": 0.9, "INFERRED": 0.3, "NOT-CHECKED": 0.1}   # serializes the R1 class
+_REQUIRED_AUDIT_FIELDS = ("tool", "verdict", "class", "evidence_ref")        # all HAND-AUTHORED
+
+
+class ToolAuditError(Exception):
+    """A ToolAudit failed fail-closed validation (schema / provenance / fidelity / missing judgment)."""
+
+
+def _load_cse():
+    """Lazy import of the NFRA_CSE contract (org/modules/graph/cse_schema.py). Lazy so recon/taxonomy
+    work without it; emit REQUIRES it (NFRA_CSE-conformance is the point of TO-2)."""
+    import cse_schema  # sibling module
+    return cse_schema
+
+
+def _resolve_evidence_ref(evidence_ref):
+    """AC2 (ToolAudit layer): evidence_ref must be NON-EMPTY and point at REAL evidence. A file / file:line
+    ref must resolve on disk (best-effort, WS-relative); a recon-pack / command / oracle / commit-ish ref
+    is accepted as-is. Empty -> not ok (a verdict with no cited evidence is inadmissible, NFRA_TOOLPASS R1)."""
+    ev = str(evidence_ref or "").strip()
+    if not ev:
+        return False, "evidence_ref empty -- a verdict with no cited evidence is inadmissible (R1)"
+    m = re.match(r"^([\w./\\-]+\.\w+)(?::\d+(?:-\d+)?)?$", ev)
+    if m:
+        cand = m.group(1)
+        path = cand if os.path.isabs(cand) else os.path.join(WS, cand)
+        return (os.path.isfile(path),
+                "resolves to %s" % cand if os.path.isfile(path) else "file ref %r does not resolve" % cand)
+    return True, "non-path evidence (recon-pack / command / oracle / commit-ish) accepted"
+
+
+def build_tool_audit_cse(audit, marker_head, actor="comp-passcraft"):
+    """Map a HAND-AUTHORED ToolAudit assessment (PRD sec.3d) into a valid NFRA_CSE CSE: subject=Tool,
+    verb=reclassify. The verdict/class are the caller's judgment -- serialized into provenance +
+    confidence, never computed. C1 edges (shared_substrate->imports, invoked_by->governs) ride along."""
+    cs = _load_cse()
+    tool = audit["tool"]
+    conf = _CLASS_CONFIDENCE.get(audit.get("class"), 0.1)
+    edges = [cs.RelationshipDelta(cs.Relationship.IMPORTS.value,
+                                  cs.EntityRef(cs.Entity.MODULE.value, "module:%s" % s))
+             for s in (audit.get("shared_substrate") or [])]
+    edges += [cs.RelationshipDelta(cs.Relationship.GOVERNS.value,
+                                   cs.EntityRef(cs.Entity.POLICY.value, "gate:%s" % g))
+              for g in (audit.get("invoked_by") or []) if g and g != "UNWIRED"]
+    return cs.CSE(
+        event_id="toolaudit:%s@%s" % (tool, marker_head),
+        schema_version=cs.SCHEMA_VERSION,
+        producer={"kind": cs.ProducerKind.AGENT.value, "ref": actor},
+        compiler={"id": "comp-passcraft", "artifact_class": "tool_audit", "version": cs.SCHEMA_VERSION},
+        transformation={"verb": cs.Transformation.RECLASSIFY.value,
+                        "subject": cs.EntityRef(cs.Entity.TOOL.value, "tool:%s" % tool),
+                        "edges": edges},
+        provenance=cs.Provenance(
+            source=str(audit.get("oracle") or (".tools/%s" % tool)),
+            locus=str(audit.get("vintage") or "recon"),
+            recognizer="comp-passcraft-recon",
+            evidence=str(audit.get("evidence_ref") or "")),
+        execution_meta={"timestamp": str(audit.get("vintage") or ""), "actor": actor, "run_id": "toolaudit"},
+        head={"marker_head": str(marker_head or "")},
+        qualifiers={cs.Qualifier.CONFIDENCE.value: conf,
+                    cs.Qualifier.SCOPE.value: str(audit.get("domain") or "tool")},
+    )
+
+
+def validate_tool_audit(audit, marker_head):
+    """FAIL-CLOSED validation before emit. Returns (ok, errors). (a) the hand-authored judgment is
+    PRESENT (tool/verdict/class/evidence_ref) -- the emitter cannot supply a verdict (anti-harness);
+    (b) class in the R1 enum, per-rail verdicts in the rail enum; (c) the derived CSE passes
+    cse_schema.validate (schema + provenance + confidence + AC6 head + fidelity decompression); (d)
+    evidence_ref resolves (AC2)."""
+    errors = []
+    for f in _REQUIRED_AUDIT_FIELDS:
+        if not str(audit.get(f) or "").strip():
+            errors.append("HAND-AUTHORED field %r missing -- the emitter serializes a verdict, it does "
+                          "NOT compute one (anti-harness)" % f)
+    if audit.get("class") and audit["class"] not in _TOOLAUDIT_CLASSES:
+        errors.append("class %r not in R1 enum %s (R0 DEFERRED)" % (audit.get("class"), _TOOLAUDIT_CLASSES))
+    for rk, rv in (audit.get("rail") or {}).items():
+        if rv not in _RAIL_VERDICTS:
+            errors.append("rail[%s]=%r not in %s" % (rk, rv, _RAIL_VERDICTS))
+    ev_ok, ev_note = _resolve_evidence_ref(audit.get("evidence_ref"))
+    if not ev_ok:
+        errors.append("evidence_ref: " + ev_note)
+    try:
+        cs = _load_cse()
+        cok, cerr = cs.validate(build_tool_audit_cse(audit, marker_head))
+        errors += ["CSE: " + e for e in cerr] if not cok else []
+    except Exception as e:  # a build/import failure is a validation FAILURE, never a silent pass
+        errors.append("CSE build/validate raised: %s" % e)
+    return (not errors, errors)
+
+
+def emit_tool_audit(audit, marker_head, actor="comp-passcraft"):
+    """Emit a ToolAudit record IFF it validates fail-closed. Returns
+    {tool_audit: <hand-authored assessment>, cse: <validated NFRA_CSE envelope as a dict>}. Raises
+    ToolAuditError on any failure (never emits an invalid / unprovenanced record)."""
+    ok, errors = validate_tool_audit(audit, marker_head)
+    if not ok:
+        raise ToolAuditError("; ".join(errors))
+    cse = build_tool_audit_cse(audit, marker_head, actor)
+    subj = cse.transformation["subject"]
+    return {
+        "tool_audit": audit,
+        "cse": {
+            "event_id": cse.event_id, "schema_version": cse.schema_version,
+            "producer": cse.producer, "compiler": cse.compiler,
+            "transformation": {"verb": cse.transformation["verb"],
+                               "subject": {"etype": subj.etype, "ref": subj.ref},
+                               "edges": [{"rtype": e.rtype,
+                                          "target": {"etype": e.target.etype, "ref": e.target.ref}}
+                                         for e in cse.transformation["edges"]]},
+            "provenance": {"source": cse.provenance.source, "locus": cse.provenance.locus,
+                           "recognizer": cse.provenance.recognizer, "evidence": cse.provenance.evidence},
+            "execution_meta": cse.execution_meta, "head": cse.head, "qualifiers": cse.qualifiers,
+        },
+    }
+
+
+def _resolve_marker_head():
+    """The vintage a ToolAudit pins (head.marker_head, AC6): the COMMIT-ISH it was authored at (git HEAD
+    short sha) -- the honest vintage, harness-attached. --marker-head overrides. Never returns empty
+    (the validator would reject) so emit stays exercisable offline."""
+    try:
+        import subprocess
+        out = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=WS,
+                             capture_output=True, text=True, timeout=10)
+        if out.returncode == 0 and out.stdout.strip():
+            return "git:%s" % out.stdout.strip()
+    except Exception:
+        pass
+    return "toolaudit-unpinned"
+
+
+def recon_mechanical_fields(tool):
+    """The MECHANICAL ToolAudit fields the recon auto-populates (tool/archetype/domain/write_surface).
+    The JUDGMENT fields (verdict/class/rail/oracle/falsifier/evidence_ref/shared_substrate-selection)
+    are the human's, merged OVER these. This is the TO-2 wiring of TO-1's recon into the emitter."""
+    pack = recon(tool)
+    m8 = pack["moves"][7]
+    return {"tool": os.path.basename(tool), "archetype": m8.get("archetype"),
+            "susceptible_to": [m8["archetype"]] if m8.get("archetype") else [],
+            "write_surface": pack["moves"][1].get("evidence", {}).get("write_surface")}
+
+
+# ============================================================================================
+# self-test -- AC1 (no verdict) + AC4 (known-defective -> no flag, surfaces lead probes) + AC5
+#   + TO-2 (emit: NFRA_CSE-conformant, AC2 fidelity, anti-harness = no verdict-deriving path).
 # ============================================================================================
 _VERDICT_KEYS = {"verdict", "pass", "fail", "passed", "failed", "defect", "defective",
                  "assured", "broken", "ok", "result", "status"}
@@ -436,6 +594,54 @@ def _self_test():
        ghost["moves"][0].get("invocation_error") is not None,
        "an unreadable target -> INVOCATION-ERROR on MOVE 1, not a silent '0 found'")
 
+    # ============== TO-2: the ToolAudit CSE emitter (NFRA_CSE-conformant, anti-harness) ============
+    def _raises(fn):
+        try:
+            fn()
+            return False
+        except Exception:
+            return True
+
+    try:
+        cs = _load_cse()
+        cse_ok = True
+    except Exception as e:  # cse_schema absent -> emit is unusable; surface it, don't silently pass
+        cse_ok = ck("TO2.cse_schema_importable", False, "cse_schema import failed: %s" % e)
+    if cse_ok:
+        mk = _resolve_marker_head()
+        valid = {"tool": "comp-freshness", "archetype": "aging-oracle",
+                 "shared_substrate": ["trading_calendar"], "invoked_by": ["UNWIRED"],
+                 "domain": "aws-cloud", "susceptible_to": ["aging-oracle"],
+                 "axis": {"mechanical": "reads mtime", "declarative": "docstring claims date-key",
+                          "semantic": "frozen-as-of rewrite reads FRESH"},
+                 "rail": {"R1": "fail"},
+                 "verdict": "DEFECTIVE (believed anti-correlated) -- HAND-AUTHORED lead, not computed",
+                 "class": "INFERRED", "evidence_ref": ".tools/comp-freshness",
+                 "falsifier": "false if it reads the partition date-key, not mtime",
+                 "oracle": ".tools/comp-freshness", "vintage": mk}
+        rec = emit_tool_audit(valid, mk)
+        ck("TO2.valid_toolaudit_emitted", isinstance(rec, dict) and {"cse", "tool_audit"} <= set(rec),
+           "a hand-authored ToolAudit emits {tool_audit, cse}")
+        cok, cerr = cs.validate(build_tool_audit_cse(valid, mk))
+        ck("TO2.nfra_cse_conformant_and_AC2_fidelity", cok,
+           "derived CSE passes cse_schema.validate @%s (schema+provenance+confidence+AC6 head+fidelity "
+           "decompression): %s" % (cs.SCHEMA_VERSION, cerr))
+        ck("TO2.AC2_empty_evidence_ref_REJECTED",
+           _raises(lambda: emit_tool_audit(dict(valid, evidence_ref=""), mk)),
+           "a ToolAudit with no cited evidence is rejected fail-closed")
+        ck("TO2.anti_harness_missing_verdict_REJECTED",
+           _raises(lambda: emit_tool_audit({k: v for k, v in valid.items() if k != "verdict"}, mk)),
+           "emit REQUIRES a hand-authored verdict -- it has NO verdict-deriving path (anti-harness)")
+        ck("TO2.verdict_serialized_verbatim", rec["tool_audit"]["verdict"] == valid["verdict"],
+           "the hand-authored verdict is serialized unchanged (never altered/computed)")
+        bad_class = dict(valid)
+        bad_class["class"] = "MAYBE"
+        ck("TO2.class_off_R1_enum_REJECTED", _raises(lambda: emit_tool_audit(bad_class, mk)),
+           "a class outside the R1 enum is rejected (R0 QUESTION-class DEFERRED, not folded)")
+        ck("TO2.R0_deferred_R1_only",
+           set(_TOOLAUDIT_CLASSES) == {"OBSERVED", "INFERRED", "NOT-CHECKED"},
+           "class vocabulary is R1 self-classification only; R0 is DEFERRED to TO-R0 (not folded here)")
+
     ok = all(c["pass"] for c in checks)
     return ok, checks
 
@@ -449,6 +655,13 @@ def main():
     pr.add_argument("--archetype", default=None, help="a hand-classification to load its lead probes")
     pr.add_argument("--json", action="store_true")
     sub.add_parser("taxonomy").add_argument("--json", action="store_true")
+    pe = sub.add_parser("emit", help="serialize a HAND-AUTHORED ToolAudit into an NFRA_CSE CSE")
+    pe.add_argument("tool", help="the tool being audited")
+    pe.add_argument("--audit", required=True,
+                    help="path to a JSON file carrying the HAND-AUTHORED assessment "
+                         "(verdict/class/rail/evidence_ref/... -- the judgment the emitter serializes)")
+    pe.add_argument("--marker-head", default=None, help="head.marker_head vintage (default: git HEAD)")
+    pe.add_argument("--actor", default="comp-passcraft", help="producer.ref (the auditor serial)")
     ap.add_argument("--self-test", action="store_true")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
@@ -476,6 +689,30 @@ def main():
                               "archetype_probes": ARCHETYPE_PROBES}, indent=2))
         else:
             print(render_taxonomy())
+        return 0
+    if args.cmd == "emit":
+        try:
+            with open(args.audit, "r", encoding="utf-8") as fh:
+                hand = json.load(fh)
+        except OSError as e:
+            print("INVOCATION-ERROR: could not read --audit %r (%s)" % (args.audit, e))
+            return 3
+        except json.JSONDecodeError as e:
+            print("INVOCATION-ERROR: --audit %r is not valid JSON (%s)" % (args.audit, e))
+            return 3
+        if not isinstance(hand, dict):
+            print("INVOCATION-ERROR: --audit must be a JSON object (the hand-authored assessment)")
+            return 3
+        audit = dict(recon_mechanical_fields(args.tool))   # mechanical scaffolding from recon
+        audit.update(hand)                                 # the human's HAND-AUTHORED judgment wins
+        audit.setdefault("tool", os.path.basename(args.tool))
+        mk = args.marker_head or _resolve_marker_head()
+        try:
+            rec = emit_tool_audit(audit, mk, actor=args.actor)
+        except ToolAuditError as e:
+            print("REJECTED (fail-closed): %s" % e)
+            return 1
+        print(json.dumps(rec, indent=2))
         return 0
     ap.print_help()
     return 2

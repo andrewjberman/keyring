@@ -13,6 +13,8 @@ from __future__ import annotations
 import os
 import sys
 
+import pytest
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import comp_passcraft as pc  # noqa: E402  (path set above so the sibling backend imports)
 
@@ -86,3 +88,66 @@ def test_every_archetype_maps_to_real_shapes():
 def test_embedded_self_test_passes():
     ok, checks = pc._self_test()
     assert ok, [c for c in checks if not c["pass"]]
+
+
+# ---- TO-2: the ToolAudit CSE emitter (NFRA_CSE-conformant, anti-harness one layer up) ----
+
+def _valid_audit():
+    return {"tool": "comp-freshness", "verdict": "DEFECTIVE -- HAND-AUTHORED lead, not computed",
+            "class": "INFERRED", "rail": {"R1": "fail"}, "evidence_ref": ".tools/comp-freshness",
+            "falsifier": "false if it reads the date-key not mtime", "domain": "aws-cloud",
+            "shared_substrate": ["trading_calendar"]}
+
+
+def test_to2_valid_toolaudit_emits_nfra_cse_conformant_record():
+    """A hand-authored ToolAudit emits {tool_audit, cse}, and the CSE passes cse_schema.validate
+    (schema + provenance + confidence + AC6 head + AC2 fidelity decompression)."""
+    import cse_schema as cs
+    mk = "git:testvintage"
+    rec = pc.emit_tool_audit(_valid_audit(), mk)
+    assert {"tool_audit", "cse"} <= set(rec)
+    cok, cerr = cs.validate(pc.build_tool_audit_cse(_valid_audit(), mk))
+    assert cok, cerr
+
+
+def test_to2_ac2_empty_evidence_ref_rejected_fail_closed():
+    """AC2: a verdict with no cited evidence is inadmissible -> ToolAuditError (fail-closed)."""
+    bad = dict(_valid_audit(), evidence_ref="")
+    with pytest.raises(pc.ToolAuditError):
+        pc.emit_tool_audit(bad, "git:testvintage")
+
+
+def test_to2_anti_harness_missing_verdict_rejected():
+    """THE anti-harness proof for the emitter: it has NO verdict-deriving path -- a ToolAudit missing
+    the hand-authored verdict cannot be completed by the emitter and is REJECTED."""
+    no_verdict = {k: v for k, v in _valid_audit().items() if k != "verdict"}
+    with pytest.raises(pc.ToolAuditError):
+        pc.emit_tool_audit(no_verdict, "git:testvintage")
+
+
+def test_to2_verdict_serialized_verbatim_never_altered():
+    audit = _valid_audit()
+    rec = pc.emit_tool_audit(audit, "git:testvintage")
+    assert rec["tool_audit"]["verdict"] == audit["verdict"]
+
+
+def test_to2_class_off_r1_enum_rejected():
+    bad = dict(_valid_audit())
+    bad["class"] = "MAYBE"
+    with pytest.raises(pc.ToolAuditError):
+        pc.emit_tool_audit(bad, "git:testvintage")
+
+
+def test_to2_r0_deferred_class_vocabulary_is_r1_only():
+    """R0 is DEFERRED (TO-R0, off CVO's lane): the class vocabulary is R1 self-classification only;
+    no QUESTION-class tag is folded here."""
+    assert set(pc._TOOLAUDIT_CLASSES) == {"OBSERVED", "INFERRED", "NOT-CHECKED"}
+
+
+def test_to2_no_verdict_deriving_function_in_module():
+    """Structural anti-harness: the module exposes no function that DERIVES a verdict from evidence.
+    Every verdict-touching entrypoint takes the verdict as an INPUT (build/validate/emit_tool_audit)."""
+    import inspect
+    for name, obj in inspect.getmembers(pc, inspect.isfunction):
+        assert not any(tok in name.lower() for tok in ("compute_verdict", "derive_verdict",
+                                                       "decide_verdict", "score_verdict", "judge")), name
