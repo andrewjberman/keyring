@@ -16049,3 +16049,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
 | 2026-07-10 | 0.3.0_DT_TradingOperations | (no-TO) | deploy_ledger.py | open/close-leg/close x2 (sscn-pfoe-promote 4 legs + posn-custom-promote 5 legs) -- both CLOSED, NEVER#5 | PASS |
 | 2026-07-10 | 0.3.0_DT_TradingOperations | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/held... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-cache/comp-transform/served-audit | SSCN_PFOE+POSN_CUSTOM PRD evidence: comp-cache 0-mismatch (no new key), comp-transform schema-check clean x4, served factor_metadata.json audit 16/16 PFOE codes present (decisive FE-only scoping); comp-blast frontend-fn NOT-FOUND + comp-routes MSYS-quirk = source-grounded | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
