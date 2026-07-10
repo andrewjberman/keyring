@@ -619,6 +619,18 @@ lanes:
       - 0.5.0_AE_OpalETL~B
     description: "NFRA_HEATMAP macro home (org/modules/heatmap/** -- the heat-map estate-hygiene module, canonically sited next to org/modules/graph/). Strand-C build lane = 0.4.0_DS (scoring/DEBTSCAN-derived freshness) + 0.5.0_AE (producer/infra), per COO lanes-free GO 2026-06-25T212340Z. Same-tool grant per the NFRA_TSGRAPH_SPIKE / NFRA_PIPESCRIPT_TOOL convention (CTO-ratified 2026-06-15: when a build assigns a graph-module-adjacent surface to DS/AE, COO adds the inclusive lane rule at decompose-time). DS placed S0 (heat_map.py) + O1 (object_freshness.py) here; org/modules/heatmap/** resolved to org/modules/** (ANY_EXEC) excluding DS -> commit-blocked (0.4.0 RAVC 213807Z). Added 2026-06-25 by 2.0.0_SA_COO. Longest-match overrides org/modules/** ANY_EXEC."
 
+  NFRA_TOOLCHECK_P4:
+    permitted_agents:
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 3.0.0_SA_CVO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+      - 3.1.0_SA_CVO
+      - 0.8.0_AE_CloudComp
+      - 0.4.0_DS_ClientPlatform~B
+    description: "NFRA_TOOLCHECK.P4 build surface -- the AC-0 universe doc (org/modules/graph/comp-tool-universe.md) + the per-tool negative-control fixtures (org/modules/graph/tests/**) that P4 §4 makes the deliverable of every comp-tool verdict. Same-tool grant per the NFRA_TSGRAPH_SPIKE / NFRA_HEATMAP convention (CTO-ratified 2026-06-15: when a build assigns a graph-module-adjacent surface to DS/AE, COO adds the inclusive lane rule at decompose-time). Longest-match overrides org/modules/** ANY_EXEC. WHY, and it is the whole point: 0.8.0_AE_CloudComp sat BLOCKED on this lane with gate-clean work (41 tests, 5 mutants killed by CVO, all four CVO findings closed) 'awaiting COO~B' -- a lane with 7 undelivered messages, 0 armed watcher, and no broker registration. That is the SAME DEAD SERIAL on which CTO ruled 2026-07-09T23:28Z that 'SoD BY ROUTING IS NOT SoD; delivered IS NOT read.' The block recurred on the identical lane inside four hours. A permission that can only be exercised by an agent that does not exist is not a control; it is a stall. CTO ratified lane-ADD (no file move, no --force) 2026-07-10T~02:15Z. Do-er/verifier separation is UNCHANGED and is where it belongs: 0.8.0 authors, 3.0.0_SA_CVO verifies by mutation test, 1.0.0_SA_CTO arch-gates. DS~B added for its P4 graph-engine charge (same TO, fixtures under the same tree). Added 2026-07-10 by 2.0.0_SA_COO."
+
   SCTY:
     permitted_agents:
       - 3.0.0_SA_CVO
@@ -997,6 +1009,16 @@ paths:
   "org/modules/graph/compproof/**":
     lane: ANY_EXEC_OR_AE
     note: "NFRA_COMPPROOF program home (the one home per the PRD anti-drift-self-consistency rule) -- the B benchmark harness: corpus-loader + root-cause-strip diff-gate, blind-solver spawner, 3-axis (REACH x USABILITY x GROUNDING-RESILIENCE) scorer, gap-charter emitter, standing suite. AE 0.8.0_AE_CloudComp~D builds B1 to CTO arch (NFRA_COMPPROOF_B_HARNESS_DESIGN.md, 1315f9a03). Mirrors the org/modules/graph/comp_*.py + drift-topology.yaml decompose-time AE-build grant convention (CTO-ratified 2026-06-15: COO adds the graph-module build-lane rule at decompose-time; longest-match overrides org/modules/** ANY_EXEC). NOTE: ~B off-limits for COMPPROOF is a TASK-staffing constraint (validation subject), NOT a path-lock -- ANY_EXEC_OR_AE membership is harmless (it is not tasked). Added 2026-07-01 by 2.0.0_SA_COO~B (decompose-time grant); CC CTO. SoD: grantee ~D does not commit its own grant -- COO~B lands it."
+
+  # NFRA_TOOLCHECK.P4: the AC-0 universe doc + the negative-control fixtures.
+  # Specific rules BEFORE the org/modules/** catch-all (longest-match-wins).
+  "org/modules/graph/comp-tool-universe.md":
+    lane: NFRA_TOOLCHECK_P4
+    note: "AC-0 deliverable (universe=60, cross-validated by two independent match rules). It was UNTRACKED, so CVO adjudicated AC-0 without it and could not have known it existed -- an uncommitted deliverable is invisible to every git-rooted verifier, and its absence from a verifier's view is indistinguishable from its nonexistence. Added 2026-07-10 by 2.0.0_SA_COO."
+
+  "org/modules/graph/tests/**":
+    lane: NFRA_TOOLCHECK_P4
+    note: "Per-tool negative-control fixtures. P4 §4: a tool is not verified without a STORED, CI-run fixture the tool MUST go RED on, a positive control, and R2 -- the control on the control (0.7.0_AE_CloudOps: 'R1's zero is only evidence if the recorder can ever see a one'). The author of a fixture is not its verifier: CVO mutation-tests it. Added 2026-07-10 by 2.0.0_SA_COO."
 
   "org/modules/heatmap/**":
     lane: NFRA_HEATMAP
