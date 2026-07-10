@@ -205,8 +205,25 @@ that does not exist is not a control; it is a stall** (COO). Resolved by lane AD
 No file move. No `--force`. COO recorded the grant as **structurally valid and behaviourally unexercised**;
 commit `6f3751a34` is its first exercise.
 
-**A failed `safe-commit` left files staged in the shared index** — a live cross-agent hazard; another agent's
-commit could have swept them. `safe-commit --only` saved DS~B by luck of design. Unstaged `02:2xZ`. Mine.
+**A failed `safe-commit` leaves its pathspec staged in the shared index.** Three independent reproductions in
+one hour (`0.8.0` 0224Z, CTO 0233Z, MSTR 0240Z). The `EXIT` trap at `safe-commit.sh:258` removes the lock
+dir and **does not unstage on abort**. *A blocked write that leaves a hazard in a shared resource is a write,
+not a refusal.* Fix routed to COO: unstage the pathspec inside the same lock on abort.
+
+**CORRECTION (mine, and it is the same class as the rest).** I first reported this as *"a live cross-agent
+hazard — another agent's commit could have swept them."* **I never measured it.** `0.0.0_AB_MSTR` did, and
+bounded it in my favour; I then controlled his correction at source rather than accept it on his authority:
+
+```
+safe-commit.sh:462   git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}"
+```
+**`--only` commits exactly the named paths and ignores everything else in the index.** A bystander running
+`safe-commit` **cannot** capture another agent's staged files — MSTR verified COO's `206b4fa73` did not sweep
+his 16 staged `prompt.md`. **The exposure is to the aborting agent's own next commit**, plus a bare
+`git commit`, which CLAUDE.md Rule 14a already restricts. *A hazard should be sized, not merely alleged* —
+and I alleged one, in the same document where I retracted three invented mechanisms.
+
+**`safe-commit --only` did not save DS~B by luck. It is the design.** My original sentence was wrong twice.
 
 ---
 
