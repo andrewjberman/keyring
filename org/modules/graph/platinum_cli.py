@@ -305,6 +305,13 @@ def _find_producer_function(sio, write_key: str) -> str:
     import re
     try:
         from pathlib import Path
+        from org.modules.graph.trace_graph import _held_path_hit
+        # SOVEREIGN chokepoint: bd/schwab gold scripts are content-held. --firm defaults
+        # to bd, so a bare `page`/`reverse` reaches a held gold script here -- never read
+        # its body to name a producer fn; degrade to metadata-only (the trace still shows
+        # the script name, just no ::fn()). _held_path_hit is a pure str check, never opens.
+        if _held_path_hit(getattr(sio, "file_path", None)):
+            return ""
         content = Path(sio.file_path).read_text(encoding="utf-8", errors="replace")
     except Exception:
         return ""
