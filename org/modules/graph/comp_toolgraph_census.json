@@ -1,0 +1,939 @@
+{
+  "artifact": "NFRA_TOOLGRAPH.TO-1 comp-tool graph census (C0 nodes)",
+  "author": "0.8.0_AE_CloudComp",
+  "generated_by": "org/modules/graph/comp_toolgraph.py (comp-toolgraph census)",
+  "universe_source": "AC-0_tool_universe_predicate_20260710.json (CVO-ratified, 63 IN)",
+  "universe_count": 63,
+  "note": "MEASURE-ONLY. archetype/susceptible_to carry a CLASS (OBSERVED/INFERRED) + source; None = not yet passed (honest, never a guess). A committed rendering (LEAD-1).",
+  "nodes": [
+    {
+      "tool": "check-lambda-layer-deps",
+      "on_disk": true,
+      "registration": "CATALOGUED",
+      "backend_kind": "self",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/check-lambda-layer-deps"
+      ]
+    },
+    {
+      "tool": "comp-adapter-audit",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": "mislabelled-control-flow",
+      "archetype_class": "OBSERVED",
+      "susceptible_to": [
+        "mislabelled-control-flow",
+        "guard-asymmetry",
+        "test-writes-prod"
+      ],
+      "archetype_source": "NFRA_TOOLPASS sec.4 (tool-1, closed 319d1df66): printed 'S3 fetch failed' when S3 was never attempted; D9 manifest-write is load-bearing for the gate",
+      "substrate": [
+        "org/modules/graph/adapter_audit_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-aws",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "contract_engine",
+        "grain_sentinel",
+        "org/modules/graph/comp_aws_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-blast",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "grain_sentinel",
+        "org/modules/graph/cli.py"
+      ]
+    },
+    {
+      "tool": "comp-build",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "grain_sentinel",
+        "org/modules/graph/cli.py"
+      ]
+    },
+    {
+      "tool": "comp-cache",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/cache_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-canon-motif",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "infra/aws/globgrph/canon_motif_scorer.py"
+      ]
+    },
+    {
+      "tool": "comp-chainrun",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/chainrun_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-cluster",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "infra/aws/globgrph/comp_cluster_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-constants",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "GIT",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/comp_constants_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-coverage",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/coverage_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-coverage-check",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "self",
+      "domain": null,
+      "archetype": "vacuous-that-can-block",
+      "archetype_class": "INFERRED",
+      "susceptible_to": [
+        "vacuous-that-can-block"
+      ],
+      "archetype_source": "NFRA_COMPASSURANCE_PRD sec.7 TO-7: seeded VACUOUS and in safe-commit's blocking chain -- not exercised here",
+      "substrate": [
+        ".tools/comp-coverage-check"
+      ]
+    },
+    {
+      "tool": "comp-deadgrant",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-deadgrant.py"
+      ]
+    },
+    {
+      "tool": "comp-denytest",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-denytest.py"
+      ]
+    },
+    {
+      "tool": "comp-depth",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "TRINO",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "comp_marker_read",
+        "org/modules/graph/comp_depth_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-diff",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "GIT",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "grain_sentinel",
+        "org/modules/graph/cli.py"
+      ]
+    },
+    {
+      "tool": "comp-dispatch",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "GIT",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/comp_dispatch.py"
+      ]
+    },
+    {
+      "tool": "comp-drift",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "drift_producer",
+        "org/modules/graph/drift_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-dups",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "self",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-dups"
+      ]
+    },
+    {
+      "tool": "comp-fedobs",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "self",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-fedobs"
+      ]
+    },
+    {
+      "tool": "comp-firmsep-sweep",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-firmsep-sweep.py"
+      ]
+    },
+    {
+      "tool": "comp-freshness",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "self",
+      "domain": "AWS-CLOUD",
+      "archetype": "aging-oracle",
+      "archetype_class": "INFERRED",
+      "susceptible_to": [
+        "aging-oracle",
+        "resource-blind",
+        "undiscriminating/constant-gate"
+      ],
+      "archetype_source": "NFRA_TOOLGRAPH_PRD sec.2 + COMPASSURANCE sec.4b-i: BELIEVED anti-correlated (reads mtime not the partition date-key) -- not exercised by this TO",
+      "substrate": [
+        ".tools/comp-freshness"
+      ]
+    },
+    {
+      "tool": "comp-glob",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "self",
+      "domain": null,
+      "archetype": "terminal-honest/artifact-lies",
+      "archetype_class": "OBSERVED",
+      "susceptible_to": [
+        "terminal-honest/artifact-lies"
+      ],
+      "archetype_source": "COMPASSURANCE_matrix_data: R7 fail -- NO-MATCH hint claimed 16 gitignored, 0 are (331849e80)",
+      "substrate": [
+        ".tools/comp-glob",
+        "_comprail"
+      ]
+    },
+    {
+      "tool": "comp-graph",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "TRINO",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/graph_status_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-grep",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "self",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-grep",
+        "_comprail"
+      ]
+    },
+    {
+      "tool": "comp-heat",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "self",
+      "domain": "LOCAL",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-heat",
+        "_trino_fed"
+      ]
+    },
+    {
+      "tool": "comp-honesty",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "self",
+      "domain": "GIT",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-honesty"
+      ]
+    },
+    {
+      "tool": "comp-iam",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": "resource-blind",
+      "archetype_class": "INFERRED",
+      "susceptible_to": [
+        "resource-blind"
+      ],
+      "archetype_source": "CLAUDE.md 22a: grants() models (action) not (action,resource); _iam_resource_matches is CVO-certified scoped (6f3751a34) -- mixed, not exercised here",
+      "substrate": [
+        "org/modules/graph/iam_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-incrparity",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "incrparity_core",
+        "org/modules/graph/incrparity_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-kit-striplist-gate",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "self",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-kit-striplist-gate"
+      ]
+    },
+    {
+      "tool": "comp-kuzu",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "TRINO",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "infra/aws/globgrph/kuzu_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-lambdamap",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/lambdamap_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-learns-status",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "infra/aws/globgrph/comp_learns_status.py"
+      ]
+    },
+    {
+      "tool": "comp-manifest-check",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": "undiscriminating/constant-gate",
+      "archetype_class": "INFERRED",
+      "susceptible_to": [
+        "undiscriminating/constant-gate"
+      ],
+      "archetype_source": "NFRA_COMPASSURANCE_PRD sec.7 TO-7: BELIEVED undiscriminating (its denominator IS the catalog) -- not exercised here",
+      "substrate": [
+        "comp_coverage_check",
+        "org/modules/graph/manifest_check_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-parity",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/comp_parity_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-perf",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/vectorize_audit_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-pii",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/pii_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-pipescript",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "GIT",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/pipeline_cli.py",
+        "safe_deploy_core"
+      ]
+    },
+    {
+      "tool": "comp-platinum",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/platinum_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-registry",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/registry_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-routable-check",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-which-routing-test.py",
+        "comp_capability_provider",
+        "comp_route"
+      ]
+    },
+    {
+      "tool": "comp-routes",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/routes_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-secrets",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "self",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-secrets"
+      ]
+    },
+    {
+      "tool": "comp-shell",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "GIT",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/shell_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-stitch-refresh",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "infra/aws/globgrph/derive_stitch.py"
+      ]
+    },
+    {
+      "tool": "comp-surface-check",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": "correct-but-unwired",
+      "archetype_class": "OBSERVED",
+      "susceptible_to": [
+        "correct-but-unwired"
+      ],
+      "archetype_source": "NFRA_TOOLGRAPH_PRD sec.2 + COMPASSURANCE sec.2: rc=2/CRITICAL on 3/3 SEV1, invoked by NO gate (safe-commit parent-scoped, portal CI 0/3)",
+      "substrate": [
+        "contract_engine",
+        "org/modules/graph/surface_check_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-symbols",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "GIT",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/comp_symbols.py"
+      ]
+    },
+    {
+      "tool": "comp-system",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "cse_schema",
+        "graph_cache",
+        "org/modules/graph/comp_system.py"
+      ]
+    },
+    {
+      "tool": "comp-tagauthz",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-tagauthz.py"
+      ]
+    },
+    {
+      "tool": "comp-to",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "self",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-to"
+      ]
+    },
+    {
+      "tool": "comp-tool-health",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/comp_tool_health.py"
+      ]
+    },
+    {
+      "tool": "comp-tool-health-gate",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/comp_tool_health_gate.py"
+      ]
+    },
+    {
+      "tool": "comp-tooltip",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/tooltip_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-trace",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "grain_sentinel",
+        "org/modules/graph/cli.py"
+      ]
+    },
+    {
+      "tool": "comp-transform",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "AWS-CLOUD",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/transform_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-types",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "GIT",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/types_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-validate",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "GIT",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "org/modules/graph/validate_cli.py"
+      ]
+    },
+    {
+      "tool": "comp-which",
+      "on_disk": true,
+      "registration": "CATALOGUED",
+      "backend_kind": "self",
+      "domain": null,
+      "archetype": "undiscriminating/constant-gate",
+      "archetype_class": "INFERRED",
+      "susceptible_to": [
+        "undiscriminating/constant-gate",
+        "aging-oracle"
+      ],
+      "archetype_source": "comp_route.py:362 vetted-offset short-circuit citation (RV-0046 F-012) -- CONTRADICTED by a live probe (zzqq -> comp-grep FALLBACK, not CONFIDENT); citation-vs-code declarative drift, INFERRED per CTO~A 193238Z, do NOT re-verify / chase live",
+      "substrate": [
+        ".tools/comp-which",
+        "comp_capability_provider",
+        "comp_potion_relevance",
+        "comp_route",
+        "comp_route_affinity",
+        "comp_which_signals"
+      ]
+    },
+    {
+      "tool": "comp-whoread",
+      "on_disk": true,
+      "registration": "CONVENTION",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/comp-whoread.py"
+      ]
+    },
+    {
+      "tool": "comp-xray",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "GIT",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "infra/aws/compdiff/cli.py"
+      ]
+    },
+    {
+      "tool": "comp-xref",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": "GIT",
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "grain_sentinel",
+        "org/modules/graph/cli.py"
+      ]
+    },
+    {
+      "tool": "loop-quiescence",
+      "on_disk": true,
+      "registration": "CATALOGUED",
+      "backend_kind": "self",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        ".tools/loop-quiescence"
+      ]
+    },
+    {
+      "tool": "pipescript",
+      "on_disk": true,
+      "registration": "INDEXED",
+      "backend_kind": "wrapped",
+      "domain": null,
+      "archetype": null,
+      "archetype_class": null,
+      "susceptible_to": [],
+      "archetype_source": null,
+      "substrate": [
+        "contract_engine",
+        "org/modules/graph/pipescript_cli.py"
+      ]
+    }
+  ]
+}
