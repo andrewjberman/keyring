@@ -16052,3 +16052,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/held... | PASS |
 | 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-cache/comp-transform/served-audit | SSCN_PFOE+POSN_CUSTOM PRD evidence: comp-cache 0-mismatch (no new key), comp-transform schema-check clean x4, served factor_metadata.json audit 16/16 PFOE codes present (decisive FE-only scoping); comp-blast frontend-fn NOT-FOUND + comp-routes MSYS-quirk = source-grounded | PASS |
 | 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/POSN_CUSTOM.json --file or... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-manifest-check | comp-manifest-check completeness --only routable | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-manifest-check | comp-manifest-check completeness --only existence | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-manifest-check | comp-manifest-check completeness --only placement | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/comp-tool-tests-quarantine.txt ... | PASS |
+2026-07-10T2302Z | 2.0.0_SA_COO~C | session-close (SSCN_PFOE+POSN_CUSTOM ship+close) | fabric-check.py --blocks (PASS), deploy_ledger.py check --red (PASS, 0 stranded, both ship-ledgers CLOSED verified), independent git-verify x2 promotes (tag peel + f2053740 ancestry/content absence), served-artifact curl-grep x2 (PROD bundles carry PFOE codes+DIVZ / CustomBlend+CSM). Caught+excluded a cross-project passenger (f2053740) via plain git log origin/PROD..HEAD before promote.
+| 2026-07-10 | 2.0.0_SA_COO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
