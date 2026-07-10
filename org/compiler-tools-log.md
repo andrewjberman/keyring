@@ -15333,3 +15333,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.5.0_AE_OpalETL | mdpf per-partner gate | commit-gate.sh + live parquet-footer read | mdpf must-fixes exercised against LIVE (content-bind reproduces 0.6.0's finding: allocations content-latest=07-08, 07-09 stub skipped -- footer row_count METADATA, not client rows). commit-gate caught E702. comp-iam N/A (Lambda/EC2/gold logic, not IAM). The night's disease recurred: 0.6.0's "exercised the mechanism not the path" -- running a function proves what it returns, not that it runs. | PASS |
 | 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 | 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/mdpf_aggregate_a... | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-iam | comp-iam service mdpf-daily-trigger | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-pipescript | comp-pipescript deployed mdpf_aggregate_aua.py | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-iam | comp-iam service mdpf-daily-trigger | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/PENDING_mdp... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-iam | comp-iam role mdpf-daily-trigger-lambda-role | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-iam | comp-iam role mdpf-daily-trigger-lambda-role | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/gold/mdpf_aggregate_aua.py | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | (Andrew-direct deploy) | comp-tagauthz / comp-pipescript | comp-tagauthz safe-apply pre-gate (fail-closed under MSYS_NO_PATHCONV, PASS w/o) ; comp-pipescript deployed MATCH ; simulate-principal-policy allowed (comp-iam NOT consulted -- resource-blind GREEN) | PASS |
+| 2026-07-09 | 0.5.0_AE_OpalETL | NFRA_TERRAFORM.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
