@@ -135,10 +135,29 @@ def lambdas():
     return rows
 
 
+_GETFN_CACHE: dict = {}
+
+
+def _get_function(fn):
+    """ONE `get-function` per Lambda, memoized. It is a documented SUPERSET of
+    get-function-configuration -- it returns Code.Location AND Configuration.{Handler,
+    Environment} in a single response, verified data-identical to the three separate calls
+    (Handler / Env / Code.Location) on 2026-07-10. artifact() + handler_file() + env_of()
+    now share this ONE aws-CLI spawn instead of making three: the per-Lambda cost is
+    dominated by the Windows aws-CLI cold-start (~1.4s/spawn), and 180 Lambdas x 2 saved
+    spawns is ~8 min off a ~14 min full sweep (PROFILED, not inferred -- NFRA_TOOLPASS)."""
+    if fn not in _GETFN_CACHE:
+        rc, out, _ = aws("lambda", "get-function", "--function-name", fn, "--output", "json")
+        try:
+            _GETFN_CACHE[fn] = json.loads(out) if rc == 0 and out else {}
+        except ValueError:
+            _GETFN_CACHE[fn] = {}
+    return _GETFN_CACHE[fn]
+
+
 def artifact(fn):
-    rc, out, _ = aws("lambda", "get-function", "--function-name", fn,
-                     "--query", "Code.Location", "--output", "text")
-    if rc or not out or out == "None":
+    out = (_get_function(fn).get("Code") or {}).get("Location")
+    if not out or out == "None":
         return None
     try:
         return zipfile.ZipFile(io.BytesIO(urllib.request.urlopen(out, timeout=240).read()))
@@ -193,23 +212,83 @@ def handler_file(fn):
     with an invented mechanism is exactly what Rule 22 forbids, so the region is attributed from the
     configured Handler, and a disagreement between copies is itself reported.
     """
-    rc, out, _ = aws("lambda", "get-function-configuration", "--function-name", fn,
-                     "--query", "Handler", "--output", "text")
-    if rc or not out or out == "None":
+    out = (_get_function(fn).get("Configuration") or {}).get("Handler")
+    if not out or out == "None":
         return None
     mod = out.rsplit(".", 1)[0]              # `lambda_function.lambda_handler` -> `lambda_function`
     return [f"{mod.replace('.', '/')}{ext}" for ext in (".py", ".js", ".mjs", ".ts")]
 
 
 def env_of(fn):
-    rc, out, _ = aws("lambda", "get-function-configuration", "--function-name", fn,
-                     "--query", "Environment.Variables", "--output", "json")
-    if rc or not out:
-        return {}
+    cfg = _get_function(fn).get("Configuration") or {}
+    return (cfg.get("Environment") or {}).get("Variables") or {}
+
+
+def _selftest() -> int:
+    """Offline regression gate (no AWS). Pins the two invariants the 2026-07-10 perf
+    consolidation could break: (1) the three consumers read the RIGHT fields from ONE
+    get-function response, (2) the axis-B fail-silent classifier. A mutation to either
+    must make this go RED (NFRA_TOOLPASS 2a) -- the tool had NO self-test before this."""
+    # 1. CONSOLIDATION -- handler_file + env_of + artifact's location all read from ONE
+    #    memoized get-function response (Code.Location + Configuration.{Handler,Environment}).
+    canned = {"Code": {"Location": "https://prod/pkg.zip"},
+              "Configuration": {"Handler": "lambda_function.lambda_handler",
+                                "Environment": {"Variables": {"GITHUB_SECRET": "github-token"}}}}
+    _GETFN_CACHE["__selftest__"] = canned
     try:
-        return json.loads(out) or {}
-    except ValueError:
-        return {}
+        assert handler_file("__selftest__") == ["lambda_function.py", "lambda_function.js",
+                                                "lambda_function.mjs", "lambda_function.ts"], \
+            "handler_file must read Configuration.Handler -> entrypoint paths"
+        assert env_of("__selftest__") == {"GITHUB_SECRET": "github-token"}, \
+            "env_of must read Configuration.Environment.Variables"
+        assert (_get_function("__selftest__").get("Code") or {}).get("Location") == "https://prod/pkg.zip", \
+            "artifact's Code.Location extraction path"
+        # a config with NO env must yield {} (not raise) -- the fail-safe artifact/env_of rely on
+        _GETFN_CACHE["__noenv__"] = {"Configuration": {"Handler": "app.handler"}}
+        assert env_of("__noenv__") == {}, "env_of must fail-safe to {} when Environment absent"
+        assert handler_file("__noenv__") == ["app.py", "app.js", "app.mjs", "app.ts"], "handler_file no-env"
+        # POPULATION PATH: _get_function must PARSE the aws get-function JSON (not just read a
+        # pre-seeded cache). Monkeypatch aws() with a canned response so the json.loads path is
+        # exercised offline -- else a mutation that breaks parsing survives (it did, until this).
+        _real_aws = globals()["aws"]
+        globals()["aws"] = lambda *a, **k: (0, json.dumps(canned), "")
+        try:
+            _GETFN_CACHE.pop("__pop__", None)
+            got = _get_function("__pop__")
+            assert (got.get("Configuration") or {}).get("Handler") == "lambda_function.lambda_handler", \
+                "_get_function must PARSE the aws get-function JSON into the response dict"
+            # a nonzero rc (call failed) must yield {} -- fail-safe, not a crash
+            globals()["aws"] = lambda *a, **k: (255, "", "boom")
+            _GETFN_CACHE.pop("__err__", None)
+            assert _get_function("__err__") == {}, "_get_function must fail-safe to {} on a failed call"
+        finally:
+            globals()["aws"] = _real_aws
+            _GETFN_CACHE.pop("__pop__", None)
+            _GETFN_CACHE.pop("__err__", None)
+    finally:
+        _GETFN_CACHE.pop("__selftest__", None)
+        _GETFN_CACHE.pop("__noenv__", None)
+    # 2. AXIS B -- the fail-silent-reader classifier (the semantic core; unchanged by the perf fix,
+    #    pinned so a future edit cannot quietly break it).
+    assert SILENT.search("except Exception:\n        return {}"), "SILENT matches a swallowing getter (return {})"
+    assert SILENT.search("except:\n        return None"), "SILENT matches a return-None swallow"
+    assert LOUD.search("except Exception:\n        raise"), "LOUD matches a re-raise"
+    assert LOUD.search("} catch (e) {\n    throw e;"), "LOUD matches a JS throw"
+    assert not LOUD.search("value = get()"), "a plain read is not LOUD"
+    # KNOWN GAP, pinned so it is explicit (flagged to CTO, NOT fixed -- semantic layer): SILENT's
+    # `^\s*pass\b` is anchored WITHOUT re.MULTILINE, so it only catches a `pass` at the START of
+    # the searched text. The tool applies SILENT to `after` (post-except text), which never starts
+    # with `pass`, so a swallow-by-bare-`pass` is missed. Pin the true behavior:
+    assert SILENT.search("pass  # at text start"), "SILENT: pass caught ONLY at text start"
+    assert not SILENT.search("x = 1\n    pass"), "SILENT: a mid-block pass is NOT caught (no MULTILINE)"
+    # the tool's own cited examples: a swallow is SILENT-not-LOUD; a re-raise is LOUD.
+    swallow = "except Exception:\n    return None"
+    reraise = "except Exception as e:\n    raise RuntimeError(e)"
+    assert bool(SILENT.search(swallow)) and not LOUD.search(swallow[:200]), "swallow -> fail-silent"
+    assert bool(LOUD.search(reraise)), "re-raise -> loud"
+    print("SELF-TEST PASS: get-function consolidation field-reads (Handler/Env/Location + fail-safe) "
+          "+ axis-B SILENT/LOUD classifier.")
+    return 0
 
 
 def main() -> int:
@@ -218,13 +297,27 @@ def main() -> int:
     p.add_argument("--live-days", type=float, default=30.0,
                    help="a consumer that ran within this window is LIVE; older is LATENT")
     p.add_argument("--json", metavar="PATH")
+    p.add_argument("--limit", type=int, default=0, metavar="N",
+                   help="inspect only the first N lambdas (bounded sweep; 0 = full fleet). "
+                        "A full sweep is ~180 lambdas x one get-function+download each.")
+    p.add_argument("--self-test", action="store_true", help="offline regression gate (no AWS)")
     a = p.parse_args()
+
+    if a.self_test:
+        return _selftest()
 
     fns = lambdas()
     live_names = all_live_secret_names(["us-east-1", "us-east-2"])
     now_ms = int(time.time() * 1000)
+    full_n = len(fns)
+    if a.limit and a.limit < full_n:
+        fns = fns[:a.limit]
+        print(f"NOTE: --limit {a.limit} -> inspecting {len(fns)} of {full_n} lambdas "
+              f"(BOUNDED sweep, not the full fleet -- coverage is partial by request).")
     print(f"live secret names (both regions): {len(live_names)}")
-    print(f"lambdas in account: {len(fns)}\n")
+    print(f"lambdas in account: {full_n}"
+          f"{' (inspecting %d)' % len(fns) if len(fns) != full_n else ''}\n")
+    _t_start = time.time()
 
     rows, uninspectable, secret_cache = [], [], {}
 
@@ -237,6 +330,16 @@ def main() -> int:
         return secret_cache[key]
 
     for i, (fn, role_arn, pkg) in enumerate(fns, 1):
+        # PROGRESS at the TOP of the loop, BEFORE any `continue`. The old every-25 print sat at
+        # the loop TAIL, past four continues (Image / unreadable / no-secret-call / no-names) --
+        # so it only fired for lambdas that ran the whole body, and a fleet whose first lambdas
+        # mostly lack a secret call showed "no output past startup" for minutes (CTO, 13min).
+        # Top-of-loop + stderr + elapsed/rate/ETA proves liveness for EVERY lambda.
+        if i % 10 == 0 or i == 1 or i == len(fns):
+            _el = time.time() - _t_start
+            _rate = _el / (i - 1) if i > 1 else 0.0
+            print(f"  ... {i}/{len(fns)} lambdas  {_el:5.0f}s elapsed  {_rate:.1f}s/lambda  "
+                  f"~{_rate * (len(fns) - i) / 60:.1f}min left", file=sys.stderr, flush=True)
         role = role_arn.rsplit("/", 1)[-1]
         if pkg == "Image":
             uninspectable.append((fn, "PackageType=Image (inspect via ECR layers if it matters)"))
@@ -390,8 +493,6 @@ def main() -> int:
                              days_since_run=round(age, 1) if age is not None else None))
             print(f"  [{sev:15s}] {fn:38s} {name:28s} {why}"
                   f"  fail_silent={silent}")
-        if i % 25 == 0:
-            print(f"  ... {i}/{len(fns)}", flush=True)
 
     # AXIS C. This tool proves AXIS A (a dead reach) and AXIS B (the reader swallows it). It CANNOT
     # prove AXIS C -- that the swallowing path actually EXECUTES and something downstream depends on
