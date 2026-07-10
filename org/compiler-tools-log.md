@@ -15878,3 +15878,37 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --staged | PASS |
 | 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
 | 2026-07-10 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --ref HEAD~1 --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --ref HEAD~1 --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --ref HEAD~1 | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --staged --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-trace | comp-trace --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-xref | comp-xref --check | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-diff | comp-diff --check | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-drift | comp-drift --help | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cli.py | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-drift | comp-drift coverage | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed gold:INF_09.generate_partner_analytics | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-drift | comp-drift gold:INF_09.generate_partner_analytics | VERDICT |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-drift | comp-drift sweep | VERDICT |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-diff | comp-diff --ref HEAD~1 --json | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-diff | comp-diff --ref HEAD~1 | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast --check | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-trace | comp-trace --check | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-xref | comp-xref --check | PASS |
+| 2026-07-10 | 2.0.0_SA_COO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier3_junior/0.2.1_RD_Positioning/t... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-drift | comp-drift coverage --json | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed gold:INF_09.generate_partner_analytics | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-drift | comp-drift gold:INF_09.generate_partner_analytics --json | VERDICT |
+| 2026-07-10 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file requirements.txt | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_dispatch.py --fi... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/tls-prep.sh | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/website/RUNBOOK.md | PASS |
+| 2026-07-10 | 0.3.4_RD_SecurityScanner | SSCN_PFOE.001.add-pfoe-preset-relabel-divz | comp-cache | comp-cache collisions | PASS |
+| 2026-07-10 | 0.3.4_RD_SecurityScanner | SSCN_PFOE.001.add-pfoe-preset-relabel-divz | comp-transform | comp-transform schema-check SecurityScanner | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~A | (no-TO) | (none) | no direct comp-tool runs -- authored NFRA_PASSCRAFT/TOOLGRAPH framework + arch-gated builder diffs vs their own tests (TOOLPASS sec.6 assurance-oracle grounding) | SKIP |
+| 2026-07-10 | 1.0.0_SA_CTO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
