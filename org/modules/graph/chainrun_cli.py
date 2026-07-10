@@ -331,6 +331,30 @@ def build_snapshot(label: str, manifest: dict, reader, source_desc: str,
     }
 
 
+def _atomic_write_json(path: str, obj, indent=None) -> None:
+    """Write `obj` as JSON to `path` ATOMICALLY: a same-dir temp file + fsync +
+    os.replace, so a reap/SIGKILL mid-write can never leave a partial/truncated
+    snapshot -- a reader sees the complete new file or the prior one, never a torn
+    write (CR1, NFRA_TOOLPASS; the comp-build 227c1651a pattern applied to the
+    snapshot output). os.replace is atomic on POSIX and Windows."""
+    import tempfile
+    d = os.path.dirname(os.path.abspath(path))
+    os.makedirs(d, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(dir=d, prefix=".chainrun-", suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as fh:
+            json.dump(obj, fh, indent=indent)
+            fh.flush()
+            os.fsync(fh.fileno())
+        os.replace(tmp, path)
+    except BaseException:
+        try:
+            os.unlink(tmp)
+        except OSError:
+            pass
+        raise
+
+
 # ---------------------------------------------------------------------------
 # Diff -- the partial-refactor-leak report
 # ---------------------------------------------------------------------------
@@ -493,8 +517,7 @@ def cmd_snapshot(args) -> int:
                           manifest_path)
 
     out = args.out or f"comp-chainrun-snapshot-{args.label}.json"
-    with open(out, "w", encoding="utf-8") as fh:
-        json.dump(snap, fh, indent=2)
+    _atomic_write_json(out, snap, indent=2)                 # CR1: atomic (temp+fsync+os.replace)
 
     present = sum(1 for s in snap["sentinels"].values() if s["exists"])
     errors = sum(1 for s in snap["sentinels"].values() if s["error"])
