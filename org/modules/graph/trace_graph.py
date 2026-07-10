@@ -15,7 +15,9 @@ Zero API calls. Pure static analysis.
 from __future__ import annotations
 
 import json
+import os
 import sys
+import tempfile
 import time
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
@@ -227,14 +229,38 @@ class TraceGraph:
                 if q in n.id.lower() or q in n.label.lower()]
 
     def save(self, path: Path):
-        """Serialize graph to JSON."""
+        """Serialize graph to JSON with an ATOMIC write.
+
+        A same-directory temp file + os.replace: a reap/SIGKILL mid-write can never leave the
+        SHARED cache truncated -- a reader (another session's comp-blast/trace/xref/diff) always
+        sees a COMPLETE graph, old or new, never a partial. `write_text` was a truncate-then-write
+        in place, which this fabric's orphan-python reap (/kill scripts) can tear mid-flight
+        (NFRA_TOOLPASS C1 fix, 3.0.0_SA_CVO~B). os.replace is atomic on POSIX and Windows.
+        """
         path.parent.mkdir(parents=True, exist_ok=True)
         data = {
             "built_at": self.built_at,
             "nodes": {k: asdict(v) for k, v in self.nodes.items()},
             "edges": [asdict(e) for e in self.edges],
         }
-        path.write_text(json.dumps(data, indent=2), encoding="utf-8")
+        payload = json.dumps(data, indent=2)
+        # Unique same-dir temp: concurrent writers never clobber each other's partial, and
+        # os.replace stays a single-filesystem atomic rename.
+        fd, tmp = tempfile.mkstemp(dir=str(path.parent), prefix=".graph-", suffix=".tmp")
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as f:
+                f.write(payload)
+                f.flush()
+                os.fsync(f.fileno())
+            os.replace(tmp, path)      # atomic swap: a reader sees old-or-new, never partial
+        except BaseException:
+            # Graceful failure / KeyboardInterrupt -> never orphan a partial temp. (A SIGKILL is
+            # uncatchable, but then os.replace never ran, so the shared cache is untouched anyway.)
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+            raise
 
     @classmethod
     def load(cls, path: Path) -> TraceGraph:

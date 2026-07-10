@@ -61,8 +61,13 @@ def _get_graph(force_rebuild: bool = False, check_freshness: bool = True) -> Tra
             elif (time.time() - g.built_at) < 300:
                 # freshness opted out (e.g. internal callers) -> retain the cheap TTL fast-path
                 return g
-        except Exception:
-            pass
+        except Exception as e:  # noqa: BLE001 -- resilience: a corrupt/truncated cache MUST self-heal to a rebuild
+            # Disclose, don't swallow silently: this fires on a truncated cache (the C1 reap
+            # window, now closed by the atomic save) OR a genuine load/freshness bug. We still
+            # rebuild below (belt), but a SILENT swallow hid a real bug behind a slow rebuild
+            # (the silent-skip class). Clean stdout preserved -- WARN goes to stderr.
+            print(f"WARN: cache load/freshness-check failed ({type(e).__name__}: {e}); "
+                  f"rebuilding from source.", file=sys.stderr)
 
     print("Building trace graph...", file=sys.stderr)
     t0 = time.time()
