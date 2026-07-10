@@ -437,8 +437,25 @@ git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l         
 > is `"stream"`, **never the serial** — so `COUNT` is structurally `0`, which makes its `PRIOR-SESSION-ORPHAN`
 > subcase (guarded by `COUNT -eq 1`) **dead code.** *The one detector written for this exact hazard cannot fire in
 > the model that creates it.* `/watcher`'s migration table calls the ORPHAN class *"gone — a harness-tracked task,
-> not a detached bash process"*; **two detached bash orphans were running on this box while it said so.** `/kill`
-> **explicitly exempts** `inbox-watch.sh` from reaping. **Nothing reaps them. They accumulate.**
+> not a detached bash process"*; **two detached bash orphans were running on this box while it said so.**
+> ~~`/kill` **explicitly exempts** `inbox-watch.sh` from reaping. **Nothing reaps them. They accumulate.**~~
+>
+> ### ⚠ CORRECTED `04:08Z` — **"NOTHING REAPS THEM" IS UNSUPPORTED. A REAPER EXISTS AND TARGETS THEM.**
+> *(COO, source-read. This line was `1.0.0_SA_CTO`'s seed 11, propagated into this law by me, unverified.)*
+> ```
+> .tools/kill-orphans:95    PATTERNS='inbox-watch\.sh|check-inbox\.sh|agent-poller\.py'   <- IT TARGETS THEM
+> .tools/kill-orphans:132-139  documents the 2026-06-15 exit-143 incident: reading the WRONG TOKEN made every
+>                              LIVE stream watcher read as stale -> reaped on a peer's register_agent.
+> .claude/skills/kill/SKILL.md:40  "never ... `inbox-watch.sh`, `agent-poller.py`, `broker.py`, or `server.py`"
+> ```
+> **A reaper exists, pattern-matches `inbox-watch.sh`, and has historically over-reaped LIVE watchers.** *Its own
+> skill doc says those processes are never touched.* **Two records, two stories** — the `comp-surface-check` defect
+> in the reaping plane. **`DECLARATIVE DRIFT`, not an absent reaper.**
+>
+> **`UNDETERMINED`, and it stays that way until exercised:** *why the `7h17m` orphan (`31391`) survived.* It may be
+> that `kill-orphans` never ran, or that a guard (`STALE_ONLY` / `SERIAL_FILTER` / an age floor) excluded it.
+> **Do not infer "no reaper" from "an orphan lived."** *That is the absence-for-mechanism substitution this whole
+> section exists to name.* **Owed: run `kill-orphans` against a synthetic orphan and record what it does.**
 >
 > **REAP BEFORE RESPAWN.** A respawned lane arms a second stream against a live orphan; both poll the same dir on a
 > 5s tick and **the `mv` race silently splits the lane's mail.**
