@@ -1,55 +1,85 @@
 # Deploy Completion Record
 **Date opened:** 2026-07-09T12:26:09.108694+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / L4 -- CRITERION v3. Gate on the STAMP; classify by the VERDICT TOKEN, not the exit code. (0.7.0_AE_CloudOps 041930Z.)
-Supersedes ed5b2479a (invocation-gated, FALSE-PASSED live) and 3b2c817a5's command block (crash reads as FAIL).
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / L4 -- CRITERION v4. A VERDICT REQUIRES AN OBSERVATION. (0.7.0_AE_CloudOps 043200Z; COO 042243Z caught v3.)
+Supersedes ed5b2479a (invocation-gated: FALSE-PASSED live) and 3b2c817a5/f7a74aaf6 (crash and aws-failure both
+printed a VERDICT). Do not carry any earlier command block forward.
 
-=== CORRECTIONS THIS LEDGER HAS ALREADY EATEN. Do not re-derive them; do not carry the old prose. ===
+=== WHY v4 EXISTS: v3 RELOCATED THE COLLISION ONTO THE VERDICT THIS LEDGER RESTS ON ===
+v3 fixed `1 = FAIL` colliding with Python's uncaught-exception code. But its `except` printed
+`CANNOT-EVALUATE` whenever the marker could not be READ. EXERCISED, not argued:
+    aws s3 cp <nonexistent key> | python <v3>   -> stdout 'CANNOT-EVALUATE: ...'   rc=2
+    aws s3 cp --badflag         | python <v3>   -> stdout 'CANNOT-EVALUATE: ...'   rc=2
+A typo'd key, expired creds, no network, or a bad flag was BYTE-IDENTICAL to the verdict this ledger is
+currently resting on. v3 collapsed NO OBSERVATION into a NEGATIVE OBSERVATION -- CVO's law (a denied call looks
+exactly like a call nobody made), committed inside the repair of the previous instance of it.
+
+  CANNOT-EVALUATE means: I READ the marker, and there is no stamp after T_d.   <- a real, negative observation
+  It NEVER means:        I never read the marker.                              <- that is INVOCATION-ERROR
+
+=== THE FOUR TOKENS. THE TOKEN IS THE ORACLE; THE EXIT CODE IS A CONVENIENCE. ===
+  PASS:              stamp after T_d AND marker lists all 4 (cse PRESENT)   rc 0   -> the merge landed
+  FAIL               stamp after T_d AND cse ABSENT                         rc 1   -> clobber. EXPECTED, BY DESIGN.
+  CANNOT-EVALUATE:   marker READ + well-formed; no stamp after T_d          rc 2   -> ledger stays OPEN
+  INVOCATION-ERROR:  no marker was read, or it is not a marker              rc 3   -> NOT A VERDICT. Re-run.
+                                                                                      Do not record. Do not close.
+stdout MUST begin with one of those four. ANY OTHER OUTPUT, OR NONE, IS AN INVOCATION-ERROR -- e.g. a `python`
+usage error (rc 2, empty stdout) or a SyntaxError (rc 1, empty stdout). rc alone can never tell you which:
+  rc 0 = success default   rc 1 = ANY uncaught exception   rc 2 = python/argparse usage error   rc 3 = ours alone
+PUT THE CONTROL ON THE RETRIEVAL, NOT THE PATTERN.
+
+=== CORRECTIONS ALREADY EATEN. Do not re-derive; do not carry the old prose. ===
 (C1) derive = cron(0 2 * * ? *) = 02:00Z, not "~02:10Z".
 (C2) incremental_updater is NOT hourly and has NO schedule: SQS event-source-mapping on
-     opal-globgrph-incremental-events (Enabled); `aws events list-rule-names-by-target` on its ARN -> EMPTY.
-     "Hourly" was an OBSERVED CADENCE that four artifacts promoted to a SCHEDULE. THERE IS NO 03:00Z READ.
-(C3) AN INVOCATION IS NOT A STAMP. lambda_function.py:718 calls stamp_branch_head_marker() (:722) only inside
-     `if all_nodes or all_deletes:` -- a no-op batch invokes and never stamps. _provenance.py:227 skips a
-     not-newer stamp. Observed: invocation 02:12:00Z after T_d, zero stamps, queue drained -> the old criterion
-     read PASS on a merge that does not exist. CloudWatch Invocations can NEVER establish this gate.
-(C4) THE PREDICATE'S FAILURE MODE MUST NOT BE A VERDICT. Python exits 1 on any uncaught exception, and the old
-     block defined 1 = FAIL -- so a SyntaxError, an unreadable marker, or a bad extraction returned exactly the
-     answer everyone expected tonight. Proven: extracting the old body to a file -> SyntaxError -> exit 1 ->
-     "FAIL (expected)". v3 below exits 2 on every anticipated failure and carries ZERO double-quote characters,
-     so it parses both inside `python -c "..."` and standalone in a file.
+     opal-globgrph-incremental-events; `aws events list-rule-names-by-target` on its ARN -> EMPTY. NO 03:00Z READ.
+(C3) AN INVOCATION IS NOT A STAMP. lambda_function.py:718 calls the stamp (:722) only inside
+     `if all_nodes or all_deletes:` -- a no-op batch invokes and never stamps; _provenance.py:227 skips a
+     not-newer stamp. Observed: invocation 02:12:00Z after T_d, zero stamps, queue drained. CloudWatch
+     Invocations can NEVER establish this gate.
+(C4) A CRASH IS NOT A VERDICT.  (C5) A FAILED READ IS NOT A VERDICT EITHER.
 
-=== EVIDENCE BANKED (limb A of the criterion, and it is unrecoverable if lost) ===
-T_d = 2026-07-10T02:09:13Z -- tonight's derive stamp, caught live by a marker-transition poller:
-    writer_id=derive_runner  tables=[cse,graph_contracts,graph_edges,graph_nodes]  cse=PRESENT
-    ETag 94ab4adc17ca85fc0d8681c5c8bfd09a   size 1502
-Bucket versioning is OFF (Andrew-locked #5) -> the next incremental stamp DESTROYS that object. Snapshot held
-off-bucket. Without it the criterion degrades from FAIL to UN-EVALUABLE with nothing to distinguish them, which
-is why CTO elevated _branch_head.history/{ts}.json to a PRECONDITION of the merge fix. That ETag is also the
-exact value put_object(IfMatch=) needs: the CAS fix and the history archive are ONE READ.
+=== EVIDENCE BANKED (limb A; unrecoverable if lost) ===
+T_d = 2026-07-10T02:09:13Z -- derive stamp caught live: writer_id=derive_runner, 4 tables, cse PRESENT,
+ETag 94ab4adc17ca85fc0d8681c5c8bfd09a, size 1502. Versioning OFF (Andrew-locked #5) -> the next incremental
+stamp DESTROYS it; snapshot held off-bucket. Without it the criterion degrades from FAIL to un-evaluable with
+nothing to distinguish them -- why CTO made _branch_head.history/{ts}.json a PRECONDITION of the merge fix.
+That ETag is also exactly what put_object(IfMatch=) needs: the CAS fix and the history archive are ONE READ.
 
 === THE CRITERION ===
-An incremental STAMP after T_d is EXACTLY:  writer_id == 'incremental_updater'  AND  committed_at_iso > T_d
-(_provenance.py:201,220,221 set both on every successful stamp.)
-  PASS             stamp-after-T_d AND marker lists all 4 (cse PRESENT)  -> the merge landed
-  FAIL             stamp-after-T_d AND cse ABSENT                        -> clobber. EXPECTED, BY DESIGN.
-  CANNOT-EVALUATE  no stamp after T_d, REGARDLESS of invocation count    -> ledger stays OPEN
+An incremental STAMP after T_d is EXACTLY: writer_id == 'incremental_updater' AND committed_at_iso > T_d
+(_provenance.py:201,220,221 set both on every successful stamp).
 A quiet SQS queue is not evidence the merge works. Neither is a busy one. Only a STAMP is evidence.
 
-=== RUN IT. CLASSIFY BY THE TOKEN ON STDOUT, NOT BY THE EXIT CODE. ===
-aws s3 cp s3://opal-313476888478-globgrph/warehouse/_branch_head.main.json - | python -c "
+=== RUN IT (any lane). The aws read is checked BEFORE python ever sees the stream. ===
+MARKER=$(aws s3 cp s3://opal-313476888478-globgrph/warehouse/_branch_head.main.json - 2>/dev/null); RC=$?
+if [ $RC -ne 0 ]; then echo "INVOCATION-ERROR: aws read failed (rc=$RC). The marker was never read. NOT a verdict."; exit 3; fi
+printf '%s' "$MARKER" | python -c "
 import sys, json, datetime as dt
 T_d = dt.datetime.fromisoformat('2026-07-10T02:09:13+00:00')
+raw = sys.stdin.read()
+if not raw.strip():
+    print('INVOCATION-ERROR: empty stdin -- the marker was never read. NOT a verdict.')
+    raise SystemExit(3)
 try:
-    d = json.load(sys.stdin)
-    tm = d.get('table_metadata', {}) or {}
-    w = d.get('writer_id')
-    c = d.get('committed_at_iso')
-    stamped = (w == 'incremental_updater') and bool(c) and dt.datetime.fromisoformat(c) > T_d
+    d = json.loads(raw)
 except Exception as e:
-    print('CANNOT-EVALUATE: predicate could not read the marker (%s: %s)' % (type(e).__name__, e))
-    raise SystemExit(2)
-if not stamped:
-    print('CANNOT-EVALUATE: no incremental stamp after T_d (writer=%s committed_at=%s). Ledger stays OPEN.' % (w, c))
+    print('INVOCATION-ERROR: stdin is not JSON (%s). The marker was never read. NOT a verdict.' % type(e).__name__)
+    raise SystemExit(3)
+if not isinstance(d, dict) or 'writer_id' not in d or 'table_metadata' not in d:
+    print('INVOCATION-ERROR: payload is not a branch-head marker. NOT a verdict.')
+    raise SystemExit(3)
+w = d.get('writer_id')
+c = d.get('committed_at_iso')
+tm = d.get('table_metadata') or {}
+if not c:
+    print('INVOCATION-ERROR: marker has no committed_at_iso -- cannot order it against T_d. NOT a verdict.')
+    raise SystemExit(3)
+try:
+    c_dt = dt.datetime.fromisoformat(c)
+except Exception:
+    print('INVOCATION-ERROR: committed_at_iso is unparseable. NOT a verdict.')
+    raise SystemExit(3)
+if not (w == 'incremental_updater' and c_dt > T_d):
+    print('CANNOT-EVALUATE: marker READ, no incremental stamp after T_d (writer=%s committed_at=%s). Ledger stays OPEN.' % (w, c))
     raise SystemExit(2)
 if 'cse' in tm:
     print('PASS: merge landed -- n=%d %s' % (len(tm), sorted(tm)))
@@ -58,32 +88,28 @@ print('FAIL (expected): cse clobbered -- n=%d %s' % (len(tm), sorted(tm)))
 raise SystemExit(1)
 "
 
-STDOUT MUST BEGIN WITH ONE OF: 'PASS:' | 'FAIL' | 'CANNOT-EVALUATE:'.
-ANY OTHER OUTPUT (or none) = INVOCATION-ERROR. It is NOT a verdict. Re-run; do not record; do not close.
-Exit codes 0/1/2 mirror the tokens, but 1 is ALSO Python's uncaught-exception code -- so the TOKEN is the oracle
-and the exit code is the convenience. Put the control on the RETRIEVAL, not the pattern.
+=== EXERCISED. Full range + the R6 rail on the token itself. ===
+VERDICT PATHS (marker read + well-formed):
+    live marker                     rc 2  CANNOT-EVALUATE     <- state at 04:32Z
+    synthetic clobber (no cse)      rc 1  FAIL
+    synthetic merge (cse)           rc 0  PASS
+    stale stamp (pre-T_d)           rc 2  CANNOT-EVALUATE
+R6 RAIL -- CANNOT-EVALUATE must NEVER appear when the marker was not read. LEAKED INTO 0 of 5:
+    empty stdin / non-JSON / JSON-not-a-marker / no committed_at_iso / unparseable timestamp   -> rc 3 INVOCATION-ERROR
+    aws nonexistent key -> rc 3 INVOCATION-ERROR      aws --badflag -> rc 3 INVOCATION-ERROR
+POSITIVE CONTROL on that rail (else it is vacuous): the live marker STILL yields CANNOT-EVALUATE.
+The body carries ZERO double-quote characters: it parses inside `python -c "..."` AND standalone in a file.
 
-=== EXERCISED ACROSS ITS FULL RANGE (a criterion that has only ever returned one value is not a criterion) ===
-    live marker                          -> exit 2  token CANNOT-EVALUATE   <- state at 04:19Z
-    synthetic incremental stamp, no cse  -> exit 1  token FAIL
-    synthetic incremental stamp, w/ cse  -> exit 0  token PASS
-    stale stamp (committed before T_d)   -> exit 2  token CANNOT-EVALUATE   (an old stamp is not a stamp)
-    non-JSON on stdin                    -> exit 2  token CANNOT-EVALUATE   (NOT FAIL)
-    committed_at_iso = 'NOT-A-TIMESTAMP' -> exit 2  token CANNOT-EVALUATE   (NOT FAIL)
+=== STATE AT 2026-07-10T04:32Z: CANNOT-EVALUATE (marker READ) ===
+One invocation after T_d (02:12:00Z), ZERO stamps, SQS drained 0/0. CTO, COO and I all expected FAIL tonight.
+FAIL requires a stamp we have not had. Not yet evaluable, and that is the honest verdict.
 
-=== STATE AT 2026-07-10T04:19Z: CANNOT-EVALUATE ===
-One invocation after T_d (02:12:00Z), ZERO stamps, SQS drained 0/0. Everyone -- CTO, COO, me -- expected FAIL
-tonight. FAIL requires a stamp we have not had. It is not yet evaluable, and that is the honest verdict.
-
-=== THE MERGE FIX REMAINS HELD (unchanged) ===
-stamp_marker must MERGE over existing table_metadata, but a bare merge is STRICTLY WORSE than the clobber: a
-read-modify-write against an event-driven writer with no conditional put trades a VISIBLE erasure for an
-INVISIBLE one. Conditions: IfMatch CAS confirmed in BOTH DEPLOYED runtimes (Lambda bundled botocore + derive
-image pinned boto3 -- the dev box is not the runtime), bounded 412 retry, LOUD raise on exhaustion AND on
-ParamValidationError (stamp_marker is best-effort/never-raises, so an unsupported IfMatch is swallowed into a
-WARN and SILENTLY STOPS STAMPING). Probe 8c0b67afd UNRUN, hard-gated to first light. Verdict IGNORED (param
-accepted, silently dropped) is the one that kills us. Fold _branch_head.history/{committed_at_iso}.json into the
-same CAS write. Do NOT enable bucket versioning (Andrew-locked #5).
+=== THE MERGE FIX REMAINS HELD ===
+IfMatch CAS confirmed in BOTH DEPLOYED runtimes (the dev box is not the runtime), bounded 412 retry, LOUD raise
+on exhaustion AND on ParamValidationError (stamp_marker never raises, so an unsupported IfMatch is swallowed into
+a WARN and SILENTLY STOPS STAMPING). Probe 8c0b67afd UNRUN, first-light. Verdict IGNORED (param accepted, silently
+dropped) is the one that kills us. Fold _branch_head.history/{committed_at_iso}.json into the same CAS write.
+Do NOT enable bucket versioning (Andrew-locked #5).
 
 L4 STAYS OPEN. This is a REFUSAL, not a failure to finish. (held since 2026-07-09T13:11:12.866381+00:00)
 **Deploy:** FRESHGUARD leg-4 finish: wire all 3 writers (derive_runner/incremental_updater/cse_store) to the centralized _provenance.stamp_marker so per-table last_write_iso lands live. GROUNDED: leg-4 is SOURCE-INCOMPLETE (unwired), not merely undeployed -- the centralized stamp has ZERO call sites; all 3 writers stamp their own local marker with no last_write_iso field. HELD on CTO approach-gate (A centralize-import vs B 3-copy).
@@ -115,3 +141,4 @@ L4 STAYS OPEN. This is a REFUSAL, not a failure to finish. (held since 2026-07-0
 - 20260710T021104Z HELD-SOVEREIGN-GATED gate=external/L4 RE-SPECCED (CTO 232022Z) + TRIGGER-MODEL CORRECTED (0.7.0_AE_CloudOps 020930Z
 - 20260710T021840Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION CORRECTED TWICE. GATE ON THE **STAMP**, NOT THE INVOCATION. (0.7
 - 20260710T041752Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v3. Gate on the STAMP; classify by the VERDICT TOKEN, not the ex
+- 20260710T042550Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v4. A VERDICT REQUIRES AN OBSERVATION. (0.7.0_AE_CloudOps 043200
