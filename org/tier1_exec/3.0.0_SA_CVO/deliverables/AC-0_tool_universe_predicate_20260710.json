@@ -1,0 +1,1789 @@
+{
+  "artifact": "AC-0 tool-universe inclusion predicate + full exclusion table",
+  "author": "3.0.0_SA_CVO",
+  "to": "NFRA_TOOLCHECK.P4 AC-0",
+  "date": "2026-07-10",
+  "predicate_note": "INVOKABLE = first bytes are #! / MZ / \u007fELF. NOT os.access(X_OK): that returns True for LICENSE.txt on this platform and made the clause a constant function.",
+  "clause_order": [
+    "E2",
+    "E3",
+    "E1a",
+    "E1b",
+    "C1",
+    "C2",
+    "E4"
+  ],
+  "controls": [
+    {
+      "probe": "comp-iam",
+      "expected": "IN/C1",
+      "got": "IN/C1",
+      "pass": true
+    },
+    {
+      "probe": "pipescript",
+      "expected": "IN/C1",
+      "got": "IN/C1",
+      "pass": true
+    },
+    {
+      "probe": "comp-deadgrant.py",
+      "expected": "OUT/E3",
+      "got": "OUT/E3",
+      "pass": true
+    },
+    {
+      "probe": "comp-which-routing-test.py",
+      "expected": "OUT/E2",
+      "got": "OUT/E2",
+      "pass": true
+    },
+    {
+      "probe": "zzz-never-existed",
+      "expected": "OUT/E1a",
+      "got": "OUT/E1a",
+      "pass": true
+    },
+    {
+      "probe": "LICENSE.txt",
+      "expected": "OUT/E1b",
+      "got": "OUT/E1b",
+      "pass": true
+    }
+  ],
+  "universe_count": 63,
+  "excluded_count": 117,
+  "rows": [
+    {
+      "name": "LICENSE.txt",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "__pycache__",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "_comprail.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "_trino_fed.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "ac6_strip_validation.py",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "activity-check.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "ajb.ps1",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "alarm-latch-sweep.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "alarm-reachability-check.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "applies_when",
+      "decision": "OUT",
+      "clause": "E1a",
+      "reason": "named in a catalog but no file in .tools/",
+      "sources": [
+        "comp-tools.yaml"
+      ]
+    },
+    {
+      "name": "backfill-lambda-iam-mapping.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "check-concurrency.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "check-inbox",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "check-lambda-layer-deps",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk"
+      ]
+    },
+    {
+      "name": "cl-check-inbox",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "cl-inbox-watch",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "commit-gate.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "commit-worker-concurrency-proof.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "commit-worker-launch.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "commit-worker.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "commit_gate_lib.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "commit_gate_runner.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "commit_queue_gc.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "commit_queue_lib.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-adapter-audit",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-aws",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-blast",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-build",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-cache",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-canon-motif",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-chainrun",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-cluster",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-constants",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-coverage",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-coverage-check",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-deadgrant",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-deadgrant.py",
+      "decision": "OUT",
+      "clause": "E3",
+      "reason": "implementation twin of comp-deadgrant",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-denytest",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-denytest.py",
+      "decision": "OUT",
+      "clause": "E3",
+      "reason": "implementation twin of comp-denytest",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-depth",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-diff",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-dispatch",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-drift",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-dups",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-fedobs",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-firmsep-sweep",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-firmsep-sweep.py",
+      "decision": "OUT",
+      "clause": "E3",
+      "reason": "implementation twin of comp-firmsep-sweep",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-freshness",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-glob",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-graph",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-grep",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-heat",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-honesty",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-iam",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-incrparity",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-kit-striplist-gate",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-kuzu",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-lambdamap",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-learns-status",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-manifest-check",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-parity",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-perf",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-pii",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-pipescript",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-platinum",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-registry",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-routable-check",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-routes",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-secrets",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-shell",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-stitch-refresh",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-surface-check",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-symbols",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-system",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-tagauthz",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-tagauthz.py",
+      "decision": "OUT",
+      "clause": "E3",
+      "reason": "implementation twin of comp-tagauthz",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-to",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-tool-health",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-tool-health-gate",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-tooltip",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-trace",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-transform",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-types",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-v5-composite-test.sh",
+      "decision": "OUT",
+      "clause": "E2",
+      "reason": "test harness",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-validate",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-which",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "disk",
+        "entries[].tool"
+      ]
+    },
+    {
+      "name": "comp-which-routing-test.py",
+      "decision": "OUT",
+      "clause": "E2",
+      "reason": "test harness",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-whoread",
+      "decision": "IN",
+      "clause": "C2",
+      "reason": "invokable, comp-* convention (uncatalogued = a CATALOG defect, not a universe defect)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-whoread.py",
+      "decision": "OUT",
+      "clause": "E3",
+      "reason": "implementation twin of comp-whoread",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "comp-xray",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comp-xref",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "comprail-gate1-fptest.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "cw_logs.json",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "deploy_ledger.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "deregister-all",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "deregister-all.ps1",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "docstring-claim-lint.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "drift_producer.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "ds-precommit-check.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "example",
+      "decision": "OUT",
+      "clause": "E1a",
+      "reason": "named in a catalog but no file in .tools/",
+      "sources": [
+        "comp-tools.yaml"
+      ]
+    },
+    {
+      "name": "fabric-check",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "fabric-check.py",
+      "decision": "OUT",
+      "clause": "E3",
+      "reason": "implementation twin of fabric-check",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "fabric-commits.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "fabric-projects.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "freeform.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "freshness_manifest_gen.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "frontend-dev",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "frontend-dev.py",
+      "decision": "OUT",
+      "clause": "E3",
+      "reason": "implementation twin of frontend-dev",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "full_methodology",
+      "decision": "OUT",
+      "clause": "E1a",
+      "reason": "named in a catalog but no file in .tools/",
+      "sources": [
+        "comp-tools.yaml"
+      ]
+    },
+    {
+      "name": "git-hooks",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "halt-gate-check.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "halt-gate-ld0131-test.sh",
+      "decision": "OUT",
+      "clause": "E2",
+      "reason": "test harness",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "har-scan.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "hooks",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "inbox-resolver-conformance.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "inbox-watch",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "jq.exe",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "kill-agent.ps1",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "kill-maint.ps1",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "kill-orphans",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "kill-orphans.ps1",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "kill-storage.ps1",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "kill-zombie-bash.ps1",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "loop-quiescence",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk"
+      ]
+    },
+    {
+      "name": "loop-resolve",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "loop-resolve.py",
+      "decision": "OUT",
+      "clause": "E3",
+      "reason": "implementation twin of loop-resolve",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "m365-mcp-kit",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "master_data_registry",
+      "decision": "OUT",
+      "clause": "E1a",
+      "reason": "named in a catalog but no file in .tools/",
+      "sources": [
+        "comp-tools.yaml"
+      ]
+    },
+    {
+      "name": "operator",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "operator-ADVI_ROLLUP",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "operator.py",
+      "decision": "OUT",
+      "clause": "E3",
+      "reason": "implementation twin of operator",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "org",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "orion-inspector.py",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "owned-paths-validate.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "parity-gates.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "pipescript",
+      "decision": "IN",
+      "clause": "C1",
+      "reason": "invokable and catalogued",
+      "sources": [
+        "comp-tools.yaml",
+        "disk",
+        "entries[].tool",
+        "tools_index"
+      ]
+    },
+    {
+      "name": "playwright-mcp-config.json",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "poller-health.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "portal-hooks",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "prd-check.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "prd-delta-report.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "prd-delta.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "prd-evidence-check.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "project-consistency-check.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "rationale",
+      "decision": "OUT",
+      "clause": "E1a",
+      "reason": "named in a catalog but no file in .tools/",
+      "sources": [
+        "comp-tools.yaml"
+      ]
+    },
+    {
+      "name": "reap_lib.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "registry-check.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "runner-telemetry-analyze.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "runner-telemetry.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "safe-apply.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "safe-commit-compat-matrix.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "safe-commit-contamination-proof.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "safe-commit-loadtest.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "safe-commit.legacy-golden.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "safe-commit.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "safe-deploy.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "safe-destroy.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "safe_deploy_core.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "scope",
+      "decision": "OUT",
+      "clause": "E1a",
+      "reason": "named in a catalog but no file in .tools/",
+      "sources": [
+        "comp-tools.yaml"
+      ]
+    },
+    {
+      "name": "served-value-freeze-check.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "ship_anchor",
+      "decision": "OUT",
+      "clause": "E1a",
+      "reason": "named in a catalog but no file in .tools/",
+      "sources": [
+        "comp-tools.yaml"
+      ]
+    },
+    {
+      "name": "silver-dtype-migrate.py",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "spawn-agent.ps1",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "stitch-refresh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "suppressed-error-lint.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "sync-skills-to-worktree.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "synthetic_test_marker",
+      "decision": "OUT",
+      "clause": "E1a",
+      "reason": "named in a catalog but no file in .tools/",
+      "sources": [
+        "comp-tools.yaml"
+      ]
+    },
+    {
+      "name": "terraform.exe",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "test-haltgt-recipient-scoping.sh",
+      "decision": "OUT",
+      "clause": "E2",
+      "reason": "test harness",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "test-safe-commit-canary.sh",
+      "decision": "OUT",
+      "clause": "E2",
+      "reason": "test harness",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "test_bronze_contract.py",
+      "decision": "OUT",
+      "clause": "E2",
+      "reason": "test harness",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "test_ds_precommit_check.py",
+      "decision": "OUT",
+      "clause": "E2",
+      "reason": "test harness",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "test_fixtures",
+      "decision": "OUT",
+      "clause": "E2",
+      "reason": "test harness",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "test_safe_deploy.py",
+      "decision": "OUT",
+      "clause": "E2",
+      "reason": "test harness",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "to-check.py",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "valgate",
+      "decision": "OUT",
+      "clause": "E1b",
+      "reason": "file exists but is not invokable (no #!/MZ/ELF magic)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "validator",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "validator-ADVI_ROLLUP",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "validator.py",
+      "decision": "OUT",
+      "clause": "E3",
+      "reason": "implementation twin of validator",
+      "sources": [
+        "disk"
+      ]
+    },
+    {
+      "name": "verify-smartx-bundle-parity.sh",
+      "decision": "OUT",
+      "clause": "E4",
+      "reason": "invokable but neither catalogued nor comp-* -- REQUIRES RULING (COO: E4 IS in the universe; tranche T1/T2/T3)",
+      "sources": [
+        "disk"
+      ]
+    }
+  ]
+}
