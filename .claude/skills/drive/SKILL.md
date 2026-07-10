@@ -98,6 +98,42 @@ done
 
 Build the hot list: all `status: active` projects + any `status: dormant`/`on-hold`/`needs-sovereign-call` that surface a blocker requiring routing (queue-hygiene escalation, not silent stale).
 
+> ## ⛔ SOVEREIGN EXCLUSION — **THE HOT LIST IS NOT THE REGISTRY. FOUR CANCELLED PROJECTS ARE STILL `status: active`.**
+> *(COO, `05:16Z`, read — not counted. Andrew standing prohibition `2026-07-09T22:33Z`: **"CANCEL, do not park."**)*
+>
+> **The read above filters on `status == "active"` AND NOTHING ELSE.** *There is no prohibition flag in the schema —
+> the `sovereign` field means **sponsor** (`ADVI_BDAPIMIG: sovereign=Andrew`), not "sovereign-blocked."* **So the
+> driver's own queue still contains work the sovereign cancelled eight days ago, and `fabric-check`'s `sovereign=0`
+> is about AGENT-state requests, not project scope. Neither instrument sees this.**
+>
+> **NEVER hot-list, classify, dispatch on, attest, or "just verify" these. They are CANCELLED, not parked:**
+> ```
+> ADVI_BDAPIMIG      49F Black Diamond: EC2 browser-scrape -> DataMining REST API
+> ADVI_TAGATTR       49F Advisor Attribution Full-Tagging
+> DATA_SSOTMG        49F Schwab-SSOT Cutover
+> MDPF_BASISSWITCH   MDPF 49F custody -> Schwab-native basis (straight RPS positions)   <-- ALSO UNTRACKED (git ls-files -> 0)
+> ```
+> **AMBIGUOUS — multi-firm, and I did NOT adjudicate them.** *Surface, do not decide* (`latest + most-restrictive
+> binds; act on the intersection, escalate the difference`): `ADVI_ETLFIX`, `ADVI_BREAKS`, `DATA_PLATFORM`.
+> **cot is a SEPARATE FIRM and remains IN SCOPE** — `ADVI_COTETL`, `MDPF_COTMDL`, `ADVI_COTPPLADVFIX`, `ADVI_COTSNP`.
+>
+> ### ⚠ **DO NOT BUILD THIS FILTER AS A MENTION-COUNT. I TRIED, AND IT FAILED IN BOTH DIRECTIONS INSIDE FIVE MINUTES.**
+> ```
+> grep -ciE '49f|schwab|black_diamond|rps|bd/silver' over each project JSON
+>    -> 18 of 39 "SOVEREIGN-SCOPE"     <- includes NFRA_COSTAWS (hits=1, a passing mention)
+>                                      <- includes every cot project, which are IN SCOPE
+> jq -r '.title'  -> "?" for 15 of 18  <- a MISSING FIELD, not a missing project. The key is `.name`.
+> ```
+> **A mention count over-reports; a missing field under-reports; and `sed 's/^/  drive/SKILL.md: /'` DIED on the
+> slash and printed nothing, which I nearly read as "the skill never mentions sovereign."** *Three instruments,
+> three failure directions, one question.* **Read `.name` and `.description`. Adjudicate by READING. Print the
+> denominator (`39 active`).**
+>
+> **STATUS-FLIP IS NOT COO-RESOLVABLE AND MUST NOT BE DONE SILENTLY.** *"CANCEL" orders a write; "no writes to
+> 49F/bd" forbids one.* **That is the DIFFERENCE, not the intersection — escalate it to Andrew, CC MSTR; do not
+> adjudicate it.** *The exclusion above is a REFUSAL TO QUEUE, which needs no sovereign permission and touches no
+> 49F artifact.* **Until Andrew rules, these stay `active` in the file and excluded from every hot list.**
+
 ---
 
 ## Step 2b — Agent-state scan (operative core embedded; LD-0083)
