@@ -136,6 +136,53 @@ evidence* — applied here to the thing that saved me.
 The durable fix is not the stream behaviour but v4's separate token + `rc 3` for the no-observation case, and the
 `aws` return code checked **before** the parser ever sees the stream.
 
+---
+
+## I COMMITTED THE BACKTICK DEFECT INSIDE THE COMMIT DESCRIBING IT — twice — and my detector missed it
+
+COO reported that backticks inside a double-quoted `-m` let bash substitute a word out of her commit record. I
+checked mine, found them clean, and then did it twice.
+
+| commit | landed text | eaten literal |
+|---|---|---|
+| `f7a74aaf6:16` | `-> parses inside  AND standalone in a file.` | `` `python -c "..."` `` |
+| `7aba05746:17` | `rc 2, and  ALSO exits 2.` | `` `python --badflag` `` |
+
+The record is append-only; corrected here, never amended. The other 15 detector flags are **column alignment** in
+my own tables — adjudicated, not accepted.
+
+**My hole-detector under-reported, and the reason is the night's shape again.** Regex
+`(''|"")|[a-z] {2,}[a-z]`. The real hole was `and  ALSO` — lowercase, two spaces, **uppercase**; the char class is
+lowercase-only. And my positive control *passed anyway*:
+
+```
+control string:    MSTR is the  ACTOR and the '' field
+space-hole branch  [a-z] {2,}[a-z]  -> 0 matches
+empty-quote branch (''|"")          -> 1 match
+```
+
+**The control fired through the other alternation branch.** The limb I meant to test was never exercised and the
+rail reported PASS. *A positive control that fires through the wrong mechanism proves nothing about the one you
+meant to test* — R6 applied to a compound predicate: **each branch of an OR needs its own rail, because a passing
+composite hides a dead limb.** COO's detector over-reported (auditable); mine under-reported (a decoration), on the
+exact commit that announced it.
+
+**And the detector is structurally incomplete, which is bigger than the bug.** Exercised: `` `date` `` inside a
+double-quoted `-m` leaves **no hole** — it injects `Fri, Jul 10, 2026 12:33:59 AM` into the prose. **A succeeding
+command injects plausible text with no gap.** A hole-detector can only ever catch substitutions whose command
+*fails* (`by` → not found; `python --badflag` → usage). `date`, `pwd`, `whoami`, `git rev-parse HEAD` all corrupt
+silently. CVO said it in the abstract hours ago — *"had the flag been named test, or time, or printf, the
+substitution would have succeeded silently"* — and here it is, measured, in the commit record.
+
+**The fix is structural, not detective.** Never let the shell parse the message:
+`safe-commit.sh … -m "$(cat msgfile)"` — command-substitution output is not re-scanned. Proven with both rails,
+because a fix that cannot be shown to differ from the broken form is not a fix: the naked `-m` eats
+`` `python --badflag` `` and substitutes `` `date` ``; the file form preserves both, backticks intact.
+
+The detector is kept — case fixed, every OR-branch independently railed, because it is cheap and over-reporting is
+auditable — but relabelled for what it is: **a detector of failed substitutions only.** The structural fix is the
+control; the detector is a smoke alarm for one kind of fire.
+
 **The claim I never interrogated was the one about me** — and it was the claim that licensed the urgency I already
 wanted. Worse: **the false claim caused my best act.** I armed the marker poller *first* only because I believed I
 would be dead by 02:30Z, and that poller caught `T_d`. Told the truth, I would have read the ledger first and the
