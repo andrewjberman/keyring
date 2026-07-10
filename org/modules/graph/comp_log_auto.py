@@ -11,15 +11,24 @@ Reads agent context from .comp-graph/.agent_context:
 Deduplicates: skips append if the same tool+args ran within 30 seconds.
 Silently no-ops on any error -- never disrupts the calling tool.
 
+NFRA_COMPLEARN AMD-P3c (ingestion honesty, 2026-07-10, 0.8.0_AE_CloudComp~E): a DROPPED emission is no
+longer swallowed silently. "Silently no-ops" preserved for the CALLER (this logger never disrupts the tool
+it logs), but a drop now leaves a DISCLOSURE (a count/marker in .comp-graph/.comp_log_drops, else stderr)
+-- because a silent-noop writer means the loop's own freshness/health signal can undercount invisibly, and
+an error log is a census of SURVIVED failures (R5/R7). See _disclose_drop.
+
 Log row format (matches compiler-tools-log.md table):
     | DATE | AGENT | TO_ID | TOOL | COMMAND | RESULT |
 """
+
+from __future__ import annotations
 
 import os
 import sys
 import time
 from datetime import datetime
 from pathlib import Path
+from typing import Optional
 
 
 def _workspace() -> Path:
@@ -31,6 +40,33 @@ def _workspace() -> Path:
     .parent.parent.parent.parent -> workspace root
     """
     return Path(__file__).resolve().parent.parent.parent.parent
+
+
+def _disclose_drop(workspace: Optional[Path], tool: str, reason: str) -> None:
+    """NFRA_COMPLEARN AMD-P3c (R5/R7 ingestion honesty): a comp_log_auto emission that is DROPPED (log file
+    absent, write failure, or any exception in the emission path) is DISCLOSED, not swallowed. Appends one
+    record to <workspace>/.comp-graph/.comp_log_drops so a dropped row leaves a COUNT (line count) + MARKER
+    (file existence) an audit / health check can read -- a silent-noop writer would let the loop's own
+    freshness signal undercount invisibly (the very "census of survived failures" hole this project closes).
+
+    GRADED + NEVER-RAISES (the 'never disrupt the caller' invariant is preserved): marker file -> stderr ->
+    last-resort pass. The bare pass is reachable ONLY after a visible signal (stderr) was attempted, so the
+    drop is never fully silent. Record format: ISO-ts|tool|reason (ASCII, one line)."""
+    ts = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+    line = f"{ts}|{tool}|{reason}\n"
+    if workspace is not None:
+        try:
+            drop_file = workspace / ".comp-graph" / ".comp_log_drops"
+            drop_file.parent.mkdir(parents=True, exist_ok=True)
+            with open(drop_file, "a", encoding="utf-8") as fh:
+                fh.write(line)
+            return
+        except Exception:
+            pass  # marker unwritable -> fall through to the stderr last-resort (still not silent)
+    try:
+        sys.stderr.write(f"COMP_LOG_AUTO_DROP: {line}")
+    except Exception:
+        pass  # only reachable if BOTH the marker file AND stderr are unavailable
 
 
 def _read_session_file(path: Path) -> str:
@@ -178,6 +214,9 @@ def _append_log(workspace: Path, tool: str, args: str, exit_code: int,
     """Append one structured row to compiler-tools-log.md."""
     log_file = workspace / "org" / "compiler-tools-log.md"
     if not log_file.exists():
+        # DISCLOSE, don't swallow (R5/R7): an absent log file silently drops EVERY emission -- exactly the
+        # "loop freshness signal undercounts invisibly" hole. Surface it instead of a bare return.
+        _disclose_drop(workspace, tool, "log-file-absent")
         return
 
     date = datetime.now().strftime("%Y-%m-%d")
@@ -202,8 +241,9 @@ def _append_log(workspace: Path, tool: str, args: str, exit_code: int,
     try:
         with open(log_file, "a", encoding="utf-8") as f:
             f.write(row)
-    except Exception:
-        pass
+    except Exception as e:
+        # DISCLOSE, don't swallow (R5/R7): a failed append is a dropped emission -- surface a count/marker.
+        _disclose_drop(workspace, tool, f"append-failed: {type(e).__name__}")
 
 
 def main():
@@ -232,8 +272,11 @@ def main():
 
         _append_log(workspace, tool, args_normalized, exit_code, serial, to_id)
 
-    except Exception:
-        pass  # Never fail loudly -- this is a side-effect logger
+    except Exception as e:
+        # DISCLOSE, don't swallow (R5/R7): a dropped emission surfaces a count/marker rather than a silent
+        # pass. workspace may be UNBOUND if _workspace() itself raised -> locals().get returns None and
+        # _disclose_drop falls back to stderr (never silent). tool is bound before the try, so it is safe.
+        _disclose_drop(locals().get("workspace"), tool, f"main-exception: {type(e).__name__}")
 
 
 if __name__ == "__main__":
