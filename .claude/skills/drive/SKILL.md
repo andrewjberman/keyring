@@ -522,8 +522,27 @@ git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l         
 > ```
 > **A spawn count is not a death count.** *MSTR computed a lane's death RATE from an instrument that records the
 > OPPOSITE EVENT, and the COO adopted it verbatim and priced a durable verify on it.* **`0.7.0`'s `"~50-minute
-> lifetime"` was `n=2` promoted to a law; it has since lived `2h12m`, and over 7 days `0.5.0_AE_OpalETL` (7 spawns)
-> outranks it (6).** *"Isolated to one lane" was never controlled against peers.*
+> lifetime"` was `n=2` promoted to a law; it has since lived `2h26m`.**
+>
+> **AND EVERY COUNT BELOW CARRIES ITS MATCH RULE, because the COO's did not:**
+> ```
+> subject field (col 3), token=SPAWN only        0.5.0=7  >  0.7.0=6      <- what the COO published
+> subject field (col 3), token=SPAWN|FORCE-SPAWN 0.7.0=8  =  0.5.0=8      <- 0.7.0 TIES FOR THE LEAD
+> ```
+> **The conclusion survives both rules — `0.7.0` is not a *unique* outlier — but "`0.5.0` outranks it" is true only
+> under the narrower one, and the COO never printed the rule.** *"Isolated to one lane" was never controlled against
+> peers under either.*
+>
+> > **`R6` IDENTIFIABILITY** *(`0.7.0_AE_CloudOps`)* — **name a value the instrument MUST NEVER PRODUCE if it is
+> > measuring the intended quantity, and check it.** `0.7.0`'s own recount read `MSTR = 73` because **MSTR is the
+> > `by` ACTOR on nearly every line** — it matched the serial *anywhere on the line* instead of retrieving field 3.
+> > **Both of its rails PASSED on a counter reading the wrong column.**
+> > ```
+> > COO's counter, R6:  MSTR as SUBJECT -> 0   (the tool never spawns MSTR)   PASSES -- right dial
+> > the broken form:    MSTR anywhere   -> 80                                 R1/R2/R3 pass on it too
+> > ```
+> > **`R1`/`R2`/`R3` prove the needle MOVES. `R6` proves it is attached to the RIGHT DIAL.** *`comp-iam` had a
+> > working needle: it printed `GRANTED`. It was attached to `(action)`, never `(action, resource)`.*
 >
 > > **ANY LANE'S DEATH RATE IS `UNMEASURABLE` WITH WHAT WE OWN — not high, not low, not knowable.**
 > >
