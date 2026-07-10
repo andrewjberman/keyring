@@ -161,8 +161,12 @@ class PipelineDAG:
 def _parse_s3_layout(gold_dir: Path) -> dict[str, S3Key]:
     """Parse lib/s3_layout.py using AST to extract all constant assignments and
     key-generating functions."""
+    from .trace_graph import _held_path_hit
     layout_file = gold_dir / "lib" / "s3_layout.py"
     if not layout_file.exists():
+        return {}
+    # Sovereign hold (design-b): never read a held path's content (bd lib/s3_layout.py).
+    if _held_path_hit(str(layout_file).replace("\\", "/")):
         return {}
 
     content = layout_file.read_text(encoding="utf-8", errors="replace")
@@ -234,8 +238,12 @@ def _extract_fstring_template(node: ast.expr) -> str | None:
 def _parse_dispatch(gold_dir: Path) -> tuple[dict[str, list[str]], dict[str, list[str]], dict[str, str]]:
     """Parse gold_dispatch.sh for chain definitions, groups, and catalog.
     Returns (chains, groups, catalog)."""
+    from .trace_graph import _held_path_hit
     dispatch_file = gold_dir / "gold_dispatch.sh"
     if not dispatch_file.exists():
+        return {}, {}, {}
+    # Sovereign hold (design-b): never read a held path's content (bd gold_dispatch.sh).
+    if _held_path_hit(str(dispatch_file).replace("\\", "/")):
         return {}, {}, {}
 
     content = dispatch_file.read_text(encoding="utf-8", errors="replace")
@@ -810,10 +818,17 @@ def _extract_script_io(
     pipeline: label for this script's pipeline ([bd-gold], [inf-gold], [bd-silver], etc.).
     run_order_override: explicit run order when chain position is known (e.g. INF dispatch order).
     """
-    try:
-        content = py_file.read_text(encoding="utf-8", errors="replace")
-    except Exception:
-        return None
+    from .trace_graph import _held_path_hit
+    # Sovereign hold (design-b): a held-path file's CONTENT is never read -> empty content, so this
+    # yields a metadata-only ScriptIO (script_id from filename; no parsed S3 imports). The caller
+    # still mints the node from this ScriptIO, so cross-firm reachability is preserved.
+    if _held_path_hit(str(py_file.relative_to(workspace_root)).replace("\\", "/")):
+        content = ""
+    else:
+        try:
+            content = py_file.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            return None
 
     rel_path = str(py_file.relative_to(workspace_root)).replace("\\", "/")
 
@@ -1442,8 +1457,12 @@ def parse_gold_direct_invoke(ws_root: Path) -> dict[str, str]:
     _parse_dispatch misses them + they read isolated. inject_pipeline_edges emits
     gold_dispatch -[TRIGGERS]-> gold:<basename> for each. (gldinc-ss4c.tf is only the canary+alarms, not
     the dispatcher -- the dispatch IS this gold_dispatch Wed leg.)"""
+    from .trace_graph import _held_path_hit
     f = ws_root / "data" / "black_diamond" / "scripts" / "gold" / "gold_dispatch.sh"
     if not f.exists():
+        return {}
+    # Sovereign hold (design-b): gold_dispatch.sh is under a held path -- never read its content.
+    if _held_path_hit(str(f.relative_to(ws_root)).replace("\\", "/")):
         return {}
     content = f.read_text(encoding="utf-8", errors="replace")
     scripts: dict[str, str] = {}

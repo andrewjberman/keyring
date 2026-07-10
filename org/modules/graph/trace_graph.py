@@ -128,6 +128,30 @@ def _compute_path_sha(path: Path) -> str:
     return ""
 
 
+# Sovereign-held path prefixes -- MIRROR of comp_constants_cli.SOVEREIGN_HELD_MARKERS (the canonical
+# held-path chokepoint; drift-guarded by tests/test_indexer_bd_content_exclusion.py). Under the
+# standing bd/49F/schwab prohibition, the indexer applies design (b) (CTO ruling 20260710T221551Z):
+# it MINTS a node for a held-path file (id + node_type + file_path METADATA, so cross-firm
+# REACHABILITY is preserved) but NEVER reads that file's CONTENT -- no read_text / ast.parse /
+# source_sha. Held nodes therefore carry no source_sha and are not freshness-checked (correct: we do
+# not track bd freshness under the hold). A pure STRING check -- it never opens a file to decide.
+_HELD_PATH_MARKERS = (
+    "data/black_diamond/",
+    "schwab/silver/",
+    "opal-data-bd",
+    "opal-data-schwab",
+)
+
+
+def _held_path_hit(path) -> bool:
+    """True if `path` falls under a sovereign-held prefix -> content-excluded from indexing.
+    Pure string check; never opens the file (so calling it can never itself read held content)."""
+    if not path:
+        return False
+    norm = str(path).replace("\\", "/")
+    return any(m in norm for m in _HELD_PATH_MARKERS)
+
+
 @dataclass
 class Edge:
     source: str                      # node id
@@ -151,7 +175,10 @@ class TraceGraph:
     def add_node(self, node: Node):
         # Compute source SHA at index time when file_path resolves to a real file
         # (ADHC_COMPIL_V4.012 STALE_NODE_WARN). Skip if SHA already populated.
-        if node.file_path and not node.source_sha:
+        # Sovereign hold (design-b): a held-path file (bd/49F/schwab) is minted as a node but its
+        # CONTENT is NEVER read -- so no source_sha is computed for it. The node still exists
+        # (reachability preserved); it simply carries no sha and is not freshness-checked.
+        if node.file_path and not node.source_sha and not _held_path_hit(node.file_path):
             try:
                 fp = Path(node.file_path)
                 if not fp.is_absolute():
@@ -309,6 +336,10 @@ def check_node_freshness(graph: TraceGraph, workspace_root: Path) -> list[tuple[
 
     for node in graph.nodes.values():
         if not node.file_path or not node.source_sha:
+            continue
+        # Sovereign hold (design-b): never open a held-path file's bytes to sha-compare it. Belt
+        # over the add_node exclusion -- holds even if a stale cache carried an old bd source_sha.
+        if _held_path_hit(node.file_path):
             continue
         fp = Path(node.file_path)
         if not fp.is_absolute():

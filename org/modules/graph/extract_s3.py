@@ -16,7 +16,7 @@ import ast
 import re
 from pathlib import Path
 
-from .trace_graph import TraceGraph, Node, Edge
+from .trace_graph import TraceGraph, Node, Edge, _held_path_hit
 
 # ADHC_COMPIL_V5 TO-VAL AC-VAL-Y.5 -- module-private cache for source-map
 # reverse-lookup (source_dir → TF-canonical Lambda name). Populated lazily
@@ -332,21 +332,18 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
     # --- Gold scripts (writers) ---
     gold_dir = workspace_root / "data" / "black_diamond" / "scripts" / "gold"
     if gold_dir.exists():
-        # Resolve constants from lib/s3_layout.py
-        constants = _resolve_constants(gold_dir)
+        # Sovereign hold (design-b): resolving constants reads lib/s3_layout.py CONTENT; for a
+        # held gold dir (bd) skip it -- constants stay empty and no held content is read.
+        constants = {} if _held_path_hit(str(gold_dir).replace("\\", "/")) else _resolve_constants(gold_dir)
 
         for py_file in sorted(gold_dir.glob("*.py")):
             if py_file.name.startswith("__"):
-                continue
-            try:
-                content = py_file.read_text(encoding="utf-8", errors="replace")
-            except Exception:
                 continue
 
             order = _run_order(py_file.stem)
             rel_path = str(py_file.relative_to(workspace_root)).replace("\\", "/")
 
-            # File-level node
+            # File-level node -- minted regardless of the hold (metadata only: cross-firm reachability).
             script_node_id = f"gold:{py_file.stem}"
             graph.add_node(Node(
                 id=script_node_id,
@@ -355,6 +352,16 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
                 file_path=rel_path,
                 run_order=order,
             ))
+
+            # Sovereign hold (design-b): a held-path file's CONTENT is NEVER read. The node above
+            # stands metadata-only; skip read_text + every content-derived extraction below.
+            if _held_path_hit(rel_path):
+                continue
+
+            try:
+                content = py_file.read_text(encoding="utf-8", errors="replace")
+            except Exception:
+                continue
 
             # Function-level nodes + local call graph.
             function_names, call_map = _extract_function_graph(content)
