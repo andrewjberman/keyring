@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# comp-passcraft -- the recon-scaffolding SDK (NFRA_PASSCRAFT.TO-1; ANTI-HARNESS, no verdict engine).
+#
+# Turns the hand-run tool front-pass into a repeatable, evidence-emitting procedure. `recon <tool>`
+# runs ONLY the MECHANICAL moves (read both layers, map the write surface, find the cache/oracle,
+# slot the universe+denominator, load the archetype's lead probes) and emits an EVIDENCE PACK -- then
+# STOPS AT THE VERDICT DOOR. It computes NO pass/fail; the verdict stays a hand-run paired test.
+#
+#   comp-passcraft recon <tool> [--archetype <shape>] [--json]   the mechanical evidence pack
+#   comp-passcraft taxonomy [--json]                             the 8 moves + 12 shapes + probe map
+#   comp-passcraft --self-test                                   AC1 (no verdict) + AC4 + AC5
+#
+# Tracked engine: org/modules/graph/comp_passcraft.py (this .tools/ shim is the PATH front; .tools/ is
+# gitignored, so the committed implementation lives in org/modules/graph -- the comp-tool convention).
+# Read-only on the estate; never runs the tool under test (that is the human's paired-run job).
+set -uo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if git_top="$(git -C "${SCRIPT_DIR}" rev-parse --show-toplevel 2>/dev/null)"; then
+  WORKSPACE_ROOT="${git_top}"
+else
+  WORKSPACE_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+fi
+exec "${COMP_PYTHON:-python}" "${WORKSPACE_ROOT}/org/modules/graph/comp_passcraft.py" "$@"

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# comp-toolgraph -- the comp-tool suite as a quality-annotated graph (NFRA_TOOLGRAPH.TO-1, MEASURE-ONLY).
+#
+# The scanners are NODES in the estate ontology at the DEPTH grain "scanner"; their shared substrates
+# are EDGES; the load-bearing move is the DECLARED-vs-ACTUAL coupling diff (comp-coverage-map.yaml
+# overlap groups vs the real import graph) -- an undeclared shared backend is the hidden ripple.
+#
+#   comp-toolgraph census [--write] [--json]    C0 node table (+ write the committed artifact)
+#   comp-toolgraph edges [--json]               C1 SHARES_SUBSTRATE / WRITES / INVOKED_BY
+#   comp-toolgraph coupling-diff [--json]       declared-vs-actual; the undeclared-ripple finding
+#   comp-toolgraph denominator                  the ONE reconciled tool count + derivation
+#   comp-toolgraph all [--json]                 every section
+#   comp-toolgraph --self-test                  AC1 go-red proof (seeded undeclared edge) + AC6
+#
+# Tracked engine: org/modules/graph/comp_toolgraph.py (this .tools/ shim is the PATH front; .tools/ is
+# gitignored, so the committed implementation lives in org/modules/graph -- the comp-tool convention).
+# Read-only on the estate; the only write is the committed census JSON via `census --write`.
+set -uo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if git_top="$(git -C "${SCRIPT_DIR}" rev-parse --show-toplevel 2>/dev/null)"; then
+  WORKSPACE_ROOT="${git_top}"
+else
+  WORKSPACE_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+fi
+exec "${COMP_PYTHON:-python}" "${WORKSPACE_ROOT}/org/modules/graph/comp_toolgraph.py" "$@"
