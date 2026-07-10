@@ -1020,6 +1020,10 @@ paths:
     lane: NFRA_TOOLCHECK_P4
     note: "Per-tool negative-control fixtures. P4 §4: a tool is not verified without a STORED, CI-run fixture the tool MUST go RED on, a positive control, and R2 -- the control on the control (0.7.0_AE_CloudOps: 'R1's zero is only evidence if the recorder can ever see a one'). The author of a fixture is not its verifier: CVO mutation-tests it. Added 2026-07-10 by 2.0.0_SA_COO."
 
+  "org/modules/graph/comp_toolgraph_census.json":
+    lane: NFRA_TOOLCHECK_P4
+    note: "NFRA_TOOLGRAPH tracked-tool CENSUS (the C0 node set, denominator=63) -- a regenerable comp-tool DATA artifact 0.8.0_AE_CloudComp maintains via `comp-toolgraph census --write`. Same class as the P4 fixtures/universe above (regenerable assurance-program comp-tool data an AE maintains -> a LANE-ADD, not a per-regen exec-commit: 'SoD by routing is not SoD', NFRA_TOOLCHECK_P4 precedent). Scoped to THIS ONE file (longest-match over org/modules/** ANY_EXEC, which excludes the AE). Do-er/verifier split UNCHANGED: 0.8.0 authors, 3.0.0_SA_CVO verifies, 1.0.0_SA_CTO arch-gates. CTO~A-ratified 2026-07-10 (arch-gate, msg 202309Z); grantor-landed by 2.0.0_SA_COO~A (SoD: grantee does NOT commit its own grant). Added 2026-07-10 by 2.0.0_SA_COO~A."
+
   "org/modules/heatmap/**":
     lane: NFRA_HEATMAP
     note: "NFRA_HEATMAP module surface (heat_map.py S0 primitive, object_freshness.py O1 engine, README, tests). Strand-C build lane (DS 0.4.0 + AE 0.5.0) self-commits its gated-clean code; the canonical home next to org/modules/graph/. Added 2026-06-25 by 2.0.0_SA_COO per 0.4.0 RAVC 213807Z (the lanes-free GO build hit org/modules/** ANY_EXEC). Longest-match overrides org/modules/** ANY_EXEC."
