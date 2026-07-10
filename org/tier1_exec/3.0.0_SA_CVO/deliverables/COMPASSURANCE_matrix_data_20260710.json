@@ -1,0 +1,2360 @@
+{
+ "vintage": "2026-07-10",
+ "predicate": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AC-0_tool_universe_predicate_20260710.json",
+ "rail_set": "RAIL_SET_canonical_20260710",
+ "summary": {
+  "tools": 63,
+  "rails": 7,
+  "cells_total": 441,
+  "cells_pass": 3,
+  "cells_fail": 2,
+  "cells_partial": 0,
+  "cells_unknown": 436,
+  "tested_tools": 29,
+  "untested_tools": 34,
+  "catalogued": 44,
+  "uncatalogued": 19
+ },
+ "rail_names": {
+  "R1": "NEGATIVE",
+  "R2": "VARIANCE",
+  "R3": "NULL",
+  "R4": "INVOCATION",
+  "R5": "DISCLOSURE",
+  "R6": "IDENTIFIABILITY",
+  "R7": "DISCLOSURE-OF-OBS"
+ },
+ "rows": [
+  {
+   "tool": "check-lambda-layer-deps",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-adapter-audit",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-aws",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-blast",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-build",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-cache",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-canon-motif",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-chainrun",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-cluster",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-constants",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-coverage",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-coverage-check",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-deadgrant",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-denytest",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-depth",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-diff",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-dispatch",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-drift",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-dups",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-fedobs",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-firmsep-sweep",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": "NEVER#1 sibling; the real commit gate is ds-precommit-check.py (E4), covers bd<->cot only, inf leg UNGATED (exercised)"
+  },
+  {
+   "tool": "comp-freshness",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-glob",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "fail",
+     "ev": "NO-MATCH hint claimed 16 comp-* gitignored; zero are (CTO finding)"
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-graph",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-grep",
+   "catalogued": "fail",
+   "cat_ev": "absent from tools_index (Rule-21 on-rails primitive)",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-heat",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-honesty",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-iam",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "pass",
+     "ev": "mutation M1/M3/M8 killed by name; cert @6f3751a34/2119e91af"
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "pass",
+     "ev": "independent _count_policy_blocks added 2119e91af"
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": "CERTIFIED scoped: resource_verdict surface only; grants() coverage surface unverified"
+  },
+  {
+   "tool": "comp-incrparity",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-kit-striplist-gate",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-kuzu",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-lambdamap",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-learns-status",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-manifest-check",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-parity",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-perf",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-pii",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-pipescript",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-platinum",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-registry",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-routable-check",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-routes",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-secrets",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-shell",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-stitch-refresh",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-surface-check",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "pass",
+     "ev": "rc=2/CRITICAL on 3/3 SEV1, rc=0 on 2/2 clean (exercised)"
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "fail",
+     "ev": "invoked by NO gate in the portal lifecycle; 17 SEV1 commits since 06-01"
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-symbols",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-system",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-tagauthz",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-to",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-tool-health",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-tool-health-gate",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-tooltip",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-trace",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-transform",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-types",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-validate",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-which",
+   "catalogued": "fail",
+   "cat_ev": "absent from tools_index -- the router does not index the router",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-whoread",
+   "catalogued": "unknown",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-xray",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "comp-xref",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "loop-quiescence",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "fail",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  },
+  {
+   "tool": "pipescript",
+   "catalogued": "pass",
+   "cat_ev": "",
+   "tested": "pass",
+   "rails": {
+    "R1": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R2": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R3": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R4": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R5": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R6": {
+     "state": "unknown",
+     "ev": ""
+    },
+    "R7": {
+     "state": "unknown",
+     "ev": ""
+    }
+   },
+   "note": ""
+  }
+ ]
+}
