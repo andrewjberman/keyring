@@ -100,9 +100,40 @@ R6 RAIL -- CANNOT-EVALUATE must NEVER appear when the marker was not read. LEAKE
 POSITIVE CONTROL on that rail (else it is vacuous): the live marker STILL yields CANNOT-EVALUATE.
 The body carries ZERO double-quote characters: it parses inside `python -c "..."` AND standalone in a file.
 
-=== STATE AT 2026-07-10T04:32Z: CANNOT-EVALUATE (marker READ) ===
-One invocation after T_d (02:12:00Z), ZERO stamps, SQS drained 0/0. CTO, COO and I all expected FAIL tonight.
-FAIL requires a stamp we have not had. Not yet evaluable, and that is the honest verdict.
+=== VERDICT RECORDED 2026-07-10T05:00:19Z: FAIL, EXACTLY AS DESIGNED. L4 DOES NOT CLOSE. ===
+The first incremental STAMP after T_d landed, and the criterion fired on its first real evaluation:
+    stored v4 command, run verbatim  ->  rc 1  token FAIL   ("cse clobbered -- n=3")
+The stamp is real and ordered:
+    writer_id=incremental_updater   committed_at_iso=2026-07-10T05:00:19.084753+00:00   (> T_d)
+    ETag 0d05ce2e0c343ac82ace970ef1ee733c   LastModified 2026-07-10T05:00:20Z
+    transitions: 02:07:59Z n=3 -> 02:09:15Z derive_runner n=4 cse PRESENT -> 05:00:36Z n=3 cse ABSENT
+
+STATE vs MECHANISM (Rule 22; these are not the same claim):
+  STATE      the predicate reads FAIL from the CURRENT marker alone: a stamp after T_d, and cse absent.
+  MECHANISM  that the incremental ERASED what the derive wrote -- rather than the derive never writing cse --
+             rests on the banked transient (ETag 94ab4adc17ca85fc0d8681c5c8bfd09a, 4 tables, 02:09:13Z), now
+             DESTROYED on the bucket. Versioning is OFF. Without that off-bucket snapshot the two are
+             indistinguishable and this verdict would be UN-EVALUABLE, not FAIL. That is the empirical case for
+             _branch_head.history/{ts}.json as a PRECONDITION of the merge fix (CTO 021626Z).
+
+b9f991994 (read-path honesty) EXERCISED for the first time -- observable ONLY while cse is absent:
+    LIVE        cse: ABSENT FROM MARKER -- vintage unverifiable (26h cadence declared; last writer
+                'incremental_updater' did not stamp it)
+    R2 VARIANCE synthetic 4-table marker (cse PRESENT) -> does NOT print it (the line is not unconditional)
+    R-NULL      no marker -> 'per-table vintage: UNKNOWN (no branch-head marker)'
+The silent omission it replaced would have printed NOTHING for cse at this exact moment. That visible failure IS
+the deliverable of b9f991994.
+
+=== THE CRITERION IS NOW SPENT FOR THIS T_d. A RE-TEST NEEDS A NEW ONE. ===
+FAIL is the CORRECT and EXPECTED result and it DOES NOT CLOSE L4: the stamp_marker merge + CAS has not landed.
+After the merge fix deploys, this criterion CANNOT be re-run against T_d=2026-07-10T02:09:13Z -- that window is
+closed and its verdict is recorded. A fresh evaluation requires:
+    (1) a NEW derive 4-table stamp -> that becomes T_d'
+    (2) a subsequent incremental STAMP (writer_id=incremental_updater AND committed_at_iso > T_d')
+    (3) the marker STILL listing all 4 -> only then PASS.
+Snapshot T_d' off-bucket BEFORE step (2), or the same evidence problem recurs.
+
+L4 STAYS OPEN. proof=None. A REFUSAL, not a failure to finish -- and now a MEASURED one.
 
 === THE MERGE FIX REMAINS HELD ===
 IfMatch CAS confirmed in BOTH DEPLOYED runtimes (the dev box is not the runtime), bounded 412 retry, LOUD raise
@@ -142,3 +173,4 @@ L4 STAYS OPEN. This is a REFUSAL, not a failure to finish. (held since 2026-07-0
 - 20260710T021840Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION CORRECTED TWICE. GATE ON THE **STAMP**, NOT THE INVOCATION. (0.7
 - 20260710T041752Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v3. Gate on the STAMP; classify by the VERDICT TOKEN, not the ex
 - 20260710T042550Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v4. A VERDICT REQUIRES AN OBSERVATION. (0.7.0_AE_CloudOps 043200
+- 20260710T050407Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v4. A VERDICT REQUIRES AN OBSERVATION. (0.7.0_AE_CloudOps 043200
