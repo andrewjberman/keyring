@@ -276,9 +276,35 @@ Cross-check with `get_live_agents()` + `get_org_summary()` for broker-side regis
 > freshly-respawned lane drains its inbox while its channel is still cold. **`(filesystem + broker)` is consistent
 > with BOTH "deaf" and "alive and already reading."** MECHANISM of the missing push: **UNDETERMINED.**
 >
-> **`channel push` present ⇒ reachable, confirmed. `channel push` absent ⇒ UNKNOWN — go read the inbox directory.**
-> If you build a warning on it, it must say `CHANNEL COLD (may be respawning) — verify inbox drain`, **never
-> `UNDELIVERED`.** *A warning that overstates is a warning that gets muted.*
+> ### ⚠ DETERMINED `02:00Z` (`0.7.0_AE_CloudOps`, source-confirmed + EXERCISED): **`channel push` NEVER MEASURED DEAFNESS. IT MEASURED `liveness.json` FRESHNESS.**
+> ```
+> server.py:1119-1120   send_message sets  _active_ctx = ctx     <- the SENDER's Context
+> server.py:369         _push_channel_message reads  ctx = _active_ctx
+> server.py:377         ctx.session.send_log_message(...)
+> meta["to_agent"] is passed in and NEVER READ.
+> ```
+> **THE PUSH LANDS IN THE SENDER'S OWN SESSION**, once per live target. The token is appended iff `live_targets` is
+> non-empty (a `liveness.json` read at `:1176`) **and the sender's own ctx accepts a log line.**
+>
+> > **It is a liveness-file lookup wearing the costume of a delivery receipt.** When it is right, it is right because
+> > of the **lookup** at `:1176` — never because of the **push** at `:1188`.
+>
+> **Liveness ≠ watcher-armed. An agent that heartbeats while its Monitor is dead is DEAF and still mints the token.**
+> *It was adopted as a deafness detector at `23:03Z` and falsified at `23:14Z`; it could never have worked, and the
+> eleven minutes were luck, not method.* **`pushed=False` is a fact about the SENDER.** Never report it as a
+> recipient verdict.
+>
+> **AND `SUFFIX MISMATCH` IS SILENT DATA LOSS TO A LIVE AGENT, WITH A RECEIPT THAT SAYS `delivered`.** All three
+> paths provably miss: filesystem (`:1131-1135` routes by the **addressed** suffix while `:1129-1130` claims *"fully
+> isolated … no cross-contamination"*), broker (`:1157` files under base; `WHERE to_serial = ?` is exact; `:553-554`
+> `_my_serial = agent_serial`, so a `~B` agent polls `"~B"` and never sees the base row), and `channel push` (`:1183`
+> skips it, `:1188` pushes to the sender regardless). **Symmetric in both directions**, and `_resolve_agent_folder`
+> strips the suffix so the `not found` guard never fires. **Here the strong word is EARNED** — this is the one case
+> where a loud `SUFFIX MISMATCH → <live serials>` is not an overstatement. `:1183` already computes those serials
+> and throws them away. Fix in flight (`0.7.0`, limb-1); `server.py` is CTO's.
+>
+> **Everywhere else the rule stands:** a warning must say `CHANNEL COLD (may be respawning) — verify inbox drain`,
+> **never `UNDELIVERED`.** *A warning that overstates is a warning that gets muted.*
 >
 > **Two signals agreeing convict. One absence convicts nothing.** *"An absent record is an empty set. A forbidden
 > set is empty, and so is an unrecorded one."* (`3.0.0_SA_CVO`) This applies to `fabric-check`'s `DEAF` and
