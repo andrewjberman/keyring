@@ -7,19 +7,41 @@ Derives a typed, certified graph of the AWS cloud by reconciling THREE truths:
   3. source/provenance (commit/sha where derivable)
 
 Emits typed nodes + edges + drift classes (DECLARED / LIVE-no-DECLARED /
-DECLARED-no-LIVE / NO-PROVENANCE) per resource class, and SCORES the derivation's
-precision / recall / F1 against the CVO-certified hand-audit oracles
-(org/modules/graph/aws-shapes/*.yaml).
+DECLARED-no-LIVE / NO-PROVENANCE) per resource class, and SCORES the derivation
+against the CVO-certified hand-audit oracles (org/modules/graph/aws-shapes/*.yaml).
 
 Subcommands:
   derive [--class C] [--out FILE]   live+TF derive -> canonical typed graph JSON
-  score  [--class C]                P/R/F1 per class vs certified oracle
+  score  [--class C]                RECALL / ATTR / UNRECONCILED vs certified oracle
   snapshot                          archive the canonical graph (PRD AC7)
   classes                           list supported resource classes
 
-Goal: >=95% F1 deterministic cloud navigation (Andrew goal 2026-06-08).
+SCORE SEMANTICS (CTO arch ruling 20260710T152154Z -- read this before "fixing" score):
+  `score` is OFFLINE-ADJUDICATING. It derives (which necessarily calls AWS -- the derive
+  IS its input) and then compares that derive to the fixture with NO further AWS call.
+  It NEVER asks AWS to adjudicate a disagreement.
+
+  PRECISION IS NOT COMPUTABLE OFFLINE and is therefore NOT PRINTED. An entry the derive
+  emitted that the fixture does not list is either a compiler phantom or a fixture gap,
+  and only a human (via --reconcile-fixture) may say which. Reporting it as a false
+  positive slanders the compiler; excusing it slanders the fixture.
+
+  Hence the THIRD STATE: UNRECONCILED = |derived - fixture|. Not a pass. Not a compiler
+  error. "The derive and the fixture disagree and no human has looked."
+
+  DO NOT "improve" this by auto-excusing extras that exist in AWS. If every extant extra
+  is excused, precision can fall only on a phantom -- and the AC-GRAIN sentinel already
+  refuses to emit those -- so precision becomes structurally 1.0 and the cert can never
+  fail. Guarded by tests/test_comp_aws_cert_mutants.py::test_fixture_gap_is_not_absorbed.
+
+  UNSCORED != PASS != INVALID. All three are distinguishable in token AND exit code.
+
+Goal: deterministic cloud navigation. (The former ">=95% aggregate F1" goal is RETIRED:
+it averaged 5 heterogeneous metrics from 3 of 30 classes into one estate-level number,
+one leg of which -- ec2 declared_f1 -- was structurally pinned to 1.0.)
 
 Author: 0.7.0_AE_CloudOps. Pattern: extends comp-iam / comp-lambdamap (PRD AC6).
+Cert layer rebuilt 2026-07-10 by 3.0.0_SA_CVO~A (NFRA_TOOLPASS tool-2 pass; CTO-gated).
 """
 from __future__ import annotations
 import argparse
@@ -29,6 +51,8 @@ import tarfile
 import io
 import glob
 import re
+import subprocess
+from datetime import datetime, timezone
 from pathlib import Path
 
 WS = Path(__file__).resolve().parents[3]   # ajb_workspace root (org/modules/graph/<file>)
@@ -36,6 +60,27 @@ TF_ROOT = WS / "infra" / "aws" / "terraform"
 SHAPES = WS / "org" / "modules" / "graph" / "aws-shapes"
 ACCOUNT = "313476888478"
 REGIONS = ["us-east-1", "us-east-2"]
+
+# --- exit codes -------------------------------------------------------------
+# A1: main() previously discarded every handler's return, so comp-aws could only exit
+# nonzero on an uncaught exception. `score --class zzqq-nope` exited 0 and was recorded
+# as PASS in org/compiler-tools-log.md (the launcher logs $?). The success token was
+# bound to the wrong step.
+RC_OK           = 0
+RC_FAIL         = 1   # a real negative verdict (unreconciled / recall miss)
+RC_INVALID      = 2   # caller error: class does not exist  (argparse also uses 2)
+RC_DERIVE_ERROR = 3   # derive could not run (e.g. unmappable ARN)
+RC_UNSCORED     = 4   # valid class, NO oracle -> UNMEASURED, never recorded as success
+
+# A6/A2: a fixture is a hand-audit frozen at a vintage. Past this age the estate has
+# almost certainly moved. STALE is an ADVISORY WARN and NEVER by itself an rc -- making
+# age fail the cert would rebuild the aging clock this fix exists to remove. The failing
+# condition is UNRECONCILED (a real disagreement), not the calendar.
+FIXTURE_STALE_DAYS = 14
+
+# A2: printed wherever a number cannot be computed honestly. A number you cannot compute
+# honestly is not improved by computing it dishonestly.
+UNAVAILABLE = "UNAVAILABLE (requires reconciliation)"
 
 def _boto(svc, region="us-east-1"):
     import boto3
@@ -2207,21 +2252,98 @@ def _load_yaml(p):
     import yaml
     return yaml.safe_load(open(p, encoding="utf-8"))
 
-def _f1(tp, fp, fn):
-    p = tp / (tp + fp) if (tp + fp) else 0.0
-    r = tp / (tp + fn) if (tp + fn) else 0.0
-    f = 2 * p * r / (p + r) if (p + r) else 0.0
-    return p, r, f
+
+def _recall(tp: int, fn: int) -> float:
+    """Recall is the ONLY set-metric computable offline.
+
+    (`_f1(tp, fp, fn)` is deliberately gone. Offline, `fp` is not a false positive --
+    it is an UNRECONCILED disagreement -- so precision and F1 have no honest value.
+    The ec2 leg used to launder this as `_f1(tp, 0, fn)`, hardcoding fp=0 and pinning
+    declared_f1 to a permanent 1.0000. A control that has only ever printed one value
+    is not a control.)
+    """
+    return tp / (tp + fn) if (tp + fn) else 0.0
+
+
+def _git_iso(rev_or_path, is_path: bool = False) -> str | None:
+    """Committer-date of a rev, or of a path's last commit. Local git, no network."""
+    args = (["git", "log", "-1", "--format=%cI", "--", str(rev_or_path)] if is_path
+            else ["git", "show", "-s", "--format=%cI", str(rev_or_path)])
+    try:
+        r = subprocess.run(args, cwd=str(WS), capture_output=True, text=True, timeout=20)
+        return r.stdout.strip() if r.returncode == 0 and r.stdout.strip() else None
+    except Exception:
+        return None
+
+
+def _fixture_vintage(path: Path, meta: dict) -> dict:
+    """Resolve a fixture's as_of. NEVER from mtime.
+
+    A6/U3. U3 RESOLVED 2026-07-10: NO fixture carries an `as_of` field (0 of 6 yaml).
+    All three scored fixtures DO carry `meta.tf_commit_at_audit` -- a commit-ish, which
+    per CLAUDE.md Rule 22 is a STRONGER vintage than a bare date.
+
+    mtime is a fact about the filesystem, not about the audit: `git checkout`, a copy, or
+    a `touch` rewrites it without a human re-auditing anything. Precedence:
+      1. meta.as_of                      (honored if a human ever adds it)
+      2. git last-commit date OF THE FIXTURE FILE   (when its assertions last changed)
+      3. UNKNOWN -> FAIL CLOSED (treated as stale)
+    `meta.tf_commit_at_audit` is always reported: it names WHICH terraform tree the hand
+    audit was taken against, which mtime and file-date both fail to record.
+    """
+    as_of, src = None, None
+    if meta.get("as_of"):
+        as_of, src = str(meta["as_of"]), "meta.as_of"
+    else:
+        g = _git_iso(path, is_path=True)
+        if g:
+            as_of, src = g, "git:last-commit-of-fixture"
+
+    age_days = None
+    if as_of:
+        try:
+            dt = datetime.fromisoformat(as_of.replace("Z", "+00:00"))
+            age_days = (datetime.now(timezone.utc) - dt).days
+        except Exception:
+            as_of, src = None, None
+
+    fver = str(meta.get("fixture_version", "UNKNOWN"))
+    # DECLARATIVE DRIFT (found 2026-07-10): the scorer loads fixtures by HARDCODED
+    # FILENAME, and in all 3 the filename version disagrees with meta.fixture_version
+    # (s3 file v1.1 / meta 1.5; iam-ec2 file v0.1 / meta 0.2; sfn file v0.1 / meta 0.2).
+    # The name is a lie about the content. Print the content's version, flag the skew.
+    name_skew = fver not in path.name
+
+    try:
+        rel = str(path.relative_to(WS)).replace("\\", "/")
+    except ValueError:
+        rel = path.name   # fixture outside the workspace tree (e.g. a test tmp path)
+    return {
+        "path": rel,
+        "fixture_version": fver,
+        "filename_version_skew": name_skew,
+        "tf_commit_at_audit": str(meta.get("tf_commit_at_audit", "UNKNOWN")),
+        "as_of": as_of or "UNKNOWN",
+        "as_of_source": src or "UNRESOLVED",
+        "age_days": age_days,
+        "stale": (age_days is None) or (age_days > FIXTURE_STALE_DAYS),
+    }
+
+
+def _load_fixture(filename: str) -> tuple[dict, dict]:
+    p = SHAPES / filename
+    doc = _load_yaml(p)
+    return doc, _fixture_vintage(p, doc.get("meta", {}) or {})
 
 def score_s3():
-    """Node-enumeration + key-attr F1 vs s3 oracle."""
-    oracle = _load_yaml(SHAPES / "s3-hand-audit-fixture-v1.1.yaml")
+    """Node-enumeration + key-attr agreement vs the s3 oracle. OFFLINE adjudication."""
+    oracle, vintage = _load_fixture("s3-hand-audit-fixture-v1.1.yaml")
     truth = {b["bucket_name"]: b for b in oracle["s3_buckets"]}
     derived = {n["id"]: n for n in derive_class("s3")["nodes"]}
     tset, dset = set(truth), set(derived)
     tp_nodes = tset & dset
-    fp = len(dset - tset)        # derived a bucket not in oracle
-    fn = len(tset - dset)        # oracle bucket the compiler missed
+    missed = sorted(tset - dset)        # oracle bucket the compiler MISSED -> real recall miss
+    unreconciled = sorted(dset - tset)  # derived, not in fixture -> NOBODY HAS LOOKED
     # attribute correctness within matched nodes (versioning + PAB = the certified axes)
     attr_total = attr_ok = 0
     for b in tp_nodes:
@@ -2230,56 +2352,85 @@ def score_s3():
                 attr_total += 1
                 if derived[b].get(dkey) == truth[b][axis]:
                     attr_ok += 1
-    pe, re_, fe = _f1(len(tp_nodes), fp, fn)
     return {
-        "class": "s3", "node_tp": len(tp_nodes), "node_fp": fp, "node_fn": fn,
-        "node_precision": round(pe, 4), "node_recall": round(re_, 4), "node_f1": round(fe, 4),
+        "class": "s3", "_fixture": vintage,
+        "node_tp": len(tp_nodes), "node_fn": len(missed),
+        "node_recall": round(_recall(len(tp_nodes), len(missed)), 4),
+        "node_precision": UNAVAILABLE, "node_f1": UNAVAILABLE,
         "attr_accuracy": round(attr_ok / attr_total, 4) if attr_total else None,
-        "attr_checked": attr_total, "missed": sorted(tset - dset), "extra": sorted(dset - tset),
+        "attr_checked": attr_total,
+        "missed": missed,
+        "unreconciled": unreconciled, "unreconciled_count": len(unreconciled),
     }
 
 def score_iam_ec2():
-    oracle = _load_yaml(SHAPES / "iam-ec2-hand-audit-fixture-v0.1.yaml")
-    res = {}
+    oracle, vintage = _load_fixture("iam-ec2-hand-audit-fixture-v0.1.yaml")
+    res = {"_fixture": vintage}
     # --- IAM role enumeration ---
     iam_truth_count = oracle["iam_roles"]["customer_role_count"]
     derived_iam = derive_class("iam")["nodes"]
-    # recall on count (oracle asserts SET size + named exceptions; we score enumeration count + overperm set)
     di = len(derived_iam)
-    # overperm precision/recall vs the 3 named
     truth_overperm = {o["role"] for o in oracle["iam_cataloged_findings_HELD"]["overperm_roles"]}
     derived_overperm = {n["id"] for n in derived_iam if n.get("broad_managed")}
     tp = len(truth_overperm & derived_overperm)
-    p, r, f = _f1(tp, len(derived_overperm - truth_overperm), len(truth_overperm - derived_overperm))
+    overperm_missed = sorted(truth_overperm - derived_overperm)
+    overperm_unrec = sorted(derived_overperm - truth_overperm)
     res["iam"] = {
         "truth_role_count": iam_truth_count, "derived_role_count": di,
+        # A4: `count_match` was computed, printed, and never entered any verdict -- a
+        # 57-role discrepancy (111 truth vs 168 derived) had ZERO effect. It now BITES:
+        # cmd_score treats a nonzero delta as an unreconciled condition.
         "count_match": di == iam_truth_count,
-        "overperm_precision": round(p, 4), "overperm_recall": round(r, 4), "overperm_f1": round(f, 4),
+        "role_count_delta": di - iam_truth_count,
+        "overperm_recall": round(_recall(tp, len(overperm_missed)), 4),
+        "overperm_precision": UNAVAILABLE, "overperm_f1": UNAVAILABLE,
         "overperm_truth": sorted(truth_overperm), "overperm_derived": sorted(derived_overperm),
+        "overperm_missed": overperm_missed,
+        "unreconciled": overperm_unrec, "unreconciled_count": len(overperm_unrec),
+        # PREDICATE MISMATCH, recorded on the face of the output (CVO 2026-07-10, live-verified).
+        # The fixture's overperm_roles asserts EFFECTIVE PERMISSION ("wildcard-action",
+        # "account-wide S3+Dynamo read/write/DELETE"). `broad_managed` (live_iam_roles:315)
+        # tests whether an ATTACHED-MANAGED POLICY NAME contains "FullAccess"/"Administrator".
+        # Those are different predicates. It is blind to all 376 inline policies in the
+        # account and to the CONTENT of every customer-managed policy. A recall miss here
+        # may mean the compiler is blind OR the fixture is stale, and this metric CANNOT
+        # tell you which. Verified 2026-07-10: market-update-lambda-role's recall miss is
+        # a genuine REMEDIATION (simulate-principal-policy -> implicitDeny on every
+        # permission the fixture claims), not a compiler defect. Census that day: 0 roles
+        # grant Action:*|svc:* on Resource:* via customer-managed or inline policy, so the
+        # blindness is REAL BUT LATENT -- harm not demonstrated.
+        "predicate_note": ("broad_managed tests POLICY NAME on attached-managed policies; the "
+                           "fixture asserts EFFECTIVE PERMISSION. Different predicates. Blind to "
+                           "inline policies and to customer-managed policy content."),
     }
     # --- EC2 enumeration ---
     decl_truth = {e["name"] for e in oracle["ec2_declared"]}
     derived_ec2 = derive_class("ec2")
     derived_declared = {n["name"] for n in derived_ec2["nodes"] if n.get("drift_class") == "DECLARED"}
     expected_no_live = {e["name"] for e in oracle["ec2_declared"] if "REMOVED" in (e.get("note") or "")}
-    # declared-set recall: oracle's declared names present live-or-declared
     tp = len(decl_truth & (derived_declared | expected_no_live))
-    p, r, f = _f1(tp, 0, len(decl_truth - (derived_declared | expected_no_live)))
+    ec2_missed = sorted(decl_truth - (derived_declared | expected_no_live))
+    # A3: `_f1(tp, 0, fn)` hardcoded fp=0 -> declared_f1 was structurally 1.0000 and could
+    # not detect a phantom EC2 instance. The set it ignored is exactly this one:
+    ec2_unrec = sorted(derived_declared - decl_truth - expected_no_live)
     res["ec2"] = {
         "truth_declared": len(decl_truth), "derived_live": derived_ec2["counts"]["live"],
         "derived_declared": sorted(derived_declared),
-        "declared_recall": round(r, 4), "declared_f1": round(f, 4),
+        "declared_recall": round(_recall(tp, len(ec2_missed)), 4),
+        "declared_precision": UNAVAILABLE, "declared_f1": UNAVAILABLE,
+        "missed": ec2_missed,
+        "unreconciled": ec2_unrec, "unreconciled_count": len(ec2_unrec),
         "live_no_declared": derived_ec2["counts"]["live_no_declared"],
     }
     return res
 
 def score_stepfunctions():
-    oracle = _load_yaml(SHAPES / "stepfunctions-hand-audit-fixture-v0.1.yaml")
+    oracle, vintage = _load_fixture("stepfunctions-hand-audit-fixture-v0.1.yaml")
     truth = {sm["name"]: sm for sm in oracle.get("state_machines", [])}
     derived = {n["id"]: n for n in derive_class("stepfunctions")["nodes"]}
     tp_nodes = set(truth) & set(derived)
-    fp = len(set(derived) - set(truth))
-    fn = len(set(truth) - set(derived))
+    node_missed = sorted(set(truth) - set(derived))
+    node_unrec = sorted(set(derived) - set(truth))
     attr_total = attr_ok = 0
     for name in tp_nodes:
         t, d = truth[name], derived[name]
@@ -2288,7 +2439,6 @@ def score_stepfunctions():
                 attr_total += 1
                 if str(d.get(axis, "")) == str(t[axis]):
                     attr_ok += 1
-    pe, re_, fe = _f1(len(tp_nodes), fp, fn)
     act_truth_count = oracle.get("activity_count", 0)
     derived_acts = derive_class("sfn_activity")["nodes"]
     # INVOKES edge recall (the key graph metric for a state machine -- must pass >=0.95)
@@ -2306,26 +2456,30 @@ def score_stepfunctions():
         except Exception:
             pass
     inv_tp = len(truth_inv_arns & derived_inv_arns)
-    inv_fp = len(derived_inv_arns - truth_inv_arns)
-    inv_fn = len(truth_inv_arns - derived_inv_arns)
-    inv_pe, inv_re, inv_fe = _f1(inv_tp, inv_fp, inv_fn)
+    inv_missed = sorted(truth_inv_arns - derived_inv_arns)
+    inv_unrec = sorted(derived_inv_arns - truth_inv_arns)
     return {
-        "class": "stepfunctions",
-        "node_tp": len(tp_nodes), "node_fp": fp, "node_fn": fn,
-        "node_precision": round(pe, 4), "node_recall": round(re_, 4), "node_f1": round(fe, 4),
+        "class": "stepfunctions", "_fixture": vintage,
+        "node_tp": len(tp_nodes), "node_fn": len(node_missed),
+        "node_recall": round(_recall(len(tp_nodes), len(node_missed)), 4),
+        "node_precision": UNAVAILABLE, "node_f1": UNAVAILABLE,
         "attr_accuracy": round(attr_ok / attr_total, 4) if attr_total else None,
         "attr_checked": attr_total,
         "activity_count_match": len(derived_acts) == act_truth_count,
         "activity_derived": len(derived_acts), "activity_truth": act_truth_count,
-        "invokes_tp": inv_tp, "invokes_fp": inv_fp, "invokes_fn": inv_fn,
-        "invokes_precision": round(inv_pe, 4), "invokes_recall": round(inv_re, 4),
-        "invokes_f1": round(inv_fe, 4),
-        "invokes_missed": sorted(truth_inv_arns - derived_inv_arns),
-        "missed": sorted(set(truth) - set(derived)),
-        "extra": sorted(set(derived) - set(truth)),
+        "invokes_tp": inv_tp, "invokes_fn": len(inv_missed),
+        "invokes_recall": round(_recall(inv_tp, len(inv_missed)), 4),
+        "invokes_precision": UNAVAILABLE, "invokes_f1": UNAVAILABLE,
+        "invokes_missed": inv_missed,
+        "missed": node_missed,
+        "unreconciled": sorted(set(node_unrec) | set(inv_unrec)),
+        "unreconciled_count": len(node_unrec) + len(inv_unrec),
     }
 
 SCORERS = {"s3": score_s3, "iam-ec2": score_iam_ec2, "stepfunctions": score_stepfunctions}
+# `iam` and `ec2` are real CLASSES covered by the composite `iam-ec2` scorer. Without this
+# they would report UNSCORED, which would be false.
+SCORER_ALIASES = {"iam": "iam-ec2", "ec2": "iam-ec2"}
 
 # ---------------------------------------------------------------------------
 def cmd_classes(args):
@@ -2334,6 +2488,38 @@ def cmd_classes(args):
         print(f"  {c:12} -> {CLASSES[c][1]}")
     print("\nCertified oracle scorers:", ", ".join(SCORERS))
 
+# A7: the ARN->class map, hoisted to a module constant so arn_unreachable_classes()
+# can COMPUTE the unreachable set rather than restate it. A hardcoded "8 classes have no
+# ARN route" comment silently rots the moment someone adds a class.
+_ARN_SERVICE_MAP = {
+    "s3": "s3", "iam": "iam", "ec2": "ec2", "lambda": "lambda",
+    "events": "eventbridge", "sns": "sns", "sqs": "sqs",
+    "dynamodb": "dynamodb", "cloudfront": "cloudfront",
+    "secretsmanager": "secrets", "kms": "kms",
+    "logs": "logs", "cloudwatch": "cloudwatch", "states": "stepfunctions",
+    # WAVE-4 expansion classes
+    "apigateway": "apigw", "ecs": "ecs_task", "ssm": "ssm_document",
+    "scheduler": "scheduler",
+    # OPLMCP.07 AC2 -- ALB-stack
+    "route53": "route53_record",
+}
+# the 3 ELB classes share one service token and are disambiguated by resource-path
+_ELB_PREFIX_MAP = {
+    "targetgroup/": "lb_target_group",
+    "listener/": "lb_listener",
+    "loadbalancer/": "lb",
+}
+
+
+def arn_unreachable_classes() -> list[str]:
+    """CLASSES with no ARN route -> `derive --resource` can never reach them.
+
+    COMPUTED from the maps above, so it cannot drift from CLASSES.
+    """
+    reachable = set(_ARN_SERVICE_MAP.values()) | set(_ELB_PREFIX_MAP.values())
+    return sorted(set(CLASSES) - reachable)
+
+
 def _arn_to_cls(arn: str) -> str | None:
     """Map an ARN to a CLASSES key for bounded derive. Returns None if unknown."""
     service = arn.split(":")[2] if arn.count(":") >= 2 else ""
@@ -2341,37 +2527,40 @@ def _arn_to_cls(arn: str) -> str | None:
     # distinguish by the resource-path so --resource on a TG/listener arn is exact.
     if service == "elasticloadbalancing":
         res = arn.split(":")[5] if arn.count(":") >= 5 else ""
-        if res.startswith("targetgroup/"):
-            return "lb_target_group"
-        if res.startswith("listener/"):
-            return "lb_listener"
-        if res.startswith("loadbalancer/"):
-            return "lb"
+        for prefix, cls in _ELB_PREFIX_MAP.items():
+            if res.startswith(prefix):
+                return cls
         # listener-rule/ (e.g. the .06 OIDC-bypass rules) + any future ELBv2 sub-type
         # are UNMODELED -> return None, NEVER phantom-classify as lb under a catch-all.
         return None
-    mapping = {
-        "s3": "s3", "iam": "iam", "ec2": "ec2", "lambda": "lambda",
-        "events": "eventbridge", "sns": "sns", "sqs": "sqs",
-        "dynamodb": "dynamodb", "cloudfront": "cloudfront",
-        "secretsmanager": "secrets", "kms": "kms",
-        "logs": "logs", "cloudwatch": "cloudwatch", "states": "stepfunctions",
-        # WAVE-4 expansion classes
-        "apigateway": "apigw", "ecs": "ecs_task", "ssm": "ssm_document",
-        "scheduler": "scheduler",
-        # OPLMCP.07 AC2 -- ALB-stack
-        "route53": "route53_record",
-    }
-    return mapping.get(service)
+    return _ARN_SERVICE_MAP.get(service)
 
 
 def cmd_derive(args):
+    """Derive the graph. RETURN CONTRACT IS LOAD-BEARING -- do not change it.
+
+    derive_runner.py:100 calls this IN-PROCESS and its return value IS the nightly's
+    graph (-> commit_to_iceberg -> Nessie -> comp-kuzu's canonical surface). It returns
+    a graph dict on success and {} on failure; main() must NEVER consume that as an exit
+    code (see cmd_derive_cli). Nothing user-facing about persistence belongs in here --
+    the nightly DOES persist, and a "NOT PERSISTED" banner printed here would write a
+    falsehood into the nightly's log.
+    """
     # Bounded derive: --resource <arn> restricts to just that class (NFRA_GLOBGRPH Item-2b)
     resource_arn = getattr(args, "resource", None)
     if resource_arn:
         resource_cls = _arn_to_cls(resource_arn)
         if not resource_cls:
-            print(f"ERROR: cannot infer class from ARN: {resource_arn}")
+            # A7: was print + return {} -> main() discarded it -> rc 0. An unroutable ARN
+            # exited SUCCESS. Name the unreachable classes: --resource is bounded OUTPUT,
+            # not bounded WORK, and 8 of 30 classes have no ARN route at all.
+            unreachable = arn_unreachable_classes()
+            print(f"ERROR: cannot infer class from ARN: {resource_arn}", file=sys.stderr)
+            print(f"  {len(unreachable)} of {len(CLASSES)} classes have NO ARN route and can never be "
+                  f"reached via --resource:", file=sys.stderr)
+            print(f"    {', '.join(unreachable)}", file=sys.stderr)
+            print("  (an ELB listener-rule/ ARN is also unmodeled by design -- never "
+                  "catch-all classified as 'lb')", file=sys.stderr)
             return {}
         # Run the single class derive; the full graph context is unavailable in bounded mode
         try:
@@ -2381,14 +2570,17 @@ def cmd_derive(args):
             cd["nodes"] = nodes
             cd["counts"]["live"] = len(nodes)
         except Exception as e:
-            print(f"ERROR: bounded derive failed: {e}")
+            print(f"ERROR: bounded derive failed: {e}", file=sys.stderr)
             return {}
-        graph = {"meta": {"account": ACCOUNT, "classes": [resource_cls], "bounded_resource": resource_arn},
+        graph = {"meta": {"account": ACCOUNT, "classes": [resource_cls], "bounded_resource": resource_arn,
+                          "edges_computed": False},
                  "classes_data": {resource_cls: cd}, "edges": []}
         if args.out:
             Path(args.out).write_text(json.dumps(graph, indent=2, default=str), encoding="utf-8")
             print(f"wrote {args.out}")
         print(f"  {resource_cls:12} bounded_derive arn={resource_arn} nodes={len(nodes)}")
+        # A8/R5: a bounded derive computes NO relationships. Say so.
+        print("  NOTE: bounded derive -- 0 edges computed (relationships require a full derive).")
         return graph
 
     classes = [args.cls] if args.cls else list(CLASSES)
@@ -2403,6 +2595,7 @@ def cmd_derive(args):
         except Exception as e:
             print(f"  {c:12} ERROR: {type(e).__name__}: {e}")
             graph["classes_data"][c] = {"error": str(e)}
+    graph["meta"]["edges_computed"] = bool(not args.cls and not getattr(args, "no_edges", False))
     if not args.cls and not getattr(args, "no_edges", False):
         es = derive_event_sources()
         graph["classes_data"]["event_source"] = {"class": "event_source", "nodes": es,
@@ -2426,6 +2619,14 @@ def cmd_derive(args):
         ec = Counter(e["edge_type"] for e in graph["edges"])
         print(f"  edges        total={len(graph['edges'])}  " +
               " ".join(f"{k}={v}" for k, v in sorted(ec.items())))
+    else:
+        # A8/R5 (exercised 2026-07-10: `derive --class lambda` returned a graph with NO
+        # 'edges' key at all -- consumers doing .get("edges", []) read 0 relationships as
+        # "this class has none"). Emit the key AND disclose that it was never computed.
+        graph["edges"] = []
+        why = "--class given" if args.cls else "--no-edges given"
+        print(f"  edges        NOT COMPUTED ({why}) -- this graph carries 0 relationships.")
+        print("               Edge derivation is a whole-account pass; run a full derive for edges.")
     # AC-GRAIN refuse-to-emit (NFRA_GRAPHS D5): a full derive must not emit a
     # wrong-grain graph (e.g. an S3 object-key minted as an S3_BUCKET). Identity-
     # format bar only (no baseline here -> no magnitude false-fire); structurally
@@ -2447,30 +2648,235 @@ def cmd_derive(args):
         print(f"\nwrote {args.out}")
     return graph
 
-def cmd_score(args):
-    targets = [args.cls] if args.cls else list(SCORERS)
-    f1s = []
-    for t in targets:
-        if t not in SCORERS:
-            print(f"  {t}: no certified oracle scorer")
+
+def cmd_derive_cli(args):
+    """CLI seam over cmd_derive: carries the EXIT CODE and the persistence disclosure.
+
+    Why a seam instead of changing cmd_derive: derive_runner.py:100 imports this module
+    and calls cmd_derive() IN-PROCESS, consuming its RETURN VALUE as the nightly's graph.
+    Making cmd_derive return an int would break the nightly; making main() exit on its
+    dict is worse -- EXERCISED 2026-07-10:
+
+        sys.exit(cmd_derive(args) or 0)
+          success -> returns graph dict  -> rc 1  + whole graph dumped to stderr
+          failure -> returns {}          -> rc 0
+        i.e. EXACTLY INVERTED.
+
+    So: cmd_derive keeps its contract; this wrapper owns the rc.
+    """
+    graph = cmd_derive(args)
+    if not graph or not graph.get("meta"):
+        return RC_DERIVE_ERROR
+
+    # A9: `derive` PERSISTS NOTHING (exercised 2026-07-10: latest.txt ETag, snapshots/
+    # object count, and the canonical DB mtime all unchanged across a derive). 89 of 188
+    # parsed comp-aws invocations were `derive`; 5 were `snapshot`. An operator who
+    # believes derive refreshed the projection is holding a stale graph and a fresh belief.
+    #
+    # U4 RESOLVED (source-confirmed) -- and it is why this wording is not "use snapshot":
+    #   comp-kuzu's DEFAULT surface is _canonical.CANONICAL_DB_PATH = kuzu_nessie_db,
+    #   built from NESSIE/Iceberg. Bare `snapshot` writes the tarball + snapshots/latest.txt,
+    #   which feed kuzu_load.py -> kuzu_db -- a NON-canonical scratch DB comp-kuzu never
+    #   opens (_canonical.py:19 says so in terms). Telling an operator to "run snapshot to
+    #   publish" would send them to a verb that does not refresh the surface they query.
+    if not args.out:
+        print("\nNOT PERSISTED -- this derive was not published, and nothing downstream saw it.")
+    else:
+        print(f"\nNOT PUBLISHED -- {args.out} is a local file; no shared surface changed.")
+    print("  comp-kuzu's canonical surface (kuzu_nessie_db, Nessie-sourced) still serves its")
+    print("  previous vintage. To publish to THAT surface:")
+    print("      comp-aws snapshot --commit-to-nessie   |   comp-aws iceberg-commit")
+    print("      (or wait for the nightly derive_runner)")
+    print("  NOTE: bare `comp-aws snapshot` does NOT refresh it -- it writes the tarball +")
+    print("  snapshots/latest.txt, which feed kuzu_load.py -> kuzu_db (a scratch DB).")
+    return RC_OK
+
+
+def _walk_metrics(d):
+    """Yield (key, value) over a scorer result, skipping the _fixture provenance block."""
+    for k, v in d.items():
+        if k == "_fixture":
             continue
+        if isinstance(v, dict):
+            yield from _walk_metrics(v)
+        else:
+            yield k, v
+
+
+def _print_fixture_banner(v: dict) -> None:
+    """A6: the single fact required to interpret the output. Never omitted."""
+    print(f"  FIXTURE  {v['path']}")
+    print(f"           fixture_version={v['fixture_version']}  tf_commit_at_audit={v['tf_commit_at_audit']}")
+    age = "unknown" if v["age_days"] is None else f"{v['age_days']}d"
+    print(f"           as_of={v['as_of']}  (source: {v['as_of_source']})  age={age}")
+    if v["filename_version_skew"]:
+        print(f"           WARN: filename does not carry content version {v['fixture_version']} "
+              f"-- the scorer loads this fixture by HARDCODED FILENAME.")
+    if v["stale"]:
+        reason = ("as_of UNRESOLVED -- failing closed" if v["age_days"] is None
+                  else f"older than {FIXTURE_STALE_DAYS}d")
+        print(f"           FIXTURE STALE ({reason}) -- ADVISORY. Staleness alone never fails the cert;")
+        print("           UNRECONCILED does. Run `comp-aws score --reconcile-fixture` to produce a gap report.")
+
+
+def _class_verdict(result: dict) -> tuple[list[str], int, list[str]]:
+    """Return (tokens, unreconciled_total, recall_miss_labels)."""
+    unrec, recall_misses, count_delta = 0, [], 0
+    for k, v in _walk_metrics(result):
+        if k == "unreconciled_count" and isinstance(v, int):
+            unrec += v
+        elif k == "role_count_delta" and isinstance(v, int):
+            count_delta = v
+        elif k.endswith("_recall") and isinstance(v, (int, float)) and v < 1.0:
+            recall_misses.append(f"{k}={v:.4f}")
+    tokens = []
+    if unrec > 0:
+        tokens.append("UNRECONCILED")
+    if count_delta != 0:
+        tokens.append("ROLE-COUNT-DELTA")
+    if recall_misses:
+        tokens.append("RECALL-MISS")
+    if not tokens:
+        tokens.append("PASS")
+    return tokens, unrec, recall_misses
+
+
+def cmd_score(args):
+    """OFFLINE-ADJUDICATING cert. See module docstring before changing anything here.
+
+    A5/A1: UNSCORED, INVALID, and PASS are distinguishable in BOTH token and exit code.
+    They used to be rc=0 with a near-identical one-liner, so `score --class zzqq-nope`
+    was recorded as PASS in org/compiler-tools-log.md.
+    """
+    if getattr(args, "reconcile_fixture", False):
+        return cmd_reconcile_fixture(args)
+
+    if args.cls:
+        cls = SCORER_ALIASES.get(args.cls, args.cls)
+        if cls in SCORERS:
+            targets = [cls]
+        elif args.cls in CLASSES:
+            # A5: a REAL class with NO oracle. Not a pass. Not an error. UNMEASURED.
+            print(f"UNSCORED: '{args.cls}' is a real resource class with NO certified oracle.")
+            print("  Its derive correctness is UNMEASURED -- not verified, not clean.")
+            print(f"  CERT COVERAGE: {len(SCORERS)} of {len(CLASSES)} classes have an oracle "
+                  f"({', '.join(sorted(SCORERS))}).")
+            return RC_UNSCORED
+        else:
+            print(f"INVALID CLASS: '{args.cls}' is not a resource class.", file=sys.stderr)
+            print(f"  {len(CLASSES)} known classes: {', '.join(sorted(CLASSES))}", file=sys.stderr)
+            return RC_INVALID
+    else:
+        targets = list(SCORERS)
+
+    failed = False
+    for t in targets:
         print(f"\n=== SCORE: {t} ===")
         r = SCORERS[t]()
+        if r.get("_fixture"):
+            _print_fixture_banner(r["_fixture"])
         print(json.dumps(r, indent=2, default=str))
-        # collect F1s
-        def collect(d):
-            for k, v in d.items():
-                if k.endswith("_f1") and isinstance(v, (int, float)):
-                    f1s.append((k, v))
-                elif isinstance(v, dict):
-                    collect(v)
-        collect(r)
-    if f1s:
-        print("\n=== F1 SUMMARY ===")
-        for k, v in f1s:
-            print(f"  {k}: {v:.4f}")
-        agg = sum(v for _, v in f1s) / len(f1s)
-        print(f"  AGGREGATE F1: {agg:.4f}  ({'PASS >=0.95' if agg >= 0.95 else 'BELOW 0.95'})")
+
+        tokens, unrec, recall_misses = _class_verdict(r)
+        print(f"\n  VERDICT [{t}]: {' + '.join(tokens)}")
+        if unrec:
+            print(f"    UNRECONCILED = {unrec}. The derive and the fixture disagree and NO HUMAN HAS")
+            print("    LOOKED. This is neither a compiler false positive nor a fixture gap until")
+            print("    someone says which. PRECISION is not computable offline and is not printed.")
+        if recall_misses:
+            print(f"    RECALL MISS: {', '.join(recall_misses)} -- the derive did not find something")
+            print("    the fixture asserts. This IS well-defined offline.")
+        if "PASS" not in tokens:
+            failed = True
+
+    # A5: the denominator, on the face of every run.
+    print("\n=== CERT COVERAGE ===")
+    pct = 100.0 * len(SCORERS) / len(CLASSES)
+    print(f"  {len(SCORERS)} of {len(CLASSES)} resource classes have a certified oracle ({pct:.1f}%).")
+    print(f"  {len(CLASSES) - len(SCORERS)} classes are UNMEASURED. UNMEASURED IS NOT CLEAN.")
+    # A3/A5: no aggregate. It averaged heterogeneous metrics across 3 of 30 classes, was
+    # pushed DOWN by legitimate estate growth and propped UP by a leg pinned to 1.0.
+    print("  No AGGREGATE is emitted (a number whose denominator is invisible).")
+    return RC_FAIL if failed else RC_OK
+
+
+# ---------------------------------------------------------------------------
+# RECONCILE -- the SEPARATE, EXPLICIT, NETWORKED pass. Writes a gap report for a human.
+# ---------------------------------------------------------------------------
+def _exists_s3(name: str) -> bool | None:
+    try:
+        _boto("s3").head_bucket(Bucket=name)
+        return True
+    except Exception as e:
+        return False if "404" in str(e) or "Not Found" in str(e) else None
+
+
+def _exists_ec2(name: str) -> bool | None:
+    try:
+        r = _boto("ec2").describe_instances(Filters=[{"Name": "tag:Name", "Values": [name]}])
+        return bool([i for res in r["Reservations"] for i in res["Instances"]])
+    except Exception:
+        return None
+
+
+def _exists_iam_role(name: str) -> bool | None:
+    try:
+        _boto("iam").get_role(RoleName=name)
+        return True
+    except Exception as e:
+        return False if "NoSuchEntity" in str(e) else None
+
+
+_EXISTS = {"s3": _exists_s3, "ec2": _exists_ec2, "iam": _exists_iam_role}
+
+
+def cmd_reconcile_fixture(args):
+    """Classify each UNRECONCILED entry as EXISTS (fixture gap) or ABSENT (compiler phantom).
+
+    THIS TOOL NEVER AMENDS A FIXTURE. The fixture's authority comes from a hand having
+    made it; a hand-audit a tool can rewrite is the derive's opinion with a yaml
+    extension. We write a report; a human merges it.
+
+    Note the epistemics: `head_bucket` and the derive both ask AWS. They are NOT
+    independent for the failure mode "AWS is right and the derive is right." They DO
+    discriminate the realistic phantom (a mangled name / an object key minted as a
+    bucket -> 404). Never let this classification touch a precision number.
+    """
+    targets = [SCORER_ALIASES.get(args.cls, args.cls)] if args.cls else list(SCORERS)
+    report = {"generated_by": "comp-aws score --reconcile-fixture", "classes": {}}
+    phantoms = 0
+
+    for t in targets:
+        if t not in SCORERS:
+            continue
+        r = SCORERS[t]()
+        legs = {k: v for k, v in r.items() if isinstance(v, dict) and k != "_fixture"} or {t: r}
+        report["classes"][t] = {"fixture": r.get("_fixture"), "entries": []}
+        for leg_name, leg in legs.items():
+            probe = _EXISTS.get(leg_name if leg_name in _EXISTS else t)
+            for entry in leg.get("unreconciled", []) or []:
+                if probe is None:
+                    verdict = "UNKNOWN (no existence probe for this class)"
+                else:
+                    ex = probe(entry)
+                    verdict = ("EXISTS -> FIXTURE GAP" if ex is True else
+                               "ABSENT -> COMPILER PHANTOM" if ex is False else
+                               "UNKNOWN (probe inconclusive)")
+                if verdict.startswith("ABSENT"):
+                    phantoms += 1
+                report["classes"][t]["entries"].append(
+                    {"leg": leg_name, "entry": entry, "verdict": verdict})
+                print(f"  [{t}/{leg_name}] {entry}: {verdict}")
+
+    out = Path(args.report_out) if getattr(args, "report_out", None) else \
+        SHAPES / "reconcile-gap-report.json"
+    out.write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
+    print(f"\nGAP REPORT -> {out}")
+    print("  A HUMAN merges this into the fixture. This command did NOT amend it.")
+    if phantoms:
+        print(f"  {phantoms} COMPILER PHANTOM(S) -- the derive emitted something that does not exist.")
+        return RC_FAIL
+    return RC_OK
 
 GLOBGRPH_BUCKET = "opal-313476888478-globgrph"   # ADHC_GLOBGRPH P1 snapshot/storage bucket
 
@@ -2536,9 +2942,11 @@ def cmd_iceberg_commit(args):
         from pyiceberg.catalog.rest import RestCatalog  # type: ignore
         import pyarrow as pa                             # type: ignore
     except ImportError as e:
-        print(f"ERROR: pyiceberg not installed: {e}")
-        print("  Install: pip install 'pyiceberg[pyarrow]' pyarrow")
-        return
+        # A1: this printed ERROR and returned None -> rc 0. A commit that never happened
+        # exited SUCCESS.
+        print(f"ERROR: pyiceberg not installed: {e}", file=sys.stderr)
+        print("  Install: pip install 'pyiceberg[pyarrow]' pyarrow", file=sys.stderr)
+        return RC_DERIVE_ERROR
 
     import time
     nessie_uri    = args.nessie_uri or "http://nessie.opal-globgrph.local:19120/api/v2"
@@ -2623,14 +3031,36 @@ def cmd_iceberg_commit(args):
 
     # Write edges
     if all_edges:
-        def _nid(e, k):
-            n = e.get(k, {})
-            if isinstance(n, dict):
-                return n.get("id", "")
-            return str(n)
+        # A11 (CVO 2026-07-10, exercised): this read e["src"]/e["dst"], but BOTH
+        # edges.append sites in this file emit {"source", "target"} (:1290, :1936) --
+        # derive_runner.py:357-358 documents exactly that remap. So _nid returned "" for
+        # every edge and graph_edges was overwritten with EMPTY src_id/dst_id on all rows.
+        # Silent: the schema's required=True is satisfied by "" (non-null).
+        # This verb is the stale duplicate of derive_runner.commit_to_iceberg (see the
+        # comment at cmd_snapshot); 2 invocations ever. FIX + FAIL CLOSED, and it is
+        # recommended for deprecation rather than maintenance.
+        def _nid(e, *keys):
+            for k in keys:
+                n = e.get(k)
+                if isinstance(n, dict) and n.get("id"):
+                    return n["id"]
+                if isinstance(n, str) and n:
+                    return n
+            return ""
+        src_ids = [_nid(e, "source", "src") for e in all_edges]
+        dst_ids = [_nid(e, "target", "dst") for e in all_edges]
+        bad = [i for i, (s, d) in enumerate(zip(src_ids, dst_ids)) if not s or not d]
+        if bad:
+            # NEVER overwrite a canonical table with dangling endpoints.
+            print(f"ERROR: {len(bad)} of {len(all_edges)} edges have an empty endpoint after key "
+                  f"resolution (tried 'source'/'src', 'target'/'dst').", file=sys.stderr)
+            print(f"  first offender: {all_edges[bad[0]]!r}", file=sys.stderr)
+            print("  REFUSING to overwrite globgrph.graph_edges. Fix the edge shape first.",
+                  file=sys.stderr)
+            return RC_FAIL
         edges_table.overwrite(pa.table({
-            "src_id":      [_nid(e, "src")          for e in all_edges],
-            "dst_id":      [_nid(e, "dst")          for e in all_edges],
+            "src_id":      src_ids,
+            "dst_id":      dst_ids,
             "edge_type":   [e.get("edge_type", "")  for e in all_edges],
             "layer":       ["aws"                    for _ in all_edges],
             "snapshot_ts": [batch_ts                 for _ in all_edges],
@@ -2638,6 +3068,7 @@ def cmd_iceberg_commit(args):
         print(f"  WRITE OK: {len(all_edges)} edges -> graph_edges")
 
     print(f"  Nessie commit on branch={branch} at ts={batch_ts} -- DONE")
+    return RC_OK
 
 
 def main():
@@ -2647,9 +3078,16 @@ def main():
     d.add_argument("--class", dest="cls")
     d.add_argument("--out")
     d.add_argument("--resource", dest="resource", help="ARN for bounded single-resource derive (NFRA_GLOBGRPH Item-2b)")
-    d.set_defaults(fn=cmd_derive)
+    d.set_defaults(fn=cmd_derive_cli)   # A1: the CLI seam owns the rc; cmd_derive keeps its return contract
     s = sub.add_parser("score")
     s.add_argument("--class", dest="cls")
+    s.add_argument("--reconcile-fixture", action="store_true", dest="reconcile_fixture",
+                   help="SEPARATE NETWORKED PASS: classify each UNRECONCILED entry as EXISTS "
+                        "(fixture gap) or ABSENT (compiler phantom) and write a gap report. "
+                        "Never amends the fixture -- a human merges it.")
+    s.add_argument("--report-out", dest="report_out",
+                   help="where --reconcile-fixture writes its gap report "
+                        "(default: org/modules/graph/aws-shapes/reconcile-gap-report.json)")
     s.set_defaults(fn=cmd_score)
     sn = sub.add_parser("snapshot")
     sn.add_argument("--stamp")
@@ -2685,7 +3123,22 @@ def main():
     ic.add_argument("--branch",     dest="branch",     default="main")
     ic.set_defaults(fn=cmd_iceberg_commit)
     args = ap.parse_args()
-    args.fn(args)
+
+    # A1: PROPAGATE the handler's exit code. Previously `args.fn(args)` -- the return was
+    # discarded, so comp-aws could exit nonzero ONLY on an uncaught exception or the
+    # AC-GRAIN sys.exit(2). `score` printing "BELOW 0.95" exited 0. `score --class
+    # zzqq-nope` exited 0 and .tools/comp-aws logged it as PASS (the launcher passes $? to
+    # comp_log_auto.py). The success token was bound to the wrong step, and it poisoned
+    # org/compiler-tools-log.md.
+    #
+    # NOT `sys.exit(args.fn(args) or 0)`: cmd_derive returns the graph DICT, so that form
+    # exits 1 on success (dumping the graph to stderr) and 0 on failure. Handlers that can
+    # fail return an int; informational handlers return None -> RC_OK. An uncaught
+    # exception still exits 1 via the interpreter.
+    rv = args.fn(args)
+    if isinstance(rv, bool) or not isinstance(rv, int):
+        rv = RC_OK
+    sys.exit(rv)
 
 if __name__ == "__main__":
     main()
