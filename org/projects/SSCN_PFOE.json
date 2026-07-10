@@ -1,0 +1,23 @@
+{
+  "project_code": "SSCN_PFOE",
+  "macro_code": "SSCN",
+  "name": "Security Scanner PFOE Preset + DIVZ Relabel",
+  "description": "Add a second built-in preset 'PFOE' to the Security Scanner page and clean up the DIVZ dropdown label. PFOE is a 16-factor growth/quality/sentiment/valuation/momentum screen (Yang Liu's weight table, Teams 2026-07-10T17:12Z; Growth 42% = 6 forward/trailing sales+EPS growth factors at 7 each; Quality 30% = gross_mgn/oper_mgn/fcf_mgn/roe/int_cov at 6 each; Sentiment 10% = eps_stable_est + eps_est_rev_45d at 5 each; Valuation 8% = peg_ntm; Momentum 10% = ret_mom_252d + short_pct_chg_12m at 5 each; sum 100%). DIVZ label 'DIVZ -- Dividend' -> 'DIVZ' (Andrew: 'take out the dividend and the double dash in the drop-down', call 2026-07-10 00:00). Empirically FE-ONLY: presets are declared in portal/src/pages/SecurityScanner/constants.ts, scoring is client-side (compositeScore = sum(pctls*weight)/100), and all 16 PFOE codes are present in the served factor_metadata.json (289 factors, asOf 20260521) -- no backend/Lambda/DS/S3 change. Extends SSCN_DIVDEF's preset-registry model with a second PRESETS entry + a PresetGroup union extension (adds Growth/Sentiment/Valuation).",
+  "prds": [
+    {"path": "docs/architecture/SSCN_PFOE.md", "label": "SSCN_PFOE PRD v0.1", "date": "2026-07-10"}
+  ],
+  "source_brief": "Andrew ↔ Yang Liu call 2026-07-10 (Call with Yang Liu.vtt, 00:00-01:52) + Yang Teams message 2026-07-10T17:12Z carrying the verbatim PFOE factor-weight table. Andrew directive to 1.0.0_SA_CTO~C 2026-07-10: carve the call topics and develop PRDs; 'the easiest one to enact immediately would be the commentary around the Factor Scanner portal template creation/edits' -- start with SSCN_PFOE. Yang timeline (call 10:46): 'a week or so, don't rush'.",
+  "status": "active",
+  "phase": "Phase 0: PRD v0.1 complete (docs/architecture/SSCN_PFOE.md), compiler evidence closed (served-metadata audit = all 16 codes present -> FE-only; comp-cache no new keys; comp-transform schema clean). COO decomposition pending (1 RD TO: SSCN_PFOE.001). 3 small open questions (universe=r1000?, 2 code mappings, group labels) resolvable by Andrew/Yang before commit -- do not block dispatch.",
+  "blocking": "COO~C task-order issuance (2.0.0_SA_COO~C). Non-blocking: OQ1-3 (universe / eps_stable_est-vs-eps_stability / peg_ntm-vs-pegy_ntm / group labels) to Andrew+Yang before TO-1 commit.",
+  "depends_on": [],
+  "depends_on_note": "Extends SSCN_DIVDEF (COMPLETE 2026-05-20, portal-v2.1.95) preset-registry model in portal/src/pages/SecurityScanner/constants.ts; inherits SSCN_PORTAL (COMPLETE 2026-03-10) page + processor Lambda + served factor_metadata.json. FE-only -- no infra/pipeline dependency. comp-cache collisions clean for scanner keys; PFOE reuses DIVZ's r1000 universe/endpoint (no new query key). No active-project file overlap (only constants.ts touched).",
+  "absorbs": [],
+  "created": "2026-07-10",
+  "pods": ["0.3"],
+  "pipeline": "portal/src/pages/SecurityScanner (FE-only; no pipeline tag). RD 0.3.4_RD_SecurityScanner build -> DE 0.3.0 review -> DT 0.3.0 DEV->PROD promote.",
+  "cto_lane": "1.0.0_SA_CTO~C",
+  "coo_lane": "2.0.0_SA_COO~C",
+  "thread_counter": 0,
+  "threads": []
+}
