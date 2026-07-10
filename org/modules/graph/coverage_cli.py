@@ -121,7 +121,8 @@ def cmd_report(args: argparse.Namespace) -> int:
                 'issued_to': 'unknown',
                 'issued_by': 'unknown',
                 'to_class': 'DOC',
-                'logged': to_id in logged_ids,
+                # CV2: match the truncated id OR the full filename stem (see XML branch).
+                'logged': (to_id in logged_ids) or (fname in logged_ids),
                 'path': str(to_path),
             })
             continue
@@ -132,7 +133,14 @@ def cmd_report(args: argparse.Namespace) -> int:
 
         to_class = _classify_to(files_text, issued_to)
         is_complete = status.lower() in _COMPLETE_STATUSES
-        is_logged = to_id in logged_ids
+        # CV2 (NFRA_TOOLPASS): match the comp-log on the <id> tag OR the filename STEM.
+        # Loggers write the filename stem as often as the <id> tag, and the two frequently
+        # differ (the <id> tag is often truncated or an agent-date slug). An <id>-only exact
+        # match UNDER-COUNTS "logged" -- grounded: 62 completed TOs matched the log by stem
+        # but not by <id>. Both remain EXACT string matches (no fuzzy prefix -> no over-count
+        # of a compliance metric). Residual unmatchable comp-log rows (free-text / agent-date
+        # forms with no clean TO-ID) are disclosed, not fuzzy-matched.
+        is_logged = (to_id in logged_ids) or (to_path.stem in logged_ids)
 
         records.append({
             'id': to_id,
@@ -159,6 +167,8 @@ def cmd_report(args: argparse.Namespace) -> int:
     print(f'  Completed TOs: {len(completed):,}')
     print(f'  Logged in comp-log: {len(logged_completed):,}')
     print(f'  Raw coverage: {raw_pct:.1f}%')
+    print('  (LOWER BOUND -- matched on <id> tag OR filename stem; comp-log rows carrying a '
+          'free-text / agent-date TO field have no clean TO-ID and cannot be matched)')
 
     # Per-class breakdown
     by_class: dict[str, dict] = defaultdict(lambda: {'total': 0, 'completed': 0, 'logged': 0})
@@ -186,7 +196,7 @@ def cmd_report(args: argparse.Namespace) -> int:
 
     # Per-agent compliance
     if by_agent:
-        print(f'\n  PER-AGENT COMPLIANCE (completed gated TOs only):')
+        print('\n  PER-AGENT COMPLIANCE (completed gated TOs only):')
         by_agent_d: dict[str, dict] = defaultdict(lambda: {'done': 0, 'logged': 0})
         for r in completed:
             if r['to_class'] in ('EXEMPT', 'DOC'):
@@ -202,24 +212,31 @@ def cmd_report(args: argparse.Namespace) -> int:
             pct = (d['logged'] / d['done'] * 100) if d['done'] else 0
             print(f'  {agent:<40}  {d["done"]:>5}  {d["logged"]:>7}  {pct:>5.1f}%')
 
+    # CV1 (NFRA_TOOLPASS): `report` is STDOUT-ONLY by default -- an audit run must not
+    # mutate the repo. The REPORT.md + per-agent yaml writes (13 git-tracked files) are
+    # opt-in via --write, so running the audit to READ the numbers leaves zero git churn.
+    if not getattr(args, 'write', False):
+        print('\n  (stdout-only -- pass --write to persist REPORT.md + per-agent yamls)')
+        return 0
+
     # Write REPORT.md
     _COVERAGE_DIR.mkdir(parents=True, exist_ok=True)
     report_path = _COVERAGE_DIR / 'REPORT.md'
     lines = [
         '# Compiler Tools Coverage Report',
         '',
-        f'Generated: 2026-05-15 (AE 0.7, ADHC_COMPIL_V4.033)',
+        'Generated: 2026-05-15 (AE 0.7, ADHC_COMPIL_V4.033)',
         '',
-        f'## Summary',
+        '## Summary',
         f'- Total TOs: {len(records):,}',
         f'- Completed: {len(completed):,}',
         f'- Logged in comp-log: {len(logged_completed):,}',
         f'- Raw coverage: {raw_pct:.1f}%',
         '',
-        f'## By Class',
+        '## By Class',
         '',
-        f'| Class | Total | Done | Logged | % |',
-        f'|-------|------:|-----:|-------:|--:|',
+        '| Class | Total | Done | Logged | % |',
+        '|-------|------:|-----:|-------:|--:|',
     ]
     for cls in ['FRONTEND', 'GOLD', 'API', 'DOC', 'EXEMPT']:
         d = by_class[cls]
@@ -250,7 +267,7 @@ def cmd_report(args: argparse.Namespace) -> int:
             f'gated_done: {len(gated)}',
             f'gated_logged: {len(logged)}',
             f'compliance_pct: {pct:.1f}',
-            f'unlogged:',
+            'unlogged:',
         ]
         for r in gated:
             if not r['logged']:
@@ -274,6 +291,8 @@ def main() -> int:
     p_report.add_argument('--by-agent', action='store_true', help='Show per-agent compliance ranking')
     p_report.add_argument('--gated-only', action='store_true', help='Only count gated-class TOs (drop EXEMPT/DOC)')
     p_report.add_argument('--pipeline', help='Filter by pipeline string in TO ID or path')
+    p_report.add_argument('--write', action='store_true',
+                          help='Persist REPORT.md + per-agent yamls (default: stdout-only, no repo churn)')
 
     args = parser.parse_args()
     if args.subcmd == 'report':
