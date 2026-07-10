@@ -1,73 +1,91 @@
 # Deploy Completion Record
 **Date opened:** 2026-07-09T12:26:09.108694+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / L4 -- CRITERION CORRECTED TWICE. GATE ON THE **STAMP**, NOT THE INVOCATION. (0.7.0_AE_CloudOps 021930Z.)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / L4 -- CRITERION v3. Gate on the STAMP; classify by the VERDICT TOKEN, not the exit code. (0.7.0_AE_CloudOps 041930Z.)
+Supersedes ed5b2479a (invocation-gated, FALSE-PASSED live) and 3b2c817a5's command block (crash reads as FAIL).
 
-!! THE PRIOR GATE TEXT OF THIS LEDGER (ed5b2479a, ~15 min old, which CTO 021626Z ratified as "the authority
-   over my memo") CONTAINED A FALSE-PASS AND IT FIRED LIVE TONIGHT. Do not execute it. Superseded below. !!
+=== CORRECTIONS THIS LEDGER HAS ALREADY EATEN. Do not re-derive them; do not carry the old prose. ===
+(C1) derive = cron(0 2 * * ? *) = 02:00Z, not "~02:10Z".
+(C2) incremental_updater is NOT hourly and has NO schedule: SQS event-source-mapping on
+     opal-globgrph-incremental-events (Enabled); `aws events list-rule-names-by-target` on its ARN -> EMPTY.
+     "Hourly" was an OBSERVED CADENCE that four artifacts promoted to a SCHEDULE. THERE IS NO 03:00Z READ.
+(C3) AN INVOCATION IS NOT A STAMP. lambda_function.py:718 calls stamp_branch_head_marker() (:722) only inside
+     `if all_nodes or all_deletes:` -- a no-op batch invokes and never stamps. _provenance.py:227 skips a
+     not-newer stamp. Observed: invocation 02:12:00Z after T_d, zero stamps, queue drained -> the old criterion
+     read PASS on a merge that does not exist. CloudWatch Invocations can NEVER establish this gate.
+(C4) THE PREDICATE'S FAILURE MODE MUST NOT BE A VERDICT. Python exits 1 on any uncaught exception, and the old
+     block defined 1 = FAIL -- so a SyntaxError, an unreadable marker, or a bad extraction returned exactly the
+     answer everyone expected tonight. Proven: extracting the old body to a file -> SyntaxError -> exit 1 ->
+     "FAIL (expected)". v3 below exits 2 on every anticipated failure and carries ZERO double-quote characters,
+     so it parses both inside `python -c "..."` and standalone in a file.
 
-=== WHAT WENT WRONG (mine; the third correction to this same criterion) ===
-v1 clock:      "read 4 tables at ~02:20Z, close"          -> certifies a transient.        (CTO re-spec killed it)
-v2 clock:      "after the next HOURLY incremental, ~03:00Z" -> a clock on an SQS trigger.  (I killed it, ed5b2479a)
-v3 invocation: ">=1 incremental_updater INVOCATION completed at t > T_d AND marker still lists 4" -> FALSE-PASS.
+=== EVIDENCE BANKED (limb A of the criterion, and it is unrecoverable if lost) ===
+T_d = 2026-07-10T02:09:13Z -- tonight's derive stamp, caught live by a marker-transition poller:
+    writer_id=derive_runner  tables=[cse,graph_contracts,graph_edges,graph_nodes]  cse=PRESENT
+    ETag 94ab4adc17ca85fc0d8681c5c8bfd09a   size 1502
+Bucket versioning is OFF (Andrew-locked #5) -> the next incremental stamp DESTROYS that object. Snapshot held
+off-bucket. Without it the criterion degrades from FAIL to UN-EVALUABLE with nothing to distinguish them, which
+is why CTO elevated _branch_head.history/{ts}.json to a PRECONDITION of the merge fix. That ETag is also the
+exact value put_object(IfMatch=) needs: the CAS fix and the history archive are ONE READ.
 
-**AN INVOCATION IS NOT A STAMP.** Two source-confirmed paths where incremental_updater runs and never touches
-the marker:
-  (a) `incremental_updater/lambda_function.py:718` -- `stamp_branch_head_marker()` (:722) is called ONLY inside
-      `if all_nodes or all_deletes:`. A NO-OP BATCH INVOKES AND NEVER STAMPS.
-  (b) `_provenance.py:227` -- monotonicity guard: `if existing.committed_at_iso >= mine: MARKER_SKIP not-newer`.
-      A not-newer stamp is SKIPPED.
+=== THE CRITERION ===
+An incremental STAMP after T_d is EXACTLY:  writer_id == 'incremental_updater'  AND  committed_at_iso > T_d
+(_provenance.py:201,220,221 set both on every successful stamp.)
+  PASS             stamp-after-T_d AND marker lists all 4 (cse PRESENT)  -> the merge landed
+  FAIL             stamp-after-T_d AND cse ABSENT                        -> clobber. EXPECTED, BY DESIGN.
+  CANNOT-EVALUATE  no stamp after T_d, REGARDLESS of invocation count    -> ledger stays OPEN
+A quiet SQS queue is not evidence the merge works. Neither is a busy one. Only a STAMP is evidence.
 
-OBSERVED LIVE, TONIGHT, WITHIN 3 MINUTES OF THE CRITERION BEING WRITTEN:
-    T_d                = 2026-07-10T02:09:13Z  (derive_runner, 4 tables, cse PRESENT, ETag 94ab4adc17ca85fc0d8681c5c8bfd09a)
-    invocation         = 2026-07-10T02:12:00Z  (CloudWatch Invocations Sum=1, AFTER T_d)
-    marker at 02:19Z   = writer_id=derive_runner, committed_at_iso=2026-07-10T02:09:12.714167+00:00, n=4, cse PRESENT
-    SQS at 02:19Z      = ApproximateNumberOfMessages=0, NotVisible=0  (fully drained)
-=> v3 reads: ">=1 invocation" TRUE, "marker lists 4" TRUE  =>  **PASS**, on a merge that DOES NOT EXIST.
-The 02:12Z invocation was a no-op batch. It never stamped. The 4 tables are still the DERIVE's.
-
-=== THE CORRECTED CRITERION -- gate on an incremental STAMP, observed on the marker itself ===
-An "incremental stamp after T_d" is EXACTLY:
-    marker.writer_id == "incremental_updater"  AND  marker.committed_at_iso > T_d
-(`_provenance.py:201,220,221` set both on every successful stamp -- they are the stamp's own record, written by
-the code path under test, and they are the only observable that distinguishes a stamp from a run.)
-
-  PASS            incremental stamp after T_d  AND  marker lists all 4 (cse PRESENT)   -> the merge landed
-  FAIL            incremental stamp after T_d  AND  cse ABSENT                          -> clobber; EXPECTED today
-  CANNOT-EVALUATE no incremental stamp after T_d, REGARDLESS OF INVOCATION COUNT        -> exit 2, ledger OPEN
-                  ^ this is the state as of 2026-07-10T02:19Z. One invocation, zero stamps, queue drained.
-
-  A quiet SQS queue is not evidence the merge works. Neither is a busy one. Only a STAMP is evidence.
-  Silence from an untriggered instrument and silence from a passing one are byte-identical.
-
-=== EXACT READ COMMANDS (any lane; T_d = 2026-07-10T02:09:13Z) ===
+=== RUN IT. CLASSIFY BY THE TOKEN ON STDOUT, NOT BY THE EXIT CODE. ===
 aws s3 cp s3://opal-313476888478-globgrph/warehouse/_branch_head.main.json - | python -c "
-import sys,json,datetime as dt
+import sys, json, datetime as dt
 T_d = dt.datetime.fromisoformat('2026-07-10T02:09:13+00:00')
-d = json.load(sys.stdin); tm = d.get('table_metadata',{}) or {}
-w  = d.get('writer_id'); c = d.get('committed_at_iso')
-stamped = (w=='incremental_updater') and c and dt.datetime.fromisoformat(c) > T_d
+try:
+    d = json.load(sys.stdin)
+    tm = d.get('table_metadata', {}) or {}
+    w = d.get('writer_id')
+    c = d.get('committed_at_iso')
+    stamped = (w == 'incremental_updater') and bool(c) and dt.datetime.fromisoformat(c) > T_d
+except Exception as e:
+    print('CANNOT-EVALUATE: predicate could not read the marker (%s: %s)' % (type(e).__name__, e))
+    raise SystemExit(2)
 if not stamped:
-    print(f'CANNOT-EVALUATE: no incremental stamp after T_d (writer={w} committed_at={c}). Ledger stays OPEN.'); raise SystemExit(2)
-print(('PASS: merge landed' if 'cse' in tm else 'FAIL (expected): cse clobbered') + f\" -- n={len(tm)} {sorted(tm)}\")
-raise SystemExit(0 if 'cse' in tm else 1)
+    print('CANNOT-EVALUATE: no incremental stamp after T_d (writer=%s committed_at=%s). Ledger stays OPEN.' % (w, c))
+    raise SystemExit(2)
+if 'cse' in tm:
+    print('PASS: merge landed -- n=%d %s' % (len(tm), sorted(tm)))
+    raise SystemExit(0)
+print('FAIL (expected): cse clobbered -- n=%d %s' % (len(tm), sorted(tm)))
+raise SystemExit(1)
 "
-# exit 0 = PASS   exit 1 = FAIL (expected today)   exit 2 = CANNOT-EVALUATE (never a pass)
-# CloudWatch Invocations is a SUPPORTING signal ONLY -- it can NEVER establish the gate. Do not use it as one.
 
-=== EVIDENCE PRESERVED ===
-Versioning is OFF (Andrew-locked #5). The derive's 4-table object is destroyed by the next incremental stamp, so
-limb (A) survives only in the off-bucket snapshot: scratchpad/leg4_derive_4table_marker_20260710T0209Z.json
-(ETag 94ab4adc17ca85fc0d8681c5c8bfd09a). CTO 021626Z has elevated `_branch_head.history/{ts}.json` from
-"nice-to-have" to a PRECONDITION of the merge fix landing: you cannot ship a CAS whose success condition is
-unobservable after one subsequent write. The same ETag is the value `put_object(IfMatch=)` needs.
+STDOUT MUST BEGIN WITH ONE OF: 'PASS:' | 'FAIL' | 'CANNOT-EVALUATE:'.
+ANY OTHER OUTPUT (or none) = INVOCATION-ERROR. It is NOT a verdict. Re-run; do not record; do not close.
+Exit codes 0/1/2 mirror the tokens, but 1 is ALSO Python's uncaught-exception code -- so the TOKEN is the oracle
+and the exit code is the convenience. Put the control on the RETRIEVAL, not the pattern.
+
+=== EXERCISED ACROSS ITS FULL RANGE (a criterion that has only ever returned one value is not a criterion) ===
+    live marker                          -> exit 2  token CANNOT-EVALUATE   <- state at 04:19Z
+    synthetic incremental stamp, no cse  -> exit 1  token FAIL
+    synthetic incremental stamp, w/ cse  -> exit 0  token PASS
+    stale stamp (committed before T_d)   -> exit 2  token CANNOT-EVALUATE   (an old stamp is not a stamp)
+    non-JSON on stdin                    -> exit 2  token CANNOT-EVALUATE   (NOT FAIL)
+    committed_at_iso = 'NOT-A-TIMESTAMP' -> exit 2  token CANNOT-EVALUATE   (NOT FAIL)
+
+=== STATE AT 2026-07-10T04:19Z: CANNOT-EVALUATE ===
+One invocation after T_d (02:12:00Z), ZERO stamps, SQS drained 0/0. Everyone -- CTO, COO, me -- expected FAIL
+tonight. FAIL requires a stamp we have not had. It is not yet evaluable, and that is the honest verdict.
 
 === THE MERGE FIX REMAINS HELD (unchanged) ===
-IfMatch CAS + bounded 412 retry + LOUD raise on exhaustion AND on ParamValidationError (stamp_marker is
-best-effort/never-raises, so an unsupported IfMatch is swallowed into a WARN and SILENTLY STOPS STAMPING).
-Probe 8c0b67afd UNRUN, hard-gated to first light, must exercise BOTH deployed runtimes. Verdict IGNORED (param
-accepted, silently dropped) is the one that kills us. Fold the history archive into the same CAS write.
+stamp_marker must MERGE over existing table_metadata, but a bare merge is STRICTLY WORSE than the clobber: a
+read-modify-write against an event-driven writer with no conditional put trades a VISIBLE erasure for an
+INVISIBLE one. Conditions: IfMatch CAS confirmed in BOTH DEPLOYED runtimes (Lambda bundled botocore + derive
+image pinned boto3 -- the dev box is not the runtime), bounded 412 retry, LOUD raise on exhaustion AND on
+ParamValidationError (stamp_marker is best-effort/never-raises, so an unsupported IfMatch is swallowed into a
+WARN and SILENTLY STOPS STAMPING). Probe 8c0b67afd UNRUN, hard-gated to first light. Verdict IGNORED (param
+accepted, silently dropped) is the one that kills us. Fold _branch_head.history/{committed_at_iso}.json into the
+same CAS write. Do NOT enable bucket versioning (Andrew-locked #5).
 
-L4 STAYS OPEN. Today's honest verdict is CANNOT-EVALUATE, not FAIL, and not PASS. (held since 2026-07-09T13:11:12.866381+00:00)
+L4 STAYS OPEN. This is a REFUSAL, not a failure to finish. (held since 2026-07-09T13:11:12.866381+00:00)
 **Deploy:** FRESHGUARD leg-4 finish: wire all 3 writers (derive_runner/incremental_updater/cse_store) to the centralized _provenance.stamp_marker so per-table last_write_iso lands live. GROUNDED: leg-4 is SOURCE-INCOMPLETE (unwired), not merely undeployed -- the centralized stamp has ZERO call sites; all 3 writers stamp their own local marker with no last_write_iso field. HELD on CTO approach-gate (A centralize-import vs B 3-copy).
 **Authored by:** 0.7.0_AE_CloudOps
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -96,3 +114,4 @@ L4 STAYS OPEN. Today's honest verdict is CANNOT-EVALUATE, not FAIL, and not PASS
 - 20260709T232435Z HELD-SOVEREIGN-GATED gate=external/L4 RE-SPECCED (CTO 232022Z) -- the old criterion ('last_write_iso populated on a
 - 20260710T021104Z HELD-SOVEREIGN-GATED gate=external/L4 RE-SPECCED (CTO 232022Z) + TRIGGER-MODEL CORRECTED (0.7.0_AE_CloudOps 020930Z
 - 20260710T021840Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION CORRECTED TWICE. GATE ON THE **STAMP**, NOT THE INVOCATION. (0.7
+- 20260710T041752Z HELD-SOVEREIGN-GATED gate=external/L4 -- CRITERION v3. Gate on the STAMP; classify by the VERDICT TOKEN, not the ex
