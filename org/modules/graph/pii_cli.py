@@ -629,6 +629,8 @@ def cmd_sweep(args):
 
     total_hits = 0
     files_with_hits = 0
+    files_scanned = 0   # PII1: the DENOMINATOR -- distinguishes "scanned 206, 0 had PII" (real clean)
+    #                     from "scanned 0" (vacuous). A count of files-with-hits alone cannot.
 
     print("PII SWEEP: scanning all portal source files for hardcoded PII values")
     print()
@@ -638,6 +640,7 @@ def cmd_sweep(args):
             content = src_file.read_text(encoding="utf-8", errors="replace")
         except Exception:
             continue
+        files_scanned += 1
 
         rel_path = str(src_file.relative_to(_WORKSPACE)).replace("\\", "/")
         file_hits = []
@@ -670,7 +673,11 @@ def cmd_sweep(args):
                 print(f"      {ctx}")
             print()
 
-    print(f"SWEEP TOTAL: {total_hits} hardcoded PII values in {files_with_hits} files")
+    print(f"SWEEP TOTAL: scanned {files_scanned} .ts/.tsx file(s); {total_hits} hardcoded PII value(s) "
+          f"in {files_with_hits} file(s) with hits.")
+    if files_scanned == 0:
+        print("  WARN: 0 files scanned -- this is NOT a clean result, it is an EMPTY scan "
+              "(portal path wrong / no source found). A 0-hit sweep is only meaningful with a non-zero denominator.")
     if total_hits > 0:
         print()
         print("  ACTION: Replace real account/relationship IDs with synthetic examples.")
