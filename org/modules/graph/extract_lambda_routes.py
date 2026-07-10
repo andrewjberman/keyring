@@ -116,15 +116,31 @@ def extract_lambda_routes(graph: TraceGraph, workspace_root: Path):
         lambda_node_id = f"lambda:{fn_name}"
         if lambda_node_id not in graph.nodes:
             source_dir = fn_info.get("source_dir", "")
+            metadata = {
+                "tf_file": fn_info.get("tf_file", ""),
+                "pipeline": source_dir.split("/")[3] if "/" in source_dir and len(source_dir.split("/")) > 3 else "",
+            }
+            # Only set file_path to a source_dir that resolves ON DISK. The "EXTERNAL"
+            # sentinel (code lives outside the repo, lambdamap_cli.py:127) and any
+            # absent dir are NOT freshness-checkable; recording them as file_path mints
+            # a node that LOOKS file-backed but is silently skipped by
+            # check_node_freshness -> a Lambda edit that never registers as drift
+            # (NFRA_TOOLPASS B5/B6). Preserve provenance in metadata instead of lying
+            # via file_path. A real dir now gets a directory-aggregate sha (add_node).
+            file_path = ""
+            if source_dir == "EXTERNAL":
+                metadata["source_dir"] = "EXTERNAL"
+            elif source_dir:
+                if (workspace_root / source_dir).exists():
+                    file_path = source_dir
+                else:
+                    metadata["source_dir_unresolved"] = source_dir
             graph.add_node(Node(
                 id=lambda_node_id,
                 node_type="LAMBDA",
                 label=fn_name,
-                file_path=source_dir,
-                metadata={
-                    "tf_file": fn_info.get("tf_file", ""),
-                    "pipeline": source_dir.split("/")[3] if "/" in source_dir and len(source_dir.split("/")) > 3 else "",
-                },
+                file_path=file_path,
+                metadata=metadata,
             ))
 
     # --- Phase B: Match ENDPOINT URLs to Lambda functions ---

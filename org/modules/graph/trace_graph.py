@@ -72,6 +72,60 @@ def _compute_file_sha(path: Path) -> str:
         return ""
 
 
+# Source extensions worth hashing for drift when a node's file_path is a DIRECTORY
+# (a Lambda bundle root). Skip vendored/cache trees so the aggregate is stable and cheap.
+_DIR_SHA_EXTS = {".py", ".js", ".mjs", ".cjs", ".ts", ".tsx", ".json",
+                 ".yaml", ".yml", ".toml", ".sh", ".txt", ".cfg", ".ini", ".sql", ".html"}
+_DIR_SHA_SKIP = {"__pycache__", ".git", "node_modules", ".terraform",
+                 ".venv", "venv", "dist", "build", ".mypy_cache", ".pytest_cache"}
+_DIR_SHA_MAX_FILES = 5000   # pathological-tree guard -> '' (a bounded, honest miss)
+
+
+def _compute_dir_sha(path: Path) -> str:
+    """Deterministic 12-char aggregate SHA over a directory's source files.
+
+    Hash = sha256 over sorted (posix-relpath, per-file-sha) pairs, so editing ANY
+    tracked source file under `path` (a Lambda's bundle dir) changes the aggregate ->
+    the node drifts. Bounded to source extensions; skips vendored/cache dirs. Returns
+    '' on empty/miss/overflow (NFRA_TOOLPASS B5/B6 fix, 3.0.0_SA_CVO~B): a Lambda node
+    whose file_path is its source DIRECTORY was silently unfreshenable because
+    `is_file()` was False; hashing the dir makes it freshness-checked.
+    """
+    try:
+        import hashlib
+        entries: list[tuple[str, str]] = []
+        for f in sorted(path.rglob("*")):
+            if any(part in _DIR_SHA_SKIP for part in f.parts):
+                continue
+            if not f.is_file() or f.suffix.lower() not in _DIR_SHA_EXTS:
+                continue
+            entries.append((f.relative_to(path).as_posix(), _compute_file_sha(f)))
+            if len(entries) > _DIR_SHA_MAX_FILES:
+                return ""
+        if not entries:
+            return ""
+        h = hashlib.sha256()
+        for rel, sha in entries:
+            h.update(rel.encode("utf-8"))
+            h.update(b"\x00")
+            h.update(sha.encode("utf-8"))
+            h.update(b"\n")
+        return h.hexdigest()[:12]
+    except (OSError, FileNotFoundError):
+        return ""
+
+
+def _compute_path_sha(path: Path) -> str:
+    """SHA for a file OR a directory; '' if neither resolves. The single entry both the
+    indexer (add_node) and the freshness check use, so 'file-backed' node types can point
+    at a file or a bundle dir and still be freshness-checked identically."""
+    if path.is_file():
+        return _compute_file_sha(path)
+    if path.is_dir():
+        return _compute_dir_sha(path)
+    return ""
+
+
 @dataclass
 class Edge:
     source: str                      # node id
@@ -101,8 +155,11 @@ class TraceGraph:
                 if not fp.is_absolute():
                     # Resolve against workspace root (parent of org/modules/graph)
                     fp = Path(__file__).resolve().parent.parent.parent.parent / node.file_path
-                if fp.is_file():
-                    node.source_sha = _compute_file_sha(fp)
+                # file OR directory (a Lambda bundle dir) -> a source_sha; '' if neither
+                # resolves. Previously `is_file()`-only, so a dir file_path minted a node
+                # that LOOKED file-backed but was silently skipped by the freshness check
+                # (NFRA_TOOLPASS B5/B6).
+                node.source_sha = _compute_path_sha(fp)
             except Exception:
                 pass
         self.nodes[node.id] = node
@@ -214,17 +271,27 @@ def check_node_freshness(graph: TraceGraph, workspace_root: Path) -> list[tuple[
     positives on empty cache).
     """
     drift: list[tuple[str, str, str]] = []
+    # Memoize per resolved path within this pass: multiple Lambda nodes can share one
+    # bundle dir (8 nodes share data/find/imo/scripts), so hash each unique path once.
+    _sha_cache: dict[str, str] = {}
+
+    def _current_sha(p: Path) -> str:
+        key = str(p)
+        if key not in _sha_cache:
+            _sha_cache[key] = _compute_path_sha(p)
+        return _sha_cache[key]
+
     for node in graph.nodes.values():
         if not node.file_path or not node.source_sha:
             continue
         fp = Path(node.file_path)
         if not fp.is_absolute():
             fp = workspace_root / node.file_path
-        if not fp.is_file():
-            # File deleted since index — count as drift
+        if not fp.exists():
+            # File/dir deleted since index — count as drift
             drift.append((node.id, node.source_sha, "<missing>"))
             continue
-        current = _compute_file_sha(fp)
+        current = _current_sha(fp)   # file OR directory-aggregate (B5/B6)
         if current and current != node.source_sha:
             drift.append((node.id, node.source_sha, current))
     return drift
