@@ -114,7 +114,18 @@ JS_CLIENT = re.compile(r"new\s+SecretsManagerClient\(\s*\{[^}]*region:\s*['\"]([
 # SecretId='literal' / SecretId: "literal"
 SECRET_ID = re.compile(r"SecretId\s*[=:]\s*['\"]([^'\"]{2,120})['\"]")
 # fail-silent AT THE GETTER. Not the system's fail-mode -- see the axis-B note in the docstring.
-SILENT = re.compile(r"return\s*(\{\}|''|\"\"|\[\]|None|null)|^\s*pass\b|get_mock|return\s+get_mock")
+# SECURITY FALSE-NEGATIVE FIX (CTO ruling 20260710T210955Z): the old `^\s*pass\b` was anchored
+# WITHOUT re.MULTILINE, so it matched a `pass` ONLY at position 0 of the searched text. SILENT is
+# applied to `after` = the text AFTER `except`/`catch`, which never starts with `pass` -- so a
+# swallow-by-bare-`pass` getter was MISSED (a missed swallow in a dead-grant x fail-silent detector
+# is the DANGEROUS direction). re.MULTILINE makes `^..$` match line-anchored; the `pass` alternative
+# is tightened to a bare `pass` STATEMENT (alone on its line + optional comment) so it does NOT
+# false-fire on `pass = x` (a JS variable) or `password` -- the negative-control concern.
+SILENT = re.compile(
+    r"return\s*(\{\}|''|\"\"|\[\]|None|null)"      # swallow-by-empty-return (any line)
+    r"|^[ \t]*pass[ \t]*(?:#.*)?$"                 # bare `pass` STATEMENT on its own line
+    r"|get_mock|return\s+get_mock",
+    re.MULTILINE)
 LOUD = re.compile(r"\braise\b|\bthrow\b|sys\.exit")
 
 
@@ -275,12 +286,17 @@ def _selftest() -> int:
     assert LOUD.search("except Exception:\n        raise"), "LOUD matches a re-raise"
     assert LOUD.search("} catch (e) {\n    throw e;"), "LOUD matches a JS throw"
     assert not LOUD.search("value = get()"), "a plain read is not LOUD"
-    # KNOWN GAP, pinned so it is explicit (flagged to CTO, NOT fixed -- semantic layer): SILENT's
-    # `^\s*pass\b` is anchored WITHOUT re.MULTILINE, so it only catches a `pass` at the START of
-    # the searched text. The tool applies SILENT to `after` (post-except text), which never starts
-    # with `pass`, so a swallow-by-bare-`pass` is missed. Pin the true behavior:
-    assert SILENT.search("pass  # at text start"), "SILENT: pass caught ONLY at text start"
-    assert not SILENT.search("x = 1\n    pass"), "SILENT: a mid-block pass is NOT caught (no MULTILINE)"
+    # BARE-`pass` SWALLOW (the fixed security false-negative). SILENT is applied to `after` = the
+    # post-except/catch text, which never starts with `pass`; re.MULTILINE now catches a bare `pass`
+    # statement on ANY line. This is the mutant that was RED before the fix:
+    assert SILENT.search("except Exception:\n        pass"), "SILENT: swallow-by-bare-pass (post-except)"
+    assert SILENT.search("    pass  # intentionally ignore"), "SILENT: bare pass + trailing comment"
+    # NEGATIVE CONTROLS (a false POSITIVE wastes security triage): a bare `pass` must be the WHOLE
+    # statement -- `pass = x` (a JS variable assignment), `password`, and a `# pass` comment must NOT fire.
+    assert not SILENT.search("        pass = compute_token()"), "NEG: `pass = ...` is an assignment, not a swallow"
+    assert not SILENT.search("        password = os.environ['X']"), "NEG: `password` must not match (word-tightened)"
+    assert not SILENT.search("        # pass on this one"), "NEG: a comment mentioning pass must not fire"
+    assert not SILENT.search("        passthrough(x)"), "NEG: `passthrough(` must not match"
     # the tool's own cited examples: a swallow is SILENT-not-LOUD; a re-raise is LOUD.
     swallow = "except Exception:\n    return None"
     reraise = "except Exception as e:\n    raise RuntimeError(e)"
