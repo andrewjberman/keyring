@@ -68,6 +68,41 @@ SERVED_CONFIG = WORKSPACE / "data" / "served_freshness_config.yaml"
 # (was bd/inf-only -> cot had NO comp-freshness coverage). cot content-mode rides as_of_field.
 PIPELINE_CONFIGS = {"bd": BD_CONFIG, "inf": INF_CONFIG, "cot": COT_CONFIG}
 
+# SOVEREIGN sec.8 HOLD (CLAUDE.md / memory: the 49F/bd/Schwab standing hold). comp-freshness is a
+# LIVE pre-chain-dispatch gate: the bd gold dispatch runs `chain bd` to gate bd freshness (the
+# $130M-Schwab-overshoot-class protection), so a HARD exclude would BREAK the live gate. FR1 ruling
+# (CTO 20260710T215214Z, COO-grounded): CASE (a) FAIL-SAFE via an env flag, NOT a hard exclude.
+#   - COMP_FRESHNESS_PIPELINE=1 SET   -> the pipeline path: held configs read normally, gate works.
+#   - flag UNSET (interactive AGENT)  -> held configs are SKIPPED with a LOUD note, never silent.
+# inf/cot/served/ddb are in-scope and always read. A held-path READ decision is made HERE, before
+# any open(), by a pure path-prefix check -- it never reads bd content to decide (same load-bearing
+# property as the comp-dups/comp-constants guards).
+_HELD_CONFIG_PREFIXES = (
+    str(WORKSPACE / "data" / "black_diamond") + os.sep,
+    str(WORKSPACE / "data" / "canonical" / "schwab" / "silver") + os.sep,
+)
+
+
+def _config_is_held(path: Path) -> bool:
+    return str(path).startswith(_HELD_CONFIG_PREFIXES)
+
+
+def _pipeline_flag_set() -> bool:
+    return os.environ.get("COMP_FRESHNESS_PIPELINE") == "1"
+
+
+def _held_config_read_allowed(path: Path) -> bool:
+    """True if `path` may be read. A sec.8-held config is read ONLY under the pipeline flag; an
+    agent invocation (flag unset) is refused HERE with a loud note and treated as no-config."""
+    if not _config_is_held(path):
+        return True
+    if _pipeline_flag_set():
+        return True
+    print(f"NOTE: held freshness config NOT read: sovereign hold (agent context) -- {path.name} "
+          f"under {path.parent}. Set COMP_FRESHNESS_PIPELINE=1 for the pipeline gate path.",
+          file=sys.stderr)
+    return False
+
 # Shared trading-day calendar (the ONE frontier/staleness definition, lib/trading_calendar.py).
 # GUARDED import: if absent (partial checkout), frontier-aware entries fall back to flat-hours --
 # never a hard failure. content-mode's freshness_basis:trading-day-frontier rides this.
@@ -259,6 +294,11 @@ class ConfigError(Exception):
 
 
 def _load_config(path: Path) -> list[dict]:
+    # SOVEREIGN sec.8 chokepoint (FR1): a held config is read ONLY under COMP_FRESHNESS_PIPELINE=1.
+    # An agent invocation is refused here -> treated as an empty (no-entry) config, loud-noted. This
+    # is the ONE place every caller (chain/all/list/script/artifact/_load_configs) flows through.
+    if not _held_config_read_allowed(path):
+        return []
     if not path.exists():
         raise ConfigError(f"Config not found: {path}")
     try:
@@ -982,8 +1022,17 @@ def cmd_artifact(s3_prefix: str, raw: bool = False, max_age=None) -> int:
     # the SERVED config for the no-gold-tree pipelines). Was BD+INF only -- COT + SERVED
     # added 2026-07-02 (WS-4) so `comp-freshness artifact <cot-or-mdpf-served-key>` finds
     # its registered content-mode entry instead of falling back to the mtime-guess default.
+    # ARTIFACT-LOOP SUB-FIX (FR1, independent of the env-flag guard): `artifact <target>` looks up
+    # ONE prefix; it has no legitimate need to read a HELD firm's config for a NON-held target. A
+    # held config is consulted here ONLY when the target itself is bd-scoped (an opal-data-bd key) --
+    # otherwise it is skipped, so `artifact <inf-key>` reads 0 held configs. (Belt-and-suspenders:
+    # _load_config's chokepoint also refuses a held read without the pipeline flag; this scoping
+    # makes the artifact command's intent explicit and independent of that flag.)
+    _target_is_bd = "opal-data-bd" in s3_prefix or "/black_diamond/" in s3_prefix
     entry = None
     for path in (BD_CONFIG, INF_CONFIG, COT_CONFIG, SERVED_CONFIG):
+        if _config_is_held(path) and not _target_is_bd:
+            continue  # non-held target never reads a held config
         if not path.exists():
             continue
         entries = _load_config(path)
