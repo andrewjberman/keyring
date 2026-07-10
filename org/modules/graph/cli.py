@@ -286,28 +286,34 @@ def cmd_trace(args):
     # F.3: normalize upstream/downstream aliases to canonical up/down
     direction = {"upstream": "up", "downstream": "down"}.get(args.direction, args.direction)
 
+    # CT1 (NFRA_TOOLPASS): collect all trace results into ONE JSON document. Previously each
+    # (node, direction) printed its own json.dumps, so `--direction both` (or `--all`) emitted
+    # multiple concatenated JSON objects on stdout -- a strict json.load rejects that. A single
+    # {"query", "traces":[...]} object is parseable and matches the sibling --json idiom.
+    json_traces: list = []
     for node in targets:
         if direction in ("up", "both"):
             results = g.upstream(node.id, max_depth=args.depth)
-            output = format_trace(node.id, results, "up")
             if args.json:
-                print(json.dumps({"node": node.id, "direction": "up",
-                                  "results": [{"id": n.id, "type": n.node_type, "label": n.label,
-                                               "edge": e.edge_type, "depth": d}
-                                              for n, e, d in results]}, indent=2))
+                json_traces.append({"node": node.id, "direction": "up",
+                                    "results": [{"id": n.id, "type": n.node_type, "label": n.label,
+                                                 "edge": e.edge_type, "depth": d}
+                                                for n, e, d in results]})
             else:
-                print(output)
+                print(format_trace(node.id, results, "up"))
 
         if direction in ("down", "both"):
             results = g.downstream(node.id, max_depth=args.depth)
-            output = format_trace(node.id, results, "down")
             if args.json:
-                print(json.dumps({"node": node.id, "direction": "down",
-                                  "results": [{"id": n.id, "type": n.node_type, "label": n.label,
-                                               "edge": e.edge_type, "depth": d}
-                                              for n, e, d in results]}, indent=2))
+                json_traces.append({"node": node.id, "direction": "down",
+                                    "results": [{"id": n.id, "type": n.node_type, "label": n.label,
+                                                 "edge": e.edge_type, "depth": d}
+                                                for n, e, d in results]})
             else:
-                print(output)
+                print(format_trace(node.id, results, "down"))
+
+    if args.json:
+        print(json.dumps({"query": query, "traces": json_traces}, indent=2))
 
 
 def _producer_node_types() -> set[str]:
@@ -651,19 +657,31 @@ def cmd_xref(args):
 
     if args.save:
         path = save_baseline(g, _CACHE_DIR)
-        print(f"Baseline saved: {len(g.nodes)} nodes, {len(g.edges)} edges")
-        print(f"Path: {path}")
+        if args.json:                                       # CX1: --json clean on the --save path too
+            print(json.dumps({"baseline_saved": {"nodes": len(g.nodes),
+                                                  "edges": len(g.edges), "path": str(path)}}, indent=2))
+        else:
+            print(f"Baseline saved: {len(g.nodes)} nodes, {len(g.edges)} edges")
+            print(f"Path: {path}")
         return
 
     # Load baseline
+    # CX1 (NFRA_TOOLPASS, the comp-diff CD1 analog): --json must emit ONLY JSON on stdout. These
+    # edge paths printed human text regardless of --json -> a strict parse failed at char 0.
     if not _BASELINE_FILE.exists():
-        print("No baseline found. Run 'comp-xref --save' to create one first.")
+        if args.json:
+            print(json.dumps({"error": "no baseline", "hint": "run comp-xref --save to create one"}))
+        else:
+            print("No baseline found. Run 'comp-xref --save' to create one first.")
         sys.exit(1)
 
     try:
         baseline = TraceGraph.load(_BASELINE_FILE)
     except Exception as e:
-        print(f"Failed to load baseline: {e}")
+        if args.json:
+            print(json.dumps({"error": f"failed to load baseline: {e}"}))
+        else:
+            print(f"Failed to load baseline: {e}")
         sys.exit(1)
 
     delta = diff_graphs(baseline, g)
