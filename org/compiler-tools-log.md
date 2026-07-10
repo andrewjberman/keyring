@@ -15355,3 +15355,21 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-iam | comp-iam role lambda-execution-role | PASS |
 | 2026-07-10T00:41Z | 0.6.0_AE_PartnerETL | comp-iam service mdpf-daily-trigger (FAIL, false-GREEN: reported s3:GetObject GRANTED for the head_object at :345 that returns AccessDenied -- binds the ACTION name, never the RESOURCE ARN; CTO ruled it a CLAUDE.md-level defect, routed to 0.8.0 with a negative-control fixture), comp-pipescript deployed mdpf_aggregate_aua.py (PASS: MATCH, gold half of the deploy landed), comp-pipescript deployed no-arg sweep (PASS: 59 MATCH/0 STALE/12 UNCOVERED -- covers NO Lambdas and NO EC2 shell artifacts, stated so it is never cited as such) | GAP: nothing answers "does this call, on this BRANCH, as this PRINCIPAL, against this RESOURCE, succeed in production?" -- the three exercise failures tonight (my branch, 0.5.0 principal, comp-iam resource) are ONE missing tool. simulate-principal-policy + pos/neg controls is the only instrument that answered it |
 | 2026-07-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-09 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TOOLCHECK.json --file... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-iam | comp-iam resource-sweep --s3-only | FAIL |
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md --file or... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-iam | comp-iam service bd_exporter | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-iam | comp-iam service inf_gold_layer | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-pipescript | comp-pipescript io infra/aws/lambda/v2_portal/01_market_overview/lambdas/market-overvie... | PASS |
+| 2026-07-09 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-trace | comp-trace lambda:market-overview-tiered-generator --direction down | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-trace | comp-trace lambda:opal-market-overview-tiered-generator --direction down | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-blast | comp-blast s3:json-tiered/market-overview/summary/all-returns.json | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-iam | comp-iam attach-census | FAIL |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-iam | comp-iam resource-sweep --s3-only | PASS |
+| 2026-07-09 | 0.8.0_AE_CloudCOmp | (no-TO) | comp-iam | comp-iam resource-sweep --s3-only | PASS |
+- 2026-07-10 (2.0.0_SA_COO, drive cycle 17): fabric-check --blocks (deaf=1, correctly flagged 0.7.0), deploy_ledger check --red (0 stranded/5 HELD), safe-commit x3 (surface-check clean). FAIL->FIXED: the SoD reachability (b) limb `ps -ef | grep -c "inbox-watch.sh <serial> stream"` matches its own grep -- reports 3 armed watchers for serial 9.9.9_NOBODY, which has never existed. UNDISCRIMINATING; it certified NFRA_TOOLCHECK.P4 own SoD. Fixed drive/SKILL.md:340 (ba013edb0). Gap: the tools that verify the tools were never given a negative control -- now in P4 scope. Rule-21: raw grep/find used without rail-checked markers, owed.
+| 2026-07-09 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
