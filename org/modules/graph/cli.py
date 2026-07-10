@@ -464,15 +464,25 @@ def cmd_diff(args):
         )
 
     if result.returncode != 0:
-        print(f"git diff failed: {result.stderr.strip()}")
+        # CD1 (NFRA_TOOLPASS): --json must emit ONLY JSON on stdout. The human-text lines
+        # ("git diff failed", "No changed files", "Changed files: N", "no graph nodes")
+        # were printed regardless of --json, so a strict parser failed at char 0.
+        if args.json:
+            print(json.dumps({"error": f"git diff failed: {result.stderr.strip()}"}))
+        else:
+            print(f"git diff failed: {result.stderr.strip()}")
         sys.exit(1)
 
     changed_files = [f.strip() for f in result.stdout.strip().splitlines() if f.strip()]
     if not changed_files:
-        print("No changed files detected.")
+        if args.json:
+            print(json.dumps({"changed_files": 0, "affected": []}, indent=2))
+        else:
+            print("No changed files detected.")
         return
 
-    print(f"Changed files: {len(changed_files)}\n")
+    if not args.json:
+        print(f"Changed files: {len(changed_files)}\n")
 
     # Map each changed file to graph nodes
     all_affected = []
@@ -494,7 +504,8 @@ def cmd_diff(args):
                     matched_nodes.append(node)
 
         if not matched_nodes:
-            print(f"  {fp_normalized} -- no graph nodes (not tracked)")
+            if not args.json:                       # CD1: don't pollute --json stdout
+                print(f"  {fp_normalized} -- no graph nodes (not tracked)")
             continue
 
         for node in matched_nodes:
