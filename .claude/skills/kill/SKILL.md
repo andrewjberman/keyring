@@ -107,33 +107,38 @@ win-temp ~2.0 GB, 244-of-251 dead scratchpad dirs ~1.5 GB) with the current sess
    (default `all`, which = scripts+apps, NEVER storage). Execute = true iff the args
    contain `go`, `force`, or `--execute`. Opt-ins: apps -> `--webview2`, `--onedrive`;
    storage -> `--caches`, `--pycache`, `--recyclebin`, `--docker`, `--docker-volumes`.
-2. **Always dry-run first.** Run the correct engine WITHOUT `-Execute` and show the plan.
-   - Process modes (`scripts` / `apps` / `all`):
+2. **Dispatch on whether an execute token was given** (`go` / `force` / `--execute`):
+
+   - **Process modes (`scripts` / `apps` / `all`) WITH an execute token** -> run the engine
+     directly WITH `-Execute` and report. **No dry-run first** -- process kills are
+     recoverable (relaunch) and NOT on the CLAUDE.md human-confirmation set, and the operator
+     already said `go`, so do not make them look at a plan they've already authorized.
+     ```
+     & .tools/kill-maint.ps1 -Mode <scripts|apps|all> -Execute [-IncludeWebView2] [-IncludeOneDrive]
+     ```
+   - **Process modes WITHOUT an execute token** (bare `/kill apps`) -> run WITHOUT `-Execute`
+     to show the plan, kill nothing, and tell the operator to append `go` to apply.
      ```
      & .tools/kill-maint.ps1 -Mode <scripts|apps|all> [-IncludeWebView2] [-IncludeOneDrive]
      ```
-   - Storage mode:
+   - **Storage mode -- ALWAYS dry-run first, even with `go`** -> because `rm -rf` IS on the
+     CLAUDE.md human-confirmation list, run WITHOUT `-Execute` first, present the plan, and
+     confirm the operator's `go` maps to THIS plan before running with `-Execute`. Never chain
+     dry-run -> execute silently; never auto-run storage.
      ```
-     & .tools/kill-storage.ps1 [-Caches] [-Pycache] [-RecycleBin] [-Docker] [-DockerVolumes]
+     & .tools/kill-storage.ps1 [-Caches] [-Pycache] [-RecycleBin] [-Docker] [-DockerVolumes]   # plan first, always
+     & .tools/kill-storage.ps1 -Execute [...]                                                   # only after the operator confirms the plan
      ```
-3. **If an execute token was given**, run again WITH `-Execute` and report the
-   killed/deleted/reclaimed summary. For `storage`, because it is recursive deletion,
-   ALWAYS present the dry-run plan first and confirm the operator's `go` maps to this
-   run before executing -- do not chain dry-run -> execute silently.
-   ```
-   & .tools/kill-maint.ps1 -Mode <mode> -Execute [...]      # processes
-   & .tools/kill-storage.ps1 -Execute [...]                 # disk
-   ```
-   If no execute token, present the dry-run plan and tell the operator to append
-   `go` (e.g. `/kill apps go`, `/kill storage --caches go`) to apply.
-4. **Report** the before/after: what was protected (count), what was killed/deleted, MB
+3. **Report** the before/after: what was protected (count), what was killed/deleted, MB
    reclaimed, anything skipped (locked/in-use). Keep it tight; ASCII only.
 
 ## Safety model / notes
 
 - **Process modes are recoverable by design.** Killing a bloat app or an orphan script
-  is reversible (relaunch), and is NOT in the CLAUDE.md human-confirmation set. The
-  dry-run-first flow is the guardrail: you see the exact PID list before anything dies.
+  is reversible (relaunch), and is NOT in the CLAUDE.md human-confirmation set. So `go`
+  executes directly -- no dry-run first. The guardrail is the invocation itself: bare
+  `/kill apps` (no `go`) shows the exact PID plan and kills nothing; add `go` only when
+  you want it applied.
 - **Storage mode is NOT recoverable** -- `rm -rf` is exactly the recursive-deletion case
   that IS on the CLAUDE.md human-confirmation list. Its guardrails are stronger to match:
   allowlist-only (never deletes outside the 7 vetted junk roots), never a root itself,
@@ -149,5 +154,6 @@ win-temp ~2.0 GB, 244-of-251 dead scratchpad dirs ~1.5 GB) with the current sess
 - **Snapshot-once semantics.** Each run enumerates processes once and acts on that
   snapshot; a browser that churns renderers between runs may show a slightly different
   count -- expected, not a bug.
-- Engine + full protect logic: `.tools/kill-maint.ps1`. Read the `-WhatIf`-style
-  dry-run output before ever passing `go`.
+- Engine + full protect logic: `.tools/kill-maint.ps1`. For process modes, `go` executes
+  directly; run the bare (no-`go`) plan first only when you want to preview. For `storage`,
+  the dry-run plan + explicit confirm is mandatory every time (recursive deletion).
