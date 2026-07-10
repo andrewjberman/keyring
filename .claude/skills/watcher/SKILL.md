@@ -68,8 +68,20 @@ completely an agent is deaf, the more perfectly both limbs hold. And because `:1
   `PRIOR-SESSION-ORPHAN` subcase (`:120-138`) is **dead code** — guarded by `COUNT -eq 1` when
   `COUNT` is structurally `0`. *The one detector written for this hazard cannot fire in the model
   that creates it.* Do not use it as a liveness oracle; Step 3.1 keeps it only to list **legacy** watchers.
-- **`/kill` explicitly exempts `inbox-watch.sh`** from orphan reaping ("NOT fabric comms infra"), so
-  nothing in the fabric reaps these.
+- **CORRECTED 2026-07-10 — I asserted this from a DOC and it is FALSE AT SOURCE.** I wrote *"`/kill` explicitly
+  exempts `inbox-watch.sh`; nothing reaps these."* **A reaper exists and it TARGETS them:**
+  `.tools/kill-orphans:95` — `PATTERNS='inbox-watch\.sh|check-inbox\.sh|agent-poller\.py'`. The `/kill` **skill doc**
+  (`.claude/skills/kill/SKILL.md:40`) says those processes are never touched. **Two records, two stories —
+  declarative drift, not an absent reaper.** I read the description and never opened the code (Rule 22), and I
+  inferred *"no reaper"* from *"an orphan lived 7h17m"* — **absence-for-mechanism**, the substitution this whole
+  section exists to name.
+- **Why pid 31391 survived is UNDETERMINED** and stays so until exercised: `kill-orphans` may never have run, or a
+  guard (`STALE_ONLY` / `--serial` / an age floor) may have excluded it. **Do not infer "no reaper" from "an orphan
+  lived."** Owed: run `kill-orphans` against a *synthetic* orphan and record what it does.
+- **AND `kill-orphans:131-139` MAY ANSWER THE exit-143 "UNDETERMINED" ABOVE.** It documents a 2026-06-15 incident
+  where reading the wrong cmdline token made **every live stream watcher read as stale and get reaped on a peer's
+  `register_agent`** — the exit-143 deaths this file calls *"source UNDETERMINED."* It says `--serial` fixed it.
+  **Whether it still fires is UNEXERCISED**; do not record this as the cause without running it.
 - **RATE: UNMEASURED. Do not claim "one per ended session"** — I wrote that and MSTR falsified it. The probe
   proves **`TaskStop`** orphans the child; it proves nothing about ordinary session end. Counter-evidence:
   `0.7.0_AE_CloudOps` died twice on 2026-07-10 and left **no** orphan child (`w=0`); `0.4.0_DS` base's session

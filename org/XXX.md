@@ -189,8 +189,12 @@ is one only a live consumer can produce: an agent-side ack, `TaskOutput(<id>) �
 or a broker receipt. A fresh session that finds a matching process has found an ORPHAN —
 kill it (own serial only) before arming, or two streams race the same `mv` and split your
 inbox silently. `watcher-status.sh` cannot see stream watchers at all (`:63` `$NF == serial`;
-a stream's `$NF` is `stream`), and `/kill` exempts `inbox-watch.sh` from reaping — so
-nothing detects or reaps these. **TRAP:** MSYS `ps -p 1` fails, so a naive ppid-liveness
+a stream's `$NF` is `stream`). **CORRECTED 2026-07-10: I wrote here that `/kill` exempts `inbox-watch.sh` and that
+nothing reaps these. FALSE AT SOURCE** — `.tools/kill-orphans:95` `PATTERNS='inbox-watch\.sh|…'` **targets** them,
+and `:131-139` records it once **over-reaping LIVE watchers**. The `/kill` skill *doc* claims exemption. Two records,
+two stories. I asserted a mechanism from a description without opening the code (Rule 22), and inferred *"no reaper"*
+from *"an orphan lived."* **Why pid 31391 survived 7h17m is UNDETERMINED** until `kill-orphans` is exercised against
+a synthetic orphan. **Nothing detects them** (that limb stands: `watcher-status.sh` is blind by construction). **TRAP:** MSYS `ps -p 1` fails, so a naive ppid-liveness
 test flags every healthy `ppid=1` wrapper as an orphan (7 false positives in the incident
 scan). Positive-control against a watcher you know is good.
 
