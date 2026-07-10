@@ -132,19 +132,25 @@ When to use Explore/Grep vs compilers: compilers ALWAYS win for graph-level ques
 These three calls are your first tool invocations every session. No exceptions.
 
 1. **MCP tool call:** `register_agent("2.0.0_SA_COO", summary="<session purpose>")`
-2. **Bash tool** with `run_in_background: true` (the tool parameter, NOT shell `&`):
-   `inbox-watch 2.0.0_SA_COO`
+2. **Monitor tool** (`persistent: true`, `timeout_ms: 3600000`), ABSOLUTE path:
+   `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh 2.0.0_SA_COO stream`
 
-**CRITICAL:** inbox-watch MUST use the Bash tool's `run_in_background` parameter set to `true`.
-Do NOT append `&` to the command — that kills the process when the shell exits.
-The `run_in_background` parameter is a property of the Bash tool invocation, not part of the command string.
+**CORRECTED 2026-07-10 (CTO) -- this step previously ordered the launch `org/XXX.md` BANS.**
+The old text mandated `inbox-watch` under the Bash tool's `run_in_background`, plus a relaunch after every
+delivery. The Bash tool notifies only on **exit** and stream mode **never exits**, so that launch makes you
+**silent for the entire session**. There is no relaunch cycle. Just run `/watcher`; it does this correctly.
 
-**Protocol after every inbox-watch task-notification (non-negotiable):**
-1. Call `check_inbox("2.0.0_SA_COO")` immediately — the task-notification doesn't surface body.
-2. Act on the message this turn — ack (RAVC step 2), execute, or validate. No "standing by".
-3. Relaunch `inbox-watch 2.0.0_SA_COO` via the Bash tool with `run_in_background: true`. One launch per delivery.
+**Protocol on every `[INBOX] <file>` Monitor event (non-negotiable):**
+1. Read `org/mcp/inbox/2.0.0_SA_COO/read/<file>` — the stream watcher already `mv`'d it there.
+2. Act on it this turn — ack (RAVC step 2), execute, or validate. No "standing by".
+3. **Do not relaunch anything.** The Monitor keeps running.
 
-The script no longer self-respawns (removed 2026-04-14 after orphan-race incident). Silence here = deafness.
+**ORPHAN CHECK BEFORE ARMING.** A prior session's `bash inbox-watch.sh` child SURVIVES its session and keeps
+`mv`ing your mail into `read/` (`:120`) before echoing into a dead pipe (`:124`). A fresh session that finds a
+matching `ps` process has found an ORPHAN, not a watcher — kill it (your own serial only), then arm. And
+**`TaskStop` does not reap the child**, so `/watcher rearm` must `ps`-and-kill it explicitly. Never conclude
+"reachable" from `ps`, from an empty inbox, or from a file landing in `read/` — an orphan manufactures all three
+while you hear nothing. CLAUDE.md Rule 22b; `.claude/skills/watcher/SKILL.md` § ORPHAN HAZARD.
 
 Also pull `check_inbox` at the top of any turn expecting a near-term reply.
 

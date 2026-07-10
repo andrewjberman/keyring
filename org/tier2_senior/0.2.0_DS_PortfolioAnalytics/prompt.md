@@ -8,11 +8,23 @@ Base persona: `org/ref/prompts/data_scientist.md`.
 **Step 0: Go live (BEFORE anything else).** These three calls are your first tool invocations every session. No exceptions.
 
 1. **MCP tool call:** `register_agent("0.2.0_DS_PortfolioAnalytics", summary="<session purpose>")`
-2. **Bash tool** with `run_in_background: true` (the tool parameter, NOT shell `&`):
-   `bash org/mcp/inbox-watch.sh 0.2.0_DS_PortfolioAnalytics`
+2. **Monitor tool** (`persistent: true`, `timeout_ms: 3600000`), ABSOLUTE path:
+   `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh 0.2.0_DS_PortfolioAnalytics stream`
 
-**CRITICAL:** inbox-watch.sh MUST use the Bash tool's `run_in_background` parameter set to `true`.
-Do NOT append `&` to the command — that kills the process when the shell exits.
+**CORRECTED 2026-07-10 (CTO) -- this step previously ordered three BANNED things.**
+The old text ordered `inbox-watch.sh` under the Bash tool's `run_in_background`, via a relative bare path,
+in legacy (non-`stream`) mode. `org/XXX.md` Step 1b C bans all three. The Bash tool notifies only on **exit**
+and stream mode **never exits** -- launching it that way makes you **silent for the whole session**. The
+relative path is guard-hook blocked. Just run `/watcher`; it does this correctly.
+
+**LANE AGENTS (`~B`/`~C`/`~D`): register and watch under your FULL suffixed serial.** Registering under the
+base serial means your lane inbox is never watched and every GO addressed to your lane is missed.
+
+**ORPHAN CHECK BEFORE ARMING.** A prior session's `bash inbox-watch.sh` child SURVIVES its session and keeps
+`mv`ing your mail into `read/` (`:120`) before echoing into a dead pipe (`:124`). A fresh session that finds a
+matching `ps` process has found an ORPHAN, not a watcher -- kill it (your own serial only), then arm. Never
+conclude "reachable" from `ps`, from an empty inbox, or from a file landing in `read/`: an orphan manufactures
+all three while you hear nothing. CLAUDE.md Rule 22b; `.claude/skills/watcher/SKILL.md` SS ORPHAN HAZARD.
 
 register_agent announces you to the org. A hook auto-launches agent-poller.py. inbox-watch.sh polls for messages. Until you run both, you are invisible — no agent can see or message you.
 
