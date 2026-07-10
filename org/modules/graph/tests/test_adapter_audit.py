@@ -115,6 +115,44 @@ def test_d11_lambda_backed_adapter_is_not_applicable_not_failed():
     assert fields == {} and uri == ''
 
 
+def test_limb2_unsupported_path_shape_is_not_fetch_failed():
+    """SECOND LIMB of the same mislabel, found 2026-07-10 answering Andrew's scope question.
+    getYieldCurveData reads a static .json from a path this tool does not model. It reported
+    UNVERIFIED: FETCH_FAILED -- claiming a read that never happened."""
+    body = 'const raw = await apiRequest<YieldCurveResponse>(`/macro/yield_curve_fred.json`)'
+    prefix, status = A._derive_s3_target(body, 'YieldCurveResponse')
+    assert prefix is None
+    assert status == A.UNSUPPORTED_PATH_SHAPE
+    fields, st, uri, _ = A._fetch_s3_raw_fields(body, 'YieldCurveResponse')
+    assert st == A.UNSUPPORTED_PATH_SHAPE and uri == '', 'nothing was fetched; claim no uri'
+
+
+def test_limb2_POSITIVE_CONTROL_a_real_listing_failure_is_still_fetch_failed(monkeypatch):
+    """NOT a blanket relabel. A modelled segment whose _sample_id listing comes back empty
+    DID touch S3, and must still report FETCH_FAILED."""
+    monkeypatch.setattr(A, '_sample_id', lambda seg: None)
+    body = 'const raw = await apiRequest<T>(`/advisors/${id}/book.json`)'
+    prefix, status = A._derive_s3_target(body, 'T')
+    assert prefix is None
+    assert status == A.FETCH_FAILED, 'an attempted-and-empty listing is a real failure'
+
+
+def test_limb2_unsupported_path_reports_NOT_APPLICABLE_not_unverified(tmp_path, monkeypatch):
+    monkeypatch.setattr(A, '_find_adapter_source',
+                        lambda n: (_WS / 'f.ts', 'const raw = await apiRequest<T>(`/macro/yc.json`)\n  return raw'))
+    monkeypatch.setattr(A, '_import_corpus', lambda f: [(Path('t.ts'), 'interface T {\n  a: string\n}\n')])
+    ns = argparse.Namespace(adapter_fn='f', severity=None, manifest_dir=str(tmp_path))
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        rc = A.cmd_audit(ns)
+    out = buf.getvalue()
+    assert rc == A.RC_CANNOT_EVALUATE
+    assert 'NOT-APPLICABLE' in out and 'UNSUPPORTED_PATH_SHAPE' in out
+    assert 'FETCH_FAILED' not in out
+    assert 'could not be read' not in out, 'must not claim a read that never happened'
+    assert 'verified: false' in (tmp_path / 'f.yaml').read_text()
+
+
 def test_d11_no_s3_source_never_prints_fetch_failed(tmp_path, monkeypatch):
     monkeypatch.setattr(A, '_find_adapter_source',
                         lambda n: (_WS / 'f.ts', 'return await apiRequest<T>(`/api/scoped/x`)'))
