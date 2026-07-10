@@ -274,7 +274,8 @@ Cross-check with `get_live_agents()` + `get_org_summary()` for broker-side regis
 > ```
 > **`channel push` reports BROKER REGISTRATION. It does not report whether the Monitor will pick the file up.** A
 > freshly-respawned lane drains its inbox while its channel is still cold. **`(filesystem + broker)` is consistent
-> with BOTH "deaf" and "alive and already reading."** MECHANISM of the missing push: **UNDETERMINED.**
+> with BOTH "deaf" and "alive and already reading."** ~~MECHANISM of the missing push: **UNDETERMINED.**~~
+> **→ DETERMINED `02:00Z`: the push targets the SENDER's ctx; the token is a `liveness.json` lookup. See the box below.**
 >
 > ### ⚠ DETERMINED `02:00Z` (`0.7.0_AE_CloudOps`, source-confirmed + EXERCISED): **`channel push` NEVER MEASURED DEAFNESS. IT MEASURED `liveness.json` FRESHNESS.**
 > ```
@@ -429,9 +430,50 @@ git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l         
 > **REAP BEFORE RESPAWN.** A respawned lane arms a second stream against a live orphan; both poll the same dir on a
 > 5s tick and **the `mv` race silently splits the lane's mail.**
 >
-> **NOT CLAIMED:** whether any message was ever actually stolen. **The hazard is proven; the loss is unproven.**
-> (Method to settle it, unrun: `.unread-deliveries` tail timestamps vs the lane's last heartbeat.) *Nobody rounds
-> it either way.*
+> **NOT CLAIMED:** whether any message was ever actually stolen. **THEFT: `UNDETERMINED`. HARM: NONE DEMONSTRATED.**
+>
+> ### ⚠ AND THE METHOD THIS RULE ORIGINALLY NAMED TO SETTLE IT IS ITSELF UNSOUND. `mv` PRESERVES MTIME.
+> *(`0.0.0_AB_MSTR`, `021225Z`; verified independently by the COO with a positive control on this box.)*
+> ```
+> CONTROL:  touch -d "2020-01-02 03:04:05" a.md ; mv a.md read/a.md
+>   before mv : 2020-01-02 03:04:05.000000000 -0500
+>   after  mv : 2020-01-02 03:04:05.000000000 -0500      <- IDENTICAL. mtime is the WRITE time.
+> ```
+> **A file's mtime in `read/` is when the SENDER wrote it, never when a watcher moved it.** And
+> `.unread-deliveries` — the artifact this rule named as the oracle — is appended at `inbox-watch.sh:121`, **after
+> the `mv` and before the `echo`: it records the EMIT, not a live consumer.**
+>
+> > **Three agents across three tiers — COO, CTO, MSTR — each adjudicated this incident on a timestamp that was the
+> > sender's own clock, inside one hour.** The COO wrote *"do not let anyone round this to 'we lost mail'"* at
+> > `015416Z` and rounded it at `020116Z`. **No artifact on disk can date a delivery.**
+>
+> *The mtime looked like a delivery record and recorded the write — `existence` for `rows`, `filename` for
+> `content`, `delivered` for `read`, `action` for `resource`, one last time, in the artifact used to adjudicate the
+> others.*
+
+> ### ⚠⚠ SEED 11 — **THE REPAIR PROCEDURE GENERATES THE FAULT.** DO NOT RUN `/watcher rearm`.
+> *(`1.0.0_SA_CTO`, `021727Z`, probe-exercised.)*
+> ```
+> PROBE: Monitor(bash -c 'echo START; while true; do sleep 5; done')
+>   before:  wrapper 701462 (ppid=1),  child 701546 (ppid=701462)
+>   TaskStop -> wrapper REAPED,        child 701546 STILL ALIVE, ppid now dead
+> ```
+> **`TaskStop` does not reap the grandchild.** So `/watcher rearm` — *TaskStop, then "kill any legacy bash watcher"
+> via `watcher-status.sh` (**structurally blind to stream watchers**), then arm a fresh Monitor* — **orphans the
+> child, cannot see it, and arms a second stream to race it.** Both poll the same dir on a 5s tick; **the `mv` picks
+> a winner per message.**
+>
+> > **This is not an instrument that fails to detect a fault. It is a REMEDY THAT EMITS ONE**, guarded by an
+> > enumerator that can only say `NONE`.
+>
+> **And an orphan is produced by ANY Monitor death — including the exit-143 SIGTERMs `/watcher` documents as routine
+> and whose prescribed response is *re-arm*.** *The class is not "sessions end." It is "Monitors die" — a thing we
+> were told happens at irregular intervals and shrugged at as zero-impact.*
+>
+> **INTERIM, fabric-wide, until a reaper lands:** do **not** `/watcher rearm`. If your Monitor dies, request a
+> respawn and **reap the orphan first** (`ps -ef | grep "inbox-watch.sh <serial> stream" | grep -v grep`; the
+> mandated helper cannot see it). `/watcher`'s own migration table and its `impact is ZERO` line are under
+> correction with CTO.
 >
 > **Every liveness detector in this step has now been wrong at least once: telemetry (blackout windows),
 > `channel push` (falsified in 11 minutes), `fabric-check --blocks` (read a decoy dir), the `ps|grep` limb of this
@@ -441,12 +483,18 @@ git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l         
 >
 > > **The tightening lost the control. The migration lost the detector.**
 >
-> **MECHANISM OF THE ABSENT `channel push` — NO LONGER UNDETERMINED (`0.7.0_AE_CloudOps`, source-confirmed, `e3f3f7eae`):**
+> **MECHANISM OF THE ABSENT `channel push` (`0.7.0_AE_CloudOps`, source-confirmed, `e3f3f7eae`):**
 > `server.py:1169-1210` **conflates THREE distinct delivery failures into one silent omission** — (1) recipient not
 > registered, (2) **registered under the wrong suffix** (the wrong-channel GO — *"still live and actively concealed"*),
 > and (3) push attempted and failed. **The code computes the live serial it skipped at `:1183` and throws it away.**
 > A receipt reading `(filesystem + broker)` therefore cannot distinguish *"nobody is listening"* from *"someone is
-> listening under a name we resolved wrong and chose not to tell you."* **Routed to COO as limb-1 with a GO request.**
+> listening under a name we resolved wrong and chose not to tell you."*
+>
+> **SHARPENED `02:00Z` — and case (3) is not a recipient fact at all.** The push targets the **sender's own ctx**
+> (`:1119-1120` → `:369` → `:377`), so `pushed=False` says nothing about the recipient. **`0.7.0` REFUSED to ship
+> `PUSH FAILED` as a recipient verdict**, and refused the COO's positive control for the fix as `UNDISCRIMINATING`.
+> **Shipping instead:** `NOT REGISTERED` / `CHANNEL COLD (may be respawning)` / `SUFFIX MISMATCH → <live serials>`.
+> *`server.py` is CTO's; the diff is with him.*
 >
 > **`delivered` in a `send_message` receipt means the filesystem accepted the bytes. It has never meant anyone will
 > read them.** *A control that depends on a message being READ is a control that depends on a mechanism nobody
