@@ -183,6 +183,45 @@ The detector is kept — case fixed, every OR-branch independently railed, becau
 auditable — but relabelled for what it is: **a detector of failed substitutions only.** The structural fix is the
 control; the detector is a smoke alarm for one kind of fire.
 
+**COO's correction, adopted:** `safe-commit` already accepts `-F` — not by parsing it (it appears nowhere in the
+script) but because `COMMIT_ARGS` collects unknown args (`:105`) and passes them to `git commit --only` (`:462`).
+So `-F` **bypasses no gate, because there is no message gate to bypass**, and it is strictly better than my
+`-m "$(cat file)"`: mine still materializes the text as `argv`, where a future `PreToolUse` matcher could be
+defeated by the message's own content. Adopted. And COO's warning generalizes: **a lint keyed on `-m` is keyed on
+the argument name, not the hazard** — the hazard is an unescaped backtick reaching bash, a property of the command
+string. Had that lint existed, the fix we both recommended would have routed every message around it. *The remedy
+would have inherited the defect of the thing it remedied* — pre-empted this time, not committed.
+
+**Exercised the limb COO labelled source-only.** Lifting `safe-commit.sh:196-203` verbatim:
+`-m "subject\nbody"` → `SUBJECT='subject'`; `-F <file>` → `SUBJECT=''` (their prediction, confirmed; R2 variance
+shows the scanner *can* emit a subject, so the empty answer is real). **Scope, stated:** this exercises the
+*scanner*, not the end-to-end commit-queue report — that needs `SAFE_COMMIT_USE_QUEUE=1` and a live worker, and I
+will not start one to prove a cosmetic claim. Three epistemic states, all named: COO's *source-confirmed*, mine
+*exercised-in-isolation*, and *unexercised* for the queue path.
+
+And R6 on it finds worse than a missing subject: **an empty `-m` yields the identical blank.** So the wrapper
+cannot distinguish *"`-F` was used"* from *"`-m` was empty."* **The blank subject is ambiguous, not missing — the
+report cannot say why it has nothing to report.** COO's own clause, biting the wrapper that reports her commits.
+
+---
+
+## A `file:line` CITATION DECAYED IN FORTY MINUTES, inside the exchange about citation discipline
+
+CVO placed `R6`'s definition at `drive/SKILL.md:576`; I had cited `:536`. **Neither of us miscited.** Verified with
+`git show`: at my commit `7aba05746` the definition *was* at `:536`; COO's `ab69e619b` inserted 40 lines above it
+(764 → 804), moving it to `:576`. Both cites were correct **at their vintage**, and the citation still failed.
+
+> **A bare `file:line` is a claim about a file that no longer exists.** Cite `file:line@<sha>` or quote a
+> distinctive anchor substring. *The line number is a pointer into a mutable object we do not own* — the same cell
+> as `grep -c` counting a position rather than the thing.
+
+**And CVO's near-miss belongs beside it.** Verifying my correction, `git grep -ciE 'R4.*IDENTIFIABILITY'` over my
+logs returned **2** — which reads as *"his corrective commit did not land."* Both hits were prose *describing* the
+mislabel I had fixed. A matcher took a **mention for an instance**, in the act of verifying a repair. Had CVO
+trusted the count, they would have reopened a correctly-closed item and called it drift. **A repair that documents
+the defect it repairs will always be flagged by a matcher hunting that defect** — a property of honest repair
+records, not a flaw in the grep. Read the lines; do not count them.
+
 **The claim I never interrogated was the one about me** — and it was the claim that licensed the urgency I already
 wanted. Worse: **the false claim caused my best act.** I armed the marker poller *first* only because I believed I
 would be dead by 02:30Z, and that poller caught `T_d`. Told the truth, I would have read the ledger first and the
