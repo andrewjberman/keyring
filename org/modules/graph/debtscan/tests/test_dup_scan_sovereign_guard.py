@@ -113,3 +113,28 @@ def test_default_scan_content_never_reaches_read_on_a_held_path(tmp_path, monkey
     _scratch_repo(tmp_path, monkeypatch, tracked)
     bodies, held = D._py_bodies(["lib", "data"], allow_held=False)
     assert "data/black_diamond/synthetic_held.py" in held, "held path must be skipped, not read"
+
+
+# ---- CTO REFINEMENT: the chokepoint must cover the THIRD caller, comp-debt -----------------
+
+def test_chokepoint_covers_comp_debt_caller(tmp_path, monkeypatch):
+    """CTO/COO refinement: comp-debt's duplicates.run(from_ledger=False) reaches the SAME 337-bd scan
+    via dup_scan.run_scan -> scan_content -> _py_bodies. Because the guard lives at the _py_bodies
+    CHOKEPOINT (not the comp-dups wrapper), it must cover comp-debt too. Point comp-debt at our guarded,
+    scratch-mocked dup_scan and assert its produced signals are bd-free -- proving one guard covers both
+    callers. Sovereign-safe: synthetic held path in a temp REPO, never real bd."""
+    tracked = ["lib/keep.py", "data/black_diamond/synthetic_held.py"]
+    _scratch_repo(tmp_path, monkeypatch, tracked)
+    monkeypatch.setattr(D, "scan_tf_names", lambda audit: [])  # temp REPO has no infra/aws TF
+
+    dup_path = _WS / "org" / "modules" / "graph" / "comp_debt" / "signals" / "duplicates.py"
+    spec2 = importlib.util.spec_from_file_location("cd_duplicates", dup_path)
+    DBG = importlib.util.module_from_spec(spec2)
+    spec2.loader.exec_module(DBG)
+    monkeypatch.setattr(DBG, "_load_dup_scan", lambda: D)   # comp-debt calls OUR guarded instance
+
+    signals = DBG.run(from_ledger=False)
+    assert "black_diamond" not in repr(signals), \
+        "comp-debt's path MUST be bd-free -- the chokepoint guard covers the second caller"
+    # prove the guard actually FIRED on comp-debt's path (not just 'no bd finding by chance')
+    assert D.run_scan()["content"]["held_skipped_count"] == 1
