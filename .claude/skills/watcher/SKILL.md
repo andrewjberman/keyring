@@ -138,7 +138,7 @@ an empty `TaskList`, and never conclude "reachable" off (3) alone.
 |---|---|
 | `/watcher` | Arm-at-load check, **once**. Register if STALE; arm the Monitor if absent; pull inbox; report. **No loop is armed** — the persistent Monitor is the standing mechanism. |
 | `/watcher status` | Report-only: registration + Monitor presence + inbox. No changes. |
-| `/watcher rearm` | Force a clean re-arm: TaskStop any existing inbox Monitor for this serial, kill any legacy bash watcher, arm a fresh stream Monitor. |
+| `/watcher rearm` | Force a clean re-arm: TaskStop the existing Monitor, **then `ps` for its bash child and KILL IT**, then arm a fresh stream Monitor. **DO NOT SKIP THE CHILD KILL — `TaskStop` DOES NOT REAP IT.** Exercised 2026-07-10: `TaskStop` reaped the wrapper (pid 701462) and left the child (pid 701546) running with a dead parent. Arming on top of that survivor makes two streams race the same `mv`. Before this was found, **`/watcher rearm` manufactured an orphan and then raced it** — the repair procedure generated the fault it was repairing, and `watcher-status.sh` (Step 3.1) could not see the survivor. |
 | `/watcher off` / `stop` / `Nm` / `10m` (legacy interval forms) | **Deprecated, accepted gracefully.** There is no loop to start or stop. Run the one-shot check, then if a stale `/watcher` CronCreate job exists, cancel it (Step 5) and say so. |
 
 ## When to invoke
