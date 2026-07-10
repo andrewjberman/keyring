@@ -15934,3 +15934,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
 | 2026-07-10 | 0.7.0_AE_CloudOps~C | NFRA_TOOLPASS | comp-grep/comp-constants/safe-commit/commit-gate/owned-paths/pytest | AE lane-committer sweep: canon-motif+comp-cluster+comp-constants closed (8 commits); `check --lane inf` ast-parsed bd source (sovereign breach) -> halted+disclosed -> CC2 structural guard b4868c28b | PASS (1 bounded breach, halted+structurally fixed) |
 | 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 0.3.4_RD_SecurityScanner | SSCN_PFOE.001.add-pfoe-preset-relabel-divz | comp-surface-check | comp-surface-check check --mode advisory --file src/pages/SecurityScanner/constants.ts | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/tests/test_d... | PASS |
+| 2026-07-10 | 0.3.4_RD_SecurityScanner | SSCN_PFOE.001.add-pfoe-preset-relabel-divz | comp-surface-check | comp-surface-check check --mode advisory --file org/tier3_junior/0.3.4_RD_SecurityScann... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/tests/test_d... | PASS |
+
+- 2026-07-10T2120Z 2.0.0_SA_COO tool-check sweep: CronList (no comp-dups cron) + bd-excluded git grep (chokepoint callers, family closed at 3) + merge-base ancestry x5 (comp-dispatch/comp-constants closes verified by hash). Commit-gate every-commit-breach scare RULED OUT at comp_constants_cli.py:202-205 (--file scopes scan_all to one file). comp-debt found = 3rd latent bd-scanner, HELD.
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
