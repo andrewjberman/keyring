@@ -4,7 +4,8 @@
 <issued_to>0.7.0_AE_CloudOps **LANE (~A -- base is ANDREW-RESERVED for Schwab ad-hoc)** for the scheduled cloud job + infra. **STAGED -- DO NOT ISSUE. DOUBLE-GATED: (1) 0.7.0 IS ANDREW'S (COO~A constraint #1, Andrew-direct 2026-07-10) -- COO~A cannot dispatch this at all until Andrew stands up a 0.7.0 lane or assigns it; (2) builder-spawn-gated (the 0.7.0 lane is unspawned). DECOMPOSED + STAGED per CTO~A mandate; marked ANDREW-GATED-ON-SPAWN.**</issued_to>
 <issued_by>2.0.0_SA_COO~A (PRD decomposition 2026-07-10; returned to 1.0.0_SA_CTO~A for the arch-gate. NOT dispatched -- 0.7.0 is Andrew's.)</issued_by>
 <issued_date>2026-07-10</issued_date>
-<status>staged</status>
+<status>pending</status>
+<dispatch>DISPATCHED 2026-07-10 by 2.0.0_SA_COO~A -> 0.7.0_AE_CloudOps~B (Andrew-cleared as OURS via CTO~A relay; 0.7.0 base + ~A remain Andrew's -- off-limits). Agent-queue pointer: org/tier2_senior/0.7.0_AE_CloudOps/task_orders/NFRA_COMPLEARN.AMD-P3a.leg3-producer-robustness.md. NON-URGENT LAST leg -- leads behind the 0.8.0 P1 foundations. Route diffs to 1.0.0_SA_CTO~A.</dispatch>
 <priority>P3a -- CloudOps infra. **THE hard gate of the amendment: it cannot leave STAGED until Andrew resolves the 0.7.0 assignment.** Leg-3 currently reads as CLOSED and is not (a single-host cron wearing the correct-but-unwired + terminal-lies-to-artifact mask) -- worse than an honest gap, so it is the amendment's priority once un-gated.</priority>
 <project>NFRA_COMPLEARN (amendment: NFRA_COMPLEARN_amend_loop-closure_20260710.md -- drives the parent's P3 to done)</project>
 
