@@ -15791,3 +15791,28 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-cluster --file infra/aws/gl... | PASS |
 | 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3b | (session summary) | AMD-P3b+P3c BUILD+STAGE: comp-to + comp-grep x4 (locate amendment/TOs/importers/owned-paths, denominators printed) + comp-surface-check; py exercises AC-L4 5/5 + AC-L3c 6/6 GREEN | PASS |
 | 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3b | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~B | NFRA_COMPLEARN.AMD-P3a | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/canon_motif_scorer.py | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-blast | comp-blast applyPreset | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-coverage | comp-coverage --help | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/ses-sendmail.sh | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3b | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_log_auto.py | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-coverage | comp-coverage report | FAIL |
+| 2026-07-10 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPLEARN/task_orders... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-transform | comp-transform schema-check SecurityScanner | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-routes | comp-routes trace /api/scoped/security-scanner | PASS |
+| 2026-07-10 | 2.0.0_SA_COO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/SSCN_PFOE.md --file o... | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3b | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/ses-sendmail.sh | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3b | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-coverage | comp-coverage report | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-transform | comp-transform schema-check Positioning | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-transform | comp-transform schema-check PositioningSummary | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~C | (no-TO) | comp-transform | comp-transform schema-check HoldingsTab | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-deadgrant | comp-deadgrant --help | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/website/dlm.tf | PASS |
+| 2026-07-10 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPLEARN/task_orders... | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3b | (session summary) | P3c LANDED (b2389745b, verify 7/7 GREEN + live comp-grep) + B4 D-4 design grounded via comp-grep (vintage parity cols, ~B-aligned) | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-coverage | comp-coverage report | PASS |
+| 2026-07-10 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.AMD-P3b | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
