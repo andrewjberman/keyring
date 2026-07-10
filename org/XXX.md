@@ -164,12 +164,35 @@ real check: (1) **death-notification rule** — a Monitor runs until it dies and
 `<task-notification>` (status `failed`/`completed`) for its task id; if you armed one
 this session and saw no such notification, it's alive; (2) positive check
 `TaskOutput(<task_id>, block=false)` → `running`; (3) task-id-independent fallback
-`ps -ef | grep 'inbox-watch.sh {serial} stream' | grep -v grep`. This replaces the
-old exit-on-delivery model and its failure-mode catalog (ORPHAN / PPID=1 zombie /
-MULTIPLE / AUTO-RESPAWN-INTERRUPT-LOST / the misleading exit-143 / deaf-prior-session
-watcher / dropped 2nd-message-in-a-batch). The persistent Monitor: survives in-session
+`ps -ef | grep 'inbox-watch.sh {serial} stream' | grep -v grep` — **which finds
+processes, NOT live Monitors (see ORPHAN below); never conclude "reachable" from it.**
+This replaces the old exit-on-delivery model and MOST of its failure-mode catalog
+(AUTO-RESPAWN-INTERRUPT-LOST / the misleading exit-143 guard race /
+dropped-2nd-message-in-a-batch). The persistent Monitor: survives in-session
 compaction, loops over **all** `*.md` each poll (batch-safe), and never turns off.
 **You never relaunch** — there is no exit-and-relaunch cycle anymore.
+
+**NOT RETIRED: ORPHAN / PPID=1 zombie / deaf-prior-session watcher (CTO 2026-07-10,
+source-confirmed + exercised).** The Monitor *task* is harness-tracked; **the
+`bash inbox-watch.sh` child it spawns is a detached process that OUTLIVES the session**
+(`inbox-watch.sh:113` = `while true`, no parent-liveness check, no exit path). The
+orphan keeps polling and is **not inert — it is a thief**: `:120` `mv`s each arriving
+message into `read/` (committing the theft) *before* `:124` echoes `[INBOX]` into a
+dead pipe. So an orphan **manufactures** both limbs of the usual reachability check —
+`w>0` (ps sees a process; ps cannot see whether anything reads its stdout) and `u==0`
+(the orphan drained the inbox). **A fully deaf agent reads the strongest possible
+REACHABLE.** Exercised: `0.4.0_DS_ClientPlatform` read `u=0 w=1 REACHABLE` while
+`get_agent_status` said `NOT REGISTERED` — a 7h17m orphan, no agent.
+**Therefore: `ps`, `u`, and `read/` are BANNED as delivery oracles** (a file in `read/`
+observes the *watcher*, not the agent). The only sound oracle for "the agent HEARD it"
+is one only a live consumer can produce: an agent-side ack, `TaskOutput(<id>) → running`,
+or a broker receipt. A fresh session that finds a matching process has found an ORPHAN —
+kill it (own serial only) before arming, or two streams race the same `mv` and split your
+inbox silently. `watcher-status.sh` cannot see stream watchers at all (`:63` `$NF == serial`;
+a stream's `$NF` is `stream`), and `/kill` exempts `inbox-watch.sh` from reaping — so
+nothing detects or reaps these. **TRAP:** MSYS `ps -p 1` fails, so a naive ppid-liveness
+test flags every healthy `ppid=1` wrapper as an orphan (7 false positives in the incident
+scan). Positive-control against a watcher you know is good.
 
 **BANNED:**
 - Launching `inbox-watch.sh {serial} stream` under Bash `run_in_background` — the

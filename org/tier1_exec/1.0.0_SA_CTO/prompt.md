@@ -77,30 +77,37 @@ then roll corrections all the way back up through every connected document.
 
 ### Step 0: Go live (BEFORE anything else)
 
-These three calls are your first tool invocations every session. No exceptions.
+Your first tool invocations every session. No exceptions. **Run `/watcher` — it does all of this.**
 
 1. **MCP tool call:** `register_agent("1.0.0_SA_CTO", summary="<session purpose>")`
-2. **Bash tool** with `run_in_background: true` (the tool parameter, NOT shell `&`):
-   `inbox-watch 1.0.0_SA_CTO`
+2. **Monitor tool** (`persistent: true`, `timeout_ms: 3600000`), absolute path:
+   `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh 1.0.0_SA_CTO stream`
 
-**CRITICAL:** inbox-watch MUST use the Bash tool's `run_in_background` parameter set to `true`.
-Do NOT append `&` to the command — that kills the process when the shell exits.
-The `run_in_background` parameter is a property of the Bash tool invocation, not part of the command string.
+**CORRECTED 2026-07-10 — this section previously mandated the two things that are now BANNED.**
+The old text ordered `inbox-watch 1.0.0_SA_CTO` under the Bash tool's `run_in_background`, plus a
+relaunch after every delivery. Both are wrong under the persistent-Monitor model (`org/XXX.md`
+Step 1b C): the Bash tool notifies only on **exit**, and stream mode **never exits** — launching it
+that way makes you **silent for the entire session**. There is no relaunch cycle; the Monitor runs
+until the session ends.
 
-**Protocol after every inbox-watch task-notification (non-negotiable):**
-1. Call `check_inbox("1.0.0_SA_CTO")` immediately — the task-notification doesn't surface body.
-2. Act on the message this turn — ack (RAVC step 2), execute, or validate. No "standing by".
-3. Relaunch `inbox-watch 1.0.0_SA_CTO` via the Bash tool with `run_in_background: true`. One launch per delivery.
+**Protocol on every `[INBOX] <file>` Monitor event (non-negotiable):**
+1. Read `org/mcp/inbox/1.0.0_SA_CTO/read/<file>` — the stream watcher already `mv`'d it there.
+2. Act on it this turn — ack (RAVC step 2), execute, or validate. No "standing by".
+3. **Do not relaunch anything.** The Monitor keeps running.
 
-The script no longer self-respawns (removed 2026-04-14 after orphan-race incident). Silence here = deafness.
+**ORPHAN CHECK, MANDATORY BEFORE ARMING (2026-07-10 incident — I was the deaf agent).** A prior
+session's `bash inbox-watch.sh` child **survives its session** and keeps `mv`ing your mail into
+`read/` (`:120`) before echoing into a dead pipe (`:124`). A fresh session that finds a matching
+process has found an **orphan**, not a watcher. Kill it (your own serial only), then arm.
+**Never conclude "reachable" from `ps`, from `u==0`, or from a file landing in `read/`** — an orphan
+manufactures all three while you hear nothing. Only a live consumer proves delivery:
+`TaskOutput(<monitor_task_id>) → running`, an agent-side ack, or a broker receipt. Full mechanism +
+the MSYS `ps -p 1` false-positive trap: `.claude/skills/watcher/SKILL.md` § ORPHAN HAZARD.
 
-Also pull `check_inbox` at the top of any turn expecting a near-term reply.
+Also pull BOTH `check_inbox` AND `get_agent_status` at the top of any turn expecting a near-term
+reply — they cover different delivery paths (filesystem vs broker channel).
 
-What each does:
-1. `register_agent` — announces you to the org via MCP + broker. A PostToolUse hook auto-launches agent-poller.py.
-2. `inbox-watch` — polls inbox every 5s, prints new messages, exits on delivery. Works from any directory.
-
-Until you do this, you are invisible to the org. No agent can see you, message you,
+Until you register, you are invisible to the org. No agent can see you, message you,
 or confirm you received anything. You are not operational until you are registered.
 
 ### Step 1: Read your own last session log

@@ -23,15 +23,59 @@ silently died, orphaned, went deaf to a prior session, or short-circuited on its
 own single-watcher guard (the misleading exit-143), so it needed periodic
 re-checking. The persistent Monitor removes the OLD bash-watcher failure modes:
 
-| Old failure mode | Why it's gone |
+| Old failure mode | Status under the Monitor model |
 |---|---|
-| ORPHAN / PPID=1 zombie | Monitor is a harness-tracked background task, not a detached bash process |
-| MULTIPLE / atomic-mv race | atomic `mv` on emit makes any overlap exactly-once anyway |
+| ORPHAN / PPID=1 zombie | **STILL LIVE — see ORPHAN HAZARD below.** The Monitor *task* is harness-tracked; the `bash inbox-watch.sh` *child it spawns* is a detached bash process that OUTLIVES the session. |
+| MULTIPLE / atomic-mv race | atomic `mv` on emit makes any overlap exactly-once — **to whichever stream wins.** An orphan that wins is a message you never see. |
 | AUTO-RESPAWN-INTERRUPT-LOST | no exit-on-delivery respawn loop; on the rare SIGTERM death you re-arm once (see caveat) |
-| "deaf prior-session watcher" | a session's Monitor dies with the session; a fresh session arms its own |
+| "deaf prior-session watcher" | **STILL LIVE.** The Monitor task dies with the session; **its bash child does not.** |
 | exit-143 guard short-circuit | no exit-on-delivery, no guard race (this OLD guard-race exit-143 is gone; a DIFFERENT exit-143 SIGTERM still occurs — see caveat) |
 | missed 2nd+ message in a batch | the poll loops over **all** `*.md` each cycle |
 | dies on compaction | a persistent Monitor normally survives in-session compaction |
+
+## ORPHAN HAZARD — the class this migration did NOT retire (CTO, 2026-07-10, source-confirmed + exercised)
+
+The two rows above were previously recorded as "gone." **They are not.** Both were falsified on a
+routine `/watcher` startup: `1.0.0_SA_CTO` found pid 2124 (`inbox-watch.sh 1.0.0_SA_CTO stream`,
+parent dead) holding its own inbox, and `0.4.0_DS_ClientPlatform` had a **7h17m orphan** (pid 31391)
+polling the mailbox of an agent that was `NOT REGISTERED`.
+
+`inbox-watch.sh:113` is `while true` with **no parent-liveness check and no exit path.** When the
+session ends the harness reaps the Monitor task and the eval wrapper; the bash child keeps polling
+forever. **An orphan is not inert — it is a thief**, and the source order is load-bearing:
+
+```
+inbox-watch.sh:120   mv "$msg" read/       <-- drains top-level. COMMITS THE THEFT.
+inbox-watch.sh:124   echo "[INBOX] $base"  <-- the ONLY notification act, into a dead pipe.
+```
+
+**Consequence — the reachability check is ANTI-CORRELATED with the truth.** A verdict of
+`w>0 && u==0 -> REACHABLE` is *manufactured by the orphan*: `w>0` because `ps` sees a live process
+(it **cannot** see whether any Monitor task reads that process's stdout — "has a live consumer" is
+not a property of the process); `u==0` **because the orphan drained the inbox at `:120`**. The more
+completely an agent is deaf, the more perfectly both limbs hold. And because `:120` precedes `:124`,
+`w` flips `1->0` only *after* a message is already lost.
+
+**Therefore:**
+- **`ps`, `u`, and the `read/` directory are BANNED as delivery oracles.** They are artifacts the
+  *watcher* produces, and the watcher is the subject of the measurement. A file in `read/` observes
+  **the watcher, not the agent** — three actors move files there (stream `:120`, legacy `:175`,
+  `check_inbox(mark_read=True)`) and only the last implies an agent read anything.
+- The only sound oracle for *"the agent heard it"* is one **only a live consumer can produce**: an
+  agent-side ack, `TaskOutput(<monitor_task_id>) -> running`, or a broker receipt.
+- **`watcher-status.sh` CANNOT SEE STREAM WATCHERS AT ALL.** `:63` matches `awk '$NF == serial'`, and
+  a stream cmdline's `$NF` is `stream`. It prints `VERDICT: NONE` while an orphan runs. Its
+  `PRIOR-SESSION-ORPHAN` subcase (`:120-138`) is **dead code** — guarded by `COUNT -eq 1` when
+  `COUNT` is structurally `0`. *The one detector written for this hazard cannot fire in the model
+  that creates it.* Do not use it as a liveness oracle; Step 3.1 keeps it only to list **legacy** watchers.
+- **`/kill` explicitly exempts `inbox-watch.sh`** from orphan reaping ("NOT fabric comms infra"), so
+  nothing in the fabric reaps these. They accumulate — one per ended session.
+
+**TRAP when you scan for orphans:** MSYS **`ps -p 1` FAILS**, so a naive ppid-liveness test marks
+every healthy detached eval-wrapper (`ppid=1` at birth) an ORPHAN. This produced **7 false positives**
+in the first scan of this incident, including on a watcher armed 90 seconds earlier. **Positive-control
+your sweep against a watcher you know is good.** The correct predicate is: a
+`bash inbox-watch.sh <serial> stream` whose ppid resolves to a **live eval-wrapper process**.
 
 **CAVEAT (2026-06-05, LD-0146 amend — Andrew-sovereign-settled).** The "never-off / exit-143 catalog
 GONE" claim is too strong, but the practical reality is: **the Monitor is robust + lossless.** Andrew
@@ -70,12 +114,23 @@ across multiple agents 2026-06-03). **An empty `TaskList` proves nothing about y
    tool's return when you arm it, or from the `/tasks` CLI command.)
 3. **OS-level check (task-id-independent — use after compaction when you may not
    recall the id):** `ps -ef | grep 'inbox-watch.sh <serial> stream' | grep -v grep`.
-   A matching process = alive. This is reliable structural truth and the right
-   fallback — *not* a discouraged heuristic.
+   **A matching process is NOT proof of a live Monitor.** It proves a bash process
+   exists — it says nothing about whether any Monitor task is reading its stdout.
+   An **orphan from a dead session matches this grep exactly** (see ORPHAN HAZARD),
+   and it is *eating your mail*. Use (3) only to find processes, never to conclude
+   "alive": a match is alive **only if its ppid resolves to a live eval-wrapper**
+   (and remember MSYS `ps -p 1` fails — every healthy wrapper is `ppid=1`).
+
+**A FRESH SESSION THAT FINDS A MATCHING PROCESS HAS FOUND AN ORPHAN, NOT A WATCHER.**
+You did not arm it; your session cannot be reading its stdout. Kill it (it is your own
+serial — that is in scope), then arm. Arming on top of it makes two streams race the
+same 5s `mv` and splits your inbox at random, silently, while every reachability probe
+reports REACHABLE.
 
 Only arm a new Monitor if **none** of these confirm a live one (genuinely fresh
 session / restart / a death notification you actually saw). When unsure, check
-(2) or (3) — never re-arm off an empty `TaskList`.
+(2) — the task-id check is the only one that observes a *consumer*. Never re-arm off
+an empty `TaskList`, and never conclude "reachable" off (3) alone.
 
 ## Invocation forms
 
