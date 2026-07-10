@@ -1,5 +1,6 @@
 <task_order>
 <id>NFRA_COMPLEARN.AMD-P3c</id>
+<correction date="2026-07-10" by="CTO~A arch-gate; COO~A path-grounded">NOT DAYLIGHT-HELD. comp_log_auto.py lives at org/modules/graph/comp_log_auto.py (NOT .tools/; .tools/comp_log_auto.py confirmed ABSENT), so this leg is NOT subject to the .tools/**->BASE_EXEC daylight hold. ALL "daylight-held / land-only-in-daylight / BASE_EXEC" language below is SUPERSEDED: P3c LANDS after commit-gate + landing-verify, no BASE_EXEC handoff. The amendment PRD's premise that comp_log_auto is an enforcer .tools file was itself declarative drift -- corrected here.</correction>
 <title>AMENDMENT P3c -- ingestion honesty: the universal writer `comp_log_auto.py` swallows a dropped emission under try/except pass -- add a disclosure (count/marker) so a dropped row is DISCLOSED, not swallowed (R5/R7)</title>
 <issued_to>0.8.0_AE_CloudComp (~E context). **STAGED -- NOT DISPATCHED.** Gated on Andrew's builder spawn. **EDIT is DAYLIGHT-HELD (`.tools/**->BASE_EXEC`): `comp_log_auto.py` is an enforcer/`.tools` file -- the disclosure edit sequences BEHIND the hold.**</issued_to>
 <issued_by>2.0.0_SA_COO~A (PRD decomposition 2026-07-10; returned to 1.0.0_SA_CTO~A for the arch-gate)</issued_by>
