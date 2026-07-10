@@ -45,6 +45,7 @@ SOUNDNESS NOTE (the trap this file also guards):
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -60,6 +61,37 @@ sys.path.insert(0, str(_GRAPH_DIR))
 _WORKSPACE_ROOT = _GRAPH_DIR.parent.parent.parent   # org/modules/graph -> repo root
 
 import extract_iam as E  # noqa: E402
+
+
+# ---------------------------------------------------------------------------
+# A SECOND BLOCK-FINDER (CVO, 2026-07-10).
+#
+# The census recount used to re-derive its total with `E._TF_POLICY_RESOURCE` --
+# the module's OWN regex. That is independent of the COUNTER and NOT independent
+# of the PARSER. It would catch an attach/drop accounting bug and could NOT catch
+# a regex that misses blocks entirely -- which is exactly the roleref hole that
+# silently dropped 26 of 330 blocks, two of them NEVER#1's cross-firm Deny belts.
+# *The test could not detect the next defect of the class it was written to close.*
+#
+# CVO: "an instrument's own perception is the last thing it occurs to you to doubt.
+# A test inherits every blindness of the instrument it imports."
+#
+# So: a deliberately DIFFERENT implementation. Line-oriented, explicit alternation,
+# comment-aware. It does not import a single regex from extract_iam.
+_RE_BLOCK_DECL = re.compile(
+    r'^\s*resource\s+"(?:aws_iam_role_policy|aws_iam_policy)"\s+"[A-Za-z0-9_-]+"\s*\{')
+
+
+def _count_policy_blocks(hcl: str) -> int:
+    """Count real (non-commented) IAM policy resource declarations, line by line."""
+    n = 0
+    for line in hcl.splitlines():
+        s = line.lstrip()
+        if s.startswith('#') or s.startswith('//'):
+            continue
+        if _RE_BLOCK_DECL.match(line):
+            n += 1
+    return n
 
 
 def _stmt(actions, resources, effect="Allow", condition=""):
@@ -317,6 +349,28 @@ def test_a_case_mismatched_key_reds_end_to_end():
 # MY OWN UNCERTAINTY (CVO P1) -- the tri-state must apply to BOTH sides.
 # ---------------------------------------------------------------------------
 
+def test_the_exact_flag_is_never_trusted_over_the_ARN_itself():
+    """CVO P1a. `exact` was a caller-supplied flag, and the invariant
+    "a '*' in the ARN implies exact is False" was ASSUMED, never asserted.
+
+    A literal `Key="prefix/*"` resolves exact=True with a '*' in the ARN, and the
+    exact branch would emit a confident UNGRANTED-RESOURCE against a PATTERN -- a
+    false accusation reading as "you are missing a permission," and someone grants a
+    permission that was never needed. The tri-state was applied to the POLICY's
+    uncertainty and not to the parser's own.
+    """
+    role = _role_after_fix()
+    for claimed_exact in (True, False):
+        v, _s, _n = role.resource_verdict(
+            's3:GetObject', 'arn:aws:s3:::*/gold/meta.json', exact=claimed_exact)
+        assert v == E.V_UNRESOLVABLE, \
+            f"a '*' in the ARN must degrade regardless of exact={claimed_exact}"
+    # ...and a genuinely exact ARN still reaches a definitive verdict.
+    v, _s, _n = role.resource_verdict(
+        's3:GetObject', 'arn:aws:s3:::opal-data-cot/gold/x.json', exact=True)
+    assert v == E.V_UNGRANTED_RESOURCE
+
+
 def test_an_unresolved_BUCKET_segment_is_unresolvable_not_a_false_accusation():
     """`Bucket=f"{env}-data"` yields `arn:aws:s3:::*-data/...`. The '*' is there because
     THIS parser could not resolve it -- not because the call spans buckets. Claiming
@@ -488,7 +542,9 @@ def test_deny_overlay_incompleteness_is_counted_and_never_silent():
     assert st['deny_unparsed'] == independent_denies, (
         f"deny census {st['deny_unparsed']} disagrees with an independent walk "
         f"({independent_denies}) -- the counter and the Terraform do not agree")
-    assert len(st['deny_detail']) == st['deny_unparsed']   # now non-vacuous: pinned above
+    # Assert the LIST against the independent truth, not against the counter that
+    # produced it (CVO: delete the tautology so no reader mistakes it for the assertion).
+    assert len(st['deny_detail']) == independent_denies
 
     if st['deny_unparsed']:
         assert st['deny_reasons'], "an unparsed Deny must carry a named reason"
@@ -514,8 +570,8 @@ def test_attach_census_closes_against_an_INDEPENDENT_recount():
     E.build_iam_report(_WORKSPACE_ROOT)
     st = E._ATTACH_STATS
 
-    independent_blocks = 0
     tf_files = 0
+    independent_blocks = 0
     for root in E.TF_SCAN_ROOTS:
         rp = _WORKSPACE_ROOT / root
         if not rp.exists():
@@ -524,14 +580,76 @@ def test_attach_census_closes_against_an_INDEPENDENT_recount():
             if '.terraform' in f.parts:
                 continue
             tf_files += 1
-            independent_blocks += len(
-                E._TF_POLICY_RESOURCE.findall(f.read_text(encoding='utf-8', errors='replace')))
+            independent_blocks += _count_policy_blocks(
+                f.read_text(encoding='utf-8', errors='replace'))
 
     assert tf_files == st['tf_files'], "scanned-file count disagrees with an independent walk"
-    assert st['attached'] + st['dropped'] == independent_blocks, (
+    # The census must close over ALL THREE worlds. A standalone aws_iam_policy has no
+    # `role =` by design; calling it an unattachable role-policy prints a reason that is
+    # false for it.
+    total = st['attached'] + st['dropped'] + st['standalone']
+    assert total == independent_blocks, (
         f"census does not close: attached {st['attached']} + dropped {st['dropped']} "
-        f"!= {independent_blocks} aws_iam_role_policy blocks")
+        f"+ standalone {st['standalone']} = {total} != {independent_blocks} blocks")
     assert st['attached'] > 0 and independent_blocks > 0, "a clean bill from an empty set"
+
+
+# A FROZEN FIXTURE with a HAND-COUNTED total. Neither the parser's regex nor the
+# test's own scanner can define the truth here -- a human counted it.
+#   2 x aws_iam_role_policy  (one TF-ref, one literal-name)
+#   1 x aws_iam_policy       (standalone -- no `role =` BY DESIGN)
+#   1 x commented-out ghost  (MUST NOT count)
+_FROZEN_HCL = '''
+# resource "aws_iam_role_policy" "ghost" {
+#   role = aws_iam_role.x.name
+# }
+resource "aws_iam_role_policy" "a" {
+  role   = aws_iam_role.x.name
+  policy = jsonencode({ Statement = [{ Effect = "Allow", Action = ["s3:GetObject"], Resource = "arn:aws:s3:::b/*" }] })
+}
+resource "aws_iam_role_policy" "b" {
+  role   = "lambda-execution-role"
+  policy = jsonencode({ Statement = [{ Effect = "Deny", Action = ["s3:*"], Resource = "*" }] })
+}
+resource "aws_iam_policy" "standalone" {
+  policy = jsonencode({ Statement = [{ Effect = "Allow", Action = ["s3:PutObject"], Resource = "arn:aws:s3:::b/*" }] })
+}
+resource "aws_iam_role" "x" { name = "some-role" }
+'''
+_FROZEN_TRUE_BLOCKS = 3   # hand-counted: a, b, standalone. NOT ghost.
+
+
+def test_the_block_finder_ignores_commented_out_blocks():
+    """Ground truth is hand-counted, so neither implementation can define it.
+
+    Before the comment mask, `_TF_POLICY_RESOURCE` matched
+    `# resource "aws_iam_role_policy" "ghost" {` and inflated the census by a policy
+    that does not exist. Latent estate-wide (0 hits today) and INVISIBLE, because the
+    recount used the same regex and inflated identically.
+    """
+    assert _count_policy_blocks(_FROZEN_HCL) == _FROZEN_TRUE_BLOCKS
+
+    masked = E._mask_hcl_comments(_FROZEN_HCL)
+    assert len(masked) == len(_FROZEN_HCL), "the mask must preserve offsets"
+    assert len(E._TF_POLICY_RESOURCE.findall(masked)) == _FROZEN_TRUE_BLOCKS, \
+        "the parser counts a commented-out block"
+
+    # ...and the unmasked regex still would. That is the defect, pinned.
+    assert len(E._TF_POLICY_RESOURCE.findall(_FROZEN_HCL)) == _FROZEN_TRUE_BLOCKS + 1
+
+
+def test_standalone_policy_is_not_an_unattachable_role_policy():
+    """`aws_iam_policy` has no `role =` BY DESIGN. Counting it as a drop, with the
+    reason 'unresolvable role ref', is a false reason attached to a real count --
+    two different worlds collapsed into one number. 5 of 330 estate-wide."""
+    assert E._TF_STANDALONE_POLICY.search('resource "aws_iam_policy" "p" {')
+    assert not E._TF_STANDALONE_POLICY.search('resource "aws_iam_role_policy" "p" {')
+
+    E.build_iam_report(_WORKSPACE_ROOT)
+    st = E._ATTACH_STATS
+    assert st['standalone'] > 0, "the estate has standalone aws_iam_policy blocks"
+    # every dropped entry must name a role-ref problem, never a standalone policy
+    assert not any('aws_iam_policy' in d for d in st['dropped_detail'])
 
 
 def test_the_never1_cross_firm_deny_belts_are_named_in_the_census():

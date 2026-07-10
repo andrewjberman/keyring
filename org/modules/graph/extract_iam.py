@@ -740,6 +740,16 @@ class IamRole:
         if arn is None:
             return (V_UNRESOLVABLE, None, 'call resource not statically resolvable')
 
+        # CVO P1a (2026-07-10). `exact` was a CALLER-SUPPLIED FLAG and the invariant
+        # "a '*' in the ARN implies exact is False" was assumed, never asserted. A
+        # literal `Key="prefix/*"` resolves exact=True with a '*' in the ARN, and the
+        # exact branch below would emit a confident UNGRANTED-RESOURCE against a
+        # pattern -- a false accusation that reads as "you are missing a permission,"
+        # and someone grants a permission that was never needed. My own defect,
+        # inverted into over-permission.
+        # DERIVE the property from the evidence; never trust the flag over the string.
+        exact = exact and '*' not in arn
+
         indeterminate = ''
         for s in allows:
             if not s.resources:
@@ -1125,11 +1135,39 @@ _TF_ROLE_REF = re.compile(r'role\s*=\s*aws_iam_role\.(\w+)\.(?:name|id)')
 _TF_ROLE_LITERAL = re.compile(r'role\s*=\s*"([^"$]+)"')
 _TF_POLICY_NAME = re.compile(r'name\s*=\s*"([^"]+)"')
 
+# `_TF_POLICY_RESOURCE` matches BOTH `aws_iam_role_policy` (inline, carries `role =`)
+# and `aws_iam_policy` (standalone, attached later via aws_iam_role_policy_attachment
+# and therefore carrying NO `role =` by design). Counting a standalone policy as
+# "NOT ATTACHED -- unresolvable role ref" lumps two different worlds into one number
+# and prints a reason that is FALSE for it. 5 of 330 estate-wide. Same class as
+# ROLL_SOURCE_ABSENT vs ROLL_SOURCE_UNREADABLE: a bare count collapsing worlds.
+_TF_STANDALONE_POLICY = re.compile(r'resource\s+"aws_iam_policy"\s+"(\w+)"\s*\{')
+
+_HCL_LINE_COMMENT = re.compile(r'^(\s*)(#|//).*$', re.M)
+
+
+def _mask_hcl_comments(content: str) -> str:
+    """Blank out whole-line HCL comments, PRESERVING LENGTH so offsets stay valid.
+
+    `_TF_POLICY_RESOURCE` happily matches a commented-out
+    `# resource "aws_iam_role_policy" "ghost" {`, which would inflate the block
+    census with a policy that does not exist. Latent estate-wide today (0 hits), and
+    invisible because the census re-derives its total with the SAME regex -- a test
+    inherits every blindness of the instrument it imports (CVO, 2026-07-10).
+    Offsets are preserved so `_extract_tf_block(content, m.start())` still reads the
+    ORIGINAL text.
+    """
+    return _HCL_LINE_COMMENT.sub(lambda m: m.group(1) + ' ' * (len(m.group(0)) - len(m.group(1))),
+                                 content)
+
 # Attachment census. comp-iam must be able to STATE what it read and what it could
 # not attach -- the same rule it now enforces on resources. Populated by
 # _parse_terraform_iam(); read by the CLI banner.
 _ATTACH_STATS: dict = {
     'attached': 0, 'dropped': 0, 'dropped_detail': [], 'tf_files': 0,
+    # standalone aws_iam_policy blocks: no `role =` by design, attached via
+    # aws_iam_role_policy_attachment. NOT a drop; a different world.
+    'standalone': 0,
     # Deny statements inside blocks we could not attach. CTO arch-gate 2026-07-10:
     # printed on EVERY invocation until zero.
     'deny_unparsed': 0, 'deny_reasons': set(), 'deny_detail': [],
@@ -1403,6 +1441,7 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
     # campaign 2026-06-26). The module-keyed role_tf_to_name + loud collision guard (below)
     # make multi-root scanning safe -- a bare label reused across roots no longer mis-links.
     _ATTACH_STATS.update({'attached': 0, 'dropped': 0, 'dropped_detail': [], 'tf_files': 0,
+                          'standalone': 0,
                           'deny_unparsed': 0, 'deny_reasons': set(), 'deny_detail': []})
     tf_roots = [workspace_root / p for p in TF_SCAN_ROOTS]
     all_tf_files: list[Path] = []
@@ -1491,8 +1530,11 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
             continue
         rel = str(tf_file.relative_to(workspace_root)).replace("\\", "/")
 
-        # aws_iam_role_policy (inline policy on a role)
-        for m in _TF_POLICY_RESOURCE.finditer(content):
+        # aws_iam_role_policy (inline policy on a role).
+        # Scan the COMMENT-MASKED text so a commented-out block is never counted;
+        # extract from the ORIGINAL (mask preserves offsets).
+        scan = _mask_hcl_comments(content)
+        for m in _TF_POLICY_RESOURCE.finditer(scan):
             block = _extract_tf_block(content, m.start())
             role_ref = _TF_ROLE_REF.search(block)
             if role_ref:
@@ -1505,6 +1547,13 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
                 lit = _TF_ROLE_LITERAL.search(block)
                 role_name = lit.group(1) if lit else None
             if not role_name or role_name not in roles:
+                # A STANDALONE aws_iam_policy has no `role =` BY DESIGN -- it is
+                # attached below via aws_iam_role_policy_attachment. Calling it an
+                # unattachable role-policy is a false reason on a real count.
+                if _TF_STANDALONE_POLICY.match(content[m.start():m.end() + 1]) or \
+                        _TF_STANDALONE_POLICY.search(block[:120]):
+                    _ATTACH_STATS['standalone'] += 1
+                    continue
                 # NEVER a silent drop. A tool that cannot state what it failed to
                 # attach cannot be trusted to have attached yours.
                 _ATTACH_STATS['dropped'] += 1

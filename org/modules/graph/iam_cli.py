@@ -354,7 +354,8 @@ def _print_plane_banner():
     print(f"  scanned {len(EI.TF_SCAN_ROOTS)} trees ({st['tf_files']} .tf files): "
           f"{', '.join(EI.TF_SCAN_ROOTS)}")
     print(f"  policy blocks attached {st['attached']}; "
-          f"NOT ATTACHED {st['dropped']}  (a role ref this parser cannot resolve)")
+          f"NOT ATTACHED {st['dropped']}  (a role ref this parser cannot resolve); "
+          f"standalone {st['standalone']}  (aws_iam_policy -- no role by design)")
     if st['dropped']:
         print("  ^ statements comp-iam has NEVER SEEN. Its verdicts are computed WITHOUT")
         print("    them, so a role may hold a grant this tool cannot find. Run")
@@ -382,9 +383,13 @@ def cmd_attach_census(args):
     print("comp-iam attach-census -- policy blocks NOT attached to any role")
     print("=" * 78)
     print(f"scanned trees: {', '.join(EI.TF_SCAN_ROOTS)}")
-    print(f"{st['tf_files']} .tf files; {st['attached'] + st['dropped']} aws_iam_role_policy blocks")
+    _rp = st['attached'] + st['dropped']
+    print(f"{st['tf_files']} .tf files; {_rp} aws_iam_role_policy + "
+          f"{st['standalone']} standalone aws_iam_policy = {_rp + st['standalone']} blocks")
     print(f"  {st['attached']:>4}  attached")
     print(f"  {st['dropped']:>4}  NOT ATTACHED  (invisible to every comp-iam verdict)")
+    print(f"  {st['standalone']:>4}  standalone aws_iam_policy -- no `role =` BY DESIGN, attached")
+    print("        via aws_iam_role_policy_attachment. NOT a drop; a different world.")
     print()
     for d in st['dropped_detail']:
         print(f"  {d}")
