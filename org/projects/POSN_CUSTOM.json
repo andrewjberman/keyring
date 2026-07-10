@@ -1,0 +1,23 @@
+{
+  "project_code": "POSN_CUSTOM",
+  "macro_code": "POSN",
+  "name": "Positioning Custom Model-Blend Tool",
+  "description": "Add a 'Custom' model blend to the Positioning page so advisors can build a client-specific mix of Opal's 5 model portfolios (UST/ST/INT/LTC/LTA) and see the resulting allocation, characteristics, and combined holdings -- replacing a manual per-row calculator (Yang: 'a huge relief for their workflow'). Two parts: (A) PositioningSummary gets a Custom column (6th) on the equity/FI bars + matrix with a DUAL-INPUT control -- Mode A: allocate 100% across the 5 models -> weighted-avg blend; Mode B: enter a target equity % -> interpolate implied model weights against the BENCHMARK view (stable per-model equity anchors, avoids market-drift); guardrail weights-sum-to-100 (warn+red else). (B) HoldingsTab gets a 'CSM' selector option that reuses the existing AGG AUM-weighted aggregation but weighted by the advisor's custom model weights, plus a weights column. Both Cottonwood AND Inflection want it (Yang, call 2026-07-10). GROUNDED FE-ONLY + SOVEREIGN-CLEAN: the 5 models come from Yang's Bloomberg PKL -> generate_positioning_json.py -> positioning_data.json (Opal model data, NOT bd/49F/Schwab custody); the blend is a client-side weighted average over already-served per-model allocations/characteristics/holdings + benchmark values -- no backend/DS/Lambda/S3 change (Andrew: 'the logic is already there, it just needs a new UI element'). Key architectural change: lift the custom-blend state to Positioning.tsx so the top summary bar drives the bottom holdings CSM view (they have no shared state today). User-scoped persistence explicitly DEFERRED (Andrew+Yang: reset-on-login is fine for now, 'don't make it too complicated').",
+  "prds": [
+    {"path": "docs/architecture/POSN_CUSTOM.md", "label": "POSN_CUSTOM PRD v0.1", "date": "2026-07-10"}
+  ],
+  "source_brief": "Andrew <-> Yang Liu call 2026-07-10 (Call with Yang Liu.vtt, 01:52-11:00); 2nd of the 3 call deliverables (Andrew close 01:06:47: 'the PFOE, the positioning tool, and then advisor of record'). Both Cottonwood and Inflection want it (Yang 02:08). Yang timeline (10:46): 'a week or so, don't rush, get it done properly'. Andrew directive to 1.0.0_SA_CTO~C 2026-07-10: carve topics, develop PRDs (SSCN_PFOE first, then the positioning macro).",
+  "status": "active",
+  "phase": "Phase 0: PRD v0.1 complete (docs/architecture/POSN_CUSTOM.md), compiler evidence closed (comp-transform schema-check clean on all 3 components; comp-cache no new query key; source-grounded sovereign-clean = Yang Bloomberg model data, FE-only). COO decomposition pending (2 sequenced RD TOs: .001 state-lift + PositioningSummary custom column/bar/dual-input; .002 HoldingsTab CSM view, depends on .001). 5 open questions (Mode-B levers, placement, label, view-mode interaction, guardrail behavior) resolvable by Andrew/Yang before commit.",
+  "blocking": "COO~C task-order issuance (2.0.0_SA_COO~C). Non-blocking: OQ1-5 (Mode-B ST/INT interpolation levers / custom-column placement / CSM label / view-mode interaction / guardrail behavior) to Andrew+Yang before TO commits.",
+  "depends_on": [],
+  "depends_on_note": "FE-only over the served positioning_data.json + holdings_attribution -- no infra/pipeline dependency. Reuses HoldingsTab's existing AGG AUM-weighted aggregation (:567-613) for the CSM view (swap weight vector + add weights column). comp-cache clean; no new query key. Sovereign-clean: POSN data = Yang Bloomberg model PKL, not bd/49F/Schwab. Only files touched are under portal/src/pages/Positioning/ (owned by this project); no active-project overlap.",
+  "absorbs": [],
+  "created": "2026-07-10",
+  "pods": ["0.2"],
+  "pipeline": "portal/src/pages/Positioning (FE-only; no pipeline tag). RD 0.2.1_RD_Positioning build -> DE 0.2.0 review -> DT 0.2.0 DEV->PROD promote.",
+  "cto_lane": "1.0.0_SA_CTO~C",
+  "coo_lane": "2.0.0_SA_COO~C",
+  "thread_counter": 0,
+  "threads": []
+}
