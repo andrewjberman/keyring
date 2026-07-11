@@ -25,5 +25,6 @@ install_hook() {
 }
 
 install_hook pre-push
+install_hook pre-commit   # LD-0273 Stage-1: comp-surface-check gate at the submodule boundary
 
 echo "OK: portal hooks installed"
