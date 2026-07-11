@@ -990,6 +990,15 @@ def _extract_column_gaps(py_file: Path) -> list[dict]:
     """
     import ast as _ast
 
+    from .trace_graph import _held_path_hit
+    # Sovereign hold: comp-pipescript `io` invokes this on gold scripts (pipeline_cli), and a HELD
+    # bd/schwab gold path's CONTENT must never be read. Return no column-gap findings for a held path --
+    # the same metadata-only contract every OTHER read in this module already honors via _held_path_hit
+    # (_parse_s3_layout / _parse_dispatch / _extract_script_io / parse_gold_direct_invoke). This closes
+    # the `io` path; `deployed` was already guarded (COMP_PIPESCRIPT_INCLUDE_HELD). Pure str check, no open.
+    if _held_path_hit(str(py_file).replace("\\", "/")):
+        return []
+
     try:
         content = py_file.read_text(encoding="utf-8", errors="replace")
     except Exception:
