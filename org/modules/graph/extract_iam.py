@@ -23,6 +23,14 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
 
+# NFRA_TOOLPASS C7: delegate the held predicate + lift signal to sovereign_held. Dual import (relative in
+# package context, else add own dir + bare) -- extract_iam loads both as a package module and standalone.
+try:
+    from .sovereign_held import is_held_path, include_held as _shared_include_held
+except ImportError:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from sovereign_held import is_held_path, include_held as _shared_include_held
+
 # SOVEREIGN sec.8 HOLD (CLAUDE.md / memory: 49F/bd/Schwab standing hold). IAM1 (CTO 20260710T222627Z):
 # extract_iam.py read_text()s data/black_diamond gold + manifest-driven bd source on EVERY comp-iam
 # command (build_iam_report -> _build). That FALSIFIED sec.8's "comp-iam runs freely" clearance (a tool
@@ -32,19 +40,18 @@ from typing import Optional
 # comp-iam KEEPS its bd ROLE / TF-IAM-policy analysis -- that is genuine sec.8-safe METADATA (the TF
 # policy documents), NOT the gold/service .py source. The decision is a pure str.startswith on the
 # relative path -- it NEVER opens a held file to decide (the load-bearing property of every prior guard).
-_HELD_SOURCE_PREFIXES = (
-    "data/black_diamond/",
-    "data/canonical/schwab/silver/",
-)
 _HELD_NOTE_EMITTED = {"done": False}
 
 
 def _rel_is_held(rel: str) -> bool:
-    return rel.replace("\\", "/").startswith(_HELD_SOURCE_PREFIXES)
+    # C7: delegate to sovereign_held.is_held_path. (Was a startswith over a local 2-marker tuple;
+    # is_held_path is a substring superset -- for extract_iam's workspace-RELATIVE inputs, which always
+    # start with data/..., the two agree, and the extra schwab/silver/ marker only tightens the hold.)
+    return is_held_path(rel)
 
 
 def _include_held() -> bool:
-    return os.environ.get("COMP_IAM_INCLUDE_HELD") == "1"
+    return _shared_include_held("COMP_IAM_INCLUDE_HELD")
 
 
 def _read_source_if_allowed(abs_path: Path, workspace_root: Path) -> Optional[str]:
