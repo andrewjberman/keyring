@@ -273,7 +273,12 @@ def _extract_fetch_bindings(content: str, lines: list[str]) -> list[FetchBinding
 # ---------------------------------------------------------------------------
 
 _USE_MEMO = re.compile(
-    r'const\s+(\w+)\s*(?::\s*[\w<>\[\]|]+\s*)?=\s*useMemo\s*\(\s*\(\)\s*=>\s*\{?',
+    # useMemo(() => ...) AND the idiomatic-TS return-type-annotated form
+    # useMemo((): DonutSegment[] | null => ...). The `(?::[^=]+?)?` allows an
+    # optional `: ReturnType` between the empty param list and the arrow; without
+    # it, every annotated useMemo was skipped and any field accessed ONLY inside
+    # one read as false-UNUSED (PartnerAnalytics `views`, 4 annotated useMemos).
+    r'const\s+(\w+)\s*(?::\s*[\w<>\[\]|]+\s*)?=\s*useMemo\s*\(\s*\(\)\s*(?::[^=]+?)?=>\s*\{?',
 )
 
 _USE_CALLBACK = re.compile(

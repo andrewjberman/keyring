@@ -14,6 +14,7 @@ Usage:
 Traces: fetch function -> response type -> useMemo/useCallback chains -> rendered JSX fields.
 Answers: "what does this component actually use from the API response, and what does it discard?"
 """
+from __future__ import annotations
 
 import argparse
 import json
@@ -26,7 +27,7 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 
 sys.path.insert(0, str(_WORKSPACE))
 
-from org.modules.graph.extract_transforms import (
+from org.modules.graph.extract_transforms import (  # noqa: E402  (import follows sys.path.insert above -- intentional)
     build_component_dataflow, build_all_dataflows, ComponentDataFlow,
 )
 
@@ -101,7 +102,7 @@ def _print_flow(flow: ComponentDataFlow, verbose: bool = True):
         print()
 
     if flow.response_types:
-        print(f"  RESPONSE TYPES:")
+        print("  RESPONSE TYPES:")
         for type_name, fields in flow.response_types.items():
             print(f"    {type_name} ({len(fields)} fields):")
             for f in fields[:15]:
@@ -223,7 +224,7 @@ def cmd_chains(args):
         if ops_str:
             print(f"   {ops_str}")
         if tc.field_accesses:
-            print(f"    fields accessed:")
+            print("    fields accessed:")
             for fa in tc.field_accesses:
                 print(f"      {fa}")
         if tc.code_preview:
@@ -264,7 +265,7 @@ def cmd_unused(args):
         print(f"    used:         {len(used_list)}")
         print(f"    unused:       {len(unused)}")
         if unused:
-            print(f"    potentially unused fields:")
+            print("    potentially unused fields:")
             for f in unused:
                 opt = "?" if f.optional else ""
                 print(f"      {f.name}{opt}: {f.type_str}")
@@ -280,6 +281,13 @@ def cmd_schema_check(args):
     Flags:
     - MISSING: field rendered in JSX but not in response type (will break at runtime)
     - UNUSED: field in response type but never rendered (over-fetching / waste)
+
+    LIMITATION (rendered-detection scope -- read before acting on UNUSED): the "rendered" signal
+    comes from useMemo/useCallback chains (incl. return-type-annotated ones,
+    extract_transforms._USE_MEMO), JSX expressions, and a component-function body-scan bounded to a
+    ~1000-char window from the component declaration. A field accessed ONLY via a plain
+    `const x = data.y` outside any hook AND beyond that window can read as false-UNUSED. Treat UNUSED
+    as "not rendered by a tracked path", not a proof of deadness (verify before deleting a field).
     """
     from org.modules.graph.extract_transforms import parse_type_deep
 
@@ -297,7 +305,6 @@ def cmd_schema_check(args):
     # check _shared/types.ts at each level. Graceful INFO degradation when
     # resolved via shared module instead of co-located.
     types_file = None
-    types_resolution_severity = "INFO"  # default when co-located (no degradation message)
     types_resolution_msg = ""
     co_located = path.parent / "types.ts"
     if co_located.exists():
@@ -313,7 +320,6 @@ def cmd_schema_check(args):
         for c in candidates:
             if c.exists():
                 types_file = c
-                types_resolution_severity = "INFO"
                 try:
                     rel = c.relative_to(_WORKSPACE)
                 except ValueError:
@@ -377,7 +383,7 @@ def cmd_schema_check(args):
                 handler_local_names.add(t)
 
     # Inline-typed arrow function params: (data: { period: string }) => ...
-    # Suppress all keys of the inline type — those are local fields on the param,
+    # Suppress all keys of the inline type -- those are local fields on the param,
     # not response-data fields. Anchor: PartnerAnalytics handleBarClick
     # `(data: { period: string }) => ... data.period`.
     for m in re.finditer(
@@ -531,7 +537,7 @@ def cmd_schema_check(args):
                 loc_str = f" at {', '.join(locations[:3])}" if locations else ""
                 print(f"       [ERROR] {m}{loc_str}")
                 print(f"         Component renders this but {check_type} does not define it.")
-                print(f"         This will be undefined at runtime unless aliased or injected.")
+                print("         This will be undefined at runtime unless aliased or injected.")
 
         if aliases_found:
             # ADHC_COMPIL_V4.011 (c): INFO severity for runtime aliases (not violations)
@@ -550,8 +556,8 @@ def cmd_schema_check(args):
                 print(f"    [WARN] feature-relevant UNUSED ({len(feature_hits)}, token: '{feature_token}'):")
                 for u in sorted(feature_hits):
                     print(f"       [WARN] {u}: {type_fields.get(u, '?')}")
-                    print(f"         This field is typed but NEVER rendered.")
-                    print(f"         You're building '{feature_token}' support — most likely cause: a routing")
+                    print("         This field is typed but NEVER rendered.")
+                    print(f"         You're building '{feature_token}' support -- most likely cause: a routing")
                     print(f"         ternary (e.g. cohort === 'geo' ? ... : ...) is missing the '{feature_token}'")
                     print(f"         branch. Run: comp-transform ternary-audit {flow.component_name}")
                 has_issues = True
@@ -568,7 +574,7 @@ def cmd_schema_check(args):
                     print(f"       ... +{len(sorted_unused) - _UNUSED_SHOW} more (--all-unused to show all)")
 
         if not missing and not unused_non_meta:
-            print(f"    OK: all rendered fields exist in type, no waste")
+            print("    OK: all rendered fields exist in type, no waste")
 
         print()
 
@@ -590,7 +596,7 @@ def cmd_ternary_audit(args):
     4. Reports which union members are not handled on each line
 
     Example output:
-      L1956: cohort ternary — handles ['geo', 'adv'] — MISSING: ['ofc']
+      L1956: cohort ternary -- handles ['geo', 'adv'] -- MISSING: ['ofc']
              ofc falls through to adv path (last else branch)
     """
     path = _find_component(args.component)
@@ -678,7 +684,7 @@ def cmd_ternary_audit(args):
     gaps_found = 0
     exhaustive_count = 0
 
-    # Generic variable names that are commonly used as loop iterators/keys — skip by default
+    # Generic variable names that are commonly used as loop iterators/keys -- skip by default
     _GENERIC_VARS = {'key', 'val', 'value', 'item', 'entry', 'elem', 'node',
                      'i', 'j', 'k', 'idx', 'index', 'seg', 'segment'}
 
@@ -691,7 +697,7 @@ def cmd_ternary_audit(args):
         if var_name in _GENERIC_VARS and not (args.var and var_name in args.var):
             continue
 
-        # Skip large unions by default (TimePeriodKey has 10+ members — these
+        # Skip large unions by default (TimePeriodKey has 10+ members -- these
         # are almost always handled via dynamic accessor `view[period]` not ternaries).
         # Use --all-unions to include them.
         if len(members) > 6 and not getattr(args, 'all_unions', False):
@@ -755,9 +761,9 @@ def cmd_ternary_audit(args):
                 visited_regions.add(region_start + offset)
 
             if not members:
-                # Manual var with no known type — just report what was checked
-                print(f"  L{lineno}: {var_name} ternary — checks: {sorted(checked_values)}")
-                print(f"           (no union type found — use --members to specify expected values)")
+                # Manual var with no known type -- just report what was checked
+                print(f"  L{lineno}: {var_name} ternary -- checks: {sorted(checked_values)}")
+                print("           (no union type found -- use --members to specify expected values)")
                 continue
 
             missing_members = [m for m in members if m not in checked_values]
@@ -765,7 +771,7 @@ def cmd_ternary_audit(args):
             if not missing_members:
                 exhaustive_count += 1
                 if args.verbose:
-                    print(f"  L{lineno}: {var_name} ({type_name}) — OK: all members handled {sorted(checked_values)}")
+                    print(f"  L{lineno}: {var_name} ({type_name}) -- OK: all members handled {sorted(checked_values)}")
                 continue
 
             # Signal quality filter:
@@ -784,9 +790,9 @@ def cmd_ternary_audit(args):
             is_suspicious = implicit_count >= 2 or getattr(args, 'strict', False)
 
             if not is_suspicious:
-                # Single implicit fallthrough — acceptable pattern, skip unless verbose
+                # Single implicit fallthrough -- acceptable pattern, skip unless verbose
                 if args.verbose:
-                    print(f"  L{lineno}: {var_name} ({type_name}) — NOTE (1 implicit fallthrough, likely intentional):")
+                    print(f"  L{lineno}: {var_name} ({type_name}) -- NOTE (1 implicit fallthrough, likely intentional):")
                     print(f"    handles:  {sorted(checked_values)}")
                     print(f"    implicit: {missing_members}  (routes to else branch)")
                     display = stripped[:100] + ('...' if len(stripped) > 100 else '')
@@ -802,10 +808,10 @@ def cmd_ternary_audit(args):
             dynamic_accessor = f'[{var_name.lower()}]'
             if dynamic_accessor in region_lower:
                 if args.verbose:
-                    print(f"  L{lineno}: {var_name} ({type_name}) — SKIP (dynamic accessor [{var_name}] in else branch)")
+                    print(f"  L{lineno}: {var_name} ({type_name}) -- SKIP (dynamic accessor [{var_name}] in else branch)")
                 continue
 
-            # True gap: 2+ members unhandled → likely wrong data routing
+            # True gap: 2+ members unhandled -> likely wrong data routing
             gaps_found += 1
             missing_str = ', '.join(f"'{m}'" for m in missing_members)
             handles_str = ', '.join(f"'{v}'" for v in sorted(checked_values))
@@ -816,13 +822,13 @@ def cmd_ternary_audit(args):
                 print(f"  L{lineno}: {var_name} ({type_name})")
                 print(f"    handles:  {sorted(checked_values)}")
                 print(f"    MISSING:  {missing_members}  ({implicit_count} members fall to else branch)")
-                print(f"    These {implicit_count} values silently share the else branch value —")
-                print(f"    if that value is correct for one but not the others, this is a routing bug.")
+                print(f"    These {implicit_count} values silently share the else branch value --")
+                print("    if that value is correct for one but not the others, this is a routing bug.")
                 print(f"    code: {display}")
                 print()
             else:
                 # Brief: 2-line default
-                print(f"  L{lineno}: {var_name} ({type_name}) — handles [{handles_str}] — MISSING: [{missing_str}]")
+                print(f"  L{lineno}: {var_name} ({type_name}) -- handles [{handles_str}] -- MISSING: [{missing_str}]")
                 print(f"           {display}")
                 print()
 
@@ -831,15 +837,15 @@ def cmd_ternary_audit(args):
     # -----------------------------------------------------------------------
     print()
     if gaps_found == 0:
-        print(f"  All ternaries on union-typed variables are exhaustive.")
+        print("  All ternaries on union-typed variables are exhaustive.")
         if exhaustive_count > 0:
             print(f"  {exhaustive_count} ternary sites checked, 0 gaps found.")
     else:
         print(f"  {gaps_found} ternary gap(s) found across {len(var_to_union)} variable(s).")
-        print(f"  Each gap means unhandled union members silently route to the else branch.")
+        print("  Each gap means unhandled union members silently route to the else branch.")
         print()
         print(f"  Run: comp-transform schema-check {args.component} --feature <token>")
-        print(f"  to see which typed fields are UNUSED for each missing branch.")
+        print("  to see which typed fields are UNUSED for each missing branch.")
 
 
 def cmd_all(args):
@@ -943,7 +949,7 @@ def main():
     )
     p_ternary.add_argument(
         '--all-unions', action='store_true', dest='all_unions',
-        help='Include large unions (>6 members, e.g. TimePeriodKey) — may be noisy'
+        help='Include large unions (>6 members, e.g. TimePeriodKey) -- may be noisy'
     )
     p_ternary.add_argument(
         '--strict', action='store_true',
