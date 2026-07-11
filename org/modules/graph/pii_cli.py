@@ -24,6 +24,7 @@ Authoritative sources:
 from __future__ import annotations
 
 import argparse
+import ast
 import re
 import sys
 from dataclasses import dataclass
@@ -112,20 +113,57 @@ _PREFIX_CATEGORY = {
 }
 
 
+# A tool that audits a mechanism must first verify the mechanism is REACHABLE, else it reports on a
+# corpse (CTO ruling 2026-07-11). The generic serve-time hashing (_transform_field) runs ONLY when
+# pseudonymize_response passes the needs_pseudonymization() gate. That gate was RETIRED 2026-04-15
+# (Andrew): needs_pseudonymization() returns False unconditionally, so _transform_field is DEAD CODE
+# and NO field is hashed at serve time -- PII is served cleartext, protected by upstream auth. Parsing
+# _transform_field's key-map and reporting those fields as "pseudonymized/protected" is FALSE ASSURANCE
+# -- the worst failure mode a security tool has. So: verify the gate can actually fire before trusting
+# the hash-map. FAIL-SAFE: unparseable/absent gate -> treat as NOT-live (report cleartext), never assure.
+def _serve_time_masking_reachable(pseudonymizer_text: str):
+    """AST-inspect needs_pseudonymization(): can it EVER return a non-False value?
+    True  = a reachable non-False return (masking CAN fire).
+    False = every return is the literal False (unconditionally retired).
+    None  = can't find/parse the gate (fail-safe: caller treats as NOT-live, never false-assures)."""
+    try:
+        tree = ast.parse(pseudonymizer_text)
+    except Exception:
+        return None
+    fn = next((n for n in ast.walk(tree)
+               if isinstance(n, ast.FunctionDef) and n.name == 'needs_pseudonymization'), None)
+    if fn is None:
+        return None
+    returns = [n for n in ast.walk(fn) if isinstance(n, ast.Return)]
+    if not returns:
+        return None
+    for r in returns:
+        v = r.value
+        if v is None:
+            continue  # bare `return` -> None (falsey), not a masking path
+        if isinstance(v, ast.Constant) and v.value is False:
+            continue  # `return False`
+        return True   # `return True`, a comparison, any expr -> masking CAN fire
+    return False      # every return path is `return False` -> retired
+
+
 def _derive_pseudonymized_fields(workspace_root: Path):
     """Parse the LIVE pseudonymizer.py _transform_field() for the actual
-    {field_name: hash_prefix} set it hashes. Returns (mapping, source_path) or
-    (None, None) if the source can't be located/parsed. Runtime truth -- beats
-    the hardcoded PII_FIELDS list, which drifts."""
+    {field_name: hash_prefix} set it hashes. Returns (mapping, source_path, masking_live) or
+    (None, None, None) if the source can't be located/parsed. Runtime truth -- beats
+    the hardcoded PII_FIELDS list, which drifts. `masking_live` (True/False/None) is the
+    REACHABILITY of the hashing gate -- False/None means _transform_field is dead (see
+    _serve_time_masking_reachable): the derived map exists but is NOT applied at serve time."""
     cands = [p for p in workspace_root.glob('infra/aws/lambda/**/opal-partners-data/pseudonymizer.py')
              if 'worktrees' not in str(p) and 'node_modules' not in str(p)]
     src = cands[0] if cands else None
     if src is None:
-        return None, None
+        return None, None, None
     try:
         text = src.read_text(encoding='utf-8', errors='replace')
     except Exception:
-        return None, None
+        return None, None, None
+    masking_live = _serve_time_masking_reachable(text)
     m = re.search(r'def _transform_field\(.*?\):(.*?)(?:\ndef |\Z)', text, re.DOTALL)
     body = m.group(1) if m else text
     mapping: dict[str, str] = {}
@@ -141,27 +179,60 @@ def _derive_pseudonymized_fields(workspace_root: Path):
             for k in pending:
                 mapping[k] = hc.group(1)
             pending = []
-    return (mapping or None), src
+    return (mapping or None), src, masking_live
 
 
 _RUNTIME_PII_LOADED = False
+
+# Set True by _ensure_runtime_pii_truth when serve-time masking is RETIRED (the hashing gate can never
+# fire): PII is served cleartext, protected by upstream auth. Consumers must report the HONEST posture
+# (0 pseudonymized fields) not the dead _transform_field key-map. Read by cmd_fields for the banner.
+MASKING_RETIRED = False
 
 
 def _ensure_runtime_pii_truth(verbose: bool = True) -> None:
     """Reconcile the hardcoded PII_FIELDS against the live pseudonymizer and,
     on drift, warn on stdout + rebuild the module globals from runtime truth.
     Fails LOUD if the source can't be read -- never silently trusts the stale
-    list as if authoritative."""
-    global PII_FIELDS, PII_FIELD_NAMES, PSEUDONYMIZED_FIELDS, POTENTIAL_PII_FIELDS, _RUNTIME_PII_LOADED
+    list as if authoritative. FIRST verifies the hashing gate is REACHABLE:
+    if serve-time masking is RETIRED, reports the honest cleartext posture
+    instead of the dead _transform_field key-map (no false assurance)."""
+    global PII_FIELDS, PII_FIELD_NAMES, PSEUDONYMIZED_FIELDS, POTENTIAL_PII_FIELDS
+    global _RUNTIME_PII_LOADED, MASKING_RETIRED
     if _RUNTIME_PII_LOADED:
         return
     _RUNTIME_PII_LOADED = True
-    derived, src = _derive_pseudonymized_fields(_WORKSPACE)
+    derived, src, masking_live = _derive_pseudonymized_fields(_WORKSPACE)
     if derived is None:
         if verbose:
             print("WARN [comp-pii]: could not locate/parse live pseudonymizer.py -- hashed-field "
                   "truth FALLS BACK to the hardcoded list (DRIFT RISK; verify manually).")
         return
+
+    # REACHABILITY GATE (CTO ruling 2026-07-11): the hash-map means nothing if the gate can't fire.
+    # masking_live is True only on a confirmed non-False return path; False (retired) or None
+    # (unverifiable) -> report the honest CLEARTEXT posture, never "hashed/protected" (false assurance).
+    if masking_live is not True:
+        MASKING_RETIRED = True
+        why = ("needs_pseudonymization() returns False on every path (retired 2026-04-15, Andrew)"
+               if masking_live is False else
+               "needs_pseudonymization() gate could not be verified -- failing SAFE (no assurance)")
+        if verbose:
+            print(f"WARN [comp-pii] SERVE-TIME MASKING NOT LIVE ({src}): {why}.")
+            print("  _transform_field is UNREACHABLE -- the field-hashing this tool models is NOT applied "
+                  "at serve time.")
+            print("  PII is served CLEARTEXT, protected by UPSTREAM AUTH (allowedFirmIds authorizer + "
+                  "auth-validator-edge), NOT by field-hashing.")
+            print("  -> HONEST POSTURE: 0 pseudonymized fields. Audit the AUTH, not _transform_field.")
+        # Every known PII field is CLEARTEXT (hash_prefix="") -- nothing is hashed at serve time.
+        PII_FIELDS = [PiiField(name=f.name, category=f.category, hash_prefix="",
+                               context="serve-time hashing RETIRED/unreachable -- CLEARTEXT, upstream-auth gated")
+                      for f in PII_FIELDS]
+        PII_FIELD_NAMES = {f.name for f in PII_FIELDS}
+        PSEUDONYMIZED_FIELDS = set()          # nothing is actually pseudonymized
+        POTENTIAL_PII_FIELDS = {f.name for f in PII_FIELDS}
+        return
+
     static = {f.name: f.hash_prefix for f in PII_FIELDS if f.hash_prefix}
     added = sorted(set(derived) - set(static))
     removed = sorted(set(static) - set(derived))
@@ -548,13 +619,21 @@ def cmd_audit(args):
 def cmd_fields(args):
     print(f"PII FIELD REGISTRY ({len(PII_FIELDS)} fields)")
     print()
+    if MASKING_RETIRED:
+        print("  ** SERVE-TIME MASKING RETIRED (2026-04-15, Andrew) -- NO field is hashed at serve time. **")
+        print("     PII is served CLEARTEXT, protected by UPSTREAM AUTH (allowedFirmIds + auth-validator-edge),")
+        print("     NOT by field-hashing. Audit the AUTH, not _transform_field. All fields below are CLEARTEXT.")
+        print()
     print(f"  PSEUDONYMIZED by pseudonymizer.py ({len(PSEUDONYMIZED_FIELDS)} fields):")
+    if not PSEUDONYMIZED_FIELDS:
+        print("    (none -- serve-time hashing is not live)" if MASKING_RETIRED else "    (none)")
     for f in PII_FIELDS:
         if f.hash_prefix:
             print(f"    {f.name:25s} [{f.category}] -> '{f.hash_prefix} {{8-char hex}}'")
             print(f"      {f.context}")
     print()
-    print("  POTENTIAL PII (not hashed, but may carry sensitive data):")
+    print("  POTENTIAL PII (not hashed, but may carry sensitive data):" if not MASKING_RETIRED
+          else "  CLEARTEXT PII (served in-the-clear; upstream-auth gated):")
     for f in PII_FIELDS:
         if not f.hash_prefix:
             print(f"    {f.name:25s} [{f.category}]")
@@ -562,9 +641,12 @@ def cmd_fields(args):
     print()
     print("  ROLE MATRIX:")
     for role, props in AUTH_ROLES.items():
-        cleartext = "cleartext" if props["sees_cleartext"] else "pseudonymized"
+        # Under the retirement NO role sees pseudonymized output -- the static matrix's
+        # partner_advisor "pseudonymized" claim is stale; report the honest cleartext posture.
+        cleartext = "cleartext" if (props["sees_cleartext"] or MASKING_RETIRED) else "pseudonymized"
         scoped = ", book-scoped" if props["book_scoped"] else ""
-        print(f"    {role:20s} -> {cleartext}{scoped}")
+        note = "  (matrix claims pseudonymized; RETIRED -> cleartext)" if (props["pseudonymized"] and MASKING_RETIRED) else ""
+        print(f"    {role:20s} -> {cleartext}{scoped}{note}")
 
 
 def cmd_routes(args):
