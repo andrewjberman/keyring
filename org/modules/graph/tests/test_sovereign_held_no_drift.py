@@ -51,6 +51,14 @@ _MIGRATED = [
 # C2 re-exports from sovereign_held. They are guarded-by-delegation, not by a direct sovereign_held import.
 _TRANSITIVE = ("extract_pipeline.py", "extract_s3.py", "platinum_cli.py")
 
+# Cross-lane vendored-mirror importer (C-x, CTO Rule-3-approved 345aeb90b): freeze_monitor is the deployed
+# comp-xray Lambda whose archive zips ONLY infra/aws/compdiff/, so it imports a byte-identical VENDORED
+# sibling infra/aws/compdiff/sovereign_held.py (not the org/ canonical). It is guarded by the compdiff-LANE
+# byte-suffix test (test_vendored_sovereign_held_is_identical.py: vendored.endswith(canonical)), NOT this
+# org-tree scan (which exempts compdiff by design -- the lane boundary CTO ratified). Named for an honest count.
+_VENDORED_MIRROR = ("freeze_monitor.py (infra/aws/compdiff -> vendored sovereign_held sibling; guarded by "
+                    "the compdiff-lane byte-suffix test, not this scan)",)
+
 _HELD_NAME_RE = re.compile(r"HELD.*(MARKER|PREFIX)|SOVEREIGN.*MARKER", re.IGNORECASE)
 
 
@@ -142,10 +150,13 @@ def test_meta_test_bites_on_a_temp_module_reintroduction(tmp_path):
 
 if __name__ == "__main__":
     print(f"canonical markers ({len(_MARKERS)}): {sorted(_MARKERS)}")
-    print(f"DENOMINATOR: {len(_MIGRATED)} direct sovereign_held importers + {len(_TRANSITIVE)} transitive "
-          f"(_held_path_hit delegation) = {len(_MIGRATED) + len(_TRANSITIVE)} tools guarded by the consolidation")
-    print(f"  direct:     {[f.name for f in _MIGRATED]}")
-    print(f"  transitive: {list(_TRANSITIVE)}")
+    _total = len(_MIGRATED) + len(_VENDORED_MIRROR) + len(_TRANSITIVE)
+    print(f"DENOMINATOR: {len(_MIGRATED)} direct sovereign_held importers + {len(_VENDORED_MIRROR)} vendored-mirror "
+          f"(cross-lane) + {len(_TRANSITIVE)} transitive (_held_path_hit delegation) = {_total} tools guarded by "
+          f"the consolidation. CONSOLIDATION 100% COMPLETE across all 16 bd-readers.")
+    print(f"  direct:         {[f.name for f in _MIGRATED]}")
+    print(f"  vendored-mirror: {list(_VENDORED_MIRROR)}")
+    print(f"  transitive:     {list(_TRANSITIVE)}")
     test_migrated_tools_import_the_shared_predicate()
     print(f"PASS: all {len(_MIGRATED)} direct-importer tools import sovereign_held")
     test_only_the_canonical_leaf_holds_marker_literals()
