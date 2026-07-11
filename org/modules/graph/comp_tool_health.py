@@ -133,6 +133,18 @@ def classify_full(used: bool, rail_consistent, effective, preventive: bool = Fal
             return "PROMOTE", False, "effective but not used -- a routing/HUD miss (feeds COMPROUTE)"
         if effective is False:
             return "RETIRE", False, "not used and not effective -- dead"
+        if preventive:
+            # symmetric-preventive-guard = stopgap-until-EFFECTIVE. The USED branch already tempers a
+            # preventive gate out of FIX (:152: low observed value = drift silently PREVENTED, which
+            # usage cannot observe). This NOT-used branch was ASYMMETRIC -- it emitted a bare RETIRE? for
+            # a preventive gate too, resting only on the '?'+EFFECTIVE-pending honesty, not a guard. A
+            # preventive gate showing NO usage is exactly the case usage cannot measure (it earns its keep
+            # by NOT being reached for). HOLD it pending the EFFECTIVE probe (TH-A), the real resolver.
+            # Token stays RETIRE (preserves --verdict / verdict_counts / _verdict_rank); the HOLD lives in
+            # pending_effective + this reason (renders RETIRE?-PREVENTIVE).
+            return "RETIRE", True, ("not used BUT a preventive GATE -- value = silently-prevented drift, "
+                                    "which usage CANNOT observe (RETIRE?-PREVENTIVE): HOLD, do NOT retire "
+                                    "pending EFFECTIVE/TH-A. symmetric-preventive-guard = stopgap-until-EFFECTIVE")
         return "RETIRE", True, ("not used; EFFECTIVE pending (TH-A) -- RETIRE unless the probe shows "
                                 "effective-but-ignored (-> PROMOTE)")
     # used == True
