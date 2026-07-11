@@ -104,7 +104,23 @@ def _git_head() -> str:
         return "unknown"
 
 
+# Sovereign hold (bd/schwab): the bd-gold freshness config is held bd source. The SIBLING comp-freshness
+# guards the SAME file via COMP_FRESHNESS_PIPELINE (_held_config_read_allowed); this generator reads it too
+# and MUST honor the same flag -- so the DS pipeline path re-enables BOTH tools with ONE signal. Pure str
+# check, never opens the file. (Folds into sovereign_held.py at the NFRA_TOOLPASS C1 consolidation.)
+_HELD_MARKERS = ("data/black_diamond/", "data/canonical/schwab/silver/", "schwab/silver/")
+
+
+def _is_held(path) -> bool:
+    s = str(path or "").replace("\\", "/")
+    return any(m in s for m in _HELD_MARKERS)
+
+
 def _load_yaml_list(rel_path: str) -> list:
+    # Sovereign hold: skip a held bd/schwab config by default; COMP_FRESHNESS_PIPELINE=1 (the sibling's
+    # flag) re-enables it for the DS pipeline path. inf/cot/served are not held -> pass through.
+    if _is_held(rel_path) and os.environ.get("COMP_FRESHNESS_PIPELINE") != "1":
+        return []
     path = os.path.join(ROOT, rel_path)
     if not os.path.exists(path):
         return []
