@@ -22,6 +22,15 @@ import time
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
 
+# NFRA_TOOLPASS C2: the held-path predicate is CONSOLIDATED into sovereign_held (the ONE canonical leaf).
+# trace_graph re-exports it (below). Dual import -- relative when loaded as a package (from .trace_graph
+# import ...), bare when loaded standalone (tests add org/modules/graph to sys.path). sovereign_held is
+# stdlib-only, so this import can never fail on a dependency.
+try:
+    from .sovereign_held import is_held_path as _shared_is_held_path, HELD_BUCKET_PREFIXES
+except ImportError:  # standalone load (spec / bare import with the module's dir on sys.path)
+    from sovereign_held import is_held_path as _shared_is_held_path, HELD_BUCKET_PREFIXES
+
 
 # ---------------------------------------------------------------------------
 # Node + Edge types
@@ -135,21 +144,21 @@ def _compute_path_sha(path: Path) -> str:
 # REACHABILITY is preserved) but NEVER reads that file's CONTENT -- no read_text / ast.parse /
 # source_sha. Held nodes therefore carry no source_sha and are not freshness-checked (correct: we do
 # not track bd freshness under the hold). A pure STRING check -- it never opens a file to decide.
-_HELD_PATH_MARKERS = (
-    "data/black_diamond/",
-    "schwab/silver/",
-    "opal-data-bd",
-    "opal-data-schwab",
-)
-
-
 def _held_path_hit(path) -> bool:
     """True if `path` falls under a sovereign-held prefix -> content-excluded from indexing.
-    Pure string check; never opens the file (so calling it can never itself read held content)."""
+    Pure string check; never opens the file (so calling it can never itself read held content).
+
+    NFRA_TOOLPASS C2: the canonical predicate now lives in sovereign_held (is_held_path); this re-exports
+    it, PRESERVING trace_graph's historical behavior of ALSO matching a held BUCKET-name substring -- its
+    old local _HELD_PATH_MARKERS conflated path markers + bucket prefixes. Every caller passes a FILE PATH
+    (extract_pipeline/extract_s3/platinum_cli), so the bucket clause is belt-and-suspenders, retained here
+    for exact-behavior preservation. is_held_path is a strict superset of the old path markers (it adds the
+    more-specific data/canonical/schwab/silver/, redundant with schwab/silver/), so nothing formerly held
+    becomes unheld -- the trace_graph fixtures stay green."""
     if not path:
         return False
     norm = str(path).replace("\\", "/")
-    return any(m in norm for m in _HELD_PATH_MARKERS)
+    return _shared_is_held_path(norm) or any(bp in norm for bp in HELD_BUCKET_PREFIXES)
 
 
 @dataclass

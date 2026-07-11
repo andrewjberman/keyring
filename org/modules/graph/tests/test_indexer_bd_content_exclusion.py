@@ -28,6 +28,10 @@ for _p in (_WS, os.path.dirname(os.path.dirname(_HERE))):
 
 import org.modules.graph.trace_graph as tg  # noqa: E402
 from org.modules.graph import extract_s3, extract_pipeline  # noqa: E402
+# C2 consolidation: the held predicate now lives in sovereign_held (trace_graph re-exports it). The test's
+# read-tracking spy uses the canonical predicate directly, so it tracks held reads INDEPENDENTLY of the
+# chokepoint under test (incl. when the mutation arm disables tg._held_path_hit).
+from org.modules.graph.sovereign_held import is_held_path, HELD_BUCKET_PREFIXES  # noqa: E402
 
 
 def _mk_fixture() -> Path:
@@ -63,7 +67,9 @@ def _run(exclusion_on: bool):
     orig_hit = tg._held_path_hit
 
     def _is_held(s):
-        return any(m in s for m in tg._HELD_PATH_MARKERS)
+        # canonical (sovereign_held) -- mirrors the OLD conflated markers (path + bucket substring), and
+        # is independent of tg._held_path_hit so the mutation arm's disabled chokepoint is still tracked.
+        return is_held_path(s) or any(b in s for b in HELD_BUCKET_PREFIXES)
 
     def rt(self, *a, **k):
         s = str(self).replace("\\", "/")
@@ -118,15 +124,23 @@ def test_mutation_off_reintroduces_the_read():
     assert held_reads, "MUTATION (exclusion off) must reintroduce held-path reads -- else the test is vacuous"
 
 
-def test_markers_match_canonical():
-    from org.modules.graph.comp_constants_cli import SOVEREIGN_HELD_MARKERS
-    assert set(tg._HELD_PATH_MARKERS) == set(SOVEREIGN_HELD_MARKERS), \
-        "trace_graph._HELD_PATH_MARKERS drifted from comp_constants_cli.SOVEREIGN_HELD_MARKERS"
+def test_trace_graph_delegates_to_sovereign_held():
+    # C2 consolidation: trace_graph no longer keeps a LOCAL _HELD_PATH_MARKERS -- _held_path_hit delegates
+    # to sovereign_held (the ONE canonical source). Assert the delegation (no local copy) + behavioral
+    # parity: every canonical path marker + bucket prefix is recognized via the re-export, non-held is not.
+    from org.modules.graph.sovereign_held import HELD_PATH_MARKERS as _PATHS, HELD_BUCKET_PREFIXES as _BUCKETS
+    assert not hasattr(tg, "_HELD_PATH_MARKERS"), \
+        "C2: trace_graph must DELEGATE to sovereign_held, not keep a local _HELD_PATH_MARKERS copy"
+    for m in _PATHS:
+        assert tg._held_path_hit(f"repo/{m}some_file.py"), f"canonical path marker not recognized via delegation: {m}"
+    for b in _BUCKETS:
+        assert tg._held_path_hit(f"s3://{b}/key"), f"canonical bucket prefix not recognized via delegation: {b}"
+    assert not tg._held_path_hit("data/inf/scripts/gold/x.py"), "an inf path must NOT be held"
 
 
 if __name__ == "__main__":
-    test_markers_match_canonical()
-    print("PASS: held markers match the canonical SOVEREIGN_HELD_MARKERS")
+    test_trace_graph_delegates_to_sovereign_held()
+    print("PASS: trace_graph delegates to sovereign_held (no local marker copy; parity preserved)")
     g, reads = _run(exclusion_on=True)
     bd = [n for n in g.nodes.values() if tg._held_path_hit(n.file_path)]
     print(f"  held bd nodes minted: {len(bd)} | with a source_sha: {sum(1 for n in bd if n.source_sha)} (want 0)")
