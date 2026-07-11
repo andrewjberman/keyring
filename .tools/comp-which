@@ -330,10 +330,58 @@ RULES = [
      "is the upstream S3 data fresh enough to run a gold chain (chain_ready); artifact mode = how old "
      "is any S3 prefix right now"),
     (["invariant", "invariants", "validate artifact", "satisfy invariants", "before upload",
-      "before s3 upload", "artifact valid", "passes validation"],
-     "artifact validation (declared invariants pre-upload)",
+      "before s3 upload", "artifact valid", "passes validation",
+      # NFRA_TOOLPASS (CVO 2026-07-10, CTO ruling 024149Z item-2 rule-3): the catalog situation
+      # "gold run done, signaling AE" routed to comp-dispatch (comp-validate only surfaced in a
+      # near-tie). comp-validate IS the canonical pre-signal gate. Distinctive gold-run-done /
+      # signal-AE vocabulary so it wins rank-1; deliberately NOT bare "dispatch"/"chain" (comp-
+      # dispatch's lane) nor bare "fresh" (comp-freshness's).
+      "gold run done", "gold run complete", "gold run finished", "signaling ae", "signal ae",
+      "signal the ae", "signal to ae", "ready to signal", "safe to signal", "before signaling ae",
+      "validate before signaling", "gold artifact done", "artifact done validate", "pass to ae"],
+     "artifact validation (declared invariants pre-upload / pre-AE-signal)",
      ["comp-validate <script_id> --artifact <local/path>"],
-     "does a gold artifact satisfy its declared invariants BEFORE the S3 upload"),
+     "does a gold artifact satisfy its declared invariants BEFORE the S3 upload / before signaling AE"),
+    # ---- NFRA_TOOLPASS curated-route additions (CVO 2026-07-10, CTO ruling 024149Z item-2) --------
+    # The routing-quality scorecard (N=12 catalog labels) found comp-which gave the canonical tool
+    # as rank-1 for only 4/12; 6 canonical tools were ABSENT from the output. Three of those had NO
+    # curated rule at all (comp-kuzu, comp-surface-check) or lost the terse label (bare "gold script").
+    # These add the missing vetted routes. Distinctive vocabulary per the file's own anti-collision
+    # discipline (never borrow a sibling's defining concept). NOTE: a keyword with a SPACE/slash/dot/
+    # colon is substring-matched against the raw query (hyphens fine inside it); a bare hyphenated
+    # token like "cross-layer" is DEAD (qtok splits on '-') -> use the space-phrase form.
+    #
+    # rule-1: comp-kuzu -- "cross-layer graph question" routed to comp-xref (graph-wide symbol
+    # OCCURRENCE), not comp-kuzu (an arbitrary cross-layer MATCH/Cypher query on the canonical DB).
+    (["cross-layer graph", "cross layer graph", "cross-layer graph question", "cross-layer question",
+      "across layers", "across the layers", "cross-tier graph", "graph question", "match query",
+      "cypher query", "run a match", "query the graph across", "arbitrary graph query",
+      "cross-layer traversal", "canonical graph query", "kuzu", "cypher", "nessie graph"],
+     "cross-layer graph query (comp-kuzu)",
+     ["comp-kuzu \"MATCH ...\""],
+     "an ARBITRARY cross-layer graph query (Cypher MATCH) over the canonical auto-refreshing DB -- "
+     "DISTINCT from comp-xref (graph-wide OCCURRENCE of one symbol) and pipescript (a named thread)"),
+    # rule-2: comp-surface-check -- "touching MP/benchmarks/ADVI backend" routed to comp-registry.
+    # comp-surface-check is THE must-always-be-right SEV1-surface guard for MP/benchmarks/ADVI.
+    (["model portfolios", "model portfolio", "benchmarks backend", "benchmark surface",
+      "advi backend", "advisor intelligence backend", "mp backend", "sev1 surface", "critical surface",
+      "must always be right", "must-always-be-right", "surface check", "touching the model portfolios",
+      "touching mp", "benchmarks", "sev1"],
+     "SEV1 critical-surface guard (comp-surface-check)",
+     ["comp-surface-check"],
+     "the must-always-be-right SEV1 surfaces (MP / benchmarks / ADVI backend) -- run before touching "
+     "them (ADVISORY: reads its output; a commit proceeds even on CRITICAL, LD-0273)"),
+    # rule-3: bare "gold script" -- "editing a gold script" routed to comp-types, "running a gold
+    # script" to comp-dispatch. Tool-level canonical = comp-pipescript (io for edits, deployed for
+    # runs). Emit BOTH subcommand calls -> one cap (comp-pipescript) surfaces regardless of subcommand.
+    (["gold script", "a gold script", "the gold script", "this gold script", "editing a gold script",
+      "editing gold script", "modify a gold script", "modifying a gold script", "change a gold script",
+      "running a gold script", "run a gold script", "work on a gold script", "gold-tier script",
+      "touch a gold script", "touching a gold script"],
+     "gold script edit/run (comp-pipescript)",
+     ["comp-pipescript io <script>", "comp-pipescript deployed <script>"],
+     "one gold SCRIPT -- its I/O contract + column gaps + portal consumers (io) and whether the "
+     "runner has its code (deployed). Bare 'gold script' -> comp-pipescript, tool-level"),
     (["pii", "personal data", "expose pii", "cleartext", "pseudonym", "pseudonymized",
       "sensitive data exposed", "leak personal",
       # real-NL leak vocabulary: "could X LEAK an SSN / social security to the browser/user".
@@ -529,6 +577,19 @@ SEARCHVERB_RX = re.compile(
 LISTVERB_RX = re.compile(
     r"\b(list (the )?files|what files|files (in|under|matching|named)|"
     r"ls |show (me )?(the )?files|directory listing|dir listing)\b", re.IGNORECASE)
+
+# NFRA_TOOLPASS (CVO 2026-07-10, CTO ruling 024149Z item-2 rule-5): the LITERAL grep/find-the-repo
+# intent. The scorecard found "grep/find the repo" mis-routed to comp-trace (a weak semantic
+# neighbour) instead of HONORING the documented comp-grep/comp-glob fallback the footer PROMISES --
+# a broken promise, worse than a gap. This regex is TIGHT (an explicit grep verb, or find/search
+# scoped to the repo/codebase/files) so a semantic search-phrased RICH query ("find every node
+# touching X" -> comp-xref) is NOT swept in; those have a STRONG curated rule and are protected by
+# the best_score >= STRONG guard at the call site.
+GREP_REPO_RX = re.compile(
+    r"\b(grep|rg|ripgrep)\b|"
+    r"\b(find|search|locate|look for)\b[^.?!]*\b(repo|repository|codebase|code ?base|source tree|"
+    r"the code|files?|string|pattern|text)\b|"
+    r"grep/find|find/grep", re.IGNORECASE)
 
 _STOP = {
     "the", "a", "an", "is", "are", "was", "were", "what", "which", "who", "where", "when",
@@ -811,6 +872,24 @@ _LIVE_AFFINITY = os.environ.get("COMP_WHICH_LIVE_AFFINITY", "").strip().lower() 
 # NFRA_TOOLCHECK P3 req3d (0.8.0~A) -- side-effect-free preview mode; see --route-only in main().
 _ROUTE_ONLY = False
 
+# NFRA_TOOLPASS (CVO 2026-07-10, CTO ruling 024149Z item-3): machine-readable output for the REFLEX
+# tool (CD1). The launcher previously swallowed "--json" into the question string; now it emits a JSON
+# object of the routed call(s) so scripted routing checks + the 0.8.0 corpus can consume comp-which
+# directly (comp_route.py already had --json; the launcher did not).
+_JSON = False
+
+
+def _emit_json(kind, caps, call_of, concern_of, term, q, fallback=None):
+    """Emit the machine-readable route (CD1). caps = ordered cap_ids; fallback = a comp-grep/glob call
+    string when the route floored to the on-rails primitive. Deterministic, ASCII-only."""
+    import json
+    routed = [{"tool": c, "call": call_of.get(c, c), "concern": concern_of.get(c, "")} for c in caps]
+    obj = {"query": q, "kind": kind, "routed": routed}
+    if fallback:
+        obj["fallback"] = fallback
+    print(json.dumps(obj, ensure_ascii=True, indent=2))
+    return 0
+
 
 def _affinity_provider():
     """The live-affinity provider ONLY when enabled (default OFF -> None -> affinity-cold live decision).
@@ -969,10 +1048,14 @@ def _default_router(q, qtok, hits, term, list_intent):
         kind = "glob" if list_intent else "grep"
         tgt = (_extract_path(q) if kind == "glob" else term) or term or "."
         _log_rail("RUN-%s" % kind.upper(), "posterior-fallback", tgt, q)
+        if _JSON:
+            return _emit_json("fallback", [], {}, {}, term, q, fallback="comp-%s %s" % (kind, tgt))
         return _run_primitive(kind, tgt)
     caps = [s.cap.id for s in r.within_margin] or ([r.ranked[0].cap.id] if r.ranked else [])
     if not caps:
         return None
+    if _JSON:
+        return _emit_json(r.kind, caps[:4], call_of, concern_of, term, q)
     if r.kind == "disambiguation":
         print("  near-tie -- the surface-aware router surfaces these; pick by concern (never a silent guess):\n")
     for cid in caps[:4]:
@@ -1004,6 +1087,11 @@ def main() -> int:
         global _ROUTE_ONLY
         _ROUTE_ONLY = True
         sys.argv = [sys.argv[0]] + [a for a in sys.argv[1:] if a != "--route-only"]
+    # NFRA_TOOLPASS item-3: --json passthrough at the launcher (was swallowed into the question).
+    if "--json" in sys.argv[1:]:
+        global _JSON
+        _JSON = True
+        sys.argv = [sys.argv[0]] + [a for a in sys.argv[1:] if a != "--json"]
     if len(sys.argv) < 2 or not sys.argv[1].strip():
         print('comp-which "<your question>"  -- maps a natural-language question to the canonical comp-* call.')
         print('  e.g. comp-which "what produces canonical_prices.parquet?"')
@@ -1045,13 +1133,71 @@ def main() -> int:
     list_intent = bool(LISTVERB_RX.search(q))
     term = _extract_term(q)
 
-    print('comp-which -- best match for: "%s"\n' % q)
+    if not _JSON:
+        print('comp-which -- best match for: "%s"\n' % q)
+
+    _STRONG_MAIN = 4
+
+    # NFRA_TOOLPASS (CTO ruling 024149Z item-2 rule-2): comp-surface-check is DELIBERATELY non-routable
+    # -- it's a commit-gate in the manifest's excluded_not_graph_use_cases (found via the CLAUDE.md
+    # invoke-table, not a graph-QUERY route), so comp_route.py:329's routable-filter DROPS it from the
+    # posterior candidate set (a plain RULES entry scores it but never surfaces -- same silent-drop class
+    # as the comp-system bug, except HERE the exclusion is intentional). comp-which should still POINT an
+    # agent to it for the MP/benchmarks/SEV1-surface intent. So a STRONG curated hit for a deliberately
+    # non-routable gate routes DIRECTLY here (a curated POINTER), like the gold-id/call-site/heat/grep
+    # special-cases -- WITHOUT making it a general routable graph-query target (respects the exclusion).
+    _CURATED_POINTER_ONLY = {"comp-surface-check"}
+    if hits and best_score >= _STRONG_MAIN:
+        _top_cap = (hits[0][2][0].strip().split()[0] if hits[0][2] else "")
+        if _top_cap in _CURATED_POINTER_ONLY:
+            _log_rail("ROUTE-POINTER", hits[0][1], term, q)
+            if _JSON:
+                return _emit_json("decision", [_top_cap], {_top_cap: hits[0][2][0]},
+                                  {_top_cap: hits[0][3]}, term, q)
+            _route_print(hits[:1])
+            return 0
+
+    # NFRA_TOOLPASS (CTO ruling 024149Z item-2 rule-5): a LITERAL grep/find-the-repo intent with NO
+    # strong vetted rich tool must HONOR the documented comp-grep/comp-glob fallback the footer
+    # PROMISES -- the DR2 posterior + POTION semantic layer can confidently mis-route it to a weak
+    # neighbour (comp-trace on "grep/find the repo"), a broken promise worse than a gap. Restore the
+    # "search-verb greps FIRST unless a STRONG curated rich tool matches" ordering here, ahead of the
+    # posterior. A gold-id / call-site / heat hit or a STRONG curated rule (best_score >= STRONG) is
+    # protected -> a semantic search-phrased rich route ("find every node touching X" -> comp-xref) is
+    # NOT swept in.
+    if GREP_REPO_RX.search(q) and best_score < _STRONG_MAIN and not gid:
+        if list_intent:
+            kind, tgt = "glob", (_extract_path(q) or term or ".")
+        else:
+            kind, tgt = "grep", (term or ".")
+        _log_rail("RUN-%s" % kind.upper(), "grep-repo-fallback-honored", tgt, q)
+        if _JSON:
+            return _emit_json("fallback", [], {}, {}, term, q, fallback="comp-%s %s" % (kind, tgt))
+        if hits and best_score > 0:
+            print("  (a rich tool MIGHT also fit -- consider first:)")
+            _route_print(hits[:1])
+        return _run_primitive(kind, tgt)
 
     # NFRA_COMPROUTE DR2 FLIP (CVO~B DRV cert 4c1d93be5): comp_route is the DEFAULT router. On any error
     # it returns None -> the LEGACY cascade below runs (fail-safe -- the flip can never break the LIVE rail).
     _dr = _default_router(q, qtok, hits, term, list_intent)
     if _dr is not None:
         return _dr
+
+    # --json + the posterior errored (rare -> the human LEGACY cascade below). Emit a best-effort
+    # JSON from the curated hits so --json ALWAYS yields machine output, never a human dump.
+    if _JSON:
+        caps, call_of = [], {}
+        for _s, _l, calls, _w in (hits[:3] or []):
+            for _c in (calls or []):
+                cid = _c.strip().split()[0] if _c.strip() else ""
+                if cid and cid not in caps:
+                    caps.append(cid)
+                    call_of[cid] = _c
+        if caps:
+            return _emit_json("decision" if len(caps) == 1 else "disambiguation", caps, call_of, {}, term, q)
+        return _emit_json("fallback", [], {}, {}, term, q,
+                          fallback="comp-%s %s" % ("glob" if list_intent else "grep", term or "."))
 
     # --- LEGACY CASCADE (fail-safe fallback; the pre-flip behavior) ----------
     # --- DECISION (never dead-ends, NFRA_COMPRAIL TO-2 AC1; LD-0208 backstop-reorder) ----------
