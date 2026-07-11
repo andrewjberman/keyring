@@ -53,7 +53,10 @@ def is_held_bucket(bucket) -> bool:
     s3://bucket[/key] or a bare bucket[/key]."""
     if not bucket:
         return False
-    s = str(bucket).replace("\\", "/")
+    # .strip().lower() matches freeze_monitor._bucket_is_held EXACTLY (so the AE~C migration is a true
+    # no-op) and is CONSERVATIVE: lowercasing can only ADD held-matches (OPAL-DATA-BD -> opal-data-bd),
+    # never remove one -> holding is the safe failure direction. S3 bucket names are lowercase by AWS rule.
+    s = str(bucket).replace("\\", "/").strip().lower()
     if s.startswith("s3://"):
         s = s[len("s3://"):]
     return any(s == p or s.startswith(p + "-") or s.startswith(p + "/") for p in HELD_BUCKET_PREFIXES)

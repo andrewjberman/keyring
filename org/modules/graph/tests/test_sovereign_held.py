@@ -43,8 +43,15 @@ def test_is_held_bucket_family_boundary():
     assert sh.is_held_bucket("opal-data-bd/platinum/x.json") is True   # <p>/*
     assert sh.is_held_bucket("s3://opal-data-bd/gold/x.parquet") is True   # s3:// scheme stripped
     assert sh.is_held_bucket("opal-data-schwab") is True
-    # NOT held -- the load-bearing boundary:
+    # case-insensitive + whitespace-tolerant (matches freeze_monitor._bucket_is_held; a true no-op for its
+    # migration; conservative -- lowercasing only ADDS held-matches):
+    assert sh.is_held_bucket("OPAL-DATA-BD") is True
+    assert sh.is_held_bucket("Opal-Data-BD/key") is True
+    assert sh.is_held_bucket("  opal-data-bd  ") is True
+    assert sh.is_held_bucket("S3://OPAL-DATA-SCHWAB/x") is True
+    # NOT held -- the load-bearing boundary (preserved under .lower()):
     assert sh.is_held_bucket("opal-data-bdx") is False           # distinct bucket, NOT a prefix-family match
+    assert sh.is_held_bucket("OPAL-DATA-BDX") is False           # ditto, case-insensitively
     assert sh.is_held_bucket("opal-data-inf") is False
     assert sh.is_held_bucket("opal-data-cot") is False
     assert sh.is_held_bucket("") is False
