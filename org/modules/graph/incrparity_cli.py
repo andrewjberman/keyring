@@ -103,6 +103,16 @@ def main(argv=None) -> int:
 
     args = parser.parse_args(argv)
 
+    # SOVEREIGN hold: comp-incrparity reads the opal-data-bd DATA bucket (core.S3_BUCKET, hardcoded) on
+    # EVERY path -- it is a bd-only parity tool with no non-bd mode. Guard the AGENT ENTRY (comp-xray
+    # pattern): skip for an agent by default; COMP_INCRPARITY_INCLUDE_HELD=1 re-enables for the DS/pipeline
+    # parity path (the engine incrparity_core stays out-of-scope -- its bd reads ARE its designed function).
+    # rc 3 = HELD-blocked, distinct from the parity verdicts (0 pass / 1 fail / 2 unverified).
+    if os.environ.get("COMP_INCRPARITY_INCLUDE_HELD") != "1":
+        print("BLOCKED: comp-incrparity reads the opal-data-bd DATA bucket, HELD under the sovereign "
+              "hold. Set COMP_INCRPARITY_INCLUDE_HELD=1 for the DS/pipeline parity path.", file=sys.stderr)
+        return 3
+
     try:
         s3 = _make_s3()
     except Exception as e:
