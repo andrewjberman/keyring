@@ -28,6 +28,7 @@ closes proposal E pass-through gap from COMPILER_VALIDATE_COVERAGE_AND_PASSTHROU
 from __future__ import annotations
 
 import argparse
+import os
 import platform
 import re
 import subprocess
@@ -50,6 +51,36 @@ _INF_VALIDATE_CONFIG = _WORKSPACE / "data" / "inf" / "scripts" / "gold" / "gold_
 # (data/cot/scripts/...) and loaded in ISOLATION -- NEVER merged into the bd+inf alias map (a merge
 # would let cot D_00/D_04 shadow bd's). Firm separation applies to tooling reads. NFRA_COT_TOOLING.
 _COT_VALIDATE_CONFIG = _WORKSPACE / "data" / "cot" / "scripts" / "gold" / "gold_validate_config.yaml"
+
+# SOVEREIGN HOLD (bd/49F/Schwab, 2026-07-09): _BD_VALIDATE_CONFIG + STANDALONE_VALIDATORS_DIR both live
+# under data/black_diamond/ -- reading them is a bd-SOURCE content read, HELD. The tool auto-read the bd
+# config UNCONDITIONALLY (alias map, --list, every non-INF validation), so INF/cot work touched bd source.
+# Default: exclude the bd config + bd validators dir; NAMED (loud skip-note, never a silent scope change).
+# Override COMP_VALIDATE_INCLUDE_HELD=1 re-enables them for the DS bd-validate/deploy cycle (Rule 13 -- a
+# bd gold validation legitimately needs the bd config; THAT path sets the flag). cot + inf are NOT held.
+_bd_skip_noted = False
+
+
+def _bd_held_excluded() -> bool:
+    """True (default) => skip the bd config + bd standalone validators. COMP_VALIDATE_INCLUDE_HELD=1 re-enables."""
+    return os.environ.get("COMP_VALIDATE_INCLUDE_HELD") != "1"
+
+
+def _note_bd_held_skip() -> None:
+    """Loud, ONE-SHOT skip note to stderr (keeps stdout clean for the RESULT-token protocol parser)."""
+    global _bd_skip_noted
+    if not _bd_skip_noted:
+        print("  SKIP: bd gold_validate_config.yaml + standalone validators HELD under the sovereign hold "
+              "-- set COMP_VALIDATE_INCLUDE_HELD=1 for the DS bd-validate/deploy cycle (Rule 13).",
+              file=sys.stderr)
+        _bd_skip_noted = True
+
+
+def _is_held_bd_path(p) -> bool:
+    """True if a path is under the held bd/schwab SOURCE tree -- pure string check, never opens the file.
+    Closes the --config hole: an explicit `--config data/black_diamond/...` is a held read too."""
+    s = str(p).replace("\\", "/")
+    return "data/black_diamond/" in s or "data/canonical/schwab/silver/" in s
 
 
 def _is_cot_path(s: str) -> bool:
@@ -99,7 +130,14 @@ def _load_raw_validate_configs() -> dict:
     Returns merged {artifact_id: raw_data_dict} from both pipelines.
     """
     result: dict = {}
-    for config_file in (_BD_VALIDATE_CONFIG, _INF_VALIDATE_CONFIG):
+    # SOVEREIGN HOLD: the bd config is a held bd-source read -- skip it by default (inf only), NAMED.
+    # Order preserved for the override: bd first so inf wins on artifact-id collision, as before.
+    if _bd_held_excluded():
+        _note_bd_held_skip()
+        config_files = (_INF_VALIDATE_CONFIG,)
+    else:
+        config_files = (_BD_VALIDATE_CONFIG, _INF_VALIDATE_CONFIG)
+    for config_file in config_files:
         if not config_file.exists():
             continue
         try:
@@ -240,6 +278,11 @@ def _find_standalone_validator(script_id: str) -> Path | None:
     """Return path to data/.../validators/validate_{script_id}.py if it exists."""
     if not script_id:
         return None
+    # SOVEREIGN HOLD: STANDALONE_VALIDATORS_DIR is under data/black_diamond/ -- statting/dispatching a bd
+    # validator executes bd source. Skip by default; COMP_VALIDATE_INCLUDE_HELD=1 re-enables (DS bd path).
+    if _bd_held_excluded():
+        _note_bd_held_skip()
+        return None
     candidate = STANDALONE_VALIDATORS_DIR / f"validate_{script_id}.py"
     return candidate if candidate.is_file() else None
 
@@ -274,7 +317,12 @@ def cmd_list(args):
             print(f"  {sid}")
         return
 
-    bd_configs = load_validate_config(_WORKSPACE)
+    # SOVEREIGN HOLD: the default bd config load is a held bd-source read -- skip by default, NAMED.
+    if _bd_held_excluded():
+        _note_bd_held_skip()
+        bd_configs = {}
+    else:
+        bd_configs = load_validate_config(_WORKSPACE)
     inf_configs = load_validate_config(_WORKSPACE, _INF_VALIDATE_CONFIG)
     configs = {**bd_configs, **inf_configs}
     if not configs:
@@ -287,7 +335,10 @@ def cmd_list(args):
     lane_filter = getattr(args, "lane", None)
 
     print(f"VALIDATE CONFIG ({len(configs)} scripts)")
-    print("  Config (BD):  data/black_diamond/scripts/gold/gold_validate_config.yaml")
+    if not _bd_held_excluded():
+        print("  Config (BD):  data/black_diamond/scripts/gold/gold_validate_config.yaml")
+    else:
+        print("  Config (BD):  HELD (sovereign hold; COMP_VALIDATE_INCLUDE_HELD=1 to include)")
     print("  Config (INF): data/inf/scripts/gold/gold_validate_config.yaml")
     print()
 
@@ -366,13 +417,24 @@ def cmd_validate(args):
             print(f"ERROR: --config path not found: {cfg_path}", file=sys.stderr)
             sys.exit(2)
         _config_file = cfg_path
+        # an explicit --config pointing INTO the held bd tree is a held read too (closes the bypass).
+        _would_read_held_bd = _is_held_bd_path(cfg_path)
     elif _is_cot:
         _config_file = _COT_VALIDATE_CONFIG
+        _would_read_held_bd = False
     else:
         # Auto-detect pipeline from script_id prefix: INF_* -> INF config; others -> BD.
         _sid_upper = (args.script_id or "").upper()
         _config_file = _INF_VALIDATE_CONFIG if _sid_upper.startswith("INF_") else None
-    configs = load_validate_config(_WORKSPACE, _config_file)
+        _would_read_held_bd = _config_file is None  # None => the bd default config
+    # SOVEREIGN HOLD: a non-INF/non-cot id defaults to the bd config (held); ditto an explicit bd --config.
+    # Skip the load -> the artifact resolves NO_CONFIG (UNVALIDATED, fail-closed exit 2 per protocol),
+    # NAMED. Override (COMP_VALIDATE_INCLUDE_HELD=1) re-enables it for the DS bd-validate/deploy cycle.
+    if _would_read_held_bd and _bd_held_excluded():
+        _note_bd_held_skip()
+        configs = {}
+    else:
+        configs = load_validate_config(_WORKSPACE, _config_file)
     # --strict is now a no-op alias: NO_CONFIG fails closed (exit 2) by DEFAULT
     # post-flip (LD-0148). Kept as a flag for back-compat; --lenient is the bypass.
 
