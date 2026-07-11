@@ -74,6 +74,24 @@ _GATE_LABELS = ", ".join(label for _rx, label, _d, _o in _GATES)
 
 
 # --------------------------------------------------------------------------------------------
+# Sovereign hold (bd/schwab): comp-dispatch is agent-facing; `comp-dispatch bd` (or a direct bd .sh
+# path) resolves to data/black_diamond/.../gold_dispatch.sh and analyze() reads its CONTENT. Skip that
+# read by DEFAULT (cot/inf still work -- path-based); COMP_DISPATCH_INCLUDE_HELD=1 re-enables it for the
+# DS bd-dispatch path. Pure str check, never opens the file. (One of the scattered held-predicates the
+# NFRA_TOOLPASS consolidation TO folds into org/modules/graph/sovereign_held.py at C1.)
+_HELD_MARKERS = ("data/black_diamond/", "data/canonical/schwab/silver/", "schwab/silver/")
+
+
+def _is_held(path) -> bool:
+    s = str(path or "").replace("\\", "/")
+    return any(m in s for m in _HELD_MARKERS)
+
+
+def _dispatch_include_held() -> bool:
+    return os.environ.get("COMP_DISPATCH_INCLUDE_HELD") == "1"
+
+
+# --------------------------------------------------------------------------------------------
 def find_dispatch(firm_or_path: str) -> tuple[str | None, str | None]:
     """Resolve a firm alias / dir name / direct path -> (dispatch_path, firm_label)."""
     if firm_or_path.endswith(".sh"):
@@ -153,6 +171,11 @@ def analyze(firm_or_path: str) -> dict:
     if not path:
         return {"error": f"no gold_dispatch.sh for '{firm_or_path}' "
                          f"(known firms: {sorted(set(FIRM_DIRS))}; or pass a path)"}
+    if _is_held(path) and not _dispatch_include_held():
+        return {"error": f"'{firm_or_path}' resolves to a HELD bd/schwab dispatch ({path}); its content "
+                         "is NOT read under the sovereign hold. Set COMP_DISPATCH_INCLUDE_HELD=1 for the "
+                         "DS bd-dispatch path.",
+                "held": True, "firm": firm}
     with open(path, encoding="utf-8", errors="replace") as fh:
         text = fh.read()
     catalog = parse_catalog(text)
