@@ -49,6 +49,9 @@ _TOOLS = os.path.join(_HERE, "..", "..", "..", ".tools")
 if os.path.isdir(_TOOLS):
     sys.path.insert(0, os.path.abspath(_TOOLS))
 from safe_deploy_core import PIPELINE_MAP  # noqa: E402
+# NFRA_TOOLPASS C5: the held predicate + lift signal delegate to sovereign_held (_HERE is already on
+# sys.path above, so the bare import resolves in every load context this harness runs in).
+from sovereign_held import is_held_path as _is_held, include_held as _include_held  # noqa: E402
 
 
 def _firm_from_source(source: str) -> str:
@@ -305,19 +308,10 @@ _REAL_SOURCES = {
 
 
 # Sovereign hold (bd/schwab): the parity harness reads REAL bd source (gold_dispatch.sh / s3_layout /
-# A_00 / A_01). This is a __main__-only parity runner (not on the comp rail), but a __main__ IS
-# agent-runnable -> defensive path-based skip. COMP_RECOGNIZERS_INCLUDE_HELD=1 re-enables (DS/parity
-# path). Pure str check, never opens the file. (Folds into sovereign_held.py at the C1 consolidation.)
-_HELD_MARKERS = ("data/black_diamond/", "data/canonical/schwab/silver/", "schwab/silver/")
-
-
-def _is_held(rel) -> bool:
-    s = str(rel or "").replace("\\", "/")
-    return any(m in s for m in _HELD_MARKERS)
-
-
+# A_00 / A_01). Defensive path-based skip by default; COMP_RECOGNIZERS_INCLUDE_HELD=1 (or canonical
+# COMP_INCLUDE_HELD=1) re-enables. C5: _is_held / lift delegate to sovereign_held (imported above).
 def _recognizers_include_held() -> bool:
-    return os.environ.get("COMP_RECOGNIZERS_INCLUDE_HELD") == "1"
+    return _include_held("COMP_RECOGNIZERS_INCLUDE_HELD")
 
 
 def _edges_for(recognizer: Recognizer, rel_path: str, marker_head: str) -> tuple:

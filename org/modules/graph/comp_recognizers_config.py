@@ -53,6 +53,9 @@ _TOOLS = os.path.join(_HERE, "..", "..", "..", ".tools")
 if os.path.isdir(_TOOLS):
     sys.path.insert(0, os.path.abspath(_TOOLS))
 from safe_deploy_core import PIPELINE_MAP  # noqa: E402
+# NFRA_TOOLPASS C5: delegate the held predicate + lift signal to sovereign_held (the graph dir is already
+# on sys.path above for the sibling bare imports, so this resolves in every load context).
+from sovereign_held import is_held_path as _is_held, include_held as _include_held  # noqa: E402
 
 
 def _ws_root() -> str:
@@ -173,19 +176,10 @@ class EnvSecretRefRecognizer(Recognizer):
 
 
 # Sovereign hold (bd/schwab): _YAML_SOURCES includes the bd gold_freshness_config.yaml; build_trees
-# opens+yaml.compose it. Defensive path-based skip by default (this is a __main__-only parity harness,
-# but a __main__ IS agent-runnable); COMP_RECOGNIZERS_INCLUDE_HELD=1 re-enables (DS/parity path). Pure
-# str check, never opens the file. (Folds into sovereign_held.py at the C1 consolidation.)
-_HELD_MARKERS = ("data/black_diamond/", "data/canonical/schwab/silver/", "schwab/silver/")
-
-
-def _is_held(rel) -> bool:
-    s = str(rel or "").replace("\\", "/")
-    return any(m in s for m in _HELD_MARKERS)
-
-
+# opens+yaml.compose it. Defensive path-based skip by default; COMP_RECOGNIZERS_INCLUDE_HELD=1 (or
+# canonical COMP_INCLUDE_HELD=1) re-enables. C5: _is_held / lift delegate to sovereign_held (imported above).
 def _recognizers_include_held() -> bool:
-    return os.environ.get("COMP_RECOGNIZERS_INCLUDE_HELD") == "1"
+    return _include_held("COMP_RECOGNIZERS_INCLUDE_HELD")
 
 
 # ---------------------------------------------------------------------------
