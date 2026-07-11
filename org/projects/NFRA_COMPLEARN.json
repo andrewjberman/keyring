@@ -3,17 +3,39 @@
   "macro_code": "NFRA",
   "name": "Self-Learning Loop over Tool-Use (the USE-verb)",
   "description": "Andrew-direct via MSTR (LD-0225 + LD-0226 fold). Reclaim the dormant COMP_LEARNS runtime (comp-learns-run/status dead shims) as a fabric-native self-learning loop over our own tool-use. Trino federates agent BEHAVIOR x cloud ESTATE x git/local CHANGE: tool_activity becomes the 3rd Trino catalog (added to the LIVE iceberg+code_heat federation -- REUSE not re-build, COO~B-grounded), extracted from compiler-tools-log.md + agent_telemetry/*.jsonl + comp-which-rail.log. A SCHEDULED (EventBridge->Fargate nightly, sidesteps LD-0175 as server-side infra), VALUE-anchored ratchet learns which comp-tools we need most + where the raw-grep coverage gaps are (Rule 21 automated) + how to optimize/merge/retire -> an ADVISORY worklist CTO ratifies. Mutation space INCLUDES the comp-which routing rules + HUD (LD-0226 = the canonical worked example; routing-misses, not missing tools, are a large share of friction). SEED CORPUS: 3mo backfill (8,600 rolling-log rows + 1,469 session-log Compiler-Tools sections) = dense from iteration 1. LOAD-BEARING RISK (CTO-owned): the Goodhart/benchmark-honesty gate -- score on VALUE (escapes-prevented/chains-shortened/drift-caught/cost-per-outcome) NOT usage; CVO verifies scorer honesty + gap-map ground-truth. The USE-verb of the NFRA_COMP* program (COMPUNIFY=map, COMPDRIFT=state-verb); references the COMPUNIFY coverage map, shares the COMPDRIFT Trino substrate.",
-  "prds": ["docs/architecture/NFRA_COMPLEARN_PRD.md", "docs/architecture/NFRA_COMPLEARN_amend_loop-closure_20260710.md"],
-  "related": ["NFRA_COMPUNIFY", "NFRA_COMPDRIFT", "NFRA_GLOBGRPH"],
+  "prds": [
+    "docs/architecture/NFRA_COMPLEARN_PRD.md",
+    "docs/architecture/NFRA_COMPLEARN_amend_loop-closure_20260710.md"
+  ],
+  "related": [
+    "NFRA_COMPUNIFY",
+    "NFRA_COMPDRIFT",
+    "NFRA_GLOBGRPH"
+  ],
   "status": "active",
   "reopened": "2026-07-10",
   "prior_completion": "2026-07-01 (CVO-verified bdc6d01a6; reopened 2026-07-10 for the loop-closure amendment, Andrew-direct via CTO~A ruling #1)",
   "phase": "REOPENED 2026-07-10 (Andrew-direct via CTO~A ruling #1; arch-gate set @ 8dfcf1e75). The loop-closure amendment (NFRA_COMPLEARN_amend_loop-closure_20260710.md) CORRECTS declarative drift in the close: the phase claimed 'P3 (nightly refresh) LIVE' but P3-as-specified (PRD sec.7 EventBridge->Fargate server-side) is NOT what runs -- it is host-local, behind a comment claiming a Fargate emit that was NEVER materialized. The close-gates (Goodhart + scorer-honesty) were correctly GREEN on WHAT THEY TESTED; the 'P3 LIVE' prose was drift. 3 AMD TOs (COO~A 2026-07-10, staged, arch-gate PASS, org/projects/NFRA_COMPLEARN/task_orders/AMD-*) drive P3 to done + a hardening leg: AMD-P3a leg-3 producer robustness + HARD freshness gate (exercised-by-going-stale) + 'make the nightly-Fargate claim TRUE or DELETE it' (0.7.0 LANE -- Andrew's, double-gated, COO~A cannot issue); AMD-P3b leg-4 DRV activation behind the CTO-owned value-anchored Goodhart gate, advisory-never-auto-mutating (0.8.0~E); AMD-P3c comp_log_auto ingestion-honesty disclosure (0.8.0~E, daylight-held). Dispatch HELD on builder spawns. --- PRIOR CLOSE: COMPLETE 2026-07-01 (2-step close, COO~B). P0 (tool_activity 3rd Trino catalog) + P1 (federated views + gap_heat) + P3 (nightly refresh) LIVE; P2 value-anchored scorer LANDED (15e88557d + CTO-caveat refine 3dffba0a9). BOTH close-gates GREEN: (a) CTO Goodhart/worklist RATIFY (grounded -- read source + ran --goodhart-audit: 250 value-vs-count inversions, merge-retire IS the Goodhart bite, value=friction-averted-not-usage, advisory-only) + (b) CVO~B scorer-honesty verify (verdict bdc6d01a6 -- scores VALUE not usage, gap-map ground-truth real, preventive-gate caveat test-locked). Single iteration -> 596-candidate advisory worklist (routing-misses first-class; one-signal-two-consumers w/ COMPROUTE L3's outcome_value). CAVEAT rides the worklist: retire-disposition on ENFORCEMENT/GATE tools = human-judgment not auto (a preventive gate scores low-value-per-run by design). [orig: PHASE 0 PRD AUTHORED, LD-0225/0226]. The USE-verb of the NFRA_COMP* program. tool_activity = 3rd Trino catalog (reuse the live federation); reclaimed comp-learns-run/status ratchet; value-anchored scorer = the CTO-owned Goodhart gate (CVO verifies); mutation space includes comp-which routing-rules (LD-0226 reference iteration); seed corpus (3mo backfill); scheduled-alive (EventBridge->Fargate). Phasing P0 catalog+seed-backfill -> P1 federated-views+status-dashboard (stands alone) -> P2 scorer+single-iteration -> P3 scheduled-autonomous-loop. References COMPUNIFY map (held until its apex shapes); shares COMPDRIFT substrate. Decomp routes to COO~B.",
   "blocking": "REOPENED for the loop-closure amendment. Dispatch of the 3 AMD TOs is HELD on Andrew's builder spawns (a 0.7.0 CloudOps lane for AMD-P3a -- 0.7.0 is Andrew's, COO~A cannot issue; 0.8.0~E for AMD-P3b/P3c). CTO~A arch-gate PASS on the AMD TO set @ 8dfcf1e75. AMD-P3c edit sequences behind the .tools/**->BASE_EXEC daylight hold. The Goodhart gate (AMD-P3b) is CTO-owned + shared with NFRA_TOOLGRAPH.TO-3 (one gate, both consumers). BOUNDARY (sovereign): no bd/49F/Schwab read or target.",
   "created": "2026-06-30",
-  "pods": ["0.8", "0.7", "3.0", "1.0", "2.0"],
+  "pods": [
+    "0.8",
+    "0.7",
+    "3.0",
+    "1.0",
+    "2.0"
+  ],
   "pipeline": "NFRA",
   "coo_lane": "COO~B (original P0-P3, NFRA_COMP* program coordination). AMENDMENT (2026-07-10 loop-closure) decomposed by COO~A (scoped exclusively to CTO~A's PRD program, Andrew-direct); 3 AMD TOs under org/projects/NFRA_COMPLEARN/task_orders/AMD-*. Original: decompose P0-P3; build 0.8.0_AE (tool_activity ETL/catalog + Trino views) + 0.7.0_AE (EventBridge->Fargate scheduled runner); CVO scorer-honesty + gap-map ground-truth verify. Trino-catalog work sequenced ONCE across the program.",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "backlog": [
+    {
+      "item": "comp-tool-health TH-B surfaced 5866 ROUTE-POSTERIOR* rows the tool_activity/routing.jsonl emitter-whitelist drops -- advisory denominator-drift, NOT a tool defect.",
+      "disposition": "advisory; owner = 1.x.0_DS_CompLearns lane (.owned-paths.yaml), currently UNSPAWNED. NOT dispatched (a route into a spawn-held lane is delivered-not-read).",
+      "pickup": "picked up on CompLearns-lane spawn (AMD-P3 reopen scope)",
+      "urgency": "none (advisory, not a defect)",
+      "source": "3.0.0_SA_CVO~B comp-tool-health TH-B; recorded 2.0.0_SA_COO 2026-07-11"
+    }
+  ]
 }
