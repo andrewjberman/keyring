@@ -172,6 +172,22 @@ class EnvSecretRefRecognizer(Recognizer):
         )]
 
 
+# Sovereign hold (bd/schwab): _YAML_SOURCES includes the bd gold_freshness_config.yaml; build_trees
+# opens+yaml.compose it. Defensive path-based skip by default (this is a __main__-only parity harness,
+# but a __main__ IS agent-runnable); COMP_RECOGNIZERS_INCLUDE_HELD=1 re-enables (DS/parity path). Pure
+# str check, never opens the file. (Folds into sovereign_held.py at the C1 consolidation.)
+_HELD_MARKERS = ("data/black_diamond/", "data/canonical/schwab/silver/", "schwab/silver/")
+
+
+def _is_held(rel) -> bool:
+    s = str(rel or "").replace("\\", "/")
+    return any(m in s for m in _HELD_MARKERS)
+
+
+def _recognizers_include_held() -> bool:
+    return os.environ.get("COMP_RECOGNIZERS_INCLUDE_HELD") == "1"
+
+
 # ---------------------------------------------------------------------------
 # Config FrontEnds (the framework-lane work my P2 review flagged) -- two capability tiers, one per class,
 # so the registry's capability-matched dispatch keeps a YAML recognizer from ever seeing an .env tree.
@@ -189,6 +205,8 @@ class ConfigYamlFrontEnd(FrontEnd):
             ap = os.path.join(_ws_root(), rel)
             if not os.path.exists(ap):
                 continue
+            if _is_held(rel) and not _recognizers_include_held():
+                continue  # sovereign hold: skip held bd/schwab config (defensive)
             with open(ap, encoding="utf-8") as fh:
                 text = fh.read()
             yield EnrichedTree(source=rel, capability=self.capability, text=text, root=yaml.compose(text))
@@ -207,6 +225,8 @@ class ConfigEnvFrontEnd(FrontEnd):
             ap = os.path.join(_ws_root(), rel)
             if not os.path.exists(ap):
                 continue
+            if _is_held(rel) and not _recognizers_include_held():
+                continue  # sovereign hold: skip held bd/schwab config (defensive)
             with open(ap, encoding="utf-8") as fh:
                 yield EnrichedTree(source=rel, capability=self.capability, text=fh.read())
 

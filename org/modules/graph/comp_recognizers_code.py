@@ -304,11 +304,29 @@ _REAL_SOURCES = {
 }
 
 
+# Sovereign hold (bd/schwab): the parity harness reads REAL bd source (gold_dispatch.sh / s3_layout /
+# A_00 / A_01). This is a __main__-only parity runner (not on the comp rail), but a __main__ IS
+# agent-runnable -> defensive path-based skip. COMP_RECOGNIZERS_INCLUDE_HELD=1 re-enables (DS/parity
+# path). Pure str check, never opens the file. (Folds into sovereign_held.py at the C1 consolidation.)
+_HELD_MARKERS = ("data/black_diamond/", "data/canonical/schwab/silver/", "schwab/silver/")
+
+
+def _is_held(rel) -> bool:
+    s = str(rel or "").replace("\\", "/")
+    return any(m in s for m in _HELD_MARKERS)
+
+
+def _recognizers_include_held() -> bool:
+    return os.environ.get("COMP_RECOGNIZERS_INCLUDE_HELD") == "1"
+
+
 def _edges_for(recognizer: Recognizer, rel_path: str, marker_head: str) -> tuple:
     ws = os.path.abspath(os.path.join(_HERE, "..", "..", ".."))
     ap = os.path.join(ws, rel_path)
     if not os.path.exists(ap):
         return ([], None)
+    if _is_held(rel_path) and not _recognizers_include_held():
+        return ([], None)  # sovereign hold: skip held bd/schwab source (defensive)
     with open(ap, encoding="utf-8", errors="replace") as fh:
         text = fh.read()
     tree = EnrichedTree(source=rel_path, capability=FrontEndCapability.RAW_TEXT, text=text)
