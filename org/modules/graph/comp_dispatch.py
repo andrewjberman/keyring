@@ -38,6 +38,15 @@ import sys
 
 _WS = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
 
+# NFRA_TOOLPASS C4: the held predicate + lift signal are CONSOLIDATED into sovereign_held. Dual import --
+# relative when imported as a package, else add this module's own dir (same dir as sovereign_held) and
+# import bare (comp-dispatch runs standalone: python comp_dispatch.py, and via the test's spec loader).
+try:
+    from .sovereign_held import is_held_path as _is_held, include_held as _include_held
+except ImportError:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from sovereign_held import is_held_path as _is_held, include_held as _include_held
+
 # firm alias -> the data/<dir>/ segment. A bare dir name or a direct .sh path also work.
 FIRM_DIRS = {
     "bd": "black_diamond", "black_diamond": "black_diamond",
@@ -74,21 +83,12 @@ _GATE_LABELS = ", ".join(label for _rx, label, _d, _o in _GATES)
 
 
 # --------------------------------------------------------------------------------------------
-# Sovereign hold (bd/schwab): comp-dispatch is agent-facing; `comp-dispatch bd` (or a direct bd .sh
-# path) resolves to data/black_diamond/.../gold_dispatch.sh and analyze() reads its CONTENT. Skip that
-# read by DEFAULT (cot/inf still work -- path-based); COMP_DISPATCH_INCLUDE_HELD=1 re-enables it for the
-# DS bd-dispatch path. Pure str check, never opens the file. (One of the scattered held-predicates the
-# NFRA_TOOLPASS consolidation TO folds into org/modules/graph/sovereign_held.py at C1.)
-_HELD_MARKERS = ("data/black_diamond/", "data/canonical/schwab/silver/", "schwab/silver/")
-
-
-def _is_held(path) -> bool:
-    s = str(path or "").replace("\\", "/")
-    return any(m in s for m in _HELD_MARKERS)
-
-
+# Sovereign hold (bd/schwab): comp-dispatch is agent-facing; `comp-dispatch bd` (or a direct bd .sh path)
+# resolves to data/black_diamond/.../gold_dispatch.sh and analyze() reads its CONTENT. Skip that read by
+# DEFAULT (cot/inf still work -- path-based); COMP_DISPATCH_INCLUDE_HELD=1 (or canonical COMP_INCLUDE_HELD=1)
+# re-enables it for the DS bd-dispatch path. C4: _is_held / lift delegate to sovereign_held (imported above).
 def _dispatch_include_held() -> bool:
-    return os.environ.get("COMP_DISPATCH_INCLUDE_HELD") == "1"
+    return _include_held("COMP_DISPATCH_INCLUDE_HELD")
 
 
 # --------------------------------------------------------------------------------------------
