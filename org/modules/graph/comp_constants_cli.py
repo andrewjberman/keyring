@@ -27,6 +27,15 @@ from pathlib import Path
 
 import yaml
 
+# NFRA_TOOLPASS C7: SOVEREIGN_HELD_MARKERS is derived from sovereign_held (the canonical leaf) instead of
+# a local literal tuple. Dual import (relative in package context, else add own dir + bare) -- comp-constants
+# runs standalone (python comp_constants_cli.py, incl. the subprocess-based fixtures) and as a package.
+try:
+    from .sovereign_held import HELD_PATH_MARKERS as _HELD_PATHS, HELD_BUCKET_PREFIXES as _HELD_BUCKETS
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from sovereign_held import HELD_PATH_MARKERS as _HELD_PATHS, HELD_BUCKET_PREFIXES as _HELD_BUCKETS
+
 
 WORKSPACE_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_CONFIG_PATH = WORKSPACE_ROOT / "comp-constants.config.yaml"
@@ -418,12 +427,10 @@ def cmd_list(args: argparse.Namespace, config: dict) -> int:
 # stays allowed (only_file scopes the scan to that one file). Override:
 # --allow-held-scan (loud stderr WARN; the wrapper logs the command string).
 # ---------------------------------------------------------------------------
-SOVEREIGN_HELD_MARKERS = (
-    "data/black_diamond/",
-    "schwab/silver/",
-    "opal-data-bd",
-    "opal-data-schwab",
-)
+# C7: derived from sovereign_held (path markers + bucket prefixes) -- preserves the historical CONFLATED
+# set (comp_constants matches both path + bucket substrings). Superset of the old 4 (adds the more-specific
+# data/canonical/schwab/silver/, redundant with schwab/silver/) -> behavior-preserving.
+SOVEREIGN_HELD_MARKERS = tuple(_HELD_PATHS) + tuple(_HELD_BUCKETS)
 
 
 def _held_surface_hits(config: dict) -> list[tuple[str, str]]:

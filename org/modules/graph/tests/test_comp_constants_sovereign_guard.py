@@ -55,8 +55,11 @@ def held_cfg(tmp_path) -> Path:
 # ---- STATIC: the guard exists and is wired ---------------------------------
 
 def test_markers_cover_the_sovereign_held_paths():
+    # C7 consolidation: the marker literals moved out of this module's SOURCE into the canonical leaf
+    # (sovereign_held); comp_constants now DERIVES SOVEREIGN_HELD_MARKERS from it. Check the RUNTIME tuple.
+    from org.modules.graph.comp_constants_cli import SOVEREIGN_HELD_MARKERS
     for marker in ("data/black_diamond/", "schwab/silver/", "opal-data-bd", "opal-data-schwab"):
-        assert marker in _SRC, f"SOVEREIGN_HELD_MARKERS must include {marker!r}"
+        assert marker in SOVEREIGN_HELD_MARKERS, f"SOVEREIGN_HELD_MARKERS must include {marker!r}"
 
 
 def test_guard_is_called_in_main_before_dispatch():
