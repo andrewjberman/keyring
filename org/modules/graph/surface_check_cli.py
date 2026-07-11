@@ -3,6 +3,16 @@
 comp-surface-check -- commit-time guard for the critical client-facing surfaces
 (NFRA_GRAPHS D8). Sibling of comp-manifest-check (D6).
 
+DISTRIBUTION (LD-0273 Stage-1 Half-2): this checker + critical-surfaces.yaml are
+published on change to s3://opal-313476888478-lambda-artifacts/surface-check/latest/
+by .github/workflows/surface-check-publish.yml (a dedicated least-privilege OIDC
+role, PutObject on that prefix only). The PORTAL CI (separate repo,
+portal/.github/workflows/surface-check.yml) downloads them with its own AWS creds
+and runs `check --mode blocking` on changed portal files -- the non-bypassable SEV1
+gate at the portal submodule boundary (Rule 20). Publish-on-change keeps the
+published copy CLOUD-HEAD-fresh (no pinned-SHA drift). Editing THIS docstring or the
+registry re-publishes the bundle.
+
 Maps changed files -> the critical-surface(s) whose carve names them, and emits a
 per-surface verdict: SEV1 = block-with-ack, SEV2 = warn, NONE = clean. Severity
 resolution (critical-surfaces.yaml monitor.severity_resolution): a file carved into
