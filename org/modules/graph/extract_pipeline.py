@@ -978,7 +978,7 @@ def _extract_script_io(
 # Column gap detection: _load_parquet columns= allowlist vs actual access
 # ---------------------------------------------------------------------------
 
-def _extract_column_gaps(py_file: Path) -> list[dict]:
+def _extract_column_gaps(py_file: Path, include_held_override: bool = False) -> list[dict]:
     """Detect cases where a script accesses a DataFrame column that was not
     included in the _load_parquet(..., columns=[...]) call that produced it.
 
@@ -987,16 +987,19 @@ def _extract_column_gaps(py_file: Path) -> list[dict]:
 
     Only fires for _load_parquet calls with an explicit columns=[...] list
     (not variables like columns=SOME_LIST). Dynamic column lists are skipped.
+
+    include_held_override: comp-pipescript `io` (the ONLY caller) passes
+    include_held("COMP_PIPESCRIPT_INCLUDE_HELD") so the DS deploy/verify path reads bd column-gaps like
+    `deployed` does. Default False = metadata-only (a held path yields no findings). The INDEXER never
+    calls this function, so the override cannot leak into the design-b metadata-only indexing contract.
     """
     import ast as _ast
 
     from .trace_graph import _held_path_hit
-    # Sovereign hold: comp-pipescript `io` invokes this on gold scripts (pipeline_cli), and a HELD
-    # bd/schwab gold path's CONTENT must never be read. Return no column-gap findings for a held path --
-    # the same metadata-only contract every OTHER read in this module already honors via _held_path_hit
-    # (_parse_s3_layout / _parse_dispatch / _extract_script_io / parse_gold_direct_invoke). This closes
-    # the `io` path; `deployed` was already guarded (COMP_PIPESCRIPT_INCLUDE_HELD). Pure str check, no open.
-    if _held_path_hit(str(py_file).replace("\\", "/")):
+    # Sovereign hold: a HELD bd/schwab gold path's CONTENT must not be read unless the override is set
+    # (the comp-pipescript io lift signal). Same _held_path_hit chokepoint the module's other reads use;
+    # the override is threaded ONLY here because io is the sole caller (the indexer never reaches this).
+    if _held_path_hit(str(py_file).replace("\\", "/")) and not include_held_override:
         return []
 
     try:

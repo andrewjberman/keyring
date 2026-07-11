@@ -59,9 +59,22 @@ def test_schwab_silver_path_also_skipped():
         assert ep._extract_column_gaps(sch_file) == [], "a held schwab/silver path must be skipped too"
 
 
+def test_include_held_override_reads_the_bd_gold_script():
+    # C io-threading: comp-pipescript io passes include_held_override=include_held("COMP_PIPESCRIPT_INCLUDE_HELD"),
+    # so a bd gold path IS read under the DS deploy/verify override -- the same finding the inf path yields.
+    with tempfile.TemporaryDirectory() as d:
+        bd_file = _write(Path(d) / "data" / "black_diamond" / "scripts" / "gold")
+        skipped = ep._extract_column_gaps(bd_file)                            # default -> []
+        read = ep._extract_column_gaps(bd_file, include_held_override=True)   # override -> reads
+    assert skipped == [], f"default (no override) must still skip a held bd path: {skipped}"
+    assert read, f"include_held_override=True must READ the bd gold script's column-gaps (non-vacuous): {read}"
+
+
 if __name__ == "__main__":
     test_inf_path_reads_and_finds_the_gap_but_bd_path_is_skipped()
     print("PASS: inf path reads+finds the gap; held bd path is skipped ([]) -- guard non-vacuous")
     test_schwab_silver_path_also_skipped()
     print("PASS: held schwab/silver path skipped too")
+    test_include_held_override_reads_the_bd_gold_script()
+    print("PASS: include_held_override reads the bd gold script (io honors the lift like deployed)")
     print("=== extract_column_gaps bd-hold: ALL PASS ===")

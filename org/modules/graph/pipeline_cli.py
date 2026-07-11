@@ -1358,7 +1358,10 @@ def cmd_io(args):
         script_path = _WORKSPACE / sio.file_path
         if script_path.exists():
             from org.modules.graph.extract_pipeline import _extract_column_gaps
-            col_gaps = _extract_column_gaps(script_path)
+            # C io-threading: comp-pipescript io honors COMP_PIPESCRIPT_INCLUDE_HELD (or COMP_INCLUDE_HELD)
+            # like `deployed` -- with the override set, a bd gold script's column-gaps ARE read.
+            col_gaps = _extract_column_gaps(
+                script_path, include_held_override=include_held("COMP_PIPESCRIPT_INCLUDE_HELD"))
             if col_gaps:
                 print()
                 print(f"  COLUMN GAPS ({len(col_gaps)}) -- columns accessed but not in _load_parquet columns= list:")
