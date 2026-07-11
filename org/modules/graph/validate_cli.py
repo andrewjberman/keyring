@@ -28,7 +28,6 @@ closes proposal E pass-through gap from COMPILER_VALIDATE_COVERAGE_AND_PASSTHROU
 from __future__ import annotations
 
 import argparse
-import os
 import platform
 import re
 import subprocess
@@ -41,6 +40,9 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 sys.path.insert(0, str(_WORKSPACE))
 
 from org.modules.graph.extract_validate import load_validate_config, run_validate  # noqa: E402
+# NFRA_TOOLPASS C3: the held predicate + lift signal are CONSOLIDATED into sovereign_held (the canonical
+# leaf). validate_cli delegates to it (was a local _is_held_bd_path + a bare COMP_VALIDATE_INCLUDE_HELD check).
+from org.modules.graph.sovereign_held import is_held_path, include_held  # noqa: E402
 
 STANDALONE_VALIDATORS_DIR = _WORKSPACE / "data" / "black_diamond" / "scripts" / "validators"
 
@@ -62,8 +64,9 @@ _bd_skip_noted = False
 
 
 def _bd_held_excluded() -> bool:
-    """True (default) => skip the bd config + bd standalone validators. COMP_VALIDATE_INCLUDE_HELD=1 re-enables."""
-    return os.environ.get("COMP_VALIDATE_INCLUDE_HELD") != "1"
+    """True (default) => skip the bd config + bd standalone validators. COMP_VALIDATE_INCLUDE_HELD=1 (or the
+    canonical COMP_INCLUDE_HELD=1) re-enables -- routed through sovereign_held.include_held (C3)."""
+    return not include_held("COMP_VALIDATE_INCLUDE_HELD")
 
 
 def _note_bd_held_skip() -> None:
@@ -77,10 +80,9 @@ def _note_bd_held_skip() -> None:
 
 
 def _is_held_bd_path(p) -> bool:
-    """True if a path is under the held bd/schwab SOURCE tree -- pure string check, never opens the file.
-    Closes the --config hole: an explicit `--config data/black_diamond/...` is a held read too."""
-    s = str(p).replace("\\", "/")
-    return "data/black_diamond/" in s or "data/canonical/schwab/silver/" in s
+    """True if a path is under the held bd/schwab SOURCE tree -- delegates to sovereign_held.is_held_path
+    (C3 consolidation). Closes the --config hole: an explicit `--config data/black_diamond/...` is held."""
+    return is_held_path(p)
 
 
 def _is_cot_path(s: str) -> bool:
