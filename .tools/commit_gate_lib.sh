@@ -38,6 +38,15 @@ cg_sensitive_hits() {
     printf '%s\n' "$f" | grep -qiE "$CG_LEAK_EXCLUDE_RE" && continue
     if printf '%s\n' "$f" | grep -qiE "$CG_LEAK_ALWAYS_RE"; then
       printf '%s\n' "$f"
+    elif [ "$f" = ".tools/comp-secrets" ]; then
+      # Exact-path allowlist (CTO-gated 2026-07-10): comp-secrets is a Secrets Manager
+      # LENS tool -- its NAME matches the (b) 'secret' filename-trigger but it carries NO
+      # secret VALUES. The .tools/ dir is broadly gitignored (.gitignore:183), so the (b)
+      # branch false-positives on it every edit. This skips the (b) filename-trigger for
+      # this EXACT path ONLY; the (a) unambiguous-secret-TYPE detection above still applies
+      # to it (defense-in-depth). NOT a glob/substring -- a 2nd lens tool tripping this is
+      # the signal to make the trigger content-based, not to grow this allowlist.
+      :
     elif printf '%s\n' "$f" | grep -qiE "$CG_LEAK_IF_IGNORED_RE" \
          && git check-ignore --no-index -q -- "$f" 2>/dev/null; then
       printf '%s\n' "$f"
@@ -58,7 +67,14 @@ cg_selftest() {
   [ -z "$hits" ] || { echo "FAIL: .env.template should be EXEMPT: [$hits]"; return 1; }
   hits="$(cg_sensitive_hits ".tools/commit-worker.sh")"
   [ -z "$hits" ] || { echo "FAIL: ordinary .sh flagged: [$hits]"; return 1; }
-  echo "PASS: commit_gate_lib selftest (ALWAYS caught, EXCLUDE exempt, ordinary spared)"
+  # Exact-path allowlist: the comp-secrets LENS tool (name-trigger, no values) is spared.
+  # Repo-independent (the branch is checked before the gitignored-(b) grep). An unambiguous
+  # secret TYPE at that path would still be caught by the (a) ALWAYS branch above.
+  hits="$(cg_sensitive_hits ".tools/comp-secrets")"
+  [ -z "$hits" ] || { echo "FAIL: .tools/comp-secrets should be exact-path allowlisted: [$hits]"; return 1; }
+  hits="$(cg_sensitive_hits ".tools/comp-secrets.pem")"
+  [ "$hits" = ".tools/comp-secrets.pem" ] || { echo "FAIL: allowlist must be EXACT-PATH -- a .pem at a comp-secrets-like path must still be caught (a): [$hits]"; return 1; }
+  echo "PASS: commit_gate_lib selftest (ALWAYS caught, EXCLUDE exempt, ordinary spared, comp-secrets allowlisted exact-path)"
   return 0
 }
 
