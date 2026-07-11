@@ -16198,3 +16198,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
 | 2026-07-11 | 3.0.0_SA_CVO~B | NFRA_TOOLPASS | sovereign_held | census refuted "bd-reader class closed" (6 unguarded found) -> C0 6 guards + C1-C8 consolidation (14 tools -> 1 predicate + COMP_INCLUDE_HELD, anti-drift meta-test) | PASS (self-enforcing) |
 | 2026-07-11 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-11 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/bd-h... | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/sovereign_held.py --f... | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO | (no-TO) | comp-pii | comp-pii fields | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pii_cli.py --file org... | PASS |
+| 2026-07-11 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/freeze_monitor.py --... | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_sovereign_... | PASS |
+| 2026-07-11 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/bd-h... | PASS |
+| 2026-07-11 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/ds-c... | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-11 | 0.7.0_AE_CloudOps | (no-TO) | (none) | de-confliction + session-close window; grounding used gh/aws/git primitives (GitHub Actions workflow_dispatch default-branch semantics, S3 seed-prefix state, branch presence) -- no comp surface fits GitHub-Actions/artifacts-bucket inspection | N/A |
+| 2026-07-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
