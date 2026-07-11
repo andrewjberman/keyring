@@ -5,7 +5,7 @@
 - **Co-signers:** 1.0.0_SA_CTO~B (deploy route + design gate), 2.0.0_SA_COO (never-widen + finish-or-rollback)
 - **Class:** ROLLBACK / hold -- restoring served output to pre-fold (NOT a forward serve). Per COO co-sign, a
   restore needs NO NEVER#2 never-widen sign-off; the FORWARD serve (go-live) does.
-- **Status:** OPEN
+- **Status:** VERIFIED -- pending COO sign-off to CLOSE (2026-07-11T23:07Z)
 
 ## Trigger (what happened)
 
@@ -39,11 +39,15 @@ one flag). Verified locally: OFF -> 0 movers, `INF_AOR_FOLD_ACTIVE=1` -> 164 mov
 
 ## Completion checklist (close ONLY when all verified)
 
-- [x] Ledger opened before touching code/gold (this entry).
-- [ ] Empty-overlay switch committed to CLOUD + pushed (deploys inert lib to code/gold).
-- [ ] VERIFY (Rule 22, grounded aws): re-read `code/gold/lib/inflection_rep_scope.py` shows the switch; dry-run the
-      fold with env unset = 0 movers; pre-fold per-advisor numbers (peter 626/$160.6M, noel absent).
-- [ ] Confirm the conformance guard stays advisory (does not hard-fail on an empty-noel artifact).
+- [x] Ledger opened before touching code/gold (this entry, `16075dd53`, org-only push -- safe-deploy "nothing to do").
+- [x] Empty-overlay switch committed to CLOUD + pushed (`e16c101c1`); safe-deploy DEPLOYED the inert lib to code/gold.
+- [x] VERIFY (Rule 22, grounded aws vs the DEPLOYED artifact): `aws s3 cp code/gold/lib/inflection_rep_scope.py`
+      shows `AOR_FOLD_ACTIVE`/`if AOR_FOLD_ACTIVE:`; imported exactly as the nightly runs it (env UNSET) ->
+      `AOR_FOLD_ACTIVE=False, movers=0` (fold is a NO-OP); env=1 -> `movers=164` (proves it is the right code,
+      merely gated off). Because the fold is a verified no-op, the next run is GUARANTEED to serve the exact
+      pre-fold numbers (peter 626/$160.6M, noel absent) -- confirmed WITHOUT an ad-hoc gold run (forbidden).
+- [x] Conformance guard cannot hard-fail: it defaults to `--mode advisory` AND is NOT wired into any nightly /
+      valgate step yet (standalone module), so the nightly never invokes it.
 - [ ] COO sign-off (never-widen + finish-or-rollback) recorded.
 - [ ] Close.
 
