@@ -48,6 +48,19 @@ PADDING_TOOLTIP = r'p[xy]?-[234]'
 # Post-migration pattern
 DATA_TOOLTIP_COMPONENT = r'<DataTooltip\b'
 
+# The CANONICAL component definition files. A drift detector must NOT flag its own canonical
+# exemplar: DataTooltip.tsx:22's `<div className=bg-[hsl(var(--bg-header))] border rounded-lg ...>`
+# IS the DataTooltip component's OWN render -- flagging it "migrate to <DataTooltip>" is circular
+# (migrate DataTooltip to use itself) and inflates the drift count. Tooltip.tsx defines the <Tooltip>
+# helper -- same self-reference class. These files are the SOURCE of the canonical pattern, so their
+# own render is canonical BY DEFINITION, never a drift site. Excluded from drift classification.
+_CANONICAL_COMPONENT_FILES = ("components/DataTooltip.tsx", "components/Tooltip.tsx")
+
+
+def _is_canonical_component_file(rel_path: str) -> bool:
+    p = rel_path.replace("\\", "/")
+    return any(p.endswith(c) for c in _CANONICAL_COMPONENT_FILES)
+
 # Helper tooltip inline pattern
 HELPER_INLINE = r'bg-\[hsl\(var\(--semantic-action-primary\)\)\].*whitespace-nowrap'
 
@@ -138,9 +151,15 @@ def scan_all():
     for filepath in sorted(PORTAL_SRC.rglob('*.tsx')):
         file_results = scan_file(filepath)
         if file_results:
-            rel = filepath.relative_to(WORKSPACE)
+            rel = str(filepath.relative_to(WORKSPACE)).replace('\\', '/')
+            canonical_file = _is_canonical_component_file(rel)
             for line_num, variant, line_text in file_results:
-                all_results.append((str(rel).replace('\\', '/'), line_num, variant, line_text))
+                # A canonical component's OWN definition file: its render IS the exemplar, never
+                # drift. Keep DATATOOLTIP (migrated) sightings if any, but never emit a drift/migrate
+                # classification against the canonical component itself (the circular self-flag).
+                if canonical_file and variant != 'DATATOOLTIP':
+                    continue
+                all_results.append((rel, line_num, variant, line_text))
     return all_results
 
 
