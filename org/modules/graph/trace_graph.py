@@ -137,8 +137,10 @@ def _compute_path_sha(path: Path) -> str:
     return ""
 
 
-# Sovereign-held path prefixes -- MIRROR of comp_constants_cli.SOVEREIGN_HELD_MARKERS (the canonical
-# held-path chokepoint; drift-guarded by tests/test_indexer_bd_content_exclusion.py). Under the
+# Sovereign-held path check -- DELEGATES to sovereign_held, the ONE canonical held-predicate leaf (post-C2
+# this re-exports it; post-C7b comp_constants derives from it too -- sovereign_held is the canonical, not
+# comp_constants). Drift-guarded by tests/test_sovereign_held_no_drift.py + test_indexer_bd_content_exclusion.py.
+# Under the
 # standing bd/49F/schwab prohibition, the indexer applies design (b) (CTO ruling 20260710T221551Z):
 # it MINTS a node for a held-path file (id + node_type + file_path METADATA, so cross-firm
 # REACHABILITY is preserved) but NEVER reads that file's CONTENT -- no read_text / ast.parse /
