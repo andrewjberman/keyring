@@ -16083,3 +16083,72 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 
 - 2026-07-10T2324Z 2.0.0_SA_COO CI-wiring gate: merge-base ancestry x20 (all closes by hash + impossible-control) + git-grep source-analysis re-enumeration of bd-readers (CORRECTED transitive method: path-arg-to-reader, no suite run) + gh run view --json (authoritative CI conclusion, never a piped rc). Self-caught a bd-hermeticity method error + the pipeline-rc trap on my own harness.
 | 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_B_00.canonica... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-pipescript | comp-pipescript io INF_D_02 | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-pipescript | comp-pipescript io INF_D_02 --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-pipescript | comp-pipescript io INF_ZZ_99.nonexistent | FAIL |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-pipescript | comp-pipescript feeds INF_D_02 --json | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-pipescript | comp-pipescript io COT_A_00 | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-platinum | comp-platinum tab-audit --firm inf | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/platinum_cli.py --fil... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipeline_cli.py --fil... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-routes | comp-routes stats | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-routes | comp-routes trace getHeaderMetrics | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/registry_cli.py --fil... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_routable_c... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-registry | comp-registry sync --all | FAIL |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-registry | comp-registry sync --all | FAIL |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-registry | comp-registry --help | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-secrets --file org/modules/... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_shell_guar... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-registry | comp-registry sync --all | FAIL |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit_gate_lib.sh | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/bd-h... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_symbols_ex... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_tagauthz_v... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-types | comp-types index PartnerAnalyticsResponse | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-types | comp-types blast PartnerAnalyticsResponse | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-types | comp-types index PartnerAnalyticsResponse | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_tooltip_ca... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-types | comp-types index PartnerAnalyticsResponse | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-types | comp-types blast PartnerAnalyticsResponse | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-types | comp-types fields PartnerAnalyticsResponse | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-types | comp-types index TenantLayoutConfig | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-types | comp-types index TenantLayoutConfig | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-types | comp-types fields PartnerAnalyticsResponse | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-types | comp-types index TenantLayoutConfig --firm-conditional-sites | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-types | comp-types index PartnerAnalyticsResponse --severity error | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-types | comp-types index PartnerAnalyticsResponse | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_comp_types... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-xray | comp-xray s3 opal-data-inf platinum/firm/header_metrics.json --fields total_aua | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/comp-tool-tests-quarantine.txt ... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_tool_health.py -... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/cli.py --file infra/... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-validate | comp-validate INF_09 --artifact C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-An... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-validate | comp-validate INF_09 --artifact C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-An... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/cli.py --file infra/... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_comp_valid... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --file portal/src/api/endpoints/aum.ts --mode blocking | VERDICT |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/bd-h... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/api/endpoints/aum.ts | VERDICT |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/README.md | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/api/endpoints/aum.ts --file ... | VERDICT |
+| 2026-07-11 | 3.0.0_SA_CVO~B | NFRA_TOOLPASS | comp-types | index/blast/fields idempotency exercise (run x2 sha-compare) -> 2 defects fixed | PARTIAL->FIXED |
+| 2026-07-11 | 3.0.0_SA_CVO~B | NFRA_TOOLPASS | comp-validate | --list + INF_09 post-guard exercise (bd skipped, 0 bd content, rc=0) | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO~B | NFRA_TOOLPASS | (audit) | source-only census of ~24 tool sources for bd-content-readers (class-closure cross-check) | IN-FLIGHT |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/api/endpoints/aum.ts | VERDICT |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
