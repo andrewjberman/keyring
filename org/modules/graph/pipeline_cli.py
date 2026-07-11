@@ -34,6 +34,8 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 sys.path.insert(0, str(_WORKSPACE))
 sys.path.insert(0, str(_WORKSPACE / ".tools"))  # safe_deploy_core lives in .tools/
 
+# NFRA_TOOLPASS C: the deployed-guard's held-BUCKET check + lift signal delegate to sovereign_held.
+from org.modules.graph.sovereign_held import is_held_bucket, include_held  # noqa: E402
 from org.modules.graph.extract_pipeline import (  # noqa: E402
     build_pipeline_dag, inject_pipeline_edges,
     build_inf_gold_dag, build_silver_dag, build_multi_pipeline_dag,
@@ -1791,9 +1793,9 @@ def cmd_deployed(args):
     # drop -- the pipescript no-silent-Unknown thesis). COMP_PIPESCRIPT_INCLUDE_HELD=1 re-enables it
     # for the DS deploy-verify cycle (Rule 13) / when the hold lifts. Gating HERE -- before aws_bin
     # and before any local read_bytes -- guarantees no held file is ever opened.
-    if S3_BUCKET == "opal-data-bd" and os.environ.get("COMP_PIPESCRIPT_INCLUDE_HELD") != "1":
+    if is_held_bucket(S3_BUCKET) and not include_held("COMP_PIPESCRIPT_INCLUDE_HELD"):
         print("  SKIP: opal-data-bd (bd) deploy-verify HELD under the sovereign prohibition -- "
-              "set COMP_PIPESCRIPT_INCLUDE_HELD=1 for the DS deploy-verify path.")
+              "set COMP_PIPESCRIPT_INCLUDE_HELD=1 (or COMP_INCLUDE_HELD=1) for the DS deploy-verify path.")
         return 0
 
     # Resolve aws CLI once, full path -- avoids subprocess PATH-loss on some shells.
