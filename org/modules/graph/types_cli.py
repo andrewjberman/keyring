@@ -229,7 +229,15 @@ def cmd_index(args: argparse.Namespace) -> int:
         cat = _classify_line(code, type_name)
         if cat == 'comment':
             continue
-        is_default_fallback = bool(re.search(r'\?\?\s+\w*(DEFAULT|LAYOUT)\w*', code))
+        # The flag MUST agree with the category: a site _classify_line already filed as
+        # 'default-fallback' (which catches ||-style `... || DEFAULT_LAYOUT` via the substring
+        # clause) was previously NOT flagged here (this regex only matches ??-style), so the
+        # summary + manifest printed "none detected" on the SAME row the table labeled
+        # default-fallback -- a self-contradiction that UNDER-COUNTED firm-fallback sites
+        # (NFRA_TOOLPASS). Category is the source of truth; the regex adds the ??-only sites
+        # _classify_line does not file as default-fallback (e.g. `x ?? MY_DEFAULT`).
+        is_default_fallback = (cat == 'default-fallback') or bool(
+            re.search(r'\?\?\s+\w*(DEFAULT|LAYOUT)\w*', code))
         consumers.append({
             'file': rel_path,
             'line': lineno,
@@ -285,11 +293,14 @@ def cmd_index(args: argparse.Namespace) -> int:
     # Write manifest
     _TYPES_INDEX_DIR.mkdir(parents=True, exist_ok=True)
     manifest_path = _TYPES_INDEX_DIR / f'{type_name}.yaml'
+    # NOTE: elapsed_seconds is NOT written to the manifest -- a per-run DURATION churns the committed
+    # cache (a diff on every `index` even when the type is unchanged; comp-types index was non-idempotent
+    # for exactly this reason, NFRA_TOOLPASS). The timing stays in the stdout PASS line below (console,
+    # not the cache). The manifest is now fully deterministic (sorted consumers + stable counts).
     manifest_lines = [
         f'type_name: {type_name}',
         f'definition_file: {_rel(str(def_file)) if def_file else "not_found"}',
         f'total_consumer_sites: {len(consumers)}',
-        f'elapsed_seconds: {elapsed:.2f}',
         f'default_fallback_sites: {len(fallbacks)}',
         'consumers:',
     ]
