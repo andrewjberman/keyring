@@ -291,13 +291,171 @@ _BOTO3_CLOUDWATCH = {
     'put_metric_alarm':      ['cloudwatch:PutMetricAlarm'],
 }
 
+# ---------------------------------------------------------------------------
+# NFRA_COMPIAM_SVCCOV (0.7.0->CTO campaign, 2026-07-11): the 13 services below
+# were the estate's USED-BUT-UNMODELED set -- every boto3 client of them produced
+# a `<svc>:UNMODELED` coverage-unknown sentinel (see _scan_python_for_operations).
+# The trigger was an ses:FromAddress question that comp-iam could not evaluate
+# because `ses` was not modeled at all. Each method below is GROUNDED in an actual
+# estate call site (cited inline) -- NOT a speculative SDK dump. A WRONG action
+# map is worse than COVERAGE-UNKNOWN: a false GRANT suppresses UNGRANTED-RESOURCE,
+# the verdict this tool exists to emit. Anything uncertain is flagged for CTO,
+# never guessed. `get_paginator` maps to [] like s3/ec2/lambda (it is not itself
+# an API call; the underlying paginated action is not statically detected here).
+# ---------------------------------------------------------------------------
+
+# boto3 ses method -> IAM action(s). SES v1 send actions.
+#   send_email     -> infrastructure_monitor/lambda_function.py:2527,2557;
+#                     etfs-pipeline/etf-ownership-dashboard/lambda_function.py:55;
+#                     partner-etl-ops-sqs-consumer/lambda_function.py:129;
+#                     m365-otp-liveness/lambda_function.py:58;
+#                     m365-ms-ingest-liveness/lambda_function.py:52
+#   send_raw_email -> etfs-reports-orchestrator/lambda_function.py:154;
+#                     trade-pipeline/trade-{workflow,submission}-handler/src/email_utils.py:115
+_BOTO3_SES = {
+    'send_email':     ['ses:SendEmail'],
+    'send_raw_email': ['ses:SendRawEmail'],
+}
+
+# boto3 events (EventBridge) method -> IAM action(s). NOTE: client('events'),
+# IAM prefix is 'events:'.
+#   list_rules           -> security-sweep-comprehensive:1221; migration/scripts/migrate_eventbridge_rules.py:24
+#   describe_rule        -> migrate_eventbridge_rules.py:30
+#   list_targets_by_rule -> security-sweep-comprehensive:1228; infrastructure-daily-snapshot:391; migrate_eventbridge_rules.py:35
+#   put_rule             -> migrate_eventbridge_rules.py:58
+#   put_targets          -> migrate_eventbridge_rules.py:89
+_BOTO3_EVENTS = {
+    'list_rules':           ['events:ListRules'],
+    'describe_rule':        ['events:DescribeRule'],
+    'list_targets_by_rule': ['events:ListTargetsByRule'],
+    'put_rule':             ['events:PutRule'],
+    'put_targets':          ['events:PutTargets'],
+    'get_paginator':        [],  # get_paginator('list_rules') -> infrastructure-daily-snapshot:384
+}
+
+# boto3 iam method -> IAM action(s).
+#   generate_credential_report  -> security-sweep-comprehensive:322
+#   list_users                  -> security-sweep-comprehensive:327; security-sweep-daily:163
+#   list_access_keys            -> security-sweep-comprehensive:335
+#   get_login_profile           -> security-sweep-comprehensive:363
+#   list_mfa_devices            -> security-sweep-comprehensive:369
+#   list_attached_user_policies -> security-sweep-comprehensive:382
+#   list_attached_role_policies -> security-sweep-comprehensive:828; infrastructure-daily-snapshot:357
+#   get_policy / get_policy_version -> security-sweep-comprehensive:843,844
+#   list_role_policies          -> security-sweep-comprehensive:855; infrastructure-daily-snapshot:350
+#   get_role_policy             -> security-sweep-comprehensive:858; infrastructure-daily-snapshot:353
+#   get_role                    -> ec2/historical-prices/test_historical_prices_scheduler.py:48
+#   get_paginator('list_roles'/'list_users') -> access-anomaly-scanner:87,95; infrastructure-daily-snapshot:342
+_BOTO3_IAM = {
+    'generate_credential_report':  ['iam:GenerateCredentialReport'],
+    'list_users':                  ['iam:ListUsers'],
+    'list_access_keys':            ['iam:ListAccessKeys'],
+    'get_login_profile':           ['iam:GetLoginProfile'],
+    'list_mfa_devices':            ['iam:ListMFADevices'],
+    'list_attached_user_policies': ['iam:ListAttachedUserPolicies'],
+    'list_attached_role_policies': ['iam:ListAttachedRolePolicies'],
+    'get_policy':                  ['iam:GetPolicy'],
+    'get_policy_version':          ['iam:GetPolicyVersion'],
+    'list_role_policies':          ['iam:ListRolePolicies'],
+    'get_role_policy':             ['iam:GetRolePolicy'],
+    'get_role':                    ['iam:GetRole'],
+    'get_paginator':               [],
+}
+
+# boto3 logs (CloudWatch Logs) method -> IAM action(s). IAM prefix 'logs:'.
+#   filter_log_events  -> infrastructure_monitor/openai_cost_tracker.py:109,120,255,268; infrastructure_monitor:1612,1634
+#   describe_log_groups -> infrastructure_monitor/lambda_function.py:1597
+#   get_log_events     -> connection_pool/pool.py:438
+_BOTO3_LOGS = {
+    'filter_log_events':  ['logs:FilterLogEvents'],
+    'describe_log_groups': ['logs:DescribeLogGroups'],
+    'get_log_events':     ['logs:GetLogEvents'],
+}
+
+# boto3 sts method -> IAM action(s). NOTE: sts:GetCallerIdentity is always
+# permitted by AWS regardless of policy, but the IAM ACTION NAME is still this.
+#   get_caller_identity -> security-sweep-comprehensive:50; infrastructure-daily-snapshot:69
+_BOTO3_STS = {
+    'get_caller_identity': ['sts:GetCallerIdentity'],
+}
+
+# boto3 sqs method -> IAM action(s).
+#   send_message         -> compdiff/served_guard.py:171
+#   get_queue_attributes -> globgrph/_provenance.py:120
+_BOTO3_SQS = {
+    'send_message':         ['sqs:SendMessage'],
+    'get_queue_attributes': ['sqs:GetQueueAttributes'],
+}
+
+# boto3 rds method -> IAM action(s).
+#   describe_db_instances -> security-sweep-comprehensive:1109; security-sweep-daily:353
+_BOTO3_RDS = {
+    'describe_db_instances': ['rds:DescribeDBInstances'],
+}
+
+# boto3 cloudtrail method -> IAM action(s).
+#   describe_trails  -> security-sweep-comprehensive:478
+#   get_trail_status -> security-sweep-comprehensive:495
+#   get_paginator('lookup_events') -> access-anomaly-scanner:210 (the paginated
+#     op is cloudtrail:LookupEvents; not modeled as a direct method here because
+#     Opal calls it only via get_paginator, which maps to []).
+_BOTO3_CLOUDTRAIL = {
+    'describe_trails':  ['cloudtrail:DescribeTrails'],
+    'get_trail_status': ['cloudtrail:GetTrailStatus'],
+    'get_paginator':    [],
+}
+
+# boto3 ce (Cost Explorer) method -> IAM action(s). IAM prefix 'ce:'.
+#   get_cost_and_usage -> cost-anomaly-scanner:97; infrastructure_monitor:1155,1214
+_BOTO3_CE = {
+    'get_cost_and_usage': ['ce:GetCostAndUsage'],
+}
+
+# boto3 kms method -> IAM action(s).
+#   list_keys               -> security-sweep-comprehensive:1156
+#   describe_key            -> security-sweep-comprehensive:1163
+#   get_key_rotation_status -> security-sweep-comprehensive:1172
+_BOTO3_KMS = {
+    'list_keys':               ['kms:ListKeys'],
+    'describe_key':            ['kms:DescribeKey'],
+    'get_key_rotation_status': ['kms:GetKeyRotationStatus'],
+}
+
+# boto3 ecs method -> IAM action(s).
+#   describe_task_definition -> org/modules/graph/aws-shapes/g2_edge_oracle.py:66
+# NOTE: data/black_diamond/.../trigger-lambda has an ecs.run_task call (ecs:RunTask)
+# but that path is under the sovereign hold and was NOT read/modeled here (CTO
+# to add run_task if the hold lifts). Grounded solely on the non-held call site.
+_BOTO3_ECS = {
+    'describe_task_definition': ['ecs:DescribeTaskDefinition'],
+}
+
+# boto3 apigateway (REST/v1) AND apigatewayv2 (HTTP/v2) method -> IAM action(s).
+# FLAGGED FOR CTO: API Gateway's IAM actions are HTTP-VERB-based, NOT
+# resource-named. Both the v1 (`apigateway`) and v2 (`apigatewayv2`) boto3 clients
+# share ONE IAM service prefix, `apigateway:`, and the action is the HTTP method
+# used against the control-plane API: apigateway:GET / POST / PUT / DELETE / PATCH.
+# All three estate calls are read/GET ops, so all map to apigateway:GET
+# (conservative -- the least-privilege read verb):
+#   get_rest_apis -> security-sweep-comprehensive:938   (v1, GET /restapis)
+#   get_stages    -> security-sweep-comprehensive:946   (v1, GET .../stages)
+#   get_apis      -> security-sweep-comprehensive:970   (v2, GET /v2/apis)
+# CTO: please confirm the HTTP-verb IAM model before this lands as a GRANT oracle.
+_BOTO3_APIGATEWAY = {
+    'get_rest_apis': ['apigateway:GET'],
+    'get_stages':    ['apigateway:GET'],
+    'get_apis':      ['apigateway:GET'],
+}
+
 # Unified service -> method-map registry. A boto3 client of any service NOT in
 # this registry produces an UNMODELED sentinel (coverage-unknown, surfaced LOUD)
 # rather than a silent zero-ops "no gap". Modeling a new service = add its map
-# here. The 7 services below were added after comp-iam's UNMODELED sweep surfaced
-# 50 coverage-unknowns (secretsmanager secret-reads, ec2 start/stop, lambda
-# invoke, sns, stepfunctions, cloudfront, cloudwatch) -- now VERIFIED, not just
-# flagged. Method maps grounded in the actual calls in infra/aws/lambda.
+# here. The first 7 non-core services were added after comp-iam's UNMODELED sweep
+# surfaced 50 coverage-unknowns (secretsmanager secret-reads, ec2 start/stop,
+# lambda invoke, sns, stepfunctions, cloudfront, cloudwatch) -- now VERIFIED, not
+# just flagged. The NFRA_COMPIAM_SVCCOV batch (2026-07-11) adds the 13 used-but-
+# unmodeled services (ses, events, iam, logs, sts, sqs, rds, cloudtrail, ce, kms,
+# ecs, apigateway, apigatewayv2). Method maps grounded in the actual estate calls.
 _BOTO3_BY_SERVICE: dict[str, dict] = {
     's3': _BOTO3_S3, 's3_client': _BOTO3_S3,
     'ssm': _BOTO3_SSM,
@@ -309,6 +467,20 @@ _BOTO3_BY_SERVICE: dict[str, dict] = {
     'stepfunctions': _BOTO3_STEPFUNCTIONS, 'sfn': _BOTO3_STEPFUNCTIONS,
     'cloudfront': _BOTO3_CLOUDFRONT,
     'cloudwatch': _BOTO3_CLOUDWATCH,
+    # NFRA_COMPIAM_SVCCOV (2026-07-11) -- the 13 used-but-unmodeled services.
+    'ses': _BOTO3_SES,
+    'events': _BOTO3_EVENTS,
+    'iam': _BOTO3_IAM,
+    'logs': _BOTO3_LOGS,
+    'sts': _BOTO3_STS,
+    'sqs': _BOTO3_SQS,
+    'rds': _BOTO3_RDS,
+    'cloudtrail': _BOTO3_CLOUDTRAIL,
+    'ce': _BOTO3_CE,
+    'kms': _BOTO3_KMS,
+    'ecs': _BOTO3_ECS,
+    # API Gateway v1 and v2 share the 'apigateway:' IAM prefix -> one shared map.
+    'apigateway': _BOTO3_APIGATEWAY, 'apigatewayv2': _BOTO3_APIGATEWAY,
 }
 _MODELED_BOTO3_SERVICES = set(_BOTO3_BY_SERVICE)
 
