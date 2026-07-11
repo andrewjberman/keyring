@@ -21,6 +21,8 @@ if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
 
 import incrparity_core as core  # noqa: E402
+# NFRA_TOOLPASS C: the lift signal delegates to sovereign_held (_HERE is on sys.path above).
+from sovereign_held import include_held  # noqa: E402
 
 
 # Per-script output prefixes for self-parity smoke runs. Declared here (not
@@ -108,9 +110,10 @@ def main(argv=None) -> int:
     # pattern): skip for an agent by default; COMP_INCRPARITY_INCLUDE_HELD=1 re-enables for the DS/pipeline
     # parity path (the engine incrparity_core stays out-of-scope -- its bd reads ARE its designed function).
     # rc 3 = HELD-blocked, distinct from the parity verdicts (0 pass / 1 fail / 2 unverified).
-    if os.environ.get("COMP_INCRPARITY_INCLUDE_HELD") != "1":
+    if not include_held("COMP_INCRPARITY_INCLUDE_HELD"):
         print("BLOCKED: comp-incrparity reads the opal-data-bd DATA bucket, HELD under the sovereign "
-              "hold. Set COMP_INCRPARITY_INCLUDE_HELD=1 for the DS/pipeline parity path.", file=sys.stderr)
+              "hold. Set COMP_INCRPARITY_INCLUDE_HELD=1 (or COMP_INCLUDE_HELD=1) for the DS/pipeline "
+              "parity path.", file=sys.stderr)
         return 3
 
     try:
