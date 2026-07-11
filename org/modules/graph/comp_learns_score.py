@@ -490,11 +490,21 @@ def _self_test() -> tuple[bool, list]:
     have_ev = all(c.get("value_evidence") and c.get("value_metric") for c in it["worklist"])
     ck("evidence.every_item_cites_value", have_ev, f"{len(it['worklist'])} items, all cite value evidence")
 
-    # The scorer exposes NO raw usage-count-as-value term (structural: value_score derives from
-    # escape severity / (1-mean_outcome), never from a bare invocation count).
-    ck("goodhart.no_usage_proxy", all("escapes_prevented" in c["value_metric"] or "cost_per_outcome"
-                                      in c["value_metric"] for c in it["worklist"]),
-       "value_metric keys are outcome-anchored")
+    # The scorer exposes NO raw usage-count-as-value term: EVERY worklist item's value is anchored on a
+    # BAD-OUTCOME-AVERTED count, never a bare invocation count. There is exactly ONE friction anchor per
+    # candidate kind -- coverage-gap: escapes_prevented (rail escapes a tool would avert); merge-retire:
+    # cost_per_outcome (low-value runs a retire averts); routing-friction: low_confidence_routes (router
+    # HEDGES a curated rule would sharpen). low_confidence_routes is friction-averted, NOT usage: it is the
+    # disambiguation count value_score derives from (build_routing_candidates: value_score = disambig), and
+    # that builder DROPS every cluster with disambig==0, so a CONFIDENT (healthy) route is never counted --
+    # total_routes carried alongside is denominator-context, not the value. (RE-ANCHOR 2026-07-11: the
+    # routing-friction anchor was absent from this set -- the flywheel candidate kind was added after this
+    # check was first written, so the whitelist fell out of sync and reported a false leak. Adding it is not
+    # a relaxation: a value_metric carrying ONLY a raw usage count and no friction anchor still fails.)
+    _OUTCOME_ANCHORS = {"escapes_prevented", "cost_per_outcome", "low_confidence_routes"}
+    ck("goodhart.no_usage_proxy",
+       all(_OUTCOME_ANCHORS & set(c["value_metric"]) for c in it["worklist"]),
+       "value_metric keys are outcome-anchored (escapes_prevented / cost_per_outcome / low_confidence_routes)")
 
     # Reuses the SAME outcome-weighting as COMPROUTE L3 (one signal, two consumers).
     ck("one_signal.shared_outcome_weighting", outcome_value({"result": "PASS"}) == 1.0
