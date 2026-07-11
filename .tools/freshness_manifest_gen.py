@@ -50,6 +50,12 @@ import yaml
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RESOLVER = os.path.join(ROOT, "org", "modules", "graph", "estate-coverage-resolver.json")
 
+# NFRA_TOOLPASS C6: delegate the held predicate + lift signal to sovereign_held (this generator lives in
+# .tools/, so add the graph dir to sys.path for the bare import). include_held honors both the sibling
+# flag COMP_FRESHNESS_PIPELINE and the canonical COMP_INCLUDE_HELD.
+sys.path.insert(0, os.path.join(ROOT, "org", "modules", "graph"))
+from sovereign_held import is_held_path as _is_held, include_held as _include_held  # noqa: E402
+
 # Pipelines that have a canonical freshness config today -> drive off the config
 # (coverage=comp-freshness). The config IS a canonical, ~D-maintained source
 # (comp-freshness reads it); driving off it is not "hardcoding paths in the report".
@@ -104,22 +110,11 @@ def _git_head() -> str:
         return "unknown"
 
 
-# Sovereign hold (bd/schwab): the bd-gold freshness config is held bd source. The SIBLING comp-freshness
-# guards the SAME file via COMP_FRESHNESS_PIPELINE (_held_config_read_allowed); this generator reads it too
-# and MUST honor the same flag -- so the DS pipeline path re-enables BOTH tools with ONE signal. Pure str
-# check, never opens the file. (Folds into sovereign_held.py at the NFRA_TOOLPASS C1 consolidation.)
-_HELD_MARKERS = ("data/black_diamond/", "data/canonical/schwab/silver/", "schwab/silver/")
-
-
-def _is_held(path) -> bool:
-    s = str(path or "").replace("\\", "/")
-    return any(m in s for m in _HELD_MARKERS)
-
-
 def _load_yaml_list(rel_path: str) -> list:
-    # Sovereign hold: skip a held bd/schwab config by default; COMP_FRESHNESS_PIPELINE=1 (the sibling's
-    # flag) re-enables it for the DS pipeline path. inf/cot/served are not held -> pass through.
-    if _is_held(rel_path) and os.environ.get("COMP_FRESHNESS_PIPELINE") != "1":
+    # Sovereign hold (C6): skip a held bd/schwab config by default; COMP_FRESHNESS_PIPELINE=1 (the sibling
+    # comp-freshness flag) OR the canonical COMP_INCLUDE_HELD=1 re-enables it for the DS pipeline path.
+    # inf/cot/served are not held -> pass through. Predicate + flag delegate to sovereign_held (imported above).
+    if _is_held(rel_path) and not _include_held("COMP_FRESHNESS_PIPELINE"):
         return []
     path = os.path.join(ROOT, rel_path)
     if not os.path.exists(path):
