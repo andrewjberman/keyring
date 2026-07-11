@@ -153,6 +153,16 @@ def main() -> int:
         f"min(eventTime) AS first_seen, max(eventTime) AS last_seen "
         f"FROM {TABLE} WHERE {where} AND {OBJ_EVENT_PRED} "
         f"GROUP BY 1 ORDER BY 2 DESC")
+    # INTENTIONALLY UNREACHABLE by design (CVO~A confirm + CTO ruling 2026-07-11). This "real zero"
+    # branch cannot fire: the positive control (above) counts obj_events over the SAME {where}+filter
+    # this group-by uses, so obj_n==0 already FAIL-CLOSED at the rc=1 return before we reach here --
+    # and when the group-by DOES run, obj_n>0, so len(rows)>=2 always. BOTH zeros (uncovered AND
+    # covered-but-this-filter-empty) deliberately fail closed rc=1: the conservative security posture,
+    # NEVER a confident false-clean rc=0 (a reader could over-trust rc=0 into "definitely nobody
+    # accessed this" when it only means "no events matched this exact filter"). Do NOT "fix" this dead
+    # branch into a reachable rc=0 (that trades safe over-conservatism for a misleadable confident-
+    # zero), and do NOT delete it -- kept as a defensive fallback: if the control ever decouples from
+    # the filter, this is the safety net.
     if len(rows) < 2:
         print("  (no object-level reads matched the filter -- but coverage exists, so this is a real zero)")
         return 0
