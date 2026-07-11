@@ -16168,3 +16168,33 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/freshness_manifest_gen.py --file... | PASS |
 | 2026-07-11 | 0.7.0_AE_CloudOps~C | NFRA_TOOLPASS/LD-0273 | comp-surface-check/comp-grep/simulate-principal-policy/safe-commit | comp-kit KSG1 (7654459a4) + comp-xray sovereign held-DATA guard landed (04de28c0b) + LD-0273 Stage-1 HALF-1 portal boundary gate (5c695a322); HALF-2 CI c-variant in progress (Rule-22a IAM verify, gated on publish-role) | PASS |
 | 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_recognizers_code... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/incrparity_cli.py --f... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/surfac... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/sovereign_held.py --f... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/bd-h... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/surface-check-publish... | PASS |
+| 2026-07-10 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/.github/workflows/surface-check.yml | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_indexer_bd... | PASS |
+| 2026-07-10 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/surface-check-publish... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/validate_cli.py | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_dispatch.py | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_transforms.py... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_recognizers_code... | PASS |
+| 2026-07-10 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/gate... | PASS |
+| 2026-07-10 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/freshness_manifest_gen.py | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_iam.py | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_constants_cli.py... | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-whoread.py | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-secrets | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipeline_cli.py | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/surface_check_cli.py | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_pipeline.py -... | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/incrparity_cli.py | PASS |
+| 2026-07-11 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/defe... | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_sovereign_... | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO~B | NFRA_TOOLPASS | sovereign_held | census refuted "bd-reader class closed" (6 unguarded found) -> C0 6 guards + C1-C8 consolidation (14 tools -> 1 predicate + COMP_INCLUDE_HELD, anti-drift meta-test) | PASS (self-enforcing) |
+| 2026-07-11 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
