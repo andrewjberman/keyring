@@ -5,7 +5,10 @@
 - **Co-signers:** 1.0.0_SA_CTO~B (deploy route + design gate), 2.0.0_SA_COO (never-widen + finish-or-rollback)
 - **Class:** ROLLBACK / hold -- restoring served output to pre-fold (NOT a forward serve). Per COO co-sign, a
   restore needs NO NEVER#2 never-widen sign-off; the FORWARD serve (go-live) does.
-- **Status:** VERIFIED -- pending COO sign-off to CLOSE (2026-07-11T23:07Z)
+- **Status:** CLOSED -- ROLLED-BACK/COMPLETE (2026-07-11T23:12Z). COO sign-off GRANTED (independent co-verify
+  reproduced movers=0 unset / 164 env=1; NEVER#6 ordering confirmed); CTO~B co-verified. Forward serve WITHHELD.
+- **Canonical sentinel-backed record:** `20260711T2311Z_advisor-aor-inert-hold_deploy_completion.md` (opened +
+  closed via `.tools/deploy_ledger.py`; 3 legs proven; sentinel removed). This file is the narrative supplement.
 
 ## Trigger (what happened)
 
@@ -48,8 +51,10 @@ one flag). Verified locally: OFF -> 0 movers, `INF_AOR_FOLD_ACTIVE=1` -> 164 mov
       pre-fold numbers (peter 626/$160.6M, noel absent) -- confirmed WITHOUT an ad-hoc gold run (forbidden).
 - [x] Conformance guard cannot hard-fail: it defaults to `--mode advisory` AND is NOT wired into any nightly /
       valgate step yet (standalone module), so the nightly never invokes it.
-- [ ] COO sign-off (never-widen + finish-or-rollback) recorded.
-- [ ] Close.
+- [x] COO sign-off (never-widen + finish-or-rollback chair) GRANTED 2026-07-11 -- independent co-verify of the
+      deployed artifact (not on my report): env-unset movers=0, env=1 movers=164, NEVER#6 ordering (16075dd53
+      ancestor of e16c101c1). CTO~B co-verified.
+- [x] CLOSED via `.tools/deploy_ledger.py close --slug advisor-aor-inert-hold` (sentinel removed, all 3 legs proven).
 
 ## Forward path (separate gate -- NOT this ledger)
 
