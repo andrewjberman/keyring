@@ -16344,3 +16344,19 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/sovereign_held.py | PASS |
 | 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-freshness / comp-iam(iam_cli) / comp-aws / aws-simulate-principal-policy | TH-A EFFECTIVE-probe sensor-tail: exercised comp-freshness as discrimination target (found+grounded partition-key defect b), grey-boxed comp-iam resource_verdict (Rule-22a resource-blindness FIXED) + comp-aws score rc-contract, simulate-principal-policy as the comp-iam oracle | PASS -- feed cf=no(a+b)/iam=yes/aws=yes, 31/31 hermetic |
 | 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor-of-record-go-live-r... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_effective_... | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/inflection_re... | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/TH-... | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/orion-gold-dispat... | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/tests/test_aor_fo... | PASS |
+| 2026-07-12 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/aor-... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-12 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_LIVELEARN.json | PASS |
+| 2026-07-12 | 2.0.0_SA_COO | (no-TO) | comp-registry | comp-registry sync --all | FAIL |
+| 2026-07-12 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yam... | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-toolgraph | comp-toolgraph coupling-diff + --self-test (D1 reconcile: 6 covered/20 intentional-shared-infra/0 residual; 7/7 self-test) | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-tool-health | comp-tool-health (TH-A state: 4 resolved/57 pending) + effective-feed seam exercise | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
