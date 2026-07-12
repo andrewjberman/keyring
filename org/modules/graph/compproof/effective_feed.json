@@ -1,10 +1,10 @@
 {
   "comp-which": {
-    "effective": "no",
-    "effective_label": "no",
+    "effective": "yes",
+    "effective_label": "yes",
     "reach": [
       "yes",
-      "no"
+      "yes"
     ],
     "usability": [
       "usable",
@@ -18,10 +18,8 @@
       "comp-which/routing-02"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783898734,
-    "fix_probes": [
-      "comp-which/routing-02"
-    ],
+    "probe_ts": 1783900056,
+    "fix_probes": [],
     "effective_evidence": [
       {
         "probe_id": "comp-which/routing-01",
@@ -42,9 +40,11 @@
         "probe_id": "comp-which/routing-02",
         "case": "positive",
         "observed": {
-          "reach": "no",
+          "reach": "yes",
           "usability": "usable",
-          "hits": []
+          "hits": [
+            "comp-freshness"
+          ]
         },
         "expected": [
           "comp-freshness"
@@ -75,7 +75,7 @@
       "comp-freshness/partition-key-frozen-vs-fresh"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783898742,
+    "probe_ts": 1783900066,
     "fix_probes": [
       "comp-freshness/frozen-vs-fresh-discrimination",
       "comp-freshness/partition-key-frozen-vs-fresh"
@@ -131,7 +131,7 @@
       "comp-iam/resource-scoped-grant-discrimination"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783898748,
+    "probe_ts": 1783900072,
     "fix_probes": [],
     "effective_evidence": [
       {
@@ -164,7 +164,7 @@
       "comp-aws/garbage-reject-and-unscored-discrimination"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783898753,
+    "probe_ts": 1783900079,
     "fix_probes": [],
     "effective_evidence": [
       {
@@ -197,7 +197,7 @@
       "comp-surface-check/sev1-detection-discrimination"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783898793,
+    "probe_ts": 1783900125,
     "fix_probes": [],
     "effective_evidence": [
       {
@@ -230,7 +230,7 @@
       "comp-pipescript/io-dependency-traversal"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783898799,
+    "probe_ts": 1783900130,
     "fix_probes": [],
     "effective_evidence": [
       {
@@ -268,7 +268,7 @@
       "comp-kuzu/cloud-estate-query-reach"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783898799,
+    "probe_ts": 1783900131,
     "fix_probes": [],
     "effective_evidence": [
       {
@@ -301,7 +301,7 @@
       "comp-blast/impact-reach-discrimination"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783898805,
+    "probe_ts": 1783900136,
     "fix_probes": [],
     "effective_evidence": [
       {
@@ -334,7 +334,7 @@
       "comp-trace/upstream-reach-discrimination"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783898841,
+    "probe_ts": 1783900176,
     "fix_probes": [],
     "effective_evidence": [
       {
@@ -373,7 +373,7 @@
       "comp-xref/symbol-reference-reach-discrimination"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783898843,
+    "probe_ts": 1783900177,
     "fix_probes": [],
     "effective_evidence": [
       {
@@ -409,7 +409,7 @@
       "comp-manifest-check/noncanonical-detection-discrimination"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783898844,
+    "probe_ts": 1783900178,
     "fix_probes": [],
     "effective_evidence": [
       {

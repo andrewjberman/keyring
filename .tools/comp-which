@@ -316,6 +316,14 @@ RULES = [
     # manifest backstop covers the rest of the catalog now that its key is fixed.
     (["fresh", "freshness", "fresh enough", "up to date", "up-to-date", "data current",
       "how old is the data", "last updated", "upstream data",
+      # DATA-staleness vocabulary (AC4/C2 2026-07-12, NFRA_LIVELEARN): the bare token "stale" is
+      # comp-pipescript deployed's (DEPLOY/runner-code staleness, rule above) and "stale value"/
+      # "frozen" is comp-xray's (value-MOTION); the DATA-staleness sense ("served gold DATA is stale"
+      # = upstream data too old to run a chain) had NO keyword here, so it misrouted to comp-pipescript
+      # deployed on the coincidental single "stale" token (+2). DATA-anchored PHRASES (+3) win that
+      # lane WITHOUT stealing deploy-staleness or value-motion (both are subject-anchored elsewhere).
+      "data is stale", "gold data is stale", "served data is stale", "is the data stale",
+      "the data is stale", "data has gone stale", "data gone stale", "data out of date",
       # real-NL currency vocabulary: "is X CURRENT / actually current / still current / how
       # current". Without these the bare word "artifact" mis-grabbed these to the producer
       # rule (comp-pipescript io). (paraphrase 2026-06-26) Note: the "is the served VALUE frozen /
