@@ -311,7 +311,7 @@ household-plurality number tied to an account-grain rollup would false-fire).
 | Grain | Question it answers | Attribution rule | Surfaces | Guard tie |
 |---|---|---|---|---|
 | **Account** | "How much AUA / how many accounts does advisor X own?" | each ACCOUNT to its own advisor-of-record owner | `leaderboard.json`, `advisor_nna_canonical.json`, `partner_analytics.json`, `advisors/{key}/*` (book/top_holdings/composition) | leaderboard `total_aua` vs `account_team` account-grain AUA rollup |
-| **Household** | "Which advisor owns this client RELATIONSHIP?" | each HOUSEHOLD to its PLURALITY-of-accounts owner (tie: max AUA, then lexical) | `client_directory.json`, `cumulative_chart.json` (both adv lines), `client_performance` | `client_directory` household-COUNT vs the household-plurality household count |
+| **Household** | "Which advisor owns this client RELATIONSHIP?" | each HOUSEHOLD to its PLURALITY-of-INDIVIDUAL-accounts owner (firm catchall excluded; tie: max AUA, then lexical) | `client_directory.json`, `cumulative_chart.json` (both adv lines), `client_performance` | SET check (advisor_key subset of SSOT) -- a numeric count tie is book-load-dependent (see below) |
 
 **Why they differ for a split household (worked):** a household with 60% of its accounts (by count) under `peter_lee`
 and 40% under `noel_soderblom`. **Account grain:** the leaderboard splits that household's AUA between peter and noel,
@@ -321,9 +321,15 @@ headline advisor as `peter_lee` (the plurality owner) and the cumulative chart a
 (mover) households, and the firm total is conserved at BOTH grains.
 
 **Guard enforcement (F4/F5 condition-1):** account surfaces tie to `account_team`'s account-grain AUA rollup;
-household surfaces tie to the household-plurality rollup (`client_directory` household-count; the cumulative chart is
-covered by the advisor-key SET check + the intra-consistency construction below — its served AUA is weekly-sampled so
-a numeric rollup tie there would false-fire on the date offset, not attribution). No surface is left unchecked.
+household surfaces are enforced by the advisor-key SET check (every served advisor_key must be a known SSOT
+individual/sentinel). A NUMERIC household rollup tie was assessed and deliberately NOT applied to either household
+surface: `client_directory`'s household population is book-load-dependent (a firm-only household is headlined under
+the firm bucket via D_02c's book-plurality fallback, a mixed household under its individual plurality, logic the
+account_team-only SSOT cannot replicate without duplicating D_02c), and `cumulative_chart`'s served AUA is
+weekly-sampled so a numeric tie would false-fire on the date offset, not attribution. `household_count_rollup`
+(individual-plurality) is still computed and the two-grain routing stays wired for a future household surface that
+exposes a clean per-advisor rollup. No surface is left unchecked (SET check on all); the two-grain guard NEVER ties a
+surface to the other grain's rollup.
 
 **Intra-surface consistency (F4/F5 condition-2):** within `cumulative_chart.json`, BOTH the adv-AUA line and the
 adv-NNA line are keyed to the **same** household-plurality owner (the AUA line reads household-grain
