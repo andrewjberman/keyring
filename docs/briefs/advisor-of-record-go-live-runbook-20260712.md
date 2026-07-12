@@ -109,9 +109,20 @@ movers -> apply uniformly (original static behavior). Gate must catch BOTH over-
 REAL loader, assert |fold|==164, apply to a DIVERGENT-basis producer frame, real fold-sensitive conservation
 (peter<->joe swap must FAIL), reconciled baseline.**
 
-**STATUS: go-live HELD (2 rounds of pre-activation blockers caught). P1/P5 false-green. CHANGE-2 review deferred.
-DS on the movers-only fix (3rd core-fold attempt -> design pass if it doesn't converge cleanly). Switch OFF
-throughout; nothing ever served.**
+**ROUND 3 (b3f051aef, /code-review ws1dwp0dx) -- ARCHITECTURE CONVERGED (movers-only is CORRECT); remaining =
+edges + gate, not architecture. GAP A (daily drift, no runtime guard): null representative_name -> spurious
+mover (:539-540); name-format fragility 'Peter A. Lee' vs 'Peter Lee' (:540); NO upper-bound guard on the
+daily path -- |fold|==164 lives only in the manual gate (:315). GAP B (gate rewrite re-placebo'd): PROOF-3
+net-vs-oracle tautological, deleted the independent per-account reconcile vs served account_team (gate:113);
+no-phantom + mismap checks structurally always-true (gate:96,139). GAP C: S1 drops new-real-advisor from the
+household signal (:536); null-rep untested (test:215); empty-partition misdiagnosed as schema-drift (:299).
+RULING (from Andrew's directive): the fold SELF-MAINTAINS among the signed group (peter/joe/patrick/noel/IWM)
+daily within data-quality+anomaly guards; a NEW advisor never auto-surfaces (S1 allowlist); the never-widen
+co-sign is for the DYNAMIC mechanism, not a frozen 164.**
+
+**STATUS: go-live HELD (3 rounds; architecture now settled). P1/P5 false-green. CHANGE-2 review deferred.
+DS on round-4 hardening + gate-restoration (restore the independent per-account gate; fix null-rep/name-format;
+add a runtime anomaly guard). Switch OFF throughout; nothing ever served.**
 
 ## Current state (2026-07-12, this runbook's write time)
 
