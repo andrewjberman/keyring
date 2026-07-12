@@ -16285,3 +16285,9 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-12 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-12 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file src/pages/AdvisorIntelligence/_partners... | PASS |
+| 2026-07-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/AdvisorIntelligence/_p... | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/silver/convert_orion_a... | PASS |
+
+2026-07-12T1210Z 0.4.2_RD_AdvisorIntelligence (/log noel_soderblom FE): comp-grep allowedAdvisorKeys (portal/src) -> sole consumer ClientsTab.tsx:270-275; grounded the filter + slice(0,maxEntries) mechanism, confirming 5 allowlist keys REQUIRE maxEntries>=5 (Rule 20b pre-commit dependency-graph check for a frontend change). safe-commit surface-check clean (advisory + blocking, no critical surface) on the inflection layout.ts commit 73ee2705. RD min comp-transform fields N/A this window -- tenant CONFIG edit, not a data-rendering component build.
+| 2026-07-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
