@@ -235,6 +235,8 @@ def probe_one(probe: dict, *, now_ts: float | None = None) -> dict:
         return _run_blast_discrimination_probe(probe, now_ts=now_ts)
     if probe.get("kind") == "graphreach-discrimination":
         return _run_graphreach_discrimination_probe(probe, now_ts=now_ts)
+    if probe.get("kind") == "manifestcheck-discrimination":
+        return _run_manifestcheck_discrimination_probe(probe, now_ts=now_ts)
     ts = int(now_ts if now_ts is not None else time.time())
     solver_id = "tool:%s" % probe["tool"]
     gate = isolation_gate(probe, solver_id=solver_id)
@@ -1018,6 +1020,83 @@ def _run_graphreach_discrimination_probe(probe: dict, *, now_ts=None, runner=Non
             "expected": "node in-graph -> the traversal REACHES %s (reach, not graph coverage)" % term,
             "oracle_run": ("cli.py %s -> reached %s = %s (answer_term NOT in cli_args -> result-only); oracle=%s"
                            % (" ".join(str(a) for a in fx["cli_args"]), term, reached, fx.get("oracle_note", "source-grounded"))),
+        },
+    })
+    return row
+
+
+# ---- (F) the comp-manifest-check DETECTION discrimination probe (CTO~D safe re-rank 2026-07-12) --------
+# comp-manifest-check = the non-canonical-graph-access lint (firm-agnostic, tool-registration; a PREVENTIVE
+# gate). EFFECTIVE = DETECTION-CORRECTNESS: does `check --mode blocking` FLAG a raw-graph-access file (rc!=0)
+# AND CLEAR a canonical-access file (rc0)? Un-gameable: the fixtures are staged synthetic tool-usage (raw
+# kuzu.Connection vs a canonical comp-blast call) -- NO firm data (sovereign-trivial). Preventive -> an
+# effective=yes RESOLVES the pending state (KEEP?->KEEP), it does NOT FIX-flip (refined AC3; reported honestly).
+_MC_NONCANON_SRC = "import kuzu\nconn = kuzu.Connection(db)  # raw kuzu = non-canonical graph access\n"
+_MC_CANON_SRC = "import subprocess\nsubprocess.run(['comp-blast', 'somenode'])  # canonical comp-tool access\n"
+
+
+def _default_manifestcheck_runner(file_path: str, timeout_s: int) -> int:
+    """Run comp-manifest-check check --file <path> --mode BLOCKING -> rc. Directly via manifest_check_cli.py.
+    --mode blocking so rc!=0 reflects a DETECTED non-canonical access (advisory returns rc0 regardless)."""
+    cli = os.path.join(_WS, "org", "modules", "graph", "manifest_check_cli.py")
+    r = subprocess.run([sys.executable, cli, "check", "--file", file_path, "--mode", "blocking"],
+                       capture_output=True, text=True, timeout=timeout_s)
+    return r.returncode
+
+
+def _run_manifestcheck_discrimination_probe(probe: dict, *, now_ts=None, runner=None) -> dict:
+    import tempfile
+    ts = int(now_ts if now_ts is not None else time.time())
+    to = int(probe.get("usability_timeout_s", 90))
+    run = runner or _default_manifestcheck_runner
+    row = {"probe_id": probe["probe_id"], "tool": probe["tool"], "class": probe["tool_class"],
+           "probe_ts": ts, "isolation_ok": True}
+
+    def _void(reason):
+        row.update({"reach": None, "usability": None, "effective": "unknown", "void_reason": reason,
+                    "effective_evidence": {"case": "negative", "oracle_run": "VOID: %s" % reason}})
+        return row
+
+    noncanon = canon = None
+    try:
+        fd1, noncanon = tempfile.mkstemp(suffix="_noncanon.py")
+        os.close(fd1)
+        with open(noncanon, "w", encoding="utf-8") as fh:
+            fh.write(_MC_NONCANON_SRC)
+        fd2, canon = tempfile.mkstemp(suffix="_canon.py")
+        os.close(fd2)
+        with open(canon, "w", encoding="utf-8") as fh:
+            fh.write(_MC_CANON_SRC)
+        try:
+            rc_bad = run(noncanon, to)
+            rc_good = run(canon, to)
+        except Exception as e:  # noqa: BLE001
+            return _void("comp-manifest-check run failed: %r" % e)
+    finally:
+        for p in (noncanon, canon):
+            if p and os.path.exists(p):
+                try:
+                    os.unlink(p)
+                except OSError:
+                    pass
+
+    obs = {"noncanon_rc": rc_bad, "canon_rc": rc_good,
+           "expected": "raw-kuzu -> rc!=0 (BLOCKED/flagged) / canonical comp-tool -> rc0 (clean)"}
+    discriminates = (rc_bad != 0) and (rc_good == 0)
+    if discriminates:
+        eff, reach_v, usab_v = "yes", "yes", "usable"        # flags the non-canonical, clears the canonical
+    else:
+        eff, reach_v, usab_v = "no", "no", "usable"          # flag-all / flag-none -> a detection regression
+    row.update({
+        "reach": reach_v, "usability": usab_v, "effective": eff,
+        "effective_evidence": {
+            "case": "negative", "observed": obs,
+            "expected": "FLAGS a raw-graph-access file (rc!=0 blocking) AND CLEARS a canonical-access file (rc0) -- discriminates",
+            # oracle = the fixture ACCESS PATTERN (raw kuzu vs canonical comp-blast), staged by the probe,
+            # grounded OTHER than comp-manifest-check's own output; firm-agnostic synthetic (no firm data).
+            "oracle_run": ("comp-manifest-check check --mode blocking: raw-kuzu-fixture->rc%s / canonical-"
+                           "fixture->rc%s; oracle=the staged fixture access pattern (firm-agnostic synthetic)"
+                           % (rc_bad, rc_good)),
         },
     })
     return row

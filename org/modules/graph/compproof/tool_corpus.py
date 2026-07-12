@@ -371,6 +371,25 @@ TOOL_PROBES = [
         "expected": "effective",   # comp-xref's symbol lookup reaches the real reader TODAY -> yes (HONEST); regression guard
         "live_estate": False,      # local trace-graph build over repo source; no AWS; inf key only -> sovereign green
     },
+    {
+        "probe_id": "comp-manifest-check/noncanonical-detection-discrimination",
+        "tool": "comp-manifest-check",
+        "tool_class": "graph-access-lint",
+        "kind": "manifestcheck-discrimination",
+        # EFFECTIVE-axis probe for comp-manifest-check (the non-canonical-graph-access lint; PREVENTIVE +
+        # firm-agnostic). DETECTION-CORRECTNESS (CTO~D safe re-rank 2026-07-12): does `check --mode blocking`
+        # FLAG a raw-graph-access file (rc!=0) AND CLEAR a canonical-access file (rc0)? UN-GAMEABLE: the
+        # runner STAGES synthetic fixtures (raw kuzu.Connection vs a canonical comp-blast call) at run-time
+        # -- NO firm data, NO estate (sovereign-trivial). PREVENTIVE (surface-check-class, in _PREVENTIVE_RX)
+        # -> an effective=yes RESOLVES the pending state (KEEP?->KEEP), NOT a FIX-flip (refined AC3, reported
+        # honestly). ISOLATION: rc-discrimination, no answer_terms in an argv. ORACLE = the fixture ACCESS
+        # PATTERN, grounded OTHER than comp-manifest-check's own output.
+        "question": "Does comp-manifest-check FLAG a raw-kuzu (non-canonical) file (rc!=0 blocking) AND CLEAR a canonical comp-tool file (rc0)?",
+        "fixture": {},   # fixtures are staged synthetically by the runner (firm-agnostic; no external oracle file / no held target)
+        "usability_timeout_s": 90,
+        "expected": "effective",   # comp-manifest-check's detection is honest TODAY -> yes (a preventive detection regression guard)
+        "live_estate": False,      # local lint over staged synthetic fixtures; no AWS, no firm data -> sovereign trivially green
+    },
 ]
 
 

@@ -392,5 +392,37 @@
         "oracle_run": "cli.py xref accounts_dimension_latest.parquet -> reached INF_C_00.canonical_performance = True (answer_term NOT in cli_args -> result-only); oracle=INF_C_00.canonical_performance reads accounts_dimension (consumer's own source); independent of comp-xref"
       }
     ]
+  },
+  "comp-manifest-check": {
+    "effective": "yes",
+    "effective_label": "yes",
+    "reach": [
+      "yes"
+    ],
+    "usability": [
+      "usable"
+    ],
+    "classes": [
+      "graph-access-lint"
+    ],
+    "probe_ids": [
+      "comp-manifest-check/noncanonical-detection-discrimination"
+    ],
+    "isolation_ok": true,
+    "probe_ts": 1783897265,
+    "fix_probes": [],
+    "effective_evidence": [
+      {
+        "probe_id": "comp-manifest-check/noncanonical-detection-discrimination",
+        "case": "negative",
+        "observed": {
+          "noncanon_rc": 1,
+          "canon_rc": 0,
+          "expected": "raw-kuzu -> rc!=0 (BLOCKED/flagged) / canonical comp-tool -> rc0 (clean)"
+        },
+        "expected": "FLAGS a raw-graph-access file (rc!=0 blocking) AND CLEARS a canonical-access file (rc0) -- discriminates",
+        "oracle_run": "comp-manifest-check check --mode blocking: raw-kuzu-fixture->rc1 / canonical-fixture->rc0; oracle=the staged fixture access pattern (firm-agnostic synthetic)"
+      }
+    ]
   }
 }
