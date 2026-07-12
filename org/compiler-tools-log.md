@@ -16273,3 +16273,4 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-12 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 2026-07-10 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE W2 | comp-iam gaps (ses=COVERAGE-UNKNOWN), aws simulate-principal-policy (rail-checked; the Rule-22a SES authority incl. positive+firm-sep controls), comp-which HUD 2x rail-checked | live aws/SSM primitives were the applied+exercised proofs; L4 exercise caught recipient-authz AccessDenied that simulate-on-from-identity missed
 | 2026-07-12 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-12 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
