@@ -450,6 +450,45 @@ def coupling_diff(actual_edges, declared_pairs):
     return undeclared
 
 
+def intentional_shared_infra_elements():
+    """The DECLARED intentional shared-infrastructure substrate elements from comp-coverage-map.yaml
+    (`intentional_shared_infra` -- validators/engines/the canonical sovereign guard/router/suite
+    dispatcher that are shared BY DESIGN). Returns a set of element strings (module names or backend
+    relpaths). yaml if available; on ANY absence/parse failure returns an EMPTY set -- the CONSERVATIVE
+    direction: an unreadable declaration classifies NOTHING intentional (every edge stays undeclared),
+    so a parse failure can never HIDE a ripple."""
+    txt = _read_text(COVERAGE_MAP)
+    if txt is None:
+        return set()
+    try:
+        import yaml  # optional; conservative-empty on absence (never hides a ripple)
+        doc = yaml.safe_load(txt)
+        if isinstance(doc, dict) and isinstance(doc.get("intentional_shared_infra"), list):
+            return {e["element"] for e in doc["intentional_shared_infra"]
+                    if isinstance(e, dict) and e.get("element")}
+    except Exception:  # fall through -> empty set (conservative)
+        pass
+    return set()
+
+
+def partition_intentional_infra(undeclared_edges, intentional_elements):
+    """PURE. Split UNDECLARED edges into (intentional, residual). An edge is INTENTIONAL-SHARED-INFRA
+    iff its `shared` set is non-empty AND ENTIRELY within the declared intentional set -- reuse of
+    shared infrastructure by design, not a hidden ripple. An edge sharing ANY element NOT declared
+    stays RESIDUAL undeclared (the real finding survives). Intentional edges are annotated with
+    `intentional_via` (the matched elements) for DISCLOSURE. Pure + total so the self-test can prove
+    the classifier bites ONLY for the declared set (non-vacuous) and that an EMPTY set hides nothing."""
+    want = set(intentional_elements)
+    intentional, residual = [], []
+    for e in undeclared_edges:
+        sh = set(e.get("shared", []))
+        if sh and sh <= want:
+            intentional.append(dict(e, intentional_via=sorted(sh)))
+        else:
+            residual.append(e)
+    return intentional, residual
+
+
 def run_coupling_diff(nodes=None):
     """Run the diff on the REAL data: every ACTUAL substrate edge, partitioned into DECLARED-covered
     vs UNDECLARED. Also reports declared pairs with NO actual substrate edge (declared-but-no-code-
@@ -458,7 +497,9 @@ def run_coupling_diff(nodes=None):
         nodes, _ = build_nodes()
     actual = shares_substrate_edges(nodes)
     declared = declared_coupling()
-    undeclared = coupling_diff(actual, declared)
+    undeclared_all = coupling_diff(actual, declared)
+    intentional_elements = intentional_shared_infra_elements()
+    intentional_infra, undeclared = partition_intentional_infra(undeclared_all, intentional_elements)
     covered = [e for e in actual if frozenset({e["a"], e["b"]}) in declared]
     actual_pairs = {frozenset({e["a"], e["b"]}) for e in actual}
     declared_no_code = sorted(
@@ -467,7 +508,8 @@ def run_coupling_diff(nodes=None):
         "actual_substrate_edges": len(actual),
         "declared_overlap_pairs": len(declared),
         "covered": covered,
-        "undeclared": undeclared,
+        "intentional_shared_infra": intentional_infra,   # declared code-reuse of shared infra (disclosed, D1 reconcile)
+        "undeclared": undeclared,                         # residual: the hidden ripples AFTER removing declared intentional-infra
         "declared_without_code_coupling": declared_no_code,
     }
 
@@ -608,6 +650,11 @@ def cmd_coupling_diff(args):
     print("  actual substrate edges ......... %d" % res["actual_substrate_edges"])
     print("  declared overlap pairs ......... %d" % res["declared_overlap_pairs"])
     print("  actual edges COVERED by a declared overlap ... %d" % len(res["covered"]))
+    intentional = res.get("intentional_shared_infra", [])
+    print("  actual edges INTENTIONAL-SHARED-INFRA (declared reuse) . %d" % len(intentional))
+    for e in intentional:
+        print("      %s <-> %s   [intentional infra: %s]" %
+              (e["a"], e["b"], ", ".join(e.get("intentional_via", e["shared"]))))
     print("  actual edges UNDECLARED (the hidden ripples) . %d" % len(res["undeclared"]))
     for e in res["undeclared"]:
         print("      %s <-> %s   [shares: %s]" % (e["a"], e["b"], ", ".join(e["shared"])))
@@ -667,6 +714,32 @@ def _self_test():
        coupling_diff([actual[0]], declared) == [],
        "a set of only-declared edges yields ZERO findings (the value the diff must produce if "
        "measuring the intended quantity -- R6 on the diff)")
+
+    # INTENTIONAL-SHARED-INFRA partition (CVO~A D1 reconcile): an UNDECLARED edge whose shared set is
+    # ENTIRELY within the declared intentional-infra set is classified intentional; an edge sharing ANY
+    # other element stays residual-undeclared. Proven non-vacuous (the negative control MUST still flag)
+    # + conservative (an EMPTY declaration hides nothing).
+    infra = {"grain_sentinel", "org/modules/graph/cli.py"}
+    seed = [
+        {"a": "comp-p", "b": "comp-q", "shared": ["grain_sentinel"]},                                # infra-only -> intentional
+        {"a": "comp-r", "b": "comp-s", "shared": ["grain_sentinel", "org/modules/graph/cli.py"]},    # all infra  -> intentional
+        {"a": "comp-t", "b": "comp-u", "shared": ["grain_sentinel", "biz_logic_lib"]},               # MIXED      -> residual
+        {"a": "comp-v", "b": "comp-w", "shared": ["biz_logic_lib"]},                                  # non-infra  -> residual
+    ]
+    intentional_p, residual_p = partition_intentional_infra(seed, infra)
+    ik = {frozenset({e["a"], e["b"]}) for e in intentional_p}
+    rk = {frozenset({e["a"], e["b"]}) for e in residual_p}
+    ck("intentional.infra_only_classified_intentional",
+       frozenset({"comp-p", "comp-q"}) in ik and frozenset({"comp-r", "comp-s"}) in ik,
+       "an edge whose shared set is entirely declared-intentional-infra is classified intentional")
+    ck("intentional.nonvacuous_mixed_and_nonimfra_stay_undeclared",
+       frozenset({"comp-t", "comp-u"}) in rk and frozenset({"comp-v", "comp-w"}) in rk,
+       "an edge sharing ANY non-declared element stays RESIDUAL undeclared (the classifier bites only "
+       "for the declared set -- a MIXED edge is NOT swallowed; non-vacuous)")
+    ck("intentional.empty_declaration_hides_nothing",
+       partition_intentional_infra(seed, set())[1] == seed,
+       "an EMPTY intentional set classifies NOTHING intentional (conservative -- an unreadable "
+       "declaration can never hide a ripple)")
 
     # AC6 (class-agnostic): the node/edge model admits a NON-comp scanner with no schema fork.
     foreign = {"tool": "org-recognizer-X", "on_disk": True, "registration": "CONVENTION",

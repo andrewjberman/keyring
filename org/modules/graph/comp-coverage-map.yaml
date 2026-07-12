@@ -909,6 +909,47 @@ redundancy_census:
     - { resource: symbol-defn,      tools: [comp-blast, comp-symbols], concerns: ["symbol-DEPENDENCY / blast-radius (REVERSE, input=NAME)", "file-symbol INVENTORY (FORWARD, input=FILE)"], state: DECLARED, finding: none }
 
 # =============================================================================
+# INTENTIONAL SHARED-INFRASTRUCTURE substrate (comp-toolgraph coupling-diff input)
+# =============================================================================
+# comp-toolgraph's SHARES_SUBSTRATE edges surface EVERY shared-backend import (the ripple map).
+# distinct_from + the redundancy_census above declare ESTATE-INSPECTION concern-overlap -- a
+# DIFFERENT coupling class than a shared internal-utility IMPORT (code reuse). The elements below
+# are shared BY DESIGN (validators, engines, the canonical sovereign guard, the router, the
+# graph-family CLI dispatcher). An ACTUAL substrate edge whose `shared` set is ENTIRELY within this
+# set is INTENTIONAL, not an undeclared ripple. Recorded here (NOT silently excluded) so
+# comp-toolgraph's coupling-diff classifies such an edge INTENTIONAL-SHARED-INFRA -- a third bucket,
+# DISCLOSED -- preserving full ripple visibility while marking these accepted-by-design. A future
+# edge that shares ANY element NOT listed here still surfaces as UNDECLARED (the classifier bites
+# only for this set -- proven non-vacuous in comp-toolgraph --self-test). No comp-coverage-check
+# gate rule reads this key, so the gate is unaffected (same additive-data pattern as
+# node_scope_disposition / role_surface_affinity).
+# CVO~A D1 reconcile 2026-07-12 (routed as coverage-map owner); owner 0.8.0_AE_CloudComp. Grounded
+# against the LIVE coupling-diff (20 undeclared edges, all within this set), NOT the routing message
+# (which listed 14 -- pre the sovereign_held cluster this session's vendored re-mirror grew).
+intentional_shared_infra:
+  - element: grain_sentinel
+    kind: validator-module
+    reason: "NFRA_GRAPHS D5 structural grain-invariant CHECKER (CVO-owned cert-integration). Every graph-emitting tool (comp-aws/blast/build/diff/trace/xref) IMPORTS it to validate its OWN derived graph's grain identity -- a shared validation LIBRARY, not a shared estate-inspection subject. The facets' semantic distinctness (trace-graph) is separately declared in distinct_from + redundancy_census above."
+  - element: contract_engine
+    kind: engine-module
+    reason: "NFRA_GCONTR period-contracts Q1/Q2 never-widen ENGINE, shared by comp-aws contract-diff + comp-surface-check + pipescript. Shared value-layer machinery (a library), not overlapping estate inspection."
+  - element: sovereign_held
+    kind: guard-module
+    reason: "the CANONICAL bd/49F sovereign guard (is_held_bucket/include_held). Shared-by-MANDATE: the architecture requires ONE canonical implementation every tool imports (comp-constants/dispatch/incrparity/secrets drop held-bucket targets via it) -- reuse IS the safety design, not a ripple. Byte-identity of the freeze-monitor vendored mirror is separately asserted (test_vendored_sovereign_held_is_identical)."
+  - element: comp_capability_provider
+    kind: router-module
+    reason: "NFRA_COMPROUTE capability-map PROVIDER. comp-which routes queries through it; comp-routable-check gates its completeness (COMPOSE, not overlap). Shared routing engine (a library)."
+  - element: comp_route
+    kind: router-module
+    reason: "NFRA_COMPROUTE posterior decision ENGINE, shared by comp-which + comp-routable-check. Shared routing engine."
+  - element: _comprail
+    kind: rail-module
+    reason: "the on-rails wrapper shared by comp-grep + comp-glob (both are the rail-carrying search primitives). Shared infra by construction."
+  - element: org/modules/graph/cli.py
+    kind: suite-dispatcher-file
+    reason: "the shared CLI DISPATCHER for the graph-family (comp-blast/build/diff/trace/xref/aws are facets of ONE graph engine). Sharing the dispatcher IS the suite architecture; the facets' semantic distinctness is declared via trace-graph distinct_from above."
+
+# =============================================================================
 # tools_index GENERATED VIEW (CTO ruling #1) -- this LEDGER is the source of truth;
 # graph-call-manifest.yaml's flat tools_index becomes a REGENERATED projection of it
 # (the tool INVENTORY + each tool's home/concern), NOT a second hand-maintained
