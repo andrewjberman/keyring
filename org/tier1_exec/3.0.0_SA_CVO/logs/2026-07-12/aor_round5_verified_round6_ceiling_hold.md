@@ -54,3 +54,21 @@ mutants). Probe drivers in session scratchpad (7014b3ab); memory trigger updated
 - **[me]** on Andrew's pick: rebuild the battery for that architecture + re-contract arm-B with DS if the
   RULE-1 semantics change; then the design-pass validation, CHANGE-2 verify, and V4 per the new sequence.
 - **[1.0.0_SA_CTO~B]** owns the design pass; loops me in.
+
+## ADDENDUM (23:3xZ) -- Andrew resolved the fork: B reframed DETECT-AND-ALERT; gate-2 Fork-B VERIFIED
+
+Andrew picked auto-nightly + detect-and-ALERT (never block); count guards + the round-5 ceiling DROPPED
+(moot). DS shipped d082f2eef (lib/aor_attribution_audit.py: pure per-account day-over-day drift detector +
+INF_A_01 comparison emit, switch-gated + non-fatal). CTO~B recontracted gate-2; my re-based battery
+(9/9, own fixtures) VERIFIED all 4 legs BY EXERCISE: (1) count-neutral swap FIRES 2 named
+ACCOUNT-ATTRIBUTION-DRIFT findings, count-blindness demonstrated in-battery (mover count identical, no
+aggregate alert); (2) source-change FIRES x3 (value-set/column/cliff); (3) identical-day SILENT +
+first-day baseline silent; (4) NEVER-BLOCKS exercised on all 3 CLI exit paths (live baseline rc 0 --
+also re-confirms 0 comparison partitions live = inert; forced S3 error -> WARN rc 0; findings-path
+hermetic -> ALERT printed rc 0). Extras: legit-vs-bug discrimination (explicit_changed), COVERAGE-DROP,
+MOVER-SET band. DS suites 11/11 + 22/22 my runs. V1/V2/V3 + independent-164 STAND (fold-correct
+unchanged). Observation to CTO~B (not a blocker): the alert's delivery is LOG-GRADE (stdout; no SNS) --
+push-grade is a one-line SNS publish, his design call. Battery driver:
+scratchpad/aor_forkb_drift_battery.py. Reported: CTO~B 233159Z, COO 233224Z (incl the package re-cut
+note: round-5 ceiling items moot; fold numbers unchanged). Waiting: gate-1 on d082f2eef -> co-sign ->
+nightly -> V4.
