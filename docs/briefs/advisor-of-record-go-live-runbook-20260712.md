@@ -27,9 +27,9 @@ peter ~$135.24M / joe ~$29.19M / patrick ~$24.13M / **noel NEW ~$12.42M** / IWM 
 | P1 | Daily fold reproduces the 164 static movers + $ numbers + firm-conserved on the 20260710 snapshot | DS | pending | static frozensets = reproduction oracle; DS proves BEFORE wiring |
 | P2 | CHANGE-3 daily fold (Option A: per-process lazy self-load, marker-checked, OFF=truly-inert) wired + re-reviewed CLEAN | DS + CTO~B | pending | /code-review CLEAN; 4 invariants (see below) |
 | P3 | CHANGE-2 AoR-wins household rule + guard + hh286-class negative control, re-reviewed CLEAN | DS + CTO~B | pending | /code-review CLEAN; guard non-vacuous on live SSOT |
-| P4 | Pull Lambda deployed + happy-path EXERCISED (200 + real roster + fresh marker), fail-safe proven | AE | fail-safe PROVEN; happy-path gated on 13:00Z JWT | Rule 22a: exercised not asserted |
-| P4a | S3-write IAM grant (BronzeAccountsRosterWrite: Put/Get/Head on accounts_roster.json + marker + latest/) safe-applied + simulate-principal-policy verified WITH a positive control, + deployed-Lambda INVOKE-confirm (role+code end-to-end, not local creds) | AE | pending | the role's s3-accounts-v2 policy is FILENAME-scoped to new_portfolio_accounts.json (verified live) -> the pull's NEW keys 403 without this; local-creds exercise MASKS it (Rule 22a-IAM) |
-| P5 | LIVE end-to-end: bronze roster -> silver advisor_of_record_raw -> gold daily fold reproduces the numbers on LIVE data (not just snapshot) | DS + AE | pending (needs P4 deployed) | grounded against served, not asserted |
+| P4 | Pull Lambda deployed + happy-path EXERCISED (200 + real roster + fresh marker), fail-safe proven | AE | **GREEN** -- inf-pipeline-v1.7.83; all 3 fail-safe paths (fresh/carry-forward/first-run-stale) exercised live; deployed-invoke wrote fresh roster 3118 accts/900 AoR @ 13:19:39Z | Rule 22a: exercised not asserted |
+| P4a | S3-write IAM grant (BronzeAccountsRosterWrite: Put/Get/Head on accounts_roster.json + marker + latest/) safe-applied + simulate-principal-policy verified WITH a positive control, + deployed-Lambda INVOKE-confirm (role+code end-to-end, not local creds) | AE | **GREEN** -- get-role-policy shows the grant live; simulate ALLOWED + positive control on new_portfolio_accounts.json; deployed-invoke = the ROLE wrote it; 0-diff | the role's s3-accounts-v2 policy is FILENAME-scoped to new_portfolio_accounts.json (verified live) -> the pull's NEW keys 403 without this; local-creds exercise MASKS it (Rule 22a-IAM) |
+| P5 | LIVE end-to-end: bronze roster -> silver advisor_of_record_raw -> gold daily fold reproduces the numbers on LIVE data (not just snapshot) | DS + AE | **UNBLOCKED** -- live roster landed @ 13:19:39Z, AE pinged DS; DS runs the serve-held silver+gold code against it (no deploy needed -- deployed silver stays sentinel-skipped) | grounded against live, not asserted |
 | P6 | Conformance guard INF_D_10 exercised CLEAN under the ACTIVE-switch build | DS | 21/21 under INF_AOR_FOLD_ACTIVE=1 already; re-run on final build | non-vacuous (286 SSOT households iterated) |
 | P7 | FE noel card held (portal 73ee2705 + comment-hygiene b005545e), DEV | RD | DONE + HELD (branch -r contains = empty) | unpushed until this sequence |
 | P8 | NEVER#2 never-widen sign-off | base CTO principal + COO + Andrew final GO | pending | firm-total conservation shown; DELTA verified |
@@ -72,7 +72,10 @@ peter ~$135.24M / joe ~$29.19M / patrick ~$24.13M / **noel NEW ~$12.42M** / IWM 
 
 ## Current state (2026-07-12, this runbook's write time)
 
-HEAD of CLOUD `b8221c7f2` = code-review CLEAN but INERT (AOR_FOLD_ACTIVE default OFF). DS building
-CHANGE-3 (reproduction proof -> sentinel -> wire Option A) then CHANGE-2 (AoR-wins). AE pull code DONE +
-fail-safe LIVE-PROVEN, happy-path holding for the 13:00Z JWT refresh. RD FE DONE + HELD. Nothing flips
-until P1-P8 GREEN + the atomic sequence above.
+DS CHANGE-3c wiring committed `223a71982` (Option A daily self-load; static frozensets retired to
+test-oracle; reproduction gate PASS + it caught a real pd.NA spurious-advisor bug, fixed) -- under my
+independent /code-review gate now (wty8mrgmu). AE pull DEPLOYED (inf-pipeline-v1.7.83) + fully 3-layer
+verified + INERT: the nightly now lands the bronze roster daily; silver+gold stay inert (switch OFF +
+the serve-gate sentinel PROVEN -- AE's push swept DS's sentineled convert and safe-deploy SKIPPED it, so
+deployed silver stays 0-raw-column). DS building CHANGE-2 (AoR-wins) on 223a71982. RD FE DONE + HELD.
+P4/P4a GREEN; P5 unblocked (live roster available). Nothing flips until P1-P8 GREEN + the atomic sequence above.
