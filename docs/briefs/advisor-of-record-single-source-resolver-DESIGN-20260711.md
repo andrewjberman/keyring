@@ -298,3 +298,35 @@ The conformance guard (Pillar C) asserts firm-total conservation as a hard gate.
 
 **Nothing implemented pending your GO.** On design-GO I execute Phase 1->2->3, re-run `/code-review` (workflow, high)
 to CLEAN, then validate every served surface + firm-conservation before routing the never-widen sign-off.
+
+---
+
+## 11. Grain taxonomy (two-grain design — CTO~B ratified, carry to Andrew at go-live)
+
+The re-key runs at TWO grains, and for an **advisor-of-record-SPLIT household** (one household whose accounts belong
+to different advisors-of-record) the two grains legitimately report different per-advisor numbers. This is a
+deliberate design choice, not a bug. The conformance guard checks **WITHIN a grain, never cross-grain** (a
+household-plurality number tied to an account-grain rollup would false-fire).
+
+| Grain | Question it answers | Attribution rule | Surfaces | Guard tie |
+|---|---|---|---|---|
+| **Account** | "How much AUA / how many accounts does advisor X own?" | each ACCOUNT to its own advisor-of-record owner | `leaderboard.json`, `advisor_nna_canonical.json`, `partner_analytics.json`, `advisors/{key}/*` (book/top_holdings/composition) | leaderboard `total_aua` vs `account_team` account-grain AUA rollup |
+| **Household** | "Which advisor owns this client RELATIONSHIP?" | each HOUSEHOLD to its PLURALITY-of-accounts owner (tie: max AUA, then lexical) | `client_directory.json`, `cumulative_chart.json` (both adv lines), `client_performance` | `client_directory` household-COUNT vs the household-plurality household count |
+
+**Why they differ for a split household (worked):** a household with 60% of its accounts (by count) under `peter_lee`
+and 40% under `noel_soderblom`. **Account grain:** the leaderboard splits that household's AUA between peter and noel,
+account by account (each account to its own owner). **Household grain:** the client directory names the household's
+headline advisor as `peter_lee` (the plurality owner) and the cumulative chart attributes the whole household's AUA
++ NNA to `peter_lee` (the relationship view). Both are correct for their question; they only diverge for split
+(mover) households, and the firm total is conserved at BOTH grains.
+
+**Guard enforcement (F4/F5 condition-1):** account surfaces tie to `account_team`'s account-grain AUA rollup;
+household surfaces tie to the household-plurality rollup (`client_directory` household-count; the cumulative chart is
+covered by the advisor-key SET check + the intra-consistency construction below — its served AUA is weekly-sampled so
+a numeric rollup tie there would false-fire on the date offset, not attribution). No surface is left unchecked.
+
+**Intra-surface consistency (F4/F5 condition-2):** within `cumulative_chart.json`, BOTH the adv-AUA line and the
+adv-NNA line are keyed to the **same** household-plurality owner (the AUA line reads household-grain
+`client_performance`; the NNA line is re-keyed account_id->household->plurality in `build_nna_adv_view`). One chart
+never shows two lines over different account sets. Account-graining the AUA line was rejected as a structural rewrite
+of a household-grain producer for a split-household-only effect (CTO~B ruling).
