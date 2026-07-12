@@ -16373,3 +16373,103 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_tool_health.py -... | PASS |
 | 2026-07-12 | 3.0.0_SA_CVO~B | LD-0277 | aor probe drivers + reproduce_aor_fold_gate + DS suites | round-5 battery on 4818dfa5f (probe EXIT 0, ceiling bracketed, RULE-2 both directions, 164 live) + w0cf5gz8z realness | PASS -- round-5 VERIFIED; round-6 real+not-clean -> ALL HELD on Andrew architecture pick |
 | 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_tool_health.py -... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_tool_health_gate... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/effective_f... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_LIVELEARN_PRD.md... | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_A_00.accounts_dimension.py | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_A_04.client_dimension.py | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_A_04.client_dimension.py | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_A_04.client_dimension.py | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_A_04.client_dimension.py | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_A_02.fee_rate_history.py | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/effective_f... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_A_04.client_dimension.py | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_A_02.fee_rate_history.py | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --schema | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_pipescript... | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS n_nodes | FAIL |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | FAIL |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.name CONTAINS 'opal-... | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/effective_f... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.name='inf-gold-layer... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.name='opal-data-inf'... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast --help | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast --function derive_advisor_key | FAIL |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast derive_advisor_key | FAIL |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast gold:INF_A_00.accounts_dimension --direction down | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/effective_f... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-blast | comp-blast gold:INF_A_00.accounts_dimension --direction down | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-transform | comp-transform --help | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace gold:INF_A_04.client_dimension --direction up | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-trace | comp-trace gold:INF_A_04.client_dimension --direction up --all | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-xref | comp-xref --help | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-xref | comp-xref accounts_dimension_latest.parquet | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/effective_f... | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-cache | comp-cache --help | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-types | comp-types --help | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-platinum | comp-platinum --help | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-trace | comp-trace gold:INF_A_04.client_dimension --direction up --all | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-xref | comp-xref accounts_dimension_latest.parquet | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check --help | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-routes | comp-routes --help | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-validate | comp-validate --help | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-cluster | comp-cluster --help | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check /tmp/mcfix/noncanon.py | VERDICT |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --help | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --file /tmp/mcfix/noncanon.py --mode blocking | VERDICT |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --file /tmp/mcfix/canon.py --mode blocking | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --file /tmp/mcfix/noncanon.py --mode advisory | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/effective_f... | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-routes | comp-routes api-routes | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-validate | comp-validate INF_B_01 | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-validate | comp-validate INF_D_00c --artifact /tmp/inf_leaderboard.json | VERDICT |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_antipattern.py | VERDICT |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean.py | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file org/modules/graph/tests/_p4_probe_exem... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean2.py | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_control.py | VERDICT |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-manifest-check | comp-manifest-check routable | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-drift | comp-drift --help | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript deployed gold:INF_A_00.accounts_dimension | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-drift | comp-drift gold:INF_A_00.accounts_dimension | VERDICT |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_A_01 | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_A_01.advisor_... | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_A_04.client_dimension.py | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/effective_f... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~A | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~A | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-12 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/aor-... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_A_01.advisor_... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_A_04.client_dimension.py | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/aor_attributi... | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file org/modules/gr... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/aor_attributi... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | NFRA_LIVELEARN | comp-tool-health / comp-which / comp-blast / comp-trace / comp-xref / comp-kuzu / comp-pipescript / comp-tool-health-gate | gate exercises: real-path verify of 7 CYCLE-B EFFECTIVE tools + C1 --refresh live probe_all + AC4 comp-which routing (routing-02->comp-freshness) + no-regression lanes | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
