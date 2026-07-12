@@ -16360,3 +16360,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-toolgraph | comp-toolgraph coupling-diff + --self-test (D1 reconcile: 6 covered/20 intentional-shared-infra/0 residual; 7/7 self-test) | PASS |
 | 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-tool-health | comp-tool-health (TH-A state: 4 resolved/57 pending) + effective-feed seam exercise | PASS |
 | 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-12 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/aor-... | PASS |
+| 2026-07-12 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/aor-... | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/tests/reproduce_a... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | LD-0277 | reproduce_aor_fold_gate + aws-applied-reads + comp-grep | AoR validation lane: gate exercised 2x (non-placebo, PASS), V2 independent-164 live, V3 IAM applied-truth, comp-grep producer sweep | PASS -- V1/V2/V3 VERIFIED, w83xbuei1 realness CONFIRMED |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
