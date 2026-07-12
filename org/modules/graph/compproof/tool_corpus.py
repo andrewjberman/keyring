@@ -326,6 +326,51 @@ TOOL_PROBES = [
         "expected": "effective",   # comp-blast's impact traversal is correct TODAY -> yes (HONEST result); the probe is the impact-reach regression guard
         "live_estate": False,      # local trace-graph build over repo source; no AWS; inf node only -> sovereign green
     },
+    {
+        "probe_id": "comp-trace/upstream-reach-discrimination",
+        "tool": "comp-trace",
+        "tool_class": "dependency-path-trace",
+        "kind": "graphreach-discrimination",
+        # EFFECTIVE-axis probe for comp-trace (bidirectional dependency PATH walk, NON-preventive). HONEST
+        # REACH (CTO~D batch 2026-07-12): does an UPSTREAM trace of gold:INF_A_04.client_dimension REACH its
+        # real producer INF_A_00.accounts_dimension? Graph-backed -> NOT-FOUND / "Multiple matches" ->
+        # VOID (graph coverage/ambiguity, not a reach miss). ORACLE from source (INF_A_04 reads
+        # accounts_dimension_latest :53, produced by INF_A_00 :90), independent of comp-trace. answer_term
+        # INF_A_00.accounts_dimension NOT in the query (gold:INF_A_04...) -> result-only. --all avoids the
+        # prefix-multiple-match ambiguity. SOVEREIGN: in-scope inf node + held-marker guard.
+        "question": "Does comp-trace UPSTREAM of gold:INF_A_04.client_dimension REACH its real producer INF_A_00.accounts_dimension?",
+        "fixture": {
+            "cli_args": ["trace", "gold:INF_A_04.client_dimension", "--direction", "up", "--all"],
+            "answer_term": "INF_A_00.accounts_dimension",
+            "void_markers": ["Multiple matches for"],
+            "oracle_note": "INF_A_04 reads accounts_dimension_latest (source :53) produced by INF_A_00 (:90); independent of comp-trace",
+        },
+        "usability_timeout_s": 150,   # comp-trace builds the trace graph on-demand (~34s)
+        "expected": "effective",   # comp-trace's path walk reaches the real producer TODAY -> yes (HONEST); regression guard
+        "live_estate": False,      # local trace-graph build over repo source; no AWS; inf node only -> sovereign green
+    },
+    {
+        "probe_id": "comp-xref/symbol-reference-reach-discrimination",
+        "tool": "comp-xref",
+        "tool_class": "symbol-cross-reference",
+        "kind": "graphreach-discrimination",
+        # EFFECTIVE-axis probe for comp-xref (SYMBOL cross-ref -- where is X referenced, NON-preventive).
+        # HONEST REACH (CTO~D batch 2026-07-12): does an xref of the accounts_dimension_latest S3 key REACH
+        # a real reader (INF_C_00.canonical_performance)? Graph-backed -> NOT-FOUND -> VOID (graph coverage,
+        # not a reach miss). ORACLE from source (INF_C_00.canonical_performance's OWN code reads
+        # accounts_dimension; also named in INF_A_00's advisor-of-record reader comment), independent of
+        # comp-xref. answer_term INF_C_00.canonical_performance NOT in the query (accounts_dimension_latest
+        # .parquet) -> result-only. SOVEREIGN: in-scope inf key + held-marker guard.
+        "question": "Does comp-xref of accounts_dimension_latest.parquet REACH its real reader INF_C_00.canonical_performance?",
+        "fixture": {
+            "cli_args": ["xref", "accounts_dimension_latest.parquet"],
+            "answer_term": "INF_C_00.canonical_performance",
+            "oracle_note": "INF_C_00.canonical_performance reads accounts_dimension (consumer's own source); independent of comp-xref",
+        },
+        "usability_timeout_s": 150,   # comp-xref builds the trace graph on-demand (~34s)
+        "expected": "effective",   # comp-xref's symbol lookup reaches the real reader TODAY -> yes (HONEST); regression guard
+        "live_estate": False,      # local trace-graph build over repo source; no AWS; inf key only -> sovereign green
+    },
 ]
 
 

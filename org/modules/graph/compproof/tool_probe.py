@@ -233,6 +233,8 @@ def probe_one(probe: dict, *, now_ts: float | None = None) -> dict:
         return _run_kuzu_discrimination_probe(probe, now_ts=now_ts)
     if probe.get("kind") == "blast-discrimination":
         return _run_blast_discrimination_probe(probe, now_ts=now_ts)
+    if probe.get("kind") == "graphreach-discrimination":
+        return _run_graphreach_discrimination_probe(probe, now_ts=now_ts)
     ts = int(now_ts if now_ts is not None else time.time())
     solver_id = "tool:%s" % probe["tool"]
     gate = isolation_gate(probe, solver_id=solver_id)
@@ -963,6 +965,59 @@ def _run_blast_discrimination_probe(probe: dict, *, now_ts=None, runner=None) ->
             "oracle_run": ("comp-blast %s --direction down -> reached %s = %s (answer_term NOT in the query "
                            "-> result-only); oracle=INF_A_00 accounts_dimension consumed by %s (source: "
                            "INF_A_00 advisor-of-record readers comment)" % (fx["query"], term, reached, term)),
+        },
+    })
+    return row
+
+
+# ---- (E) the GENERIC graph-backed REACH discrimination probe (comp-trace/comp-xref/comp-diff) ----------
+# Same shape as comp-blast (graph-backed cli.py subcommands): does a traversal REACH a KNOWN dependent
+# grounded from SOURCE? NOT-FOUND / ambiguity (void_markers) -> VOID (graph-coverage/staleness, NOT a reach
+# miss); in-graph + reached -> yes / missed -> no. fixture: cli_args (after cli.py) + answer_term (NOT in
+# cli_args -> result-only) + optional void_markers + oracle_note. SOVEREIGN: in-scope by design + guard.
+
+
+def _default_graphreach_runner(cli_args, timeout_s):
+    """Run cli.py <*cli_args> DIRECTLY -> (combined_out, rc). Builds the trace graph on-demand (~34s)."""
+    cli = os.path.join(_WS, "org", "modules", "graph", "cli.py")
+    r = subprocess.run([sys.executable, cli, *cli_args], capture_output=True, text=True, timeout=timeout_s)
+    return (r.stdout or "") + (r.stderr or ""), r.returncode
+
+
+def _run_graphreach_discrimination_probe(probe: dict, *, now_ts=None, runner=None) -> dict:
+    ts = int(now_ts if now_ts is not None else time.time())
+    fx = probe["fixture"]
+    to = int(probe.get("usability_timeout_s", 120))
+    run = runner or _default_graphreach_runner
+    term = fx["answer_term"]
+    row = {"probe_id": probe["probe_id"], "tool": probe["tool"], "class": probe["tool_class"],
+           "probe_ts": ts, "isolation_ok": True}
+
+    def _void(reason):
+        row.update({"reach": None, "usability": None, "effective": "unknown", "void_reason": reason,
+                    "effective_evidence": {"case": "negative", "oracle_run": "VOID: %s" % reason}})
+        return row
+
+    argstr = " ".join(str(a) for a in fx["cli_args"]).lower()
+    if any(m in argstr for m in _KUZU_HELD_MARKERS):
+        return _void("SOVEREIGN: %s query targets a held bd/schwab/49F node -- refused (inf only)" % probe["tool"])
+    try:
+        out, rc = run(list(fx["cli_args"]), to)
+    except Exception as e:  # noqa: BLE001
+        return _void("%s run failed: %r" % (probe["tool"], e))
+    for m in ("NOT-FOUND",) + tuple(fx.get("void_markers", ())):
+        if m in out:
+            return _void("%s: '%s' in output -- graph-coverage/ambiguity/staleness, not a reach miss" % (probe["tool"], m))
+    reached = (rc == 0) and (term in out)
+    obs = {"cli_args": fx["cli_args"], "rc": rc, "reached": reached, "answer_term": term}
+    eff, reach_v, usab_v = ("yes", "yes", "usable") if reached else ("no", "no", "usable")
+    row.update({
+        "reach": reach_v, "usability": usab_v, "effective": eff,
+        "effective_evidence": {
+            "case": "negative", "observed": obs,
+            "expected": "node in-graph -> the traversal REACHES %s (reach, not graph coverage)" % term,
+            "oracle_run": ("cli.py %s -> reached %s = %s (answer_term NOT in cli_args -> result-only); oracle=%s"
+                           % (" ".join(str(a) for a in fx["cli_args"]), term, reached, fx.get("oracle_note", "source-grounded"))),
         },
     })
     return row

@@ -317,5 +317,80 @@
         "oracle_run": "comp-blast gold:INF_A_00.accounts_dimension --direction down -> reached INF_C_00.canonical_performance = True (answer_term NOT in the query -> result-only); oracle=INF_A_00 accounts_dimension consumed by INF_C_00.canonical_performance (source: INF_A_00 advisor-of-record readers comment)"
       }
     ]
+  },
+  "comp-trace": {
+    "effective": "yes",
+    "effective_label": "yes",
+    "reach": [
+      "yes"
+    ],
+    "usability": [
+      "usable"
+    ],
+    "classes": [
+      "dependency-path-trace"
+    ],
+    "probe_ids": [
+      "comp-trace/upstream-reach-discrimination"
+    ],
+    "isolation_ok": true,
+    "probe_ts": 1783896047,
+    "fix_probes": [],
+    "effective_evidence": [
+      {
+        "probe_id": "comp-trace/upstream-reach-discrimination",
+        "case": "negative",
+        "observed": {
+          "cli_args": [
+            "trace",
+            "gold:INF_A_04.client_dimension",
+            "--direction",
+            "up",
+            "--all"
+          ],
+          "rc": 0,
+          "reached": true,
+          "answer_term": "INF_A_00.accounts_dimension"
+        },
+        "expected": "node in-graph -> the traversal REACHES INF_A_00.accounts_dimension (reach, not graph coverage)",
+        "oracle_run": "cli.py trace gold:INF_A_04.client_dimension --direction up --all -> reached INF_A_00.accounts_dimension = True (answer_term NOT in cli_args -> result-only); oracle=INF_A_04 reads accounts_dimension_latest (source :53) produced by INF_A_00 (:90); independent of comp-trace"
+      }
+    ]
+  },
+  "comp-xref": {
+    "effective": "yes",
+    "effective_label": "yes",
+    "reach": [
+      "yes"
+    ],
+    "usability": [
+      "usable"
+    ],
+    "classes": [
+      "symbol-cross-reference"
+    ],
+    "probe_ids": [
+      "comp-xref/symbol-reference-reach-discrimination"
+    ],
+    "isolation_ok": true,
+    "probe_ts": 1783896048,
+    "fix_probes": [],
+    "effective_evidence": [
+      {
+        "probe_id": "comp-xref/symbol-reference-reach-discrimination",
+        "case": "negative",
+        "observed": {
+          "cli_args": [
+            "xref",
+            "accounts_dimension_latest.parquet"
+          ],
+          "rc": 0,
+          "reached": true,
+          "answer_term": "INF_C_00.canonical_performance"
+        },
+        "expected": "node in-graph -> the traversal REACHES INF_C_00.canonical_performance (reach, not graph coverage)",
+        "oracle_run": "cli.py xref accounts_dimension_latest.parquet -> reached INF_C_00.canonical_performance = True (answer_term NOT in cli_args -> result-only); oracle=INF_C_00.canonical_performance reads accounts_dimension (consumer's own source); independent of comp-xref"
+      }
+    ]
   }
 }
