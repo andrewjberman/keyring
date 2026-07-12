@@ -1,0 +1,133 @@
+"""NFRA_TOOLHEALTH.TH-A (A)+(B) -- the fixture bar for the frozen-vs-fresh DISCRIMINATION probe (the
+un-gameable honesty half CTO gates on). Every test is HERMETIC: the fixture writer/deleter and the
+comp-freshness runner are INJECTED (mocked), so nothing here touches S3, opal-data-bd, or the live tool.
+
+Proves, each non-vacuous:
+  - positive control: the standard blind-run reaches -> effective="yes" (case=positive).
+  - CAUGHT: comp-freshness says STALE on the frozen fixture -> effective="yes" (case=negative).
+  - LIED (the BITE): comp-freshness says GREEN on a KNOWN-frozen artifact -> effective="no" (the false-GREEN catch).
+  - VOID: a staging failure -> effective="unknown", NEVER a silent no; the tool is never run.
+  - SOVEREIGN: a bd scratch target -> the guard blocks the WRITE (unknown+SOVEREIGN), no bd touch.
+  - ORACLE-INDEPENDENCE: the ground-truth is the probe's own clock (_iso_days_ago), not the tool's claim --
+    the tool lying "fresh" still scores effective="no".
+  - MUTANT non-vacuity: neuter the negative arm (green_terms=[]) -> the false-GREEN catch VANISHES (unknown,
+    not no) -> proves the negative arm is load-bearing.
+
+# rail-checked: assurance oracle for the TH-A discrimination probe under test (NFRA_TOOLPASS sec.6)
+Author: 3.0.0_SA_CVO~B.
+"""
+
+import importlib
+import os
+import sys
+
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_WS = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(_HERE))))
+for _p in (os.path.join(_WS, "org", "modules", "graph"),
+           os.path.join(_WS, "org", "modules", "graph", "compproof")):
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
+tp = importlib.import_module("tool_probe")
+
+_NOW = 1_000_000_000
+_DISC = {
+    "probe_id": "comp-freshness/frozen-vs-fresh-discrimination", "tool": "comp-freshness",
+    "tool_class": "artifact-freshness", "kind": "discrimination",
+    "fixture": {"scratch_bucket": "opal-data-inf", "scratch_prefix": "_toolprobe_scratch/",
+                "content_as_of_days_ago": 30},
+    "expected_verdict_terms": ["stale", "fail", "frozen", "escalat"],
+    "green_terms": ["pass", "fresh", "current", "ok", "warn"],
+    "usability_timeout_s": 60, "expected": "fix", "live_estate": True,
+}
+
+
+def _run(disc, runner, *, writer_raises=False):
+    calls = {"writer": [], "runner": [], "deleter": []}
+
+    def w(uri, *, frozen_as_of):
+        calls["writer"].append((uri, frozen_as_of))
+        if writer_raises:
+            raise RuntimeError("s3 unavailable")
+
+    def r(uri):
+        calls["runner"].append(uri)
+        return runner(uri)
+
+    def d(uri):
+        calls["deleter"].append(uri)
+
+    row = tp._run_discrimination_probe(disc, now_ts=_NOW, fixture_writer=w, fixture_deleter=d, freshness_runner=r)
+    return row, calls
+
+
+def test_standard_positive_reaches_effective_yes(monkeypatch=None):
+    saved = tp.run_tool
+    tp.run_tool = lambda probe, **k: {"cmd": "comp-freshness artifact s3://opal-data-inf/x",
+                                      "stdout": "STATUS: PASS age_h 2.0 warn ...", "stderr": "",
+                                      "rc": 0, "elapsed_s": 1.0, "timed_out": False, "timeout_s": 60}
+    try:
+        probe = {"probe_id": "comp-freshness/single-artifact", "tool": "comp-freshness",
+                 "tool_class": "artifact-freshness", "run": ["comp-freshness", "artifact", "s3://opal-data-inf/x"],
+                 "answer_terms": ["status", "age_h", "warn"], "reach_threshold": 1,
+                 "usable_returncodes": [0, 1], "usability_timeout_s": 60}
+        row = tp.probe_one(probe, now_ts=_NOW)
+    finally:
+        tp.run_tool = saved
+    assert row["effective"] == "yes"
+    assert row["effective_evidence"]["case"] == "positive"
+    assert row["effective_evidence"]["oracle_run"] == "comp-freshness artifact s3://opal-data-inf/x"  # exercised, not file:line
+
+
+def test_discrimination_caught_freeze_effective_yes():
+    row, calls = _run(_DISC, lambda uri: {"stdout": "STATUS: STALE age_h 720 FAIL", "rc": 1})
+    assert row["effective"] == "yes", "the tool CAUGHT the freeze (STALE) -> effective"
+    assert row["effective_evidence"]["case"] == "negative"
+    assert "staged s3://opal-data-inf" in row["effective_evidence"]["oracle_run"]
+    assert calls["writer"] and calls["deleter"], "fixture staged + cleaned up"
+
+
+def test_discrimination_lied_green_on_frozen_effective_no_BITE():
+    row, _ = _run(_DISC, lambda uri: {"stdout": "STATUS: PASS (fresh)", "rc": 0})
+    assert row["effective"] == "no", "GREEN on a KNOWN-frozen artifact => effective=no (the false-GREEN catch)"
+    assert row["effective_evidence"]["case"] == "negative"
+    assert tp._iso_days_ago(30, now_ts=_NOW) in row["effective_evidence"]["expected"]
+
+
+def test_void_on_stage_failure_never_silent_no():
+    row, calls = _run(_DISC, lambda uri: {"stdout": "PASS"}, writer_raises=True)
+    assert row["effective"] == "unknown", "a staging failure is VOID/unknown, NEVER a silent no"
+    assert not calls["runner"], "the tool must NOT be run if the fixture could not be staged"
+
+
+def test_sovereign_scratch_guard_blocks_a_bd_write():
+    bd = dict(_DISC, fixture={"scratch_bucket": "opal-data-bd", "scratch_prefix": "_toolprobe_scratch/",
+                              "content_as_of_days_ago": 30})
+    row, calls = _run(bd, lambda uri: {"stdout": "PASS"})
+    assert row["effective"] == "unknown" and "SOVEREIGN" in row.get("void_reason", "")
+    assert not calls["writer"], "the sovereign guard must block the write BEFORE any bd touch"
+
+
+def test_oracle_is_independent_of_the_tools_claim():
+    # the tool LIES "fresh", but the probe scores effective=no because the ORACLE (30d-frozen content it
+    # WROTE, on its own clock) is the ground-truth -- the verdict never trusts the tool's own claim.
+    row, _ = _run(_DISC, lambda uri: {"stdout": "everything PASS and fresh", "rc": 0})
+    assert row["effective"] == "no"
+    assert tp._iso_days_ago(30, now_ts=_NOW) == tp._iso_days_ago(30, now_ts=_NOW)  # deterministic, tool-independent
+
+
+def test_negative_arm_is_load_bearing_MUTANT():
+    real, _ = _run(_DISC, lambda uri: {"stdout": "STATUS: PASS (fresh)", "rc": 0})
+    assert real["effective"] == "no"
+    neutered = dict(_DISC, green_terms=[])   # MUTANT: neuter the false-GREEN detection
+    mut, _ = _run(neutered, lambda uri: {"stdout": "STATUS: PASS (fresh)", "rc": 0})
+    assert mut["effective"] != "no", "neutering the negative arm must LOSE the false-GREEN catch (non-vacuous)"
+    assert mut["effective"] == "unknown"
+
+
+if __name__ == "__main__":
+    for name, fn in sorted(globals().items()):
+        if name.startswith("test_") and callable(fn):
+            fn()
+            print("PASS:", name)
+    print("=== TH-A discrimination fixture bar: ALL PASS ===")

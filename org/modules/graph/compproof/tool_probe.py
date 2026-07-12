@@ -51,6 +51,11 @@ if _HERE not in sys.path:
 import harness         # noqa: E402  -- reuse score_run (REACH x USABILITY rubric) + AUTHOR_ID un-forked
 import tool_corpus     # noqa: E402
 
+_GRAPH = os.path.dirname(_HERE)                       # compproof -> graph (home of sovereign_held)
+if _GRAPH not in sys.path:
+    sys.path.insert(0, _GRAPH)
+from sovereign_held import is_held_path, is_held_bucket  # noqa: E402 -- scratch-target sovereign guard
+
 _WS = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(_HERE))))  # compproof->graph->modules->org->ws
 
 AUTHOR_ID = harness.AUTHOR_ID                         # the probe AUTHOR (seals the corpus)
@@ -214,6 +219,8 @@ def probe_one(probe: dict, *, now_ts: float | None = None) -> dict:
     """Run one per-tool probe end-to-end: isolation gate -> (if not void) run the tool live -> score
     REACH x USABILITY -> EFFECTIVE. Returns the emit row {tool, class, reach, usability, effective,
     probe_ts, isolation_ok, ...}. A VOID isolation gate -> effective=unknown (measured nothing)."""
+    if probe.get("kind") == "discrimination":
+        return _run_discrimination_probe(probe, now_ts=now_ts)
     ts = int(now_ts if now_ts is not None else time.time())
     solver_id = "tool:%s" % probe["tool"]
     gate = isolation_gate(probe, solver_id=solver_id)
@@ -221,7 +228,8 @@ def probe_one(probe: dict, *, now_ts: float | None = None) -> dict:
            "probe_ts": ts, "isolation_ok": not gate["void"]}
     if gate["void"]:
         row.update({"reach": None, "usability": None, "effective": "unknown",
-                    "void_reason": "isolation: " + "; ".join(gate["reasons"])})
+                    "void_reason": "isolation: " + "; ".join(gate["reasons"]),
+                    "effective_evidence": {"case": "positive", "oracle_run": "VOID: isolation broken"}})
         return row
     run = run_tool(probe)
     reach = score_reach(run["stdout"], probe)
@@ -229,13 +237,142 @@ def probe_one(probe: dict, *, now_ts: float | None = None) -> dict:
     effective = effective_from_axes(reach["reach"], usability)
     row.update({"reach": reach["reach"], "usability": usability, "effective": effective,
                 "reach_hits": reach["hits"], "elapsed_s": run["elapsed_s"], "rc": run["rc"],
-                "timed_out": run["timed_out"], "cmd": run["cmd"]})
+                "timed_out": run["timed_out"], "cmd": run["cmd"],
+                "effective_evidence": {
+                    "case": "positive",
+                    "observed": {"reach": reach["reach"], "usability": usability, "hits": reach["hits"]},
+                    "expected": probe.get("answer_terms", []),
+                    # oracle_run = the EXERCISED run (argv + its scored output), NEVER a source file:line.
+                    "oracle_run": run["cmd"],
+                }})
     return row
 
 
 def probe_all(probes: list | None = None, *, now_ts: float | None = None) -> list:
     """Run every probe -> a list of emit rows."""
     return [probe_one(p, now_ts=now_ts) for p in (probes if probes is not None else tool_corpus.probes())]
+
+
+# ---- (B) the frozen-vs-fresh DISCRIMINATION probe: the un-gameable NEGATIVE case -------------
+# NFRA_TOOLHEALTH.TH-A (A)+(B), CVO~B 2026-07-12, CTO-gated. A REACH x USABILITY probe is a SOFT exit-0
+# proxy for a PLAUSIBLE-BUT-WRONG answer, so it cannot catch comp-freshness saying FRESH on a frozen-content
+# / fresh-mtime artifact (the anti-correlated false-GREEN). This stages that EXACT lie against a CONTROLLED
+# fixture whose frozen content-date the PROBE writes (the ORACLE, grounded OTHER than comp-freshness, which
+# reads mtime), and scores effective by whether the tool CAUGHT the freeze (STALE => yes) or LIED (GREEN =>
+# no). unknown/VOID on any staging failure -- never a silent no. Sovereign-safe scratch target (in-scope
+# only, asserted); GUARANTEED cleanup (finally-delete). Writer/deleter/runner injectable for the fixture bar.
+
+def _iso_days_ago(days: int, *, now_ts: float | None = None) -> str:
+    """A UTC ISO date `days` in the past -- the FROZEN content data_as_of the fixture carries (the oracle)."""
+    t = (now_ts if now_ts is not None else time.time()) - days * 86400
+    return time.strftime("%Y-%m-%d", time.gmtime(t))
+
+
+def _assert_scratch_in_scope(s3_uri: str) -> None:
+    """The scratch write-target MUST be in-scope (never bd/schwab) -- by construction, not vigilance."""
+    if is_held_path(s3_uri) or is_held_bucket(s3_uri):
+        raise ValueError("SOVEREIGN: scratch target is a held bd/schwab path: %s" % s3_uri)
+
+
+def _default_fixture_writer(s3_uri: str, *, frozen_as_of: str) -> None:
+    """Write a synthetic artifact with a FROZEN content data_as_of + a FRESH mtime (write=now) to s3_uri.
+    The JSON body carrying data_as_of=<frozen> is what an HONEST freshness tool must read to say STALE."""
+    body = json.dumps({"data_as_of": frozen_as_of, "_probe_fixture": True,
+                       "_note": "synthetic frozen-content/fresh-mtime fixture for the TH-A discrimination probe"})
+    subprocess.run(["aws", "s3", "cp", "-", s3_uri, "--content-type", "application/json"],
+                   input=body, text=True, capture_output=True, timeout=60, check=True)
+
+
+def _default_fixture_deleter(s3_uri: str) -> None:
+    subprocess.run(["aws", "s3", "rm", s3_uri], capture_output=True, text=True, timeout=60)
+
+
+def _default_freshness_runner(s3_uri: str) -> dict:
+    """Exercise comp-freshness on the staged fixture (the same run_tool machinery)."""
+    return run_tool({"run": ["comp-freshness", "artifact", s3_uri], "usability_timeout_s": 60})
+
+
+def _run_discrimination_probe(probe: dict, *, now_ts=None,
+                              fixture_writer=None, fixture_deleter=None, freshness_runner=None) -> dict:
+    ts = int(now_ts if now_ts is not None else time.time())
+    fx = probe["fixture"]
+    key = "%s%s/frozen_%d.json" % (fx["scratch_prefix"], probe["tool"], ts)
+    s3_uri = "s3://%s/%s" % (fx["scratch_bucket"], key)
+    frozen_as_of = _iso_days_ago(int(fx["content_as_of_days_ago"]), now_ts=now_ts)  # ORACLE (independent of the tool)
+    # isolation trivially OK: the run argv is `comp-freshness artifact <uri>` -- no verdict/oracle hint; the
+    # tool must DERIVE staleness from the artifact content, it is NEVER told the answer.
+    row = {"probe_id": probe["probe_id"], "tool": probe["tool"], "class": probe["tool_class"],
+           "probe_ts": ts, "isolation_ok": True}
+    try:
+        _assert_scratch_in_scope(s3_uri)
+    except ValueError as e:
+        row.update({"reach": None, "usability": None, "effective": "unknown", "void_reason": str(e),
+                    "effective_evidence": {"case": "negative", "oracle_run": "VOID: %s" % e}})
+        return row
+    writer = fixture_writer or _default_fixture_writer
+    deleter = fixture_deleter or _default_fixture_deleter
+    runner = freshness_runner or _default_freshness_runner
+    try:
+        writer(s3_uri, frozen_as_of=frozen_as_of)
+    except Exception as e:  # noqa: BLE001 -- a staging failure is UNKNOWN, never a silent no
+        row.update({"reach": None, "usability": None, "effective": "unknown",
+                    "void_reason": "fixture-stage-failed: %r" % e,
+                    "effective_evidence": {"case": "negative", "oracle_run": "VOID: could not stage fixture"}})
+        return row
+    try:
+        run = runner(s3_uri)
+        text = ((run.get("stdout") or "") + " " + (run.get("stderr") or "")).lower()
+        caught = any(t in text for t in probe["expected_verdict_terms"])            # STALE/FAIL/FROZEN
+        said_green = (not caught) and any(t in text for t in probe["green_terms"])  # plausible-fresh on a frozen artifact
+        if run.get("timed_out") or (not caught and not said_green):
+            eff, reach_v, usab_v = "unknown", None, ("too-slow" if run.get("timed_out") else "fell-back")
+        elif caught:
+            eff, reach_v, usab_v = "yes", "yes", "usable"        # the tool CAUGHT the freeze -> effective
+        else:
+            eff, reach_v, usab_v = "no", "no", "usable"          # exit-0-while-lying: GREEN on a KNOWN-frozen artifact
+        row.update({
+            "reach": reach_v, "usability": usab_v, "effective": eff, "rc": run.get("rc"),
+            "timed_out": run.get("timed_out"), "elapsed_s": run.get("elapsed_s"),
+            "effective_evidence": {
+                "case": "negative",
+                "observed": text.strip()[:200],
+                "expected": "STALE (content data_as_of %s = frozen ~%dd)"
+                            % (frozen_as_of, int(fx["content_as_of_days_ago"])),
+                # oracle_run = an EXERCISED observation (staged a known-frozen artifact, ran the tool on it);
+                # the ground-truth is the content date the PROBE wrote, independent of comp-freshness (mtime).
+                "oracle_run": "staged %s with content data_as_of=%s (frozen), then ran comp-freshness on it"
+                              % (s3_uri, frozen_as_of),
+            },
+        })
+    finally:
+        try:
+            deleter(s3_uri)
+        except Exception:  # noqa: BLE001 -- a failed delete is swept at load (_sweep_stale_scratch), never accumulates
+            pass
+    return row
+
+
+def _sweep_stale_scratch(bucket: str, prefix: str, *, older_than_h: float = 6.0) -> int:
+    """Belt for a failed finally-delete: at load, list the in-scope scratch prefix + delete fixtures older
+    than older_than_h so a leaked fixture never accumulates. In-scope-asserted. Returns count deleted."""
+    root = "s3://%s/%s" % (bucket, prefix)
+    if is_held_path(root) or is_held_bucket(root):   # never sweep a held bucket
+        return 0
+    try:
+        ls = subprocess.run(["aws", "s3", "ls", "--recursive", root], capture_output=True, text=True, timeout=60)
+    except Exception:  # noqa: BLE001
+        return 0
+    deleted = 0
+    for line in (ls.stdout or "").splitlines():
+        parts = line.split()
+        if len(parts) < 4 or "frozen_" not in parts[-1]:
+            continue
+        m = re.search(r"frozen_(\d+)\.json$", parts[-1])
+        if m and (time.time() - int(m.group(1))) > older_than_h * 3600:
+            subprocess.run(["aws", "s3", "rm", "s3://%s/%s" % (bucket, parts[-1])],
+                           capture_output=True, text=True, timeout=60)
+            deleted += 1
+    return deleted
 
 
 # ---- per-tool rollup + emit (append-only stream + the TH-B feed) ----------------------------
@@ -257,8 +394,11 @@ def rollup_by_tool(rows: list) -> dict:
         else:
             eff = "yes"
         feed[tool] = {
-            "effective": (eff == "yes") if eff in ("yes", "no") else None,
-            "effective_label": eff,
+            # TRISTATE (CVO-base 2-way contract, CTO-ruled): "yes"|"no"|"unknown" -- the wire maps
+            # yes->True / no->False / unknown->None(pending). unknown=VOID is EXPLICIT (fail-closed): a "no"
+            # MUST mean measured-not-effective, NEVER couldn't-measure (the CANNOT-EVALUATE vs FAIL law).
+            "effective": eff,
+            "effective_label": eff,   # (== effective; retained for back-compat consumers)
             "reach": [r.get("reach") for r in rs],
             "usability": [r.get("usability") for r in rs],
             "classes": sorted({r["class"] for r in rs}),
@@ -266,6 +406,11 @@ def rollup_by_tool(rows: list) -> dict:
             "isolation_ok": all(r["isolation_ok"] for r in rs),
             "probe_ts": max(r["probe_ts"] for r in rs),
             "fix_probes": [r["probe_id"] for r in rs if r["effective"] == "no"],
+            # per-probe honesty evidence (the gate inspects it): case positive|negative + the EXERCISED
+            # oracle_run (a run, never a source file:line). This is the shared honesty law's audit surface.
+            "effective_evidence": [
+                dict({"probe_id": r["probe_id"]}, **(r.get("effective_evidence") or {})) for r in rs
+            ],
         }
     return feed
 
@@ -340,6 +485,14 @@ def ensure_fresh(*, ceiling_days: float = DEFAULT_CEILING_DAYS, force: bool = Fa
         result["reason"] = "fresh: last probe %.2fd old <= %.1fd ceiling -- reused (no run)" % (age, ceiling_days)
         return result
     corpus = corpus if corpus is not None else tool_corpus.probes()
+    # CTO condition (c): sweep leaked scratch fixtures at load, so a failed finally-delete never accumulates.
+    for p in corpus:
+        fx = p.get("fixture")
+        if fx:
+            try:
+                _sweep_stale_scratch(fx["scratch_bucket"], fx["scratch_prefix"])
+            except Exception:  # noqa: BLE001 -- a best-effort sweep never blocks the probe run
+                pass
     rows = probe_all(corpus, now_ts=now_ts)
     emit_probe_log(rows, probe_log)
     emit_effective_feed(rows, feed_path)
@@ -387,8 +540,12 @@ def _selftest() -> int:
             {"tool": "t", "class": "c", "effective": "no", "isolation_ok": True, "probe_ts": 2,
              "reach": "no", "usability": "usable", "probe_id": "t/2"}]
     rolled = rollup_by_tool(mock)
-    assert rolled["t"]["effective"] is False and rolled["t"]["fix_probes"] == ["t/2"], \
+    # effective is now the TRISTATE string (2-way contract): "no" (not the old bool False). unknown=VOID.
+    assert rolled["t"]["effective"] == "no" and rolled["t"]["fix_probes"] == ["t/2"], \
         "any in-class functional miss -> tool EFFECTIVE=no (FIX): %s" % rolled["t"]
+    assert rollup_by_tool([{"tool": "u", "class": "c", "effective": "unknown", "isolation_ok": False,
+                            "probe_ts": 1, "reach": None, "usability": None, "probe_id": "u/1"}]
+                          )["u"]["effective"] == "unknown", "all-VOID -> unknown, NEVER a silent no/False"
     # AC: the consumption-driven staleness gate (CTO GO) -- pure decision, no live run.
     assert _is_stale(None, 7, False) is True, "no feed -> stale (must run)"
     assert _is_stale(8.0, 7, False) is True, "older than ceiling -> stale"

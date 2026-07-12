@@ -28,6 +28,15 @@ Author: 0.8.0_AE_CloudComp~D (NFRA_TOOLHEALTH.TH-A, COO~B GO 2026-07-02). Reuses
 
 from __future__ import annotations
 
+import os
+import sys
+
+# sovereign_held lives one dir up (compproof -> graph); reach it for the by-construction sovereign assert.
+_GRAPH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _GRAPH not in sys.path:
+    sys.path.insert(0, _GRAPH)
+from sovereign_held import is_held_path, is_held_bucket  # noqa: E402
+
 
 # The probe corpus. Kept SMALL + representative (per-tool, per-class) -- this is a RECURRING probe, not
 # an exhaustive test suite; each entry is one class-representative question the tool claims to answer.
@@ -66,12 +75,14 @@ TOOL_PROBES = [
         "probe_id": "comp-freshness/single-artifact",
         "tool": "comp-freshness",
         "tool_class": "artifact-freshness",
-        # CONTROL (expected effective): does comp-freshness reach a usable freshness verdict for a TARGETED
-        # single artifact? REACH=yes if the output carries a per-artifact STATUS + age verdict. rc 0 (PASS)
-        # and 1 (a FAIL verdict found) are BOTH usable answers (usable_returncodes); only rc 2 (config/AWS
-        # error) is a fall-back. This shows comp-freshness IS effective for the targeted-freshness question.
+        # POSITIVE control (expected effective): does comp-freshness reach a usable freshness verdict for a
+        # TARGETED single artifact? REACH=yes if the output carries a per-artifact STATUS + age verdict. rc 0
+        # (PASS) and 1 (a FAIL verdict) are BOTH usable answers; only rc 2 (config/AWS error) is a fall-back.
+        # RE-POINTED off opal-data-bd -> IN-SCOPE opal-data-inf (sovereign hold 2026-07-09; the corpus is
+        # sovereign-safe BY CONSTRUCTION -- _assert_sovereign_safe below). inf_orion_api_performance is an
+        # inf-configured served prefix (data/inf/.../gold_freshness_config.yaml).
         "question": "Report the freshness STATUS of a single named served artifact.",
-        "run": ["comp-freshness", "artifact", "s3://opal-data-bd/silver/prices/canonical_prices.parquet"],
+        "run": ["comp-freshness", "artifact", "s3://opal-data-inf/silver/api_dims/performance/"],
         "answer_terms": ["status", "age_h", "fail_at_h", "warn"],
         "answer_substr": "",
         "reach_threshold": 1,
@@ -81,41 +92,65 @@ TOOL_PROBES = [
         "live_estate": True,
     },
     {
-        "probe_id": "comp-freshness/full-chain-under-load",
+        "probe_id": "comp-freshness/frozen-vs-fresh-discrimination",
         "tool": "comp-freshness",
         "tool_class": "artifact-freshness",
-        # THE FIX-CATCH (grounded LIVE, Rule 22 -- NOT manufactured, and ROBUST not marginal). The whole-BD-
-        # chain freshness scan is a real, heavily-reached-for in-class question. MEASURED TRUE latency
-        # 2026-07-06, TWO independent uncapped runs: 190s ending rc=2 EMPTY (author) and 144s rc=1 WITH a
-        # freshness table (CVO TH-V independent) -- both ~5-6x past any interactive SLA. So the ROBUST
-        # determinant is TOO-SLOW ALONE (144-190s >> the 30s cap => load-deterministic); the rc-fallback is
-        # an INTERMITTENT 2nd failure mode (rc varies 1<->2 run-to-run), NOT a reliable co-determinant.
-        # usability_timeout_s=30 is a principled "usable in-the-moment" SLA (an interactive agent needing a
-        # freshness answer will not wait 30s+) sitting ~5-6x BELOW the measured latency -- robust margin,
-        # NOT a 0.3%-over-cap datapoint (resolves CVO TH-V F-1 2026-07-06: the old 90s cap sat right at the
-        # tool's ~90s+ apparent latency, making KEEP-vs-FIX load-non-deterministic). The 30s cap also cuts
-        # probe cost (killed at 30s, never waits the full runtime). NET FINDING for the FIX candidate:
-        # comp-freshness `chain bd` is UNRELIABLE for the whole-chain query -- sometimes slow-succeeds (144s
-        # rc1), sometimes slow-fails (190s rc2), ALWAYS well past interactive SLA -- a real fix TO
-        # (optimize/paginate OR repair the chain), the load-bearing catch this axis exists for.
-        # NOTE: the earlier MDPF-coverage-gap hypothesis was RETIRED -- `comp-freshness --list` was grounded
-        # LIVE 2026-07-02 and now carries 6 mdpf/aggregate_aua entries (added since 0.5.0's 06-25 FREEZE-DX
-        # noted none). Rule 22: the doc-era prior was stale; no coverage FIX exists there today.
-        "question": "Report the freshness of the entire BD gold chain in one pass (usable in-the-moment).",
-        "run": ["comp-freshness", "chain", "bd"],
-        "answer_terms": ["status", "pass", "fail", "stale"],
-        "answer_substr": "",
-        "reach_threshold": 1,
-        "usable_returncodes": [0, 1],
-        "usability_timeout_s": 30,
-        "expected": "fix",
+        "kind": "discrimination",
+        # THE HONESTY KEYSTONE (the un-gameable NEGATIVE case; replaces the bd latency FIX-catch with a
+        # false-GREEN catch -- a stronger, honester FIX-signal). A REACH x USABILITY probe is a SOFT exit-0
+        # proxy for a PLAUSIBLE-BUT-WRONG answer, so it CANNOT catch the paradigm lie: comp-freshness saying
+        # FRESH on a frozen-content / fresh-mtime artifact (its as_of/partition-key reader is ANTI-CORRELATED,
+        # test_freshness_partition_key_anticorrelated.py). This probe STAGES that exact lie: write a synthetic
+        # artifact with a FROZEN content date + a FRESH mtime to an IN-SCOPE scratch prefix, run comp-freshness
+        # on it, and score effective by whether the tool CAUGHT the freeze (STALE => yes) or LIED (GREEN =>
+        # no). The ORACLE = the content date the probe WROTE (grounded OTHER than comp-freshness, which reads
+        # mtime) -- the anti-Goodhart anchor. Guaranteed cleanup; sovereign-safe scratch target. CTO gate
+        # 2026-07-12: B1 per-run fixture (a committed fixture's mtime AGES; the per-run write IS the fresh mtime).
+        "question": "Does comp-freshness catch a KNOWN-FROZEN artifact (content 30d old) whose S3 mtime is fresh?",
+        "fixture": {
+            "scratch_bucket": "opal-data-inf",          # IN-SCOPE only (asserted); never bd/schwab
+            "scratch_prefix": "_toolprobe_scratch/",     # dedicated + namespaced; never a served/canonical key
+            "content_as_of_days_ago": 30,                # the FROZEN content date = the independent oracle ground-truth
+        },
+        "expected_verdict_terms": ["stale", "fail", "frozen", "escalat"],  # an HONEST tool says one of these
+        "green_terms": ["pass", "fresh", "current", "ok", "warn"],          # GREEN/plausible-fresh on the frozen = the lie
+        "usability_timeout_s": 60,
+        "expected": "fix",   # self-test label: PRE-fix the discrimination catches comp-freshness's false-GREEN
         "live_estate": True,
     },
 ]
 
 
+def _scratch_uri(p: dict) -> str | None:
+    """The scratch write-target a discrimination probe stages its fixture at (for the sovereign assert)."""
+    fx = p.get("fixture")
+    if not fx:
+        return None
+    return "s3://%s/%s" % (fx.get("scratch_bucket", ""), fx.get("scratch_prefix", ""))
+
+
+def assert_sovereign_safe(probe_list: list | None = None) -> None:
+    """SOVEREIGN-SAFE BY CONSTRUCTION (CTO 2026-07-12): NO probe may target a held bd/schwab path or bucket
+    -- not in its `run` argv, not in its discrimination fixture scratch target. A held target would make the
+    recurring probe read opal-data-bd on a re-run. This fails the corpus LOAD (never a silent bd read), and
+    is the same canonical sovereign_held predicate the whole estate uses. Vigilance-independent."""
+    offenders = []
+    for p in (probe_list if probe_list is not None else TOOL_PROBES):
+        for tok in list(p.get("run", [])):
+            s = str(tok)
+            if is_held_path(s) or is_held_bucket(s):
+                offenders.append("%s run: %s" % (p.get("probe_id"), s))
+        su = _scratch_uri(p)
+        if su and (is_held_path(su) or is_held_bucket(su)):
+            offenders.append("%s scratch: %s" % (p.get("probe_id"), su))
+    if offenders:
+        raise ValueError("SOVEREIGN VIOLATION -- probe corpus targets a held bd/schwab path (re-point to "
+                         "inf/cot/mdpf):\n  " + "\n  ".join(offenders))
+
+
 def probes() -> list:
-    """All probe dicts (the corpus)."""
+    """All probe dicts (the corpus). Sovereign-asserted on every access -- a held target fails the load."""
+    assert_sovereign_safe()
     return list(TOOL_PROBES)
 
 
@@ -127,5 +162,9 @@ def solver_visible_fields() -> tuple:
 
 def sealed_fields() -> tuple:
     """Judge-only fields -- NEVER folded into the tool-run payload (the sealed answer + the self-test
-    label). tool_probe.probe_payload proves these do not leak into what the tool sees."""
-    return ("answer_terms", "answer_substr", "reach_threshold", "expected")
+    label). tool_probe.probe_payload proves these do not leak into what the tool sees. For a discrimination
+    probe the tool run is `comp-freshness artifact <fixture s3 uri>` (built dynamically) -- so the judge
+    criteria (expected_verdict_terms / green_terms) are sealed by construction (never in the run argv); the
+    tool must DERIVE freshness from the artifact content, not be told the verdict."""
+    return ("answer_terms", "answer_substr", "reach_threshold", "expected",
+            "expected_verdict_terms", "green_terms")
