@@ -16325,3 +16325,22 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
 | 2026-07-12 | 3.0.0_SA_CVO~A | NFRA_PASSCRAFT.TO-R0/TO-2 | comp-passcraft --self-test (21) + source-neuter of the FP-R0 lint (non-vacuity) + pytest test_passcraft_anti_harness (22); safe-commit/commit-gate/owned-paths per commit | PASSCRAFT FP-R0: R0 RULED IN, rail eeaef157f, emitter fold §0-gate 32141b332, doc amend CTO-lane e5e7d13b9; caught CTO's two-rail-set conflation before minting; ToolAudit effective DECOUPLED (FP-R0 decided it); AC4 functional non-vacuity closes the name-based anti-harness gap | PASS + RULING |
 | 2026-07-12 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor-of-record-go-live-r... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/effective_f... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-aws | comp-aws describe s3 opal-data-inf-NONEXISTENT-GARBAGE-xyz | FAIL |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-aws | comp-aws | FAIL |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-aws | comp-aws classes | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-aws | comp-aws derive --class NONEXISTENT_GARBAGE_CLASS_xyz | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/inflection_re... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/effective_f... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-aws | comp-aws score --class NONEXISTENT_GARBAGE_xyz | FAIL |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-aws | comp-aws score --class sns | FAIL |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-aws | comp-aws score --class s3 | FAIL |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/sovereign_held.py --... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/sovereign_held.py --f... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/effective_f... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/sovereign_held.py | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-freshness / comp-iam(iam_cli) / comp-aws / aws-simulate-principal-policy | TH-A EFFECTIVE-probe sensor-tail: exercised comp-freshness as discrimination target (found+grounded partition-key defect b), grey-boxed comp-iam resource_verdict (Rule-22a resource-blindness FIXED) + comp-aws score rc-contract, simulate-principal-policy as the comp-iam oracle | PASS -- feed cf=no(a+b)/iam=yes/aws=yes, 31/31 hermetic |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
