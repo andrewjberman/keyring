@@ -558,6 +558,19 @@ def _render(h: dict, verdict_filter: str | None = None) -> str:
             L.append(f"  [drift finding] emitter whitelist DROPS {drop} ROUTE-POSTERIOR* rows from the "
                      f"catalog+scorer (advisory -> COMPLEARN owner; TH-B reads routing.jsonl directly)")
     L.append(f"verdict counts: {h['verdict_counts']}   ('?' = pending EFFECTIVE / TH-A)")
+    fr = h.get("feed_freshness")            # W4/AC5: feed age + vintage + N tools -- an old-but-within-ceiling feed is VISIBLE, never silently trusted
+    if fr is not None:
+        _age = fr.get("age_days")
+        _age_str = "no feed (EFFECTIVE pending)" if _age is None else f"{_age:.1f}d old"
+        if fr.get("refreshed"):
+            _vint = "auto-refreshed this run"
+        elif fr.get("failed"):
+            _vint = "refresh FAILED -- serving prior feed"
+        elif fr.get("stale"):
+            _vint = f"STALE (> {fr.get('ceiling_days')}d ceiling), NOT refreshed"
+        else:
+            _vint = f"fresh (<= {fr.get('ceiling_days')}d ceiling)"
+        L.append(f"EFFECTIVE feed: {_age_str} -- {_vint}; {len(h['tools'])} tools scored   (AC5)")
     L.append("")
     hdr = f"{'VERDICT':<9} {'TOOL':<22} {'USED':>6} {'ROLES':>5} {'OUTCOME':>8} {'RAIL':<12} {'EFFECTIVE':<13} NOTE"
     L.append(hdr)
@@ -718,6 +731,61 @@ def _goodhart_audit() -> dict:
     }
 
 
+# --------------------------------------------------------------------------------------------
+# Consumption-driven freshness wire (NFRA_LIVELEARN CYCLE A / G1 -- CTO~D GO 2026-07-12, W1-W6).
+# The consumer (this governance/review read) ensures the EFFECTIVE feed is fresh BEFORE reading it:
+# reuse if <= 7d (W2), else auto-refresh with a VISIBLE pre-run banner (W3) -- staleness is NEVER
+# silent on any path. Refresh failure is LOUD, serving the existing feed (W5). The auto-refresh
+# routes through tool_probe.ensure_fresh(corpus=None) so tool_corpus.probes() builds the corpus and
+# assert_sovereign_safe VOIDs any held bd/schwab target (W6). tool_probe is LAZY-imported so the
+# refresh machinery costs nothing on the common (fresh / explicit-feed / self-test) paths.
+# --------------------------------------------------------------------------------------------
+def _ensure_feed_fresh(refresh: bool, no_refresh: bool, *, feed_path: str | None = None,
+                       ceiling_days: float | None = None, now_ts=None,
+                       _ensure=None, _age=None) -> dict:
+    """W2/W3/W5/W6 at the consume point. Returns a report {age_days, ceiling_days, stale, ran,
+    refreshed, failed, banner}. `_ensure`/`_age` are injectable so the wire is provable HERMETICALLY
+    (no live full-corpus estate probe during dev/test -- AC1 is a WIRE property, CTO~D confirmed)."""
+    from org.modules.graph.compproof import tool_probe as tp  # lazy: off the common path
+    ensure = _ensure or tp.ensure_fresh
+    age_fn = _age or tp.feed_age_days
+    feed_path = feed_path or tp.EFFECTIVE_FEED
+    ceiling_days = tp.DEFAULT_CEILING_DAYS if ceiling_days is None else ceiling_days
+
+    age = age_fn(feed_path, now_ts=now_ts)
+    age_str = "no prior feed" if age is None else "%.1fd old" % age
+    stale = tp._is_stale(age, ceiling_days, refresh)      # --refresh forces the stale (run) path
+    rep = {"age_days": age, "ceiling_days": ceiling_days, "stale": stale,
+           "ran": False, "refreshed": False, "failed": False, "banner": None}
+    if not stale:
+        return rep                                        # W2 fresh: reuse, no run (the W4 age banner is in _render)
+    if no_refresh:                                        # W3 --no-refresh on a stale feed: LOUD, never silent, no run
+        rep["banner"] = ("WARN: EFFECTIVE feed %s > %.0fd ceiling and --no-refresh -- serving STALE feed; "
+                         "verdicts may be outdated (rerun without --no-refresh to auto-refresh)." %
+                         (age_str, ceiling_days))
+        print(rep["banner"])
+        return rep
+    forced_within = refresh and age is not None and age <= ceiling_days
+    rep["banner"] = (("--refresh: forcing a fresh EFFECTIVE probe (feed %s, within ceiling) -- full corpus, "
+                      "live inf scratch, may take a moment..." % age_str) if forced_within else
+                     ("EFFECTIVE feed %s > %.0fd ceiling -- running fresh probe (full corpus, live inf "
+                      "scratch), may take a moment..." % (age_str, ceiling_days)))
+    print(rep["banner"])                                  # W3 VISIBLE banner BEFORE the run
+    try:
+        res = ensure(ceiling_days=ceiling_days, force=True, feed_path=feed_path,
+                     corpus=None, now_ts=now_ts)          # W6 corpus=None -> probes() LOAD-assert (sovereign)
+        rep["ran"] = bool(res.get("ran"))
+        rep["refreshed"] = True
+        print("EFFECTIVE feed refreshed (%s)." % res.get("reason", "ran"))
+    except Exception as e:                                # W5 refresh failure: LOUD, serve existing, never silent-fresh
+        rep["failed"] = True
+        rep["banner"] = ("ERROR: EFFECTIVE feed REFRESH FAILED (%s) -- serving existing feed %s; verdicts "
+                         "may be outdated. A missing feed stays EFFECTIVE-pending (never a silent False)." %
+                         (e, age_str))
+        print(rep["banner"])
+    return rep
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="comp-tool-health -- NFRA_TOOLHEALTH TH-B fused per-tool health query")
     ap.add_argument("--verdict", choices=["KEEP", "FIX", "PROMOTE", "RETIRE"], help="filter to one verdict")
@@ -727,6 +795,10 @@ def main() -> int:
     ap.add_argument("--self-test", action="store_true", help="taxonomy + value-honesty + EFFECTIVE-flip self-test")
     ap.add_argument("--effective-feed", metavar="JSON",
                     help="TH-A EFFECTIVE probe stream (JSON {tool: bool}); present => full 4-verdict (Phase-B)")
+    ap.add_argument("--refresh", "--force", dest="refresh", action="store_true",
+                    help="consumption-driven: force a fresh EFFECTIVE probe even within the 7d ceiling")
+    ap.add_argument("--no-refresh", dest="no_refresh", action="store_true",
+                    help="never run a probe; read the existing feed + a LOUD staleness banner if stale")
     args = ap.parse_args()
 
     if args.self_test:
@@ -754,9 +826,16 @@ def main() -> int:
     # (compproof/effective_feed.json). --effective-feed overrides; an ABSENT probe feed fail-safes to the
     # 2-axis skeleton (EFFECTIVE pending) -- never a crash. Was: None-unless-flag (the stubbed-None state
     # where a exit-0-while-lying tool scored KEEP). The flip to FIX now rides the exercised effective.
+    # W1: consumption-driven freshness at the consume point -- ONLY on the DEFAULT-feed branch. An
+    # explicit --effective-feed <path> is a deliberate caller choice and is NEVER auto-refreshed.
+    refresh_rep = None
+    if not args.effective_feed:
+        refresh_rep = _ensure_feed_fresh(args.refresh, args.no_refresh)
     _feed_path = args.effective_feed or (DEFAULT_EFFECTIVE_FEED if os.path.exists(DEFAULT_EFFECTIVE_FEED) else None)
     feed = load_effective_feed(_feed_path) if _feed_path else None
     h = health(effective_feed=feed)
+    if refresh_rep is not None:
+        h["feed_freshness"] = refresh_rep    # W4: _render surfaces feed age/vintage (never silently trusted)
     if args.tool:
         print(_render_tool(h, _canonical_tool(args.tool) or args.tool))
     elif args.json:
