@@ -223,6 +223,8 @@ def probe_one(probe: dict, *, now_ts: float | None = None) -> dict:
         return _run_discrimination_probe(probe, now_ts=now_ts)
     if probe.get("kind") == "pk-discrimination":
         return _run_pk_discrimination_probe(probe, now_ts=now_ts)
+    if probe.get("kind") == "iam-discrimination":
+        return _run_iam_discrimination_probe(probe, now_ts=now_ts)
     ts = int(now_ts if now_ts is not None else time.time())
     solver_id = "tool:%s" % probe["tool"]
     gate = isolation_gate(probe, solver_id=solver_id)
@@ -473,6 +475,129 @@ def _run_pk_discrimination_probe(probe: dict, *, now_ts=None,
             "oracle_run": "overwrote %s (date-key %s, fresh mtime), ran comp-freshness _check_artifact "
                           "(partition-key mode); oracle date-key=%s independent of the tool (reads mtime)"
                           % (obj_uri, date_key, date_key),
+        },
+    })
+    return row
+
+
+# ---- (B3) the comp-iam RESOURCE-DISCRIMINATION probe: a SECURITY-oracle regression guard (CTO 2026-07-12) --
+# comp-iam is a GRANT ORACLE. Its Rule-22a resource-blindness (GRANTED on a bucket the role never held) is
+# FIXED (resource_verdict compares the ARN; CVO P1/P1a). So this scores effective="yes" TODAY and stands as
+# a REGRESSION GUARD -- a resource-awareness regression is a SILENT FALSE-GRANT (the worst class). It checks
+# comp-iam DISCRIMINATES a HELD resource (-> GRANTED) from a NOT-HELD one (-> UNGRANTED-RESOURCE), grounded
+# by the simulate-principal-policy ORACLE (live-APPLIED, independent of comp-iam's TF-DESIRED model) WITH a
+# POSITIVE CONTROL on the held resource (Rule 22a: else a 403/typo reads as implicitDeny and proves nothing).
+# READ-only (IAM TF-parse + simulate); NO S3 write; in-scope ARNs only (asserted).
+
+_V_GRANTED = "GRANTED"
+_V_GRANTED_BROAD = "GRANTED-BROAD"
+_V_UNGRANTED_RESOURCE = "GRANTED-ACTION / UNGRANTED-RESOURCE"
+_V_UNGRANTED = "UNGRANTED"
+_GRANTED_LIKE = (_V_GRANTED, _V_GRANTED_BROAD)
+_UNGRANTED_LIKE = (_V_UNGRANTED_RESOURCE, _V_UNGRANTED)
+_DENY_DECISIONS = ("implicitdeny", "explicitdeny")
+
+_IAM_ROLES_CACHE = {"roles": None}
+
+
+def _default_iam_verdict(role_name: str, action: str, resource: str) -> str:
+    """Grey-box comp-iam: build the TF role model (iam_cli._build, cached) and return the role's
+    resource_verdict string for (action, resource). Exercises the REAL resource_verdict seam."""
+    import contextlib
+    import io
+    if _IAM_ROLES_CACHE["roles"] is None:
+        if _GRAPH not in sys.path:
+            sys.path.insert(0, _GRAPH)
+        import iam_cli  # noqa: E402 -- the tool under test
+        with contextlib.redirect_stdout(io.StringIO()):   # _build prints module-namespacing NOTEs
+            _profiles, roles, _ = iam_cli._build()
+        _IAM_ROLES_CACHE["roles"] = roles
+    roles = _IAM_ROLES_CACHE["roles"]
+    role = roles.get(role_name)
+    if role is None:
+        raise KeyError("role %r not in the TF model" % role_name)
+    return role.resource_verdict(action, resource, True)[0]
+
+
+def _default_iam_oracle(role_arn: str, action: str, resource: str) -> str:
+    """The ORACLE: aws iam simulate-principal-policy -> the LIVE-APPLIED IAM decision (allowed / implicitDeny
+    / explicitDeny), grounded OTHER than comp-iam's TF model. Lowercased. Raises on a non-zero aws rc."""
+    r = subprocess.run([_aws_bin(), "iam", "simulate-principal-policy",
+                        "--policy-source-arn", role_arn, "--action-names", action,
+                        "--resource-arns", resource,
+                        "--query", "EvaluationResults[0].EvalDecision", "--output", "text"],
+                       capture_output=True, text=True, timeout=60)
+    if r.returncode != 0:
+        raise RuntimeError("simulate-principal-policy rc=%d: %s" % (r.returncode, (r.stderr or "")[:200]))
+    return (r.stdout or "").strip().lower()
+
+
+def _run_iam_discrimination_probe(probe: dict, *, now_ts=None,
+                                  verdict_fn=None, oracle_fn=None) -> dict:
+    ts = int(now_ts if now_ts is not None else time.time())
+    fx = probe["fixture"]
+    row = {"probe_id": probe["probe_id"], "tool": probe["tool"], "class": probe["tool_class"],
+           "probe_ts": ts, "isolation_ok": True}
+
+    def _void(reason):
+        row.update({"reach": None, "usability": None, "effective": "unknown", "void_reason": reason,
+                    "effective_evidence": {"case": "negative", "oracle_run": "VOID: %s" % reason}})
+        return row
+
+    # SOVEREIGN: no ARN may be bd/schwab (in-scope: inf held, cot not-held). is_held_bucket strips s3://
+    # but NOT arn:aws:s3:::, so normalize an S3 ARN to bucket/key form before the check (else a bd ARN slips).
+    for fld in ("role_arn", "held_resource", "notheld_resource"):
+        s = str(fx.get(fld, ""))
+        bucketish = s.split(":::", 1)[1] if ":::" in s else s   # arn:aws:s3:::BUCKET/KEY -> BUCKET/KEY
+        if is_held_path(s) or is_held_bucket(bucketish) or is_held_path(bucketish):
+            return _void("SOVEREIGN: %s is a held bd/schwab arn: %s" % (fld, s))
+
+    verdict = verdict_fn or _default_iam_verdict
+    oracle = oracle_fn or _default_iam_oracle
+    try:
+        comp_held = verdict(fx["role_name"], fx["action"], fx["held_resource"])
+        comp_notheld = verdict(fx["role_name"], fx["action"], fx["notheld_resource"])
+    except Exception as e:  # noqa: BLE001 -- a model-build failure is UNKNOWN, never a silent verdict
+        return _void("comp-iam verdict failed: %r" % e)
+    try:
+        orc_held = oracle(fx["role_arn"], fx["action"], fx["held_resource"])
+        orc_notheld = oracle(fx["role_arn"], fx["action"], fx["notheld_resource"])
+    except Exception as e:  # noqa: BLE001 -- an oracle failure is UNKNOWN, never a silent verdict
+        return _void("oracle (simulate-principal-policy) failed: %r" % e)
+
+    # POSITIVE CONTROL (Rule 22a): the oracle MUST allow the held resource -- else the role/action/arn is
+    # wrong and the negative (implicitDeny) proves nothing. And the not-held must actually be denied live.
+    if orc_held != "allowed":
+        return _void("positive control FAILED: oracle held=%s (expected allowed) -- tuple stale / sim broken"
+                     % orc_held)
+    if orc_notheld not in _DENY_DECISIONS:
+        return _void("not-held is no longer denied live (oracle=%s) -- tuple went stale, re-pick" % orc_notheld)
+    if comp_held not in _GRANTED_LIKE:
+        return _void("comp-iam does not see the held grant (held verdict=%s) -- TF model changed" % comp_held)
+
+    obs = {"comp_held": comp_held, "comp_notheld": comp_notheld,
+           "oracle_held": orc_held, "oracle_notheld": orc_notheld}
+    if comp_notheld == _V_GRANTED:
+        # FALSE-GRANT: comp-iam says GRANTED where the oracle denies -> resource-blind REGRESSION.
+        eff, reach_v, usab_v = "no", "no", "usable"
+    elif comp_notheld in _UNGRANTED_LIKE:
+        # comp-iam correctly DENIED the not-held, matching the oracle's implicitDeny -> effective.
+        eff, reach_v, usab_v = "yes", "yes", "usable"
+    else:
+        # UNRESOLVABLE / GRANTED-BROAD on the not-held: comp-iam honestly could not determine -> VOID.
+        return _void("comp-iam not-held verdict inconclusive (%s) -- cannot cleanly test discrimination"
+                     % comp_notheld)
+    row.update({
+        "reach": reach_v, "usability": usab_v, "effective": eff,
+        "effective_evidence": {
+            "case": "negative",
+            "observed": obs,
+            "expected": "comp-iam not-held=UNGRANTED-RESOURCE matching oracle implicitDeny (held=GRANTED/allowed)",
+            # oracle_run = the EXERCISED simulate-principal-policy check (live-APPLIED), independent of comp-iam.
+            "oracle_run": "simulate-principal-policy(%s, %s): held %s=%s / not-held %s=%s; comp-iam verdicts "
+                          "held=%s / not-held=%s" % (fx["role_name"], fx["action"], fx["held_resource"],
+                                                     orc_held, fx["notheld_resource"], orc_notheld,
+                                                     comp_held, comp_notheld),
         },
     })
     return row

@@ -23,6 +23,12 @@ Also covers the SIBLING pk-discrimination case (CTO D2, defect b): the keystone 
 (b) -- a grey-box over the REAL _check_artifact, verdict = its computed STATUS (PASS=>no, WARN/FAIL=>yes,
 partition-UNCHECKED/crash=>VOID). Same VOID-not-silent-no + sovereign-scratch + fixed-key-overwrite laws.
 
+And the comp-iam REGRESSION guard (`test_iam_*`, CTO 2026-07-12): comp-iam's Rule-22a resource-blindness is
+FIXED, so this scores effective="yes" TODAY and guards against a resource-blind FALSE-GRANT regression on a
+security oracle. VERDICT = comp-iam's resource_verdict vs the simulate-principal-policy ORACLE, with a
+POSITIVE control on the held resource (a failed control => VOID, never a false yes). effective="no" only on
+a real false-grant of a live-denied resource; VOID on stale-tuple / model-changed / oracle-failure.
+
 # rail-checked: assurance oracle for the TH-A discrimination probe under test (NFRA_TOOLPASS sec.6)
 Author: 3.0.0_SA_CVO~B.
 """
@@ -256,6 +262,92 @@ def test_positive_control_reach_ignores_headers_keys_on_resolved_id():
     stale_probe = dict(pos, answer_terms=["status", "age_h", "fail_at_h", "warn"], answer_substr="")
     assert tp.score_reach(header_only, stale_probe)["reach"] == "yes", \
         "documents the DEFECT the fix removes: header tokens falsely reached"
+
+
+_IAM = {
+    "probe_id": "comp-iam/resource-scoped-grant-discrimination", "tool": "comp-iam",
+    "tool_class": "iam-grant-oracle", "kind": "iam-discrimination",
+    "fixture": {"role_name": "orion-crawl-harness-role",
+                "role_arn": "arn:aws:iam::313476888478:role/orion-crawl-harness-role",
+                "action": "s3:GetObject",
+                "held_resource": "arn:aws:s3:::opal-data-inf/orion/k",
+                "notheld_resource": "arn:aws:s3:::opal-data-cot/k"},
+    "usability_timeout_s": 60, "expected": "effective", "live_estate": True,
+}
+_H = _IAM["fixture"]["held_resource"]
+_N = _IAM["fixture"]["notheld_resource"]
+
+
+def _run_iam(comp, oracle, *, fixture_over=None, verdict_raises=False, oracle_raises=False):
+    """Hermetic: inject the comp-iam VERDICT fn + the simulate ORACLE fn -- never touches iam_cli or AWS."""
+    probe = dict(_IAM, fixture=dict(_IAM["fixture"], **(fixture_over or {}))) if fixture_over else _IAM
+    calls = {"verdict": [], "oracle": []}
+
+    def v(role, action, resource):
+        calls["verdict"].append(resource)
+        if verdict_raises:
+            raise RuntimeError("model build failed")
+        return comp[resource]
+
+    def o(role_arn, action, resource):
+        calls["oracle"].append(resource)
+        if oracle_raises:
+            raise RuntimeError("simulate failed")
+        return oracle[resource]
+
+    row = tp._run_iam_discrimination_probe(probe, verdict_fn=v, oracle_fn=o)
+    return row, calls
+
+
+def test_iam_effective_yes_discriminates_and_matches_oracle():
+    row, _ = _run_iam({_H: "GRANTED", _N: "GRANTED-ACTION / UNGRANTED-RESOURCE"},
+                      {_H: "allowed", _N: "implicitdeny"})
+    assert row["effective"] == "yes", "comp-iam DISCRIMINATES + matches the oracle -> effective"
+    assert row["effective_evidence"]["observed"]["oracle_notheld"] == "implicitdeny"
+    assert "simulate-principal-policy" in row["effective_evidence"]["oracle_run"]
+
+
+def test_iam_false_grant_regression_effective_no_BITE():
+    # THE REGRESSION this guard exists to catch: comp-iam GRANTS the not-held where the oracle DENIES.
+    row, _ = _run_iam({_H: "GRANTED", _N: "GRANTED"}, {_H: "allowed", _N: "implicitdeny"})
+    assert row["effective"] == "no", "a FALSE-GRANT of a live-denied resource -> effective=no (resource-blind regression)"
+
+
+def test_iam_void_when_positive_control_fails_not_a_false_yes():
+    # oracle does NOT allow the HELD resource -> the tuple is untrustworthy -> VOID, never a false yes.
+    row, _ = _run_iam({_H: "GRANTED", _N: "GRANTED-ACTION / UNGRANTED-RESOURCE"},
+                      {_H: "implicitdeny", _N: "implicitdeny"})
+    assert row["effective"] == "unknown" and "positive control" in row["void_reason"]
+
+
+def test_iam_void_when_notheld_became_held():
+    row, _ = _run_iam({_H: "GRANTED", _N: "GRANTED-ACTION / UNGRANTED-RESOURCE"},
+                      {_H: "allowed", _N: "allowed"})   # not-held now allowed live -> tuple stale
+    assert row["effective"] == "unknown" and "stale" in row["void_reason"]
+
+
+def test_iam_void_when_comp_held_not_granted_model_changed():
+    row, _ = _run_iam({_H: "UNGRANTED", _N: "GRANTED-ACTION / UNGRANTED-RESOURCE"},
+                      {_H: "allowed", _N: "implicitdeny"})
+    assert row["effective"] == "unknown" and "model changed" in row["void_reason"]
+
+
+def test_iam_void_on_unresolvable_notheld():
+    row, _ = _run_iam({_H: "GRANTED", _N: "UNRESOLVABLE-RESOURCE"},
+                      {_H: "allowed", _N: "implicitdeny"})
+    assert row["effective"] == "unknown" and "inconclusive" in row["void_reason"]
+
+
+def test_iam_void_on_oracle_failure_never_silent():
+    row, _ = _run_iam({_H: "GRANTED", _N: "GRANTED-ACTION / UNGRANTED-RESOURCE"}, {}, oracle_raises=True)
+    assert row["effective"] == "unknown", "an oracle failure is VOID, never a silent verdict"
+
+
+def test_iam_sovereign_guard_blocks_a_bd_arn_before_any_call():
+    row, calls = _run_iam({_H: "GRANTED", _N: "x"}, {_H: "allowed", _N: "x"},
+                          fixture_over={"notheld_resource": "arn:aws:s3:::opal-data-bd/k"})
+    assert row["effective"] == "unknown" and "SOVEREIGN" in row["void_reason"]
+    assert not calls["verdict"] and not calls["oracle"], "sovereign guard blocks BEFORE any verdict/oracle call"
 
 
 if __name__ == "__main__":

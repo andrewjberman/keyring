@@ -155,6 +155,40 @@ TOOL_PROBES = [
         "expected": "fix",   # self-test label: PRE-fix the partition-key mode false-GREENs the frozen date-key
         "live_estate": True,
     },
+    {
+        "probe_id": "comp-iam/resource-scoped-grant-discrimination",
+        "tool": "comp-iam",
+        "tool_class": "iam-grant-oracle",
+        "kind": "iam-discrimination",
+        # EFFECTIVE-axis probe for comp-iam, a SECURITY GRANT ORACLE (CTO 2026-07-12). The Rule-22a
+        # resource-blindness (`s3:GetObject [GRANTED]` for a bucket the role never held; extract_iam
+        # Operation had NO resource field) is FIXED (resource_verdict :927 compares the ARN; CVO P1/P1a
+        # 2026-07-10). So this is NOT a lie-catcher -- it scores effective="yes" TODAY and stands as a
+        # REGRESSION GUARD: a resource-awareness regression on a grant oracle is a SILENT FALSE-GRANT (the
+        # worst class). It checks whether comp-iam DISCRIMINATES a resource the role HOLDS from one it does
+        # NOT: held -> GRANTED, not-held -> UNGRANTED-RESOURCE. The ORACLE is simulate-principal-policy (the
+        # LIVE-APPLIED IAM decision, grounded OTHER than comp-iam's TF-DESIRED model -- Rule 22a's mandated
+        # technique), WITH a POSITIVE CONTROL on the held resource (else a 403/typo reads as implicitDeny and
+        # the negative proves nothing). VALIDATED live 2026-07-12: comp-iam held=GRANTED/notheld=UNGRANTED-
+        # RESOURCE; oracle held=allowed/notheld=implicitDeny -> effective="yes". IN-SCOPE ARNs only (inf held,
+        # cot not-held); NO bd/schwab (asserted). READ-only: no S3 write, only IAM TF-parse + simulate.
+        "question": "Does comp-iam DENY (UNGRANTED-RESOURCE) an action on a resource the role does NOT hold -- matching the live simulate-principal-policy implicitDeny -- rather than resource-blind false-GRANT it?",
+        "fixture": {
+            "role_name": "orion-crawl-harness-role",
+            "role_arn": "arn:aws:iam::313476888478:role/orion-crawl-harness-role",
+            "action": "s3:GetObject",
+            "held_resource": "arn:aws:s3:::opal-data-inf/orion/toolprobe-regression-key",   # POSITIVE control (role HAS inf/orion/*)
+            "notheld_resource": "arn:aws:s3:::opal-data-cot/toolprobe-regression-key",       # the discrimination (role has NO cot grant)
+        },
+        # VERDICT: comp-iam's resource_verdict string vs the simulate-principal-policy decision. effective=
+        # "yes" iff comp-iam DISCRIMINATES (held GRANTED, not-held UNGRANTED-RESOURCE/UNGRANTED) AND the
+        # oracle grounds it (held allowed, not-held *Deny); "no" iff comp-iam FALSE-GRANTS the not-held where
+        # the oracle denies (resource-blind regression); VOID iff the positive control fails / the tuple
+        # went stale / comp-iam returns UNRESOLVABLE/GRANTED-BROAD (honestly could not determine).
+        "usability_timeout_s": 60,
+        "expected": "effective",   # comp-iam is resource-aware TODAY -> yes; the probe is the regression guard
+        "live_estate": True,
+    },
 ]
 
 
@@ -180,6 +214,12 @@ def assert_sovereign_safe(probe_list: list | None = None) -> None:
         su = _scratch_uri(p)
         if su and (is_held_path(su) or is_held_bucket(su)):
             offenders.append("%s scratch: %s" % (p.get("probe_id"), su))
+        # iam-discrimination fixtures carry ARNs (role + resources), not a scratch uri -- assert none is bd.
+        fx = p.get("fixture") or {}
+        for fld in ("role_arn", "held_resource", "notheld_resource"):
+            s = str(fx.get(fld, ""))
+            if s and (is_held_path(s) or is_held_bucket(s)):
+                offenders.append("%s %s: %s" % (p.get("probe_id"), fld, s))
     if offenders:
         raise ValueError("SOVEREIGN VIOLATION -- probe corpus targets a held bd/schwab path (re-point to "
                          "inf/cot/mdpf):\n  " + "\n  ".join(offenders))
