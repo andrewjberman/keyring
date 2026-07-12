@@ -50,15 +50,19 @@ def is_held_path(path) -> bool:
 def is_held_bucket(bucket) -> bool:
     """True if `bucket` is a held bd/schwab S3 bucket. Family: exact | '<p>-*' | '<p>/*'. PURE str check.
     opal-data-bdx is NOT held; opal-data-bd / opal-data-bd-raw / opal-data-bd/key ARE. Accepts an
-    s3://bucket[/key] or a bare bucket[/key]."""
+    s3://bucket[/key], an arn:aws:s3:::bucket[/key] (S3 resource ARN -- no region/account), or a bare
+    bucket[/key]. The ARN form is REQUIRED: extract_iam / comp-iam / any IAM-resource caller passes an
+    S3 ARN, and without this strip a bd ARN read as not-held (a sovereign-safety hole; CTO 2026-07-12)."""
     if not bucket:
         return False
     # .strip().lower() matches freeze_monitor._bucket_is_held EXACTLY (so the AE~C migration is a true
     # no-op) and is CONSERVATIVE: lowercasing can only ADD held-matches (OPAL-DATA-BD -> opal-data-bd),
     # never remove one -> holding is the safe failure direction. S3 bucket names are lowercase by AWS rule.
     s = str(bucket).replace("\\", "/").strip().lower()
-    if s.startswith("s3://"):
-        s = s[len("s3://"):]
+    for pfx in ("s3://", "arn:aws:s3:::"):   # normalize URI + S3-ARN forms to bucket[/key] before the family-match
+        if s.startswith(pfx):
+            s = s[len(pfx):]
+            break
     return any(s == p or s.startswith(p + "-") or s.startswith(p + "/") for p in HELD_BUCKET_PREFIXES)
 
 

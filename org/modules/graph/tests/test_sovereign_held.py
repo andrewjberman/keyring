@@ -58,6 +58,35 @@ def test_is_held_bucket_family_boundary():
     assert sh.is_held_bucket(None) is False
 
 
+def test_is_held_bucket_arn_form():
+    """REGRESSION for the ARN coverage gap (CTO 2026-07-12): is_held_bucket stripped s3:// + bare-name but
+    NOT arn:aws:s3:::, so a bd/schwab S3 RESOURCE ARN (what extract_iam / comp-iam / any IAM caller passes)
+    read as NOT-held -- a sovereign-safety hole. An S3 ARN is arn:aws:s3:::<bucket>[/key] (no region/account)."""
+    # bd/schwab ARN -> HELD, both the bare-bucket ARN and the bucket/key ARN:
+    assert sh.is_held_bucket("arn:aws:s3:::opal-data-bd") is True                        # bare-bucket ARN
+    assert sh.is_held_bucket("arn:aws:s3:::opal-data-bd/gold/x.parquet") is True         # bucket/key ARN
+    assert sh.is_held_bucket("arn:aws:s3:::opal-data-bd-raw/x") is True                  # <p>-* under ARN
+    assert sh.is_held_bucket("arn:aws:s3:::opal-data-schwab/silver/x") is True
+    assert sh.is_held_bucket("ARN:AWS:S3:::OPAL-DATA-BD/key") is True                    # case-insensitive ARN
+    # NOT held -- the load-bearing boundary MUST survive the ARN strip (opal-data-bdx is a distinct bucket):
+    assert sh.is_held_bucket("arn:aws:s3:::opal-data-bdx/key") is False
+    assert sh.is_held_bucket("arn:aws:s3:::opal-data-inf/orion/k") is False              # in-scope inf
+    assert sh.is_held_bucket("arn:aws:s3:::opal-data-cot/silver/x") is False             # in-scope cot
+
+
+def test_every_held_prefix_caught_in_all_input_forms():
+    """COVERAGE-COMPLETENESS guard (CTO 2026-07-12, 'so the gap never re-opens'): for EVERY canonical held
+    bucket prefix, ALL accepted input forms (bare / s3:// / arn:aws:s3:::) resolve HELD -- and the
+    distinct-bucket boundary (<prefix>x) resolves NOT-held in EVERY form. It reads sh.HELD_BUCKET_PREFIXES,
+    so a NEW held prefix is auto-covered and DROPPING a form-strip (the exact ARN gap) is auto-caught."""
+    forms = ("{b}", "s3://{b}", "arn:aws:s3:::{b}")
+    for p in sh.HELD_BUCKET_PREFIXES:
+        for f in forms:
+            assert sh.is_held_bucket(f.format(b=p)) is True, f"HELD prefix {p!r} NOT caught in form {f!r}"
+            assert sh.is_held_bucket(f.format(b=p + "/key")) is True, f"{p}/key NOT caught in form {f!r}"
+            assert sh.is_held_bucket(f.format(b=p + "x")) is False, f"distinct bucket {p}x WRONGLY held in form {f!r}"
+
+
 def test_include_held_three_arm_precedence():
     for v in ("COMP_INCLUDE_HELD", "COMP_VALIDATE_INCLUDE_HELD", "COMP_OTHER_INCLUDE_HELD"):
         os.environ.pop(v, None)
@@ -101,6 +130,8 @@ def test_module_imports_are_stdlib_only():
 if __name__ == "__main__":
     test_is_held_path_boundary()
     test_is_held_bucket_family_boundary()
+    test_is_held_bucket_arn_form()
+    test_every_held_prefix_caught_in_all_input_forms()
     test_include_held_three_arm_precedence()
     test_module_imports_are_stdlib_only()
     print("=== _sovereign_held: predicates + include_held precedence + stdlib-only invariant: ALL PASS ===")
