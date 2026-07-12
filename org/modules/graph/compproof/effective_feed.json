@@ -284,5 +284,38 @@
         "oracle_run": "confirm->present=True [vintage=current]; target->reached=True (answer_term=inf-gold-layer-runner NOT in the query -> result-only); oracle=inf-gold-layer-runner WRITES opal-data-inf (inf-pipeline/ec2.tf:6, confirmed-in-graph)"
       }
     ]
+  },
+  "comp-blast": {
+    "effective": "yes",
+    "effective_label": "yes",
+    "reach": [
+      "yes"
+    ],
+    "usability": [
+      "usable"
+    ],
+    "classes": [
+      "impact-blast-radius"
+    ],
+    "probe_ids": [
+      "comp-blast/impact-reach-discrimination"
+    ],
+    "isolation_ok": true,
+    "probe_ts": 1783895164,
+    "fix_probes": [],
+    "effective_evidence": [
+      {
+        "probe_id": "comp-blast/impact-reach-discrimination",
+        "case": "negative",
+        "observed": {
+          "query": "gold:INF_A_00.accounts_dimension",
+          "rc": 0,
+          "reached": true,
+          "answer_term": "INF_C_00.canonical_performance"
+        },
+        "expected": "node in-graph -> the blast radius REACHES the known dependent INF_C_00.canonical_performance (impact-reach, not graph coverage)",
+        "oracle_run": "comp-blast gold:INF_A_00.accounts_dimension --direction down -> reached INF_C_00.canonical_performance = True (answer_term NOT in the query -> result-only); oracle=INF_A_00 accounts_dimension consumed by INF_C_00.canonical_performance (source: INF_A_00 advisor-of-record readers comment)"
+      }
+    ]
   }
 }

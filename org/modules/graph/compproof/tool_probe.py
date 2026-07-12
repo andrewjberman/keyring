@@ -231,6 +231,8 @@ def probe_one(probe: dict, *, now_ts: float | None = None) -> dict:
         return _run_surfacecheck_discrimination_probe(probe, now_ts=now_ts)
     if probe.get("kind") == "kuzu-discrimination":
         return _run_kuzu_discrimination_probe(probe, now_ts=now_ts)
+    if probe.get("kind") == "blast-discrimination":
+        return _run_blast_discrimination_probe(probe, now_ts=now_ts)
     ts = int(now_ts if now_ts is not None else time.time())
     solver_id = "tool:%s" % probe["tool"]
     gate = isolation_gate(probe, solver_id=solver_id)
@@ -892,6 +894,75 @@ def _run_kuzu_discrimination_probe(probe: dict, *, now_ts=None, runner=None) -> 
             "oracle_run": ("confirm->present=%s [vintage=%s]; target->reached=%s (answer_term=%s NOT in the "
                            "query -> result-only); oracle=inf-gold-layer-runner WRITES opal-data-inf "
                            "(inf-pipeline/ec2.tf:6, confirmed-in-graph)" % (present, vintage, reached, term)),
+        },
+    })
+    return row
+
+
+# ---- (D) the comp-blast IMPACT-REACH discrimination probe (CTO~D B2, 2026-07-12) ----------------------
+# comp-blast = the "what breaks if I change X" impact tool (function/node-level, graph-backed). Its
+# EFFECTIVE axis is IMPACT-REACH: does the blast radius of a chosen node REACH a KNOWN real downstream
+# dependent (grounded from SOURCE)? Like comp-kuzu, it is graph-backed + honest about NOT-FOUND, so the
+# runner SEPARATES reach from graph coverage: node in-graph + dependent reached -> yes; in-graph + a known
+# dependent MISSED -> no (a real impact-traversal miss); NOT-FOUND (node absent / SHA-drifted out) -> VOID
+# (a graph-coverage/staleness issue, NOT a comp-blast reach miss -- the same class as comp-kuzu's ingestion
+# gap + comp-pipescript's out-of-scope read). ORACLE from source (INF_A_00 -> its accounts_dimension.
+# advisor_key readers), independent of comp-blast. SOVEREIGN: in-scope inf node BY DESIGN + held-marker guard.
+
+
+def _default_blast_runner(query: str, timeout_s: int):
+    """Run comp-blast <query> --direction down via cli.py blast DIRECTLY -> (combined_out, rc). Builds the
+    trace graph on-demand (~34s). --direction down = the downstream IMPACT set (what breaks if X changes)."""
+    cli = os.path.join(_WS, "org", "modules", "graph", "cli.py")
+    r = subprocess.run([sys.executable, cli, "blast", query, "--direction", "down"],
+                       capture_output=True, text=True, timeout=timeout_s)
+    return (r.stdout or "") + (r.stderr or ""), r.returncode
+
+
+def _run_blast_discrimination_probe(probe: dict, *, now_ts=None, runner=None) -> dict:
+    ts = int(now_ts if now_ts is not None else time.time())
+    fx = probe["fixture"]
+    to = int(probe.get("usability_timeout_s", 120))
+    run = runner or _default_blast_runner
+    term = fx["answer_term"]
+    row = {"probe_id": probe["probe_id"], "tool": probe["tool"], "class": probe["tool_class"],
+           "probe_ts": ts, "isolation_ok": True}
+
+    def _void(reason):
+        row.update({"reach": None, "usability": None, "effective": "unknown", "void_reason": reason,
+                    "effective_evidence": {"case": "negative", "oracle_run": "VOID: %s" % reason}})
+        return row
+
+    # SOVEREIGN (in-scope inf by design + backstop): refuse a query targeting a held node.
+    ql = str(fx["query"]).lower()
+    if any(m in ql for m in _KUZU_HELD_MARKERS) or is_held_path(fx["query"]) or is_held_bucket(fx["query"]):
+        return _void("SOVEREIGN: comp-blast query targets a held bd/schwab/49F node -- refused (inf only)")
+    try:
+        out, rc = run(fx["query"], to)
+    except Exception as e:  # noqa: BLE001
+        return _void("comp-blast run failed: %r" % e)
+    if "NOT-FOUND" in out:
+        # the node is not in the graph (absent / SHA-drifted out) -> a graph-coverage/staleness issue, NOT a
+        # comp-blast reach miss. comp-blast is itself honest here ("a NOT-FOUND, not a 'nothing breaks' clear").
+        return _void("comp-blast NOT-FOUND for %s -- graph-coverage/staleness (rerun comp-build), not a reach miss"
+                     % fx["query"])
+    reached = (rc == 0) and (term in out)
+    obs = {"query": fx["query"], "rc": rc, "reached": reached, "answer_term": term}
+    if reached:
+        eff, reach_v, usab_v = "yes", "yes", "usable"        # node in-graph + the known dependent reached
+    else:
+        eff, reach_v, usab_v = "no", "no", "usable"          # in-graph but a KNOWN dependent MISSED -> real impact-traversal miss
+    row.update({
+        "reach": reach_v, "usability": usab_v, "effective": eff,
+        "effective_evidence": {
+            "case": "negative",
+            "observed": obs,
+            "expected": "node in-graph -> the blast radius REACHES the known dependent %s (impact-reach, not graph coverage)" % term,
+            # oracle = the real downstream dependent from SOURCE (INF_A_00's accounts_dimension readers),
+            # independent of comp-blast; answer_term is NOT in the query -> result-only (isolation-clean).
+            "oracle_run": ("comp-blast %s --direction down -> reached %s = %s (answer_term NOT in the query "
+                           "-> result-only); oracle=INF_A_00 accounts_dimension consumed by %s (source: "
+                           "INF_A_00 advisor-of-record readers comment)" % (fx["query"], term, reached, term)),
         },
     })
     return row

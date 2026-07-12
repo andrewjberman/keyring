@@ -301,6 +301,31 @@ TOOL_PROBES = [
         "expected": "effective",   # comp-kuzu's query engine reaches a well-formed query TODAY -> yes (HONEST result); the probe is the query-reach regression guard
         "live_estate": True,       # reads the canonical Kuzu DB (local file, no AWS call); in-scope inf query only
     },
+    {
+        "probe_id": "comp-blast/impact-reach-discrimination",
+        "tool": "comp-blast",
+        "tool_class": "impact-blast-radius",
+        "kind": "blast-discrimination",
+        # EFFECTIVE-axis probe for comp-blast (the "what breaks if I change X" impact tool, NON-preventive).
+        # HONEST IMPACT-REACH (CTO~D B2 2026-07-12): does the downstream blast radius of gold:INF_A_00.
+        # accounts_dimension REACH a KNOWN downstream dependent grounded from SOURCE? comp-blast is graph-
+        # backed (like comp-kuzu) -> the runner SEPARATES reach from graph coverage: NOT-FOUND -> VOID (a
+        # graph-coverage/staleness issue -- comp-blast is itself honest here, "a NOT-FOUND, not a 'nothing
+        # breaks' clear"), NEVER a silent reach 'no'. ORACLE: INF_A_00.accounts_dimension is consumed by
+        # INF_C_00.canonical_performance (+ INF_A_04/C_02/C_03/C_05) -- the accounts_dimension.advisor_key
+        # readers named in INF_A_00's OWN source comment, INDEPENDENT of comp-blast. answer_term
+        # INF_C_00.canonical_performance is NOT in the query (gold:INF_A_00...) -> result-only (isolation-
+        # clean); a boilerplate would not name a specific downstream. SOVEREIGN: in-scope inf node BY DESIGN
+        # + the runner's held-marker guard. NON-preventive -> the effective bool flips KEEP<->FIX.
+        "question": "Does comp-blast's downstream radius of gold:INF_A_00.accounts_dimension REACH the source-grounded consumer INF_C_00.canonical_performance?",
+        "fixture": {
+            "query": "gold:INF_A_00.accounts_dimension",
+            "answer_term": "INF_C_00.canonical_performance",   # source-grounded consumer, NOT in the query
+        },
+        "usability_timeout_s": 150,   # comp-blast builds the trace graph on-demand (~34s)
+        "expected": "effective",   # comp-blast's impact traversal is correct TODAY -> yes (HONEST result); the probe is the impact-reach regression guard
+        "live_estate": False,      # local trace-graph build over repo source; no AWS; inf node only -> sovereign green
+    },
 ]
 
 
