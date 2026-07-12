@@ -42,8 +42,10 @@ _DISC = {
 }
 
 
-def _run(disc, runner, *, writer_raises=False):
-    calls = {"writer": [], "runner": [], "deleter": []}
+def _run(disc, runner, *, writer_raises=False, now_ts=_NOW):
+    # NOTE: no deleter -- the fixed-key overwrite has NO delete by design (CTO option a). Only writer+runner
+    # are injected. A delete would be a human-confirmation op; the design removes it.
+    calls = {"writer": [], "runner": []}
 
     def w(uri, *, frozen_as_of):
         calls["writer"].append((uri, frozen_as_of))
@@ -54,10 +56,7 @@ def _run(disc, runner, *, writer_raises=False):
         calls["runner"].append(uri)
         return runner(uri)
 
-    def d(uri):
-        calls["deleter"].append(uri)
-
-    row = tp._run_discrimination_probe(disc, now_ts=_NOW, fixture_writer=w, fixture_deleter=d, freshness_runner=r)
+    row = tp._run_discrimination_probe(disc, now_ts=now_ts, fixture_writer=w, freshness_runner=r)
     return row, calls
 
 
@@ -83,8 +82,21 @@ def test_discrimination_caught_freeze_effective_yes():
     row, calls = _run(_DISC, lambda uri: {"stdout": "STATUS: STALE age_h 720 FAIL", "rc": 1})
     assert row["effective"] == "yes", "the tool CAUGHT the freeze (STALE) -> effective"
     assert row["effective_evidence"]["case"] == "negative"
-    assert "staged s3://opal-data-inf" in row["effective_evidence"]["oracle_run"]
-    assert calls["writer"] and calls["deleter"], "fixture staged + cleaned up"
+    assert "overwrote s3://opal-data-inf" in row["effective_evidence"]["oracle_run"]
+    assert calls["writer"], "fixture overwritten (no delete -- fixed-key design)"
+
+
+def test_fixed_key_overwrite_no_accumulation():
+    # CTO option (a): a FIXED key overwritten each run -> two runs target the SAME key (no per-run ts), so
+    # it never accumulates + needs no delete. The write refreshes mtime (fresh-mtime property preserved).
+    _, c1 = _run(_DISC, lambda uri: {"stdout": "STALE"}, now_ts=_NOW)
+    _, c2 = _run(_DISC, lambda uri: {"stdout": "STALE"}, now_ts=_NOW + 999_999)
+    assert c1["writer"][0][0] == c2["writer"][0][0], "the fixture key is FIXED across runs (no ts) -> overwrite, no accumulation"
+    assert c1["writer"][0][0].endswith("/comp-freshness/frozen.json"), "fixed namespaced key"
+    # and there is NO deleter in the interface at all (the delete is designed out):
+    import inspect
+    assert "fixture_deleter" not in inspect.signature(tp._run_discrimination_probe).parameters, \
+        "the deleter is removed -- no aws s3 rm (human-confirmation op) in the probe"
 
 
 def test_discrimination_lied_green_on_frozen_effective_no_BITE():

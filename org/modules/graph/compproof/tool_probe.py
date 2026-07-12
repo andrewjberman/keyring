@@ -283,20 +283,20 @@ def _default_fixture_writer(s3_uri: str, *, frozen_as_of: str) -> None:
                    input=body, text=True, capture_output=True, timeout=60, check=True)
 
 
-def _default_fixture_deleter(s3_uri: str) -> None:
-    subprocess.run(["aws", "s3", "rm", s3_uri], capture_output=True, text=True, timeout=60)
-
-
 def _default_freshness_runner(s3_uri: str) -> dict:
     """Exercise comp-freshness on the staged fixture (the same run_tool machinery)."""
     return run_tool({"run": ["comp-freshness", "artifact", s3_uri], "usability_timeout_s": 60})
 
 
 def _run_discrimination_probe(probe: dict, *, now_ts=None,
-                              fixture_writer=None, fixture_deleter=None, freshness_runner=None) -> dict:
+                              fixture_writer=None, freshness_runner=None) -> dict:
     ts = int(now_ts if now_ts is not None else time.time())
     fx = probe["fixture"]
-    key = "%s%s/frozen_%d.json" % (fx["scratch_prefix"], probe["tool"], ts)
+    # FIXED key (CTO 143216Z option a): OVERWRITTEN each run -- the write (PutObject, pre-authorized)
+    # REFRESHES the mtime (B1's fresh-mtime property) with NO delete (an aws s3 rm is human-confirmation).
+    # One namespaced object, never accumulates -> condition-(c) satisfied by construction; no finally-delete,
+    # no sweep. Versioning is OFF on the shared buckets (Andrew-locked) -> a clean PUT, no delete-marker.
+    key = "%s%s/frozen.json" % (fx["scratch_prefix"], probe["tool"])
     s3_uri = "s3://%s/%s" % (fx["scratch_bucket"], key)
     frozen_as_of = _iso_days_ago(int(fx["content_as_of_days_ago"]), now_ts=now_ts)  # ORACLE (independent of the tool)
     # isolation trivially OK: the run argv is `comp-freshness artifact <uri>` -- no verdict/oracle hint; the
@@ -310,69 +310,44 @@ def _run_discrimination_probe(probe: dict, *, now_ts=None,
                     "effective_evidence": {"case": "negative", "oracle_run": "VOID: %s" % e}})
         return row
     writer = fixture_writer or _default_fixture_writer
-    deleter = fixture_deleter or _default_fixture_deleter
     runner = freshness_runner or _default_freshness_runner
     try:
-        writer(s3_uri, frozen_as_of=frozen_as_of)
+        writer(s3_uri, frozen_as_of=frozen_as_of)   # OVERWRITE the fixed key -> fresh mtime + frozen content
     except Exception as e:  # noqa: BLE001 -- a staging failure is UNKNOWN, never a silent no
         row.update({"reach": None, "usability": None, "effective": "unknown",
                     "void_reason": "fixture-stage-failed: %r" % e,
                     "effective_evidence": {"case": "negative", "oracle_run": "VOID: could not stage fixture"}})
         return row
-    try:
-        run = runner(s3_uri)
-        text = ((run.get("stdout") or "") + " " + (run.get("stderr") or "")).lower()
-        caught = any(t in text for t in probe["expected_verdict_terms"])            # STALE/FAIL/FROZEN
-        said_green = (not caught) and any(t in text for t in probe["green_terms"])  # plausible-fresh on a frozen artifact
-        if run.get("timed_out") or (not caught and not said_green):
-            eff, reach_v, usab_v = "unknown", None, ("too-slow" if run.get("timed_out") else "fell-back")
-        elif caught:
-            eff, reach_v, usab_v = "yes", "yes", "usable"        # the tool CAUGHT the freeze -> effective
-        else:
-            eff, reach_v, usab_v = "no", "no", "usable"          # exit-0-while-lying: GREEN on a KNOWN-frozen artifact
-        row.update({
-            "reach": reach_v, "usability": usab_v, "effective": eff, "rc": run.get("rc"),
-            "timed_out": run.get("timed_out"), "elapsed_s": run.get("elapsed_s"),
-            "effective_evidence": {
-                "case": "negative",
-                "observed": text.strip()[:200],
-                "expected": "STALE (content data_as_of %s = frozen ~%dd)"
-                            % (frozen_as_of, int(fx["content_as_of_days_ago"])),
-                # oracle_run = an EXERCISED observation (staged a known-frozen artifact, ran the tool on it);
-                # the ground-truth is the content date the PROBE wrote, independent of comp-freshness (mtime).
-                "oracle_run": "staged %s with content data_as_of=%s (frozen), then ran comp-freshness on it"
-                              % (s3_uri, frozen_as_of),
-            },
-        })
-    finally:
-        try:
-            deleter(s3_uri)
-        except Exception:  # noqa: BLE001 -- a failed delete is swept at load (_sweep_stale_scratch), never accumulates
-            pass
+    run = runner(s3_uri)
+    text = ((run.get("stdout") or "") + " " + (run.get("stderr") or "")).lower()
+    caught = any(t in text for t in probe["expected_verdict_terms"])            # STALE/FAIL/FROZEN
+    said_green = (not caught) and any(t in text for t in probe["green_terms"])  # plausible-fresh on a frozen artifact
+    if run.get("timed_out") or (not caught and not said_green):
+        eff, reach_v, usab_v = "unknown", None, ("too-slow" if run.get("timed_out") else "fell-back")
+    elif caught:
+        eff, reach_v, usab_v = "yes", "yes", "usable"        # the tool CAUGHT the freeze -> effective
+    else:
+        eff, reach_v, usab_v = "no", "no", "usable"          # exit-0-while-lying: GREEN on a KNOWN-frozen artifact
+    row.update({
+        "reach": reach_v, "usability": usab_v, "effective": eff, "rc": run.get("rc"),
+        "timed_out": run.get("timed_out"), "elapsed_s": run.get("elapsed_s"),
+        "effective_evidence": {
+            "case": "negative",
+            "observed": text.strip()[:200],
+            "expected": "STALE (content data_as_of %s = frozen ~%dd)"
+                        % (frozen_as_of, int(fx["content_as_of_days_ago"])),
+            # oracle_run = an EXERCISED observation (staged a known-frozen artifact, ran the tool on it);
+            # the ground-truth is the content date the PROBE wrote, independent of comp-freshness (mtime).
+            "oracle_run": "overwrote %s with content data_as_of=%s (frozen, fresh mtime), then ran comp-freshness on it"
+                          % (s3_uri, frozen_as_of),
+        },
+    })
     return row
 
 
-def _sweep_stale_scratch(bucket: str, prefix: str, *, older_than_h: float = 6.0) -> int:
-    """Belt for a failed finally-delete: at load, list the in-scope scratch prefix + delete fixtures older
-    than older_than_h so a leaked fixture never accumulates. In-scope-asserted. Returns count deleted."""
-    root = "s3://%s/%s" % (bucket, prefix)
-    if is_held_path(root) or is_held_bucket(root):   # never sweep a held bucket
-        return 0
-    try:
-        ls = subprocess.run(["aws", "s3", "ls", "--recursive", root], capture_output=True, text=True, timeout=60)
-    except Exception:  # noqa: BLE001
-        return 0
-    deleted = 0
-    for line in (ls.stdout or "").splitlines():
-        parts = line.split()
-        if len(parts) < 4 or "frozen_" not in parts[-1]:
-            continue
-        m = re.search(r"frozen_(\d+)\.json$", parts[-1])
-        if m and (time.time() - int(m.group(1))) > older_than_h * 3600:
-            subprocess.run(["aws", "s3", "rm", "s3://%s/%s" % (bucket, parts[-1])],
-                           capture_output=True, text=True, timeout=60)
-            deleted += 1
-    return deleted
+# NOTE: no scratch-sweep/delete exists by design (CTO 143216Z option a) -- the discrimination fixture is a
+# single FIXED key OVERWRITTEN each run, so it never accumulates and needs no cleanup. An `aws s3 rm` would
+# be a human-confirmation op; the fixed-key overwrite designs it out.
 
 
 # ---- per-tool rollup + emit (append-only stream + the TH-B feed) ----------------------------
@@ -485,14 +460,6 @@ def ensure_fresh(*, ceiling_days: float = DEFAULT_CEILING_DAYS, force: bool = Fa
         result["reason"] = "fresh: last probe %.2fd old <= %.1fd ceiling -- reused (no run)" % (age, ceiling_days)
         return result
     corpus = corpus if corpus is not None else tool_corpus.probes()
-    # CTO condition (c): sweep leaked scratch fixtures at load, so a failed finally-delete never accumulates.
-    for p in corpus:
-        fx = p.get("fixture")
-        if fx:
-            try:
-                _sweep_stale_scratch(fx["scratch_bucket"], fx["scratch_prefix"])
-            except Exception:  # noqa: BLE001 -- a best-effort sweep never blocks the probe run
-                pass
     rows = probe_all(corpus, now_ts=now_ts)
     emit_probe_log(rows, probe_log)
     emit_effective_feed(rows, feed_path)
