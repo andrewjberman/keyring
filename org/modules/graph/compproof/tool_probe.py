@@ -225,6 +225,8 @@ def probe_one(probe: dict, *, now_ts: float | None = None) -> dict:
         return _run_pk_discrimination_probe(probe, now_ts=now_ts)
     if probe.get("kind") == "iam-discrimination":
         return _run_iam_discrimination_probe(probe, now_ts=now_ts)
+    if probe.get("kind") == "cmpaws-discrimination":
+        return _run_cmpaws_discrimination_probe(probe, now_ts=now_ts)
     ts = int(now_ts if now_ts is not None else time.time())
     solver_id = "tool:%s" % probe["tool"]
     gate = isolation_gate(probe, solver_id=solver_id)
@@ -598,6 +600,77 @@ def _run_iam_discrimination_probe(probe: dict, *, now_ts=None,
                           "held=%s / not-held=%s" % (fx["role_name"], fx["action"], fx["held_resource"],
                                                      orc_held, fx["notheld_resource"], orc_notheld,
                                                      comp_held, comp_notheld),
+        },
+    })
+    return row
+
+
+# ---- (B4) the comp-aws GARBAGE-REJECT probe: a cloud-cert-compiler regression guard (CTO 2026-07-12) ----
+# comp-aws (ADHC_CMPAWS) is a cloud-state CERT compiler and is ALREADY rc-honest (garbage->rc2 INVALID,
+# no-oracle->rc4 UNSCORED "UNMEASURED never success", real-oracle->rc0/1, NO aggregate F1). So this scores
+# effective="yes" TODAY and guards the regression: a GARBAGE class SCORED as a verdict, or an UNMEASURED
+# class recorded as a false PASS. VERDICT is the RC CONTRACT, never a substring. ORACLE = the class
+# classification grounded OTHER than comp-aws's scoring (A = a HARDCODED garbage string, fully independent
+# of comp-aws's CLASSES per CTO's hardening; B/C = hand-picked known classes). READ-only (offline cert).
+
+_RC_OK, _RC_FAIL, _RC_INVALID, _RC_DERIVE_ERROR, _RC_UNSCORED = 0, 1, 2, 3, 4
+
+
+def _default_cmpaws_runner(cls: str, timeout_s: int) -> int:
+    """Run `comp-aws score --class <cls>` and return its rc. Calls comp_aws_cli.py DIRECTLY (the .tools/
+    comp-aws bash wrapper is not runnable via a Windows subprocess); the wrapper only adds comp_log_auto,
+    the rc is comp_aws_cli's own. rc: 0 OK / 1 FAIL(real neg) / 2 INVALID(garbage) / 3 DERIVE_ERROR / 4 UNSCORED."""
+    cli = os.path.join(_WS, "org", "modules", "graph", "comp_aws_cli.py")
+    r = subprocess.run([sys.executable, cli, "score", "--class", cls],
+                       capture_output=True, text=True, timeout=timeout_s)
+    return r.returncode
+
+
+def _run_cmpaws_discrimination_probe(probe: dict, *, now_ts=None, runner=None) -> dict:
+    ts = int(now_ts if now_ts is not None else time.time())
+    fx = probe["fixture"]
+    to = int(probe.get("score_timeout_s", 180))
+    run = runner or _default_cmpaws_runner
+    row = {"probe_id": probe["probe_id"], "tool": probe["tool"], "class": probe["tool_class"],
+           "probe_ts": ts, "isolation_ok": True}
+
+    def _void(reason):
+        row.update({"reach": None, "usability": None, "effective": "unknown", "void_reason": reason,
+                    "effective_evidence": {"case": "negative", "oracle_run": "VOID: %s" % reason}})
+        return row
+
+    try:
+        rc_garbage = run(fx["garbage_class"], to)
+        rc_no_oracle = run(fx["no_oracle_class"], to)
+        rc_real = run(fx["real_oracle_class"], to)
+    except Exception as e:  # noqa: BLE001 -- a subprocess/timeout failure is UNKNOWN, never a silent verdict
+        return _void("comp-aws score run failed: %r" % e)
+
+    obs = {"garbage_rc": rc_garbage, "no_oracle_rc": rc_no_oracle, "real_oracle_rc": rc_real,
+           "expected": "garbage->2(INVALID) / no_oracle->4(UNSCORED) / real_oracle->{0,1}(a real verdict)"}
+    # DANGEROUS false-scores (the regression this guards) score "no"; all-correct scores "yes"; anything
+    # else VOIDs (positive control failed / fixture stale / rc contract changed) -- never a silent pass.
+    if rc_garbage in (_RC_OK, _RC_FAIL):
+        eff, reach_v, usab_v = "no", "no", "usable"          # SCORED a garbage class -> reject regression
+    elif rc_no_oracle == _RC_OK:
+        eff, reach_v, usab_v = "no", "no", "usable"          # false PASS on an UNMEASURED no-oracle class
+    elif rc_garbage == _RC_INVALID and rc_no_oracle == _RC_UNSCORED and rc_real in (_RC_OK, _RC_FAIL):
+        eff, reach_v, usab_v = "yes", "yes", "usable"        # rejects garbage + UNSCORES no-oracle + real verdict for real-oracle
+    else:
+        # positive control failed (real-oracle no longer scores), or a fixture/rc-contract change.
+        return _void("unexpected rc contract: garbage=%s no_oracle=%s real=%s (expected 2/4/{0,1}) -- "
+                     "positive control failed or fixture stale" % (rc_garbage, rc_no_oracle, rc_real))
+    row.update({
+        "reach": reach_v, "usability": usab_v, "effective": eff,
+        "effective_evidence": {
+            "case": "negative",
+            "observed": obs,
+            "expected": "garbage rc2 (rejected) AND no-oracle rc4 (UNSCORED) AND real-oracle rc{0,1} (real verdict)",
+            # oracle_run = the EXERCISED score runs; oracle = the class classification (hardcoded garbage +
+            # known sns/s3), grounded OTHER than comp-aws's own scoring output.
+            "oracle_run": "comp-aws score --class: garbage(%s)->rc%s / no-oracle(%s)->rc%s / real-oracle(%s)->rc%s"
+                          % (fx["garbage_class"], rc_garbage, fx["no_oracle_class"], rc_no_oracle,
+                             fx["real_oracle_class"], rc_real),
         },
     })
     return row

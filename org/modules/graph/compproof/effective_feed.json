@@ -18,7 +18,7 @@
       "comp-which/routing-02"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783870801,
+    "probe_ts": 1783871969,
     "fix_probes": [
       "comp-which/routing-02"
     ],
@@ -75,7 +75,7 @@
       "comp-freshness/partition-key-frozen-vs-fresh"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783870810,
+    "probe_ts": 1783871978,
     "fix_probes": [
       "comp-freshness/frozen-vs-fresh-discrimination",
       "comp-freshness/partition-key-frozen-vs-fresh"
@@ -131,7 +131,7 @@
       "comp-iam/resource-scoped-grant-discrimination"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783870817,
+    "probe_ts": 1783871984,
     "fix_probes": [],
     "effective_evidence": [
       {
@@ -145,6 +145,39 @@
         },
         "expected": "comp-iam not-held=UNGRANTED-RESOURCE matching oracle implicitDeny (held=GRANTED/allowed)",
         "oracle_run": "simulate-principal-policy(orion-crawl-harness-role, s3:GetObject): held arn:aws:s3:::opal-data-inf/orion/toolprobe-regression-key=allowed / not-held arn:aws:s3:::opal-data-cot/toolprobe-regression-key=implicitdeny; comp-iam verdicts held=GRANTED / not-held=GRANTED-ACTION / UNGRANTED-RESOURCE"
+      }
+    ]
+  },
+  "comp-aws": {
+    "effective": "yes",
+    "effective_label": "yes",
+    "reach": [
+      "yes"
+    ],
+    "usability": [
+      "usable"
+    ],
+    "classes": [
+      "cloud-compiler-cert"
+    ],
+    "probe_ids": [
+      "comp-aws/garbage-reject-and-unscored-discrimination"
+    ],
+    "isolation_ok": true,
+    "probe_ts": 1783871989,
+    "fix_probes": [],
+    "effective_evidence": [
+      {
+        "probe_id": "comp-aws/garbage-reject-and-unscored-discrimination",
+        "case": "negative",
+        "observed": {
+          "garbage_rc": 2,
+          "no_oracle_rc": 4,
+          "real_oracle_rc": 1,
+          "expected": "garbage->2(INVALID) / no_oracle->4(UNSCORED) / real_oracle->{0,1}(a real verdict)"
+        },
+        "expected": "garbage rc2 (rejected) AND no-oracle rc4 (UNSCORED) AND real-oracle rc{0,1} (real verdict)",
+        "oracle_run": "comp-aws score --class: garbage(zzqq-nonexistent-class-9x7)->rc2 / no-oracle(sns)->rc4 / real-oracle(s3)->rc1"
       }
     ]
   }

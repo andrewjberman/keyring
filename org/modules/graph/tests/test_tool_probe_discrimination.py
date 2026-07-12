@@ -29,6 +29,12 @@ security oracle. VERDICT = comp-iam's resource_verdict vs the simulate-principal
 POSITIVE control on the held resource (a failed control => VOID, never a false yes). effective="no" only on
 a real false-grant of a live-denied resource; VOID on stale-tuple / model-changed / oracle-failure.
 
+And the comp-aws GARBAGE-REJECT guard (`test_cmpaws_*`, CTO 2026-07-12): comp-aws is already rc-honest, so
+effective="yes" TODAY, guarding a regression where a GARBAGE class is SCORED or a no-oracle class records a
+false PASS. VERDICT = the rc contract (garbage->2 INVALID / no-oracle->4 UNSCORED / real-oracle->{0,1}), a
+HARDCODED garbage oracle + a real-oracle POSITIVE control. effective="no" only on a real false-score; VOID
+on positive-control-failure / unexpected-rc / subprocess-failure.
+
 # rail-checked: assurance oracle for the TH-A discrimination probe under test (NFRA_TOOLPASS sec.6)
 Author: 3.0.0_SA_CVO~B.
 """
@@ -348,6 +354,65 @@ def test_iam_sovereign_guard_blocks_a_bd_arn_before_any_call():
                           fixture_over={"notheld_resource": "arn:aws:s3:::opal-data-bd/k"})
     assert row["effective"] == "unknown" and "SOVEREIGN" in row["void_reason"]
     assert not calls["verdict"] and not calls["oracle"], "sovereign guard blocks BEFORE any verdict/oracle call"
+
+
+_CMPAWS = {
+    "probe_id": "comp-aws/garbage-reject-and-unscored-discrimination", "tool": "comp-aws",
+    "tool_class": "cloud-compiler-cert", "kind": "cmpaws-discrimination",
+    "fixture": {"garbage_class": "zzqq-nonexistent-class-9x7", "no_oracle_class": "sns", "real_oracle_class": "s3"},
+    "score_timeout_s": 180, "expected": "effective", "live_estate": True,
+}
+_G, _NO, _R = (_CMPAWS["fixture"]["garbage_class"], _CMPAWS["fixture"]["no_oracle_class"],
+               _CMPAWS["fixture"]["real_oracle_class"])
+
+
+def _run_cmpaws(rcs, *, runner_raises=False):
+    """Hermetic: inject the `comp-aws score` RUNNER (class -> rc) -- never calls comp-aws / AWS."""
+    calls = []
+
+    def r(cls, to):
+        calls.append(cls)
+        if runner_raises:
+            raise RuntimeError("subprocess failed")
+        return rcs[cls]
+
+    return tp._run_cmpaws_discrimination_probe(_CMPAWS, runner=r), calls
+
+
+def test_cmpaws_effective_yes_rejects_garbage_unscores_no_oracle_real_verdict():
+    row, _ = _run_cmpaws({_G: 2, _NO: 4, _R: 1})   # garbage->INVALID, sns->UNSCORED, s3->real FAIL verdict
+    assert row["effective"] == "yes"
+    assert row["effective_evidence"]["observed"]["garbage_rc"] == 2
+    row2, _ = _run_cmpaws({_G: 2, _NO: 4, _R: 0})   # real-oracle rc0 (PASS) is ALSO a real verdict
+    assert row2["effective"] == "yes"
+
+
+def test_cmpaws_garbage_scored_is_regression_no_BITE():
+    # THE primary regression: a GARBAGE class SCORED (rc 0/1) instead of rejected (rc 2).
+    for garbage_rc in (0, 1):
+        row, _ = _run_cmpaws({_G: garbage_rc, _NO: 4, _R: 1})
+        assert row["effective"] == "no", f"scoring a garbage class (rc {garbage_rc}) is the reject regression -> no"
+
+
+def test_cmpaws_no_oracle_false_pass_is_regression_no():
+    row, _ = _run_cmpaws({_G: 2, _NO: 0, _R: 1})   # sns (no oracle) recorded a false PASS (rc0)
+    assert row["effective"] == "no", "a false PASS (rc0) on an UNMEASURED no-oracle class -> regression"
+
+
+def test_cmpaws_void_when_positive_control_fails():
+    # the real-oracle class (s3) stops producing a real verdict (rc 4) -> positive control failed -> VOID, not yes
+    row, _ = _run_cmpaws({_G: 2, _NO: 4, _R: 4})
+    assert row["effective"] == "unknown" and "positive control" in row["void_reason"]
+
+
+def test_cmpaws_void_on_unexpected_rc_never_silent():
+    row, _ = _run_cmpaws({_G: 3, _NO: 4, _R: 1})   # garbage -> DERIVE_ERROR (neither rejected nor scored)
+    assert row["effective"] == "unknown", "an unexpected rc is VOID (not a silent yes)"
+
+
+def test_cmpaws_void_on_runner_failure_never_silent():
+    row, _ = _run_cmpaws({}, runner_raises=True)
+    assert row["effective"] == "unknown", "a subprocess failure is VOID, never a silent verdict"
 
 
 if __name__ == "__main__":

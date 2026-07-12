@@ -189,6 +189,36 @@ TOOL_PROBES = [
         "expected": "effective",   # comp-iam is resource-aware TODAY -> yes; the probe is the regression guard
         "live_estate": True,
     },
+    {
+        "probe_id": "comp-aws/garbage-reject-and-unscored-discrimination",
+        "tool": "comp-aws",
+        "tool_class": "cloud-compiler-cert",
+        "kind": "cmpaws-discrimination",
+        # EFFECTIVE-axis probe for comp-aws (ADHC_CMPAWS), a cloud-state CERT compiler (CTO gate 2026-07-12).
+        # comp-aws is ALREADY honest about garbage / no-oracle -- so this scores effective="yes" TODAY and
+        # guards the regression: a garbage class SCORED as a verdict, or an UNMEASURED class recorded as a
+        # false PASS. Verdict is the RC CONTRACT (RC_INVALID=2 / RC_UNSCORED=4 / RC_OK=0 / RC_FAIL=1), NOT a
+        # substring. Three cases roll into one tool verdict:
+        #   A GARBAGE class     -> expect rc 2 (rejected). effective="no" if it SCORES it (rc 0/1).
+        #   B no-oracle class   -> expect rc 4 (UNSCORED, "UNMEASURED never success"). "no" if false PASS (rc 0).
+        #   C real-oracle class -> expect rc {0,1} (a REAL verdict = the POSITIVE control: not reject-all).
+        # ORACLE = the class CLASSIFICATION, grounded OTHER than comp-aws's scoring: A is a HARDCODED garbage
+        # string (CTO hardening -- fully independent of comp-aws's CLASSES, so a CLASSES-list corruption
+        # cannot fool BOTH the scoring and the probe); B/C are hand-picked KNOWN classes (sns=no-oracle,
+        # s3=real-oracle, per the live grounding). MAINTENANCE: legitimate coverage growth (sns GETS a
+        # certified scorer) makes B's rc flip 4->{0,1} -> update no_oracle_class to another scorer-less class
+        # (a definition-corruption is out-of-scope for a regression guard, per CTO -- acceptable, noted).
+        # READ-only (score is offline-adjudicating); calls comp_aws_cli.py directly (bash wrapper unusable on Windows subprocess).
+        "question": "Does comp-aws score REJECT a garbage class (rc2), declare a no-oracle class UNSCORED (rc4, never a false PASS), AND still produce a real verdict for a real-oracle class (rc0/1)?",
+        "fixture": {
+            "garbage_class": "zzqq-nonexistent-class-9x7",   # HARDCODED garbage (CTO hardening) -- independent of CLASSES
+            "no_oracle_class": "sns",                         # KNOWN no-oracle (maintained fixture; see MAINTENANCE)
+            "real_oracle_class": "s3",                        # KNOWN real-oracle = POSITIVE control (a real verdict)
+        },
+        "score_timeout_s": 180,   # the real-oracle case DERIVES live; garbage/no-oracle reject/unscore fast
+        "expected": "effective",  # comp-aws is rc-honest TODAY -> yes; the probe is the regression guard
+        "live_estate": True,
+    },
 ]
 
 
