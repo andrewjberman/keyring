@@ -740,12 +740,16 @@ def _goodhart_audit() -> dict:
 # assert_sovereign_safe VOIDs any held bd/schwab target (W6). tool_probe is LAZY-imported so the
 # refresh machinery costs nothing on the common (fresh / explicit-feed / self-test) paths.
 # --------------------------------------------------------------------------------------------
-def _ensure_feed_fresh(refresh: bool, no_refresh: bool, *, feed_path: str | None = None,
+def _ensure_feed_fresh(refresh: bool, no_refresh: bool, *, out=None, feed_path: str | None = None,
                        ceiling_days: float | None = None, now_ts=None,
                        _ensure=None, _age=None) -> dict:
     """W2/W3/W5/W6 at the consume point. Returns a report {age_days, ceiling_days, stale, ran,
     refreshed, failed, banner}. `_ensure`/`_age` are injectable so the wire is provable HERMETICALLY
-    (no live full-corpus estate probe during dev/test -- AC1 is a WIRE property, CTO~D confirmed)."""
+    (no live full-corpus estate probe during dev/test -- AC1 is a WIRE property, CTO~D confirmed).
+    `out` = the stream the human banners print to (F1: main() passes STDERR in --json mode so stdout
+    stays valid JSON -- the SAME staleness facts live in the returned dict / h['feed_freshness'], so
+    'staleness never silent' holds on BOTH channels)."""
+    out = sys.stdout if out is None else out
     from org.modules.graph.compproof import tool_probe as tp  # lazy: off the common path
     ensure = _ensure or tp.ensure_fresh
     age_fn = _age or tp.feed_age_days
@@ -763,26 +767,26 @@ def _ensure_feed_fresh(refresh: bool, no_refresh: bool, *, feed_path: str | None
         rep["banner"] = ("WARN: EFFECTIVE feed %s > %.0fd ceiling and --no-refresh -- serving STALE feed; "
                          "verdicts may be outdated (rerun without --no-refresh to auto-refresh)." %
                          (age_str, ceiling_days))
-        print(rep["banner"])
+        print(rep["banner"], file=out)
         return rep
     forced_within = refresh and age is not None and age <= ceiling_days
     rep["banner"] = (("--refresh: forcing a fresh EFFECTIVE probe (feed %s, within ceiling) -- full corpus, "
                       "live inf scratch, may take a moment..." % age_str) if forced_within else
                      ("EFFECTIVE feed %s > %.0fd ceiling -- running fresh probe (full corpus, live inf "
                       "scratch), may take a moment..." % (age_str, ceiling_days)))
-    print(rep["banner"])                                  # W3 VISIBLE banner BEFORE the run
+    print(rep["banner"], file=out)                        # W3 VISIBLE banner BEFORE the run
     try:
         res = ensure(ceiling_days=ceiling_days, force=True, feed_path=feed_path,
                      corpus=None, now_ts=now_ts)          # W6 corpus=None -> probes() LOAD-assert (sovereign)
         rep["ran"] = bool(res.get("ran"))
         rep["refreshed"] = True
-        print("EFFECTIVE feed refreshed (%s)." % res.get("reason", "ran"))
+        print("EFFECTIVE feed refreshed (%s)." % res.get("reason", "ran"), file=out)
     except Exception as e:                                # W5 refresh failure: LOUD, serve existing, never silent-fresh
         rep["failed"] = True
         rep["banner"] = ("ERROR: EFFECTIVE feed REFRESH FAILED (%s) -- serving existing feed %s; verdicts "
                          "may be outdated. A missing feed stays EFFECTIVE-pending (never a silent False)." %
                          (e, age_str))
-        print(rep["banner"])
+        print(rep["banner"], file=out)
     return rep
 
 
@@ -830,7 +834,10 @@ def main() -> int:
     # explicit --effective-feed <path> is a deliberate caller choice and is NEVER auto-refreshed.
     refresh_rep = None
     if not args.effective_feed:
-        refresh_rep = _ensure_feed_fresh(args.refresh, args.no_refresh)
+        # F1: in --json mode the human banners go to STDERR so stdout stays valid JSON (the same
+        # staleness facts live in h["feed_freshness"] -- staleness-never-silent on BOTH channels).
+        refresh_rep = _ensure_feed_fresh(args.refresh, args.no_refresh,
+                                         out=(sys.stderr if args.json else sys.stdout))
     _feed_path = args.effective_feed or (DEFAULT_EFFECTIVE_FEED if os.path.exists(DEFAULT_EFFECTIVE_FEED) else None)
     feed = load_effective_feed(_feed_path) if _feed_path else None
     h = health(effective_feed=feed)

@@ -122,3 +122,28 @@ def test_W1_refresh_only_on_default_feed_branch(monkeypatch):
     th.main()
     assert len(calls) == 1 and calls[0] == (False, False), \
         "W1: the DEFAULT-feed branch MUST ensure freshness before the read"
+
+
+def test_F1_json_mode_stdout_stays_valid_json_banner_on_stderr(monkeypatch, capsys):
+    # F1 REGRESSION (CTO~D gate, a0c995f4d break): on a STALE day, `comp-tool-health --json | jq` must
+    # not break. The wire printed the W3 banner to STDOUT before json.dumps -> a raw line ahead of the
+    # JSON. FIX: in --json mode banners route to STDERR; the same staleness facts live in
+    # h["feed_freshness"] IN the JSON, so "staleness never silent" holds on BOTH channels. This test
+    # would have caught F1 and prevents its return. (Hermetic: fake age+ensure, no live estate probe.)
+    import json
+    import org.modules.graph.compproof.tool_probe as tp
+    monkeypatch.setattr(tp, "feed_age_days", lambda *a, **k: 10.0)                  # stale (> 7d)
+    monkeypatch.setattr(tp, "ensure_fresh", lambda **k: {"ran": True, "reason": "stale -- ran (fake)"})
+    monkeypatch.setattr(th, "load_effective_feed", lambda p: {})
+    monkeypatch.setattr(th, "health", lambda **k: {"tools": [], "phase": "P", "corpus_source": "c",
+                        "value_metric": "v", "rail_enforcement": {"available": False}, "verdict_counts": {}})
+    monkeypatch.setattr(th.sys, "argv", ["comp-tool-health", "--json"])
+    th.main()
+    cap = capsys.readouterr()
+    # THE regression: stdout must be pure, parseable JSON -- a raw banner line before it breaks json.loads/jq.
+    assert cap.out.lstrip().startswith("{"), "stdout must start with JSON, no leading banner line"
+    parsed = json.loads(cap.out)
+    # staleness is NEVER silent on the machine channel -- it lives IN the JSON (feed_freshness)
+    assert parsed["feed_freshness"]["stale"] is True and parsed["feed_freshness"]["refreshed"] is True
+    # ...and the human banner is on STDERR, not polluting stdout
+    assert "running fresh probe" in cap.err.lower(), "W3 banner routed to stderr in --json mode"
