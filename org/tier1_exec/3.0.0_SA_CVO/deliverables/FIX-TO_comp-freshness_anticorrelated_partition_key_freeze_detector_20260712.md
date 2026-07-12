@@ -94,9 +94,11 @@ mtime, so mtime alone is exactly the wrong oracle for a freeze.)
    no->yes. Whether to add that case (vs. accepting a+b as two distinct catches) is a CTO design call.
 
 ## OPEN DECISIONS for CTO (surface, don't adjudicate)
-- **D1 (operational-care GO):** land the `_max_partition_date` fix now, given the live blast = 5 cot silver
-  entries mid-freeze? Recommend an IN-SCOPE dry-run delta (old vs new verdict per cot entry) FIRST -- I can
-  run it on your GO (a cot read, in-scope). bd blast rests on DS~B's cot-only census, not my read (sovereign).
+- **D1 (operational-care GO):** DRY-RUN DONE 2026-07-12 (CTO GO) -- 0 of 5 cot entries flip verdict old->new;
+  land is safe-but-not-urgent, HELD until post-07-14 cot-clarity + a FRESH dry-run at land-time (CTO 151616Z:
+  the fix is ~24h STRICTER, a threshold change not a no-op). **LAND-TIME RE-CONFIRM TOOL:
+  `cot_pk_dryrun_land_reconfirm.py` (this dir) -- run it immediately before landing; exit 0 + "0 of 5" = safe,
+  any flip = STOP + surface.** bd blast rests on DS~B's cot-only census, not my read (sovereign).
 - **D2 (probe alignment):** add a partition-key probe case to close the loop on defect (b), or accept
   defects (a) and (b) as two independently-caught misses (keystone catches a; this fix removes b)?
 - **D3 (ownership + test):** I (CVO~B) can implement the one-seam fix; the inverted test is DS~B's lane
