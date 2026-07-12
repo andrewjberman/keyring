@@ -18,7 +18,7 @@
       "comp-which/routing-02"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783867631,
+    "probe_ts": 1783868112,
     "fix_probes": [
       "comp-which/routing-02"
     ],
@@ -72,7 +72,7 @@
       "comp-freshness/frozen-vs-fresh-discrimination"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783867635,
+    "probe_ts": 1783868116,
     "fix_probes": [
       "comp-freshness/frozen-vs-fresh-discrimination"
     ],
@@ -84,17 +84,11 @@
           "reach": "yes",
           "usability": "usable",
           "hits": [
-            "age_h",
-            "fail_at_h",
-            "status",
-            "warn"
+            "inf_orion_api_performance"
           ]
         },
         "expected": [
-          "status",
-          "age_h",
-          "fail_at_h",
-          "warn"
+          "inf_orion_api_performance"
         ],
         "oracle_run": "comp-freshness artifact s3://opal-data-inf/silver/api_dims/performance/"
       },

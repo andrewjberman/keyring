@@ -76,15 +76,17 @@ TOOL_PROBES = [
         "tool": "comp-freshness",
         "tool_class": "artifact-freshness",
         # POSITIVE control (expected effective): does comp-freshness reach a usable freshness verdict for a
-        # TARGETED single artifact? REACH=yes if the output carries a per-artifact STATUS + age verdict. rc 0
-        # (PASS) and 1 (a FAIL verdict) are BOTH usable answers; only rc 2 (config/AWS error) is a fall-back.
-        # RE-POINTED off opal-data-bd -> IN-SCOPE opal-data-inf (sovereign hold 2026-07-09; the corpus is
-        # sovereign-safe BY CONSTRUCTION -- _assert_sovereign_safe below). inf_orion_api_performance is an
-        # inf-configured served prefix (data/inf/.../gold_freshness_config.yaml).
+        # TARGETED single artifact? REACH keys on the RESOLVED artifact_id `inf_orion_api_performance` --
+        # NOT the column headers (status/age_h/fail_at_h), which comp-freshness prints UNCONDITIONALLY (even
+        # a header-only / no-row result would false-match them; found live 2026-07-12, same class as the
+        # discrimination fail_at_h bug). The id is NOT in the run argv (which carries only the s3 PATH), so
+        # its presence PROVES the tool resolved config -> a real data row; a header/empty output never
+        # contains it. rc 0 (PASS) and 1 (a FAIL verdict) are BOTH usable (usability gate); rc 2 = fall-back.
+        # opal-data-inf is IN-SCOPE (sovereign hold 2026-07-09); corpus sovereign-safe BY CONSTRUCTION below.
         "question": "Report the freshness STATUS of a single named served artifact.",
         "run": ["comp-freshness", "artifact", "s3://opal-data-inf/silver/api_dims/performance/"],
-        "answer_terms": ["status", "age_h", "fail_at_h", "warn"],
-        "answer_substr": "",
+        "answer_terms": ["inf_orion_api_performance"],   # the RESOLVED-row id, not a header token
+        "answer_substr": "inf_orion_api_performance",
         "reach_threshold": 1,
         "usable_returncodes": [0, 1],
         "usability_timeout_s": 60,

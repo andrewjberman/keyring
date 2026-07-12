@@ -154,6 +154,27 @@ def test_negative_arm_is_load_bearing_MUTANT():
     assert mut["effective"] == "unknown"
 
 
+def test_positive_control_reach_ignores_headers_keys_on_resolved_id():
+    # The live-run honesty gap (2026-07-12, sibling of the discrimination fail_at_h bug): comp-freshness
+    # prints its column HEADERS (status / age_h / fail_at_h) UNCONDITIONALLY, so a reach signal on those
+    # tokens scores reach=yes on a header-only / no-row result. The positive control now keys on the RESOLVED
+    # artifact_id, which ONLY a real data row carries (and which is NOT in the run argv -> the tool derived it).
+    pos = {"probe_id": "comp-freshness/single-artifact", "tool": "comp-freshness",
+           "tool_class": "artifact-freshness",
+           "run": ["comp-freshness", "artifact", "s3://opal-data-inf/silver/api_dims/performance/"],
+           "answer_terms": ["inf_orion_api_performance"], "answer_substr": "inf_orion_api_performance",
+           "reach_threshold": 1, "usable_returncodes": [0, 1]}
+    header_only = ("artifact_id | s3_key | last_modified | age_h | fail_at_h | status\n"
+                   "--- | --- | --- | --- | --- | ---\n(no artifacts matched)")
+    assert tp.score_reach(header_only, pos)["reach"] == "no", "header/empty output must NOT reach (no resolved row)"
+    real_row = "artifact_id | ... | status\ninf_orion_api_performance | s3://... | 1.3h | 72h | PASS"
+    assert tp.score_reach(real_row, pos)["reach"] == "yes", "a resolved data row (artifact_id present) reaches"
+    # the OLD header tokens must NO LONGER be the reach signal (non-vacuity of the fix):
+    stale_probe = dict(pos, answer_terms=["status", "age_h", "fail_at_h", "warn"], answer_substr="")
+    assert tp.score_reach(header_only, stale_probe)["reach"] == "yes", \
+        "documents the DEFECT the fix removes: header tokens falsely reached"
+
+
 if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_") and callable(fn):
