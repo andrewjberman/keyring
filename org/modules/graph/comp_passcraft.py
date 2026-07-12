@@ -376,10 +376,17 @@ def render_taxonomy():
 #   without them; there is no compute step. R0 is DEFERRED (TO-R0, off CVO's lane) -- class is R1
 #   self-classification only; no QUESTION-class tag is folded here.
 # ============================================================================================
-_TOOLAUDIT_CLASSES = ("OBSERVED", "INFERRED", "NOT-CHECKED")   # R1 self-classification (R0 deferred)
+_TOOLAUDIT_CLASSES = ("OBSERVED", "INFERRED", "NOT-CHECKED")   # FP-R1 claim-class self-classification
 _RAIL_VERDICTS = ("pass", "fail", "n/a", "unknown")
-_CLASS_CONFIDENCE = {"OBSERVED": 0.9, "INFERRED": 0.3, "NOT-CHECKED": 0.1}   # serializes the R1 class
-_REQUIRED_AUDIT_FIELDS = ("tool", "verdict", "class", "evidence_ref")        # all HAND-AUTHORED
+_CLASS_CONFIDENCE = {"OBSERVED": 0.9, "INFERRED": 0.3, "NOT-CHECKED": 0.1}   # serializes the FP-R1 class
+# FP-R0 (FRONTPASS_RULES_canonical_20260712, R0 RULED IN 20260712): classify the QUESTION before the
+# CLAIM. A DYNAMIC question answered from SOURCE is auto-INFERRED, never OBSERVED. question_class is a
+# HAND-AUTHORED field (the auditor names the question's dynamism from the 5-type vocabulary below); the
+# emitter LINTS it against the claim-class -- it does NOT compute it (anti-harness holds).
+_QUESTION_CLASSES = ("STATIC", "DYNAMIC")
+_DYNAMIC_QUESTION_TYPES = ("which-branch-ran", "what-value-flowed", "did-a-side-effect-happen",
+                           "who-reads-X-at-runtime", "what-the-served-artifact-contains")
+_REQUIRED_AUDIT_FIELDS = ("tool", "verdict", "class", "evidence_ref", "question_class")  # all HAND-AUTHORED
 
 
 class ToolAuditError(Exception):
@@ -407,6 +414,15 @@ def _resolve_evidence_ref(evidence_ref):
         return (os.path.isfile(path),
                 "resolves to %s" % cand if os.path.isfile(path) else "file ref %r does not resolve" % cand)
     return True, "non-path evidence (recon-pack / command / oracle / commit-ish) accepted"
+
+
+def _evidence_is_source(evidence_ref):
+    """True iff evidence_ref is a SOURCE citation (a `file` / `file:line`), False if it is an EXERCISED
+    observation (a run / command / oracle / commit-ish). FP-R0 uses this to bar an OBSERVED claim on a
+    DYNAMIC question backed only by source: reading the code that COULD produce a runtime fact does not
+    OBSERVE it. Same file-ref shape _resolve_evidence_ref keys on, named for the FP-R0 use."""
+    ev = str(evidence_ref or "").strip()
+    return bool(re.match(r"^([\w./\\-]+\.\w+)(?::\d+(?:-\d+)?)?$", ev))
 
 
 def build_tool_audit_cse(audit, marker_head, actor="comp-passcraft"):
@@ -454,7 +470,22 @@ def validate_tool_audit(audit, marker_head):
             errors.append("HAND-AUTHORED field %r missing -- the emitter serializes a verdict, it does "
                           "NOT compute one (anti-harness)" % f)
     if audit.get("class") and audit["class"] not in _TOOLAUDIT_CLASSES:
-        errors.append("class %r not in R1 enum %s (R0 DEFERRED)" % (audit.get("class"), _TOOLAUDIT_CLASSES))
+        errors.append("class %r not in FP-R1 enum %s" % (audit.get("class"), _TOOLAUDIT_CLASSES))
+    # FP-R0 (FRONTPASS_RULES_canonical_20260712, R0 RULED IN): classify the QUESTION before the CLAIM.
+    # A CONSISTENCY LINT, NOT a verdict engine -- it checks the hand-authored (question_class, class,
+    # evidence_ref) triple for coherence and computes NO tool verdict (anti-harness holds, same category
+    # as the class-enum check). (a) question_class in the enum; (b) a DYNAMIC question answered from
+    # SOURCE (a file:line evidence_ref) may NOT be class=OBSERVED -- reading the code that COULD produce a
+    # runtime fact does not OBSERVE it, so that claim is INFERRED. Fail-closed.
+    qc = audit.get("question_class")
+    if qc and qc not in _QUESTION_CLASSES:
+        errors.append("question_class %r not in %s (FP-R0)" % (qc, _QUESTION_CLASSES))
+    if qc == "DYNAMIC" and audit.get("class") == "OBSERVED" and _evidence_is_source(audit.get("evidence_ref")):
+        errors.append(
+            "FP-R0: a DYNAMIC question answered from SOURCE (evidence_ref=%r is a file:line, not an "
+            "exercised run) is INFERRED, never OBSERVED -- cite an EXERCISED observation (a run / command "
+            "/ commit-ish) or downgrade class to INFERRED (FP-R0@FRONTPASS_RULES_canonical_20260712)"
+            % audit.get("evidence_ref"))
     for rk, rv in (audit.get("rail") or {}).items():
         if rv not in _RAIL_VERDICTS:
             errors.append("rail[%s]=%r not in %s" % (rk, rv, _RAIL_VERDICTS))
@@ -617,6 +648,7 @@ def _self_test():
                  "rail": {"R1": "fail"},
                  "verdict": "DEFECTIVE (believed anti-correlated) -- HAND-AUTHORED lead, not computed",
                  "class": "INFERRED", "evidence_ref": ".tools/comp-freshness",
+                 "question_class": "DYNAMIC",   # FP-R0: aging-oracle = a what-value-flowed question;
                  "falsifier": "false if it reads the partition date-key, not mtime",
                  "oracle": ".tools/comp-freshness", "vintage": mk}
         rec = emit_tool_audit(valid, mk)
@@ -636,11 +668,59 @@ def _self_test():
            "the hand-authored verdict is serialized unchanged (never altered/computed)")
         bad_class = dict(valid)
         bad_class["class"] = "MAYBE"
-        ck("TO2.class_off_R1_enum_REJECTED", _raises(lambda: emit_tool_audit(bad_class, mk)),
-           "a class outside the R1 enum is rejected (R0 QUESTION-class DEFERRED, not folded)")
-        ck("TO2.R0_deferred_R1_only",
-           set(_TOOLAUDIT_CLASSES) == {"OBSERVED", "INFERRED", "NOT-CHECKED"},
-           "class vocabulary is R1 self-classification only; R0 is DEFERRED to TO-R0 (not folded here)")
+        ck("TO2.class_off_FPR1_enum_REJECTED", _raises(lambda: emit_tool_audit(bad_class, mk)),
+           "a class outside the FP-R1 enum is rejected")
+
+        # ===== FP-R0 (FRONTPASS_RULES_canonical_20260712): the QUESTION-class CONSISTENCY LINT =====
+        # A consistency lint, NOT a verdict engine: it rejects an incoherent hand-authored
+        # (question_class, class, evidence_ref) triple and computes no tool verdict (anti-harness holds).
+        ck("TO2.FPR0_question_class_required",
+           _raises(lambda: emit_tool_audit({k: v for k, v in valid.items() if k != "question_class"}, mk)),
+           "question_class is REQUIRED -- an absent question-class is 'never classified', fail-closed")
+        ck("TO2.FPR0_question_class_off_vocab_REJECTED",
+           _raises(lambda: emit_tool_audit(dict(valid, question_class="MAYBE"), mk)),
+           "question_class outside STATIC|DYNAMIC is rejected")
+        # THE BITE: a DYNAMIC question + class=OBSERVED + a SOURCE (file:line) evidence_ref is
+        # inadmissible -- reading source does not OBSERVE a runtime fact; that claim is INFERRED.
+        dyn_obs_source = dict(valid, question_class="DYNAMIC",
+                              evidence_ref="org/modules/graph/comp_passcraft.py:1")
+        dyn_obs_source["class"] = "OBSERVED"
+        ck("TO2.FPR0_dynamic_OBSERVED_from_source_REJECTED",
+           _raises(lambda: emit_tool_audit(dyn_obs_source, mk)),
+           "FP-R0: a DYNAMIC question claimed OBSERVED from a source file:line is rejected (must be INFERRED)")
+        # NOT over-firing: the SAME dynamic OBSERVED claim backed by an EXERCISED run is admissible.
+        dyn_obs_exercised = dict(dyn_obs_source,
+                                 evidence_ref="EXERCISED: paired-run 2026-07-12 shows FRESH-on-stale")
+        ck("TO2.FPR0_dynamic_OBSERVED_from_exercise_ACCEPTED",
+           not _raises(lambda: emit_tool_audit(dyn_obs_exercised, mk)),
+           "FP-R0 promotes an EXERCISED dynamic claim to OBSERVED -- it bars source, not exercise")
+        # TOUCHES ONLY dynamic: a STATIC fact IS observable from source (e.g. 'does the file define X').
+        static_obs_source = dict(valid, question_class="STATIC",
+                                 evidence_ref="org/modules/graph/comp_passcraft.py:1")
+        static_obs_source["class"] = "OBSERVED"
+        ck("TO2.FPR0_static_OBSERVED_from_source_ACCEPTED",
+           not _raises(lambda: emit_tool_audit(static_obs_source, mk)),
+           "FP-R0 bars DYNAMIC-from-source only; a STATIC fact is observable from source")
+
+        # ===== AC4 NON-VACUITY: the anti-harness 'no verdict-deriving path' property must BITE against an
+        # INJECTED derive path -- not be vacuously true (a name-based structural check misses a
+        # verdict-computer named innocuously). Neuter: wrap validate so a missing verdict is auto-supplied
+        # (a DERIVE path); the missing-verdict audit is then NO LONGER rejected -> the property FLIPS,
+        # proving it holds ONLY because no derive path exists. Restore in finally. =====
+        _real_v = globals()["validate_tool_audit"]
+
+        def _deriving_validate(a, mkh):   # the mutant: emit now DERIVES a verdict instead of requiring one
+            return _real_v(dict(a, verdict=(a.get("verdict") or "DERIVED-BY-MUTANT")), mkh)
+
+        globals()["validate_tool_audit"] = _deriving_validate
+        try:
+            _nv = {k: v for k, v in valid.items() if k != "verdict"}
+            ck("AC4.anti_harness_missing_verdict_reject_is_NON_VACUOUS",
+               not _raises(lambda: emit_tool_audit(_nv, mk)),
+               "with an injected verdict-DERIVING path the missing-verdict audit is NO LONGER rejected -- "
+               "so the real REJECT property is non-vacuous (it holds only because no derive path exists)")
+        finally:
+            globals()["validate_tool_audit"] = _real_v
 
     ok = all(c["pass"] for c in checks)
     return ok, checks
