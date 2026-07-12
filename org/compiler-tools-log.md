@@ -16291,3 +16291,37 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 
 2026-07-12T1210Z 0.4.2_RD_AdvisorIntelligence (/log noel_soderblom FE): comp-grep allowedAdvisorKeys (portal/src) -> sole consumer ClientsTab.tsx:270-275; grounded the filter + slice(0,maxEntries) mechanism, confirming 5 allowlist keys REQUIRE maxEntries>=5 (Rule 20b pre-commit dependency-graph check for a frontend change). safe-commit surface-check clean (advisory + blocking, no critical surface) on the inflection layout.ts commit 73ee2705. RD min comp-transform fields N/A this window -- tenant CONFIG edit, not a data-rendering component build.
 | 2026-07-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file src/pages/AdvisorIntelligence/_partners... | PASS |
+| 2026-07-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/AdvisorIntelligence/_p... | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/silver/convert_orion_a... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/safe_deploy_core.py --file .tool... | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/silver/convert_orion_a... | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/inflection_re... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor-of-record-go-live-r... | PASS |
+| 2026-07-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/manual_api/pull_inflection_new... | PASS |
+| 2026-07-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/inf-pipeline/inf-accou... | PASS |
+| 2026-07-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_01.canonica... | PASS |
+| 2026-07-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions inf-accounts-v2-daily --settle-retry-seco... | PASS |
+| 2026-07-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor-of-record-go-live-r... | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/inflection_re... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor-of-record-go-live-r... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor-of-record-go-live-r... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_passcraft.py --f... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/tool_corpus... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/inflection_re... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor-of-record-go-live-r... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/tool_probe.... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/effective_f... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_tool_health.py | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/effective_f... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~A | NFRA_PASSCRAFT.TO-R0/TO-2 | comp-passcraft --self-test (21) + source-neuter of the FP-R0 lint (non-vacuity) + pytest test_passcraft_anti_harness (22); safe-commit/commit-gate/owned-paths per commit | PASSCRAFT FP-R0: R0 RULED IN, rail eeaef157f, emitter fold §0-gate 32141b332, doc amend CTO-lane e5e7d13b9; caught CTO's two-rail-set conflation before minting; ToolAudit effective DECOUPLED (FP-R0 decided it); AC4 functional non-vacuity closes the name-based anti-harness gap | PASS + RULING |
+| 2026-07-12 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
