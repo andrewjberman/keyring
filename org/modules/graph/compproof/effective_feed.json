@@ -180,5 +180,38 @@
         "oracle_run": "comp-aws score --class: garbage(zzqq-nonexistent-class-9x7)->rc2 / no-oracle(sns)->rc4 / real-oracle(s3)->rc1"
       }
     ]
+  },
+  "comp-surface-check": {
+    "effective": "yes",
+    "effective_label": "yes",
+    "reach": [
+      "yes"
+    ],
+    "usability": [
+      "usable"
+    ],
+    "classes": [
+      "critical-surface-detection"
+    ],
+    "probe_ids": [
+      "comp-surface-check/sev1-detection-discrimination"
+    ],
+    "isolation_ok": true,
+    "probe_ts": 1783891169,
+    "fix_probes": [],
+    "effective_evidence": [
+      {
+        "probe_id": "comp-surface-check/sev1-detection-discrimination",
+        "case": "negative",
+        "scope": "effective=yes attests DETECTION-CORRECTNESS ONLY (a registered SEV1 path is FLAGGED + a non-critical path is CLEARED, vs critical-surfaces.yaml as the independent oracle); it does NOT attest the SEV1 surfaces are GATED in the real commit flow -- that wiring-blindness is LD-0273 (open, arch-gated CTO).",
+        "observed": {
+          "sev1_rc": 2,
+          "noncritical_rc": 0,
+          "expected": "registered SEV1 -> rc!=0 (block-with-ack) / non-critical -> rc0 (clean)"
+        },
+        "expected": "registered SEV1 rc!=0 (blocking) AND non-critical rc0 -- discriminates",
+        "oracle_run": "comp-surface-check check --mode blocking: SEV1(portal/src/pages/ModelPortfolios.tsx)->rc2 / non-critical(org/modules/graph/comp_tool_health.py)->rc0; oracle=critical-surfaces.yaml membership (sev1 registered=True, non-critical registered=False)"
+      }
+    ]
   }
 }

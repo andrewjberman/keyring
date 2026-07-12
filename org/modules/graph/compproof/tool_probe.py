@@ -227,6 +227,8 @@ def probe_one(probe: dict, *, now_ts: float | None = None) -> dict:
         return _run_iam_discrimination_probe(probe, now_ts=now_ts)
     if probe.get("kind") == "cmpaws-discrimination":
         return _run_cmpaws_discrimination_probe(probe, now_ts=now_ts)
+    if probe.get("kind") == "surfacecheck-discrimination":
+        return _run_surfacecheck_discrimination_probe(probe, now_ts=now_ts)
     ts = int(now_ts if now_ts is not None else time.time())
     solver_id = "tool:%s" % probe["tool"]
     gate = isolation_gate(probe, solver_id=solver_id)
@@ -671,6 +673,121 @@ def _run_cmpaws_discrimination_probe(probe: dict, *, now_ts=None, runner=None) -
             "oracle_run": "comp-aws score --class: garbage(%s)->rc%s / no-oracle(%s)->rc%s / real-oracle(%s)->rc%s"
                           % (fx["garbage_class"], rc_garbage, fx["no_oracle_class"], rc_no_oracle,
                              fx["real_oracle_class"], rc_real),
+        },
+    })
+    return row
+
+
+# ---- (B) the comp-surface-check DETECTION-CORRECTNESS discrimination probe (CTO~D B2 2026-07-12) --------
+# comp-surface-check is the SEV1 critical-surface DETECTION gate (Rule 20). Its detection is honest today
+# (a path-match vs critical-surfaces.yaml), so this scores effective="yes" and stands as a REGRESSION GUARD
+# -- a detection regression (registry-parse break / path-match bug / severity-resolution error) is a SILENT
+# FALSE-CLEAN on a must-always-be-right surface. SCOPE (MANDATORY, CTO~D): the bool attests DETECTION-
+# CORRECTNESS ONLY -- NOT that the SEV1 surfaces are GATED in the real commit flow (that wiring-blindness is
+# LD-0273, arch-gated CTO). Two axes, two records; this bool must never be read as "surfaces protected".
+_SURFACECHECK_SCOPE = (
+    "effective=yes attests DETECTION-CORRECTNESS ONLY (a registered SEV1 path is FLAGGED + a non-critical "
+    "path is CLEARED, vs critical-surfaces.yaml as the independent oracle); it does NOT attest the SEV1 "
+    "surfaces are GATED in the real commit flow -- that wiring-blindness is LD-0273 (open, arch-gated CTO).")
+
+
+def _registered_surface_paths(registry_rel: str) -> set:
+    """The set of `path:` values registered in critical-surfaces.yaml -- the INDEPENDENT oracle, read by the
+    PROBE (never the tool's stdout). yaml if available, else a tolerant `- path: X` line scan. Absolute-
+    resolved off _WS."""
+    path = os.path.join(_WS, registry_rel)
+    with open(path, encoding="utf-8", errors="replace") as fh:
+        txt = fh.read()
+    try:
+        import yaml  # optional; the line scan is the fallback + independently correct for this block shape
+        doc = yaml.safe_load(txt)
+        found = set()
+
+        def _walk(o):
+            if isinstance(o, dict):
+                if isinstance(o.get("path"), str):
+                    found.add(o["path"].strip())
+                for v in o.values():
+                    _walk(v)
+            elif isinstance(o, list):
+                for v in o:
+                    _walk(v)
+        _walk(doc)
+        if found:
+            return found
+    except Exception:  # noqa: BLE001 -- fall through to the tolerant line scan
+        pass
+    return {m.group(1).strip() for m in re.finditer(r"^\s*-?\s*path:\s*(\S+)", txt, re.M)}
+
+
+def _default_surfacecheck_runner(file_path: str, timeout_s: int) -> int:
+    """Run `comp-surface-check check --file <path> --mode blocking` -> its rc. Calls surface_check_cli.py
+    DIRECTLY (the bash wrapper adds only comp_log_auto). --mode BLOCKING so rc!=0 reflects a real SEV1
+    DETECTION (advisory mode nullifies the rc -> a false 'no-detection'). rc 0 = clean/no-SEV1, rc!=0 =
+    SEV1 touch (block-with-ack)."""
+    cli = os.path.join(_WS, "org", "modules", "graph", "surface_check_cli.py")
+    r = subprocess.run([sys.executable, cli, "check", "--file", file_path, "--mode", "blocking"],
+                       capture_output=True, text=True, timeout=timeout_s)
+    return r.returncode
+
+
+def _run_surfacecheck_discrimination_probe(probe: dict, *, now_ts=None, runner=None, registry_reader=None) -> dict:
+    ts = int(now_ts if now_ts is not None else time.time())
+    fx = probe["fixture"]
+    to = int(probe.get("usability_timeout_s", 60))
+    run = runner or _default_surfacecheck_runner
+    reg_read = registry_reader or _registered_surface_paths
+    row = {"probe_id": probe["probe_id"], "tool": probe["tool"], "class": probe["tool_class"],
+           "probe_ts": ts, "isolation_ok": True}
+
+    def _void(reason):
+        row.update({"reach": None, "usability": None, "effective": "unknown", "void_reason": reason,
+                    "effective_evidence": {"case": "negative", "scope": _SURFACECHECK_SCOPE,
+                                           "oracle_run": "VOID: %s" % reason}})
+        return row
+
+    # (1) NON-VACUOUS controls (CTO~D tightening #1): read the registry ORACLE + confirm membership at
+    # RUN-TIME -- else a registry edit silently makes the positive control vacuous.
+    try:
+        registered = reg_read(fx["registry"])
+    except Exception as e:  # noqa: BLE001 -- an unreadable oracle is UNKNOWN, never a silent verdict
+        return _void("could not read the critical-surfaces registry oracle %s: %r" % (fx.get("registry"), e))
+    if fx["sev1_path"] not in registered:
+        return _void("positive control VACUOUS: %s is NOT registered in %s (registry edited?)"
+                     % (fx["sev1_path"], fx["registry"]))
+    if fx["noncritical_path"] in registered:
+        return _void("negative control INVALID: %s IS registered (must be non-critical)" % fx["noncritical_path"])
+
+    # (2) RC contract in BLOCKING mode (CTO~D tightening #2): SEV1 -> rc!=0, non-critical -> rc0.
+    try:
+        rc_sev1 = run(fx["sev1_path"], to)
+        rc_non = run(fx["noncritical_path"], to)
+    except Exception as e:  # noqa: BLE001 -- subprocess/timeout failure is UNKNOWN, never a silent no
+        return _void("comp-surface-check run failed: %r" % e)
+
+    obs = {"sev1_rc": rc_sev1, "noncritical_rc": rc_non,
+           "expected": "registered SEV1 -> rc!=0 (block-with-ack) / non-critical -> rc0 (clean)"}
+    discriminates = (rc_sev1 != 0) and (rc_non == 0)
+    if discriminates:
+        eff, reach_v, usab_v = "yes", "yes", "usable"        # detection-correct: flags SEV1, clears non-critical
+    else:
+        # flag-none (missed the SEV1 -> silent false-clean), flag-all (false-flags non-critical), or inverted
+        # -- every non-discriminating shape is a detection regression. A crash/usage error VOIDed above.
+        eff, reach_v, usab_v = "no", "no", "usable"
+    row.update({
+        "reach": reach_v, "usability": usab_v, "effective": eff,
+        "effective_evidence": {
+            "case": "negative",
+            # MANDATORY (CTO~D): the bool is DETECTION-CORRECTNESS ONLY, never "surfaces protected".
+            "scope": _SURFACECHECK_SCOPE,
+            "observed": obs,
+            "expected": "registered SEV1 rc!=0 (blocking) AND non-critical rc0 -- discriminates",
+            # oracle = critical-surfaces.yaml MEMBERSHIP (read by the probe), grounded OTHER than the tool's
+            # stdout; oracle_run = the EXERCISED blocking runs (rc discrimination), never a source file:line.
+            "oracle_run": ("comp-surface-check check --mode blocking: SEV1(%s)->rc%s / non-critical(%s)->rc%s; "
+                           "oracle=critical-surfaces.yaml membership (sev1 registered=%s, non-critical registered=%s)"
+                           % (fx["sev1_path"], rc_sev1, fx["noncritical_path"], rc_non,
+                              fx["sev1_path"] in registered, fx["noncritical_path"] in registered)),
         },
     })
     return row

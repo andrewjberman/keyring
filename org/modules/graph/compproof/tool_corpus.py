@@ -219,6 +219,34 @@ TOOL_PROBES = [
         "expected": "effective",  # comp-aws is rc-honest TODAY -> yes; the probe is the regression guard
         "live_estate": True,
     },
+    {
+        "probe_id": "comp-surface-check/sev1-detection-discrimination",
+        "tool": "comp-surface-check",
+        "tool_class": "critical-surface-detection",
+        "kind": "surfacecheck-discrimination",
+        # EFFECTIVE-axis probe for comp-surface-check, the SEV1 critical-surface DETECTION gate (Rule 20).
+        # DETECTION-CORRECTNESS regression guard (CTO~D B2 ruling 2026-07-12, framing APPROVED w/ the
+        # mandatory scoping annotation). The tool's detection is honest today (path-match vs the registry),
+        # so this scores effective="yes" and guards a detection regression -- a registry-parse break /
+        # path-match bug / severity-resolution error is a SILENT FALSE-CLEAN on a must-always-be-right
+        # surface (the worst class for a gate). SCOPE (MANDATORY -- in _SURFACECHECK_SCOPE + every emitted
+        # effective_evidence): effective="yes" attests DETECTION-CORRECTNESS ONLY -- NOT that the SEV1
+        # surfaces are GATED in the real commit flow (that wiring-blindness is LD-0273, arch-gated CTO).
+        # Two axes, two records; this bool must NEVER be read as "surfaces protected".
+        # ORACLE = critical-surfaces.yaml MEMBERSHIP (read by the probe, not the tool's stdout); the runner
+        # asserts sev1_path IS registered + noncritical_path is NOT, at run-time (non-vacuous both ways).
+        # VERDICT = the RC contract of `check --mode blocking` (SEV1->rc!=0, non-critical->rc0), NEVER a
+        # substring. READ-only, parent-scoped (argv carries only the PATH, no verdict leak); no S3/estate/bd.
+        "question": "Does comp-surface-check FLAG a registered SEV1 surface (block-with-ack, rc!=0 blocking) AND CLEAR a non-critical file (rc0) -- discriminating, not flag-all/flag-none?",
+        "fixture": {
+            "sev1_path": "portal/src/pages/ModelPortfolios.tsx",          # POSITIVE control: registered SEV1 (asserted vs the registry at run-time)
+            "noncritical_path": "org/modules/graph/comp_tool_health.py",  # the discrimination: NOT registered (asserted)
+            "registry": "org/modules/graph/critical-surfaces.yaml",       # the INDEPENDENT oracle (read by the probe, never the tool's stdout)
+        },
+        "usability_timeout_s": 60,
+        "expected": "effective",   # comp-surface-check detection is honest TODAY -> yes; the probe is the regression guard
+        "live_estate": False,      # local/parent-scoped: path-match vs the registry; no AWS/S3/estate, no bd
+    },
 ]
 
 
