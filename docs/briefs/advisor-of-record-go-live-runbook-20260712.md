@@ -86,9 +86,12 @@ pre-activation, which is the entire point.** Fix relayed to DS.
 **Secondaries (fix same round):** phantom-advisor minting on daily drift (canonicalize:417 -- no known-advisor
 allowlist; CONFIRMED); swallowed S3 read-failure misreported as "roster MISSING" + unguarded list paginate
 (loader:221/235/262; CONFIRMED); placebo conservation check (gate:71 omits firm, structurally invariant;
-CONFIRMED); NEW s3 read dependency on all 10 producer roles needs simulate-principal-policy (loader:221;
-PLAUSIBLE -- Rule 22a); 7-partition walk-back too narrow (loader:229; PLAUSIBLE); cross-process attribution
-drift (loader:302; PLAUSIBLE). Full: task wty8mrgmu.output.
+CONFIRMED); NEW s3 read dependency on all 10 producer roles (loader:221; PLAUSIBLE -- Rule 22a) -- **SATISFIED** (AE,
+2026-07-12): all 10 share inf-gold-layer-ec2-role with broad opal-data-inf/* read, already exercised
+nightly via INF_C_07:156; grounded applied+exercised (NOT simulate -- for this SCP-bound EC2 role simulate
+FALSE-denies every read, incl a known-good positive control; do NOT read a gold-runner simulate explicitDeny
+as a go-live block); 7-partition walk-back too narrow (loader:229; PLAUSIBLE -> DS S4 date-bounded);
+cross-process attribution drift (loader:302; PLAUSIBLE -> DS S5 run-level as-of). Full: task wty8mrgmu.output.
 
 **STATUS: go-live HELD. P1/P5 false-green (downgraded). CHANGE-2 review deferred (stacks on the broken
 loader). DS fixes 3c EXERCISING THE PRODUCTION LOADER PATH -> I re-review 3c -> then CHANGE-2. Switch stays
