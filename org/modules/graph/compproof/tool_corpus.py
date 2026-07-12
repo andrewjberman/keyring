@@ -247,6 +247,32 @@ TOOL_PROBES = [
         "expected": "effective",   # comp-surface-check detection is honest TODAY -> yes; the probe is the regression guard
         "live_estate": False,      # local/parent-scoped: path-match vs the registry; no AWS/S3/estate, no bd
     },
+    {
+        "probe_id": "comp-pipescript/io-dependency-traversal",
+        "tool": "comp-pipescript",
+        "tool_class": "gold-dag-io",
+        # EFFECTIVE-axis probe for comp-pipescript (the gold-layer I/O-manifest / DAG tool, NON-preventive).
+        # HONEST measurement (CTO~D 2026-07-12): does `comp-pipescript io <script>` genuinely SURFACE the
+        # script's real I/O + dependency chain -- NOT a predetermined verdict. Scored on a DISCRIMINATING,
+        # source-grounded fact (CTO~D refinement, the comp-freshness lesson): INF_A_04's READ INPUT KEY +
+        # its PRODUCER edge, which appear in the io output ONLY IF pipescript traversed THIS script's deps
+        # (a boilerplate header would false-match reach). ORACLE = INF_A_04's SOURCE directly (ACCOUNTS_DIM_
+        # KEY:53 -> it reads gold/dimensions/accounts_dimension_latest.parquet, which INF_A_00 writes as its
+        # OUTPUT_KEY) -- grounded OTHER than pipescript's own stdout (Rule 22a / FP-R0). pipescript DERIVES
+        # this edge by source-parsing all gold scripts (not a stale graph cache), so it is robust; a genuine
+        # graph-vintage miss would VOID (rc!=0 / usage error), never score a silent no. ISOLATION: the terms
+        # are NOT in the run argv (the filename is INF_A_04.client_dimension.py; the write key "client_
+        # dimension" is deliberately NOT an answer_term to avoid an argv leak). HONEST SCORING: today it
+        # REACHES the read + producer edge -> yes->KEEP; a DAG-detection regression (missed read / dropped
+        # producer edge) would score no->FIX (comp-pipescript is non-preventive -> the flip is real).
+        "question": "Does `comp-pipescript io INF_A_04` surface its REAL read input (accounts_dimension_latest.parquet) AND the producer edge (<- INF_A_00), from source?",
+        "run": ["comp-pipescript", "io", "data/inf/scripts/gold/INF_A_04.client_dimension.py"],
+        "answer_terms": ["accounts_dimension_latest.parquet", "INF_A_00"],
+        "reach_threshold": 2,      # BOTH the read input AND its producer edge -> a real dependency traversal, not a header
+        "usable_returncodes": [0],
+        "expected": "effective",   # comp-pipescript's gold-DAG traversal is correct TODAY -> yes (HONEST result, not a target); regression guard
+        "live_estate": False,      # local: pipescript source-parses gold scripts; no AWS estate; inf script only -> sovereign trivially green
+    },
 ]
 
 

@@ -213,5 +213,43 @@
         "oracle_run": "comp-surface-check check --mode blocking: SEV1(portal/src/pages/ModelPortfolios.tsx)->rc2 / non-critical(org/modules/graph/comp_tool_health.py)->rc0; oracle=critical-surfaces.yaml membership (sev1 registered=True, non-critical registered=False)"
       }
     ]
+  },
+  "comp-pipescript": {
+    "effective": "yes",
+    "effective_label": "yes",
+    "reach": [
+      "yes"
+    ],
+    "usability": [
+      "usable"
+    ],
+    "classes": [
+      "gold-dag-io"
+    ],
+    "probe_ids": [
+      "comp-pipescript/io-dependency-traversal"
+    ],
+    "isolation_ok": true,
+    "probe_ts": 1783892093,
+    "fix_probes": [],
+    "effective_evidence": [
+      {
+        "probe_id": "comp-pipescript/io-dependency-traversal",
+        "case": "positive",
+        "observed": {
+          "reach": "yes",
+          "usability": "usable",
+          "hits": [
+            "accounts_dimension_latest.parquet",
+            "inf_a_00"
+          ]
+        },
+        "expected": [
+          "accounts_dimension_latest.parquet",
+          "INF_A_00"
+        ],
+        "oracle_run": "comp-pipescript io data/inf/scripts/gold/INF_A_04.client_dimension.py"
+      }
+    ]
   }
 }
