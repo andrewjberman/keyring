@@ -16264,3 +16264,5 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-12 | 0.7.0_AE_CloudOps | (INF-udf7ADVISOROF) | (none) | STEP-1 endpoint determination -- docs/schema grounding (Read+Grep) that /Portfolio/Accounts carries udf7ADVISOROF, /NewPortfolio omits it, no $select rescue; zero live Orion call | N/A |
 | 2026-07-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (Andrew-direct /log) | (grounding) | deploy-safety scan of the 15 folds + comp_tool_health:132-148 linkage-already-wired grounding | PASS -- 100% closed, no open CVO work |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
