@@ -349,6 +349,37 @@ def rail_enforcement_context() -> dict:
 # --------------------------------------------------------------------------------------------
 # The EFFECTIVE-feed join contract (TH-A) -- makes Phase-B a CONFIG wire, not a code change.
 # --------------------------------------------------------------------------------------------
+
+# TOOLGRAPH TO-3 keystone (CTO-ratified 2026-07-12): the EFFECTIVE axis reads the TH-A probe's
+# EXERCISED effective_feed BY DEFAULT (live-by-default), not None-unless-flag. This is the quality
+# sensor the COMPLEARN loop lacked -- a tool that exits-0-while-LYING now reads FIX, not KEEP, once
+# its exercised effective="no" feeds classify_full (:168, the load-bearing FIX). The wire is a PURE
+# REDUCER: it READS the producer-supplied `effective`, it NEVER computes it (anti-harness -- the wire
+# stops at the verdict door, same property as PASSCRAFT). Contract v1 (2-way, CVO base + CVO~B probe).
+DEFAULT_EFFECTIVE_FEED = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                      "compproof", "effective_feed.json")
+
+# Effective vocab: tristate (CTO-ratified). "unknown" (VOID) must stay EXPLICIT -- never collapse it
+# into a bare False (a non-observation is not a negative observation; CVO leg-4 CANNOT-EVALUATE vs FAIL).
+_EFFECTIVE_TRISTATE = ("yes", "no", "unknown")
+
+
+def _effective_to_bool(x):
+    """Map a producer-supplied effective signal to the wire's tri-state bool: True (effective) /
+    False (measured NOT effective) / None (VOID -- unknown/pending, NEVER a silent False). Accepts the
+    tristate string ("yes"|"no"|"unknown") or a bare bool (legacy). Off-vocab / null -> None (fail-closed
+    toward unknown). This is a pure mapping -- it derives NOTHING, it only translates the produced value."""
+    if isinstance(x, bool):
+        return x
+    if isinstance(x, str):
+        s = x.strip().lower()
+        if s == "yes":
+            return True
+        if s == "no":
+            return False
+    return None  # "unknown" / null / off-vocab -> pending (VOID explicit)
+
+
 def load_effective_feed(path: str) -> dict:
     """Load TH-A's per-tool EFFECTIVE probe stream from JSON -> a normalized {canonical_tool: bool}.
 
@@ -375,11 +406,14 @@ def load_effective_feed(path: str) -> dict:
         tool = _canonical_tool(k)
         if not tool:
             continue
-        if isinstance(v, bool):
-            feed[tool] = v
-        elif isinstance(v, dict) and isinstance(v.get("effective"), bool):
-            feed[tool] = v["effective"]
-        # anything else (None/number/str) -> leave the tool EFFECTIVE-pending (never a silent False)
+        # The TH-A probe emits a TRISTATE effective ("yes"|"no"|"unknown") -- OR a bare bool (legacy).
+        # yes/True -> effective; no/False -> measured NOT effective; unknown/anything-else -> pending
+        # (NOT added, so the tool stays EFFECTIVE-pending). VOID is EXPLICIT: a False in the feed MUST
+        # mean "measured not-effective", NEVER "could not measure". The wire READS this, never computes it.
+        raw_eff = v.get("effective") if isinstance(v, dict) else v
+        b = _effective_to_bool(raw_eff)
+        if b is not None:
+            feed[tool] = b
     return feed
 
 
@@ -716,7 +750,12 @@ def main() -> int:
                    + f"  VERDICT: {audit['verdict']}")
         return 0
 
-    feed = load_effective_feed(args.effective_feed) if args.effective_feed else None
+    # LIVE-BY-DEFAULT (TOOLGRAPH TO-3): default the EFFECTIVE feed to the TH-A probe's exercised output
+    # (compproof/effective_feed.json). --effective-feed overrides; an ABSENT probe feed fail-safes to the
+    # 2-axis skeleton (EFFECTIVE pending) -- never a crash. Was: None-unless-flag (the stubbed-None state
+    # where a exit-0-while-lying tool scored KEEP). The flip to FIX now rides the exercised effective.
+    _feed_path = args.effective_feed or (DEFAULT_EFFECTIVE_FEED if os.path.exists(DEFAULT_EFFECTIVE_FEED) else None)
+    feed = load_effective_feed(_feed_path) if _feed_path else None
     h = health(effective_feed=feed)
     if args.tool:
         print(_render_tool(h, _canonical_tool(args.tool) or args.tool))
