@@ -221,6 +221,8 @@ def probe_one(probe: dict, *, now_ts: float | None = None) -> dict:
     probe_ts, isolation_ok, ...}. A VOID isolation gate -> effective=unknown (measured nothing)."""
     if probe.get("kind") == "discrimination":
         return _run_discrimination_probe(probe, now_ts=now_ts)
+    if probe.get("kind") == "pk-discrimination":
+        return _run_pk_discrimination_probe(probe, now_ts=now_ts)
     ts = int(now_ts if now_ts is not None else time.time())
     solver_id = "tool:%s" % probe["tool"]
     gate = isolation_gate(probe, solver_id=solver_id)
@@ -362,6 +364,118 @@ def _run_discrimination_probe(probe: dict, *, now_ts=None,
 # NOTE: no scratch-sweep/delete exists by design (CTO 143216Z option a) -- the discrimination fixture is a
 # single FIXED key OVERWRITTEN each run, so it never accumulates and needs no cleanup. An `aws s3 rm` would
 # be a human-confirmation op; the fixed-key overwrite designs it out.
+
+
+# ---- (B2) the PARTITION-KEY discrimination probe: the SIBLING freeze-blind path (CTO D2 2026-07-12) -----
+# The keystone (B) measures the ad-hoc `artifact`-mode MTIME miss (defect a). THIS measures the partition-key
+# `_max_partition_date` miss (defect b): comp-freshness's partition-key mode reads the aws-s3-ls LastModified
+# instead of the filename date-key, so a silver/<t>/<STALE-date>.parquet with a FRESH mtime reads GREEN.
+# GREY-BOX BY NECESSITY: comp-freshness has no config-override / partition-key CLI flag, so the CLI cannot
+# reach partition-key mode for a scratch fixture -- the probe exercises the REAL _check_artifact against a
+# real in-scope partition-keyed S3 fixture and scores on its computed STATUS (never a substring). Oracle =
+# the FROZEN date-key filename the probe wrote (independent of comp-freshness, which reads LastModified).
+
+_CAUGHT_STATUSES = ("WARN", "FAIL", "ESCALATED", "STALE")   # comp-freshness rendered a staleness verdict
+_GREEN_STATUS = "PASS"                                       # rendered fresh on a KNOWN-frozen date-key = the lie
+
+
+def _load_comp_freshness():
+    """Load the extensionless .tools/comp-freshness as a module (grey-box). comp-freshness has no
+    config-override / partition-key CLI entry point, so the partition-key path (the defect-b seam) is only
+    reachable by calling _check_artifact directly against a staged partition-keyed fixture."""
+    import importlib.machinery
+    import importlib.util
+    tool = os.path.join(_WS, ".tools", "comp-freshness")
+    ldr = importlib.machinery.SourceFileLoader("comp_freshness_probe", tool)
+    spec = importlib.util.spec_from_loader(ldr.name, ldr)
+    mod = importlib.util.module_from_spec(spec)
+    ldr.exec_module(mod)
+    return mod
+
+
+def _default_pk_fixture_writer(obj_uri: str, *, date_key: str) -> None:
+    """OVERWRITE a partition-keyed object `.../<date_key>.parquet` with a FRESH mtime (write=now). The
+    filename date_key is the FROZEN content frontier an honest partition-key reader must return; the fresh
+    mtime is the trap. aws resolved to a full path (Windows subprocess cannot resolve a bare `aws`)."""
+    body = ("PK-FREEZE-FIXTURE date-key=%s (fresh mtime); an honest partition-key reader returns the KEY, "
+            "not LastModified. TH-A pk-discrimination probe fixture." % date_key)
+    r = subprocess.run([_aws_bin(), "s3", "cp", "-", obj_uri, "--content-type", "text/plain"],
+                       input=body, text=True, capture_output=True, timeout=60)
+    if r.returncode != 0:
+        raise RuntimeError("aws s3 cp failed rc=%d: %s" % (r.returncode, (r.stderr or "")[:200]))
+
+
+def _default_pk_checker(entry: dict, now):
+    """Exercise comp-freshness's REAL _check_artifact (partition-key path) against the staged fixture."""
+    cf = _load_comp_freshness()
+    return cf._check_artifact(entry, now)   # noqa: SLF001 -- the partition-key seam under test
+
+
+def _run_pk_discrimination_probe(probe: dict, *, now_ts=None,
+                                 fixture_writer=None, checker=None) -> dict:
+    import datetime as _dt
+    ts = int(now_ts if now_ts is not None else time.time())
+    fx = probe["fixture"]
+    date_key = str(fx.get("frozen_date_key", "2001-01-01"))         # FIXED old key -> no accumulation
+    prefix_uri = "s3://%s/%s" % (fx["scratch_bucket"], fx["scratch_prefix"])
+    obj_uri = "%s%s.parquet" % (prefix_uri, date_key)
+    row = {"probe_id": probe["probe_id"], "tool": probe["tool"], "class": probe["tool_class"],
+           "probe_ts": ts, "isolation_ok": True}
+    try:
+        _assert_scratch_in_scope(obj_uri)
+    except ValueError as e:
+        row.update({"reach": None, "usability": None, "effective": "unknown", "void_reason": str(e),
+                    "effective_evidence": {"case": "negative", "oracle_run": "VOID: %s" % e}})
+        return row
+    writer = fixture_writer or _default_pk_fixture_writer
+    check = checker or _default_pk_checker
+    try:
+        writer(obj_uri, date_key=date_key)     # OVERWRITE the fixed date-key object -> fresh mtime + frozen key
+    except Exception as e:  # noqa: BLE001 -- a staging failure is UNKNOWN, never a silent no
+        row.update({"reach": None, "usability": None, "effective": "unknown",
+                    "void_reason": "fixture-stage-failed: %r" % e,
+                    "effective_evidence": {"case": "negative", "oracle_run": "VOID: could not stage pk fixture"}})
+        return row
+    entry = {"artifact_id": "toolprobe_pk_freeze", "s3_key_prefix": prefix_uri,
+             "warn_age_hours": fx.get("warn_age_hours", 30), "fail_age_hours": fx.get("fail_age_hours", 48),
+             "severity": fx.get("severity", "ERROR"), "cadence": "daily", "_pk_check": True}
+    now = _dt.datetime.utcfromtimestamp(ts).replace(tzinfo=_dt.timezone.utc)
+    try:
+        result = check(entry, now)
+    except Exception as e:  # noqa: BLE001 -- a checker crash is UNKNOWN, never a silent no
+        row.update({"reach": None, "usability": None, "effective": "unknown",
+                    "void_reason": "checker-failed: %r" % e,
+                    "effective_evidence": {"case": "negative", "oracle_run": "VOID: _check_artifact raised"}})
+        return row
+    status = str(result.get("status", "")).upper()
+    partition_as_of = result.get("partition_as_of")
+    notes = str(result.get("notes", ""))
+    # VERDICT is the computed STATUS, not a substring. A partition-UNCHECKED (couldn't read the date-key) is
+    # VOID -- "no observation", never a silent no (the CANNOT-EVALUATE vs FAIL law).
+    if "PARTITION-KEY UNCHECKED" in notes or status in ("MISSING", "ERROR", "SKIP", "RAW", ""):
+        eff, reach_v, usab_v = "unknown", None, "fell-back"
+    elif status in _CAUGHT_STATUSES:
+        eff, reach_v, usab_v = "yes", "yes", "usable"          # rendered a staleness verdict -> CAUGHT the freeze
+    elif status == _GREEN_STATUS:
+        eff, reach_v, usab_v = "no", "no", "usable"            # PASS on a KNOWN-frozen date-key -> false-GREEN
+    else:
+        eff, reach_v, usab_v = "unknown", None, "fell-back"
+    row.update({
+        "reach": reach_v, "usability": usab_v, "effective": eff, "status": status,
+        "partition_as_of": str(partition_as_of) if partition_as_of is not None else None,
+        "effective_evidence": {
+            "case": "negative",
+            "observed": {"status": status, "partition_as_of": str(partition_as_of)},
+            "expected": "FAIL/WARN (frozen date-key %s.parquet, fresh mtime -- an honest partition-key "
+                        "reader returns %s, not the mtime)" % (date_key, date_key),
+            # oracle_run = the EXERCISED run: staged a real frozen-date-key object, ran comp-freshness's real
+            # _check_artifact (partition-key mode). Grey-box because the CLI has no scratch-partition-key path.
+            "oracle_run": "overwrote %s (date-key %s, fresh mtime), ran comp-freshness _check_artifact "
+                          "(partition-key mode); oracle date-key=%s independent of the tool (reads mtime)"
+                          % (obj_uri, date_key, date_key),
+        },
+    })
+    return row
 
 
 # ---- per-tool rollup + emit (append-only stream + the TH-B feed) ----------------------------

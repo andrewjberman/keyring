@@ -122,6 +122,39 @@ TOOL_PROBES = [
         "expected": "fix",   # self-test label: PRE-fix the discrimination catches comp-freshness's false-GREEN
         "live_estate": True,
     },
+    {
+        "probe_id": "comp-freshness/partition-key-frozen-vs-fresh",
+        "tool": "comp-freshness",
+        "tool_class": "artifact-freshness",
+        "kind": "pk-discrimination",
+        # SENSOR-COMPLETENESS (CTO D2, 2026-07-12). The keystone discrimination probe above measures the
+        # AD-HOC `artifact`-mode MTIME-only miss (defect a; cmd_artifact:1058 permissive-default, no
+        # _pk_check). This case measures the SIBLING partition-key miss (defect b): comp-freshness's
+        # PARTITION-KEY mode reads _max_partition_date, whose `_DATE_KEY_RE.search(line)` (:347) takes the
+        # FIRST date on an `aws s3 ls` line = the LastModified column, NOT the filename date-key -- so a
+        # silver/<t>/<STALE-date>.parquet rewritten with a FRESH mtime reads GREEN (the FIX-TO defect,
+        # 23a7be2a1). GREY-BOX BY NECESSITY: comp-freshness has NO config-override / partition-key CLI flag,
+        # so the ad-hoc CLI cannot reach partition-key mode for a scratch fixture -- the probe stages a real
+        # in-scope partition-keyed S3 fixture and exercises the REAL _check_artifact (partition-key path),
+        # scoring on its computed STATUS (not a substring). The ORACLE = the FROZEN date-key filename the
+        # probe WROTE (2001-01-01), independent of comp-freshness (which reads LastModified). VALIDATED live
+        # 2026-07-12: the fixture reads status=PASS, partition_as_of=<today> (the mtime) -> effective="no".
+        # POST the FIX-TO land, _max_partition_date reads 2001 -> status=FAIL -> effective="yes" (the loop
+        # closes on defect b). FIXED date-key -> object never accumulates (overwrite, no delete).
+        "question": "Does comp-freshness's PARTITION-KEY mode catch a frozen date-key (silver/<t>/<stale>.parquet) whose S3 mtime is fresh?",
+        "fixture": {
+            "scratch_bucket": "opal-data-inf",                    # IN-SCOPE only (asserted); never bd/schwab
+            "scratch_prefix": "_toolprobe_scratch/pk/silver/toolprobe/",  # a silver/<table>/ shape; dedicated
+            "frozen_date_key": "2001-01-01",                      # FIXED old date-key = the oracle; no accumulation
+            "warn_age_hours": 30, "fail_age_hours": 48, "severity": "ERROR",
+        },
+        # VERDICT is comp-freshness's computed result["status"] (from _check_artifact), NOT a substring:
+        # PASS => false-GREEN on a frozen date-key => effective="no"; WARN/FAIL/ESCALATED => CAUGHT => "yes";
+        # a partition-UNCHECKED / MISSING / ERROR / staging failure => VOID/unknown (never a silent no).
+        "usability_timeout_s": 60,
+        "expected": "fix",   # self-test label: PRE-fix the partition-key mode false-GREENs the frozen date-key
+        "live_estate": True,
+    },
 ]
 
 

@@ -18,7 +18,7 @@
       "comp-which/routing-02"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783868112,
+    "probe_ts": 1783869681,
     "fix_probes": [
       "comp-which/routing-02"
     ],
@@ -58,9 +58,11 @@
     "effective_label": "no",
     "reach": [
       "yes",
+      "no",
       "no"
     ],
     "usability": [
+      "usable",
       "usable",
       "usable"
     ],
@@ -69,12 +71,14 @@
     ],
     "probe_ids": [
       "comp-freshness/single-artifact",
-      "comp-freshness/frozen-vs-fresh-discrimination"
+      "comp-freshness/frozen-vs-fresh-discrimination",
+      "comp-freshness/partition-key-frozen-vs-fresh"
     ],
     "isolation_ok": true,
-    "probe_ts": 1783868116,
+    "probe_ts": 1783869690,
     "fix_probes": [
-      "comp-freshness/frozen-vs-fresh-discrimination"
+      "comp-freshness/frozen-vs-fresh-discrimination",
+      "comp-freshness/partition-key-frozen-vs-fresh"
     ],
     "effective_evidence": [
       {
@@ -98,6 +102,16 @@
         "observed": "artifact_id                            | s3_key                                                  | last_modified              | age_h    | fail_at_h | status\n------------------------------------------",
         "expected": "STALE (content data_as_of 2026-06-12 = frozen ~30d)",
         "oracle_run": "overwrote s3://opal-data-inf/_toolprobe_scratch/comp-freshness/frozen.json with content data_as_of=2026-06-12 (frozen, fresh mtime), then ran comp-freshness on it"
+      },
+      {
+        "probe_id": "comp-freshness/partition-key-frozen-vs-fresh",
+        "case": "negative",
+        "observed": {
+          "status": "PASS",
+          "partition_as_of": "2026-07-12"
+        },
+        "expected": "FAIL/WARN (frozen date-key 2001-01-01.parquet, fresh mtime -- an honest partition-key reader returns 2001-01-01, not the mtime)",
+        "oracle_run": "overwrote s3://opal-data-inf/_toolprobe_scratch/pk/silver/toolprobe/2001-01-01.parquet (date-key 2001-01-01, fresh mtime), ran comp-freshness _check_artifact (partition-key mode); oracle date-key=2001-01-01 independent of the tool (reads mtime)"
       }
     ]
   }

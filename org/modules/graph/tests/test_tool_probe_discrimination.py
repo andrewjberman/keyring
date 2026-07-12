@@ -18,6 +18,11 @@ HEADER, so a naive `"fail" in stdout` false-matched a PASS row as CAUGHT (caught
 PASS (=> false-GREEN on the frozen fixture => no), rc 1 = a FAIL/STALE verdict (=> caught => yes), any
 other rc / timeout => VOID/unknown.
 
+Also covers the SIBLING pk-discrimination case (CTO D2, defect b): the keystone above measures the ad-hoc
+`artifact`-mode MTIME miss (a); the `test_pk_*` bar measures the partition-key `_max_partition_date` miss
+(b) -- a grey-box over the REAL _check_artifact, verdict = its computed STATUS (PASS=>no, WARN/FAIL=>yes,
+partition-UNCHECKED/crash=>VOID). Same VOID-not-silent-no + sovereign-scratch + fixed-key-overwrite laws.
+
 # rail-checked: assurance oracle for the TH-A discrimination probe under test (NFRA_TOOLPASS sec.6)
 Author: 3.0.0_SA_CVO~B.
 """
@@ -152,6 +157,84 @@ def test_negative_arm_is_load_bearing_MUTANT():
     mut, _ = _run(neutered, lambda uri: {"stdout": "STATUS: PASS (fresh)", "rc": 0})
     assert mut["effective"] != "no", "neutering the negative arm must LOSE the false-GREEN catch (non-vacuous)"
     assert mut["effective"] == "unknown"
+
+
+_PK = {
+    "probe_id": "comp-freshness/partition-key-frozen-vs-fresh", "tool": "comp-freshness",
+    "tool_class": "artifact-freshness", "kind": "pk-discrimination",
+    "fixture": {"scratch_bucket": "opal-data-inf", "scratch_prefix": "_toolprobe_scratch/pk/silver/toolprobe/",
+                "frozen_date_key": "2001-01-01", "warn_age_hours": 30, "fail_age_hours": 48, "severity": "ERROR"},
+    "usability_timeout_s": 60, "expected": "fix", "live_estate": True,
+}
+
+
+def _run_pk(pk, checker_result, *, writer_raises=False, checker_raises=False, now_ts=_NOW):
+    """Hermetic: inject the fixture WRITER and the _check_artifact CHECKER -- never touches S3 or
+    comp-freshness. No deleter (fixed-key overwrite, no delete -- same autonomy-clean design as B)."""
+    calls = {"writer": [], "checker": []}
+
+    def w(uri, *, date_key):
+        calls["writer"].append((uri, date_key))
+        if writer_raises:
+            raise RuntimeError("s3 unavailable")
+
+    def c(entry, now):
+        calls["checker"].append((entry, now))
+        if checker_raises:
+            raise RuntimeError("check crashed")
+        return checker_result
+
+    row = tp._run_pk_discrimination_probe(pk, now_ts=now_ts, fixture_writer=w, checker=c)
+    return row, calls
+
+
+def test_pk_caught_frozen_datekey_effective_yes():
+    # comp-freshness rendered FAIL on the frozen date-key -> it READ the key -> CAUGHT the freeze.
+    row, calls = _run_pk(_PK, {"status": "FAIL", "partition_as_of": "2001-01-01"})
+    assert row["effective"] == "yes", "a FAIL verdict on the frozen date-key -> effective"
+    assert row["effective_evidence"]["case"] == "negative"
+    assert calls["checker"], "the checker was exercised after staging"
+    assert calls["writer"][0][0].endswith("/2001-01-01.parquet"), "staged the frozen date-key object"
+
+
+def test_pk_lied_green_on_frozen_datekey_effective_no_BITE():
+    # THE BITE (defect b): PASS + partition_as_of=<today> = it read the fresh mtime, not the 2001 key.
+    row, _ = _run_pk(_PK, {"status": "PASS", "partition_as_of": "2026-07-12"})
+    assert row["effective"] == "no", "PASS on a KNOWN-frozen date-key => effective=no (the false-GREEN catch)"
+    assert row["effective_evidence"]["observed"]["partition_as_of"] == "2026-07-12"
+    assert "2001-01-01" in row["effective_evidence"]["oracle_run"], "oracle = the frozen date-key it wrote"
+
+
+def test_pk_void_on_partition_unchecked_is_not_a_silent_no():
+    # A partition-UNCHECKED (couldn't read the date-key) PASS is "no observation", NOT a false-GREEN.
+    # It must VOID, never masquerade as effective=no (CANNOT-EVALUATE vs FAIL law).
+    row, _ = _run_pk(_PK, {"status": "PASS", "notes": "mtime PASS | PARTITION-KEY UNCHECKED (no date-key)"})
+    assert row["effective"] == "unknown", "a partition-UNCHECKED PASS is VOID, never a silent no"
+
+
+def test_pk_void_on_stage_failure_never_runs_checker():
+    row, calls = _run_pk(_PK, {"status": "PASS"}, writer_raises=True)
+    assert row["effective"] == "unknown"
+    assert not calls["checker"], "the checker must NOT run if the fixture could not be staged"
+
+
+def test_pk_void_on_checker_crash_never_silent_no():
+    row, _ = _run_pk(_PK, {"status": "PASS"}, checker_raises=True)
+    assert row["effective"] == "unknown", "a checker crash is VOID/unknown, never a silent no"
+
+
+def test_pk_sovereign_scratch_guard_blocks_a_bd_write():
+    bd = dict(_PK, fixture=dict(_PK["fixture"], scratch_bucket="opal-data-bd"))
+    row, calls = _run_pk(bd, {"status": "PASS"})
+    assert row["effective"] == "unknown" and "SOVEREIGN" in row.get("void_reason", "")
+    assert not calls["writer"], "the sovereign guard must block the pk write BEFORE any bd touch"
+
+
+def test_pk_fixed_key_overwrite_no_accumulation():
+    _, c1 = _run_pk(_PK, {"status": "PASS"}, now_ts=_NOW)
+    _, c2 = _run_pk(_PK, {"status": "PASS"}, now_ts=_NOW + 999_999)
+    assert c1["writer"][0][0] == c2["writer"][0][0], "the pk fixture key is FIXED across runs (no ts) -> overwrite"
+    assert c1["writer"][0][1] == "2001-01-01", "the frozen date-key is fixed (no accumulation)"
 
 
 def test_positive_control_reach_ignores_headers_keys_on_resolved_id():
