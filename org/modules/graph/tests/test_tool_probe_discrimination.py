@@ -9,9 +9,14 @@ Proves, each non-vacuous:
   - VOID: a staging failure -> effective="unknown", NEVER a silent no; the tool is never run.
   - SOVEREIGN: a bd scratch target -> the guard blocks the WRITE (unknown+SOVEREIGN), no bd touch.
   - ORACLE-INDEPENDENCE: the ground-truth is the probe's own clock (_iso_days_ago), not the tool's claim --
-    the tool lying "fresh" still scores effective="no".
-  - MUTANT non-vacuity: neuter the negative arm (green_terms=[]) -> the false-GREEN catch VANISHES (unknown,
-    not no) -> proves the negative arm is load-bearing.
+    the tool lying "fresh" (rc 0) still scores effective="no".
+  - MUTANT non-vacuity: neuter the negative arm (drop rc 0 from usable_returncodes) -> the false-GREEN catch
+    VANISHES (unknown, not no) -> proves the rc-0 => false-GREEN arm is load-bearing.
+
+VERDICT is the tool's RC, never a substring of its stdout: comp-freshness prints a `fail_at_h` COLUMN
+HEADER, so a naive `"fail" in stdout` false-matched a PASS row as CAUGHT (caught live 2026-07-12). rc 0 =
+PASS (=> false-GREEN on the frozen fixture => no), rc 1 = a FAIL/STALE verdict (=> caught => yes), any
+other rc / timeout => VOID/unknown.
 
 # rail-checked: assurance oracle for the TH-A discrimination probe under test (NFRA_TOOLPASS sec.6)
 Author: 3.0.0_SA_CVO~B.
@@ -36,8 +41,7 @@ _DISC = {
     "tool_class": "artifact-freshness", "kind": "discrimination",
     "fixture": {"scratch_bucket": "opal-data-inf", "scratch_prefix": "_toolprobe_scratch/",
                 "content_as_of_days_ago": 30},
-    "expected_verdict_terms": ["stale", "fail", "frozen", "escalat"],
-    "green_terms": ["pass", "fresh", "current", "ok", "warn"],
+    "usable_returncodes": [0, 1],
     "usability_timeout_s": 60, "expected": "fix", "live_estate": True,
 }
 
@@ -79,18 +83,29 @@ def test_standard_positive_reaches_effective_yes(monkeypatch=None):
 
 
 def test_discrimination_caught_freeze_effective_yes():
+    # rc 1 = comp-freshness FOUND a FAIL/STALE verdict -> the tool CAUGHT the freeze.
     row, calls = _run(_DISC, lambda uri: {"stdout": "STATUS: STALE age_h 720 FAIL", "rc": 1})
-    assert row["effective"] == "yes", "the tool CAUGHT the freeze (STALE) -> effective"
+    assert row["effective"] == "yes", "the tool CAUGHT the freeze (STALE, rc 1) -> effective"
     assert row["effective_evidence"]["case"] == "negative"
     assert "overwrote s3://opal-data-inf" in row["effective_evidence"]["oracle_run"]
     assert calls["writer"], "fixture overwritten (no delete -- fixed-key design)"
 
 
+def test_verdict_is_rc_not_a_stdout_substring_REGRESSION():
+    # The live-run bug (2026-07-12): comp-freshness's real PASS output carries a `fail_at_h` COLUMN HEADER.
+    # A substring verdict (`"fail" in stdout`) wrongly read that PASS as CAUGHT. The rc-based verdict must
+    # score this exact output effective="no" (rc 0 = PASS = the false-GREEN), NOT "yes".
+    header = ("artifact_id | s3_key | last_modified | age_h | fail_at_h | status\n"
+              "--- | --- | --- | --- | --- | ---\nx | s3://.../frozen.json | 2026-07-12 | 0.1 | 72 | PASS")
+    row, _ = _run(_DISC, lambda uri: {"stdout": header, "rc": 0})
+    assert row["effective"] == "no", "rc 0 (PASS) on a frozen fixture is the false-GREEN; a header 'fail' must NOT flip it to yes"
+
+
 def test_fixed_key_overwrite_no_accumulation():
     # CTO option (a): a FIXED key overwritten each run -> two runs target the SAME key (no per-run ts), so
     # it never accumulates + needs no delete. The write refreshes mtime (fresh-mtime property preserved).
-    _, c1 = _run(_DISC, lambda uri: {"stdout": "STALE"}, now_ts=_NOW)
-    _, c2 = _run(_DISC, lambda uri: {"stdout": "STALE"}, now_ts=_NOW + 999_999)
+    _, c1 = _run(_DISC, lambda uri: {"stdout": "STALE", "rc": 1}, now_ts=_NOW)
+    _, c2 = _run(_DISC, lambda uri: {"stdout": "STALE", "rc": 1}, now_ts=_NOW + 999_999)
     assert c1["writer"][0][0] == c2["writer"][0][0], "the fixture key is FIXED across runs (no ts) -> overwrite, no accumulation"
     assert c1["writer"][0][0].endswith("/comp-freshness/frozen.json"), "fixed namespaced key"
     # and there is NO deleter in the interface at all (the delete is designed out):
@@ -131,7 +146,9 @@ def test_oracle_is_independent_of_the_tools_claim():
 def test_negative_arm_is_load_bearing_MUTANT():
     real, _ = _run(_DISC, lambda uri: {"stdout": "STATUS: PASS (fresh)", "rc": 0})
     assert real["effective"] == "no"
-    neutered = dict(_DISC, green_terms=[])   # MUTANT: neuter the false-GREEN detection
+    # MUTANT: drop rc 0 from the usable set -> a PASS (rc 0) is no longer a scoreable false-GREEN, it
+    # falls back to VOID. The catch VANISHES (unknown, not no) -> proves the rc-0 => false-GREEN arm bites.
+    neutered = dict(_DISC, usable_returncodes=[1])
     mut, _ = _run(neutered, lambda uri: {"stdout": "STATUS: PASS (fresh)", "rc": 0})
     assert mut["effective"] != "no", "neutering the negative arm must LOSE the false-GREEN catch (non-vacuous)"
     assert mut["effective"] == "unknown"

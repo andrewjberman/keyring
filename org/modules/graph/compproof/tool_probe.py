@@ -274,13 +274,23 @@ def _assert_scratch_in_scope(s3_uri: str) -> None:
         raise ValueError("SOVEREIGN: scratch target is a held bd/schwab path: %s" % s3_uri)
 
 
+def _aws_bin() -> str:
+    """Resolve the aws CLI to a FULL path -- on Windows `aws` is aws.cmd/aws.exe, and subprocess (no shell)
+    cannot resolve a bare `aws` via PATHEXT (WinError 2). shutil.which returns the resolved executable."""
+    import shutil
+    return shutil.which("aws") or "aws"
+
+
 def _default_fixture_writer(s3_uri: str, *, frozen_as_of: str) -> None:
-    """Write a synthetic artifact with a FROZEN content data_as_of + a FRESH mtime (write=now) to s3_uri.
-    The JSON body carrying data_as_of=<frozen> is what an HONEST freshness tool must read to say STALE."""
+    """Write (OVERWRITE) a synthetic artifact with a FROZEN content data_as_of + a FRESH mtime (write=now)
+    to s3_uri. The JSON body carrying data_as_of=<frozen> is what an HONEST freshness tool must read to
+    say STALE. aws resolved to a full path (Windows subprocess can't resolve a bare `aws`)."""
     body = json.dumps({"data_as_of": frozen_as_of, "_probe_fixture": True,
                        "_note": "synthetic frozen-content/fresh-mtime fixture for the TH-A discrimination probe"})
-    subprocess.run(["aws", "s3", "cp", "-", s3_uri, "--content-type", "application/json"],
-                   input=body, text=True, capture_output=True, timeout=60, check=True)
+    r = subprocess.run([_aws_bin(), "s3", "cp", "-", s3_uri, "--content-type", "application/json"],
+                       input=body, text=True, capture_output=True, timeout=60)
+    if r.returncode != 0:
+        raise RuntimeError("aws s3 cp failed rc=%d: %s" % (r.returncode, (r.stderr or "")[:200]))
 
 
 def _default_freshness_runner(s3_uri: str) -> dict:
@@ -320,16 +330,20 @@ def _run_discrimination_probe(probe: dict, *, now_ts=None,
         return row
     run = runner(s3_uri)
     text = ((run.get("stdout") or "") + " " + (run.get("stderr") or "")).lower()
-    caught = any(t in text for t in probe["expected_verdict_terms"])            # STALE/FAIL/FROZEN
-    said_green = (not caught) and any(t in text for t in probe["green_terms"])  # plausible-fresh on a frozen artifact
-    if run.get("timed_out") or (not caught and not said_green):
+    rc = run.get("rc")
+    # THE VERDICT IS THE RC, not a substring of the output. (A substring match on the output false-fired:
+    # comp-freshness's `fail_at_h` COLUMN HEADER contains "fail" -> a naive `"fail" in text` wrongly read
+    # a PASS row as CAUGHT. The control goes on the RETRIEVAL, not the pattern.) comp-freshness single-
+    # artifact rc: 0 = PASS verdict, 1 = a FAIL/STALE verdict found, 2 = config/AWS error (VOID).
+    usable_rcs = probe.get("usable_returncodes", [0, 1])
+    if run.get("timed_out") or rc not in usable_rcs:
         eff, reach_v, usab_v = "unknown", None, ("too-slow" if run.get("timed_out") else "fell-back")
-    elif caught:
-        eff, reach_v, usab_v = "yes", "yes", "usable"        # the tool CAUGHT the freeze -> effective
-    else:
+    elif rc == 1:
+        eff, reach_v, usab_v = "yes", "yes", "usable"        # comp-freshness FOUND a stale/fail verdict -> CAUGHT the freeze
+    else:  # rc == 0 -> a PASS verdict on a KNOWN-frozen artifact
         eff, reach_v, usab_v = "no", "no", "usable"          # exit-0-while-lying: GREEN on a KNOWN-frozen artifact
     row.update({
-        "reach": reach_v, "usability": usab_v, "effective": eff, "rc": run.get("rc"),
+        "reach": reach_v, "usability": usab_v, "effective": eff, "rc": rc,
         "timed_out": run.get("timed_out"), "elapsed_s": run.get("elapsed_s"),
         "effective_evidence": {
             "case": "negative",

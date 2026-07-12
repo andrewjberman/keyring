@@ -1,0 +1,110 @@
+{
+  "comp-which": {
+    "effective": "no",
+    "effective_label": "no",
+    "reach": [
+      "yes",
+      "no"
+    ],
+    "usability": [
+      "usable",
+      "usable"
+    ],
+    "classes": [
+      "tool-routing"
+    ],
+    "probe_ids": [
+      "comp-which/routing-01",
+      "comp-which/routing-02"
+    ],
+    "isolation_ok": true,
+    "probe_ts": 1783867631,
+    "fix_probes": [
+      "comp-which/routing-02"
+    ],
+    "effective_evidence": [
+      {
+        "probe_id": "comp-which/routing-01",
+        "case": "positive",
+        "observed": {
+          "reach": "yes",
+          "usability": "usable",
+          "hits": [
+            "comp-blast"
+          ]
+        },
+        "expected": [
+          "comp-blast"
+        ],
+        "oracle_run": "comp-which 'what downstream depends on a gold-script function I want to change'"
+      },
+      {
+        "probe_id": "comp-which/routing-02",
+        "case": "positive",
+        "observed": {
+          "reach": "no",
+          "usability": "usable",
+          "hits": []
+        },
+        "expected": [
+          "comp-freshness"
+        ],
+        "oracle_run": "comp-which 'how do I check whether served gold data is stale'"
+      }
+    ]
+  },
+  "comp-freshness": {
+    "effective": "no",
+    "effective_label": "no",
+    "reach": [
+      "yes",
+      "no"
+    ],
+    "usability": [
+      "usable",
+      "usable"
+    ],
+    "classes": [
+      "artifact-freshness"
+    ],
+    "probe_ids": [
+      "comp-freshness/single-artifact",
+      "comp-freshness/frozen-vs-fresh-discrimination"
+    ],
+    "isolation_ok": true,
+    "probe_ts": 1783867635,
+    "fix_probes": [
+      "comp-freshness/frozen-vs-fresh-discrimination"
+    ],
+    "effective_evidence": [
+      {
+        "probe_id": "comp-freshness/single-artifact",
+        "case": "positive",
+        "observed": {
+          "reach": "yes",
+          "usability": "usable",
+          "hits": [
+            "age_h",
+            "fail_at_h",
+            "status",
+            "warn"
+          ]
+        },
+        "expected": [
+          "status",
+          "age_h",
+          "fail_at_h",
+          "warn"
+        ],
+        "oracle_run": "comp-freshness artifact s3://opal-data-inf/silver/api_dims/performance/"
+      },
+      {
+        "probe_id": "comp-freshness/frozen-vs-fresh-discrimination",
+        "case": "negative",
+        "observed": "artifact_id                            | s3_key                                                  | last_modified              | age_h    | fail_at_h | status\n------------------------------------------",
+        "expected": "STALE (content data_as_of 2026-06-12 = frozen ~30d)",
+        "oracle_run": "overwrote s3://opal-data-inf/_toolprobe_scratch/comp-freshness/frozen.json with content data_as_of=2026-06-12 (frozen, fresh mtime), then ran comp-freshness on it"
+      }
+    ]
+  }
+}

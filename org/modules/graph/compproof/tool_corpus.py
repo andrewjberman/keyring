@@ -112,8 +112,10 @@ TOOL_PROBES = [
             "scratch_prefix": "_toolprobe_scratch/",     # dedicated + namespaced; never a served/canonical key
             "content_as_of_days_ago": 30,                # the FROZEN content date = the independent oracle ground-truth
         },
-        "expected_verdict_terms": ["stale", "fail", "frozen", "escalat"],  # an HONEST tool says one of these
-        "green_terms": ["pass", "fresh", "current", "ok", "warn"],          # GREEN/plausible-fresh on the frozen = the lie
+        # VERDICT is the RC, not a substring (a `fail_at_h` header would false-match a "fail" term). comp-
+        # freshness single-artifact: rc 0 = PASS (=> false-GREEN on the frozen fixture => effective=no),
+        # rc 1 = a FAIL/STALE verdict (=> CAUGHT => yes), rc 2 = config/AWS error (=> VOID/unknown).
+        "usable_returncodes": [0, 1],
         "usability_timeout_s": 60,
         "expected": "fix",   # self-test label: PRE-fix the discrimination catches comp-freshness's false-GREEN
         "live_estate": True,
@@ -163,8 +165,9 @@ def solver_visible_fields() -> tuple:
 def sealed_fields() -> tuple:
     """Judge-only fields -- NEVER folded into the tool-run payload (the sealed answer + the self-test
     label). tool_probe.probe_payload proves these do not leak into what the tool sees. For a discrimination
-    probe the tool run is `comp-freshness artifact <fixture s3 uri>` (built dynamically) -- so the judge
-    criteria (expected_verdict_terms / green_terms) are sealed by construction (never in the run argv); the
-    tool must DERIVE freshness from the artifact content, not be told the verdict."""
-    return ("answer_terms", "answer_substr", "reach_threshold", "expected",
-            "expected_verdict_terms", "green_terms")
+    probe the tool run is `comp-freshness artifact <fixture s3 uri>` (built dynamically) and the VERDICT is
+    the tool's RC (0=PASS => false-GREEN on the frozen fixture; 1=FAIL/STALE => caught) -- so the judge
+    criterion is sealed by construction (never in the run argv, and never a substring of the tool's own
+    stdout, which would false-match a `fail_at_h` column header); the tool must DERIVE freshness from the
+    artifact content, not be told the verdict."""
+    return ("answer_terms", "answer_substr", "reach_threshold", "expected")
