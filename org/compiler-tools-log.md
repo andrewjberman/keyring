@@ -16213,3 +16213,53 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
 | 2026-07-11 | 0.7.0_AE_CloudOps | (no-TO) | (none) | de-confliction + session-close window; grounding used gh/aws/git primitives (GitHub Actions workflow_dispatch default-branch semantics, S3 seed-prefix state, branch presence) -- no comp surface fits GitHub-Actions/artifacts-bucket inspection | N/A |
 | 2026-07-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor-of-record-single-so... | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pii | comp-pii | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pii | comp-pii routes | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pii | comp-pii fields | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO | (no-TO) | comp-pii | comp-pii fields | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO | (no-TO) | comp-pii | comp-pii routes | PASS |
+| 2026-07-11 | 3.0.0_SA_CVO | (no-TO) | comp-pii | comp-pii routes | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-blast | comp-blast apply_advisor_of_record_fold | FAIL |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_07 | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_BBGTMNL_PRD.md | PASS |
+| 2026-07-11 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/comp-tool-tests-quarantine.txt | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor-of-record-single-so... | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_learns_score.py | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/comp-tool-tests-quarantine.txt | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_iam.py --file... | PASS |
+| 2026-07-11 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/auth... | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_09.generate_p... | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/inflection_re... | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_02 | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_03 | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_04 | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_05 | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_06 | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_08 | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_02.client_p... | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_02.client_p... | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00d.cumulat... | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_07.advisor_... | PASS |
+| 2026-07-11 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/auth... | PASS |
+| 2026-07-11 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/fixT... | PASS |
+| 2026-07-11 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/back... | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_routes.py --f... | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_07.advisor_... | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_routes.py --f... | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed data/inf/scripts/gold/INF_C_07.advisor_attribution.py | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_routes.py --f... | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_routes.py --f... | PASS |
+| 2026-07-11 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/gate... | PASS |
+| 2026-07-11 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLPASS.md | PASS |
+| 2026-07-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/advisor_of_re... | PASS |
+
+2026-07-12T1154Z 1.0.0_SA_CTO: comp-pipescript deployed (INF_C_07 MATCH -- grounded the peer-sweep) + comp-freshness inf (PASS) + aws accessanalyzer validate-policy (34 comp-iam actions via AE~C, +positive control) + ruff/pytest commit-gates (comp-iam/learns-score/routes fixes; blocked twice on pre-existing lint, cleared). Comp-tool-effectiveness push + deploy-gate Phase 1.
+| 2026-07-12 | 0.7.0_AE_CloudOps | (INF-udf7ADVISOROF) | (none) | STEP-1 endpoint determination -- docs/schema grounding (Read+Grep) that /Portfolio/Accounts carries udf7ADVISOROF, /NewPortfolio omits it, no $select rescue; zero live Orion call | N/A |
+| 2026-07-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
