@@ -273,6 +273,34 @@ TOOL_PROBES = [
         "expected": "effective",   # comp-pipescript's gold-DAG traversal is correct TODAY -> yes (HONEST result, not a target); regression guard
         "live_estate": False,      # local: pipescript source-parses gold scripts; no AWS estate; inf script only -> sovereign trivially green
     },
+    {
+        "probe_id": "comp-kuzu/cloud-estate-query-reach",
+        "tool": "comp-kuzu",
+        "tool_class": "cloud-estate-graph-query",
+        "kind": "kuzu-discrimination",
+        # EFFECTIVE-axis probe for comp-kuzu (the GLOBGRPH cloud-estate graph query tool, NON-preventive).
+        # HONEST QUERY-REACH measurement (CTO~D B2 + 4-case refinement 2026-07-12): does a reasonable,
+        # correct-dialect targeted query REACH an edge that IS confirmed in the graph? The 4-case runner
+        # SEPARATES comp-kuzu's reach from GLOBGRPH's ingestion coverage -- confirmed+found->yes / confirmed+
+        # missed(current)->no (a REAL query-reach/dialect failure, the .id-vs-.name class) / NOT-ingested->
+        # VOID (ingestion gap, not the tool's fault) / BEHIND|UNKNOWN+miss->VOID. ORACLE grounded from SOURCE
+        # independently of comp-kuzu: inf-gold-layer-runner (inf-pipeline/ec2.tf:6 -- the dedicated inf gold
+        # EC2 runner, instance i-0ed5afded2ebd4ed4) WRITES opal-data-inf, confirmed-in-graph by confirm_query.
+        # SOVEREIGN: the queries are IN-SCOPE inf BY DESIGN (comp-kuzu is whole-estate) + the runner's held-
+        # marker guard; never bd/schwab/49F. VINTAGE: the runner reads the stderr provenance header (a
+        # BEHIND/UNKNOWN + miss VOIDs). ISOLATION: the answer_term (inf-gold-layer-runner) is NOT in the
+        # target_query -> it appears in the RESULT only on a real traversal (the .id-vs-.name reach lesson).
+        "question": "Does a reasonable targeted comp-kuzu query REACH the confirmed-in-graph edge inf-gold-layer-runner WRITES opal-data-inf?",
+        "fixture": {
+            "confirm_query": "MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.name='inf-gold-layer-runner' AND b.name='opal-data-inf' AND e.edge_type='WRITES' RETURN b.name",
+            "confirm_expect": "opal-data-inf",   # the specific edge is ingested iff the confirm result is non-empty
+            "target_query": "MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.name='opal-data-inf' AND e.edge_type='WRITES' AND a.node_type='EC2_INSTANCE' RETURN a.name",
+            "answer_term": "inf-gold-layer-runner",   # NOT in the target_query -> result-only (isolation-clean)
+        },
+        "usability_timeout_s": 150,   # each comp-kuzu invocation reloads the Kuzu DB (~30-60s); this runs 2 queries
+        "expected": "effective",   # comp-kuzu's query engine reaches a well-formed query TODAY -> yes (HONEST result); the probe is the query-reach regression guard
+        "live_estate": True,       # reads the canonical Kuzu DB (local file, no AWS call); in-scope inf query only
+    },
 ]
 
 

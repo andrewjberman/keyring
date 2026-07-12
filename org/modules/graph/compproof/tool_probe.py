@@ -229,6 +229,8 @@ def probe_one(probe: dict, *, now_ts: float | None = None) -> dict:
         return _run_cmpaws_discrimination_probe(probe, now_ts=now_ts)
     if probe.get("kind") == "surfacecheck-discrimination":
         return _run_surfacecheck_discrimination_probe(probe, now_ts=now_ts)
+    if probe.get("kind") == "kuzu-discrimination":
+        return _run_kuzu_discrimination_probe(probe, now_ts=now_ts)
     ts = int(now_ts if now_ts is not None else time.time())
     solver_id = "tool:%s" % probe["tool"]
     gate = isolation_gate(probe, solver_id=solver_id)
@@ -788,6 +790,108 @@ def _run_surfacecheck_discrimination_probe(probe: dict, *, now_ts=None, runner=N
                            "oracle=critical-surfaces.yaml membership (sev1 registered=%s, non-critical registered=%s)"
                            % (fx["sev1_path"], rc_sev1, fx["noncritical_path"], rc_non,
                               fx["sev1_path"] in registered, fx["noncritical_path"] in registered)),
+        },
+    })
+    return row
+
+
+# ---- (C) the comp-kuzu QUERY-REACH discrimination probe (CTO~D B2 + 4-case refinement 2026-07-12) -------
+# comp-kuzu = the GLOBGRPH CLOUD-ESTATE graph query tool. Its EFFECTIVE axis is QUERY-REACH: does a
+# reasonable, correct-dialect targeted query REACH an edge that IS in the graph? The 4-case guard
+# separates comp-kuzu's reach from GLOBGRPH's ingestion coverage (CTO~D): (1) edge confirmed-in-graph +
+# targeted query FINDS it -> yes; (2) confirmed + MISSES + vintage current -> no (a REAL query-reach /
+# dialect failure, the .id-vs-.name class); (3) edge NOT ingested (confirm query empty) -> VOID (a
+# GLOBGRPH ingestion gap, NOT comp-kuzu's fault -- test what the tool CLAIMS: reaching what IS in the
+# graph); (4) BEHIND/UNKNOWN vintage + miss -> VOID. SOVEREIGN: queries are in-scope inf/cot/mdpf BY
+# DESIGN + a runtime held-marker guard (comp-kuzu is a whole-estate tool). ORACLE grounded from source
+# (inf-pipeline/ec2.tf), independent of comp-kuzu's own output.
+_KUZU_HELD_MARKERS = ("opal-data-bd", "opal-data-schwab", "black_diamond", "schwab", "49f", "49financial")
+
+
+def _default_kuzu_runner(query: str, timeout_s: int):
+    """Run comp-kuzu <query> via kuzu_cli.py DIRECTLY -> (stdout, stderr, rc). The provenance header prints
+    to STDERR (kuzu_cli:53); query results to STDOUT. Read-only (SHARED lock)."""
+    cli = os.path.join(_WS, "infra", "aws", "globgrph", "kuzu_cli.py")
+    r = subprocess.run([sys.executable, cli, query], capture_output=True, text=True, timeout=timeout_s)
+    return r.stdout, r.stderr, r.returncode
+
+
+def _kuzu_vintage(stderr: str) -> str:
+    """Parse comp-kuzu's provenance header (stderr) -> 'current' | 'BEHIND' | 'UNKNOWN'. Fail-closed to
+    UNKNOWN (an unverifiable vintage is never treated as fresh)."""
+    s = stderr or ""
+    for line in s.splitlines():
+        if "Nessie HEAD" in line:
+            low = line.lower()
+            if "current" in low:
+                return "current"
+            if "behind" in low:
+                return "BEHIND"
+    return "UNKNOWN"   # no readable header / UNKNOWN VINTAGE -> fail-closed
+
+
+def _run_kuzu_discrimination_probe(probe: dict, *, now_ts=None, runner=None) -> dict:
+    ts = int(now_ts if now_ts is not None else time.time())
+    fx = probe["fixture"]
+    to = int(probe.get("usability_timeout_s", 120))
+    run = runner or _default_kuzu_runner
+    term = fx["answer_term"]
+    row = {"probe_id": probe["probe_id"], "tool": probe["tool"], "class": probe["tool_class"],
+           "probe_ts": ts, "isolation_ok": True}
+
+    def _void(reason):
+        row.update({"reach": None, "usability": None, "effective": "unknown", "void_reason": reason,
+                    "effective_evidence": {"case": "negative", "oracle_run": "VOID: %s" % reason}})
+        return row
+
+    # SOVEREIGN (designed-in + runtime backstop -- comp-kuzu is whole-estate): refuse a query that names a
+    # held bd/schwab/49F target. The queries are in-scope inf by construction; this is the belt.
+    for q in (fx["confirm_query"], fx["target_query"]):
+        ql = str(q).lower()
+        if any(m in ql for m in _KUZU_HELD_MARKERS) or is_held_path(q) or is_held_bucket(q):
+            return _void("SOVEREIGN: a comp-kuzu query references a held bd/schwab/49F target -- refused (inf/cot/mdpf only)")
+
+    # (A) CONFIRM the specific edge IS ingested (a broad presence query) -- so a target miss below is a
+    # comp-kuzu query-reach failure, NOT a GLOBGRPH ingestion gap.
+    try:
+        out_c, err_c, rc_c = run(fx["confirm_query"], to)
+    except Exception as e:  # noqa: BLE001
+        return _void("comp-kuzu confirm-query run failed: %r" % e)
+    if rc_c != 0:
+        return _void("confirm-query rc=%s (query/engine error) -- unverifiable" % rc_c)
+    vintage = _kuzu_vintage(err_c)
+    present = ("0 rows" not in out_c) and (fx.get("confirm_expect", "opal-data-inf") in out_c)
+    if not present:
+        # case 3: not ingested -> GLOBGRPH ingestion coverage gap, NOT a comp-kuzu miss.
+        return _void("edge NOT ingested (confirm query empty) -- GLOBGRPH ingestion coverage gap, not a "
+                     "comp-kuzu query-miss (the tool CLAIMS reaching what IS in the graph, not graph completeness)")
+
+    # (B) the TARGETED query -- does a reasonable, correct-dialect query REACH the confirmed edge? The
+    # answer_term is NOT in the target query (isolation-clean) -> it appears in the RESULT only on a real traversal.
+    try:
+        out_t, err_t, rc_t = run(fx["target_query"], to)
+    except Exception as e:  # noqa: BLE001
+        return _void("comp-kuzu target-query run failed: %r" % e)
+    reached = (rc_t == 0) and (term in out_t)
+    obs = {"confirm_present": present, "vintage": vintage, "target_reached": reached, "answer_term": term}
+    if reached:
+        eff, reach_v, usab_v = "yes", "yes", "usable"        # case 1
+    elif vintage in ("BEHIND", "UNKNOWN"):
+        return _void("targeted query missed %s under %s vintage -- unverifiable (stale-graph, not a tool miss)"
+                     % (term, vintage))                       # case 4
+    else:
+        eff, reach_v, usab_v = "no", "no", "usable"          # case 2: confirmed + current + MISSED -> real query-reach failure
+    row.update({
+        "reach": reach_v, "usability": usab_v, "effective": eff,
+        "effective_evidence": {
+            "case": "negative",
+            "observed": obs,
+            "expected": "edge confirmed-in-graph -> a reasonable targeted query REACHES %s (QUERY-REACH, not ingestion coverage)" % term,
+            # oracle = the inf edge from SOURCE (inf-pipeline/ec2.tf), confirmed-in-graph; oracle_run = the
+            # EXERCISED confirm + target queries, independent of comp-kuzu's correctness.
+            "oracle_run": ("confirm->present=%s [vintage=%s]; target->reached=%s (answer_term=%s NOT in the "
+                           "query -> result-only); oracle=inf-gold-layer-runner WRITES opal-data-inf "
+                           "(inf-pipeline/ec2.tf:6, confirmed-in-graph)" % (present, vintage, reached, term)),
         },
     })
     return row

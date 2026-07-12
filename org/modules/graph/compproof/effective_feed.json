@@ -251,5 +251,38 @@
         "oracle_run": "comp-pipescript io data/inf/scripts/gold/INF_A_04.client_dimension.py"
       }
     ]
+  },
+  "comp-kuzu": {
+    "effective": "yes",
+    "effective_label": "yes",
+    "reach": [
+      "yes"
+    ],
+    "usability": [
+      "usable"
+    ],
+    "classes": [
+      "cloud-estate-graph-query"
+    ],
+    "probe_ids": [
+      "comp-kuzu/cloud-estate-query-reach"
+    ],
+    "isolation_ok": true,
+    "probe_ts": 1783894243,
+    "fix_probes": [],
+    "effective_evidence": [
+      {
+        "probe_id": "comp-kuzu/cloud-estate-query-reach",
+        "case": "negative",
+        "observed": {
+          "confirm_present": true,
+          "vintage": "current",
+          "target_reached": true,
+          "answer_term": "inf-gold-layer-runner"
+        },
+        "expected": "edge confirmed-in-graph -> a reasonable targeted query REACHES inf-gold-layer-runner (QUERY-REACH, not ingestion coverage)",
+        "oracle_run": "confirm->present=True [vintage=current]; target->reached=True (answer_term=inf-gold-layer-runner NOT in the query -> result-only); oracle=inf-gold-layer-runner WRITES opal-data-inf (inf-pipeline/ec2.tf:6, confirmed-in-graph)"
+      }
+    ]
   }
 }
