@@ -16,8 +16,11 @@ Exit 0 if all 7 assertions hold; exit 1 with details on any failure.
 """
 from __future__ import annotations
 
+import contextlib
 import hashlib
 import importlib.machinery
+import io
+import os
 import pathlib
 import sys
 import tempfile
@@ -35,6 +38,7 @@ deploy_file = _core.deploy_file
 write_bypass_audit = _core.write_bypass_audit
 _pipescript_output_ok = _core._pipescript_output_ok
 main = _core.main
+_serve_held_reason = _core._serve_held_reason
 
 
 # ---------------------------------------------------------------------------
@@ -260,6 +264,250 @@ def test_pipescript_verdict_parse():
     return True
 
 
+# ===========================================================================
+# Phase-1 serve-gate cases (CTO, Andrew-approved). Drive main() end-to-end with a
+# stubbed WORKSPACE (real temp files, so the sentinel read + upload md5 are real)
+# and a subprocess mock that emulates git diff / git show / git log / aws.
+# ===========================================================================
+
+def _make_main_mock(diff_files, old_blobs, log_body, authors, uploads, sha="abc1234"):
+    """subprocess.run stub for a full main() run.
+
+    diff_files : list[str]  -> `git diff --name-only ...` output (candidate set)
+    old_blobs  : dict path->str  -> `git show <old>:<path>` content; MISSING key =>
+                 file absent in old_ref (rc!=0 with a 'does not exist in' stderr).
+    log_body   : str  -> `git log <range> --format=%B` body (WHOLE range; the ACK
+                 may sit on ANY commit here -- the peer-sweep vector).
+    authors    : dict path->str  -> `git log ... --format=%an -1 -- <path>`
+    uploads    : dict  -> recorded {s3_key: md5(local)} so head-object returns MATCH.
+    """
+    def _run(cmd, **kwargs):
+        r = MagicMock()
+        argv = [str(c) for c in cmd]
+        joined = " ".join(argv)
+        prog = os.path.basename(argv[0]).lower()
+        r.returncode, r.stdout, r.stderr = 0, "", ""
+
+        if prog.startswith("git"):
+            sub = argv[1] if len(argv) > 1 else ""
+            if sub == "diff":
+                r.stdout = "".join(f"{f}\n" for f in diff_files)
+            elif sub == "show":
+                ref_path = argv[2]
+                path = ref_path.split(":", 1)[1] if ":" in ref_path else ""
+                if path in old_blobs:
+                    r.stdout = old_blobs[path]
+                else:
+                    r.returncode = 128
+                    r.stderr = f"fatal: path '{path}' does not exist in '{ref_path.split(':', 1)[0]}'"
+            elif sub == "log":
+                if "--format=%an" in argv:
+                    r.stdout = authors.get(argv[-1], "someone") + "\n"
+                elif "--format=%B" in argv:
+                    r.stdout = log_body
+            elif sub == "rev-parse":
+                r.stdout = sha + "\n"
+            return r
+
+        # aws
+        if "s3 cp" in joined:
+            src, dst = argv[3], argv[4]
+            key = dst.split("/", 3)[3] if dst.startswith("s3://") else dst
+            uploads[key] = _md5(pathlib.Path(src).read_bytes())
+        elif "head-object" in joined:
+            key = argv[argv.index("--key") + 1]
+            r.stdout = f'"{uploads.get(key, "")}"\n'
+        return r
+    return _run
+
+
+def _run_serve_gate(argv, files_content, diff_files, old_blobs="same",
+                    log_body="", authors=None):
+    """Set up a temp WORKSPACE, run main(argv), return (rc, stdout, uploads).
+
+    files_content : dict rel_path -> current (working-tree) content, written to temp.
+    old_blobs     : dict path->str for `git show <old>:<path>`, or the string "same"
+                    meaning "old == current content" (no removal), or "absent" meaning
+                    every file is new (rc!=0 in old_ref).
+    """
+    authors = authors or {}
+    with tempfile.TemporaryDirectory() as td:
+        ws = pathlib.Path(td)
+        for rel, content in files_content.items():
+            p = ws / rel.replace("/", os.sep)
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(content, encoding="utf-8")
+        if old_blobs == "same":
+            old_blobs = dict(files_content)
+        elif old_blobs == "absent":
+            old_blobs = {}
+        uploads: dict[str, str] = {}
+        audit = ws / "org" / "safe-deploy-bypass-audit.log"
+        mock = _make_main_mock(diff_files, old_blobs, log_body, authors, uploads)
+        buf = io.StringIO()
+        with patch.object(_core, "WORKSPACE", ws), \
+             patch.object(_core, "BYPASS_AUDIT_LOG", audit), \
+             patch("safe_deploy_core.subprocess.run", side_effect=mock), \
+             patch("safe_deploy_core._find_aws", return_value="/usr/bin/aws"), \
+             contextlib.redirect_stdout(buf):
+            rc = main(argv)
+        out = buf.getvalue()
+        audit_text = audit.read_text(encoding="utf-8") if audit.exists() else ""
+    return rc, out, uploads, audit_text
+
+
+_GOLD = "data/inf/scripts/gold/INF_D_01.py"
+_GOLD2 = "data/inf/scripts/gold/INF_D_02.py"
+_HELD_LINE = "# DEPLOY-SERVE-HELD: waiting on CTO signoff\n"
+
+
+# ---------------------------------------------------------------------------
+# Case 8 (a): SERVE-HELD sentinel -> file SKIPPED (not in the deploy/upload set)
+# ---------------------------------------------------------------------------
+def test_serve_held_skip():
+    rc, out, uploads, _ = _run_serve_gate(
+        ["--no-pipescript", "--commit-range", "old111..new222"],
+        files_content={_GOLD: _HELD_LINE + "print('gold')\n"},
+        diff_files=[_GOLD],
+    )
+    assert rc == 0, f"Case 8 FAIL: held-only push should exit 0, got {rc}\n{out}"
+    assert "code/gold/INF_D_01.py" not in uploads, \
+        f"Case 8 FAIL: HELD file was uploaded (should be skipped): {uploads}"
+    assert "SERVE-HELD: data/inf/scripts/gold/INF_D_01.py" in out, \
+        f"Case 8 FAIL: SERVE-HELD note not emitted\n{out}"
+    return True
+
+
+# ---------------------------------------------------------------------------
+# Case 8b (malformed control): a no-reason / malformed sentinel STILL skips.
+# Fail-closed DIRECTION: a parse ambiguity must resolve toward NOT serving.
+# ---------------------------------------------------------------------------
+def test_serve_held_malformed_still_skips():
+    rc, out, uploads, _ = _run_serve_gate(
+        ["--no-pipescript", "--commit-range", "old111..new222"],
+        files_content={_GOLD: "#DEPLOY-SERVE-HELD\nprint('gold')\n"},  # no space, NO reason
+        diff_files=[_GOLD],
+    )
+    assert rc == 0, f"Case 8b FAIL: malformed-held push should exit 0, got {rc}\n{out}"
+    assert "code/gold/INF_D_01.py" not in uploads, \
+        f"Case 8b FAIL: malformed/no-reason sentinel was NOT treated as held: {uploads}"
+    assert "SERVE-HELD:" in out and "(no reason given)" in out, \
+        f"Case 8b FAIL: malformed sentinel note/ reason-fallback missing\n{out}"
+    return True
+
+
+# ---------------------------------------------------------------------------
+# Case 9 (b1): removing a sentinel with NO SERVE-RELEASE-ACK -> gate REFUSES
+# (non-zero, nothing uploaded).
+# ---------------------------------------------------------------------------
+def test_serve_release_blocked_no_ack():
+    rc, out, uploads, _ = _run_serve_gate(
+        ["--no-pipescript", "--commit-range", "base000..tip999"],
+        files_content={_GOLD: "print('gold')\n"},              # CURRENT: no sentinel
+        diff_files=[_GOLD],
+        old_blobs={_GOLD: _HELD_LINE + "print('gold')\n"},     # BASE had the sentinel
+        log_body="just a normal commit\nno ack here\n",
+    )
+    assert rc != 0, f"Case 9 FAIL: removal w/o ACK must refuse (non-zero), got {rc}\n{out}"
+    assert not uploads, f"Case 9 FAIL: nothing may deploy on a blocked removal: {uploads}"
+    assert "SERVE-RELEASE BLOCKED" in out, f"Case 9 FAIL: BLOCKED note missing\n{out}"
+    return True
+
+
+# ---------------------------------------------------------------------------
+# Case 10 (b2): removal WITH `SERVE-RELEASE-ACK: <reason>` on ANY commit in the
+# range (peer-sweep: the ack sits on a NON-TIP commit) -> proceeds + audits.
+# Proves range-spanning: base-vs-current removal + whole-range ACK scan.
+# ---------------------------------------------------------------------------
+def test_serve_release_authorized_with_ack():
+    peer_sweep_log = (
+        "tip commit by another agent -- unrelated sweep\n\n"
+        "----\n"
+        "release the hold on INF_D_01\n\n"
+        "SERVE-RELEASE-ACK: CTO+COO never-widen signoff LD-xxxx\n\n"
+        "----\n"
+        "base+1 commit\n"
+    )
+    rc, out, uploads, audit = _run_serve_gate(
+        ["--no-pipescript", "--commit-range", "base000..tip999", "--author", "0.4.0_DS_ClientPlatform"],
+        files_content={_GOLD: "print('gold')\n"},              # CURRENT: no sentinel
+        diff_files=[_GOLD],
+        old_blobs={_GOLD: _HELD_LINE + "print('gold')\n"},     # BASE had the sentinel
+        log_body=peer_sweep_log,
+    )
+    assert rc == 0, f"Case 10 FAIL: acked removal should proceed (exit 0), got {rc}\n{out}"
+    assert "code/gold/INF_D_01.py" in uploads, \
+        f"Case 10 FAIL: acked file was not deployed: {uploads}"
+    assert "SERVE-RELEASE authorized" in out, f"Case 10 FAIL: authorized note missing\n{out}"
+    assert "SERVE-RELEASE" in audit and "CTO+COO never-widen signoff" in audit, \
+        f"Case 10 FAIL: SERVE-RELEASE audit entry (+reason) missing\n{audit!r}"
+    return True
+
+
+# ---------------------------------------------------------------------------
+# Case 10b (malformed control): an EMPTY / malformed SERVE-RELEASE-ACK does NOT
+# release a removal (the \\s*-crosses-newline fail-OPEN inversion). Fail-closed:
+# the reason must be non-empty and on the ACK's own line.
+# ---------------------------------------------------------------------------
+def test_serve_release_empty_ack_does_not_release():
+    empty_ack_log = "removing the hold\n\nSERVE-RELEASE-ACK:\nsome later commit line\n"
+    rc, out, uploads, _ = _run_serve_gate(
+        ["--no-pipescript", "--commit-range", "base000..tip999"],
+        files_content={_GOLD: "print('gold')\n"},
+        diff_files=[_GOLD],
+        old_blobs={_GOLD: _HELD_LINE + "print('gold')\n"},
+        log_body=empty_ack_log,   # ACK token present but EMPTY reason -> must NOT release
+    )
+    assert rc != 0, f"Case 10b FAIL: empty ACK must NOT release (non-zero), got {rc}\n{out}"
+    assert not uploads, f"Case 10b FAIL: empty ACK deployed anyway: {uploads}"
+    assert "SERVE-RELEASE BLOCKED" in out, f"Case 10b FAIL: BLOCKED note missing\n{out}"
+    return True
+
+
+# ---------------------------------------------------------------------------
+# Case 11 (c): the enumeration notice shows the commit AUTHOR of each file.
+# ---------------------------------------------------------------------------
+def test_author_enumeration_notice():
+    rc, out, uploads, _ = _run_serve_gate(
+        ["--no-pipescript", "--commit-range", "base000..tip999"],
+        files_content={_GOLD: "print('gold')\n"},
+        diff_files=[_GOLD],
+        authors={_GOLD: "0.7.0_AE_CloudOps"},
+    )
+    assert rc == 0, f"Case 11 FAIL: clean push should exit 0, got {rc}\n{out}"
+    assert "(authored by 0.7.0_AE_CloudOps)" in out, \
+        f"Case 11 FAIL: author not shown in enumeration\n{out}"
+    assert "-> code/gold/" in out, f"Case 11 FAIL: target prefix not shown\n{out}"
+    return True
+
+
+# ---------------------------------------------------------------------------
+# Case 12 (d): NO-REGRESSION -- a clean deploy-scope change with NO sentinel and
+# NO removal deploys EXACTLY as before (same files, same S3 targets, exit 0).
+# The load-bearing positive control.
+# ---------------------------------------------------------------------------
+def test_no_regression_clean_deploy():
+    rc, out, uploads, audit = _run_serve_gate(
+        ["--no-pipescript", "--commit-range", "base000..tip999"],
+        files_content={
+            _GOLD: "print('gold one')\n",
+            _GOLD2: "print('gold two')\n",
+        },
+        diff_files=[_GOLD, _GOLD2],
+        old_blobs="same",   # base == current -> no sentinel history, no removal
+        log_body="ordinary gold refresh\n",
+    )
+    assert rc == 0, f"Case 12 FAIL: clean push must exit 0, got {rc}\n{out}"
+    assert set(uploads.keys()) == {"code/gold/INF_D_01.py", "code/gold/INF_D_02.py"}, \
+        f"Case 12 FAIL: deploy set/targets changed: {sorted(uploads)}"
+    assert "DEPLOYED  [inf] data/inf/scripts/gold/INF_D_01.py" in out, \
+        f"Case 12 FAIL: normal DEPLOYED line missing\n{out}"
+    assert "SERVE-HELD" not in out and "SERVE-RELEASE" not in out, \
+        f"Case 12 FAIL: a clean push must emit no serve-gate notes\n{out}"
+    assert audit == "", f"Case 12 FAIL: clean push must write no audit entry\n{audit!r}"
+    return True
+
+
 # ---------------------------------------------------------------------------
 # Runner
 # ---------------------------------------------------------------------------
@@ -272,6 +520,13 @@ CASES = [
     ("BYPASS --allow-stale writes audit entry", test_bypass_allow_stale),
     ("INF-PATH data/inf->opal-data-inf routing", test_inf_path_resolution),
     ("PIPESCRIPT-VERDICT parser known-good/known-bad", test_pipescript_verdict_parse),
+    ("SERVE-HELD sentinel skips file", test_serve_held_skip),
+    ("SERVE-HELD malformed/no-reason still skips", test_serve_held_malformed_still_skips),
+    ("SERVE-RELEASE removal w/o ACK refuses", test_serve_release_blocked_no_ack),
+    ("SERVE-RELEASE removal w/ range ACK proceeds+audits", test_serve_release_authorized_with_ack),
+    ("SERVE-RELEASE empty ACK does not release", test_serve_release_empty_ack_does_not_release),
+    ("AUTHOR enumeration notice shows author", test_author_enumeration_notice),
+    ("NO-REGRESSION clean deploy unchanged", test_no_regression_clean_deploy),
 ]
 
 

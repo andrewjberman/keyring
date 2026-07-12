@@ -29,6 +29,26 @@ BYPASS_AUDIT_LOG = WORKSPACE / "org" / "safe-deploy-bypass-audit.log"
 VALID_LAYERS = {"gold", "silver", "bronze"}
 
 # ---------------------------------------------------------------------------
+# Phase-1 serve-gate (CTO, Andrew-approved). A committed deploy-scope .py does
+# NOT auto-serve on push if it carries a SERVE-HELD sentinel; REMOVING that
+# sentinel (old had it, current does not) is authorizing serve, so it is gated
+# behind an in-message SERVE-RELEASE-ACK (tied to NEVER#2 never-widen).
+# All three checks FAIL CLOSED: any unreadable file / git error BLOCKS the deploy.
+# ---------------------------------------------------------------------------
+# A held file carries a line like:   # DEPLOY-SERVE-HELD: waiting on CTO signoff
+# Horizontal-whitespace-only ([ \t]) around the reason so a MALFORMED / no-reason
+# sentinel still MATCHES (stays HELD) -- fail-closed direction: never fall through
+# to serve on a parse ambiguity.
+SERVE_HELD_RE = re.compile(r"^[ \t]*#[ \t]*DEPLOY-SERVE-HELD\b[ \t]*:?[ \t]*(.*?)[ \t]*$")
+# An authorizing commit carries a line like:  SERVE-RELEASE-ACK: <reason>
+# [ \t]* (NOT \s*) is load-bearing: \s* would cross the newline and let an EMPTY
+# `SERVE-RELEASE-ACK:` falsely capture the NEXT commit line as its "reason" -- a
+# fail-OPEN inversion of the gate. The reason MUST be non-empty and on the SAME line.
+SERVE_RELEASE_ACK_RE = re.compile(
+    r"^[ \t]*SERVE-RELEASE-ACK:[ \t]*(\S.*?)[ \t]*$", re.MULTILINE
+)
+
+# ---------------------------------------------------------------------------
 # Canonical code-prefix registry (ADVI_INFETL.BRONZE-FIX #1 + NFRA_DEBTSCAN
 # TOOL-03; machine-readable surface for the deploy-completion ledger, TO #5).
 #
@@ -266,18 +286,159 @@ def run_pipescript_verify(rel_path: str) -> tuple[bool, str]:
     return _pipescript_output_ok(output), output
 
 
-def write_bypass_audit(author: str, files: list[str], commit_sha: str, reason: str) -> None:
+def write_bypass_audit(
+    author: str,
+    files: list[str],
+    commit_sha: str,
+    reason: str,
+    kind: str = "ALLOW-STALE",
+) -> None:
+    """Append an audit line. `kind` tags the row: ALLOW-STALE (the --allow-stale
+    bypass, default -- unchanged) or SERVE-RELEASE (a gated serve-hold removal)."""
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     BYPASS_AUDIT_LOG.parent.mkdir(parents=True, exist_ok=True)
     detail = ",".join(files[:5])
     if len(files) > 5:
         detail += f"...+{len(files) - 5}"
     entry = (
-        f"{ts} ALLOW-STALE  {author}  {len(files)}  ({detail})"
+        f"{ts} {kind}  {author}  {len(files)}  ({detail})"
         f"  sha:{commit_sha}  reason:{reason}\n"
     )
     with open(BYPASS_AUDIT_LOG, "a", encoding="utf-8") as fh:
         fh.write(entry)
+
+
+# ---------------------------------------------------------------------------
+# Phase-1 serve-gate helpers. Every function here FAILS CLOSED: a read/git error
+# is reported as "held" (skip, safe) or "undetermined -> refuse" (block, safe),
+# never silently treated as clear-to-serve.
+# ---------------------------------------------------------------------------
+
+def _git_env() -> dict[str, str]:
+    """Env for git subprocesses. MSYS_NO_PATHCONV=1 keeps a `<ref>:<path>` arg and
+    a `-- <path>` pathspec from being mangled by the Git-for-Windows path rewriter
+    (CLAUDE.md Git note); harmless where no path arg is present."""
+    env = os.environ.copy()
+    env["MSYS_NO_PATHCONV"] = "1"
+    return env
+
+
+def _text_has_serve_held(text: str) -> bool:
+    """True if any line of `text` is a DEPLOY-SERVE-HELD sentinel."""
+    for line in text.splitlines():
+        if SERVE_HELD_RE.match(line):
+            return True
+    return False
+
+
+def _serve_held_reason(rel_path: str) -> Optional[str]:
+    """Feature 1. Return the hold reason if the CURRENT (working-tree) content of
+    `rel_path` -- the exact bytes deploy_file would upload -- carries a SERVE-HELD
+    sentinel, else None (clear to serve).
+
+    FAIL CLOSED: an unreadable candidate is treated as HELD (returns a reason), so
+    it is skipped/reported, never silently served.
+    """
+    local_path = WORKSPACE / rel_path.replace("/", os.sep)
+    try:
+        text = local_path.read_text(encoding="utf-8", errors="replace")
+    except Exception as exc:  # unreadable -> held (safe)
+        return f"READ-ERROR treated-as-held ({exc})"
+    for line in text.splitlines():
+        m = SERVE_HELD_RE.match(line)
+        if m:
+            return m.group(1).strip() or "(no reason given)"
+    return None
+
+
+def _old_blob_has_serve_held(old_ref: str, rel_path: str) -> tuple[Optional[bool], str]:
+    """Feature 2 half A. Did `old_ref`'s version of `rel_path` carry the sentinel?
+
+    Returns (had_sentinel, detail):
+      (True,  "")            old blob had the sentinel
+      (False, "absent-in-old") file did not exist at old_ref -> a NEW file, not a removal
+      (False, "")            old blob determinably did NOT carry it
+      (None,  <error>)       UNDETERMINED -> caller MUST fail-closed (refuse)
+    """
+    ref_arg = f"{old_ref}:{rel_path}"
+    try:
+        r = subprocess.run(
+            ["git", "show", ref_arg],
+            capture_output=True, text=True, cwd=str(WORKSPACE), timeout=30,
+            env=_git_env(),
+        )
+    except Exception as exc:  # git unavailable / timeout -> undetermined -> refuse
+        return None, f"git show {ref_arg} failed: {exc}"
+    if r.returncode != 0:
+        stderr = (r.stderr or "").lower()
+        # A path missing from old_ref is a NEW file, not a serve-hold removal.
+        if "does not exist in" in stderr or "exists on disk" in stderr:
+            return False, "absent-in-old"
+        # Anything else (bad ref, corrupt object, ...) is undetermined -> refuse.
+        return None, (r.stderr or "").strip() or f"git show rc={r.returncode}"
+    return _text_has_serve_held(r.stdout), ""
+
+
+def _find_serve_release_ack(old_ref: str, new_ref: str) -> tuple[bool, str, Optional[str]]:
+    """Feature 2 half B. Scan commit messages in old_ref..new_ref for a
+    `SERVE-RELEASE-ACK: <reason>` line.
+
+    Returns (present, reason, error). error non-None => the log could not be read
+    -> caller MUST fail-closed (treat as NO ack -> refuse).
+    """
+    rng = f"{old_ref}..{new_ref}"
+    try:
+        r = subprocess.run(
+            ["git", "log", rng, "--format=%B"],
+            capture_output=True, text=True, cwd=str(WORKSPACE), timeout=30,
+            env=_git_env(),
+        )
+    except Exception as exc:
+        return False, "", f"git log {rng} failed: {exc}"
+    if r.returncode != 0:
+        return False, "", (r.stderr or "").strip() or f"git log rc={r.returncode}"
+    m = SERVE_RELEASE_ACK_RE.search(r.stdout)
+    if m:
+        return True, m.group(1).strip(), None
+    return False, "", None
+
+
+def _file_author(range_expr: str, rel_path: str) -> str:
+    """Feature 3. Last author to touch `rel_path` within `range_expr`. Informational
+    (transparency), so it FAILS SOFT to 'unknown' -- an author-lookup miss must never
+    block a legitimate deploy."""
+    try:
+        r = subprocess.run(
+            ["git", "log", range_expr, "--format=%an", "-1", "--", rel_path],
+            capture_output=True, text=True, cwd=str(WORKSPACE), timeout=15,
+            env=_git_env(),
+        )
+        if r.returncode == 0:
+            lines = [ln.strip() for ln in r.stdout.splitlines() if ln.strip()]
+            if lines:
+                return lines[0]
+    except Exception:
+        pass
+    return "unknown"
+
+
+def _resolve_serve_refs(
+    commit_range: Optional[str], explicit_files: Optional[list[str]]
+) -> tuple[str, str, bool]:
+    """Resolve (old_ref, new_ref, is_new_branch) for the serve-release removal gate.
+
+    is_new_branch True => there is no comparable old version (new-branch push,
+    remote sha 0000...) => the gate is skipped (spec: not a removal).
+    """
+    if commit_range and ".." in commit_range:
+        parts = commit_range.split("..")
+        old = parts[0].strip()
+        new = (parts[1].strip() if len(parts) > 1 else "") or "HEAD"
+        if not old or old.startswith("0000000"):
+            return "", new, True
+        return old, new, False
+    # No range (explicit files or bare invocation): mirror detect_script_files' default.
+    return "HEAD~1", "HEAD", False
 
 
 def _current_commit_sha() -> str:
@@ -322,12 +483,21 @@ def main(argv: list[str]) -> int:
         print("OK: safe-deploy -- no deploy-scope script files detected, nothing to do")
         return 0
 
+    # Feature 3: author-enumeration notice -- make "you are about to serve
+    # <someone else>'s gold" visible. Author lookup fails soft to 'unknown'
+    # (transparency, not a gate); the S3 target prefix comes from file_to_s3_target
+    # (scope logic untouched).
+    author_range = args.commit_range or "HEAD~1..HEAD"
     print(f"safe-deploy: {len(files)} script file(s) to deploy")
     for f in files:
-        print(f"  {f}")
+        target = file_to_s3_target(f)
+        layer = target[1].split("/")[1] if target else "?"   # s3_key = code/<layer>/...
+        author = _file_author(author_range, f)
+        print(f"  {f}  (authored by {author}) -> code/{layer}/")
     print()
 
-    # --allow-stale bypass
+    # --allow-stale bypass (unchanged: no S3 upload happens, so nothing SERVES;
+    # the serve-gate below governs the actual deploy path, not this bypass).
     if args.allow_stale:
         if not args.reason:
             print("ERROR: --allow-stale requires --reason", file=sys.stderr)
@@ -339,11 +509,84 @@ def main(argv: list[str]) -> int:
         print(f"  Reason: {args.reason}")
         return 0
 
-    # Deploy phase: upload all files, fail fast on any error
+    # ----- Feature 1: SERVE-HELD sentinel -- skip held files (fail closed) -----
+    # A deploy-scope file whose CURRENT content carries `# DEPLOY-SERVE-HELD` is a
+    # deliberate hold: it is NOT uploaded and NOT an error, but IS reported loud.
+    to_deploy: list[str] = []
+    held: list[tuple[str, str]] = []
+    for f in files:
+        reason = _serve_held_reason(f)   # unreadable -> treated as held (safe)
+        if reason is None:
+            to_deploy.append(f)
+        else:
+            held.append((f, reason))
+    for f, reason in held:
+        print(
+            f"SERVE-HELD: {f} -- committed but NOT served (reason: {reason}); "
+            "remove the sentinel to serve."
+        )
+    if held:
+        print()
+
+    # ----- Feature 2: gated sentinel-removal (removing a hold = authorizing serve) -----
+    # For each file that will deploy (current content lacks the sentinel), if its
+    # OLD (old_ref) version HAD the sentinel, this push is REMOVING the serve-hold.
+    # Refuse the whole push unless a commit in the range carries SERVE-RELEASE-ACK.
+    old_ref, new_ref, is_new_branch = _resolve_serve_refs(
+        args.commit_range, args.files if args.files else None
+    )
+    if not is_new_branch:
+        removed: list[str] = []
+        for f in to_deploy:
+            had, detail = _old_blob_has_serve_held(old_ref, f)
+            if had is None:   # UNDETERMINED -> fail closed
+                print(
+                    f"BLOCKED: safe-deploy serve-release check could not evaluate {f} "
+                    f"(old_ref={old_ref}): {detail}"
+                )
+                print("  (fail-closed: refusing the deploy; removal check incomplete)")
+                return 1
+            if had:
+                removed.append(f)
+        if removed:
+            present, ack_reason, ack_err = _find_serve_release_ack(old_ref, new_ref)
+            if ack_err is not None:   # log unreadable -> fail closed
+                print(
+                    "BLOCKED: safe-deploy serve-release ACK scan could not read the "
+                    f"commit log ({old_ref}..{new_ref}): {ack_err}"
+                )
+                print("  (fail-closed: refusing the deploy)")
+                return 1
+            lst = ", ".join(removed)
+            if not present:
+                print(
+                    f"SERVE-RELEASE BLOCKED: this push removes the serve-hold on "
+                    f"{len(removed)} file(s): {lst}. They WILL serve. Add "
+                    '"SERVE-RELEASE-ACK: <reason>" to a commit in this push to '
+                    "authorize (tied to NEVER#2 never-widen)."
+                )
+                return 1
+            # Authorized: record the release + reason + files, then let them deploy.
+            sha = _current_commit_sha()
+            write_bypass_audit(
+                args.author or "UNKNOWN", removed, sha, ack_reason, kind="SERVE-RELEASE"
+            )
+            print(
+                f"OK: SERVE-RELEASE authorized -- serve-hold removed on {len(removed)} "
+                f"file(s): {lst} (reason: {ack_reason})"
+            )
+            print(f"  Audit: {BYPASS_AUDIT_LOG}")
+            print()
+
+    if not to_deploy:
+        print("OK: safe-deploy -- all deploy-scope file(s) are SERVE-HELD; nothing served.")
+        return 0
+
+    # Deploy phase: upload all NON-HELD files, fail fast on any error
     deployed: list[tuple[str, str, str]] = []   # (rel_path, bucket, s3_key)
     failed = False
 
-    for rel_path in files:
+    for rel_path in to_deploy:
         target = file_to_s3_target(rel_path)
         if target is None:
             continue
