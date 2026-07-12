@@ -93,9 +93,25 @@ FALSE-denies every read, incl a known-good positive control; do NOT read a gold-
 as a go-live block); 7-partition walk-back too narrow (loader:229; PLAUSIBLE -> DS S4 date-bounded);
 cross-process attribution drift (loader:302; PLAUSIBLE -> DS S5 run-level as-of). Full: task wty8mrgmu.output.
 
-**STATUS: go-live HELD. P1/P5 false-green (downgraded). CHANGE-2 review deferred (stacks on the broken
-loader). DS fixes 3c EXERCISING THE PRODUCTION LOADER PATH -> I re-review 3c -> then CHANGE-2. Switch stays
-OFF throughout; nothing was ever served.**
+**ROUND 2 (e8745f1e2, /code-review w9tjoz12p) -- the B1 fix OVER-CORRECTED (new regression, CONFIRMED @ source):**
+option (b) made the fold = ALL ~837 explicit accounts (inflection_rep_scope.py:532-533), and apply re-keys all
+837 in EVERY producer. "no-op for non-movers" holds only where a producer's servicing basis == account_team's
+-- but INF_C_01 NNA (INF_C_01.py:448-458) uses a DIFFERENT basis (hardcoded rep_id->advisor map + unmapped
+catch-all), so non-movers there are silently re-attributed beyond the signed-off 164 (advisor_nna_canonical,
+holdings, top_holdings) + rep_bucket force-flipped into the individual NNA window. Gate can't see it (reconciles
+only vs account_team). Gate also: stubs the loader (:73 -> S2/S4/S5 un-exercised), tautological conservation
+(:111), baseline mismatch (:94). S5 as-of pin substring-matched (:245) + un-wired by any caller (:243). S1
+drop narrows CHANGE-2 household signal (:518). CTO~B's option-(b) lean was WRONG; owned.
+
+**CORRECT DESIGN (relayed, convergent): MOVERS-ONLY -- derive the servicing advisor_key from accounts_v2's own
+servicing rep (rep_id/rep_name, the basis that DEFINED the 164 oracle; accounts_v2 HAS it) -> fold = the 164
+movers -> apply uniformly (original static behavior). Gate must catch BOTH over- AND under-fold: exercise the
+REAL loader, assert |fold|==164, apply to a DIVERGENT-basis producer frame, real fold-sensitive conservation
+(peter<->joe swap must FAIL), reconciled baseline.**
+
+**STATUS: go-live HELD (2 rounds of pre-activation blockers caught). P1/P5 false-green. CHANGE-2 review deferred.
+DS on the movers-only fix (3rd core-fold attempt -> design pass if it doesn't converge cleanly). Switch OFF
+throughout; nothing ever served.**
 
 ## Current state (2026-07-12, this runbook's write time)
 
