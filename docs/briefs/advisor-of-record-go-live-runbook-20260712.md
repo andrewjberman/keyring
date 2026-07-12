@@ -16,7 +16,7 @@ Migrate the served Inflection advisor attribution from the servicing Representat
 - Fallback: blank advisor-of-record -> keep the servicing-rep key (no stranding).
 - Household headline = **advisor-of-record WINS** over servicing plurality (Andrew override). Only **1** household flips today (hh286): its sole explicit-AoR account (Noel, **$0 AUA**) headlines over 4 blank-AoR Peter accounts (~$79k). Faithful to "AoR always wins regardless of AUA"; **transparency flag for Andrew's final GO** -- a $0 account drives the flip. TRUE multi-AoR-owner households = 0, so the AUA/lexical tie-break never fires on live data.
 - Keil / DeMuth **excluded** (Andrew: not interested in those advisors) -> their 9 accts keep servicing key.
-- **34 INF accounts** (871 cohort - 837 roster-covered) have no roster row -> blank AoR -> keep servicing key (Andrew fallback). Firm-total still conserved; confirm these are expected-non-roster (closed/other), not a silent coverage gap, before go-live.
+- **34 INF accounts** keep servicing key (Andrew fallback). **CONFIRMED not a gap** (DS, grounded on live roster): all 871 cohort accounts ARE in the roster (0 missing rows); the 34 carry a BLANK udf7ADVISOROF (Orion has no AoR designation on them) -> keep-servicing. Stable across snapshots; self-heals daily (the fold picks up any of the 34 the instant Orion tags an AoR). Firm-total conserved.
 
 Expected served numbers (firm-CONSERVED, reconciled to MSTR's live Orion rollup):
 peter ~$135.24M / joe ~$29.19M / patrick ~$24.13M / **noel NEW ~$12.42M** / IWM ~$1.34M; firm $202.3M / 871 accts unchanged.
@@ -25,12 +25,12 @@ peter ~$135.24M / joe ~$29.19M / patrick ~$24.13M / **noel NEW ~$12.42M** / IWM 
 
 | # | Gate | Owner | State | Verify |
 |---|---|---|---|---|
-| P1 | Daily fold reproduces the 164 static movers + $ numbers + firm-conserved on the 20260710 snapshot | DS | **GREEN** -- reproduce_aor_fold_gate.py PASS (symmetric-diff 0, value-mismatch 0); caught + fixed a real pd.NA spurious-advisor bug (164->198) | static frozensets = reproduction oracle |
+| P1 | Daily fold reproduces the 164 static movers + $ numbers + firm-conserved on the 20260710 snapshot | DS | **RED / FALSE-GREEN** -- the gate feeds a synthetic av2 built from GOLD account_team (which HAS advisor_key) + bypasses the production loader; production reads silver accounts_v2 (NO advisor_key) -> empty fold. Gate must exercise the real loader path. | reproduce_aor_fold_gate.py:41,48-51 |
 | P2 | CHANGE-3 daily fold (Option A: per-process lazy self-load, marker-checked, OFF=truly-inert) wired + re-reviewed CLEAN | DS + CTO~B | committed 223a71982; **/code-review IN FLIGHT (wty8mrgmu)** | 4 invariants (see below) |
 | P3 | CHANGE-2 AoR-wins household rule + guard + hh286-class negative control, re-reviewed CLEAN | DS + CTO~B | committed ae737009f; **pending CTO~B /code-review** (after P2 clears -- stacks on 3c) | guard non-vacuous on live SSOT (286 hh); TRUE-N1 multi-owner=0 so disambiguation defensive-only |
 | P4 | Pull Lambda deployed + happy-path EXERCISED (200 + real roster + fresh marker), fail-safe proven | AE | **GREEN** -- inf-pipeline-v1.7.83; all 3 fail-safe paths (fresh/carry-forward/first-run-stale) exercised live; deployed-invoke wrote fresh roster 3118 accts/900 AoR @ 13:19:39Z | Rule 22a: exercised not asserted |
 | P4a | S3-write IAM grant (BronzeAccountsRosterWrite: Put/Get/Head on accounts_roster.json + marker + latest/) safe-applied + simulate-principal-policy verified WITH a positive control, + deployed-Lambda INVOKE-confirm (role+code end-to-end, not local creds) | AE | **GREEN** -- get-role-policy shows the grant live; simulate ALLOWED + positive control on new_portfolio_accounts.json; deployed-invoke = the ROLE wrote it; 0-diff | the role's s3-accounts-v2 policy is FILENAME-scoped to new_portfolio_accounts.json (verified live) -> the pull's NEW keys 403 without this; local-creds exercise MASKS it (Rule 22a-IAM) |
-| P5 | LIVE end-to-end: bronze roster -> silver advisor_of_record_raw -> gold daily fold reproduces the numbers on LIVE data (not just snapshot) | DS + AE | **GREEN** -- ran held silver+gold against AE's real 13:19:39Z roster (871 INF cohort, 837 roster-covered): 164 movers == oracle (symmetric-diff 0), peter/joe/patrick/noel EXACT, $0.00 drift, firm $202.32M conserved | grounded against LIVE, strongest form |
+| P5 | LIVE end-to-end: bronze roster -> silver advisor_of_record_raw -> gold daily fold reproduces the numbers on LIVE data (not just snapshot) | DS + AE | **RED / FALSE-GREEN** -- ran the SAME synthetic path as the gate (account_team-derived av2, has advisor_key), not the production loader reading real silver accounts_v2. Shares the P1 blind spot. Re-run must go through _ensure_advisor_of_record_fold_loaded reading REAL silver accounts_v2. | same blind spot as P1 |
 | P6 | Conformance guard INF_D_10 exercised CLEAN under the ACTIVE-switch build | DS | 21/21 under INF_AOR_FOLD_ACTIVE=1 already; re-run on final build | non-vacuous (286 SSOT households iterated) |
 | P7 | FE noel card held (portal 73ee2705 + comment-hygiene b005545e), DEV | RD | DONE + HELD (branch -r contains = empty) | unpushed until this sequence |
 | P8 | NEVER#2 never-widen sign-off | base CTO principal + COO + Andrew final GO | pending | firm-total conservation shown; DELTA verified |
@@ -70,6 +70,29 @@ peter ~$135.24M / joe ~$29.19M / patrick ~$24.13M / **noel NEW ~$12.42M** / IWM 
 2. DT: revert the FE promote (PROD back to pre-Noel).
 3. served reverts to pre-fold (4 advisors, servicing-rep attribution) on the next nightly.
 4. RED-ALERT to COO; ledger entry -> rolled-back with the failure grounding.
+
+## P2 /code-review (wty8mrgmu, xhigh) -- GO-LIVE HELD: 1 blocker + secondaries (2026-07-12)
+
+**BLOCKER (SOURCE-CONFIRMED @ working-tree) -- empty-fold silent-pre-fold-serve:** silver accounts_v2 has NO
+`advisor_key` (servicing key is gold-derived from rep_id at convert_orion_api_to_silver.py:969 in
+build_positions_mv; build_accounts_v2:400-602 never emits it). The loader (inflection_rep_scope.py:272)
+passes accounts_v2 (no advisor_key) to build_advisor_of_record_fold, whose :443 guard returns ({},{}) ->
+ADVISOR_OF_RECORD_FOLD empty -> assert_fold_landed:337 short-circuits on the empty map -> served = PRE-FOLD
+servicing attribution under an ACTIVE switch = NEVER#2 silent-widen. invariant 2 does NOT catch it (only
+guards advisor_of_record_raw, which IS present). The reproduction gate + P5 CANNOT detect it (feed
+account_team-derived av2 that HAS advisor_key + bypass the loader). **Nothing served -- switch OFF; caught
+pre-activation, which is the entire point.** Fix relayed to DS.
+
+**Secondaries (fix same round):** phantom-advisor minting on daily drift (canonicalize:417 -- no known-advisor
+allowlist; CONFIRMED); swallowed S3 read-failure misreported as "roster MISSING" + unguarded list paginate
+(loader:221/235/262; CONFIRMED); placebo conservation check (gate:71 omits firm, structurally invariant;
+CONFIRMED); NEW s3 read dependency on all 10 producer roles needs simulate-principal-policy (loader:221;
+PLAUSIBLE -- Rule 22a); 7-partition walk-back too narrow (loader:229; PLAUSIBLE); cross-process attribution
+drift (loader:302; PLAUSIBLE). Full: task wty8mrgmu.output.
+
+**STATUS: go-live HELD. P1/P5 false-green (downgraded). CHANGE-2 review deferred (stacks on the broken
+loader). DS fixes 3c EXERCISING THE PRODUCTION LOADER PATH -> I re-review 3c -> then CHANGE-2. Switch stays
+OFF throughout; nothing was ever served.**
 
 ## Current state (2026-07-12, this runbook's write time)
 
