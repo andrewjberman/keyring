@@ -34,7 +34,7 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 
 sys.path.insert(0, str(_WORKSPACE))
 
-from org.modules.graph.extract_routes import build_routing_table, parse_edge_versions
+from org.modules.graph.extract_routes import build_routing_table, parse_edge_versions, EndpointFunction  # noqa: E402
 
 
 def _build_rt():
@@ -98,7 +98,7 @@ def cmd_trace(args):
                             _print_route(r)
                     return
                 print(f"No match for: {query}")
-                print(f"Try a URL (/api/...), endpoint function name, or component name.")
+                print("Try a URL (/api/...), endpoint function name, or component name.")
                 return
 
     if args.json:
@@ -107,6 +107,17 @@ def cmd_trace(args):
             "cf_behavior": r.cf_behavior,
             "cf_origin": r.cf_origin,
             "cf_origin_type": r.cf_origin_type,
+            # UNRESOLVED when the URL is client-composed (auth is UNDETERMINED, not
+            # proven-absent). auth_edge/auth_api_gw are only meaningful when
+            # url_resolvable is True -- a consumer must read url_resolvable, never
+            # treat false/false as a proven auth:NONE.
+            "url_resolvable": r.url_resolvable,
+            "resolve_reason": r.resolve_reason,
+            "auth_status": "UNRESOLVED" if not r.url_resolvable else (
+                "edge+apigw" if (r.auth_edge and r.auth_api_gw) else
+                "edge" if r.auth_edge else
+                "apigw" if r.auth_api_gw else "none"
+            ),
             "auth_edge": r.auth_edge,
             "auth_api_gw": r.auth_api_gw,
             "edge_router": r.edge_router,
@@ -125,6 +136,17 @@ def _print_route(route, indent=0):
     pad = " " * indent
     print(f"{pad}ROUTE: {route.endpoint_function}")
     print(f"{pad}  URL: {route.url_pattern}")
+    if not route.url_resolvable:
+        # The URL is client-composed / statically-unresolvable: we CANNOT map it to a
+        # CloudFront behavior, so the auth posture is UNDETERMINED. Report UNRESOLVED,
+        # never a false auth:NONE (which reads as a proven-open gate).
+        print(f"{pad}  CloudFront: UNRESOLVED ({route.resolve_reason})")
+        print(f"{pad}  Auth: UNRESOLVED -- cannot statically map this URL to a CF behavior;")
+        print(f"{pad}        auth is UNDETERMINED here, NOT proven absent. Verify the served edge directly.")
+        if route.components:
+            print(f"{pad}  Components: {', '.join(route.components)}")
+        print()
+        return
     print(f"{pad}  CloudFront:")
     print(f"{pad}    behavior: {route.cf_behavior}")
     print(f"{pad}    origin:   {route.cf_origin} ({route.cf_origin_type})")
@@ -239,7 +261,6 @@ def cmd_endpoints(args):
     for ep in with_urls.values():
         by_file.setdefault(ep.source_file, []).append(ep)
 
-    from org.modules.graph.extract_routes import EndpointFunction
     for src_file, eps in sorted(by_file.items()):
         print(f"  {src_file}:")
         for ep in sorted(eps, key=lambda e: e.name):
@@ -293,7 +314,7 @@ def cmd_auth_map(args):
         for cer in auth_codes_intercepted:
             print(f"  HTTP {cer.error_code} -> {cer.response_code} {cer.response_page_path}")
             print(f"  Lambda auth denials ({cer.error_code}) will reach browser as {cer.response_code} HTML, not JSON.")
-            print(f"  To pass auth errors through: return HTTP 401 instead of 403 from Lambda.")
+            print("  To pass auth errors through: return HTTP 401 instead of 403 from Lambda.")
 
 
 def cmd_stats(args):
@@ -336,7 +357,7 @@ def cmd_edge_versions(args):
         return
 
     print("LAMBDA@EDGE VERSION BINDINGS")
-    print(f"  Source: cloudfront-distribution.tf locals block\n")
+    print("  Source: cloudfront-distribution.tf locals block\n")
 
     hardcoded = []
     dynamic = []
@@ -368,13 +389,11 @@ def cmd_edge_versions(args):
         print("  Example:")
         for b in hardcoded:
             if b.tf_resource:
-                # Infer the tf local name format
-                res_name = b.tf_resource.split('.')[-1]
                 print(f"    {b.local_name} = {b.tf_resource}.qualified_arn")
         print()
         print(f"  WARNING: {len(hardcoded)} edge function(s) will silently serve stale code")
-        print(f"  after their next deploy. Same root cause as the ADVI_49PUSH outage")
-        print(f"  (shared-advisor-router was pinned to :10, Terraform published :12).")
+        print("  after their next deploy. Same root cause as the ADVI_49PUSH outage")
+        print("  (shared-advisor-router was pinned to :10, Terraform published :12).")
 
 
 # ---------------------------------------------------------------------------

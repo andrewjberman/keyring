@@ -134,6 +134,13 @@ class Route:
     # Frontend
     endpoint_function: str = ""        # JS function that makes the call
     components: list[str] = field(default_factory=list)  # React components
+    # Static-resolvability of the request URL. False when the endpoint's URL is
+    # CLIENT-COMPOSED at runtime (a base built from a non-file-level local const /
+    # template literal, leaving a leading "{param}") so the tool CANNOT map it to a
+    # CloudFront behavior. When False, the auth_* flags are UNDETERMINED, NOT proven
+    # absent -- consumers must report UNRESOLVED, never a false auth:NONE.
+    url_resolvable: bool = True
+    resolve_reason: str = ""           # why the URL is unresolvable (when url_resolvable is False)
 
 
 @dataclass
@@ -196,6 +203,26 @@ def _api_route_matches(route_path: str, url: str) -> bool:
     regex = re.sub(r'\{[^}]+\}', '[^/]+', re.escape(route_path))
     regex = '^' + regex.replace(r'\*', '.*') + '(?:\\?.*)?$'
     return bool(re.match(regex, url))
+
+
+def _url_is_statically_resolvable(url: str) -> bool:
+    """A URL template is statically resolvable iff it begins with a LITERAL absolute
+    path segment ('/...').
+
+    The frontend endpoint parser substitutes file-level string constants
+    (e.g. PLATINUM_BASE = '/api/scoped/...') and only THEN collapses remaining
+    runtime interpolations to '{param}'. So:
+      - '/api/scoped/advisor-intelligence/platinum/advisors/{param}/book.json' is
+        RESOLVABLE -- an absolute literal with a mid-path '{param}' that CloudFront
+        '*' behavior patterns match.
+      - '{param}/book.json{param}' is NOT resolvable -- the BASE itself was
+        client-composed at runtime (a local template-literal const the tool cannot
+        see), leaving a LEADING '{param}'. The tool cannot map it to any CloudFront
+        behavior, so its auth posture is UNDETERMINED (not proven-absent).
+
+    This is the discriminator that keeps a false auth:NONE off client-composed URLs
+    WITHOUT blanket-relabelling genuinely-resolvable open routes."""
+    return url.startswith('/')
 
 
 # ---------------------------------------------------------------------------
@@ -455,7 +482,7 @@ def _parse_rewrite_rules(workspace_root: Path) -> list[RewriteRule]:
     # shared-advisor-router
     router_file = workspace_root / "infra" / "aws" / "lambda-edge" / "shared-advisor-router" / "index.mjs"
     if router_file.exists():
-        content = router_file.read_text(encoding="utf-8", errors="replace")
+        _content = router_file.read_text(encoding="utf-8", errors="replace")  # noqa: F841 (pre-existing dead read; rules below are hardcoded, not parsed -- marked unused to satisfy universal gate)
 
         # Parse the if/else chain in the router (order matters -- more specific first)
         # suffix.startsWith("advisors/") -> /gold/entities/ + suffix
@@ -755,8 +782,21 @@ def build_routing_table(workspace_root: Path) -> RoutingTable:
         url = ep.url_template
         route = Route(url_pattern=url, endpoint_function=fn_name)
 
+        # Static-resolvability gate. A client-composed URL (runtime-templated base,
+        # leading "{param}") cannot be mapped to a CloudFront behavior, so its auth
+        # posture is UNDETERMINED -- we must NOT let it fall through to the default
+        # all-False auth flags, which read as a proven-open auth:NONE. Only attempt
+        # a behavior match on a statically-resolvable absolute URL.
+        statically_resolvable = _url_is_statically_resolvable(url)
+        behavior = rt.match_behavior(url) if statically_resolvable else None
+        if not statically_resolvable:
+            route.url_resolvable = False
+            route.resolve_reason = "client-composed URL (runtime-templated base, no static literal)"
+        elif behavior is None:
+            route.url_resolvable = False
+            route.resolve_reason = "no CloudFront behavior matched the static URL"
+
         # Match CloudFront behavior
-        behavior = rt.match_behavior(url)
         if behavior:
             route.cf_behavior = behavior.path_pattern
             route.cf_origin = behavior.origin_id

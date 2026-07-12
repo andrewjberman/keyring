@@ -334,17 +334,29 @@ def _scan_component_pii(component_path: Path, workspace_root: Path, rt=None) -> 
     for fb in flow.fetches:
         route = next((r for r in rt.routes if r.endpoint_function == fb.fetch_function), None)
         if route:
-            auth_parts = []
-            if route.auth_edge:
-                auth_parts.append("edge")
-            if route.auth_api_gw:
-                auth_parts.append("apigw")
-            fetch_routes[fb.fetch_function] = {
-                "origin_type": route.cf_origin_type,
-                "auth": "+".join(auth_parts) or "none",
-                "s3_key": route.s3_key,
-                "lambda": route.lambda_handler,
-            }
+            if not route.url_resolvable:
+                # Client-composed / statically-unresolvable URL: auth is UNDETERMINED.
+                # Surfacing "none" here would be a FALSE auth:NONE (reads as open gate).
+                fetch_routes[fb.fetch_function] = {
+                    "origin_type": route.cf_origin_type or "unresolved",
+                    "auth": "UNRESOLVED",
+                    "s3_key": route.s3_key,
+                    "lambda": route.lambda_handler,
+                    "resolvable": False,
+                }
+            else:
+                auth_parts = []
+                if route.auth_edge:
+                    auth_parts.append("edge")
+                if route.auth_api_gw:
+                    auth_parts.append("apigw")
+                fetch_routes[fb.fetch_function] = {
+                    "origin_type": route.cf_origin_type,
+                    "auth": "+".join(auth_parts) or "none",
+                    "s3_key": route.s3_key,
+                    "lambda": route.lambda_handler,
+                    "resolvable": True,
+                }
 
     # Scan transform chain field accesses
     for tc in flow.transforms:
@@ -679,6 +691,21 @@ def cmd_routes(args):
             if not component_pii:
                 print(f"  {flow.component_name}:")
                 component_pii = True
+
+            # Client-composed / statically-unresolvable URL: the tool CANNOT map it to
+            # a CloudFront behavior, so origin/auth/pseudonymizer are all UNDETERMINED.
+            # Emitting "origin: (blank) | auth: NONE | NO PSEUDONYMIZER (S3 direct)" here
+            # is a FALSE posture -- auth:NONE reads as a proven-open gate. Report
+            # UNRESOLVED and say so, never a determinate verdict we did not compute.
+            if not route.url_resolvable:
+                print(f"    {fb.fetch_function}()")
+                print("      origin: UNRESOLVED | auth: UNRESOLVED | PSEUDONYMIZER: UNRESOLVED")
+                print(f"      reason: {route.resolve_reason}")
+                print(f"      PII fields: {', '.join(pii_field_names)}")
+                print("      !! UNRESOLVED: client-composed URL -- auth is UNDETERMINED here, NOT")
+                print("         proven absent. This is NOT a no-auth finding; verify the served edge directly.")
+                print()
+                continue
 
             origin = route.cf_origin_type
             auth_parts = []
