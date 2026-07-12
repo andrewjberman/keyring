@@ -14,8 +14,9 @@ Migrate the served Inflection advisor attribution from the servicing Representat
 - **Scanlan_IWM** folds into existing **patrick_scanlan**; **Soderblom_IWM** into **noel_soderblom**.
 - The whole existing group re-keys by advisor-of-record (Joe Brandenburg $19.4M-by-rep -> $29.2M-by-AoR, etc.).
 - Fallback: blank advisor-of-record -> keep the servicing-rep key (no stranding).
-- Household headline = **advisor-of-record WINS** over servicing plurality (Andrew override).
+- Household headline = **advisor-of-record WINS** over servicing plurality (Andrew override). Only **1** household flips today (hh286): its sole explicit-AoR account (Noel, **$0 AUA**) headlines over 4 blank-AoR Peter accounts (~$79k). Faithful to "AoR always wins regardless of AUA"; **transparency flag for Andrew's final GO** -- a $0 account drives the flip. TRUE multi-AoR-owner households = 0, so the AUA/lexical tie-break never fires on live data.
 - Keil / DeMuth **excluded** (Andrew: not interested in those advisors) -> their 9 accts keep servicing key.
+- **34 INF accounts** (871 cohort - 837 roster-covered) have no roster row -> blank AoR -> keep servicing key (Andrew fallback). Firm-total still conserved; confirm these are expected-non-roster (closed/other), not a silent coverage gap, before go-live.
 
 Expected served numbers (firm-CONSERVED, reconciled to MSTR's live Orion rollup):
 peter ~$135.24M / joe ~$29.19M / patrick ~$24.13M / **noel NEW ~$12.42M** / IWM ~$1.34M; firm $202.3M / 871 accts unchanged.
@@ -24,12 +25,12 @@ peter ~$135.24M / joe ~$29.19M / patrick ~$24.13M / **noel NEW ~$12.42M** / IWM 
 
 | # | Gate | Owner | State | Verify |
 |---|---|---|---|---|
-| P1 | Daily fold reproduces the 164 static movers + $ numbers + firm-conserved on the 20260710 snapshot | DS | pending | static frozensets = reproduction oracle; DS proves BEFORE wiring |
-| P2 | CHANGE-3 daily fold (Option A: per-process lazy self-load, marker-checked, OFF=truly-inert) wired + re-reviewed CLEAN | DS + CTO~B | pending | /code-review CLEAN; 4 invariants (see below) |
-| P3 | CHANGE-2 AoR-wins household rule + guard + hh286-class negative control, re-reviewed CLEAN | DS + CTO~B | pending | /code-review CLEAN; guard non-vacuous on live SSOT |
+| P1 | Daily fold reproduces the 164 static movers + $ numbers + firm-conserved on the 20260710 snapshot | DS | **GREEN** -- reproduce_aor_fold_gate.py PASS (symmetric-diff 0, value-mismatch 0); caught + fixed a real pd.NA spurious-advisor bug (164->198) | static frozensets = reproduction oracle |
+| P2 | CHANGE-3 daily fold (Option A: per-process lazy self-load, marker-checked, OFF=truly-inert) wired + re-reviewed CLEAN | DS + CTO~B | committed 223a71982; **/code-review IN FLIGHT (wty8mrgmu)** | 4 invariants (see below) |
+| P3 | CHANGE-2 AoR-wins household rule + guard + hh286-class negative control, re-reviewed CLEAN | DS + CTO~B | committed ae737009f; **pending CTO~B /code-review** (after P2 clears -- stacks on 3c) | guard non-vacuous on live SSOT (286 hh); TRUE-N1 multi-owner=0 so disambiguation defensive-only |
 | P4 | Pull Lambda deployed + happy-path EXERCISED (200 + real roster + fresh marker), fail-safe proven | AE | **GREEN** -- inf-pipeline-v1.7.83; all 3 fail-safe paths (fresh/carry-forward/first-run-stale) exercised live; deployed-invoke wrote fresh roster 3118 accts/900 AoR @ 13:19:39Z | Rule 22a: exercised not asserted |
 | P4a | S3-write IAM grant (BronzeAccountsRosterWrite: Put/Get/Head on accounts_roster.json + marker + latest/) safe-applied + simulate-principal-policy verified WITH a positive control, + deployed-Lambda INVOKE-confirm (role+code end-to-end, not local creds) | AE | **GREEN** -- get-role-policy shows the grant live; simulate ALLOWED + positive control on new_portfolio_accounts.json; deployed-invoke = the ROLE wrote it; 0-diff | the role's s3-accounts-v2 policy is FILENAME-scoped to new_portfolio_accounts.json (verified live) -> the pull's NEW keys 403 without this; local-creds exercise MASKS it (Rule 22a-IAM) |
-| P5 | LIVE end-to-end: bronze roster -> silver advisor_of_record_raw -> gold daily fold reproduces the numbers on LIVE data (not just snapshot) | DS + AE | **UNBLOCKED** -- live roster landed @ 13:19:39Z, AE pinged DS; DS runs the serve-held silver+gold code against it (no deploy needed -- deployed silver stays sentinel-skipped) | grounded against live, not asserted |
+| P5 | LIVE end-to-end: bronze roster -> silver advisor_of_record_raw -> gold daily fold reproduces the numbers on LIVE data (not just snapshot) | DS + AE | **GREEN** -- ran held silver+gold against AE's real 13:19:39Z roster (871 INF cohort, 837 roster-covered): 164 movers == oracle (symmetric-diff 0), peter/joe/patrick/noel EXACT, $0.00 drift, firm $202.32M conserved | grounded against LIVE, strongest form |
 | P6 | Conformance guard INF_D_10 exercised CLEAN under the ACTIVE-switch build | DS | 21/21 under INF_AOR_FOLD_ACTIVE=1 already; re-run on final build | non-vacuous (286 SSOT households iterated) |
 | P7 | FE noel card held (portal 73ee2705 + comment-hygiene b005545e), DEV | RD | DONE + HELD (branch -r contains = empty) | unpushed until this sequence |
 | P8 | NEVER#2 never-widen sign-off | base CTO principal + COO + Andrew final GO | pending | firm-total conservation shown; DELTA verified |
