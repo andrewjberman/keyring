@@ -316,8 +316,22 @@ def main() -> int:
             print(f"\n{'OK: all checks pass' if ok else 'ERROR: one or more checks FAILED'}")
         return 0 if ok else 1
 
-    feed = th.load_effective_feed(args.effective_feed) if args.effective_feed else None
+    # Ga (CYCLE-A.1 / F2): DEFAULT to the EFFECTIVE feed for CONSISTENCY with comp-tool-health (mirrors
+    # main():757) -- so the commission gate decides on the same EFFECTIVE axis, not the 2-axis skeleton.
+    # Gb: READ-ONLY -- the gate READS the feed; it NEVER refreshes (no ensure_fresh / _ensure_feed_fresh /
+    # probe_all on the gate path). A commission/decision gate is a hot path; a live full-corpus probe here
+    # is exactly the probe-storm G1's consumption-driven wire guarded against.
+    _feed_path = args.effective_feed or (th.DEFAULT_EFFECTIVE_FEED
+                                         if os.path.exists(th.DEFAULT_EFFECTIVE_FEED) else None)
+    feed = th.load_effective_feed(_feed_path) if _feed_path else None
     ledger = build_commissions(effective_feed=feed)
+    # Gc: staleness VISIBLE (a pure feed_age_days READ, never a run) so a stale feed shows in the ledger;
+    # the gate never triggers a probe. A missing feed -> feed None -> EFFECTIVE pending (2-axis skeleton).
+    from org.modules.graph.compproof import tool_probe as _tp  # lazy: pure feed-age read only (NO probe)
+    _age = _tp.feed_age_days(_feed_path) if _feed_path else None
+    ledger["feed_freshness"] = {"feed_path": _feed_path, "age_days": _age,
+                                "ceiling_days": _tp.DEFAULT_CEILING_DAYS, "read_only": True,
+                                "stale": (_age is None or _age > _tp.DEFAULT_CEILING_DAYS)}
 
     if args.emit:
         # Vintage-stamp only in the served-emit path (keeps build_commissions deterministic for the
@@ -332,6 +346,10 @@ def main() -> int:
     if args.json:
         print(json.dumps(ledger, indent=2))
     else:
+        _fr = ledger["feed_freshness"]                    # Gc: staleness visible in the human output too (read-only)
+        _astr = "no feed (EFFECTIVE pending)" if _fr["age_days"] is None else f"{_fr['age_days']:.1f}d old"
+        print(f"EFFECTIVE feed (gate is READ-ONLY, never probes): {_astr} -- "
+              f"{'STALE' if _fr['stale'] else 'fresh'} (ceiling {_fr['ceiling_days']}d)")
         print(_render(ledger, verdict_filter=args.verdict))
     return 0
 
