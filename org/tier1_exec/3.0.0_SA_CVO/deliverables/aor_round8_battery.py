@@ -257,18 +257,23 @@ full_off = pd.DataFrame({"account_id": [1, 2, 3, 6],
                          "advisor_key": [my_servicing[a] for a in (1, 2, 3, 6)],
                          "rep_bucket": ["individual", "individual", "individual", "firm"]})
 full_before = full_off.copy()
-ar.attach_advisor_key(full_off, res_off)
+# `absent` is REQUIRED + KEYWORD-ONLY as of DS's F2-B(a) fix (dbab19e4c) -- the dangerous default was
+# DELETED on purpose. This battery called the OLD signature and CRASHED at HEAD (TypeError), which
+# means every arm BELOW this line silently never ran: **a battery that aborts after 8 PASSes is not a
+# green, it is an unfinished measurement.** Mirroring the REAL full-attach consumers, censused by
+# FUNCTION at HEAD (not by mention): INF_A_00:274 / INF_A_01:203 / INF_C_07:280 all pass absent='unknown'.
+ar.attach_advisor_key(full_off, res_off, absent='unknown')
 check("F5b-FULL-OFF: FULL attach under OFF re-stamps servicing onto a servicing-correct current"
       " snapshot -> values UNCHANGED (DELTA-0 for the A_00/A_01 mode)",
       full_off.equals(full_before))
 full_on = full_before.copy()
-ar.attach_advisor_key(full_on, res_on)
+ar.attach_advisor_key(full_on, res_on, absent='unknown')
 check("F5b-FULL-ON: FULL attach under ON moves ONLY the movers (1->joe, 2->noel; 3,6 stay servicing)",
       list(full_on["advisor_key"]) == ["joe_brandenburg", "noel_soderblom", "peter_lee",
                                        "inflection_wealth_management"]
       and list(full_on["rep_bucket"]) == ["individual", "individual", "individual", "firm"])
 vint = pd.DataFrame({"account_id": [1], "advisor_key": ["vintage_x"], "rep_bucket": ["individual"]})
-ar.attach_advisor_key(vint, res_off)
+ar.attach_advisor_key(vint, res_off, absent='unknown')
 check("F5b-MODE-DISCRIMINATION: a FULL attach on a VINTAGE frame DOES overwrite history (vintage_x ->"
       " servicing) -- demonstrating WHY the 7 vintage consumers ride movers-only; the census below"
       " asserts the mode assignment", list(vint["advisor_key"]) == ["peter_lee"])
@@ -285,7 +290,7 @@ vb = pd.DataFrame({"account_id": [3, 3], "x": [1, 2], "advisor_key": ["peter_lee
 ar.apply_resolution_fold(va, res_mut)
 ar.apply_resolution_fold(vb, res_mut)
 vc = pd.DataFrame({"account_id": [3], "advisor_key": [pd.NA]})
-ar.attach_advisor_key(vc, res_mut, rep_bucket_col=None)
+ar.attach_advisor_key(vc, res_mut, absent='unknown', rep_bucket_col=None)
 check("F5c perturbation PROPAGATES: one flipped resolution row -> EVERY view reflects it mechanically"
       " (inherit, not re-derive)",
       set(va["advisor_key"]) == set(vb["advisor_key"]) == set(vc["advisor_key"]) == {"noel_soderblom"})

@@ -29,6 +29,54 @@ from io import BytesIO
 REPO = r'C:\Users\AndrewBerman\Desktop\ajb_workspace'
 LIB = os.path.join(REPO, 'data', 'inf', 'scripts', 'gold', 'lib')
 
+# =================================================================================================
+# >> SUPERSEDED -- AND IT WAS EMITTING A CONFIDENT FALSE *RED*, IN MY OWN VOICE. <<
+# (3.0.0_SA_CVO~B, 2026-07-13. Self-caught while re-running the battery at HEAD.)
+#
+# This arm verifies the TWO-input key `(source_digest, fold_mode)`. Its fixtures stamp exactly those
+# two fields (:68-69). The key that SHIPPED grew a THIRD axis -- `code_digest` (R-B: the CODE is an
+# input too) -- so the chokepoint's third assertion legitimately RAISES on every one of this arm's
+# unstamped fixtures. A5 and A6 (which demand RETURN) therefore came back RAISED, and this script
+# concluded, at exit 1:
+#
+#       "VERDICT: DOES NOT DISCRIMINATE -- gate-2 stays RED. Do not ship this key."
+#
+# THAT VERDICT IS FALSE. The shipped 3-input key does NOT over-condemn: `aor_gate2_final_matrix.py`
+# runs the SAME semantic arms with fixtures that stamp all THREE axes, and A5 (legit cache reuse)
+# RETURNS. Two arms, one question, different fixture completeness -- and the one whose fixture matches
+# the shipped key is the one that is right.
+#
+# THE LESSON, AND IT IS THE C_07 LESSON TURNED ON MY OWN INSTRUMENTS: this arm was CORRECT when it was
+# written, and the GROUND MOVED UNDER IT. Nothing in it changed; the MEANING of what it measures
+# changed. It now argues -- authoritatively, at exit 1, in my own voice -- against a key that is sound.
+# **A stale arm that emits a confident false RED is worse than no arm**: a false FAIL's remedy is
+# DESTRUCTIVE (block a good key, or teach the next reader to ignore RED verdicts).
+#
+# It is KEPT, not deleted -- it is the historical record of how the 2-input key was verified, and the
+# A3/A4 arms in it are the ones that killed two earlier keys. But it MUST NOT render a verdict on the
+# shipped key. It now detects that the key has grown past it and refuses.
+#     LIVE REPLACEMENT: aor_gate2_final_matrix.py  (the 3-input key, 8/8 at HEAD)
+# =================================================================================================
+sys.path.insert(0, LIB)
+try:
+    from aor_resolution import RESOLUTION_COLS
+    _shipped_axes = {c for c in ('source_digest', 'fold_mode', 'code_digest') if c in RESOLUTION_COLS}
+except Exception as _e:                                    # noqa: BLE001
+    print(f'INSTRUMENT BROKEN: cannot read RESOLUTION_COLS to check the key shape ({_e}). '
+          'Refusing to render a verdict.')
+    sys.exit(2)
+if 'code_digest' in _shipped_axes:
+    print('=' * 100)
+    print('SUPERSEDED -- THIS ARM VERIFIES A KEY THAT NO LONGER SHIPS. NO VERDICT.')
+    print('=' * 100)
+    print("  this arm's key : (source_digest, fold_mode)          -- 2 axes, stamped at :68-69")
+    print(f"  the SHIPPED key: {tuple(sorted(_shipped_axes))}  -- {len(_shipped_axes)} axes")
+    print('\n  Its fixtures do not stamp `code_digest`, so the chokepoint raises on them CORRECTLY.')
+    print('  Run unchanged, this script would report "A5/A6 OVER-CONDEMN -> do not ship this key" --')
+    print('  a CONFIDENT FALSE RED against a sound key. It refuses instead.')
+    print('\n  LIVE REPLACEMENT: aor_gate2_final_matrix.py (3-input key, 8/8 GREEN at HEAD).')
+    sys.exit(2)
+
 PIN = '2026-07-12'                 # live: latest accounts_v2 partition
 ETAG_NOW = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'    # the partition THIS run reads
 ETAG_OLD = 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'    # the bytes it held BEFORE an in-place rewrite
