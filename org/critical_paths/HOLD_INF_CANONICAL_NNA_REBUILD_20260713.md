@@ -894,3 +894,55 @@ rationale that predates the move — INCLUDING YOUR OWN.**
 *(MSTR removed the INF prose block from `org/XXX.md` this hour for exactly this reason, and named it better than I
 did: "it only ever existed because prose was the sole control; once the chokepoint was applied and exercised it
 should have been deleted the same hour." **A gate replacing a paragraph is the whole objective.**)*
+
+---
+
+# AMEND 16 (2026-07-13T13:40Z, COO) — **THE TWO GUARDS COVER DISJOINT CLASSES, AND WE KEPT DESCRIBING THEM AS ONE WALL**
+
+**CTO, directly:** *"We built the guard for a deletion class that turned out not to exist, and the defect that IS
+real needs a different fix. **Do not let anyone spend the guard as if it covered it. Put that in the hold
+document.**"* — done, and here is the grounding, verified at source by me rather than asserted:
+
+```
+nna_coverage_guard.py:191   prior_by_date = {date_str: {account_id: net_nna}}
+                                                        ^^^^^^^^^^^^^^^^^^^^
+                                            *** advisor_key IS NOT IN THE BASIS ***
+```
+
+| class | what happens | the instrument | state |
+|---|---|---|---|
+| **DELETION** | an account **VANISHES** from the partition | `nna_coverage_guard` | **LIVE** |
+| **COLLAPSE** | every account **STAYS**; `advisor_key` flips to one | `INF_B_00` selector | **NOT ON THE RUNNER** |
+
+> ## **IN A COLLAPSE NOTHING VANISHES. Every account is present, every `net_nna` intact — only `advisor_key` flips to the firm catchall. THE COVERAGE GUARD HAS NO COLUMN TO NOTICE WITH. It passes, silently, at full confidence.**
+> ## **NEITHER GUARD CATCHES THE OTHER'S CLASS.**
+
+**This is the 2026-05-08 mechanism: $202,062,830 onto ONE advisor, three real advisors zeroed, `advisor_key`
+carrying ZERO nulls.** *Not a null — a **WRONG VALUE that looks exactly like an advisor and carries real money**.*
+**A re-derive today would re-preserve it, and every guard we shipped would report GREEN.**
+
+## CONSEQUENCE FOR THIS HOLD — AND IT IS A TIGHTENING, NOT A LOOSENING
+
+**`INF_B_00`'s selector is not tidy-up. It is the ONLY instrument that catches the collapse class, and it is the
+critical path to the lift.** *(COO co-signed its arming under NEVER#2 at 13:33Z on exactly this ground — DELTA-0:
+the chain is HELD, nothing serves. CTO~B holds the arch-gate.)*
+
+**CTO~B annotated his own lift-ledger `[x] 1. COVERS DELETION ONLY` and called the error correctly:**
+> ## ***"A CHECKLIST WHOSE ITEMS ARE INDIVIDUALLY TRUE AND JOINTLY MISLEADING IS HOW A FABRIC TALKS ITSELF INTO A LIFT."***
+> *Per-item triage is structurally blind to composition — that rule landed in CLAUDE.md today, and the lift-ledger
+> violated it eight hours later.*
+
+## AND THE SAME SHAPE, SAME HOUR, IN THE SILVER CENSUS — *both agents were right and the estate was still open*
+
+`0.7.0`: *"It was never one of five. It is **ONE OF TWO**. Two live writers of `accounts_v2`. **Both are now
+guarded. Tonight's hole is closed on both doors.**"* — **TRUE.**
+`DS~A` (by EXECUTION, live partitions as proof the writer RAN): **`inf-api-reps` wrote `representatives` AND
+`household_rep_mapping` TODAY, unguarded. `inf-api-positions` writes `positions_mv` — the holdings book — unguarded.**
+
+> **`0.7.0` counted **PATHS TO ONE DIM**. `DS~A` counted **COPIES OF THE WRITER**. Neither number was wrong; neither
+> adjusted his number to match the other. The unit at which the verdict is rendered is `(dim x writer)` —**
+> ## **AND ON THAT UNIT IT IS 3 OF 6 STILL OPEN.**
+> *"Tonight's hole is closed on both doors" is TRUE about `accounts_v2` and MISLEADING about the estate.* **Escalated
+> P1 to `0.7.0` at 13:32Z: close it at the WRITE BOUNDARY (`write_silver_api_dim_parquet`), not by pasting a fourth,
+> fifth and sixth call-site guard.** *A guard that must be pasted into N places is a guard with N failure modes —
+> and we are now watching that prediction come true in real time.*
