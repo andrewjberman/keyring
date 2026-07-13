@@ -19,12 +19,13 @@ Run: python org/mcp/server.py
 Transport: stdio (Claude Code connects directly)
 """
 
+from __future__ import annotations
+
 import os
 import re
 import json
 import time
 import asyncio
-import signal
 import logging
 import subprocess
 import sys
@@ -40,7 +41,7 @@ from contextlib import contextmanager
 import time as _time
 LOCK_FILE = Path(__file__).resolve().parent / "liveness.lock"
 
-from mcp.server.fastmcp import FastMCP, Context
+from mcp.server.fastmcp import FastMCP, Context  # noqa: E402  (after LOCK_FILE by design)
 
 # ---------------------------------------------------------------------------
 # Config
@@ -188,6 +189,175 @@ def _liveness_status(info: dict) -> str:
     elif elapsed < DEAD_THRESHOLD:
         return "stale"
     return "dead"
+
+
+# ---------------------------------------------------------------------------
+# NFRA_IDENTITY.G-A -- broker-side PID identity guard (the enforcing chokepoint).
+# ---------------------------------------------------------------------------
+# The 2026-07-12/13 SEV: a compacted session re-derived its serial from the SHARED
+# .comp-graph/.agent_context and operated as ANOTHER agent for ~9h. Nothing checked
+# the claim against the broker, so the mis-adoption looked confirmed by every
+# subsequent action (registration just OVERWROTE). The detection was available at
+# every step and never fired: "is my PID already registered under a different
+# serial?" -- one comparison catches the whole class mechanically.
+# Design: 1.0.0_SA_CTO SEV_IDENTITY_MISADOPTION_GATE_20260713.md (d1aa23968).
+#
+# TWO directions, and they are DIFFERENT KINDS OF CLAIM. That is why they carry
+# different severities (CTO arch-ruling 2026-07-13, on 0.7.0_AE_CloudOps~A's build):
+#
+#   (1) CROSS -- my PID is already LIVE under a DIFFERENT serial.  --> HARD REFUSE.
+#       A LOGICAL impossibility: one process cannot be two agents. There is no
+#       legitimate case, so a refusal here has no false-positive branch, and this
+#       direction ALONE closes the 07-12/13 SEV (the phantom's FIRST registration
+#       would have named the conflict). Refusing is risk-free.
+#
+#   (2) SERIAL HELD -- the claimed serial is LIVE under a DIFFERENT PID. --> ADVISORY.
+#       An EMPIRICAL claim about the world, and it rests on a predicate that is
+#       COARSER THAN THE CLAIM IT WOULD LICENSE: _pid_alive(pid) answers "does SOME
+#       process hold this PID", NOT "is THAT AGENT alive". It cannot distinguish:
+#         - the real incumbent (a true conflict),
+#         - a lingering orphan MCP process from a dead session (fabric-demonstrated),
+#         - a RECYCLED Windows PID now held by an unrelated process.
+#       Its verdict is invariant under the thing we actually care about. A HARD
+#       refusal on (2) would therefore block a LEGITIMATE respawn whenever the dead
+#       incumbent's entry is still inside the 120s STALE_THRESHOLD and its PID
+#       happens to resolve alive -- and the population most exposed to that is
+#       agents that just died and are RESPAWNING. A guard that blocks the recovery
+#       path converts a transient failure into a permanent one (the fabric silently
+#       loses an agent: it never registers, so it is invisible to every scan -- the
+#       exact "unresponsive agent" churn the SEV already cost us 9h on).
+#       So (2) WARNS + AUDITS UNCONDITIONALLY and lets the registration proceed.
+#
+#       We go from ZERO signal on duplicate-serial collisions (today) to a logged,
+#       measurable one -- WITHOUT adding a new way to lose an agent. The audit line
+#       is what lets us MEASURE the collision rate; promote (2) to HARD only on that
+#       evidence. (Banked lesson, applied verbatim: "measure the rate before sizing
+#       the reaper" -- do not harden a gate against a rate nobody has measured.)
+
+
+def _pid_alive(pid: int) -> bool:
+    """True if the OS process exists. Cross-platform, no deps.
+
+    NEVER uses os.kill on Windows (there, os.kill TERMINATES rather than probing).
+    Returns True on an undeterminable probe so direction-(2) FAILS OPEN -- a guard
+    that cannot tell must not refuse a legitimate restart.
+    """
+    if not pid or pid <= 0:
+        return False
+    try:
+        if sys.platform.startswith("win"):
+            import ctypes
+            # PROCESS_QUERY_LIMITED_INFORMATION (0x1000) -- probe only, no side effects.
+            handle = ctypes.windll.kernel32.OpenProcess(0x1000, False, int(pid))
+            if handle:
+                ctypes.windll.kernel32.CloseHandle(handle)
+                return True
+            return False
+        os.kill(int(pid), 0)  # POSIX: signal 0 = existence probe
+        return True
+    except (OSError, ProcessLookupError):
+        return False
+    except Exception:
+        return True  # undeterminable -> fail OPEN (never block a legit restart)
+
+
+def _identity_conflict(claimed_serial: str, data: dict, my_pid: int):
+    """The guard. Returns (kind, message) or None if the claim is clean.
+
+    kind is "CROSS" (hard-refuse) or "SERIAL_HELD" (advisory) -- see the severity
+    rationale in the block comment above. The CALLER decides what to do with each;
+    this function only classifies, so the severity policy is testable in isolation.
+
+    Pure over (claimed_serial, liveness-dict, pid) so it is directly replay-testable.
+    """
+    # (1) CROSS: this PID is already live under a DIFFERENT serial. HARD.
+    for serial, info in data.items():
+        if serial == claimed_serial:
+            continue
+        if info.get("pid") == my_pid and _liveness_status(info) == "live":
+            elapsed = int(time.time() - info.get("last_seen_epoch", 0))
+            return ("CROSS", (
+                f"IDENTITY CONFLICT -- NOT REGISTERED. PID {my_pid} is currently "
+                f"{serial} (live {elapsed}s ago); you claimed {claimed_serial}. "
+                f"A process cannot hold two identities. If you compacted and re-derived "
+                f"your serial from .comp-graph/.agent_context, that file is SHARED and is "
+                f"NOT an identity source -- you are {serial}. "
+                f"Legitimate override: register_agent(..., identity_override=\"<reason>\") (audited)."
+            ))
+    # (2) SERIAL HELD by another process that still resolves alive. ADVISORY --
+    # _pid_alive cannot tell a real incumbent from an orphan or a recycled PID,
+    # so this WARNS and proceeds; it must never block a legitimate respawn.
+    info = data.get(claimed_serial)
+    if info and info.get("pid") and info.get("pid") != my_pid:
+        if _liveness_status(info) == "live" and _pid_alive(info["pid"]):
+            elapsed = int(time.time() - info.get("last_seen_epoch", 0))
+            return ("SERIAL_HELD", (
+                f"IDENTITY WARNING -- REGISTERED ANYWAY (advisory). {claimed_serial} was "
+                f"already held by PID {info['pid']} (heartbeat {elapsed}s ago) and that PID "
+                f"still resolves ALIVE; you are PID {my_pid}. This is NOT proof of a phantom: "
+                f"the probe cannot distinguish a live incumbent from a lingering orphan MCP "
+                f"process or a recycled OS PID, so it does not block you. But if you did NOT "
+                f"expect to be sharing this serial, ONE of you is a phantom -- confirm which "
+                f"(broker + org/mcp/agent-spawn-audit.log) BEFORE acting as {claimed_serial}. "
+                f"Collision audited."
+            ))
+    return None
+
+
+def _identity_decide(conflict, identity_override: str):
+    """Map a classified conflict + override to an ACTION. Returns (action, message).
+
+    action: ALLOW (clean) | REFUSE (hard-block, no state written)
+          | OVERRIDE (a hard block that was explicitly forced -- audit, then proceed)
+          | WARN (advisory -- audit, surface the warning, and PROCEED)
+
+    THE SEVERITY RULING LIVES HERE AND NOWHERE ELSE. Both call sites (register_agent
+    and heartbeat) route through it, so the policy cannot silently drift apart between
+    them, and it is testable in isolation without writing to the real liveness.json.
+    CTO arch-ruling 2026-07-13: CROSS is HARD (a logical impossibility -- no false-
+    positive branch exists); SERIAL_HELD is ADVISORY (an empirical claim resting on a
+    probe coarser than the claim -- must never block a legitimate respawn).
+    """
+    if not conflict:
+        return ("ALLOW", "")
+    kind, message = conflict
+    if kind == "CROSS":
+        return ("OVERRIDE", message) if identity_override else ("REFUSE", message)
+    return ("WARN", message)
+
+
+# Dedupe for the advisory audit: heartbeat fires every 30-60s, and a persistent
+# SERIAL_HELD collision would otherwise write an audit row on every beat, burying
+# the signal we added the row to measure. One row per (serial, other-pid) per window.
+_IDENTITY_AUDIT_WINDOW = 300
+_identity_audited: dict = {}
+
+
+def _audit_identity(kind: str, claimed_serial: str, my_pid: int, reason: str, conflict: str) -> None:
+    """Append an audited identity row. Best-effort -- never blocks registration.
+
+    kind: CROSS_OVERRIDE (a hard refusal that was forced) | SERIAL_HELD (an advisory
+    collision that proceeded). Both are audited; the SERIAL_HELD rows are the
+    measurement that decides whether direction (2) ever earns a promotion to HARD.
+    """
+    try:
+        if kind == "SERIAL_HELD":
+            key = (claimed_serial, conflict)
+            now = time.time()
+            last = _identity_audited.get(key, 0)
+            if now - last < _IDENTITY_AUDIT_WINDOW:
+                return
+            _identity_audited[key] = now
+        line = (
+            f"{datetime.now(timezone.utc).isoformat()} IDENTITY_{kind} "
+            f"serial={claimed_serial} pid={my_pid} reason={reason!r} "
+            f"conflict={(conflict.splitlines()[0] if conflict else '')!r}\n"
+        )
+        path = Path(__file__).resolve().parent / "agent-spawn-audit.log"
+        with open(path, "a", encoding="utf-8") as fh:
+            fh.write(line)
+    except Exception:
+        pass
 
 
 # ---------------------------------------------------------------------------
@@ -534,12 +704,19 @@ mcp = FastMCP("opal-agent-comms")
 async def register_agent(
     agent_serial: str,
     summary: str = "",
+    identity_override: str = "",
     ctx: Context = None,
 ) -> str:
     """Register this agent as live. Call once at session startup.
     Sets PID, timestamp, and optional work summary visible to all agents.
     Enables instant message push via MCP channel notifications.
-    Auto-launches the broker daemon for cross-session message routing."""
+    Auto-launches the broker daemon for cross-session message routing.
+
+    IDENTITY GUARD (NFRA_IDENTITY.G-A): refuses the registration if this PID is
+    already live under a DIFFERENT serial, or the claimed serial is held by a
+    different LIVE process. Pass identity_override="<reason>" to force it
+    (audited). Your serial NEVER comes from .comp-graph/.agent_context -- that
+    file is shared and answers "what TO", never "who am I"."""
     global _active_ctx, _my_serial, _poll_task
     _active_ctx = ctx
 
@@ -551,6 +728,26 @@ async def register_agent(
     # but resolve folder/inbox from base serial.  Multiple instances of the
     # same agent share the same org folder, logs, and task_orders.
     live_serial = agent_serial  # e.g. "0.4.0_DS_ClientPlatform~B"
+
+    # --- NFRA_IDENTITY.G-A: the enforcing chokepoint (before ANY state is written) ---
+    my_pid = os.getpid()
+    _identity_warning = ""
+    with _locked_liveness(write=False) as _snapshot:
+        _conflict = _identity_conflict(live_serial, dict(_snapshot), my_pid)
+    _action, _message = _identity_decide(_conflict, identity_override)
+    if _action == "REFUSE":
+        # HARD -- name the conflict verbatim so the phantom's FIRST registration
+        # surfaces it (the 07-12/13 SEV would have died right here). No state is
+        # written; the caller is NOT registered.
+        return _message
+    if _action == "OVERRIDE":
+        _audit_identity("CROSS_OVERRIDE", live_serial, my_pid, identity_override, _message)
+    elif _action == "WARN":
+        # SERIAL_HELD -- advisory. Audit the collision and PROCEED; the warning
+        # rides the return value so the agent sees it but is never blocked.
+        _audit_identity("SERIAL_HELD", live_serial, my_pid, identity_override or "-", _message)
+        _identity_warning = _message + "\n\n"
+
     _my_serial = live_serial
 
     # Update liveness.json (local file, always works)
@@ -601,6 +798,7 @@ async def register_agent(
         instance_note = f"\nInstance: ~{_instance_suffix(agent_serial)} (folder: {folder.name})"
 
     return (
+        f"{_identity_warning}"
         f"Registered {live_serial} as live (PID {os.getpid()}).\n"
         f"Summary: {summary or '(none)'}\n"
         f"Broker: {broker_status}\n"
@@ -613,11 +811,16 @@ async def register_agent(
 async def heartbeat(
     agent_serial: str,
     summary: str = "",
+    identity_override: str = "",
     ctx: Context = None,
 ) -> str:
     """Update last-seen timestamp. Optionally update work summary.
     Call periodically (recommended: every 30-60s) to stay in 'live' state.
-    If not called for 2 min, status degrades to 'stale'."""
+    If not called for 2 min, status degrades to 'stale'.
+
+    IDENTITY GUARD (NFRA_IDENTITY.G-A): refuses if this PID is live under a
+    DIFFERENT serial (you cannot heartbeat an identity you do not hold).
+    identity_override="<reason>" forces it (audited)."""
     global _active_ctx
     _active_ctx = ctx
 
@@ -627,6 +830,27 @@ async def heartbeat(
 
     # Use full serial (with instance suffix) for liveness tracking
     live_serial = agent_serial
+
+    # --- NFRA_IDENTITY.G-A: same chokepoint on the heartbeat path. A mis-adopted
+    # session that skipped register_agent (or was already registered before the
+    # guard shipped) must not be able to keep the phantom identity alive.
+    # Same severity split as register_agent: CROSS is hard (a process cannot beat
+    # for an identity it does not hold); SERIAL_HELD is advisory (the probe cannot
+    # prove the incumbent is real, and killing an agent's heartbeat on a bad probe
+    # would silently drop it out of every liveness scan).
+    my_pid = os.getpid()
+    _identity_warning = ""
+    with _locked_liveness(write=False) as _snapshot:
+        _conflict = _identity_conflict(live_serial, dict(_snapshot), my_pid)
+    _action, _message = _identity_decide(_conflict, identity_override)
+    if _action == "REFUSE":
+        return _message
+    if _action == "OVERRIDE":
+        _audit_identity("CROSS_OVERRIDE", live_serial, my_pid, identity_override, _message)
+    elif _action == "WARN":
+        _audit_identity("SERIAL_HELD", live_serial, my_pid, identity_override or "-", _message)
+        _identity_warning = _message + "\n\n"
+
     now = time.time()
     with _locked_liveness(write=True) as data:
         _clean_stale(data)
@@ -655,8 +879,8 @@ async def heartbeat(
 
     urgent = _drain_piggyback()
     if urgent:
-        return urgent + f"Heartbeat OK for {folder.name}."
-    return f"Heartbeat OK for {folder.name}."
+        return _identity_warning + urgent + f"Heartbeat OK for {folder.name}."
+    return _identity_warning + f"Heartbeat OK for {folder.name}."
 
 
 @mcp.tool()
@@ -739,7 +963,7 @@ async def deregister_agent(
                      f"ForEach-Object {{ Stop-Process -Id $_.ProcessId -Force; $_.ProcessId }}"],
                     text=True, timeout=10,
                 )
-                pollers_killed = len([l for l in out.strip().splitlines() if l.strip()])
+                pollers_killed = len([ln for ln in out.strip().splitlines() if ln.strip()])
             else:
                 import subprocess as _sp
                 out = _sp.check_output(
@@ -805,7 +1029,7 @@ async def deregister_all_stale(
                      f"ForEach-Object {{ Stop-Process -Id $_.ProcessId -Force; $_.ProcessId }}"],
                     text=True, timeout=15,
                 )
-                total_killed = len([l for l in out.strip().splitlines() if l.strip()])
+                total_killed = len([ln for ln in out.strip().splitlines() if ln.strip()])
             else:
                 import subprocess as _sp
                 for serial in removed:
