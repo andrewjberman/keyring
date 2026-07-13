@@ -52,11 +52,38 @@
 # ---------------------------------------------------------------------------
 # __headmove_serial <repo-root> -- resolve the acting agent serial.
 # ---------------------------------------------------------------------------
+# FIXED 2026-07-13 (RV-0046 F-001 sibling / RV-0047). THIS FUNCTION WAS A FALSE WITNESS.
+#
+# It read `^SERIAL=` from `$root/.comp-graph/.agent_context` -- a SHARED, repo-root file that
+# EVERY agent's startup Step E TRUNCATES AND REWRITES. So it named whoever ran Step E most
+# recently, not the actor. And because org/XXX.md Step E guarantees the file always EXISTS,
+# the GIT_AUTHOR_NAME fallback was UNREACHABLE -- and GIT_AUTHOR_NAME is unset in an agent
+# Bash-tool shell anyway. THE FUNCTION HAD NO BRANCH THAT COULD EVER NAME THE TRUE ACTOR:
+#   file present -> whoever last ran Step E;  file absent -> UNKNOWN.
+#
+# Exercised live 2026-07-10 (CVO, real function, real root): it named `1.0.0_SA_CTO` while
+# `3.0.0_SA_CVO` was the actor -- and `$OPAL_AGENT_SERIAL` held the correct answer, unread.
+#
+# *** An absent field is a gap. A confident WRONG field is a false witness. ***
+# And this one is ANTI-CORRELATED: it names the most-recently-STARTED agent, who by construction
+# has the FEWEST local commits worth force-discarding. ON A DESTRUCTIVE HEAD MOVE, IT NAMED THE
+# INNOCENT -- which is worse than logging nothing at all.
+#
+# Now delegates to the one sound resolver (env -> per-session file -> git author -> UNKNOWN).
+# .comp-graph/.agent_context is NEVER consulted: it answers "what TO", never "who am I".
 __headmove_serial() {
-    local root="$1" serial=""
-    if [ -f "$root/.comp-graph/.agent_context" ]; then
-        serial="$(grep -m1 '^SERIAL=' "$root/.comp-graph/.agent_context" 2>/dev/null \
-            | sed 's/^SERIAL=//' | tr -d '\r')"
+    local root="$1" here
+    here="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)" || here=""
+    if [ -n "$here" ] && [ -f "$here/../lib/resolve-actor.sh" ]; then
+        . "$here/../lib/resolve-actor.sh"
+        resolve_actor
+        return 0
+    fi
+    # Resolver missing -> replicate its precedence inline. Still NEVER the shared file.
+    local serial="${OPAL_AGENT_SERIAL:-}"
+    if [ -z "$serial" ] && [ -n "${CLAUDE_CODE_SESSION_ID:-}" ] \
+       && [ -f "$root/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial" ]; then
+        serial="$(tr -d '\r\n' < "$root/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial" 2>/dev/null)"
     fi
     [ -z "$serial" ] && serial="${GIT_AUTHOR_NAME%% <*}"
     [ -z "$serial" ] && serial="UNKNOWN"

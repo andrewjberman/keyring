@@ -119,11 +119,34 @@ detect_default_tags() {
 detect_default_tags "$CHDIR_TREE"
 if [ "$DT_FOUND" -eq 1 ]; then
   if [ -n "${TAGAUTHZ_OVERRIDE:-}" ]; then
+    # -----------------------------------------------------------------------------------
+    # RV-0047 F-001: TWO RECORDS -- INTENT here, OUTCOME after the apply returns.
+    # The old line was written HERE and then the script `exec`d terraform, which REPLACES
+    # the process -- so nothing after it could ever run. That is not an oversight in the
+    # logging; it is the reason a single record was the only thing possible.
+    #   *** AN AUDIT LOG WRITTEN BEFORE THE ACTION IS A CENSUS OF INTENTIONS. ***
+    # It could say someone MEANT to bypass the tag-authz gate. It could never say whether
+    # the apply then SUCCEEDED, FAILED, or was killed -- so a bypass that broke production
+    # and a bypass that no-op'd are byte-identical in the record.
+    # And it named no ACTOR at all (OPAL_AGENT_SERIAL x0 across .tools/*.sh at build time),
+    # so "a second TAGAUTHZ bypass would be exactly as unattributable as the first" (MSTR).
+    # -----------------------------------------------------------------------------------
+    . "$SCRIPT_DIR/lib/resolve-actor.sh"
     AUDIT="$SCRIPT_DIR/../org/git-author-override-audit.log"
-    printf '%s TAGAUTHZ_OVERRIDE safe-apply tree=%s reason=%s\n' \
-      "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo UNKNOWN-TIME)" "$CHDIR_TREE" "$TAGAUTHZ_OVERRIDE" \
+    TA_ACTOR="$(resolve_actor)"
+    TA_ID="$(date -u +%Y%m%dT%H%M%SZ 2>/dev/null || echo UNKNOWN-TIME)-$$"
+    printf '%s TAGAUTHZ_BYPASS-INTENT id=%s actor=%s safe-apply tree=%s reason=%s\n' \
+      "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo UNKNOWN-TIME)" \
+      "$TA_ID" "$TA_ACTOR" "$CHDIR_TREE" "$TAGAUTHZ_OVERRIDE" \
       >> "$AUDIT" 2>/dev/null
-    echo "safe-apply: TAGAUTHZ_OVERRIDE set -- tag-authz gate BYPASSED (audited). reason: $TAGAUTHZ_OVERRIDE" >&2
+    TAGAUTHZ_BYPASSED=1
+    echo "safe-apply: TAGAUTHZ_OVERRIDE set -- tag-authz gate BYPASSED (audited: INTENT id=$TA_ID actor=$TA_ACTOR). reason: $TAGAUTHZ_OVERRIDE" >&2
+    if [ "$TA_ACTOR" = "UNKNOWN" ]; then
+      echo "safe-apply: WARN -- could not resolve the acting agent (no \$OPAL_AGENT_SERIAL, no session serial)." >&2
+      echo "            The bypass is recorded as actor=UNKNOWN. An unattributable bypass is a gap, but it is" >&2
+      echo "            an HONEST one -- we do NOT guess an actor from the shared .agent_context (it names the" >&2
+      echo "            most-recently-STARTED agent, i.e. the innocent). See .tools/lib/resolve-actor.sh." >&2
+    fi
   elif [ ! -x "$COMP_TAGAUTHZ" ] && ! command -v comp-tagauthz >/dev/null 2>&1; then
     echo "safe-apply: ERROR -- $CHDIR_TREE sets default_tags but comp-tagauthz is not available to gate it." >&2
     echo "safe-apply: in this account tags carry authorization; refusing to apply ungated. (Fail closed.)" >&2
@@ -165,5 +188,31 @@ else
 fi
 
 # Checkpoint passed (empty inbox, or routine acked, or audited STOP override).
+#
+# RV-0047 F-001, the OUTCOME half. `exec` REPLACES this process -- nothing after it can ever
+# run -- which is precisely why a bypass could only ever be recorded as an INTENT. So when a
+# gate was BYPASSED we must NOT exec: we run terraform, capture its real exit code, write the
+# OUTCOME record, and exit with that same code. The record then says what ACTUALLY HAPPENED,
+# not merely what someone meant to do.
+#
+# The NON-bypass path is left EXACTLY as it was (exec, transparent exit code, zero new
+# behaviour) -- there is nothing to correlate, and the common path should carry no new risk.
+if [ "${TAGAUTHZ_BYPASSED:-0}" = "1" ]; then
+  "$TERRAFORM" "$@"
+  TA_RC=$?
+  case "$TA_RC" in
+    0) TA_RESULT=SUCCESS ;;
+    *) TA_RESULT=FAILED ;;
+  esac
+  printf '%s TAGAUTHZ_BYPASS-OUTCOME id=%s actor=%s safe-apply tree=%s result=%s rc=%s\n' \
+    "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo UNKNOWN-TIME)" \
+    "$TA_ID" "$TA_ACTOR" "$CHDIR_TREE" "$TA_RESULT" "$TA_RC" \
+    >> "$AUDIT" 2>/dev/null
+  echo "safe-apply: TAGAUTHZ bypass OUTCOME recorded (id=$TA_ID result=$TA_RESULT rc=$TA_RC)." >&2
+  # An INTENT with no matching OUTCOME id = the apply was KILLED mid-flight. That asymmetry is
+  # the point: it is now VISIBLE in the log instead of being indistinguishable from a clean run.
+  exit "$TA_RC"
+fi
+
 # Delegate to terraform; exec propagates its exit code transparently.
 exec "$TERRAFORM" "$@"
