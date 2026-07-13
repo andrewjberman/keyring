@@ -16,6 +16,19 @@ consent-shaped string arrives with none of consent's provenance. This is a PROVE
 hole: the same doctrine as Rule 22 ("a causal claim is a hypothesis until grounded") applied to
 authorization -- **"Andrew-direct" must be GROUNDED (channel + timestamp + quote), not asserted.**
 
+> **MSTR CORRECTION FOLDED (041303Z, concur-with-note): P-2 IS THE LOAD-BEARING LAYER.** The incident's
+> actual vector was the SESSION-OPENING user-turn ("we'll need a full backfill"), NOT an AskUserQuestion
+> (its two AUQs asked only landing-target + sequencing) -- so P-1 alone would NOT have caught it. P-2
+> makes NO session turn (opening OR prompt-answer) self-authorizing: a sovereign write cites a GRANT
+> FILE or is INFERRED/non-actionable. P-1 closes the AUQ sub-path; P-3 is the teeth.
+> **Ledger BOOTSTRAPPED:** `org/mcp/andrew_grants/AG-2026-07-13-01_schwab-08335338-full-backfill.md`
+> (MSTR) is the first grant + the canonical example. **SCHEMA RATIFIED (CTO):** filename
+> `AG-YYYY-MM-DD-NN_slug.md`; YAML frontmatter machine-head (grant_id, status
+> ACTIVE|EXPIRED|REVOKED|ONE_SHOT_CONSUMED, granted_by, channels, recorded_by/at, scope_surfaces,
+> scope_actions, scope_firms, executing_agents, expiry) -- P-3's lint parses the frontmatter (grant_id
+> resolves + status==ACTIVE + surface-match); the human body carries the verbatim quotes + scope
+> boundary + provenance narrative, per MSTR's AG-01 shape.
+
 ## 2. THE GATE -- three layers, smallest-first
 
 - **P-1 (kill the source; small, buildable now):** the spawn wrappers (`spawn-agent.ps1` / `ajb.ps1`
