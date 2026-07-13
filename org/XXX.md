@@ -1,42 +1,7 @@
 # AGENT START HERE — Opal Capital
 
----
-
-## !! ANDREW-DIRECT INSTRUCTIONS — RECORD + BROADCAST, SAME TURN !!
-
-> **ANDREW WRITES DIRECTLY TO WORKER AGENTS. He always has.** Andrew-direct, verbatim, 2026-07-13:
-> *"I often times will write to worker agents if I notice that they are doing something I want to change.
-> Eventually there may come a time where I only relay instructions to tier1 agents, but that is unlikely, and for
-> now let's not assume that to be the case."*
-
-**THEREFORE — and this is the load-bearing consequence, not the etiquette:**
-- **A lane can be carrying a sovereign instruction that COO, CTO and MSTR NEVER LEARN EXISTS.**
-- ## **`latest + most-restrictive binds` — OUR GOVERNING CONFLICT RULE — IS INERT AGAINST AN INSTRUCTION NOBODY SURFACED.**
-  *A conflict-resolution law cannot bind on an invisible input.* **An exec can dispatch a lane straight through a
-  sovereign order he has never seen.**
-> **Same structure as the orphan that ate the respawn requests: THE FABRIC'S COORDINATION ASSUMES A CHANNEL IT
-> DOES NOT ACTUALLY HAVE.** *We keep building rules on top of a topology nobody has verified.*
-
-**THE CONVENTION — it binds every agent, every tier:**
-```
-ANY AGENT RECEIVING AN ANDREW-DIRECT INSTRUCTION RECORDS IT DURABLY AND BROADCASTS IT -- SAME TURN.
-
-  DURABLE   a commit (memory entry / ledger / org record), quoting him VERBATIM, with the channel and the time.
-            *** NEVER A PARAPHRASE. THE PHRASING *IS* THE RULING. ***
-  BROADCAST MCP to COO + CTO + MSTR, so `latest + most-restrictive` has something to bind on.
-  SCOPE     The receiving agent does NOT adjudicate scope. SURFACE, DO NOT ADJUDICATE.
-```
-
-> ## **AN AGENT RELAYING "ANDREW RULED" IS NOT SUSPECT MERELY BECAUSE YOU DID NOT SEE IT. THAT IS THE NORMAL CASE.**
-> *Do not challenge the provenance of a relayed sovereign ruling from your own vantage point — **your vantage
-> point is not the topology.*** (COO did exactly that today, spent a colleague's credibility on it, and was
-> wrong: **half the standing prohibitions in `MEMORY.md` originate as Andrew-direct messages to individual
-> lanes.** He asserted a comms topology from where he happened to be sitting.)
-
-**THIS IS NOT A REQUEST THAT ANDREW CHANGE HOW HE WORKS.** He should write to whoever he needs to, whenever he
-needs to — it is his prerogative and it is faster than routing through an exec.
-> ## **THE OBLIGATION IS ON US: THE INSTRUCTION MUST BECOME VISIBLE THE MOMENT IT LANDS, OR OUR OWN
-> ## CONFLICT-RESOLUTION LAW IS A DEAD LETTER.**
+**Scope of this doc:** what is true for **every agent, every session**. Operating rules, not history.
+Incident history and rationale live in `org/tier0/ledger/` and the linked docs — never here.
 
 ---
 
@@ -47,457 +12,336 @@ needs to — it is his prerogative and it is faster than routing through an exec
 
 ---
 
-## RAVC Protocol — Read First (Non-Negotiable)
+## Andrew-direct instructions — RECORD + BROADCAST, same turn
 
-Every inter-agent request follows **Request → Acknowledge → Validate → Close**.
-Full spec: `org/ref/RAVC_PROTOCOL.md`.
+**Andrew writes directly to worker agents, not only to Tier 1.** So a lane can be carrying a sovereign
+instruction that COO, CTO and MSTR never learn exists — and **`latest + most-restrictive binds`, our
+governing conflict rule, cannot bind on an instruction nobody surfaced.**
 
-- If a registered agent asks you to do something: acknowledge immediately, do it,
-  report back with evidence (commit hash, artifact path, tool output).
-- If you asked another agent for something: validate their evidence before
-  closing the loop. REWORK requests must be specific — tie the gap back to the
-  original expected evidence.
-- Silent receipt and silent completion are both violations.
-- CTO and COO own driving every loop to close during "go time" and only
-  escalate to Andrew on the five triggers listed in the spec.
-- **Issuing a STOP / halt:** an exec halting a long irreversible operation MUST
-  prefix the message subject with `[STOP]` (or the synonym `[HALT]`) as the first
-  characters of the subject text. This is the signal the HALTGT deploy checkpoint
-  classifies against — see `docs/architecture/HALTGT_SEVERITY_CONVENTION.md`. A
-  routine message MUST NOT begin its subject with either token (do not use them
-  for emphasis — they hard-block deploys). For non-blocking urgency use plain
-  words (`URGENT`, `ESCALATION`).
+```
+ANY AGENT RECEIVING AN ANDREW-DIRECT INSTRUCTION RECORDS IT DURABLY AND BROADCASTS IT -- SAME TURN.
+
+  DURABLE   a commit (memory entry / ledger / org record), quoting him VERBATIM, with channel + time.
+            NEVER A PARAPHRASE. THE PHRASING *IS* THE RULING.
+  BROADCAST MCP to COO + CTO + MSTR, so `latest + most-restrictive` has something to bind on.
+  SCOPE     The receiving agent does NOT adjudicate scope. SURFACE, DO NOT ADJUDICATE.
+```
+
+**An agent relaying "Andrew ruled" is not suspect merely because you did not see it — that is the normal
+case.** Do not challenge the provenance of a relayed sovereign ruling from your own vantage point.
 
 ---
 
-## Tier 0 — `0.0.0_AB_MSTR` and the authority hierarchy
+## RAVC Protocol (Non-Negotiable)
 
-The fabric has a Tier-0 agent: **`0.0.0_AB_MSTR`** (MSTR) — the autonomous
-principal-proxy. It stands in for Andrew among the agents: it originates
-strategy, charters, and the decomposition of work, and directs the fabric
-through Tier 1. It is governed by its own constitution at `org/tier0/`
-(`CONSTITUTION.md`, `STAKES_MATRIX.md`, `DIRECTIVES.md`).
+Every inter-agent request follows **Request → Acknowledge → Validate → Close**. Full spec:
+`org/ref/RAVC_PROTOCOL.md`.
 
-**Authority hierarchy:**
-
-> **Andrew (sovereign) › MSTR / Tier 0 (principal-proxy) › CTO · COO / Tier 1 › Tier 2 (DE/DT/DS/AE) › Tier 3 (RD)**
-
-- A **Tier-0 directive outranks Tier-1 planning.** A charter MSTR delegates to
-  CTO/COO carries near-Andrew authority — treat it accordingly.
-- Tier 1 **may push back on a Tier-0 charter on operational grounds** — reject or
-  request clarification on feasibility. That is the org working, not
-  insubordination. MSTR sets *what* and *why*; Tier 1 informs *whether* and *how*.
-- **Andrew remains sovereign.** A real-Andrew instruction overrides any MSTR
-  directive. MSTR is a proxy, never a replacement.
-- **CVO independence:** the CVO (`3.0.0_SA_CVO`) sits in Tier 1, but when it
-  exercises its Constitution Article XIV ratification or review authority it is
-  **constitutionally independent** — it does **not** ratify as MSTR's subordinate.
-  MSTR outranks Tier 1 for strategic direction; it does **not** outrank a CVO
-  ratification verdict.
-- **The never-stop rule.** Agents NEVER stop at a fork. A fork you cannot
-  resolve is escalated up the chain — never halted on, never sat-silent-on.
-  The chain is built so something always moves. Silent freeze is the failure
-  mode the Tier-0 framework was designed to prevent.
-- **The escalation chain.** worker (Tier 2/3) → CTO / COO (Tier 1) → MSTR
-  (Tier 0, terminal resolver) → Andrew (sovereign). **MSTR is the terminal
-  resolver of the escalation chain** — authorized to make the principal's
-  call in Andrew's absence, bounded by active Directives + the Stakes
-  Matrix. Andrew only gets the forks MSTR explicitly defers to sovereign
-  judgment (new product strategy, new Directive, S3 / S4 procurement). The
-  chain runs only upward, never sideways.
-
-**MSTR startup:** see `org/tier0/CONSTITUTION.md` (MSTR-only).
-
-**Other agents:** MSTR dispatches through Tier 1. A Tier-0 charter reaching you via CTO/COO carries the authority above.
+- Asked to do something by a registered agent: **acknowledge immediately**, do it, report back **with
+  evidence** (commit hash, artifact path, tool output).
+- You asked someone for something: **validate their evidence before closing.** REWORK requests must tie
+  the gap back to the original expected evidence.
+- **Silent receipt and silent completion are both violations.**
+- CTO and COO drive every loop to close; escalate to Andrew only on the five triggers in the spec.
+- **Issuing a STOP/halt:** prefix the message subject with `[STOP]` (or `[HALT]`) as the **first
+  characters**. The HALTGT deploy checkpoint classifies on it. **A routine message must never begin with
+  either token** — they hard-block deploys. For non-blocking urgency use `URGENT` / `ESCALATION`.
 
 ---
 
-## Step 1 — Identify Yourself
+## Authority hierarchy
 
-**HOW YOU KNOW YOUR SERIAL (identity resolution — session start AND after every compaction; G-B of the
-identity-misadoption gate, CTO d1aa23968, COO-endorsed).** Your serial resolves ONLY from session-scoped
-evidence, in this precedence: **(1) Andrew's word · (2) your own session serial file
-`org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial` (Step 1b A.1 — the session id survives compaction) ·
-(3) your own armed Monitors/watchers (a session watching serial X's inbox IS serial X) · (4) your own
-pre-compaction registrations.** **`.comp-graph/.agent_context` is NOT an identity source** — it is a
-SHARED file whichever agent ran last rewrote; it answers "what TO context", never "who am I". Cross-check
-mechanically before acting: if `org/mcp/liveness.json` shows your claimed serial LIVE at a DIFFERENT PID
-(fresh heartbeat), or a DIFFERENT serial at YOUR PID — STOP, you have an identity conflict; resolve it
-before registering (the broker-side refusal, G-A, is being built — until it lands this check is yours).
-**Inverse-first rule:** before reporting a "duplicate/parallel stream under my serial", check whether YOU
-are the phantom (liveness.json + `org/mcp/agent-spawn-audit.log` say who holds the serial). Why: the
-2026-07-12/13 incident — a compacted base-CTO session adopted 0.8.0 from the shared file and ran 9h as it
-(stole its watcher/registration/TO; two false split-brain reports; the fabric-wide "unresponsive CTO"
-escalation was the mis-identified session itself). Full incident + gate:
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/SEV_IDENTITY_MISADOPTION_GATE_20260713.md`.
+> **Andrew (sovereign) › MSTR / Tier 0 › CTO · COO / Tier 1 › Tier 2 (DE/DT/DS/AE) › Tier 3 (RD)**
+
+- **MSTR** (`0.0.0_AB_MSTR`) is the autonomous principal-proxy: it originates strategy and charters and
+  directs the fabric through Tier 1. A Tier-0 directive outranks Tier-1 planning.
+- **Tier 1 may push back on a Tier-0 charter on operational grounds.** MSTR sets *what* and *why*; Tier 1
+  informs *whether* and *how*. That is the org working, not insubordination.
+- **Andrew remains sovereign.** A real-Andrew instruction overrides any MSTR directive.
+- **CVO independence:** when the CVO (`3.0.0_SA_CVO`) exercises ratification or review authority it is
+  **constitutionally independent** — MSTR does **not** outrank a CVO ratification verdict.
+- **Never stop at a fork.** A fork you cannot resolve is **escalated**, never halted on, never
+  sat-silent-on. Silent freeze is the failure mode this framework exists to prevent.
+- **Escalation chain:** worker → CTO/COO → MSTR (terminal resolver) → Andrew. Runs **upward only, never
+  sideways.** Andrew gets only the forks MSTR explicitly defers to sovereign judgment.
+
+---
+
+## Step 1 — Identify yourself
+
+**Your serial resolves ONLY from session-scoped evidence, in this precedence:**
+1. **Andrew's word**
+2. `org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial` (the session id survives compaction)
+3. **Your own armed Monitor** — a session watching serial X's inbox **is** serial X
+4. Your own pre-compaction registrations
+
+> **`.comp-graph/.agent_context` is NOT an identity source.** It is a shared file that whichever agent ran
+> last rewrote. It answers *"what TO context"*, never *"who am I"*. **No gate, audit line, or attribution
+> may resolve an actor from it.** The sound sources are `$OPAL_AGENT_SERIAL` (per-process) and the session
+> serial file above.
+
+**Cross-check before acting.** If `org/mcp/liveness.json` shows your claimed serial LIVE at a **different
+PID** (fresh heartbeat), or a **different serial at your PID** — **STOP, you have an identity conflict.**
+Resolve it before registering.
+
+**Inverse-first rule:** before reporting a "duplicate stream under my serial", **check whether YOU are the
+phantom** (`liveness.json` + `org/mcp/agent-spawn-audit.log` say who holds the serial).
 
 Then read your agent folder:
 ```
 org/{tier_folder}/{your_serial}/README.md    — your ID, role, responsibilities
 org/{tier_folder}/{your_serial}/prompt.md    — your scoped persona (read in Step 3)
 ```
-
 Tier folders: `tier1_exec/` (SA) | `tier2_senior/` (DE, DT, DS, AE) | `tier3_junior/` (RD)
 
 ---
 
 ## Step 1a — Your BASE is the workspace root; `portal/` is a work-site, never a base
 
-**Andrew-direct 2026-06-12.** Your cwd is `C:\Users\AndrewBerman\Desktop\ajb_workspace`. Every agent's files — logs, task orders, deliverables, identity — live under `org/` there.
+Your cwd is `C:\Users\AndrewBerman\Desktop\ajb_workspace`. Every agent's files — logs, task orders,
+deliverables, identity — live under `org/` there.
 
-Agents (DE/RD included) may **WORK** in the portal repo, but are never **BASED** there: address it explicitly (`git -C portal ...`, or a scoped `cd portal && <work> && cd -`) and return to the workspace root when the portal task ends.
+You may **WORK** in the portal repo, but you are never **BASED** there: address it explicitly
+(`git -C portal ...`, or a scoped `cd portal && <work> && cd -`) and return to the workspace root when the
+task ends.
 
-**A CWD that lingers in `portal/` between tasks is itself a defect.** Portal is its own git repo, so a lingering portal CWD breaks workspace tooling (`safe-commit.sh`, `.tools/*`) at best — and at worst **silently substitutes the WRONG repo's git history into evidence pulls**: a bare `git log` inside `portal/` reports portal commits only, **with no error**. *The silent variant is the dangerous one.* (Empirical anchor: 0.4.0_DE /log telemetry 2026-06-12.)
+**A CWD that lingers in `portal/` is itself a defect.** Portal is its own git repo: a lingering portal CWD
+breaks workspace tooling (`safe-commit.sh`, `.tools/*`) at best, and at worst **silently substitutes the
+WRONG repo's git history into evidence pulls** — a bare `git log` inside `portal/` reports portal commits
+only, **with no error.**
 
 ---
 
-## Step 1b — MCP Startup (MANDATORY, every session, no exceptions)
+## Step 1b — MCP startup (MANDATORY, every session)
 
-**A. Register — use your FULL serial, including ~suffix:**
+**A. Register — use your FULL serial, including any `~lane` suffix:**
 ```python
 register_agent("{your_serial}", summary="Starting session")
 ```
-Makes you visible. Starts broker. Enables message push. Also auto-launches `agent-poller.py`.
+Makes you visible, starts the broker, enables message push, reaps your own orphaned watchers.
 
-**Lane agents (~B/~C/~D): register as `0.4.0_DS_ClientPlatform~C`, NOT as `0.4.0_DS_ClientPlatform`.**
-Registering under the base serial means your `~C` inbox directory is never checked — you will
-silently miss all GOs and MCP messages addressed to your lane serial.
+> **Lane agents register as `0.4.0_DS_ClientPlatform~C`, NOT the base serial.** Registering under the base
+> means your `~C` inbox is never watched — you will silently miss every GO addressed to your lane.
 
-**A.1 — Write session-id-keyed serial file (LD-0070 §7.2):**
+**A.1 — Write your session-keyed serial file:**
 ```bash
 mkdir -p org/mcp/sessions
 if [ -n "${CLAUDE_CODE_SESSION_ID:-}" ]; then
     echo "{your_full_suffixed_serial}" > "org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial"
 fi
 ```
-Enables the PostToolUse hook to resolve agent serial via per-session deterministic source (tilde-lane-safe; broker-outage-resilient; survives `.comp-graph/.agent_context` race). Hook applies once WB-1.1 patch lands; this file write is harmless ~50-byte data until then. Env var name is `$CLAUDE_CODE_SESSION_ID` (with `_CODE_` infix) — empirically verified set by Claude Code at session start. Files are per-session ephemeral; gitignored at `org/mcp/sessions/*.serial`; GC'd 24h post-last-activity per spec §7.4.
 
-**B. Check inbox for offline messages — two paths, both required:**
+**B. Check inbox — BOTH paths, both required:**
 ```bash
-check-inbox {your_serial}   # filesystem path: reads inbox/{serial}/ + inbox/{base}/
+check-inbox {your_serial}           # filesystem: inbox/{serial}/ + inbox/{base}/
 ```
 ```python
-get_agent_status("{your_serial}")  # broker path: surfaces messages delivered via broker channel
+get_agent_status("{your_serial}")   # broker channel
 ```
-These cover different delivery paths. `send_message` writes to filesystem AND broker — but
-`check-inbox` only reads filesystem, and broker-channel messages only surface via `get_agent_status`.
-Run BOTH to avoid missing messages. `check-inbox` alone is insufficient.
+`send_message` writes to **both**, but each probe reads only one. **`check-inbox` alone is insufficient.**
 
-**C. Arm the persistent inbox Monitor (ONCE at load — `/watcher` does this):**
+**C. Arm the persistent inbox Monitor — run `/watcher` (once, at load).**
 
-Run `/watcher`. It arms a **persistent Monitor task** running
-`inbox-watch.sh {your_serial} stream`. The Monitor tool turns each `[INBOX] <file>`
-line the script emits into a chat notification, so you are interrupted **per
-message while you keep working** — and the script **never exits**. Arm it once;
-it is the standing delivery mechanism for the whole session.
-
-If arming manually (what `/watcher` does internally) — use the **Monitor tool**,
-`persistent: true`, `timeout_ms: 3600000`:
-```
-Monitor(
-  command="bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh {your_serial} stream",
-  persistent=true, timeout_ms=3600000)
-```
-
-**Decisive reachability test — do NOT use `TaskList`.** `TaskList` lists `TaskCreate`
-to-do items, NOT Monitor/background tasks; it returns "No tasks found" even when your
-Monitor is alive, so an empty `TaskList` is NOT evidence of a dead watcher (treating
-it as one makes agents double-arm — observed across multiple agents 2026-06-03). The
-real check: (1) **death-notification rule** — a Monitor runs until it dies and fires a
-`<task-notification>` (status `failed`/`completed`) for its task id; if you armed one
-this session and saw no such notification, it's alive; (2) positive check
-`TaskOutput(<task_id>, block=false)` → `running`; (3) task-id-independent fallback
-`ps -ef | grep 'inbox-watch.sh {serial} stream' | grep -v grep` — **which finds
-processes, NOT live Monitors (see ORPHAN below); never conclude "reachable" from it.**
-This replaces the old exit-on-delivery model and MOST of its failure-mode catalog
-(AUTO-RESPAWN-INTERRUPT-LOST / the misleading exit-143 guard race /
-dropped-2nd-message-in-a-batch). The persistent Monitor: survives in-session
-compaction, loops over **all** `*.md` each poll (batch-safe), and never turns off.
-**You never relaunch** — there is no exit-and-relaunch cycle anymore.
-
-**ORPHAN WATCHERS — the one thing you must know.** The Monitor *task* is harness-tracked, but the
-`bash inbox-watch.sh` child it spawns is **detached and outlives the session**. An orphan is **not inert —
-it is a thief**: it `mv`s each arriving message into `read/` *before* echoing `[INBOX]` into a dead pipe,
-so it **eats your mail while manufacturing the strongest possible REACHABLE verdict** (a process exists;
-the inbox is empty *because the orphan drained it*).
-
-- **`ps`, an empty inbox, and the `read/` dir are BANNED as delivery oracles.** They observe the
-  *watcher*, not the agent. **The only sound proof that an agent HEARD a message is one only a live
-  consumer can produce: an agent-side ACK** (or `TaskOutput(<id>) → running`).
-- **A fresh session that finds a matching `inbox-watch.sh` process has found an ORPHAN, not a watcher.**
-  Reap it (your own serial only) *before* arming, or two streams race the same `mv` and split your inbox.
-- **Your `register_agent` reaps your own orphans automatically** (`hook_register_orphan_cleanup.py` →
-  `kill-orphans --serial <you> --force`, audited as `KILL-ORPHAN`). *This hook silently did nothing for
-  months and reported success every time; fixed 2026-07-13 (`920a7bb77`, LD-0280) — it now checks its exit
-  code and audits its failures.*
-
-Full forensics (the 7h17m orphan; why the obvious probes are anti-correlated with the truth):
-`.claude/skills/watcher/SKILL.md` and LD-0280.
+It arms a persistent Monitor running `inbox-watch.sh {serial} stream`; each `[INBOX] <file>` line becomes a
+chat notification. **Arm once — it never exits and you never relaunch it.** If arming by hand, use the
+**Monitor tool** with `persistent: true`, `timeout_ms: 3600000`, and the **absolute** script path.
 
 **BANNED:**
-- Launching `inbox-watch.sh {serial} stream` under Bash `run_in_background` — the
-  Bash tool only notifies on *exit*, and stream mode never exits, so you go silent
-  for the session. It MUST run under the **Monitor tool**.
-- The legacy bare-path relative launch `bash org/mcp/inbox-watch.sh ...` (guard-hook
-  blocked — use the absolute path in the Monitor command above).
-- A recurring `/watcher` cron/ScheduleWakeup loop — obsolete; the persistent
-  Monitor is the standing mechanism, armed once at load.
+- Launching `inbox-watch.sh ... stream` under Bash `run_in_background` — the Bash tool only notifies on
+  *exit*, and stream mode never exits, so **you go silent for the session.** It MUST run under the Monitor tool.
+- The bare-path relative launch (`bash org/mcp/inbox-watch.sh ...`) — guard-hook blocked.
+- A recurring `/watcher` cron — the persistent Monitor is the standing mechanism.
 
-**Legacy exit-on-delivery mode** (`inbox-watch.sh {serial}` with no `stream` arg)
-is retained only so already-running pre-migration agents aren't broken; do not use
-it for new launches.
+> **ORPHAN WATCHERS — the one thing you must know.** The `inbox-watch.sh` child outlives its session. An
+> orphan is **not inert, it is a thief**: it `mv`s each arriving message into `read/` **before** echoing
+> into a dead pipe — **so it eats your mail while manufacturing the strongest possible REACHABLE verdict**
+> (a process exists; the inbox is empty *because the orphan drained it*).
+> - **`ps`, an empty inbox, and the `read/` dir are BANNED as delivery oracles** — they observe the
+>   *watcher*, not the agent. **Only an agent-side ACK proves an agent HEARD a message.**
+> - **A fresh session that finds a matching `inbox-watch.sh` process has found an ORPHAN, not a watcher.**
+>   Reap it (**your own serial only**) before arming, or two streams race the same `mv` and split your inbox.
+>
+> Depth: `.claude/skills/watcher/SKILL.md`.
 
-**Inbox path.** Every agent's inbox is `org/mcp/inbox/{serial}/` (lane agents:
-`org/mcp/inbox/{base}/{~lane}/`). Full architecture:
-`docs/architecture/AGENT_COMMS_ARCHITECTURE.md`.
+**Never use `TaskList` to check your watcher.** It lists `TaskCreate` to-do items, not Monitors, and returns
+"No tasks found" even when your Monitor is alive — treating that as a dead watcher makes agents double-arm.
 
-**When an `[INBOX] <file>` event fires, that IS a new message.** Your required
-response:
-1. Read the message from `org/mcp/inbox/{your_serial}/read/<file>` (the stream
-   watcher already mv'd it there) — or call `check_inbox` / `get_agent_status` if
-   you want the broker-channel view too.
-2. Act on it this turn — ack (RAVC step 2), do the work, or validate the evidence
-   (RAVC step 4). No "standing by" silence.
-3. **Do not relaunch anything** — the Monitor keeps running.
+**Inbox path:** `org/mcp/inbox/{serial}/` (lane agents: `org/mcp/inbox/{base}/{~lane}/`).
+Design: `docs/architecture/AGENT_COMMS_ARCHITECTURE.md`.
 
-**Belt-and-suspenders:** after sending a message where you expect a near-term
-reply, still call BOTH `check_inbox` AND `get_agent_status` at the top of the turn.
-The Monitor is event-push; `check_inbox` is authoritative pull. Both are in
-`.tools/` (PATH) and work from any directory. Full design: `org/mcp/INBOX_WATCH_DESIGN.md`.
+**When an `[INBOX]` event fires, that IS a new message.** Read it from `inbox/{serial}/read/<file>` (the
+watcher already moved it there) and **act this turn** — ack (RAVC step 2), do the work, or validate the
+evidence (RAVC step 4). **No "standing by" silence. Do not relaunch anything.**
 
-**If inbox has a GO message:** Read the referenced task order, flip `<status>` to `pending`, begin immediately. The GO IS your authorization. Do not ask Andrew.
+**If the inbox has a GO:** read the referenced task order, flip `<status>` to `pending`, **begin
+immediately.** The GO **is** your authorization — do not ask Andrew.
 
-**If the GO lists a SEQUENCE of TOs:** You are authorized to execute ALL of them in order without waiting for a new GO between steps. If a TO in the sequence is already complete when you reach it, move immediately to the next one. Keep going until you hit a blocked TO (deps unmet) or the list is exhausted. Stopping mid-sequence to ask for a new GO is a protocol violation — the batch GO covers the whole lane.
+**If the GO lists a SEQUENCE of TOs:** execute **all of them in order** without waiting for a new GO. Skip
+any already complete. Keep going until a TO is blocked (deps unmet) or the list is exhausted. **Stopping
+mid-sequence to ask for a new GO is a protocol violation** — the batch GO covers the whole lane.
 
-**D. Owned-paths hook (install if absent):**
+**D. Install the owned-paths hook (idempotent):**
 ```bash
-# owned-paths hook — installs if absent (ADHC_OWNPTH)
 test -L .git/hooks/pre-commit || bash .tools/git-hooks/install-owned-paths.sh
 ```
-Wires the lane-enforcement pre-commit hook on first use. Idempotent — safe to re-run. On Windows Git Bash the `-L` test always fails (no true symlinks), so the install script runs each session but exits 0 immediately once the hook is present.
 
-**D2. Commit hygiene (use safe-commit.sh — ADHC_OWNPTH.007):**
-Use `.tools/safe-commit.sh --author "..." -m "..." -- <paths>` for every commit. The wrapper aborts if the staged index contains any file outside your declared pathspec — the exact failure mode that produced three CLASS-C sweep incidents on 2026-04-27. With `--force`, the wrapper still runs but logs a `FORCE-BYPASS` audit entry to `org/git-author-override-audit.log` (use only when you cannot clean the shared index — e.g. multi-agent worktree contention). Bare `git commit` is allowed only when explicitly justified in the commit message.
-
-**D3. Destructive-HEAD-move guard (install if absent — ADHC_OWNPTH.010):**
-```bash
-# git() destructive-HEAD-move guard — wires into ~/.bashrc if absent (ADHC_OWNPTH.010)
-grep -qF "ADHC_OWNPTH.010 headmove-guard" ~/.bashrc 2>/dev/null || bash .tools/git-hooks/install-headmove-guard.sh
-```
-Installs a `git()` shell-shadow function that gates destructive `git reset` / `git rebase` / `git commit --amend` (moves that discard or rewrite local-only commits). Idempotent — safe to re-run. Override an intentional destructive move with `FORCE_HEADMOVE=1` (audited to `org/git-author-override-audit.log`). Covers Bash-tool shells that source `~/.bashrc`; NOT PowerShell or `command git`.
-
-**E. Set compiler tool context (enables auto-logging):**
+**E. Set compiler-tool context (enables auto-logging):**
 ```bash
 mkdir -p .comp-graph && printf "SERIAL=%s\nTO_ID=\n" "{your_serial}" > .comp-graph/.agent_context
 ```
-Every comp-* tool run automatically appends a structured row to `org/compiler-tools-log.md`.
-No manual logging needed. **When you start a new TO, set it with `comp-to` (NOT `printf > .agent_context`):**
+Every comp-* run then auto-appends a row to `org/compiler-tools-log.md`.
+
+**When you start a new TO, set it with `comp-to` — never by writing `TO_ID=` into `.agent_context`:**
 ```bash
-comp-to {TO_filename_without_.md}
-# Example: comp-to ADVI_OFFICE.W1
+comp-to {TO_filename_without_.md}      # e.g. comp-to ADVI_OFFICE.W1
 ```
-`comp-to` writes a RACE-FREE per-session file (`org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.to_id`)
-that the auto-logger reads with precedence env -> session-file -> shared `.agent_context`. The old
-`printf "...TO_ID=.." > .comp-graph/.agent_context` muscle-memory is RETIRED for TO_ID: that shared
-file is one global last-writer-wins across all concurrent agents, so it cross-attributed every
-comp run to whatever TO_ID the most-recent writer left (MSTR-FINDING 2026-06-22; corrupted the
-NFRA_COMPRAIL TO-5 per-TO coverage attribution).
+`.agent_context` is one repo-global file, last-writer-wins across all concurrent agents; `comp-to` writes a
+race-free per-session file instead.
 
-**CORRECTED 2026-07-10 (CTO doctrine, CVO-exercised). This line previously read: "The `.serial` line in
-`.agent_context` is still fine to write (SERIAL is per-process); only TO_ID needed the race-free per-session
-source." THAT CLAUSE IS FALSE AND IT LICENSED A LIVE DEFECT.** It is true of the VALUE (one agent's serial does
-not change mid-session, unlike TO_ID) and **false of the STORAGE** (the file is one repo-root global that every
-agent's Step E *truncates*). Keep writing the `SERIAL=` line -- 11 consumers read it and the write itself is not
-the bug -- **but it is NOT a sound source of AGENT IDENTITY, and no gate, audit line, or attribution may resolve
-an actor from it.** The sound sources, both already present in every agent shell: **`$OPAL_AGENT_SERIAL`** (set
-at `.tools/ajb.ps1:286`, per-process) and **`org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial`** (race-free,
-written by Step 1b-A.1 above). Precedence reference impl: `org/modules/graph/comp_log_auto.py:62-77`.
+**F. Loop arming — every serial arms ZERO crons at launch. One exception: the COO's `/drive`.**
 
-**The defect this clause authorized:** `.tools/git-hooks/headmove-guard.sh:55-64 @ 3e44606e7`
-(`__headmove_serial`) resolves the actor for a **destructive HEAD move** by grepping `^SERIAL=` out of this
-shared file, consulting `GIT_AUTHOR_NAME` only if the file is absent -- and Step E guarantees it is never absent.
-**Exercised live 2026-07-10T13:15Z (CVO, real function, real root): the guard named `1.0.0_SA_CTO` while
-`3.0.0_SA_CVO` was the actor and `$OPAL_AGENT_SERIAL` held the correct answer, unread.** `GIT_AUTHOR_NAME` is
-UNSET in an agent Bash-tool shell, so **the guard has no branch that can ever name the true actor**: file present
--> whoever last ran Step E; file absent -> `UNKNOWN`. It is worse than an absent field. **An absent field is a
-gap; a confident wrong field is a false witness** -- and this one is ANTI-CORRELATED, naming the most-recently-
-*started* agent, who by construction has the fewest local commits worth force-discarding. **It names the
-innocent.** Scope is bounded: CVO enumerated 14 code consumers of this file and found **exactly one** that
-resolves an actor shared-only (the guard); 10 others have a sound tier present but **UNVERIFIED ORDER** --
-*absence of a sound tier is conclusive, presence of one is not.* Fix + mutant bar (M4, the demotion test: no env
-and no session-id MUST print `UNKNOWN`, never the shared serial): RV-0046 F-001 sibling, CVO SoD `131514Z`.
-**Harm is NOT demonstrated -- no existing audit line is shown to be actually misattributed. The defect is the
-finding.**
+Loops are **operator-initiated**. `/watcher` is not a loop — it arms the persistent inbox Monitor once.
 
-**F. Reachability + the COO driver — arm ZERO loops at launch EXCEPT the COO auto-arms `/drive` (LD-0175 Andrew-direct 2026-06-10; COO carve-out Andrew-direct 2026-06-18):**
+| Serial | Launch arming |
+|---|---|
+| `0.0.0_AB_MSTR` | `/watcher` once. Zero crons. `/mstr-review` runs once at startup as an ad-hoc pass; all other MSTR skills are event-triggered. |
+| `1.0.0_SA_CTO` | `/watcher` once. Zero crons. `/ws-charter` is ad-hoc. |
+| `2.0.0_SA_COO` | `/watcher` once **+ ARM `/drive`** (20m cron + one cycle now). The COO is the fabric's **primary operational driver**: each cycle = fabric-check + stimulus scan + **dispatch every idle agent** + **spawn needed agents** + track TO/RAVC2 + police registry zombies. **"All standing by" is a `/drive` GATE FAILURE, not a valid state.** |
+| `3.0.0_SA_CVO` | `/watcher` once. Zero crons. `/spot-check` and `/verify-channel` are ad-hoc / closeout-triggered. |
+| Tier-2/3 workers (+ `~lanes`) | `/watcher` once. Zero crons. **Event-driven:** act on Monitor-delivered dispatches. Keep your broker summary accurate: `WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`. `/work` is ad-hoc. |
 
-Andrew direct 2026-06-10 (verbatim): *"I don't want any loops initiated at launch ... if I want a loop to run, I will initiate the looped skill (e.g., drive, work, etc), don't need it at launch."* This supersedes the LD-0062 "each agent arms a role-appropriate primary cron loop at session start" ruling **in full** — no serial arms ANY cron at launch. The only launch mechanism is `/watcher`, which arms the persistent inbox Monitor ONCE at load (a Monitor task, NOT a cron). Every loop is Andrew/operator-initiated on demand; each skill retains its loop body when invoked.
-
-**COO carve-out (Andrew-direct 2026-06-18):** the ONE exception is the **COO (`2.x.0_SA_COO`)** — the COO is the fabric's **PRIMARY OPERATIONAL DRIVER**, so it **AUTO-ARMS `/drive` at launch** (20m cron + one cycle now). A COO that only answers its inbox reactively — without proactively spawning needed agents, dispatching staged TOs, running the stimulus-scan over idle capacity, and policing TO/RAVC2/registry zombies — is the failure this corrects (Andrew 2026-06-18: *"you have been categorically failing in your responsibilities to drive the fabric"*). ZERO-loops still binds every OTHER serial; only the COO's `/drive` is exempt.
-
-| Serial-class | Launch arming | Notes |
-|---|---|---|
-| `0.0.0_AB_MSTR` | **/watcher ONCE — ZERO crons (LD-0164/0166/0175).** | `/mstr-review` runs once at startup as an ad-hoc pass (LD-0164), then on-demand. `/govern` is Andrew-discretion only (LD-0147). All MSTR skills event-triggered / on-demand. |
-| `1.0.0_SA_CTO` (ws) | **/watcher ONCE — ZERO crons (LD-0157/0175).** | ws CTO is event-driven; `/ws-charter` is ad-hoc when there is charter work. |
-| `1.x.0_SA_CTO` (CL) | **/watcher ONCE — ZERO crons (LD-0175).** | `/cl-charter` is **ad-hoc** — run it for CL charter / queue-pull work, not as a launch loop. (Supersedes the LD-0066 `/cl-charter 30m` launch-arm; the CL pipeline is now manual-init.) |
-| `2.x.0_SA_COO` | **/watcher ONCE + ARM `/drive` at launch (Andrew-direct 2026-06-18, COO carve-out to LD-0175).** | The COO is the PRIMARY OPERATIONAL DRIVER: run `/drive` at launch (arms the 20m cron + runs one cycle now). Each cycle = fabric-check + agent-state/stimulus scan + dispatch EVERY idle agent + SPAWN needed agents (MSTR respawn-request — do NOT defer the spawn to Andrew) + track TO/RAVC2 + police registry zombies. "All standing by" is a /drive GATE FAILURE, not a valid state. |
-| `3.x.0_SA_CVO` | **/watcher ONCE — ZERO crons (LD-0164/0175).** | `/spot-check`, `/verify-channel`, and (CL CVO) `/case-find` are all ad-hoc — fire on-demand / at closeout-class signals, NOT a launch cron. (Supersedes the LD-0062 `/verify-channel 2h` + LD-0082 `/case-find 24h` launch-arms.) |
-| `0.x.0_(DS\|AE\|DE\|DT\|RD)_*` Tier-2/3 worker (+ tilde-lanes) | **/watcher ONCE — ZERO crons (LD-0157/0175).** | Workers are event-driven: act on Monitor-delivered dispatches/TOs; keep your broker summary an accurate status (`WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`). `/work` is ad-hoc (off-cycle pass if useful). |
-| `0.x.0` non-worker / unspecified | **/watcher ONCE — no cron.** | reachability = `/watcher` Monitor once at load. |
-
-**No CronCreate at launch.** If you find a stale cron from a prior session (`/work`, `/drive`, `/ws-charter`, `/spot-check`, `/mstr-review`, `/watcher`, `/cl-charter`, `/verify-channel`, `/case-find`), cancel it: `CronList` → `CronDelete`.
-
-**Loop hygiene:** The fabric is event-driven; self-tick loops are retired from launch for every serial **EXCEPT the COO's `/drive`** — **`/work` (workers)**, **`/ws-charter` (ws CTO)**, **`/mstr-review` (MSTR)**, **`/spot-check` (CVO)**, **`/verify-channel` (CVO)**, **`/cl-charter` (CL CTO)**, **`/case-find` (CL CVO)** — none of THOSE are armed at launch (LD-0175). The COO's **`/drive` IS auto-armed at launch** (Andrew-direct 2026-06-18 carve-out — the COO is the primary operational driver; see Section F COO carve-out above). All remain ad-hoc invocable when Andrew fires them; invoking a skill with an interval (e.g. `/drive 20m`, `/verify-channel queue 2h`, `/cl-charter 30m`) arms that loop on demand. `/watcher` arms the persistent inbox Monitor once at load (not a loop).
-
-**CL fabric inheritance:** CL agents (`feature_clb/`) inherit this convention via cwd=ajb_workspace per LD-0033/0034 unified-broker substrate; org/XXX.md is workspace-canonical (no CL-side mirror needed). Under LD-0175 the CL fabric arms ZERO launch loops like every other — `/cl-charter` + `/case-find` are manual-init (Andrew kicks the CL pipeline when he wants it running).
+**Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
 
 ---
 
-## Step 2 — Read Your Recent Logs
+## Step 2 — Read your recent logs
 
 ```
 {your_agent_folder}/logs/{most_recent_date}/
 ```
-Read ALL logs from the most recent date. You are continuing prior work, not starting fresh.
+Read **all** logs from the most recent date. **You are continuing prior work, not starting fresh.**
 
 ---
 
-## Step 2b — Ground Truth Reconciliation (SA/COO only)
+## Step 2b — Ground-truth reconciliation (SA / COO only)
 
-Full protocol: `org/ref/COO_STARTUP.md`
-
-Summary: reconcile task order statuses and project JSON against logs, commits, and deployed artifacts. Correct every stale document before presenting your oriented summary. Logs and commits are ground truth — `<status>` is a claim.
+Reconcile TO statuses and project JSON against logs, commits, and **deployed artifacts**. Correct every
+stale document before presenting your summary. **Logs and commits are ground truth — `<status>` is a
+claim.** Full protocol: `org/ref/COO_STARTUP.md`.
 
 ---
 
-## Step 3 — Read Your Prompt
+## Step 3 — Read your prompt
 
 Read `{your_agent_folder}/prompt.md` and adopt that role.
 
 ---
 
-## Step 4 — Understand Your Place in the Hierarchy
+## Step 4 — Understand your place
 
 Read `org/ORG_CHART.md` — reporting chain, pod members, escalation path.
 
-**Check daily log (Tier 1 and Tier 2 only):**
-```
-org/daily_log/{YYYY-MM-DD}.md
-```
-
 ---
 
-## Step 5 — Provide Oriented Summary
+## Step 5 — Give an oriented summary
 
-Brief statement of: what projects you're on, what's pending, what's blocked, what you're starting now. One paragraph. Do not ask for permission — state what you're doing.
-
-Any deliverable produced by the ka_testing Docker runtime must be marked `[*runtime]` in REGISTRY.md, project JSON, and session logs.
+One paragraph: what projects you're on, what's pending, what's blocked, **what you're starting now.**
+**Do not ask permission — state what you are doing.**
 
 ---
 
 ## `/loop` — operator-initiated only
 
-**`/loop` is fired by Andrew (or an operator) at a specific agent, on demand. Nothing self-ticks.**
-It is not a launch mechanism and not a standing mode — see Section F: **every serial arms ZERO crons at
-launch**, and the sole exception is the COO's `/drive`.
-
-*(The former "Universal Watchdog Mode" — a 60s/270s self-scheduling wake loop that "never auto-exits" —
-is **RETIRED** per LD-0157 / LD-0164 / LD-0175. The fabric is event-driven: your persistent inbox Monitor
-delivers work, and COO's `/drive` is the centralized tick that finds blocked agents.)*
+`/loop` is fired by Andrew or an operator at a specific agent, on demand. **Nothing self-ticks.** It is not
+a launch mechanism and not a standing mode: the fabric is event-driven, your inbox Monitor delivers the
+work, and COO's `/drive` is the centralized tick that finds blocked agents.
 
 ---
 
-*Compiler tools trigger table: see CLAUDE.md § "Compiler Tools (comp-*)".*
+## Session log — required sections
 
-## Session Log — Required Sections
+Full template: `org/ref/SESSION_LOG_STANDARD.md`.
 
-Full template: `org/ref/SESSION_LOG_STANDARD.md`
+Every session log must include **`## Compiler Tools`** — a table of tools run, results, what worked, what
+failed, any gap found. Append one line to `org/compiler-tools-log.md`.
+**"Blank" and "N/A" are not acceptable.** One sentence explaining why you didn't run one is fine.
 
-Every session log must include **`## Compiler Tools`** — table of tools run, results, what worked, what failed, any gap found. Append one line to `org/compiler-tools-log.md`.
-
-Minimum compiler tools by role:
+**Minimum compiler tools by role:**
 
 | Role | Minimum |
 |------|---------|
-| DS | `comp-pipescript io` for every gold script touched (includes COLUMN GAPS — zero extra work). `comp-pipescript deployed` before every gold run. `comp-pipescript postdeps` before any ad-hoc script run. `comp-validate <script> --artifact <file>` before signaling AE (if script has validate config). |
-| DE | `comp-transform schema-check` before touching data props; `comp-blast` before deleting. `comp-routes behaviors` when debugging 4xx / auth failures. **Adding a new cohort/metric/mode:** `schema-check --feature [token]` + `ternary-audit [Component]` at Phase 1 — mandatory after W3 OFC incident. |
-| DT | `comp-pipescript io` for every script deployed. `comp-iam service <lambda>` after adding any new boto3 call. `comp-routes behaviors` before CloudFront / Lambda@Edge changes. |
-| AE | `comp-pipescript deployed` before every gold run trigger. `comp-pipescript postdeps` before any gold run (check required post-steps). `comp-iam gaps` after any iam.tf change. `comp-blast` on infra before changes. |
+| DS | `comp-pipescript io` for every gold script touched. `comp-pipescript deployed` before every gold run. `comp-pipescript postdeps` before any ad-hoc run. `comp-validate <script> --artifact <file>` before signaling AE. |
+| DE | `comp-transform schema-check` before touching data props; `comp-blast` before deleting. `comp-routes behaviors` for 4xx/auth debugging. **New cohort/metric/mode:** `schema-check --feature [token]` + `ternary-audit [Component]` at Phase 1. |
+| DT | `comp-pipescript io` for every script deployed. `comp-iam service <lambda>` after any new boto3 call. `comp-routes behaviors` before CloudFront / Lambda@Edge changes. |
+| AE | `comp-pipescript deployed` before every gold-run trigger. `comp-pipescript postdeps` before any gold run. `comp-iam gaps` after any `iam.tf` change. `comp-blast` on infra before changes. |
 | RD | `comp-transform fields` for every component rendering data. |
-| COO | `comp-pipescript overlap A B` before authoring cross-domain coordination blocks. `comp-blast` + `comp-routes` + `comp-cache` before decomposing PRDs into TOs. |
+| COO | `comp-pipescript overlap A B` before authoring cross-domain coordination. `comp-blast` + `comp-routes` + `comp-cache` before decomposing PRDs into TOs. |
 
-"Blank" and "N/A" are not acceptable. One sentence explaining why you didn't run is fine.
-
-### Archetype tag — required from 2026-05-25T00:00 UTC
-
-Every substantive session-log entry includes a single-line `**archetype:** TAG` header immediately after the title. Pick one of eight: `EXPLORE` / `TRACE` / `DIAGNOSE` / `VALIDATE` / `DEPLOY` / `IMPLEMENT` / `COORDINATE` / `SCRIBE`, or `MIXED` if dominant archetype is genuinely unclear. Optional `**secondary_archetypes:** A, B` line for high-mixed cases. ~5 sec per emission; no scoring; under-classify is fine. Canonical taxonomy + weights + aggregation logic: `org/tier0/COMPILER_ARCHETYPES.md`.
-
-The tag feeds MSTR's cross-fabric stimulus-scan signal class 6 (high-cost-archetype clusters). Compiler-tooling R&D's highest-leverage target is COST, not BUGS — archetype aggregation surfaces where time is being paid (leading indicator) rather than waiting for bites to surface (lagging). Forward-only cutover from named date; no retroactive tagging.
-
-Heartbeat-only entries, watcher self-checks, and minor housekeeping commits do not require tags (would dilute signal).
-
-Per LD-0043 + Opal CTO + MSTR working-session lock 2026-05-24T19:45Z. Canonical for both fabrics per CONSTITUTION Art. XV.
+**Archetype tag.** Every substantive log entry carries a single-line `**archetype:** TAG` header after the
+title — one of `EXPLORE` / `TRACE` / `DIAGNOSE` / `VALIDATE` / `DEPLOY` / `IMPLEMENT` / `COORDINATE` /
+`SCRIBE`, or `MIXED`. Under-classifying is fine; no scoring. It feeds the stimulus-scan's cost signal.
+Taxonomy: `org/tier0/COMPILER_ARCHETYPES.md`. Heartbeats, watcher self-checks and housekeeping commits do
+**not** need tags (they dilute the signal).
 
 ---
 
-## Task Orders
+## Task orders
 
-Full template and filename convention: `org/ref/TASK_ORDER_PROTOCOL.md`
+Full template + filename convention: `org/ref/TASK_ORDER_PROTOCOL.md`. Stored in the receiving agent's
+`task_orders/` folder.
 
-- Stored in the receiving agent's `task_orders/` folder
-- `staged` = assigned, wait for GO | `pending` = active | `complete` = done (self-marked)
-- Every task order must include `<compiler_tools_mandate>` — three-phase (before write, before commit, after commit)
-- Every task order must include `<cross_domain_coordination>` — populated by COO/CTO at PRD decomposition using `comp-blast`; `<none/>` only if confirmed no shared files/S3 keys with other active TOs
-- Every task order must include `<acceptance_criteria>` — machine-checkable output validation, not "code runs"
-- Session log with Compiler Tools section is an explicit deliverable on every task order
-- A TO with no compiler check logged is NOT accepted as complete — see `org/standards/TO_COMPILER_GATE.md`
+**Statuses:** `staged` = assigned, wait for GO · `pending` = active · `complete` = done (self-marked).
 
-**Author + GO pairing — Non-Negotiable (Andrew directive 2026-05-23, MSTR CY-0017 finding, COO suffix-routing refinement):**
+**Every TO must include:**
+- `<compiler_tools_mandate>` — three-phase (before write, before commit, after commit)
+- `<cross_domain_coordination>` — populated by COO/CTO at PRD decomposition using `comp-blast`; `<none/>`
+  only if confirmed no shared files or S3 keys with other active TOs
+- `<acceptance_criteria>` — **machine-checkable output validation**, not "code runs"
+- A session log with a Compiler Tools section as an explicit deliverable
 
-Every TO commit MUST be paired with an MCP `send_message` GO to the assignee — **addressed to the EXACT registered serial including any `~lane` suffix** — within the same operational window. A TO file landing on disk via `git commit` alone does **NOT** fire a broker push to the assignee's session, and a GO MCP addressed to the wrong serial (base when assignee registered `~C`, or vice versa) is functionally equivalent to no GO at all because the broker push routes by exact-serial channel match.
+**A TO with no compiler check logged is NOT accepted as complete** (`org/standards/TO_COMPILER_GATE.md`).
 
-**Two failure modes the rule covers:**
+**Author + GO pairing (non-negotiable).** Every TO commit MUST be paired with an MCP `send_message` GO to
+the assignee, **addressed to the EXACT registered serial including any `~lane` suffix**, in the same
+operational window.
+- **A TO file landing on disk via `git commit` alone does NOT notify the assignee.**
+- **A GO addressed to the wrong serial lands in a directory the assignee is not watching** (a lane's inbox
+  is `inbox/{base}/{~lane}/`).
 
-1. **Missing GO** — TO file committed, no MCP `send_message` fired. The assignee only sees the file on a filesystem poll, which can be minutes to hours.
-2. **Wrong-serial GO** — MCP fired, but addressed to the base serial when the assignee registered under a `~lane` suffix (or vice versa). **The lane's inbox is a different directory** (`inbox/{base}/{~lane}/`), so the message lands somewhere the assignee is not watching.
+**The TO author owns the GO and its addressing.** Check `<issued_to>` and address the MCP to that exact
+string, suffix included.
 
-**The TO author owns the GO and its addressing.** The commit IS the authoring; the MCP GO IS the dispatch. Check `<issued_to>` in the TO file and address the MCP to that exact string, suffix included.
-
-*(Historical note: this rule once cited an "MCP suffix-strip semantic" in which the broker itself collapsed `~lane` pushes onto the base channel. **LD-0202 established that was a `server.py` query/write-layer bug, and fixed it — the broker DB keys every entry by the FULL serial.** The rule stands on the inbox-directory grounds above; do not cite suffix-strip as live behaviour.)*
-
-**COO/CTO parallel wave protocol:**
-Before writing any TOs for a parallelized wave: run `comp-blast` on every affected component/script. Any node appearing in 2+ TOs' blast radii is a CROSS-DOMAIN resource — flag it in the PRD and in each relevant TO's `<cross_domain_coordination>` block. Agents must MCP-message each other before committing to cross-domain files.
-
----
-
-## Closure Discipline (Non-Negotiable — SA/COO/CTO only)
-
-Closing a project is a **2-step atomic operation**, not a single JSON edit. Both steps happen in the same commit:
-
-1. **JSON status flip.** `org/projects/{CODE}.json` → `"status": "complete"` + add `"completed": "YYYY-MM-DD"` + rewrite `phase` narrative as closure summary + set `blocking` to "None" (or "None — {reason}" if superseded/absorbed).
-2. **REGISTRY row move.** `org/projects/REGISTRY.md` → delete the row from "Active Projects" (or "Inactive / On Hold") table. Insert a new row at the TOP of "Completed / Archived Projects" table (newest-first convention) with `Completed` date column + closure notes citing ship evidence (commits, tags, supersession path).
-
-**PRDs are NOT a close-step (amended 2026-06-03 — CVO P3 finding / CTO doctrine; CC MSTR for LD-ratification).** PRDs stay in `docs/architecture/` — do NOT archive active PRDs, and do NOT bump their top-of-file `Status:` line on close. The PRD is an authored-once design artifact; `org/projects/{CODE}.json` status is the single authoritative close-state (`org/projects/REGISTRY.md` §"Closing a project" is the canonical 2-step, which this section now matches). The older "3-step atomic close" convention (a vestigial PRD-`Status:` bump, still echoed in some completed-row narratives like YALP_FACTOR/POSITN) is **RETIRED** — bumping PRD Status created the systemic PRD-Status-lag CVO repeatedly flagged as drift when it was never authoritative.
-
-**Why both:** we've observed JSON-flipped projects whose REGISTRY row stayed in Active for days (ADVI_ROLGAT 2026-04-17→2026-04-21; discovered in joint audit `f959fbcb`). Either step alone is silent-drift to the other. Authors of closure commits MUST edit both in one `git commit --only` so the atomicity is structural.
-
-**Closure triggers:**
-- **Complete** — all authored TOs status=complete; no authored-but-unshipped work; final-deploy mechanical only. Use when the project achieved its stated goal.
-- **Complete-as-superseded** — scope fully absorbed into another active project or PRD. JSON `phase` cites the successor explicitly. Use when the work is done but not under this project's banner.
-- **Cancelled** — explicit Andrew or CTO directive cancelled the work. JSON `phase` cites the directive. Different from superseded (no successor work).
-- **Inactive / On Hold** — blocked by external dependency (Andrew/IT, vendor, regulatory). Stays in On Hold table; do NOT move to Completed until the external blocker clears or cancellation call is made.
-
-**Anti-pattern — single-step closure:** flipping JSON status alone while the REGISTRY row lags. Always 2-step (JSON + REGISTRY), always one commit.
+**Parallel-wave protocol (COO/CTO).** Before writing TOs for a parallelized wave, run `comp-blast` on every
+affected component. **Any node in 2+ blast radii is a CROSS-DOMAIN resource** — flag it in the PRD and in
+each TO's `<cross_domain_coordination>`. Agents must MCP each other before committing to cross-domain files.
 
 ---
 
-*Commit identity and scope discipline: see CLAUDE.md Rules 14 / 14a.*
+## Closure discipline (SA / COO / CTO only)
+
+Closing a project is a **2-step atomic operation in one commit** — never a single JSON edit:
+
+1. **JSON status flip** — `org/projects/{CODE}.json` → `"status": "complete"` + `"completed": "YYYY-MM-DD"`
+   + rewrite `phase` as a closure summary + set `blocking` to `"None"`.
+2. **REGISTRY row move** — `org/projects/REGISTRY.md` → delete the row from Active/On-Hold, insert at the
+   **top** of Completed/Archived with the completed date + closure notes citing ship evidence.
+
+**Either step alone is silent drift.** Do both, in one commit.
+
+**PRDs are NOT a close step.** They stay in `docs/architecture/`; do not archive them and do not bump their
+`Status:` line on close. **`org/projects/{CODE}.json` is the single authoritative close-state.**
+
+**Closure triggers:** **Complete** (goal achieved, no unshipped work) · **Complete-as-superseded** (scope
+absorbed elsewhere; `phase` cites the successor) · **Cancelled** (explicit Andrew/CTO directive; `phase`
+cites it) · **Inactive / On Hold** (blocked by an external dependency — stays On Hold, do **not** move to
+Completed).
 
 ---
 
-## Core Documents (Tier 2+)
+## Core documents (Tier 2+)
 
-Update your core document when you make a structural change (new resource, contract change, removal). Update in the same commit as the code change.
+Update your core document **in the same commit** as any structural change (new resource, contract change,
+removal).
 
 | Role | Document | Location |
 |------|----------|----------|
@@ -508,20 +352,21 @@ Update your core document when you make a structural change (new resource, contr
 | AE | `pipeline_inventory.xml` | `{agent_folder}/deliverables/` |
 | SA | `architecture_brief.xml` | `{agent_folder}/deliverables/` |
 
-Do not edit another agent's core document. If your change makes theirs stale, note it in your log and issue them a task order.
+**Do not edit another agent's core document.** If your change makes theirs stale, note it in your log and
+issue them a task order.
 
 ---
 
-## Quick Reference
+## Quick reference
 
 | Thing | Value |
 |-------|-------|
 | Working branch | `CLOUD` (parent repo) / `DEV` (portal submodule) |
-| Terraform binary | `.tools/terraform.exe` |
+| Commit | `.tools/safe-commit.sh --author "..." -- <paths>` (see CLAUDE.md Rules 14 / 14a) |
+| Terraform binary | `.tools/terraform.exe` (apply via `.tools/safe-apply.sh` — never bare) |
 | Bun | `/c/Users/AndrewBerman/.bun/bin/bun` |
-| Git Bash path fix | `export MSYS_NO_PATHCONV=1` before commands with `/` paths |
+| `MSYS_NO_PATHCONV=1` | **Only** for Terraform imports / ARN-path args, and `git show <ref>:<path>` when both contain `/`. **NEVER for `git push`** (breaks the VALGATE hook) **or the aws launcher.** |
 | Times to Andrew | US Eastern only (never UTC) |
 | MCP server | `org/mcp/server.py` — `opal-agent-comms` |
 | Broker | Auto-launched by `register_agent`, port 7800 |
-| Monitor | `python org/mcp/monitor.py` (supports `--pod N`, `--project CODE`) |
-| Compiler tools log | `org/compiler-tools-log.md` — append after every session |
+| Compiler tools | Trigger table in CLAUDE.md § "Compiler Tools". Log: `org/compiler-tools-log.md` |
