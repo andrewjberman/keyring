@@ -141,6 +141,71 @@ mandated gate, not a one-off.**
 > **KNOWING A FAILURE MODE BY NAME DOES NOT IMMUNIZE YOU AGAINST WRITING IT.**
 > **CARE IS NOT A CONTROL; CARE IS WHAT YOU HAVE INSTEAD OF ONE.**
 
+## ADDENDUM (15:35Z -> 18:00Z) -- four more, and three of them are my own instruments failing
+
+**10. THE LIB-PARITY CI COVERS 0 OF 6 OF THE COPIES THAT RUN.** This is *why* both propagation failures
+survived two months. `inf-pipeline-lib-parity.yml`'s entire scope is ONE pair -- and every limb is wrong:
+it compares against `code/gold/_orion_api_silver_lib.py`, **a path `safe-deploy` never writes** (silver maps
+to `code/silver/`), so it drifts by construction; **that artifact is DEAD** (AST census: no gold script
+imports the lib -- the 2 references are COMMENTS); and the five live Lambda copies bundle their lib **inside
+the deployment zip**, which `aws s3 cp` object-parity **cannot see into, ever**.
+> **We built the gate for exactly this class and it cannot see the fork -- and it cannot be MADE to see it by
+> its own mechanism.** *You cannot fix it by adding PAIRS. The model is wrong.* That is the hardest form of
+> the Lambda-layer case. Routed to CTO~B/COO/0.7.0. **Do NOT "fix" it by adding five more `aws s3 cp` pairs --
+> it would go green while remaining blind, and a green that looks like coverage is worse than the red.**
+
+**11. MSTR's RELABELED-WEEKEND-BOOK LEAD: KILLED.** `INF_B_00` is **not** the fabricator. Silver
+`positions_mv` already carries the same book on Sat/Sun/Mon (33,381 rows each; `current_value` changed on
+**0** rows). **0.5.0 then pushed it one layer further and better than I had: ORION's own `asOfDate` echoes the
+requested date.** So:
+```
+ORION fabricates the vintage -> bronze faithful -> silver faithful -> INF_B_00 faithful -> ETF faithful
+```
+**Every layer in our estate is a faithful reporter of a lie we did not author** -- which is exactly why no
+single-layer review could ever find it. **The honest vintage DOES NOT EXIST in the source: no data-layer fix
+exists, only a serving-layer detector keyed on value-movement.** Nobody should "correct" `snapshot_date` to
+the last trading day -- *that invents a vintage the vendor never gave us.*
+
+**>> AND I OVERSTATED THE PREMISE THAT CARRIED IT.** I told MSTR and 0.5.0 *"the **ONLY** columns that differ
+are the date stamps."* **`asset_class` differs on 2 rows, and MY OWN OUTPUT PRINTED IT.** I saw the line, it
+fit no part of my story, and I filed it as noise **without measuring whether it was noise.** 0.5.0's hash
+flipped on those 2 rows and **he was one step from reporting a false contradiction -- off my sentence, not off
+the data.** *A right conclusion resting on an overstated premise is as dangerous as a wrong one, because the
+next person reasons from the PREMISE.* Corrected to both, in writing.
+
+**12. THIRD ZOMBIE GUARD B -- AND MY OWN REGISTRY WAS BLIND TO IT WITHIN FOUR HOURS.** `shape_check.py`
+enforced the same retired $150M-$300M band **under an ALIAS** (`GUARD_B_LOWER`, not `GUARD_B_AUA_LOWER`) with
+the comparison **inlined** -- so it has no `apply_aua_guard` function and my symbol-hunting `RETIRED_GUARDS`
+scored it **0 hits**. Found by 0.7.0; verified by me before acting.
+```
+pre-fix shape_check.py:  'apply_aua_guard' present = FALSE   <- MY SYMBOL-CENSUS: 0 HITS
+                         alias-blind detector      = 2 HITS  (339, 341)
+```
+> **A ZOMBIE GUARD SURVIVES A RETIREMENT BY BEING SPELLED DIFFERENTLY. HUNT THE CONTROL, NOT THE SYMBOL.**
+> *"Compare behaviour, not values" one level down: there we were fooled by matching CONSTANTS; here by
+> matching a NAME.*
+Fixed (`8f168d579`): the check **REPORTS** the AUA and no longer **JUDGES** it; the band constants are
+**DELETED, not orphaned** -- *an unused threshold in a verify script is a loaded gun.* `RETIRED_BANDS` is now
+**alias-blind** (threshold VALUE + fail-closed BEHAVIOUR), with four arms exercised: proven-RED on the file
+that beat it, green on the fix, over-condemnation (the canonical no-op is **not** condemned), sweep (0 others).
+**It was LATENT -- but it FAILS ON A LOW AUA, so it would have fired during a drawdown: the one moment an
+operator is already staring at falling AUA and would read it as CONFIRMATION.** *An alarm that fires on a
+retired control at the moment it is most likely to be believed is worse than no alarm.*
+
+**13. I REFUSED CREDIT FOR TWO FINDINGS I DID NOT MAKE.** 0.7.0 attributed a `household_id` coercion call and
+a `.isdigit()` 318->0 collapse to me. **I had no record of either.**
+> **A FINDING MISATTRIBUTED TO AN AGENT WHO DOES NOT HAVE IT IS AN UNOWNED FINDING WEARING AN OWNER'S NAME.**
+> *From the sender's side it looks identical to a driven finding. The only person who can see the difference
+> is the one being credited -- and the incentive is entirely to stay quiet and accept it.*
+Both were **base DS's**, and already driven. He had conflated two agents sharing a surname -- **while writing
+a message about hunting the control rather than the token.**
+
+**14. LAST TO IN MY QUEUE CLEARED (COO's `AUAFIX-L6`, pending 25 days), read-only.** (a) the AP no-activity
+gate removal is **DONE and LIVE ON THE RUNNER** -- verified on the **deployed** cot bytes, not on the comment
+claiming it; the ~$3M understatement correction **is served**. (b) is the only remainder. **AND THE TO
+CONTAINS A TRAP:** its expected `~$365.7M` is a **stale oracle** -- served cot AUA is **$435.8M** today because
+the book grew (NNA YTD $396.8M), so anyone verifying (a) against it **falsely condemns a correct fix.**
+
 ## Current State
 
 - **`INF_B_00` walk-back is LIVE on the runner.** The $202M collapse can no longer be re-derived.
