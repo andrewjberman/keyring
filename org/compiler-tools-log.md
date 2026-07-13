@@ -16561,3 +16561,70 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 2026-07-13 | 0.7.0_AE_CloudOps | OPAL_ASSETS P1/G3a (08335338 full backfill) + lambda-ci | deploy_ledger.py open/close-leg/hold/--release/check (NEVER#6; HELD-SOVEREIGN-GATED = the right primitive for a sovereign-gated IN-FLIGHT write -- kept the IAM + 85-file writes tracked-not-stranded through the halt; also root-caused the INF ledger RED: _md_status() only matches a line that LEADS with **Status:**), safe-apply.sh -target (1 added/0 changed/0 destroyed, 0-diff re-verified), safe-commit.sh x7 (owned-paths correctly REFUSED CTO's commit on my lane -> SoD-clean hand-off), comp-iam NOT RUN on the iam.tf change = SELF-REPORTED GAP (it models (action) not (action,resource) so it CANNOT discriminate a NEW prefix on a role that already holds s3:PutObject -- but the rule says run it and I skipped it; recording the miss, not rationalizing it), NFRA_COMPRAIL nudge x1 (correctly gated a Bash grep; complied via native Grep/Read -- note its remediation text points at comp-aws/comp-iam/comp-routes, none of which answer a SHELL-SCRIPT line-level review) | KEY FINDING: `aws iam simulate-principal-policy` FALSE-DENIED the POSITIVE CONTROL (implicitDeny on 01_raw_quartz_validation/*, a prefix this role writes EVERY DAY) -> both probes returned the same verdict -> the instrument is NON-DISCRIMINATING for this role -> verdict DISCARDED per Rule 22a and grounded instead on applied (get-role-policy) + exercised (a real PutObject). The positive control is the ONLY reason I knew the instrument was dead rather than reading a meaningless implicitDeny as a real finding.
 | 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-13 | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws opal-assets-daily-emitter | FAIL |
+| 2026-07-13 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast build_rows | FAIL |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-pipescript | comp-pipescript io INF_D_02b | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed INF_A_0.aor_resolver.py | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/server.py --file org/mcp/test_i... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-pipescript | comp-pipescript deployed INF_A_0.aor_resolver.py | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_02b | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --firm inf | FAIL |
+| 2026-07-13 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam service opal-assets-daily-emitter | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0047.md | PASS |
+| 2026-07-13 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam service opal-assets-daily-emitter | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/mstr-review/SKILL.md --f... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-13 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/opal-assets/emitter.tf | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor-of-record-go-live-g... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/serve-hold-sentinel-is-py-o... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-platinum | comp-platinum reverse top_holdings | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-blast | comp-blast INF_D_02b | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/cens... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/spawn-agent.ps1 | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/tests/test... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/AOR_GO_LIVE... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_PRD.md | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/AOR_GO_LIVE... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor-of-record-go-live-g... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_PRD.md | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/aor_resolutio... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed data/inf/scripts/gold/lib/aor_resolution.py | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed INF_A_0.aor_resolver.py | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/settings.json --file .tools/hoo... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --firm inf | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_PRD.md | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/AOR_GO_LIVE... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/aor_resolutio... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam --help | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam role quartz-si2-spike-role | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam resource-sweep | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/AOR_GO_LIVE... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --firm inf | PASS |
+- 2026-07-13 0.7.0_AE_CloudOps (respawn 0519-0610Z, 08335338 backfill re-attach): comp-iam role quartz-si2-spike-role PASS (11 stmts; backfill grant stmt 9/10 resource-scoped+conditioned; DenyPlanes 6/7/8 on bd/cot/inf intact -- closes the comp-iam gap COO flagged) + comp-iam resource-sweep PARTIAL -> F-5: its population is LAMBDAS (123 lambdas/388 calls); the EC2 instance-profile role doing 2,500+ live backfill writes is NOT in the denominator -- neither flagged nor cleared. The tool built to catch the action-vs-resource blind spot is blind to every EC2 role. Also commit-gate + safe-commit(-F) + deploy_ledger(hold, check --red) PASS -> F-6: the ledger has no AMEND, so a mis-cited proof on a CLOSED leg cannot be corrected (my own L1 names the POLICY in a ROLE slot -> re-verify returns NoSuchEntity, which READS like "never applied"). Raw aws iam simulate-principal-policy (Rule-22a-mandated over comp-iam for a fresh action+resource question) -> F-3: it EVALUATES Condition blocks, so without --context-entries every conditioned statement false-DENIES -- and prefix-conditioned ListBucket is exactly what NEVER-WIDEN makes us write. DESIRED (comp-iam) and LIVE (simulate) agreed on both the grant and the deny planes.
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
