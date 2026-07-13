@@ -73,13 +73,18 @@ EMPTY = pd.DataFrame({'household_id': [], 'household_headline_advisor_key': []})
 
 F4_ARMS = [
     ('None  (account_team READ FAILED -- C_02 WARN path)', None, True),
-    ('EMPTY frame (0 rows, read OK)', EMPTY, False),   # legitimately "no households" -- may return {}
+    ('EMPTY frame (0 rows) -- caller DECLARED non-empty', EMPTY, True),  # F4-B: declared -> must RAISE
     ('STALE frame (missing stamped col)', STALE, True),
     ('HEALTHY (C_07 stamped) -- POSITIVE CONTROL', HEALTHY, False),
 ]
 for name, frame, should_raise in F4_ARMS:
     try:
-        got = household_headline_map(frame)
+        # F4-B (CTO~B): expect_nonempty is now a REQUIRED positional -- THE CALLER DECLARES
+        # whether zero households is legitimate. INF cannot have zero (~286 across 4 advisors),
+        # so every INF caller declares True, and a 0-row read is therefore UNOBSERVABLE-shaped
+        # and must RAISE. (Omitting the arg made EVERY arm raise on a TypeError -- including the
+        # HEALTHY control. The control caught my stale fixture, not the code.)
+        got = household_headline_map(frame, expect_nonempty=True)
         result, raised = (f'RETURNED {got if got else "{} (EMPTY -- SILENT)"}', False)
     except Exception:
         result, raised = ('RAISED (fail-closed)', True)
