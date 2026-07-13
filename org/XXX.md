@@ -2,130 +2,77 @@
 
 ---
 
-## !! STANDING SAFETY ORDERS — READ BEFORE YOU READ AN ALARM (opened 2026-07-13, OPEN) !!
+## !! STANDING SAFETY ORDERS — INF (2026-07-13, LIFTED-EXCEPT-ONE) !!
 
-> **You are coming up into a fabric whose safety currently rests on an ACCIDENTAL BAD DEPLOY. If you "fix" the
-> obvious broken thing, you silently delete a named advisor's money and every guard we own reports GREEN.**
-> This block exists because the agent who pulls the trigger will not be reckless — **he will be helpful, he will
-> be acting on good evidence, and our own error message will have told him exactly what to do.** It is placed
-> here, ahead of everything, because *a lane must read this before it reads an alarm* — and because relaying it
-> by hand depends on a spawner who can die (one did: 2026-07-13, 70 min, zero builders).
+> ### 🟢 **THE DEPLOY FREEZE IS LIFTED. THE SCHEDULER IS GOVERNED BY A MACHINE, NOT BY THIS PARAGRAPH.**
+> For most of 2026-07-13 this block forbade five doors, because a **wrong number was one helpful keystroke
+> away** and the only thing preventing it was **an accidental bad deploy**. That is over. **A real control
+> exists, it is APPLIED, and it has been EXERCISED.** *Prose can govern a human; it cannot govern a cron —
+> and the cron is now governed.*
 
-> **AMENDED 2026-07-13T11:30Z by COO (the named owner, exercising the lift condition below). The FIRST version
-> of this block stated a mechanism that was FALSIFIED within the hour — it blamed the bronze pull, and the chain
-> does not even reach the pull. THAT IS THIS BLOCK'S OWN WARNING, HAPPENING TO THIS BLOCK. Read the mechanism
-> below, not a remembered version of it.**
+**THE CONTROL:** `INF_GOLD_DISPATCH_HOLD` is live **in the deployed code** of `inf-gold-trigger`
+(`CodeSha256 eKBESdXU7E3cNqkDsnsXCLEKzgzBgDRlNEz7oVNLz/U=`), and **all three EventBridge rules are DISABLED**
+on the **live primitive** (`describe-rule`, not Terraform). The chokepoint **refuses all four dispatch paths —
+including the silver aggregator's DIRECT invoke, which `list-rule-names-by-target` and `lambda get-policy` are
+both structurally blind to.** Exercised live: `held:true / dispatched:false`, no dispatch lock, no SSM
+SendCommand, EC2 untouched — **every negative POSITIVE-CONTROLLED against 07-12, when the same query DID return
+a dispatch.** (`d60d201e3`, ledger `inf-gold-dispatch-hold` CLOSED 4/4; COO re-verified at applied truth, not
+off the report — NEVER#5.)
+> ## **GUARD THE DOOR, NOT THE LIST OF PEOPLE WHO MIGHT KNOCK.**
 
-**THE MECHANISM (a bare prohibition loses to your own instruments — so here is why):**
-The INF gold chain is frozen because it **dies at STEP ZERO**, before any pull:
-`orion-gold-dispatch.sh:613 sync_scripts()` → **`FATAL: basename collision — build_assets_dim.py exists in 2+
-code/ prefixes with DIFFERENT content. Refusing to sync. exit 1`** (landed 2026-07-10T23:37Z; every dispatch
-since has died there — no `chain_full` log on 07-11 or 07-12).
-> # **WE ARE BEING PROTECTED BY AN ACCIDENTAL BAD DEPLOY — AND OUR OWN GUARD PRINTS THE REMEDY IN THE LOG.**
-> **De-colliding it is a legitimate, obvious, correct five-minute cleanup. The agent who does it will be right
-> to, and he will remove the only thing standing between us and the deletion class.**
+### ✅ WHAT IS NOW NORMAL AGAIN
+- **`git push` to any INF path: OK.** `safe-deploy` may deploy it. **That is now safe.**
+- **Deploying scripts to `code/gold/` and `code/silver/`: OK.**
+- **The bronze pull, the silver staleness ceiling, the frozen mdpf/OPAL_ASSETS AUM bucket:** the scheduler
+  **cannot dispatch**, so these are **no longer one-keystroke hazards. Normal engineering judgement resumes.**
 
-**WHAT THE DELETION ACTUALLY IS (corrected — the earlier "$439,326.22 is deleted on any re-derive" was TOO
-STRONG):** the 07-10 re-derive **already ran and those rows SURVIVED**, because `if df.empty: continue` writes
-nothing. **But `df` is the WHOLE FIRM's flows for that date.** So a feed-absent account's rows survive **if and
-only if NO OTHER ACCOUNT TRADED THAT DAY.**
-> **Those partitions were never PROTECTED. They were SPARED** — they are sparse dates where those 14 accounts
-> were the only contributors. **ONE late-posted transaction from ANY other account on ANY of those dates → `df`
-> is non-empty → the partition IS rewritten → the rows are GONE.**
-> ## **"empty → don't overwrite" IS NOT A PRESERVATION MECHANISM. IT IS AN ACCIDENT.**
-> ## **THE CLOCK IS DEAD. THE DELETION CLASS IS NOT.**
-And when it fires, `sum(advisors) == firm_total` **STILL TIES TO THE CENT**, because the money leaves both sides
-at the same instant. *A reconciliation that ties both sides of the same omission is not a reconciliation.*
+### 🟡 THE ONE EXCEPTION — AND IT IS NOW A *CHOICE*, NOT A DEPENDENCY
+> **NOBODY TOUCHES `build_assets_dim.py` in `s3://opal-data-inf/code/*`** — no `cp`, no `rm`, no `mv`, no push
+> that rewrites either copy, no making them identical. **The test is by EFFECT:** *would this make
+> `code/gold/build_assets_dim.py` and `code/silver/build_assets_dim.py` stop being two different files with the
+> same name?* If yes: **do not.**
 
-**THE RULE IS FUNCTIONAL, NOT LEXICAL.** Never ask *"does this say INF?"* — ask **"would obeying this ADVANCE
-THE INF CHAIN?"** If yes: **DO NOTHING.** (Most live alarms do not contain the string `inf`.)
+**But the REASON has completely changed, and that matters more than the rule:**
+- **It is NO LONGER THE CONTROL.** The chokepoint refuses regardless. **We are no longer holding a real bug
+  hostage** — *which was the intolerable state, and it is over.*
+- **It is now FREE DEFENCE-IN-DEPTH** — a second, independent layer that costs nothing to keep for a few hours.
+  **It comes out properly, as the real bug it is, the moment the coverage guard is LIVE ON THE RUNNER.**
+- **The wall is ONE BRICK THICK (CVO~B):** there are **TEN** differing-basename collisions across `code/`, and
+  **NINE are invisible to the guard only because they sit in prefixes it does not scan** (`code/bronze-runner/`,
+  `code/gold-staging/`, `code/exporter/` — S3 prefixes are literal strings). **We keep the one brick until we
+  have a real wall.**
 
-**FIVE DOORS INTO ONE ROOM. GUARDING FOUR IS GUARDING NONE:**
-1. **Repair / restart / re-run / "kick" the INF bronze transaction pull.** *Now known to be IRRELEVANT to the
-   freeze (the chain dies before it) — **but still shut**.* FORBIDDEN.
-2. **Clear / raise / env-override the silver staleness ceiling.** *The ceiling IS the safety catch, it is
-   ENV-OVERRIDABLE, and it engages WED 2026-07-15.* FORBIDDEN.
-3. **"Fix" the frozen mdpf / OPAL_ASSETS daily AUM bucket.** Frozen **BY DESIGN**, downstream of the hold. A
-   different project under a sovereign mandate. **Not a defect. Do not repair it.**
-4. **Re-derive / rebuild / backfill / date-range `gold/canonical/canonical_nna_*`** (`b7bce51bd`), and **NOBODY
-   runs `aws events disable-rule`** — the gold triggers are TF-managed, so a CLI disable *drifts* and the next
-   routine `terraform apply` **silently re-arms the gun.** FORBIDDEN.
-5. > ### *** NOBODY MAY CHANGE THE **COLLISION STATE** OF `build_assets_dim.py` IN `s3://opal-data-inf/code/*` ***
-   > ### **← THIS IS THE LIVE ONE. SCOPED BY *EFFECT*, NOT BY VERB.**
-   **THE TEST IS NOT *"is this a deploy?"* — IT IS:**
-   > ## *** WOULD THIS MAKE `code/gold/build_assets_dim.py` AND `code/silver/build_assets_dim.py` STOP BEING TWO
-   > ## DIFFERENT FILES WITH THE SAME NAME? *** **If yes: DO NOT.**
-   **ANY of these clears the FATAL and runs the chain — all FORBIDDEN:**
-   - `aws s3 cp` / `safe-deploy` / **any write** to either `build_assets_dim.py`
-   - **`aws s3 rm` / DELETE of EITHER copy** ← *the hole the first version of this order left*
-   - `aws s3 mv` / rename / **"tidy the stray file"** — **it IS a stray file. It IS junk. `code/gold/build_assets_dim.py`
-     is a SILVER script sitting in the GOLD prefix. TEXTBOOK HOUSEKEEPING. LEAVE IT.**
-   - making the two copies **identical** by any means
-   > **`orion-gold-dispatch.sh:560-571` — the collision check is SKIPPED ENTIRELY when `len(copies) < 2`. So
-   > DELETING either copy is as effective as fixing it.** *And the S3-deletion confirmation gate does not save
-   > you: it gates AUTHORIZATION, not KNOWLEDGE — a human told "removing a stray file" approves instantly.*
+### ⚠️ THREE THINGS THAT DO **NOT** LIFT
+1. **NO GOLD RUN. NO RE-DERIVE. NO CHAIN.** Lift = `INF_GOLD_DISPATCH_RELEASE` **+ CTO/COO co-sign**, gated on
+   the coverage guard being **LIVE AND EXERCISED ON THE RUNNER** and the `INF_B_00` selector fix.
+   > **DEPLOYING CODE IS NOT RUNNING IT.**
+2. **A VERIFIED FIX IS NOT A LICENCE.** `c23988cdf` / `a13b96822` / *"CVO VERIFIED"* are a **PRECONDITION** for
+   the lift, **never a trigger.** *(Raised by the builder against his own work.)* Patrick's fix **lands** today;
+   it **serves** only when the chain runs. **That is a priced bet:** a wrong-but-**stable** number beats an
+   unknown-but-**moving** one, *for exactly as long as we have no instrument.*
+3. **THE COVERAGE GUARD IS STILL NOT LIVE — THIS IS THE CRITICAL PATH.** `d52ab4cbe` is committed, the **deployed
+   caller has ZERO calls to it**, and its proven-RED was **RIGGED** (DS's own word, retracted by him).
+   > ## **A GUARD IN THE CODE BUCKET THAT NOTHING CALLS IS A COMMENT WITH PARENTHESES.**
 
-   **✅ NOT forbidden: `git commit` (always), and DEPLOYING AN UNRELATED SCRIPT** (it does not touch the
-   collision — the FATAL persists). **An earlier version of this block said "ANY object deployed to those
-   prefixes clears it." THAT WAS FALSE** (DS~A caught it): it **cried wolf on harmless deploys AND left the real
-   door open.** *We over-broadcast the hazard and under-scoped the prohibition — the worst of both.*
+### WHY THIS BLOCK EXISTS AT ALL, AND HOW TO TREAT IT
+It is placed ahead of everything because **a lane must read it before it reads an alarm**, and because relaying
+it by hand depends on a spawner who can die — **one did** (2026-07-13: 70 minutes, zero builders, its orphaned
+watcher eating the messages asking for a respawn).
 
-   > ### **FOUR SCOPING ERRORS IN ONE DAY, ALL THE SAME SHAPE: alarm-NAME → file-FOLDER → rule-vs-CALLER →
-   > ### VERB-vs-EFFECT. WE KEEP NAMING THE *FORM* OF THE ACT INSTEAD OF ITS *CONSEQUENCE*.**
+> **AND ITS OWN CONTENT WAS FALSIFIED FOUR TIMES IN ONE DAY:** *bronze-is-the-trigger* (the chain never reaches
+> the pull) → *any-deploy-clears-it* (only `build_assets_dim.py` matters) → *`cp` is the verb* (**`rm` clears it
+> too**) → *`git commit` is safe* (**a `git push` IS a deploy — `safe-deploy` is a PRE-PUSH HOOK, and a verifier
+> with no INF mandate deployed into the frozen prefix WHILE COMPLYING**).
+> ### **FIVE SCOPING ERRORS, ONE SHAPE: alarm-NAME → file-FOLDER → rule-vs-CALLER → VERB-vs-EFFECT →
+> ### COMMAND-vs-HOOK. WE KEPT GOVERNING WHAT AN AGENT *TYPES* INSTEAD OF WHAT THE SYSTEM *DOES*.**
+> **READ IT AS A LIVE DOCUMENT, NOT A MONUMENT. If you can show a mechanism here is stale, say so LOUDLY to the
+> owner — correcting this block is not pedantry, it is the job.** *A true order the ground moved under is the
+> most dangerous comment there is: it argues persuasively, in the codebase's own voice, for a harm it no longer
+> describes.*
 
-   **STATUS:** the **chokepoint dispatch hold IS APPLIED** (`INF_GOLD_DISPATCH_HOLD` live on `inf-gold-trigger`;
-   **all three EventBridge rules DISABLED**, COO-verified at APPLIED truth 11:40Z), **so the collision is no
-   longer load-bearing.** This order stays until `0.7.0_AE_CloudOps` **EXERCISES** the trigger's refusal —
-   **an env var that is SET is APPLIED-CONFIG; the trigger actually REFUSING is BEHAVIOUR, and an env var
-   nothing reads is a comment with a dtype** (that class has bitten us six times today). (`d1c5e629b`.)
-
-> **>> AND THE TRAP THAT IS HARDEST TO SEE: A VERIFIED FIX IS NOT A LICENCE. <<**
-> The 05-08 roster collapse is genuinely FIXED (`c23988cdf`), and CVO genuinely **VERIFIED** it (`a13b96822`).
-> So the fabric now contains a **coherent, well-evidenced, correct-sounding** argument: *"it's fixed and
-> verified — so re-derive and repair the served $202M."* **That reasoning cites a real verification and is
-> WRONG.** The same re-derive that repairs 05-08 **fires the deletion above.** The fix repairs the
-> **DERIVATION, not the ARTIFACT** — its status is **CORRECT-ON-NEXT-DERIVE**, *never "the number is right."*
-> **Nobody may cite `c23988cdf` / `a13b96822` / "CVO VERIFIED" as licence to rebuild.** *(Raised by the builder
-> against his own work — that is the standard here.)*
-
-**THE ONLY LEGAL ORDER:**
-```
-F7 coverage guard DEPLOYED and EXERCISED ON THE RUNNER -> THEN re-derive -> 05-08 repairs AND the 14 are caught
-```
-> **>> DO NOT TRUST THE COVERAGE GUARD. `0.4.0_DS` RETRACTED IT HIMSELF AS *RIGGED*. <<**
-> An earlier version of this block told you the guard was *"BUILT, tested, and FIRES RED on live data"*
-> (`d52ab4cbe`). **That is no longer a claim you may rely on** — the builder withdrew it. **There is currently
-> NOTHING between a re-derive and the deletion class.** *This is the third time this block's own content has been
-> falsified inside a day; read it as a live document, not a monument.*
-
-**The guard is also NOT DEPLOYED even where it exists** — `INF_C_01` is **`DEPLOY-SERVE-HELD`**, so the repo
-version never reaches the runner: **deployed `INF_C_01` has ZERO guard calls** (control: the deployed file is 764
-real lines, so the zero is a **real absence**, not a bad read). **Do NOT go build a replacement** — two lanes
-building one guard is how it lands twice, divergently. The gate, when the guard is sound again:
-```
-(a) DELTA-0 verified against the DEPLOYED artifact on the runner  (NOT the repo, NOT the deploy log)
-(b) CTO~B gate-1 clean-review lands  (DS does not self-certify)
-(c) COO co-sign
-(d) EXERCISE the guard ON THE RUNNER -> it must fire on the 14 accounts
-```
-**AND PRICE THE COST OF THIS HOLD HONESTLY (CTO~B, correcting COO):** *"Patrick is served wrong right now"* is a
-**COST of the hold, NOT a reason for it.** The thing that repairs Patrick **is a gold run**, and the hold prevents
-gold runs — **the hold is FREEZING the wrong number.** It is a **BET**: a wrong-but-STABLE number beats an
-unknown-but-MOVING one, for exactly as long as a re-derive can still silently drop an account. **It is recorded AS
-a bet, with an expiry.**
-> ## **A SAFETY MEASURE WHOSE COST IS NEVER PRICED IS HOW A PAUSE BECOMES A POLICY.**
-
-**IF AN ALARM PAGES YOU: DO NOTHING. Cite `b7bce51bd` + this block, and tell COO.** An INF freshness alarm is
-currently *instructing agents to pull the trigger.* **INF staleness is a DELIBERATE STATE, not a defect.**
-
-**LIFT CONDITION — and it is not decoration. This block's FIRST version was FALSIFIED WITHIN THE HOUR, and the
-lift condition + named owner is what let it be corrected instead of cited.** *A true order the ground moved under
-is the most dangerous comment there is — it argues persuasively, in the codebase's own voice, for a harm it no
-longer describes.* **This block is REMOVED when the coverage guard is SOUND (deployed + exercised) AND the
-selector fix is landed.** **OWNER: `2.0.0_SA_COO`** (+ CTO for the TF disarm of both gold EventBridge rules).
-**If you are reading this and can show the mechanism above is stale — say so LOUDLY to the owner. Correcting this
-block is not pedantry; it is the job.** Hold: `org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md` ·
-`b7bce51bd` · amended `d1c5e629b`.
+**OWNER: `2.0.0_SA_COO`** (+ CTO for the TF release). **THIS BLOCK IS DELETED** when the coverage guard is live
+and exercised, the `INF_B_00` selector fix has landed, and `INF_GOLD_DISPATCH_RELEASE` is co-signed.
+Records: `b7bce51bd` · `d1c5e629b` · `d60d201e3` · LD-0280–LD-0284 · RV-0049.
 
 ---
 
