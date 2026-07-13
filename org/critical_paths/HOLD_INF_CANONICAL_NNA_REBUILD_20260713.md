@@ -1001,3 +1001,85 @@ swap (CVO~B, proven RED this morning).** *If that were the only evidence I would
 > neighbours (05-07 / 05-09) — A CONTROL THE FIX WAS NOT FITTED TO. That is an assertion a swap cannot pass.**
 
 **LIFT LEDGER: 4 of 7.** Item 4 (CVO~B, **by exercise**) is the critical path. **Nothing lifts today.**
+
+---
+
+# AMEND 18 (2026-07-13T14:10Z, COO) — **THE WHOLE FIRM CAN COLLAPSE ONTO ONE *VALID* KEY WITH EVERY DETECTOR GREEN. THE LEDGER GROWS 7 -> 9.**
+
+## THE FINDING (CVO~B, EXERCISED — item 4 verification, `a2ff8d8ce`, 9/9)
+```
+D1   Guard A (coverage) PASSES a total advisor COLLAPSE.
+     Basis = {date: {account_id: net_nna}} (:191).  advisor_key IS NOT IN IT.  No column to notice with.
+
+D1b  *** THE RESIDUAL-ADVISOR GUARD IS *ALSO* BLIND -- and nobody had said this out loud. ***
+     A collapse flips every key to `inflection_wealth_management`, WHICH IS A LEGITIMATE ROSTER MEMBER.
+     So it is NOT a residual, and the guard CORRECTLY stays quiet.
+     EXERCISED: assert_no_residual_advisor({inflection_wealth_management: $202,062,830.31}) -> PASSED
+
+D1c  CONTROL: the residual guard DOES fire on a real residual (inflection_unmapped_rep).
+     >> Its silence on the catchall is a REAL READING, not a dead instrument. <<
+```
+> ## **THE ENTIRE FIRM CAN COLLAPSE ONTO ONE VALID KEY AND EVERY DOWNSTREAM DETECTOR STAYS GREEN.**
+> ## **THE COLLAPSE CLASS IS PREVENTED AT SOURCE AND DETECTED BY NOTHING.**
+> ## **`INF_B_00`'s SELECTOR IS NOT DEFENCE-IN-DEPTH. IT IS THE ONLY THING.**
+
+**D1c is what makes D1b believable:** *a guard silent because it is DEAD and a guard silent because the input is
+legitimately CLEAN are byte-identical until you make it FIRE.* **She made it fire.**
+
+**And the raw 05-08 partition is `0 rows / 45 COLUMNS`** — a **perfect schema on an empty roster**, which is exactly
+why a column-level guard passed it. > ## **A SCHEMA CHECK IS NOT A CONTENT CHECK.**
+
+## THE RULING (CTO~B) — **HE GREW THE DENOMINATOR WHEN HE WAS ONE ITEM FROM A CLEAN BOARD**
+> ***"We have spent all day condemning single-point prevention with no detection. I am not going to accept it in my
+> own lift because everything else is finished."*** · ***"THE DENOMINATOR GREW BECAUSE WE LEARNED SOMETHING.
+> SHRINKING A CHECKLIST TO FEEL FINISHED IS THE DISEASE."***
+
+**This morning he predicted the hazard would arrive looking like *"the last box on a form."* It did — and the person
+who refused it was HIM, about HIS OWN FORM.** **RATIFIED, both items, without amendment.**
+
+- **ITEM 8 — THE COLLAPSE DETECTOR** (DS~A's concentration guard): a roster is usable only if **non-empty AND
+  < 50% firm-catchall — RAISE, never silently skip.** **Proven-RED required on BOTH 05-08 (0 rows) AND 04-28
+  (818/850 = 96.2%)**, *plus* an **over-condemnation arm on a legitimately concentrated day.** *A threshold that
+  fires on a real concentration is the disease it was sent to cure.* **No hardcoded skip-list — the next poisoned
+  partition will not announce itself.**
+- **ITEM 9 — REMOVING THE SELECTOR MUST BREAK THE BUILD.** **AST-asserted (DEFINED *and* CALLED), never grep** — *a
+  mention is not an implementation, and a symbol-gate is walked past by inlining the call.* **If one function is the
+  only thing between us and a silent $202M collapse, deleting it must be LOUD.**
+
+## OPEN QUESTION POSED (may become item 10)
+**Item 9 protects the selector from being REMOVED. It does not protect it from being BYPASSED.** *What stops a
+DIFFERENT script from reading `accounts_v2` by date-key and deriving an advisor without it?* **Census BY FUNCTION,
+print the denominator — routed to DS~A.**
+
+## AND THE SILVER POISON-PILL WINDOW (AMEND 17) IS **CLOSED — 22h EARLY**
+`0.7.0` deployed the write-boundary guard to **all four live writers**. **I verified it MYSELF on the deployed
+bytes — IMPORTED, not grepped:**
+```
+inf-api-reps / inf-api-positions   IMPORT OK (16,560B)   EmptyDimWriteError=True   registry=dict
+   representatives / household_rep_mapping / positions_mv -> allows_empty=False -> RAISE
+   billing -> allows_empty=True -> WRITES            (the over-condemnation control, INTACT)
+RETRIEVAL CONTROL  6 .py files/package (a 0 would be a REAL absence, not a failed download)
+NEGATIVE CONTROL   inf-api-txn -> 0/0.  *** THE CHECK DISCRIMINATES. ***
+```
+**The 12:00Z fallback is STOOD DOWN; the rules stay ENABLED.** *Two verifications asking DIFFERENT questions — his
+"does it RAISE" (25 arms, over-condemnation control), mine "is it LOADABLE and CORRECTLY CONFIGURED."*
+
+**RESIDUAL, grounded and DELIBERATELY NOT FIXED:** `inf-api-txn` carries a **WEAKENED AUA SANITY BAND** —
+`50M–400M` vs the canonical `150M–300M` — **and I confirmed in the deployed bytes that IT IS READ (3 refs). It is
+not dead code.** *A live Lambda would accept AUA values every other copy in the estate rejects.* **Nobody tightens
+it on an ungrounded basis** (the `INF_B_00`-in-the-F2-blast hazard: a blanket fix that BREAKS a working script).
+**It is a FINDING with an owner, not a chore.** *The commit gate's refusal is the only reason it is visible.*
+
+## LIFT LEDGER: **5 of 9**
+```
+[x] 1 coverage assertion LIVE      DELETION ONLY -- blind to collapse (exercised: D1)
+[x] 2 silver rep_id NULL GROUNDED
+[x] 3 INF_B_00 selector LIVE       the ONLY collapse instrument
+[x] 4 CVO~B independent verification, BY EXERCISE      a2ff8d8ce, 9/9, both guards
+[x] 5 co-sign on the PRE-REGISTERED delta              CTO + COO, both GIVEN on ccabfb3de
+[ ] 6 the collision -- DELETE the orphan               SOVEREIGN (Andrew); deliberately LAST
+[ ] 7 the first re-derive WATCHED against the delta, revertible from the 8,805 backups
+[ ] 8 *** NEW: THE COLLAPSE DETECTOR ***               DS~A
+[ ] 9 *** NEW: removing the selector BREAKS THE BUILD *** DS~A
+```
+**Nothing lifts today — and now for two more reasons than it had an hour ago.**
