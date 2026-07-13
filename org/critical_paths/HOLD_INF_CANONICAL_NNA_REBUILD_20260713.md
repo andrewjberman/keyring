@@ -1251,3 +1251,72 @@ $3,512.28 from the roster and amended the BAR, not his output.* **That is why th
 **`apply_time_lock` is still CALLED ZERO TIMES in `INF_C_01`. I have WITHDRAWN MY URGENCY ON THE WIRING — not the
 priority.** *Patrick's day-five is a COST of the hold, not a reason to rush an irreversible write, and I have been
 corrected on exactly that framing once already today.*
+
+---
+
+# AMEND 21 (2026-07-13T14:41Z, COO) — 🔴 **GO-LIVE BLOCKER: TWO PROJECTS, OPPOSITE ATTRIBUTION POLICIES, AND THE STAMP MAKES THE WIRING ORDER AN IRREVERSIBLE POLICY VOTE.** GATE-2 RE-OPENED BY ITS OWN VERIFIER.
+
+## THE COLLISION (CVO~B, EXERCISED on the real `apply_resolution_fold`)
+```
+TIME-LOCK  (Andrew-ruled TODAY)      history belongs to WHOEVER HELD IT AT THE TIME
+AoR FOLD   (INF_C_01:500, gate-2)    history is RE-KEYED TO WHOEVER HOLDS IT TODAY
+                                     *** OPPOSITE POLICIES. SAME FILE. ***
+
+EXERCISED:  2020-03-15  $100,000  ->  noel_soderblom     <- A SIX-YEAR-OLD FLOW, RE-KEYED
+            2023-07-01  $250,000  ->  noel_soderblom
+            4 of 4 rows re-keyed. $400,000 of HISTORICAL NNA moved to an advisor who did not hold it.
+```
+> ## **`attach_advisor_key` IS `aid.map(key_map)` — IT MAPS BY `account_id` WITH **NO DATE COLUMN**. IT *CANNOT* EXPRESS "FROM THE TRANSFER DATE FORWARD."**
+**It re-keys the entire history of all 164 movers, ~61 of them to Noel.**
+
+> ## **THIS IS THE SAME DEFECT THAT HANDED JOE $2.1M OF PETER'S AND PATRICK'S HISTORY AND COST PATRICK $52,604.80 — ARRIVING THROUGH THE AoR SSOT INSTEAD OF `accounts_v2`.**
+> ***A vendor roster is a statement about TODAY; it does not get to rewrite the past. **NEITHER DOES AN AoR SSOT.***
+
+## >> AND THE STAMP MAKES THE WIRING ORDER TERMINAL <<
+```
+lock BEFORE fold ->  the FOLD WINS   -> Noel inherits six years of Peter's NNA.
+lock AFTER  fold ->  the LOCK RESTORES the stamped servicing key (:321) -> THE AoR FOLD IS SILENTLY UNDONE
+                     for every historical row. Noel NEVER gets his history. PERMANENTLY.
+   *** AND THE LOG READS "TIME-LOCK: N rows RESTORED" -- EXACTLY LIKE THE LOCK WORKING. ***
+```
+> ## **A WRONG CHOICE HERE DOES NOT FAIL LOUDLY. IT SUCCEEDS, IN THE WRONG DIRECTION, WITH A GREEN LOG LINE.**
+**`lock AFTER fold` is C_07 all over again** — a downstream step overwriting the canonical AoR key with the servicing
+one. **C_07 was REVERSIBLE. THIS IS NOT** (AMEND 20: the lock will honour the stamp it wrote).
+
+## THE SOVEREIGN QUESTION — **ESCALATED TO ANDREW. NOBODY WIRES IN EITHER ORDER.**
+> **When an account's advisor-of-record CHANGES, does the NEW advisor inherit the account's HISTORICAL NNA — or does
+> history stay with whoever held it at the time?**
+```
+history STAYS       -> the fold must become DATE-AWARE -- and it has NO date axis at all. A redesign.
+the AoR OWNS ALL    -> the fold is correct, and the TIME-LOCK must be SCOPED to exclude the fold's rows.
+```
+**BOTH READINGS ARE DEFENSIBLE. NEITHER COO NOR CVO ADJUDICATES.** *(Noted without ruling on it: Andrew's time-lock
+ruling uses the phrase **"advisor of record"** explicitly — "just FUTURE NNA will be associated with the advisor of
+record in the new period." **Whether that governs the AoR SSOT is his call, and the question goes to him rather than
+being read in.**)*
+
+## HOW IT WAS FOUND, AND IT INDICTS THE WHOLE APPARATUS
+> **ANDREW ASKED, IN PASSING, WHY NOEL SODERBLOM WAS NOT IN THE NUMBERS. He was thinking of AUA and RETRACTED THE
+> QUESTION. THE QUESTION WAS RIGHT ANYWAY, AND IT FOUND THIS.**
+
+**32 adversarial review agents, gate-1, gate-2, two exec verifiers, and a CTO acceptance did not ask it.**
+
+## CVO~B's SELF-INDICTMENT — the fourth COMPOSITION failure of the day
+> ***"I cleared gate-2 on the mechanism, the served-view survival, the DELTA-0, and the movers-only contract — AND I
+> NEVER ONCE ASKED WHAT THE FOLD DOES TO A 2020 FLOW. I verified two projects separately while their policies were
+> opposite."***
+> ## ***"A CLEARED GATE THAT NEVER ASKED THE QUESTION IS NOT A CLEARED GATE."***
+
+**CANDIDATE DURABLE RULE: WHEN TWO PROJECTS TOUCH THE SAME FIELD, SOMEONE MUST VERIFY THE *PAIR*.** *Per-project
+verification is structurally blind to a policy collision BETWEEN projects — we had two gates, two verifiers, and no
+instrument that looked across them. Neither gate was ever asked to.*
+
+## LEDGER IMPACT
+```
+GATE-2                      *** RE-OPENED. It was an [x] in the AoR go-live chain. It is not. ***
+NEW BLOCKING CONDITION      no wiring of apply_time_lock in EITHER ORDER until the policy is RULED.
+                            (Upstream of item 7 -- you cannot verify a dry-run whose POLICY is undecided.)
+Item 7's dry-run            must be run under the RULED policy, not the current code.
+```
+**Chain HELD. `AOR_FOLD_ACTIVE=0`. Nothing served. Nothing wired. `apply_time_lock` CALLED ZERO TIMES — and that is
+now the CORRECT state, not a coast.**
