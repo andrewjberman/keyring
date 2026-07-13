@@ -1320,3 +1320,79 @@ Item 7's dry-run            must be run under the RULED policy, not the current 
 ```
 **Chain HELD. `AOR_FOLD_ACTIVE=0`. Nothing served. Nothing wired. `apply_time_lock` CALLED ZERO TIMES — and that is
 now the CORRECT state, not a coast.**
+
+---
+
+# AMEND 22 (2026-07-13T14:47Z, COO) — ✅ **ANDREW RULED: "HISTORY STAYS WITH WHOEVER HELD IT AT THE TIME."** THE FOLD IS **WRONG AS BUILT**, AND THE HOLD'S MEANING **INVERTS**.
+
+## THE RULING (Andrew, verbatim, to CTO~B)
+> ## **"history stays with whoever held it at the time"**
+
+## 1. THE FOLD IS WRONG AS BUILT — **NOT MIS-WIRED. THE ORDERING QUESTION IS DEAD.**
+```
+attach_advisor_key  ==  aid.map(key_map)     -- keyed on account_id. NO DATE COLUMN.
+```
+> ## **NO ORDERING OF A DATE-BLIND MAP CAN PRODUCE A DATE-SCOPED RESULT.**
+*A 2020-03-15 flow belongs to whoever held the account in 2020. There is no sequence of steps that gets there from a
+map with no date axis.* **THE FOLD MUST BECOME DATE-AWARE — attribution applies FORWARD FROM THE TRANSFER DATE,
+never retroactively.** It needs an **effective-from date per account**. **A DESIGN CHANGE, NOT A PATCH.**
+**BOTH GATES STAY OPEN until it lands and is re-verified.**
+
+## 2. THE COLLISION RESOLVES — **THE LOCK IS THE POLICY; THE FOLD MUST CONFORM**
+- **The LOCK stamps and freezes history. That IS the ruling, implemented.**
+- **"Lock before or after fold" is MOOT once the fold is date-aware** — *a forward-only fold produces NO historical
+  re-key, so there is nothing for the lock to undo.* **The lock becomes the ENFORCEMENT (a backstop asserting the
+  invariant), not the arbiter of a policy fight.** *A far better job, and the one it was designed for.*
+- **UNTIL THE FOLD IS DATE-AWARE: NOTHING IS WIRED, IN EITHER ORDER.** *The `[STOP]` stands — and now for a better
+  reason.*
+
+## 3. 🔴 >> AND THE RULING PROMOTES A **LIVE, SERVED DEFECT** — SHIPPING TODAY WITH THE FOLD **OFF** <<
+```
+In 10 days, $2.6M of ALL-TIME advisor NNA credit moved BETWEEN NAMED ADVISORS.
+   patrick -$981K   ·   peter -$1.6M   ·   joe +$2.1M
+HISTORICAL ATTRIBUTION FOLLOWS THE CURRENT BOOK AND IS REWRITTEN NIGHTLY.
+(AOR_FOLD_ACTIVE=0. This is the servicing-basis derivation in INF_C_01 -- LIVE, on the SERVED spine, TODAY.)
+```
+**COO escalated this as a QUESTION because the policy was undecided. THE POLICY IS NOW DECIDED, AND IT DECIDES
+AGAINST THE CURRENT BEHAVIOUR.**
+> ## **THE NIGHTLY REWRITE OF HISTORICAL ATTRIBUTION IS A DEFECT, NOT A DESIGN CHOICE.**
+
+### >> AND IT INVERTS WHAT THIS HOLD HAS BEEN DOING <<
+**The chain being frozen since 07-10 has been PREVENTING FURTHER DRIFT.** *The thing we have treated purely as an
+outage has ALSO been, accidentally, the only thing stopping a defect Andrew has now ruled against.*
+> ## **DO NOT READ THIS AS AN ARGUMENT TO KEEP IT FROZEN. IT IS AN ARGUMENT TO FIX IT BEFORE IT RUNS.**
+*A stall is not a control; it merely happened to be pointing the right way — the fourth time today we have found
+ourselves protected by an accident and mistaken it for a mechanism.*
+
+## 4. WHAT STAYS TRUE — **do not let the good news erase it**
+- **BOTH GATES OPEN.** Gate-2 re-opened by CVO~B; **gate-1 re-opened by CTO~B on the identical grounds**, *"the same
+  question neither of us asked."*
+- **ITEM 7 IS STILL WRONG AS WRITTEN.** The first re-derive is a **ONE-SHOT IRREVERSIBLE STAMP**, not a
+  watched-and-revertible run. **VERIFY BEFORE IT STAMPS.** *`timelock_preview` is the right instrument — **and it
+  must now preview the DATE-AWARE fold.*** > **A PREVIEW OF THE WRONG COMPUTATION IS A FALSE ORACLE ON AN
+  IRREVERSIBLE WRITE.**
+- **AND THE PREVIEW'S OWN BASIS IS UNRESOLVED (CTO~B):** it derives via `_servicing_advisor_key` (**roster**) while
+  the DEPLOYED `INF_C_01` derives via `rep_str.map(_INF_REP_ID_TO_ADVISOR_KEY)` (**the transaction's `rep_id`**).
+  **TWO DIFFERENT DERIVATIONS.** *If the preview is not the producer's own path, it clears nothing.* **ONE PATH, ONE
+  FACT.**
+- **THE GOLD SUITE IS RED** — the F10 census fired on the preview's banned symbol, **CORRECTLY**. **Disposition: an
+  EXPLICIT, REASONED EXCEPTION IN THE CENSUS LIST.** *Never a silent pass. Never a weakened test.*
+- **Chain HELD. `AOR_FOLD_ACTIVE=0`. Nothing served. Nothing wired.**
+
+## 5. THE DURABLE RULE, EARNED THE HARD WAY
+> ## **WHEN TWO PROJECTS TOUCH THE SAME FIELD, SOMEONE MUST VERIFY THE *PAIR*.**
+**Two gates. Two independent verifiers. Thirty-two adversarial review agents. A CTO acceptance. AND NO INSTRUMENT
+THAT LOOKED ACROSS THEM.** *Per-project verification is structurally blind to a policy collision BETWEEN projects.*
+
+> ### **AND THE QUESTION WAS FINALLY ASKED BY ANDREW — IN PASSING, ABOUT NOEL — AND THEN RETRACTED BY HIM AS AN AUA MIX-UP.**
+> ## **IT WAS RIGHT ANYWAY.**
+
+## THE CRITICAL PATH, RE-SCOPED
+```
+1. Can the AoR resolution ledger give an EFFECTIVE-FROM date per account?  MEASURE IT. Do not assume.
+2. Make attach_advisor_key DATE-AWARE -- forward-only from the transfer date.
+3. timelock_preview must preview the DATE-AWARE fold, on the PRODUCER'S OWN PATH.
+4. Disposition the F10 RED with a written, reasoned exception.
+5. BOTH gates re-verify.  THEN the one-shot -- verified BEFORE it stamps.
+```
+**Owner: DS. No clock. The hold is now doing real work and everyone knows exactly what.**
