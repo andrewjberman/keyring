@@ -54,6 +54,50 @@ failure is not evidence of success.*
 
 ---
 
+## 2a. ⛔ CO-SIGN SEQUENCING — **I DO NOT CO-SIGN AGAINST TONIGHT'S NUMBERS**
+
+*(CTO 061116Z. This is MY gate and this is the rule I hold myself to.)*
+
+**Gate-2's verification is GREEN — and it is against DS's UNCOMMITTED WORKING TREE.** The lib moved under CVO~B
+**three times tonight**, and two of her own citations went stale mid-analysis. **She will not sign gate-2 off a
+moving target, and she is right** — Rule 22: *a line citation without a vintage is not a citation.*
+
+**THEREFORE THE CO-SIGN RIDES A RE-RUN AT A COMMITTED HASH. THE ONLY LEGAL SEQUENCE:**
+
+1. **DS COMMITS round-8.2** → hands CVO~B a **hash**.
+2. **CVO~B RE-RUNS the full matrix AT THAT COMMIT.** (Not tonight's run. Not a working-tree run.)
+3. **gate-2** (CVO~B) → **gate-1** (CTO~B) → **THEN my co-sign** → **then Andrew's GO.**
+
+**A green verification against an uncommitted tree verifies NOTHING THAT WILL SHIP.** The tree is not the artifact.
+**I will refuse a co-sign that cites a working-tree result, however green.**
+
+**SoD NOTE:** base-CVO has **RECUSED** himself from certifying this fix — he is now an **author** on it (he found
+the `code_digest` input). **Gate-2 is CVO~B's ALONE.** Correct call, endorsed by CTO, and I will not accept a
+base-CVO sign-off as a substitute.
+
+### THREE RESIDUALS — one is a SHIP-BLOCKER (with DS as conformance corrections, not new findings)
+
+- [ ] **R-A — SHIP-BLOCKER. A FAIL-OPEN *INSIDE* THE GUARD BUILT TO CLOSE A FAIL-OPEN.** `source_digest()` HEADs
+      **the PIN** while the loader **WALKS BACK** — so the resolver can stamp the digest of partition `P` while the
+      fold was actually derived from `P-1`. **A false identity that fails OPEN, inside the mechanism.** Not
+      shippable. *(This is the sixth instance tonight of **the repair inheriting the defect it repairs.**)*
+- [ ] **R-B — `code_digest` NOT BUILT** (refs=0). The third input. Without it, a mid-day resolver-lib deploy + a
+      resolverless run **passes the guard on RETIRED LOGIC.**
+- [ ] **R-C — a live S3 HEAD on EVERY `load_resolution()` call**, inside 32-worker loops → a per-worker HEAD **and
+      mid-chain NONDETERMINISM** (consumer A passes, consumer B raises, *same run, no bug*). A guard that answers
+      differently to two consumers in one run is not a guard.
+
+### WHAT IS ALREADY PROVEN (do not re-litigate)
+
+- **ETag-keyed mutant matrix: 6/6** — including **A5: legitimate `--single` cache reuse → RETURNS.** The digest key
+  does **not** brick the targeted-rerun ops surface. **It is a discriminator, not a brick.**
+- **A3 THROUGH THE DISPATCH: GREEN**, raising on the **mode** branch — and the fixture was built so the artifact
+  agrees on **every field except `fold_mode`** (`as_of` matches, digest matches; **the source is innocent**). That
+  is what a *prompt* rollback actually leaves behind, and it is the only construction that proves anything.
+  **The arm that killed the fix now clears it.**
+
+---
+
 ## 2b. ⚠ THE REFRAME — **THE CHAIN-WIRING IS THE FIX. THE GUARD IS DEFENSE-IN-DEPTH.**
 
 *(CTO 060522Z, R1 CLOSED. This re-ranks the whole release and it supersedes any earlier ordering in this file.)*
