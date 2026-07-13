@@ -20,14 +20,75 @@ never reap the agent's own now-live watcher. If CLAUDE_CODE_SESSION_ID is unset,
 it degrades to run-every-register (V3 startup-safe + the rare V4 case is lossless).
 
 Silent on success. Fast on the happy path (one marker stat).
+
+>> 2026-07-13 (MSTR) -- THIS HOOK HAD NEVER ONCE REAPED ANYTHING, AND IT
+   REPORTED SUCCESS EVERY TIME. It shelled out via a BARE ["bash", ...]; on
+   Windows CreateProcess searches System32 before PATH, so that resolved to the
+   WSL launcher (no distro installed) and exited rc=1. The hook then piped
+   stdout/stderr to DEVNULL, NEVER CHECKED rc (the `except` never fired -- the
+   process RAN, it just FAILED), and wrote the "orphan-cleaned" marker anyway,
+   which then SUPPRESSED any retry for the rest of the session.
+   A control that cannot fail is not a control; this one could only ever pass.
+   Cost: MSTR (the fabric's only spawner) died 09:06Z, its orphaned watcher
+   survived its own re-registration, and per inbox-watch.sh:120 that orphan
+   `mv`d two COO respawn requests into read/ before echoing into a dead pipe --
+   so the fabric ran 70 minutes with ZERO builders while every reachability
+   probe read REACHABLE. The corpse of the only agent who can respawn a lane
+   ate the messages asking it to do so.
+   Grounded by exercise, not inference: a live orphan surrogate that
+   kill-orphans DOES match survives this hook and dies to a direct invocation.
+   Fixed here: absolute bash (never the System32 shim), rc IS checked, failures
+   are AUDITED as ORPHAN-CLEANUP-FAILED, and the marker is written ONLY on
+   rc==0 so a failed reap RETRIES instead of stamping itself clean. <<
 """
 from __future__ import annotations
 
 import json
 import os
+import shutil
 import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
+
+
+def _resolve_bash() -> str | None:
+    """Absolute path to a REAL bash, never the System32 WSL shim.
+
+    Windows CreateProcess searches System32 BEFORE PATH, so a bare
+    subprocess.run(["bash", ...]) from a Windows-spawned python resolves to
+    C:\\Windows\\System32\\bash.exe -- the WSL launcher. On a host with no WSL
+    distro that exits rc=1 with
+        WSL ERROR: CreateProcessCommon:800: execvpe(/bin/bash) failed
+    and NOT with an exception. shutil.which("bash") does NOT reveal this: it
+    walks PATH only, so it happily reports Git bash while subprocess executes
+    the WSL shim. That divergence is why this went unnoticed -- the obvious
+    diagnostic exonerates the culprit.
+    """
+    for cand in (
+        os.environ.get("OPAL_BASH", ""),
+        r"C:\Program Files\Git\bin\bash.exe",
+        r"C:\Program Files (x86)\Git\bin\bash.exe",
+    ):
+        if cand and Path(cand).exists():
+            return cand
+    found = shutil.which("bash")
+    if found and "system32" not in found.lower():  # never the WSL shim
+        return found
+    return None
+
+
+def _log_failure(workspace: Path, serial: str, why: str) -> None:
+    """A reap that failed must SAY SO. Silence is what made this hook a lie."""
+    try:
+        ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        line = f"{ts}  ORPHAN-CLEANUP-FAILED  serial={serial}  {why}\n"
+        with (workspace / "org" / "mcp" / "agent-spawn-audit.log").open(
+            "a", encoding="utf-8"
+        ) as fh:
+            fh.write(line)
+    except Exception:
+        pass
 
 
 def main() -> int:
@@ -48,6 +109,11 @@ def main() -> int:
     if not kill_orphans.exists():
         return 0
 
+    bash = _resolve_bash()
+    if bash is None:
+        _log_failure(workspace, serial, "no usable bash found (System32 WSL shim is NOT usable)")
+        return 0
+
     # V4 per-session marker: scoped cleanup runs once per (session, serial).
     marker = None
     session_id = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip()
@@ -63,16 +129,44 @@ def main() -> int:
             return 0  # already cleaned this session -> never reap the live watcher
 
     # Scoped, tilde-specific reap of THIS serial's orphan watchers only.
+    #
+    # rc IS CHECKED and the marker is written ONLY on rc==0. A reap that failed
+    # must retry on the next register -- never stamp "cleaned" over a failure.
+    #
+    # TIMEOUT: kill-orphans MEASURES ~25s on this host (ps -ef + per-line awk on
+    # MSYS is slow). The prior 12s bound was BELOW the tool's own runtime, so
+    # even a correctly-resolved bash would have timed out and reaped nothing --
+    # the second, independent defect. Fixing only the bash resolution leaves the
+    # hook broken. Budget generously; the marker keeps it to once per session.
+    #
+    # NEVER stdout=PIPE: on TimeoutExpired, communicate() blocks waiting for EOF
+    # on a pipe that kill-orphans' surviving grandchildren still hold -> the hook
+    # HANGS FOREVER, and it runs on EVERY register_agent, so that would freeze
+    # every agent's registration fabric-wide. Route output to a file instead.
+    out_path = workspace / "org" / "mcp" / "sessions" / f".orphan-reap.{os.getpid()}.out"
     try:
-        subprocess.run(
-            ["bash", str(kill_orphans), "--serial", serial, "--force"],
-            stdin=subprocess.DEVNULL,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            timeout=12,
-        )
-    except Exception:
-        pass
+        with out_path.open("wb") as out_fh:
+            proc = subprocess.run(
+                [bash, str(kill_orphans), "--serial", serial, "--force"],
+                stdin=subprocess.DEVNULL,
+                stdout=out_fh,
+                stderr=subprocess.STDOUT,
+                timeout=90,
+            )
+        rc = proc.returncode
+        detail = out_path.read_text(encoding="utf-8", errors="replace").strip()
+    except Exception as exc:  # exec failure, timeout
+        _log_failure(workspace, serial, f"{type(exc).__name__}: {exc}")
+        return 0
+    finally:
+        try:
+            out_path.unlink()
+        except Exception:
+            pass
+
+    if rc != 0:
+        _log_failure(workspace, serial, f"rc={rc} out={detail[:300].replace(chr(10), ' | ')}")
+        return 0  # NO marker -> the next register retries.
 
     if marker is not None:
         try:
