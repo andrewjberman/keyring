@@ -806,3 +806,91 @@ hold is the only thing standing between us and a silent half-million-dollar dele
 
 *Filed by COO after a reconciliation run to CONFIRM a claim instead refused to tie. Mechanism ruled by CTO
 (`ef923bf10`) after he opened the script none of the four of us had read.*
+
+---
+
+# AMEND 15 (2026-07-13T13:30Z, COO) — THE ANDREW-APPROVED SPEC CITES A FUNCTION THAT THE FIX FOR THE DEFECT DELETED
+
+## THE FINDING
+
+CTO's **TIME-LOCK NNA** spec (12:47Z, Andrew-approved — the fix this entire hold exists to enable) says at step 3:
+
+> *"`INF_B_00.accounts_v2_key_for_snap` **ALREADY DOES EXACTLY THIS — USE IT. Do not write a second one.**
+> (Two paths to one fact is how we got here.)"*
+
+```
+grep -rn "accounts_v2_key_for_snap" --include=*.py .        ->  0 REFS
+  RETRIEVAL POSITIVE CONTROL: _INF_REP_ID_TO_ADVISOR_KEY    ->  6 files.  The grep works.
+git log --all -S "accounts_v2_key_for_snap"                 ->  12 commits. IT EXISTED.
+  DELETED BY:  c23988cdf  "fix(INF_B_00 SEV): WALK BACK OVER THE 0-ROW ROSTER"
+               0.4.0_DS_ClientPlatform~A  ·  2026-07-13T10:58Z  ·  PUSHED to origin/CLOUD
+```
+
+> ## **THE SPEC WAS WRITTEN AT 12:47Z. THE FUNCTION DIED AT 10:58Z. IT WAS CITED 1h49m AFTER THE GROUND MOVED.**
+
+## AND THE DEAD NAME IS NOT MERELY STALE — IT ENCODES THE BROKEN CONTRACT
+
+The replacement, at `data/inf/scripts/gold/INF_B_00.canonical_holdings.py` @ `c23988cdf`:
+```
+:211  accounts_v2_candidates_for_snap(snap, available) -> list[str]    # a LIST
+:240  resolve_accounts_v2_for_snap(snap, available)    -> DataFrame    # walks back over EMPTY *and* UNREADABLE
+```
+**It returns a LIST *because a single key IS the defect*.** `..._key_for_snap` — **singular** — promises exactly
+the one-key selector that walked into the 0-row 2026-05-08 partition, NaN'd every `representative_name`, and
+served **all $202,062,830 to one advisor with three real advisors zeroed.**
+
+> ## **DS GREPS THE NAME → GETS ZERO → HIS ONLY OPTIONS ARE STALL OR *WRITE A SECOND ONE* — TO THE CONTRACT THE DEAD NAME IMPLIES.**
+> ## **THE SPEC'S OWN CITATION WOULD HAVE CAUSED THE EXACT DEFECT THE SPEC'S OWN PARENTHETICAL FORBIDS.**
+
+## THIS IS THE DAY'S OWN DOCTRINE, LANDING ON THE DAY'S MOST IMPORTANT SPEC
+
+> *"**THE MOST DANGEROUS COMMENT IS NOT A FALSE ONE — IT IS A TRUE ONE THAT THE GROUND MOVED UNDER.**"*
+> *"**A LINE CITATION WITHOUT A VINTAGE IS NOT A CITATION.**"*
+
+The citation was **TRUE WHEN CTO LEARNED IT.** It reads authoritatively, in the codebase's own voice, and argues
+persuasively for the harm it would now cause. **Nobody was careless.** *A fix can outlive the defect it fixed and
+reverse polarity — and so can a citation.*
+
+**AND IT WAS NOT CAUGHT BY CARE. It was caught because the grep returned ZERO and the rule says: WHEN THE ANSWER
+IS ZERO, OPEN THE FILE.** *A zero is the one result a pattern produces for reasons that have nothing to do with
+the estate.* **CONTROLS OVER CARE — ninth instrument-catch of the day, and the first one aimed at a spec rather
+than at code.**
+
+**ROUTED:** DS (build against the real names) + CTO (correct the spec AT SOURCE — a verbal patch in an inbox does
+not survive; the spec is what DS builds from). **The spec's INTENT is correct and unchanged** — the at-or-before
+walk-back IS the right instrument and it EXISTS. Only the name was a ghost.
+
+## >> AND A HYPOTHESIS I RAISED AND *FALSIFIED* BEFORE SENDING IT — RECORDED BECAUSE THE NEGATIVE IS THE POINT
+
+I suspected the spec reused a selector with a **live 0-row hole** (2026-05-08 is an empty roster; a vintage-correct
+at-or-before walk would land on it). **FALSE — already closed.** `resolve_accounts_v2_for_snap` walks back over
+EMPTY *and* UNREADABLE partitions and **discriminates the two** (Rule 22a F4: *an instrument that cannot observe
+must say so; one that observed nothing should say that instead*). **No alarm was sent.** *A hypothesis that dies
+on contact with the source is the system working; a hypothesis that gets DISPATCHED is how a COO invents a defect.*
+
+---
+
+# AMEND 15b — **A TRUE-THEN-FALSE-NOW SENTENCE IN *THIS* DOCUMENT. MINE.**
+
+The **NOTE** closing the section above this one says:
+
+> *"That stall is currently the only thing holding this line — **AND A STALL IS NOT A CONTROL**."*
+
+> ## **THAT WAS TRUE WHEN I WROTE IT. IT IS FALSE NOW, AND I AM THE ONE WHO MADE IT FALSE.**
+
+```
+INF_GOLD_DISPATCH_HOLD  on `inf-gold-trigger`        APPLIED   [live read, this cycle]
+  inf-gold-full-on-bronze-complete                   DISABLED
+  inf-canonical-prices-daily                         DISABLED
+  inf-gold-incremental-daily                         DISABLED
+EXERCISED live by 0.7.0 (5697cc340), mode=gold-c -- the mode that carries INF_C_01 -- held:true, dispatched:false,
+  dispatch-lock object UNCHANGED, EC2 still stopped.  THE HOLD IS PROVEN MODE-AGNOSTIC ON THE DEPLOYED CODE.
+```
+**The line is now held ON PURPOSE, by an applied and exercised control — not by a stall, and not by prose.**
+*I struck the sentence rather than deleting it, because the correction is the record.* **I amended this document
+fourteen times today and never re-read its own closing paragraph. When you change what is canonical, re-read every
+rationale that predates the move — INCLUDING YOUR OWN.**
+
+*(MSTR removed the INF prose block from `org/XXX.md` this hour for exactly this reason, and named it better than I
+did: "it only ever existed because prose was the sole control; once the chokepoint was applied and exercised it
+should have been deleted the same hour." **A gate replacing a paragraph is the whole objective.**)*
