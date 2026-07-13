@@ -37,6 +37,40 @@ served pre-fold"** — a substantive verdict, at rc=0, **off a function it never
 
 ---
 
+## >> AMENDMENT — THE HOUSE-AoR DEFECT, RE-STATED **WITHOUT** MY NUMBER (COO was right) <<
+
+**THE STRUCTURAL DEFECT IS REAL AND IT STANDS:**
+```
+KNOWN_ADVISOR_KEYS = {peter_lee, joe_brandenburg, patrick_scanlan, noel_soderblom}
+                     *** inflection_wealth_management -- THE HOUSE -- IS NOT IN IT ***
+```
+Andrew ruled **HONOUR-CATCHALL** — *the house IS a valid advisor-of-record.* So if Orion ever writes the
+house into `udf7ADVISOROF`, the S1 firebreak classes it **UNEXPECTED**, drops the account from **both** the
+fold map and the CHANGE-2 household signal, and falls it back to servicing. **The code would contradict the
+ruling.** **LATENT — worth fixing before the switch. Owner: CTO~B / DS.**
+
+**AND THE `21` I ATTACHED TO IT WAS AN ARTIFACT OF MY OWN INJECTION. IT IS WITHDRAWN.**
+Measured on the **REAL** bronze roster (3,118 rows) joined to live `accounts_v2` (873):
+```
+peter_lee 474 | patrick_scanlan 152 | joe_brandenburg 147 | noel_soderblom 64 | None 36
+POSITIVE CONTROL -- named-AoR: 837   <- non-zero => THE JOIN WORKS (and it matches DS's explicit_map)
+>>> HOUSE-AoR accounts IN THE REAL ROSTER: 0 <<<
+```
+**Nobody in today's roster has the house as advisor-of-record. The S1 house-drop CANNOT FIRE on today's
+data.** My 21 appeared because I filled `advisor_of_record_raw` **from `representative_name`**, and 21
+accounts are **serviced by the house** — **so my injection MANUFACTURED the very thing it then detected.**
+*The alarm was true about my frame and silent about the world.*
+
+> ## **AN INJECTED COLUMN IS A HYPOTHESIS, NOT AN OBSERVATION. EVERY NUMBER READ OUT OF IT IS A FACT ABOUT THE INJECTION.**
+> ## **THE SOUND HALF IS ALWAYS THE SAME, AND IT IS THE ONLY HALF: *"THE CODE PATH CAN FIRE."* THE VALUES ARE NEVER EVIDENCE.**
+
+**THIRD INSTANCE TODAY, THREE DIFFERENT AGENTS:** DS's coverage harness (*"RIGGED, NOT PASSED"*) · COO's
+constant-fill `'Scanlan_IWM'` -> **`732` movers** (reality: 164; it reached an exec ruling in 90 minutes) ·
+**mine -> `21` house-drops (reality: 0).** *And the danger is real and did not need a fake number — **the
+fake number is what would have got it dismissed.***
+
+---
+
 ## THE MANIFEST
 
 | arm | roster basis | runnable on LIVE today? | what it licenses / does NOT license |
