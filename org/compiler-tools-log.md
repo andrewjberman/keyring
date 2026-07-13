@@ -16898,3 +16898,27 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-13 | 1.0.0_SA_CTO | session 0821-1536Z (crash-forensics/INF-timelock/gate-hardening) | LIVE-primitive grounding (aws lambda get-function-configuration for dispatch-HOLD state; s3api ETag for gold backup content-verify) + never-rules-gate 2-sided regression suite + commit-gate on every .py + owned-paths-validate for the new GOVERNANCE_AUDIT lane. Gap: no deploy check verifies a lib IMPORTS (presence+hash != loadability) -> gate candidate. |
 | 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/advisor_timel... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_01.canonica... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/CONTROLS_OVER_CARE.md | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/CONTROLS_OVER_CARE.md --f... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/CONTROLS_OVER_CARE.md --f... | PASS |
+2026-07-13T16:47Z | 0.5.0_AE_OpalETL | none (forensic byte-diff of served S3 + DEPLOYED lambda zips + governance-attribution; outside comp-tool coverage; raw aws/grep w/ # rail-checked; native Grep/Read) | session_1519-1647Z
+| 2026-07-13 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
