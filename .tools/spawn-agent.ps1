@@ -203,6 +203,7 @@ $inner = "[Console]::Write(([char]27).ToString() + ']0;$Serial' + ([char]7).ToSt
 # subcommand, so wt.exe doesn't try to parse our PowerShell statements as wt
 # actions.
 $wt = Get-Command wt.exe -ErrorAction SilentlyContinue
+$hostPid = $null
 if ($wt) {
     # wt.exe semicolon-escape: wt parses `;` as action-separator. Use `\;` to
     # escape ANY semicolon inside the -Command payload so wt passes the full
@@ -212,13 +213,75 @@ if ($wt) {
     # convention). `new-tab --title $Serial` sets the tab title that WT will
     # display at creation. powershell.exe then runs our $inner script inside.
     & wt.exe -w new new-tab --title $Serial powershell.exe -NoProfile -NoExit -Command $innerForWt
+    # NOTE (F-008): do NOT -PassThru wt.exe. It is a LAUNCHER that hands the tab to
+    # the existing Windows Terminal process -- its pid is NOT the agent's shell, and
+    # recording it would be a confident WRONG pid. Resolve the marker-carrying shell
+    # instead, by the same CIM predicate the concurrency cap above already uses.
 } else {
     # Fallback for non-WT environments (e.g. legacy conhost) -- relies on the
     # OSC + WindowTitle in $inner to set title best-effort.
-    Start-Process powershell -ArgumentList '-NoProfile', '-NoExit', '-Command', $inner
+    $proc = Start-Process powershell -ArgumentList '-NoProfile', '-NoExit', '-Command', $inner -PassThru
+    if ($proc) { $hostPid = $proc.Id }   # this IS the marker-carrying shell
 }
 
+# ---------------------------------------------------------------------------
+# F-008 (RV-0046 ruled -> RV-0047 "ruled and never built", 2 reviews overdue):
+# capture the BIRTH pid. Before this, agent-spawn-audit.log carried 652 SPAWN
+# lines with ZERO pid= and 70 KILL lines with 54 -- we recorded the pid of every
+# agent we KILLED and of none we CREATED, so no birth could ever be correlated
+# with its death.
+#
+# WHY THIS IS NOT THE ONE-LINE `-PassThru` FIX IT LOOKS LIKE:
+#   kill-agent.ps1 targets **claude.exe** (Name='claude.exe', serial matched in its
+#   CommandLine) and writes THAT pid. Start-Process -PassThru returns the
+#   **powershell.exe** host. They are DIFFERENT PROCESSES in the same tree
+#   (powershell -> ajb.ps1 -> claude.exe -> the python MCP server, which is a THIRD
+#   pid again -- the one liveness.json holds). Recording the host pid as `pid=`
+#   would make birth and death name different objects: a correlation that LOOKS
+#   sound and silently is not. A confident wrong field is worse than an absent one.
+# So we record BOTH, each named for what it actually is:
+#   pid=      the claude.exe -- the SAME object kill-agent kills. This is the one
+#             that makes birth/death correlate, and it is the one F-008 asked for.
+#   host_pid= the marker-carrying powershell.exe -- the object the concurrency cap
+#             counts.
+# claude.exe does not exist at launch (the shell must start, dot-source ajb, then
+# launch it), so it is polled for. Unresolved -> UNKNOWN, EXPLICITLY. Never omit
+# (a missing field reads as "not applicable") and never guess.
+# ---------------------------------------------------------------------------
+$claudePid = $null
+$deadline = (Get-Date).AddSeconds(20)
+while ((Get-Date) -lt $deadline -and (-not $claudePid -or -not $hostPid)) {
+    Start-Sleep -Milliseconds 400
+    try {
+        if (-not $hostPid) {
+            # SELF-EXCLUSION ($_.ProcessId -ne $PID) is NOT paranoia -- it is a caught bug.
+            # Exercising this resolver, the negative control (a serial belonging to no agent)
+            # returned a CONFIDENT host_pid: the probe process's OWN CommandLine carried the
+            # marker + serial text, so the query MATCHED ITSELF. Any process whose cmdline
+            # merely MENTIONS the marker and a serial satisfies this predicate -- and the
+            # process most likely to mention both is the one doing the asking.
+            # kill-agent.ps1:91 already carries this exclusion for the same reason.
+            $ps = @(Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" -ErrorAction Stop |
+                Where-Object { $_.ProcessId -ne $PID -and $_.CommandLine -and
+                               $_.CommandLine -like "*$marker*" -and $_.CommandLine -like "*$Serial*" })
+            if ($ps.Count -ge 1) { $hostPid = ($ps | Sort-Object CreationDate -Descending | Select-Object -First 1).ProcessId }
+        }
+        if (-not $claudePid) {
+            # Same object kill-agent.ps1 resolves: claude.exe carrying this serial.
+            $cl = @(Get-CimInstance Win32_Process -Filter "Name='claude.exe'" -ErrorAction Stop |
+                Where-Object { $_.ProcessId -ne $PID -and $_.CommandLine -and $_.CommandLine -like "*$Serial*" })
+            if ($cl.Count -ge 1) { $claudePid = ($cl | Sort-Object CreationDate -Descending | Select-Object -First 1).ProcessId }
+        }
+    } catch {
+        # CIM unavailable -- fail-open (same posture as the concurrency cap above).
+        # The spawn already happened; we lose the pid, we do NOT lose the agent.
+        break
+    }
+}
+$pidField = if ($claudePid) { "pid=$claudePid" } else { "pid=UNKNOWN" }
+$hostField = if ($hostPid) { "host_pid=$hostPid" } else { "host_pid=UNKNOWN" }
+
 # Audit -- every successful spawn is recorded.
-Add-Content -Path $log -Value "$ts  SPAWN  $Serial  by $by"
+Add-Content -Path $log -Value "$ts  SPAWN  $Serial  by $by  $pidField  $hostField"
 
 Write-Host "[spawn-agent] launched $Serial in a new window (spawned by $by, headless)" -ForegroundColor Green
