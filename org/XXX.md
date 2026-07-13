@@ -278,16 +278,42 @@ Every session log must include **`## Compiler Tools`** — a table of tools run,
 failed, any gap found. Append one line to `org/compiler-tools-log.md`.
 **"Blank" and "N/A" are not acceptable.** One sentence explaining why you didn't run one is fine.
 
+**`comp-which "<plain-English question>"` is the DEFAULT for every search and inspection — all roles.** It routes
+your question to the right tool, or runs the on-rails `comp-grep` / `comp-glob` itself. **A raw `grep` / `find` /
+`aws` inspection is the EXCEPTION** and is gated: it needs an inline `# rail-checked: <why no comp-tool fits>`
+marker (audited). Raw search is text-local and connection-blind — it misses coupled things the graph would catch.
+
 **Minimum compiler tools by role:**
 
 | Role | Minimum |
 |------|---------|
 | DS | `comp-pipescript io` for every gold script touched. `comp-pipescript deployed` before every gold run. `comp-pipescript postdeps` before any ad-hoc run. `comp-validate <script> --artifact <file>` before signaling AE. |
-| DE | `comp-transform schema-check` before touching data props; `comp-blast` before deleting. `comp-routes behaviors` for 4xx/auth debugging. **New cohort/metric/mode:** `schema-check --feature [token]` + `ternary-audit [Component]` at Phase 1. |
-| DT | `comp-pipescript io` for every script deployed. `comp-iam service <lambda>` after any new boto3 call. `comp-routes behaviors` before CloudFront / Lambda@Edge changes. |
-| AE | `comp-pipescript deployed` before every gold-run trigger. `comp-pipescript postdeps` before any gold run. `comp-iam gaps` after any `iam.tf` change. `comp-blast` on infra before changes. |
+| DE | `comp-transform schema-check` before touching data props; `comp-blast` before deleting. `comp-routes behaviors` for 4xx/auth debugging. **New cohort/metric/mode:** `comp-transform schema-check --feature [token]` + `comp-transform ternary-audit [Component]` at Phase 1. |
+| DT | `comp-pipescript io` for every script deployed. `comp-iam service <lambda>` after any new boto3 call **(necessary, NOT sufficient — see below)**. `comp-routes behaviors` before CloudFront / Lambda@Edge changes. |
+| AE | `comp-pipescript deployed` before every gold-run trigger. `comp-pipescript postdeps` before any gold run. `comp-iam gaps` after any `iam.tf` change **(necessary, NOT sufficient — see below)**. `comp-blast` on infra before changes. |
 | RD | `comp-transform fields` for every component rendering data. |
 | COO | `comp-pipescript overlap A B` before authoring cross-domain coordination. `comp-blast` + `comp-routes` + `comp-cache` before decomposing PRDs into TOs. |
+
+> **`comp-iam` IS NOT SUFFICIENT FOR A NEW RESOURCE, AND IT FAILS GREEN.** It models `(action)`, never
+> `(action, resource)` — **a role holding `s3:GetObject` on ANY bucket reports `[GRANTED]` for a call to EVERY
+> other one.** For a boto3 call against a **new bucket / table / ARN**, verify on the live primitive:
+> ```
+> aws iam simulate-principal-policy --policy-source-arn <role> --action-names <action> --resource-arns <exact key>
+> ```
+> **ONE `--resource-arns` per call** (2+ ARNs poisons the held ones to `implicitDeny`), **run the positive control
+> as a SEPARATE invocation** (a control batched with the target is corrupted by its own presence), and pass
+> `--context-entries` for any conditioned statement (an unsatisfied condition returns a deny byte-identical to a
+> real one). Also note `comp-iam`'s default view is **DESIRED** (parsed Terraform) — it cannot tell landed from
+> planned. For a fresh change, ground on live `aws iam get-role-policy`.
+
+> **`comp-validate` returning `NO_CONFIG` or `ZERO_CHECKS` means UNVALIDATED — NEVER signal SAFE on it.** Only
+> `PASS` / `WAIVED` are safe; `ADVISORY` means read the WARNs. *A script with no validate config produces an
+> output that looks like a pass and asserts nothing.*
+
+> **`comp-surface-check` CANNOT BLOCK — read its output yourself.** It is invoked advisory-only from
+> `safe-commit`, so a commit proceeds even when it prints `CRITICAL ... SEV1`. **Silence from it is not a pass**,
+> and an unblocked commit is not a clearance. Run it by hand when touching model-portfolio / benchmark / ADVI
+> backend surfaces.
 
 **Archetype tag.** Every substantive log entry carries a single-line `**archetype:** TAG` header after the
 title — one of `EXPLORE` / `TRACE` / `DIAGNOSE` / `VALIDATE` / `DEPLOY` / `IMPLEMENT` / `COORDINATE` /
