@@ -1,0 +1,13 @@
+# HALTGT STOP-override audit log (ADHC_HALTGT.001).
+#
+# One line is appended here by .tools/halt-gate-check.sh each time a STOP-class
+# hard-block is bypassed via an audited override (HALT_OVERRIDE="<reason>").
+#
+# Line format:
+#   {ISO8601}  HALT-OVERRIDE  agent={serial}  stop_from={sender}  subject={subject}  context={deploy-context}  reason={operator-reason}
+#
+# Kept SEPARATE from org/git-author-override-audit.log (commit-scope forensics)
+# so STOP-override forensics are isolated -- CTO~B section 7-Q3 ruling.
+#
+# --- entries below ---
+2026-07-09T21:24:30Z  HALT-OVERRIDE  agent=TEST_SERIAL  stop_from=X  subject=[STOP] isolated fixture  context=safe-apply  reason=fixture

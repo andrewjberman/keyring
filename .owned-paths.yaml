@@ -43,6 +43,14 @@ lanes:
       - 3.0.0_SA_CVO
     description: "Base workspace execs — CTO + COO + CVO (not project-scoped). 3.0.0_SA_CVO added 2026-05-23 by COO: CVO is now a Tier-1 Claude-agent exec per Andrew 2026-05-22 ruling (was Codex no-commit under prior model); lane membership catches up. Closes the gap caught by CVO /spot-check cycle 1 on ANY_EXEC_OR_AE REGISTRY-write attempt."
 
+  GOVERNANCE_AUDIT:
+    permitted_agents:
+      - 0.0.0_AB_MSTR
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 3.0.0_SA_CVO
+    description: "The fabric's AUDIT EVIDENCE BASE (org/audit/archive/**) -- immutable dated snapshots of the override, ledger, comp-rail, mass-deletion, sovereign-override, deploy-bypass and halt-gate logs. Andrew-directed 2026-07-13 (MSTR RV-0049): ALL of them were UNTRACKED -- local-only, unreviewable by any other agent, and erased by a fresh clone or a dead disk, with their ABSENCE INDISTINGUISHABLE FROM 'no overrides ever happened'. MSTR is on this lane because OVERRIDE_REVIEW is his instrument and he must be able to archive the evidence he is required to walk; the execs are on it so a second party can. NOT world-writable: this is tamper-sensitive evidence, and a log anyone may rewrite is not a log. The LIVE logs stay gitignored (ten agents append continuously; a tracked append-only file conflicts on every pull, forever) -- we track only the SNAPSHOT, which is a new file each time and can never conflict. Added 2026-07-13 by ws CTO."
+
   TIER0_TIER1_STARTUP_DOCS:
     permitted_agents:
       - 0.0.0_AB_MSTR
@@ -653,6 +661,14 @@ paths:
   # Andrew directive. Law docs = TIER0_LAW (Andrew-only / human commit);
   # operating artifacts = TIER0_MSTR; ratification records = TIER0_RATIFY.
   # -----------------------------------------------------------------------
+  # GOVERNANCE AUDIT EVIDENCE BASE (Andrew-directed 2026-07-13; MSTR RV-0049 finding, CTO census+mechanism).
+  # A census BY REMEMBERED NAME found 4 logs; a sweep BY PATTERN found 13 -- and the nine missed included
+  # MASS-DELETION, SOVEREIGN-OVERRIDE, DEPLOY-BYPASS and HALT-GATE. They are SMALL *because* they record the
+  # rarest acts, which is exactly why they were forgotten and exactly why they matter most.
+  "org/audit/**":
+    lane: GOVERNANCE_AUDIT
+    note: "Immutable dated snapshots of the audit trail. TRACK BEFORE YOU CLEAN -- deleting from an untracked file is unrecoverable, and this snapshot is what makes Andrew's phantom-override cleanup provably lossless."
+
   "org/tier0/CONSTITUTION.md":
     lane: TIER0_LAW
     note: "Tier-0 Constitution -- Andrew-only law doc (human commit)"
