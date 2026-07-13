@@ -78,6 +78,45 @@ deny() {
     exit 0
 }
 
+# =========================================================================================
+# offending_lines <match-re> <excuse-re>
+#   Prints the lines that MATCH <match-re> and are NOT excused by <excuse-re>.
+#   Empty output => nothing to block.
+#
+# *** WHY THIS EXISTS. THE GATE DISARMED ITSELF, AND IT NEARLY COST A LIVE RELEASE. ***
+# 2026-07-13: the CTO ran a live probe of the new stash gate. The probe was a multi-line Bash
+# command whose ECHO line read:
+#     echo "(probe chosen so a DEAD gate is harmless: 'git stash list' would just print ...)"
+# The gate matched `git stash push` correctly -- and then evaluated its ALLOWLIST
+# (`stash list|show|pop|...`) against the WHOLE COMMAND, found "stash list" INSIDE THE ECHO
+# STRING, concluded the call was a read-only form, and PASSED IT.
+# `git stash push` then EXECUTED and parked the working tree of EIGHT LIVE AGENTS -- the exact
+# incident the gate had been written, minutes earlier, to prevent. (Recovered: 0 files lost.)
+#
+# >> AN EXCLUSION EVALUATED OVER A WIDER SCOPE THAN THE MATCH IT EXCUSES IS A DISARM VECTOR. <<
+# Any text anywhere in the command -- a comment, an echo, a commit message -- could switch the
+# gate off. It is the census-by-mention defect (CLAUDE.md Rule 22a) wearing a safety-check's
+# clothes: THE MATCH was scoped to the command form, but THE EXCUSE was scoped to the prose.
+# The excuse must be scoped to the SAME UNIT as the match. Hence: per-line.
+# =========================================================================================
+# THE UNIT IS THE SIMPLE COMMAND, NOT THE LINE. Line-scoping was my SECOND wrong answer:
+# `git stash push  # we can git stash pop it back` still disarmed the gate, because the excuse
+# (`stash pop`) sat on the same LINE -- in a COMMENT. And `git stash push && git stash list`
+# would have done the same. So we normalise to one SIMPLE COMMAND per line (split on newline,
+# `;`, `&&`, `||`, `|`) and STRIP COMMENTS before evaluating the excuse.
+# (The `# never-override:` marker is matched earlier against the RAW command and exits, so
+#  comment-stripping here cannot eat it.)
+#   >> SCOPE THE EXCUSE TO THE SAME UNIT AS THE MATCH. A wider scope is a disarm vector;
+#      "the same line" is still wider than "the same command." <<
+_simple_commands() {
+    printf '%s\n' "$CMD" \
+      | sed -E 's/#.*$//' \
+      | sed -E 's/(\|\||&&|;|\|)/\n/g'
+}
+offending_lines() {
+    _simple_commands | grep -E "$1" | grep -vE "$2"
+}
+
 # --- audited override -------------------------------------------------------------------
 if printf '%s' "$CMD" | grep -qE '#[[:space:]]*never-override:'; then
     REASON=$(printf '%s' "$CMD" | sed -n 's/.*#[[:space:]]*never-override:[[:space:]]*\(.*\)/\1/p' | head -1)
@@ -128,13 +167,64 @@ if printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(])git([[:space:]]+-[^[:space:
 fi
 
 # =========================================================================================
+# GATE 4 -- THE SHARED-WORKTREE BLAST RULE: `git stash` (and `git clean`) park/delete EVERY
+# dirty file in the repo -- INCLUDING OTHER AGENTS' UNSAVED WORK.
+#
+# INCIDENT (2026-07-13, self-reported by 2.0.0_SA_COO -- disclosed before anyone found it):
+# to check whether a ruff failure on `.tools/operator.py` was HIS or pre-existing, he ran
+# `git stash` to see the file unmodified. It parked **38 FILES**, across DS / AE / CTO lanes,
+# during a live release with eight agents writing -- including CTO~B's live gate-1 verdict,
+# 0.8.0's emitter test, and 0.7.0's open deploy ledger. (Zero data loss: he measured it
+# file-by-file, retained the stash, and correctly refused to restore from it because live
+# agents had written NEWER content since.)
+#
+# *** `stash` IS THE SHARPEST OF THE DESTRUCTIVE VERBS BECAUSE IT *LOOKS* READ-ONLY AND
+#     REVERSIBLE, AND IT IS NEITHER. *** `reset`/`rebase` only rewrite YOUR history.
+# `stash` silently widens its blast radius to EVERY dirty file in the repo, and its `pop`
+# is not guaranteed clean. It is the only one that will happily park another agent's work.
+#
+# THE CLASS (COO's own framing, and it is the same one that bit six instruments tonight):
+#   >> IN A SHARED WORKTREE, ANY COMMAND THAT MUTATES GLOBAL STATE TO ANSWER A LOCAL
+#      QUESTION IS A HAZARD. He reached for a MUTATING instrument to answer a READ-ONLY
+#      question -- "he used a tool that changes the subject in order to observe the subject."
+#
+# THE RIGHT INSTRUMENT, and it is what this gate tells you: `git show HEAD:<path>` reads the
+# committed vintage WITHOUT TOUCHING THE WORKING TREE AT ALL.
+#
+# ALLOWED: `git stash list` / `show` (read-only), and `pop` / `apply` / `drop` (the RECOVERY
+# path -- never block recovery; same rule as NFRA_IDENTITY G-A direction-2).
+# =========================================================================================
+_GIT='(^|[[:space:];|&(])git([[:space:]]+-[^[:space:]]+|[[:space:]]+-C[[:space:]]+[^[:space:]]+)*[[:space:]]+'
+if [ -n "$(offending_lines "${_GIT}stash([[:space:]]|$)" 'stash[[:space:]]+(list|show|pop|apply|drop|branch|clear)')" ]; then
+    if true; then
+        deny "BLOCKED (shared-worktree blast rule): 'git stash' PARKS EVERY DIRTY FILE IN THE REPO -- including other agents' UNSAVED WORK. This is a multi-agent tree; on 2026-07-13 one 'git stash' parked 38 files across DS/AE/CTO lanes during a live release (a gate-1 verdict, a test, an OPEN deploy ledger). It LOOKS read-only and reversible and it is NEITHER -- and its 'pop' is not guaranteed clean. IF YOU WANT TO SEE A FILE'S COMMITTED STATE, DO NOT TOUCH THE WORKING TREE: use 'git show HEAD:<path>' (pipe it: git show HEAD:.tools/x.py | ruff check -). IN A SHARED WORKTREE, ANY COMMAND THAT MUTATES GLOBAL STATE TO ANSWER A LOCAL QUESTION IS A HAZARD. (stash list/show/pop/apply/drop are NOT blocked -- read + recovery are fine.) Audited override: '# never-override: <reason>'."
+    fi
+fi
+
+# `git clean` DELETES untracked files -- i.e. another agent's not-yet-committed new work.
+# Strictly worse than stash: there is no stash to pop it back from.
+# Dry-run detection must accept a COMBINED short-flag cluster (`-nd`, `-dn`), not just a standalone
+# `-n`. My first version matched only `-n` and therefore DENIED `git clean -nd` -- i.e. it blocked
+# "LOOK BEFORE YOU DELETE", the exact safe behaviour this gate wants to encourage. A guard that
+# punishes the cautious form pushes people to the destructive one. (Caught by the test's PASS arm;
+# every DENY arm was green and it would have shipped.) Excuse is LINE-SCOPED, per offending_lines.
+if [ -n "$(offending_lines "${_GIT}clean([[:space:]]|$)" '(^|[[:space:]])(-[a-zA-Z]*n[a-zA-Z]*|--dry-run)([[:space:]]|$)')" ]; then
+    if true; then
+        deny "BLOCKED (shared-worktree blast rule): 'git clean' DELETES UNTRACKED FILES -- in a multi-agent tree that is another agent's not-yet-committed NEW work, and unlike 'git stash' there is NO stash to pop it back from. It is unrecoverable. Dry-run ('git clean -n') is NOT blocked -- look first. If you must delete specific files, name them explicitly with rm. Audited override: '# never-override: <reason>'."
+    fi
+fi
+
+# =========================================================================================
 # GATE 2 -- NEVER#3: bare `terraform apply` / `terraform destroy`.
 # There is NO terraform PATH shim (.tools/terraform is the real PE binary) and .tools/ is on
 # PATH -- so this has been running straight through. safe-apply / safe-destroy carry the
 # HALTGT checkpoint; a bare apply skips it entirely.
 # =========================================================================================
-if printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(/\\])(terraform(\.exe)?)[[:space:]]+(apply|destroy)([[:space:]]|$)'; then
-    if ! printf '%s' "$CMD" | grep -qE 'safe-apply|safe-destroy'; then
+# LINE-SCOPED excuse (see offending_lines): a bare `terraform apply` on one line was previously
+# excused by the string "safe-apply" appearing ANYWHERE else in the command -- a comment, an echo,
+# even a message explaining why the apply was unsafe. Same disarm vector as the stash gate.
+if [ -n "$(offending_lines '(^|[[:space:];|&(/\\])(terraform(\.exe)?)[[:space:]]+(apply|destroy)([[:space:]]|$)' 'safe-apply|safe-destroy')" ]; then
+    if true; then
         deny "BLOCKED (CLAUDE.md NEVER#3): bare 'terraform apply/destroy'. Use .tools/safe-apply.sh (or safe-destroy.sh) -- it carries the HALTGT inbox checkpoint at the last reversible moment, plus the pre-apply drift-plan check and the write-without-read paired-permission lint (Rule 22a). A bare apply skips ALL of it. NOTE: there is no terraform PATH shim -- .tools/terraform is the real binary on PATH, so nothing else stops this. Audited override: '# never-override: <reason>'."
     fi
 fi
