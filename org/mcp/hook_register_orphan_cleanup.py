@@ -124,9 +124,32 @@ def main() -> int:
         except Exception:
             return 0
         safe_serial = serial.replace("/", "_").replace("\\", "_")
-        marker = marker_dir / f"{session_id}.{safe_serial}.orphan-cleaned"
+        # =====================================================================
+        # *** MARKER VERSION -- RV-0049 F-003b (CVO). THE FIX WAS INERT ON THE
+        #     RUNNER, SUPPRESSED BY THE RESIDUE OF THE BUG IT FIXES. ***
+        #
+        # The PRE-FIX hook wrote this marker UNCONDITIONALLY -- including after
+        # a reap that had FAILED (rc was never checked). So every session that
+        # ever registered carries a marker asserting "orphans already cleaned"
+        # when nothing was ever cleaned. 368 of them existed; EVERY live session
+        # had one, all stamped BEFORE the fix landed.
+        #
+        # The FIXED hook then read that lie, took the `already cleaned` branch,
+        # and RETURNED WITHOUT REAPING -- so the correct code never executed.
+        # It landed, it was sound, it was EXERCISED GREEN in isolation, and it
+        # was INERT ON THE RUNNER. (CTO's own criterion, ruled this morning off
+        # CVO's finding: *** LANDED IS NOT REACHABLE-FROM-THE-RUNNER. ***)
+        #
+        # >> A FIX GATED ON A MARKER THAT THE BUG ITSELF WROTE IS INERT UNTIL
+        #    THE MARKER IS INVALIDATED. VERSION THE MARKER WHEN YOU FIX THE
+        #    WRITER -- do NOT mass-delete the old ones (a destructive sweep to
+        #    repair a safety hook is how you get a second incident). <<
+        # Bumping the suffix retires all 368 stale markers at zero risk: the new
+        # hook simply cannot see them, and the old hook no longer exists.
+        # =====================================================================
+        marker = marker_dir / f"{session_id}.{safe_serial}.orphan-cleaned-v2"
         if marker.exists():
-            return 0  # already cleaned this session -> never reap the live watcher
+            return 0  # already cleaned this session BY THE FIXED HOOK -> never reap the live watcher
 
     # Scoped, tilde-specific reap of THIS serial's orphan watchers only.
     #
