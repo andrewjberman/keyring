@@ -790,6 +790,21 @@ def _extract_path(q: str):
 
 
 def _log_rail(decision: str, intent: str, term, q: str) -> None:
+    # --- --route-only IS NOW ACTUALLY SIDE-EFFECT-FREE (COO~Z + 0.8.0_AE_CloudComp~Z, 2026-07-13) ------
+    # `_ROUTE_ONLY` was DOCUMENTED as "side-effect-free preview mode" (:881) and was NOT: it still wrote a
+    # ROUTE row. comp-tool-hud.sh:291 calls it on EVERY search nudge, piping the agent's RAW SEARCH
+    # STRING in -- so the rail log recorded SEARCHES AGENTS RAN, not QUESTIONS AGENTS ASKED.
+    #
+    # MEASURED CONSEQUENCE: ~10% of the "real agent questions" cohort were GLOB PATTERNS
+    # (`**/*COMPASSURANCE*`, `**/cot_bronze_ingest.py`). They score zero because THEY ARE NOT QUESTIONS --
+    # and a glob falling through to comp-glob is THE FALLBACK WORKING AS DESIGNED. So the log was
+    # SCORING A SUCCESS AS A FAILURE and inflating the defect estimate by ~4 points (33.1% -> 29.0%).
+    #
+    # This is the SAME FAMILY as self_route_verdicts() on the commit gate: TWO INDEPENDENT INSTRUMENTS,
+    # BOTH SILENTLY AUTHORING THE EVIDENCE BASE THEY WERE MEASURED BY. The clean fix is the flag, never a
+    # strip rule downstream -- "a filter would be us deciding what agents really meant."
+    if _ROUTE_ONLY:
+        return
     try:
         import datetime
         ts = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
