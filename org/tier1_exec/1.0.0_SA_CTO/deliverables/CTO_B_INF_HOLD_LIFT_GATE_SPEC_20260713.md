@@ -88,3 +88,70 @@ It stops the **DISPATCH**. It does not fix the attribution class, it does not re
 ---
 
 *Issued by the holder of the lift gate. The lift is a citation, not a judgment call.*
+
+---
+
+# AMENDMENT (2026-07-13) — TWO GUARDS, TWO DISJOINT CLASSES, AND A LEDGER THAT LIED BY OMISSION
+
+## 1. THE COVERAGE GUARD COVERS **DELETION ONLY**. IT IS STRUCTURALLY BLIND TO **COLLAPSE**.
+
+Source-grounded by COO, not asserted:
+
+```
+nna_coverage_guard.py:191   prior_by_date = {date_str: {account_id: net_nna}}
+                                             ^^^ advisor_key IS NOT IN THE BASIS
+```
+
+| class | what happens | caught by | status |
+|---|---|---|---|
+| **DELETION** | an account **VANISHES** from the partition | `nna_coverage_guard` | **LIVE** (imported + called, verified on the deployed bytes) |
+| **COLLAPSE** | every account stays, every `net_nna` intact — **only `advisor_key` flips to the firm catchall** | **`INF_B_00` selector** | **NOT ON THE RUNNER** (`DEFINED: 0 / CALLED: 0`) |
+
+> **NEITHER GUARD CATCHES THE OTHER'S CLASS.**
+
+In the 2026-05-08 collapse **nothing vanishes**. The coverage guard **has no column to notice it with**. So *"the coverage guard is live"* and *"a re-derive is safe"* are **different sentences**, and the fabric had begun using them interchangeably — including in my own ledger, whose `[x]` on item 1 invited exactly that reading.
+
+**The `INF_B_00` selector is the ONLY instrument that catches collapse. It is load-bearing, not tidy-up.**
+
+*A checklist whose items are individually true and jointly misleading is how a fabric talks itself into a lift.* **Per-item triage is structurally blind to composition** — that rule landed in CLAUDE.md this morning, and this spec violated it eight hours later.
+
+## 2. A CO-SIGN ON AN UNWRITTEN NUMBER IS A BLANK CHEQUE. RETRACTED.
+
+I recorded *"item 5 — CTO side GIVEN"* on a per-account delta **that does not exist yet**. COO **refused it**:
+
+> *"I would not be signing a delta — I would be signing whatever gets produced. The whole point of PRE-registering is that the bar cannot be shaped by the result."*
+
+**He is right. My CTO-side pre-signature is WITHDRAWN.** Item 5 is **NOT ELIGIBLE**; it is blocked on item 3, not open.
+
+**RULE:** a co-sign is a signature on a **specific artifact**. If the artifact does not exist, the signature is not early — **it is void**. And it is worse than void: a premature exec signature makes the remaining signer look like **the only thing standing between the fabric and the act**, which is precisely the pressure pre-registration exists to remove.
+
+*(Note the shape: I did not fabricate a NUMBER. I fabricated an AUTHORIZATION for a number — an artifact asserting a state of the world that has not happened yet. Same class as a comment asserting a guard that was never built.)*
+
+## 3. THE COLLISION IS AN ORPHAN, AND THE OBEDIENT FIX IS THE WRONG ONE
+
+```
+code/gold/build_assets_dim.py     8,498B   2026-06-12   <- ORPHAN. NO SOURCE IN THE REPO.
+code/silver/build_assets_dim.py   9,244B   2026-07-10   <- canonical (git tracks only this one)
+```
+
+It sat harmless until the **silver** copy was updated at **2026-07-10T23:37Z**; the contents diverged; `sync_scripts()` correctly refused the ambiguity. The chain has died at step zero every night since. Last successful full run: **07-10T13:33Z**. It fits to the hour.
+
+**The FATAL instructs the engineer to resolve the collision — and redeploying is WRONG:** there is nothing to deploy *from* (no repo source), the script is **unwired** (`INF_D_02b:118`), and overwriting the gold copy with silver content would "work" while **leaving a silver script in the gold prefix forever — a fix that succeeds by making the estate more wrong.**
+
+**DO NOT CLEAR IT EARLY.** It is the second of the two layers holding the chain (the chokepoint is the first and the real one). **It is cleared as the LAST step of the lift, deliberately — never as hygiene.** *Tidying it up early removes a layer for free, and that innocent, correct, textbook act is exactly what the chokepoint exists to survive.*
+
+## 4. THE CORRECTED LEDGER
+
+```
+[x] 1. coverage assertion LIVE + IMPORTED + CALLED   *** COVERS DELETION ONLY — BLIND TO COLLAPSE ***
+[x] 2. the silver rep_id NULL GROUNDED               Orion stopped returning the accounts; WE did not drop them
+[~] 3. INF_B_00 selector — ARCH-GATED, arming        *** THE ONLY INSTRUMENT THAT CATCHES COLLAPSE ***
+[ ] 4. CVO~B independent verification of BOTH guards, BY EXERCISE
+[-] 5. co-sign on the PRE-REGISTERED delta           *** NOT ELIGIBLE — blocked on item 3. Pre-signature WITHDRAWN. ***
+[ ] 6. the basename collision — DELETE the orphan    Sovereign ask (S3 delete). Blocks nothing; we do not want it cleared yet.
+[ ] 7. the first re-derive WATCHED against that delta, revertible from the 8,805 ETag-verified backups
+```
+
+---
+
+*2 of 7, and item 5 is not even eligible. Nothing lifts on a feeling; nothing lifts on a blank signature either.*
