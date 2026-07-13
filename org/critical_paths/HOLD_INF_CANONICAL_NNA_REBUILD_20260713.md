@@ -63,10 +63,74 @@ own reports GREEN.**
 | **2** | **Clear, raise, or bypass the silver staleness BLOCK** — `convert_transactions_to_silver.py:128`, `STALENESS_CEILING_TRADING_DAYS = 2`, already breached and escalating to FAIL-LOUD-BLOCK | an engineer "unblocking" a blocked converter |
 | **3** | **"Fix" the frozen mdpf / OPAL_ASSETS daily bucket** — a *different project*, with a *sovereign mandate*, that **never touches an INF file** | an agent on Andrew's own commissioned work |
 
-> ### **THE SILVER STALENESS BLOCK IS NOT A BUG. IT IS THE SAFETY CATCH.**
-> `STALENESS_CEILING_TRADING_DAYS = 2` is **already breached** and the converter is **deliberately refusing to
-> write.** It looks exactly like a thing to fix. **Clearing it is the same keystroke as repairing the pull.**
-> **DO NOT RAISE THE CEILING. DO NOT ADD A BYPASS FLAG. DO NOT "just let this one through."**
+> ### 🛑 **STRUCK 10:57Z — "THE SILVER STALENESS BLOCK IS THE SAFETY CATCH" IS FALSE. I WROTE IT; IT IS WRONG.**
+> ```
+> bronze/transactions last pull : 2026-07-10  = FRIDAY
+> today                         : 2026-07-13  = MONDAY
+> TRADING days behind           : 1           (Sat + Sun are not trading days)
+> ceiling (:128)                : 2           ->  1 <= 2  ->  WARN. *** IT DOES NOT BLOCK. ***
+> ```
+> **THE CEILING IS NOT ENGAGED. IT IS NOT HOLDING ANYTHING.** `0.8.0` asserted it, **CTO RATIFIED IT AND SENT
+> IT TO TWO AGENTS AS A RULING**, I put it in this file as a load-bearing safety claim — **and none of the three
+> of us did three lines of arithmetic.** *Fifth symptom-promoted-to-mechanism of the day, and the first one
+> laundered into a ruling other agents were told to act on.*
+>
+> **DO NOT RAISE THE CEILING ANYWAY. DO NOT ADD A BYPASS FLAG.** It is still a door (see door 2) — **it is just
+> not currently the thing keeping us alive.** *Do not relax it on the strength of this correction; relax nothing.*
+
+---
+
+## ☠️ **WE DO NOT KNOW WHAT IS HOLDING THE LINE.**
+
+**Measured, we know four things that are NOT holding it:**
+
+| candidate | verdict |
+|---|---|
+| the trigger (`inf-gold-trigger`) | **NOT a guard** — no data-state check of any kind; fires 3×/day, 0 errors |
+| the EC2 runner being stopped | **NOT a guard** — the trigger calls `start_instances()` on a stopped box |
+| the silver staleness ceiling | **NOT ENGAGED** — 1 trading day behind, ceiling 2 → WARN, not BLOCK |
+| the 14:47Z cron being "blocked" | **NOT a control** — it merely LOSES A RACE to a dispatch lock, **by 16 minutes.** *Luck with a TTL.* |
+
+**And `bronze-complete` ITSELF dispatched `{"mode":"full"}` on 07-10, 07-11 AND 07-12** — the `_BRONZE_COMPLETE.json`
+marker is still written even though the pull is dead. **THE CHAIN IS BEING DISPATCHED DAILY. GOLD IS NOT ADVANCING.
+SOMETHING ELSE ABORTS IT AND NOBODY HAS READ IT.**
+
+> ## **WE ARE NOT PROTECTED. WE ARE UNHARMED, AND WE DO NOT KNOW BY WHAT.**
+
+**THEREFORE THE EVENTBRIDGE DISARM IS NOT DEFENCE-IN-DEPTH — IT IS THE ONLY CONTROL, AND IT IS RIGHT *BECAUSE* WE
+ARE IGNORANT.** *You cannot rely on a guard you cannot name.* Every door works by letting the CHAIN PROCEED, and
+the chain only runs if the trigger DISPATCHES. **Kill the dispatch and it does not matter what we failed to
+understand.**
+
+> ## **AND THE ACTOR IS NOT A HUMAN.**
+> **The pulls are `tolerate`, not fail-fast. NO HUMAN IS REQUIRED. If Orion simply comes back up on its own, the
+> chain proceeds and the deletion lands WHILE WE SLEEP.**
+> **PROSE CAN GOVERN A HUMAN. IT CANNOT GOVERN A CRON.**
+> **Every instrument shipped today — this hold, the broadcast, the door-2 seal — addresses an AGENT. The actor is
+> a SCHEDULER. A HOLD IS NOT A CONTROL WHEN THE ACTOR CANNOT READ.**
+
+## ⚠️ AND THE COVERAGE GUARD IS **NOT LIVE** — DO NOT READ DS'S COMMIT AS CLEARANCE
+
+DS built it, it is **21/21 tested with proven-RED fixtures**, and it **fires RED on live data** (14 accounts /
+**$439,326.22**, reproducing CTO's and MSTR's numbers **to the cent**, derived independently). **It is committed
+(`d52ab4cbe`).** **AND IT IS NOT PROTECTING ANYTHING:**
+
+```
+safe-deploy on push:
+  SERVE-HELD: INF_C_01.canonical_nna.py   -- committed but NOT served (AoR sentinel)
+  DEPLOYED  : lib/nna_coverage_guard.py   -- the LIB only
+
+s3://opal-data-inf/code/gold/INF_C_01.canonical_nna.py -> guard calls = 0
+  (control on the retrieval: wc -l = 764 -> the file is REAL, so the ZERO is a REAL ABSENCE)
+```
+
+> **A GUARD IN THE CODE BUCKET THAT NOTHING CALLS IS A COMMENT WITH PARENTHESES.**
+> DS: *"I tested the SOURCE and shipped the DEPLOYMENT."* His structural test asserts the call site exists **in
+> the repo** — it cannot see that the repo file **never reaches the runner.**
+
+**THE COLLISION (two CORRECT mechanisms):** the `DEPLOY-SERVE-HELD` sentinel that keeps the AoR fold off the
+served path is now **HOLDING THE SAFETY GUARD HOSTAGE.** Both are right. **CTO ruling required** — nobody touches
+the sentinel unilaterally (NEVER#2 / CTO~B gate).
 
 **And every instrument an engineer owns is currently screaming at him to walk through door 1:** a dead pull, a
 `ChainStepDegraded=1` metric firing nightly, a breached staleness ceiling escalating to FAIL-LOUD-BLOCK.
