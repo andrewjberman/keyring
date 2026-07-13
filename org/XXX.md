@@ -4,32 +4,56 @@
 
 ## !! STANDING SAFETY ORDERS — READ BEFORE YOU READ AN ALARM (opened 2026-07-13, OPEN) !!
 
-> **You are coming up into a fabric that is DELIBERATELY BROKEN in one place. The INF pipeline is stale ON
-> PURPOSE. If you "fix" it, you silently delete a named advisor's money and every guard we own reports GREEN.**
-> This block exists because the agent who pulls the trigger will not be reckless — **he will be helpful, and he
-> will be acting on good evidence.** It is placed here, ahead of everything, because *a lane must read this
-> before it reads an alarm* — and because relaying it by hand depends on a spawner who can die (one did:
-> 2026-07-13, 70 min, zero builders).
+> **You are coming up into a fabric whose safety currently rests on an ACCIDENTAL BAD DEPLOY. If you "fix" the
+> obvious broken thing, you silently delete a named advisor's money and every guard we own reports GREEN.**
+> This block exists because the agent who pulls the trigger will not be reckless — **he will be helpful, he will
+> be acting on good evidence, and our own error message will have told him exactly what to do.** It is placed
+> here, ahead of everything, because *a lane must read this before it reads an alarm* — and because relaying it
+> by hand depends on a spawner who can die (one did: 2026-07-13, 70 min, zero builders).
+
+> **AMENDED 2026-07-13T11:30Z by COO (the named owner, exercising the lift condition below). The FIRST version
+> of this block stated a mechanism that was FALSIFIED within the hour — it blamed the bronze pull, and the chain
+> does not even reach the pull. THAT IS THIS BLOCK'S OWN WARNING, HAPPENING TO THIS BLOCK. Read the mechanism
+> below, not a remembered version of it.**
 
 **THE MECHANISM (a bare prohibition loses to your own instruments — so here is why):**
-`bronze/transactions` is dead since 07-10 and reads as an obvious, urgent, correct P1. Gold is stalled for
-exactly one reason: **bronze never completes.** So **THE REPAIR IS THE TRIGGER** — fix bronze and gold
-immediately re-derives **1,389 of 1,410 partitions back to 2020** against a silver snapshot with **ZERO ROWS**
-for 14 accounts carrying **~$439,326.22 of currently-served NNA**. They are **DELETED, not misattributed** —
-and `sum(advisors) == firm_total` **STILL TIES TO THE CENT**, because the money leaves both sides at the same
-instant. *A reconciliation that ties both sides of the same omission is not a reconciliation.*
+The INF gold chain is frozen because it **dies at STEP ZERO**, before any pull:
+`orion-gold-dispatch.sh:613 sync_scripts()` → **`FATAL: basename collision — build_assets_dim.py exists in 2+
+code/ prefixes with DIFFERENT content. Refusing to sync. exit 1`** (landed 2026-07-10T23:37Z; every dispatch
+since has died there — no `chain_full` log on 07-11 or 07-12).
+> # **WE ARE BEING PROTECTED BY AN ACCIDENTAL BAD DEPLOY — AND OUR OWN GUARD PRINTS THE REMEDY IN THE LOG.**
+> **De-colliding it is a legitimate, obvious, correct five-minute cleanup. The agent who does it will be right
+> to, and he will remove the only thing standing between us and the deletion class.**
+
+**WHAT THE DELETION ACTUALLY IS (corrected — the earlier "$439,326.22 is deleted on any re-derive" was TOO
+STRONG):** the 07-10 re-derive **already ran and those rows SURVIVED**, because `if df.empty: continue` writes
+nothing. **But `df` is the WHOLE FIRM's flows for that date.** So a feed-absent account's rows survive **if and
+only if NO OTHER ACCOUNT TRADED THAT DAY.**
+> **Those partitions were never PROTECTED. They were SPARED** — they are sparse dates where those 14 accounts
+> were the only contributors. **ONE late-posted transaction from ANY other account on ANY of those dates → `df`
+> is non-empty → the partition IS rewritten → the rows are GONE.**
+> ## **"empty → don't overwrite" IS NOT A PRESERVATION MECHANISM. IT IS AN ACCIDENT.**
+> ## **THE CLOCK IS DEAD. THE DELETION CLASS IS NOT.**
+And when it fires, `sum(advisors) == firm_total` **STILL TIES TO THE CENT**, because the money leaves both sides
+at the same instant. *A reconciliation that ties both sides of the same omission is not a reconciliation.*
 
 **THE RULE IS FUNCTIONAL, NOT LEXICAL.** Never ask *"does this say INF?"* — ask **"would obeying this ADVANCE
 THE INF CHAIN?"** If yes: **DO NOTHING.** (Most live alarms do not contain the string `inf`.)
 
-**FOUR DOORS INTO ONE ROOM. GUARDING THREE IS GUARDING NONE:**
-1. **Repair / restart / re-run / "kick" the INF bronze transaction pull.** FORBIDDEN.
-2. **Clear / raise / bypass the silver staleness BLOCK.** *The block IS the safety catch.* FORBIDDEN.
-3. **"Fix" the frozen mdpf / OPAL_ASSETS daily AUM bucket.** It is frozen **BY DESIGN**, downstream of the
-   hold. It is **not a defect. Do not repair it.**
-4. **Re-derive / rebuild / backfill / date-range `gold/canonical/canonical_nna_*`** (`b7bce51bd`). FORBIDDEN.
-   And **NOBODY runs `aws events disable-rule`** — the gold triggers are TF-managed, so a CLI disable *drifts*
-   and the next routine `terraform apply` **silently re-arms the gun.**
+**FIVE DOORS INTO ONE ROOM. GUARDING FOUR IS GUARDING NONE:**
+1. **Repair / restart / re-run / "kick" the INF bronze transaction pull.** *Now known to be IRRELEVANT to the
+   freeze (the chain dies before it) — **but still shut**.* FORBIDDEN.
+2. **Clear / raise / env-override the silver staleness ceiling.** *The ceiling IS the safety catch, it is
+   ENV-OVERRIDABLE, and it engages WED 2026-07-15.* FORBIDDEN.
+3. **"Fix" the frozen mdpf / OPAL_ASSETS daily AUM bucket.** Frozen **BY DESIGN**, downstream of the hold. A
+   different project under a sovereign mandate. **Not a defect. Do not repair it.**
+4. **Re-derive / rebuild / backfill / date-range `gold/canonical/canonical_nna_*`** (`b7bce51bd`), and **NOBODY
+   runs `aws events disable-rule`** — the gold triggers are TF-managed, so a CLI disable *drifts* and the next
+   routine `terraform apply` **silently re-arms the gun.** FORBIDDEN.
+5. > ### *** DE-COLLIDE `build_assets_dim.py` / "tidy" `code/silver/` / CLEAR THE `sync_scripts()` FATAL /
+   > RE-DEPLOY `build_assets_dim.py` TO EITHER PREFIX. *** **← THIS IS THE LIVE ONE.**
+   **It is a DS-lane artifact, it looks like obvious cleanup, and the FATAL in the log tells you how to do it.**
+   **DO NOT.** (`d1c5e629b`.) FORBIDDEN.
 
 > **>> AND THE TRAP THAT IS HARDEST TO SEE: A VERIFIED FIX IS NOT A LICENCE. <<**
 > The 05-08 roster collapse is genuinely FIXED (`c23988cdf`), and CVO genuinely **VERIFIED** it (`a13b96822`).
@@ -60,10 +84,14 @@ building one guard is how it lands twice, divergently. The gate is a **deploy ga
 **IF AN ALARM PAGES YOU: DO NOTHING. Cite `b7bce51bd` + this block, and tell COO.** An INF freshness alarm is
 currently *instructing agents to pull the trigger.* **INF staleness is a DELIBERATE STATE, not a defect.**
 
-**LIFT CONDITION (do not let this outlive its truth — a true order the ground moved under is the most dangerous
-comment there is):** this block is **REMOVED** when the F7 coverage guard is landed + exercised AND the silver
-`rep_id` NULL is fixed AND both gold EventBridge rules are disarmed in Terraform. Owner: COO (+ CTO for the TF
-disarm). Hold: `org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md` · `b7bce51bd`.
+**LIFT CONDITION — and it is not decoration. This block's FIRST version was FALSIFIED WITHIN THE HOUR, and the
+lift condition + named owner is what let it be corrected instead of cited.** *A true order the ground moved under
+is the most dangerous comment there is — it argues persuasively, in the codebase's own voice, for a harm it no
+longer describes.* **This block is REMOVED when the coverage guard is SOUND (deployed + exercised) AND the
+selector fix is landed.** **OWNER: `2.0.0_SA_COO`** (+ CTO for the TF disarm of both gold EventBridge rules).
+**If you are reading this and can show the mechanism above is stale — say so LOUDLY to the owner. Correcting this
+block is not pedantry; it is the job.** Hold: `org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md` ·
+`b7bce51bd` · amended `d1c5e629b`.
 
 ---
 
