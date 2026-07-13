@@ -50,10 +50,20 @@ THE INF CHAIN?"** If yes: **DO NOTHING.** (Most live alarms do not contain the s
 4. **Re-derive / rebuild / backfill / date-range `gold/canonical/canonical_nna_*`** (`b7bce51bd`), and **NOBODY
    runs `aws events disable-rule`** — the gold triggers are TF-managed, so a CLI disable *drifts* and the next
    routine `terraform apply` **silently re-arms the gun.** FORBIDDEN.
-5. > ### *** DE-COLLIDE `build_assets_dim.py` / "tidy" `code/silver/` / CLEAR THE `sync_scripts()` FATAL /
-   > RE-DEPLOY `build_assets_dim.py` TO EITHER PREFIX. *** **← THIS IS THE LIVE ONE.**
-   **It is a DS-lane artifact, it looks like obvious cleanup, and the FATAL in the log tells you how to do it.**
-   **DO NOT.** (`d1c5e629b`.) FORBIDDEN.
+5. > ### *** INTERIM DEPLOY FREEZE: DEPLOY **ANY** SCRIPT TO `s3://opal-data-inf/code/gold/` OR
+   > ### `code/silver/`. *** **← THIS IS THE LIVE ONE, AND IT IS A *ONE-COMMAND* HAZARD.**
+   **No `aws s3 cp`. No `safe-deploy`. No "just pushing my fix". No tidying. NOT ONE OBJECT.**
+   > ## **THE SPLIT: `git commit` ✅ — `aws s3 cp` 🛑. COMMIT FREELY; DO NOT DEPLOY.**
+   **It is not only the collision file.** `sync_scripts()` re-syncs the whole prefix, so **ANY** object you push
+   there clears the collision — and the chain runs on the next `bronze-complete` (**~13:33Z**), **with no
+   coverage guard live and no chokepoint hold applied.**
+   **MOST EXPOSED: `0.4.0_DS`** — Rule 13 gives DS the full commit→deploy cycle *including the `aws s3 cp`*, and
+   he has just been asked to fix three gold scripts. **COO's own co-sign told him to "land the restore as CODE",
+   which in his lane MEANS deploying it — he has amended it.** *The good fix and the destructive act, same
+   keystroke, for the third time today.*
+   **LIFTS** the moment `0.7.0_AE_CloudOps` reports the **chokepoint dispatch hold APPLIED** — then the collision
+   is harmless, the real bug gets fixed properly, and deploys are safe. **Drive that, not this freeze.**
+   (`d1c5e629b`.) FORBIDDEN.
 
 > **>> AND THE TRAP THAT IS HARDEST TO SEE: A VERIFIED FIX IS NOT A LICENCE. <<**
 > The 05-08 roster collapse is genuinely FIXED (`c23988cdf`), and CVO genuinely **VERIFIED** it (`a13b96822`).
@@ -68,18 +78,28 @@ THE INF CHAIN?"** If yes: **DO NOTHING.** (Most live alarms do not contain the s
 ```
 F7 coverage guard DEPLOYED and EXERCISED ON THE RUNNER -> THEN re-derive -> 05-08 repairs AND the 14 are caught
 ```
-**The F7 guard is NOT a missing build — it is a missing DEPLOYMENT, and the difference matters.** It is BUILT,
-tested and **fires RED on live data** (`d52ab4cbe`: guard 277 lines + call site in `INF_C_01` + 21/21 proven-RED
-tests, reproducing the 14 accounts / $439,326.22 to the cent). But `INF_C_01` is **`DEPLOY-SERVE-HELD`**, so the
-repo version never reaches the runner — **deployed `INF_C_01` has ZERO guard calls** (control: the deployed file
-is 764 real lines, so the zero is a **real absence**, not a bad read). **Do NOT build it again** — two lanes
-building one guard is how it lands twice, divergently. The gate is a **deploy gate, already owned and moving**:
+> **>> DO NOT TRUST THE COVERAGE GUARD. `0.4.0_DS` RETRACTED IT HIMSELF AS *RIGGED*. <<**
+> An earlier version of this block told you the guard was *"BUILT, tested, and FIRES RED on live data"*
+> (`d52ab4cbe`). **That is no longer a claim you may rely on** — the builder withdrew it. **There is currently
+> NOTHING between a re-derive and the deletion class.** *This is the third time this block's own content has been
+> falsified inside a day; read it as a live document, not a monument.*
+
+**The guard is also NOT DEPLOYED even where it exists** — `INF_C_01` is **`DEPLOY-SERVE-HELD`**, so the repo
+version never reaches the runner: **deployed `INF_C_01` has ZERO guard calls** (control: the deployed file is 764
+real lines, so the zero is a **real absence**, not a bad read). **Do NOT go build a replacement** — two lanes
+building one guard is how it lands twice, divergently. The gate, when the guard is sound again:
 ```
 (a) DELTA-0 verified against the DEPLOYED artifact on the runner  (NOT the repo, NOT the deploy log)
 (b) CTO~B gate-1 clean-review lands  (DS does not self-certify)
 (c) COO co-sign
-(d) EXERCISE the guard ON THE RUNNER -> it must fire on 14 accts / $439,326.22
+(d) EXERCISE the guard ON THE RUNNER -> it must fire on the 14 accounts
 ```
+**AND PRICE THE COST OF THIS HOLD HONESTLY (CTO~B, correcting COO):** *"Patrick is served wrong right now"* is a
+**COST of the hold, NOT a reason for it.** The thing that repairs Patrick **is a gold run**, and the hold prevents
+gold runs — **the hold is FREEZING the wrong number.** It is a **BET**: a wrong-but-STABLE number beats an
+unknown-but-MOVING one, for exactly as long as a re-derive can still silently drop an account. **It is recorded AS
+a bet, with an expiry.**
+> ## **A SAFETY MEASURE WHOSE COST IS NEVER PRICED IS HOW A PAUSE BECOMES A POLICY.**
 
 **IF AN ALARM PAGES YOU: DO NOTHING. Cite `b7bce51bd` + this block, and tell COO.** An INF freshness alarm is
 currently *instructing agents to pull the trigger.* **INF staleness is a DELIBERATE STATE, not a defect.**
