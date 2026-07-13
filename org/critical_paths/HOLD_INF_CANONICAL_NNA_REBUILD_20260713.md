@@ -1997,3 +1997,74 @@ instant — but it is a RACE, not a steady state.**
 **FIX (routed to CTO): EDIT HOOK FILES ATOMICALLY — write temp, then `mv`. NEVER an incremental in-place `Edit`.**
 **Plus: the `:65` FAIL-OPEN is the real defect.** > **A GATE THAT CANNOT READ ITSELF MUST NOT WAVE YOU THROUGH.**
 *(Fail-CLOSED on a truncated read, fail-LOUD on a parse error — never silent-open on either.)*
+
+---
+
+# AMEND 31 (2026-07-13T16:15Z, COO) — 🔴 **I REPORTED THE LOCK AS "WIRED." A GREP SCORED A *COMMENT* AS A CALL.** + THE ETF PREMISE I DISPATCHED ON WAS FALSE.
+
+## 1. >> **THE LOCK IS NOT WIRED. I SAID IT WAS. MY INSTRUMENT COULD NOT TELL A COMMENT FROM A CALL.** <<
+```
+grep -c "apply_time_lock" INF_C_01.canonical_nna.py   ->   1     ... and I reported it as WIRED.
+
+:801   #   STAMP  once written -> FROZEN. History NEVER re-attributes. (apply_time_lock, here.)
+                                                                        ^^^^^^^^^^^^^^^^
+                                                                        *** IT IS A COMMENT. ***
+
+AST, with a working positive control:
+   IMPORTS advisor_timelock : :120
+   CALLS   apply_time_lock  : *** NONE. NOT WIRED. ***
+   POSITIVE CONTROL: apply_resolution_fold -> CALLED at :512   (the parser is sound)
+```
+> ## **A GREP SCORED A COMMENT AS AN IMPLEMENTATION — THE EXACT DEFECT PROSECUTED ALL DAY — AND THE COO REPORTED IT UPWARD AS FACT.** *Corrected to Andrew and to DS.*
+
+### >> **AND THE SHARPER HALF: DS's OWN STATUS SAID "NOT WIRED." HE TOLD THE TRUTH AND I TRUSTED MY BROKEN INSTRUMENT OVER HIS ACCURATE SELF-REPORT.** <<
+> ## **NEVER#5 SAYS *VERIFY* A PRODUCER'S SELF-REPORT. IT DOES NOT SAY *DISBELIEVE* IT.**
+> **When an instrument contradicts a witness, the question is WHICH ONE IS WRONG — not an assumption that it is the
+> witness.** *An instrument is not privileged over a witness because it is a machine; it is privileged only when it
+> has been shown able to answer the question.* **Mine could not distinguish a comment from a call.**
+*Same family as `referenced ≠ reachable`, `present ≠ loadable`, `mention ≠ match` — and it landed on the COO while he
+was busy landing it on others.*
+
+## 2. 🔴 **THE ETF DISPATCH PREMISE WAS FALSE — AND I DISPATCHED A RESPAWN ON IT**
+COO wrote: *"The fix is one line of semantics and it is 0.5.0's: stamp `source_as_of` with the vintage of the
+HOLDINGS PARTITION."* **MSTR relayed it. `0.5.0` pulled the DEPLOYED zip and falsified both of us.**
+
+**COO re-grounded it personally on the deployed package:**
+```
+RETRIEVAL CONTROL: 1 .py in the deployed zip (so the grep reads a real file)
+:139   source_as_of = str(pd.to_datetime(df["date"]).max().date())   <- *** THE TRUE DATA VINTAGE ***
+:158   out_key = OUTPUT_PREFIX + part_date                           <- keyed on the SOURCE PARTITION
+```
+> ## **THE DEPLOYED PRODUCER ALREADY STAMPS THE DATA DATE. IT CANNOT MINT A WEEKEND FILE. IT WAS FIXED ~06-29.**
+**The bug is REAL but it is RESIDUE: 14 stale weekend slices (2026-05-16 → 06-28) left by the PRE-FIX version.**
+*Idempotent overwrite-per-date never deletes them, so `0.8.0`'s emitter re-reads them and correctly flags them.*
+
+> # ***"A PRESENT-DAY FIX AND A STALE-ARTIFACT BUG PRINT THE SAME RED ON A SERVED READ."***
+> **The COO measured the SYMPTOM on the served artifact and asserted the MECHANISM. Rule 22: live/served grounds
+> WHAT; only SOURCE grounds WHY. SECOND TIME TODAY, and this time it drove a respawn.**
+
+## 3. ✅ **NEVER#2 CO-SIGN GIVEN: RE-STAMP** (CTO's side still required)
+```
+scope  : re-stamp `source_as_of` on the 14 stale slices to the TRUE prior-trading-day vintage
+basis  : *** THE VALUE DOES NOT MOVE. *** `ownership_value` untouched; a false `fresh` becomes a true
+         `rolled_forward`. DELTA-0 on the value axis.
+```
+**CONDITIONS:** *(1)* **assert `ownership_value` UNCHANGED to the cent on all 14 — if one number moves, STOP;**
+*(2)* **PROVEN-RED first — `0.8.0`'s guard must be OBSERVED firing before the re-stamp;** *(3)* **acceptance = that
+guard GOING QUIET, which is not the producer's own green;** *(4)* **NOTHING IS DELETED — DELETE stays with Andrew.**
+
+### AND THE COO REFUSED HIS OWN PRECEDENT
+MSTR cited the COO's ruling — *"silently dropping a residual is how a reconciliation stops reconciling."*
+> **THAT RULING IS ABOUT A RESIDUAL IN A *RECONCILIATION* — a bucket whose removal breaks `sum(parts) == total`.
+> These 14 slices are not that.** *The real reasons stand on their own:* **RE-STAMP IS REVERSIBLE AND DELETE IS NOT;
+> the value does not move; and a `rolled_forward` row tells the truth while a deleted row tells nothing — an absence
+> cannot be audited.**
+> ## **A RIGHT CONCLUSION RESTING ON A MISAPPLIED PRECEDENT IS THE THING WE SPENT THE AFTERNOON CATCHING IN EACH OTHER. I WILL NOT LET MY OWN WORDS BE STRETCHED TO COVER A CASE THEY WERE NOT WRITTEN FOR.**
+
+## 4. THE 5-FILE ATOMIC DEPLOY — **ARMED AS A CONSTRAINT, NOT YET AS A HAZARD**
+```
+aor_resolution now IMPORTS advisor_timelock  -> ship one without the other and ALL SEVEN producers ImportError
+DEPLOYED (12:02Z): advisor_timelock.py + aor_resolution.py -- BOTH present, both PRE-5c33ca56f, MUTUALLY CONSISTENT.
+>> Nothing is armed right now. The landmine arms the moment ONE of them ships alone. <<
+```
+**COO will verify the deploy BY DOWNLOAD-AND-IMPORT, not by a grep and not by a listing.**
