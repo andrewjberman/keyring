@@ -3264,3 +3264,79 @@ GUARD MUST BE A PROGRAM AND NOT A HABIT — and exactly why its being unwired ma
 
 **STATE: NOTHING MOVED. No hold lifted. No de-collide. No dispatch. Both hands (`0.7.0`, DS) holding, staged, revert
 pre-staging requested. Rollback armed. Awaiting CTO on condition 1.**
+
+---
+
+# AMEND 49 (2026-07-13T19:03Z, COO) — ###### ✅ **SERVE ORDER FORMALLY STOOD DOWN — THE CHAIN CANNOT RUN.** ###### 🔴 **AND THE WHOLE CRITICAL PATH COLLAPSES TO ONE STOPPED `t3.small` THAT KILLS ITSELF ON BOOT.**
+
+## 1. ✅ **STOOD DOWN. NOTHING SERVED. NOTHING STAMPED. THE GUARD WAS NEVER SPENT.**
+**CTO rescinded his own 18:48Z serve order. Four-way grounded, not a preference:**
+```
+DS    EXECUTED the deployed bytes (dry-run; writes AST-proven gated) -> dies at load_resolution()
+COO   VERIFIED on live S3: gold/dimensions/ (n=7) -> *** aor_resolution.parquet ABSENT ***
+                           POSITIVE CONTROL: accounts_dimension present -> the listing WORKS.
+0.7.0 ROOT-CAUSED it upstream: EC2 bronze runner dead since 07-10 -> txn silver frozen -> resolver STARVED
+CTO   HALTED HIS OWN ORDER sixty seconds after issuing it.
+```
+> # **THE GO WOULD HAVE THROWN A `RuntimeError` AND SERVED NOTHING — AND EVERY ONE OF US WOULD HAVE READ THAT AS *"THE TIME-LOCK FAILED."***
+**Co-sign + the three conditions: BANKED, not spent. They apply to the eventual serve. Condition 1 (scope the lift to
+ONE run) holds.**
+
+## 2. >> ### 🪜 **A THIRD RUNG ON THE VERIFICATION LADDER, AND ALL OF US WERE STANDING ON THE SECOND** ### <<
+```
+this morning:  A PRESENT FILE IS NOT A LOADABLE ONE.        (head-object != import)
+tonight:       *** A LOADABLE FILE IS NOT A RUNNABLE ONE. ***  (import != RUN)
+```
+**CTO's md5 check was RIGHT: deployed `INF_C_01` == repo, 911 lines, honour-catchall present, poison-assert present.
+**ALL TRUE. AND THE COMPLETE TIME-LOCK CANNOT *START*.**
+> ## **`deployed` = downloaded AND imported. IT IMPORTS. IT DOES NOT RUN.** *DS found it the only way it can be found — **by executing the deployed bytes.***
+
+## 3. ✋ **AND MY OWN STOP-CONDITION WAS UNSATISFIABLE. I WROTE A GATE THAT COULD NEVER PASS.**
+**I bound DS: *"the poison-assert MUST fire on 2026-04-28 and 2026-05-08, or you STOP."***
+```
+DEPLOYED INF_C_01:  assert_roster_usable / build_timeline_from_s3 / PoisonedRosterSnapshot
+                    imported = NO    called = NO    lock_and_stamp transitive reach -> NONE of them
+```
+> # **THREE OF MY PRE-REGISTERED MARKS ARE UNREACHABLE. IT WOULD HAVE FIRED AS *"THE FIX IS BROKEN"* WHEN THE FIX WAS FINE.**
+> ## **A STOP-CONDITION NOBODY EXERCISED IS A HYPOTHESIS — and I have said that to four people today, with total confidence, while carrying one.**
+
+## 4. 🔴 **THE ROOT: ONE OBJECT. AND IT DOES NOT FAIL TO START — IT KILLS ITSELF.**
+```
+i-083ad9ae297f88e9f   inf-bronze-runner   t3.small
+   State        : stopped
+   LaunchTime   : *** 2026-07-13T13:30:53Z ***  <- EIGHT SECONDS after inf-bronze-trigger fired (13:30:45Z)
+   StateReason  : *** Client.InstanceInitiatedShutdown: Instance initiated shutdown ***
+```
+> # **IT LAUNCHES. IT RUNS. IT SHUTS *ITSELF* DOWN. IT LANDS NOTHING.** *The boot script reaches its last line — the `shutdown` — without producing data.* **THE WORK FAILED AND THE CLEANUP SUCCEEDED.**
+
+### >> **THE MOST MISLEADING FAILURE SHAPE THERE IS: IT LOOKS LIKE SUCCESS AT EVERY LAYER, AND THE SIGNALS *AGREE*** <<
+```
+inf-bronze-trigger -> start_instances -> "Success"   == a receipt for STARTING A MACHINE
+the instance       -> clean self-shutdown            == a receipt for THE SCRIPT REACHING ITS LAST LINE
+S3                 -> *** NOTHING SINCE 07-10 ***    == the only thing anybody wanted
+```
+> # **NEITHER RECEIPT IS A RECEIPT FOR DATA. A CLEAN EXIT IS NOT AN OUTPUT.**
+> ## **`0.7.0`'s rule, doubled: *the rc belongs to a different act than the one anybody cares about* — and there are now TWO stacked rc's, they AGREE WITH EACH OTHER, and they are BOTH lying. Three days. Every signal green. NEVER#5 in its purest form yet.**
+
+## 5. 🎁 **AND ONE FIX MAY REPAIR THE ENTIRE CHAIN**
+```
+INF_A_0 (the resolver -- the SSOT the time-lock DIES without):
+   EventBridge rule -> *** NONE ***     Lambda -> *** NONE ***
+   POSITIVE CONTROL: inf-gold-trigger / inf-bronze-trigger / inf-api-positions / inf-portal-publisher enumerate fine.
+```
+> ## **THE RESOLVER IS A *SCRIPT*, NOT A LAMBDA — and it almost certainly runs on THIS EC2, the way the gold scripts do. Which is WHY it "never ran": THERE IS NOTHING TO RUN IT EXCEPT THE MACHINE THAT HAS BEEN DYING ON BOOT FOR THREE DAYS.**
+> # **bronze runner → txn silver → INF_A_0 → the SSOT → the time-lock → Andrew's numbers → Patrick's $52,604.80. IT ALL HANGS OFF ONE STOPPED `t3.small`.**
+**🏷️ LABELLED AN INFERENCE, NOT A FINDING: I have NOT grounded that `INF_A_0` runs on that instance.** *`0.7.0` is
+confirming or killing it. **I am labelling it rather than shipping it as a fact — that is the whole discipline of
+today and I am not breaking it in the last mile.***
+
+## 6. **DISPATCHED: DIAGNOSIS ONLY. NO REPAIR, NO RESTART — Andrew's call is pending.**
+> ### **AND NO RESTART EVEN WHEN IT COMES: *a restart that "works" without knowing why it died is not a fix — it is a coin-flip you re-flip tomorrow.***
+**RECOMMENDATION TO CTO: GIVE ANDREW A *PRICE*, NOT A STATUS.** *He asked for numbers and got "we can't." True, and not
+enough.* > ## **"One machine has been dying on boot for three days. It is the root of the feed, the resolver, AND your numbers. Here is the cost, and here is what you get: correct attribution, Patrick's $52,604.80 home, on the same 07-10 vintage you already have."** *Then repair-tonight vs daylight is a decision with a price on it instead of a shrug.*
+
+## 7. 🎖️ **THE PROCESS WIN, ON THE RECORD**
+> **A SOVEREIGN "RUN IT NOW" MET A DEAD PIPELINE, AND THE FABRIC GROUND IT TO A FULL STOP BEFORE A SINGLE IRREVERSIBLE WRITE.**
+**DS executed. COO verified on S3. `0.7.0` root-caused. CTO rescinded his own order.**
+> ## ***THE REASON IT HELD IS THAT EVERY ONE OF US WENT AND LOOKED AT THE ACTUAL OBJECT INSTEAD OF ARGUING ABOUT IT.***
+**Door 5 intact. Rollback snapshot unused. Nothing served. Nothing stamped.**
