@@ -83,11 +83,38 @@ halt_gate_resolve_serial() {
     fi
   fi
 
-  # Fallback: legacy .comp-graph/.agent_context (per-workspace-shared; clobber-prone) -- LAST resort only
-  [ -f "$ctx" ] || return 1
-  serial="$(grep -m1 '^SERIAL=' "$ctx" 2>/dev/null | sed 's/^SERIAL=//' | tr -d '\r' | sed 's/[[:space:]]*$//')"
-  [ -n "$serial" ] || return 1
-  printf '%s\n' "$serial"
+  # --- FAIL CLOSED (Andrew-direct 2026-07-13; CTO) --------------------------------
+  # The legacy `.comp-graph/.agent_context` fallback is REMOVED. It is a SHARED,
+  # LAST-WRITER-WINS file, and org/XXX.md:90 states the law outright:
+  #     "`.comp-graph/.agent_context` is NOT an identity source."
+  # `register_agent` carries a hard IDENTITY GUARD against exactly this. The halt
+  # gate had none -- so it resolved whichever serial some *other* agent wrote last.
+  #
+  # MEASURED 2026-07-13 (1.0.0_SA_CTO, on the live primitive): with no session-keyed
+  # serial file, this function returned `0.7.0_AE_CloudOps` -- A DEAD AGENT. At an
+  # earlier push it had returned `2.0.0_SA_COO`. The gate scanned THEIR inboxes.
+  #
+  # BOTH failure directions, and the second is the dangerous one:
+  #   FALSE POSITIVE  blocked on a STOP addressed to a stranger.  (loud; I noticed)
+  #   FALSE NEGATIVE  *** MY OWN inbox was NEVER SCANNED. A genuine [STOP] addressed
+  #                   to me would have been INVISIBLE to my own halt gate, and I would
+  #                   have pushed straight through it with a clean exit 0. ***
+  # Rule 18 already concedes "a HALTGT pass is not evidence you were not halted," but
+  # it locates the defect in WHICH FILES are seen. The real defect is one level up:
+  # <serial> may be THE WRONG AGENT ENTIRELY.
+  #
+  # >> A SAFETY GATE THAT CANNOT NAME ITS OWN PRINCIPAL MUST NOT GUESS. Guessing does
+  #    not degrade a control -- it converts it into a random number generator that is
+  #    wrong in BOTH directions while reporting success. <<
+  #
+  # Callers treat a non-zero return as exit 3 = NO-SERIAL = BLOCK (halt_gate_check:171
+  # already says: "a checkpoint that cannot find its inbox must NOT green-light a
+  # deploy"). That path existed and was simply never reachable, because the fallback
+  # always "succeeded" -- with someone else's name.
+  #
+  # REMEDIATION IS ONE LINE (printed by the caller):
+  #     printf '%s\n' "<your-serial>" > "org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial"
+  return 1
 }
 
 # --- STOP-class classifier (ADHC_HALTGT.000 canonical rule) ---------------------
@@ -169,9 +196,23 @@ halt_gate_check() {
   local -a scan_serials=() msg_files=() stop_files=()
 
   serial="$(halt_gate_resolve_serial)" || {
-    printf 'HALT-GATE: ERROR -- agent serial unresolved (%s missing or SERIAL= empty).\n' \
-      "$HALT_GATE_CONTEXT_FILE" >&2
-    printf 'HALT-GATE: failing loud -- a checkpoint that cannot find its inbox must NOT green-light a deploy.\n' >&2
+    printf '======================================================================\n' >&2
+    printf 'HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed)\n' >&2
+    printf '======================================================================\n' >&2
+    printf '  This gate could not determine WHICH AGENT it is running as from any\n' >&2
+    printf '  session-keyed source. It will NOT guess.\n\n' >&2
+    printf '  It used to guess -- from .comp-graph/.agent_context, a SHARED\n' >&2
+    printf '  last-writer-wins file. That made it scan ANOTHER agent`s inbox:\n' >&2
+    printf '    - it blocked you on STOPs addressed to strangers, AND\n' >&2
+    printf '    - *** IT NEVER SCANNED YOUR OWN INBOX, so a real [STOP] to YOU\n' >&2
+    printf '        was INVISIBLE and you pushed straight through it. ***\n\n' >&2
+    printf '  A safety gate that cannot name its own principal must not guess.\n\n' >&2
+    printf '  FIX (one line -- use YOUR serial, incl. any ~lane suffix):\n' >&2
+    printf '    printf %%s\\\\n "1.2.3_XX_Yourserial" > "org/mcp/sessions/%s.serial"\n' \
+      "${CLAUDE_CODE_SESSION_ID:-<CLAUDE_CODE_SESSION_ID-IS-UNSET>}" >&2
+    printf '\n  Then re-run. Do NOT override this; overriding it means deploying\n' >&2
+    printf '  while blind to your own STOP messages.\n' >&2
+    printf '======================================================================\n' >&2
     return 3
   }
 
