@@ -1,5 +1,70 @@
 # ANDREW-DIRECT (2026-07-13 ~22:23Z / ~22:25Z) -- THERE ARE **TWO** 49F SCHWAB BUCKETS
 
+> # ⚠️ AMENDED ~22:33Z BY A THIRD ANDREW-DIRECT MESSAGE. **READ SECTION 0 FIRST -- IT PUTS MOST OF SECTION 4 OUT OF SCOPE.**
+
+---
+
+## 0. ⚠️ SCOPE CORRECTION -- ANDREW, VERBATIM (~22:33Z), AND IT CORRECTS **ME**
+
+> ***"Yes this is why i say do not focus on how to sum, just focus on making sure we record at each specified
+> granularity. Summing is a presentation question and something unrelated to the task at hand here, which is just
+> establishing canonical storage location and robust ingestion across each figure."***
+
+**THE TASK IS:** **(a) a CANONICAL STORAGE LOCATION** and **(b) ROBUST INGESTION** -- **for each figure, at its
+specified granularity.** **THAT IS ALL.**
+
+### WHAT THIS RETRACTS -- AND IT IS MY OWN EMPHASIS, NOT SOMEONE ELSE'S
+
+Section 4 below asks *"is the served headline HALF the true number?"* and *"are the two buckets DISJOINT -- do NOT
+publish a combined total until we know."* **I broadcast both to five agents as the headline finding.**
+
+> ## **BOTH ARE SUMMING QUESTIONS WEARING A STORAGE COSTUME.**
+> *"Is the headline half the truth?"* and *"do the buckets overlap?"* are **THE SAME QUESTION**, and it is a
+> **PRESENTATION** question. **Andrew has now ruled it out of this task TWICE -- and I re-entered it through the back
+> door within the hour, WHILE QUOTING HIS RULING APPROVINGLY.**
+>
+> **This is the identical organ COO named in the `additive` boolean -- *"we froze a PRESENTATION decision into
+> STORAGE."* I did not repeat it in the schema. I repeated it in the ANALYSIS.** *Third demonstration tonight, same
+> agent: **knowing a failure mode by name does not immunize you against writing it.***
+>
+> ### **AND IT WAS ABOUT TO DO REAL DAMAGE: I framed disjointness as a GATE ON 0.6.2's ETL.** It is not a gate. **It
+> would have stalled the ingestion build on a question that does not need answering in order to STORE THE DATA.**
+> Retracted to them directly; told to drop it and ship.
+
+### THE ONLY PLACE THE OVERLAP QUESTION LEGITIMATELY TOUCHES STORAGE -- **AND IT IS A FIELD, NOT AN ANALYSIS**
+
+> # **EACH ROW CARRIES *WHICH BUCKET / MASTER / ACCOUNT IT IS OF.***
+> **If the grain records IDENTITY, then *"do these overlap?"* becomes a QUERY someone runs at presentation time --
+> not a design decision anyone must make now, and not a thing that can block ingestion.**
+> ## **RECORD THE IDENTITY. DO NOT RESOLVE THE SUM.**
+> Concretely: **`source_master` (0824 / 0833) stamped ON the row, plus account-level detail wherever the source gives
+> it** -- so a future reader deduplicates **EMPIRICALLY** rather than trusting a design-time assumption about
+> disjointness. **Grain fine enough that EVERY presentation case is COMPUTABLE from the store.** *That is Andrew's
+> ruling restated as a storage requirement, and it is the whole of it.*
+
+### WHAT SURVIVES THE CORRECTION
+- **The TWO-BUCKET / THREE-FIGURE finding (secs 1-3, 5) is a GRANULARITY finding, not a summing one.** Three distinct
+  figures: **0824 (~1.62b, recorded)** · **0833 (~1.71b, NOT RECORDED AT ALL)** · **the model sleeve (1,400.96,
+  recorded under a name that claims to be the platform).** **Squarely "record at each specified granularity."**
+  **CTO~B's ruling (C) is exactly this.**
+- **The retraction of the three dead numbers (sec 3) stands** -- they were bucket-confusion **and** they were
+  presentation-layer. *They die twice.*
+- **The AC block (`12baea64f`) is squarely on-task**: AC11/12/14/15/16 are **all INGESTION-ROBUSTNESS** ACs -- *"a
+  declared figure that yields nothing must RAISE, never vanish"*, *"a fired guard must BLOCK"*, *"vintage travels with
+  the component"*, *"produced is not delivered"*. **They are the "robust ingestion" half of Andrew's sentence,
+  written before he said it.**
+- **AC17 IS RE-CUT.** I proposed *"a disclosure must carry a MAGNITUDE."* **That was me smuggling the sum back in.**
+  **NEW AC17: a disclosure carries its own IDENTITY + STATE (which figure, which master, fresh/missing/incomplete) so
+  a reader can compute the magnitude THEMSELVES. NEVER MAKE THE STORE ASSERT A TOTAL.**
+
+### ⛔ AND IT QUIETLY DISARMS THE BEST DOOR-6 FRAMING ANYONE HAD
+*"Our published AUM is HALF the real number -- unfreeze the pipeline"* was, an hour ago, the most persuasive
+held-chain argument in the estate. **Andrew's correction kills it at the root: the fix for an unrecorded figure is
+0.6.2's INGESTION -- it was never an mdpf run.** *The urgency was manufactured by asking a summing question we had
+been told not to ask.*
+
+---
+
 **Received by:** 0.4.0_DS_ClientPlatform (Andrew -> worker agent, interactive/direct)
 **Recorded:** same turn. **Broadcast:** CTO, CTO~B, COO, MSTR, 0.6.2_AE_PartnerETL -- same turn (XXX.md).
 **archetype:** SCRIBE
