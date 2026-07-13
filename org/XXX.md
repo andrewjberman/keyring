@@ -76,6 +76,44 @@ Records: `b7bce51bd` · `d1c5e629b` · `d60d201e3` · LD-0280–LD-0284 · RV-00
 
 ---
 
+## !! ANDREW-DIRECT INSTRUCTIONS — RECORD + BROADCAST, SAME TURN (PERMANENT; not part of the block above) !!
+
+> **ANDREW WRITES DIRECTLY TO WORKER AGENTS. He always has.** Andrew-direct, verbatim, 2026-07-13:
+> *"I often times will write to worker agents if I notice that they are doing something I want to change.
+> Eventually there may come a time where I only relay instructions to tier1 agents, but that is unlikely, and for
+> now let's not assume that to be the case."*
+
+**THEREFORE — and this is the load-bearing consequence, not the etiquette:**
+- **A lane can be carrying a sovereign instruction that COO, CTO and MSTR NEVER LEARN EXISTS.**
+- ## **`latest + most-restrictive binds` — OUR GOVERNING CONFLICT RULE — IS INERT AGAINST AN INSTRUCTION NOBODY SURFACED.**
+  *A conflict-resolution law cannot bind on an invisible input.* **An exec can dispatch a lane straight through a
+  sovereign order he has never seen.**
+> **Same structure as the orphan that ate the respawn requests: THE FABRIC'S COORDINATION ASSUMES A CHANNEL IT
+> DOES NOT ACTUALLY HAVE.** *We keep building rules on top of a topology nobody has verified.*
+
+**THE CONVENTION — it binds every agent, every tier:**
+```
+ANY AGENT RECEIVING AN ANDREW-DIRECT INSTRUCTION RECORDS IT DURABLY AND BROADCASTS IT -- SAME TURN.
+
+  DURABLE   a commit (memory entry / ledger / org record), quoting him VERBATIM, with the channel and the time.
+            *** NEVER A PARAPHRASE. THE PHRASING *IS* THE RULING. ***
+  BROADCAST MCP to COO + CTO + MSTR, so `latest + most-restrictive` has something to bind on.
+  SCOPE     The receiving agent does NOT adjudicate scope. SURFACE, DO NOT ADJUDICATE.
+```
+
+> ## **AN AGENT RELAYING "ANDREW RULED" IS NOT SUSPECT MERELY BECAUSE YOU DID NOT SEE IT. THAT IS THE NORMAL CASE.**
+> *Do not challenge the provenance of a relayed sovereign ruling from your own vantage point — **your vantage
+> point is not the topology.*** (COO did exactly that today, spent a colleague's credibility on it, and was
+> wrong: **half the standing prohibitions in `MEMORY.md` originate as Andrew-direct messages to individual
+> lanes.** He asserted a comms topology from where he happened to be sitting.)
+
+**THIS IS NOT A REQUEST THAT ANDREW CHANGE HOW HE WORKS.** He should write to whoever he needs to, whenever he
+needs to — it is his prerogative and it is faster than routing through an exec.
+> ## **THE OBLIGATION IS ON US: THE INSTRUCTION MUST BECOME VISIBLE THE MOMENT IT LANDS, OR OUR OWN
+> ## CONFLICT-RESOLUTION LAW IS A DEAD LETTER.**
+
+---
+
 ## STOP — READ THESE FIRST
 
 **BANNED: Explore agent** — produces fabricated output. Use comp-* tools and Grep/Read instead.
