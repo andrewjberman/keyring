@@ -2517,3 +2517,73 @@ NEW         unknown -> SLUG (not None) + a docstring promising a gate the code d
 ```
 **The gold-side allowlist the COO approved is NOT NEEDED — it is already built and already correct.**
 > **DO NOT BUILD A SECOND ONE. *Two paths to one fact is what started this.***
+
+---
+
+# AMEND 39 (2026-07-13T17:06Z, COO) — ✅ **CHANGE-3 IS DEPLOYED (11 MINUTES). THE BLOCKER IS NOW *TIME*, NOT WORK.** — AND **A DEPLOY IS NOT THE TEST EITHER. THE TEST IS A ROW.**
+
+## 1. ✅ **DEPLOY VERIFIED BY THE COO ON THE BYTES AWS RUNS — positive-controlled**
+```
+lambda LastModified       13:54:31  ->  *** 16:59:10 ***    (it MOVED)
+advisor_of_record_raw            0  ->  *** 7 ***
+udf7ADVISOROF                    0  ->  *** 5 ***
+deployed converter             974  ->  1024 lines
+POSITIVE CONTROL  def build_accounts_v2  ->  1              <- reading the REAL converter
+```
+**`0.7.0` injected the CHANGE-3 block SURGICALLY (1024, not the repo's 1124) rather than overwriting the fork** —
+*the same discipline he used on the 0-row guard: **the forks are DIVERGED; overwriting one with the canonical file
+could break a Lambda that is currently correct.*** **Eleven minutes from dispatch to deployed-and-verified.**
+
+## 2. 🔴 >> **BUT THE COLUMN IS NOT IN A LIVE ROW — AND *THAT* IS THE BAR.** <<
+```
+newest LIVE partition  snapshot_date=2026-07-13   873 rows, 45 cols
+   advisor_of_record_raw IN THE ROW  ->  *** FALSE ***
+   POSITIVE CONTROL rep_id           ->  TRUE      <- the read WORKS. The column is simply NOT THERE.
+```
+> # **A `git push` IS NOT THE TEST. AND NOW: *A DEPLOY IS NOT THE TEST EITHER.* THE TEST IS A ROW.**
+**The lambda must RUN before the column exists.** *Not a failure. It is the difference between `deployed` and
+`EXERCISED` — the distinction the whole day has been about, arriving one layer further out than we had it.*
+
+## 3. 🛑 **RULED, BEFORE ANYONE OFFERS: DO NOT TRIGGER IT AD-HOC.**
+```
+inf-accounts-v2-daily   ENABLED   cron(22 13 * * ? *)  ->  13:22Z DAILY
+now 17:05Z   ->   the row exists at ~13:22Z TOMORROW (~20h)
+```
+**An ad-hoc invoke would REWRITE `snapshot_date=2026-07-13` — a partition that ALREADY EXISTS, written 13:22Z today
+with 873 rows.**
+> ## **THAT IS AN IN-PLACE PARTITION REWRITE — THE EXACT HAZARD DOCUMENTED THIS MORNING (`accounts_v2`: 6 of 69 partitions rewritten in place after their own `snapshot_date`; a fixed key means a re-emit OVERWRITES BYTES).**
+**And NEVER#4's SPIRIT binds even though its letter says "gold":** > ***validate on the scheduled run's artifacts, not
+on one you manufactured to validate against.***
+**Nothing is bleeding. The chain is HELD. Nothing is served. THERE IS NO REASON TO BUY 20 HOURS WITH AN IN-PLACE
+REWRITE.**
+
+## 4. ✅ **AND THE SILVER RUN CANNOT CASCADE — the firebreak holds through it**
+```
+INF_GOLD_DISPATCH_HOLD             APPLIED
+inf-gold-full-on-bronze-complete   DISABLED
+inf-gold-incremental-daily         DISABLED
+```
+**Tomorrow's silver run writes the roster and CANNOT trigger a gold re-derive.**
+> *That is exactly why the chokepoint was worth building: **a prerequisite can land without the chain moving.***
+
+## 5. THE SEQUENCE FROM HERE
+```
+13:22Z TOMORROW   inf-accounts-v2-daily runs -> writes accounts_v2 WITH advisor_of_record_raw
+THEN              *** COO READS THE ROW. *** Not the log. Not the deploy. THE ROW.
+THEN              BLOCKER #1 closes; the resolver may run under FOLD_ACTIVE=1
+THEN              timelock_preview reports exactly what INF_C_01 would FREEZE
+THEN              CVO~B renders gate-2 ON THE SERVED ARTIFACT
+THEN              the one-shot stamps, BYTE-IDENTICAL to the run she cleared
+```
+**`0.7.0`'s deploy-ledger entry stays OPEN until the row exists.**
+> **A deploy ledger closed on a DEPLOY, when the bar was a ROW, is the `landed ≠ deployed` gap wearing a new coat.**
+
+## STATE
+```
+BLOCKER #1  CHANGE-3   *** DEPLOYED. AWAITING THE 13:22Z RUN. ***   Blocker is now TIME, not work.
+BLOCKER #2  _IWM       WITHDRAWN -- it never existed.
+OPEN        canonicalize_advisor_of_record('Zzz_Nobody') -> 'zzznobody' (a SLUG, not None)
+            + a docstring promising a hard-RAISE the code does not perform.    DS.
+CHAIN       HELD.  Nothing wired to the switch.  NOTHING SERVED.
+PATRICK     short $52,604.80.  DAY FIVE.  His restore falls out of the one-shot -> earliest is tomorrow.
+```
