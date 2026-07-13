@@ -1544,3 +1544,80 @@ presumption from observation afterwards, WE NEVER CAN.**
 > on after the stamp.** *(A labelling question, not a blocker. Andrew's to weigh.)*
 
 **Chain HELD. Nothing wired. Nothing served. `AOR_FOLD_ACTIVE=0`. Suite 184/184 on the repo; F10 RED stands.**
+
+---
+
+# AMEND 25 (2026-07-13T15:31Z, COO) — ✅ **THE STAMP *IS* THE DATE-AWARENESS.** THE REDESIGN IS DELETED, THE ORDERING IS DETERMINED, AND BOTH P1s LANDED.
+
+## 1. >> **CVO~B KILLED A REDESIGN BEFORE IT WAS BUILT — BY EXERCISE, NOT BY ARGUMENT** <<
+**Exercised on the REAL `apply_resolution_fold` + the REAL `apply_time_lock`, both UNCHANGED and DATE-BLIND:**
+```
+WIRE apply_time_lock AFTER apply_resolution_fold, stamping the POST-FOLD key:
+
+A1  BACKFILL      2020-03-15 -> noel_soderblom  (first-observed AoR reaches ALL history, ONCE)   PASS
+                  ...then it is STAMPED.
+A2  NO REWRITE    night 2, same inputs -> BYTE-IDENTICAL.  *** THE DEFECT CANNOT RECUR. ***      PASS
+A3  FORWARD-ONLY  2020/2023 stay noel; the NEW (unstamped) 2026-09-01 row takes joe              PASS
+                  *** A LATER CHANGE APPLIED FORWARD ONLY, AND NOT ONE CENT BEFORE. ***
+```
+> # **THE STAMP *IS* THE DATE-AWARENESS.**
+> ***"Already stamped" MEANS "already happened."*** **The only thing A1 and A3 need to distinguish is *"has this row
+> been written before?"* — AND THAT IS EXACTLY WHAT A STAMP RECORDS.**
+> ## **`aid.map(key_map)` re-keys everything, and the lock un-does it for everything that already happened. THE COMPOSITION IS DATE-SCOPED EVEN THOUGH NEITHER COMPONENT IS.**
+
+**The fold being date-blind is NOT a defect to redesign around. It is IRRELEVANT once the lock is downstream of it.**
+**CTO~B's "the fold is wrong as built and needs a design change" is SUPERSEDED — struck in place.** *(AMEND 22 §1 is
+therefore wrong on the REMEDY and right on the DEFECT. The defect was always the nightly rewrite.)*
+
+## 2. **THE ORDERING IS DETERMINED — AND IT WAS AN IRREVERSIBLE POLICY VOTE, EXACTLY AS WE SAID**
+> ## **`lock AFTER fold` IS THE ONLY ORDER THAT IMPLEMENTS ANDREW'S RULING. `lock BEFORE fold` LETS THE NIGHTLY REWRITE STRAIGHT BACK IN.**
+**COO's `[STOP]` on the ORDER is LIFTED — the order is now DETERMINED BY THE DATA, not chosen by an engineer.**
+*We were right that it was a policy vote and right to refuse to cast it.* **The `[STOP]` on RUNNING the one-shot is
+NOT lifted.**
+
+## 3. >> **THE ONE RESIDUAL, AND IT IS REAL** <<
+```
+A HISTORICAL date re-derived AFTER an AoR change, with NO PRIOR ROWS IN GOLD, is UNSTAMPED
+   -> it takes the CURRENT AoR, not the FIRST-OBSERVED one.  *** VIOLATES A1. ***
+   *** AND THE LOCK CANNOT CATCH IT -- THERE IS NOTHING STAMPED TO RESTORE. ***
+```
+> **The F2 absent-account shape: THE GUARD PROTECTS WHAT IT HAS ALREADY SEEN AND IS BLIND TO WHAT ARRIVES LATE.**
+**NOT hypothetical — it is exactly what a backfill of an old date hits, and we are about to run a one-shot over
+1,410 partitions.** **Required guard, routed to DS: an unstamped OLD row must take the FIRST-OBSERVED AoR, never the
+current one.**
+
+## 4. **POINT 5 IS NOW FREE — AND WITHOUT IT ANDREW'S RULING IS UNENFORCEABLE**
+```
+stamped during the FIRST (one-shot) run  ->  BACKFILLED   (a PRESUMPTION)
+stamped on any later nightly             ->  OBSERVED     (a FACT)
+```
+**One boolean, at stamp time. Zero marginal cost — we are already writing that row.**
+> **A1 and A3 differ ONLY by *"was this the first observation?"* — SO WITHOUT THE FLAG THE RULED SPEC CANNOT BE
+> ENFORCED, TESTED, OR AUDITED.** *It is not a labelling nicety; it is the discriminator.*
+
+### AND THE PRECEDENT IS DAMNING (CVO~B — the find of the day)
+```
+silver/transactions  ->  column `rep_id_is_historical`  ->  False on ALL 1,394,630 rows
+```
+> **SOMEONE BUILT A COLUMN WHOSE ENTIRE JOB IS TO SAY *"THIS ATTRIBUTION IS STAMPED, NOT HISTORICAL"* — SET IT TO
+> `False` — AND THE PIPELINE DERIVED SIX YEARS OF ADVISOR ATTRIBUTION OFF IT ANYWAY.**
+> ## ***THE WARNING LABEL WAS IN THE DATA THE WHOLE TIME AND NOBODY READ IT.***
+**That is the $2.6M nightly rewrite, announcing itself in a boolean, for months.** *Not a comment mistaken for an
+enforcement — a **correct, deliberate, machine-readable disclosure**, ignored 1.4 million times.* **DO NOT BUILD THE
+SECOND ONE AND IGNORE IT.**
+
+## 5. BOTH P1s LANDED IN TEN MINUTES — **AND THE GATE FIX WAS VERIFIED IN *BOTH* DIRECTIONS**
+```
+ZOMBIE GUARD B (0.7.0, 754900a0e)   inf-api-positions / inf-api-reps: 'Guard B FAIL' raise = 0
+                                    in the DEPLOYED BYTES. Retrieval control: 6 .py files/package.
+                                    *** THE ZOMBIE IS DEAD. ***
+never-rules-gate (CTO, 071fbda9f)   COO ran BOTH controls:
+                                      NEGATIVE  echo mentioning the banned words   ->  PASSES
+                                      POSITIVE  git rebase --quit (subcmd position) ->  DENIES
+                                    *** FIXED, AND NOT BROKEN-OPEN. ***
+```
+> *A gate fix that removes the false-positive **and** the true-positive is worse than the bug. The positive control
+> was chosen to be HARMLESS IF THE GATE HAD FAILED OPEN.* **CLAUDE.md's subcommand-position claim is now TRUE rather
+> than ASSERTED.**
+
+**Chain HELD. Nothing wired. Nothing served. Both gates OPEN — and now closeable WITHOUT a redesign.**
