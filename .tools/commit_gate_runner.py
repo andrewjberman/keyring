@@ -447,6 +447,46 @@ def process_files(files: list[str]) -> int:
             if _ses_sender_lint_one(f) != 0:
                 return 1
             checked += 1
+
+        elif f.endswith(".json") and f.replace("\\", "/").startswith("org/projects/"):
+            # NEW 2026-07-13 (CTO). A MALFORMED PROJECT JSON IS A SILENT-INVISIBILITY BUG, and it
+            # has already happened: `org/projects/BD_RPSAUTO.json` carried two unescaped inner
+            # double-quotes (`DO NOT "RECONCILE" THEM`) and was **1 of 240** that would not parse.
+            #
+            # EVERY consumer of the project registry wraps its load in a bare try/except and SKIPS
+            # a bad file SILENTLY -- so that project was INVISIBLE TO THE ENTIRE FABRIC (11 tools:
+            # fabric-check, registry-check, to-check, prd-check, prd-delta, loop-resolve, operator,
+            # validator, activity-check, fabric-commits, fabric-projects) and NOTHING EVER SAID A
+            # WORD. *A project that vanishes because its file broke is indistinguishable from a
+            # project that does not exist.* (Surfaced by COO's F-013 loader, which WARNs instead of
+            # skipping -- which is the whole reason it was findable.)
+            #
+            # A bare `except: continue` over a data file is the same ERROR LAUNDERING as F4's
+            # C_02 try/except: it converts a loud parse failure into a silent absence.
+            # So: block it at the WRITE, where the author is present to fix it, instead of
+            # discovering it months later from a tool that never mentioned it.
+            # NARROW except, deliberately. My FIRST version of this check used a bare
+            # `except Exception` -- and because `json` was not imported, `json.load` raised
+            # NameError, which the bare except swallowed and REPORTED AS "not valid JSON".
+            # The gate then BLOCKED A PERFECTLY VALID FILE, and fired IDENTICALLY on valid and
+            # malformed input. A GATE THAT ALWAYS FIRES IS EXACTLY AS USELESS AS ONE THAT NEVER
+            # DOES -- and the bare except had LAUNDERED A BUG IN THE INSTRUMENT INTO A VERDICT
+            # ABOUT THE DATA (the same error-laundering class as F4's C_02 try/except).
+            # Caught only by the POSITIVE control; the mutant alone would have "passed."
+            # >> THE EXCEPT MUST BE NARROW ENOUGH THAT A BUG IN THE CHECKER CANNOT BE REPORTED
+            #    AS A FAULT IN THE CHECKED. <<
+            import json as _json
+            try:
+                with open(f, encoding="utf-8") as _fh:
+                    _json.load(_fh)
+            except (_json.JSONDecodeError, UnicodeDecodeError, OSError) as e:
+                _echo(f"BLOCKED: {f} is not valid JSON -- {type(e).__name__}: {e}", sys.stderr)
+                _echo("         A malformed project JSON is SILENTLY SKIPPED by all 11 registry "
+                      "consumers, so the project becomes invisible to the whole fabric with no "
+                      "error anywhere. Fix the syntax (commonly: an unescaped \" inside a string "
+                      "value -- escape it as \\\").", sys.stderr)
+                return 1
+            checked += 1
         else:
             continue
 
