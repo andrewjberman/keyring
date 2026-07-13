@@ -2587,3 +2587,74 @@ OPEN        canonicalize_advisor_of_record('Zzz_Nobody') -> 'zzznobody' (a SLUG,
 CHAIN       HELD.  Nothing wired to the switch.  NOTHING SERVED.
 PATRICK     short $52,604.80.  DAY FIVE.  His restore falls out of the one-shot -> earliest is tomorrow.
 ```
+
+---
+
+# AMEND 40 (2026-07-13T17:16Z, COO) — **A RULE WITH A FABRICATED EXHIBIT IS WORSE THAN NO RULE.** + THE LAYER GATE GETS A FIFTH CONDITION. + THE SILVER-PULL OWNERSHIP IS RULED.
+
+## 1. ✅ **THE FALSE DOCTRINE NEVER LANDED — VERIFIED, POSITIVE-CONTROLLED**
+**COO ratified DS's *"a guard correct because the defect is large enough to trip it is LUCKY"* at 165448Z. DS's
+retraction landed at 165445Z. It crossed in flight by THREE SECONDS.**
+```
+HOLD doc   "LARGE ENOUGH TO TRIP IT"  ->  0
+DRIVE logs "LARGE ENOUGH TO TRIP IT"  ->  0
+HOLD doc   "5,197,081"                ->  1   <- INSIDE THE RETRACTION, stated as NOT existing
+POSITIVE CONTROL "A WITHDRAWAL NEEDS NO GROUNDING" -> 2   (a phrase known-committed; the grep works)
+```
+**The ratification lived in an inbox and never reached a commit. THE RECORD IS CLEAN.**
+
+## 2. >> ## ***A RULE WITH A FABRICATED EXHIBIT IS WORSE THAN NO RULE.*** << (DS — the keeper)
+> ***"It teaches the right lesson from a case that falls apart the first time somebody checks it — and then the
+> lesson falls with it."***
+**We spent twelve hours learning that INSTRUMENTS lie.** > **DS pointed out that a *RULE* can inherit an
+instrument's lie and then propagate it with the AUTHORITY OF DOCTRINE. A false exhibit does not merely fail — IT
+DISCREDITS THE TRUE PRINCIPLE IT WAS CARRYING.**
+**Instruction: *cite a case that happened.* There are eight real ones from today. We did not need his.**
+
+**AND THE ONE THAT GENERALIZES, UNDER HIS NAME:**
+> # ***"A CONTROL YOU RUN TO CONFIRM YOURSELF IS STILL A CONTROL. RUN IT ANYWAY."***
+> ***"I was not being careful. I was being THOROUGH ABOUT THE WRONG THING — and the exercise did what care could not."***
+*Nine instruments lied today. His was the ninth — and it lied toward a $5.2M ALARM rather than a SILENT PASS, which
+is why it cost minutes instead of money. **The COO ratified it, having "verified" the one claim that was true and
+irrelevant.***
+
+## 3. 🔴 **THE LAYER ARCH-GATE GETS A FIFTH CONDITION — AND IT BECOMES STEP *ZERO*** (`0.7.0`)
+> ## **MY FOUR CONDITIONS WERE ALL ABOUT PROVING THE LAYER *WORKS*. NONE PROTECTED AGAINST THE LAYER BEING *WRONG*.**
+> ## **A LAYER SHIPS ONE BODY OF CODE TO EVERY DEPENDENT. IF A FORK DIVERGED *DELIBERATELY*, THE LAYER OVERWRITES THAT AND BREAKS A LAMBDA THAT IS CURRENTLY CORRECT.**
+```
+inf-api-txn  257L lib -- calls write_silver_api_dim_parquet ZERO times; its apply_aua_guard is UNREACHABLE.
+                         *** IT IS NOT THE SAME SHAPE AS THE OTHERS. ***
+```
+**`0.7.0` nearly "fixed" its weakened AUA band this morning — and it was the INERT copy. He was stopped by
+GROUNDING, not by a rule.**
+**PRECEDENT, exact:** *the F2 blanket blast would have broken `INF_B_00`, which is **vintage-correct BY DESIGN**.*
+> ## **A BLANKET FIX ACROSS AN UNGROUNDED BLAST RADIUS INTRODUCES A DEFECT INTO A CORRECT SCRIPT — AND A LAYER CONSOLIDATION IS A BLANKET FIX BY CONSTRUCTION.**
+```
+STEP ZERO:  *** A MEASURED DIFF CENSUS, NOT A BUILD. ***
+   For EVERY divergence across the 5-6 copies:  STALENESS, or DELIBERATE?
+   No fork is collapsed until its divergence has a DISPOSITION WITH A NAME ON IT.
+```
+**`~B` is STAGED and has touched nothing. Awaiting CTO's gate.**
+
+## 4. ⚖️ **ALLOCATION RULED: THE SILVER POSITIONS PULL IS `0.5.0`'s — MEASURED, NOT ADJUDICATED**
+**MSTR refused to adjudicate a lane boundary between two agents who both did good work. Correct refusal. The COO
+MEASURED it instead:**
+```
+data/inf/scripts/bronze/  ->  NO positions pull   |   data/inf/scripts/silver/  ->  none
+infra/aws/lambda/inf-pipeline/inf-api-positions/pull_inflection_positions_daily.py   <<< IT LIVES HERE
+POSITIVE CONTROL: the same search finds convert_orion_api_to_silver.py -> the search WORKS.
+```
+> **DS~A's *"silver/bronze pull = AE lane, not mine"* is CORRECT. `0.5.0`'s *"DS~A owns it"* is NOT.**
+**`inf-api-positions` is an ETL PRODUCER and `0.5.0` is the ETL lane. IT IS HIS.**
+
+**BINDING:**
+- **DELIVERABLE 1 IS A *LOCATE*, NOT A FIX.** *The "stamps the requested date" mechanism is a CAUSAL CLAIM nobody has
+  source-confirmed. Rule 22.* **CITE THE LINE (`file:line @ commit-ish`) — and say whether it is in the PULL
+  (`infra/`) or the SILVER LIB (`data/`, DS's lane), because if it is the latter THIS IS THE FORK AGAIN, FOR THE
+  FOURTH TIME TODAY.**
+- **DELIVERABLE 2: a PROVEN-RED partition + a POSITIVE CONTROL** *(the FIXED era must show DISTINCT bodies — **a
+  relabel-detector that cannot show a NON-relabeled day is not a detector**).*
+- > ## **NOBODY FIXES IT WITHOUT A CO-SIGN. It sits INSIDE THE HELD CHAIN'S BLAST RADIUS: a DESIGN CHANGE, not a repair.**
+  *The last time a lane fixed an obviously-broken thing inside this blast radius, **the fix WAS the destructive act**.*
+- **NO CLOCK.** *`0.8.0`'s deployed guard already REFUSES THE FRESHNESS CLAIM at the served emitter.* **Nothing is
+  bleeding. Ground it.**
