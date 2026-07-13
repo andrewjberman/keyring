@@ -34,13 +34,20 @@ LIVE = [
                                     'control 69219a7db -- it can see the defect it clears)', 0),
     ('aor_off_is_a_noop_guard.py', 'under OFF the fold is a structural no-op (DELTA-0)', 0),
     ('aor_f4_and_inherit_census.py', 'F4 fails closed on the UNOBSERVABLE', 0),
-    ('aor_f2_pin_does_not_bind_a00.py', 'the absent-account path fails closed at EVERY full-attach '
-                                        'call site', 1),   # RED: 2 of 3 UNGUARDED -- a WITHHOLD
-    ('aor_r2_null_stamp.py', 'the chokepoint asserts the ROW, not the column', 1),  # RED -- a WITHHOLD
+    # v2 @ 59d70b95e -- WITHHOLDS DISCHARGED. Both flipped 1 -> 0 when DS's fixes landed, and the
+    # over-condemnation controls STAYED green. If either ever flips back, the runner says CHANGED.
+    ('aor_f2_pin_does_not_bind_a00.py', "an absent account's loss is DISCLOSED, never SILENT "
+                                        '(exclusion by DECISION + no fabricated attribution + visible '
+                                        'residual + incoherent shape refused)', 0),
+    # I PREDICTED THIS WOULD STAY AT 1 AND THE RUNNER CAUGHT ME. It exits 0 at 59d70b95e: base CVO's
+    # falsifier now RAISES on both attacks (N1, N2) while its non-placebo control C1 still RETURNS.
+    # Her arm confirms the fix independently of mine. **The runner refused to accept a changed arm
+    # silently -- which is the entire reason it exists.**
+    ('aor_r2_null_stamp.py', 'the chokepoint asserts the ROW, not the column', 0),
     ('aor_phantom_advisor_arm.py', 'no key on the served per-advisor NNA is a non-advisor', 1),  # RED
+    # -- LIVE on the served spine, but NOT a gate-2 blocker (switch-independent on today's data).
     ('aor_phantom_switch_arm.py', 'the go-live switch does not move the phantom bucket', 0),
-    ('aor_gate2_fix_bar.py', 'BOTH withholds discharged AND neither fix over-condemns', 1),  # RED by
-                                                                                            # construction
+    ('aor_gate2_fix_bar.py', 'BOTH withholds discharged AND neither fix over-condemns', 0),  # 5/5
 ]
 
 # -- DECLARED EXCLUSIONS -- these are NOT run, and here is exactly why -------------------------
@@ -114,10 +121,20 @@ if changed:
     print(f'!! AN ARM CHANGED STATE: {changed}')
     print('   Something moved under the battery. RE-GROUND before quoting any of it.')
     sys.exit(1)
-print(f'BATTERY CONSISTENT AT HEAD: {len(rows)} live arms, {len(EXCLUDED)} declared exclusions.')
-print('  GATE-2 = WITHHELD. The REDs are the two withholds (F2 at INF_A_01/INF_C_07; R2 row-vs-column)')
-print('  plus the phantom (RED, but NOT a gate-2 blocker -- exercised switch-independent on TODAY\'s data)')
-print('  and the pre-registered fix bar (RED by construction until the fixes land).')
-print('  V4 SERVED-VERIFY: NOT RUN -- blocked by the INF chain freeze. An EXPLICIT GAP, never a PASS,')
-print('  and NO fixture green in this battery closes it.')
+print(f'BATTERY CONSISTENT AT 59d70b95e: {len(rows)} live arms, {len(EXCLUDED)} declared exclusions.')
+print('  GATE-2 = CLEARED (determination #4). Both withholds DISCHARGED at 59d70b95e:')
+print('    F2 -- an absent account\'s loss is now DISCLOSED, never silent (exclusion by DECISION, no')
+print('          fabricated attribution, visible reconcilable residual, incoherent shape refused).')
+print('    R2 -- the chokepoint asserts the ROW. Confirmed independently by base CVO\'s own falsifier')
+print('          (its attacks N1/N2 now RAISE while its non-placebo control C1 still RETURNS).')
+print('  And the OVER-CONDEMNATION controls STAYED GREEN -- neither fix fires on a legitimate run.')
+print('\n  THE ONE RED IS EXPECTED AND IS **NOT** A GATE-2 BLOCKER:')
+print('    the PHANTOM is LIVE on the served spine ($52,604.80 on a key that is not an advisor), but it')
+print('    is EXERCISED switch-independent on TODAY\'s data (the 3 accounts are ROSTER-ABSENT, so the')
+print('    fold cannot reach them). Separate chapter; its fix is blocked by the INF hold.')
+print('\n  >> CLEARING GATE-2 DOES NOT AUTHORIZE GO-LIVE, AND NOTHING IN THIS BATTERY DOES. <<')
+print('  V4 SERVED-VERIFY: NOT RUN. It verifies the FIRST NIGHTLY *AFTER* the switch flips, so it is a')
+print('  POST-cutover step and cannot be a precondition of a PRE-cutover gate. It remains an EXPLICIT')
+print('  GAP -- never a PASS -- and NO fixture green in this battery closes it. Still required and NOT')
+print('  mine: CHANGE-2, the never-widen co-sign, the INF hold-lift, and Andrew\'s GO.')
 sys.exit(0)

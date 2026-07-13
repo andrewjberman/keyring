@@ -107,27 +107,70 @@ except TypeError as e:
           f'TypeError: {e}')
 
 # ---- A2: the floor protects the OBSERVABLE field, NOT the one that silently drops the row --------
+# =================================================================================================
+# A2 -- REWRITTEN AT 59d70b95e. **MY PREVIOUS A2 ASSERTED THE DEFECT AND A GOOD FIX BROKE IT.**
+#
+# It read:   check('...LEAVES THE SILENT FIELD NULL', pd.isna(rb))
+# i.e. it DEMANDED that rep_bucket stay <NA> -- which is precisely the thing that silently drops the
+# row from per-advisor NNA. The fix floors it to an explicit 'unresolved', and my arm went
+# **FAIL: rep_bucket = 'unresolved'**. The tempting "repair" was to revert the code.
+#     A TEST THAT ASSERTS THE DEFECT WILL DEFEND IT.
+# Third time today, in my own battery, and CTO~B warned me about this exact class ONE MESSAGE before
+# it happened (his own gate-1 arm A had the mirror-image error: it demanded the absent row SURVIVE
+# into per-advisor NNA -- which demands FABRICATED attribution, the phantom sin in reverse).
+#
+# >> WRITE THE ASSERTION FROM THE PROPERTY YOU WANT, NEVER FROM THE SHAPE OF THE DEFECT. <<
+#
+# THE PROPERTY (and it is NOT "the row must survive", and NOT "rep_bucket must be null"):
+#     AN ABSENT ACCOUNT'S LOSS MUST NEVER BE SILENT. It must be EXCLUDED BY DECISION and DISCLOSED.
+# Grounded on the real consumer, INF_09.generate_partner_analytics.py @ 59d70b95e:
+#     :188  firm_nna = window['net_nna'].sum()                      <- NOT rep_bucket-filtered
+#     :193  indiv    = window[window['rep_bucket'] == 'individual'] <- per-advisor IS filtered
+# So a row with rep_bucket='unresolved' is EXCLUDED from per-advisor and REMAINS in the firm total
+# => sum(advisors) < firm_total, and the residual is VISIBLE and RECONCILABLE. That is the disclosure.
+# =================================================================================================
 dim, _ = ar.attach_advisor_key(a00_frame(True), resolution(), absent='unknown')
 row = dim[pd.to_numeric(dim['account_id'], errors='coerce') == 99].iloc[0]
 ak, rb = row['advisor_key'], row['rep_bucket']
 
-check('A2 the FLOOR sets the OBSERVABLE field (advisor_key -> "unknown", visibly non-null)',
-      ak == 'unknown', f'advisor_key = {ak!r}')
-check('A2 ...and LEAVES THE SILENT FIELD NULL (rep_bucket has NO absent-branch)',
-      pd.isna(rb), f'rep_bucket = {rb!r}')
+check('A2.P1 the exclusion is a DECISION, not an artifact: rep_bucket is floored to an EXPLICIT named '
+      'bucket, never left <NA> (a null exclusion is dtype-dependent and unpinned)',
+      (not pd.isna(rb)) and rb == ar.UNRESOLVED_REP_BUCKET,
+      f'rep_bucket = {rb!r}   advisor_key = {ak!r}')
 
-# ASSERT THE THING, NOT A PROXY FOR IT. My first cut wrote `survives = (rb == 'individual')` on the
-# SCALAR -- which yields pd.NA, not False, and blew up on `not NA` ("boolean value of NA is ambiguous").
-# That was a scalar STANDING IN for what INF_09:193 actually does, which is a SERIES MASK -- and the
-# two do not behave the same on a null (a mask coerces NA -> False and DROPS the row; the scalar
-# refuses to answer). So: run the REAL filter and read what SURVIVES it.
-served = dim[dim['rep_bucket'] == 'individual']              # INF_09:193, verbatim in behaviour
-ids_served = set(pd.to_numeric(served['account_id'], errors='coerce').dropna().astype(int))
-check('A2 >> SO THE ROW STILL VANISHES AT INF_09:193 -- the floor closes the NULL, not the LOSS.\n'
-      '      THIS is why INF_A_00:302 must RAISE. A floor alone is a backstop for the READER. <<',
-      99 not in ids_served,
-      f'survivors of the rep_bucket filter: {sorted(ids_served)}  -- account 99 is GONE, and it is '
-      f'gone SILENTLY: it carries a visibly-populated advisor_key={ak!r} the whole way to the drop.')
+# ASSERT THE THING, NOT A PROXY FOR IT: INF_09:193 is a SERIES MASK, and a mask coerces NA -> False.
+# A scalar `rb == 'individual'` yields pd.NA and cannot answer. Run the REAL filter.
+indiv = dim[dim['rep_bucket'] == 'individual']                 # INF_09:193, verbatim in behaviour
+attributed = set(pd.to_numeric(indiv['account_id'], errors='coerce').dropna().astype(int))
+check('A2.P2 NO FABRICATED ATTRIBUTION: the unattributable row is NOT rolled into any named advisor '
+      "(it must never be served as somebody's NNA)",
+      99 not in attributed,
+      f'per-advisor rollup contains: {sorted(attributed)}  -- 99 correctly EXCLUDED. '
+      '(CTO~B\'s gate-1 arm demanded the OPPOSITE and DS refused it. He was right.)')
+
+# P3 -- the disclosure. firm total is UNFILTERED (INF_09:188), so the row stays in it.
+dim['nna'] = 30.0
+firm_total = float(dim['nna'].sum())                            # INF_09:188 -- no rep_bucket filter
+per_advisor = float(dim[dim['rep_bucket'] == 'individual']['nna'].sum())   # INF_09:193
+residual = firm_total - per_advisor
+check('A2.P3 THE LOSS IS DISCLOSED, not silently absorbed: the row REMAINS in the firm total, so '
+      'sum(advisors) < firm_total and the residual is VISIBLE and RECONCILABLE',
+      residual > 0,
+      f'firm total {firm_total:.1f}  |  sum over per-advisor {per_advisor:.1f}  |  '
+      f'VISIBLE RESIDUAL {residual:.1f}\n      '
+      'THAT is the property. Not "the row survives" (fabrication) and not "rep_bucket is null" (the '
+      'defect) -- but "the loss is DISCLOSED rather than SILENT."')
+
+# P4 -- the structural gate: the incoherent shape is UNCONDITIONALLY refused.
+try:
+    bad = pd.DataFrame({'account_id': [7], 'advisor_key': ['peter_lee'], 'rep_bucket': [pd.NA]})
+    ar.attach_advisor_key(bad, resolution(), absent=None)
+    check('A2.P4 the INCOHERENT shape (non-null advisor_key + NULL rep_bucket) is REFUSED', False,
+          'IT RETURNED. The row that looks perfectly attributed and vanishes from every aggregate '
+          'is emittable again.')
+except RuntimeError as e:
+    check('A2.P4 the INCOHERENT shape (non-null advisor_key + NULL rep_bucket) is REFUSED '
+          '-- unconditionally, on EVERY path, incl. absent=None', True, f'RuntimeError: {str(e)[:96]}...')
 
 # ---- A3: the gate fires, and it does not over-condemn --------------------------------------------
 n_bad = n_absent(a00_frame(True), resolution())
@@ -205,32 +248,40 @@ if not census_sound:
     sys.exit(2)
 
 unguarded = [n for n, s in states.items() if s == 'UNGUARDED']
-check('A4 the guard census is SOUND (both controls scored correctly)', True,
-      f'{len(unguarded)} of {len(CONSUMERS)} full-attach call sites are UNGUARDED: {unguarded}')
 
-# ---- A5: the CONSEQUENCE at an unguarded call site (quantified, on the real filter) --------------
-frame = pd.DataFrame({'account_id': [1, 2, 99], 'advisor_key': [pd.NA] * 3,
-                      'rep_bucket': [pd.NA] * 3, 'nna': [30.0, 30.0, 30.0]})
-frame, _ = ar.attach_advisor_key(frame, resolution(), absent='unknown')   # A_01:203 / C_07:280
-served_nna = frame[frame['rep_bucket'] == 'individual']['nna'].sum()      # INF_09:193
-total_nna = frame['nna'].sum()
-check('A5 CONSEQUENCE at an UNGUARDED call site: the absent account is floored to a visibly-populated\n'
-      "      advisor_key='unknown', carries rep_bucket=<NA>, and is then SILENTLY DROPPED at INF_09:193",
-      served_nna < total_nna,
-      f'NNA in the frame: ${total_nna:,.1f}   NNA surviving the rep_bucket filter: ${served_nna:,.1f}'
-      f'   -> ${total_nna - served_nna:,.1f} VANISHES with no alarm.\n      '
-      'The comments at A_01/C_07 claim the floor protects against exactly this. IT DOES NOT.')
+# >> AND THE CENSUS ITSELF WAS ASSERTING MY REMEDY, NOT THE PROPERTY. <<
+# Pre-59d70b95e this block FAILED whenever any call site did not RAISE -- i.e. it demanded ONE
+# SPECIFIC FIX SHAPE ("make A_01 and C_07 raise like A_00 does"). That was MY proposed remedy, and
+# a bar that encodes a remedy grades the fixer on obedience, not on correctness.
+# DS chose a DIFFERENT and better shape: floor rep_bucket to an EXPLICIT 'unresolved' (so the
+# exclusion is a DECISION), EXCLUDE the row from per-advisor rollups (never fabricate attribution),
+# LEAVE it in the firm total (so the residual is VISIBLE and reconcilable), ALARM by account, and
+# RAISE unconditionally on the incoherent shape. **That satisfies the property without the raise.**
+# So the census now REPORTS the shapes and the VERDICT is rendered on P1-P4 above, not on this.
+# A_00 additionally RAISES (:302) and runs FIRST in the chain -- a gate on top of the disclosure.
+check('A4 per-call-site census (denominator 3): the SHAPES, reported -- not a pass/fail on my remedy',
+      True,
+      f'GATED (raises): {[n for n, s in states.items() if s == "GUARDED"]}   |   '
+      f'DISCLOSING (floor+alarm+exclude-by-decision): {unguarded}\n      '
+      'Both shapes satisfy the property. The verdict is P1-P4, not "did they adopt my fix".')
 
 print('\n' + '=' * 100)
 if FAILS:
     print(f'F2 ARM: {len(FAILS)} FAILURE(S) -- {FAILS}')
+    print('  NOTE BEFORE YOU "FIX" THE CODE: ask FIRST whether this ARM was encoding the bug.')
+    print('  It has done so twice already (absent=None; rep_bucket-must-be-null).')
     sys.exit(1)
-print('F2 ARM @ HEAD -- SPLIT VERDICT. THIS IS NOT A GREEN.')
-print('  CLOSED at INF_A_00 (:302 raises -- fails closed, does not over-condemn).')
-print(f'  OPEN at {unguarded} -- they FLOOR AND CONTINUE. The floor closes the NULL and')
-print('  not the LOSS: a visibly-populated advisor_key rides all the way to a SILENT drop.')
-print('  >> A backstop that protects the OBSERVABLE and not the UNOBSERVABLE is a backstop for the')
-print('  >> READER, not for the DATA. <<')
-print('\n  I originally rendered "F2 CLOSED at HEAD" off INF_A_00 ALONE. That was a census of one.')
-print('  Caught by CTO~B gate-1, re-grounded here. The unit is the CALL SITE.')
-sys.exit(1)
+print('F2 ARM: GREEN AT 59d70b95e. The absent-account loss can no longer be SILENT.')
+print('  P1 the exclusion is a DECISION (rep_bucket -> explicit \'unresolved\', never <NA>)')
+print('  P2 NO fabricated attribution -- the unattributable row is never rolled into a named advisor')
+print('  P3 the loss is DISCLOSED -- the row stays in the firm total, so sum(advisors) < firm_total')
+print('     is VISIBLE and reconcilable (INF_09:188 unfiltered / :193 filtered -- verified at source)')
+print('  P4 the incoherent shape (non-null key + null bucket) is REFUSED unconditionally')
+print('  + INF_A_00:302 RAISES and runs FIRST in the chain -- a gate on top of the disclosure.')
+print('\n  RESIDUAL, NAMED HONESTLY AND *NOT* A BLOCKER: the residual is VISIBLE but not ASSERTED.')
+print('  Nothing raises on `sum(advisors) + unattributed != firm_total` -- that is ruling (iii)\'s')
+print('  durable fix and it is not built. A WARN IN A LOG IS NOT A GATE. It is not a blocker because')
+print('  the absent set is empty by construction today (pin + source-digest assertion => the resolver')
+print('  and every consumer read the SAME accounts_v2 bytes => identical account sets), A_00 raises,')
+print('  and the incoherent shape raises. It is defence-in-depth for the day that invariant breaks.')
+sys.exit(0)

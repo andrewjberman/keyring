@@ -170,13 +170,47 @@ def guarded(path: str) -> bool:
     return bool(re.search(r'_n_absent\s*=', w) and re.search(r'if\s+_n_absent\s*:', w) and 'raise' in w)
 
 
-states = {n: guarded(p) for n, p in CONSUMERS.items()}
-unguarded = [n for n, g in states.items() if not g]
-bar('B4  ALL THREE full-attach call sites raise on absent (denominator 3)',
-    not unguarded,
-    'GUARDED: ' + ', '.join(n for n, g in states.items() if g)
-    + (f'   || STILL UNGUARDED: {unguarded} -- they FLOOR AND CONTINUE, and the floored row carries '
-       f'rep_bucket <NA> straight to the silent drop at INF_09:193' if unguarded else ''))
+# >> B4 REWRITTEN AT 59d70b95e -- IT WAS ASSERTING **MY REMEDY**, NOT THE PROPERTY. <<
+# It read: "ALL THREE full-attach call sites raise on absent" -- one specific fix shape, the one I
+# happened to propose. **A bar that encodes a remedy grades the fixer on OBEDIENCE, not correctness.**
+# DS chose a better shape: floor rep_bucket to an explicit 'unresolved' (the exclusion becomes a
+# DECISION, not a dtype-dependent artifact of NaN != 'individual'), EXCLUDE the row from per-advisor
+# rollups (never fabricate attribution), LEAVE it in the firm total (so the residual is VISIBLE), ALARM
+# by account, and RAISE unconditionally on the incoherent shape. It satisfies the property WITHOUT the
+# raise -- and it is better than what I asked for, because a raise at C_07 would abort the chain where
+# a disclosure suffices.
+# THE PROPERTY, grounded on the real consumer (INF_09.generate_partner_analytics.py @ 59d70b95e):
+#     :188  firm_nna = window['net_nna'].sum()                       <- NOT rep_bucket-filtered
+#     :193  indiv    = window[window['rep_bucket'] == 'individual']  <- per-advisor IS filtered
+#   => an 'unresolved' row is EXCLUDED from per-advisor and REMAINS in firm => the loss is DISCLOSED.
+# NOT "the row must survive into per-advisor NNA" -- that demands FABRICATED attribution, and it is the
+# error CTO~B's own gate-1 arm made (DS refused it, and was right).
+states = {n: guarded(p) for n, p in CONSUMERS.items()}   # the SHAPES, reported -- not graded
+res_b4 = pd.DataFrame({'account_id': [1, 2], 'advisor_key': ['peter_lee', 'joe_brandenburg'],
+                       'rep_bucket': ['individual'] * 2, 'is_mover': [False, False]})
+f_b4 = pd.DataFrame({'account_id': [1, 2, 99], 'advisor_key': [pd.NA] * 3,
+                     'rep_bucket': [pd.NA] * 3, 'nna': [30.0, 30.0, 30.0]})
+f_b4, _ = A.attach_advisor_key(f_b4, res_b4, absent='unknown')
+row99 = f_b4[pd.to_numeric(f_b4['account_id'], errors='coerce') == 99].iloc[0]
+p1 = (not pd.isna(row99['rep_bucket'])) and row99['rep_bucket'] == A.UNRESOLVED_REP_BUCKET
+indiv_b4 = f_b4[f_b4['rep_bucket'] == 'individual']                      # INF_09:193
+p2 = 99 not in set(pd.to_numeric(indiv_b4['account_id'], errors='coerce').dropna().astype(int))
+firm_b4, adv_b4 = float(f_b4['nna'].sum()), float(indiv_b4['nna'].sum())  # INF_09:188 vs :193
+p3 = firm_b4 > adv_b4
+try:
+    A.attach_advisor_key(pd.DataFrame({'account_id': [7], 'advisor_key': ['peter_lee'],
+                                       'rep_bucket': [pd.NA]}), res_b4, absent=None)
+    p4 = False
+except RuntimeError:
+    p4 = True
+bar('B4  an absent account\'s loss is DISCLOSED, never SILENT (the PROPERTY, not my remedy)',
+    p1 and p2 and p3 and p4,
+    f"P1 exclusion is a DECISION (rep_bucket={row99['rep_bucket']!r}, not <NA>): {p1}   "
+    f'P2 no fabricated attribution: {p2}\n       '
+    f'P3 loss DISCLOSED -- firm {firm_b4:.1f} vs per-advisor {adv_b4:.1f} -> VISIBLE RESIDUAL '
+    f'{firm_b4 - adv_b4:.1f}: {p3}   P4 incoherent shape REFUSED: {p4}\n       '
+    f"call-site shapes: GATED={[n for n, g in states.items() if g]} "
+    f"DISCLOSING={[n for n, g in states.items() if not g]} -- both satisfy the property.")
 
 # B5: the over-condemnation control on the F2 fix -- a healthy frame must not be condemned.
 res_ok = pd.DataFrame({'account_id': [1, 2], 'advisor_key': ['peter_lee', 'joe_brandenburg'],
