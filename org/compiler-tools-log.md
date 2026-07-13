@@ -16741,3 +16741,13 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/inf-pipeline/inf-gold-... | PASS |
 | 2026-07-13 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript io | comp-pipescript io INF_B_00 | GAP: omitted the silver/api_dims/accounts_v2 READ and the gold/canonical/holdings_*.parquet WRITE (the primary output). Listed only positions_mv + 2 bronze reads / 2 _meta writes. The roster input at the heart of the 0-row SEV (c23988cdf) is INVISIBLE to the mandated DS tool -- a DS running io before editing INF_B_00 would not learn it reads accounts_v2 at all. positions_mv IS detected from an identical module-constant prefix, so detection is inconsistent (mechanism NOT asserted -- not grounded). |
 | 2026-07-13 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/hook_register_orphan_cleanup.py | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_B_00.canonica... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform~A | (no-TO) | session-summary | comp-pipescript io INF_B_00 (GAP, see above) + comp-surface-check x3 (PASS, auto via safe-commit) + commit-gate.sh x3 (PASS) | MIXED | 0-row roster SEV built+exercised+landed (c23988cdf, a13b96822); CVO RAVC-4 VERIFIED. |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
