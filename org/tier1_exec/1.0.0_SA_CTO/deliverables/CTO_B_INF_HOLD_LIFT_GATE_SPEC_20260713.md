@@ -155,3 +155,102 @@ It sat harmless until the **silver** copy was updated at **2026-07-10T23:37Z**; 
 ---
 
 *2 of 7, and item 5 is not even eligible. Nothing lifts on a feeling; nothing lifts on a blank signature either.*
+
+---
+
+# AMENDMENT 2 (2026-07-13) — THE COLLAPSE CLASS IS **PREVENTED AT SOURCE AND DETECTED BY NOTHING**
+
+**Ledger grows 7 → 10.** It grew because we learned something. *Shrinking a checklist to feel finished is the disease.*
+
+## 1. THE FINDING (CVO~B, `a2ff8d8ce`, EXERCISED — not reasoned)
+
+```
+D1   The COVERAGE guard PASSES a total advisor COLLAPSE.
+     Basis = {date: {account_id: net_nna}}  (nna_coverage_guard.py:191)
+     advisor_key IS NOT IN IT. Nothing vanishes in a collapse, so it has NO COLUMN TO NOTICE WITH.
+
+D1b  THE RESIDUAL-ADVISOR GUARD IS *ALSO* BLIND:
+     a collapse flips every key to `inflection_wealth_management` — A LEGITIMATE ROSTER MEMBER.
+     It is therefore NOT a residual, and the guard CORRECTLY stays quiet.
+     EXERCISED: assert_no_residual_advisor({inflection_wealth_management: $202,062,830.31}) -> PASSED
+
+D1c  CONTROL: the residual guard DOES fire on a real residual (`inflection_unmapped_rep`).
+     >> Its silence on the catchall is a REAL READING, not a dead instrument. <<
+```
+
+> ## **THE ENTIRE FIRM CAN COLLAPSE ONTO ONE VALID ADVISOR KEY AND EVERY DOWNSTREAM DETECTOR STAYS GREEN.**
+> ## **THE `INF_B_00` SELECTOR IS NOT DEFENCE-IN-DEPTH. IT IS THE ONLY THING.**
+
+**D1c is what makes D1b believable.** *A guard that is silent because it is dead and a guard that is silent because the input is legitimately clean are byte-identical until you make it fire.* She made it fire.
+
+**And the poisoned partition's shape is the lesson:** 2026-05-08 raw is **`0 rows / 45 COLUMNS`** — **a perfect schema on an empty roster.** That is exactly why a column-level guard passed it. **A SCHEMA CHECK IS NOT A CONTENT CHECK.**
+
+## 2. NEW LIFT CONDITIONS
+
+**ITEM 8 — THE COLLAPSE DETECTOR.** (DS~A's concentration guard: *non-empty AND < 50% firm-catchall → RAISE, not skip*; his 04-28 case is 818/850 = 96.2%.)
+- **PROVEN-RED on BOTH real cases — 05-08 AND 04-28.** Two shapes of one class; proven on one is not proven on the other.
+- **OVER-CONDEMNATION ARM (the hard half):** a *legitimately* concentrated day must PASS. A small firm, a sparse date, a holiday with one trade — **these are real shapes, not hypotheticals.** *A threshold that fires on a real concentration is the disease it was sent to cure.*
+- **MEASURE the distribution across all 69 partitions before choosing the number. Do not reason about the threshold.** (The billing-dim precedent: 1364/1567 empty = *legitimate*, and a blanket raise would have aborted the nightly 87% of days.)
+
+**ITEM 9 — REMOVING THE SELECTOR MUST BREAK THE BUILD.**
+A structural test failing if `resolve_accounts_v2_for_snap` is not **DEFINED *and* CALLED** in `INF_B_00` — **asserted by AST, never grep** (*a mention is not an implementation*). **Structure beats assertion: we cannot detect the regression downstream, so we make it impossible to ship quietly.**
+
+**ITEM 10 — THE BYPASS QUESTION. OPEN.** (COO's — and it is a hole in item 9.)
+
+> **Item 9 stops the selector being REMOVED. It does NOT stop it being BYPASSED.**
+> **What prevents a DIFFERENT script from reading `accounts_v2` by RAW DATE-KEY and deriving an advisor without the walk-back?**
+
+That is the **C_07** lesson: *a symbol-gate is walked past by INLINING the call.*
+
+**MY SCREEN, AND ITS DECLARED INCAPACITY:**
+```
+gold scripts (denominator)                              49
+scripts referencing accounts_v2                         19
+raw date-key pattern AND no safe-path reference          5   <- CANDIDATES ONLY. NOT FINDINGS.
+    INF_C_09 · INF_D_00 · INF_D_04 · INF_D_08 · INF_E_00
+```
+**THAT IS A SYMBOL CENSUS AND IT CANNOT ANSWER THE QUESTION.** It counts mentions. It **cannot** distinguish a script that *derives `advisor_key` from a raw date-keyed roster* (**the defect**) from one that reads `accounts_v2` for account metadata and never touches attribution (**harmless**). It would score a comment as an implementation and **miss an inlined read entirely.**
+
+**5 candidates, 0 findings. Routed to DS~A as a DATA-FLOW census.** *I am not sending an engineer to "fix" five working scripts off a grep, and I am not reporting a number I cannot stand behind.*
+**If the answer is ZERO — OPEN THE FILES.** *A zero is the one result a pattern produces for reasons that have nothing to do with the estate.* (Today alone: a "0 tests" green from the wrong runner; `objects=0` from a silently-failed copy; `0 matches` from scanning zero files.)
+
+## 3. THE LEDGER — **5 of 10**
+
+```
+[x]  1  coverage assertion LIVE            *** DELETION ONLY — BLIND TO COLLAPSE (exercised, D1) ***
+[x]  2  silver rep_id NULL grounded        Orion stopped returning the accounts; WE did not drop them
+[x]  3  INF_B_00 selector LIVE             *** THE ONLY COLLAPSE INSTRUMENT *** (verified on the deployed bytes)
+[x]  4  CVO~B independent verification     a2ff8d8ce, 9/9, BOTH guards, by exercise
+[x]  5  co-sign on the PRE-REGISTERED delta   CTO + COO, both GIVEN on ccabfb3de (firm total invariant; drift $0.00)
+[ ]  6  the collision — DELETE the orphan  sovereign ask (S3 delete). Deliberately LAST: it is a layer.
+[ ]  7  the first re-derive WATCHED against the delta, revertible from the 8,805 ETag-verified backups
+[ ]  8  the COLLAPSE DETECTOR              DS~A
+[ ]  9  removing the selector BREAKS THE BUILD   (AST, not grep)
+[?] 10  BYPASS — does anything else derive an advisor from a raw date-keyed roster?   *** OPEN ***
+```
+
+**A count that disagrees with its own rows is the defect we spent the day prosecuting** — my header once read `4 of 9` against five ticks, because I wrote it before COO's co-sign landed and never re-read it. **The error ran CONSERVATIVE, and a conservative error never gets audited: nobody challenges a checklist claiming to be less finished than it is.** *Flag them anyway.*
+
+## 4. THE CO-SIGN STANDARD (COO, and it corrects the obvious instinct)
+
+The 05-08 repair delta conserves: firm total **$202,062,830.31 → $202,062,830.31, drift $0.00.**
+
+> **COO REFUSED TO SIGN ON THAT.** *"Conservation is invariant under a SWAP. `DRIFT $0.00` tells me no money entered or left. It tells me NOTHING ABOUT WHOSE IT IS."*
+
+**He signed on the OUT-OF-SAMPLE control instead: the repaired day lands BETWEEN its two healthy neighbours (05-07 / 05-09) — a control the fix was NOT FITTED TO.** *A swap cannot pass that.*
+
+**And it generalises — it is the same weak oracle that let $453,179 leave the served spine while `sum(advisors) == firm_total` still tied to $0.00:**
+
+```
+CONSERVATION IS INVARIANT UNDER:
+   a SWAP                    (peter's money becomes patrick's)        -> total unchanged
+   a BOTH-SIDES DELETION     (an account leaves both sums at once)    -> total unchanged
+   a COLLAPSE                (every advisor -> one catchall)          -> total unchanged
+```
+
+> **A CONSERVATION CHECK IS A CONSTRAINT, NOT AN ORACLE.** It can only tell you nothing entered or left. **It is structurally incapable of telling you whether the right thing is in the right place — and every attribution defect we have is invisible to it BY CONSTRUCTION.**
+> **What earns a signature is an OUT-OF-SAMPLE control the fix was NOT fitted to.** *A check the fix was tuned to pass proves the tuning, not the fix.*
+
+---
+
+*5 of 10. Nothing lifts on a feeling, nothing lifts on a blank signature, and nothing lifts on a guard that cannot see the class it is being credited with.*
