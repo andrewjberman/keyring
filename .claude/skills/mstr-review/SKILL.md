@@ -39,6 +39,34 @@ must be derived, never approximated:
   to the NEXT window).
 - Record both `window_from_commit` and `window_to_commit` (sha) in the RV record.
 
+**A NEGATIVE CLAIM MAY NOT BE ASSERTED FROM A PINNED WINDOW (RV-0047 F-015 — the
+boundary-error class, recurring inside the review that cites it).** The rules above
+govern *how you pin a window*. They say nothing about *what you may conclude from
+one* — and that gap produced a false finding in RV-0046.
+
+RV-0046 reported *"MSTR-self overrides in-window: 0 … the behaviour has stopped."*
+Its END was pinned at `01:45:47Z`. Two MSTR-self OVERRIDE lines fired at `02:41:45Z`
+and `02:44:24Z` — **56 minutes later**, self-labelled "F-002 recurrence 12." The
+review declared a recurring behaviour extinct, and the behaviour was 56 minutes from
+recurring. Every window rule was followed to the letter; the error happened anyway.
+
+> **A window pinned before the present cannot support a claim about the present.**
+> A `0` read from it is not a measurement of the behaviour — it is a measurement of
+> the boundary. A negative result is a claim about a boundary until you show the
+> boundary does not produce it.
+
+**Therefore, asymmetric treatment — positives pin, negatives do not:**
+- **POSITIVE findings** (a record exists, an override fired, a commit landed) are
+  safe to assert from the pinned window. The window can only under-count them, and
+  an under-counted positive is still a true positive.
+- **NEGATIVE findings** (a behaviour "stopped", a count of zero, an absence, a
+  "did not recur") must be **re-measured at write-time against HEAD**, or stated as
+  what they actually are: *"not observed as of `<END>`"* — never as *"stopped."*
+- A pinned END is chosen precisely *because* the fabric is still committing. That
+  reasoning is sound for **including** a record and exactly wrong for concluding an
+  **absence** — the liveness that justifies the pin is the same liveness that
+  invalidates the zero.
+
 ## Step 1 — Diff the window
 
 Deterministic, since the flag:
