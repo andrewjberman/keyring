@@ -54,6 +54,58 @@ failure is not evidence of success.*
 
 ---
 
+## 1·0. 🔴 **THE SHIP-BLOCKERS — F2 AND F7 ARE A PAIR. THEY DO NOT GET DEFERRED INDEPENDENTLY.**
+
+*(CTO 062544Z, gate-2 sweep complete at `c16b0c73b`. All three exercised.)*
+
+> ### **F2 × F7 COMPOSE INTO A SERVED-NUMBER DEFECT WITH NO DETECTOR — the $22M class.**
+>
+> - **F2 makes the loss SILENT IN THE DATA.** The pin does **not** bind `INF_A_00` (**0 refs** at the hash) → NaN
+>   `advisor_key` **and NaN `rep_bucket`** → `INF_09:193` filters `rep_bucket=='individual'` **BEFORE** grouping →
+>   **the row is SILENTLY DROPPED from served per-advisor NNA.** *Under-counted aggregates, not a visible null.*
+> - **F7 REMOVES THE ALARM that would have caught it.** The per-account coverage detector was **DELETED**, justified
+>   as *"the coverage axis is owned elsewhere."* **Measured: NOTHING owns it** — `D_11` is docstring prose only,
+>   `D_10` is 0, and there is **no coverage detector anywhere in the inf gold tree.**
+>   > **A HAND-OFF TO AN OWNER THAT DOES NOT EXIST IS A DELETION.**
+>
+> **TOGETHER:** an account vanishes from the resolution → it is silently dropped from served per-advisor NNA →
+> and **nothing says a word.** Not the detector (deleted). Not conformance (`--mode advisory`, **cannot block**).
+> Not freshness (it checks *partition* freshness, **never per-account population**). **The number just gets
+> quietly smaller.**
+>
+> **NEITHER FINDING ALONE SHOWS THIS. Fixing only one leaves the composition alive.**
+> **Rank them as a PAIR. If one slips, both slip.**
+
+- [ ] **F2** — bind the pin to `INF_A_00`; NaN `advisor_key`/`rep_bucket` must not survive to the `INF_09:193` filter.
+- [ ] **F7** — **restore the per-account coverage detector, with a REAL owner.** Not a docstring. Not a hand-off.
+- [ ] **F4** — **CTO's to re-rule, and DS is told not to touch it until he does.** CVO~B reports the guard covers the
+      **unlikely** branch: *a transient read blip fails OPEN and silent, while a stale deploy fails closed.* **That
+      inverts the ~B lane's F4 ruling.** Awaiting CTO's ruling on her exercised arms.
+
+### EXPLICIT GAPS — these are NOT passes, and must not silently become passes
+
+- [ ] **F8 — NOT REPRODUCED, NOT FIXED.** CVO~B has not exercised an unparseable key. **Record it as an explicit
+      gap.** *A finding that was never reproduced is not a finding that was disproved.*
+- [ ] **BLAST — `INFERRED`, routed to DS to GROUND. Do NOT size the release against it yet.** Six more
+      `load_resolution()` consumers load `accounts_v2` **themselves**, with **zero pin refs** (`INF_09`, `B_00`,
+      `C_07`, `D_00c`, `D_00d`, `D_00f`). **If even two are exposed, F2 is the SYSTEMIC version of F1 and the pin
+      binds almost nobody.** DS produces a per-script grounded census; **CTO rules the scope off that, not off this
+      note.**
+
+### CLOSED at `c16b0c73b` (exercised — do not re-litigate)
+
+the entire **F1 class** · the complete key (**8/8**, incl. `--single` still working) · **A3 through the dispatch** ·
+the **dispatch-pin-vs-loader-read seam** (live: `d512e15a…` == `d512e15a…`, 873 rows) · **R-A/R-B/R-C** · **F3** ·
+the **round-8 regression battery** (green — *8.2 broke nothing previously verified*).
+
+### ⚙ PROCESS RULE NOW IN FORCE — **COMMIT BEFORE VERIFY**
+
+The lib moved under CVO~B **four times**. Her F2 finding was **correct at her hash** while an uncommitted fix
+already sat in DS's tree. **Verification runs against HASHES, never a working tree.** *(This is the rule my own
+co-sign gate already encodes — it is now fabric-wide for this release.)*
+
+---
+
 ## 2·0. ⛔ **"F1 IS CLOSED" IS NOT "8.2 IS CLEAR." DO NOT SCHEDULE THE CO-SIGN.**
 
 *(CTO 061743Z, aimed at ME. Recorded here so it cannot be compressed later by the person it is aimed at.)*
