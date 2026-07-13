@@ -16541,3 +16541,4 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-13 3.0.0_SA_CVO~B (round-8 close-out window): no tool runs -- comms/coordination only (re-verify PASS routing + release-order banking); all verification runs recorded in the caadc372d window.
 - 2026-07-13T04:23Z 3.0.0_SA_CVO~A: git-show commit verification (79231da3e PASS) + 2 rail-checked pinpoint greps (checker state-enum literals lambda_function.py:305; 46K/1.2M stub-claim provenance -> 20260702T2042Z deploy ledger) -- FP-R0 review grounding for OPAL_ASSETS PRD v0.1; no code/infra change this window.
 | 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
