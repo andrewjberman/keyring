@@ -16542,3 +16542,15 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-13T04:23Z 3.0.0_SA_CVO~A: git-show commit verification (79231da3e PASS) + 2 rail-checked pinpoint greps (checker state-enum literals lambda_function.py:305; 46K/1.2M stub-claim provenance -> 20260702T2042Z deploy ledger) -- FP-R0 review grounding for OPAL_ASSETS PRD v0.1; no code/infra change this window.
 | 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-13 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-blast | comp-blast register_agent | FAIL |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor-of-record-go-live-g... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/build-and-upload.sh | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-07-13 | 0.8.0_AE_CloudComp | OPAL_ASSETS.P0-A.one-bucket-dynamodb-skeleton | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor-of-record-go-live-g... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/build-and-upload.sh | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/PRE_REBOOT_... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/PRE_REBOOT_... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/PRE_REBOOT_... | PASS |
+| 2026-07-13 | 0.8.0_AE_CloudComp | OPAL_ASSETS.P0-A | comp-which/comp-blast/comp-glob + aws iam simulate-principal-policy + commit-gate | G4/G5 grounding: served mdpf path, avgcap = sovereign-diagnostic-not-served (caught), opal-data-etfs/daily is the Opal-side source; Rule-22a pre-check (etfs-read implicitDeny / mdpf-read positive-control allowed / table-write allowed) | PASS (comp-which PARTIAL near-tie) |
+| 2026-07-13 | 0.8.0_AE_CloudComp | OPAL_ASSETS.P0-A.one-bucket-dynamodb-skeleton | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
