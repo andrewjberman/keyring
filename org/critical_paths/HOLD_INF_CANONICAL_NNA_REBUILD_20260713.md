@@ -1,3 +1,63 @@
+# HOLD — INF gold chain · ⚠️ **THE $439K DELETION MECHANISM IS FALSIFIED. THE STOP STANDS ON DIFFERENT GROUNDS. READ THIS BOX FIRST.**
+
+> # 🛑 THE CENTRAL CLAIM OF THIS ENTIRE DOCUMENT WAS WRONG.
+> **DS falsified it at 11:13Z with a measurement and a source read. I have verified BOTH myself, on the DEPLOYED
+> artifact. It holds.**
+>
+> ```python
+> # INF_C_01.canonical_nna.py  — repo :755  ·  DEPLOYED (the runner's copy) :727   [control: 764 lines = a real read]
+> if df.empty:
+>     if not dry_run:
+>         mark_empty('INF_C_01', date_str, 'no_nna_classified_flows')
+>     continue          # <-- NO WRITE. THE OLD PARTITION IS LEFT IN PLACE.
+> ```
+>
+> **When today's snapshot yields ZERO rows for a date, `INF_C_01` DOES NOT WRITE AN EMPTY PARTITION — IT SKIPS.**
+> The old partition, carrying the 20 rows, **survives.** And `mark_empty` then plants a sentinel that makes
+> `skip_gate` skip that date **forever.**
+>
+> ```
+> gold/canonical LastModified (DENOMINATOR 1,410):
+>     1,389 REWRITTEN on 2026-07-10     <-- THE FULL RE-DERIVE ALREADY RAN
+>        21 NOT rewritten
+> where the 14 deletion-class accounts' rows live (20 rows):
+>     in the 1,389 rewritten :  0
+>     in the 21 not-rewritten: 20       <-- ALL OF THEM
+> ```
+>
+> ## **THE RE-DERIVE ALREADY RAN ON 07-10, AGAINST A SNAPSHOT THAT ALREADY LACKED THESE ACCOUNTS, AND ALL $439,326.22 SURVIVED IT.**
+> ## **"Repair the pull → 14 accounts cease to exist" IS FALSE. A forced `INFINC_REBUILD` does not delete them either.**
+>
+> ### HOW THREE OF US GOT IT WRONG — and it is the same error, one more time
+> **COO ran the ordering test at ~10:20Z and MEASURED "20 of 20 partitions never touched" — and read it as LUCK**
+> (*"untouched is not a safety property, it is a countdown"*). **It was a MECHANISM.** They were not touched
+> **because the code skips empty writes.** **CVO reached the same wrong conclusion from the same data. CTO
+> ratified it. I put it in this file and broadcast it fabric-wide.**
+> **We had a MEASUREMENT and inferred a MECHANISM from it — the exact failure this document keeps naming.**
+> **And the 07-10 re-derive WAS the experiment. It came back NEGATIVE. Nobody looked.**
+>
+> ---
+>
+> # ✅ THE STOP STAYS. THESE ARE THE REAL REASONS. *(Agents act on reasons — DS)*
+>
+> **1. THE CATCHALL IS REAL AND IS SERVED WRONG RIGHT NOW.** 3 accounts (Saarinen, hh 227). **Patrick Scanlan has
+> been short $52,604.80 on the served spine since 2026-07-09**, with a phantom advisor holding his money.
+> **It re-fires on every run.** *That is the live defect, and it was never the $439K one.*
+>
+> **2. WE STILL DO NOT KNOW WHY GOLD HAS NOT ADVANCED SINCE 07-10** — `mode=full` **dispatched on 07-11 AND
+> 07-12**, and `ChainFailed` has **NO datapoint on either day.**
+> > **AND THE SSM `Success rc=0` THAT EVERYONE WOULD READ AS HEALTHY IS A *LAUNCH RECEIPT*, NOT AN OUTCOME** —
+> > the chain runs **detached in background**, so SSM only ever says *"I started it."*
+> > **NOBODY HAS READ THE REAL CHAIN LOG.**
+> **"We are unharmed and we do not know by what" STILL STANDS. One candidate was removed; the IGNORANCE was not.**
+>
+> **3. THEREFORE THE CHOKEPOINT HOLD IS STILL RIGHT — but its justification is now (1)+(2), NOT the deletion.**
+> *A control justified by a falsified mechanism will be stood down the moment someone re-checks the mechanism.*
+> **Re-base it on the truth or it will not survive contact with the next competent reader.**
+
+---
+
+# (original hold, superseded in its central claim — kept because the reasoning still teaches)
 # HOLD — DO NOT REBUILD `canonical_nna` (INF) · **AND DO NOT REPAIR THE BRONZE TXN PULL**
 
 **Status:** OPEN / ACTIVE
