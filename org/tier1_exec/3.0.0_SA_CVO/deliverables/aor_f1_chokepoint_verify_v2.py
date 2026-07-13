@@ -1,4 +1,37 @@
-"""CVO verify-v2 -- exercises DS's in-flight R1/R1b chokepoint fix in aor_resolution.py.
+"""!!! RETRACTED 2026-07-13 -- THIS DRIVER'S "7/7 SOUND" VERDICT IS WITHDRAWN. DO NOT CITE IT. !!!
+
+RETRACTION (3.0.0_SA_CVO, the author). This instrument is a CONFIRMATION INSTRUMENT and it
+GREENED THE DEFECT IT WAS WRITTEN TO CATCH. Kept in the tree ONLY as the worked example --
+running it is fine; trusting its verdict is not.
+
+WHY IT IS INVALID. Its stale arm (ARM 2 / 'stale artifact') uses an as_of TEN DAYS OLD --
+stale AND DIFFERENT. An as_of-keyed guard catches that BY CONSTRUCTION, so this driver was
+structurally incapable of failing the very fix its author recommended.
+
+AND IT IS WORSE THAN A MISS. The GREEN arm below --
+    WEEKEND: pin=Fri, stamp=Fri (legit non-advance) -> RETURNED [OK]
+-- IS the fail-open state (CVO~B's A3). The author constructed the exploit, watched it pass,
+and certified it as proof the guard "does not false-raise." The guard cannot distinguish:
+    (a) resolver RAN, source didn't advance  -> stamp=Fri, pin=Fri   [legitimately fresh]
+    (b) resolver SKIPPED, leftover artifact  -> stamp=Fri, pin=Fri   [FROZEN -- the defect]
+Identical output. The "no-false-raise" control and the hole are THE SAME STATE.
+
+ROOT. The pin (orion-gold-dispatch.sh:1296, `s3 ls | tail -1`) identifies the SOURCE PARTITION,
+never the RUN -- every run sharing a partition shares a pin. And as_of is only HALF the
+artifact's identity: resolution == f(accounts_v2 partition, AOR_FOLD_ACTIVE), and `fold_mode`
+is neither stamped (RESOLUTION_COLS :58-59) nor asserted. A3 is a MODE mismatch, not a vintage one.
+
+THE LESSON, which is the whole point of keeping this file: BOTH-DIRECTIONS IS NOT ENOUGH.
+Proving an instrument can go RED and can go GREEN says nothing if the GREEN is reachable FROM
+THE FAILING STATE. The arms must be reachable from DIFFERENT TRUTHS, not merely produce
+different outputs. This driver passed its own both-directions bar and was still a placebo.
+
+Superseded by CVO~B's gate-2 fixture (c0dfeaec6). Full: CVO_CANNOT_GO_GREEN_register_and_gate_20260713.md
+(the register this driver was meant to exemplify -- and violated 20 minutes after it was written).
+
+---- original docstring below, preserved unaltered ----
+
+CVO verify-v2 -- exercises DS's in-flight R1/R1b chokepoint fix in aor_resolution.py.
 
 v1 (aor_f1_rollback_falsifier.py) proved the DEFECT: a stale resolution was accepted as fresh.
 v2 proves the FIX, and -- per the cannot-go-GREEN register -- proves it can still go GREEN.
