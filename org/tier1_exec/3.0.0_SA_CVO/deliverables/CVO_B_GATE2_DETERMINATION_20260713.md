@@ -7,7 +7,52 @@ clean — I ran the committed code, not a working tree).
 
 ---
 
-## DETERMINATION: **gate-2 VERIFIED** for the round-8.2 delta — subject to the explicit gaps in §4.
+## >> RETRACTED 2026-07-13 07:05Z — **GATE-2 IS WITHHELD, NOT VERIFIED. DO NOT CO-SIGN.** <<
+
+**I issued VERIFIED at 07:00Z. It was WRONG. Retracted four minutes later, before anyone acted on it.**
+
+**Why:** `INF_C_07:229` inherits the canonical advisor_key and then **OVERWRITES it** —
+`df['advisor_key'] = df['_key_override'].combine_first(df['advisor_key'])`, where `_key_override` is
+`slug(accounts_v2.representative_name)` — **the SERVICING rep**. **Exercised:** canonical (folded)
+`joe_brandenburg` → after the override → `inflection_wealth_mgmt`. **`combine_first` takes the override
+FIRST; the override always wins; the fold is ERASED.** And `account_team` is both the frame the household
+headline resolves from *and* the served view that C_01b/C_08/D_00/D_00b/D_00c/D_02/D_03/D_04 inherit. **So
+under ON the fold never reaches the served views — which is the entire point of the project.**
+*(Found by DS, reported against himself; I verified at source and exercised it rather than taking his word.)*
+
+**WHY MY BATTERY PASSED ANYWAY — the instrument gap, stated plainly:**
+**EVERY ARM I BUILT MEASURES THE RESOLUTION. NOT ONE MEASURES THE SERVED VIEW UNDER ON.**
+- OFF arms: correctly green (under OFF the resolution *is* servicing, so an override to servicing is a no-op).
+- My ON positive control asserted `fold == 164 == my independent oracle` — that measures **the resolver's
+  OUTPUT**, not what C_07 does to it afterwards.
+- My F5c perturbation arm proved the resolution **propagates**. It proves the value **arrives**; it does not
+  prove nothing **overwrites** it downstream.
+
+**This is the same shape as my own R-A finding — a value that is CORRECT AT THE POINT IT IS PRODUCED and
+WRONG AT THE POINT IT IS CONSUMED. I found that class in the resolver and never pointed it at my own battery.**
+
+**And the gap was already written in §4 of this very document** — *"gate-2 verifies the MECHANISM; only the
+nightly verifies the DELIVERY"* — and I issued a green as though mechanism-verified were enough.
+**A gap you have named and not closed is not a gap you have handled.**
+
+**SECOND OPEN FINDING (mine, grounded structure / ungrounded branch — Rule 22):** the dispatch pins
+`INF_AOR_ASOF` (`:1385`) and `INF_AOR_SRC_ETAG` (`:1422`) at **script load**, before `case "$MODE"` (`:1447`),
+with **no re-pin** — while `CHAIN_FULL = CHAIN_PULL + CHAIN_COMPUTE` (`:345`) and `CHAIN_PULL` (`:337`)
+contains **`INF_API_SILVER_ACCOUNTS_V2`, which REWRITES `accounts_v2`**. **The chain pins the source, then
+rewrites the source, then reads it.** Branch (a): the pull rewrites the pinned partition → read-ETag ≠ pin →
+resolver RAISES → **the whole nightly aborts on a healthy run** (the "total abort that looks exactly like the
+guard working"). Branch (b): the pull writes a new partition → the resolver *and, post-my-F2-fix, `INF_A_00`*
+resolve off the **pre-pull** partition → the freshly-pulled roster is ignored, and **the served dimension may
+be one pull staler than before my fix — in which case that staleness is MINE.** Which branch obtains is
+**NOT grounded**; routed to DS, who owns `convert_orion_api_to_silver`.
+
+**NEXT ARM (should have existed from the start): a SERVED-VIEW arm under ON** — assert the **served
+`account_team`** carries the FOLDED key for a mover. Not the resolver's output. The served artifact.
+
+---
+## (SUPERSEDED — the 07:00Z determination, retained for the record)
+
+## ~~DETERMINATION: gate-2 VERIFIED for the round-8.2 delta~~ — **RETRACTED, see above**
 
 **This clears gate-2. It does NOT authorize go-live.** Still required and NOT mine: CHANGE-2, the
 never-widen co-sign (CTO~B + COO), **Andrew's GO**, and the **V4 served-verify on the first nightly after
