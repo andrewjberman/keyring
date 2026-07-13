@@ -50,15 +50,62 @@ Manav's Total Fee Paying AUM                                         $2,532.55 m
 **Only the 49F staleness and the Inflection diff are DEFECTS.** The $685.64mm is a **DEFINITION**, and it is now a
 **DIMENSION** instead of a hidden default.
 
-## IT ALSO PRE-SOLVES THE $290mm SMArtX GAP (DS's open item)
-Ours `1400.96` vs Manav `1691.11`. Our value is approximately the **sum of the 5 Opal models (`1404.94`)** -- so we
-are labelling **"the SMArtX PLATFORM total"** with what is really **"the OPAL-MODEL SUBSET of it."**
-**A NAME THAT IS NOT THE COMPUTATION -- the identical defect, one cohort over.**
-Under this ruling the fix is **not to pick a number**: record **BOTH components** (platform total AND Opal-model
-subset) at grain and let the presentation case choose.
-> ⚠️ **SMArtX is DS's and it is a HYPOTHESIS -- NOT source-confirmed.** Rule 22: a hypothesis cannot authorize a fix.
-> **This ruling tells you the SHAPE of the answer, not that the answer is in hand. Do not let it close the item on a
-> plausible story.**
+## IT ALSO PRE-SOLVES THE $290mm SMArtX GAP (DS's item -- **and DS has since GROUNDED it; my first draft of this section was WRONG. See the correction.**)
+
+### 🔴 CORRECTION (2026-07-13 ~22:15Z) -- **I WROTE A FALSE PREMISE INTO A PARAGRAPH WARNING ABOUT FALSE PREMISES.**
+**My original text said:** *"our value is approximately the sum of the 5 Opal models (`1404.94`)"* and directed DS to
+*"find the line that selects the 5 models and labels the result as the platform total."*
+```
+1404.94                        REPRODUCES NOWHERE ON THE SERVED ARTIFACT. I do not know where I got it.
+                               (sum(all 7 by_model) = 1424.34 -- the 7 includes the 2 SMAs, which model_aua EXCLUDES.)
+                               THE VALUE IS 1400.96.
+"the line that selects the     DOES NOT EXIST. The emitter reads ONE served field:
+ 5 models"                     lambda_function.py:566-567 @ bf7269a1e -> val = pb.get("model_aua").
+                               Summing models is a DIFFERENT vkind (partner_model_sum), used only by inflection_models.
+```
+**The sum-of-models story is TRUE -- but at the PRODUCER, not the emitter:** `model_aua` **is** definitionally the
+5-term-model sleeve (`sum(5 term models) == model_aua` to the cent, on served bytes). **DS grounded this
+(`c6d07bf6a`) ~90 min before I sent him my "correction," which is the only reason my false premise did not cost him
+a wasted hunt through the emitter.**
+> ### **I HANDED HIM A QUESTION WITH A FALSE PREMISE INSIDE IT, WRAPPED IN A WARNING ABOUT EXACTLY THAT FAILURE MODE.**
+> *"A question carrying a false premise gets answered ON it and comes back looking like corroboration"* -- **I wrote
+> that sentence TO HIM, IN THE SAME MESSAGE, and it was true of the message.** **KNOWING A FAILURE MODE BY NAME DOES
+> NOT IMMUNIZE YOU AGAINST WRITING IT.** *(Third proof of that tonight, after CTO breaking NEVER#1 two hours after
+> authoring it, and my own AC-5.)* **The next agent will not have DS's luck of having already done the work.**
+
+### THE GROUNDED FINDING (DS `c6d07bf6a`; CTO~B `RULING: (C)`, structural)
+The defect is **NOT cohort 9's name.** It is that **ROW 8 IS DOING TWO JOBS** -- the additive 49F partner-total AND
+an account-level cohort named for a master it does not read. **A rename is REJECTED and it is a trap:** post-G2,
+cohort 8 *becomes* `08335338`, and at that instant the `08242234` platform total -- **Manav's actual number** -- has
+**no cohort at all.** *A rename fixes today and digs tomorrow's hole.*
+
+**Still the same organ as the ETF gap, and DS states it best:**
+
+| | the store froze... | ...silently pre-answering |
+|---|---|---|
+| **ETF ($685mm)** | a **PRESENTATION** decision (`additive=FALSE`) into **STORAGE** | *"which question are we asking?"* |
+| **SMArtX ($290mm)** | a **NAME** (`platform`) onto a **SLEEVE COMPUTATION** (`model_aua`) | *"which quantity is this?"* |
+
+**Both are THE STORE LYING ABOUT WHAT IT HOLDS.** *A reader cannot recover the question from the row.*
+**But they are NOT the same finding and must not be collapsed:** the ETF gap is now **definitional** (a missing
+dimension, never an error). **The $290mm is ALSO A REAL DEFECT** -- a field whose basis label literally reads
+`partner_platform_view` is bound to a key that is not the platform, and the **true platform total (1,621.25) is
+being served under COHORT 8's name.**
+
+## 🔴 BLOCKER -- **THE RULING CANNOT BE IMPLEMENTED ON TODAY'S DATA** (DS, and nobody else had surfaced it)
+The remedy requires *"all the components granularly recorded daily."* **One ETF component is NOT MEASURABLE today.**
+- `public_residual = etf_total_net_assets - held` -- **a SUBTRACTION ACROSS TWO VINTAGES.**
+- **There is no clean partition. Not one.** `07-08` has correct 49F attribution but net assets **6 trading days
+  stale**; `07-10` has the freshest net assets but **49F has DROPPED OUT**, with ~**$528mm** misclassified as public
+  float (LD-0292).
+> ### **A DIFFERENCE BETWEEN TWO NUMBERS TAKEN AT DIFFERENT VINTAGES IS NOT A MEASUREMENT OF ANYTHING.**
+> **You cannot "record the components at grain" while one component is a vintage-mixed difference. You would be
+> granularly recording a number that means NOTHING -- DAILY -- and the ruling would have MANUFACTURED A DURABLE WRONG
+> SERIES WITH SOVEREIGN AUTHORITY BEHIND IT.**
+**The ruling is RIGHT and it is BLOCKED on: (i) a staleness ceiling on the ETF net-assets feeder, and (ii) restoring
+49F attribution.** ⛔ **AND THE REPAIR FOR (ii) IS DOOR 6** -- *"re-run mdpf so we can record the components properly,
+as Andrew asked"* **== writing the INF spine sentinel == dispatching the held chain, now WITH A SOVEREIGN RULING AS
+COVER.** **THE RULING MAKES DOOR 6 MORE ATTRACTIVE, NOT LESS. DO NOT WRITE THAT KEY.**
 
 ## WHAT THIS AUTHORIZES -- AND WHAT IT EMPHATICALLY DOES NOT
 - **AUTHORIZES:** a PRD/schema input to **CTO~B** (macro-project owner) -- component-grain daily store, no stored
