@@ -2,81 +2,7 @@
 
 ---
 
-## !! STANDING SAFETY ORDERS — INF (2026-07-13, LIFTED-EXCEPT-ONE) !!
-
-> ### 🟢 **THE DEPLOY FREEZE IS LIFTED. THE SCHEDULER IS GOVERNED BY A MACHINE, NOT BY THIS PARAGRAPH.**
-> For most of 2026-07-13 this block forbade five doors, because a **wrong number was one helpful keystroke
-> away** and the only thing preventing it was **an accidental bad deploy**. That is over. **A real control
-> exists, it is APPLIED, and it has been EXERCISED.** *Prose can govern a human; it cannot govern a cron —
-> and the cron is now governed.*
-
-**THE CONTROL:** `INF_GOLD_DISPATCH_HOLD` is live **in the deployed code** of `inf-gold-trigger`
-(`CodeSha256 eKBESdXU7E3cNqkDsnsXCLEKzgzBgDRlNEz7oVNLz/U=`), and **all three EventBridge rules are DISABLED**
-on the **live primitive** (`describe-rule`, not Terraform). The chokepoint **refuses all four dispatch paths —
-including the silver aggregator's DIRECT invoke, which `list-rule-names-by-target` and `lambda get-policy` are
-both structurally blind to.** Exercised live: `held:true / dispatched:false`, no dispatch lock, no SSM
-SendCommand, EC2 untouched — **every negative POSITIVE-CONTROLLED against 07-12, when the same query DID return
-a dispatch.** (`d60d201e3`, ledger `inf-gold-dispatch-hold` CLOSED 4/4; COO re-verified at applied truth, not
-off the report — NEVER#5.)
-> ## **GUARD THE DOOR, NOT THE LIST OF PEOPLE WHO MIGHT KNOCK.**
-
-### ✅ WHAT IS NOW NORMAL AGAIN
-- **`git push` to any INF path: OK.** `safe-deploy` may deploy it. **That is now safe.**
-- **Deploying scripts to `code/gold/` and `code/silver/`: OK.**
-- **The bronze pull, the silver staleness ceiling, the frozen mdpf/OPAL_ASSETS AUM bucket:** the scheduler
-  **cannot dispatch**, so these are **no longer one-keystroke hazards. Normal engineering judgement resumes.**
-
-### 🟡 THE ONE EXCEPTION — AND IT IS NOW A *CHOICE*, NOT A DEPENDENCY
-> **NOBODY TOUCHES `build_assets_dim.py` in `s3://opal-data-inf/code/*`** — no `cp`, no `rm`, no `mv`, no push
-> that rewrites either copy, no making them identical. **The test is by EFFECT:** *would this make
-> `code/gold/build_assets_dim.py` and `code/silver/build_assets_dim.py` stop being two different files with the
-> same name?* If yes: **do not.**
-
-**But the REASON has completely changed, and that matters more than the rule:**
-- **It is NO LONGER THE CONTROL.** The chokepoint refuses regardless. **We are no longer holding a real bug
-  hostage** — *which was the intolerable state, and it is over.*
-- **It is now FREE DEFENCE-IN-DEPTH** — a second, independent layer that costs nothing to keep for a few hours.
-  **It comes out properly, as the real bug it is, the moment the coverage guard is LIVE ON THE RUNNER.**
-- **The wall is ONE BRICK THICK (CVO~B):** there are **TEN** differing-basename collisions across `code/`, and
-  **NINE are invisible to the guard only because they sit in prefixes it does not scan** (`code/bronze-runner/`,
-  `code/gold-staging/`, `code/exporter/` — S3 prefixes are literal strings). **We keep the one brick until we
-  have a real wall.**
-
-### ⚠️ THREE THINGS THAT DO **NOT** LIFT
-1. **NO GOLD RUN. NO RE-DERIVE. NO CHAIN.** Lift = `INF_GOLD_DISPATCH_RELEASE` **+ CTO/COO co-sign**, gated on
-   the coverage guard being **LIVE AND EXERCISED ON THE RUNNER** and the `INF_B_00` selector fix.
-   > **DEPLOYING CODE IS NOT RUNNING IT.**
-2. **A VERIFIED FIX IS NOT A LICENCE.** `c23988cdf` / `a13b96822` / *"CVO VERIFIED"* are a **PRECONDITION** for
-   the lift, **never a trigger.** *(Raised by the builder against his own work.)* Patrick's fix **lands** today;
-   it **serves** only when the chain runs. **That is a priced bet:** a wrong-but-**stable** number beats an
-   unknown-but-**moving** one, *for exactly as long as we have no instrument.*
-3. **THE COVERAGE GUARD IS STILL NOT LIVE — THIS IS THE CRITICAL PATH.** `d52ab4cbe` is committed, the **deployed
-   caller has ZERO calls to it**, and its proven-RED was **RIGGED** (DS's own word, retracted by him).
-   > ## **A GUARD IN THE CODE BUCKET THAT NOTHING CALLS IS A COMMENT WITH PARENTHESES.**
-
-### WHY THIS BLOCK EXISTS AT ALL, AND HOW TO TREAT IT
-It is placed ahead of everything because **a lane must read it before it reads an alarm**, and because relaying
-it by hand depends on a spawner who can die — **one did** (2026-07-13: 70 minutes, zero builders, its orphaned
-watcher eating the messages asking for a respawn).
-
-> **AND ITS OWN CONTENT WAS FALSIFIED FOUR TIMES IN ONE DAY:** *bronze-is-the-trigger* (the chain never reaches
-> the pull) → *any-deploy-clears-it* (only `build_assets_dim.py` matters) → *`cp` is the verb* (**`rm` clears it
-> too**) → *`git commit` is safe* (**a `git push` IS a deploy — `safe-deploy` is a PRE-PUSH HOOK, and a verifier
-> with no INF mandate deployed into the frozen prefix WHILE COMPLYING**).
-> ### **FIVE SCOPING ERRORS, ONE SHAPE: alarm-NAME → file-FOLDER → rule-vs-CALLER → VERB-vs-EFFECT →
-> ### COMMAND-vs-HOOK. WE KEPT GOVERNING WHAT AN AGENT *TYPES* INSTEAD OF WHAT THE SYSTEM *DOES*.**
-> **READ IT AS A LIVE DOCUMENT, NOT A MONUMENT. If you can show a mechanism here is stale, say so LOUDLY to the
-> owner — correcting this block is not pedantry, it is the job.** *A true order the ground moved under is the
-> most dangerous comment there is: it argues persuasively, in the codebase's own voice, for a harm it no longer
-> describes.*
-
-**OWNER: `2.0.0_SA_COO`** (+ CTO for the TF release). **THIS BLOCK IS DELETED** when the coverage guard is live
-and exercised, the `INF_B_00` selector fix has landed, and `INF_GOLD_DISPATCH_RELEASE` is co-signed.
-Records: `b7bce51bd` · `d1c5e629b` · `d60d201e3` · LD-0280–LD-0284 · RV-0049.
-
----
-
-## !! ANDREW-DIRECT INSTRUCTIONS — RECORD + BROADCAST, SAME TURN (PERMANENT; not part of the block above) !!
+## !! ANDREW-DIRECT INSTRUCTIONS — RECORD + BROADCAST, SAME TURN !!
 
 > **ANDREW WRITES DIRECTLY TO WORKER AGENTS. He always has.** Andrew-direct, verbatim, 2026-07-13:
 > *"I often times will write to worker agents if I notice that they are doing something I want to change.
@@ -215,25 +141,13 @@ Tier folders: `tier1_exec/` (SA) | `tier2_senior/` (DE, DT, DS, AE) | `tier3_jun
 
 ---
 
-## Step 1a — Verify your cwd matches your fabric (LD-0088 A.1+A.2)
+## Step 1a — Your BASE is the workspace root; `portal/` is a work-site, never a base
 
-Cross-fabric agents launch into different worktree cwds per LD-0088 A.1 (Andrew sovereign `5c39327f` + LD-0089 AC1 implementation):
+**Andrew-direct 2026-06-12.** Your cwd is `C:\Users\AndrewBerman\Desktop\ajb_workspace`. Every agent's files — logs, task orders, deliverables, identity — live under `org/` there.
 
-| Fabric | Serials | Expected cwd |
-|---|---|---|
-| **ws** (ajb_workspace) | `0.0.0_AB_MSTR`, `1.0.0_SA_CTO`, `2.0.0_SA_COO`, `3.0.0_SA_CVO`, `0.x.x_(DE\|DT\|DS\|AE\|RD)_*`, all ws lanes | `C:\Users\AndrewBerman\Desktop\ajb_workspace` |
-| **CL** (feature_clb worktree) | `1.1.0_SA_CTO`, `2.1.0_SA_COO`, `3.1.0_SA_CVO`, `2.1.0_SC_CompLearns`, `1.[1-4].0_DS_CompLearns` | `C:\Users\AndrewBerman\Desktop\feature_clb` |
+Agents (DE/RD included) may **WORK** in the portal repo, but are never **BASED** there: address it explicitly (`git -C portal ...`, or a scoped `cd portal && <work> && cd -`) and return to the workspace root when the portal task ends.
 
-`.tools/ajb.ps1` Get-AgentLoopDirective + the cwd-routing block at the top of the `ajb` function enforce this automatically when the agent is launched via `ajb` / `spawn-agent.ps1`. If you find yourself in the wrong cwd (e.g. an Andrew-direct manual launch placed you in ajb_workspace as a CL serial), this is acceptable per LD-0088 standing-authorization-via-AC-enumeration (Andrew direct overrides the wrapper) — your fabric attribution still resolves via your serial.
-
-**The workspace root is your BASE; `portal/` is a work-site, never a base (Andrew-direct 2026-06-12).** Every agent's files — logs, task orders, deliverables, identity — live under `org/` in ajb_workspace. Agents (DE/RD included) may WORK in the portal repo, but they are never BASED there: address portal explicitly (`git -C portal ...`, or a scoped `cd portal && <work> && cd -`) and return to the workspace root when the portal task ends. A CWD that lingers in `portal/` between tasks is itself a defect — portal is its own git repo, so a lingering portal CWD breaks workspace tooling (`safe-commit.sh`, `.tools/*`) at best and at worst silently substitutes the WRONG repo's git history into evidence pulls (a bare `git log` inside `portal/` reports portal commits only, with no error). Empirical anchor: 0.4.0_DE /log telemetry 2026-06-12 (wrapper error from a lingering portal CWD; the silent variant is the dangerous one).
-
-**Why cwds differ:** Each cwd carries different `.mcp.json` + `.claude/skills/` content. The cwd determines which MCP server config Claude Code loads + which skills are discoverable. Post-LD-0034 unified-broker + LD-0089 AC1 A.3 (`f6bd29067`), both cwds reach the same `opal-agent-comms` canonical broker, but the local config files differ:
-
-- `ajb_workspace/.claude/skills/` — full ws skill set (ws-charter, mstr-*, drive, work, etc. + workspace-shared)
-- `feature_clb/.claude/skills/` — CL-native skills (cl_cto, cl_program, cl-charter, cl-subject, continuous-cycle) + 9 workspace-shared skills synced from ws per LD-0089 AC1 A.4-EXT (`ba1f914c3`)
-
-Workspace-shared skills propagate ws → CL via `.tools/sync-skills-to-worktree.sh` (idempotent + sha256 drift detection; run on each session-start in feature_clb or after `git pull`).
+**A CWD that lingers in `portal/` between tasks is itself a defect.** Portal is its own git repo, so a lingering portal CWD breaks workspace tooling (`safe-commit.sh`, `.tools/*`) at best — and at worst **silently substitutes the WRONG repo's git history into evidence pulls**: a bare `git log` inside `portal/` reports portal commits only, **with no error**. *The silent variant is the dangerous one.* (Empirical anchor: 0.4.0_DE /log telemetry 2026-06-12.)
 
 ---
 
@@ -301,35 +215,24 @@ dropped-2nd-message-in-a-batch). The persistent Monitor: survives in-session
 compaction, loops over **all** `*.md` each poll (batch-safe), and never turns off.
 **You never relaunch** — there is no exit-and-relaunch cycle anymore.
 
-**NOT RETIRED: ORPHAN / PPID=1 zombie / deaf-prior-session watcher (CTO 2026-07-10,
-source-confirmed + exercised).** The Monitor *task* is harness-tracked; **the
-`bash inbox-watch.sh` child it spawns is a detached process that OUTLIVES the session**
-(`inbox-watch.sh:113` = `while true`, no parent-liveness check, no exit path). The
-orphan keeps polling and is **not inert — it is a thief**: `:120` `mv`s each arriving
-message into `read/` (committing the theft) *before* `:124` echoes `[INBOX]` into a
-dead pipe. So an orphan **manufactures** both limbs of the usual reachability check —
-`w>0` (ps sees a process; ps cannot see whether anything reads its stdout) and `u==0`
-(the orphan drained the inbox). **A fully deaf agent reads the strongest possible
-REACHABLE.** Exercised: `0.4.0_DS_ClientPlatform` read `u=0 w=1 REACHABLE` while
-`get_agent_status` said `NOT REGISTERED` — a 7h17m orphan, no agent.
-**Therefore: `ps`, `u`, and `read/` are BANNED as delivery oracles** (a file in `read/`
-observes the *watcher*, not the agent). The only sound oracle for "the agent HEARD it"
-is one only a live consumer can produce: an agent-side ack, `TaskOutput(<id>) → running`,
-or a broker receipt. A fresh session that finds a matching process has found an ORPHAN —
-kill it (own serial only) before arming, or two streams race the same `mv` and split your
-inbox silently. `watcher-status.sh` cannot see stream watchers at all (`:63` `$NF == serial`;
-a stream's `$NF` is `stream`). **CORRECTED 2026-07-10: I wrote here that `/kill` exempts `inbox-watch.sh` and that
-nothing reaps these. FALSE AT SOURCE** — `.tools/kill-orphans:95` `PATTERNS='inbox-watch\.sh|…'` **targets** them,
-and `:131-139` records it once **over-reaping LIVE watchers**. The `/kill` skill *doc* claims exemption. Two records,
-two stories. I asserted a mechanism from a description without opening the code (Rule 22), and inferred *"no reaper"*
-from *"an orphan lived."* **RESOLVED (COO `ab69e619b`, exercised): THE REAPER IS GATED ON THE DEAD AGENT'S OWN
-RETURN** — `hook_register_orphan_cleanup.py` fires PostToolUse after `register_agent` with `--serial S --force`, so
-**31391 survived 7h17m because the only thing that would reap it is the return of the agent that died.** That scoped
-hook replaced a fabric-wide sweep that had been reaping LIVE watchers: **the remedy for over-reaping produced
-under-reaping, and under-reaping is the mode that FORGES liveness.** The narrow version is right — **do not widen it;
-the fix is the ACK.** **Nothing detects them** (that limb stands: `watcher-status.sh` is blind by construction). **TRAP:** MSYS `ps -p 1` fails, so a naive ppid-liveness
-test flags every healthy `ppid=1` wrapper as an orphan (7 false positives in the incident
-scan). Positive-control against a watcher you know is good.
+**ORPHAN WATCHERS — the one thing you must know.** The Monitor *task* is harness-tracked, but the
+`bash inbox-watch.sh` child it spawns is **detached and outlives the session**. An orphan is **not inert —
+it is a thief**: it `mv`s each arriving message into `read/` *before* echoing `[INBOX]` into a dead pipe,
+so it **eats your mail while manufacturing the strongest possible REACHABLE verdict** (a process exists;
+the inbox is empty *because the orphan drained it*).
+
+- **`ps`, an empty inbox, and the `read/` dir are BANNED as delivery oracles.** They observe the
+  *watcher*, not the agent. **The only sound proof that an agent HEARD a message is one only a live
+  consumer can produce: an agent-side ACK** (or `TaskOutput(<id>) → running`).
+- **A fresh session that finds a matching `inbox-watch.sh` process has found an ORPHAN, not a watcher.**
+  Reap it (your own serial only) *before* arming, or two streams race the same `mv` and split your inbox.
+- **Your `register_agent` reaps your own orphans automatically** (`hook_register_orphan_cleanup.py` →
+  `kill-orphans --serial <you> --force`, audited as `KILL-ORPHAN`). *This hook silently did nothing for
+  months and reported success every time; fixed 2026-07-13 (`920a7bb77`, LD-0280) — it now checks its exit
+  code and audits its failures.*
+
+Full forensics (the 7h17m orphan; why the obvious probes are anti-correlated with the truth):
+`.claude/skills/watcher/SKILL.md` and LD-0280.
 
 **BANNED:**
 - Launching `inbox-watch.sh {serial} stream` under Bash `run_in_background` — the
@@ -344,11 +247,9 @@ scan). Positive-control against a watcher you know is good.
 is retained only so already-running pre-migration agents aren't broken; do not use
 it for new launches.
 
-**Post-LD-0034 unified broker + inbox (2026-05-24).** ALL agents (ws + CL) use the
-ws-rooted inbox at `ajb_workspace/org/mcp/inbox/{serial}/`. CL serials all have
-inbox dirs under that unified path; the legacy `feature_clb/org/mcp/cl_inbox/` path
-and the `cl-inbox-watch.sh` carve-out are **retired**. Full cross-channel
-architecture: `docs/architecture/AGENT_COMMS_ARCHITECTURE.md`.
+**Inbox path.** Every agent's inbox is `org/mcp/inbox/{serial}/` (lane agents:
+`org/mcp/inbox/{base}/{~lane}/`). Full architecture:
+`docs/architecture/AGENT_COMMS_ARCHITECTURE.md`.
 
 **When an `[INBOX] <file>` event fires, that IS a new message.** Your required
 response:
@@ -494,11 +395,15 @@ Any deliverable produced by the ka_testing Docker runtime must be marked `[*runt
 
 ---
 
-## /loop — Universal Watchdog Mode (ALL agents)
+## `/loop` — operator-initiated only
 
-Andrew fires `/loop` at any agent. Full watchdog spec lives in the `/loop` skill file. In brief:
+**`/loop` is fired by Andrew (or an operator) at a specific agent, on demand. Nothing self-ticks.**
+It is not a launch mechanism and not a standing mode — see Section F: **every serial arms ZERO crons at
+launch**, and the sole exception is the COO's `/drive`.
 
-On each wake: pull inbox (both `check_inbox` + `get_agent_status`), check watcher health (`ps` not `TaskList`), re-register if stale, heartbeat, check git commits ground truth, scan TO queue (hot-registry scope check per TO), schedule next wake (60s active / 270s idle, never 300s). Escalation: peer → COO → MSTR → Andrew. Never auto-exit.
+*(The former "Universal Watchdog Mode" — a 60s/270s self-scheduling wake loop that "never auto-exits" —
+is **RETIRED** per LD-0157 / LD-0164 / LD-0175. The fabric is event-driven: your persistent inbox Monitor
+delivers work, and COO's `/drive` is the centralized tick that finds blocked agents.)*
 
 ---
 
@@ -553,14 +458,12 @@ Every TO commit MUST be paired with an MCP `send_message` GO to the assignee —
 
 **Two failure modes the rule covers:**
 
-1. **Missing GO** — TO file committed, no MCP send_message fired. Assignee only sees the file on next filesystem poll (polling-cadence-dependent delay, can be minutes to hours).
-2. **Wrong-channel GO** — MCP fired, but addressed to the base serial when the assignee is registered under a `~lane` suffix (or vice versa). Per the MCP suffix-strip semantic, the broker push lands on the base channel; the `~lane` watcher only fires on `~lane`-channel push, so the push doesn't trigger their session — same effective gap as missing GO. Filesystem inbox still gets the write (visible on next poll), but the real-time delivery fails.
+1. **Missing GO** — TO file committed, no MCP `send_message` fired. The assignee only sees the file on a filesystem poll, which can be minutes to hours.
+2. **Wrong-serial GO** — MCP fired, but addressed to the base serial when the assignee registered under a `~lane` suffix (or vice versa). **The lane's inbox is a different directory** (`inbox/{base}/{~lane}/`), so the message lands somewhere the assignee is not watching.
 
-**The TO author is responsible for the GO AND for addressing it correctly.** The commit IS the authoring; the MCP GO IS the dispatch; the exact-serial addressing IS what makes the broker push reach the assignee's session. Check `<issued_to>` in the TO file; address the MCP to that exact string.
+**The TO author owns the GO and its addressing.** The commit IS the authoring; the MCP GO IS the dispatch. Check `<issued_to>` in the TO file and address the MCP to that exact string, suffix included.
 
-Empirical anchor: `ADVI_DEMOV1.005` commit `2991f63ea` 2026-05-23 06:50Z sat ~20 min before AE~C session-side processing. COO DID fire a paired GO MCP — but addressed to `0.7.0_AE_CloudOps` (base) while AE~C was registered as `0.7.0_AE_CloudOps~C`. Broker push followed suffix-strip semantics, landing on the base channel; AE~C's watcher (listening on `~C` channel) didn't fire. AE~C only saw the message on next filesystem poll. MSTR's CY-0017 stimulus-scan classified AE~C STALE with a convergent ask and surfaced the structural pattern.
-
-A **structural git post-commit hook** that auto-sends GO on every `org/tier*/task_orders/*.md` commit — suffix-aware: parses `<issued_to>` exactly and addresses the MCP to that string verbatim — is a planned follow-on infra task. Until that lands, the discipline is procedural.
+*(Historical note: this rule once cited an "MCP suffix-strip semantic" in which the broker itself collapsed `~lane` pushes onto the base channel. **LD-0202 established that was a `server.py` query/write-layer bug, and fixed it — the broker DB keys every entry by the FULL serial.** The rule stands on the inbox-directory grounds above; do not cite suffix-strip as live behaviour.)*
 
 **COO/CTO parallel wave protocol:**
 Before writing any TOs for a parallelized wave: run `comp-blast` on every affected component/script. Any node appearing in 2+ TOs' blast radii is a CROSS-DOMAIN resource — flag it in the PRD and in each relevant TO's `<cross_domain_coordination>` block. Agents must MCP-message each other before committing to cross-domain files.
