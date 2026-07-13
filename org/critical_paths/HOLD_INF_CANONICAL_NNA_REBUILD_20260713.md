@@ -2658,3 +2658,217 @@ POSITIVE CONTROL: the same search finds convert_orion_api_to_silver.py -> the se
   *The last time a lane fixed an obviously-broken thing inside this blast radius, **the fix WAS the destructive act**.*
 - **NO CLOCK.** *`0.8.0`'s deployed guard already REFUSES THE FRESHNESS CLAIM at the served emitter.* **Nothing is
   bleeding. Ground it.**
+
+---
+
+# AMEND 41 (2026-07-13T17:34Z, COO) — **ANDREW LIFTED ORION VENDOR-EGRESS.** + **THE BRONZE `[STOP]` STANDS, RE-FOOTED — ITS ORIGINAL REASON IS DEAD.** + **THE AD-HOC TRIGGER HAD NO TRADE-OFF, AND TWO EXECS SPENT AN HOUR MAKING ONE.**
+
+## 1. 🔓 **ANDREW-DIRECT, RECORDED VERBATIM (COMMS-TOPOLOGY convention: verbatim + channel + time)**
+> ## ***"It is fine to hit orion api as much as you like."***
+> **— Andrew, direct to `1.0.0_SA_CTO~B`, relayed to the fabric 2026-07-13T172411Z.**
+
+**VENDOR-EGRESS FOR ORION IS LIFTED.** *This is an AMENDMENT to the standing "no external vendor API without Andrew's
+explicit per-use word." It is scoped to **ORION**. `ycharts_*` and every other vendor remain held.*
+
+### >> AND THE DISCRIMINATION IS THE WHOLE RULING (CTO~B's line, adopted verbatim) <<
+```
+AN ORION API PULL   writes bronze / silver.        *** NOW AUTHORIZED. FREELY. ***
+A GOLD RUN          re-derives SERVED artifacts.   *** STILL HELD. STILL FORBIDDEN. ***
+```
+**He authorized a VENDOR CALL. He said nothing about gold, an in-place partition rewrite, or a bronze repair — and
+NOBODY GETS TO READ THOSE IN.** *Inferring an unstated permission from a stated one is the class we spent the day
+destroying.* **NEVER#4 stands. The chokepoint stands. The lift ledger stays 5 of 10. THIS AUTHORIZATION MOVES NOTHING
+ON IT.**
+
+## 2. 🛑 **BRONZE `[STOP]`: IT STANDS — AND ITS ORIGINAL REASON IS DEAD. I AM SAYING SO RATHER THAN LETTING ANYONE INFER IT STILL HOLDS.**
+**CTO~B is RIGHT that *"the repair IS the trigger"* is finished.** The chokepoint refuses every dispatch from every
+caller; the basename collision kills the chain at step zero; **a bronze pull now writes bronze+silver AND NOTHING
+ELSE.** *That was the entire point of building it. The control paid off exactly as designed.*
+> # **BUT WHEN THE REASON FOR A CONTROL DIES, YOU DO NOT LIFT THE CONTROL — YOU RE-DERIVE IT.**
+> ## **AND THE NEW REASON IS THE HAZARD CTO~B NAMED IN HIS OWN MESSAGE:**
+> ## **A BRONZE/SILVER PULL MOVES THE INPUTS UNDER A CO-SIGNED, PRE-REGISTERED DELTA THAT AN *IRREVERSIBLE* ONE-SHOT WILL CONSUME.** *(DS~A's 05-08 delta, `ccabfb3de`, co-signed against TODAY'S silver.)*
+
+**THE STOP, RE-SCOPED:** ~~*"do not repair bronze because it fires gold"*~~ →
+> ## **DO NOT MOVE THE SILVER THAT THE ONE-SHOT WILL READ, UNTIL THE DELTA IS RE-REGISTERED AGAINST THE SILVER IT WILL ACTUALLY READ.**
+**Named repairs considered on the merits, with the moved keys ENUMERATED. NO BLANKET LIFT. And it is not lifted off a
+vendor-egress authorization** — *0.7.0 refused to do that on his own and was right to.*
+
+**ITEM 7, STRENGTHENED (CTO~B's condition, ratified + hardened):** *"a pre-registration is only evidence if the inputs
+did not move underneath it"* — **correct, and it is the pin/pull class.** **Stronger, binding form:**
+> ## **THE LAST WRITE TO THE SILVER THE ONE-SHOT READS MUST HAPPEN *BEFORE* THE DELTA IS RE-REGISTERED — NOT AFTER. SEQUENCE IT; DO NOT MERELY RE-COMPUTE IT.** *A re-computation that races a pull is the same defect one layer up.*
+
+## 3. 🔴 **THE AD-HOC TRIGGER: THERE WAS NEVER A TRADE-OFF, AND *BOTH EXECS WERE BUSY MAKING ONE*.**
+**CTO~B told `0.7.0` to fire the pull and row-prove CHANGE-3. `0.7.0` REFUSED, escalated the difference instead of
+taking the permissive senior reading — and then did the one thing NEITHER EXEC HAD DONE: HE OPENED THE HANDLER.**
+```
+handler:   snap_date = event.get("date")  OR  today's UTC date
+
+SCHEDULED 13:22Z tomorrow  ->  snapshot_date=2026-07-14   *** A NEW KEY. ZERO OVERWRITE. ***
+AD-HOC now                 ->  snapshot_date=2026-07-13   *** OVERWRITES 873 LIVE ROWS. ***
+```
+> # **THE ROW WAS ALWAYS GOING TO LAND ON A CLEAN NEW PARTITION. FIRING BUYS *NOTHING* AND COSTS AN IN-PLACE OVERWRITE OF A PARTITION THREE AGENTS HAVE MEASURED.**
+
+**AND I OWN MY HALF, BECAUSE IT IS THE RULE:** **my 17:05Z refusal was CORRECT AND UNGROUNDED.** I asserted *"an
+ad-hoc invoke rewrites a partition that already exists"* **from a cron pattern and a partition listing. I NEVER OPENED
+THE HANDLER.** Under Rule 22 that is `INFERRED` — **and an INFERRED causal claim cannot authorize a ruling. It
+authorized one.**
+> ## ***A RULING THAT HAPPENS TO BE RIGHT IS STILL UNGROUNDED UNTIL SOMEBODY READS THE LINE.***
+> ## **AND THE GROUNDING DID NOT *CONFIRM* MY RULING — IT *DESTROYED THE QUESTION*. I believed I was refusing to buy 20 hours at a price. There was no price, and there were no 20 hours to buy.** *That is what grounding is FOR: not to ratify the verdict, but to find out the question was wrong.*
+**RULED: WAIT. No ad-hoc invoke. Cost of waiting: 20 hours of nothing.**
+
+## 4. ✅ **THE POSITIONS-PULL THREAD: CLOSED. NO FIX EXISTS. DO NOT BUILD ONE.**
+`0.5.0` source-confirmed it (`61c28f3c7`) in **ELEVEN MINUTES**:
+```
+STAMP:  pull_inflection_positions_daily.py:396   (infra/, his lane -- does NOT cross into DS's tree)
+ORIGIN: *** ORION. Its native asOfDate ALSO echoes the requested date. ***
+        bronze asOfDate = ['06-13'] / ['06-14'] / ['06-15'] across a cluster whose current_value is 100% IDENTICAL.
+```
+> ## **THE HONEST VINTAGE DOES NOT EXIST IN THE SOURCE. THERE IS NO FIELD TO SWAP TO.**
+> **EVERY LAYER OF OURS IS A FAITHFUL REPORTER OF A LIE WE DID NOT AUTHOR** — *which is exactly why no single-layer code review could ever have caught it: each layer is individually correct.*
+**The only remedy is a value-movement detector at the SERVED layer, and `0.8.0` HAS ALREADY DEPLOYED IT.** *A
+pull-side flag would be a second place to be wrong and nothing else — two detectors of one fact, nothing asserting
+they agree, and the weaker one wins. That is the C_07 class. NOT AUTHORIZED.*
+
+### >> AND I REFUSED MSTR'S RETRACTION *REASONING*, THOUGH NOT HIS CONCLUSION <<
+He retracted the allocation because *"anyone you allocate this to will spend a week hunting for a field that is not
+there."* **He is right about the risk and wrong about what happened.**
+> # **THE REMEDY FOR "WE DO NOT KNOW WHETHER A FIX EXISTS" IS NOT TO *WITHHOLD* THE WORK. IT IS TO SCOPE THE WORK TO A ***LOCATE*** — and then "no fix exists" IS the deliverable, arriving in ELEVEN MINUTES instead of never.**
+*An allocation scoped to a REPAIR would have burned the week he feared. An allocation scoped to a QUESTION cannot.*
+**Withheld, we would still be asserting "no fix exists" on a Tier-0 say-so — which is the exact class of relay he was
+retracting.**
+
+## 5. 🟡 **THE NOEL / SLUG QUESTION: ANSWERED BY EXERCISE, THEN MEASURED. LATENT, NOT LIVE.**
+**DS exercised the firebreak (`'Zzz Nobody'` → a SLUG, not `None` — but DROPPED, never served) and mutant-verified it
+could go RED. Then he raised Noel: *"he is not in the servicing rep map at all (rep 10) — an advisor of his shape
+loses ALL of his book, silently."* I MEASURED THE OTHER MAP — the one that actually gates the fold:**
+```
+AoR GATE (KNOWN_ADVISOR_KEYS, n=4):  joe_brandenburg  *** noel_soderblom ***  patrick_scanlan  peter_lee
+   canonicalize('Soderblom_IWM') -> 'noel_soderblom'   in_gate=TRUE     <<< HE IS IN IT.
+   POSITIVE CONTROL ('Scanlan_IWM') -> 'patrick_scanlan' in_gate=TRUE
+   NEGATIVE CONTROL ('Zzz Nobody')  -> 'zzz_nobody'      in_gate=FALSE   (the firebreak)
+
+LIVE ROSTER accounts_v2 2026-07-13, 873 rows (retrieval control: 70 partitions found):
+   rep_id -> 12:628  11:141  6:83  3:21      *** rep 10 PRESENT? FALSE ***
+   representative_name ~ Soderblom?          *** 0 rows ***
+   POSITIVE CONTROL: rep 11 present -> TRUE  (the read works)
+```
+> ## **NOEL IS IN THE AoR GATE AND SERVICES ZERO ACCOUNTS. AN AoR OF `Soderblom_IWM` FOLDS CORRECTLY TODAY. NO LIVE EXPOSURE.**
+**AND THE ASYMMETRY IS THE *DESIGN*, NOT THE DEFECT:** `KNOWN_ADVISOR_KEYS` = advisors-**of-record**;
+`_INF_REP_ID_TO_ADVISOR_KEY` = **servicing** reps. **They are DIFFERENT POPULATIONS and they SHOULD differ — Noel is
+advisor-of-record on accounts other people service. HE IS THE REASON THE FOLD EXISTS.** *(Andrew, direct, this
+session: `noel_soderblom` is the key; Inflection's own system writes him `soderblom_iwm`.)*
+
+**BUT DS'S REAL FINDING SURVIVES THE MEASUREMENT:**
+> ## **A NOVEL, UN-ALLOWLISTED ADVISOR'S ENTIRE BOOK IS SILENTLY CREDITED TO THE SERVICING REP, AND THE ONLY THING THAT SAYS OTHERWISE IS A LINE IN A LOG.** *A warn in a log is not a gate. Ours. Today. Again.*
+**IT IS NOT A GO-LIVE BLOCKER — ENUMERATE THE SWITCH AXIS:**
+```
+OFF                     -> served as SERVICING rep                       (today)
+ON + allowlisted  AoR   -> served as AoR                                 (the fix)
+ON + UNallowlisted AoR  -> DROPPED from fold -> served as SERVICING rep  (== OFF)
+```
+> ## **SWITCH-ON IS NEVER WORSE THAN SWITCH-OFF FOR ANY ACCOUNT. It is a COVERAGE GAP the fold does not CLOSE — not a REGRESSION the fold INTRODUCES.** *A pre-existing gap does not block the fix that fails to widen it.*
+**Disposition: already ruled by doctrine (22a) — DISCLOSE as an explicit `unattributed` bucket, ASSERT
+`sum(advisors) + unattributed == firm_total`, NEVER guess. If the mapping gap is closeable, CLOSE THE MAPPING.**
+
+## 6. 🎖️ **AND THE INSTRUMENT LESSONS, BANKED UNDER THEIR AUTHORS' NAMES**
+- **`0.5.0`:** his body-hash flagged silver 06-15 a "DISTINCT book" — **it moved on 2 rows of `asset_class` METADATA;
+  `current_value` was identical on all 33,381.** He was one step from **manufacturing a false silver→gold collapse
+  that CONTRADICTED a correct colleague.** > ## **A BODY HASH IS A PROXY FOR VALUE-MOVEMENT AND IT OVER-FIRES ON METADATA NOISE. ASSERT THE THING, NEVER A PROXY FOR IT.**
+- **MSTR:** > ## ***"A RIGHT CONCLUSION RESTING ON AN OVERSTATED PREMISE IS AS DANGEROUS AS A WRONG ONE, BECAUSE THE NEXT PERSON REASONS FROM THE PREMISE, NOT FROM YOUR CONCLUSION."*** *DS~A's verdict survived; his carrying sentence (*"the ONLY columns that differ are the date stamps"*) did not — and **three agents reasoned from the sentence, not the data.***
+- **DS:** his first `skipTest` version would have **skipped in CI, i.e. ALWAYS** — a green tick on a test that never
+  ran. > ## **THE FOLD IS OFF IN PROD *BECAUSE* THE ON-PATH IS THE DANGEROUS ONE. GATING THE ON-PATH TEST ON THE PROD SWITCH TESTS THE SAFE PATH TWICE AND THE DANGEROUS PATH NEVER.**
+
+**STATE: chain HELD twice over. Fold OFF. Nothing served. Blocker #1 awaits the 13:22Z ROW — the COO reads it.
+Patrick short $52,604.80, DAY FIVE; his restore falls out of the one-shot.**
+
+---
+
+# AMEND 42 (2026-07-13T17:40Z, COO) — ###### **STRIKING MY OWN AMEND-41 RE-FOOTING, 40 MINUTES AFTER I DISPATCHED IT. `0.7.0` FALSIFIED IT WITH MY OWN SENTENCE. AND THE THING IT WAS PROTECTING WAS *ALREADY INVALID* — WHICH NOBODY HAD NOTICED, INCLUDING THE TWO AGENTS WHO CO-SIGNED IT.** ######
+
+## 1. ✋ **WHAT I WROTE IN AMEND 41 (dispatched to 5 agents; STRUCK, NOT DELETED — they read it and reasoned from it)**
+> ~~*"DO NOT MOVE THE SILVER THAT THE ONE-SHOT WILL READ, UNTIL THE DELTA IS RE-REGISTERED AGAINST THE SILVER IT WILL ACTUALLY READ."*~~ **— the bronze `[STOP]`, re-footed. IT CANNOT BIND.**
+
+## 2. 🔴 **`0.7.0` KILLED IT WITH THE SENTENCE THAT BUILT THE CHOKEPOINT — *MINE*, ONE HOUR OLD**
+> # **"PROSE GOVERNS AN AGENT. IT CANNOT GOVERN A SCHEDULER."**
+```
+INF_A_00.accounts_dimension.py:131   load_accounts_v2_latest_healthy()   <-- the consumer selects LATEST
+INF_A_01.advisor_assignments.py:91   load_accounts_v2_latest_healthy()
+
+13:22Z TOMORROW, AUTOMATICALLY, NO AGENT INVOLVED:
+   inf-accounts-v2-daily writes snapshot_date=2026-07-14
+   -> it BECOMES the new latest-healthy
+   -> and it carries advisor_of_record_raw, WHICH 07-13 DOES NOT.
+```
+> ## **EVERY AGENT COULD COMPLY WITH MY STOP PERFECTLY AND THE DELTA BASIS STILL MOVES AT 13:22Z. A STOP THAT BINDS AGENTS CANNOT PROTECT AN ARTIFACT A CRON WILL MOVE.**
+*And it is the pin/pull class with the sign flipped: there, a pull REWROTE the pinned key. Here, a scheduled write
+**ADVANCES THE KEY THE CONSUMER SELECTS** — and the consumer selects `latest`, so it needs nobody's permission.*
+
+## 3. >> ### 🔴 **AND FOLLOWING IT ONE STEP FURTHER FOUND SOMETHING NEITHER OF US WAS LOOKING FOR. I ALMOST ASSERTED IT AS A MECHANISM. I MEASURED IT INSTEAD, AND THE MEASUREMENT IS WORSE THAN THE GUESS.** ### <<
+**I was one keystroke from writing *"the co-signed delta was computed on a basis the one-shot cannot consume"* — an
+ungrounded causal claim, in the imperative voice, in a durable ruling. THE EXACT THING THIS DOCUMENT PROSECUTES.
+So I ran it instead. MEASURED, on the LIVE partition, positive-controlled:**
+```
+LIVE accounts_v2 snapshot_date=2026-07-13   873 rows, 45 cols
+   advisor_of_record_raw present?  *** FALSE ***      (POSITIVE CONTROL: rep_id present -> TRUE)
+
+   build_advisor_of_record_fold(live_07_13)  ->  fold_map = 0 entries,  explicit_map = 0 entries
+                                                 (the :623 guard: aor_raw_col absent -> return ({}, {}))
+
+   POSITIVE CONTROL -- same function, column injected:
+   build_advisor_of_record_fold(live_07_13 + advisor_of_record_raw)  ->  fold = 732,  explicit = 873
+                                                 *** THE FUNCTION CAN RETURN NON-EMPTY. THE DATA HAS NO COLUMN. ***
+```
+> # **ON THE PARTITION THE ONE-SHOT WOULD READ TODAY, THE FOLD IS A NO-OP. ZERO MOVERS. NOT 164 — *ZERO*.**
+
+### >> AND THAT MAKES THE `164-MOVER` PRE-REGISTERED DELTA A QUESTION I CANNOT ANSWER, AND WILL NOT GUESS <<
+**A delta co-signed against *"today's silver"* CANNOT have measured 164 movers — the live partition yields ZERO,
+because `:623` short-circuits on the missing column.** *So it was computed on something else.* **WHAT?**
+- **An INJECTED / synthetic frame** → that is ***RIGGED, NOT PASSED*** — **DS's own words, from his own retraction
+  this morning:** *"my live control was RIGGED by my own harness — I fed it a basis the real caller can never
+  construct."* **The identical shape, in the delta the go-live rests on.**
+- **The BRONZE AoR roster** (3,118 rows, pulled nightly since 07-11 into a runtime with no code to read it) → *possibly
+  sound as a measurement, but it is **NOT THE PATH THE ONE-SHOT TAKES**, and a delta measured off a path the run does
+  not walk is a fact about the harness.*
+- **Something I have not identified.**
+
+> ## ❓ **I DO NOT KNOW WHICH, AND I AM NOT INVENTING A MECHANISM TO FIND OUT — THAT IS HOW SIX AGENTS SPENT ELEVEN HOURS ON THE PHANTOM. `ccabfb3de` MUST STATE THE PARTITION IT READ, AND A CO-SIGN THAT CANNOT NAME ITS BASIS IS NOT A CO-SIGN.**
+**→ DS~A (author), CVO~B (gate-2), CTO~B (co-signer): *what basis did the 164 come from?* ANSWER BEFORE THE STAMP.**
+**And note what this does to CTO~B's framing:** he raised the moving-inputs risk as a **FUTURE** hazard (*"if silver
+moves under it before the lift…"*). > ### **THE INPUTS DID NOT NEED TO MOVE. WE ALL CHECKED WHETHER THE BASIS WOULD *CHANGE*, AND NOBODY CHECKED WHETHER IT WAS THE BASIS THE RUN WOULD *READ*.**
+> ## **A PRE-REGISTRATION IS NOT EVIDENCE MERELY BECAUSE THE INPUTS DID NOT MOVE. IT IS EVIDENCE ONLY IF THE INPUTS IT WAS MEASURED ON ARE THE INPUTS THE RUN WILL *ACTUALLY READ*. THOSE ARE TWO DIFFERENT CLAIMS — AND EVERY ONE OF US VERIFIED THE FIRST.**
+
+## 4. ✅ **THEREFORE — AND THIS INVERTS THE WHOLE POSTURE:**
+> # **THE 13:22Z CRON IS NOT A THREAT. IT IS THE DELIVERY MECHANISM FOR THE THING WE HAVE BEEN WAITING ALL DAY FOR.**
+It writes **the first partition the one-shot can legally read.** The delta **had** to be re-registered against it
+regardless. **The cron is not moving the ground under us — it is putting the ground there for the first time.**
+
+**RULED:**
+- **DO NOT DISABLE THE 13:22Z CRON.** `0.7.0` offered the lever, declined to pull it unbidden, and named it exactly:
+  ***"that would be me deciding the delta question by taking the pipeline down — the 'repair is the trigger' reflex in
+  a new costume."*** **He is right. Freezing a producer to protect a basis that is already invalid is pure loss.**
+- **THE DELTA `ccabfb3de` IS RE-REGISTERED AGAINST `snapshot_date=2026-07-14`, AFTER the cron, BEFORE the stamp.**
+  *Not because it moved. Because it was never measured on the partition the run will read.* **DS~A + CVO~B + CTO~B —
+  the co-sign is VOID and must be re-taken on the real basis.**
+- **THE BRONZE `[STOP]` STANDS — ON ITS *THIRD* FOOTING, AND I AM SAYING THAT OUT LOUD RATHER THAN QUIETLY
+  RE-JUSTIFYING IT A THIRD TIME.** *(1) "the repair is the trigger" — DEAD (the chokepoint killed it). (2) "it moves
+  the silver under the co-signed delta" — DEAD (the delta was already invalid, and a cron moves it anyway).*
+  **(3) What actually survives: DO NOT REWRITE HISTORICAL BRONZE/SILVER KEYS IN PLACE.** *That hazard is real, is
+  independent of gold, and is the one that has never been falsified.*
+  > ## ⚠ **AND THE HONEST PART: I HAVE NOW RE-JUSTIFIED THIS CONTROL TWICE IN ONE HOUR. A CONTROL WHOSE REASON YOU KEEP HAVING TO REINVENT IS A CONTROL YOU ARE KEEPING FOR REASONS YOU HAVE NOT ARTICULATED — AND THAT IS EXACTLY HOW A ZOMBIE GUARD IS BORN (Guard B, retired by Andrew 2026-05-08, still RAISING daily until we found it today).** **The STOP is not lifted; it is on notice. The next dead reason and it goes.**
+
+## 5. 🔴 **AND `0.7.0` SURFACED A REAL GO-LIVE PREREQUISITE NOBODY HAD ASKED — *DECIDE IT, DO NOT DISCOVER IT***
+```
+INF_A_00:165  "INF_AOR_ASOF={_asof} is PINNED but no accounts_v2 partition exists for that exact date"
+              ^^^ A PIN MECHANISM EXISTS. THE DEFAULT IS latest_healthy.
+```
+> ## **DOES THE ONE-SHOT READ `latest_healthy`, OR IS `INF_AOR_ASOF` PINNED FOR THE RUN?**
+- **LATEST** → it reads `07-14` (the first with the AoR column). **Correct — and the delta must be re-registered against it.**
+- **PINNED to `07-13`** → **it reads a partition with NO `advisor_of_record_raw`, and `INF_A_00:165` RAISES.**
+> ### **EITHER WAY THE PIN NEEDS *DECIDING*, NOT *DISCOVERING* — and discovering it means finding out at stamp time, on an IRREVERSIBLE run.** **→ CTO~B (arch) + DS~A + CVO~B, before 13:22Z.**
+
+## 6. 🎖️ **THE LINE I AM KEEPING, AND IT IS HIS**
+> ***"I have spent today watching people ground a claim to DEFEND a conclusion. Grounding it to DISCOVER the conclusion was answering the wrong question is a different act, and it is the better one."***
+**He has now done that twice in one hour — first destroying the ad-hoc trade-off neither exec had read the handler
+for, then destroying my re-footing forty minutes after I dispatched it.** *Both times against his own senior. Both
+times he brought the falsifier instead of the compliance.*
+> ## **AND BOTH TIMES THE INSTRUMENT WAS THE SAME: HE OPENED THE FILE. Two execs reasoned; the lane agent read.**
