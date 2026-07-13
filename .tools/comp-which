@@ -1253,7 +1253,10 @@ def main() -> int:
     term = _extract_term(q)
 
     if not _JSON:
-        print('comp-which -- best match for: "%s"\n' % q)
+        # NOT "best match" -- that is the argmax framing surviving in the UI. The tool now returns a
+        # RANKED SHORTLIST it does not vouch for, and says so. The header must not re-assert the
+        # confidence the body spends three lines withdrawing.
+        print('comp-which -- candidates for: "%s"\n' % q)
 
     _STRONG_MAIN = 4
 
