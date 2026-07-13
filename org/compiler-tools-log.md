@@ -16954,3 +16954,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/silver/verify_deployed... | PASS |
 | 2026-07-13 | 0.4.0_DS_ClientPlatform~A | (no-TO) | session-summary(pt3) | comp-surface-check + commit-gate (PASS, auto) | MIXED | GAP: the lib-parity CI (inf-pipeline-lib-parity.yml) covers 0 OF 6 of the copies that actually run -- it compares against a path safe-deploy never writes, guarding a DEAD artifact no gold script imports, and aws-s3-cp object-parity CANNOT SEE INSIDE A LAMBDA ZIP. It was green/ignored-red through BOTH of the days propagation failures. Cannot be fixed by adding PAIRS; the model is wrong. Routed CTO~B/COO/0.7.0. |
 | 2026-07-13 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/silver/convert_orion_a... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/inf-pipeline/ci/test_b... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed data/inf/manual_api/pull_inflection_positions_daily.py | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed data/inf/manual_api/pull_inflection_performance_rest.py | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/inf-pipeline-lib-pari... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_01.canonica... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/DOOR5_REVERT_RUNBOOK... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform~A | (no-TO) | session-close | comp-surface-check x19 (PASS, auto via safe-commit) + commit-gate x10 (PASS) + comp-pipescript io (GAP) | MIXED | TWO GAPS IN MANDATED GATES: (1) comp-pipescript io INF_B_00 omits the accounts_v2 READ + the gold/canonical/holdings WRITE -- the roster input at the heart of the 05-08 SEV is invisible to the tool a DS must run before editing that script; (2) comp-constants compares VALUES and cannot see a BEHAVIOUR divergence -- it flagged the inert copy while waving through two live zombie guards carrying IDENTICAL canonical constants. Both filed to 0.7.0 + COO. |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
