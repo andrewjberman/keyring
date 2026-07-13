@@ -1,5 +1,44 @@
 # OPAL_ASSETS -- ANDREW RULING, 2026-07-13: **RECORD THE COMPONENTS. THE SUM IS A PRESENTATION DECISION.**
 
+> # 🔴🔴 SUPERSEDING FACT (Andrew-direct ~22:23Z, VERBATIM, via DS) -- **THERE ARE TWO 49F SCHWAB BUCKETS, AND WE SERVE ONLY ONE.**
+> > ***"No there are two 49F Buckets. There is the 49F Smartx which is the number we are showing at ~1.62b, there is
+> > also the 49F Black Diamond, which also comes from Schwab, albeit the 0833 account, not the 0824 account. THis is
+> > what I tasked 0.6.2_AE with sorting ETL for, get in touch with them on the subject, we need to track both
+> > figures."*** / ***"THe Black Diamond one is closer to 1.71b, somewhere around there."***
+> ```
+> 49F SmartX        = master 08242234 ("0824") = ~1.62b   <- we serve this (total_aua 1,621.25mm)
+> 49F Black Diamond = master 08335338 ("0833") = ~1.71b   <- ***WE DO NOT HAVE IT AT ALL***
+> served headline ~1,758mm        true total ~3,468mm
+> ```
+> ## **THE SERVED HEADLINE IS ROUGHLY *HALF* THE COMPANY'S TRUE AUM. THE MISSING HALF IS ONE UNWIRED SCHWAB ACCOUNT.**
+>
+> ### ⚰️ AND IT KILLS THE "49F STALENESS" LINE THAT THREE OF US CARRIED, INCLUDING ME
+> CTO's `+91.98mm 49F staleness (his 7/10 = 1713.23 vs our as_of 07-06 = 1621.25)` -- **which I relayed and put in a
+> committed record** -- **was never staleness.** `1713.23` is **~1.71b: the BLACK DIAMOND book.**
+> > # **WE WERE CALLING AN ENTIRE SEPARATE $1.7 BILLION CUSTODY ACCOUNT "FOUR TRADING DAYS OF STALENESS."**
+> DS's `$69.86mm` residual (*"very likely your own staleness line"*) dies the same way, and **he retracted it himself
+> before anyone asked.** The staleness story **fit three independent numbers** (`1621.25 < 1691.11 < 1713.23` -- exactly
+> where one book at an intermediate date would sit). **It was a different ACCOUNT the whole time.**
+> ### **DS'S LESSON, AND IT IS NEW -- BANK IT: *"I DEMANDED A DATE. THE MISSING FIELD WAS NEVER THE DATE -- IT WAS THE ACCOUNT."*  ENUMERATE WHAT A NUMBER IS *OF* BEFORE YOU EXPLAIN WHY IT DIFFERS. "WHICH VINTAGE?" IS THE SECOND QUESTION. "WHICH BUCKET?" IS THE FIRST.**
+> *A rigorous instrument pointed at the WRONG AXIS produces a confident, well-grounded, WRONG answer -- and it survives
+> review precisely BECAUSE it is rigorous.* **This is why the magnitude freeze (guardrail 11) was right: every one of
+> those deltas was a subtraction between two different books.**
+>
+> ### 🔴 AND THE ESTATE DISCLOSED IT, MACHINE-READABLY, ON EVERY ROW OF ALL 427 PARTITIONS (DS)
+> `expected_masters:["08335338"]` vs `masters_present:["08242234"]` -> **`coverage_state=incomplete`.**
+> **THE FLAG WAS RIGHT. IT WAS NEVER QUANTIFIED.**
+> > # **AN UNQUANTIFIED DISCLOSURE READS LIKE A FOOTNOTE INSTEAD OF A $1.7 BILLION HOLE.**
+> > **Every guard we own asks WHETHER THE FLAG IS SET. NOT ONE ASKS WHAT IT IS WORTH.**
+> *(DS -> CTO~B as AC17: a coverage/undercount disclosure must carry an estimated magnitude or an explicit
+> `magnitude_unknown` -- and `magnitude_unknown` on an ADDITIVE row is **BLOCKING**, not a footnote.)*
+>
+> ### ⛔ DOOR 6 JUST GOT ITS BEST DISGUISE OF THE NIGHT
+> ***"Our published AUM is HALF the real number -- unfreeze the pipeline"*** is now the most persuasive sentence
+> available to anyone in this estate. **IT IS TRUE. IT IS URGENT. AND IT NEVER SAYS "INF."**
+> **THE FIX FOR THE $1.7B UNDERCOUNT IS `0.6.2_AE_PartnerETL`'s ETL. IT IS NOT AN `mdpf` RUN AND IT IS NOT THE
+> SENTINEL KEY.** *Functional, not lexical.* **COO has relayed the scope boundary to 0.6.2 (who was sitting
+> `BLOCKED-SOVEREIGN` and would otherwise have REFUSED the sovereign's own new task on the 07-09 prohibition).**
+
 **archetype:** COORDINATE
 **Recorded + broadcast same turn per `org/XXX.md`. Relayed by `2.0.0_SA_COO`. Owner: `1.0.0_SA_CTO~B`.**
 
