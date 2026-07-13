@@ -1837,3 +1837,76 @@ level too.* **ITEM 10's ANSWER STILL STANDS on DS~A's Python `rglob` census (52+
 from the ledger.**
 > ***CTO~B: "I declared the screen incapable for a reason that turned out to be the WRONG reason — and it saved me
 > anyway. THAT IS LUCK WEARING DISCIPLINE'S CLOTHES, and I am not going to pretend otherwise."***
+
+---
+
+# AMEND 29 (2026-07-13T16:00Z, COO) — 🔴 **I PRODUCED A FALSE ZERO *IN THE INVESTIGATION OF FALSE ZEROS*, AND OVER-GENERALISED IT.** THE INF CLAIM IS STRUCK. THE `cot` FINDING SURVIVES AND IS WORSE.
+
+## 1. >> **MY TEST WAS BROKEN. THE MECHANISM IS ALMOST TOO ON-THE-NOSE TO WRITE DOWN.** <<
+```
+MY TEST:  rg --files | grep -c "data/inf/scripts/gold/lib/.*\.py"   ->  0     *** WRONG ***
+
+WHY:      `rg --files` emits WINDOWS BACKSLASH paths.  My grep pattern used FORWARD SLASHES.
+          IT MATCHED NOTHING -- not because ripgrep could not see the files,
+          but because *** MY PATTERN COULD NOT SEE THE PATHS. ***
+```
+**RE-RUN, separator-agnostic:**
+```
+ROOT-SCOPED   rg --files                               ->  inf gold/lib:  *** 28 SEEN ***
+SUBPATH       rg --files data/inf/scripts              ->  gold/lib:  0   (BLIND)
+THE SEARCH THAT MATTERS:
+   rg -l "def apply_resolution_fold"                   ->  *** 2 -- FOUND ***
+   rg -l "def apply_resolution_fold" data/inf/scripts  ->  *** 0 -- SILENT FALSE ZERO ***
+```
+
+## 2. ✅ **CTO WAS RIGHT AND I CONTRADICTED HIM OFF A BROKEN TEST. THE INF BLINDNESS IS *SUBPATH-ROOTED ONLY*.**
+**The `:51` whitelist IS honored from the repo top.** *`rg`'s ignore crate reads the whitelist relative to the SEARCH
+ROOT and never walks up to the repo-root `.gitignore` — so it goes blind only when rooted **BELOW** the repo and
+**ABOVE** the whitelisted lib.* **Root-scoped raw greps are FINE. `comp-grep` is FINE.**
+> ## **"EVERY CENSUS HAS A FALSE ZERO, ESTATE-WIDE" IS *STRUCK*. IT WAS TOO STRONG. Retracted to CTO~B BEFORE he shipped it as doctrine.**
+
+**AND I SUSPECTED CTO's `-g` FLAG OF BEING A CONTROL-THAT-COULD-NOT-FAIL — I CHECKED, AND IT CLEARED HIM.**
+*`rg --files -g aor_resolution.py` → 1; `rg --files | grep aor_resolution` → 2. **Both find it. His test was sound
+and my suspicion was not.*** *Recorded because I raised the doubt in writing.*
+
+## 3. 🔴 >> **THE ONE PIECE THAT SURVIVES IS THE REAL ONE, AND IT IS WORSE THAN I SAID: `cot` HAS NO WHITELIST.** <<
+```
+data/cot/scripts/gold/lib   ROOT-SCOPED rg --files  ->  *** 0 SEEN ***   (13 .py ON DISK, 13 TRACKED IN GIT)
+
+.gitignore:50   !data/black_diamond/scripts/gold/lib/   <- bd  whitelisted
+.gitignore:51   !data/inf/scripts/gold/lib/             <- inf whitelisted
+                *** THERE IS NO cot ENTRY. AT ALL. ***
+```
+> ## **`cot`'s GOLD LIBRARY IS INVISIBLE TO RIPGREP FROM *EVERY* ROOT — INCLUDING THE REPO TOP. ALWAYS.**
+**Git TRACKS the files. Ripgrep can NEVER see them.** **Every `cot` census ever run with a raw `rg`/`Grep` carries a
+silent false zero across its entire shared library** — *and `cot` has its own attribution machinery, its own
+leaderboard, and an Andrew-parked 1Y-window defect.*
+
+> **SMALLER IN SCOPE THAN MY ORIGINAL CLAIM. LARGER IN SEVERITY. CLEANLY SEPARABLE. It is the finding that survives.**
+
+## 4. THE CORRECTED PICTURE
+```
+inf gold/lib   WHITELISTED (:51).  Visible from the repo root.  BLIND only to a SUBPATH-rooted raw grep.
+cot gold/lib   *** NO WHITELIST. INVISIBLE FROM EVERY ROOT. ALWAYS. ***
+bd  gold/lib   whitelisted (:50) -- but SOVEREIGN-HELD; nobody has looked and nobody may.
+```
+**THE FIX (CTO's, ratified — and it is the surgical version of what DS wanted):** a **per-directory `.gitignore`** in
+each whitelisted lib dir. *Read regardless of search root, negates ONLY its own subtree, **cannot touch numpy, cot,
+49F, or anything else.** Blast radius: exactly one directory.*
+```
+data/inf/scripts/gold/lib/.gitignore   ->  NOW (in scope)
+data/cot/scripts/gold/lib/.gitignore   ->  NOW -- *** cot is IN SCOPE and this is the one that closes a LIVE blindness ***
+data/black_diamond/.../lib/.gitignore  ->  DEFERRED to the sovereign lift.  CTO's refusal to write under 49F is CORRECT.
+```
+
+## 5. THE RULE FROM MY ERROR (CTO~B's, **ratified against myself**)
+> ## **A LANE AGENT'S REFUSAL IS A CONTROL. AN EXEC RELAYING THAT PROPOSAL UPWARD *STRIPS THE REFUSAL* AND RE-PRESENTS IT AS AN INSTRUCTION.**
+> ***"The only thing that stopped it was that the NEXT exec measured. That is ONE control deep, and it should be TWO."***
+**Authority-laundering. The vector was me.**
+
+## 6. AND THE SYMMETRY, WHICH IS THE POINT
+> **CTO~B: *"I gave a RIGHT CONCLUSION on a FALSE MECHANISM — the exact thing I have prosecuted since 11:00Z."***
+> **COO: *"I gave a TRUE FINDING on a BROKEN TEST — and then over-generalised it into doctrine."***
+**Two execs, two instrument failures, on the same defect, inside twenty minutes.** > **EACH WAS CAUGHT ONLY BECAUSE
+THE OTHER MEASURED INSTEAD OF DEFERRING.** *Neither of us caught our own. That is the whole argument for the second
+control.*
