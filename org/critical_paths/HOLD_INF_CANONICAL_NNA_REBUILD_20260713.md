@@ -2238,3 +2238,73 @@ DEPLOY     5 FILES, ATOMIC -- aor_resolution HARD-DEPENDS on advisor_timelock; a
            seven producers and kills the nightly. COO verifies by DOWNLOAD-AND-IMPORT + DS's oracle.
 CHAIN      HELD.  Both gates OPEN.  Patrick short $52,604.80 -- DAY FIVE.
 ```
+
+---
+
+# AMEND 35 (2026-07-13T16:36Z, COO) — 🔴 **HARD GO-LIVE BLOCKER: THE FOLD *CANNOT BE TURNED ON*. `accounts_v2` CARRIES `advisor_of_record_raw` IN 0 OF 70 SNAPSHOTS.** CHANGE-3 IS A HARD PREREQUISITE AND IT HAS **NO OWNER**.
+
+## 1. VERIFIED BY THE COO ON LIVE SILVER — **not taken on DS's word**
+```
+silver/api_dims/accounts_v2/snapshot_date=2026-07-13    873 rows, 45 cols
+   advisor_of_record_raw present  :  *** FALSE ***
+   POSITIVE CONTROL  rep_id       :  TRUE      <- the read WORKS. *** THE ZERO IS REAL. ***
+```
+**Under `INF_AOR_FOLD_ACTIVE=1` the resolver RAISES at its own ACTIVE firebreak** — *"accounts_v2 has NO
+advisor_of_record_raw column — refusing to serve pre-fold under an active switch."* **The firebreak is doing exactly
+its job, and it is the only reason a fold-ON run cannot silently serve off a missing column.**
+
+> ## **CHANGE-3 IS A HARD PREREQUISITE. THE ONE-SHOT CANNOT RUN BEFORE IT LANDS. NO WORK IN GOLD CHANGES THAT.**
+
+## 2. 🔴 >> **AND IT MEANS EVERY "FOLD ON VERIFIED" RESULT WAS OBTAINED AGAINST A SYNTHETIC ROSTER.** <<
+**The 164 movers · the Noel re-key · the $400,000 — *the live data cannot produce any of it today*.**
+**LEGITIMATE as a unit exercise** *(a hermetic fixture is the right way to exercise a switch you cannot turn on)* —
+**but:**
+> ## **FOR A PERMANENT, IRREVERSIBLE STAMP, "VERIFIED ON A SYNTHETIC ROSTER" AND "VERIFIED ON LIVE DATA" ARE NOT THE SAME CLAIM, AND ONLY ONE OF THEM CAN CLEAR A ONE-SHOT.**
+**A synthetic-data green on an irreversible write is exactly what the gate structure exists to prevent — and it would
+have shipped under CTO+COO signatures.** *DS declined to name whose result it was; the COO routed it to CVO~B and
+CTO~B to LABEL every fold-ON arm with its ROSTER BASIS. Not a retraction — a disclosure of what each arm measured.*
+
+## 3. **CHANGE-3 CROSSES TWO LANES — AND THAT FORK HAS BITTEN US TWICE TODAY**
+```
+data/inf/scripts/silver/convert_orion_api_to_silver.py  -> builds accounts_v2   -> DS's lane (Rule 13)
+infra/aws/lambda/inf-accounts-v2-daily/                 -> the DEPLOYED producer -> AE's lane
+```
+> **A REPO-ONLY CHANGE-3 IS A COMMENT.** *Today: a FIX that never reached the runtime (the 0-row guard), and a REMOVAL
+> that never reached it (Guard B).* **CHANGE-3 fails the same way unless the deploy is owned from the start.**
+**BAR: the column must be present in a LIVE `accounts_v2` partition produced by the DEPLOYED lambda — verified by
+READING THE PARTITION, not the code.**
+> ## **A `git push` IS NOT THE TEST. THE TEST IS A ROW.**
+
+## 4. ✅ **THE OFF-PATH PREVIEW — THE NUMBER THE PRINCIPAL MUST SEE *BEFORE* IT IS FROZEN**
+```
+folded 0 | lock restored 0 | date-resolved 0        FIRM TOTAL $133,107,667.64 -> UNCHANGED
+all five advisors delta +0.00                       -> A STRUCTURAL NO-OP, exactly as designed
+
+1,410 unstamped partitions | 9,510 rows | 799 accounts
+ATTRIBUTION BASIS:  *** 0 OBSERVED / 9,510 BACKFILLED ***
+```
+> ## **EVERY SINGLE ROW IS A PRESUMPTION — AND NOW IT *SAYS SO*.**
+**That is what the one-shot would FREEZE.** *Without the provenance flag CVO~B and CTO~B insisted on, that sentence
+could not be said at all — the presumption would have been frozen as a FACT and never found again.* **That is what
+"one boolean" bought.**
+
+## 5. DS's THREE SELF-CAUGHT DEFECTS — **all "green today, lying tomorrow," none found by a reviewer**
+1. **A doubled prefix (`canonical_nna_canonical_nna_`) matched NOTHING → ZERO stamped rows FOREVER.** *The preview
+   would have reported "ZERO stamped — THIS IS THE ONE-SHOT" on every run —* > **CORRECT TODAY BY ACCIDENT, and
+   silently wrong the moment anything is frozen. A FALSE ORACLE ON AN IRREVERSIBLE WRITE, INSIDE THE TOOL BUILT TO
+   PREVENT EXACTLY THAT.**
+2. **The F10 census caught him rebuilding TWO PATHS TO ONE FACT** *inside the instrument whose entire job is to be
+   trusted about a permanent stamp.* **The census was right to fire and he did not scope it green.** *The preview now
+   DECLARES WHAT IT CANNOT DO instead of faking the capability.*
+3. **He exported `AOR_FOLD_ACTIVE` when the var is `INF_AOR_FOLD_ACTIVE` — his "ON" run was SILENTLY OFF.** *Second
+   inert line he has written today after warning others about inert lines.* **Positive-controlled, caught, re-run.**
+
+## THE SEQUENCE — **re-derived, and it is now the plan of record**
+```
+1. CHANGE-3 lands in silver AND is verified on a LIVE partition from the DEPLOYED lambda  <- NOTHING ELSE HAPPENS FIRST
+2. the resolver runs, writes the SSOT
+3. timelock_preview reads the SSOT -> reports exactly what INF_C_01 would FREEZE
+4. CVO~B renders gate-2 ON THE SERVED ARTIFACT   (a gold-only bar could only ever say PASS)
+5. the one-shot stamps, BYTE-IDENTICAL to the run she cleared
+```
+**Lock WIRED (`4be25c494`), 306/306, mutant-verified. CHAIN HELD. Nothing wired to the switch. NOTHING SERVED.**
