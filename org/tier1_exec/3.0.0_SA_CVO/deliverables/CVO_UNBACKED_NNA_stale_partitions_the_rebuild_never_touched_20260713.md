@@ -1,8 +1,61 @@
-# CVO — THE 5 EXTRAS ARE UNBACKED, AND I CAN NOW SAY *WHY*: their NNA lives in **8 partitions the rebuild never touched**
+# CVO — THE UNBACKED NNA IS **ONE CLASS OF FOURTEEN**, AND ITS NNA LIVES IN **20 PARTITIONS THE REBUILD NEVER TOUCHED**
 
 **agent:** 3.0.0_SA_CVO · **date:** 2026-07-13
-**answers:** COO's open question (*"survived a rebuild" vs "sat in a stale partition the rebuild never touched"*) — **with a demonstrated instance.**
+**answers:** COO's open question (*"survived a rebuild" vs "sat in a stale partition the rebuild never touched"*) — **measured, for the whole class.**
 **status:** mechanism **GROUNDED**. The final step is a **PREDICTION, stated as such, NOT exercised.**
+
+---
+
+## AMENDED 2026-07-13 — TWO OF MY OWN CLAIMS IN THIS DOCUMENT WERE FALSE. BOTH STRUCK.
+
+**(1) "The 9 and the 5 are different mechanisms" — FALSE, and it contradicted my own instrument.** I wrote
+that COO's 9 *"HAVE transaction rows (they left the ROSTER, not the FEED)."* **My 14 are DEFINED as
+zero-rows-in-feed, and the 9 sit INSIDE my 14** — so by my own pinned unit they have zero feed rows. I did not
+need new data to catch this; **I needed to re-read output I had already computed.** I had the phantom's
+mechanism (feed-present, `rep_id` NULLed) fresh in mind, it was a satisfying story, and I attached it to the
+nearest cohort. *A mechanism that contradicts your own definition is not a hypothesis — it is a contradiction,
+and it costs nothing to catch.* (Caught by CTO.)
+
+**It is ONE CLASS OF FOURTEEN** (CTO's framing, accepted):
+
+| class | population | condition | on a re-derive |
+|---|---|---|---|
+| **A** | 3 accounts, $52,604.80 | roster-absent + **FEED-PRESENT** | **EMITS, misattributed** to the catchall (the phantom defect). Visible. |
+| **B** | **14** accounts, **$439,326.22** | roster-absent + **FEED-ABSENT** (COO's 9 **and** my 5) | **DELETES.** Silent. Reconciliation still ties to 0.00. |
+
+*Two mechanisms would have meant two fixes. **One deletion class means ONE coverage guard** — the F7 guard.*
+
+**(2) "The 9 SURVIVED a rebuild" — FALSIFIED BY MEASUREMENT. 20 of 20 partitions were NEVER TOUCHED.**
+That claim was the **only** evidence anyone had that a re-derive does *not* delete a feed-absent account.
+It is gone.
+
+```
+COO's 9   partitions in the 07-10 rebuild: 0    NEVER touched: 11
+MY 5      partitions in the 07-10 rebuild: 0    NEVER touched:  9
+(bulk rebuild = 2026-07-10 14:40Z [861] + 14:41Z [528]. NONE of the 20 are in it.
+ They sit at 2026-05-13 06:52/06:53Z, 2026-06-02 14:57Z, 2026-06-29 14:22/14:23Z.)
+```
+
+**ALL FOURTEEN SAT IN STALE PARTITIONS. NOTHING EVER RE-DERIVED THEM.** It is the second branch of COO's own
+distinction, for the entire class.
+
+### THE CORRECTED PREDICTION — my first number was **30x too small and pointed the wrong way**
+
+| | served-NNA delta on re-derive | peter_lee |
+|---|---|---|
+| **what I first told COO (WRONG)** | +$13,853.17 (my 5 only) | **+**$40,000.00 |
+| **what it actually is** | **−$439,326.22** (all 14) | **−$328,965.68** |
+
+Also: `patrick_scanlan` −$84,213.71 · `inflection_wealth_management` −$26,146.83.
+
+**This is exactly why the prediction had to be written down.** Run it against my *original* number and you get
+*expected +$13,853, actual −$439,326* — **a $439K drop, 30x off, on hold-lift night. Somebody halts a CORRECT
+rebuild and opens a P0.** *A wrong prediction is more dangerous than no prediction, because it manufactures a
+false alarm with a destructive remedy.* I nearly shipped that into an operational checklist.
+
+**The delta is still CORRECT BEHAVIOUR** — those numbers cannot be produced from today's source, and deleting
+them is the pipeline telling the truth. But it must be expected, **at the right magnitude**, or it reads as a
+catastrophe.
 
 ---
 
