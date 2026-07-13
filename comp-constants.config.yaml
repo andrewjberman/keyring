@@ -470,6 +470,31 @@ constants:
   notes: 'Inflection Guard B lower AUA bound ($150M). Also appears as GUARD_B_LOWER in shape_check.py (different constant name — divergent naming pattern worth flagging to AE for comp-constants canonical-name
     enforcement).
 
+
+    *** RATIFIED EXCEPTION — inf-api-txn (0.7.0_AE_CloudOps~B, 2026-07-13). READ THIS BEFORE YOU "FIX" ANYTHING. ***
+
+    IF THE GATE JUST BLOCKED YOUR COMMIT ON infra/aws/lambda/inf-pipeline/inf-api-txn/_orion_api_silver_lib.py,
+    IT IS BLOCKING ON A KNOWN, DELIBERATE, INERT DIVERGENCE. That copy holds 50_000_000 / 400_000_000 against a
+    canonical 150_000_000 / 300_000_000. It is LEFT UNFIXED ON PURPOSE.
+
+    WHY IT IS HARMLESS: apply_aua_guard is UNREACHABLE from inf-api-txn''s handler. lambda_function.py imports
+    NEITHER _orion_api_silver_lib NOR convert_orion_api_to_silver — the silver write was removed from that Lambda
+    by ADVI_TXNAMG.004 (2026-05-15), so both files are vestigial baggage in the deployment package. Measured
+    counterfactual: substituting the canonical body leaves the reach set at 7 -> 7, ACTIVATING NOTHING.
+    Census of record: org/tier2_senior/0.7.0_AE_CloudOps/deliverables/INF_SILVER_LIB_DIFF_CENSUS_20260713.md (182a88183).
+    Guard B itself was RETIRED by Andrew on 2026-05-08 — these constants have READS=0 in canonical, accounts-v2,
+    positions and reps. They are dead everywhere except this one inert copy.
+
+    DO NOT tighten the band to turn this gate green. That is an UNGROUNDED EDIT TO A LIVE LAMBDA MADE TO SATISFY
+    AN INSTRUMENT — the exact defect class this registry exists to prevent.
+    DO NOT cite the struck reason "consolidating txn would activate dead code there." It was asserted, ratified,
+    and then FALSIFIED BY MEASUREMENT (CTO struck it 2026-07-13). A mechanism that is merely absent gets
+    re-invented; one recorded as FALSE gets left alone.
+
+    TOOL GAP (filed): comp-constants has no exempt/deliberate/ratified field, so it cannot distinguish a ratified
+    divergence from drift — which is why this exception has to live in a notes: string. THE GATE IS NOT WRONG,
+    IT IS INEXPRESSIVE. Fix the instrument, not the sample.
+
     '
 - name: GUARD_B_AUA_UPPER
   lane: inf
@@ -489,6 +514,17 @@ constants:
     value: '300_000_000'
     comment: 'GUARD_B_UPPER = 300_000_000  # verify-only alias (different name: GUARD_B_UPPER)'
   notes: 'Inflection Guard B upper AUA bound ($300M). Same divergent naming pattern as GUARD_B_AUA_LOWER — shape_check.py uses GUARD_B_UPPER not GUARD_B_AUA_UPPER.
+
+
+    *** RATIFIED EXCEPTION — inf-api-txn (0.7.0_AE_CloudOps~B, 2026-07-13). SEE GUARD_B_AUA_LOWER FOR THE FULL NOTE. ***
+
+    inf-api-txn''s bundled copy holds 400_000_000 against canonical 300_000_000 (paired with its 50_000_000 lower).
+    KNOWN. DELIBERATE. INERT — apply_aua_guard is UNREACHABLE from that Lambda''s handler, which imports neither the
+    lib nor the converter (silver write removed by ADVI_TXNAMG.004, 2026-05-15). Counterfactual reach 7 -> 7:
+    ACTIVATES NOTHING. Census 182a88183. Guard B was RETIRED by Andrew 2026-05-08; READS=0 in every other copy.
+
+    DO NOT tighten the band to satisfy the gate. DO NOT cite the struck "it would activate dead code" reason —
+    FALSIFIED and struck by CTO 2026-07-13.
 
     '
 - name: INFLECTION_EXTENDED
