@@ -60,6 +60,7 @@ SERVICING = 'peter_lee'       # what a switch-OFF run MUST serve (DELTA-0)
 FOLDED = 'noel_soderblom'     # what the artifact from the last ON run carries for a mover
 
 from aor_resolution import RESOLUTION_KEY, load_resolution  # noqa: E402
+from aor_resolution import code_digest as _code_digest  # noqa: E402
 
 
 # ---- STEP 1: ask THE REAL DISPATCH what it would run -----------------------------------
@@ -103,8 +104,12 @@ def _stale_folded_resolution() -> pd.DataFrame:
         'explicit_aor': [True, False, False],
         'is_mover': [True, False, False],
         'as_of': [PIN] * 3,
-        'fold_mode': ['ACTIVE'] * 3,        # built under ON, last night
+        'fold_mode': ['ACTIVE'] * 3,        # built under ON, last night  <-- THE ONLY MISMATCH
         'source_digest': [ETAG_NOW] * 3,    # from the SAME partition this run reads -- source is INNOCENT
+        # round-8.2 R-B: the artifact must ALSO carry the CODE identity, and it must MATCH this run's
+        # lib -- otherwise the guard raises on NOT-SELF-DESCRIBING and we exercise the A2 branch,
+        # learning nothing about A3. The whole test is that EVERY field agrees except fold_mode.
+        'code_digest': [_code_digest()] * 3,
     })
 
 
