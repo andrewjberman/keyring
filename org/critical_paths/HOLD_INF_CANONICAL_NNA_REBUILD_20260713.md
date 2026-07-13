@@ -2130,3 +2130,62 @@ was wrong"* — and it will not happen twice in one day under the COO's own hand
 > Both inside twenty minutes. Both on the defect 'instruments lie.' **Both caught by the other one measuring.**
 > Neither of us was careless. **Care is not what caught these. Controls over care — and today the control was each
 > other.**"*
+
+---
+
+# AMEND 33 (2026-07-13T16:24Z, COO) — 🔴 **MY *CORRECTED* AST INSTRUMENT WAS ALSO BROKEN. "A RED THAT RESTS ON THE ABSENCE OF A SYMBOL IS NOT A RED."** THE WIRING ORACLE IS NOW DS's BEHAVIOURAL TEST.
+
+## 1. THE COO's AST WAS THE SAME DISEASE, ONE LEVEL UP
+```
+COO's instrument:   CALLS apply_time_lock -> NONE  ->  "NOT WIRED"
+REALITY:            the producer calls `lock_and_stamp` -- the composed entry point (GUARD -> LOCK -> STAMP) --
+                    which calls apply_time_lock INTERNALLY.
+>> apply_time_lock will be called ZERO TIMES even when the lock is FULLY WIRED. <<
+```
+> ## **THE POSITIVE CONTROL PASSED AND SAID THE PARSER WAS SOUND. IT WAS. THE PARSER WAS NEVER THE PROBLEM — THE SYMBOL WAS.**
+> # **A RED THAT RESTS ON THE ABSENCE OF A SYMBOL IS NOT A RED.**
+**The exact MIRROR of the rule landed this morning (*a GREEN that rests on the absence of a symbol is not a GREEN*) —
+and the COO built the RED version while prosecuting the GREEN one.**
+
+**THIRD COO INSTRUMENT TO LIE TODAY:** *a grep that scored a COMMENT as a call · a false zero from a slash-pattern vs
+backslash paths · an AST keyed on the wrong symbol.*
+> **AND A FALSE RED IS THE MORE DANGEROUS KIND: it would have reported NOT-WIRED *after* the lock was wired, and its
+> remedy is to go "fix" a correct script.** *The COO would have been the tool crying wolf at the one moment the fabric
+> needed to believe a wiring claim.*
+
+## 2. >> **AND THE PART NO CALL-CENSUS CAN SEE — WHICH IS THE ONE THAT ACTUALLY KILLS** <<
+```python
+df, st = lock_and_stamp(df, ...)     # correct
+lock_and_stamp(df, ...)              # LOCK RUNS. LOG SAYS "N rows restored". EVERY UNIT TEST PASSES.
+                                     # *** AND THE UNLOCKED FRAME IS WHAT GETS WRITTEN. ***
+```
+> ## **BOTH FORMS *CALL* THE FUNCTION. A CALL-CENSUS SCORES THEM IDENTICALLY.**
+> **A SILENT NO-OP WEARING A WORKING LOCK'S CLOTHES — and the log CONGRATULATES YOU while the pre-lock frame goes to
+> S3.** **The $22M shape, invisible to EVERY symbol-level instrument proposed today, INCLUDING BOTH OF THE COO's.**
+
+## 3. ✅ THE WIRING ORACLE (DS, `tests/test_inf_c01_timelock_wiring.py`, 10/10) — **ADOPTED; THE COO's AST IS RETIRED**
+```
+1. lock_and_stamp is CALLED in main()
+2. it is called BEFORE assert_no_residual_advisor
+   <- else THE GUARD JUDGES A DRAFT: it groups by advisor_key and passes on keys the lock then CHANGES
+3. the returned frame is RE-BOUND (ast.Assign) and `to_write = _relocked` actually REPLACES the list
+   <- else PASS 2 WRITES THE PRE-LOCK FRAMES
+MUTANT-VERIFIED BOTH WAYS (discard the return / drop the re-bind). BOTH CAUGHT.
+```
+**Condition 2 is the sharpest and the COO would never have thought of it:** > ***a guard that runs BEFORE the lock
+judges a DRAFT and passes on keys the lock is about to change*** — **an ordering defect that produces a GREEN guard
+on a WRONG artifact. The F2/F7 composition class, inside one function.**
+
+**COO WILL NOT REPORT `WIRED` OR `NOT-WIRED` OFF ANY SYMBOL CENSUS AGAIN.** *Verification of the wiring = DS's
+behavioural test + DOWNLOAD-AND-IMPORT of the deployed bytes.*
+
+## 4. THE VERDICT WAS RIGHT; THE INSTRUMENT WAS WRONG — **AND DS CORRECTED THE INSTRUMENT, NOT THE VERDICT**
+*The COO's `NOT WIRED` was TRUE when measured (DS's working tree, mid-edit; `5c33ca56f` was lib+tests only).*
+> **A RIGHT ANSWER FROM A BROKEN TOOL IS STILL A BROKEN TOOL, AND IT WILL BE WRONG THE VERY NEXT TIME.**
+**Most agents would have banked the agreement and moved on. He did not.**
+
+## 5. THE STANDARD, IN HIS WORDS — **and it is now the bar for the one-shot**
+> # ***"VERIFY ME. BUT VERIFY ME WITH SOMETHING THAT COULD HAVE SAID NO."***
+*DS has caught FOUR of his own instruments lying this session — a dtype false-negative, a rigged proven-RED, a
+mention-census run twenty minutes after warning the COO about mention-censuses, and a preview prefix that would have
+read ZERO stamped rows forever and been **correct today by accident**.*
