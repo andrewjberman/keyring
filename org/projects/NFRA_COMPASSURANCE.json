@@ -8,11 +8,16 @@
       "path": "docs/architecture/NFRA_COMPASSURANCE.md",
       "label": "NFRA_COMPASSURANCE PRD v0.1 (CTO-authored from CVO Andrew-direct brief; the 5 architectural rulings resolved in-doc)",
       "date": "2026-07-10"
+    },
+    {
+      "path": "docs/architecture/NFRA_COMPASSURANCE_COMPWHICH_TOPK.md",
+      "label": "comp-which: top-k retrieval, not argmax routing (Andrew-direct redesign)",
+      "date": "2026-07-13"
     }
   ],
   "status": "active",
-  "phase": "Phase 0: PRD v0.1 complete (CTO-authored, Andrew-direct via CVO brief). The 5 open architectural decisions are RULED in PRD sec.5: (R-1) COMPASSURANCE productizes P4, P4 stays open as the reference oracle until the harness reproduces its founding verdicts; (R-2) shares COMPILERKIT's layer taxonomy, seam is build-vs-assure; (R-3) the matrix lives as columns on the AC-0 predicate JSON, NO second home; (R-4) a red R1/R4/R7 cell BLOCKS a GREEN citation for SEV1/security/IAM tools, WARNS elsewhere; (R-5) E4-tool assurance is out-of-band and COMPASSURANCE cannot grade itself through itself. AC-7 vacuity gate: the harness must REJECT the old 'ran/exit-0/log-clean' assurance. Awaiting COO decomposition into TO-1..TO-6.",
-  "blocking": "COO task-order decomposition (TO-1 wiring registry + portal SEV1 gate; TO-2 R1 generated-control harness; TO-3 rule<->scan conformance; TO-4 catalog gate + CLAUDE.md ~30->63; TO-5 matrix columns on predicate JSON; TO-6 E4 out-of-band). HARD PREDECESSORS: NFRA_TOOLCHECK.P4 stays open as the reproduce-me oracle; the .tools/** daylight tranche (wiring + E4 fixes land in .tools/ + portal, human-awake window); the .tools/** -> BASE_EXEC lane narrowing (E4 assurance unbuildable while the enforcer is in no lane). RAIL_SET numbering: CVO publishes the single canonical set; the PRD amends to match (AC-0 for this project).",
+  "phase": "Phase 0 (2 PRDs). PRD-2 LANDED 2026-07-13 (CTO~Z, Andrew-direct): comp-which TOP-K REDESIGN. comp-which fails GREEN -- rc=0 on 9/9 probes, a generated-nonsense query routes CONFIDENTLY (fails the random-input control); source-confirmed at .tools/comp-which:1071-1074 @52d008f4c the live COMPROUTE posterior prints its grep fallback in the SUBJUNCTIVE then returns 0, while the real floor sits DOWNSTREAM+UNREACHABLE at :1212-1281 (6,230/6,308 logged routes took the unfloored path). Measured on RULES(n=46): precision@1=67%, recall@5=75% -- the cheap 'top-k lifts recall' hypothesis was FALSIFIED; the real win is that top-k makes the ZERO-STATE expressible, which argmax cannot do at any k. 5 TOs (TO-1 generated harness FIRST -- measure before fixing). ~Z lane: CTO~Z -> COO~Z.",
+  "blocking": "PRD-2 (comp-which top-k): NOT blocked -- COO~Z decomposing TO-1..TO-5 now. PRD-1 (assurance harness): still COO task-order decomposition. OPEN/ANDREW: does NFRA_COMPROUTE reopen? Its 'complete / DEFAULT-ROUTER LIVE' deliverable IS the defect.",
   "created": "2026-07-10",
   "pods": [
     "1.0",
