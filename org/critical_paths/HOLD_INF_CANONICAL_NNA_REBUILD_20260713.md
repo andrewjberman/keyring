@@ -36,10 +36,49 @@ reason: **bronze never completes.**
 
 **INF STALENESS IS NOW A DELIBERATE STATE, NOT A DEFECT TO BE CLEARED.**
 
-**AND THE INF FRESHNESS ALARMS ARE ACTIVELY DANGEROUS — THEY ARE INSTRUCTING AGENTS TO PULL THE TRIGGER.**
-`inf-gold-freshness-check-trigger` (18:30Z) and the NNA partition check (19:30Z) currently page for the one action
-that destroys the data. **If either fires: DO NOTHING. Cite this hold.**
+**AND THE FRESHNESS ALARMS ARE ACTIVELY DANGEROUS — THEY ARE INSTRUCTING AGENTS TO PULL THE TRIGGER.**
 > *An alarm that instructs an engineer to perform the destructive act is worse than no alarm.*
+
+### ⚠ SCOPE THE STOP BY **WHAT THE ALARM POINTS AT**, NEVER BY WHAT IT IS **CALLED** (0.8.0, 10:36Z)
+
+**The first version of this order said "ignore all INF freshness alarms." THAT WAS A CENSUS-BY-MENTION BUG IN A
+SAFETY ORDER, and `0.8.0` caught it inside four minutes — live, exercised:**
+
+```
+12 of 14  mdpf-cohort-freshness-stale-*  ARE IN ALARM RIGHT NOW
+          incl. ...-inflection_models AND all nine 49f_* cohorts   (only etf_pfde / etf_pfoe are OK)
+NONE of them has "inf" in its name.
+```
+
+**`mdpf-cohort-freshness-stale-inflection_models` IS an INF freshness alarm wearing a different prefix.** It fires
+*because* of this freeze and it points its reader at the same repair. **An agent obeying the old STOP LITERALLY AND
+CORRECTLY could still page on `mdpf-*`, conclude mdpf is broken, and go unblock the chain.**
+
+> ## **THE RULE IS FUNCTIONAL, NOT LEXICAL:**
+> ## **ANY alarm whose remedy is "refresh / unblock / repair / re-run the INF chain — OR ANYTHING DOWNSTREAM OF IT" IS UNDER THIS STOP, WHATEVER IT IS NAMED.**
+> **Do not ask "does the alarm say INF?" Ask "would obeying it advance the INF chain?"** If yes: **DO NOTHING.**
+
+**Named instances (NOT exhaustive — the functional rule above governs):**
+`inf-gold-freshness-check-trigger` (18:30Z) · the NNA partition check (19:30Z) · **all 14
+`mdpf-cohort-freshness-stale-*`** · **any OPAL_ASSETS "daily AUM bucket has not advanced" alarm.**
+
+### AND THE HAZARD REACHES INTO PROJECTS THAT NEVER TOUCH AN INF FILE
+
+**OPAL_ASSETS' daily emitter is FROZEN at `run_date=2026-07-10`** (`lambda_function.py:842,844 @ 677dd4d72` —
+`run_date` comes from the SOURCE FILENAME, never the emit date). mdpf cannot advance past a gold that last wrote
+07-10. **So from the OPAL_ASSETS lane the symptom presents as *"the Andrew-commissioned DAILY AUM bucket has not
+advanced in 3 days"* — a clean, urgent, entirely legitimate P1 with a sovereign mandate behind it — and its repair
+path runs straight into the $439,326.22 deletion.**
+
+> **AN AGENT WORKING OPAL_ASSETS, IN GOOD FAITH, WOULD FIX THIS AND NEVER TOUCH AN INF FILE TO DO IT.**
+> The blast radius of the "obvious repair" is **WIDER THAN THE INF LANE**. Scope this hold by the CHAIN, not by
+> the folder.
+
+**`0.8.0` is deliberately NOT building the obvious missing control** — a "daily AUM bucket has not advanced in N
+days" staleness alarm — **because under this freeze that alarm has exactly one function: to page a future agent
+into the destructive repair, with a green-looking justification and a sovereign mandate behind it.** *A loaded gun
+with a helpful label.* **It ships when the hold lifts, WITH a `frozen-by-deliberate-hold` discriminator so it can
+never again mean two things.** *That is the correct call and it is recorded as such.*
 
 **THE REAL CONTROL, REQUESTED OF CTO (`103534Z`), NOT YET LANDED: DISARM `inf-gold-full-on-bronze-complete`.**
 The trigger is **already effectively dead** (bronze never completes), so **disabling it is a NO-OP TODAY and a
