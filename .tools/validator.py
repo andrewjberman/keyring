@@ -105,13 +105,27 @@ def validate_code(code: str) -> None:
 
 
 def load_project(code: str) -> dict:
-    path = PROJECTS_DIR / f"{code}.json"
-    if not path.exists():
-        die(f"project {code} not found at {path}", code=3)
-    try:
-        return json.loads(path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as e:
-        die(f"project {code} JSON invalid: {e}", code=3)
+    """F-013: routed through the sovereign-exclusion loader.
+
+    A DRIVER, like operator.py -- it drives a project toward CLOSURE. A held code
+    reaching here would be validated and closed, not merely printed:
+
+        A FILTER ON THE LIST IS NOT A FILTER ON THE ITEM.
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from lib import project_registry as _pr
+
+    if _pr.is_sovereign_excluded(code):
+        die(
+            f"project {code} is SOVEREIGN-EXCLUDED and cannot be validated or closed.\n"
+            "  Andrew, 2026-07-10: 'just exclude those items, we will deal with them later.'\n"
+            "  This is a hold, not a bug. Do not route around it.",
+            code=3,
+        )
+    data = _pr.load_project(code)
+    if data is None:
+        die(f"project {code} not found (or unreadable) under {PROJECTS_DIR}", code=3)
+    return data
 
 
 def load_prds(project: dict) -> list[dict]:
@@ -728,16 +742,16 @@ def compose_elevation(
         f"- blocked:               {len(buckets['blocked'])}",
         f"- unknown:               {len(buckets['unknown'])}",
         "",
-        f"Requesting resolution per historical patterns + best judgment.",
+        "Requesting resolution per historical patterns + best judgment.",
         f"Validator is HALTED on {code} until your directive lands.",
     ]
     body = "\n".join(body_lines)
 
     print("## MCP-ready elevation -- paste into send_message")
     print(f"   from_agent: {sender}")
-    print(f"   to_agent:   1.0.0_SA_CTO")
+    print("   to_agent:   1.0.0_SA_CTO")
     print(f"   subject:    {subject}")
-    print(f"   body:")
+    print("   body:")
     for line in body.splitlines():
         print(f"     {line}")
 

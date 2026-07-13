@@ -150,6 +150,54 @@ def active_projects(**kw: Any) -> list[dict[str, Any]]:
     return [p for p in load_projects(**kw) if p.get("status") == "active"]
 
 
+def load_project(
+    code: str,
+    *,
+    include_sovereign_excluded: bool = False,
+    reason: str = "",
+) -> dict[str, Any] | None:
+    """ONE project by code. Returns None if absent OR sovereign-excluded.
+
+    ===================================================================
+    THE SECOND READ PATH -- the loader shipped without it and was HALF A FILTER.
+    ===================================================================
+    The enumerating consumers glob the directory; load_projects() (PLURAL) covers them.
+    But operator.py and validator.py do:
+
+        path = PROJECTS_DIR / f"{code}.json"
+
+    -- a DIRECT read by code. It never touches the glob and sails straight past a filter
+    that guards only enumeration. And those two are not display tools: THEY ARE THE
+    DRIVERS. `operator DATA_SSOTMG` would DRIVE a sovereign-held project with the
+    exclusion nominally "in place." Observed live before this landed.
+
+        A FILTER ON THE LIST IS NOT A FILTER ON THE ITEM.
+
+    NAMING NOTE, and it cost real time: this function is `load_project` and its sibling
+    is `load_projects`. A `grep -c "def load_project"` MATCHES BOTH -- the singular is a
+    substring of the plural -- so a check for "does the singular exist?" returns 1 when
+    only the plural does. Use `grep "def load_project("` (with the paren). The verifier
+    that confirmed this function existed, when it did not, was itself a mention-match.
+    """
+    if include_sovereign_excluded and not reason.strip():
+        raise SovereignOverrideError(
+            "include_sovereign_excluded=True requires a written `reason`."
+        )
+    path = PROJECTS_DIR / f"{code}.json"
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(data, dict):
+        return None
+    data.setdefault("code", code)
+    if data.get(EXCLUDE_FIELD) is True:
+        if not include_sovereign_excluded:
+            return None
+        _audit(_actor(), reason.strip(), 1)
+    return data
+
+
 def is_sovereign_excluded(code: str) -> bool:
     """Is this project code under the sovereign hold? (Reads the FIELD, not a list.)"""
     path = PROJECTS_DIR / f"{code}.json"
