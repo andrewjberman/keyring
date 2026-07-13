@@ -3016,3 +3016,71 @@ commit SUBJECT LINE in as a filename.** *A false zero, inside the verification o
 about not reading the artifact.* **The positive control is the only reason I did not report "the artifact is silent
 on AoR" off a broken read and get the right answer for the wrong reason.**
 > # ***PUT THE CONTROL ON THE RETRIEVAL. EVERY TIME. IT CAUGHT ME INSIDE THE VERY AMENDMENT WHERE I WAS PROSECUTING MYSELF FOR NOT CHECKING.***
+
+---
+
+# AMEND 45 (2026-07-13T18:11Z, COO) — ###### 🔴 **NEAR-MISS ON THE HOLDINGS BOOK. THE LAYER CONSOLIDATION WOULD HAVE MADE ONE LAMBDA *WRITE* `.parquet` AND *READ* `.jsonl.gz` IN THE SAME INVOCATION.** ###### **AND THE CENSUS THAT WAS SUPPOSED TO CATCH IT WOULD HAVE REPORTED IT *CLEAN*.**
+
+## 1. 🔴 **THE FINDING (DS) — VERIFIED BY COO ON LIVE S3, NOT RELAYED**
+```
+DEPLOYED inf-api-positions :  producer WRITES bronze/positions/{date}.parquet
+                              converter READS  .parquet      -> CONSISTENT. Works today.
+REPO (canonical)           :  producer WRITES .jsonl.gz
+                              converter READS  .jsonl.gz     -> CONSISTENT. *** NEVER SHIPPED. ***
+```
+**LEG-2's gzip-JSONL migration is COMPLETE, COHERENT, CORRECT — and sitting ENTIRELY IN THE REPO. BOTH WORLDS WORK
+INTERNALLY.** *Ship exactly ONE half — **which is precisely what putting the canonical converter in a Lambda layer
+does** — and:*
+> ## **NIGHT ONE: the producer WRITES `2026-07-14.parquet`; the converter READS `2026-07-14.jsonl.gz` → `NoSuchKey`. THE SAME LAMBDA. ONE INVOCATION. SECONDS APART.**
+> # **`positions_mv` DIES → THE HOLDINGS BOOK STOPS UPDATING → `INF_B_00`'s *SERVED* AUA GOES STALE.**
+
+**COO's independent verification (live `head_object`, both formats, today AND historical):**
+```
+TODAY -- the ONLY key the nightly writes:
+   bronze/positions/2026-07-13.parquet    EXISTS  1,212,239 B  13:40:47Z
+   bronze/positions/2026-07-13.jsonl.gz   *** ABSENT ***
+HISTORICAL:
+   2026-07-09.jsonl.gz  EXISTS  |  2026-07-10.jsonl.gz  EXISTS
+   format census (n=1000):  jsonl.gz 500  |  parquet 500      <- both eras present, by design
+```
+> ## **A VERIFICATION THAT SAMPLED A HISTORICAL PARTITION WOULD HAVE GREEN-LIT THIS.** *2,265 `.jsonl.gz` objects exist. **ONLY TODAY'S IS MISSING — AND TODAY'S IS THE ONLY ONE THE NIGHTLY READS.*** **Point the control at the thing that RUNS.**
+
+## 2. >> ### 🔬 **THE DOCTRINE, AND IT IS A WHOLE AUDIT NOBODY HAS EVER RUN** ### <<
+**`0.7.0`'s reach-set census is a GOOD instrument. IT WOULD HAVE REPORTED THIS CONSOLIDATION *CLEAN*.**
+*It asks **"what would newly EXECUTE?"** — and `build_positions_mv` executes in BOTH worlds. **Nothing activates.
+Nothing deactivates.*** **IT JUST READS A DIFFERENT STRING.**
+> # ***"WHAT WOULD NEWLY EXECUTE" AND "WHAT WOULD IT READ" ARE TWO DIFFERENT AUDITS, AND ONLY ONE OF THEM HAD EVER BEEN RUN.***
+> ## **A DIVERGENCE IN A *STRING LITERAL* IS INVISIBLE TO A REACH-SET CENSUS AND FATAL AT 13:40Z.**
+
+### **→ ARCH-GATE CONDITION 6 (binding, PRECEDES the build):**
+> ## **A READ-SET / WRITE-SET CENSUS. For every fork the layer would overwrite, enumerate the KEYS, FORMATS and SCHEMAS it reads and writes — and ASSERT the producer's WRITE-set equals the consumer's READ-set *IN THE RUNTIME*, NOT IN THE REPO.**
+
+## 3. 🔴 **THE HARD BLOCK**
+> # **LEG-2 IS AN ATOMIC PAIR — PRODUCER + CONVERTER, BOTH OR NEITHER. THE LAYER CANNOT BE THE DELIVERY MECHANISM FOR A HALF-LANDED FORMAT MIGRATION.**
+**Sequence: LEG-2 lands as a PAIR (producer = `0.7.0`'s lane; converter = DS's) → *THEN* the layer consolidates a tree
+that is internally consistent.** **The layer is STILL the right fix and `0.7.0` was STILL right to rank it first. It
+simply cannot GO first.**
+**DS explicitly REFUSED to revert the template to `.parquet`:** *"that would un-land a correct migration to make a
+symptom go away."* **He named the pair and did not rule outside his lane. He shipped the converter-side split-brain
+guard instead (`e3ec94f5b`, SERVE-HELD) — 3 arms exercised, and it says *"THIS IS NOT A LATE BRONZE PULL. Waiting will
+not fix it"*, because a bare `NoSuchKey` would have had somebody waiting for a pull that is never coming.**
+*(And it still reads 33,760 rows on 07-10 — **which also proves the canonical converter WORKS. It only needs its
+producer.** A guard that shouts SPLIT BRAIN at a genuine bronze miss is a liar; his does not.)*
+
+## 4. **THE FORK'S FOURTH DEFECT TODAY — AND THE PATTERN IS WORSE THAN "DRIFT"**
+```
+CHANGE-3   the PULL shipped from infra/, the JOIN sat in data/    -> blocked the AoR go-live for TWO DAYS
+LEG-2      NEITHER half shipped -- and the LAYER would have shipped EXACTLY ONE OF THEM
+```
+> # **THE FORK DOES NOT MERELY LET CHANGES DRIFT. IT SPLITS ONE COHERENT CHANGE ACROSS TWO TREES AND THEN SHIPS HALF.**
+
+## 5. 🎖️ >> ### **THE JUDGEMENT CALL OF THE DAY — AND IT WAS MADE ON EVIDENCE THAT WAS NOT ABOUT HIS SYSTEM** ### <<
+**`0.7.0` HELD HIS OWN CANARY ON A HUNCH — from a bug DS had just confessed in DS's *own probe code*, about a
+*different instrument*, in a *different lane*** *(DS nearly switched two probes onto the wrong dim; **ruff's "unused
+variable" was the only thing that caught him**, and he said so).*
+> # **HE GENERALISED SOMEONE ELSE'S MISTAKE INTO A HOLE IN HIS OWN INSTRUMENT AND STOPPED HIS OWN APPLY.**
+**Ten instruments lied today. His would have been the eleventh — and it would have cost the holdings book. The only
+thing that stopped it was an engineer taking a colleague's unrelated confession personally.**
+> ## ***A CONFESSED BUG IS A GIFT TO EVERY OTHER INSTRUMENT IN THE FABRIC. THE FABRIC ONLY COLLECTS IT IF SOMEBODY ASKS "COULD MINE DO THAT?"***
+
+**STATE: canary HELD. Nothing applied. Nothing served. Chain held twice over. `0.7.0~B` staged, untouched.**
