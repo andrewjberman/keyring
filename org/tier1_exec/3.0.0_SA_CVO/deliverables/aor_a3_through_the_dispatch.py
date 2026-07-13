@@ -81,8 +81,19 @@ def dispatch_chain(fold_active: str) -> list[str]:
 
 # ---- STEP 2: the artifact-present-and-stale state the ROLLBACK actually creates ---------
 
+ETAG_NOW = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'   # the accounts_v2 partition as it stands RIGHT NOW
+
+
 def _stale_folded_resolution() -> pd.DataFrame:
-    """Written by LAST night's ON run: FOLDED keys, stamped with the SAME pin (no new partition)."""
+    """Written by LAST night's ON run: FOLDED keys, SAME pin, SAME source content (no new partition).
+
+    CRITICAL: this artifact is FULLY SELF-DESCRIBING and every field the guard checks AGREES with
+    this run EXCEPT fold_mode. as_of matches the pin; source_digest matches the partition's current
+    ETag. That is the whole point -- it is NOT a crude stale artifact that any check would catch. It
+    is precisely the artifact a prompt rollback leaves behind, and the ONLY thing that betrays it is
+    the MODE it was built under. If we stamped it non-self-describing we would exercise the A2 branch
+    and learn nothing about A3.
+    """
     return pd.DataFrame({
         'account_id': [1, 2, 3],
         'advisor_key': [FOLDED, 'peter_lee', 'patrick_scanlan'],
@@ -92,6 +103,8 @@ def _stale_folded_resolution() -> pd.DataFrame:
         'explicit_aor': [True, False, False],
         'is_mover': [True, False, False],
         'as_of': [PIN] * 3,
+        'fold_mode': ['ACTIVE'] * 3,        # built under ON, last night
+        'source_digest': [ETAG_NOW] * 3,    # from the SAME partition this run reads -- source is INNOCENT
     })
 
 
@@ -106,6 +119,9 @@ class StubS3:
         self.frame.to_parquet(b, index=False, engine='pyarrow')
         b.seek(0)
         return {'Body': BytesIO(b.read())}
+
+    def head_object(self, Bucket, Key):
+        return {'ETag': f'"{ETAG_NOW}"'}    # the source partition is UNCHANGED: only the MODE differs
 
 
 print('=' * 100)
@@ -144,7 +160,7 @@ try:
     served = str(res.loc[res['account_id'] == 1, 'advisor_key'].iloc[0])
 except Exception as e:
     got, served = 'RAISED', '-'
-    detail = str(e)[:90]
+    detail = str(e).split(' -- ')[1][:110] if ' -- ' in str(e) else str(e)[:110]
 
 print(f'      -> load_resolution() {got}')
 
