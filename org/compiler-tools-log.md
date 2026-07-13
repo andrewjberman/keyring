@@ -16490,3 +16490,26 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-12 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
 | 2026-07-13 | 3.0.0_SA_CVO~A | OPAL_ASSETS validation tail | aws lambda invoke x5 (REAL deployed checker: 4 fixture-seam + 1 prod-restore) + cloudwatch describe-alarms/-history (live 12/14 ALARM + transitions + PFOE/PFDE integrity) + g6_fixture_generator | G6 exercised-fires VERDICT PASS 6/6 (triple-closed); 08335338 verdict FINALIZED fully-OBSERVED (genuine PIT snapshot ~93K rows; D1=SPLIT both masters; G2 +new CBUGL parser; depth 2023-07-12). OPAL_ASSETS discovery COMPLETE. 1 mis-authored assertion of mine corrected (tool right); s3-delete correctly gated on me. | PASS + 2 VERDICTS |
 | 2026-07-12 | 3.0.0_SA_CVO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-blast | comp-blast apply_advisor_of_record_fold | FAIL |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-blast | comp-blast derive_advisor_key | FAIL |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_07 | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_01 | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_PRD.md --... | PASS |
+| 2026-07-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-ec... | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_A_0.aor_resol... | PASS |
+| 2026-07-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/run-... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-12 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_09.generate_p... | PASS |
+| 2026-07-12 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-07-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/schwab... | PASS |
+| 2026-07-12 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+- 2026-07-13 3.0.0_SA_CVO~B (AoR round-8 gate-2): battery 35/35 own-fixture legs + DS suites 45/45 my runs + rail-checked census greps (F5a deliverable) + live read-only DELTA-0 0/871; finding R8-F1 grounded file:line @ 5581c0de1 + exercised live.
+| 2026-07-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/aor_resolutio... | PASS |
+| 2026-07-12 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast mdpf_aggregate_aua | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast mdpf_aggregate_aua | PASS |
+| 2026-07-12 | 0.8.0_AE_CloudComp | OPAL_ASSETS.P0-A.one-bucket-dynamodb-skeleton | comp-pipescript | comp-pipescript mdpf | FAIL |
+| 2026-07-12 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-12 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
