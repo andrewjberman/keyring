@@ -1479,3 +1479,68 @@ DECISION, not a CONVENIENCE.**"* **RATIFIED.**
 
 **Chain HELD. Nothing wired. Both gates OPEN. The one-shot stays un-run. `apply_time_lock` CALLED ZERO TIMES — and
 that remains the CORRECT state.**
+
+---
+
+# AMEND 24 (2026-07-13T15:22Z, COO) — ✅ **ANDREW: "WE BACKFILL THE FIRST AVAILABLE AoR."** THE BLOCK DISSOLVES, AND **CVO~B's "DEFECT" WAS CORRECT BEHAVIOUR ALL ALONG.**
+
+## THE RULING (Andrew, verbatim, to CTO~B ~15:18Z — and he notes he has ruled it before)
+> ## **"we backfill the first available AoR"**
+
+## THE BINDING SPEC (CTO~B — **his own "forward-only, no backfill" ruling is STRUCK**)
+```
+1. BACKFILL   The FIRST OBSERVED AoR applies to ALL of that account's HISTORY.
+2. STAMP      Once written -> FROZEN. History NEVER re-attributes.
+3. FORWARD    A LATER AoR change applies ONLY from its observation date, forward.
+
+>> THE DEFECT IS THE NIGHTLY REWRITE, NOT THE BACKFILL. <<
+```
+
+## 1. >> **CVO~B's `2020-03-15 -> noel_soderblom` IS CORRECT BEHAVIOUR. THE CODE WAS RIGHT; *OUR INTERPRETATION* WAS WRONG.** <<
+**If Noel is that account's first-observed AoR, backfilling him to 2020 is PRECISELY what has been ruled.**
+> **She spent an hour building the arm that exposed a policy question nobody had asked — and the answer came back
+> IN THE CODE'S FAVOUR. THAT IS THE ARM DOING ITS JOB, NOT FAILING.** *A verifier who only ever finds defects is not
+> verifying; they are confirming.* **And the re-open was still correct: the gate had never asked the question, and
+> only the principal could answer it.**
+
+## 2. >> **THE "EFFECTIVE DATE DOES NOT EXIST" BLOCKER DISSOLVES — THE MEASUREMENT WAS TRUE AND IS NO LONGER FATAL.** <<
+**We never needed a historical effective date.** *Andrew is not asking us to reconstruct WHEN Noel became the AoR —
+he is telling us to **PRESUME the first one we observed was always it**, write it ONCE, and FREEZE.*
+```
+HISTORICAL effective-from  ->  NOT NEEDED. The first observed AoR covers all history BY RULING.
+FORWARD  effective-from    ->  the ledger's `change` events, from its first run onward -- WHICH IT WILL CARRY.
+attach_advisor_key         ->  DATE-AWARE: a LATER change applies FORWARD ONLY from its observation date.
+```
+**And it retires CVO~B's trap as a blocker** — *we no longer need to date Noel from the roster, which we could never
+have done (he is not in the servicing-rep map at all).* **The hole is gone because the requirement is gone.**
+
+## 3. WHAT DIES, WHAT SURVIVES
+**DIES:** CTO~B's *"forward-only, no backfill"* ruling (**struck in place**). · The framing that the fold is
+*"extrapolation, not attribution"* — **it is a POLICY, and the principal has set it.** · **CVO~B's option (B)**
+(*"do not AoR-fold NNA at all"*) — **sound reasoning, not adopted; STRUCK IN PLACE, NOT DELETED.** *If this ever
+bites us, hers is the argument we will want to re-read.*
+
+**SURVIVES, and is now MORE load-bearing:**
+- > ## **THE FIRST RE-DERIVE IS A ONE-SHOT IRREVERSIBLE STAMP. VERIFY BEFORE IT STAMPS.** *(AMEND 20. "Watched and revertible" was never true.)*
+- **`timelock_preview` must preview THE PRODUCER'S OWN PATH** — *one derivation, one function.* **DS's P2 (a
+  structural test on a second caller) is what makes it trustworthy, and it is not optional.**
+- **DS's CATCH-UP finding, and it is SHARPER now:** *`compute_events` takes `event_date` AS AN ARGUMENT — **the
+  ledger records WHEN WE NOTICED, NOT WHEN IT HAPPENED.*** **Fine for the BACKFILL (first-observed IS "when we
+  noticed", by ruling). NOT fine for FORWARD changes after a catch-up run** — *a resolver down since 07-10 that runs
+  tonight would stamp TODAY as the effective-from for a change that occurred earlier.* **KEEP THAT GUARD.**
+- **BOTH GATES stay RE-OPENED** until the fold implements **backfill-then-freeze** and is re-verified.
+- **The gold suite RED stays a BLOCKER** — *and its REASON is now resolvable, because the architecture is ratified.*
+
+## 4. >> **THE OPEN ASK I AM BACKING TO ANDREW (CTO~B raised it, and it is what makes the two rulings COHERENT)** <<
+> ***"A number we cannot source is not a WRONG number — it is an UNBACKED one."***
+> ## **THE ARTIFACT MUST BE ABLE TO SAY WHICH ROWS ARE *OBSERVED* AND WHICH ARE *BACKFILLED*.**
+
+**We have NO roster of any kind before 2026-04-28.** *The ruling tells us how to POPULATE history; it does not CREATE
+EVIDENCE for it.* **And under the STAMP the backfilled portion is FROZEN FOREVER — if we cannot distinguish
+presumption from observation afterwards, WE NEVER CAN.**
+
+> **`"history stays with whoever held it at the time"` and `"backfill the first available AoR"` ONLY RECONCILE IF WE
+> ARE HONEST THAT THE BACKFILLED SPAN IS A PRESUMPTION, NOT AN OBSERVATION.** **Design the column NOW; do not bolt it
+> on after the stamp.** *(A labelling question, not a blocker. Andrew's to weigh.)*
+
+**Chain HELD. Nothing wired. Nothing served. `AOR_FOLD_ACTIVE=0`. Suite 184/184 on the repo; F10 RED stands.**
