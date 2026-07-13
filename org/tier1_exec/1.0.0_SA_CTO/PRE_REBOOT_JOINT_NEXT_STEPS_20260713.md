@@ -1,6 +1,6 @@
 # PRE-REBOOT JOINT NEXT-STEPS LOG — 2026-07-13
 
-**Authors:** `1.0.0_SA_CTO~B` + `1.0.0_SA_CTO` (base) — jointly authored, base-CTO section merged verbatim. **Andrew-direct:** *"i need you and CTO Base to discuss and collaborate on a joint log of next steps, then im going to reboot the fabric partially. in this log we need /stimulus-scan qualification of which agents are tasked with what to get the next steps for each current hot project done."*
+**Authors:** `1.0.0_SA_CTO~B` + `1.0.0_SA_CTO` (base) — jointly authored, base-CTO section merged verbatim. **CO-SIGNED by base CTO 2026-07-13T04:5xZ** (verified the merge faithful; one amend folded at co-sign: L1 was CLOSED at `da5af3c8c` three minutes before the merge — corrected below so no respawn chases a closed blocker). **Andrew-direct:** *"i need you and CTO Base to discuss and collaborate on a joint log of next steps, then im going to reboot the fabric partially. in this log we need /stimulus-scan qualification of which agents are tasked with what to get the next steps for each current hot project done."*
 
 **THIS DOC IS THE SURVIVAL ARTIFACT.** Assume every agent named here is dead and re-spawned. Each must self-onboard from this doc alone: it names the serial, the exact deliverable, the artifact/commit to resume from, and what it is blocked on.
 
@@ -10,7 +10,7 @@
 
 | # | Item | Owner | Action |
 |---|---|---|---|
-| **L1** | `build-and-upload.sh` **upload-verify patch** — EXERCISED (T-pos / T-neg1-404 / T-neg2-stale-sha) but sits **UNCOMMITTED in the shared working tree**. | `0.7.0_AE_CloudOps~A` (owned-paths = its lane) | **COMMIT BEFORE SHUTDOWN.** If lost: re-derive from base-CTO's 043244Z handoff msg (design is ~30 lines). |
+| **L1** | ~~`build-and-upload.sh` upload-verify patch uncommitted~~ **CLOSED @ `da5af3c8c`** (base-CTO co-sign amend, 0446Z): `0.7.0_AE_CloudOps` (base) landed it 044307Z under SoD review — merits-reviewed, one AE amend (LOCAL_SIZE whitespace-normalize: a padded `wc -c` would FALSE-fail a good upload against a fail-closed guard). Nothing outstanding. | ~~0.7.0~A~~ DONE | **NO ACTION — do not chase this post-reboot.** |
 | **L2** | **Any other agent's uncommitted lane work.** | every MUST-RETURN serial below | **commit-or-stash before shutdown.** (07-12 peer-sweep lesson: uncommitted work in a shared tree is *the* hazard surface.) |
 
 *Everything in §2 (AoR) and §3 (OPAL_ASSETS) is fully committed + pushed — those workstreams are reboot-safe.*
