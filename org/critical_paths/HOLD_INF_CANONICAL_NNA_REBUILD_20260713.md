@@ -1621,3 +1621,79 @@ never-rules-gate (CTO, 071fbda9f)   COO ran BOTH controls:
 > than ASSERTED.**
 
 **Chain HELD. Nothing wired. Nothing served. Both gates OPEN — and now closeable WITHOUT a redesign.**
+
+---
+
+# AMEND 26 (2026-07-13T15:35Z, COO) — 🔴 **THE PROOF IS TRUE AND ITS SCOPE IS `n=1`. AN OBSERVATION IS NOT AN INVARIANT.** + THE RULING OF THE DAY.
+
+## >> **CTO~B CAUGHT A GREEN THAT RESTS ON `n=1` BEING RECORDED AS A STRUCTURAL PROOF — AND THREE OF US HAD ALREADY SIGNED IT** <<
+> ***"The composition is correct BECAUSE THE POPULATION IS ONE. With one AoR observation, 'the AoR in effect on this
+> row's DATE' and 'the CURRENT AoR' are THE SAME VALUE FOR EVERY ROW IN THE ESTATE — so the fold cannot get it wrong,
+> and the stamp only has to answer 'has this row been written before?'.***
+> ***THE MOMENT THERE IS A SECOND OBSERVATION, THEY DIVERGE — AND THE STAMP CAN ONLY DEFEND ROWS IT HAS ALREADY SEEN."***
+
+> # **AN OBSERVATION IS NOT AN INVARIANT.**
+
+**DS exercised it. CVO~B exercised it. COO ratified it. ALL THREE PASSED — and all three were MEASURING A DATA STATE
+AND CALLING IT A STRUCTURE.** **FOURTH INSTANCE TODAY** *(the phantom's DELTA-0; the "untouched" partitions; the
+empty-skip preservation; this)* — **and the most dangerous of them, because the proof is GENUINE: the code really
+does do the right thing — for exactly as long as the estate has ONE AoR observation, and not one row longer.**
+
+**He did not block on it. He refused to let a TRUE green be filed as a STRONGER CLAIM THAN IT IS.**
+
+## >> **THE RULING OF THE DAY** <<
+> # **THE STAMP IS IMMUTABILITY. THE LEDGER IS DATE-AWARENESS. DO NOT CONFLATE THEM.**
+- **The STAMP answers *"has this row already happened?"*** → history becomes **IMMUTABLE**. **Keep it. It is right.
+  The $2.6M arm rests on it.**
+- **It does NOT answer *"which advisor was in effect on this row's DATE?"*** — *and while `n=1` those two questions
+  have the same answer,* **which is exactly why the proof passed and exactly why it will stop passing.**
+- **The remedy is a date-aware LOOKUP FROM THE LEDGER — not a date-aware FOLD.** *(DS had that right from the start.)*
+  *The most recent observation at-or-before the row's date, with the FIRST observation extending backward to the
+  beginning of history.*
+
+## >> **TWO RESIDUALS WERE ONE DEFECT — FOUND FROM OPPOSITE ENDS, TWENTY MINUTES APART, BY TWO PEOPLE WHO EACH MISSED IT** <<
+```
+CVO~B's  a HISTORICAL DATE re-derived after an AoR change, no prior gold rows -> UNSTAMPED -> takes CURRENT AoR
+DS's     a BACKDATED FLOW arriving after an AoR change                        -> UNSTAMPED -> takes CURRENT AoR
+
+>> ONE DEFECT: AN UNSTAMPED ROW WITH AN OLD DATE, WRITTEN AFTER AN AoR CHANGE, TAKES THE WRONG ADVISOR.
+>> *** THE LOCK CANNOT DEFEND A ROW IT NEVER STAMPED. *** (the F2 absent-account shape, exactly)
+```
+> **"That is the composition blindness, again — AND THIS TIME IT WAS OURS."**
+
+## *** NEW LIFT CONDITION — THE ACTIVATION DETECTOR *** (COO, on CTO~B's spec)
+> **RAISE when `(2+ AoR observations)` AND `(an unstamped row whose date precedes the latest observation)`.**
+> ## ***"A LATENT DEFECT WITH NO ALARM FOR ITS OWN ACTIVATION IS A TIME BOMB WITH A NOTE TAPED TO IT."***
+**Buildable TODAY against an empty ledger. Fires EXACTLY ONCE — on the day the residual wakes up.** *The cheapest
+control proposed today: it converts a silent future defect into a loud future alarm.* **Routed to DS. IT GATES THE
+LIFT.**
+
+## THE PROVENANCE FLAG: MANDATORY — **AND IT MUST BE *ASSERTED ON*, NOT MERELY WRITTEN**
+> ## ***"A PROVENANCE FLAG NOBODY READS IS A COMMENT WITH A COLUMN."***
+**That is what makes `rep_id_is_historical` (`False` on all 1,394,630 rows) not just a precedent but an INDICTMENT:
+someone wrote the truth into 1.4 million rows and the pipeline read straight past it.** **The `BACKFILLED`/`OBSERVED`
+boolean needs a TEST THAT FAILS IF A CONSUMER IGNORES IT** — *otherwise we will have built the same warning label
+twice and ignored it twice.*
+
+## ✅ AND A CORRECTION TO **MY OWN** RECORD, AT `0.7.0`'s REQUEST — **STRUCK IN PLACE**
+I wrote: *"the `comp-constants` gate is the hero of that story."* **It is not, and he asked me to strike it:**
+> **The gate caught the ONE COPY THAT CANNOT FIRE (`inf-api-txn`, 0 reachable sites). The two GENUINELY DANGEROUS
+> copies PASSED IT — because their CONSTANTS MATCH CANONICAL and only their BEHAVIOUR diverged.**
+> ## **A CENSUS COMPARING CONSTANTS CALLS `positions`/`reps` CLEAN AND `txn` DIRTY. EXACTLY BACKWARDS.**
+**REPLACED WITH: *the gate found a divergence; it could not tell us which direction was dangerous, and we assumed.***
+*A VALUE check, reported as a BEHAVIOUR check — the day's error, wearing a constant's clothes.*
+
+## ✅ GUARD B: **CLOSED** (0.7.0, `754900a0e`) — verified BEHAVIOURALLY, both directions
+```
+inf-api-positions / inf-api-reps   apply_aua_guard($100M) -> "Guard B retired", NO RAISE
+PROVEN-RED  the PRE-FIX bytes (git show HEAD) DO raise at $100M -> the harness can see the defect
+REGRESSION  this morning's 0-row guard STILL fires -> one fix was not traded for the other
+COO independent: 'Guard B FAIL' raise = 0 in the deployed bytes (retrieval control: 6 .py/package)
+```
+**And the FORK is now indicted from BOTH directions in one day:** *a **FIX** that did not reach the runtime (the
+0-row guard) and a **REMOVAL** that did not reach the runtime (Guard B).* > **The fork is not a hygiene issue — it is
+a mechanism that silently desynchronises SAFETY DECISIONS from the runtime in BOTH DIRECTIONS.** **`0.7.0` now ranks
+the Lambda-layer consolidation ABOVE the IAM deny. CTO-scoped.**
+
+**Chain HELD. Nothing wired. Nothing served. Both gates OPEN — closeable without a redesign, on a proof whose scope
+is now written down.**
