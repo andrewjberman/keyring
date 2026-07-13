@@ -60,11 +60,48 @@ The deciding question is a **business** one, not a refactor: should a household 
 - **The *"classified legal"* annotation is itself a finding.** **An exception annotated "legal" with no recorded reason is not an exception — it is an unlogged decision wearing a ruling's clothes.** Same disease as the three false comments above.
 - **SCOPE: a SWITCH-ON blocker, not a round-8.2 blocker.** DELTA-0 today (servicing ≡ resolution under OFF). It bites **only under ON** — a mover's household would show the SERVICING advisor while every other surface shows the AoR: **the exact per-view divergence the SSOT exists to kill, appearing AT go-live rather than before it.** Routed to COO for the go-live checklist: **DECIDED before GO, not DISCOVERED at GO.**
 
-## 5. RELEASE MECHANICS — the one that can take the nightly down
+## 5. THE WIRING — verified, and it is the actual fix
 
-`INF_A_0` and `INF_D_11` are **`MISSING_ON_S3`**. The consumers are now **fail-closed**: once deployed, they RAISE unless a resolver ran in that chain and stamped a matching artifact.
+> *"The chain-wiring is THE FIX. The guard is defense-in-depth. We spent the night asking a guard to do a wiring job."* — base CTO. Correct, so I verified the wiring, not just the guard.
 
-> **The resolver+detector upload and the consumer deploy must be ATOMIC (or resolver strictly first). Deploy the consumers alone and the ENTIRE INF nightly aborts** — loudly, correctly, and catastrophically. **A NEVER#6-shaped half-landing reachable from a correct-looking deploy.**
+**The presence-gate is REAL.** `orion-gold-dispatch.sh:408 @ c16b0c73b` — `_aor_script_deployed()` is
+`aws s3api head-object --bucket "$INF_S3_BUCKET" --key "code/gold/$1"`.
+**Chain entry is keyed on the SCRIPT EXISTING in the deployed S3 prefix. It never reads `INF_AOR_FOLD_ACTIVE` on any path** — no default, no `:-`, no semantic-switch read. **My opening instinct — that an `INF_AOR_FOLD_ACTIVE=${X:-1}` would LOOK unconditional and still drop the resolver on an explicit `0` (precisely the switch-OFF path the rollback uses) — is now STRUCTURALLY IMPOSSIBLE.** The de-multiplex (R5) is real, not cosmetic.
+
+**R3 chain census — the resolver is prepended to ALL EIGHT consumer-carrying chains** (:425-434):
+`CHAIN_COMPUTE` · `CHAIN_FULL` · **`CHAIN_INCREMENTAL`** · `CHAIN_GOLD_A` · `CHAIN_GOLD_B` · `CHAIN_GOLD_C` · `CHAIN_GOLD_D` · `CHAIN_GOLD_CD`.
+Cross-checked against my own enumeration of all **nine** `load_resolution()` call-sites: **every chain carrying one gets the resolver**; `CHAIN_PULL` / `CHAIN_SILVER_PREP` / `CHAIN_ECLIPSE` carry none. **`CHAIN_INCREMENTAL` — the killer, because it refreshes `INF_API_SILVER_ACCOUNTS_V2` (the resolver's OWN source) and then runs five consumers — now carries it. It no longer moves the ground and leaves the SSOT behind.**
+
+**The DETECTOR is lifted off the resolver's conditional** — its own presence check, its own variable, appended to `CHAIN_COMPUTE` only (a group-stage recovery run has nothing new in the ledger and must never become an alerting surface). **A rollback can no longer drop the resolver AND its alarm in one flip.**
+
+**Invocation axis (`--single`/`--from`) is closed by the CHOKEPOINT, not the wiring — and that is correct**: an invocation path *has* no chain literal for R4 to see. **The wiring closes the chains; the guard closes the invocations. Neither can do the other's job.**
+
+## 6. RELEASE MECHANICS — an ORDER, not merely "atomic"
+
+`INF_A_0` and `INF_D_11` are **`MISSING_ON_S3`**. The consumers are now **fail-closed**: once deployed they RAISE unless a resolver ran in that chain and stamped a matching artifact.
+
+**Resolver FIRST is PROVABLY SAFE — order it, do not merely synchronise it:**
+
+1. **Upload `INF_A_0.aor_resolver.py` + `INF_D_11` to `code/gold/` FIRST; verify presence** (`comp-pipescript deployed` → MATCH, not MISSING_ON_S3).
+   → **The intermediate state is SAFE BY CONSTRUCTION:** the presence-gate admits the resolver to every chain, it runs and writes a stamped artifact, and the **still-stale consumers never read it** (pre-round-8; they do not call `load_resolution`). Nothing serves differently.
+2. **THEN deploy the consumers** — they arrive fail-closed into a world where a correctly-stamped resolution **already exists**.
+
+> **Reverse the order and every AoR consumer RAISES on the first nightly — the ENTIRE INF chain aborts.** The dispatch concedes it at :415. **A NEVER#6-shaped half-landing reachable from a correct-looking deploy — and ordering it away costs nothing.**
+
+## 7. F4 — SUPERSEDED (accepted), + **F4-B** (mine, new)
+
+**F4 supersession ACCEPTED**, verified at source: `aor_resolution.py:578` — `if account_team is None or len(account_team) == 0: return {}` — **collapses `None` (read FAILED) and empty (read OK) into one return.** `INF_C_02.client_performance.py:466-472` catches the read error, sets `_acct_team = None`, and calls the map **OUTSIDE the try**, so `{}` is falsy and the re-key silently vanishes. **My original F4 hardened the missing-column branch — a stale deploy, rare and self-announcing — and left the branch that actually fires: a transient read blip, common and invisible.**
+
+**F4-B — FIXING `None` IS NECESSARY AND NOT SUFFICIENT.** A truncated/zero-row parquet is a **successful read**: throws nothing, returns 0 rows, hits `len()==0`, returns `{}`, and the re-key vanishes through the identical door. **`len()==0` is not safe merely because the read did not throw** — and it is not exotic: the 49F allocations feed **already** alternates 46K/1.2M rows because BD returns undersized stubs.
+**An OBSERVED zero is only safe if zero is a value the system can LEGITIMATELY take — and Inflection cannot have zero households** (~286 across four advisors). **But the LIBRARY must not raise on empty either** — that over-condemns a genuinely zero-household firm (*the `run_id` mistake in miniature*).
+> **THE DISCRIMINATOR DOES NOT LIVE IN THE LIBRARY. The chokepoint fails closed on the UNOBSERVABLE (`None`); the CALLER DECLARES whether zero is legitimate for its firm.** (`expect_nonempty`, required + declared — the same declared-not-observed principle as `source_masters` and the `(source_digest, fold_mode, code_digest)` key.) *An empty frame and an empty firm are byte-identical; the data cannot tell you which you have.*
+
+## 8. THE COMMENT FINDINGS — four now, and the fourth is the worst class
+
+**G1-D1** (dispatch:396-405) — describes an `as_of` assertion that does not exist, a hole that is closed, and a remedy that was rejected. **G1-D2** (`INF_A_00:233`, `INF_A_01:173`) — asserts INVOCATION where the guard asserts CONTENT. **G1-D3** (dispatch:415) — tells the operator, *in a log line read during an incident*, that the consumer fails closed at *"the run-as-of assertion."* **There is no run-as-of assertion.**
+
+**G1-D4 — and it is a NEW and WORSE class.** `INF_C_02:462-464` reads *"…**no-ops if account_team is unavailable**."* **That comment is TRUE.** It accurately describes the defect, phrased as deliberate graceful degradation.
+> **A FALSE comment gets caught the moment someone checks it against the code. A TRUE comment that describes a defect as a FEATURE is never checked at all** — it reads as considered, so the reader moves on. It survived weeks and a 32-agent review. **When the behaviour is fixed, the comment MUST be rewritten, or the next reader will "restore" the no-op believing it was intended.**
 
 ---
 
