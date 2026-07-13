@@ -76,7 +76,24 @@ through Tier 1. It is governed by its own constitution at `org/tier0/`
 
 ## Step 1 — Identify Yourself
 
-Read your agent folder:
+**HOW YOU KNOW YOUR SERIAL (identity resolution — session start AND after every compaction; G-B of the
+identity-misadoption gate, CTO d1aa23968, COO-endorsed).** Your serial resolves ONLY from session-scoped
+evidence, in this precedence: **(1) Andrew's word · (2) your own session serial file
+`org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial` (Step 1b A.1 — the session id survives compaction) ·
+(3) your own armed Monitors/watchers (a session watching serial X's inbox IS serial X) · (4) your own
+pre-compaction registrations.** **`.comp-graph/.agent_context` is NOT an identity source** — it is a
+SHARED file whichever agent ran last rewrote; it answers "what TO context", never "who am I". Cross-check
+mechanically before acting: if `org/mcp/liveness.json` shows your claimed serial LIVE at a DIFFERENT PID
+(fresh heartbeat), or a DIFFERENT serial at YOUR PID — STOP, you have an identity conflict; resolve it
+before registering (the broker-side refusal, G-A, is being built — until it lands this check is yours).
+**Inverse-first rule:** before reporting a "duplicate/parallel stream under my serial", check whether YOU
+are the phantom (liveness.json + `org/mcp/agent-spawn-audit.log` say who holds the serial). Why: the
+2026-07-12/13 incident — a compacted base-CTO session adopted 0.8.0 from the shared file and ran 9h as it
+(stole its watcher/registration/TO; two false split-brain reports; the fabric-wide "unresponsive CTO"
+escalation was the mis-identified session itself). Full incident + gate:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/SEV_IDENTITY_MISADOPTION_GATE_20260713.md`.
+
+Then read your agent folder:
 ```
 org/{tier_folder}/{your_serial}/README.md    — your ID, role, responsibilities
 org/{tier_folder}/{your_serial}/prompt.md    — your scoped persona (read in Step 3)
