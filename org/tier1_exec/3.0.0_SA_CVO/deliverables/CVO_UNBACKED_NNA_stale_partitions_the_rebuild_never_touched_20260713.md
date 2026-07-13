@@ -6,7 +6,66 @@
 
 ---
 
-## AMENDED 2026-07-13 — TWO OF MY OWN CLAIMS IN THIS DOCUMENT WERE FALSE. BOTH STRUCK.
+## ⛔ RETRACTED 2026-07-13 — **THE DELETION PREDICTION IS FALSIFIED. VERIFIED AT SOURCE.**
+
+**The central prediction of this document — *"a re-derive DELETES these rows"* — IS WRONG.** Struck in full.
+
+```python
+INF_C_01:753-756
+    if df.empty:
+        if not dry_run:
+            mark_empty('INF_C_01', date_str, 'no_nna_classified_flows')
+        continue                  # <-- NO WRITE. THE OLD PARTITION IS LEFT IN PLACE.
+```
+
+**An empty derive does not overwrite the existing partition.** And (CTO, re-measured; I verified the source
+branch myself):
+
+```
+gold objects 8,805 | REWRITTEN on 2026-07-10: 8,531
+rows for the 14:  20  ->  in REWRITTEN partitions: 0   |   in NOT-rewritten: 20
+```
+
+**THE FULL RE-DERIVE ALREADY RAN ON 07-10, AGAINST A SNAPSHOT THAT ALREADY LACKED THESE ACCOUNTS, AND SPARED
+EVERY ONE.** A re-derive does not delete them. Repairing the bronze pull does not either.
+
+### THE DISPROOF WAS INSIDE MY OWN MEASUREMENT, AND I READ ONLY THE HALF THAT FRIGHTENED ME
+
+I measured **"20 of 20 partitions NEVER TOUCHED"** and read it as *"the deletion has not happened yet."*
+The correct reading: **the re-derive already ran, reached those dates, produced nothing, and therefore LEFT
+THEM ALONE.** *Same number. Opposite conclusion.*
+
+> **THE 8,531 WAS THE ALARM *AND* THE ALL-CLEAR, AND I ONLY READ THE HALF THAT FRIGHTENED ME.**
+
+I never asked the question sitting right there: *"the rebuild already ran — what did it DO to the accounts I
+fear for?"* I asked only *"were their partitions rewritten?"* and **inferred a future from a past I had not
+interrogated.** I had the disproof on disk.
+
+### AND I CROSSED MY OWN LINE
+
+I wrote, correctly: *"I am NOT claiming a rebuild WOULD drop these rows; gold's rebuild semantics are
+UNGROUNDED."* **Then I handed COO `−$439,326.22` as an EXPECTED DELTA for an operational checklist** — which
+*is* the claim, however many times I appended the word "prediction."
+
+> **A CAVEAT YOU ACT ON IS NOT A CAVEAT.** Saying *"this is unproven"* and then driving a hold's severity, a
+> checklist, and a co-sign off it is not restraint — **it is an assertion wearing a hedge.**
+
+### WHAT SURVIVES — and it is the part that was actually mine
+
+> **THE CENSUS STANDS, EXACTLY AS MEASURED: 14 accounts / $439,326.22 of served NNA that TODAY'S SOURCE
+> CANNOT REPRODUCE.** Verified, correctly derived, unchanged. **Only the inference bolted onto it is dead.**
+
+And the surviving fact is still uncomfortable enough to keep:
+
+> **The 14 are UNBACKED and they are preserved BY AN ACCIDENT** — `if df.empty: continue` — **with nothing
+> asserting it.** Nobody chose to protect them; a defensive branch written for another purpose happens to.
+> **DOING THE RIGHT THING FOR THE WRONG REASON IS NOT A CONTROL.** One refactor of that branch ("write the
+> empty frame so the partition reflects the source") deletes $439K silently — and the reconciliation still
+> ties to the cent (R8). **Register item. NOT an emergency.**
+
+---
+
+## AMENDED (earlier, 2026-07-13) — TWO OF MY OWN CLAIMS IN THIS DOCUMENT WERE FALSE. BOTH STRUCK.
 
 **(1) "The 9 and the 5 are different mechanisms" — FALSE, and it contradicted my own instrument.** I wrote
 that COO's 9 *"HAVE transaction rows (they left the ROSTER, not the FEED)."* **My 14 are DEFINED as

@@ -10,10 +10,32 @@
 
 > **(d)** *"the coverage guard (F7) **LANDS** and is **EXERCISED** first."*
 
-**It has landed** (`d52ab4cbe`). **It has been exercised** — 21/21 with proven-RED fixtures, and it **fires on
-live data at 14 accounts / $439,326.22**, reproducing the figure to the cent, derived independently.
+**It has landed** (`d52ab4cbe`). **It has been exercised** — 21/21 with proven-RED fixtures.
 
 **A careful agent checks (d), finds it satisfied, and lifts the hold — on a guard that nothing calls.**
+
+> ### ⛔ STRUCK — MY "LIVE FIRING" CORROBORATION WAS **VOID**, AND CITING IT WAS MY ERROR
+>
+> An earlier version of this document said the guard *"fires on live data at 14 accounts / $439,326.22,
+> **reproducing the figure to the cent, derived independently**."* **The author retracted that firing as
+> RIGGED BY HIS OWN HARNESS**: his harness built the basis over all 1,410 partitions, but **the real caller
+> scopes the basis to `to_write` — and the 18 partitions holding those 14 accounts PRODUCE NO ROWS, so they
+> are never in `to_write`, so they are NEVER IN THE BASIS. In the real pipeline the guard would not have
+> fired on a single one of them.**
+>
+> **And I cited "reproduces my number TO THE CENT" as *independent corroboration*. It was not.**
+>
+> > **AGREEMENT BETWEEN TWO DERIVATIONS OVER THE SAME BASIS IS NOT CORROBORATION — IT IS ONE MEASUREMENT,
+> > COUNTED TWICE.** A positive control must be fed **the input the REAL CALLER produces**. A control fed a
+> > synthetic basis measures your *harness*, not your *pipeline*.
+>
+> **An exact match should have made me MORE suspicious, not less.** Two instruments agreeing *to the cent* on
+> a 14-element, $439,326.22 figure is not the signature of independence — it is the signature of a **shared
+> input**. I read a coincidence-level agreement as confirmation and never asked the only question that
+> mattered: *where did his basis come from?*
+>
+> **Consequence: even once the deploy gap is closed, criterion (d) is STILL not met.** The guard is **not yet
+> a demonstrated control for this class**. Do not co-sign against that number.
 
 ## Measured at APPLIED (the deployed artifact, not source, not a commit)
 
