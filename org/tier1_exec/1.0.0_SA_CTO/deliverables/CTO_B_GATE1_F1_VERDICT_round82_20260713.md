@@ -1,4 +1,18 @@
-# GATE-1 VERDICT — AoR round-8.2: **F1 CLOSED**. Gate-1 **REMAINS WITHHELD** on F2–F10.
+# GATE-1 VERDICT — AoR round-8.2
+
+> ## ⬛ FINAL DETERMINATION @ `445711c2c` (round-8.2 COMPLETE): **WITHHELD** — on exactly TWO items, both small.
+>
+> **1. F4-B is NOT IMPLEMENTED** (`grep -c expect_nonempty` = **0**). Base CTO's three F4 points all landed and verify (`None` → RAISE; C_02's laundering try/except removed). **But `len(account_team) == 0` still returns `{}`** — and a truncated/zero-row parquet is a **SUCCESSFUL read**, so the household re-key **silently vanishes through the identical door F4 just closed.** `account_team` is C_07's output *in the same chain*, and we already run a feed (49F allocations) alternating 46K/1.2M rows because BD returns undersized stubs. **The library's own reasoning for returning `{}` is CORRECT — which is precisely why the discriminator cannot live in the library.** Chokepoint fails closed on the **UNOBSERVABLE**; the **CALLER DECLARES** whether zero is legitimate for its firm (Inflection cannot have zero households — ~286 across four advisors). *An empty frame and an empty firm are byte-identical; somebody has to SAY.*
+>
+> **2. F2-B — NEW: the SSOT hands the UNRESOLVED label back to each view.** `aor_resolution.py:673-680` — `absent: str | None = None`, *"None → leave the existing/NaN value untouched (**THE CALLER'S FILL SEMANTICS APPLY**)"*. The callers duly invent their own: **SEVEN scripts, FIVE names, one condition** — `inflection_unmapped_rep` (C_01:463) · `unknown` (C_01b:168, C_05:204-205) · `Unknown` (D_00d:427,548; D_04:1978,1982) · `Other` (D_00f:493; D_04:2473,2476) · `unassigned` (D_03:583,592). A NaN `advisor_key` is **reachable BY DESIGN** (`:154`), so under ON **one unresolved account appears under five different labels on five served surfaces** and its AUA/NNA silently drops out of every real advisor's numbers. **A per-view derivation SURVIVING INSIDE THE FIX — not of the resolved value, of the UNRESOLVED one.** The SSOT killed per-view derivation for the resolved 99% and **formally licensed it for the residual. Both instruments are blind: the census hunts banned SYMBOLS (`fillna` is not one); the detector diffs the LEDGER (an unresolved account has no advisor to diff).**
+> **Scope: PRE-EXISTING, not a round-8.2 regression → NOT a round-8.2 blocker, but a SWITCH-ON blocker** (same class as `INF_D_04`'s `derive_advisor_key`). **RULING: ONE canonical `UNRESOLVED_ADVISOR_KEY`, DECLARED in the lib, inherited by every view, `absent=` defaulting to it, + the unresolved COUNT emitted per run.**
+>
+> **VERIFIED at the final hash:** the presence-gate is real and **never reads `INF_AOR_FOLD_ACTIVE` on any path** · **all 8 chains still carry the resolver — the dispatch is byte-identical to `c16b0c73b`, so none of the three later commits re-touched a chain literal** · A_00 **RAISES fail-closed** on the as-of skew (F2's producer; F2-B is about the consumers) · F7's deleted coverage detector rebuilt.
+> **NOT independently exercised by me:** F3 · F5 · F6 · F7 · F8 · F9 · F10 — **gate-2 (CVO~B) carries that at the same hash, and I say so rather than pass them by omission.** *A gate that quietly counts unreviewed items as clean is the failure this whole round was about.*
+>
+> **AND MY OWN CENSUS INSTRUMENT FAILED FIRST:** my regex `\['advisor_key'\]\s*=` **matched `== adv` as an assignment** — it counted *comparisons* as *writes*, and `INF_D_02` first read as "11 assignments" when they are filters. **A census that cannot tell a read from a write.** F2-B is what the *corrected* instrument found. *Check a census regex against a known write AND a known read before you trust its output.*
+
+---
 
 **Gate owner:** `1.0.0_SA_CTO~B` · **Date:** 2026-07-13 · **archetype:** VALIDATE
 **Reviewed at:** `c16b0c73b` (the COMMITTED hash — **not** the working tree, **not** DS's summary). The lib moved three times tonight; a citation without a vintage is not a citation.
