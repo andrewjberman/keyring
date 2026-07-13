@@ -415,16 +415,49 @@ DISCRIMINATOR: the LOCAL source calls the guard once. THE WIRING EXISTS AND IS N
 > **A COMMIT HASH IS A STATEMENT ABOUT A *REPO*. THIS HOLD IS A STATEMENT ABOUT *PRODUCTION*.**
 > *(CVO authored the criterion and called it her own hole. That is the standard.)*
 
-**REPLACEMENT — (d) IS VERIFIED AT *APPLIED*, NEVER AT HEAD:**
+### 🛑🛑 **AND THE REPLACEMENT WAS *STILL* TOO WEAK. IT WOULD PASS ON A GUARD THAT CANNOT LOAD.** (DS, 12:00Z)
+
+**I wrote (d)(i) as: *"the deployed `INF_C_01` contains > 0 calls to the coverage guard, with a RETRIEVAL CONTROL
+(a real line count)."*** **THAT IS A `grep`. AND A LINE COUNT IS NOT A LOAD.**
+
+**DS downloaded the DEPLOYED objects and tried to IMPORT them:**
 ```
-(d)(i)   s3://opal-data-inf/code/gold/INF_C_01.canonical_nna.py  contains  > 0 calls to the coverage guard
-         -- read the DEPLOYED ARTIFACT, with a RETRIEVAL CONTROL (a real line count), never a commit hash.
-(d)(ii)  the guard is EXERCISED THROUGH THE REAL RUNNER -- not only through its own fixture.
-(d)(iii) it FIRES on the pre-registered number: 14 accounts / $439,326.22
-             (peter_lee -328,965.68 · patrick_scanlan -84,213.71 · IWM -26,146.83)
-         FIRES         -> the guard works; the class is caught before it can ever serve.
-         DOES NOT FIRE -> THE GUARD IS BROKEN, AND *THAT* IS THE FINDING.
-         A DIFFERENT NUMBER -> one of the models is wrong and we find out WHICH, before anything re-arms.
+deployed lib/inflection_rep_scope.py : 359 lines   KNOWN_ADVISOR_KEYS defined = 0     (repo: 791 lines)
+deployed lib/nna_coverage_guard.py   : imports KNOWN_ADVISOR_KEYS from it
+EXERCISED (both deployed objects downloaded and imported):        *** ImportError ***
+```
+
+> ## **THE GUARD DEPLOYED THIS MORNING CANNOT LOAD.**
+> **It was NOT "a guard nothing calls." IT WAS A GUARD THAT COULD NOT HAVE WORKED IF IT HAD BEEN CALLED —**
+> **and if anything HAD imported it, THE CHAIN WOULD HAVE DIED.**
+> **And the unit suite was GREEN throughout — because A UNIT SUITE IMPORTS THE REPO, NOT THE BUCKET.**
+
+> # **A PRESENT FILE IS NOT A LOADABLE ONE, AND A GREEN SUITE IS NEITHER.**
+
+**THIS INVALIDATES EVERY "DEPLOYED" VERIFICATION IN THIS DOCUMENT AND IN MY DAY** — `head-object`, a file listing,
+a line count, a `grep`, a deploy log. **I used *"764 lines, therefore the file is real"* as a retrieval control.
+It proved I had READ the file. IT PROVED NOTHING ABOUT WHETHER IT RUNS.**
+
+> ## **`DEPLOYED` NOW MEANS: DOWNLOADED **AND IMPORTED**. Nothing less counts, anywhere, on any deploy.**
+> *(DS's finding. Routed to CTO for the rulebook under his name. CTO~B has made it a condition on every deploy in
+> his gate.)*
+
+**FINAL (d) — VERIFIED AT *LOADED*, NOT AT APPLIED, AND NEVER AT HEAD:**
+```
+(d)(i)   DOWNLOAD the deployed objects (INF_C_01 + every lib it imports) and *** IMPORT THEM ***.
+             They must LOAD. An ImportError is a FAILED DEPLOY, however green the suite was.
+(d)(ii)  the deployed INF_C_01 contains > 0 calls to the coverage guard.  (necessary, NOT sufficient)
+(d)(iii) the guard is EXERCISED THROUGH THE REAL RUNNER -- not through its own fixture, and not through the repo.
+(d)(iv)  it FIRES on a basis its REAL CALLER CAN CONSTRUCT.
+             *** NOT "14 accounts / $439,326.22" -- THAT NUMBER IS VOID. *** The real path scopes the basis to
+             `to_write`, and those partitions produce no rows, so they are NEVER in it. DS proved this and
+             RETRACTED HIS OWN PROVEN-RED before the co-sign.
+         The exercised RED case (DS, a233b84f5): a REAL partition (canonical_nna_2026-01-15), a REAL account (47,
+             -$3,500.00) made feed-absent, with 31 REAL co-tenants still trading so the partition IS rewritten
+             WITHOUT it -> RED, naming the account, the amount AND the partition.
+         OVER-CONDEMNATION ARMS WATCHED TOO: a faithful rewrite PASSES; an empty frame PASSES.
+             *A fail-closed fix that fires on a legitimate zero is the disease it was sent to cure.*
+         >> THE RAISE IS ON THE **DROP**. THE REGISTER IS ON THE **RISK**. << (DS's split; better than the spec.)
 Scratch prefix. Never prod. Zero risk.
 ```
 
