@@ -114,3 +114,39 @@ Both new findings above are anchored on the **defect LINE** (`:747-756`; `:661/:
 ---
 
 *Gate-1: SOUND, WITHHELD on §2 and §3. Nothing served; switch OFF; SERVE-HELD.*
+
+---
+
+# ADDENDUM — GATE-1 **CLEARED** at `59d70b95e` (2026-07-13)
+
+Both withholds are closed. **141/141** on my own run, my own denominator.
+
+**A** — `attach_advisor_key` floors **both** fields atomically. `rep_bucket` gets an explicit named bucket (`UNRESOLVED_REP_BUCKET='unresolved'`), so **the exclusion is a DECISION, not an artifact of `NaN != 'individual'`**. The row is **excluded from per-advisor rollups** (an unattributable row must never be served as an advisor's) but **REMAINS in the firm total** — so `sum(advisors) < firm_total` is **VISIBLE** rather than silently absorbed. Loud alarm naming accounts; hard RAISE on the incoherent shape (non-null `advisor_key` + null `rep_bucket`). **`apply_resolution_fold` still passes `absent=None`** — the movers-only landmine stays **unarmed**, pinned by test.
+
+**B** — the **row-level assertion is FIRST** (`:671-699`), before the column comparisons (`:718+`). **The ordering IS the fix**: the column checks would PASS on a poisoned frame and the row check would never be reached. Over-condemnation exercised: `.isna().any()` on an EMPTY frame is False, so the legitimate **zero-mover OFF path still PASSES**.
+
+## >> AND MY OWN FALSIFIER ASSERTED THE DEFECT. RECORDED, BECAUSE IT IS THE LESSON. <<
+
+Re-running my morning falsifier against the fix, **arm A FAILED — and the failing assertion was MINE and it was WRONG**:
+
+> *"the absent row SURVIVES the `INF_09:193` rep_bucket filter"*
+
+**That demands an UNATTRIBUTABLE row be counted into a named advisor's NNA. It demands FABRICATED ATTRIBUTION** — the phantom-advisor sin in reverse. DS refused it explicitly (*"I am not fixing a silent drop by committing the phantom sin in reverse"*) and he was right.
+
+**A TEST THAT ASSERTS THE DEFECT WILL DEFEND IT.** I had conflated *"the row must not silently vanish"* with *"the row must be counted as an advisor's."* **Only the first is true.** The property that matters is **DISCLOSURE, not INCLUSION**:
+
+```
+firm total 60.0 · sum over per-advisor 30.0 · VISIBLE RESIDUAL 30.0   <- disclosed, reconcilable
+```
+
+*Disclose the residual; never suppress it; never guess it.* **Three of us wrote a test that defended the bug it was written to catch today** (CVO~B's F2 arm encoding `absent=None`; her phantom arm rewarding the forbidden fix; this). It is not coincidence — **it is what happens when you write the assertion from the SHAPE OF THE DEFECT instead of from the PROPERTY YOU WANT.**
+
+**And DS's dtype finding is the one none of the three gates saw:** `df[df['rep_bucket'] != 'routing']` **KEEPS** a `<NA>` row under `object` dtype and **DROPS** it under `string` dtype. **The fate of an unresolved row depended on a dtype nobody pinned.** Flooring makes it deterministic. He found it by measuring, not reasoning.
+
+## WHAT GATE-1 CLEARING DOES *NOT* DO
+
+- It does **not** clear gate-2 (CVO~B, independent, LD-0277). Her V4 served-verify is **NOT RUN — an EXPLICIT GAP, never a PASS** — and it is now structurally blocked: the dispatch is **held at the chokepoint**, so the nightly cannot run. **AoR go-live is serialized behind the hold-lift.**
+- It does **not** authorize the switch. `AOR_FOLD_ACTIVE` stays **OFF**. The deploy it unblocks is **DELTA-0**.
+- **The lift is gated on the coverage assertion — never on this gate, and never on any project's release being ready.** *"Lift it just for the V4"* is the most likely way the hold is defeated. It will not arrive looking like a destructive act; it will arrive looking like the last box on a form.
+
+*Gate-1: CLEARED. Nothing served; switch OFF; the chain is held and verified held.*
