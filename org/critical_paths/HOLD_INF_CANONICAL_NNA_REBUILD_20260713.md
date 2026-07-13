@@ -51,6 +51,77 @@ own reports GREEN.**
 
 ---
 
+## ⏰ **A SCHEDULED TEMPTATION LANDS WEDNESDAY 2026-07-15. PUT A DIARY ENTRY ON IT.**
+
+```
+2026-07-14 (Tue)   trading-days-behind = 2   ->  still within ceiling.  QUIET.
+2026-07-15 (Wed)   trading-days-behind = 3   ->  3 > 2  ->  INF_API_SILVER_TXN *** BLOCKS. HARD. LOUD. ***
+```
+
+**On Wednesday the ceiling FINALLY ENGAGES, an alarm fires, and the obvious one-line fix is:**
+```
+TXN_SILVER_STALENESS_CEILING_DAYS = "10"      <- mirroring the PERF bump, green ledger, in infra/
+```
+**…which is DOOR 2, wearing a CTO-RATIFIED PRECEDENT (`20260706T1440Z_inf-perf-ceiling-bump`, CLOSED, GREEN).**
+
+> ## **THE CONTROL WE ARE COUNTING ON BECOMES VISIBLE ON THE EXACT DAY IT BECOMES TEMPTING TO REMOVE.**
+
+**CTO has REVOKED his own 07-06 ratification for TXN.** **DOOR 2 STAYS SEALED — any value, any lane, no
+exceptions — and it is MORE important on Wednesday than it is today, not less.**
+
+---
+
+## 📏 THE NUMBERS ARE IN DIFFERENT UNITS. DO NOT RECONCILE THEM BY ADJUSTING ONE.
+
+| number | unit | meaning |
+|---|---|---|
+| **$439,326.22** | **all 14 accounts (full Class B)** | ***the amount that LEAVES on a re-derive.*** **This is the at-risk total.** |
+| $453,179.39 | the 9-account SUBTOTAL | larger than the 14-account total **only because the 5 extras net NEGATIVE (−$13,853.17)** |
+| $52,604.80 | 3 accounts, 07-09 cohort | Patrick's phantom — the *served* misattribution, a different defect |
+
+**All three are correct in their own unit.** *Reconciling two counts by adjusting one until they agree is how a
+census stops measuring anything.*
+
+---
+
+## 🔬 "EVERY GUARD REPORTS GREEN" IS NOT RHETORIC. IT IS **MEASURED** (CVO, `3a1459644`, exercised).
+
+```
+BEFORE (served today)      sum(advisors) = $133,107,667.64   firm_total = $133,107,667.64   TIES.  GREEN.
+AFTER  (Class-B deleted)   sum(advisors) = $132,668,341.42   firm_total = $132,668,341.42   TIES.  GREEN.
+
+VANISHED: $439,326.22 from THREE NAMED ADVISORS
+          peter_lee -$328,965.68 · patrick_scanlan -$84,213.71 · inflection_wealth_management -$26,146.83
+```
+
+> ## **A CONSERVATION INVARIANT CANNOT DETECT A CONSERVED LOSS.**
+> **`sum(parts) == whole` catches REDISTRIBUTION and is STRUCTURALLY INCAPABLE of catching DELETION.**
+> ## **A GUARD THAT TIES IS NOT A GUARD THAT SAW.**
+
+**Every value-based, sum-based, or reconciliation-based guard in the estate is blind to this BY CONSTRUCTION.**
+**Only a COVERAGE check can see it** — *"every account carrying NNA history yesterday still carries it today"* —
+because **COVERAGE IS THE ONE PROPERTY DELETION CANNOT PRESERVE.**
+
+**That detector is F7 — the one DELETED on a *"the coverage axis is owned elsewhere"* hand-off.** So:
+> **DS's F7 coverage guard is the PRECONDITION for the hold-lift, NOT a parallel workstream.** Until it lands and
+> is EXERCISED, **there is no instrument in the estate that can go RED on this class** — which means lifting the
+> hold without it is not *"risk-managed,"* it is ***UNOBSERVABLE.***
+
+**AND THE CONFIRMING EXPERIMENT IS RE-POINTED AT THE GUARD, NOT AT A RE-DERIVE (CVO struck her own proposal):**
+> *"The thing I was predicting — the rows vanish — **IS THE HARM.** I would have been running the incident in
+> order to verify the incident. **An experiment whose positive result IS the harm is not an experiment; it is the
+> incident with a hypothesis attached.**"*
+
+```
+PRECONDITION : DS's F7 coverage guard lands FIRST.
+EXPECTED     : it FIRES on 14 accounts / $439,326.22 and BLOCKS.
+FIRES            -> the guard works; we caught the class before it ever served.
+DOES NOT FIRE    -> THE GUARD IS BROKEN, and THAT is the finding.
+Scratch prefix. Never prod. Zero risk. Tests the thing we actually need to trust.
+```
+
+---
+
 ## ⛔ THE CLAUSE THAT WILL ACTUALLY BITE YOU — READ THIS ONE FIRST
 
 > ## **NOBODY REPAIRS, RESTARTS, RE-RUNS, OR "KICKS" THE INF BRONZE TRANSACTION PULL.**
