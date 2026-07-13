@@ -1128,6 +1128,16 @@ def _default_router(q, qtok, hits, term, list_intent):
         return _emit_json(r.kind, caps, call_of, concern_of, term, q)
     if r.kind == "disambiguation":
         print("  near-tie -- the surface-aware router surfaces these; pick by concern (never a silent guess):\n")
+    # THE WARNING GOES ABOVE THE MENU, NOT BELOW IT (COO~Z, 2026-07-13).
+    # A scored menu first and a "these are guesses" second is a MIXED SIGNAL: the NUMBERS land before
+    # the caveat does, and a number is the strongest credibility signal this fabric has. Frame first,
+    # evidence second -- otherwise the caveat is arguing against an impression already formed.
+    no_fit = (r.ranked and r.ranked[0].score < _VETTED_BAND)
+    if no_fit:
+        print("  !! NO CURATED RULE MATCHED THIS QUESTION -- READ THIS BEFORE THE LIST BELOW.")
+        print("     Every candidate scored below the vetted band. These are FUZZY GUESSES, not a")
+        print("     routing decision. If none of the descriptions answer your question, THE CATALOG")
+        print("     DOES NOT COVER IT -- do not pick one because it was ranked first.\n")
     print("  MATCHES (top %d of %d -- score is overlap, NOT a confidence):\n"
           % (len(ranked), len(r.ranked)))
     for i, s in enumerate(ranked, 1):
@@ -1154,12 +1164,6 @@ def _default_router(q, qtok, hits, term, list_intent):
     # behaviour changes on a Rule-21-gated path, and the floor CANNOT be `top == 0` -- the posterior's
     # scores are BOUNDED AWAY FROM ZERO (that is the PRD's C-3 defect reproducing INSIDE the fix for
     # F-1). The threshold must be set FROM THE SCORE DISTRIBUTION, not eyeballed. TO-2 owns it.
-    no_fit = ranked[0].score < _VETTED_BAND
-    if no_fit:
-        print("  !! NO CURATED RULE MATCHED THIS QUESTION (every score is below the vetted band).")
-        print("     These are FUZZY GUESSES, not a routing decision. If none of the descriptions")
-        print("     above answer your question, THE CATALOG DOES NOT COVER IT -- do not pick one.")
-        print("")
     # The terminal shows 3; the YAML holds ALL of them. The right tool is at rank 4+ ~10% of the time
     # (measured, live router) -- so the deeper answer must be ONE OPEN AWAY, not gone.
     spill = _spill_full_ranking(r.ranked or [], call_of, concern_of, q)
