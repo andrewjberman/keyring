@@ -1697,6 +1697,7 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
     role_tf_to_name: dict[tuple[str, str], str] = {}  # (module_dir, tf_resource) -> role_name
     _label_to_roles: dict[str, set[str]] = {}  # bare tf_resource label -> {role_names} (collision detector)
     module_var_cache: dict[Path, dict[str, str]] = {}  # module dir -> {var: default} (lazy)
+    module_locals_cache: dict[Path, dict[str, str]] = {}  # module dir -> {local: value} (lazy)
     module_locals_cache: dict[Path, dict[str, str]] = {}  # module dir -> {local: literal} (lazy)
     for tf_file in all_tf_files:
         try:
@@ -1711,6 +1712,27 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
             name_m = _TF_ROLE_NAME.search(block)
             if name_m:
                 role_name = name_m.group(1)
+                # Resolve ${local.X} against the module's locals so e.g.
+                # name = "${local.emitter_name}-role" keys as "opal-assets-daily-emitter-role".
+                #
+                # WHY THIS EXISTS: policy RESOURCE ARNs already resolved locals (see the
+                # _resolve_tf_locals call in the statement pass) but role NAMES did not -- an
+                # asymmetry, and it made comp-iam BLIND to any role whose name is built from a
+                # local. The role key stayed the literal "${local.x}-role", never matched the
+                # concrete name the service side reports, and EVERY operation on that Lambda
+                # degraded to [UNKNOWN] / "role not mapped".
+                # Found 2026-07-13 on opal-assets-daily-emitter: comp-iam could not answer the
+                # one question Rule 20/22a asks of it -- a brand-new Lambda's IAM -- and the
+                # whole check had to fall back to live simulate-principal-policy.
+                # NOT a false-GREEN (it said UNKNOWN, not GRANTED), so Rule 22a was never
+                # undermined -- silence is not a pass. But a mandated tool that goes silent on a
+                # whole module is a coverage hole, and a brand-new pipeline is exactly when the
+                # graph is least useful and most needed.
+                if "${local." in role_name:
+                    mod_dir = tf_file.parent
+                    if mod_dir not in module_locals_cache:
+                        module_locals_cache[mod_dir] = _collect_module_locals(mod_dir)
+                    role_name = _resolve_tf_locals(role_name, module_locals_cache[mod_dir])
                 # Resolve ${var.X} against the module's variable defaults so e.g.
                 # name = "${var.name}-role" keys as "m365-mcp-gateway-role" (and links to its
                 # inline policies + the EC2_MANIFEST service iam_role), not the literal string.
@@ -1719,6 +1741,14 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
                     if mod_dir not in module_var_cache:
                         module_var_cache[mod_dir] = _collect_module_var_defaults(mod_dir)
                     role_name = _resolve_tf_vars(role_name, module_var_cache[mod_dir])
+                # A still-unresolved ${local.X} is an INTERPOLATED local (e.g.
+                # local.x = "${var.env}-role") which _collect_module_locals deliberately does not
+                # half-guess. Say so rather than keying a role under a literal "${...}" that can
+                # never match anything -- a silent unmatched key is how this class hides.
+                if "${local." in role_name:
+                    print(f"comp-iam: NOTE -- role name '{role_name}' in {rel} holds an "
+                          f"unresolved ${{local.X}} (an interpolated local, not a plain string); "
+                          f"its grants will not link. NOT a clear.", file=sys.stderr)
                 # A still-unresolved ${var.X} = a REUSABLE module template (e.g.
                 # multi-account/terraform/modules/lambda) with no concrete default -- it is
                 # instantiated elsewhere under a concrete name (which we DO scan). Listing the
