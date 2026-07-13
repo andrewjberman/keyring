@@ -889,14 +889,50 @@ _JSON = False
 # NFRA_COMPROUTE -- Andrew-direct 2026-07-13: "top k as 1 is not acceptable" ... "serves top-5 with
 # attached description."  k=5, and it may be WIDENED but NEVER narrowed to 1.
 #
-# k=5 IS MEASURED ON THE LIVE ROUTER, and the number matters -- do not "optimize" it back down:
-#     recall@1 = 70%   recall@3 = 90%   recall@5 = 100%   recall@10 = 100%
-# I first shipped k=3 on a recall@3 == recall@5 result measured against the CURATED `RULES` LAYER --
-# WHICH IS NOT THE SCORER THAT SERVES AGENTS. On the live posterior router the tail is real: for
-# "how fresh is the platinum mdpf aggregate", comp-freshness is RANK 4 (a curated rule takes the
-# VETTED +1.0 offset on the literal token "platinum" and structurally dominates). k=3 HIDES IT; k=5
-# SHOWS IT. Grading the wrong layer is exactly the failure this tool is being fixed for.
-_TOPK = max(3, int(os.environ.get("COMP_WHICH_TOPK", "5") or 5))
+# k=3 SHOWN + THE FULL RANKING SPILLED TO YAML (Andrew-direct): "we need top 3, that's what we decided
+# on" + "top 3 predicted and a path to a .yaml ... if the agent wants to check further."
+#
+# WHY THIS BEATS A BIGGER k. Measured on the LIVE router: recall@1=70% recall@3=90% recall@5=100%.
+# So k=3 alone HIDES a real answer ~10% of the time -- for "how fresh is the platinum mdpf aggregate",
+# comp-freshness is RANK 4, because a curated rule takes the VETTED +1.0 offset on the literal token
+# "platinum" and structurally dominates. Raising k to 5 fixes THAT query while making EVERY other
+# invocation noisier. The spill file gets both: a TIGHT top-3 for the 90% case, and a COMPLETE ranked
+# catalog (all ~41, scored + described) one open away for the 10% where the answer is deeper.
+# The terminal is a summary; the YAML is the evidence. Never make the summary carry the evidence.
+_TOPK = max(3, int(os.environ.get("COMP_WHICH_TOPK", "3") or 3))
+_SPILL_DIR = os.path.join(WS, ".comp-graph", "which")
+
+
+def _yq(s):
+    """Minimal YAML scalar quote -- the catalog carries ':', '#', quotes and unicode."""
+    return "'" + str(s).replace("'", "''") + "'"
+
+
+def _spill_full_ranking(ranked_all, call_of, concern_of, q):
+    """Write the COMPLETE ranked catalog for this question. PID-keyed: concurrent agents never race.
+    Returns a workspace-relative path, or None (a spill failure must NEVER break a route)."""
+    try:
+        os.makedirs(_SPILL_DIR, exist_ok=True)
+        path = os.path.join(_SPILL_DIR, "rank-%d.yaml" % os.getpid())
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write("# comp-which -- the COMPLETE ranked catalog for this question.\n")
+            fh.write("# score = token/prior OVERLAP, NOT a confidence.\n")
+            fh.write("# score >= 1.0 => a CURATED (vetted) rule fired. < 1.0 => a fuzzy base-band guess.\n")
+            fh.write("question: %s\n" % _yq(q))
+            fh.write("shown_in_terminal: %d\n" % _TOPK)
+            fh.write("tools_ranked: %d\n" % len(ranked_all))
+            fh.write("tools:\n")
+            for i, s in enumerate(ranked_all, 1):
+                cid = s.cap.id
+                fh.write("  - rank: %d\n" % i)
+                fh.write("    tool: %s\n" % _yq(cid))
+                fh.write("    score: %.2f\n" % s.score)
+                fh.write("    vetted: %s\n" % ("true" if s.score >= 1.0 else "false"))
+                fh.write("    call: %s\n" % _yq(call_of.get(cid, cid)))
+                fh.write("    does: %s\n" % _yq((concern_of.get(cid, "") or "").strip()))
+        return os.path.relpath(path, WS).replace("\\", "/")
+    except Exception:
+        return None
 
 # The router's STRUCTURAL band boundary (comp_route.py:_VETTED_OFFSET). A score >= this means a VETTED
 # curated/surface-first rule fired; below it is pure fuzzy base-band. NOT a tuned threshold -- it is the
@@ -1118,14 +1154,36 @@ def _default_router(q, qtok, hits, term, list_intent):
     # behaviour changes on a Rule-21-gated path, and the floor CANNOT be `top == 0` -- the posterior's
     # scores are BOUNDED AWAY FROM ZERO (that is the PRD's C-3 defect reproducing INSIDE the fix for
     # F-1). The threshold must be set FROM THE SCORE DISTRIBUTION, not eyeballed. TO-2 owns it.
-    if ranked[0].score < _VETTED_BAND:
+    no_fit = ranked[0].score < _VETTED_BAND
+    if no_fit:
         print("  !! NO CURATED RULE MATCHED THIS QUESTION (every score is below the vetted band).")
         print("     These are FUZZY GUESSES, not a routing decision. If none of the descriptions")
         print("     above answer your question, THE CATALOG DOES NOT COVER IT -- do not pick one.")
         print("")
-    print("  None of these fit?  comp-grep '%s'   (or comp-glob)" % (term or q))
-    _log_rail("ROUTE-POSTERIOR", "+".join(caps), term, q)
-    return 0
+    # The terminal shows 3; the YAML holds ALL of them. The right tool is at rank 4+ ~10% of the time
+    # (measured, live router) -- so the deeper answer must be ONE OPEN AWAY, not gone.
+    spill = _spill_full_ranking(r.ranked or [], call_of, concern_of, q)
+    if spill:
+        print("  Not it?  ALL %d tools, ranked + described:  %s" % (len(r.ranked or []), spill))
+    print("           or search directly:  comp-grep '%s'   (or comp-glob)" % (term or q))
+    _log_rail("NOFIT-POSTERIOR" if no_fit else "ROUTE-POSTERIOR", "+".join(caps), term, q)
+    # --- THE ABSTAIN, PROGRAMMATIC (MSTR directive 2026-07-13) --------------------------------------
+    # The BANNER lets an AGENT see doubt. rc lets a PROGRAM see it. A tool that cannot signal "I have
+    # nothing" to its callers has no failure channel at all -- and comp-which returned 0 on gibberish
+    # for its entire deployed life, which is why nothing ever alarmed on it.
+    #
+    # SAFE BECAUSE I CHECKED THE CONSUMER INSTEAD OF GUESSING (I had guessed, and held this back on the
+    # guess). The ONLY consumer of the exit code is comp-tool-hud.sh:291 --
+    #     _route_out="$(... comp-which --route-only "$q" ...)" || _route_out=""
+    # -- a nonzero exit blanks the nudge, and the hook's OWN comment (:284) states that is the intent:
+    # "if comp-which itself would fall back (no rich tool fits), suppress the nudge." So rc=1 ALIGNS the
+    # hook with its documented design; it does not break it. It stops the rail nagging an agent toward
+    # a catalog that has nothing for them -- which is the honest behaviour.
+    #
+    # NOT the `relevance_floor` (0.15). That is still HELD for TO-2's score distribution: it already
+    # fires (200 live abstains), gibberish scores 0.63 = 4x above it, and moving it could push
+    # LEGITIMATE queries into grep. A threshold gets set FROM A DISTRIBUTION, not from one probe.
+    return 1 if no_fit else 0
 
 
 def main() -> int:
