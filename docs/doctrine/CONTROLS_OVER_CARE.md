@@ -173,11 +173,24 @@ live defect, and only the deployed bytes tell you which one you have.**
 
 **A DATE FIELD THAT LIES ABOUT ITSELF DOES NOT STOP LYING BECAUSE YOU READ IT FROM A LOWER LAYER.**
 *Told that a producer's `source_as_of` was untrustworthy, we sent an agent to read the "true" vintage from the
-source partition's own internal `date` column. **It carried the same lie** — byte-identical weekend books,
-relabeled per-date (identical non-date body hash, identical row count, three consecutive dates).*
+source partition's own internal `date` column. **It carried the same lie.** Going one layer further down again:
+the **silver pull** stamps `as_of_date`/`snapshot_date` with **the date it REQUESTED**, not the vintage of what
+came back — the vendor returns the same book on Sat/Sun/Mon, and every layer above faithfully propagates it.*
 **Going one layer down is not the same as finding an independent source. Ask what the lower layer DERIVES its
 answer from** — if it is the same field, or the same producer's belief about itself, you have not left the
-lie, you have re-read it.
+lie, **you have re-read it.** *Keep descending until you reach a field the producer did not choose.*
+
+**A HASH IS A PROXY; THE COLUMNS ARE THE THING.**
+*An agent hashed three daily partitions, got three distinct digests, and concluded "the source differs, so my
+consumer must be fabricating." **The hash was dominated by the two date-stamp columns he had not dropped** — the
+very fields under investigation. He was one bad measurement from convicting his own script.* **He caught it by
+asking WHICH COLUMNS DIFFER instead of trusting the digest.**
+**When you hash to prove sameness, you must first remove the fields whose sameness is the question.**
+
+**A SATURDAY BOOK EQUALLING FRIDAY'S IS CORRECT. MONDAY'S IS THE LIE.**
+*Before you condemn a repeat, ask whether the world moved.* A carried value on a **non-trading day** is honest;
+the same value under a **trading-day** stamp is not. **Scope your detector to the days on which a change was
+possible** — a repeat-detector that fires on weekends is crying wolf, and one that ignores Mondays is blind.
 
 **YOU CANNOT STAMP A DATE YOU CANNOT DETERMINE.**
 When the true value is unrecoverable, **a "correction" writes a CONFIDENT, PRECISE, WRONG value onto a served
@@ -322,6 +335,26 @@ AGENT'S unsaved work — and it LOOKS read-only and reversible while being NEITH
 **A `git push` IS A DEPLOY.** `safe-deploy` is a pre-push hook. **An agent who obeys a "do not deploy" order to
 the letter — commits, pushes, never touches the AWS CLI — HAS DEPLOYED.**
 **Deploying is not a thing an agent CHOOSES to do; it is a thing that HAPPENS to them.**
+
+---
+
+## VI-b. Granting and withdrawing
+
+> # **A WITHDRAWAL NEEDS NO GROUNDING; A GRANT DOES.**
+
+*A co-sign was granted on a premise that was later falsified. The signer **voided it immediately, without
+re-verifying anything** — then declined to grant the replacement until he could ground it himself.*
+
+**The asymmetry is the whole point: refusing to act is always the safe direction.** So:
+- **Withdraw FIRST, ask questions second.** A withdrawal cannot cause the harm the grant was gating.
+- **Never grant what you cannot see.** *"I will not sign what I cannot ground"* is not obstruction — **a
+  co-sign is a claim, and an ungrounded claim on a served-output change is the thing the co-sign exists to
+  prevent.**
+
+**And when the premise of your own ruling is falsified: WITHDRAW IT YOURSELF, LOUDLY, BEFORE SOMEONE ACTS ON
+IT.** *Two executives recommended a fix; the lane proved it unexecutable; both withdrew within the hour rather
+than defend it.* **A ruling you have to defend against your own evidence is already dead — the only question is
+whether it takes someone's work down with it.**
 
 ---
 
