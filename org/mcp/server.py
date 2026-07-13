@@ -1056,6 +1056,38 @@ async def deregister_agent(
         except Exception:
             pass
 
+    # =====================================================================================
+    # RV-0049 F-004 (MSTR): DEREGISTRATION WROTE NO AUDIT LINE. 750 audit entries, ZERO records.
+    # *** THIS IS THE ONE PRIMITIVE THAT CAN UN-PERSON AN AGENT, AND IT LEFT NO TRAIL. ***
+    # Exercised today, twice, on live agents: MSTR was deregistered mid-session and found out only
+    # when a later heartbeat() failed; the CTO deregistered HIMSELF via F-024 and knew only because
+    # the return string happened to name the serial it actually acted on.
+    # An action nobody can review is an action nobody can catch being wrong -- and F-024 proves it
+    # CAN be wrong about WHICH AGENT it acted on. Record the REQUESTED serial and the RESOLVED one
+    # separately: if they ever differ again, the log says so instead of a human noticing a dead
+    # heartbeat 40 minutes later.
+    # =====================================================================================
+    try:
+        from datetime import datetime as _dt, timezone as _tz
+        _ts = _dt.now(_tz.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        _line = (
+            f"{_ts} DEREGISTER caller={caller or 'UNKNOWN'} requested={agent_serial} "
+            f"resolved={resolved} liveness={'removed' if removed_liveness else 'absent'} "
+            f"broker={'removed' if removed_broker else 'absent'} pollers_killed={pollers_killed}"
+        )
+        if resolved != agent_serial:
+            _line += "  *** RESOLVED != REQUESTED -- a DIFFERENT AGENT was acted on (F-024 class) ***"
+        # NOTE: use the SAME idiom the rest of this file already uses (:377, :399). My first draft
+        # referenced a `WORKSPACE` constant that DOES NOT EXIST -- it would have raised NameError,
+        # been swallowed by the `except` below, and written NOTHING: a SILENT NO-OP AUDIT, shipped as
+        # the fix FOR a missing audit. The exact class this whole file's RV findings are about, written
+        # into the remedy for it. Caught by checking the constant instead of assuming it.
+        _audit = Path(__file__).resolve().parent / "agent-spawn-audit.log"
+        with _audit.open("a", encoding="utf-8") as _fh:
+            _fh.write(_line + "\n")
+    except Exception:
+        pass  # never let the audit write break the recovery primitive itself
+
     parts = [f"Deregistered {resolved}:"]
     parts.append(f"  liveness.json: {'removed' if removed_liveness else 'not found'}")
     parts.append(f"  broker: {'removed' if removed_broker else 'not found or unavailable'}")
