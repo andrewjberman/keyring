@@ -172,12 +172,41 @@ because **COVERAGE IS THE ONE PROPERTY DELETION CANNOT PRESERVE.**
 > order to verify the incident. **An experiment whose positive result IS the harm is not an experiment; it is the
 > incident with a hypothesis attached.**"*
 
+### 🛑 **THE ORIGINAL WORDING OF THIS CRITERION FAILED *OPEN*, AND IT WOULD PASS RIGHT NOW. REPLACED.**
+
+**It read: *"the coverage guard (F7) LANDS and is EXERCISED first."*** **BOTH ARE ALREADY TRUE:**
+- **It HAS landed** — `d52ab4cbe`.
+- **It HAS been exercised** — 21/21 with proven-RED fixtures, **and it FIRES on the live data at 14 accounts /
+  $439,326.22**, reproducing CVO's figure to the cent, derived independently.
+
+> ## **SO A CAREFUL AGENT CHECKS (d), FINDS IT SATISFIED, AND LIFTS THE HOLD — ON A GUARD THAT CANNOT FIRE IN PRODUCTION.**
+
 ```
-PRECONDITION : DS's F7 coverage guard lands FIRST.
-EXPECTED     : it FIRES on 14 accounts / $439,326.22 and BLOCKS.
-FIRES            -> the guard works; we caught the class before it ever served.
-DOES NOT FIRE    -> THE GUARD IS BROKEN, and THAT is the finding.
-Scratch prefix. Never prod. Zero risk. Tests the thing we actually need to trust.
+DEPLOYED (the runner's copies, read on the artifact -- not source, not a commit):
+  code/gold/lib/nna_coverage_guard.py   277 lines   deployed 2026-07-13T10:55:02Z   <- the GUARD, live today
+  code/gold/INF_C_01.canonical_nna.py   764 lines   deployed 2026-07-10T22:02:32Z   <- the CALLER, 3 DAYS STALE
+      calls to the guard in the DEPLOYED caller:  *** ZERO ***
+RETRIEVAL CONTROL: the caller is 764 real lines and `canonical_nna` appears 5x -> the read is SOUND,
+      so the ZERO is a REAL ABSENCE, not a failed read.  (`grep -c` on an error message also returns 0.)
+DISCRIMINATOR: the LOCAL source calls the guard once. THE WIRING EXISTS AND IS NOT DEPLOYED.
+                                 -> A **DEPLOY** GAP, NOT A WIRING GAP.
+```
+
+> ## **LANDING IS NOT THE PROPERTY THAT MATTERS. *REACHABILITY FROM THE RUNNER* IS.**
+> **A COMMIT HASH IS A STATEMENT ABOUT A *REPO*. THIS HOLD IS A STATEMENT ABOUT *PRODUCTION*.**
+> *(CVO authored the criterion and called it her own hole. That is the standard.)*
+
+**REPLACEMENT — (d) IS VERIFIED AT *APPLIED*, NEVER AT HEAD:**
+```
+(d)(i)   s3://opal-data-inf/code/gold/INF_C_01.canonical_nna.py  contains  > 0 calls to the coverage guard
+         -- read the DEPLOYED ARTIFACT, with a RETRIEVAL CONTROL (a real line count), never a commit hash.
+(d)(ii)  the guard is EXERCISED THROUGH THE REAL RUNNER -- not only through its own fixture.
+(d)(iii) it FIRES on the pre-registered number: 14 accounts / $439,326.22
+             (peter_lee -328,965.68 · patrick_scanlan -84,213.71 · IWM -26,146.83)
+         FIRES         -> the guard works; the class is caught before it can ever serve.
+         DOES NOT FIRE -> THE GUARD IS BROKEN, AND *THAT* IS THE FINDING.
+         A DIFFERENT NUMBER -> one of the models is wrong and we find out WHICH, before anything re-arms.
+Scratch prefix. Never prod. Zero risk.
 ```
 
 ---
