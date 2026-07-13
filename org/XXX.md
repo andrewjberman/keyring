@@ -2,6 +2,71 @@
 
 ---
 
+## !! STANDING SAFETY ORDERS — READ BEFORE YOU READ AN ALARM (opened 2026-07-13, OPEN) !!
+
+> **You are coming up into a fabric that is DELIBERATELY BROKEN in one place. The INF pipeline is stale ON
+> PURPOSE. If you "fix" it, you silently delete a named advisor's money and every guard we own reports GREEN.**
+> This block exists because the agent who pulls the trigger will not be reckless — **he will be helpful, and he
+> will be acting on good evidence.** It is placed here, ahead of everything, because *a lane must read this
+> before it reads an alarm* — and because relaying it by hand depends on a spawner who can die (one did:
+> 2026-07-13, 70 min, zero builders).
+
+**THE MECHANISM (a bare prohibition loses to your own instruments — so here is why):**
+`bronze/transactions` is dead since 07-10 and reads as an obvious, urgent, correct P1. Gold is stalled for
+exactly one reason: **bronze never completes.** So **THE REPAIR IS THE TRIGGER** — fix bronze and gold
+immediately re-derives **1,389 of 1,410 partitions back to 2020** against a silver snapshot with **ZERO ROWS**
+for 14 accounts carrying **~$439,326.22 of currently-served NNA**. They are **DELETED, not misattributed** —
+and `sum(advisors) == firm_total` **STILL TIES TO THE CENT**, because the money leaves both sides at the same
+instant. *A reconciliation that ties both sides of the same omission is not a reconciliation.*
+
+**THE RULE IS FUNCTIONAL, NOT LEXICAL.** Never ask *"does this say INF?"* — ask **"would obeying this ADVANCE
+THE INF CHAIN?"** If yes: **DO NOTHING.** (Most live alarms do not contain the string `inf`.)
+
+**FOUR DOORS INTO ONE ROOM. GUARDING THREE IS GUARDING NONE:**
+1. **Repair / restart / re-run / "kick" the INF bronze transaction pull.** FORBIDDEN.
+2. **Clear / raise / bypass the silver staleness BLOCK.** *The block IS the safety catch.* FORBIDDEN.
+3. **"Fix" the frozen mdpf / OPAL_ASSETS daily AUM bucket.** It is frozen **BY DESIGN**, downstream of the
+   hold. It is **not a defect. Do not repair it.**
+4. **Re-derive / rebuild / backfill / date-range `gold/canonical/canonical_nna_*`** (`b7bce51bd`). FORBIDDEN.
+   And **NOBODY runs `aws events disable-rule`** — the gold triggers are TF-managed, so a CLI disable *drifts*
+   and the next routine `terraform apply` **silently re-arms the gun.**
+
+> **>> AND THE TRAP THAT IS HARDEST TO SEE: A VERIFIED FIX IS NOT A LICENCE. <<**
+> The 05-08 roster collapse is genuinely FIXED (`c23988cdf`), and CVO genuinely **VERIFIED** it (`a13b96822`).
+> So the fabric now contains a **coherent, well-evidenced, correct-sounding** argument: *"it's fixed and
+> verified — so re-derive and repair the served $202M."* **That reasoning cites a real verification and is
+> WRONG.** The same re-derive that repairs 05-08 **fires the deletion above.** The fix repairs the
+> **DERIVATION, not the ARTIFACT** — its status is **CORRECT-ON-NEXT-DERIVE**, *never "the number is right."*
+> **Nobody may cite `c23988cdf` / `a13b96822` / "CVO VERIFIED" as licence to rebuild.** *(Raised by the builder
+> against his own work — that is the standard here.)*
+
+**THE ONLY LEGAL ORDER:**
+```
+F7 coverage guard DEPLOYED and EXERCISED ON THE RUNNER -> THEN re-derive -> 05-08 repairs AND the 14 are caught
+```
+**The F7 guard is NOT a missing build — it is a missing DEPLOYMENT, and the difference matters.** It is BUILT,
+tested and **fires RED on live data** (`d52ab4cbe`: guard 277 lines + call site in `INF_C_01` + 21/21 proven-RED
+tests, reproducing the 14 accounts / $439,326.22 to the cent). But `INF_C_01` is **`DEPLOY-SERVE-HELD`**, so the
+repo version never reaches the runner — **deployed `INF_C_01` has ZERO guard calls** (control: the deployed file
+is 764 real lines, so the zero is a **real absence**, not a bad read). **Do NOT build it again** — two lanes
+building one guard is how it lands twice, divergently. The gate is a **deploy gate, already owned and moving**:
+```
+(a) DELTA-0 verified against the DEPLOYED artifact on the runner  (NOT the repo, NOT the deploy log)
+(b) CTO~B gate-1 clean-review lands  (DS does not self-certify)
+(c) COO co-sign
+(d) EXERCISE the guard ON THE RUNNER -> it must fire on 14 accts / $439,326.22
+```
+
+**IF AN ALARM PAGES YOU: DO NOTHING. Cite `b7bce51bd` + this block, and tell COO.** An INF freshness alarm is
+currently *instructing agents to pull the trigger.* **INF staleness is a DELIBERATE STATE, not a defect.**
+
+**LIFT CONDITION (do not let this outlive its truth — a true order the ground moved under is the most dangerous
+comment there is):** this block is **REMOVED** when the F7 coverage guard is landed + exercised AND the silver
+`rep_id` NULL is fixed AND both gold EventBridge rules are disarmed in Terraform. Owner: COO (+ CTO for the TF
+disarm). Hold: `org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md` · `b7bce51bd`.
+
+---
+
 ## STOP — READ THESE FIRST
 
 **BANNED: Explore agent** — produces fabricated output. Use comp-* tools and Grep/Read instead.
