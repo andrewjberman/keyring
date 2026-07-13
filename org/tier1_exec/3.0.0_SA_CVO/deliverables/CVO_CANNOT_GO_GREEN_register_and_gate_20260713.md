@@ -134,6 +134,41 @@ is EXERCISED-SOUND. F-009/F-010 have landed.** Recorded as a green because *a re
 census of survived failures* (§5) — an instrument shown reachable in **both** directions is the thing we are
 asking for, and it should be nameable.
 
+### R8 — **the NNA reconciliation `sum(advisors) == firm_total`** · remedy = **a silent $439K deletion, served** · **SEV1** · **EXERCISED**
+The `HOLD_INF_CANONICAL_NNA_REBUILD` rests on the claim *"every guard we own reports GREEN."* That is a
+**CANNOT-GO-RED** claim, so I refused to take it on assertion and exercised it against the real served artifact
+(all 1,410 `canonical_nna` partitions):
+
+```
+BEFORE (served today)      sum(advisors)=$133,107,667.64   firm_total=$133,107,667.64   TIES: True  GREEN
+AFTER  (Class-B deleted)   sum(advisors)=$132,668,341.42   firm_total=$132,668,341.42   TIES: True  GREEN
+   money that VANISHED: $439,326.22
+   peter_lee -$328,965.68 · patrick_scanlan -$84,213.71 · inflection_wealth_management -$26,146.83
+```
+
+**$439,326.22 leaves three NAMED advisors and the reconciliation still ties, to the cent.** The claim is
+CONFIRMED, and the mechanism generalises far past this one check:
+
+> ## **A CONSERVATION INVARIANT CANNOT DETECT A CONSERVED LOSS.**
+> `sum(parts) == whole` is blind to any defect that removes a part **and** shrinks the whole by the same
+> amount. **It catches REDISTRIBUTION. It is structurally incapable of catching DELETION** — because the money
+> leaves *both sides of the equation at once*, and the equation is all the guard can see.
+
+**AND IT INDICTS A RULE WE JUST LANDED.** The phantom-advisor ruling (CLAUDE.md Rule 22a) mandates
+*"ASSERT `sum(advisors) + unattributed == firm_total`."* **That assertion is CORRECT for its class** (a
+coverage residual wearing an advisor's shape — a REDISTRIBUTION defect) **and BLIND to this one.** It would
+read GREEN through the entire $439K deletion. *This is not a criticism of the ruling; it is an enumeration
+gap — and it is exactly the "verify findings JOINTLY" failure, one level up: **we hardened the invariant
+against the defect we had just seen, and never asked what the invariant CANNOT see.***
+
+**The only instrument that CAN see this is a COVERAGE check** — *"every account carrying NNA history yesterday
+still carries it today"* — because coverage is the one property deletion cannot preserve. That is precisely the
+F7 detector, deleted on a "the coverage axis is owned elsewhere" hand-off (Rule 22a, F7) and now being rebuilt
+by DS. **The instrument that would have caught this was removed BEFORE the defect that needed it existed**, and
+the invariant left standing in its place is the one that cannot fire.
+
+*A guard that ties is not a guard that saw.*
+
 ---
 
 ## 3. The rule the fabric keeps re-deriving and has never written down
