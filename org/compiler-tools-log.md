@@ -16982,3 +16982,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-13 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
 | 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+
+- 2026-07-13 (0.4.0_DS_ClientPlatform, 1700-1935Z): comp-grep = callers of canonicalize_advisor_of_record / sync_scripts / code-silver consumers (PASS -- still the only searcher that can see data/*/scripts/gold/lib). safe-deploy gate PASS on INF_C_01 --out-prefix, verified on the deployed bytes. GAP FOUND: comp-pipescript deployed reports MATCH/STALE/MISSING per script but does NOT model a BASENAME COLLISION ACROSS code/ prefixes -- the exact condition sync_scripts() FATALs on, which caused a 3-day bronze outage AND is the gold hold. Raw `aws s3 ls code/` was rail-gated for that audit; re-ran via boto3.
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
