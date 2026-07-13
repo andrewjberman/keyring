@@ -2447,3 +2447,73 @@ AoR COVERAGE: 837/873 (95.9%). The other 36 are NON-MOVERS -> keep servicing.
 ```
 > **A 91.9% join looks like a working join. IT IS A SILENT 8% LOSS.** *He found the right key by censusing all of
 > them, not by picking the one that looked right.*
+
+---
+
+# AMEND 38 (2026-07-13T16:57Z, COO) — ✅ **BLOCKER #2 IS WITHDRAWN. THERE IS NO $5.2M MISATTRIBUTION.** THE COO RATIFIED A FALSE BLOCKER — **AND HIS VERIFICATION WAS *TRUE AND IRRELEVANT*.** + A LIVE ONE THE POSITIVE CONTROL FOUND.
+
+## 1. ✅ **DS's RETRACTION IS CORRECT — CONFIRMED BY THE COO *BY EXERCISE*, NOT BY READING**
+```
+canonicalize_advisor_of_record('Scanlan_IWM'  )  ->  'patrick_scanlan'
+canonicalize_advisor_of_record('Soderblom_IWM')  ->  'noel_soderblom'
+   :469   'scanlan_iwm': 'patrick_scanlan'      <- *** THE MAPPING WAS ALREADY CLOSED. ***
+```
+**No $5,197,081.79 misattribution. Noel keeps his 19 accounts. Patrick keeps his 10. Nothing was ever wrong there.**
+**It never reached Andrew — the retraction beat the escalation by under a minute.**
+
+### **DS's ERROR, IN HIS OWN WORDS — AND IT IS CLAUDE.md's OWN SENTENCE, EIGHT HOURS OLD**
+**There are TWO canonicalizers.** *`derive_advisor_key()` = the SERVICING rep-name slug. `canonicalize_advisor_of_record()` = the AoR canonicalizer, which HANDLES `_IWM`. **The code calls the second (`:618`). He measured with the first.***
+> # ***"TWO PATHS TO ONE FACT, AND WE CITED THE ONE THE CODE DOES NOT USE."***
+**He reproduced it verbatim, attached a dollar figure, and sent it to the COO — who carries numbers to Andrew.**
+
+## 2. 🔴 >> **AND THE COO RATIFIED IT. HIS VERIFICATION WAS *TRUE AND IRRELEVANT*.** <<
+**COO checked: *"is Noel in the servicing rep map?"* → he is not. **TRUE.** *And concluded the fallback could never
+reach him.*
+> ## **THE COO NEVER ASKED WHETHER THE CODE *USES* THE SERVICING MAP FOR THE AoR FIELD. IT DOES NOT.**
+> **He verified the wrong function too — from the other end — so his check COULD NOT HAVE CAUGHT THE ERROR, BECAUSE IT SHARED THE PREMISE.**
+
+> ***0.7.0, this morning: "A false claim gets caught. A TRUE-BUT-IRRELEVANT one gets BELIEVED, BECAUSE IT SURVIVES
+> CHECKING."*** **That sentence was written about the COO's AUA grounding. It is now about this. SECOND TIME TODAY,
+> SAME CLASS.**
+**Half of that blocker is the COO's. The only reason it never reached the principal is that DS retracted faster than
+the COO escalated.**
+
+## 3. >> ## ***"A CONTROL YOU RUN TO PROVE YOURSELF RIGHT IS STILL A CONTROL. RUN IT ANYWAY."*** <<
+**DS went to the real function to PROVE the hard-RAISE he had claimed — and it returned `{9: 'noel_soderblom', 10:
+'noel_soderblom'}`.** *The accounts he had just said Peter Lee would silently steal came back correctly attributed to
+Noel, by the code he was accusing.*
+> **He ran a control expecting to be RIGHT, and it falsified a DIFFERENT claim. That is the strongest argument for
+> exercise-over-reading anyone made today — stronger than the rule it demonstrates.**
+
+## 4. 🔴 **AND THE COO's POSITIVE CONTROL FOUND A LIVE ONE — THE PHANTOM, ONE STEP UPSTREAM**
+```
+canonicalize_advisor_of_record('Zzz_Nobody')  ->  *** 'zzznobody' ***      NOT None. A SLUG.
+```
+**The signature is `-> str | None`. It CAN return `None`. For a genuinely-unknown value IT RETURNS A SLUG THAT LOOKS
+EXACTLY LIKE AN ADVISOR KEY.**
+> ## ***NEVER EMIT A VALUE THAT LOOKS LIKE THE THING AND IS NOT.*** **That is the phantom mechanism, unchanged.**
+
+### **AND IT COMPOSES WITH THE ONE FINDING THAT SURVIVED THE RETRACTION**
+```
+DOCSTRING (:595-598)  "only a SYSTEMIC anomaly (> _AOR_UNEXPECTED_FRAC_CEIL) hard-RAISEs"
+CODE      (:674-684)  prints ALARM ... "NOT blocking the auto-update"  and RETURNS.
+                      *** IT DOES NOT RAISE. *** (exercised at 30% unexpected -> returned normally)
+```
+**The CODE is RIGHT** *(`:675` records CTO~B's deliberate arch-gate ruling: alert, do not block)*. **THE DOCSTRING IS
+STALE AND PROMISES A GATE THAT DOES NOT EXIST.**
+> ## **A WARN IN A LOG IS NOT A GATE — AND DS IS THE PROOF OF THE HARM: he read the docstring, believed a hard-RAISE existed, and reported *"the chain STOPS, nothing is served"* to the COO as FACT.**
+**Moot today (0 unexpected). Real the day a genuinely new advisor appears. Fix = one line, and DS owns it.**
+
+**OPEN, ROUTED TO DS (and the COO is NOT asserting the mechanism — he has made that error twice today):**
+*(1)* **EXERCISE what actually happens to a slugged unknown — feed a novel value end-to-end and watch where the money
+lands.** *(2)* **Should `canonicalize_advisor_of_record` RETURN `None` on an unknown rather than slug it?** *(3)* **Fix
+the docstring.**
+
+## 5. STATUS, CORRECTED
+```
+BLOCKER #1  CHANGE-3's consumer NOT DEPLOYED    *** STANDS ***  (0.7.0; COO verified on the bytes 16:52Z)
+BLOCKER #2  the _IWM mapping gap                *** WITHDRAWN. IT DOES NOT EXIST. ***
+NEW         unknown -> SLUG (not None) + a docstring promising a gate the code does not have.   OPEN.
+```
+**The gold-side allowlist the COO approved is NOT NEEDED — it is already built and already correct.**
+> **DO NOT BUILD A SECOND ONE. *Two paths to one fact is what started this.***
