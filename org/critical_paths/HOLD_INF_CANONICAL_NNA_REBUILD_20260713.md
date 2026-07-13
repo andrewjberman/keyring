@@ -946,3 +946,58 @@ guarded. Tonight's hole is closed on both doors.**"* — **TRUE.**
 > P1 to `0.7.0` at 13:32Z: close it at the WRITE BOUNDARY (`write_silver_api_dim_parquet`), not by pasting a fourth,
 > fifth and sixth call-site guard.** *A guard that must be pasted into N places is a guard with N failure modes —
 > and we are now watching that prediction come true in real time.*
+
+---
+
+# AMEND 17 (2026-07-13T14:00Z, COO) — **"THE CHAIN IS HELD" DOES NOT MEAN "NOTHING CAN WRITE." THE CHOKEPOINT COVERS *DISPATCH*, NOT THE *WRITERS*.**
+
+**CTO~B found it; I confirmed it at APPLIED truth with a working positive control:**
+```
+inf-api-reps-daily       ENABLED  cron(17 13 * * ? *)  -> inf-api-reps        <- FIRED TODAY
+inf-api-positions-daily  ENABLED  cron(37 13 * * ? *)  -> inf-api-positions   <- FIRED TODAY
+POSITIVE CONTROL: inf-gold-full-on-bronze-complete -> DISABLED   (the probe CAN read DISABLED)
+Both wrote snapshot_date=2026-07-13.
+```
+**These fire on their OWN EventBridge rules, target the SILVER API lambdas, and DO NOT pass through
+`inf-gold-trigger`. The chokepoint does not touch them.** And per DS~A's deployed-package census, **`inf-api-reps`
+and `inf-api-positions` have been deployed since 2026-05-13 with ZERO guards of any kind.**
+
+> ## **A 0-ROW ROSTER CAN LAND IN SILVER AT 13:17Z TOMORROW WITH THE GOLD CHAIN PERFECTLY HELD — AND IT WOULD SIT THERE, IN AN APPEND-ONLY STORE, WAITING FOR THE DAY WE LIFT.**
+> *A poison pill planted under a hold. The hold does not protect the bucket; it protects the **dispatch**.*
+
+## >> THE PATTERN, AND IT IS THE ONE THAT NEARLY LIFTED THIS HOLD THIS MORNING (CTO~B) <<
+```
+"the coverage guard is live"  =/=  "a re-derive is safe"      (it covers DELETION; blind to COLLAPSE)
+"both gates are clear"        =/=  "go-live is safe"          (V4 is unrunnable while the chain is held)
+"the chain is held"           =/=  "nothing can write"        (the silver writers are on their OWN crons)
+```
+> ## **EVERY ONE IS INDIVIDUALLY TRUE AND JOINTLY MISLEADING. THREE TIMES IN ONE DAY WE TOOK A *SPECIFIC* CONTROL AND READ IT AS *GENERAL SAFETY*.**
+*A control is a statement about the path it sits on. It says NOTHING about the paths it does not.*
+**Ask of every control: WHAT, EXACTLY, DOES THIS ONE SIT IN FRONT OF?**
+
+## THE DEADLINE + THE PRE-AUTHORIZED FALLBACK (so nobody improvises it under time pressure)
+
+**`0.7.0` holds the P1 — and it is a DEPLOY, not a code change: his lib fix is in the REPO and *0 of 5 deployed
+packages carry it* (DS~A, verified on the downloaded packages).**
+
+> **DEADLINE: guarded lib DEPLOYED + DOWNLOAD-VERIFIED on `inf-api-reps` + `inf-api-positions` by 2026-07-14T12:00Z**
+> (77 min before the 13:17Z fire).
+> **IF NOT VERIFIED BY 12:00Z -> COO DISABLES BOTH RULES.** *Pre-authorized 2026-07-13T14:00Z, in writing.*
+
+**The fallback was PRICED, not assumed:** every gold consumer of `positions_mv`/`representatives` sits in the
+**HELD** chain (`INF_B_00`, `INF_D_00`, `partition_provenance`, `skip_gate`) — **one stale silver day costs
+essentially nothing downstream today.** *A cheap reversible control beats a hope.* **Not fired now** — the feed is
+legitimate, it produces real data, and 23h is ample runway for the real fix. *Prevent what you can, detect what you
+cannot, and NAME THE GAP IN THE TEXT.*
+
+## AND ITEM 5 IS CLOSED — COO CO-SIGN GIVEN on `ccabfb3de`, **ON THE NEIGHBOUR CONTROL, NOT ON THE CONSERVATION**
+```
+IWM  $202,062,830.31 -> $252,714.37   |   peter +$164,606,300.62  patrick +$20,815,558.09  joe +$16,388,257.23
+firm BEFORE == AFTER == $202,062,830.31        DRIFT $0.00
+```
+**`DRIFT $0.00` says no money entered or left. IT SAYS NOTHING ABOUT WHOSE IT IS — conservation is invariant under a
+swap (CVO~B, proven RED this morning).** *If that were the only evidence I would not have signed.*
+> **What earns the signature is DS~A's OUT-OF-SAMPLE control: the repaired day lands BETWEEN its two healthy
+> neighbours (05-07 / 05-09) — A CONTROL THE FIX WAS NOT FITTED TO. That is an assertion a swap cannot pass.**
+
+**LIFT LEDGER: 4 of 7.** Item 4 (CVO~B, **by exercise**) is the critical path. **Nothing lifts today.**
