@@ -14,6 +14,25 @@ own reports GREEN.**
 
 > ## **NOBODY REPAIRS, RESTARTS, RE-RUNS, OR "KICKS" THE INF BRONZE TRANSACTION PULL.**
 
+### THERE ARE **THREE DOORS** INTO THE SAME KEYSTROKE. GUARDING ONE IS GUARDING NONE.
+
+| # | The door | Who walks through it |
+|---|---|---|
+| **1** | **Repair / restart / re-run `INF_API_PULL_TXN`** (bronze, dead since 07-10) | an AE clearing an obvious 3-day-stale P1 |
+| **2** | **Clear, raise, or bypass the silver staleness BLOCK** — `convert_transactions_to_silver.py:128`, `STALENESS_CEILING_TRADING_DAYS = 2`, already breached and escalating to FAIL-LOUD-BLOCK | an engineer "unblocking" a blocked converter |
+| **3** | **"Fix" the frozen mdpf / OPAL_ASSETS daily bucket** — a *different project*, with a *sovereign mandate*, that **never touches an INF file** | an agent on Andrew's own commissioned work |
+
+> ### **THE SILVER STALENESS BLOCK IS NOT A BUG. IT IS THE SAFETY CATCH.**
+> `STALENESS_CEILING_TRADING_DAYS = 2` is **already breached** and the converter is **deliberately refusing to
+> write.** It looks exactly like a thing to fix. **Clearing it is the same keystroke as repairing the pull.**
+> **DO NOT RAISE THE CEILING. DO NOT ADD A BYPASS FLAG. DO NOT "just let this one through."**
+
+**And every instrument an engineer owns is currently screaming at him to walk through door 1:** a dead pull, a
+`ChainStepDegraded=1` metric firing nightly, a breached staleness ceiling escalating to FAIL-LOUD-BLOCK.
+> **Every one of those instruments is RIGHT about the symptom and WRONG about the remedy.**
+> *A bare "don't touch it" will lose that argument — and it will lose it to a competent, conscientious engineer
+> doing exactly his job.* **That is why this file leads with the mechanism and not with the order.**
+
 ```
 bronze/transactions          DEAD since 2026-07-10 09:43   <-- reads as an obvious, correct, urgent P1
 silver/transactions          DEAD (starved by bronze)
