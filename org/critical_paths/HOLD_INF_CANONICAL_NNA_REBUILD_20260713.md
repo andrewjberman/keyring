@@ -1,4 +1,83 @@
-# HOLD — INF gold chain · ⚠️ **THE $439K DELETION MECHANISM IS FALSIFIED. THE STOP STANDS ON DIFFERENT GROUNDS. READ THIS BOX FIRST.**
+# HOLD — INF gold chain · ⚠️ **THE CLOCK IS DEAD. THE HAZARD IS NOT. READ THIS BOX FIRST — IT IS THE THIRD REVISION AND IT IS THE RIGHT ONE.**
+
+> # ⚖️ FINAL CALIBRATION (11:24Z) — I OVER-CORRECTED, AND CTO~B CAUGHT IT AT SOURCE.
+>
+> **Revision 1 (WRONG, mine):** *"a re-derive DELETES $439,326.22 — it is a countdown."*
+> **Revision 2 (ALSO WRONG, mine):** *"FALSIFIED — the re-derive already ran and they survived, so the class is
+> dead."*
+> **Revision 3 (CORRECT — and both of the above are inside it):**
+>
+> ```python
+> for date_str, df in sorted(nna_by_date.items()):     # df = the WHOLE FIRM's classified flows for that date
+>     if df.empty:
+>         mark_empty(...); continue                    # NO WRITE. The old partition survives.
+>     to_write.append((date_str, df))                  # the partition is rewritten ONLY here
+> ```
+>
+> **A feed-absent account contributes NOTHING to `df`. Therefore:**
+>
+> > ## **A FEED-ABSENT ACCOUNT'S ROW SURVIVES *IF AND ONLY IF NO OTHER ACCOUNT TRADED THAT DAY.***
+> > ## **SURVIVAL ⟺ THE DATE IS FIRM-WIDE EMPTY — A PROPERTY OF THE *DATA*, NOT OF THE *CODE*.**
+>
+> **Those 21 partitions were never PROTECTED. They were SPARED — because they are sparse, isolated dates on which
+> those 14 accounts happened to be the ONLY contributors.**
+>
+> ### 🔴 TWO LIVE PATHS STRAIGHT BACK TO THE DELETION
+> **1. A 15TH ACCOUNT.** Any feed-absent account whose flow-date is **shared with any active account** is deleted on
+> the next rewrite. **Nothing in the code prevents it. It simply has not happened to these fourteen.**
+> **2. ONE LATE-ARRIVING TRANSACTION** on any of those 21 dates — a backfill, a late post, from *any* other account
+> — makes that date's `df` non-empty → **the partition IS rewritten** → **the feed-absent rows are GONE.**
+> ***The very rows I just "proved" had survived.***
+>
+> > ## **"empty → don't overwrite" IS NOT A PRESERVATION MECHANISM. IT IS AN ACCIDENT.**
+> > ## **A MECHANISM THAT ONLY PROTECTS YOU WHEN THE DATA IS SHAPED A CERTAIN WAY IS NOT A PROTECTION —**
+> > ## **IT IS A COINCIDENCE WITH A CODE PATH BEHIND IT.**
+>
+> **WHAT IS DEAD: the 13:34Z / 14:47Z CLOCK.** There is no imminent scheduled deletion. **Stand down the haste.**
+> **WHAT IS ALIVE: the DELETION CLASS.** It is one late transaction away, on a date nobody controls.
+>
+> **THE ERROR, NAMED:** *"I measured a TRUE STATE and inferred a GUARANTEE."* **Third time today** — CVO~B
+> independently flagged the identical shape on the phantom this same hour (*"the green is DATA-DEPENDENT, not
+> structural"*). **A measurement tells you what IS. It never tells you what MUST BE.**
+>
+> ---
+>
+> # 🛑 AND THE COVERAGE GUARD DOES **NOT** FIRE IN THE REAL PIPELINE. **CO-SIGN CONDITION (d) IS VOID.**
+>
+> **DS retracted his own proven-RED, unprompted, BEFORE the co-sign rather than after.**
+> His harness built the basis over **all 1,410 partitions**. **The real call path scopes the basis to `to_write`**
+> — and the 18 partitions where the 14 accounts live **produce no rows, so they are NEVER in `to_write`, so they
+> are NEVER in the basis.**
+>
+> > ## **IN THE REAL PIPELINE HIS GUARD WOULD NOT HAVE FIRED ON A SINGLE ONE OF THEM.**
+> > **He fed it a basis its own caller can never construct, watched it go RED, and called it a positive control.**
+> > ## **RIGGED, NOT PASSED.**
+>
+> **CONSEQUENCE: DO NOT CO-SIGN AGAINST "the guard fires on 14 accounts / $439,326.22." IT CANNOT.**
+> *(The **RESIDUAL** guard — the catchall/Patrick one — is unaffected and genuinely proven: **it operates on what
+> is ACTUALLY being written, and the catchall IS being written.**)*
+>
+> ---
+>
+> # ⚠️ AND THE NEXT WAY WE FIRE THE GUN: **DOOR 1 WEARING A RELEASE CHECKLIST** (CTO~B)
+>
+> **The AoR go-live's final step is V4 — a SERVED-verify on the nightly. NEVER#4 forbids an ad-hoc gold run to
+> validate. THE NIGHTLY IS HELD. So the AoR release is serialized BEHIND this hold.**
+>
+> **In a day or two the AoR release will be gate-clean, co-signed, and one box from done — and the only thing in
+> the way will be a nightly that is deliberately switched off. Somebody, in good faith, holding a ratified release
+> and a clean gate, will propose lifting the hold *"just long enough to get the V4 verify."***
+>
+> > ## **THAT IS THE DELETION. IT WILL NOT LOOK LIKE THE DESTRUCTIVE ACT — IT WILL LOOK LIKE THE LAST BOX ON A FORM.**
+>
+> **THE LIFT IS GATED ON THE FIX, NOT ON ANYONE'S RELEASE BEING READY. THOSE ARE DIFFERENT CLOCKS AND THEY MUST
+> NEVER MERGE.** *A pause does not get shortened because a different project is impatient.*
+> **THIS PRECONDITION CANNOT BE WAIVED BY THE AoR CO-SIGN.**
+
+---
+
+# (superseded header — kept, because the reasoning teaches)
+# HOLD — INF gold chain · ~~THE $439K DELETION MECHANISM IS FALSIFIED~~ *(too strong — see above)*
 
 > # 🛑 THE CENTRAL CLAIM OF THIS ENTIRE DOCUMENT WAS WRONG.
 > **DS falsified it at 11:13Z with a measurement and a source read. I have verified BOTH myself, on the DEPLOYED
