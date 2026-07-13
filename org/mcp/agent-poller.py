@@ -27,6 +27,8 @@ Exit: Ctrl+C, kill -9, or MCP server PID dies. All three paths are clean —
 the frozen last_seen_epoch is enough signal for the rest of the system.
 """
 
+from __future__ import annotations
+
 import json
 import os
 import sys
@@ -121,18 +123,53 @@ def _find_agent_folder(serial: str) -> Path | None:
 
 
 def _pid_alive(pid: int) -> bool:
-    """Cross-platform check: does a running process exist with this PID?"""
+    """Is a process with this PID actually RUNNING (not merely addressable)?
+
+    A HANDLE IS NOT A RUNNING PROCESS. On Windows a process object outlives the
+    process itself for as long as anyone holds a handle to it, so OpenProcess()
+    SUCCEEDS on an exited-but-not-reaped pid. The previous implementation returned
+    True on that handle and never asked whether the process had exited -- so this
+    probe could not distinguish RUNNING from EXITED, and it was the sole liveness
+    gate on the poller's exit path.
+
+    Consequence (2026-07-13, exercised): when the host OOM'd and killed the fabric,
+    2.0.0_SA_COO's MCP server (pid 15900) died -- and its poller kept writing
+    last_seen every 2s and heartbeating the broker every 10s, indefinitely, because
+    _pid_alive(15900) returned True. Every instrument in the fabric (get_live_agents,
+    get_agent_status, fabric-check) reported a DEAD executive as LIVE with a 1-second
+    heartbeat, fabric-check's DEAF detector could never fire for it, and the identity
+    guard refused to respawn the serial because it was "held by a LIVE process."
+    An absent field is a gap; a confident wrong field is a FALSE WITNESS.
+
+    Measured, with the two live agents as positive controls:
+        pid    who                    OpenProcess-only   GetExitCodeProcess
+        12780  MSTR (alive, control)  True               True
+        5876   CTO  (alive, control)  True               True
+        15900  COO  (DEAD)            True               False   <-- the forgery
+
+    So: assert STILL_ACTIVE. Never infer liveness from addressability.
+    """
     if pid <= 0:
         return False
     if sys.platform == "win32":
         import ctypes
         kernel32 = ctypes.windll.kernel32
         PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+        STILL_ACTIVE = 259
         handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
-        if handle:
+        if not handle:
+            return False
+        try:
+            code = ctypes.c_ulong()
+            ok = kernel32.GetExitCodeProcess(handle, ctypes.byref(code))
+            if not ok:
+                # Cannot read the exit code -> we CANNOT OBSERVE liveness. Say so by
+                # failing closed (dead), never by defaulting to alive: the whole point
+                # of this probe is to let a poller notice its agent is gone.
+                return False
+            return code.value == STILL_ACTIVE
+        finally:
             kernel32.CloseHandle(handle)
-            return True
-        return False
     try:
         os.kill(pid, 0)
         return True
@@ -237,7 +274,7 @@ def main():
     print(f"  Tracking MCP server PID: {mcp_pid}")
     print(f"  Heartbeat interval: {POLL_INTERVAL}s")
     print(f"  Liveness: {LIVENESS_FILE}")
-    print(f"  Mode: HEARTBEAT ONLY (inbox handled by conversation-side MCP)")
+    print("  Mode: HEARTBEAT ONLY (inbox handled by conversation-side MCP)")
     sys.stdout.flush()
 
     broker_cycle = 0
