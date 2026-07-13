@@ -16990,3 +16990,56 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 | 2026-07-13 | 1.0.0_SA_CTO | reboot handoff log | LIVE-primitive state grounding (lambda env dispatch-HOLD, s3 served-spine mtime, gold/scratch object counts, SSOT existence, collision presence) -- accurate zero-context handoff for a blind restart; no new code/infra, all reads. |
 | 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/mdpf_aggregate_aua.py | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-aws | comp-aws mdpf-daily-trigger | FAIL |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | pipescript | pipescript --resource mdpf-daily-trigger | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0288.md | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0288.md | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0288.md | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0288.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast comp-which | FAIL |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPASSURANCE_CO... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0289.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPASSURANCE_CO... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/COMP... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPASSURANCE_CO... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp~Z/t... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0290.md | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0290.md | PASS |
+| 2026-07-13 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-blast | comp-blast comp-which | FAIL |
+| 2026-07-13 | 2.0.0_SA_COO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/README.md --file ... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0291.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md --file org/tie... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md --file org/tie... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0289.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_ETF_CLOUD... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/COMP... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file docs/architect... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_PRD.md --... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_ETF_CLOUD... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0292.md | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file docs/architect... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_PRD.md --... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | NFRA_WEBSITE | comp-which rail (raw aws SES/EC2/DLM/SSM/DNS inspection -- all rail-checked, no comp-tool models SES identities, DNS zones, or on-box OLS/wp-cli state); terraform validate+fmt PASS; bash -n PASS x5; comp-surface-check OK; owned-paths gate BLOCKED my commit into COO lane (CORRECT -- re-scoped, did not --force); never-rules gate BLOCKED a `-m` carrying `$(` (CORRECT -- re-issued with -F) | GAP (load-bearing): NO comp-tool models domain OWNERSHIP -- we held an SES sending identity for opalcapital.com, a domain Opal does not own, for 2 weeks. Gate candidate accepted by MSTR, routed to CTO: owned-domain allowlist -> DENY any SES identity / ACM cert / DNS-bearing resource for an apex we do not hold. |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
