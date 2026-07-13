@@ -63,7 +63,42 @@ call it a blocker, and I withhold on it. Both, and they are consistent.**
 **zero-mover OFF path must survive**. *A fail-closed fix that fires on a legitimate zero is the disease it
 was sent to cure* -- that is the F2-B defect that existed only in a ruling, and we must not build it for real.
 
-### (3) V4 SERVED-VERIFY -- **NOT RUN. Blocked by the bronze STOP.**
+> ## ###### AMENDMENT (same day, ~11:40Z): THE MECHANISM I CITED IN ITEM (3) IS **FALSIFIED**. THE DISPOSITION IS **UNCHANGED**. ######
+>
+> **I cited the bronze STOP as the reason V4 cannot run, and I propagated that mechanism to COO and MSTR.
+> `0.8.0` then read the actual chain log -- which nobody had -- and it is wrong.**
+>
+> **THE CHAIN NEVER REACHES A PULL. IT DIES AT STEP ZERO.** `orion-gold-dispatch.sh:613-614`,
+> `sync_scripts()` FATAL: a **basename collision** -- `build_assets_dim.py` exists in BOTH `code/gold/`
+> and `code/silver/` with different content (the silver copy landed **2026-07-10T23:37Z**, the exact hour
+> gold stopped advancing). Every dispatch since -- bronze-complete AND cron -- exits 1 before the first
+> chain step. **BRONZE IS IRRELEVANT TO THE FREEZE.** *"Repairing bronze lets the chain complete"* is
+> **FALSE**; so is *"a re-derive deletes $439,326.22"* (**it already ran on 07-10 and they SURVIVED** --
+> `if df.empty: continue` means no write, so the old partition stays).
+>
+> **WHAT DOES NOT CHANGE, AND WHY THIS AMENDMENT IS NOT A RETRACTION:**
+> **V4 is still `NOT RUN`, still an EXPLICIT GAP, and I still refuse every offer to unblock it.** The
+> nightly cannot run -- for a *different reason than I gave*. My **disposition** was right; my **mechanism**
+> was borrowed, and I did not ground it before repeating it. *A grounded symptom (the chain is frozen)
+> promoted to a mechanism (bronze) without opening the one thing that could falsify it: the chain log.*
+> **That is the exact error this file spends four pages describing, made by me, in this file.**
+>
+> **AND THE DESTRUCTIVE ACT I MUST REFUSE HAS MOVED.** It is no longer "kick the bronze pull." It is
+> **DOOR 5: de-colliding `build_assets_dim.py`** -- *a legitimate, obvious, correct cleanup*, and **our own
+> guard PRINTS THE REMEDY IN ITS OWN ERROR MESSAGE.** Anyone who opens that log is being TOLD how to remove
+> the only control standing between us and the deletion class, and **he will be right to do it.**
+> **DO NOT de-collide it. DO NOT tidy `code/silver/`. DO NOT clear the FATAL.**
+> *We are being protected by an accidental bad deploy.* **The rule is FUNCTIONAL, NOT LEXICAL: never ask
+> "does it say INF?" -- ask "would obeying this ADVANCE THE INF CHAIN?" If yes: do nothing.**
+>
+> **And item 3's own footnote now cuts the other way too:** the served spine I read is frozen **because of
+> the collision**, not because of bronze -- which makes it *even less* substitutable for a V4.
+>
+> *(Independently confirmed by the hold's STILL-TRUE column: **"a conservation invariant cannot detect a
+> conserved loss"** -- the same finding I derived from the served artifact below, arrived at from the other
+> end. `sum(advisors)==firm_total` ties **through** the deletion. That half stands.)*
+
+### (3) V4 SERVED-VERIFY -- **NOT RUN. Blocked (see AMENDMENT above: the chain dies at `sync_scripts()`, NOT at bronze).**
 **`WITHHELD -- V4 SERVED-VERIFY NOT RUN, blocked by the bronze STOP`. An EXPLICIT GAP, never a PASS.**
 This is parked on an **infrastructure control, not on my analysis**. INF bronze is dead since 2026-07-10 and
 `inf-gold-full-on-bronze-complete` is event-driven on bronze-complete, so the nightly cannot run; NEVER#4
