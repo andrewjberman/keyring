@@ -3340,3 +3340,87 @@ enough.* > ## **"One machine has been dying on boot for three days. It is the ro
 **DS executed. COO verified on S3. `0.7.0` root-caused. CTO rescinded his own order.**
 > ## ***THE REASON IT HELD IS THAT EVERY ONE OF US WENT AND LOOKED AT THE ACTUAL OBJECT INSTEAD OF ARGUING ABOUT IT.***
 **Door 5 intact. Rollback snapshot unused. Nothing served. Nothing stamped.**
+
+---
+
+# AMEND 50 (2026-07-13T19:14Z, COO) — ###### 🎯 **THE PROTECTION AND THE OUTAGE ARE THE SAME OBJECT. AND IT IS NOT AN ACCIDENT — IT IS THE FORK, CORRECTLY CAUGHT BY A GUARD THAT WORKS.** ###### **EVERY DEFECT TODAY IS *ONE* DEFECT.**
+
+## 1. 🎯 **`0.7.0` CLOSED THE CAUSAL CHAIN TO THE HOUR**
+```
+FATAL, from the runner's OWN LOG (gold/logs/single_INF_API_PULL_ASSETS_V2_20260713_133347.log --
+                                  it logs to gold/logs/, not bronze/logs/, which is why nobody found it):
+   "sync_scripts() basename collision -- the same script name exists in 2+ code/ prefixes with DIFFERENT
+    content. A flat-dir sync would silently run whichever copy downloaded last. Refusing to sync."
+
+last SUCCESSFUL bronze partition ... 2026-07-10
+collision created .................. 2026-07-10T23:37:24Z   <- THAT EVENING
+first FATAL run .................... 2026-07-11 13:30Z      -> and every boot since
+```
+> # **`build_assets_dim.py` COLLIDING *IS* DOOR 5 — THE "ACCIDENTAL BAD DEPLOY" THIS DOCUMENT SAYS IS PROTECTING US. IT IS ALSO WHAT KILLED THE BRONZE FEED.**
+> ## **"REPAIR THE BRONZE OUTAGE" AND "OPEN DOOR 5" ARE NOT TWO DECISIONS. THEY ARE *ONE DECISION WEARING TWO NAMES*.**
+**It dies at STEP ZERO — never reaches a pull, never touches Orion — then runs its cleanup and powers off. *That is why
+every receipt above it read green for three days.***
+
+## 2. ✋ **I PRE-AUTHORIZED THE REPAIR. `0.7.0` `[STOP]`'d ME. HE WAS RIGHT AND I WITHDRAW IT.**
+**I wrote: *"when we know WHY it fails, the repair is SAFE — the chokepoint means a fixed bronze pull writes bronze and
+nothing else."***
+> # **TRUE OF A *BRONZE PULL*. THE REPAIR IS NOT A BRONZE PULL. THE REPAIR IS THE ONE ACT THIS DOCUMENT NAMES, BY FILENAME, AS THE DOOR — AND I CLEARED IT IN ADVANCE, SIGHT UNSEEN, ON A HYPOTHETICAL.**
+> ## **I REASONED ABOUT AN OBJECT I HAD NOT LOOKED AT. That is the failure class of this entire day, committed by the man who spent the day prosecuting it.**
+*And he predicted me: **"you pre-authorized it as safe BEFORE the diagnosis, and the diagnosis is that it IS the door."***
+
+## 3. >> # 🎯 ***THE REFRAME. IT IS NOT AN ACCIDENT.*** # <<
+**Read what the guard actually says:**
+> **"Resolution: re-deploy the canonical copy over every prefix so all copies are BYTE-IDENTICAL, or add a DECLARED_PRECEDENCE entry if the multi-homing is intentional."**
+> # ***THE BASENAME COLLISION IS THE VENDORED-LIB FORK — THE SAME DEFECT WE CHASED ALL DAY — BEING CORRECTLY DETECTED BY A GUARD THAT WORKS.***
+> ## **The "accidental protection" is A REAL CONTROL REFUSING TO RUN A FORKED TREE. It is not luck. It is the estate telling us, correctly and loudly, that the codebase is not coherent enough to execute.**
+
+**AND IT UNIFIES THE ENTIRE DAY INTO ONE DEFECT:**
+```
+one library, 6 copies, 4 versions                     <- the fork
+CHANGE-3: the PULL shipped from infra/, the JOIN sat in data/   <- the fork (blocked the go-live 2 days)
+LEG-2: producer writes .parquet, converter reads .jsonl.gz      <- the fork (near-miss on the holdings book)
+positions + assets split brain                        <- the fork
+*** the basename collision that killed bronze AND shut the gold door ***   <- THE FORK
+```
+> # **EVERY DEFECT TODAY IS *ONE* DEFECT. AND THE GUARD THAT CAUGHT IT IS THE ONE WE HAVE BEEN CALLING AN ACCIDENT.**
+
+## 4. ✅ **THEREFORE THE REPAIR IS NOT "DE-COLLIDE" — IT IS THE FORK FIX, AND THE GUARD PRINTS IT**
+> ## **"Re-deploy the canonical copy over every prefix so all copies are byte-identical" IS THE LAYER CONSOLIDATION.** *CTO's arch-gate. Condition 6. `0.7.0`'s read-set census. **The work already in flight — and exactly the work that must not be rushed at 7pm.***
+
+## 5. 🔴 **AND THE FACT THAT DISSOLVES THE URGENCY: *THERE ARE TWO COLLISIONS. THE QUICK FIX DOES NOT EXIST.***
+```
+COLLISION 1  build_assets_dim.py       gold 06-12 (8,498 B)  |  silver 07-10T23:37Z (9,244 B)
+COLLISION 2  _orion_api_silver_lib.py  gold 07-02 (21,132 B) |  silver *** 07-13T12:48Z *** (28,694 B)  <- TODAY
+```
+> # **DE-COLLIDING `build_assets_dim.py` WOULD NOT RESTORE BRONZE. THE RUNNER WOULD STILL `FATAL` ON THE SECOND COLLISION. THE REPAIR EVERYONE IS BEING PULLED TOWARD BUYS *NOTHING* AND SPENDS THE GUARD.**
+**COLLISION 2 IS DS's — he was shipping the silver guards I asked him for, and *nobody had ever told him `code/silver/`
+was load-bearing*. No blame; a fabric gap. He is frozen on the bucket and instructed NOT to tidy it: **the tidy-up IS
+the door.***
+
+## 6. 📏 **AND ONE CORRECTION *IN ANDREW'S FAVOUR* — WE MUST NOT INFLATE THE RISK EITHER**
+```
+inf-gold-full-on-bronze-complete  DISABLED  |  inf-gold-incremental-daily  DISABLED
+s3://opal-data-inf/control/ EMPTY -> INF_GOLD_DISPATCH_RELEASE ABSENT = HELD
+POSITIVE CONTROL: /aws/events/inf-gold-dispatch-release-audit EXISTS -> the mechanism is REAL.
+```
+> **De-colliding does NOT *fire* gold. It removes ONE of THREE holds.** *Say it plainly — **if we overstate the risk, the next person who checks will discount everything else we say.***
+> ## **THE RULING HOLDS FOR A SHARPER REASON: the disabled rules and the release marker are things a PERSON, a DEPLOY, or a `terraform apply` can flip. THE COLLISION IS A PHYSICAL IMPOSSIBILITY — the only control in the stack that requires NOBODY'S COOPERATION. We would trade the one control that cannot be talked out of, for two that can.**
+
+## 7. >> **WHAT ANDREW MUST BE TOLD *BEFORE* HE ANSWERS — HIS QUESTION HAS A FALSE PREMISE** <<
+> **"The bronze feed has been dead three days. We found why: a filename collision uploaded on the 10th at 23:37Z. That
+> same collision is the accidental safety catch that has been stopping the gold chain from re-deriving your NNA and
+> possibly deleting $439,326.22 of it. THEY ARE THE SAME OBJECT.**
+> **Removing it to fix your feed is the same act as opening the door we deliberately left shut — AND IT WOULD NOT EVEN
+> WORK, because a second collision was added today. Nothing is bleeding: your served numbers are unchanged and correct
+> as-of 07-10. The fix you want is real, deployed, and waiting. It needs a clean repair in daylight, not a lever pulled
+> at 7pm."**
+
+## 8. 🎖️ **THE SENTENCE THAT SHOULD OUTLIVE THIS INCIDENT (`0.7.0`)**
+> # ***"THE SAFEST ESTATE TONIGHT IS THE BROKEN ONE. EVERY INSTINCT ANY OF US HAS SAYS FIX IT. THAT INSTINCT IS THE ATTACK."***
+**The hold doc predicted — to the word — that whoever opened that FATAL would be *"doing good work."* He was. He didn't.**
+**And the pressure stack it predicted arrived in full: a 3-day outage · a dead txn feed · a perf ceiling · a sovereign
+asking for numbers · an exec (me) pre-clearing the repair · and THE GUARD'S OWN LOG PRINTING THE REMEDY IN PLAIN
+ENGLISH.** > ## **EVERY VECTOR POINTED AT DOOR 5. EVERY ONE OF THEM WAS LEGITIMATE, CORRECT, WELL-INTENTIONED WORK. THAT IS *WHY* IT IS THE LIVE DOOR.**
+
+**STATE: nothing de-collided, nothing tidied, nothing restarted, nothing served. `code/` bucket FROZEN. Chain held
+three ways. Door 5 intact.**
