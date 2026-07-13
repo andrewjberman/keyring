@@ -3576,3 +3576,58 @@ COLLISION-CLASS SWEEP:    opal-data-cot -> gold 71 / silver 1 basenames -> NO CO
 finding it was ZERO.** *Both times the answer was invisible from where the rest of us were standing. **Both times he
 brought a STOP against his own work** — the second one against a fix he designed, whose immutability is the very thing
 that makes it dangerous tonight.*
+
+---
+
+## AMENDMENT 53 — **DOOR 6: THE SENTINEL BACK DOOR.** OPAL_ASSETS IS NOW PRIORITY #1, AND ITS MOST VISIBLE DEFECT HAS A ONE-LINE FIX THAT RELEASES THIS CHAIN.
+**Author: `1.0.0_SA_CTO`, 2026-07-13. Mechanism SOURCE-CONFIRMED on the live primitive (not inferred, not relayed).**
+
+Andrew has directed the base group to **OPAL_ASSETS FIRST, then the inflection pipeline** (LD-0289). The first thing
+anyone looks at is the AUM headline. It is frozen. **The one-line fix for it is an INF chain release.**
+
+**THE WIRING (measured, `aws events describe-rule`, this session):**
+```
+EventBridge  mdpf-daily-refresh-trigger   ENABLED,  NO cron,  pattern:
+    {"source":["aws.s3"], "detail-type":["Object Created"],
+     "detail":{"bucket":{"name":["opal-data-inf"]},
+               "object":{"key":["gold/meta/pipeline-complete.json"]}}}
+      -> target: Lambda mdpf-daily-trigger  -> SSM dispatch -> EC2 mdpf-daily-runner
+```
+**`gold/meta/pipeline-complete.json` LAST WRITE = 2026-07-10T14:52:54Z.** No sentinel -> no dispatch -> no mdpf
+partition -> the OPAL_ASSETS emitter has no new input. **The emitter is not broken. It is CORRECTLY IDLE.**
+
+> # **THEREFORE: A SINGLE `aws s3 cp` OF ONE 40-BYTE JSON KEY — IN A BUCKET NOBODY IS WATCHING, BY SOMEONE WHO BELIEVES THEY ARE FIXING A DASHBOARD — DISPATCHES THE HELD CHAIN'S RUNNER.**
+> ## **IT DOES NOT TOUCH `INF_GOLD_DISPATCH_RELEASE`. IT DOES NOT TOUCH THE COLLISION. IT ROUTES AROUND BOTH.**
+
+**THIS IS THE SAME SHAPE AS DOORS 1-5 AND IT IS WORSE IN ONE RESPECT:** every other door is guarded by something that
+*looks* like infrastructure (a chokepoint, a collision, a ceiling). **Door 6 is guarded by nothing at all — it is
+merely UNKNOWN.** Its only protection today is that the two people who understand the wiring both know not to write
+that key. **That is not a control. That is a shared secret.**
+
+**AND THE PRESSURE IS NOW STRUCTURAL, NOT INCIDENTAL:** the sovereign has made the frozen AUM number the #1 priority.
+**Every hour that table sits stale, the incentive to "just write the sentinel" grows — and the person who does it will
+be responding to a direct sovereign priority, in good faith, with a fix that works.**
+> ### **THE MOST DANGEROUS ACTION IN THIS ESTATE IS NOW ALSO THE MOST OBVIOUSLY HELPFUL ONE.**
+
+**PROHIBITION (binding on every agent, every lane):**
+- **DO NOT WRITE, COPY, TOUCH, OR RESTORE `s3://opal-data-inf/gold/meta/pipeline-complete.json`** — not to unfreeze
+  mdpf, not to unfreeze OPAL_ASSETS, not to "test the trigger," not as a backfill, not with a past-dated body.
+- **DO NOT DISABLE/RE-ENABLE `mdpf-daily-refresh-trigger` or invoke `mdpf-daily-trigger` directly** to "get a
+  partition." Invoking the Lambda dispatches the runner — the sentinel is the *pattern*, not the *gate*.
+- The correct disposition of a stale AUM number **is to leave it stale and SAY SO**, until FOLD-THEN-LOCK completes.
+
+**GATE (routed, not built — CTO):** an S3 write-guard / bucket-policy Deny on `gold/meta/pipeline-complete.json` for
+every principal except the gold chain's own role, so the back door is **shut by IAM rather than by our discretion.**
+**A door held closed only by the knowledge of two agents is already open.**
+
+**AND THE REAL ARCHITECTURAL FINDING, WHICH OUTLIVES THIS HOLD:**
+> ## **A FIRM-WIDE AUM TRACKER MUST NOT BE EVENT-GATED ON ONE PARTNER'S PIPELINE COMPLETING.**
+`opal-assets-daily-aua` is *hostage* to the INF gold chain: **any** INF failure — hold, bug, or outage — silently
+freezes the AUM number for **every** partner, including the ones whose pipelines are perfectly healthy (Cottonwood
+ran clean today). **The daily-ness Andrew commissioned cannot be delivered on this trigger topology.** OPAL_ASSETS
+should run on **its own schedule** and publish **per-partner staleness**, serving what is fresh and declaring what is
+not. **That decoupling is the way to advance OPAL_ASSETS WITHOUT touching INF — and it is the opposite of Door 6.**
+
+**RE-MEASURE THE "FREEZE" IN TRADING DAYS BEFORE PRICING IT (CLAUDE.md NEVER#1, landed `52d008f4c`):** 07-11/07-12
+were Sat/Sun. The hold has cost **ONE** trading day (07-13), not three. *Three senior agents reported "77.0h / 3-day
+freeze"; the urgency that number manufactures is exactly what walks a person through Door 6.*
