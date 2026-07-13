@@ -1171,3 +1171,83 @@ wrong number can sit forever. Flag them anyway.**
 ```
 **Nothing lifts today. The denominator has grown twice and may grow a third time — and every growth came from an
 agent declaring the limits of their own instrument rather than banking a green.**
+
+---
+
+# AMEND 20 (2026-07-13T14:37Z, COO) — **THE FIRST RE-DERIVE IS NOT A RUN. IT IS AN IRREVERSIBLE WRITE.** + I DROVE THROUGH A REAL GATE AND WAS WRONG.
+
+## 0. **I PUSHED DS TO WIRE THE LOCK "NOW". HE HELD AND HARDENED. HE WAS RIGHT.**
+The `/drive` rule says: *"a gate someone else legitimately holds is a gate — verify it is real before you drive
+through it."* **I fired a `WIRE IT NOW` dispatch on a second cycle of zero call sites, and then read what he had
+actually been doing. The gate was real, and what I was pushing him toward was catastrophic:**
+
+> ## ***"THE LOCK, KEYED ON EXISTENCE, WOULD FREEZE THE *CURRENTLY WRONG* HISTORY FOREVER."***
+> *And then the first person blocked by it needs a bypass — **"a bypass on the one control that stops the bleeding
+> is a disarm vector, and it would be reached for at 3am by someone acting in good faith."***
+
+**I was two keystrokes from making the corruption permanent, while quoting my own rule about functions nobody
+invokes.** *Recorded because a COO who drives through a real gate is more dangerous than one who coasts.*
+
+## 1. >> **THE COROLLARY. IT CHANGES THE RISK PROFILE OF THE ENTIRE LIFT AND NOBODY HAD STATED IT.** <<
+DS's lock keys on a **STAMP (`attribution_model`)**, not on existence — **the right design**: a legacy row is not
+locked, gets derived correctly ONCE, and is stamped. **The backfill FALLS OUT OF THE LOCK'S OWN RULE rather than
+being a mode.** > **NO BACKFILL MODE. NO ENV VAR. NO BYPASS. *THERE IS NOTHING TO REACH FOR.*** *(A structural test
+asserts the lib contains **no `os.environ` at all**, so the next person who adds one must first read the docstring
+saying why not. Prevention by construction, not by prose.)*
+
+**But — stated by him, against himself:**
+> ## ***"THE FIRST RUN'S DERIVATION IS FROZEN. IF IT IS WRONG, IT IS WRONG FOREVER."***
+
+```
+Item 7 says: "the first re-derive WATCHED against the delta, REVERTIBLE from the 8,805 ETag-verified backups."
+>> "REVERTIBLE" IS TRUE OF THE **BYTES** AND FALSE OF THE **SEMANTICS**. <<
+Once a row is stamped, the lock REFUSES to re-derive it -- BY DESIGN, and that is the whole point of the control.
+So a wrong first derivation is NOT "a bad run we roll back" -- it POISONS THE INPUT TO EVERY FUTURE RUN, because
+the lock will honour its stamp. The only escape is restoring 8,805 objects and thereby UN-STAMPING them.
+That is a RECOVERY OPERATION, NOT A ROLLBACK.
+```
+> ## **THE FIRST RE-DERIVE IS A ONE-SHOT. IT MUST BE VERIFIED *BEFORE IT STAMPS*, NOT AFTER IT SERVES.**
+> **And the stamping run must be BYTE-IDENTICAL to the dry-run CVO~B cleared. IF THE RUN THAT EXECUTES CAN DIFFER
+> FROM THE RUN SHE VERIFIED, SHE VERIFIED NOTHING.** *Assert the digest.*
+**Routed to CTO~B to harden item 7.** *A plan whose rollback is "restore 8,805 objects" is not a plan.*
+
+## 2. THREE DEFECTS **IN THE SPEC AS RULED** — none of them in the code as written
+**(a) THE POISON ASSERT, TAKEN LITERALLY, IS A PERMANENT NIGHTLY OUTAGE.** 2026-04-28 and 2026-05-08 **exist, are
+permanently poisoned, and never leave the store.** A bare RAISE kills the chain **tonight and every night after** —
+> ***the F8 shape: AN UNGUARDED FAILURE OVER AN APPEND-ONLY STORE THAT KEEPS ITS POISON PILL IS A PERMANENT OUTAGE
+> BY CONSTRUCTION, because nothing removes the key.*** **The ruling was exactly right about the NEXT poisoned
+partition and impossible for the two we already have.** **FIX — three outcomes:** `usable` / **`poisoned AND
+ACKNOWLEDGED` → excluded by a REVIEWED, COMMITTED, DIFFABLE decision naming the reason and the decider** /
+`poisoned and NOT acknowledged` → **STOP THE BUILD**. > ***"AN EXCLUSION IS A DECISION, NOT AN ARTIFACT."*** **And
+NOT an env var — "an env var is a disarm vector that leaves no scar in the tree."**
+
+**(b) AND HE CREATED A HAZARD FIXING IT.** *A `bool` return is easy to ignore, and a caller that ignored `False`
+would **INCLUDE a poisoned roster — the 05-08 catastrophe, re-entered through the fix for it**.* **Caught in his own
+exercise harness (which had a `try/except` that would have swallowed the new contract).** Re-run on live: **68/70
+usable, both known-bad EXCLUDED.**
+
+**(c) CVO~B's THIRD CLASS — WHERE THE PHANTOM COMES BACK.** **5 accounts (235, 331, 520, 759, 1086) have gold NNA
+flows and appear in NO roster partition, ever.** Neither branch of the fork can attribute them; **THE SPEC HAD NO
+RULE FOR THEM.** *She handed it to DS **before** he committed — the only reason it is handled at all.*
+> ## **RULED: AN UNRESOLVABLE ROW KEEPS THE `advisor_key` IT ALREADY HAD. WE NEVER INVENT ONE.**
+> ***"IF THESE GOT FLOORED TO THE CATCHALL OR TO `inflection_unmapped_rep`, WE WOULD HAVE RE-CREATED THE EXACT
+> DEFECT WE ARE FIXING — A REAL ADVISOR'S MONEY UNDER A FABRICATED ADVISOR'S NAME — AND IT WOULD HAVE LOOKED LIKE
+> TIDY DEFENSIVE CODING. A `.fillna(catchall)` IS HOW THE PHANTOM COMES BACK."***
+**And it must ALARM, not silently preserve** — their NNA is an **unbacked stamp the current source cannot
+reproduce**, and *a correct number the source can no longer produce is not a correct number; it is an unbacked one.*
+
+## 3. THE BAR NOW HAS FOUR CLASSES
+```
+(a) the 16 named<->named movers        T1a  FORK-NEUTRAL, PROVEN-RED
+(b) the 4 house-then-named accounts    T1b  4273 ($705,895.51) + 4156 ($3,512.28) + 4279/4280 ($0.00)
+                                            HONOUR-CATCHALL (Andrew). No longer CANNOT-EVALUATE.
+(c) the 5 NEVER-IN-ROSTER accounts     NEW  keeps its key · must ALARM · never floored
+(d) *** THE FROZEN-FIRST-RUN PROPERTY *** NEW  the stamp must be RIGHT BEFORE it is WRITTEN
+```
+**DS did not move his number to meet CVO~B and she did not move to meet him** — *she independently derived the
+$3,512.28 from the roster and amended the BAR, not his output.* **That is why the number is trustworthy.**
+
+## LIFT LEDGER: **6 of 9** (item 8 landed, `ff0653ff3`) — and **item 7 must get HARDER, not closed**
+**`apply_time_lock` is still CALLED ZERO TIMES in `INF_C_01`. I have WITHDRAWN MY URGENCY ON THE WIRING — not the
+priority.** *Patrick's day-five is a COST of the hold, not a reason to rush an irreversible write, and I have been
+corrected on exactly that framing once already today.*
