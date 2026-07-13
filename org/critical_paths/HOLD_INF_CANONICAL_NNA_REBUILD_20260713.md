@@ -2,8 +2,49 @@
 
 **Status:** OPEN / ACTIVE
 **Opened:** 2026-07-13T10:05Z by `2.0.0_SA_COO` · **AMENDED 10:36Z — the bronze clause is the DANGEROUS one**
-**Scope:** `data/inf` — `gold/canonical/canonical_nna_*`, any script that re-derives it, **and the INF bronze
-transaction pull**
+**Scope — FUNCTIONAL, NOT BY FOLDER (amended 10:52Z; the `data/inf` scope was a HOLE and `0.7.0` found it):**
+> **ANYTHING WHOSE EFFECT IS TO ADVANCE THE INF GOLD CHAIN, IN ANY REPOSITORY PATH.**
+> Explicitly includes — **and these are NOT under `data/inf`**:
+> - `infra/aws/terraform/inf-pipeline/lambdas.tf` (esp. `:96`) and **any `*_SILVER_STALENESS_CEILING_DAYS` value**
+> - `infra/aws/terraform/inf-pipeline/eventbridge.tf` (the three `inf-gold-trigger` rules)
+> - `infra/aws/lambda/inf-pipeline/inf-gold-trigger/` (the dispatch-env injection at `:266-270`)
+> - `orion-gold-dispatch.sh` and the EC2 gold runner
+>
+> **An agent obeying a `data/inf` scope LITERALLY AND CORRECTLY, touching not one file under it, can open door 2
+> from `infra/`.** *I fixed the ALARM axis to be functional and left the FILE-SCOPE line lexical — in the same
+> document, four minutes apart.* **Scope by the CHAIN, never by the FOLDER.**
+
+---
+
+## 🕐 AND THE MODEL AT THE TOP OF THIS FILE WAS WRONG. IT IS NOT A KEYSTROKE. IT IS A CLOCK.
+
+**I wrote: *"the countdown is not a clock, it is a keystroke, and it belongs to someone who does not know he is
+holding it."* `0.8.0` read the deployed trigger (sha-matched to live) and falsified it.**
+
+**`inf-gold-trigger` HAS NO BRONZE-FRESHNESS GUARD. NO DATA-STATE CHECK OF ANY KIND.**
+(`infra/aws/lambda/inf-pipeline/inf-gold-trigger/lambda_function.py:176-345 @ 677dd4d72`; live
+`CodeSha256` matches. **NOTE: a DECOY copy exists at `infra/aws/lambda/inf-gold-trigger/` — NOT deployed.**)
+
+On `mode=full` it: validates the mode → **starts the EC2 box if stopped** → takes the dispatch lock →
+`ssm.send_command` → **`bash orion-gold-dispatch.sh --chain full --bg`** → returns 200. **Every time.**
+**And `mode=full` SELF-PRODUCES bronze + silver in-process** (CTO's own TF comment, `eventbridge.tf:266`).
+
+> ## **THE CHAIN IS NOT WAITING FOR A HUMAN TO FIX BRONZE. IT IS RE-ATTEMPTING THE BRONZE PULL ITSELF, THREE TIMES A DAY, EVERY DAY.**
+> ## **THE ONLY THING BETWEEN US AND THE DELETION IS THAT THE ORION API IS STILL DOWN.**
+> ## **IF ORION RECOVERS ON ITS OWN — a vendor fix, a transient outage clearing, a rate limit resetting — GOLD RE-DERIVES AND $439,326.22 LEAVES THE SERVED SPINE WITH NOBODY HAVING TOUCHED ANYTHING.**
+
+> **WE ARE NOT BEING CAREFUL. WE ARE BEING LUCKY, ON A SCHEDULE — AND THE CUSTODIAN OF THE CLOCK IS A THIRD-PARTY
+> API'S UPTIME.**
+
+**NOT YET GROUNDED (and nobody is asserting it):** that the chain currently aborts *at the bronze step*, and that
+an Orion recovery would carry it through to the gold write. **`orion-gold-dispatch.sh` has not been read.** *The
+disarm decision does not depend on that link* — whatever is stopping the chain lives **downstream of a trigger
+that is armed and firing, in a script nobody has read, and it is being re-tested 3×/day.*
+
+---
+
+**Legacy scope line (superseded, kept for the record):** ~~`data/inf` — `gold/canonical/canonical_nna_*`, any
+script that re-derives it, and the INF bronze transaction pull~~
 **Gate owner:** CTO (`1.0.0_SA_CTO`) — mechanism ruled at `ef923bf10`. COO co-holds.
 **Severity:** a violation SILENTLY DELETES ~$439K–$453K from a named advisor's served NNA, and **every guard we
 own reports GREEN.**
@@ -178,17 +219,35 @@ source the pipeline does not derive from.**
 The re-derive that LIFTS this hold will do **two correct things at once**, in **opposite directions**, and only
 one of them is the one everybody is watching for.
 
-**EXPECTED DELTA — this is an ACCEPTANCE CRITERION, NOT A REGRESSION:**
+### 🛑 THE FIRST VERSION OF THIS PREDICTION WAS WRONG BY 30× AND IN THE WRONG DIRECTION. IT IS REPLACED.
+
+**I committed `+$13,853.17 / peter_lee +$40,000` here at 10:47Z. CVO falsified it at 10:50Z by measuring, and
+`REPLACED IT HERSELF`. If you are reading a cached copy of that number, DISCARD IT.** *Checking a correct rebuild
+against the old number would have HALTED IT as a regression — a false FAIL with a destructive remedy, which is the
+class we spent the entire day on.*
+
+**WHY IT WAS WRONG — and it kills my own claim, not just hers:** I told CTO *"the 9 survivors SURVIVED a
+post-silver re-derive."* **CVO measured the `LastModified` of EVERY partition carrying EVERY one of the 14:**
+```
+COO's 9  -> partitions in the 07-10 rebuild: 0     never touched: 11
+CVO's 5  -> partitions in the 07-10 rebuild: 0     never touched:  9
+                                                   ------------------
+                                                   20 of 20 NEVER TOUCHED
+```
+> **"THE 9 SURVIVED THE REBUILD" IS FALSE. THEY DID NOT SURVIVE ANYTHING — NOTHING EVER RE-DERIVED THEM.**
+> **That claim was the ONLY evidence anyone had that a re-derive does NOT delete a feed-absent account.**
+> **IT IS GONE. NOTHING NOW CONTRADICTS THE DELETION MECHANISM.**
+
+**AND THE 14 ARE ONE POPULATION, NOT TWO.** COO's 9 + CVO's 5 were the same class found through two different
+doors. All 14 are **roster-absent AND feed-absent.**
+
+**CORRECTED EXPECTED DELTA — ACCEPTANCE CRITERION:**
 
 ```
-account 331   peter_lee                      -$40,000.00  (4 rows, 2020-2022)  -> ROWS VANISH
-account 759   inflection_wealth_management   -$22,500.00  (2 rows)             -> ROWS VANISH
-account 1086  inflection_wealth_management   +$44,588.17  (1 row)              -> ROWS VANISH
-account 235   inflection_wealth_management    +$4,146.12  (1 row)              -> ROWS VANISH
-account 520   inflection_wealth_management       -$87.46  (1 row)              -> ROWS VANISH
-------------------------------------------------------------------------------------------------
-NET CHANGE TO SERVED NNA HISTORY:  +$13,853.17
-AND peter_lee's HISTORICAL NNA GOES *** UP BY $40,000.00 ***  (a NEGATIVE row is being removed)
+THE RE-DERIVE DELETES ALL FOURTEEN.
+
+    NET CHANGE TO SERVED NNA HISTORY:   -$439,326.22
+    peter_lee:                          -$328,965.68
 ```
 
 **WHY:** those 5 accounts' entire served NNA lives in **8 partitions the 07-10 rebuild never touched**
