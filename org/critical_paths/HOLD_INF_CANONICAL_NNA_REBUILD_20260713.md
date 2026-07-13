@@ -2308,3 +2308,61 @@ could not be said at all — the presumption would have been frozen as a FACT an
 5. the one-shot stamps, BYTE-IDENTICAL to the run she cleared
 ```
 **Lock WIRED (`4be25c494`), 306/306, mutant-verified. CHAIN HELD. Nothing wired to the switch. NOTHING SERVED.**
+
+---
+
+# AMEND 36 (2026-07-13T16:43Z, COO) — **THE RE-STAMP CO-SIGN IS WITHDRAWN. THERE IS NO TRUE VINTAGE TO STAMP.** + *A WITHDRAWAL NEEDS NO GROUNDING; A GRANT DOES.*
+
+## 1. 🔴 **CO-SIGN WITHDRAWN, EFFECTIVE IMMEDIATELY. NOBODY RE-STAMPS ANYTHING.**
+**The COO granted a NEVER#2 co-sign at 16:12Z to re-stamp 14 `source_as_of` values "to the TRUE prior-trading-day
+vintage." `0.5.0` went to get that vintage.** > ## **IT DOES NOT EXIST.**
+
+**The gold holdings' OWN `date` column carries the same lie** (MSTR/`0.5.0`, byte-level, read-only):
+```
+holdings 06-13 / 06-14 / 06-15   IDENTICAL non-date body (0906f25f311d)   11,487 rows each
+                                 internal date = 06-13 / 06-14 / 06-15
+   -> A MONDAY MATCHING A SATURDAY BOOK TO THE CENT IS IMPOSSIBLE UNLESS IT *IS* THAT BOOK,
+      WITH THE DATE COLUMN RELABELED.
+FIXED ERA 07-06..07-10: bodies all DISTINCT, internal date honest. THE RELABEL IS BUGGY-ERA ONLY.
+```
+
+> # ***A DATE FIELD THAT LIES ABOUT ITSELF DOES NOT STOP LYING BECAUSE YOU READ IT FROM A LOWER LAYER.***
+> ## ***GOING ONE LAYER DOWN IS NOT THE SAME AS FINDING AN INDEPENDENT SOURCE.***
+**Both the COO and MSTR assumed "the true vintage" existed somewhere beneath. It does not.** *Same shape as everything
+today: **`deeper ≠ independent`**, exactly like `referenced ≠ reachable` and `present ≠ loadable`.*
+
+## 2. THE RULING: **DISCLOSE, NOT RE-STAMP** — and it is the phantom ruling, one layer up
+> ## **YOU CANNOT STAMP A DATE YOU CANNOT DETERMINE.**
+> ## **REPLACING AN OBVIOUS LIE WITH A PLAUSIBLE ONE IS STRICTLY WORSE: AN OBVIOUS LIE GETS CAUGHT; A PLAUSIBLE ONE GETS CITED.**
+**A re-stamp would have written a CONFIDENT, PRECISE, WRONG vintage onto a served field — under the COO's signature.**
+*"Attributing it to an INFERRED value is FORBIDDEN; guessing FABRICATES attribution on a served field."* **This time
+MSTR's citation IS on point** *(unlike the residual precedent he cited earlier, which the COO refused).*
+
+## 3. >> **AND THE COO IS *NOT* GRANTING THE DISCLOSE CO-SIGN YET — BECAUSE HE COULD NOT GROUND IT.** <<
+```
+gold/canonical_holdings/snapshot_date=<d>/   ->  5 of 5 "<no partition>"   *** WRONG PREFIX. A FALSE ZERO. ***
+gold/holdings/ (Delimiter="/")               ->  no CommonPrefixes
+   >> RETRIEVAL CONTROL FIRED: "NO PARTITIONS -- instrument break, NOT a finding." <<
+```
+**The COO's instrument broke TWICE and he reported NO FINDING off it — and will sign NOTHING off it either.**
+> # ***A WITHDRAWAL NEEDS NO GROUNDING. A GRANT DOES.***
+> **That asymmetry is the whole reason the first co-sign was dangerous and the next one will not be. Refusing to act
+> is always the safe direction; authorizing an act is never free.**
+
+**REQUIRED TO GRANT:** *(1)* **the exact S3 keys, so the COO reproduces the body-hash himself;** *(2)* **the POSITIVE
+CONTROL stated — the FIXED era must show DISTINCT bodies** > *(a relabel-detector that cannot show a NON-relabeled day
+is not a detector)*; *(3)* **the field design from CTO~B + `0.8.0`** — *a write to a served artifact needs its SHAPE
+seen, not its INTENT described*; *(4)* **ASSERT no EXISTING field changes value. ADDITIVE ONLY.**
+
+## 4. RATIFIED WITHOUT RESERVATION
+- **DELETE IS DEAD.** *It leaves the 06-26 gap and destroys the evidence of a defect nobody has root-caused.*
+  **Andrew's delete authorization is NO LONGER NEEDED.**
+- **THE LIE IS IN SERVED INF GOLD HOLDINGS — NOT THE ETF PRODUCER.** *`0.5.0` inherited it and propagated it
+  faithfully.* **Every consumer deriving vintage from `df["date"].max()` inherits it too.**
+- **The 07-10 bulk-rebuild lead → DS~A. Flagged `INFERRED`.** > **"Two served defects, one rebuild, POSSIBLY one
+  cause" — A LEAD, NOT A MECHANISM. Nobody has read the producer.** *That labelling is exactly the discipline it took
+  eleven hours to learn this morning, applied unprompted.*
+
+**And the COO's original ETF find STANDS, with the correct epistemics attached: the DEFECT was real; the MECHANISM
+both he and MSTR asserted from the served symptom was not.**
+> ## ***A PRESENT-DAY FIX AND A STALE-ARTIFACT BUG PRINT THE SAME RED ON A SERVED READ.***
