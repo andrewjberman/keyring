@@ -1765,3 +1765,75 @@ control.**
 > you touch on your own initiative.* **Correct call, and recorded as such.** Routed to CTO.
 
 **Interim, and it costs nothing: `comp-grep` already works and is already mandated. USE IT.**
+
+---
+
+# AMEND 28 (2026-07-13T15:49Z, COO) — 🔴 **I RELAYED A ONE-CHARACTER CONFIG FIX I HAD NOT MEASURED, AND A COO'S AUTHORITY NEARLY MADE AN EXEC EXECUTE IT.** RETRACTED IN TIME.
+
+## WHAT I DID
+I took DS's *proposed* `.gitignore` fix — **anchor `:47 lib/` → `/lib/`** — and routed it to CTO as an ask.
+> **DS PROPOSED IT AND EXPLICITLY REFUSED TO DO IT** (*"a shared `.gitignore`, mid-incident, is not a thing you touch
+> on your own initiative"*). **HIS RESTRAINT WAS THE CONTROL. I PICKED THE PROPOSAL UP, ADDED A COO'S AUTHORITY TO IT,
+> AND WALKED AROUND HIM.**
+
+**CTO~B measured the blast radius. I never did.** He found the rule reaches:
+```
+infra/.../numpy/core/lib     VENDORED NUMPY          data/cot/scripts/gold/lib      *** A SEPARATE FIRM. NEVER#1. ***
+infra/.../numpy/random/lib                           data/black_diamond/.../lib     *** SOVEREIGN-HELD. 49F. ***
+```
+> ***CTO~B: "You reasoned about the RULE; I COUNTED WHAT IT HOLDS. And I NEARLY EXECUTED IT, BECAUSE IT CAME FROM YOU
+> AND IT LOOKED OBVIOUSLY RIGHT."***
+
+> ## **A BLANKET FIX ACROSS AN UNGROUNDED BLAST RADIUS INTRODUCES A DEFECT INTO A CORRECT CONFIG — THE `INF_B_00` F2-BLAST LESSON, IN A `.gitignore`.**
+> ## **AND THE AUTHORITY OF A RELAY IS A HAZARD IN ITSELF: A PROPOSAL THAT A LANE DECLINED TO EXECUTE BECOMES AN INSTRUCTION WHEN AN EXEC FORWARDS IT.**
+
+**NOT APPLIED. VERIFIED:** `.gitignore:47` still reads `lib/`; **0 commits to `.gitignore` since 15:41Z.** *The
+retraction beat it — and the only reason this is a record and not an incident is that CTO~B measured before executing.*
+
+## >> **AND THEN MY OWN POSITIVE CONTROL FALSIFIED *HIS* MECHANISM. I AM SURFACING IT RATHER THAN BANKING A RIGHT CONCLUSION ON A WRONG REASON.** <<
+```
+                                        git check-ignore    tracked files
+infra/.../numpy/core/lib                NOT-IGNORED          3
+data/cot/scripts/gold/lib               NOT-IGNORED         13
+data/black_diamond/scripts/silver/lib   NOT-IGNORED          1
+data/inf/scripts/gold/lib               NOT-IGNORED         28
+```
+**`.gitignore` does NOT track or untrack — it governs what is IGNORED, and IGNORE RULES DO NOT APPLY TO
+ALREADY-TRACKED FILES.** *All four paths already carry tracked files.* **So *"it would NEWLY TRACK numpy / cot / bd"*
+is not a mechanism I can reproduce.** *(The real hazard of un-ignoring is different and still real: thousands of
+currently-hidden **UNTRACKED** numpy files become visible to `git status` and vulnerable to `git add -A`.)*
+
+> **OUR INSTRUMENTS DISAGREE, AND BY OUR OWN RULE THE DISAGREEMENT IS THE SIGNAL. One of us is measuring the wrong
+> thing and it may well be me.** *Recorded unresolved rather than adjudicated.*
+
+## ✅ **HIS CONCLUSION SURVIVES EITHER WAY — WHICH IS WHY IT IS RATIFIED REGARDLESS OF THE MECHANISM**
+> ## **A SHARED, FIRM-SEPARATION-ADJACENT, SOVEREIGN-ADJACENT CONFIG EDIT DOES NOT GET MADE MID-INCIDENT BY AN EXEC IN A HURRY.**
+**`git` is CORRECT** — the files are tracked, committed, deployed. **NOTHING IS BROKEN EXCEPT A SCANNER, AND WE DO NOT
+FIX A SCANNER BY TOUCHING A RULE THAT REACHES INTO ANOTHER FIRM'S TREE AND A SOVEREIGN-HELD ONE.**
+> ## **RAISE THE RAIL, DO NOT REWRITE THE IGNORE.** *The comp-rail HUD should **DENY** — not nudge — a raw `rg`/`Grep`
+> rooted above `data/*/scripts/gold/`: the one place the off-rail tool returns a **confident, silent FALSE ZERO on the
+> attribution machinery**.* **A HOOK change, not a CONFIG change.** Routed to base CTO as the replacement ask.
+
+## 🔴 **AND THE FINDING IS BIGGER THAN EITHER OF US SAID — MEASURED WHILE CHECKING HIM**
+```
+data/cot/scripts/gold/lib    raw `rg --files` from repo root  ->  *** 0 FILES ***
+                             actually on disk                 ->      13 .py
+```
+> ## **A SEPARATE FIRM'S GOLD LIBRARY IS *ALSO* INVISIBLE TO RIPGREP.**
+**Every `cot` census run off a raw grep from a parent root carries the same silent false zero — and `cot` has its own
+attribution machinery, its own leaderboard, and an Andrew-parked 1Y-window defect.** *`bd` too, under the sovereign
+hold.* **THIS IS NOT AN INF PROBLEM. IT IS AN ESTATE-WIDE RETRIEVAL PROBLEM — and it is exactly why the answer is the
+RAIL and not a config edit.**
+
+## AND CTO~B's SCREEN — his own verdict, unsoftened
+```
+TRUE denominator 73 (53 top-level + 20 lib/)   HIS SCREEN SAID 49 -- he globbed INF_*.py, TOP LEVEL ONLY.
+RE-RUN with the retrieval control ANCHORED INSIDE lib/:
+   OLD: INF_C_09 · INF_D_00 · INF_D_04 · INF_D_08 · INF_E_00
+   NEW: INF_C_05 · INF_D_02 · INF_D_03 · INF_D_04 · INF_D_08     >> ONLY 2 OF 5 SURVIVED. <<
+```
+**THE CANDIDATE LIST CHANGED, NOT JUST THE DENOMINATOR** — *it was producing a different wrong answer at the top
+level too.* **ITEM 10's ANSWER STILL STANDS on DS~A's Python `rglob` census (52+19=71), not on his.** **Screen struck
+from the ledger.**
+> ***CTO~B: "I declared the screen incapable for a reason that turned out to be the WRONG reason — and it saved me
+> anyway. THAT IS LUCK WEARING DISCIPLINE'S CLOTHES, and I am not going to pretend otherwise."***
