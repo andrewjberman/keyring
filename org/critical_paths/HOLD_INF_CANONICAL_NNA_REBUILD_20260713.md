@@ -2366,3 +2366,84 @@ seen, not its INTENT described*; *(4)* **ASSERT no EXISTING field changes value.
 **And the COO's original ETF find STANDS, with the correct epistemics attached: the DEFECT was real; the MECHANISM
 both he and MSTR asserted from the served symptom was not.**
 > ## ***A PRESENT-DAY FIX AND A STALE-ARTIFACT BUG PRINT THE SAME RED ON A SERVED READ.***
+
+---
+
+# AMEND 37 (2026-07-13T16:49Z, COO) — 🔴 **CHANGE-3 WAS WRITTEN ON 07-11 AND HAS NEVER RUN. HALF OF ONE ANDREW-DIRECT CHANGE SHIPPED.** THE SILVER FORK IS THE **ROOT CAUSE** OF THE AoR GO-LIVE BLOCKER.
+
+## 1. VERIFIED BY THE COO ON THE DEPLOYED BYTES — **positive-controlled**
+```
+DEPLOYED inf-accounts-v2-daily:
+  convert_orion_api_to_silver.py    974 lines
+      POSITIVE CONTROL  def build_accounts_v2  ->  1     <- reading the REAL converter
+      advisor_of_record_raw                    ->  *** 0 ***
+      udf7ADVISOROF                            ->  *** 0 ***    <<< CHANGE-3 IS NOT DEPLOYED
+  pull_inflection_new_portfolio.py
+      accounts_roster refs                     ->  12           <<< *** THE ROSTER PULL *IS* DEPLOYED ***
+
+REPO  data/inf/scripts/silver/convert_orion_api_to_silver.py   1,124 lines
+      advisor_of_record_raw x7   -- IT WAS WRITTEN 2026-07-11, AT :549-597
+```
+> ## **THE PULL IS LIVE AND RUNS NIGHTLY — 3,118 rows, `udf7ADVISOROF` POPULATED, landed today 09:22:44.**
+> ## **THE CONSUMER THAT READS IT HAS NEVER EXISTED ON THE RUNTIME. THE DATA HAS BEEN ARRIVING ON SCHEDULE, UNUSED, FOR DAYS.**
+
+**TWO HALVES OF *ONE* ANDREW-DIRECT CHANGE WENT TO TWO FILES — one deployed from `infra/`, one from `data/` — AND
+ONLY THE `infra/` HALF SHIPPED.**
+> ## **THAT IS NOT A MISTAKE ANYONE MADE. THAT IS THE FORK MAKING IT FOR US.**
+
+**AND THE COO NEARLY DISPATCHED DS TO WRITE IT A SECOND TIME.** *"The repo would have had TWO of them and the runtime
+still ZERO."* **He checked the deployed bytes instead of obeying the dispatch. Second time today he has refused a COO
+instruction and been right.**
+
+## 2. >> **AND IT IS SILENT *BY DESIGN* — WHICH IS THE WORST PART** <<
+The converter's own fall-through branch:
+> `# (roster + marker BOTH absent = pre-AE-pull-deploy state: no column, fully inert -- no noise.)`
+> ## **THE ONE STATE THAT WOULD HAVE ANNOUNCED THIS — THE CONSUMER RUNNING WITHOUT ITS INPUT — IS THE ONE STATE THAT CANNOT OCCUR, BECAUSE THE CONSUMER ISN'T THERE AT ALL.**
+**A silent no-op inside a file that never shipped.**
+
+## 3. **`0.7.0` CALLED THIS THIS MORNING. IT IS THE THIRD INSTANCE, AND THE FIRST TO BLOCK A GO-LIVE.**
+> ***"The fork produced TWO production defects today in OPPOSITE directions (a FIX that never reached the runtime, a
+> REMOVAL that never reached it), NEITHER VISIBLE FROM THE REPO."***
+> ## **THE LAYER CONSOLIDATION IS NO LONGER A RECOMMENDATION. IT IS THE ROOT CAUSE OF THE AoR GO-LIVE BLOCKER, AND EVERYTHING DOWNSTREAM OF CHANGE-3 WAITS ON IT.** *Backed to CTO as P0 on those grounds, not on hygiene.*
+**THE WORK IS PROPAGATE + DEPLOY, NOT WRITE. AE's lane.** **BAR: the column must appear in a LIVE `accounts_v2`
+partition produced by the DEPLOYED lambda.** > ***A `git push` is not the test. THE TEST IS A ROW.***
+
+## 4. 🔴 >> **TWO PHANTOM ADVISORS IN THE LIVE BOOK — AND ANDREW NAMED ONE OF THEM THREE HOURS BEFORE WE COULD SEE IT** <<
+**Andrew, 14:53Z, verbatim:** *"i just noticed that inf listed him as **soderblom_iwm** in their system"*
+```
+distinct udf7ADVISOROF (Inflection book):
+   Joe Brandenburg | Noel Soderblom | Patrick Scanlan | Peter Lee | *** Scanlan_IWM *** | *** Soderblom_IWM ***
+```
+> ## **HE TOLD US THE SHAPE OF THIS DEFECT BEFORE THE DATA WAS VISIBLE TO US — AND THERE ARE *TWO*, NOT ONE.**
+**A naive slug MANUFACTURES TWO PHANTOM ADVISORS ON THE SERVED SPINE.** *We have already paid $52,604.80 this
+morning for exactly one of them.*
+
+**AND DS's OWN CENSUS-HONESTY IS THE RULE:** *"I reported ONE off a FIRM-WIDE sample. Scoped to the book that
+actually feeds the fold, there is a SECOND. **My sample was wider than my claim and it still missed a value.**"*
+> ## **A WIDER SAMPLE IS NOT A SAFER ONE. THE SCOPE MUST MATCH THE CLAIM.**
+
+### **HIS REFUSAL TO RESOLVE `_IWM` IS RATIFIED, HARD**
+> ***"I am NOT resolving `_IWM` — that is Andrew's or Orion's to say, and it is precisely the 'obvious' inference that
+> cost us $52,604.80 this morning."***
+**`Scanlan_IWM` obviously "means" Patrick Scanlan. *THAT OBVIOUSNESS IS THE TRAP.*** *We do not know whether `_IWM`
+denotes the same human under a different book, a house-account variant, a data-entry duplicate, or something Orion
+means and we do not.* **RAISE. DISCLOSE. ESCALATE. NEVER INFER.** *Sovereign question to Andrew, with the census
+attached.*
+
+## 5. ✅ **APPROVED: DS TAKES THE GOLD-SIDE AoR → `advisor_key` ALLOWLIST** — the last unowned piece
+```
+* IT MUST RAISE ON AN UNMAPPED VALUE. NEVER SLUG. NEVER FLOOR. NEVER GUESS.
+* `assert_no_residual_advisor` MUST NEVER BE THE THING THAT CATCHES THIS -- it is the LAST line, not the FIRST.
+  *** A guard that is ASKED to catch a mapping gap is a mapping gap with a safety net, not a closed mapping. ***
+* CLOSE THE MAPPING; DO NOT GUESS THE ATTRIBUTION.   (the phantom ruling, verbatim)
+```
+
+## 6. THE JOIN IS ALREADY GROUNDED — **and the decoys are the lesson**
+```
+roster['id'] == accounts_v2.account_id   ->  873/873 = 100.0%, 0 duplicates
+  *** registrationId (91.9%) and clientId (62.0%) are PLAUSIBLE-LOOKING DECOYS that would have
+      SILENTLY UNDER-JOINED. DS tested EVERY id column rather than picking the obvious one. ***
+AoR COVERAGE: 837/873 (95.9%). The other 36 are NON-MOVERS -> keep servicing.
+```
+> **A 91.9% join looks like a working join. IT IS A SILENT 8% LOSS.** *He found the right key by censusing all of
+> them, not by picking the one that looked right.*
