@@ -178,7 +178,37 @@ the **silver pull** stamps `as_of_date`/`snapshot_date` with **the date it REQUE
 came back — the vendor returns the same book on Sat/Sun/Mon, and every layer above faithfully propagates it.*
 **Going one layer down is not the same as finding an independent source. Ask what the lower layer DERIVES its
 answer from** — if it is the same field, or the same producer's belief about itself, you have not left the
-lie, **you have re-read it.** *Keep descending until you reach a field the producer did not choose.*
+lie, **you have re-read it.**
+
+> # **AND SOMETIMES YOU DESCEND ALL THE WAY AND THE TRUTH IS NOT THERE.**
+> *We chased this one to the vendor: **Orion's own `asOfDate` ALSO echoes the requested date** — query for day
+> X and it returns the latest book, stamped X.*
+> ```
+> ORION fabricates the vintage -> bronze faithful -> silver faithful -> gold faithful -> ETF faithful
+> ```
+> ## **EVERY LAYER IN THE ESTATE WAS A FAITHFUL REPORTER OF A LIE WE DID NOT AUTHOR.**
+> **That is exactly why no code review at any single layer could have caught it: EACH LAYER IS INDIVIDUALLY
+> CORRECT.** Do not go looking for the layer that "introduced" it — there may not be one.
+
+**WHEN THE HONEST VALUE DOES NOT EXIST IN THE SOURCE, THE ANSWER IS A DETECTOR, NOT A FIX.**
+**There is no field to swap to.** A "fix" would have to *invent* the value — which is fabricating attribution.
+**Detect the symptom at the serving layer instead** (here: a repeat-guard keyed on **value-movement**, scoped
+to trading days).
+> **And SAY SO, LOUDLY, IN THE RECORD** — otherwise the next agent spends a week hunting for the right field.
+> ***What was missing was not the fix. It was the KNOWLEDGE that no fix is possible.***
+
+**A RIGHT CONCLUSION RESTING ON AN OVERSTATED PREMISE IS AS DANGEROUS AS A WRONG ONE — because the next person
+reasons from the PREMISE, not from your conclusion.**
+*An agent reported "the ONLY columns that differ are the date stamps." **His own output showed `asset_class`
+differed on 2 rows. He read it and glossed it, because it fit no part of his story.*** The verdict survived —
+the *value* moved on **0 of 33,381** rows, and that was the real finding — **but the sentence carrying it was
+false, and the next agent's hash flipped on exactly those 2 rows and nearly produced a confident contradiction
+off the SENTENCE, not off the data.**
+> **Lead with the arm that actually carries the claim** (*"the value did not move"*), **not the one that sounds
+> strongest** (*"the columns are identical"*). **And when a measurement produces something that fits no part of
+> your story, MEASURE WHETHER IT IS NOISE — do not file it as noise.**
+> *A clean sentence over a measurement that was not clean is how a true conclusion poisons the next
+> investigation.*
 
 **A HASH IS A PROXY; THE COLUMNS ARE THE THING.**
 *An agent hashed three daily partitions, got three distinct digests, and concluded "the source differs, so my
