@@ -96,6 +96,44 @@ beats the assertion that checks for lies.*
 
 ---
 
+## 2·0b. MUST-FIX-BEFORE-GO — **G1-D1: a comment with NEGATIVE VALUE**
+
+*(CTO~B gate-1, finding G1-D1. Non-blocking for F1; a live hazard; MUST NOT survive to GO. Routed to DS 062056Z.)*
+
+- [ ] **`orion-gold-dispatch.sh:396-405` — rewrite it.** At `c16b0c73b` it still makes **three false claims**, in the
+      very file the guard protects:
+      1. that `load_resolution()` asserts **`as_of`** — **it deliberately does NOT** (a proxy that under-fires;
+         the key repeats across different bytes);
+      2. that the carried-over-resolution hole is **still open** — **it is CLOSED** (A3 exercised RED at this hash);
+      3. that the remedy is a **RUN-IDENTITY stamp** — **`run_id` was CONSIDERED AND WITHDRAWN for OVER-FIRING.**
+
+> **This is the pattern's THIRD instance tonight — and it has INVERTED.** It no longer overstates a guarantee;
+> **it UNDERSTATES it and points the next reader straight at the destructive remedy we spent the night proving
+> wrong.** An agent landing there at 3am mid-incident reads *"the fail-open is live, the fix is a run-identity
+> stamp"* and goes and **builds `run_id`** — bricking every recovery run, at exactly the moment recovery runs
+> matter most. **A comment is a claim with no vintage and no test.** This one has *negative* value.
+> The rewrite must say **"`run_id` was withdrawn as over-firing — do not build it"** *explicitly*. The comment's
+> job now is to stop the next person re-deriving a rejected fix.
+
+### ⚠ PRESERVATION NOTES — things that are CORRECT and that a future reader may "helpfully" break
+
+- **R4 covers ONLY chain literals, and that is RIGHT.** An invocation path (`--single`/`--from`) **has no chain
+  literal**, so R4 *structurally cannot* cover it and **does not need to**. **The CHOKEPOINT covers the invocation
+  surface; R4 covers the dispatch surface. Together they close both.** *Do not let anyone "fix" R4 to chase a path
+  it was never meant to see.*
+- **The completeness claim survived an ADVERSARY.** CTO~B flagged `explicit_map` as a possible unenumerated
+  **fourth** input and then closed it at source (`aor_resolution.py:753` — `fold_map, explicit_map =
+  build_advisor_of_record_fold(av2)`; **both derive from `accounts_v2`**, no independent second source, no
+  independent vintage). **The enumeration holds.** That is the strongest confirmation available: *an adversary who
+  went looking for the hole and reported there wasn't one.*
+- **The test suite is NOT a placebo** — it carries GREEN arms reachable from a *different truth* than the RED ones
+  (**A5** legit-cache-reuse → RETURNED; **A6** servicing-only-under-OFF → RETURNED, peter_lee, correct DELTA-0).
+  **Without those two, the other six would be a brick that raises at everything.** It discriminates.
+- **R4 carries its own negative control** (`test_r82_r4_negative_control_the_invariant_can_actually_fail`) — the
+  invariant is proven **able to fail**. *An assertion never mutated has never been tested.*
+
+---
+
 ## 2a. ⛔ CO-SIGN SEQUENCING — **I DO NOT CO-SIGN AGAINST TONIGHT'S NUMBERS**
 
 *(CTO 061116Z. This is MY gate and this is the rule I hold myself to.)*
