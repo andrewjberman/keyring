@@ -898,6 +898,11 @@ _JSON = False
 # SHOWS IT. Grading the wrong layer is exactly the failure this tool is being fixed for.
 _TOPK = max(3, int(os.environ.get("COMP_WHICH_TOPK", "5") or 5))
 
+# The router's STRUCTURAL band boundary (comp_route.py:_VETTED_OFFSET). A score >= this means a VETTED
+# curated/surface-first rule fired; below it is pure fuzzy base-band. NOT a tuned threshold -- it is the
+# band the scorer itself is built on, which is why it is safe to read without a distribution.
+_VETTED_BAND = 1.0
+
 
 def _emit_json(kind, caps, call_of, concern_of, term, q, fallback=None):
     """Emit the machine-readable route (CD1). caps = ordered cap_ids; fallback = a comp-grep/glob call
@@ -1099,6 +1104,25 @@ def _default_router(q, qtok, hits, term, list_intent):
     # A tie is not a ranking. Say so, because breaking one silently is the whole defect.
     if len(ranked) > 1 and abs(ranked[0].score - ranked[1].score) < 1e-6:
         print("  *** TOP SCORES ARE TIED -- THE ORDER IS NOT A RANKING. Read the descriptions. ***")
+    # ---- THE UNCERTAINTY CHANNEL (COO~Z, 2026-07-13) -------------------------------------------
+    # Ranking WITHOUT a way to express doubt does not fix the defect -- it DRESSES THE DEFECT IN THE
+    # COSTUME OF RIGOR. Five scored, described candidates read as considered analysis even when they
+    # are noise, and a NUMBER is the strongest credibility signal we have. So the tool must be able to
+    # say "no curated rule matched this."
+    #
+    # This uses the router's OWN STRUCTURAL BAND, not a tuned number: comp_route.py's _VETTED_OFFSET
+    # is 1.0, so score >= 1.0 <=> a VETTED (curated/surface-first) rule fired, and score < 1.0 <=> a
+    # pure fuzzy base-band guess. Gibberish tops out around 0.63 -- ENTIRELY base-band.
+    #
+    # NOT DONE HERE, DELIBERATELY: rc=1 on no-fit, and any move of `relevance_floor` (0.15). Both are
+    # behaviour changes on a Rule-21-gated path, and the floor CANNOT be `top == 0` -- the posterior's
+    # scores are BOUNDED AWAY FROM ZERO (that is the PRD's C-3 defect reproducing INSIDE the fix for
+    # F-1). The threshold must be set FROM THE SCORE DISTRIBUTION, not eyeballed. TO-2 owns it.
+    if ranked[0].score < _VETTED_BAND:
+        print("  !! NO CURATED RULE MATCHED THIS QUESTION (every score is below the vetted band).")
+        print("     These are FUZZY GUESSES, not a routing decision. If none of the descriptions")
+        print("     above answer your question, THE CATALOG DOES NOT COVER IT -- do not pick one.")
+        print("")
     print("  None of these fit?  comp-grep '%s'   (or comp-glob)" % (term or q))
     _log_rail("ROUTE-POSTERIOR", "+".join(caps), term, q)
     return 0
