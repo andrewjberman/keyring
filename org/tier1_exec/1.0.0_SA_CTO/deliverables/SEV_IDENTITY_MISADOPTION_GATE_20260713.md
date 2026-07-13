@@ -1,11 +1,34 @@
 # SEV: session-identity mis-adoption from the shared agent-context -- incident + the gate (CTO)
 
 **Author:** 1.0.0_SA_CTO (base) | **Date:** 2026-07-13 | **Status:** incident CLOSED (all consequences
-unwound); GATE PROPOSED (sec. 4) -- COO to TO-record + route the build; MSTR + COO pre-endorsed
-(034936Z / 035059Z). **This was a KNOWN defect class with prose-only protection; tonight is the live
-instance proving prose did not prevent it** (prior art: `feedback_agent_context_serial_is_not_per_process`
-memory + org/XXX.md Step-E corrected note). Same law as the aws-shim earlier tonight: prose taxes every
-session; only a gate prevents.
+unwound); **GATE BUILT + LANDED.** G-A = `786fb085d` (built + exercised by `0.7.0_AE_CloudOps~A`,
+arch-gated + landed by CTO; 13/13 + a negative control). G-B = landed in `org/XXX.md` Step 1.
+MSTR + COO pre-endorsed (034936Z / 035059Z). **This was a KNOWN defect class with prose-only protection;
+tonight is the live instance proving prose did not prevent it** (prior art:
+`feedback_agent_context_serial_is_not_per_process` memory + org/XXX.md Step-E corrected note). Same law
+as the aws-shim earlier tonight: prose taxes every session; only a gate prevents.
+
+> **SEVERITY RULING (CTO, 2026-07-13, on the built diff) -- the one thing sec. 4 below got wrong.**
+> Sec. 4 specified BOTH directions as REFUSE. That is right for (1) and wrong for (2), and the build
+> surfaced it rather than swallowing it.
+> - **(1) CROSS** (my PID already live under another serial) -> **HARD REFUSE.** A logical
+>   impossibility; no false-positive branch exists; closes the SEV on its own.
+> - **(2) SERIAL_HELD** (claimed serial held by a different live-resolving PID) -> **ADVISORY**
+>   (warn + audit + proceed). It rests on `_pid_alive(pid)`, a predicate **coarser than the claim it
+>   licenses**: it answers *"does SOME process hold this PID"*, never *"is THAT AGENT alive"*. It cannot
+>   separate a real incumbent from a lingering orphan MCP process, or from a **recycled Windows PID**.
+>   A hard refuse there **blocks a legitimate RESPAWN** inside the 120s STALE window -- and the agents
+>   most exposed are the ones recovering from a death. **A guard that blocks the recovery path converts
+>   a transient failure into a permanent one**: the agent never registers, so it is invisible to every
+>   scan -- the exact "unresponsive agent" churn this very incident cost us 9h on. Advisory still moves
+>   us from ZERO signal on duplicate-serial collisions to a **measurable** one, with no new way to lose
+>   an agent.
+> - **Promotion path:** SERIAL_HELD collisions audit **unconditionally** to `org/mcp/agent-spawn-audit.log`
+>   (deduped 1/300s so the 30-60s heartbeat cannot bury the signal). Those rows are the evidence that
+>   would justify promoting (2) to HARD -- *measure the rate before sizing the reaper*; not before.
+> - **Class, worth naming:** *an instrument whose verdict cannot see the distinction it is being asked to
+>   license.* Same shape as `comp-iam` modelling `(action)` but never `(action, resource)`, and `ps` as a
+>   delivery oracle. Third instance this week.
 
 ## 1. The incident (2026-07-12T~18:30Z -> 07-13T03:44Z, ~9h)
 
@@ -70,13 +93,29 @@ would have named the conflict.
   before reporting a "parallel stream under my serial," check whether YOU are the phantom (broker +
   spawn-audit say who holds the serial).
 
-## 5. Acceptance (for the G-A build)
+## 5. Acceptance (for the G-A build) -- ALL MET, EXERCISED (`786fb085d`)
 
 1. A registration whose PID is live under another serial is REFUSED with the conflict named (exercised
    with two fake registrations). Falsifier: the 07-12 sequence replayed against the patched broker
-   completes registration silently.
-2. `identity_override` path works + audit-logs. 3. Normal re-registration (same serial, same/new PID
-   after restart) unaffected -- the common case must not regress. 4. Zero change to message routing.
+   completes registration silently. -- **MET.** AC1 replays the real 07-12/13 sequence -> REFUSE, and
+   the refusal names the true holder.
+2. `identity_override` path works + audit-logs. -- **MET** (AC3: `CROSS + override -> OVERRIDE`, audited).
+3. Normal re-registration (same serial, same/new PID after restart) unaffected -- the common case must
+   not regress. -- **MET.** AC2: same-PID re-register / restart-with-dead-incumbent / first-registration
+   / stale-incumbent all ALLOW. *This was the load-bearing criterion and it is why (2) is advisory: a hard
+   direction-2 would have regressed exactly this, for respawning agents.*
+4. Zero change to message routing. -- **MET** (guard is pre-write only; routing untouched).
+5. **[added at gate] The ruling must be ASSERTED, not implied.** -- **MET.** AC5 mutant bar + a run
+   negative control: reverting the ruling in-memory (hard-refuse on SERIAL_HELD) turns the suite RED
+   (2 checks fail, exit 1). *A passing assertion never mutated has never been tested.*
+
+**Test:** `org/mcp/test_identity_guard.py` (13/13). Pure over `(serial, liveness-dict, pid)` -- writes
+nothing, so it is safe to run against a live fabric.
+
+**Residual, stated plainly:** direction (2) does NOT block a duplicate-serial claim; it warns and records.
+That is deliberate (see the ruling above), and the audit rows are what would let us revisit it with
+evidence rather than intuition. The guard is INERT until MCP servers restart; first effect is next
+session start.
 
 *The instrument that caught this was Andrew's eyes on the shells. The gate exists so the broker catches
 it first.*
