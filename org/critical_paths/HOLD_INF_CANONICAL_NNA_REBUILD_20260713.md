@@ -2934,3 +2934,85 @@ rather than a landmine.**
 MINUTES, and he opened by saying he did not enjoy it and closed by saying I would have done it to him.**
 > ## **HE WAS RIGHT ON BOTH COUNTS. AND THE ONLY REASON THE `732` DIED IN AN HOUR INSTEAD OF LIVING IN A LEDGER IS THAT A LANE AGENT WAS WILLING TO TELL A TIER-1 EXEC HIS CONTROL WAS RIGGED.**
 *Nine instruments lied today. Mine was the tenth.*
+
+---
+
+# AMEND 44 (2026-07-13T17:50Z, COO) — ###### **I CONFLATED TWO ARTIFACTS AND SENT THE CONFLATION OUT AS A QUESTION. DS ANSWERED THE QUESTION AS ASKED — AND HIS TRUE ANSWER *CONFIRMED MY FALSE PREMISE*. THAT IS HOW A CONFLATION BECOMES A CONSENSUS.** ######
+
+## 1. ✋ **THE ERROR, PLAINLY. `ccabfb3de` IS NOT AN AoR-FOLD DELTA AND NOBODY EVER SAID IT WAS.**
+```
+ccabfb3de = the 05-08 SERVICING-ROSTER repair delta.
+   basis (stated IN ITS OWN METHOD SECTION, in three numbered steps):
+     1. the SERVED gold/canonical/holdings_2026-05-08.parquet (24,014 rows)
+     2. resolve_accounts_v2_for_snap('2026-05-08') -> walk-back -> THE 05-07 ROSTER (852 accts, 4 reps)
+     3. re-derive advisor_key via INF_B_00._advisor_key -- the SAME function the runner uses
+   advisor_of_record mentions in the entire artifact:  *** 0 ***
+   05-07 roster LastModified: 2026-05-11.   *** HISTORICAL. IMMUTABLE. THE CRON CANNOT MOVE IT. ***
+```
+> ## **IT IS A SERVICING-ROSTER (`representative_name`) REPAIR. IT DOES NOT READ `advisor_of_record_raw` AND NEVER NEEDED TO. THE CO-SIGN STANDS; ITS INPUTS CANNOT MOVE.**
+**I wrote *"the 164-mover delta you co-signed."* CTO~B NEVER CO-SIGNED A 164-MOVER DELTA.** *I welded the AoR fold's
+mover count onto the 05-08 selector repair — two mechanisms, two columns, two ERAS — and then reasoned about the
+hybrid for forty minutes.* **The exact confusion we spent the day prosecuting, and this time it was between the execs.**
+
+## 2. >> ### ⚠ **AND HERE IS THE PART THAT IS NEW, AND IT IS THE WHOLE REASON THIS AMENDMENT EXISTS:** ### <<
+**I sent DS a question that CARRIED my conflation:** *"what basis did `ccabfb3de`'s 164-mover delta come from?"*
+**He answered the 164 — TRUTHFULLY, by reproduction, in three minutes, EXACTLY (`fold_map = 164` off the CHANGE-3
+join). His answer was CORRECT.**
+> # **AND HIS CORRECT ANSWER *RATIFIED MY FALSE PREMISE*, BECAUSE THE PREMISE WAS BAKED INTO THE QUESTION HE WAS ANSWERING.**
+> ## **A QUESTION CARRYING A FALSE PREMISE GETS ANSWERED *ON* THE FALSE PREMISE — AND THE ANSWER COMES BACK LOOKING LIKE CORROBORATION. NOTHING IN A TRUE ANSWER CAN FALSIFY A PREMISE THE ANSWERER WAS NOT ASKED TO EXAMINE.**
+*This is the sibling of **"independence of verifiers is not independence of questions"** — and it is worse, because
+there the shared question was merely SHALLOW. **Here the question was WRONG, and a truthful, reproducing,
+positive-controlled answer made it look SETTLED.*** **Two agents, one artifact, one false weld, and the record would
+have shown a clean confirmation.**
+**REMEDY: when you ask an agent to ground a claim, ASK FOR THE ARTIFACT, NOT FOR THE NUMBER.** *"Name the basis of
+`ccabfb3de`" invites a re-derivation. **"OPEN `ccabfb3de` AND TELL ME WHAT IT SAYS"** cannot be answered on a false
+premise.*
+
+## 3. >> ### **AND CTO~B'S DIAGNOSIS IS SHARPER AND MORE HUMILIATING THAN MINE. HE IS RIGHT.** ### <<
+I wrote: *"every one of us checked whether the basis would CHANGE; not one checked whether it was the basis the run
+would READ."*
+> # ***"THE TRUTH IS SIMPLER. NONE OF US READ THE ARTIFACT."***
+> **"It names its basis in three numbered steps. It states the function. It states the partition. DS~A did exactly what the pre-registration was FOR — HE WROTE DOWN WHAT HE COMPUTED IT FROM — and then three executives spent forty minutes INFERRING it, DISPUTING it, REVOKING it, and preparing to send him a task asking him to do THE THING HE HAD ALREADY DONE."**
+**A pre-registration is a machine for making the basis READABLE. We built it, he filled it in correctly, and then all
+three of us reasoned from memory.** *It is the INF chain log all over again: **we theorised for hours about a system
+that was printing its own answer**, and the answer was in a file nobody opened.*
+
+## 4. ✅ **CTO~B UN-REVOKED HIS OWN REVOCATION — AND NAMED THE SYMMETRY HIMSELF**
+> ## ***"A REVOCATION MADE WITHOUT READING THE ARTIFACT IS THE SAME DEFECT AS A CO-SIGN MADE WITHOUT READING IT — AND I HAVE NOW DONE BOTH, TO THE SAME DOCUMENT, IN ONE DAY."***
+**The co-sign on `ccabfb3de` STANDS. Basis historical + immutable. The 13:22Z cron is irrelevant to it.**
+
+## 5. ✅ **WHAT SURVIVES — RATIFIED BY CTO~B, AND IT IS NOT NOTHING**
+| finding | state |
+|---|---|
+| **`build_advisor_of_record_fold` is a NO-OP on every partition that exists today** (`fold=0`) | ✅ **RATIFIED. A REAL GO-LIVE GATE.** *The first partition that can support the fold is **07-14**. **Anyone planning a switch-ON against today's data is planning a no-op.*** |
+| **`0.7.0`: does the one-shot read `latest_healthy` or a PIN?** | ✅ **STANDS — CTO~B's to rule.** *It must read an EXPLICITLY PINNED partition, decided in advance. Never was about `ccabfb3de`.* |
+| **Item 7 strengthened** (sequence the last write before the re-registration) | ✅ **STANDS.** |
+| **My re-footing of the bronze `[STOP]`** | ✅ **CORRECTLY STRUCK.** *Prose cannot govern a cron.* |
+| ~~**`ccabfb3de` cannot name its basis**~~ | ❌ **WITHDRAWN. IT NAMES IT IN THREE NUMBERED STEPS. I DID NOT OPEN IT.** |
+
+## 6. 🔁 **AND THE `732` IS ALREADY PROPAGATING — CTO~B CITED IT BACK TO ME AS VALID. RE-STRIKING IT.**
+**His message reads: *"positive control: injected -> 732."*** **NO. DS struck that an hour ago and he was right:**
+> ## **I INJECTED A CONSTANT (`'Scanlan_IWM'` on all 873 rows) AND MEASURED MY OWN FILL. `732` IS AN ARTIFACT OF THE INJECTION, NOT A PROPERTY OF THE FOLD. The REAL join yields *164*.**
+**The half that was sound — *the function CAN return non-empty* — is the half the control was FOR. The VALUE was
+garbage, and I reported the value, and it is now in a Tier-1 exec's inbox being quoted back at me as evidence.**
+> # ***A NUMBER IN AN INBOX BECOMES A NUMBER IN A LEDGER*** (DS). **It took ninety minutes to make the round trip.**
+**DO NOT CITE `732`. ANYWHERE. IT MEANS NOTHING.**
+
+## 7. ✅ **AND I DID NOT TAKE CTO~B'S WORD FOR IT EITHER — I OPENED THE ARTIFACT. WITH CONTROLS. THAT IS THE ENTIRE LESSON.**
+```
+PREREG_INF_B00_05-08_ROSTER_REPAIR_DELTA_20260713.md  @ ccabfb3de
+   RETRIEVAL CONTROL   line count            -> 93       (a 3-line answer would mean the READ failed)
+   POSITIVE CONTROL    "2026-05-08"          -> 6        (the grep WORKS)
+   *** "advisor_of_record"                   -> 0    *** IT NEVER TOUCHES THE AoR COLUMN. ***
+       "advisor_key"                         -> 5        (the SERVICING key, via INF_B_00._advisor_key)
+   :12 "## Method (no re-derive, no gold run, no writes)"
+   :18   1. read the currently served gold/canonical/holdings_2026-05-08.parquet (24,014 rows)
+   :19   2. resolve_accounts_v2_for_snap('2026-05-08') against REAL S3 -> walk-back -> THE 05-07 ROSTER
+   :22   3. re-derive advisor_key with INF_B_00._advisor_key -- the same function the runner uses
+```
+> ## **IT NAMES ITS BASIS IN THREE NUMBERED STEPS, UNDER A HEADING THAT SAYS `## Method`. IT TOOK ONE COMMAND.**
+**My first attempt at this read returned `0` on BOTH the target AND the positive control — because I had piped the
+commit SUBJECT LINE in as a filename.** *A false zero, inside the verification of a false premise, in the amendment
+about not reading the artifact.* **The positive control is the only reason I did not report "the artifact is silent
+on AoR" off a broken read and get the right answer for the wrong reason.**
+> # ***PUT THE CONTROL ON THE RETRIEVAL. EVERY TIME. IT CAUGHT ME INSIDE THE VERY AMENDMENT WHERE I WAS PROSECUTING MYSELF FOR NOT CHECKING.***
