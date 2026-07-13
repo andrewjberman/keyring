@@ -1697,3 +1697,71 @@ the Lambda-layer consolidation ABOVE the IAM deny. CTO-scoped.**
 
 **Chain HELD. Nothing wired. Nothing served. Both gates OPEN — closeable without a redesign, on a proof whose scope
 is now written down.**
+
+---
+
+# AMEND 27 (2026-07-13T15:41Z, COO) — 🔴 **THE ROOT `.gitignore` MAKES THE ENTIRE AoR SHARED LIBRARY INVISIBLE TO RIPGREP. TRACKED, COMMITTED, DEPLOYED — AND UNSCANNABLE.**
+
+## THE MECHANISM (DS — source-confirmed against **ripgrep's own debug output**, not inferred)
+```
+.gitignore:47   lib/                            -> the ignore crate compiles it to  **/lib
+.gitignore:51   !data/inf/scripts/gold/lib/     -> the whitelist, added deliberately
+.gitignore:50   !data/black_diamond/.../lib/    -> same
+
+>> GIT HONORS THE WHITELIST. The files are TRACKED, COMMITTED, DEPLOYED, and commit normally.
+>> RIPGREP'S IGNORE CRATE DOES NOT, when the search is ROOTED ABOVE the directory.
+
+   rg --debug --files data/inf/scripts
+      ignoring data/inf/scripts\gold\lib:
+         Gitignore(Glob { original: "lib/", actual: "**/lib", is_whitelist: false })
+```
+
+## WHAT IS INVISIBLE — **IT IS THE WHOLE INCIDENT**
+> **`aor_resolution.py` (88KB — THE AoR CHOKEPOINT) · `advisor_timelock.py` · `nna_coverage_guard.py` ·
+> `inflection_rep_scope.py` (`KNOWN_ADVISOR_KEYS`) · `aor_attribution_audit.py` ·
+> `advisor_of_record_conformance.py`**
+> ## **THE ENTIRE SHARED LIBRARY OF THE INCIDENT THE FABRIC HAS BEEN WORKING ALL DAY.**
+
+## THE DIRECTION OF THE RESULT **VINDICATES RULE 21** — the off-rail tool is the one that lies
+```
+comp-grep "def apply_resolution_fold"   ->  FOUND  gold/lib/aor_resolution.py:882
+raw rg / native Grep, same root         ->  *** ZERO ***
+```
+**And `comp-grep` VOLUNTEERS what it could not see** (*"972 sovereign-held paths EXCLUDED — not searched, not
+confirmed absent"*) — **a tool declaring what it cannot do**, which is the posture we have demanded all day.
+
+## CONCRETE HIT, ALREADY FOUND — **THE ANSWER SURVIVES; THE SCREEN DID NOT**
+```
+CTO~B's bypass screen denominator:   "49 gold scripts"
+MEASURED:                             53 top-level + 20 in lib/  =  73
+DS~A's item-10 census:               "71 = 52 top-level + 19 gold/lib"   <- PYTHON rglob. lib/ INCLUDED.
+```
+**ITEM 10's ANSWER (nothing else bypasses the selector) STANDS — DS~A's retrieval saw `lib/`** *(he reported that
+adding `lib/` brought 21 more write sites and ZERO more derived ones, which is itself proof he scanned it).*
+**But CTO~B's screen may have had a FALSE ZERO across the entire shared library.** *He had already declared that
+screen INCAPABLE and refused to report findings off it —* > **his restraint covered for a defect in his instrument
+that he did not know about.**
+
+## >> **THE NEW RULE, AND IT IS THE PART WORTH KEEPING** <<
+DS positive-controlled his grep with a symbol **OUTSIDE** `lib/`. It returned hits — proving the tool RUNS.
+> ## **A POSITIVE CONTROL ON A FILE THE SCANNER *CAN* SEE CANNOT DETECT A SCANNER THAT CANNOT SEE A *DIRECTORY*.**
+> ## **A RETRIEVAL CONTROL MUST BE ANCHORED *INSIDE* THE DIRECTORY YOU FEAR IS INVISIBLE.**
+
+**"Put the control on the RETRIEVAL, not the pattern" — ONE LEVEL DEEPER.** *We have been controlling for **"did the
+tool RUN?"** when the failure mode was **"did the tool LOOK THERE?"*** **Same family as: a shim validated in a shell
+that could not have failed; a harness that compared garbage against itself; a control that cannot fail is not a
+control.**
+
+> ## **A ZERO FROM A SCANNER THAT NEVER OPENED THE DIRECTORY IS NOT A FINDING ABOUT THE ESTATE. IT IS A FINDING ABOUT THE SCANNER.**
+
+## COO's OWN RETRIEVAL: **CLEAN — CHECKED, NOT ASSUMED**
+*Bash GNU `grep -rn` does NOT read `.gitignore`.* **Verified: a grep for `KNOWN_ADVISOR_KEYS` returned three
+`gold/lib/` paths.** **Every census the COO ran today is sound on this axis — including the dead-citation finding
+(`accounts_v2_key_for_snap` → 0 refs), which stands: GNU grep saw `lib/` and the symbol genuinely is not there.**
+
+## THE FIX — **one character, shared file, CTO's to rule**
+> **Anchor `:47` as `/lib/`** — it was written for a TOP-LEVEL Python build dir. *The two `!` whitelists then become
+> redundant-but-harmless.* **DS PROPOSED AND DID NOT DO IT** — *a shared `.gitignore`, mid-incident, is not a thing
+> you touch on your own initiative.* **Correct call, and recorded as such.** Routed to CTO.
+
+**Interim, and it costs nothing: `comp-grep` already works and is already mandated. USE IT.**
