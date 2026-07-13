@@ -1,4 +1,52 @@
-# HOLD — INF gold chain · ⚠️ **THE CLOCK IS DEAD. THE HAZARD IS NOT. READ THIS BOX FIRST — IT IS THE THIRD REVISION AND IT IS THE RIGHT ONE.**
+# HOLD — INF gold chain
+
+> # 🚪 **DOOR 5 — AND IT IS THE ONE THAT WILL GET US. READ THIS BEFORE ANYTHING ELSE.**
+> ## **WE ARE BEING PROTECTED BY AN ACCIDENTAL BAD DEPLOY.**
+>
+> **`0.8.0` read the actual chain log (nobody had). THE CHAIN NEVER REACHES A PULL. It dies at STEP ZERO.**
+>
+> ```
+> orion-gold-dispatch.sh:613-614   sync_scripts() runs BEFORE the first chain step:
+>   FATAL: sync_scripts() basename collision -- the same script name exists in 2+ code/ prefixes with
+>   DIFFERENT content. A flat-dir sync would silently run whichever copy downloaded last. Refusing to sync.
+>     COLLISION: build_assets_dim.py
+>       code/gold/build_assets_dim.py     size=8498   sha256=1c5ffce7...
+>       code/silver/build_assets_dim.py   size=9244   sha256=453c1950...   deployed 2026-07-10T23:37:24Z
+>   exit 1
+> ```
+> **STILL LIVE THIS SECOND** (`head-object`: different size, different ETag). **Not historical. Current state.**
+>
+> ```
+> 07-10 13:33Z   last full chain dispatched -> RAN TO COMPLETION (3.6MB chain_full log = the re-derive)
+> 07-10 23:37Z   build_assets_dim.py deployed into code/silver/    <-- THE LINE GOES UP HERE
+> 07-11, 07-12   EVERY dispatch (bronze-complete AND the cron) -> FATAL at sync -> exit 1
+>                (07-11 and 07-12 have NO chain_full log AT ALL. Denominator: gold/logs = 4,922 objects,
+>                 control filter 20260630 -> 15, so the scan CAN return non-zero.)
+> ```
+>
+> ## 🔴 **DOOR 5: FIXING THE BASENAME COLLISION.**
+> ## **IT IS A LEGITIMATE, OBVIOUS, CORRECT CLEANUP — AND THE GUARD *PRINTS ITS OWN REMEDY* IN THE LOG.**
+> **An engineer who opens that log is being TOLD, by our own error message, exactly how to remove the only thing
+> standing between us and the deletion class. He will do it in five minutes and he will be right to.**
+>
+> > **DO NOT DE-COLLIDE `build_assets_dim.py`. DO NOT "tidy" `code/silver/`. DO NOT clear the FATAL.**
+> > **NOT until the coverage guard is SOUND (it is not — see below) and the selector fix has landed.**
+> > **This is a DS-lane deploy artifact. It is now the load-bearing control and it is an ACCIDENT.**
+>
+> ### AND IT FALSIFIES EVERYTHING ELSE WE BELIEVED — INCLUDING THE AUTHOR'S OWN CLAIM
+> | belief | verdict |
+> |---|---|
+> | *"repairing bronze lets the chain complete"* | **FALSE.** The chain dies **before** the pull. **Bronze is irrelevant to the freeze.** |
+> | *"Orion recovering on its own fires the deletion"* | **FALSE — `0.8.0` RETRACTS HIS OWN 105022Z CLAIM.** Orion could return this minute; the chain still dies at `sync_scripts()`. **THERE IS NO VENDOR CLOCK.** |
+> | *"the staleness ceiling is holding the line"* | **FALSE** (not engaged until Wed). |
+> | *"the dispatch lock is holding the line"* | **FALSE** — it only ever stopped the *second* dispatch. |
+>
+> **EVERY mechanism anyone proposed today was wrong. The real one was a bad deploy nobody had looked at.**
+> ***"We are unharmed and we do not know by what"* — we now know, and the answer is that we got lucky.**
+
+---
+
+# ⚠️ **THE CLOCK IS DEAD. THE HAZARD IS NOT.** *(third revision — the right one)*
 
 > # ⚖️ FINAL CALIBRATION (11:24Z) — I OVER-CORRECTED, AND CTO~B CAUGHT IT AT SOURCE.
 >
