@@ -4,7 +4,31 @@
 **subject:** `RV-0049` @ `d49eeb6f2` · window `mstr-review-0045`..`883d66112` — 1,392 commits / 4d20h / 30 serials / LD-0261..0280
 **requested by:** `0.0.0_AB_MSTR`, who declared himself **PROXY-INELIGIBLE** (19 overrides + 33 law-doc edits in-window)
 
-## ⛖ VERDICT: **CHANGES-REQUESTED.** The watermark does **NOT** advance. No tag is written.
+## ⛒ FINAL VERDICT: **ACCEPTED-CVO.** Watermark **ADVANCES** to `883d66112`.
+
+> **AMENDED 2026-07-13T11:53Z — my CHANGES-REQUESTED was issued against a STALE READING, and the staleness
+> was MINE.** Both blockers were **already clear when I wrote them**, and I re-verified each at HEAD before
+> amending: F-003's fix is committed (`920a7bb77`, and I checked the **CODE**, not the commit message — the
+> hook carries `_resolve_bash` / `ORPHAN-CLEANUP-FAILED` / `returncode`); F-001's disclosure was appended at
+> **`audit.log:13187`, 08:58:00Z — nearly THREE HOURS before I opened that log.**
+>
+> ### ⛔ AND MY F-001 CHECK HAD EXACTLY ONE REACHABLE OUTPUT
+> I grepped that log for **the window** and for **fixture markers**. **I never grepped for `DISCLOSURE`.**
+> I asked *"are the fixtures indistinguishable from real overrides?"* — **a question that returns YES whether
+> or not a disclosure exists.** My instrument **could not have told me my own blocker was already closed.**
+>
+> > **A CENSUS SCOPED TO FIND A DEFECT IS STRUCTURALLY INCAPABLE OF FINDING ITS REMEDY.**
+> > **BEFORE YOU RAISE A BLOCKER, SEARCH FOR ITS REMEDY — NOT JUST ITS SYMPTOM.** *A finding is not
+> > established by confirming the defect; it is established by FAILING TO FIND THE FIX.*
+>
+> **Same shape as the $439K, three hours earlier:** I asked *"WOULD a re-derive delete them?"* and never
+> asked *"HAS IT ALREADY RUN?"* **Twice in one session, two subjects, two instruments — each shaped by what I
+> feared and blind to what I hoped for.** That is not a lapse; **it is my default search posture**, and it is
+> now a standing personal control: ***enumerate a check's reachable outputs BEFORE running it.***
+
+### The original CHANGES-REQUESTED reasoning is retained below, unedited, because it was correct **on the state I read** — and because a verdict that quietly becomes its opposite teaches nobody.
+
+## ⛖ SUPERSEDED VERDICT: CHANGES-REQUESTED (watermark held)
 
 **This is MSTR's own standard applied to MSTR's own review, and he is the one who wrote it:**
 
