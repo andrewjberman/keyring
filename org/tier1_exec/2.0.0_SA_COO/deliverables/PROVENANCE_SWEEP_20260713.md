@@ -140,3 +140,34 @@ STATED state contradicts LANDED state, **and flag hardest the ones that say HOLD
 - **Did NOT tidy the INF hold docs, the frozen-3, or any door.**
 - **Did NOT mass-edit `docs/architecture/archive/`** to make the `opalcapital` grep quiet.
 - **Did NOT touch `~Z` or `AE_CloudOps`** -- Andrew-scoped agent-by-agent, not under my coordination.
+
+---
+
+## 🔴 FINDING 5 -- **I ISSUED A SCOPE FENCE AROUND THE ACCOUNT ANDREW HAD PERSONALLY ASSIGNED. WITHDRAWN.**
+I told `0.6.2_AE_PartnerETL`: *"AUTHORIZED `08335338` / STILL HELD `08242234`."* **WRONG.**
+**Andrew -> 0.6.2 DIRECTLY, ~20:45Z, BY ACCOUNT NUMBER:** *"investigate the pull mechanics around the Schwab box,
+namely for **EACH 08242234 as well as the 0833** alt account... pull all the historical files from **EACH**."*
+**0824 is not adjacent to his task. IT IS HALF OF IT.**
+> I reconstructed a fence from Andrew's ~22:23Z note **to DS** -- which was EXPLAINING WHY 0833 MATTERS and was
+> **NEVER DRAWING A BOUNDARY.** Both records TRUE. Neither stale. **They were never in conflict. I MANUFACTURED THE
+> CONFLICT BY READING ONE WITHOUT ITS SCOPE** -- *the exact defect already banked in our own memory index, which I was
+> holding while I wrote the error.* **Fifth demonstration tonight.**
+> ### **AND THE COST WAS REAL: obeying me would have left a 4-TRADING-DAY HOLE IN THE ~$1.62b SmartX BOOK WE ACTUALLY SERVE, while he polished the 0833 pull. PRECISELY BACKWARDS.** *He refused, cited Andrew's words to HIM, and was right -- the **second** time tonight he refused a COO directive and was right both times.*
+> **THE ESCALATION CHAIN WORKED IN THE DIRECTION IT IS LEAST COMFORTABLE TO WORK. That is the control. Not my care.**
+
+## 🔴 FINDING 6 -- **AND THE OUTAGE MY FENCE WOULD HAVE BURIED**
+**`08242234`'s daily pull has been DEAD SINCE 2026-07-02 -- ELEVEN DAYS -- REPORTING `rc=0` SUCCESS ~22 TIMES.** Its
+log wrote *"vendor likely not posted"* **while the vendor was posting.** 0.6.2 enumerated Schwab's live catalogue:
+**5,966 files; Schwab HAS 07-07 / 07-08 / 07-09 / 07-10, every type. They were sitting there.**
+> ### **A PRODUCER WHOSE SUCCESS CONDITION WAS DECOUPLED FROM THE PROPERTY IT EXISTED TO GUARANTEE.** *Same organ as
+> the mdpf feeder's unbounded roll-forward, and as an "audit-visible" note that no human ever audited.*
+**BLOCKER (escalated to CTO -- only he can clear it):** `s3:PutObject` on `opal-data-schwab/08242234/bronze/*` =
+**implicitDeny**; positive control run as a **SEPARATE invocation** (Rule 22a) -> `01_raw/*` **ALLOWED**, so the
+instrument is discriminating and **the deny is REAL.** Needs a Terraform IAM grant. **His puller + an independent
+freshness oracle (mutant suite 5/5) are BUILT, TESTED, COMMITTED -- AND CANNOT DEPLOY.**
+
+## FINDING 7 -- **`~133m` IS `managedValue`. THE SERVED TABLE CARRIES `totalValue` = `$136,859,722.32`.**
+Two different numbers wearing the same name **in the same conversation**, and one has already reached Andrew.
+**NEITHER IS QUOTABLE WITHOUT ITS BASIS. SAY WHICH, OR SAY NEITHER.** *(0.7.0 holds the live channel and corrects him
+first-hand, not third-hand from us.)* **Sixth instance of the one defect: a number whose IDENTITY is not recorded
+alongside its VALUE.**
