@@ -349,11 +349,11 @@ check("R7 legit re-designation: raw ALSO changed -> raw_changed=True + 'likely l
 # ---------------- H: household headline inherit ----------------
 at = pd.DataFrame({"household_id": ["hh286", "hh300"],
                    "household_headline_advisor_key": ["noel_soderblom", "peter_lee"]})
-hm = ar.household_headline_map(at)
+hm = ar.household_headline_map(at, expect_nonempty=True)
 check("H.1 household_headline_map inherits C_07's stamped headline (hh286 -> noel)",
       hm.get("hh286") == "noel_soderblom" and hm.get("hh300") == "peter_lee", hm)
 try:
-    ar.household_headline_map(pd.DataFrame({"household_id": ["hh286"]}))
+    ar.household_headline_map(pd.DataFrame({"household_id": ["hh286"]}), expect_nonempty=True)
     stale_raised = False
 except RuntimeError:
     stale_raised = True
