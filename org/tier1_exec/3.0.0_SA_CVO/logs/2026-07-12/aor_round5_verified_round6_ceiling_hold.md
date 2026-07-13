@@ -72,3 +72,19 @@ push-grade is a one-line SNS publish, his design call. Battery driver:
 scratchpad/aor_forkb_drift_battery.py. Reported: CTO~B 233159Z, COO 233224Z (incl the package re-cut
 note: round-5 ceiling items moot; fold numbers unchanged). Waiting: gate-1 on d082f2eef -> co-sign ->
 nightly -> V4.
+
+## ADDENDUM 2 (07-13 00:xxZ) -- Round-7: the DATA-MISSING half, demonstrated then closed
+
+wjlqray4r (gate-1 on d082f2eef, realness confirmed: 22 agents, 7/7 angles) found the DATA-MISSING
+false-green half my round-6 battery did not enumerate (fed both-partitions-present throughout -- the
+CANNOT-EVALUATE trap unexercised in my own instrument; 2nd self-caught state-space gap). I DEMONSTRATED
+all 3 pre-fix on d082f2eef (M1 literal 'OK no drift' diffing two PRIOR-day partitions, :302 no wall-clock
+check; M2 stale-green; M3 all-NA raw pair silent-forever via :153) with healthy twins + a flip contract.
+DS fixed (9c3b4513b: --as-of expected-day freshness gate, finding-grade _emit_alert, COMPARISON-STALE /
+COMPARISON-INCOMPLETE / CANNOT-EVALUATE / ACCOUNT-RAW-RELABEL-NO-SHIFT codes). My re-verify: ALL GUARDED
+(M1/M2->STALE, M3->INCOMPLETE, healthy twin green + no emit call, E3 caught, never-blocks rc-0 preserved);
+DATA-PRESENT 9/9 stands; DS 21/21 my run. Gate-2 DETECTOR VERIFIED BOTH HALVES. 3rd self-caught
+instrument issue disclosed (my _emit_alert stub returned None where the real one returns 0 -- "a stub
+must preserve the stubbed function's contract or the harness manufactures the defect it tests for";
+CTO~B banked it). Remaining: CTO~B fresh gate-1 (wi6kmcnng) -> (3a)+(3b) exercises (INF_D_11 + AE channel;
+SMS-sandbox = Andrew's call) -> CHANGE-2 -> co-sign -> V4 nightly.
