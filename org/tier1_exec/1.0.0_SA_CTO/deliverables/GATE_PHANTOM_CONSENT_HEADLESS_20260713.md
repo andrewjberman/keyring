@@ -51,6 +51,17 @@ authorization -- **"Andrew-direct" must be GROUNDED (channel + timestamp + quote
   (`assert_sovereign_safe`) proved this by-construction pattern works; this extends it from the probe
   corpus to write paths. Incremental -- each wrapper adopts it as touched.
 
+## 2b. Cross-gate design requirement (MSTR 041716Z, folded)
+
+**One grant serves BOTH gates.** A grant whose `scope_actions` includes an external vendor call (e.g.
+`schwab-sdd-rest-pull`) is not only the sovereign-held-write authorization -- it IS the vendor-egress
+authorization ("Andrew's explicit per-use word"; availability-is-not-authorization). Design the P-3
+citation-lint as ONE shared resolver (`resolve_grant(action, surface) -> ACTIVE grant | None`) that both
+the sovereign-write gate and any future vendor-egress entitlement lint (m365-gateway) call -- never two
+parallel grant-parsers that can drift. Ledger completeness convention: `scope_surfaces` stays WRITE
+surfaces (P-3's domain); operational non-write touches (e.g. a Secrets Manager session-secret read) go
+in an optional `operational_reads` frontmatter list -- enumerated for the record, not gated by P-3.
+
 ## 3. What does NOT work
 
 - "Headless agents should be more careful" -- prose against false certainty (same law as the identity
