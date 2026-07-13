@@ -91,15 +91,36 @@ def _load_c07_at(ref: str):
 
 def served_advisor_key(mod) -> str:
     """Push a MOVER through C_07's REAL override path and read back what account_team would SERVE."""
-    fn = getattr(mod, '_apply_accounts_v2_advisor_key_override', None)
+    # Exercise WHICHEVER enrichment path this vintage actually has, and assert on the SERVED VALUE.
+    # NOT on the absence of a symbol. My first version returned a GREEN called 'NO-OVERRIDE-FN' when the
+    # old function was missing -- that is symbol-absence, not behaviour, and it would have FALSE-GREENED a
+    # RENAMED clobber. (It is the same defect as the F10 census matching banned SYMBOL calls while C_07
+    # re-implemented the slug inline and walked straight past it.) A missing path is an INSTRUMENT BREAK.
+    fn = (getattr(mod, '_enrich_accounts_dim_from_accounts_v2', None)      # post-fix name
+          or getattr(mod, '_apply_accounts_v2_advisor_key_override', None))  # pre-fix name
     if fn is None:
-        return 'NO-OVERRIDE-FN'      # the function is gone entirely -> nothing can erase the fold
+        raise RuntimeError('INSTRUMENT BROKEN: no accounts_v2 enrichment path found in this vintage. '
+                           'Refusing to report GREEN off a symbol that is merely absent -- a renamed '
+                           'clobber would look identical.')
     # acct_dim: post-round-8 this carries the CANONICAL key (folded to the advisor-of-record under ON).
     # Account 42 is a MOVER: canonical = noel_soderblom, but its SERVICING rep is Peter Lee. If the fold
     # survives to the served view, advisor_key stays noel_soderblom. If C_07 re-derives from the servicing
     # rep, it is clobbered to peter_lee.
     acct_dim = pd.DataFrame({'account_id': [MOVER_ID], 'advisor_key': [FOLDED],
                              'household_id': [286], 'total_aua': [1_000_000.0]})
+
+    # The POST-FIX path INHERITS the canonical key via load_resolution() -- the correct fix. But the
+    # canonical resolution does not exist in prod S3 (the resolver has never run: SERVE-HELD), so a live
+    # call 404s and the function fails closed. That is CORRECT behaviour and it is NOT a verdict on the
+    # fold. Inject the resolution the resolver WOULD have written, so the arm can observe what is SERVED.
+    # Account 42 is the MOVER: the resolution says noel_soderblom; its SERVICING rep is peter_lee.
+    if hasattr(mod, 'load_resolution'):
+        _res = pd.DataFrame({'account_id': [MOVER_ID], 'advisor_key': [FOLDED],
+                             'rep_bucket': ['individual'], 'servicing_advisor_key': [SERVICING],
+                             'advisor_of_record_raw': ['Noel'], 'explicit_aor': [True],
+                             'is_mover': [True], 'as_of': ['2026-07-12']})
+        mod.load_resolution = lambda *a, **k: _res.copy()
+
     out = fn(acct_dim)      # signature is (df, max_lookback_days) -- it loads accounts_v2 itself
     row = out[out['account_id'] == MOVER_ID]
     if row.empty:
@@ -113,12 +134,12 @@ print(f'  a MOVER: canonical/folded = {FOLDED!r}   servicing = {SERVICING!r}')
 print('=' * 100)
 
 RESULTS = {}
-for ref, label in (('69219a7db', 'the hash I WRONGLY GREENED'), ('WORKTREE', 'DS fix IN FLIGHT (uncommitted)')):
+for ref, label in (('69219a7db', 'the hash I WRONGLY GREENED'), ('dbd10d7aa', 'DS C_07 fix -- COMMITTED')):
     try:
         got = served_advisor_key(_load_c07_at(ref))
     except Exception as e:
         got = f'ERROR: {type(e).__name__}'
-    survived = (got == FOLDED) or got == 'NO-OVERRIDE-FN'
+    survived = (got == FOLDED)   # GREEN only if the SERVED key is still the FOLDED one
     RESULTS[ref] = survived
     verdict = 'GREEN -- the fold SURVIVES to the served view' if survived else \
               '*** RED -- THE FOLD IS ERASED BEFORE IT IS SERVED ***'
@@ -127,7 +148,7 @@ for ref, label in (('69219a7db', 'the hash I WRONGLY GREENED'), ('WORKTREE', 'DS
     print(f'      {verdict}')
 
 print('\n' + '=' * 100)
-if RESULTS.get('69219a7db') is False and RESULTS.get('WORKTREE') is True:
+if RESULTS.get('69219a7db') is False and RESULTS.get('dbd10d7aa') is True:
     print('THE ARM DISCRIMINATES: RED at the hash I greened, GREEN at the fix.')
     print('  It would have caught the defect. That is the property my original battery lacked --')
     print('  every arm it had measured the RESOLUTION, and this one measures the SERVED ARTIFACT.')
