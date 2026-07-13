@@ -86,6 +86,54 @@ not exist. **Not held, not blocked, not idle -- LOST.** Per LD-0288 I may not re
 
 ---
 
+---
+
+## 🔴 FINDING 3 -- **MEASURED: 84 OF 121 OPEN TOs (69%) ARE RECORDS THEIR PROJECT MOVED ON WITHOUT.** And a hypothesis of mine that the data KILLED.
+
+**Andrew's complaint, quantified:** *"all TOs and work need to be refreshed so other agents dont come across it like
+you did and think the last work was issuing a first TO a week ago."*
+
+```
+DENOMINATOR   open TOs (active/pending/staged) under a task_orders/ dir, valid project code ...... 121
+EXCLUDED      by the code-convention control (would have polluted the count) ..................... 105
+>> STALE      project kept committing >=3 days AFTER the TO record was last touched ..............  84  (69%)
+   worst      NFRA_OPLMCP.06 (32d) · NFRA_OPLMCP.05 (32d) · ADVI_COTETL.NIGHTLY-VERIFY (32d) · NFRA_COSTAWS.W5 (30d)
+```
+**CONTROL ON THE RETRIEVAL (and it mattered):** my FIRST pass at this returned `190 of 260` and was **CONTAMINATED** --
+it swept in `page_inventory.md` / `data_contract.md` / `deployment_map.md`, which are **CORE DOCUMENTS, NOT TASK
+ORDERS**, under fabricated project codes. **I did not report that number.** *A number from an uncontrolled retrieval
+is a rumour with a decimal point -- the same lesson the fabric learned on `10 of 28` an hour earlier.*
+
+### ⚠️ AND A HYPOTHESIS OF MINE THAT THE MEASUREMENT KILLED -- RECORDED BECAUSE IT WAS WRONG
+From **two** examples (`ADHC_GLDINC.PARITY-FIX` and `ADVI_49NNAFIX.D1-D2`, both rendering `[ACTIVE]` while their own
+status TEXT said *"CLOSED + CERTIFIED"* / *"SHIPPED + FULLY CERTIFIED"*) I formed the thesis: **"the `<status>` field
+lies while the prose tells the truth."** **MEASURED: 8 of 253 open TOs = 3%** -- and several of those are legitimate
+partial-completions (*"Part A COMPLETE, Part B CORE..."*), plus a false positive on the protocol template itself.
+> ### **THE CLASS IS REAL AND IT IS SMALL. MY TWO EXAMPLES WERE NOT A SAMPLE, THEY WERE AN ANECDOTE.**
+> *A sample that cannot distinguish two hypotheses is not evidence for either.* **I measured before I propagated. That
+> is the only reason this paragraph says 3% instead of becoming the estate's next confident wrong answer.**
+
+## 🔴 FINDING 4 -- **THE ROOT CAUSE OF THIS ENTIRE SWEEP: THERE IS NO INSTRUMENT FOR RECORD-TRUTH.**
+```
+DATA freshness      -> comp-freshness
+DEPLOY parity       -> comp-pipescript deployed
+AGENT liveness      -> fabric-check / get_live_agents
+IAM / infra         -> comp-iam, comp-aws
+RECORD TRUTH        -> ***NOTHING.***
+```
+**Every other axis of the estate has a guard. The records -- REGISTRY rows, project JSONs, TO statuses, the things a
+FRESH AGENT READS FIRST AND TRUSTS MOST -- have none.** Nothing ever asks *"is this still true?"*
+> # **THAT IS WHY THE `NFRA_WEBSITE` ROW SAT TWELVE DAYS WRONG SAYING "HELD, DO NOT DISPATCH" WHILE THE SITE WAS SERVING. NOT BECAUSE ANYONE WAS CARELESS -- BECAUSE NOTHING WAS WATCHING.**
+> **A guard nothing invokes is indistinguishable from a guard that does not exist (VERIFICATION LAW 4). Here there was
+> never a guard at all -- and an estate that instruments its DATA and not its RECORDS is one that will keep telling
+> its own agents to stand down on live work, forever, with authority.**
+**BUILD PROPOSAL -> CTO:** a `comp-records` / record-truth lint: for every open TO + REGISTRY row + project JSON,
+compare the record's last-touch against its project's commit activity and its landed evidence; flag any record whose
+STATED state contradicts LANDED state, **and flag hardest the ones that say HOLD / STAND DOWN.** *A row that says
+"unknown" costs a lookup; a row that says "HELD, do not dispatch" costs the project.*
+
+---
+
 ## WHAT I DID NOT DO (and why that is the finding, not the gap)
 - **Did NOT arm `/drive`.** Andrew named it OFF in both answers. Zero crons, zero dispatches, zero spawns.
 - **Did NOT act on any record I refreshed.** *A TO refreshed to `pending` is not a TO I may drive.* (MSTR fence (b).)
