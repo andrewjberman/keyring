@@ -171,6 +171,53 @@ it was never there.** *An invariant that only ever compares the artifact to itse
 **The only instrument that can see it compares the served total against a PRIOR VINTAGE of itself, or against a
 source the pipeline does not derive from.**
 
+## ⚑ PRE-REGISTERED PREDICTION — WRITE THE NUMBER DOWN **BEFORE** THE RE-DERIVE RUNS (CVO, `5be383519`)
+
+> ## **A PREDICTED NUMBER-MOVE IS A VERIFICATION. AN UNPREDICTED ONE IS AN INCIDENT.**
+
+The re-derive that LIFTS this hold will do **two correct things at once**, in **opposite directions**, and only
+one of them is the one everybody is watching for.
+
+**EXPECTED DELTA — this is an ACCEPTANCE CRITERION, NOT A REGRESSION:**
+
+```
+account 331   peter_lee                      -$40,000.00  (4 rows, 2020-2022)  -> ROWS VANISH
+account 759   inflection_wealth_management   -$22,500.00  (2 rows)             -> ROWS VANISH
+account 1086  inflection_wealth_management   +$44,588.17  (1 row)              -> ROWS VANISH
+account 235   inflection_wealth_management    +$4,146.12  (1 row)              -> ROWS VANISH
+account 520   inflection_wealth_management       -$87.46  (1 row)              -> ROWS VANISH
+------------------------------------------------------------------------------------------------
+NET CHANGE TO SERVED NNA HISTORY:  +$13,853.17
+AND peter_lee's HISTORICAL NNA GOES *** UP BY $40,000.00 ***  (a NEGATIVE row is being removed)
+```
+
+**WHY:** those 5 accounts' entire served NNA lives in **8 partitions the 07-10 rebuild never touched**
+(all written 2026-05-13 06:52Z; 8 of 8). They have **ZERO rows** in the canonical snapshot `INF_C_01` derives from
+(`:306` — single-snapshot source-selection, over ALL of history). **When the re-derive reaches those partitions,
+those rows cease to exist — and that is CORRECT: a number the source cannot produce should not be served.**
+
+> **BOTH OUTCOMES ARE RIGHT. THAT IS EXACTLY WHY IT IS DANGEROUS.**
+> The same delta lands on the same night either way. The only variable is whether it reads as
+> *"the re-derive did what CVO said it would, to the cent"* — or as
+> ***"peter_lee's historical NNA moved $40,000 and nobody knows why."***
+> **We have spent this entire day on numbers that moved without an owner.**
+
+**IF THE DELTA IS ANYTHING OTHER THAN THE ABOVE, *THAT* IS THE ALARM.** Halt and restore from the backup.
+
+**AND THIS MAKES THE PREDICTION FALSIFIABLE FOR FREE.** CTO wanted a dry re-derive of one untouched partition and
+said it needed an owner. **The hold-lift re-derive IS that exercise, at zero extra cost** — provided someone reads
+the result against a number written down **in advance**. *It stops being a prediction and becomes a measurement.*
+**Safe:** 8,805 gold objects backed up + ETag-verified (0 missing / 0 mismatched), so a wrong prediction is
+recoverable.
+
+> **THE GENERAL SHAPE (CVO):** *"F2 × F7 taught us that per-finding triage is structurally blind to COMPOSITION.
+> This is the same thing between two findings of MINE, in two different scripts, filed an hour apart, that I never
+> held up against each other. Individually: 'a collapse to repair' and 'some stale rows.' Jointly: a single
+> re-derive that changes served advisor numbers in TWO DIRECTIONS AT ONCE, one of which nobody is expecting."*
+> **ENUMERATE THE INTERACTION, NOT JUST THE FINDINGS.**
+
+---
+
 ## TO LIFT THIS HOLD
 
 1. **Ground and fix the upstream defect: WHY is `rep_id` NULL in `silver/transactions` for accounts 560/703/1225?**
