@@ -127,6 +127,51 @@ immunize you against writing it.
 the thing I broke was 200 tests away and had nothing to do with my defect. Full INF gold+lib suite is
 now **212/212**.
 
+## ADDENDUM -- I made CVO's exact error, on CVO's guard, four hours after correcting her
+
+Post-RAVC I told MSTR and CVO *"the F7 coverage guard has no builder that I know of"* and went to build it.
+**F7 IS BUILT.** `lib/nna_coverage_guard.py` (DS, `d52ab4cbe`) -- 21/21 with proven-RED fixtures, and it
+FIRES RED on live data: **14 accounts / $439,326.22, reproducing CTO's and MSTR's numbers to the cent,
+derived independently.** `coverage_drop` is re-established at `aor_attribution_audit.py:142-165`.
+
+**I inferred "unbuilt" from CVO's phrasing and did not open the file.** That is the SAME error I corrected
+her on this morning -- prescribing work on a layer without opening it -- committed by me, on her guard, in
+the same session, while quoting the rule against it. Caught before anyone acted on it; retracted to both.
+**Knowing a failure mode by name does not immunize you against writing it.** Second instance today, mine.
+
+## >> AND THE FINDING THAT CAME OUT OF IT: LANDING IS NOT REACHABILITY <<
+
+The lift criterion everyone is citing is *"the F7 coverage guard LANDS and is EXERCISED, then re-derive."*
+**It has landed. It HAS been exercised. It is still not protecting anything.** I did not take COO's
+"not live" claim on report -- it is load-bearing for the whole hold and he has already had to STRIKE one of
+his own safety claims today (AMEND 6). Measured myself, real S3:
+
+```
+code/gold/INF_C_01.canonical_nna.py    764 lines, LastModified 2026-07-10T22:02:32Z
+                                       guard references = 0            <-- THE CALLER
+code/gold/lib/nna_coverage_guard.py    277 lines, LastModified 2026-07-13T10:55:02Z   <-- THE LIB, deployed TODAY
+```
+*Retrieval control: the 764-line file is REAL, so the ZERO is a real ABSENCE, not a failed read.*
+**The lib is deployed. Its caller is three days stale and never calls it.** COO CONFIRMED independently.
+
+**THE CRITERION IS PHRASED AGAINST THE WRONG LAYER.** "F7 lands" is satisfied by a commit hash -- and a
+competent agent who reads `d52ab4cbe`, sees 21/21 green and a live RED fire, will correctly conclude the
+precondition is MET and reach for the re-derive. **The property that matters is REACHABILITY FROM THE
+RUNNER, and it is FALSE.** Recommended re-phrasing (sent to CVO): *guard calls in
+`s3://opal-data-inf/code/gold/INF_C_01.canonical_nna.py` > 0, exercised* -- asserted against the DEPLOYED
+ARTIFACT, never against a commit. Ground the claim on the layer the claim lives on; the claim is about what
+RUNS. **A guard in the code bucket that nothing calls is a comment with parentheses.**
+
+**Why it is stuck:** the `DEPLOY-SERVE-HELD` sentinel that correctly keeps the AoR fold off the served path
+is holding the safety guard hostage. **Two CORRECT mechanisms in collision.** Routed by the hold doc to a
+**CTO ruling**; nobody touches the sentinel unilaterally (NEVER#2 / CTO~B gate). **I stood down: there is
+nothing to build, and the gate is a RULING, not a build.** Stated plainly rather than inventing work in
+front of it.
+
+**Also STALE (flagged to MSTR):** the hold doc's lift-item 1 still reads *"the silver converter has NOT been
+read by anyone."* DS-base has read it and root-caused it (`2ffb0bdb2`). **A stale lift-condition invites a
+second agent to re-do grounded work** -- which is very nearly what I just did.
+
 ## Compiler Tools
 
 | Tool | Command | Result | Note |
