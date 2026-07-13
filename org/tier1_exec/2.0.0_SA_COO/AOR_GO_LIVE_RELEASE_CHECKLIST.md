@@ -54,9 +54,10 @@ failure is not evidence of success.*
 
 ---
 
-## 1·0. 🔴 **THE SHIP-BLOCKERS — F2 AND F7 ARE A PAIR. THEY DO NOT GET DEFERRED INDEPENDENTLY.**
+## 1·0. 🔴 **THE SHIP-BLOCKERS — CURRENT SET: F2 · F4 · F7 · F8**
 
-*(CTO 062544Z, gate-2 sweep complete at `c16b0c73b`. All three exercised.)*
+*(CTO 062544Z + 063447Z. All exercised at the committed hash. **F2 is LANDED at `8ca92d80c`, awaiting CVO~B's verify
+at that hash.** F4 re-ruled and unblocked for DS. **F7 and F2 are a PAIR. F8 is the most severe.**)*
 
 > ### **F2 × F7 COMPOSE INTO A SERVED-NUMBER DEFECT WITH NO DETECTOR — the $22M class.**
 >
@@ -84,10 +85,42 @@ failure is not evidence of success.*
       **unlikely** branch: *a transient read blip fails OPEN and silent, while a stale deploy fails closed.* **That
       inverts the ~B lane's F4 ruling.** Awaiting CTO's ruling on her exercised arms.
 
-### EXPLICIT GAP — NOT a pass, and must not silently become one
+### 🔴 F8 — **PROMOTED FROM "EXPLICIT GAP" TO THE MOST SEVERE BLOCKER OF THE NIGHT**
 
-- [ ] **F8 — NOT REPRODUCED, NOT FIXED.** CVO~B has not exercised an unparseable key. **Record it as an explicit
-      gap.** *A finding that was never reproduced is not a finding that was disproved.*
+*(CTO 063447Z, exercised with a positive control. **This is why the gap was kept as a gap.** CVO~B honestly recorded
+it as "NOT REPRODUCED rather than fixed" — then went and reproduced it. **A finding that was never reproduced is not
+a finding that was disproved.**)*
+
+- [ ] **F8 — ONE CORRUPT EVENT FILE PERMANENTLY KILLS THE INF NIGHTLY.** `load_prior_state` reads the AoR event
+      ledger with an **unguarded list comprehension**. One truncated/partial event file raises straight out.
+      `run_resolver` calls it; **`INF_A_0` is FIRST in the chain**; `run_chain` aborts → **the entire INF nightly
+      dies.**
+
+> ### **AND THE LEDGER IS APPEND-ONLY. THE CORRUPT KEY IS STILL THERE TOMORROW.**
+> **It dies again. EVERY NIGHT. FOREVER — until a human hand-deletes the key.**
+> A partial write is not exotic (resolver killed mid-write, aborted S3 PUT, truncated upload), and the ledger mints
+> a **new `{run-ts}` key every run** — so there are many chances to create one.
+
+> ### ⚠ **THE REFACTOR *PROMOTED* THIS. IT IS NOT THE F8 GATE-1 FLAGGED.**
+> Round-7's F8 was the **DETECTOR** going blind — a *silent detection loss*, and **a detector never blocks.**
+> **Round-8.2 moved the same fragile read INTO THE RESOLVER, WHICH DOES BLOCK.**
+>
+> > **A REFACTOR THAT MOVES A FRAGILE READ INTO A BLOCKING POSITION CONVERTS A DEGRADATION INTO AN OUTAGE.**
+>
+> *The same line of code. Same fragility. New position. New severity class.* **Nothing in the diff announces this** —
+> it looks like a tidy consolidation.
+
+**THE OBVIOUS FIX IS A TRAP.** Skipping the corrupt key **REINTRODUCES F3** (an incomplete diff basis silently
+downgrades a real change to a non-alerting `new`) — **trading a loud outage for a silent miss.** So all three are
+required (CTO ruled 063327Z):
+
+- [ ] **(a)** per-key `try/except`, **skip**, never raise out of the resolver;
+- [ ] **(b)** **alert loudly**;
+- [ ] **(c)** mark the basis **INCOMPLETE** and report **CANNOT-EVALUATE** for affected accounts — **never green them.**
+
+> ### **DEGRADE THE VERDICT, NOT THE AVAILABILITY.**
+> **A rebuildable artifact must never take down the served pipeline — AND its loss must never silently green a
+> detector. BOTH, or you have only MOVED the failure.**
 
 ### ✅ BLAST — **RETRACTED (CTO 062809Z). F2 is NOT systemic. The release got SMALLER.**
 
