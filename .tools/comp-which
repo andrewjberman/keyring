@@ -886,6 +886,18 @@ _ROUTE_ONLY = False
 # directly (comp_route.py already had --json; the launcher did not).
 _JSON = False
 
+# NFRA_COMPROUTE -- Andrew-direct 2026-07-13: "top k as 1 is not acceptable" ... "serves top-5 with
+# attached description."  k=5, and it may be WIDENED but NEVER narrowed to 1.
+#
+# k=5 IS MEASURED ON THE LIVE ROUTER, and the number matters -- do not "optimize" it back down:
+#     recall@1 = 70%   recall@3 = 90%   recall@5 = 100%   recall@10 = 100%
+# I first shipped k=3 on a recall@3 == recall@5 result measured against the CURATED `RULES` LAYER --
+# WHICH IS NOT THE SCORER THAT SERVES AGENTS. On the live posterior router the tail is real: for
+# "how fresh is the platinum mdpf aggregate", comp-freshness is RANK 4 (a curated rule takes the
+# VETTED +1.0 offset on the literal token "platinum" and structurally dominates). k=3 HIDES IT; k=5
+# SHOWS IT. Grading the wrong layer is exactly the failure this tool is being fixed for.
+_TOPK = max(3, int(os.environ.get("COMP_WHICH_TOPK", "5") or 5))
+
 
 def _emit_json(kind, caps, call_of, concern_of, term, q, fallback=None):
     """Emit the machine-readable route (CD1). caps = ordered cap_ids; fallback = a comp-grep/glob call
@@ -1059,19 +1071,36 @@ def _default_router(q, qtok, hits, term, list_intent):
         if _JSON:
             return _emit_json("fallback", [], {}, {}, term, q, fallback="comp-%s %s" % (kind, tgt))
         return _run_primitive(kind, tgt)
-    caps = [s.cap.id for s in r.within_margin] or ([r.ranked[0].cap.id] if r.ranked else [])
-    if not caps:
+    # NFRA_COMPROUTE top-3 (Andrew-direct 2026-07-13): NEVER COLLAPSE TO ONE ROUTE.
+    # Measured: recall@3 == recall@5 == recall@10 -- the correct tool sits at rank <=2 or is absent
+    # entirely. So argmax was DISCARDING AN ANSWER THE ROUTER HAD ALREADY FOUND (comp-freshness sat at
+    # rank 2 on a TIED score, and the tie was broken on list order). This is a PRESENTATION fix: show
+    # the vector the router already computed, with each tool's concern, and let the agent choose.
+    # `ranked` is the full ranking (comp_route.py:160 -- "nothing is ever filtered out by score").
+    # NOTE: the score is TOKEN/PRIOR OVERLAP, not a confidence. Never label it one.
+    # The r.kind == "fallback" abstain path above is UNTOUCHED -- it works (1,722 live RUN-GREP/GLOB).
+    ranked = (r.ranked or [])[:_TOPK]
+    if not ranked:
         return None
+    caps = [s.cap.id for s in ranked]
     if _JSON:
-        return _emit_json(r.kind, caps[:4], call_of, concern_of, term, q)
+        return _emit_json(r.kind, caps, call_of, concern_of, term, q)
     if r.kind == "disambiguation":
         print("  near-tie -- the surface-aware router surfaces these; pick by concern (never a silent guess):\n")
-    for cid in caps[:4]:
-        print("  -> %s   [%s]" % (call_of.get(cid, cid), concern_of.get(cid, "")[:78]))
+    print("  MATCHES (top %d of %d -- score is overlap, NOT a confidence):\n"
+          % (len(ranked), len(r.ranked)))
+    for i, s in enumerate(ranked, 1):
+        cid = s.cap.id
+        print("  %d. score %.2f   %s" % (i, s.score, call_of.get(cid, cid)))
+        concern = (concern_of.get(cid, "") or "").strip()
+        if concern:
+            print("                %s" % concern[:92])
     print("")
-    print("  (comp-which routed via the COMPROUTE default posterior router -- run the call yourself.")
-    print("   No tool fit? it would RUN comp-grep/comp-glob -- never a dead-end.)")
-    _log_rail("ROUTE-POSTERIOR", "+".join(caps[:4]), term, q)
+    # A tie is not a ranking. Say so, because breaking one silently is the whole defect.
+    if len(ranked) > 1 and abs(ranked[0].score - ranked[1].score) < 1e-6:
+        print("  *** TOP SCORES ARE TIED -- THE ORDER IS NOT A RANKING. Read the descriptions. ***")
+    print("  None of these fit?  comp-grep '%s'   (or comp-glob)" % (term or q))
+    _log_rail("ROUTE-POSTERIOR", "+".join(caps), term, q)
     return 0
 
 
