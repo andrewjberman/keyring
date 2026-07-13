@@ -332,6 +332,27 @@ def _identity_decide(conflict, identity_override: str):
 _IDENTITY_AUDIT_WINDOW = 300
 _identity_audited: dict = {}
 
+# --- THE DENOMINATOR (0.7.0_AE_CloudOps~A, 2026-07-13 -- he caught this in MY promotion path) ---
+# The guard ACTIVATES per-session when the MCP server process starts and reads THIS FILE OFF DISK.
+# It does NOT activate on the git land. (Demonstrated live: AE~A's session was served a register_agent
+# schema carrying the G-A docstring while `git show HEAD:org/mcp/server.py | grep -c "IDENTITY GUARD"`
+# returned 0 -- his uncommitted working-tree edit was already ENFORCING.)
+#
+# Consequence for the SERIAL_HELD promotion path: a server that started on the PRE-audit build
+# ENFORCES but does NOT RECORD. So counting SERIAL_HELD rows against WALL-CLOCK systematically
+# UNDERSTATES the collision rate -- and understates it most in the window where sessions are still
+# running the un-auditing build. A quiet log would be indistinguishable from "no session was running
+# the auditing code yet."  ==> That is, exactly, an instrument whose verdict cannot see the
+# distinction it is being asked to license -- the same class the guard's own severity ruling turns on.
+#
+# So: every server process that arms the guard writes ONE `IDENTITY_GUARD_ACTIVE` row stamped with the
+# guard version. The denominator is COUNTABLE from the log itself, not inferred from wall-clock:
+#     denominator = grep -c "IDENTITY_GUARD_ACTIVE .*guard=GA-2"   (server-starts running the auditing build)
+#     numerator   = grep -c "IDENTITY_SERIAL_HELD"                 (collisions those servers actually saw)
+# NEVER promote direction (2) to HARD off a row count that cannot show its denominator.
+_GUARD_VERSION = "GA-2"   # GA-1 = classify+refuse-both (as-built); GA-2 = CTO severity ruling + unconditional audit
+_guard_active_logged = False
+
 
 def _audit_identity(kind: str, claimed_serial: str, my_pid: int, reason: str, conflict: str) -> None:
     """Append an audited identity row. Best-effort -- never blocks registration.
@@ -350,8 +371,30 @@ def _audit_identity(kind: str, claimed_serial: str, my_pid: int, reason: str, co
             _identity_audited[key] = now
         line = (
             f"{datetime.now(timezone.utc).isoformat()} IDENTITY_{kind} "
-            f"serial={claimed_serial} pid={my_pid} reason={reason!r} "
+            f"guard={_GUARD_VERSION} serial={claimed_serial} pid={my_pid} reason={reason!r} "
             f"conflict={(conflict.splitlines()[0] if conflict else '')!r}\n"
+        )
+        path = Path(__file__).resolve().parent / "agent-spawn-audit.log"
+        with open(path, "a", encoding="utf-8") as fh:
+            fh.write(line)
+    except Exception:
+        pass
+
+
+def _audit_guard_active(serial: str, my_pid: int) -> None:
+    """Emit ONE row per server process recording that the guard armed, and at what version.
+
+    This row IS the denominator (see the block comment above). Without it, a quiet
+    SERIAL_HELD log cannot be distinguished from a log nobody was writing to.
+    """
+    global _guard_active_logged
+    if _guard_active_logged:
+        return
+    _guard_active_logged = True
+    try:
+        line = (
+            f"{datetime.now(timezone.utc).isoformat()} IDENTITY_GUARD_ACTIVE "
+            f"guard={_GUARD_VERSION} serial={serial} pid={my_pid}\n"
         )
         path = Path(__file__).resolve().parent / "agent-spawn-audit.log"
         with open(path, "a", encoding="utf-8") as fh:
@@ -732,6 +775,7 @@ async def register_agent(
     # --- NFRA_IDENTITY.G-A: the enforcing chokepoint (before ANY state is written) ---
     my_pid = os.getpid()
     _identity_warning = ""
+    _audit_guard_active(live_serial, my_pid)   # one row per server process == THE DENOMINATOR
     with _locked_liveness(write=False) as _snapshot:
         _conflict = _identity_conflict(live_serial, dict(_snapshot), my_pid)
     _action, _message = _identity_decide(_conflict, identity_override)
