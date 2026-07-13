@@ -655,6 +655,23 @@ def _instance_suffix(agent_serial: str) -> str | None:
     return parts[1] if len(parts) > 1 else None
 
 
+def _identity_key(agent_serial: str, folder_name: str | None) -> str:
+    """The key an agent is REGISTERED under -- liveness, broker, poller pattern.
+
+    *** A FOLDER IS A FILE LOCATION. A SERIAL IS AN IDENTITY. *** Lanes SHARE a folder by design
+    (they read the same role docs) and do NOT share a registration. Folding a lane onto its base
+    folder-name is RV-0048 F-024: it made lane zombies immortal AND made deregistering a lane kill
+    its BASE agent. register_agent stores the FULL suffixed serial; this must agree with it.
+
+    A suffixed serial is returned VERBATIM. An unsuffixed one may be canonicalised via the folder
+    (so a partial like '0.4.0_DS' resolves to '0.4.0_DS_ClientPlatform') -- that path cannot cross
+    identities, because a base serial has no lane to be confused with.
+    """
+    if _instance_suffix(agent_serial):
+        return agent_serial
+    return folder_name or agent_serial
+
+
 def _resolve_agent_folder(agent_serial: str) -> Path | None:
     """Find an agent's folder across all tier directories.
     Instance suffixes (e.g., ~B) are stripped before lookup so all instances
@@ -976,8 +993,29 @@ async def deregister_agent(
     if not (caller.startswith("1.0.0") or caller.startswith("2.0.0")):
         return f"Denied: only CTO/COO can deregister agents. Caller: {caller or '(not registered)'}"
 
+    # =====================================================================================
+    # RV-0048 F-024 (CTO, 2026-07-13 -- IT DEREGISTERED *ME*, MID-INCIDENT).
+    #
+    # THE BUG: `resolved = _resolve_agent_folder(x).name` -- and _resolve_agent_folder looks up
+    # by _base_serial(), which STRIPS the ~lane suffix. So `resolved` was always the BASE serial,
+    # and it was then used as the LIVENESS KEY, the BROKER KEY, and the POLLER-KILL PATTERN.
+    # Meanwhile register_agent (:770-773) registers under the FULL serial, WITH the suffix.
+    #   register writes '1.0.0_SA_CTO~B'   ...   deregister deleted '1.0.0_SA_CTO'
+    # CONSEQUENCE, both halves live:
+    #   (a) a LANE could never be deregistered -- its zombie registration was structurally immortal;
+    #   (b) every attempt to clean a lane zombie SILENTLY KILLED ITS BASE AGENT INSTEAD.
+    # Exercised for real during the 2026-07-13 post-crash recovery: deregister_agent("1.0.0_SA_CTO~B")
+    # returned "Deregistered 1.0.0_SA_CTO", removed the CTO's liveness record and killed 2 of his
+    # pollers -- while the CTO was the agent performing the recovery. deregister is restricted to
+    # CTO/COO, and CTO~B is a LANE OF CTO, so *the one authorized survivor, cleaning up the zombie he
+    # is most likely to meet, deregisters himself.* The repair primitive self-destructs.
+    #
+    # THE ROOT CONFUSION: A FOLDER IS A FILE LOCATION. A SERIAL IS AN IDENTITY. They are not the
+    # same key, and deregistration is an act on the IDENTITY. Lanes share a folder (by design --
+    # they read the same role docs); they do NOT share a registration.
+    # =====================================================================================
     folder = _resolve_agent_folder(agent_serial)
-    resolved = folder.name if folder else agent_serial
+    resolved = _identity_key(agent_serial, folder.name if folder else None)
 
     removed_liveness = False
     removed_broker = False
