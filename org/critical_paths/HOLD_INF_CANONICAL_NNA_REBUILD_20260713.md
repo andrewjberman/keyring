@@ -1396,3 +1396,86 @@ THAT LOOKED ACROSS THEM.** *Per-project verification is structurally blind to a 
 5. BOTH gates re-verify.  THEN the one-shot -- verified BEFORE it stamps.
 ```
 **Owner: DS. No clock. The hold is now doing real work and everyone knows exactly what.**
+
+---
+
+# AMEND 23 (2026-07-13T14:57Z, COO) — **THE EFFECTIVE DATE DOES NOT EXIST. ZERO, NOT SPARSE.** + ANDREW-DIRECT: **INF's SYSTEM LISTS NOEL AS `soderblom_iwm`.**
+
+## 1. ANDREW-DIRECT (verbatim, interactive session, ~14:53Z — recorded + broadcast same turn)
+> **"noel_soderblom is what he should be listed as, that is his name as an advisor, i just noticed that inf listed
+> him as soderblom_iwm in their system"**
+```
+CANONICAL advisor key (ours, CORRECT)  ->  noel_soderblom
+INFLECTION'S OWN SYSTEM lists him as   ->  soderblom_iwm      <- the RAW vendor value
+```
+**NOT a rename. A RAW-vs-CANONICAL mapping fact about the AoR source field (`udf7ADVISOROF`).**
+
+**WHY IT IS OPERATIONALLY LIVE, and it is the phantom's shape one layer along:**
+1. **An unmapped raw vendor string can land on the served spine AS AN ADVISOR KEY** — *a value that looks like an
+   advisor and is not one; `inflection_unmapped_rep` wearing a vendor's naming convention.*
+2. **Or Noel's NNA SPLITS across two keys for ONE HUMAN** — and **`sum(advisors) == firm_total` ties to the cent
+   THROUGH the split.** > ***A conservation invariant cannot detect a conserved SPLIT.***
+3. **AND THE LOCK WOULD STAMP WHICHEVER KEY IT SAW — FOREVER.**
+*(The seam EXISTS: `aor_resolution` carries `advisor_of_record_raw` alongside `advisor_of_record`. The open question
+is whether the MAP exists and whether an UNMAPPED raw value **RAISES** or gets served. **It must RAISE.**)*
+
+> **AND IT LANDS ON BOTH LANES' FIXTURES: CVO~B's proven-RED and DS's architecture are BOTH keyed on the string
+> `noel_soderblom`. If the source emits `soderblom_iwm`, a fixture keyed on `noel_soderblom` CANNOT GO RED FOR THE
+> RIGHT REASON.** *Both told to check it before trusting either.*
+
+## 2. 🔴 **THE EFFECTIVE DATE DOES NOT EXIST. NOT SPARSE — ZERO.** (CVO~B + DS, independently, both positive-controlled)
+```
+RESOLUTION_COLS   -> NO effective/transfer date. `as_of` is THE RUN DATE, not "when did this become Noel's."
+AoR EVENT LEDGER  -> s3://opal-data-inf/gold/dimensions/aor_ledger/  ->  *** 0 OBJECTS ***
+                     POSITIVE CONTROL: gold/dimensions/ -> 7 objects. THE ZERO IS A REAL ABSENCE.
+                     (The resolver has NEVER run in prod. aor_resolution.parquet: NoSuchKey.)
+AoR SSOT          -> Orion `udf7ADVISOROF` -- a CURRENT-STATE custom field.
+                     inflection_rep_scope:130 -- THE NIGHTLY PULL DOES NOT EVEN CARRY IT.
+```
+> ## **`udf7ADVISOROF` SAYS *"NOEL IS THE ADVISOR OF RECORD."* IT DOES NOT SAY *WHEN HE BECAME IT*. FOR ANY ACCOUNT. EVER.**
+*(DS confirms the SCHEMA is right — `EVENT_COLS` carries `event_date` + `prior_advisor_of_record`, a real
+effective-from record. **The ledger has simply never run. The schema is correct and the store is empty.**)*
+
+## 3. >> **CVO~B NAMED THE TRAP SIXTY SECONDS BEFORE DS WALKED INTO IT. THEIR MESSAGES CROSSED.** <<
+- **DS (14:51Z):** *"the roster timeline is the ONLY reconstruction of history that exists"* → derive effective-from
+  from the 70 `accounts_v2` snapshots.
+- **CVO~B (14:50Z):** *"the natural move is 'use the `accounts_v2` rep_id change as the transfer date.' **IT DOES NOT
+  WORK, AND IT WOULD LOOK LIKE IT DID.**"*
+
+**COO VERIFIED AT SOURCE — she is right:** `_INF_REP_ID_TO_ADVISOR_KEY = {3: iwm, 6: joe, 11: patrick, 12: peter}`.
+> ## **THERE IS NO NOEL. His 61 accounts still show `peter_lee` as SERVICING rep and have NO ROSTER CHANGE TO KEY ON.**
+> **SERVICING REP AND ADVISOR-OF-RECORD ARE DIFFERENT FIELDS WITH DIFFERENT HISTORIES, AND ONE IS NOT A PROXY FOR THE OTHER.**
+**The roster timeline CANNOT date Noel. DS's architecture has a hole exactly where the defect is.** *Collided; both
+lanes now hold both halves.*
+
+> ## **AN INVENTED TRANSFER DATE IS AN INVENTED ATTRIBUTION — ON A SERVED NUMBER, FROZEN FOREVER BY THE LOCK.**
+> *"The phantom sin wearing a date instead of a name — and this time there is no `inflection_unmapped_rep` in the
+> output to give it away. **IT WOULD BE INVISIBLE.**"* **That is why nobody builds until Andrew rules.**
+
+## 4. THE THREE OPTIONS — **SOVEREIGN. NOBODY BUILDS. NOBODY ADJUDICATES.**
+```
+(C) FIND THE REAL DATE   Does Orion carry an effective/as-of date on udf7ADVISOROF? NOBODY HAS LOOKED.
+                         *** REQUIRES ANDREW'S EXPLICIT PER-USE WORD -- it is a VENDOR API. ***
+(B) DO NOT AoR-FOLD NNA AT ALL   <- CVO~B's RECOMMENDATION, carried in her words:
+      "NNA is a FLOW: it belongs to whoever EARNED it -- the servicing rep at the time, WHICH WE DO HAVE
+       HISTORY FOR. AoR is about who OWNS the relationship NOW: use it for AUA / current-book views.
+       We are asking one field to answer both 'who owns it' and 'who earned it,' and it can only answer
+       the first."
+      >> "Stop overloading the symbol," one level up -- the THIRD time today that principle is the answer.
+      >> And it satisfies Andrew's ruling USING DATA WE ACTUALLY HAVE, which no other option can say.
+(A) FOLD FORWARD FROM FIRST OBSERVATION   Honest and evidenced, but UNDER-CREDITS Noel for any period he
+                                          held the account before we started looking. Must be DISCLOSED,
+                                          never buried. Second-best; only if (C) fails and (B) is rejected.
+```
+
+## 5. DS SHIPPED A RED SUITE AND REPORTED IT AGAINST HIMSELF
+> ***"The F10 census fired on `timelock_preview.py` and IT WAS RIGHT TO FIRE. I committed it anyway. I read the
+> commit-gate line and not the test line — the precise 'green suite' failure I have been hunting all day, committed
+> by me, in the tool whose entire job is to make an irreversible write safe."***
+
+**And he refused the easy disposition:** *"I am NOT writing a census exception yet, because the exception's REASON
+depends on the architecture being ratified... **A red suite is a blocker. It stays red until the disposition is a
+DECISION, not a CONVENIENCE.**"* **RATIFIED.**
+
+**Chain HELD. Nothing wired. Both gates OPEN. The one-shot stays un-run. `apply_time_lock` CALLED ZERO TIMES — and
+that remains the CORRECT state.**
