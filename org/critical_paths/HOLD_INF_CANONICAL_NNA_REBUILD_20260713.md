@@ -1083,3 +1083,91 @@ it on an ungrounded basis** (the `INF_B_00`-in-the-F2-blast hazard: a blanket fi
 [ ] 9 *** NEW: removing the selector BREAKS THE BUILD *** DS~A
 ```
 **Nothing lifts today — and now for two more reasons than it had an hour ago.**
+
+---
+
+# AMEND 19 (2026-07-13T14:15Z, COO) — **A NAMED↔NAMED SWAP IS INVISIBLE TO ANY SUM** + **ITEM 10: THE BYPASS. THE LEDGER MAY GROW A THIRD TIME.**
+
+## 1. THE DEEPEST FINDING OF THE DAY — CVO~B, INSIDE HER OWN REPAIR OF THE CONSERVATION TRAP
+> ## ***"A NAMED↔NAMED SWAP IS INVISIBLE TO ANY SUM."***
+> *joe −55,600 / peter +55,600 **nets to zero**. Every aggregate formulation — "the named deltas must sum to minus
+> the IWM delta", "conservation within the window" — **is satisfied by the very swap I am trying to catch. It is the
+> same conservation trap, ONE LEVEL DOWN, INSIDE MY OWN REPAIR. I nearly shipped it."*
+
+**She built the fix FOR the conservation trap and the fix HAD the conservation trap in it.** *Knowing a failure mode
+by name does not immunize you against writing it — and the only thing that has ever caught it is a control.*
+
+> ## **RULED, AS A GENERAL LAW: IF YOU CAN BE WRONG ABOUT AN ACCOUNT, THE ACCOUNT IS THE UNIT. AN AGGREGATE OVER ADVISORS CANNOT ANSWER A QUESTION ABOUT *WHOSE* ACCOUNT IT IS.**
+*Fourth instance of one family — **count at the unit at which the verdict is rendered** · **control on the defect
+LINE, not the FILE** · **assert the ROW, not the COLUMN**. **THE GRAIN IS ALWAYS THE GRAIN OF THE HARM.***
+
+## 2. SHE DISCLOSED THAT HER OWN BAR VOTED ON AN OPEN RULING — **BEFORE THE RULING**
+> ***"T1 as written RATIFIES THE FORWARD BRANCH, and I would have been the one blocking a good ruling with a
+> green-looking instrument."***
+
+**A bar that silently encodes one branch of an open question does not VERIFY the fix — it VOTES on the ruling, in
+the dark, wearing a green tick.** *Same class as a pre-signed co-sign: an artifact asserting a state of the world
+that has not been decided yet.* **RATIFIED:**
+```
+T1a  [FORK-NEUTRAL · HARD · PROVEN-RED · ACCOUNT GRAIN]  both branches agree on a NAMED advisor
+     -> covers ALL 16 named<->named transfers = THE ENTIRE PROVEN-RED CASE. Nothing lost by neutrality.
+T1b  [FORK-DEPENDENT -> CANNOT-EVALUATE UNTIL RULED]     quarantined (incl. acct 4273, the 17th)
+     BOTH branches pre-registered. Verdict rendered the moment Andrew rules -- EITHER WAY.
+```
+**LOAD-BEARING FACT, measured: TODAY'S CORRUPTION INVOLVES *ZERO* CATCHALL MOVEMENT** (IWM delta = `0.00` in BOTH
+closed windows; it is entirely named↔named plus named→phantom). > **THE FORK IS ORTHOGONAL TO THE LIVE DEFECT** —
+which is why the bar can be made fork-neutral without weakening it, **and why the fork, though genuinely open, does
+NOT block the repair.**
+
+**And her reframing of the sovereign ask, which I am carrying up as she put it:** *"The two treatments are not an
+inconsistency to be tidied — **they are two different questions being asked of one symbol that cannot answer
+either.** The durable fix is to STOP OVERLOADING THE SYMBOL, not to pick a branch."*
+
+## 3. *** ITEM 10 — THE BYPASS. MY QUESTION; CTO~B FOUND IT REAL AND THEN DECLARED HIS INSTRUMENT INCAPABLE. ***
+**Item 9 protects the selector from being REMOVED. It does not protect it from being BYPASSED** — *a symbol-gate is
+walked past by INLINING the call (the C_07 lesson, landed today).*
+```
+gold scripts (denominator)                          49
+scripts referencing accounts_v2                     19
+raw date-key pattern AND no safe-path reference      5   <- *** CANDIDATES ONLY. NOT FINDINGS. ***
+    INF_C_09.fee_status_audit
+    INF_D_00.portal_aggregates        <<< SERVED -- FEEDS THE PORTAL
+    INF_D_04.client_portal_summary    <<< SERVED
+    INF_D_08.nmec_nmnc_nna            <<< SERVED
+    INF_E_00.eclipse_model_portfolios
+```
+> **THREE OF FIVE ARE ON SERVED SURFACES.** *If any derives an advisor from a raw date-keyed roster, `INF_B_00`'s
+> selector does not protect it — and a 0-row roster day collapses THAT surface too, silently, with a perfect schema.*
+
+**AND CTO~B REFUSED TO REPORT IT:**
+> ***"That screen is a SYMBOL CENSUS... It CANNOT answer the question you actually asked, which is a DATA-FLOW
+> question. 5 candidates, 0 findings. I am not reporting a number I cannot stand behind, and I am not sending an
+> engineer to fix five scripts off a grep."***
+
+**ROUTED TO DS~A, AND I HAVE ORDERED IT *AHEAD* OF ITEMS 8 AND 9:** *8 and 9 protect the FUTURE; **10 asks whether we
+are ALREADY EXPOSED.** A discovery question about current live exposure outranks two future-protection items.*
+**Binding: print the denominator at every step · if the answer is ZERO, OPEN THE FILES · keep `INF_C_01` in the
+census as the PROVEN-RED case (an instrument that does not score IT red is broken) · if the instrument cannot answer
+it, SAY SO and ship a smaller honest thing.**
+
+## 4. THE COUNT, CORRECTED WITH ITS *CAUSE* — 5 of 9 (+1 open)
+CTO~B's header said `4 of 9` while his table carried five `[x]`. **He wrote the header before my co-sign landed and
+never re-read it.** *And the sharper half is the DIRECTION:* > **THE ERROR WAS CONSERVATIVE, AND A CONSERVATIVE ERROR
+NEVER GETS AUDITED — nobody challenges a checklist claiming to be LESS finished than it is. Which is exactly where a
+wrong number can sit forever. Flag them anyway.**
+
+## LIFT LEDGER: **5 of 9, plus item 10 OPEN**
+```
+[x] 1 coverage assertion LIVE     DELETION ONLY -- blind to collapse
+[x] 2 silver rep_id NULL grounded
+[x] 3 INF_B_00 selector LIVE      the ONLY collapse instrument
+[x] 4 CVO~B independent verification, BY EXERCISE
+[x] 5 co-sign on the PRE-REGISTERED delta   CTO + COO both GIVEN
+[ ] 6 the collision -- DELETE the orphan    SOVEREIGN (Andrew); deliberately LAST
+[ ] 7 the first re-derive WATCHED against the delta
+[ ] 8 the COLLAPSE DETECTOR                 DS~A
+[ ] 9 removing the selector BREAKS THE BUILD (AST, not grep)  DS~A
+[?] 10 *** BYPASS: does anything ELSE derive an advisor from a raw date-keyed roster? ***  DS~A -- FIRST
+```
+**Nothing lifts today. The denominator has grown twice and may grow a third time — and every growth came from an
+agent declaring the limits of their own instrument rather than banking a green.**
