@@ -69,7 +69,11 @@ CMD=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.command // empty' 2>/dev/null
 [ -z "$CMD" ] && exit 0
 
 WS="${CLAUDE_PROJECT_DIR:-$(cd "$SCRIPT_DIR/../.." 2>/dev/null && pwd)}"
-AUDIT="$WS/org/git-author-override-audit.log"
+# NEVER_GATE_AUDIT lets the TEST SUITE route its override records to a scratch file. Without it the
+# suite appends to the governance log on every run -- and OVERRIDE_REVIEW (the instrument MSTR is
+# required to walk every review) then reads its own test fixtures as real overrides. An instrument
+# whose test suite poisons its evidence base, append-only, cannot be audited. (RV-0048 F-020.)
+AUDIT="${NEVER_GATE_AUDIT:-$WS/org/git-author-override-audit.log}"
 SHARED_BRANCHES='^(CLOUD|DEV|PROD|main|master)$'
 
 deny() {
@@ -135,25 +139,80 @@ _strip_heredocs() {
       }
     '
 }
-_simple_commands() {
+
+# =========================================================================================
+# *** RV-0048 F-019: THE OVERRIDE MARKER WAS A UNIVERSAL DISARM. ***
+# The marker used to be grepped against the WHOLE COMMAND, ahead of every rule, with an
+# unconditional `exit 0`. So ONE occurrence of that text ANYWHERE -- a comment on an unrelated
+# line, a quoted string inside an echo, a commit message -- waived rebase AND pull AND stash AND
+# clean AND terraform AND commit-msg. All of them. Exercised by MSTR with an isolated control:
+#   CONTROL  `terraform apply` + `git stash push`, no marker                      -> DENY
+#   BROKEN   the SAME two hazards + `# never-override: scratch cleanup` on a
+#            DIFFERENT line (authorizing a scratch REBASE, not these)             -> PASS
+#   BROKEN   a real `git stash push`, marker merely QUOTED INSIDE AN ECHO         -> PASS
+# An agent legitimately overriding ONE thing silently waived the terraform and stash gates.
+#
+# >> IT IS THIS FILE'S OWN RULE, ONE LEVEL UP. << The comment 40 lines above says: "AN EXCLUSION
+# EVALUATED OVER A WIDER SCOPE THAN THE MATCH IT EXCUSES IS A DISARM VECTOR -- scope the excuse to
+# the same unit as the match; the unit is the SIMPLE COMMAND." I applied that to the stash/clean
+# ALLOWLIST and did not apply it to the MARKER -- which is the maximal exclusion in the file, the
+# one that excuses EVERY match. *** KNOWING A FAILURE MODE BY NAME DOES NOT IMMUNIZE YOU AGAINST
+# WRITING IT *** (CLAUDE.md Rule 22a, landed by me, hours before I shipped this).
+#
+# THE FIX: the marker is now evaluated PER SIMPLE COMMAND, exactly like every other excuse.
+# A marker on the `git rebase` line excuses THAT rebase and NOTHING ELSE; a `terraform apply` on
+# the next line still denies. There is no whole-command pre-emptive exit.
+#
+# AND F-020: the audit log now records an override ONLY when the marker actually SUPPRESSED A REAL
+# MATCH. It used to write a NEVER-OVERRIDE record on every MENTION -- census-by-mention wearing an
+# audit trail's clothes, on the append-only log that OVERRIDE_REVIEW reads as its evidence base.
+# =========================================================================================
+OVERRIDE_RE='#[[:space:]]*never-override:'
+
+# Simple commands with COMMENTS PRESERVED -- the marker lives in a comment, so it must survive the
+# split. (Comments are stripped per-command below, AFTER the marker is read off the raw text.)
+_simple_commands_raw() {
     printf '%s\n' "$CMD" \
       | _strip_heredocs \
-      | sed -E 's/#.*$//' \
       | sed -E 's/(\|\||&&|;|\|)/\n/g'
 }
-offending_lines() {
-    _simple_commands | grep -E "$1" | grep -vE "$2"
+
+audit_override() {   # <rule> <the simple command that carried the marker>
+    local reason
+    reason=$(printf '%s' "$2" | sed -n 's/.*#[[:space:]]*never-override:[[:space:]]*\(.*\)/\1/p' | head -1)
+    {
+        printf '%s NEVER-OVERRIDE serial=%s rule=%s reason=%s cmd=%s\n' \
+            "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "${OPAL_AGENT_SERIAL:-UNKNOWN}" \
+            "$1" "${reason:-<none>}" "$2"
+    } >> "$AUDIT" 2>/dev/null || true
 }
 
-# --- audited override -------------------------------------------------------------------
-if printf '%s' "$CMD" | grep -qE '#[[:space:]]*never-override:'; then
-    REASON=$(printf '%s' "$CMD" | sed -n 's/.*#[[:space:]]*never-override:[[:space:]]*\(.*\)/\1/p' | head -1)
-    {
-        printf '%s NEVER-OVERRIDE serial=%s reason=%s cmd=%s\n' \
-            "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "${OPAL_AGENT_SERIAL:-UNKNOWN}" "${REASON:-<none>}" "$CMD"
-    } >> "$AUDIT" 2>/dev/null || true
-    exit 0
-fi
+# scan <rule> <excuse-re|""> <match-re>...
+#   Prints the SIMPLE COMMANDS where EVERY <match-re> matches (all on that one command), which are
+#   not excused by <excuse-re>, and which do not carry the override marker.
+#   A marker on the SAME simple command suppresses THAT command only, and is AUDITED as a real
+#   override. Empty output => nothing to block.
+#   Requiring all match-res to hit ONE simple command is what stops three independent whole-command
+#   greps ("git commit" here, "-m" there, "$(" in an unrelated echo) from conspiring into a verdict.
+scan() {
+    local rule="$1" excuse="$2"; shift 2
+    local sc code re ok
+    while IFS= read -r sc; do
+        printf '%s' "$sc" | grep -qE -- '[^[:space:]]' || continue
+        code=$(printf '%s' "$sc" | sed -E 's/#.*$//')     # a comment is not a command
+        ok=1
+        for re in "$@"; do
+            printf '%s' "$code" | grep -qE -- "$re" || { ok=0; break; }
+        done
+        [ "$ok" -eq 1 ] || continue
+        if [ -n "$excuse" ] && printf '%s' "$code" | grep -qE -- "$excuse"; then continue; fi
+        if printf '%s' "$sc" | grep -qE -- "$OVERRIDE_RE"; then
+            audit_override "$rule" "$sc"
+            continue
+        fi
+        printf '%s\n' "$sc"
+    done < <(_simple_commands_raw)
+}
 
 # --- resolve the target repo's branch ----------------------------------------------------
 # Honour `git -C <path>` so a portal command is judged against portal's branch, not the parent's.
@@ -172,25 +231,28 @@ BRANCH=$(git -C "$REPO" rev-parse --abbrev-ref HEAD 2>/dev/null || echo UNKNOWN)
 # Match the SUBCOMMAND POSITION, never the word. `git [opts] rebase` / `git [opts] -C x rebase`.
 # `git commit -m "...rebase..."` cannot match: the token after git (modulo -flags) is `commit`.
 # =========================================================================================
-IS_REBASE=0
-printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(])git([[:space:]]+-[^[:space:]]+|[[:space:]]+-C[[:space:]]+[^[:space:]]+)*[[:space:]]+rebase([[:space:]]|$)' && IS_REBASE=1
-# `git pull --rebase` (any flag order, up to the next command separator)
-printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(])git([[:space:]]+-[^[:space:]]+|[[:space:]]+-C[[:space:]]+[^[:space:]]+)*[[:space:]]+pull[^;|&]*--rebase' && IS_REBASE=1
+_GIT='(^|[[:space:];|&(])git([[:space:]]+-[^[:space:]]+|[[:space:]]+-C[[:space:]]+[^[:space:]]+)*[[:space:]]+'
+# `git rebase`, or `git pull ... --rebase` (any flag order, up to the next command separator).
+_RE_REBASE="${_GIT}"'(rebase([[:space:]]|$)|pull[^;|&]*--rebase)'
+_RE_PULL="${_GIT}"'pull([[:space:]]|$)'
 
-if [ "$IS_REBASE" -eq 1 ]; then
-    if printf '%s' "$BRANCH" | grep -qE "$SHARED_BRANCHES"; then
-        deny "BLOCKED (CLAUDE.md NEVER#7): rebase on the SHARED branch '$BRANCH' ($REPO). Rebase REWRITES multi-agent history -- a non-conflicting result is luck, not correctness, and a silent non-conflicting rebase is INDISTINGUISHABLE from an honest merge, so this gate is the only detector. Rejected push? Use: git pull (merge), then re-push. Legitimate local-only rebase on a scratch branch is NOT blocked (this fired because HEAD is '$BRANCH'). Audited override: append '# never-override: <reason>' to the command."
+# *** NO EARLY `exit 0` HERE. IT WAS A SECOND DISARM VECTOR, AND NOBODY NAMED IT (CTO, self-found
+# while fixing F-019). The old code did:
+#       if IS_REBASE; then  (deny if shared);  exit 0  # "a scratch rebase is your own business"
+# -- and that `exit 0` returned from THE WHOLE HOOK, skipping the stash, clean, terraform and
+# commit-msg gates. So on a scratch branch, `git rebase -i HEAD~1 && terraform apply` sailed
+# straight past the terraform gate. The rebase verdict is a verdict about the REBASE; it must never
+# be a verdict about the rest of the command. Same class as F-019 through a different door:
+# A CONTROL-FLOW SHORTCUT IS AN EXCLUSION TOO, AND IT WAS SCOPED TO THE WHOLE COMMAND. ***
+if printf '%s' "$BRANCH" | grep -qE -- "$SHARED_BRANCHES"; then
+    if [ -n "$(scan REBASE '' "$_RE_REBASE")" ]; then
+        deny "BLOCKED (CLAUDE.md NEVER#7): rebase on the SHARED branch '$BRANCH' ($REPO). Rebase REWRITES multi-agent history -- a non-conflicting result is luck, not correctness, and a silent non-conflicting rebase is INDISTINGUISHABLE from an honest merge, so this gate is the only detector. Rejected push? Use: git pull (merge), then re-push. Legitimate local-only rebase on a scratch branch is NOT blocked (this fired because HEAD is '$BRANCH'). Audited override: append '# never-override: <reason>' to the SAME simple command."
     fi
-    exit 0   # non-shared branch -> a rebase is the author's own business
-fi
 
-# `git pull` BARE while pull.rebase=true silently rebases (CLAUDE.md NEVER#7; headmove-guard has pull x0).
-if printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(])git([[:space:]]+-[^[:space:]]+|[[:space:]]+-C[[:space:]]+[^[:space:]]+)*[[:space:]]+pull([[:space:]]|$)'; then
-    if ! printf '%s' "$CMD" | grep -qE -- '--no-rebase'; then
-        PR=$(git -C "$REPO" config --get pull.rebase 2>/dev/null || echo "")
-        if [ "$PR" = "true" ] && printf '%s' "$BRANCH" | grep -qE "$SHARED_BRANCHES"; then
-            deny "BLOCKED (CLAUDE.md NEVER#7): 'git pull' on shared branch '$BRANCH' with pull.rebase=true SILENTLY REBASES -- this is the cell nobody types and nobody gated (headmove-guard.sh carries 'pull' x0, and the remedy for a rejected push sends you straight here). Use: git pull --no-rebase. Or fix the config: git config pull.rebase false. Audited override: '# never-override: <reason>'."
-        fi
+    # `git pull` BARE while pull.rebase=true silently rebases (NEVER#7; headmove-guard has pull x0).
+    PR=$(git -C "$REPO" config --get pull.rebase 2>/dev/null || echo "")
+    if [ "$PR" = "true" ] && [ -n "$(scan PULL_REBASE_CFG '--no-rebase' "$_RE_PULL")" ]; then
+        deny "BLOCKED (CLAUDE.md NEVER#7): 'git pull' on shared branch '$BRANCH' with pull.rebase=true SILENTLY REBASES -- this is the cell nobody types and nobody gated (headmove-guard.sh carries 'pull' x0, and the remedy for a rejected push sends you straight here). Use: git pull --no-rebase. Or fix the config: git config pull.rebase false. Audited override: '# never-override: <reason>'."
     fi
 fi
 
@@ -222,8 +284,7 @@ fi
 # ALLOWED: `git stash list` / `show` (read-only), and `pop` / `apply` / `drop` (the RECOVERY
 # path -- never block recovery; same rule as NFRA_IDENTITY G-A direction-2).
 # =========================================================================================
-_GIT='(^|[[:space:];|&(])git([[:space:]]+-[^[:space:]]+|[[:space:]]+-C[[:space:]]+[^[:space:]]+)*[[:space:]]+'
-if [ -n "$(offending_lines "${_GIT}stash([[:space:]]|$)" 'stash[[:space:]]+(list|show|pop|apply|drop|branch|clear)')" ]; then
+if [ -n "$(scan STASH 'stash[[:space:]]+(list|show|pop|apply|drop|branch|clear)' "${_GIT}"'stash([[:space:]]|$)')" ]; then
     if true; then
         deny "BLOCKED (shared-worktree blast rule): 'git stash' PARKS EVERY DIRTY FILE IN THE REPO -- including other agents' UNSAVED WORK. This is a multi-agent tree; on 2026-07-13 one 'git stash' parked 38 files across DS/AE/CTO lanes during a live release (a gate-1 verdict, a test, an OPEN deploy ledger). It LOOKS read-only and reversible and it is NEITHER -- and its 'pop' is not guaranteed clean. IF YOU WANT TO SEE A FILE'S COMMITTED STATE, DO NOT TOUCH THE WORKING TREE: use 'git show HEAD:<path>' (pipe it: git show HEAD:.tools/x.py | ruff check -). IN A SHARED WORKTREE, ANY COMMAND THAT MUTATES GLOBAL STATE TO ANSWER A LOCAL QUESTION IS A HAZARD. (stash list/show/pop/apply/drop are NOT blocked -- read + recovery are fine.) Audited override: '# never-override: <reason>'."
     fi
@@ -236,7 +297,7 @@ fi
 # "LOOK BEFORE YOU DELETE", the exact safe behaviour this gate wants to encourage. A guard that
 # punishes the cautious form pushes people to the destructive one. (Caught by the test's PASS arm;
 # every DENY arm was green and it would have shipped.) Excuse is LINE-SCOPED, per offending_lines.
-if [ -n "$(offending_lines "${_GIT}clean([[:space:]]|$)" '(^|[[:space:]])(-[a-zA-Z]*n[a-zA-Z]*|--dry-run)([[:space:]]|$)')" ]; then
+if [ -n "$(scan CLEAN '(^|[[:space:]])(-[a-zA-Z]*n[a-zA-Z]*|--dry-run)([[:space:]]|$)' "${_GIT}"'clean([[:space:]]|$)')" ]; then
     if true; then
         deny "BLOCKED (shared-worktree blast rule): 'git clean' DELETES UNTRACKED FILES -- in a multi-agent tree that is another agent's not-yet-committed NEW work, and unlike 'git stash' there is NO stash to pop it back from. It is unrecoverable. Dry-run ('git clean -n') is NOT blocked -- look first. If you must delete specific files, name them explicitly with rm. Audited override: '# never-override: <reason>'."
     fi
@@ -251,7 +312,7 @@ fi
 # LINE-SCOPED excuse (see offending_lines): a bare `terraform apply` on one line was previously
 # excused by the string "safe-apply" appearing ANYWHERE else in the command -- a comment, an echo,
 # even a message explaining why the apply was unsafe. Same disarm vector as the stash gate.
-if [ -n "$(offending_lines '(^|[[:space:];|&(/\\])(terraform(\.exe)?)[[:space:]]+(apply|destroy)([[:space:]]|$)' 'safe-apply|safe-destroy')" ]; then
+if [ -n "$(scan TERRAFORM 'safe-apply|safe-destroy' '(^|[[:space:];|&(/\\])(terraform(\.exe)?)[[:space:]]+(apply|destroy)([[:space:]]|$)')" ]; then
     if true; then
         deny "BLOCKED (CLAUDE.md NEVER#3): bare 'terraform apply/destroy'. Use .tools/safe-apply.sh (or safe-destroy.sh) -- it carries the HALTGT inbox checkpoint at the last reversible moment, plus the pre-apply drift-plan check and the write-without-read paired-permission lint (Rule 22a). A bare apply skips ALL of it. NOTE: there is no terraform PATH shim -- .tools/terraform is the real binary on PATH, so nothing else stops this. Audited override: '# never-override: <reason>'."
     fi
@@ -265,9 +326,20 @@ fi
 # hook can. Text-matching is correct HERE and nowhere else, precisely because -F moves the body
 # OUT of the shell-parsed argument -- so the safe path needs no backtick in the command at all.
 # =========================================================================================
-if printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(/\\])(git([[:space:]]+-[^[:space:]]+|[[:space:]]+-C[[:space:]]+[^[:space:]]+)*[[:space:]]+commit|safe-commit(\.sh)?)([[:space:]]|$)'; then
-    if printf '%s' "$CMD" | grep -qE -- '(^|[[:space:]])-m([[:space:]]|=)'; then
-        if printf '%s' "$CMD" | grep -qE '`|\$\('; then
+# RV-0048 F-021: these three conditions used to be THREE INDEPENDENT WHOLE-COMMAND GREPS, so they
+# did not have to co-occur on the same command to convict. A perfectly safe `-F` commit sitting next
+# to an unrelated `echo "the id is $(id)"` supplied `git commit` from one line, `-m`... from wherever,
+# and `$(` from the echo -- and got DENIED. It fails CLOSED, so it was never a hole; but it blocks the
+# brief reporting the hazard, which is the ONE thing CLAUDE.md refuses ("the matcher fires on MENTIONS
+# ... including the one reporting this"), and it made the cell inline-untestable.
+# Now all three must hit ONE simple command -- which is exactly what a real `git commit -m "... $(id)"`
+# does, and what prose about it does not.
+_RE_COMMIT='(^|[[:space:];|&(/\\])(git([[:space:]]+-[^[:space:]]+|[[:space:]]+-C[[:space:]]+[^[:space:]]+)*[[:space:]]+commit|safe-commit(\.sh)?)([[:space:]]|$)'
+_RE_DASH_M='(^|[[:space:]])-m([[:space:]]|=)'
+_RE_META='`|\$\('
+if [ -n "$(scan COMMIT_MSG '' "$_RE_COMMIT" "$_RE_DASH_M" "$_RE_META")" ]; then
+    if true; then
+        if true; then
             deny "BLOCKED (CLAUDE.md Git / LD-0276): 'git commit -m' carrying a backtick or \$( -- A COMMIT MESSAGE IS AN EXECUTION VECTOR. The substitution is performed by the SHELL before git or safe-commit ever sees the argument, so it RUNS with your permissions and splices its stdout into the immutable record -- and a safe-commit lint structurally cannot catch it. Use -F instead: write the body to a file (heredoc -> file), then: safe-commit.sh --author \"...\" -F <file> -- <paths>. -F routes the body into a file the shell never parses, so the safe path needs no backtick in the command at all. (Yes, -m \"\$(cat <<'EOF'...)\" is technically inert -- it is still deprecated, because verifying it requires shell parsing and mandating -F makes the gate parse-free.) Audited override: '# never-override: <reason>'. Incident: MSTR corrupted 11c44632b writing the finding about this very hazard."
         fi
     fi

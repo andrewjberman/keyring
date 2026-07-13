@@ -10,8 +10,20 @@
 # documenting the hazard. If N2/N3 ever go red, the gate ships OFF.
 
 set -uo pipefail
-HOOK="$(cd "$(dirname "$0")/.." && pwd)/never-rules-gate.sh"
+# NRG_HOOK lets us drive the suite at a DIFFERENT build of the hook -- specifically the PREVIOUS
+# committed one -- to prove the new arms are PROVEN-RED. A test that has never been observed to fail
+# has not been shown it CAN fail. (CLAUDE.md: "a census never observed to say RED has not been shown
+# to be able to." Run it as: NRG_HOOK=/tmp/old-hook.sh bash tests/test_never_rules_gate.sh)
+HOOK="${NRG_HOOK:-$(cd "$(dirname "$0")/.." && pwd)/never-rules-gate.sh}"
 PASS=0; FAIL=0
+
+# *** RV-0048 F-020: THIS SUITE USED TO POISON THE EVIDENCE BASE IT IS AUDITED BY. ***
+# The hook appends every override to org/git-author-override-audit.log -- the append-only log that
+# OVERRIDE_REVIEW (MSTR's governance instrument) reads. This suite exercises overrides, so every run
+# wrote fixtures into it as if they were real bypasses. 6 such records existed; ALL were phantoms.
+# Route ours to a scratch file, and assert on it at the end.
+export NEVER_GATE_AUDIT="$(mktemp 2>/dev/null || echo "/tmp/nrg_audit_$$")"
+: > "$NEVER_GATE_AUDIT"
 
 # verdict: prints DENY or PASS for a given command string.
 #
@@ -124,6 +136,86 @@ git stash push -m wip'                                                          
 echo ""
 echo "OVERRIDE -- audited bypass must PASS:"
 check "never-override marker"             'git rebase -i HEAD~2  # never-override: scratch branch cleanup, CTO' PASS
+
+echo ""
+echo "*** RV-0048 F-019: THE OVERRIDE MARKER IS AN EXCLUSION. IT MUST BE SCOPED TO ITS OWN"
+echo "    SIMPLE COMMAND -- OR IT IS A UNIVERSAL DISARM: one string waives EVERY rule. ***"
+echo "  Found by 0.0.0_AB_MSTR by EXERCISING the gate, not by it biting. These arms are PROVEN-RED:"
+echo "  every one of them PASSED (fail-open) against the gate as shipped 2026-07-13."
+echo "  D and E are the disarms. G is the control that proves the override still WORKS -- without G,"
+echo "  a gate that simply ignored the marker entirely would score a perfect green here."
+check "F-019 D: marker QUOTED in an echo + a real stash" 'echo "append # never-override: reason to bypass the gate"
+git stash push -m wip'                                                                             DENY
+check "F-019 E: marker authorizes the REBASE, not the terraform" 'git rebase -i HEAD~2  # never-override: scratch cleanup
+terraform apply -auto-approve'                                                                     DENY
+check "F-019 E2: marker authorizes the REBASE, not the stash"    'git rebase -i HEAD~2  # never-override: scratch cleanup
+git stash push -m wip'                                                                             DENY
+check "F-019 F: CONTROL -- same two hazards, NO marker at all"   'terraform apply -auto-approve
+git stash push -m wip'                                                                             DENY
+check "F-019 G: CONTROL -- marker ON the hazard's OWN command"   'terraform apply  # never-override: DR drill, CTO'  PASS
+
+echo ""
+echo "*** F-022 (CTO, self-found while fixing F-019): THE REBASE GATE'S EARLY `exit 0` WAS A"
+echo "    SECOND UNIVERSAL DISARM. A rebase on a SCRATCH branch returned from the WHOLE HOOK,"
+echo "    skipping the stash / clean / terraform / commit-msg gates. ***"
+echo "  Cannot be observed on a shared branch (the rebase denies first), so these arms drive the"
+echo "  hook at a REAL scratch repo via 'git -C' -- the branch the hook itself resolves."
+SCRATCH=$(mktemp -d 2>/dev/null || echo "/tmp/nrg_scratch_$$")
+mkdir -p "$SCRATCH"
+git -C "$SCRATCH" init -q >/dev/null 2>&1
+git -C "$SCRATCH" checkout -q -b scratch >/dev/null 2>&1
+# An UNBORN HEAD makes `rev-parse --abbrev-ref HEAD` fail -- the hook then reads BRANCH=UNKNOWN,
+# which is not shared, so the arms would still work by ACCIDENT. Give it a real commit so the
+# scratch branch is a real branch and the arms test what they claim to test.
+git -C "$SCRATCH" -c user.email=t@t -c user.name=t commit -q --allow-empty --allow-empty-message -F /dev/null >/dev/null 2>&1
+if [ "$(git -C "$SCRATCH" rev-parse --abbrev-ref HEAD 2>/dev/null)" = "scratch" ]; then
+    check "F-022 scratch rebase alone -> allowed (your own business)" \
+        "git -C $SCRATCH rebase -i HEAD~1"                                                         PASS
+    check "F-022 scratch rebase must NOT disarm the terraform gate" \
+        "git -C $SCRATCH rebase -i HEAD~1
+terraform apply -auto-approve"                                                                     DENY
+    check "F-022 scratch rebase must NOT disarm the stash gate" \
+        "git -C $SCRATCH rebase -i HEAD~1
+git stash push -m wip"                                                                             DENY
+    rm -rf "$SCRATCH" 2>/dev/null || true
+else
+    FAIL=$((FAIL+1)); echo "  FAIL  F-022 setup: could not create a scratch repo -- ARMS NOT RUN (not a pass)"
+fi
+
+echo ""
+echo "*** RV-0048 F-021: the commit-msg gate's three conditions must CO-OCCUR on ONE simple"
+echo "    command. Three independent whole-command greps convicted a SAFE -F commit. ***"
+echo "  NOTE: the arm MUST carry a real -m, or it does not exercise the bug at all. My first version"
+echo "  omitted it, scored PASS against the OLD hook, and would have shipped as a green measuring"
+echo "  nothing. (A test that cannot encode the failing input reports PASS no matter what.)"
+check "F-021 safe -m commit + an unrelated \$( in an echo" 'safe-commit.sh --author "x" -m "plain message" -- a
+echo "the id is $(id)"'                                                                            PASS
+check "F-021 ...but a REAL commit -m with \$( still denies"  'safe-commit.sh --author "x" -m "fix $(id)" -- a'  DENY
+
+echo ""
+echo "*** RV-0048 F-020: THE AUDIT LOG MUST RECORD A REAL SUPPRESSION, NEVER A MENTION. ***"
+echo "  It is the evidence base for OVERRIDE_REVIEW. Census-by-mention on an append-only"
+echo "  governance log is not a bug in a report -- it is a permanently corrupted record."
+# `grep -c` PRINTS 0 AND EXITS 1 on no-match, so `|| echo 0` emitted "0\n0" and the arithmetic blew
+# up. It is the banked retrieval defect (CLAUDE.md Git: "grep -c prints 0 -- grep counted zero
+# matches IN AN ERROR MESSAGE"). Swallow the exit status, do not add a second value.
+_n_audit=$(grep -c 'NEVER-OVERRIDE' "$NEVER_GATE_AUDIT" 2>/dev/null || true)
+[ -z "$_n_audit" ] && _n_audit=0
+# The ONLY arms that legitimately override (marker on the SAME simple command as a real match):
+#   'never-override marker' (rebase on CLOUD) and 'F-019 G' (terraform) -- and F-019 E/E2 each
+#   legitimately override THEIR rebase limb (the terraform/stash limb is what still denies).
+# What must NEVER appear: an override record from F-019 D, where the marker is only QUOTED in an echo.
+if [ "$_n_audit" -gt 0 ]; then
+    PASS=$((PASS+1)); printf '  PASS  %-58s -> %s\n' "audit log records real overrides" "$_n_audit record(s)"
+else
+    FAIL=$((FAIL+1)); printf '  FAIL  %-58s -> %s\n' "audit log records real overrides" "0 (the override path never fired -- instrument break, not a pass)"
+fi
+if grep -q 'reason=reason to bypass the gate' "$NEVER_GATE_AUDIT" 2>/dev/null; then
+    FAIL=$((FAIL+1)); printf '  FAIL  %-58s -> %s\n' "F-020 a MENTION was audited as an override" "census-by-mention"
+else
+    PASS=$((PASS+1)); printf '  PASS  %-58s -> %s\n' "F-020 no mention audited as an override" "clean"
+fi
+rm -f "$NEVER_GATE_AUDIT" 2>/dev/null || true
 
 echo ""
 echo "================================================================"
