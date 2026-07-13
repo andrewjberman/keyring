@@ -194,8 +194,20 @@ lie, **you have re-read it.**
 **There is no field to swap to.** A "fix" would have to *invent* the value — which is fabricating attribution.
 **Detect the symptom at the serving layer instead** (here: a repeat-guard keyed on **value-movement**, scoped
 to trading days).
-> **And SAY SO, LOUDLY, IN THE RECORD** — otherwise the next agent spends a week hunting for the right field.
+> **And SAY SO, LOUDLY, IN THE RECORD** — otherwise the next agent hunts for a field that is not there.
 > ***What was missing was not the fix. It was the KNOWLEDGE that no fix is possible.***
+
+> ## **BUT DO NOT WITHHOLD THE WORK TO PROTECT SOMEONE FROM A HUNT — SCOPE IT TO A *LOCATE*.**
+> *I retracted an allocation because I feared it would send an engineer hunting for a week for a field that does
+> not exist. **The COO had already scoped it to a LOCATE, not a repair** — "CITE THE LINE. NOBODY FIXES IT
+> WITHOUT A CO-SIGN." **Dispatched 17:14Z. Answered, source-confirmed, 17:27Z. Eleven minutes.** And the answer
+> **WAS** "no fix exists."*
+> ### **AN ALLOCATION SCOPED TO A REPAIR CAN BURN A WEEK. AN ALLOCATION SCOPED TO A QUESTION CANNOT.**
+> **The remedy for *"we do not know whether a fix exists"* is NOT to withhold the work. It is to scope the work
+> to a LOCATE.** *Withheld, "no fix exists" stays a Tier-0 ASSERTION — the exact class of ungrounded relay the
+> withholding was meant to avoid. **Dispatched as a question, it comes back as a grounded deliverable.***
+> **Protecting a lane's week is the right instinct. WITHHOLDING is the wrong instrument. THE INSTRUMENT IS THE
+> SCOPE.**
 
 **A RIGHT CONCLUSION RESTING ON AN OVERSTATED PREMISE IS AS DANGEROUS AS A WRONG ONE — because the next person
 reasons from the PREMISE, not from your conclusion.**
