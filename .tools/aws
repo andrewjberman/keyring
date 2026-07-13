@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+# aws -- MSYS path-mangling guard shim (Andrew-direct 2026-07-13, 0.8.0_AE_CloudComp).
+#
+# THE CLASS THIS KILLS: Git Bash (MSYS) rewrites leading-/ arguments at the bash->native-exe
+# boundary, silently corrupting AWS NAMESPACE args -- /ecs/... log groups, /aws/lambda/...,
+# SSM /param/paths -- into C:/Program Files/Git/... paths. The call then errors (or worse,
+# returns empty and reads as "resource absent"). Months of recurring cost; CLAUDE.md's prose
+# remedy ("use PowerShell for leading-/ aws args") taxes every session and is forgotten.
+#
+# THE MECHANISM: MSYS mangles only when bash invokes a NATIVE exe. This shim is a BASH script,
+# so it receives argv UNMANGLED (bash->bash crossing converts nothing). It then:
+#   1. converts ONLY genuine local paths itself (drive-letter POSIX form /c/... or a path that
+#      exists on disk), preserving the old behavior where it was actually wanted;
+#   2. passes every other leading-/ arg LITERAL (the AWS namespace args -- the fix);
+#   3. execs the real AWS entry with MSYS_NO_PATHCONV=1 so MSYS converts NOTHING further.
+#      The launcher-breakage CLAUDE.md warns about (bare MSYS_NO_PATHCONV=1 aws) is sidestepped
+#      by invoking the real entry with a WINDOWS-FORM script path via python.exe directly.
+#
+# SCOPE: Git Bash only. PowerShell never resolves this file (extensionless, no PATHEXT match)
+# and keeps resolving Scripts\aws.cmd -- PowerShell was never broken and stays untouched.
+#
+# DEBUG: AWS_SHIM_DEBUG=1 aws <args...>  -> prints the resolved argv, does NOT execute.
+# ROLLBACK: delete this file; bash falls back to the Python Scripts launcher (pre-shim state).
+#
+# Tracked implementation + design brief:
+#   org/tier2_senior/0.8.0_AE_CloudComp/deliverables/AWS_SHIM_MSYS_MANGLING_20260713.md
+# (.tools/ shim file itself is gitignored -- the PATH entry pattern, mirroring comp-* shims.)
+set -uo pipefail
+
+# ---- resolve the REAL aws entry (first `aws` on PATH that is not this shim) ----------------
+_self="${BASH_SOURCE[0]}"
+REAL=""
+while IFS= read -r c; do
+    [ "$c" = "$_self" ] && continue
+    case "$c" in */.tools/aws) continue ;; esac
+    REAL="$c"; break
+done < <(which -a aws 2>/dev/null)
+if [ -z "$REAL" ]; then
+    echo "aws-shim ERROR: no real aws launcher found on PATH beyond the shim" >&2
+    exit 127
+fi
+
+# ---- selective arg conversion: local paths convert, AWS namespace args pass literal ---------
+_convert_if_local() {
+    # $1 = a leading-/ path candidate. Convert iff drive-letter POSIX form (/c/...) or it exists
+    # locally in the MSYS view. Everything else (e.g. /ecs/globgrph, /aws/lambda/x) is LITERAL.
+    local p="$1"
+    if [[ "$p" =~ ^/[A-Za-z]/ ]] || [ -e "$p" ]; then
+        cygpath -w "$p" 2>/dev/null || printf '%s' "$p"
+    else
+        printf '%s' "$p"
+    fi
+}
+
+args=()
+for a in "$@"; do
+    case "$a" in
+        file:///*|fileb:///*)
+            scheme="${a%%//*}//"
+            p="${a#*//}"
+            args+=("${scheme}$(_convert_if_local "$p")")
+            ;;
+        /*)
+            args+=("$(_convert_if_local "$a")")
+            ;;
+        *)
+            args+=("$a")
+            ;;
+    esac
+done
+
+if [ "${AWS_SHIM_DEBUG:-0}" = "1" ]; then
+    printf 'aws-shim real-entry: %s\n' "$REAL"
+    printf 'aws-shim argv: '
+    printf '[%s] ' "${args[@]}"
+    printf '\n'
+    exit 0
+fi
+
+# ---- exec: NOTHING further converts (MSYS_NO_PATHCONV=1); launcher gets a Windows-form path --
+case "$REAL" in
+    *.exe)
+        MSYS_NO_PATHCONV=1 exec "$REAL" "${args[@]}"
+        ;;
+    *)
+        # pip-installed python-script entry: invoke via python with the WINDOWS-FORM script path
+        # (this is exactly why bare `MSYS_NO_PATHCONV=1 aws` breaks -- the shebang hop hands
+        # python an unconverted POSIX path; we hand it a Windows one).
+        MSYS_NO_PATHCONV=1 exec python "$(cygpath -w "$REAL")" "${args[@]}"
+        ;;
+esac
