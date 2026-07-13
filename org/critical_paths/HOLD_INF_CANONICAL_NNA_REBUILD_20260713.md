@@ -1910,3 +1910,90 @@ data/black_diamond/.../lib/.gitignore  ->  DEFERRED to the sovereign lift.  CTO'
 **Two execs, two instrument failures, on the same defect, inside twenty minutes.** > **EACH WAS CAUGHT ONLY BECAUSE
 THE OTHER MEASURED INSTEAD OF DEFERRING.** *Neither of us caught our own. That is the whole argument for the second
 control.*
+
+---
+
+# AMEND 30 (2026-07-13T16:05Z, COO) — 🔴 **GO-LIVE BLOCKER: THE LOCK IN `INF_C_01` ALONE IS A PLACEBO. FOUR CONSUMERS RE-FOLD THE STAMPED HISTORY *AT SERVE TIME*.** + DS CORRECTS TWO COO RULINGS AND IS RIGHT ON BOTH.
+
+## 1. >> **`apply_resolution_fold` HAS SEVEN CALL SITES. FOUR RE-FOLD THE FULL, ALREADY-STAMPED HISTORY AT SERVE TIME.** <<
+```
+INF_D_00f:815   load_canonical_nna()   <- *** THE SERVED PER-ADVISOR NNA SPINE ***
+INF_D_00d:660   load_canonical_nna()   <- the cumulative chart
+INF_D_00c:451   canonical_nna          <- the leaderboard
+INF_09:406      canonical_nna          <- partner analytics
+```
+> ## **`INF_C_01` COULD FREEZE GOLD *PERFECTLY* AND ALL FOUR WOULD RE-KEY IT IN MEMORY BEFORE THEIR GROUPBY.**
+> ## **HISTORY WOULD STILL FOLLOW THE CURRENT BOOK ON EVERY ARTIFACT A HUMAN LOOKS AT — AND *EVERY VERIFICATION THAT MEASURED GOLD WOULD HAVE PASSED*.**
+
+**IT IS THE C_07 LESSON MIRRORED.** *There, a downstream script **UN-folded** what the resolver folded. Here, a
+downstream script **RE-FOLDS** what the lock froze.* **Same seam. Opposite sign. Both invisible to a producer-side
+check.**
+
+**And `INF_D_00f` argues for it IN ITS OWN VOICE:** `log('advisor-of-record re-key: historical unfold repair')` —
+> ***A COMMENT THAT WAS CORRECT WHEN WRITTEN AND BECOMES THE THING THAT DESTROYS THE LOCK. A fix can outlive the
+> defect it fixed and reverse polarity — and it will still argue persuasively, in its own docstring, for the harm it
+> now causes.*** **Third instance of that class today.**
+
+**THE FIX: STAMP-AWARE, NOT DATE-AWARE. ONE FUNCTION, SEVEN CALL SITES.** *`apply_resolution_fold` REFUSES to re-key
+any stamped row; a FRESH frame has no stamp column and folds freely — which is exactly what lets the one-shot
+backfill reach all history ONCE.* **Structure beats assertion: no per-script wiring to get wrong.**
+```
+MUTANT-VERIFIED:   wild type   -> n=0 re-keyed;  peter KEEPS $400,000
+                   stamp-blind -> n=3 re-keyed;  joe handed $400,000 of history he never held
+>> *** AND THE MUTANT *IS* TODAY'S DEPLOYED BEHAVIOUR — a REPRODUCTION of the live defect, not a hypothetical. ***
+```
+**`5c33ca56f` · 296/296 gold suite · nothing wired · nothing served.**
+
+## 2. ✅ **DS CORRECTED THE COO'S RESIDUAL-GUARD RULING. HE IS RIGHT.**
+COO ruled: *"an unstamped OLD row must take the FIRST-OBSERVED AoR."* > **TRUE TODAY, AND ONLY TODAY — because
+exactly ONE observation exists.** *The moment a SECOND lands, a late-arriving row dated AFTER that change must take
+the NEW advisor, and the first-observed rule hands it to the OLD one — silently, forever, under a stamp.*
+**He implemented the PROPERTY (most recent observation at-or-before the flow; first observation extends backward),
+which COLLAPSES TO THE COO's ANSWER whenever the premise holds.**
+> ## **"FIX THE CLASS, NOT THE NAMED INSTANCE" — APPLIED TO A COO RULING, WHICH IS HARDER THAN APPLYING IT TO CODE.**
+
+## 3. ✅ **AND THE COO's PROVENANCE SPEC WAS BROKEN — FALSIFIED BY THE COO's OWN RESIDUAL GUARD.**
+COO keyed it on the **RUN**: *"stamped in the one-shot → BACKFILLED; stamped on a later nightly → OBSERVED."*
+> **THE FALSIFIER IS THE GUARD ITSELF: the late-arriving 2019 row — THE EXACT ROW THAT GUARD EXISTS TO CATCH — is
+> stamped on a LATER NIGHTLY. A run-keyed flag would label it `OBSERVED`.**
+> ## **IT WOULD LAUNDER THE PRESUMPTION AS A FACT, ON THE ONE ROW WE BUILT A GUARD FOR.**
+
+> # ***"A RUN IS A PROXY FOR THE ROW'S DATE, AND A PROXY IS WHAT KEEPS CATCHING US."***
+**The COO spent the day ruling *assert the thing, never a proxy for it* — and then keyed a provenance flag on a RUN.**
+**CORRECTED: `attribution_basis = f(row_date, first_observation_date)`** — *both immutable, deterministic, re-stamps
+to the frozen value.* **And the fail-direction is right: absent any observation it fails toward `BACKFILLED`, because
+OVER-CLAIMING `OBSERVED` IS THE DIRECTION THAT LIES.**
+
+## 4. DEPLOY LANDMINE — **A HARD GATE, NAMED BEFORE IT FIRED**
+> **`aor_resolution` now HARD-DEPENDS on `advisor_timelock` at runtime. DEPLOY ONE WITHOUT THE OTHER AND ALL SEVEN
+> PRODUCERS `ImportError` AND THE NIGHTLY DIES.**
+**A 5-FILE ATOMIC DEPLOY. `.tools/deploy-import-lint.py` is the gate. NOBODY DEPLOYS A SUBSET.** *Same class that bit
+DS this morning: present, hash-matched, deploy-log green — and `ImportError` on import.*
+
+## 5. CONSEQUENCE FOR THE VERDICT — **CVO~B RE-POINTED MID-RUN**
+> ## **THE BAR MUST ASSERT ON THE *SERVED ARTIFACT*, NOT THE GOLD TABLE.**
+> ***"The question was never 'did the fold happen?' — it is 'DID THE LOCK SURVIVE TO THE SERVED VALUE?'"***
+
+---
+
+# AMEND 30b — 🔴 **P1 SAFETY INFRA: EVERY IN-PLACE EDIT OF `never-rules-gate.sh` SILENTLY FAILS THE NEVER GATE *OPEN* FOR THE WHOLE FABRIC** (0.5.0, measured)
+```
+The harness RE-READS the hook FROM DISK on EVERY Bash|PowerShell call, FOR EVERY AGENT.
+Of 429 truncation points in the live file:
+   *** 225 (52%) SILENTLY FAIL-OPEN ***  -> exit 0, NO deny-JSON (the file's own :65 fail-open path)
+       129 deny  ·  75 error loudly
+   *** A ZERO-BYTE FILE -- the Write truncate-window -- ALLOWS EVERYTHING. ***
+The rebase DENY sits at :293 behind 247 lines of helpers -- ALMOST ANY TRUNCATION DROPS IT.
+```
+**Hit LIVE: a routine Bash call blocked with `line 331: syntax error near 'stash'` while CTO was mid-edit.** *That was
+the LOUD mode. **The 52% is the SILENT one, and a silent fail-open leaves no scar — we cannot count how often it has
+already happened.***
+
+> ## **A CONTROL THAT DISARMS ITSELF WHILE BEING IMPROVED IS A CONTROL WITH A HOLE THAT SCALES WITH HOW MUCH WE CARE ABOUT IT.**
+**And it is the same class as the `git stash` incident that PROMPTED the edit** — *mutating a file eight live agents
+share, in place.* **COO positive-controlled it: `git rebase --quit` still DENIES, so the gate is NOT open at this
+instant — but it is a RACE, not a steady state.**
+
+**FIX (routed to CTO): EDIT HOOK FILES ATOMICALLY — write temp, then `mv`. NEVER an incremental in-place `Edit`.**
+**Plus: the `:65` FAIL-OPEN is the real defect.** > **A GATE THAT CANNOT READ ITSELF MUST NOT WAVE YOU THROUGH.**
+*(Fail-CLOSED on a truncated read, fail-LOUD on a parse error — never silent-open on either.)*
