@@ -32,5 +32,7 @@
   "pipeline": "the 49F off-BD cutover program: Schwab raw (Quartz-EC2 unattended pull) -> opal-data-schwab/01_raw -> canonical silver (17 fact/5 dim, incremental) -> canonical gold (G1-G13, FULL daily cadence) -> parity-validate vs BD-served (several days) -> never-widen cutover to Schwab-SSOT; BD shrinks to the thin advisor-metadata tether + (temporary) non-Schwab bridge until Fidelity Data Delivery",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "sovereign_excluded": true,
+  "sovereign_reason": "SOVEREIGN HOLD -- Andrew, 2026-07-10, verbatim: 'just exclude those items, we will deal with them later.' The escalation is CLOSED. Do NOT hot-list, classify, dispatch on, attest, or 'just verify' this project. It stays status=active in-file and excluded from every consumer until Andrew reopens it."
 }

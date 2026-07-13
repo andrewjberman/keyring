@@ -22,5 +22,7 @@
       "agent": "2.0.0_SA_COO",
       "event": "PROJECT FILE CREATED (COO tracking-formalization; queue-hygiene). TAGATTR had grown into a multi-leg Andrew-direct effort (DS-1 leg-1 deployed, leg-2-fee on CTO ADR, FE riding 2nd promote, DS-2 staged w/ an Andrew-magnitude gate) but was only tracked ad-hoc in COO drive_logs -> registered so /drive classifies it + the DS-2 gates (leg-1-validated + CTO-arch + Andrew-downward-shift-confirm) aren't dropped. TO trail: DS-1 0517a8397 (DE-authored, fee-blast gate AC7 ee396d9a0); DS-2 staged 32d035b5b. FE a58ff3a7. Owners: 0.4.0_DS (data), 0.4.0_DE (FE), 1.0.0_SA_CTO (arch-gates)."
     }
-  ]
+  ],
+  "sovereign_excluded": true,
+  "sovereign_reason": "SOVEREIGN HOLD -- Andrew, 2026-07-10, verbatim: 'just exclude those items, we will deal with them later.' The escalation is CLOSED. Do NOT hot-list, classify, dispatch on, attest, or 'just verify' this project. It stays status=active in-file and excluded from every consumer until Andrew reopens it."
 }

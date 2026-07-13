@@ -33,8 +33,30 @@
   "sovereign": "Andrew",
   "thread_counter": 3,
   "threads": [
-    {"id": "ADVI_BDAPIMIG.P1a", "owner": "0.6.0_AE_PartnerETL", "title": "Productionize the .bd.identity cookie-REST + DataMining ingest off the dead runner.ts UI-export (the ratified durable pull path)", "status": "active", "dispatched": "2026-07-02", "arch_gate": "1.0.0_SA_CTO (RAVC on commit)"},
-    {"id": "ADVI_BDAPIMIG.P1b", "owner": "0.7.0_AE_CloudOps~A", "title": "Cookie/login-box durability (mint/refresh/rotate) + kill-cookie resilience VERIFY-GATE + LEAD the dead scrape/login-box RETIRE. Sequence: REST-durable-proven THEN retire; the EC2 stop/terminate is HUMAN-CONFIRM-gated (CLAUDE.md unrecoverable-op)", "status": "active", "dispatched": "2026-07-02", "arch_gate": "1.0.0_SA_CTO"},
-    {"id": "ADVI_BDAPIMIG.P1c", "owner": "0.6.2_AE_PartnerETL", "title": "Kimi-guard box-health, coordinate the box-retire context", "status": "active", "dispatched": "2026-07-02"}
-  ]
+    {
+      "id": "ADVI_BDAPIMIG.P1a",
+      "owner": "0.6.0_AE_PartnerETL",
+      "title": "Productionize the .bd.identity cookie-REST + DataMining ingest off the dead runner.ts UI-export (the ratified durable pull path)",
+      "status": "active",
+      "dispatched": "2026-07-02",
+      "arch_gate": "1.0.0_SA_CTO (RAVC on commit)"
+    },
+    {
+      "id": "ADVI_BDAPIMIG.P1b",
+      "owner": "0.7.0_AE_CloudOps~A",
+      "title": "Cookie/login-box durability (mint/refresh/rotate) + kill-cookie resilience VERIFY-GATE + LEAD the dead scrape/login-box RETIRE. Sequence: REST-durable-proven THEN retire; the EC2 stop/terminate is HUMAN-CONFIRM-gated (CLAUDE.md unrecoverable-op)",
+      "status": "active",
+      "dispatched": "2026-07-02",
+      "arch_gate": "1.0.0_SA_CTO"
+    },
+    {
+      "id": "ADVI_BDAPIMIG.P1c",
+      "owner": "0.6.2_AE_PartnerETL",
+      "title": "Kimi-guard box-health, coordinate the box-retire context",
+      "status": "active",
+      "dispatched": "2026-07-02"
+    }
+  ],
+  "sovereign_excluded": true,
+  "sovereign_reason": "SOVEREIGN HOLD -- Andrew, 2026-07-10, verbatim: 'just exclude those items, we will deal with them later.' The escalation is CLOSED. Do NOT hot-list, classify, dispatch on, attest, or 'just verify' this project. It stays status=active in-file and excluded from every consumer until Andrew reopens it."
 }
