@@ -310,6 +310,56 @@ buy the wiring's priority.
 
 ---
 
+## 3·0. ✅ **THE DEPLOY ORDER — PROVEN. "RESOLVER FIRST." ORDER IT; DO NOT MERELY SYNCHRONISE IT.**
+
+*(CTO~B gate-1 @ `c16b0c73b`. This SUPERSEDES the weaker "land them as one group" item below — an ordered deploy
+whose intermediate state is safe **by construction** is strictly better than an atomicity property we would have to
+prove and then trust.)*
+
+- [ ] **STEP 1 — Upload `INF_A_0.aor_resolver.py` + `INF_D_11` to `code/gold/` FIRST.**
+      **Verify presence:** `comp-pipescript deployed` → **both MATCH** (they are `MISSING_ON_S3` today).
+      > **The intermediate state is SAFE BY CONSTRUCTION.** The presence-gate admits the resolver to every chain; it
+      > runs and writes a correctly-stamped artifact; and the **still-stale consumers do not read it** — they are
+      > pre-round-8 and **never call `load_resolution()`**. **Nothing serves differently. Nothing breaks.**
+- [ ] **STEP 2 — THEN deploy the consumers.** They arrive **fail-closed into a world where a correctly-stamped
+      resolution ALREADY EXISTS.**
+
+> ### ⛔ **THE REVERSE ORDER KILLS THE NIGHTLY.**
+> Deploy consumers first and **every AoR consumer RAISES on the first nightly — the entire INF chain aborts.** The
+> dispatch's own message concedes it: *"Any AoR consumer that runs will FAIL CLOSED at `load_resolution()`."*
+> **That is a NEVER#6-shaped half-landing reachable from a correct-looking deploy — and ordering it away costs
+> NOTHING.**
+
+**THE WIRING IS VERIFIED REAL, not cosmetic** (`orion-gold-dispatch.sh:408` — `_aor_script_deployed()` is an
+`s3api head-object` on `code/gold/$1`). **Chain entry is keyed on the SCRIPT ACTUALLY EXISTING in the deployed
+prefix and NEVER reads `INF_AOR_FOLD_ACTIVE` on any path** — no default, no `:-`. The `${X:-1}` failure mode CTO~B
+opened gate-1 worrying about is now **structurally impossible.**
+
+**R3 CHAIN CENSUS — the resolver is prepended to ALL EIGHT consumer-carrying chains** (`:425-434`): `CHAIN_COMPUTE`
+· `CHAIN_FULL` · **`CHAIN_INCREMENTAL`** · `CHAIN_GOLD_A/B/C/D/CD`. **`CHAIN_INCREMENTAL` — the killer, because it
+refreshes `INF_API_SILVER_ACCOUNTS_V2`, the resolver's OWN source, then runs five AoR consumers — now carries the
+resolver. It no longer moves the ground and leaves the SSOT behind.** Cross-checked against all nine
+`load_resolution()` call-sites; `CHAIN_PULL` / `CHAIN_SILVER_PREP` / `CHAIN_ECLIPSE` carry none. **The detector is
+lifted onto its own presence check** — *a rollback can no longer drop the resolver AND its alarm in one flip.*
+
+> **The WIRING closes the CHAINS; the GUARD closes the INVOCATIONS (`--single`/`--from`, which have no chain literal
+> for R4 to see). Neither could do the other's job.**
+
+### 🔴 F4-B — NEW BLOCKER (CTO~B). **Fixing `None` is NECESSARY AND NOT SUFFICIENT.**
+
+- [ ] **A truncated / zero-row parquet is a SUCCESSFUL read.** It throws nothing, returns **0 rows**, hits
+      `len()==0`, returns `{}` — and **the re-key vanishes through the identical door** that fixing `None` closed.
+      > **`len()==0` IS NOT SAFE MERELY BECAUSE THE READ DID NOT THROW.**
+      **Not exotic for us:** the 49F allocations feed **already** alternates 46K/1.2M rows because BD returns
+      undersized stubs.
+- [ ] **BUT THE LIBRARY MUST NOT RAISE ON EMPTY EITHER** — that would over-condemn a genuinely zero-household firm.
+      *(**The `run_id` mistake in miniature** — a discriminator that fires on the healthy case.)*
+- [ ] **THEREFORE THE DISCRIMINATOR DOES NOT LIVE IN THE LIBRARY:** the **chokepoint fails closed on the
+      UNOBSERVABLE (`None`)**; the **CALLER DECLARES** whether zero is legitimate for its firm. *(Inflection cannot
+      have zero households — ~286 across four advisors.)*
+
+---
+
 ## 3. ORDERING (what may deploy when)
 
 **The dispatch is ORDER-INDEPENDENT under R5 — do not gate the release on proving deploy atomicity.**
