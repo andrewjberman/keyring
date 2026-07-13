@@ -102,6 +102,26 @@ check "same-line: safe-apply"                 'bash .tools/safe-apply.sh -chdir=
 check "same-line: git clean -nd"              'git clean -nd'                                      PASS
 
 echo ""
+echo "*** HEREDOC BODY = DATA, NOT COMMANDS. The gate BLOCKED ITS OWN COMMIT on this. ***"
+echo "  CLAUDE.md refuses a matcher that 'would forbid every brief and commit message discussing"
+echo "  rebase -- INCLUDING THE ONE REPORTING THIS.' A -F commit message (LD-0276) documenting the"
+echo "  gate necessarily CONTAINS 'git stash' / 'git clean'. It must PASS."
+check "heredoc commit msg documenting the gate" 'cat > /tmp/m.txt <<'"'"'EOF'"'"'
+doc: the gate denies git stash and git clean
+git stash parks every dirty file; git clean -fd deletes untracked work
+EOF
+bash .tools/safe-commit.sh -F /tmp/m.txt -- CLAUDE.md'                                            PASS
+check "heredoc mentioning terraform apply"      'cat > /tmp/m.txt <<'"'"'EOF'"'"'
+never run bare terraform apply
+EOF
+git status'                                                                                       PASS
+echo "  ...but a REAL command AFTER a heredoc must still be caught:"
+check "heredoc + a real git stash after it"     'cat > /tmp/m.txt <<'"'"'EOF'"'"'
+some message
+EOF
+git stash push -m wip'                                                                            DENY
+
+echo ""
 echo "OVERRIDE -- audited bypass must PASS:"
 check "never-override marker"             'git rebase -i HEAD~2  # never-override: scratch branch cleanup, CTO' PASS
 
