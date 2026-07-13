@@ -1,6 +1,35 @@
 # GATE-1 VERDICT — AoR round-8.2
 
-> ## ⬛ FINAL DETERMINATION @ `445711c2c` (round-8.2 COMPLETE): **WITHHELD** — on exactly TWO items, both small.
+> # ✅ GATE-1 **CLEARS** @ `dbd10d7aa` — **CONDITIONAL**
+>
+> **Both withholds CLOSED, verified at the hash (not on a summary).**
+>
+> **C_07 — CLOSED.** `_key_override` = **0**; `combine_first` on `advisor_key` = **0** — *both* branches gone, **including `:231`**, the third override line the human analysis missed and my census found. The IWM-orphan enrichment SURVIVES (17 live accounts to the catchall is a real 2026-05-13 incident) and now **inherits the canonical via `attach_advisor_key`**.
+>
+> **AND I PROVED MY OWN INSTRUMENT COULD SEE IT BEFORE TRUSTING ITS SILENCE.** My positive control *was* `C_07:229` — now fixed, so it can no longer fire. **A census silent because the defect is gone is indistinguishable from a census silent because it is BROKEN.** So I ran the SAME instrument against BOTH hashes:
+> ```
+> @ 69219a7db (defect present) -> C_07 flagged at [229, 231]   FIRES
+> @ dbd10d7aa (defect fixed)   -> C_07 flagged at []           SILENT
+> VERDICT: DISCRIMINATES.  C_07 confirmed closed.
+> ```
+> **Same instrument, two truths.** The fix introduced **NO new compensation**.
+>
+> **F4-B — BUILT.** `household_headline_map(account_team, expect_nonempty: bool, …)` — **second positional, NO default, genuinely REQUIRED**; a call-site cannot forget an argument that does not exist. **Four** household-grain callers declare it. Tests are the bar I set, not a paraphrase: `..._raises_when_the_caller_DECLARES_nonempty` · `..._every_call_site_DECLARES_it` · **`..._mutant_reverting_the_declaration_goes_GREEN_again`** · `..._c07_the_rep_name_slug_override_is_GONE_both_branches` · **`..._c07_ON_the_canonical_FOLD_survives_the_enrichment`** (RED against unfixed code **by construction**).
+>
+> **THE COMPENSATION CENSUS IS COMPLETE — 19 remaining writes, ALL triaged, NONE unaccounted:** C_07 class = **ZERO** · `D_02:2116/2118` latent re-entry (logged) · `D_04:3307/3313/3327` = the ruled `derive_advisor_key` switch-ON item · `D_02c:258` household headline, canonical-sourced, SAFE · **all the rest = F2-B.**
+>
+> **F2-B IS BIGGER THAN FIRST REPORTED — a SIXTH behaviour, and the worst one.** `D_04:3991` fills with **`_INF_CATCHALL_ADV_KEY`** — *"so unrouted accounts roll up into IWM rather than disappear."* **That does not MISLABEL an unresolved account; it ATTRIBUTES it to a REAL ADVISOR (IWM) and silently INFLATES that advisor's numbers.** The other five at least make the gap visible as junk; **this one makes it invisible by making it look legitimate.**
+>
+> ## CONDITIONS OF CLEARANCE — owned switch-ON items. None is a round-8.2 blocker; **none may be carried as a comment.**
+> 1. **F2-B** — ONE canonical `UNRESOLVED_ADVISOR_KEY`, DECLARED in the lib, inherited by every view, `absent=` defaulting to it, **+ the unresolved COUNT emitted per run.**
+> 2. **`INF_D_04` `derive_advisor_key`** — the servicing-vs-AoR business question. **DECIDED before GO, not discovered at GO.**
+> 3. **`INF_D_02:2116/2118`** — inherit the canonical and **ASSERT agreement**, not blindly prefer one field.
+> 4. **V4 served-verify on the first nightly.** **GATE-2 CLEARS THE MECHANISM; ONLY THE NIGHTLY CLEARS THE DELIVERY.** No end-to-end gold run exists (correctly forbidden as ad-hoc) — recorded as a **GAP, not a waiver.**
+> 5. **Deploy ORDER: resolver + detector FIRST**, then the consumers. Reverse it and the nightly aborts.
+
+---
+
+> ## ⬛ (superseded) DETERMINATION @ `445711c2c`: **WITHHELD** — on exactly TWO items, both small.
 >
 > **1. F4-B is NOT IMPLEMENTED** (`grep -c expect_nonempty` = **0**). Base CTO's three F4 points all landed and verify (`None` → RAISE; C_02's laundering try/except removed). **But `len(account_team) == 0` still returns `{}`** — and a truncated/zero-row parquet is a **SUCCESSFUL read**, so the household re-key **silently vanishes through the identical door F4 just closed.** `account_team` is C_07's output *in the same chain*, and we already run a feed (49F allocations) alternating 46K/1.2M rows because BD returns undersized stubs. **The library's own reasoning for returning `{}` is CORRECT — which is precisely why the discriminator cannot live in the library.** Chokepoint fails closed on the **UNOBSERVABLE**; the **CALLER DECLARES** whether zero is legitimate for its firm (Inflection cannot have zero households — ~286 across four advisors). *An empty frame and an empty firm are byte-identical; somebody has to SAY.*
 >
