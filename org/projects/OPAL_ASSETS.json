@@ -4,18 +4,27 @@
   "name": "OPAL Assets - Bullet-Proof Daily AUM Cohort Tracking",
   "description": "Andrew-commissioned macro-project (2026-07-12): bullet-proof DAILY tracking of all 14 Opal AUM cohorts into ONE canonical daily DynamoDB bucket (one row per cohort per day; row shape {cohort, source_master(s), value, as_of, state}), plus per-partner true ETF ownership. PIT-snapshot pattern (retire the bd transaction engine as the AUM source for this surface); each cohort carries its OWN-field as_of and an explicit state (fresh|rolled_forward|missing) so stale/absent cohorts are visible, never silently rolled forward or smeared into a cross-partner as_of. A CONVERGENCE of six already-daily sources + one new Schwab-BD 08335338 PIT pull (both-masters-dedup, D1=SPLIT). Strictly internal.",
   "prds": [
-    { "path": "docs/architecture/OPAL_ASSETS_PRD.md", "label": "OPAL_ASSETS PRD v0.5 (CTO~B) -- v0.1 synthesis + v0.2 CVO FP-R0 folds + v0.3 decoupling/ETF-channel/cohort-disentangling + v0.4 vintage-alignment/fired-guard-must-block/magnitudes-withdrawn + v0.5 ANDREW SOVEREIGN component-grain store (supersedes the stored additive boolean) + AC11 expected-firms NOT-gated-on-G1", "date": "2026-07-13" }
+    {
+      "path": "docs/architecture/OPAL_ASSETS_PRD.md",
+      "label": "OPAL_ASSETS PRD v0.6 (CTO~B) -- v0.1 synthesis + v0.2 CVO FP-R0 + v0.3 decoupling/ETF-channel + v0.4 vintage-alignment/fired-guard-must-block + v0.5 ANDREW component-grain store + v0.6 THE MIGRATION ARMS THE MINE (AC14) / conservation identity (AC15) / count reconciled 10-of-28",
+      "date": "2026-07-13"
+    }
   ],
   "source_brief": "CVO~A blueprint b2a17a7e3 (CVO_14cohort_daily_AUM_tracking_assessment_and_plan_20260712.md) + source-map reconciliation e41c49683 + the 08335338 discovery (fully observed); Andrew-direct commission 2026-07-12.",
   "status": "active",
-  "phase": "PRD v0.3 (CTO~B). Adds G7 (DECOUPLE the tracker from the INF sentinel -- mdpf-daily-refresh-trigger has Sched:null and fires ONLY on INF's pipeline-complete.json, so the firm AUM number is hostage to one partner's pipeline and is frozen now because INF is correctly held) and G8 (the ETF issuer channel: DIVZ/IDVZ/PFOE/PFDE = $685.64mm = 27% of fee-paying AUM produced by a Windows Task Scheduler job on Andrew's personal laptop; MEASURED 10 of 28 trading days missing 06-01->07-10 incl. a 5-trading-day blackout; NO BRONZE = Rule 17a violation). Plus the staleness ceiling (the mdpf ETF feeder roll-forward is UNBOUNDED and prints OK on a 6-day-stale valuation) and the cohort-8/9 disentangling ruling (one row was doing two jobs). G6 LIVE = the acceptance harness.",
+  "phase": "PRD v0.6 (CTO~B). G7 DECOUPLE the tracker from the INF sentinel (mdpf-daily-refresh-trigger has Sched:null and fires ONLY on INF's pipeline-complete.json -- the alarm has a schedule, the producer does not). G8 the ETF issuer channel (DIVZ/IDVZ/PFOE/PFDE ~= 27% of fee-paying AUM on a Windows Task Scheduler job on Andrew's personal laptop; CANONICAL MEASURE 10 of 28 NYSE trading days missing = 35.7%, 5-day contiguous blackout; NO BRONZE = Rule 17a). SOVEREIGN (Andrew x2): component-grain store, summation at READ TIME per presentation case -- a TOTAL IS NOT A PRIMITIVE, an UNLABELLED TOTAL IS THE BUG; the stored additive boolean is RETIRED (it froze a presentation decision into storage; the $685.64mm was never an error, it was a MISSING DIMENSION); double-charging is REAL + INTENTIONAL and becomes first-class via overlap_of. AC14 THE MIGRATION INVARIANT is the most important AC: 49F is the only RPS-only firm (0/427 target_weight fallback) -- and it is 1 ONLY BECAUSE THE MIGRATION HAS HAPPENED ONCE. The firm on the CORRECT architecture carries the landmine; inflection is safe only because it is still on the LEGACY estimate path this project exists to retire. COTTONWOOD IS NOW FIRST-CLASS (Andrew-direct) with no partner_aua row anywhere -- the guard MUST precede the migration. G6 LIVE = the acceptance harness.",
   "current_phase": "P0 (Opal-side, NO sovereign, nothing blocking): G7 DECOUPLE (the lead -- unblocks the frozen headline WITHOUT touching INF) + G8 step 1 BRONZE the ETF raw bytes (the only irreversible daily loss) + the one-bucket skeleton + G4 interim fold. P1 (gated on the 49F/Schwab scope-lift, granted OPAL_ASSETS-only): G1 un-stale, G2 08335338 pull+CBUGL parser, G3(a) backfill 2023-07-12. P2: convergence + served cutover (never-widen).",
-  "blocking": "NOTHING blocks P0 -- G7 + G8 are fully Opal-side and wait on nothing. AWAITING ANDREW: (a) GO on PRD v0.3 (G7/G8); (b) the 14->16 cohort count (the taxonomy disentangling adds two non-additive account_view rows; the row count is his). P1 rides the granted 49F/Schwab scope-lift; G3(b) 2021 depth = Andrew vendor-channel call; served cutovers ride never-widen co-sign + NEVER#4. GUARDRAIL 9: never write s3://opal-data-inf/gold/meta/pipeline-complete.json -- that is DOOR 6, and it will look like the one-line fix for this project's most visible defect.",
-  "depends_on": ["MDPF_ASSETS"],
+  "blocking": "NOTHING blocks P0 -- G7 + G8 are fully Opal-side and wait on nothing; 0.5.0_AE_OpalETL is BUILDING the ETF cloud lift (bronze in the SAME change, co-signed) and DS is speccing AC11/AC12/AC14. AWAITING ANDREW: (a) GO on PRD v0.6 (G7/G8); (b) the cohort count (the taxonomy disentangling adds non-additive account_view rows; the row set is his). P1 rides the granted 49F/Schwab scope-lift; G3(b) 2021 depth = Andrew vendor-channel call; served cutovers ride never-widen + NEVER#4. GUARDRAIL 9: NEVER write s3://opal-data-inf/gold/meta/pipeline-complete.json -- DOOR 6. The frozen mdpf artifact froze in a BROKEN state (a real $528mm 49F misattribution), so the repair now looks RESPONSIBLE rather than reckless -- and it would dispatch the held INF chain. A VERIFIED DEFECT IS NOT A LICENCE. GUARDRAIL 11: the ETF-gap MAGNITUDES are UNQUOTABLE (every available partition mixes vintages) -- Andrew gets the QUESTION, not a FIGURE.",
+  "depends_on": [
+    "MDPF_ASSETS"
+  ],
   "depends_on_note": "Extends the mdpf aggregate_aua emitter + its per-cohort freshness checker (G6).",
   "absorbs": [],
   "created": "2026-07-13",
-  "pods": ["0.4", "0.7"],
+  "pods": [
+    "0.4",
+    "0.7"
+  ],
   "pipeline": "mdpf aggregate_aua + smartx 08242234 + schwab-bd 08335338 (PIT) + inflection (Orion/Eclipse) + opal-etfs (TrueShares/Filepoint) + cot positions_cube (one-way) -> DynamoDB daily AUM bucket -> portal AUM surface",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
