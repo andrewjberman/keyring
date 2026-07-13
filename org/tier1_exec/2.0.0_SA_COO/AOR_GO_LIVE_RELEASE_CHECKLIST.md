@@ -74,28 +74,65 @@ abort (serve stale, never garbage)**. Verify the group lands together; do not tr
 
 ---
 
-## 4. THE ROLLBACK LEG — **THE ASSERTION IS `run_id`, NOT `as_of`**
+## 4. THE ROLLBACK LEG — **THE ASSERTION IS `(source_content_digest, fold_mode)`**
 
-> **CORRECTION ON THE RECORD.** My first version of this leg asserted *"the nightly did not fail."* That is
-> defeated: **a green nightly is exactly what a fail-open rollback produces.** I then amended it to *"the
-> resolution's `as_of` ADVANCED."* **That is ALSO defeated** — CTO 054815Z: **`as_of` can legitimately NOT advance
-> on a perfectly good run** (a non-advancing source partition — a weekend, a holiday, a same-day re-run). An
-> assertion that fires on a legitimate case is not an assertion; it is an alarm we will tune until it stops.
+> **CORRECTION ON THE RECORD — THIS LEG HAS NOW BEEN DEFEATED THREE TIMES. Every defeat came from EXERCISE, never
+> from a re-read. All four versions are kept in place, because the pattern is the lesson.**
 >
-> I made, twice, the exact error this release exists to catch: **I picked a discriminator that is invariant under
-> the failure it is meant to detect.** Recording it rather than quietly fixing it, because the pattern is the
-> lesson.
+> - **v1 — "the nightly did not fail."** DEFEATED: **a green nightly is exactly what a fail-open rollback produces.**
+> - **v2 — "the resolution's `as_of` ADVANCED."** DEFEATED (CTO 054815Z): **`as_of` can legitimately NOT advance on
+>   a perfectly good run** (weekend / holiday / same-day re-run against a non-advancing partition). An assertion
+>   that fires on a legitimate case is not an assertion; it is an alarm we will tune until it stops.
+> - **v3 — "`run_id` is THIS run's."** DEFEATED (CTO 055214Z, base-CVO's falsifier): **it OVER-condemns.** The
+>   resolution is a **pure function of its inputs**, so a legitimate recovery run reusing an identical artifact is a
+>   **CORRECT CACHE, not staleness.** `run_id` hard-aborts on an artifact *provably identical* to what the run would
+>   have produced — **a condemnation instrument with a destructive remedy** (the 3am re-run hits the raise and the
+>   operator reaches for the switch). *I had already committed v3 as the answer.*
+>
+> **v2 UNDER-condemned; v3 OVER-condemned. I walked into BOTH ends of the same axis.** The error I kept making is
+> the one this release exists to catch: **choosing a discriminator that is invariant under the failure it must
+> detect** — and then, over-correcting, one that fires on the healthy case too.
 
-**THE DISCRIMINATING ASSERTION:**
+**THE MEASUREMENT THAT KILLED v2 — and I verified it MYSELF rather than relay it, because the ruling turns on it:**
 
-- [ ] **`run_id` is THIS run's.** `INF_AOR_RUN_ID` is exported once per chain start, **per-INVOCATION, never
-      data-derived**; the resolver stamps it; `load_resolution()` asserts it. A resolution carried over from any
-      other run — including a same-day re-run against the same partition — **fails this check by construction.**
-      *(This is R1-RUN. The event ledger already got this right — per-run key, uncollapsible. The resolution was a
-      fixed key stamped with a repeating value. **The fix is a better IDENTITY, not a better comparison.**)*
-- [ ] **`as_of` matches the pinned source partition.** *(R1-SRC — KEPT, not replaced.)* **`run_id` catches the WRONG
-      RUN; `as_of` catches the WRONG SOURCE.** Both earn their place; CVO~B's A2 arm fires on `as_of`. Neither is
-      redundant.
+`accounts_v2` partitions are **MUTABLE — they are rewritten IN PLACE.** Each partition is ONE FIXED KEY
+(`snapshot_date=<d>/data.parquet`), so a re-emit **overwrites the content under the same key.** CTO measured 6 of
+69 rewritten after their own snapshot_date. My independent check (`s3api head-object`, **UTC** — *not* `s3 ls`,
+which renders LOCAL time and is tonight's other trap):
+
+```
+snapshot_date=2026-04-28  ->  LastModified Mon, 11 May 2026 15:41:20 GMT   *** REWRITTEN
+snapshot_date=2026-04-29  ->  LastModified Mon, 11 May 2026 15:41:20 GMT   *** REWRITTEN
+snapshot_date=2026-05-07  ->  LastModified Mon, 11 May 2026 15:41:20 GMT   *** REWRITTEN
+snapshot_date=2026-05-10  ->  LastModified Mon, 11 May 2026 15:41:20 GMT   *** REWRITTEN
+snapshot_date=2026-07-12  ->  LastModified Sun, 12 Jul 2026 13:22:42 GMT   (same-day control)
+```
+All four at one identical timestamp — a single 05-11 backfill. **THE KEY REPEATS ACROSS DIFFERENT BYTES.**
+So a resolution derived from the OLD 05-10 content passes a guard checking `as_of=05-10 + mode=ACTIVE`, while
+consumers attribute the NEW content — **silently.** `(as_of, fold_mode)` is a complete identity **only if
+partitions are immutable. They are not: 6 in 69.**
+
+**THE DISCRIMINATING ASSERTION (v4 — FINAL):**
+
+- [ ] **The resolution's `(source_content_digest, fold_mode)` equals what THIS run would read.** Stamp the
+      resolution with the **S3 ETag of the `accounts_v2` partition the resolver ACTUALLY READ**, plus the fold mode;
+      assert both. The ETag is **free** — it comes back on the same GET the loader already does.
+      **The digest identifies the BYTES, not the name of the bytes.**
+- [ ] On a **correct** post-GO rollback: the resolver still runs, re-derives under `mode=OFF`, stamps the CURRENT
+      digest + OFF → **the leg PASSES** and servicing attribution is served.
+- [ ] On a **broken** rollback (resolver skipped): the stamped mode is `ACTIVE` while the run is `OFF` → **RAISE.**
+
+**TRUTH TABLE — why this key dominates (it is the only one of the four right in every arm):**
+
+| arm | verdict | note |
+|---|---|---|
+| legitimate cache reuse (identical inputs) | **RETURNS** | no over-condemnation — v3 failed here |
+| A3: folded artifact on a switch-OFF run | **RAISES** | the original defect |
+| **rewritten partition (same key, new bytes)** | **RAISES** | **neither v2 nor v3 catches this** |
+| source advanced | **RAISES** | CVO~B's A2 arm |
+| weekend non-advance, resolver ran | **RETURNS** | weekend-safety preserved |
+
+**`run_id` is WITHDRAWN entirely. `as_of`-advanced is NOT the leg.** Do not reintroduce either.
 - [ ] **The `as_of` field cannot be FABRICATED.** *(R1b.)* `aor_resolution.py:382` currently reads
       `as_of = os.environ.get('INF_AOR_ASOF','').strip() or str(pd.Timestamp.now(tz='UTC').date())` — when the pin
       is unset it stamps **wall-clock TODAY**, and `dispatch:1302` explicitly leaves it unset with a WARN when it
