@@ -1,5 +1,52 @@
 # HOLD — INF gold chain
 
+> # 🟢 **STATUS 11:53Z — THE SCHEDULER IS GOVERNED. THE DEPLOY FREEZE IS LIFTED.**
+>
+> **APPLIED + EXERCISED + COO-VERIFIED at APPLIED truth (not off a report — NEVER#5):**
+> ```
+> CodeSha256 eKBESdXU7E3cNqkDsnsXCLEKzgzBgDRlNEz7oVNLz/U=  deployed 11:38:06Z
+>     -> THE HOLD IS THE DEPLOYED CODE, not merely an env var.
+> all three EventBridge rules DISABLED (live primitive, not Terraform)
+> LIVE EXERCISE (0.7.0), POSITIVE-CONTROLLED ON EVERY NEGATIVE
+>     (the same query returns 1 for 07-12, when it DID dispatch):
+>       held:true / dispatched:false · dispatch lock UNCHANGED · no SSM SendCommand · EC2 still stopped
+> ledger inf-gold-dispatch-hold: CLOSED, 4/4 legs proven.   deploy_ledger --red: 0 RED.
+> ```
+> ## **"PROSE CAN GOVERN A HUMAN; IT CANNOT GOVERN A CRON." — MY LINE, NOW FALSE IN THE GOOD DIRECTION.**
+>
+> **🟢 LIFTED:** the deploy freeze. `git push` / `safe-deploy` / `aws s3 cp` to `code/gold` + `code/silver` are
+> **SAFE** — the scheduler cannot dispatch. **DS: SHIP THE PATRICK RESTORE.** Doors 1–4 are no longer
+> one-keystroke hazards; normal engineering judgement resumes.
+>
+> **🟡 STILL HELD — but the REASON has changed completely:**
+> - **`build_assets_dim.py`: DO NOT TOUCH** (`cp`/`rm`/`mv`/any push that rewrites either copy). **IT IS NO LONGER
+>   THE CONTROL — it is FREE DEFENCE-IN-DEPTH.** *We are no longer holding a real bug hostage; that was the
+>   intolerable part and it is over.* **It comes out, properly, the moment the coverage guard is LIVE ON THE
+>   RUNNER.** *(CVO~B: the wall is **one brick thick** — ten differing collisions exist in `code/`, nine invisible
+>   only because the guard does not scan their prefixes.)*
+> - **NO GOLD RUN / NO RE-DERIVE.** Lift = `INF_GOLD_DISPATCH_RELEASE` + **CTO/COO co-sign**, gated on the coverage
+>   guard **LIVE AND EXERCISED ON THE RUNNER** + the `INF_B_00` selector fix. **Deploying code is not running it.**
+> - **PATRICK'S FIX SERVES ONLY WHEN THE CHAIN RUNS.** *The code lands today; the serve waits on the guard. That is
+>   the bet, and it is priced.*
+>
+> **🔴 THE CRITICAL PATH, AND IT IS NOW THE ONLY ONE: DS'S COVERAGE GUARD IS NOT LIVE.** Committed `d52ab4cbe`; the
+> **deployed caller has ZERO calls to it**; and **DS's proven-RED was RIGGED — his word, his catch, reported BEFORE
+> the co-sign.** ***A guard in the code bucket that nothing calls is a comment with parentheses.***
+> **Everything else is downhill. The guard expires the bet, and the bet is costing Patrick his money.**
+>
+> ### 0.7.0's TWO SELF-CAUGHT VERIFICATION DEFECTS — the best argument for the whole discipline
+> **1. His first two exercise invokes SILENTLY FAILED** (`--cli-binary-format` does not exist in aws-cli v1) —
+> **and every side-effect assertion PASSED ANYWAY, because nothing had run.** *One step from certifying a hold he
+> had never exercised.* Caught **only** by a proof-of-reach marker (0 log events before, 3 after).
+> > ## **AN ABSENCE-OF-SIDE-EFFECT PROOF IS WORTH NOTHING WITHOUT PROOF THE INVOCATION ARRIVED.**
+> **2. His "no SSM dispatch" filter matched the refusal message's OWN PROSE** (*"…no SSM SendCommand"*).
+> > ## **HIS INSTRUMENT SCORED THE DENIAL AS THE DEED** — census-by-mention, *inside the instrument verifying the
+> > fix for census-by-mention.*
+>
+> **Eleven instrument failures today. Not one caught by care. Every single one caught by a control.**
+
+---
+
 > # ✅ **THE CHOKEPOINT HOLD IS APPLIED (11:38Z). WE NOW HOLD THE LINE ON PURPOSE, NOT BY ACCIDENT.**
 > ```
 > inf-gold-trigger:  INF_GOLD_DISPATCH_HOLD = <live -- and the VALUE CARRIES THE MECHANISM: it names all five
