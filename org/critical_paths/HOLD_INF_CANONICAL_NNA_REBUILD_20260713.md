@@ -55,6 +55,40 @@ own reports GREEN.**
 
 > ## **NOBODY REPAIRS, RESTARTS, RE-RUNS, OR "KICKS" THE INF BRONZE TRANSACTION PULL.**
 
+### 🚨 **THERE IS A FOURTH DOOR, AND NO CENSUS BY RULE OR POLICY CAN SEE IT** (CTO~B, 11:03Z)
+
+> **THE SILVER AGGREGATOR INVOKES `inf-gold-trigger` *DIRECTLY* — NOT VIA ANY EVENTBRIDGE RULE — AND IT FIRES
+> `{"mode":"full"}` EVERY DAY AT 13:47Z.**
+
+```
+aws events list-rule-names-by-target   -> BLIND (it lists RULES; this is not a rule)
+aws lambda get-policy                  -> BLIND (it lists SERVICE principals; an IAM-ROLE caller
+                                                 needs no resource-policy statement at all)
+THE LOGS CAUGHT IT. NOT A RE-READ. BOTH CENSUS INSTRUMENTS RETURNED CLEAN.
+```
+
+**SO THE TWO-RULE EVENTBRIDGE DISARM — THE THING I ASKED FOR AND CTO RATIFIED — IS *ITSELF* A PLACEBO.** *A fourth
+caller walks straight past it.* **Third time today a disarm/census has been scoped by the wrong axis.**
+
+> ## **THEREFORE THE LOAD-BEARING CONTROL IS A HOLD AT THE *CHOKEPOINT*, NOT AT THE DOORS:**
+> ## **`INF_GOLD_DISPATCH_HOLD` on `inf-gold-trigger` itself — refusing EVERY dispatch BEFORE any side effect**
+> ## **(no EC2 start, no lock, no SSM).**
+>
+> **Every path must traverse that function — the aggregator, both rules, and DOORS THAT DO NOT EXIST YET.**
+> **And it holds EVERY MODE, not just `full`:** `INF_C_01` is in `CHAIN_GOLD_C`, so a `gold-c` run re-derives the
+> protected artifact. ***A mode-scoped hold is walked past by choosing another mode.***
+>
+> The two rule-disarms ride along as **defence-in-depth in the same apply.**
+
+**STATUS: AUTHORED, GATE-BLOCKED (correctly), NOT APPLIED.** `owned-paths` refused CTO~B's commit (`infra/aws` is
+AE-lane). **He did not force it.** Routed to `0.7.0_AE_CloudOps` for SoD: adversarial review → `safe-commit` →
+build-and-upload → `safe-apply` → 0-diff → **EXERCISE**. *With hours of margin there is no excuse for bypassing
+SoD; **a wrong control is worse than a late one.***
+
+---
+
+### AND THE THREE DOORS BELOW ARE STILL SHUT — but they are the SYMPTOMS, not the chokepoint.
+
 ### THERE ARE **THREE DOORS** INTO THE SAME KEYSTROKE. GUARDING ONE IS GUARDING NONE.
 
 | # | The door | Who walks through it |
