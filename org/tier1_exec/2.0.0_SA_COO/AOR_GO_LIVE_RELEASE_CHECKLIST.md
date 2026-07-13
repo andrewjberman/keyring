@@ -54,6 +54,31 @@ failure is not evidence of success.*
 
 ---
 
+## 2b. ⚠ THE REFRAME — **THE CHAIN-WIRING IS THE FIX. THE GUARD IS DEFENSE-IN-DEPTH.**
+
+*(CTO 060522Z, R1 CLOSED. This re-ranks the whole release and it supersedes any earlier ordering in this file.)*
+
+Every key we argued about for an hour — `as_of`, `run_id`, `(digest, mode)`, the final triple — answers exactly one
+question: ***"is this LEFTOVER artifact safe to reuse?"***
+
+**That question only exists because a chain can run WITHOUT the resolver.** Presence-gate `INF_A_0` into every
+chain and **there IS no leftover**: the artifact is always rebuilt by the run that consumes it, and the entire
+identity question **evaporates**.
+
+> **We spent the night asking a GUARD to do a WIRING job.**
+
+**THEREFORE, RANKED:**
+
+1. **PRIMARY — presence-gate `INF_A_0` into ALL chains** (`CHAIN_COMPUTE` + `CHAIN_INCREMENTAL` + `CHAIN_GOLD_*`)
+   and lift `INF_D_11` off the shared conditional. **This is the release item.**
+2. **BACKSTOP — the `(source_etag, fold_mode, code_digest)` guard.** Defense-in-depth, not the fix.
+
+**If the wiring lands and the guard does not, we are mostly safe. If the guard lands and the wiring does not, we
+are ONE `--chain` FLAG from frozen attribution.** Rank them accordingly, and do not let the guard's cleverness
+buy the wiring's priority.
+
+---
+
 ## 3. ORDERING (what may deploy when)
 
 **The dispatch is ORDER-INDEPENDENT under R5 — do not gate the release on proving deploy atomicity.**
@@ -112,12 +137,26 @@ So a resolution derived from the OLD 05-10 content passes a guard checking `as_o
 consumers attribute the NEW content — **silently.** `(as_of, fold_mode)` is a complete identity **only if
 partitions are immutable. They are not: 6 in 69.**
 
-**THE DISCRIMINATING ASSERTION (v4 — FINAL):**
+**THE DISCRIMINATING ASSERTION (v5 — FINAL, R1 CLOSED 060416Z):**
 
-- [ ] **The resolution's `(source_content_digest, fold_mode)` equals what THIS run would read.** Stamp the
-      resolution with the **S3 ETag of the `accounts_v2` partition the resolver ACTUALLY READ**, plus the fold mode;
-      assert both. The ETag is **free** — it comes back on the same GET the loader already does.
-      **The digest identifies the BYTES, not the name of the bytes.**
+> **v4 (`source_content_digest, fold_mode`) WAS STILL INCOMPLETE.** Base-CVO found the **THIRD input nobody had
+> keyed on: THE CODE.** The real surface is **`resolution = f(source_content, mode, THE CODE)`** — and he proved
+> there is no fourth (`derive_advisor_key` is a pure slug, no I/O). **A mid-day resolver-lib deploy followed by a
+> resolverless run: ETag matches, mode matches, the guard PASSES — and the artifact was computed by RETIRED
+> LOGIC.** Reachable tonight, given how many times that lib has been touched.
+>
+> **THE KEY STOPPED MOVING ONLY WHEN THE INPUT SURFACE WAS ENUMERATED.** Every earlier key — mine and CTO's —
+> was incomplete for the same reason: **we kept proposing keys without ever asking what the function's INPUTS
+> were.** *Enumerate the state space before choosing a discriminator.*
+>
+> *(Multipart-ETag caveat killed by measurement: 69/69 objects are SINGLE-PART, so the ETag IS the content MD5 —
+> it can only over-condemn, never fail open.)*
+
+- [ ] **The resolution's `(source_etag, fold_mode, code_digest)` equals what THIS run would read.** Stamp the
+      resolution with the **S3 ETag of the `accounts_v2` partition the resolver ACTUALLY READ** + the fold mode +
+      **the digest of the resolver code that produced it**; assert all three. The ETag is **free** — same GET the
+      loader already does. **The digest identifies the BYTES, not the name of the bytes; the code_digest
+      identifies the FUNCTION, not the name of the function.**
 - [ ] On a **correct** post-GO rollback: the resolver still runs, re-derives under `mode=OFF`, stamps the CURRENT
       digest + OFF → **the leg PASSES** and servicing attribution is served.
 - [ ] On a **broken** rollback (resolver skipped): the stamped mode is `ACTIVE` while the run is `OFF` → **RAISE.**
