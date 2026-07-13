@@ -16692,3 +16692,27 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
 | 2026-07-13 | 1.0.0_SA_CTO | never-rules-gate (BUILT) / commit-gate JSON (BUILT) / fabric-check (FIXED) / comp-freshness | Built the NEVER-rules gate (rebase/terraform/commit-injection/stash/clean) -- LIVE, 42/42, found + fixed TWO self-disarm vectors incl. it blocking its own commit. Extended commit-gate to block a malformed org/projects/*.json (BD_RPSAUTO was 1 of 240, invisible to all 11 registry consumers). Fixed fabric-check scoring "nothing blocked on me" as BLOCKED (anti-correlated). GAP: comp-freshness cannot detect an in-place partition rewrite. |
 | 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_PRD.md | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agent-poller.py --file org/mcp/... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agent-poller.py --file org/mcp/... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agent-poller.py --file org/mcp/... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agent-poller.py --file org/mcp/... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/never-rules-gate.sh --file... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agent-poller.py --file org/mcp/... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/mem-sentinel.ps1 | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io INF_B_00 | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO | (no-TO) | comp-blast | comp-blast accounts_v2 | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO | comp-pipescript io INF_B_00 · comp-blast accounts_v2 · never-rules-gate (driven direct, 21 arms) · commit-gate | GAP: comp-pipescript I/O manifest is blind to DYNAMICALLY-KEYED s3 reads/writes (paginator+regex, f-string helper) -- it omitted INF_B_00 accounts_v2 read + the holdings write. comp-blast DISCLOSED its own lower-bound limit (good). never-rules-gate 21/21 SOUND after I fixed MY OWN rc-oracle (it could only ever say PASS). |
+| 2026-07-13 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
