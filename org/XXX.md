@@ -1,7 +1,19 @@
 # AGENT START HERE — Opal Capital
 
-**Scope of this doc:** what is true for **every agent, every session**. Operating rules, not history.
-Incident history and rationale live in `org/tier0/ledger/` and the linked docs — never here.
+> **BEFORE YOU ADD ANYTHING TO THIS FILE, APPLY THE TEST:**
+> ### **Is this directly and explicitly OPERATIONAL for the fabric as it is RIGHT NOW, for EVERY agent, EVERY session?**
+>
+> **If yes — keep it, however long it needs to be.** A rule is unobeyable without its **mechanism** (an
+> orphan watcher *manufactures* a REACHABLE verdict; `.agent_context` is last-writer-wins across all
+> agents), and **a bare prohibition loses to an agent's own instruments.** Never cut a mechanism to save space.
+>
+> **If no — it does not belong here.** Anecdotes, incident histories, dated corrections, empirical anchors,
+> retired mechanisms, and anything scoped to one project or one moment go to `org/tier0/ledger/` and the
+> linked docs. **The scar is not the rule.** *This doc is read by someone who has done nothing yet: it must
+> tell them what to DO.*
+>
+> **A time-bounded hold does not belong in the doc every agent reads at startup.** If something must reach
+> every agent, that is a signal it needs a **GATE**, not a paragraph here.
 
 ---
 
@@ -60,8 +72,8 @@ Every inter-agent request follows **Request → Acknowledge → Validate → Clo
 - **Andrew remains sovereign.** A real-Andrew instruction overrides any MSTR directive.
 - **CVO independence:** when the CVO (`3.0.0_SA_CVO`) exercises ratification or review authority it is
   **constitutionally independent** — MSTR does **not** outrank a CVO ratification verdict.
-- **Never stop at a fork.** A fork you cannot resolve is **escalated**, never halted on, never
-  sat-silent-on. Silent freeze is the failure mode this framework exists to prevent.
+- **Never stop at a fork.** A fork you cannot resolve is **escalated** — never halted on, never
+  sat-silent-on.
 - **Escalation chain:** worker → CTO/COO → MSTR (terminal resolver) → Andrew. Runs **upward only, never
   sideways.** Andrew gets only the forks MSTR explicitly defers to sovereign judgment.
 
