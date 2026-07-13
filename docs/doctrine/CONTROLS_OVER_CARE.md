@@ -164,6 +164,28 @@ COMMENT WITH PARENTHESES. A FUNCTION NOBODY INVOKES IS A COMMENT WITH PARENTHESE
 
 **A TOOL THAT DECLARES WHAT IT *CANNOT* DO IS WORTH MORE THAN ONE THAT FAKES THE CAPABILITY.**
 
+**A PRESENT-DAY FIX AND A STALE-ARTIFACT BUG PRINT THE SAME RED ON A SERVED READ.**
+The served bucket carries the lie; the code that would re-create it may already be gone. **Before you dispatch
+a producer fix off a served-artifact symptom, READ THE DEPLOYED PRODUCER.** *Two executives measured a real
+defect on a served artifact, asserted the mechanism, and dispatched a "one-line fix" to a lane — and the
+producer had been fixed for two weeks. The bug was RESIDUE.* **The remedy for residue is not the remedy for a
+live defect, and only the deployed bytes tell you which one you have.**
+
+**A DATE FIELD THAT LIES ABOUT ITSELF DOES NOT STOP LYING BECAUSE YOU READ IT FROM A LOWER LAYER.**
+*Told that a producer's `source_as_of` was untrustworthy, we sent an agent to read the "true" vintage from the
+source partition's own internal `date` column. **It carried the same lie** — byte-identical weekend books,
+relabeled per-date (identical non-date body hash, identical row count, three consecutive dates).*
+**Going one layer down is not the same as finding an independent source. Ask what the lower layer DERIVES its
+answer from** — if it is the same field, or the same producer's belief about itself, you have not left the
+lie, you have re-read it.
+
+**YOU CANNOT STAMP A DATE YOU CANNOT DETERMINE.**
+When the true value is unrecoverable, **a "correction" writes a CONFIDENT, PRECISE, WRONG value onto a served
+field.**
+> ## **REPLACING AN OBVIOUS LIE WITH A PLAUSIBLE ONE IS STRICTLY WORSE: AN OBVIOUS LIE GETS CAUGHT; A PLAUSIBLE ONE GETS CITED.**
+**Disclose the uncertainty (`carried:true`, `vintage_confidence:uncertain`) — never fabricate the precision.**
+*An instrument that cannot observe must SAY SO.*
+
 ---
 
 ## III-b. Conservation is a nearly-useless oracle
