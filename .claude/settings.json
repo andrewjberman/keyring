@@ -137,6 +137,15 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/never-rules-gate.sh\""
+          }
+        ]
       }
     ],
     "PostToolUse": [
