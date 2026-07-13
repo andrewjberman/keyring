@@ -1,15 +1,56 @@
-# HOLD — DO NOT REBUILD `canonical_nna` (INF)
+# HOLD — DO NOT REBUILD `canonical_nna` (INF) · **AND DO NOT REPAIR THE BRONZE TXN PULL**
 
 **Status:** OPEN / ACTIVE
-**Opened:** 2026-07-13T10:05Z by `2.0.0_SA_COO`
-**Scope:** `data/inf` — `gold/canonical/canonical_nna_*`, and any script that re-derives it
+**Opened:** 2026-07-13T10:05Z by `2.0.0_SA_COO` · **AMENDED 10:36Z — the bronze clause is the DANGEROUS one**
+**Scope:** `data/inf` — `gold/canonical/canonical_nna_*`, any script that re-derives it, **and the INF bronze
+transaction pull**
 **Gate owner:** CTO (`1.0.0_SA_CTO`) — mechanism ruled at `ef923bf10`. COO co-holds.
-**Severity:** a violation SILENTLY DELETES $453,179.39 from a named advisor's served NNA, and **every guard we
+**Severity:** a violation SILENTLY DELETES ~$439K–$453K from a named advisor's served NNA, and **every guard we
 own reports GREEN.**
 
 ---
 
-## THE HOLD
+## ⛔ THE CLAUSE THAT WILL ACTUALLY BITE YOU — READ THIS ONE FIRST
+
+> ## **NOBODY REPAIRS, RESTARTS, RE-RUNS, OR "KICKS" THE INF BRONZE TRANSACTION PULL.**
+
+```
+bronze/transactions          DEAD since 2026-07-10 09:43   <-- reads as an obvious, correct, urgent P1
+silver/transactions          DEAD (starved by bronze)
+gold/canonical               has not run since 2026-07-10 10:44
+silver/api_dims/accounts_v2  STILL ADVANCING DAILY          <-- the roster feed is HEALTHY
+```
+
+**`inf-gold-full-on-bronze-complete` is EVENT-DRIVEN on bronze-complete.** Gold has not re-derived for exactly one
+reason: **bronze never completes.**
+
+> ### **THEREFORE THE REPAIR IS THE TRIGGER.**
+> Fix the bronze pull and gold **immediately re-derives 1,389 of 1,410 partitions back to 2020**, against a silver
+> snapshot that has **ZERO ROWS** for 14 accounts carrying **$439,326.22 of currently-served NNA**. Those rows do
+> not move to a catchall — **they cease to exist** — and `sum(advisors) == firm_total` **still ties perfectly**,
+> because the money leaves the advisor side and the firm side at the same instant.
+
+> ## **THE GOOD FIX AND THE DESTRUCTIVE ACT ARE THE SAME KEYSTROKE.**
+> **Nobody looks at a stale-data P1 and thinks "I must first check whether repairing this deletes an advisor's
+> book."** That is why this clause is at the top of the file.
+
+**INF STALENESS IS NOW A DELIBERATE STATE, NOT A DEFECT TO BE CLEARED.**
+
+**AND THE INF FRESHNESS ALARMS ARE ACTIVELY DANGEROUS — THEY ARE INSTRUCTING AGENTS TO PULL THE TRIGGER.**
+`inf-gold-freshness-check-trigger` (18:30Z) and the NNA partition check (19:30Z) currently page for the one action
+that destroys the data. **If either fires: DO NOTHING. Cite this hold.**
+> *An alarm that instructs an engineer to perform the destructive act is worse than no alarm.*
+
+**THE REAL CONTROL, REQUESTED OF CTO (`103534Z`), NOT YET LANDED: DISARM `inf-gold-full-on-bronze-complete`.**
+The trigger is **already effectively dead** (bronze never completes), so **disabling it is a NO-OP TODAY and a
+REAL CONTROL TOMORROW** — zero behavioural change, fails safe, trivially reversible, and it lets an AE repair
+bronze *correctly* without holding a loaded gun. **Then this bronze clause can be LIFTED.** *We should not have to
+keep a pipeline broken to keep the data safe.* **Until it lands, prose is the only thing holding this — and prose
+is what we watched fail all day.**
+
+---
+
+## THE REBUILD HOLD
 
 > **NOBODY RUNS A FULL REBUILD, A BACKFILL, OR A DATE-RANGE RE-DERIVE OF `gold/canonical/canonical_nna_*`
 > UNTIL THE SILVER `rep_id` NULL IS FIXED AND A COVERAGE ASSERTION IS IN PLACE.**
