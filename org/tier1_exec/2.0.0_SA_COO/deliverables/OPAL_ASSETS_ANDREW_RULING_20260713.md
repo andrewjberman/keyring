@@ -39,16 +39,43 @@ FACT** -- `comp-which`'s argmax-as-confidence; `check-inbox`'s *"No pending mess
 halt gate's confident **wrong** principal; a REGISTRY row's 12-day-dead *"HELD, do NOT dispatch"* while the site was
 serving. **Here: no channel for the QUESTION, so the ANSWER got baked in.**
 
-## THE ARITHMETIC IT DISSOLVES (CTO, tied to Manav's sheet to 0.05%)
+## 🔴 THE ARITHMETIC -- **EVERY MAGNITUDE BELOW IS UNQUOTABLE (CTO~B guardrail 11, and I had already quoted them to Andrew)**
 ```
-our served additive headline                                          $1,758.11 mm
-  + the 4 ETF FUNDS  (etf_fund additive=FALSE; MANAV COUNTS THEM)          +685.64   <- NOT A BUG. A DIFFERENT QUESTION.
-  + 49F staleness    (his 7/10 1713.23 vs our as_of 07-06 1621.25)           +91.98   <- a REAL defect
-  - Inflection diff  (ours 136.86 vs his 132.50)                              -4.36   <- a REAL defect
-Manav's Total Fee Paying AUM                                         $2,532.55 mm
+                        *** DO NOT QUOTE THESE FIGURES. NOT TO ANDREW, NOT IN A PRD, NOT TO EACH OTHER. ***
+our served additive headline                                          $1,758.11 mm   UNQUOTABLE
+  + the 4 ETF FUNDS  (etf_fund additive=FALSE; MANAV COUNTS THEM)          +685.64   UNQUOTABLE
+  + 49F staleness    (his 7/10 1713.23 vs our as_of 07-06 1621.25)           +91.98   UNQUOTABLE
+  - Inflection diff  (ours 136.86 vs his 132.50)                              -4.36   UNQUOTABLE
+Manav's Total Fee Paying AUM                                         $2,532.55 mm   UNQUOTABLE
 ```
-**Only the 49F staleness and the Inflection diff are DEFECTS.** The $685.64mm is a **DEFINITION**, and it is now a
-**DIMENSION** instead of a hidden default.
+**WHY:** these are **reconciliation deltas against a sheet whose `as_of` WE DO NOT HAVE**, computed across partitions
+that **ALL MIX VINTAGES** (see the BLOCKER below -- there is no clean partition, not one).
+> ### **A DELTA BETWEEN TWO NUMBERS OF UNKNOWN, DIFFERENT VINTAGE IS NOT A MEASUREMENT. IT IS A SUBTRACTION.**
+**THE RULING IS DEFINITIONAL AND DOES NOT DEPEND ON ANY OF THEM.** *ANDREW GETS THE QUESTION, NOT A FIGURE.*
+**I had already put this whole table in front of Andrew as fact. WITHDRAWN.** *(DS withdrew his own $95mm for the
+same reason, before anyone asked him to. That is the standard.)*
+**Qualitatively (and this survives): the $685.64mm class is a DEFINITION -- a missing dimension, never an error. The
+49F-staleness and Inflection classes are REAL DEFECTS. The SIGNS are sound; the MAGNITUDES are not yet measurements.**
+
+## 🔴 AND MY OWN COUNT WAS WRONG -- **BY A MARKET HOLIDAY. NEVER#1, INSIDE A MEASUREMENT OF NEVER#1.**
+I reported **"11 of 29 trading days missing = 38%"**. **CTO~B re-derived the canonical figure (`lib/trading_calendar.py`,
+NYSE, denominator PRINTED):**
+```
+CANONICAL   WINDOW 2026-06-01 -> 2026-07-10 inclusive   DENOMINATOR 28 trading days   MISSING 10  (= 35.7%)
+HOLES       06-03 06-04 06-08 06-10 06-18   07-01 07-02 07-06 07-07 07-08
+```
+> ### **`2026-07-03` IS A FULL NYSE HOLIDAY -- INDEPENDENCE DAY OBSERVED** (July 4 falls on a Saturday in 2026, so
+> the market closes Friday the 3rd). **I counted it as a trading day.** It inflated numerator AND denominator together
+> (`10/28 -> 11/29`) -- *both moving by one, in lockstep, is the signature of a single misclassified day.*
+> # **I FAILED TO RESOLVE THE TRADING CALENDAR *INSIDE A MEASUREMENT OF THE FAILURE-TO-RESOLVE-THE-TRADING-CALENDAR ERROR CLASS.* AN UNRESOLVED HOLIDAY MANUFACTURED A PHANTOM OUTAGE DAY. IT MANUFACTURED EXACTLY ONE.**
+> **Fourth agent to break NEVER#1 tonight, two hours after CTO landed it as law.**
+
+**AND MY "3-DAY BLACKOUT" IS REALLY A FIVE-TRADING-DAY CONTIGUOUS RUN** (`07-01 07-02 07-06 07-07 07-08`). The 3-day
+reading stops at the weekend+holiday and treats them as a boundary -- **but in TRADING days 07-02 and 07-06 are
+ADJACENT. The market never reopened in between; only the calendar did.**
+> ### **A GAP MEASURED IN WALL-CLOCK DAYS LOOKS LIKE TWO SHORT OUTAGES. MEASURED IN TRADING DAYS IT IS ONE LONG ONE.** *Materially worse, and it is now the finding of record.*
+
+**QUOTE THE FRACTION, NEVER THE PERCENTAGE. `10 of 28` carries its own denominator; `36%` does not.**
 
 ## IT ALSO PRE-SOLVES THE $290mm SMArtX GAP (DS's item -- **and DS has since GROUNDED it; my first draft of this section was WRONG. See the correction.**)
 
