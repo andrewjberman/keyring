@@ -1,6 +1,54 @@
 # ANDREW-DIRECT (2026-07-13 ~22:23Z / ~22:25Z) -- THERE ARE **TWO** 49F SCHWAB BUCKETS
 
-> # ⚠️ AMENDED ~22:33Z BY A THIRD ANDREW-DIRECT MESSAGE. **READ SECTION 0 FIRST -- IT PUTS MOST OF SECTION 4 OUT OF SCOPE.**
+> # ⚠️ AMENDED TWICE. **READ SECTION 00 AND SECTION 0 FIRST.**
+> **§00 (~22:54Z) FALSIFIES THE PREMISE OF SECTION 4. §0 (~22:33Z) PUTS SECTION 4 OUT OF SCOPE.**
+> ### **SECTION 4 IS WRONG TWICE OVER AND IS RETAINED ONLY AS THE RECORD OF THE ERROR.**
+
+---
+
+## 00. ⚠️⚠️ THE BUCKETS **OVERLAP** -- ANDREW, VERBATIM (~22:54Z). **MY $1.71B WAS FALSE, NOT MERELY OUT OF SCOPE.**
+
+> ***"0833 is basically the same as 0824 it just has some extra accounts not included in 0824, again, we are just
+> focused on retrieval and storage, NOT SUMMING."***
+
+```
+0833  ~=  0824  +  extra accounts not in 0824      <-- THEY OVERLAP. NOT DISJOINT. 0833 is broadly a SUPERSET.
+```
+
+### 🔴 SECTION 4's ENTIRE MAGNITUDE RESTED ON AN ASSUMPTION OF **DISJOINTNESS** THAT IS **FALSE**
+
+`1.62b + 1.71b` was **never** the true total -- **it was an OVERCOUNT.** **There is no $1.7B hole of the kind I
+described.** *(Wrong #1: it was a SUMMING question, ruled out of scope. Wrong #2: the premise was FALSE.)*
+
+> ### **AND I FLAGGED THE ASSUMPTION IN THIS VERY DOCUMENT AND THEN LED WITH THE NUMBER ANYWAY.**
+> §4 says, in my own words: ***"THE DISJOINTNESS IS AN INFERENCE, NOT A MEASUREMENT. I AM NOT CLOSING IT."***
+> **I wrote that -- and broadcast the magnitude to five agents as the headline finding.**
+> ## **A CAVEAT UNDERNEATH A $1.7 BILLION NUMBER IS NOT A CONTROL.** *MSTR said exactly this about his own relay of
+> it. **I did it first, and to my own caveat.*** **A hedge you do not act on is decoration.**
+> **THE OUT-OF-SCOPE QUESTION DID NOT ONLY MANUFACTURE DOOR-6 PRESSURE (LD-0293). IT ALSO PRODUCED A FALSE NUMBER.
+> Both harms trace to the same root: NOBODY SHOULD HAVE BEEN ASKING IT.**
+
+### ✅ AND THE STRUCTURAL FACT IS **SCHEMA-DETERMINING** -- this is the part that matters
+
+> # **TWO OVERLAPPING BUCKETS CANNOT BE STORED AS TWO TOTALS. THE OVERLAP BECOMES IRRECOVERABLE.**
+> Store `0824 = <number>` and `0833 = <number>`, and **no presentation case can EVER reconstruct the union** -- not
+> because summing is hard, but because **the information needed to dedup was never recorded.**
+> **YOU CANNOT SUBTRACT AN INTERSECTION YOU NEVER STORED.**
+> ## **=> THE GRAIN MUST BE ACCOUNT-LEVEL. This is not a refinement of AC4 -- IT IS WHAT MAKES AC4 WORK.**
+> **`source_master` ALONE IS INSUFFICIENT once the masters overlap:** two rows stamped `[0824]` and `[0833]` **still
+> cannot be combined without knowing WHICH ACCOUNTS THEY SHARE.** *The identity channel must go one level deeper
+> than either CTO~B or I specced it.*
+
+**This IS Andrew's instruction, not an addition to it:** *"record at each specified granularity"* -- **and he has now
+told us WHAT the granularity is: THE ACCOUNT, because the account is the level at which the two buckets DIFFER.**
+*A total is not a granularity. It is a summary of one, and it destroys precisely the information the union needs.*
+
+**The source already gives it:** CBUGL is **1 row per (account, security) as-of `Business_Date`** (CVO~A, exercised
+on a ~93K-row sample). **`0.6.2_AE` must not aggregate it away on the way in.** Sent to them directly, **with an
+explicit re-confirmation that I am NOT asking them to resolve the overlap** -- *they record the identity; they do not
+resolve the sum.*
+
+---
 
 ---
 
