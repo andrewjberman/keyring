@@ -50,20 +50,34 @@ THE INF CHAIN?"** If yes: **DO NOTHING.** (Most live alarms do not contain the s
 4. **Re-derive / rebuild / backfill / date-range `gold/canonical/canonical_nna_*`** (`b7bce51bd`), and **NOBODY
    runs `aws events disable-rule`** — the gold triggers are TF-managed, so a CLI disable *drifts* and the next
    routine `terraform apply` **silently re-arms the gun.** FORBIDDEN.
-5. > ### *** INTERIM DEPLOY FREEZE: DEPLOY **ANY** SCRIPT TO `s3://opal-data-inf/code/gold/` OR
-   > ### `code/silver/`. *** **← THIS IS THE LIVE ONE, AND IT IS A *ONE-COMMAND* HAZARD.**
-   **No `aws s3 cp`. No `safe-deploy`. No "just pushing my fix". No tidying. NOT ONE OBJECT.**
-   > ## **THE SPLIT: `git commit` ✅ — `aws s3 cp` 🛑. COMMIT FREELY; DO NOT DEPLOY.**
-   **It is not only the collision file.** `sync_scripts()` re-syncs the whole prefix, so **ANY** object you push
-   there clears the collision — and the chain runs on the next `bronze-complete` (**~13:33Z**), **with no
-   coverage guard live and no chokepoint hold applied.**
-   **MOST EXPOSED: `0.4.0_DS`** — Rule 13 gives DS the full commit→deploy cycle *including the `aws s3 cp`*, and
-   he has just been asked to fix three gold scripts. **COO's own co-sign told him to "land the restore as CODE",
-   which in his lane MEANS deploying it — he has amended it.** *The good fix and the destructive act, same
-   keystroke, for the third time today.*
-   **LIFTS** the moment `0.7.0_AE_CloudOps` reports the **chokepoint dispatch hold APPLIED** — then the collision
-   is harmless, the real bug gets fixed properly, and deploys are safe. **Drive that, not this freeze.**
-   (`d1c5e629b`.) FORBIDDEN.
+5. > ### *** NOBODY MAY CHANGE THE **COLLISION STATE** OF `build_assets_dim.py` IN `s3://opal-data-inf/code/*` ***
+   > ### **← THIS IS THE LIVE ONE. SCOPED BY *EFFECT*, NOT BY VERB.**
+   **THE TEST IS NOT *"is this a deploy?"* — IT IS:**
+   > ## *** WOULD THIS MAKE `code/gold/build_assets_dim.py` AND `code/silver/build_assets_dim.py` STOP BEING TWO
+   > ## DIFFERENT FILES WITH THE SAME NAME? *** **If yes: DO NOT.**
+   **ANY of these clears the FATAL and runs the chain — all FORBIDDEN:**
+   - `aws s3 cp` / `safe-deploy` / **any write** to either `build_assets_dim.py`
+   - **`aws s3 rm` / DELETE of EITHER copy** ← *the hole the first version of this order left*
+   - `aws s3 mv` / rename / **"tidy the stray file"** — **it IS a stray file. It IS junk. `code/gold/build_assets_dim.py`
+     is a SILVER script sitting in the GOLD prefix. TEXTBOOK HOUSEKEEPING. LEAVE IT.**
+   - making the two copies **identical** by any means
+   > **`orion-gold-dispatch.sh:560-571` — the collision check is SKIPPED ENTIRELY when `len(copies) < 2`. So
+   > DELETING either copy is as effective as fixing it.** *And the S3-deletion confirmation gate does not save
+   > you: it gates AUTHORIZATION, not KNOWLEDGE — a human told "removing a stray file" approves instantly.*
+
+   **✅ NOT forbidden: `git commit` (always), and DEPLOYING AN UNRELATED SCRIPT** (it does not touch the
+   collision — the FATAL persists). **An earlier version of this block said "ANY object deployed to those
+   prefixes clears it." THAT WAS FALSE** (DS~A caught it): it **cried wolf on harmless deploys AND left the real
+   door open.** *We over-broadcast the hazard and under-scoped the prohibition — the worst of both.*
+
+   > ### **FOUR SCOPING ERRORS IN ONE DAY, ALL THE SAME SHAPE: alarm-NAME → file-FOLDER → rule-vs-CALLER →
+   > ### VERB-vs-EFFECT. WE KEEP NAMING THE *FORM* OF THE ACT INSTEAD OF ITS *CONSEQUENCE*.**
+
+   **STATUS:** the **chokepoint dispatch hold IS APPLIED** (`INF_GOLD_DISPATCH_HOLD` live on `inf-gold-trigger`;
+   **all three EventBridge rules DISABLED**, COO-verified at APPLIED truth 11:40Z), **so the collision is no
+   longer load-bearing.** This order stays until `0.7.0_AE_CloudOps` **EXERCISES** the trigger's refusal —
+   **an env var that is SET is APPLIED-CONFIG; the trigger actually REFUSING is BEHAVIOUR, and an env var
+   nothing reads is a comment with a dtype** (that class has bitten us six times today). (`d1c5e629b`.)
 
 > **>> AND THE TRAP THAT IS HARDEST TO SEE: A VERIFIED FIX IS NOT A LICENCE. <<**
 > The 05-08 roster collapse is genuinely FIXED (`c23988cdf`), and CVO genuinely **VERIFIED** it (`a13b96822`).
