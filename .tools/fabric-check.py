@@ -41,6 +41,7 @@ from __future__ import annotations
 import glob
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -323,12 +324,65 @@ def infer_project(summary: str, agent_commits: list[dict], codes: list[str],
     return "(unmapped)"
 
 
+# The fabric MANDATES a leading state token (org/XXX.md Section F: "keep your broker summary an
+# accurate status -- WORKING: <task> / IDLE: available / BLOCKED: <what> / BLOCKED-SOVEREIGN: <ask>").
+# That token IS the declared state. Everything after it is PROSE.
+_STATE_PREFIX = re.compile(
+    r'^\s*\[?\s*(blocked[\s\-_]*sovereign|blocked|working|idle[\s\-_]*available|idle|standing[\s\-_]*by)'
+    r'\s*\]?\s*[:\-—]',
+    re.IGNORECASE)
+_PREFIX_TO_STATE = {
+    "blocked-sovereign": "SOVEREIGN", "blocked": "BLOCKED",
+    "working": "WORKING", "idle-available": "IDLE", "idle": "IDLE", "standing-by": "IDLE",
+}
+
+
 def classify_declared(summary: str) -> tuple[str, str]:
-    """Parse the self-declared state from the summary. Returns (state, detail)."""
+    """Parse the self-declared state from the summary. Returns (state, detail).
+
+    >> THE LEADING STATE TOKEN IS AUTHORITATIVE AND SHORT-CIRCUITS EVERY PROSE HEURISTIC. <<
+
+    THE BUG THIS FIXES (COO, 2026-07-13 -- and it flagged the CTO one hour after he landed the rule
+    it violates): the prose heuristics below scan for the SUBSTRING "blocked on"/"blocker"/"blocked:"
+    ANYWHERE in the summary. A CTO summary reading
+
+        "IDLE-AVAILABLE: all AoR blockers RULED (...). Nothing blocked on me."
+
+    contains the substring "blocked on" -- inside the words "NOTHING BLOCKED ON ME" -- and was scored
+    **BLOCKED**. So was a CVO summary reporting that the blockers were CLOSED.
+
+    *** IT MEASURED THE TOKEN, NOT THE BEHAVIOUR. *** (CLAUDE.md Rule 22a: CENSUS BY FUNCTION, NEVER
+    BY MENTION -- a matcher cannot tell an assertion from its negation.)
+
+    And the failure is ANTI-CORRELATED WITH THE TRUTH: the more explicitly an agent declares itself
+    unblocked ("no blockers", "nothing blocked on me", "blockers RULED"), the more certainly it trips
+    the flag -- while an agent that says nothing passes clean. `blocked>0` is a /drive GATE, so this
+    taxed exactly the reporting behaviour the fabric wants and sent COO chasing phantoms.
+
+    THE DATA TO DO THIS RIGHT WAS ALREADY THERE: both mis-flagged agents led with a correct, machine-
+    readable state token, and the classifier ignored it to go grep the prose. So: match the PREFIX
+    first and return. The prose heuristics survive ONLY as a fallback for a summary that declares no
+    token at all (legacy/undeclared), which is the case they were actually written for.
+    """
     s = (summary or "").strip()
     low = s.lower()
     if not s:
         return ("UNCLEAR", "(no summary set)")
+
+    # --- AUTHORITATIVE: the declared state token. No prose is consulted. ---
+    m = _STATE_PREFIX.match(s)
+    if m:
+        key = re.sub(r'[\s_]+', '-', m.group(1).strip().lower())
+        state = _PREFIX_TO_STATE.get(key)
+        if state:
+            # A BLOCKED-prefixed summary may still be a sovereign ASK; keep that refinement,
+            # but only for a summary that actually declared itself BLOCKED.
+            if state == "BLOCKED" and ("sovereign" in low or "needs andrew" in low
+                                       or "awaiting andrew" in low):
+                return ("SOVEREIGN", s)
+            return (state, s)
+
+    # --- FALLBACK ONLY: no state token declared. Legacy prose heuristics. ---
     # Sovereign request -- a block REQUESTING an Andrew/MSTR ruling (NOT a report of a
     # past ruling). Request-phrasing only: explicit BLOCKED-SOVEREIGN token, or a
     # request verb (needs/awaiting/pending/requires) + andrew/sovereign. Deliberately
@@ -342,10 +396,17 @@ def classify_declared(summary: str) -> tuple[str, str]:
                    "needs sovereign ruling", "sovereign discretion needed")
     if any(m in low for m in sov_markers):
         return ("SOVEREIGN", s)
-    # Explicit blocked
-    if "blocked:" in low or "blocked on" in low or low.startswith("blocked") \
-       or "[blocked" in low or "blocker:" in low:
-        return ("BLOCKED", s)
+    # Explicit blocked -- with a NEGATION GUARD. Even in the token-less fallback, a matcher
+    # must not read "NO blockers" / "NOTHING blocked on me" / "NOT blocked" as a block. A
+    # substring matcher cannot tell an assertion from its negation, so the negation is checked
+    # FIRST and wins. (Same defect, one level down: it is the reason the prefix rule above exists.)
+    _negated = ("no blockers", "no blocker", "nothing blocked", "not blocked", "none blocked",
+                "no blocks", "nothing is blocked", "blockers ruled", "blockers closed",
+                "blockers cleared", "unblocked", "no longer blocked")
+    if not any(n in low for n in _negated):
+        if "blocked:" in low or "blocked on" in low or low.startswith("blocked") \
+           or "[blocked" in low or "blocker:" in low:
+            return ("BLOCKED", s)
     # Soft-block: holding/pending a ruling or decision (a hold that stalls a
     # workstream until someone decides -- the single-point block class COO must
     # resolve). Distinct from "awaiting next TO" idle (those phrases not matched here).
@@ -357,8 +418,13 @@ def classify_declared(summary: str) -> tuple[str, str]:
     if any(m in low for m in softblock):
         return ("BLOCKED", s)
     # Idle / available (explicit or the common legacy phrasings)
+    # NOTE: "no blockers" was REMOVED from this list 2026-07-13. It is a statement about
+    # BLOCKERS, not an assertion of IDLENESS -- and it produced the MIRROR of the BLOCKED bug:
+    # an agent mid-build reporting "grinding the round-8.2 build, no blockers" was classified
+    # IDLE, so /drive would dispatch fresh work onto a busy agent. Same mention-vs-function
+    # defect, opposite bucket. (Found by the test written for the BLOCKED half.)
     idle_markers = ("idle", "available", "standing by", "stand-down", "stand down",
-                    "nothing to", "no blockers", "no work", "quiet", "parked",
+                    "nothing to", "no work", "quiet", "parked",
                     "awaiting", "at-gate", "at gate", "no-work")
     if any(m in low for m in idle_markers):
         return ("IDLE", s)
