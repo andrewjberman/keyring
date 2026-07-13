@@ -4,7 +4,7 @@
   "name": "OPAL Assets - Bullet-Proof Daily AUM Cohort Tracking",
   "description": "Andrew-commissioned macro-project (2026-07-12): bullet-proof DAILY tracking of all 14 Opal AUM cohorts into ONE canonical daily DynamoDB bucket (one row per cohort per day; row shape {cohort, source_master(s), value, as_of, state}), plus per-partner true ETF ownership. PIT-snapshot pattern (retire the bd transaction engine as the AUM source for this surface); each cohort carries its OWN-field as_of and an explicit state (fresh|rolled_forward|missing) so stale/absent cohorts are visible, never silently rolled forward or smeared into a cross-partner as_of. A CONVERGENCE of six already-daily sources + one new Schwab-BD 08335338 PIT pull (both-masters-dedup, D1=SPLIT). Strictly internal.",
   "prds": [
-    { "path": "docs/architecture/OPAL_ASSETS_PRD.md", "label": "OPAL_ASSETS PRD v0.3 (CTO~B) -- v0.1 synthesis + v0.2 CVO FP-R0 folds + v0.3 decoupling/ETF-channel/cohort-disentangling", "date": "2026-07-13" }
+    { "path": "docs/architecture/OPAL_ASSETS_PRD.md", "label": "OPAL_ASSETS PRD v0.4 (CTO~B) -- v0.1 synthesis + v0.2 CVO FP-R0 folds + v0.3 decoupling/ETF-channel/cohort-disentangling + v0.4 vintage-alignment/fired-guard-must-block/magnitudes-withdrawn", "date": "2026-07-13" }
   ],
   "source_brief": "CVO~A blueprint b2a17a7e3 (CVO_14cohort_daily_AUM_tracking_assessment_and_plan_20260712.md) + source-map reconciliation e41c49683 + the 08335338 discovery (fully observed); Andrew-direct commission 2026-07-12.",
   "status": "active",
