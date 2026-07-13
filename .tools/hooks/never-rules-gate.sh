@@ -171,9 +171,27 @@ OVERRIDE_RE='#[[:space:]]*never-override:'
 
 # Simple commands with COMMENTS PRESERVED -- the marker lives in a comment, so it must survive the
 # split. (Comments are stripped per-command below, AFTER the marker is read off the raw text.)
+# *** A QUOTED STRING IS DATA, NOT COMMANDS. *** The command-form gates (rebase / terraform / stash /
+# clean) must not see inside one -- and, crucially, must not SPLIT inside one.
+#   grep -oE 'rebase|terraform apply|git stash' CLAUDE.md
+# The `|` characters are INSIDE A QUOTED REGEX. Splitting on them tore the command into fragments,
+# and `terraform apply` became a FRAGMENT WHOSE FIRST TOKEN IS `terraform` -- a command that never
+# existed. The gate DENIED A CENSUS OF ITSELF. Same root as `echo "...terraform apply; use
+# safe-apply"`, where the `;` inside the quotes split the MATCH away from its EXCUSE.
+# So: blank the CONTENTS of quoted strings before splitting. The quotes and the surrounding command
+# structure survive; only the data inside them is neutralised.
+# NOTE: GATE 3 (commit -m + metachar) does NOT use this -- it must see INSIDE the `-m` body, because
+# the body is exactly what the shell will evaluate. Different question, different scope.
+# ACCEPTED RESIDUAL: `bash -c "git rebase"` evades this. It is a deliberate trade -- the alternative
+# is a gate that blocks every brief, census and echo discussing the hazard, and CLAUDE.md is explicit
+# that such a gate SHIPS OFF. A gate nobody can work next to gets disabled, and then protects nothing.
+_strip_quoted() {
+    sed -E "s/'[^']*'/'Q'/g; s/\"[^\"]*\"/\"Q\"/g"
+}
 _simple_commands_raw() {
     printf '%s\n' "$CMD" \
       | _strip_heredocs \
+      | _strip_quoted \
       | sed -E 's/(\|\||&&|;|\|)/\n/g'
 }
 
@@ -231,7 +249,33 @@ BRANCH=$(git -C "$REPO" rev-parse --abbrev-ref HEAD 2>/dev/null || echo UNKNOWN)
 # Match the SUBCOMMAND POSITION, never the word. `git [opts] rebase` / `git [opts] -C x rebase`.
 # `git commit -m "...rebase..."` cannot match: the token after git (modulo -flags) is `commit`.
 # =========================================================================================
-_GIT='(^|[[:space:];|&(])git([[:space:]]+-[^[:space:]]+|[[:space:]]+-C[[:space:]]+[^[:space:]]+)*[[:space:]]+'
+# =========================================================================================
+# *** COMMAND POSITION, NOT "ANYWHERE IN THE TEXT". THE NEGATIVE CONTROL WAS RED AND CLAUDE.md
+#     SAYS A RED NEGATIVE CONTROL SHIPS THE GATE OFF. (COO, exercised, 2026-07-13.) ***
+#
+#     echo "the rule forbids bare terraform apply; use safe-apply"   -> WAS DENIED
+#     echo "NEVER#7 forbids git rebase on shared branches"           -> WAS DENIED
+#     grep -oE 'rebase|terraform apply'   (a CENSUS OF THE GATE)     -> WAS DENIED
+#   The command is `echo`. There is NO terraform and NO git invocation in any of them.
+#   *** THE GATE WAS BLOCKING THE BRIEF THAT REPORTS THE HAZARD *** -- the one thing CLAUDE.md
+#   refuses outright ("a gate that blocks the brief reporting the hazard is worse than no gate").
+#
+# TWO CAUSES, ONE ROOT -- I MATCHED THE WORD, NOT THE COMMAND:
+#   (a) `_GIT` matched `git ... rebase` ANYWHERE in the text, INCLUDING INSIDE A QUOTED STRING.
+#   (b) `_simple_commands()` splits on `;` -- INCLUDING A `;` INSIDE QUOTES -- so
+#       `echo "... terraform apply; use safe-apply"` tore into a fragment holding the MATCH and a
+#       fragment holding the EXCUSE. The match survived; its excuse did not.
+#   CLAUDE.md said, from the beginning: *"match the SUBCOMMAND POSITION, NEVER THE WORD."*
+#   I wrote a rule about command position and then implemented a substring search.
+#
+# THE FIX: the command must be the FIRST TOKEN of its simple command. `echo "git rebase"` has
+# first token `echo` -> no match. `git rebase -i` has first token `git` -> match. `cd x && git
+# rebase` splits, and fragment 2's first token is `git` -> match. Leading env-assignments, an
+# interpreter (`bash`/`sh`/`env`/`command`), and shell keywords (`then`/`do`/`else`/`{`) are
+# skipped so `if ...; then git rebase; fi` still catches.
+# =========================================================================================
+_LEAD='^[[:space:]]*(([A-Za-z_][A-Za-z0-9_]*=[^[:space:]]*|bash|sh|env|command|then|do|else|elif|\{|\()[[:space:]]+)*'
+_GIT="${_LEAD}"'git([[:space:]]+-[^[:space:]]+|[[:space:]]+-C[[:space:]]+[^[:space:]]+)*[[:space:]]+'
 # `git rebase`, or `git pull ... --rebase` (any flag order, up to the next command separator).
 _RE_REBASE="${_GIT}"'(rebase([[:space:]]|$)|pull[^;|&]*--rebase)'
 _RE_PULL="${_GIT}"'pull([[:space:]]|$)'
@@ -312,7 +356,12 @@ fi
 # LINE-SCOPED excuse (see offending_lines): a bare `terraform apply` on one line was previously
 # excused by the string "safe-apply" appearing ANYWHERE else in the command -- a comment, an echo,
 # even a message explaining why the apply was unsafe. Same disarm vector as the stash gate.
-if [ -n "$(scan TERRAFORM 'safe-apply|safe-destroy' '(^|[[:space:];|&(/\\])(terraform(\.exe)?)[[:space:]]+(apply|destroy)([[:space:]]|$)')" ]; then
+# COMMAND-POSITION anchored, same as the git gates and for the same reason: the unanchored version
+# DENIED `echo "the rule forbids bare terraform apply; use safe-apply"` and even a `grep -oE
+# 'terraform apply'` CENSUS OF THE GATE ITSELF. The `;` inside the quoted string also split the
+# MATCH away from its EXCUSE. A leading path is allowed (`./.tools/terraform.exe apply`).
+_RE_TF="${_LEAD}"'([^[:space:]]*[/\\])?(terraform(\.exe)?)[[:space:]]+(apply|destroy)([[:space:]]|$)'
+if [ -n "$(scan TERRAFORM 'safe-apply|safe-destroy' "$_RE_TF")" ]; then
     if true; then
         deny "BLOCKED (CLAUDE.md NEVER#3): bare 'terraform apply/destroy'. Use .tools/safe-apply.sh (or safe-destroy.sh) -- it carries the HALTGT inbox checkpoint at the last reversible moment, plus the pre-apply drift-plan check and the write-without-read paired-permission lint (Rule 22a). A bare apply skips ALL of it. NOTE: there is no terraform PATH shim -- .tools/terraform is the real binary on PATH, so nothing else stops this. Audited override: '# never-override: <reason>'."
     fi
@@ -337,8 +386,40 @@ fi
 _RE_COMMIT='(^|[[:space:];|&(/\\])(git([[:space:]]+-[^[:space:]]+|[[:space:]]+-C[[:space:]]+[^[:space:]]+)*[[:space:]]+commit|safe-commit(\.sh)?)([[:space:]]|$)'
 _RE_DASH_M='(^|[[:space:]])-m([[:space:]]|=)'
 _RE_META='`|\$\('
-if [ -n "$(scan COMMIT_MSG '' "$_RE_COMMIT" "$_RE_DASH_M" "$_RE_META")" ]; then
-    if true; then
+# =========================================================================================
+# *** GATE 3 IS DELIBERATELY **WHOLE-COMMAND** SCOPED. DO NOT "FIX" IT TO PER-SIMPLE-COMMAND. ***
+#
+# It WAS per-simple-command for ~6 hours on 2026-07-13 (my own F-021 change) and THAT CREATED A
+# HOLE THAT EXECUTED A REAL COMMIT MESSAGE. `_simple_commands()` splits on NEWLINES -- and a `-m`
+# body is a SINGLE SHELL ARGUMENT THAT SPANS NEWLINES. So a multi-line message is torn apart:
+#     git commit -m "fix: the selector          <- fragment 1: has `commit` + `-m`, NO metachar
+#     `any(t in src ...)` was the bug"          <- fragment 2: has the metachar, NO `commit`
+# Neither fragment carries all three, so the gate PASSED IT. Exercised:
+#     single-line -m + backtick   -> DENY      (the only case I tested when I made the change)
+#     multi-line  -m + backtick   -> PASS      *** THE HOLE ***
+# 0.4.0_DS_ClientPlatform~A then executed his own commit message (49fe7b0e4): the shell evaluated
+# the backticks BEFORE git or safe-commit saw the string, the substitution failed, and bash spliced
+# its EMPTY output in -- DELETING A CLAUSE FROM THE IMMUTABLE RECORD. He had read the rule that
+# morning and followed it four times. The gate was the only thing that could have caught the fifth,
+# and I had broken it.
+#
+# >> I TRADED A FALSE POSITIVE FOR A FALSE NEGATIVE, AND THE FALSE NEGATIVE IS THE DIRECTION THAT
+#    EXECUTES CODE. <<  The F-021 false positive (a SAFE `-m` commit denied because an UNRELATED
+# `echo "$(id)"` sits elsewhere in the command) is ANNOYING and FAILS CLOSED. This hole is SILENT
+# and RUNS ARBITRARY CODE with the agent's permissions, into a record that cannot be corrected.
+# *** WHEN THE TWO ERROR DIRECTIONS ARE "ANNOYING" AND "EXECUTES CODE", YOU CHOOSE ANNOYING. ***
+# And the remedy for the false positive costs nothing: USE `-F`. That is the mandated path anyway
+# (LD-0276), and a `-F` body is not shell-parsed, so it needs no metachar in the command at all.
+#
+# HEREDOC BODIES ARE STILL STRIPPED (see _strip_heredocs), so the mandated
+# `cat > msg <<'EOF' ... EOF; safe-commit -F msg` pattern -- even when the message DOCUMENTS this
+# very hazard and contains backticks -- still PASSES. That is the case that must never break.
+# =========================================================================================
+_CMD_NOHEREDOC=$(printf '%s\n' "$CMD" | _strip_heredocs)
+if printf '%s' "$_CMD_NOHEREDOC" | grep -qE -- "$_RE_COMMIT" \
+   && printf '%s' "$_CMD_NOHEREDOC" | grep -qE -- "$_RE_DASH_M" \
+   && printf '%s' "$_CMD_NOHEREDOC" | grep -qE -- "$_RE_META"; then
+    if ! printf '%s' "$CMD" | grep -qE -- "$OVERRIDE_RE"; then
         if true; then
             deny "BLOCKED (CLAUDE.md Git / LD-0276): 'git commit -m' carrying a backtick or \$( -- A COMMIT MESSAGE IS AN EXECUTION VECTOR. The substitution is performed by the SHELL before git or safe-commit ever sees the argument, so it RUNS with your permissions and splices its stdout into the immutable record -- and a safe-commit lint structurally cannot catch it. Use -F instead: write the body to a file (heredoc -> file), then: safe-commit.sh --author \"...\" -F <file> -- <paths>. -F routes the body into a file the shell never parses, so the safe path needs no backtick in the command at all. (Yes, -m \"\$(cat <<'EOF'...)\" is technically inert -- it is still deprecated, because verifying it requires shell parsing and mandating -F makes the gate parse-free.) Audited override: '# never-override: <reason>'. Incident: MSTR corrupted 11c44632b writing the finding about this very hazard."
         fi

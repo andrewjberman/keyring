@@ -185,12 +185,51 @@ fi
 echo ""
 echo "*** RV-0048 F-021: the commit-msg gate's three conditions must CO-OCCUR on ONE simple"
 echo "    command. Three independent whole-command greps convicted a SAFE -F commit. ***"
-echo "  NOTE: the arm MUST carry a real -m, or it does not exercise the bug at all. My first version"
-echo "  omitted it, scored PASS against the OLD hook, and would have shipped as a green measuring"
-echo "  nothing. (A test that cannot encode the failing input reports PASS no matter what.)"
-check "F-021 safe -m commit + an unrelated \$( in an echo" 'safe-commit.sh --author "x" -m "plain message" -- a
-echo "the id is $(id)"'                                                                            PASS
-check "F-021 ...but a REAL commit -m with \$( still denies"  'safe-commit.sh --author "x" -m "fix $(id)" -- a'  DENY
+echo ""
+echo "*** F-023 -- THE HOLE MY OWN F-021 FIX CREATED, AND IT EXECUTED A REAL COMMIT MESSAGE. ***"
+echo "  A `-m` BODY IS ONE SHELL ARGUMENT THAT SPANS NEWLINES. Per-simple-command scoping SPLITS IT:"
+echo "     line 1 gets `commit` + `-m` and NO metachar; line 2 gets the metachar and NO `commit`."
+echo "  Neither fragment carries all three -> the gate PASSED IT. 0.4.0_DS_ClientPlatform~A then"
+echo "  executed his own commit message (49fe7b0e4) and a clause was DELETED from the immutable record."
+echo "  >> GATE 3 IS WHOLE-COMMAND SCOPED ON PURPOSE. Do NOT 'fix' it to per-simple-command. <<"
+check "F-023 MULTI-LINE -m, backtick on line 2 (DS~A's shape)" 'git commit -m "fix: the selector
+`any(t in src for t in ROSTER_TOKENS)` was the bug"'                                               DENY
+check "F-023 MULTI-LINE -m, \$( on line 2"                 'git commit -m "header
+body with $(id) in it"'                                                                            DENY
+check "F-023 single-line -m + backtick (was already green)" 'git commit -m "fix `whoami` thing"'   DENY
+
+echo ""
+echo "  ...and the FALSE POSITIVE we DELIBERATELY ACCEPT. It fails CLOSED, and the remedy is -F."
+echo "  *** WHEN THE TWO ERROR DIRECTIONS ARE 'ANNOYING' AND 'EXECUTES CODE', YOU CHOOSE ANNOYING. ***"
+check "F-021 safe -m + unrelated \$( elsewhere -> DENIED (accepted)" 'safe-commit.sh --author "x" -m "plain message" -- a
+echo "the id is $(id)"'                                                                            DENY
+check "F-021 a REAL commit -m with \$( still denies"  'safe-commit.sh --author "x" -m "fix $(id)" -- a'  DENY
+
+echo ""
+echo "  ...but the MANDATED -F PATH MUST STILL PASS -- even when the message DOCUMENTS this hazard:"
+check "the -F heredoc pattern, message full of backticks" 'cat > /tmp/m.txt <<'"'"'EOF'"'"'
+doc: a commit message is an EXECUTION VECTOR -- `whoami` and $(id) run BEFORE git sees them
+EOF
+bash .tools/safe-commit.sh --author "x" -F /tmp/m.txt -- CLAUDE.md'                                PASS
+check "-F with no -m at all"                          'safe-commit.sh --author "x" -F /tmp/m.txt -- a'  PASS
+
+echo ""
+echo "*** F-024: THE NEGATIVE CONTROL WENT RED, ON BOTH ARMS. CLAUDE.md: A RED HERE SHIPS THE GATE OFF. ***"
+echo "  Exercised by COO. The gate DENIED an `echo` that merely MENTIONED the banned commands -- and"
+echo "  DENIED A CENSUS OF ITSELF. *** IT WAS BLOCKING THE BRIEF THAT REPORTS THE HAZARD. ***"
+echo "  ROOT (one, three symptoms): I matched THE WORD, not THE COMMAND -- and split on ; and | INSIDE"
+echo "  QUOTED STRINGS, which tore the MATCH away from its EXCUSE and manufactured fragments whose"
+echo "  first token looked like a command that never existed."
+echo "  FIX: command-POSITION anchoring + a quoted string is DATA (blank its contents before splitting)."
+check "COO-1 echo mentioning terraform apply + safe-apply" 'echo "the rule forbids bare terraform apply; use safe-apply"'  PASS
+check "COO-2 echo mentioning the rebase rule"              'echo "NEVER#7 forbids git rebase on shared branches"'          PASS
+check "COO-3 a CENSUS OF THE GATE ITSELF"                  "grep -oE 'rebase|terraform apply|git stash' CLAUDE.md"         PASS
+check "N echo mentioning git stash"                        'echo "git stash parks every dirty file"'                       PASS
+echo "  ...and it must STILL BITE (a gate that denies nothing is not a gate):"
+check "REAL rebase still denies"                           'git rebase -i HEAD~3'                                          DENY
+check "REAL bare terraform apply still denies"             'terraform apply -auto-approve'                                 DENY
+check "REAL stash push still denies"                       'git stash push -m wip'                                         DENY
+check "rebase inside if/then (leading keyword)"            'if true; then git rebase origin/CLOUD; fi'                     DENY
 
 echo ""
 echo "*** RV-0048 F-020: THE AUDIT LOG MUST RECORD A REAL SUPPRESSION, NEVER A MENTION. ***"
