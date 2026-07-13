@@ -1,5 +1,8 @@
 # Deploy completion -- INF udf7ADVISOROF /Portfolio/Accounts roster pull
 
+**Status:** COMPLETE + VERIFIED, INERT (bronze producer only) -- closed 2026-07-12T13:24Z
+**Closed:** 2026-07-12T13:24Z
+
 **Deploy:** inf-pipeline-v1.7.83 | **Owner:** 0.7.0_AE_CloudOps | **Completed:** 2026-07-12T13:24Z (in-session) | **Status:** COMPLETE + VERIFIED, INERT (bronze producer only)
 
 ## What
