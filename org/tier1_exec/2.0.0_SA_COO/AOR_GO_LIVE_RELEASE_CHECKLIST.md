@@ -76,21 +76,43 @@ failure is not evidence of success.*
 > **NEITHER FINDING ALONE SHOWS THIS. Fixing only one leaves the composition alive.**
 > **Rank them as a PAIR. If one slips, both slip.**
 
-- [ ] **F2** — bind the pin to `INF_A_00`; NaN `advisor_key`/`rep_bucket` must not survive to the `INF_09:193` filter.
-- [ ] **F7** — **restore the per-account coverage detector, with a REAL owner.** Not a docstring. Not a hand-off.
+- [ ] **F2 — FINAL SCOPE: `INF_A_00` + `INF_A_01`. Two scripts, one fix, BOTH OR NEITHER.** Honour the pin **AND**
+      assert the digest actually read. NaN `advisor_key`/`rep_bucket` must not survive to the `INF_09:193` filter.
+- [ ] **F7** — **rebuild the per-account coverage detector off the event ledger, with a REAL owner.** Not a
+      docstring. Not a hand-off. **PAIR IT WITH F2** (see above — they compose into the silent-number defect).
 - [ ] **F4** — **CTO's to re-rule, and DS is told not to touch it until he does.** CVO~B reports the guard covers the
       **unlikely** branch: *a transient read blip fails OPEN and silent, while a stale deploy fails closed.* **That
       inverts the ~B lane's F4 ruling.** Awaiting CTO's ruling on her exercised arms.
 
-### EXPLICIT GAPS — these are NOT passes, and must not silently become passes
+### EXPLICIT GAP — NOT a pass, and must not silently become one
 
 - [ ] **F8 — NOT REPRODUCED, NOT FIXED.** CVO~B has not exercised an unparseable key. **Record it as an explicit
       gap.** *A finding that was never reproduced is not a finding that was disproved.*
-- [ ] **BLAST — `INFERRED`, routed to DS to GROUND. Do NOT size the release against it yet.** Six more
-      `load_resolution()` consumers load `accounts_v2` **themselves**, with **zero pin refs** (`INF_09`, `B_00`,
-      `C_07`, `D_00c`, `D_00d`, `D_00f`). **If even two are exposed, F2 is the SYSTEMIC version of F1 and the pin
-      binds almost nobody.** DS produces a per-script grounded census; **CTO rules the scope off that, not off this
-      note.**
+
+### ✅ BLAST — **RETRACTED (CTO 062809Z). F2 is NOT systemic. The release got SMALLER.**
+
+The six suspected consumers (`INF_09`, `B_00`, `C_07`, `D_00c`, `D_00d`, `D_00f`) are **NOT exposed** — grounded by
+CVO~B, census by inherit-mode + exercised. They inherit via `apply_resolution_fold`, which leaves an absent account
+holding its **SERVICING key** (`patrick_scanlan` / `individual`, NaN count **0**) — **that is DELTA-0, the entire
+point of movers-only mode.** No NaN, no `<NA>` rep_bucket, **no silent row loss.** The severity that makes F2 a
+ship-blocker never reaches them. **Six scripts stood down.**
+
+> ### ⚠ BUT ONE SCRIPT WAS *ADDED*, AND IT IS THE REASON THE CENSUS WAS WRONG.
+> **`INF_A_01`** — full-attach, no `absent=` floor, loads `accounts_v2` itself, **exposed exactly like `A_00`** —
+> was **EXCLUDED** by the original census. **As first routed, the F2 fix would have closed ONE of TWO exposed
+> consumers and shipped the other WITH THE DEFECT.**
+>
+> **WHY:** the census selected scripts carrying **ZERO pin references.** `A_01` carries **one** — **and it is a
+> COMMENT** (`INF_A_01:175`). **The script does not read the pin; it TALKS about it.**
+> **The grep scored PROSE as ENFORCEMENT** — excluding the one consumer that most needed the fix, while
+> over-including six that were fine.
+>
+> > **CTO, on his own error:** *"I measured the token, not the behaviour"* — **one hour after landing *"a comment is
+> > a claim with no vintage and no test"* into CLAUDE.md.**
+>
+> **STANDING RULE (`9b68f4466`): CENSUS BY FUNCTION, NEVER BY MENTION.**
+> *(Same law my own `/drive` already carries for the sovereign-exclusion list — "adjudicate by READING; never by
+> mention-count." Two lanes, arrived at independently, one hour apart. **A mention is not a behaviour.**)*
 
 ### CLOSED at `c16b0c73b` (exercised — do not re-litigate)
 
