@@ -1,6 +1,37 @@
 # OPAL_ASSETS -- ANDREW RULING, 2026-07-13: **RECORD THE COMPONENTS. THE SUM IS A PRESENTATION DECISION.**
 
-> # 🔴🔴 SUPERSEDING FACT (Andrew-direct ~22:23Z, VERBATIM, via DS) -- **THERE ARE TWO 49F SCHWAB BUCKETS, AND WE SERVE ONLY ONE.**
+> # ⛔ SCOPE CORRECTION (Andrew-direct ~22:33Z, VERBATIM, via DS) -- **READ THIS *BEFORE* THE BLOCK BELOW IT. THE "HALF THE COMPANY'S AUM" FRAMING IS OUT OF SCOPE, AND IT IS MINE.**
+> > ***"Yes this is why i say do not focus on how to sum, just focus on making sure we record at each specified
+> > granularity. Summing is a presentation question and something unrelated to the task at hand here, which is just
+> > establishing canonical storage location and robust ingestion across each figure."***
+>
+> ```
+> THE TASK IS       (a) CANONICAL STORAGE LOCATION   (b) ROBUST INGESTION, PER FIGURE.
+> THE TASK IS NOT   summing. Not "is the headline half the truth?". Not "do the buckets overlap?".
+> ```
+> ## **I LED MY REPORT TO ANDREW WITH *"THE SERVED HEADLINE IS HALF THE COMPANY'S AUM."* THAT IS A SUMMING QUESTION. IT IS THE EXACT QUESTION HIS RULING EXCLUDED -- AND I RE-ENTERED IT THROUGH THE BACK DOOR WHILE QUOTING THE RULING APPROVINGLY.**
+> **DS did it 8 minutes before me (his *"headline is short by $1.71B"* + a disjointness GATE on 0.6.2's ETL); I did it
+> while relaying his correction.** *Same organ as the `additive` boolean I diagnosed myself: **a PRESENTATION concern
+> leaking into the layer below it.** I named it, and then committed it -- in my analysis instead of my schema.*
+> ### **FOURTH DEMONSTRATION TONIGHT: KNOWING A FAILURE MODE BY NAME DOES NOT IMMUNIZE YOU AGAINST WRITING IT.**
+> **AND THE COST WAS NEARLY REAL:** framing disjointness as a **gate** would have **STALLED 0.6.2's ETL on a question
+> that does not need answering in order to store the data.** *A presentation question, promoted to a blocker, halts an
+> ingestion.*
+>
+> ## THE ONLY STORAGE-SIDE IMPLICATION -- **A FIELD, NOT AN ANALYSIS**
+> > ### **EACH ROW CARRIES *WHICH BUCKET / MASTER / ACCOUNT IT IS OF.* If the grain records IDENTITY, *"do these overlap?"* is a **QUERY**, not a design decision. RECORD THE IDENTITY; DO NOT RESOLVE THE SUM.**
+> **Grain fine enough that every presentation case is COMPUTABLE from the store.**
+>
+> **DIES (drop from the framing entirely -- and all three were ALSO bucket-confusion, so they die twice):** the
+> `$290mm` · CTO's `$91.98mm staleness` · my/DS's *"headline is half."*
+> **STANDS:** the **GRANULARITY** finding -- three distinct figures; `0833` unrecorded; `49f_smartx_platform`
+> mislabelled onto the sleeve. *(That is CTO~B's ruling (C).)* **And DS re-cut his own AC17** -- *"a disclosure must
+> carry a MAGNITUDE"* **was smuggling the sum back in**; re-cut to: **a disclosure carries its own IDENTITY + STATE, so
+> a reader can compute the magnitude themselves. NEVER MAKE THE STORE ASSERT A TOTAL.**
+>
+> ---
+>
+> # 🔴 THE FACT ITSELF (Andrew-direct ~22:23Z, VERBATIM, via DS) -- **TWO 49F SCHWAB BUCKETS; WE RECORD ONLY ONE.** *(A GRANULARITY finding. Read it as identity, NOT as a total.)*
 > > ***"No there are two 49F Buckets. There is the 49F Smartx which is the number we are showing at ~1.62b, there is
 > > also the 49F Black Diamond, which also comes from Schwab, albeit the 0833 account, not the 0824 account. THis is
 > > what I tasked 0.6.2_AE with sorting ETL for, get in touch with them on the subject, we need to track both
