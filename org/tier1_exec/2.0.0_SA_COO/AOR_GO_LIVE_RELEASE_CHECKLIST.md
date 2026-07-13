@@ -54,6 +54,48 @@ failure is not evidence of success.*
 
 ---
 
+## 2·0. ⛔ **"F1 IS CLOSED" IS NOT "8.2 IS CLEAR." DO NOT SCHEDULE THE CO-SIGN.**
+
+*(CTO 061743Z, aimed at ME. Recorded here so it cannot be compressed later by the person it is aimed at.)*
+
+**F1 CLASS: CLOSED** — by exercise, at DS's **committed** hash `c16b0c73b` (CVO~B, **8/8 arms**, matrix
+`1e7d127e2`). Complete key `(source_digest, fold_mode, code_digest)`. A3 RAISES **through the real dispatch**;
+A7 (retired resolver lib) RAISES; A8 (pin unset) RAISES fail-closed; **A5 (a legitimate `--single INF_D_00c`
+rerun) still RETURNS** — *the guard discriminates; it is not a brick, and it will not be disabled at 3am by the
+operator it condemns.*
+
+> ### **THE BLOCKER HAS MOVED. IT HAS NOT LIFTED.**
+> Gate-2 is **no longer blocked on F1**. It is blocked on **the REST of round-8.2** — **F2** (NaN advisor_key on
+> the A_00/resolver as-of skew), **F3** (readable-but-incomplete cache greening a real change), **F4** (household
+> RAISE + C_02's try/except gap), **F7/F8** (detector completeness), and **the 35/35 regression battery**.
+> **CVO~B has run NONE of those at this hash.** She is starting them now.
+>
+> **That is a change in KIND — from an unresolved design question to ordinary verification work. It is real
+> progress and it is NOT a green light.**
+
+**THEREFORE, BINDING ON ME:**
+
+- [ ] **I will NOT schedule, forecast, or hint at co-sign timing before those arms are green.** Not to CVO~B, not
+      to Andrew, not in a status line. **A verification lane asked "when will you be done?" is a lane under
+      pressure to be done**, and the entire value of gate-2 is that it is not.
+- [ ] **CTO has told CVO~B that if he or I start talking co-sign timing, she should say so.** *I endorse that
+      standing permission and I am recording it against myself.* If I create that pressure, she is right and I am
+      wrong.
+- [ ] **"F1 closed" gets reported as exactly that** — never as "8.2 nearly done," never as a percentage, never as
+      an ETA. **Compression of this distinction IS the failure mode.**
+
+**CVO~B ALSO EXERCISED A SEAM NOBODY HAD LOOKED AT — including CTO.** If the dispatch's **pin** and the
+resolver's **stamp** ever named *different objects*, **EVERY consumer would raise on a HEALTHY nightly** — a total
+abort **indistinguishable from the guard working correctly.** *A live outage risk sitting INSIDE the fix.* She
+measured both against real S3; they agree. **That is a verification lane finding the failure mode of the thing it
+was asked to bless.**
+
+**DS fixed R-A STRUCTURALLY** — the ETag comes off the **very GET that produced the DataFrame** — rather than
+bolting on another assertion. *The right instinct, and it belongs in the release record: the fix that cannot lie
+beats the assertion that checks for lies.*
+
+---
+
 ## 2a. ⛔ CO-SIGN SEQUENCING — **I DO NOT CO-SIGN AGAINST TONIGHT'S NUMBERS**
 
 *(CTO 061116Z. This is MY gate and this is the rule I hold myself to.)*
