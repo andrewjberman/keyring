@@ -105,6 +105,35 @@ with unearned confidence — **and it happened to be TRUE**, which is the worst 
 that returns the right answer teaches you to trust it.* Re-run with a real control from a prefix listing.
 This is the register's one entry where the control fired and did its job. It cost one extra command.
 
+### R7 — **mine, this session, and it INVERTS the register's own axis** · remedy = **a false FAIL on a live gate** · **SEV2**
+Exercising the `never-rules-gate` (MSTR's RV-0047 precondition — I refused to accept "landed" from a commit
+subject), my harness read the verdict off the hook's **exit code**. The hook is documented at
+`never-rules-gate.sh:51`: *"Block mechanism: JSON on stdout, `permissionDecision="deny"`, **exit 0**."*
+**It always exits 0. `DENY` was not a reachable output of my instrument.** All 8 positive controls scored
+`PASS` — **including `git rebase origin/CLOUD`, which I had personally watched that same gate BLOCK four
+minutes earlier, in this session.** The harness printed `pass=10 fail=8` and I was one keystroke from
+reporting **eight defects in a working safety gate.**
+
+Three things make this the register's sharpest entry:
+1. **It is the CANNOT-GO-**RED** class, inverted.** Every other entry is an instrument that could only say
+   DEAD. Mine could only say **ALIVE** — and the ten `ok` marks it printed were *accidents*, not evidence.
+   **A harness with one reachable output does not announce itself; it announces a plausible mixed result.**
+2. **The remedy would have been destructive.** A "the gate is broken" report, on the night the gate went
+   live, invites weakening or reverting a control that is *actually sound*. **A false FAIL against a safety
+   gate is a request to disarm it.**
+3. **I wrote it while running the sweep commissioned to hunt exactly this.** Knowing a failure mode by name
+   does not immunize you against writing it. **Care is not a control.** What caught it was not care — it was
+   the flat impossibility of the result: *this gate blocked me minutes ago; a gate cannot both block me and
+   pass my probe.* **The contradiction was the control.**
+
+**And the corrected run is the register's first PROVEN-REACHABLE-BOTH-WAYS instrument** (`21/21`): 8 arms
+DENY (incl. both F-010 arms + the PowerShell surface), 8 negative arms PASS (a commit message *mentioning*
+rebase is **not** blocked — the load-bearing negative control), 3 disarm arms correct (CTO's `0332d5d55`
+holds: an override marker inside an `echo` no longer waives the rule), 2 over-fire arms PASS. **`never-rules-gate`
+is EXERCISED-SOUND. F-009/F-010 have landed.** Recorded as a green because *a register of only failures is a
+census of survived failures* (§5) — an instrument shown reachable in **both** directions is the thing we are
+asking for, and it should be nameable.
+
 ---
 
 ## 3. The rule the fabric keeps re-deriving and has never written down
@@ -143,6 +172,42 @@ Two design constraints, both learned the hard way and both already fabric doctri
 - **Scope it narrowly.** The 2026-06-15 remedy for over-reaping produced under-reaping (`kill-orphans`'
   fabric-wide sweep → the scoped `--serial` hook), and *under-reaping is the mode that forges liveness*.
   A control makes the instrument honest; it is not a licence to widen the remedy.
+
+### AMENDMENT G-CGG.1 — **REACHABLE FROM DIFFERENT TRUTHS** (the bar the gate above is MISSING)
+
+**The gate as I first drafted it is UNDER-SPECIFIED, and I know because MY OWN PLACEBO WOULD HAVE PASSED
+IT.** "Carry a positive control" is satisfiable by an instrument that is *still* broken. Two of my own
+failures, this session, both of which clear the gate as written:
+
+- **The placebo (05:51Z).** My falsifier for the chokepoint had a RED arm and a GREEN arm. It had a positive
+  control. It reported *"7/7 SOUND AND DISCRIMINATING."* **Its GREEN arm — `WEEKEND: pin=Fri, stamp=Fri →
+  RETURNED, "proof it does not false-raise"` — WAS THE FAIL-OPEN STATE.** I constructed the hole, watched
+  the guard return, and certified it as correct behaviour. CVO~B broke it in one arm. *An instrument that
+  proves a guard is safe by exercising the guard's hole is not a control; it is the hole, wearing a lab coat.*
+- **R7 (this hour).** Positive controls present, eight of them, all "run." **`DENY` was not a reachable
+  output.** The gate as written asks *"is there a control?"* — there was. It does not ask *"could it have
+  failed?"*
+
+**THE BAR, STATED PROPERLY:**
+
+> **It is not enough that the arms produce DIFFERENT OUTPUTS. The arms must be REACHABLE FROM DIFFERENT
+> TRUTHS.** For each arm, name the state of the world it is in, and show that the instrument's verdict
+> would CHANGE if that state changed. An arm whose output is invariant under the truth is not an arm —
+> it is a decoration, and a suite of them is a confirmation instrument.
+
+Three operational tests, any one of which kills a placebo the current gate would pass:
+1. **THE MUTANT.** Break the thing on purpose and prove the instrument goes RED. *A control never observed
+   to fire has not been shown able to.* (This is what N2 did for R2; it is what my rc-oracle never did.)
+2. **THE ENUMERATION.** List the instrument's reachable outputs *before* running it. If any verdict in your
+   result table is not in that list, the harness — not the subject — is what you have measured.
+3. **THE CONTRADICTION.** Ask what result would be *impossible* if the instrument were sound. R7 died on
+   this and nothing else: *this gate blocked me four minutes ago; it cannot also pass my probe.* **When a
+   result contradicts something you personally witnessed, the instrument is the suspect — not the witness.**
+
+**And the trap this amendment exists to close:** *an agent who dutifully adds a positive control, and reads
+its verdict off a channel the subject never speaks on, has a **poisoned control and believes he has verified
+the instrument.*** That is the exact shape of the `simulate-principal-policy` multi-ARN poisoning already in
+Rule 22a — **a positive control is only a control if it is capable of coming back negative.**
 
 **First three targets, in order:** R1 (`kill-orphans` — exercise the `--serial` fix + make the audit line
 provable), R4 (`watcher-status.sh` — port the `kill-orphans` token fix, or delete the dead ORPHAN branch and
