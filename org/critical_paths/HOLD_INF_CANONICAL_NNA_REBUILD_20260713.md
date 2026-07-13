@@ -1,6 +1,51 @@
 # HOLD — INF gold chain
 
+> # ✅ **THE CHOKEPOINT HOLD IS APPLIED (11:38Z). WE NOW HOLD THE LINE ON PURPOSE, NOT BY ACCIDENT.**
+> ```
+> inf-gold-trigger:  INF_GOLD_DISPATCH_HOLD = <live -- and the VALUE CARRIES THE MECHANISM: it names all five
+>                    doors, says "this refusal is NOT the bug you are chasing," and states the lift condition>
+> inf-gold-full-on-bronze-complete  DISABLED
+> inf-canonical-prices-daily        DISABLED
+> inf-gold-incremental-daily        DISABLED
+> ```
+> **Verified by COO at APPLIED truth (live Lambda config), not off a report and not off a Monitor.**
+> **THEREFORE THE COLLISION IS NO LONGER LOAD-BEARING. There is no dispatch path. There is no 13:33Z.**
+>
+> **🛑 BUT THE DEPLOY FREEZE DOES NOT LIFT ON A CONFIG READ.**
+> **The env var being SET is APPLIED-*config*. The trigger actually *REFUSING* is *BEHAVIOUR*.**
+> ## **AN ENV VAR THAT NOTHING READS IS A COMMENT WITH A DTYPE.**
+> *Sixth instance of that class today — one of them being DS's own coverage guard: **deployed, 277 lines on the
+> runner, and nothing called it.*** **EXERCISE REQUIRED before anything is certified:** refusal-**before** any side
+> effect (no EC2 start, no lock, no SSM) · a **positive control** (it is not a brick) · **EVERY MODE**
+> (`INF_C_01` is in `CHAIN_GOLD_C` — a mode-scoped hold is walked past by choosing another mode) · **EVERY CALLER**
+> (incl. the aggregator's **direct invoke**, which no rule- or policy-census can see).
+
+---
+
 > # 🚪 **DOOR 5 — AND IT IS THE ONE THAT WILL GET US. READ THIS BEFORE ANYTHING ELSE.**
+>
+> ## ⚠️ **SCOPE THE PROHIBITION BY *EFFECT*, NEVER BY *VERB*. MY FIRST VERSION NAMED `cp` AND NOT `rm`.**
+> **DS~A found the hole.** The freeze forbade `aws s3 cp` / `safe-deploy` / "tidying" — **and never named
+> DELETION.**
+> ```
+> orion-gold-dispatch.sh:560-571 -> the collision check is SKIPPED ENTIRELY when len(copies) < 2.
+>   So DELETING either copy clears the FATAL just as well as overwriting it.
+> And code/gold/build_assets_dim.py is a SILVER script sitting in the GOLD prefix -- TEXTBOOK JUNK.
+>   Anyone would delete it as obvious housekeeping. ONE COMMAND. NOT A DEPLOY.
+>   (And the S3-deletion confirmation gate does NOT help: it gates AUTHORIZATION, not KNOWLEDGE --
+>    a human told "removing a stray file" approves instantly.)
+> ```
+> ## **THE TEST IS NOT *"IS THIS A DEPLOY?"* — IT IS:**
+> ## **"WOULD THIS MAKE `code/gold/build_assets_dim.py` AND `code/silver/build_assets_dim.py` STOP BEING TWO DIFFERENT FILES WITH THE SAME NAME?"**
+> **If yes: DO NOT.** `cp` · `rm` · `mv` · rename · "make them identical" — **all forbidden, by effect.**
+> **Deploying OTHER scripts is NOT forbidden** — an unrelated `.py` leaves the collision intact.
+> *(MSTR's "ANY script clears it" was too broad. DS~A corrected us both: we over-broadcast the hazard AND
+> under-scoped the prohibition — the worst of both, crying wolf on harmless deploys while leaving the real door
+> open.)*
+>
+> > **FOURTH SCOPING ERROR OF THE DAY, AND THE SAME SHAPE EVERY TIME:**
+> > **alarm-NAME → file-FOLDER → rule-vs-CALLER → VERB-vs-EFFECT.**
+> > ## **I KEEP NAMING THE *FORM* OF THE ACT INSTEAD OF ITS *CONSEQUENCE*.**
 > ## **WE ARE BEING PROTECTED BY AN ACCIDENTAL BAD DEPLOY.**
 >
 > **`0.8.0` read the actual chain log (nobody had). THE CHAIN NEVER REACHES A PULL. It dies at STEP ZERO.**
