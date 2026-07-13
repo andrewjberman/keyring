@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-07-13T03:20:46.811756+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: sovereign / Andrew explicit in-channel P1 execution nod (OPAL_ASSETS-P1). Phantom headless AskUserQuestion was NOT authorization. HALTED at 85 tcf; residue (85 tcf + 2 manifests @ backfill/08335338/) held pending Andrew/MSTR purge-keep. MSTR+COO surfacing to Andrew. (held since 2026-07-13T03:21:14.539401+00:00)
+**Status:** OPEN
 **Deploy:** Schwab 08335338 backfill -- IAM+harness staged, EXECUTION HALTED+HELD (sovereign)
 **Authored by:** 0.7.0_AE_CloudOps
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -22,3 +22,4 @@
 - 20260713T032112Z LEG L1 closed: get-role-policy quartz-si2-backfill-08335338: SchwabBackfillList (prefix backfill/08335338/*) + SchwabBackfillWrite (Put
 - 20260713T032113Z LEG L2 closed: sdd-backfill-08335338.ps1 + run-admin-bg.ps1 committed 4235c98ed + uploaded to s3://opal-data-schwab/_ops/canonical-schw
 - 20260713T032114Z HELD-SOVEREIGN-GATED gate=sovereign/Andrew explicit in-channel P1 execution nod (OPAL_ASSETS-P1). Phantom headless A
+- 20260713T034245Z HOLD RELEASED -> OPEN
