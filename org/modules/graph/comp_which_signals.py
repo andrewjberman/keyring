@@ -99,7 +99,15 @@ def curated_extractor(intent, ctx_d):
         else:
             if rank != 0:                                          # only the TOP weak hit routes (step 6)
                 continue
-            conf = 0.4                                             # weak-curated: below curated-strong/surface-first
+            # 0.4 -> 0.5 (NFRA_COMPCLOSE 2026-07-14, floor recalibration): the distribution-derived
+            # relevance_floor is 0.25, and a weak-curated vet at 0.4 gated at w_q*0.4 = 0.22 -- BELOW
+            # the floor, so every weak-but-real curated match ("what produces holdings json",
+            # "...freshness for 49financial": one genuine rule token, no anchor) fell to grep, breaking
+            # cascade-step-6 semantics ("comp-which still routes the TOP weak hit"). 0.5 -> 0.275
+            # clears the floor. NOISE-SAFE BY CONSTRUCTION: a weak-curated vet requires a RULE KEYWORD
+            # match, and generated gibberish scores 0 against every rule (the harness's L1 control,
+            # 40/40 zero) -- noise cannot buy this confidence.
+            conf = 0.5                                             # weak-curated: below curated-strong/surface-first
         for call in (calls or []):
             cid = _cap_from_call(call)
             if cid and cid not in seen:

@@ -138,7 +138,23 @@ class Weights:
     w_h: float = 0.25
     w_f: float = 0.15      # soft (fuzzy) extractor weight -- adds into the base band, never dominant
     eps: float = 0.05      # within-margin => disambiguate, never argmax
-    relevance_floor: float = 0.15   # top base-band score < floor => nothing relevant => grep/glob FALLBACK
+    # THE FLOOR IS SET FROM THE MEASURED DISTRIBUTION, NOT PICKED (NFRA_COMPCLOSE 2026-07-14;
+    # the TOPK PRD TO-2 held ruling + PRD Q2). Measured on top_relevance under the LIVE config
+    # (Shape-B POTION blend, extractors, cold affinity), frozen cohort @ 0.8.0~Z's TO-1 artifact,
+    # AFTER the query_match stem fix + the vetted-gate fix (both this pass -- the floor is only
+    # meaningful against the fixed noise sources):
+    #   G  generated gibberish (n=40):    [0.105 .. 0.288], median 0.201
+    #   C  catalog self-probes (n=66):    [0.275 .. 0.700], median 0.550   <- the recall bound
+    #   R  real agent questions (n=200):  [0.101 .. 0.700], median 0.336
+    # No clean separator exists (G-max 0.288 > C-min 0.275), so the defense is LAYERED:
+    #   0.25 = the highest floor keeping >= 0.025 margin under the WEAKEST legitimate catalog
+    #   probe (0 of 66 C-probes fall), catching 35/40 gibberish as hard FALLBACK; the residual
+    #   G-band [0.25, 0.288) is base-band (< _VETTED_BAND) and lands in comp-which's NOFIT
+    #   channel (banner + rc=1), never a silent confident route. ~27% of the real strict cohort
+    #   sits below 0.25 -- those are noise-indistinguishable from gibberish (R-0.2-bin overlaps
+    #   G's median) and now get the HONEST on-rails comp-grep RUN (C-3a: "no relevant tool ->
+    #   run the fallback for real") instead of a fuzzy-guess menu. Old value 0.15 caught 1/40.
+    relevance_floor: float = 0.25   # top base-band relevance < floor => nothing relevant => grep/glob FALLBACK
 
 
 @dataclass
@@ -163,6 +179,9 @@ class RouteResult:
     training_row: dict              # the flywheel row L4 persists to tool_activity
     regression_case: dict           # the routing regression-test case L4 persists
     fallback: Optional[str] = None  # when kind=="fallback": the on-rails grep/glob suggestion (never a dead-end)
+    top_relevance: Optional[float] = None  # the EXACT quantity Stage C gated on (NFRA_COMPCLOSE 2026-07-14):
+    #                                        exposed so the floor is observable/testable/derivable from live
+    #                                        results instead of re-derived by every consumer. None on "empty".
 
     @property
     def decision(self) -> Optional[Scored]:
@@ -210,9 +229,22 @@ def _tokenize(text: str) -> list[str]:
 def query_match(intent: str, keywords: Iterable[str]) -> tuple[float, tuple[str, ...]]:
     """Coverage of the intent by the capability's keywords, in [0,1], + which intent terms matched.
 
-    For each intent token, it matches if any keyword token equals it or contains it (light stem
-    tolerance). score = matched_intent_tokens / total_intent_tokens (LIKELIHOOD). Deterministic; no
-    ranking magic, so a disambiguation is explainable by the matched terms."""
+    For each intent token, it matches if any keyword token equals it, or stems against it under a
+    LENGTH-GUARDED PREFIX rule. score = matched_intent_tokens / total_intent_tokens (LIKELIHOOD).
+    Deterministic; no ranking magic, so a disambiguation is explainable by the matched terms.
+
+    THE OLD TOLERANCE (`it in kt or kt in it`, any length) WAS THE POSTERIOR'S NOISE FLOOR
+    (NFRA_COMPCLOSE 2026-07-14): keyword bags legitimately carry 2-3 char tokens (s3/io/bd/rds/...),
+    and arbitrary-position containment let a RANDOM 4-9 char string swallow one with high
+    probability -- generated gibberish scored query_match ~1.0 against 65 caps' pooled bags, which
+    (a) put gibberish at ~0.63 posterior, 4x above the 0.15 floor, and (b) made the Shape-B
+    confident-lexical PIN fire on noise (a separated argmax over garbage is still separated),
+    stamping semantic relevance 1.0 on random letters -- measured: 3/40 frozen gibberish probes
+    rode that to a CONFIDENT decision at top_relevance 0.55, above any floor this gate could hold.
+    The stem rule now requires EQUALITY, or BOTH tokens >= 4 chars AND one a PREFIX of the other
+    (collision/collisions, advisor/advisors, fresh/freshness still stem; erdsjrv-vs-rds and every
+    mid-string coincidence do not). Same-direction fix as the harness's r[1] anti-control class:
+    a score that noise can earn is a space-count wearing a score's costume."""
     itoks = _tokenize(intent)
     if not itoks:
         return 0.0, ()
@@ -221,8 +253,11 @@ def query_match(intent: str, keywords: Iterable[str]) -> tuple[float, tuple[str,
         ktoks.update(_tokenize(kw))
     matched = []
     for it in itoks:
-        if any(it == kt or it in kt or kt in it for kt in ktoks):
-            matched.append(it)
+        for kt in ktoks:
+            if it == kt or (len(it) >= 4 and len(kt) >= 4
+                            and (it.startswith(kt) or kt.startswith(it))):
+                matched.append(it)
+                break
     return len(matched) / len(itoks), tuple(dict.fromkeys(matched))
 
 
@@ -355,13 +390,26 @@ def route(intent: str, ctx, provider: CapabilityMapProvider,
     top = scored[0].score
     top_s = scored[0]
 
-    # STAGE C -- confidence gate. RELEVANCE FLOOR (absolute): measured on RELEVANCE (vetted OR
-    # query + affinity + soft), NOT the surface_prior BIAS -- a nonsense intent on the role's home
-    # surface must still fall back (a high prior never RESCUES a zero-relevance intent). A vetted hit
-    # clears it by construction. Below floor => FALLBACK to the on-rails grep/glob (never a dead-end).
-    top_relevance = (_VETTED_OFFSET if top_s.vetted else
-                     weights.w_q * top_s.query + weights.w_h * (top_s.affinity or 0.0)
-                     + weights.w_f * soft_by_cap.get(top_s.cap.id, 0.0))
+    # STAGE C -- confidence gate. RELEVANCE FLOOR (absolute): measured on RELEVANCE (query +
+    # affinity + soft), NOT the surface_prior BIAS -- a nonsense intent on the role's home
+    # surface must still fall back (a high prior never RESCUES a zero-relevance intent).
+    #
+    # THE VETTED BRANCH IS NO LONGER A CONSTANT (NFRA_COMPCLOSE 2026-07-14; COMPASSURANCE TO-8b).
+    # It was `top_relevance = _VETTED_OFFSET if vetted` -- 1.0 vs floor 0.15, so for any vetted
+    # candidate the gate's value was INVARIANT UNDER THE QUERY CHANGING: `1.0 < 0.15` is never
+    # true, "a vetted hit always clears it" was structural, and the one gate whose job is to say
+    # "nothing fits" could not say it about the vetted set (source-confirmed COMPASSURANCE PRD
+    # section 2, ROUTING row). A vetted signal IS genuine relevance evidence -- an extractor's
+    # vocabulary matched -- so it counts, but at ITS OWN CONFIDENCE and through the same w_q lens
+    # as any other relevance, never as a constant: curated 1.0 -> 0.55 (clears any sane floor,
+    # correctly -- a curated phrase matched); a weak drill vet 0.2 -> 0.11 with zero query overlap
+    # falls through to the on-rails fallback instead of being force-routed. The gate now MOVES
+    # when the query moves, for every candidate. (Vetted RANKING dominance -- the [1.0, 2.0)
+    # band -- is untouched; this is only the fallback gate.)
+    base_rel = (weights.w_q * top_s.query + weights.w_h * (top_s.affinity or 0.0)
+                + weights.w_f * soft_by_cap.get(top_s.cap.id, 0.0))
+    top_relevance = (max(base_rel, weights.w_q * top_s.vetted_confidence)
+                     if top_s.vetted else base_rel)
     if top_relevance < weights.relevance_floor:
         fb = _fallback_suggestion(intent)
         training_row = {
@@ -369,7 +417,8 @@ def route(intent: str, ctx, provider: CapabilityMapProvider,
             "ranked": [{"id": s.cap.id, "score": round(s.score, 4)} for s in scored[:5]],
             "kind": "fallback", "cold_start": cold_start, "fallback": fb, "outcome": None,
         }
-        return RouteResult("fallback", intent, scored, [], cold_start, training_row, {}, fb)
+        return RouteResult("fallback", intent, scored, [], cold_start, training_row, {}, fb,
+                           top_relevance=round(top_relevance, 4))
 
     within = [s for s in scored if (top - s.score) < weights.eps]   # includes the top; PRIOR never filters within a band
     kind = "decision" if len(within) == 1 else "disambiguation"
@@ -390,7 +439,8 @@ def route(intent: str, ctx, provider: CapabilityMapProvider,
         "expect_ids": [s.cap.id for s in within],
     } if kind == "disambiguation" else {}
 
-    return RouteResult(kind, intent, scored, within, cold_start, training_row, regression_case, None)
+    return RouteResult(kind, intent, scored, within, cold_start, training_row, regression_case, None,
+                       top_relevance=round(top_relevance, 4))
 
 
 # ============================================================================================
@@ -795,6 +845,32 @@ def _self_test() -> tuple[bool, list]:
        rD.decision is not None and rD.decision.cap.id == "comp-drift" and rD.decision.vetted
        and tr.query > 0.5 and tr.score < rD.decision.score,
        f"comp-drift(vetted) beat comp-transform(query={tr.query:.2f}) -- structural, not keyword-tuned")
+
+    # (8 -- NFRA_COMPCLOSE) THE VETTED GATE IS QUERY-SENSITIVE, NOT A CONSTANT (COMPASSURANCE
+    # TO-8b mutant, both directions). A WEAK vet (confidence 0.1 -> relevance 0.055) on an intent
+    # with ZERO query overlap must FALL THROUGH to the on-rails fallback -- under the old
+    # `top_relevance = _VETTED_OFFSET` constant this was a guaranteed decision (1.0 < floor is
+    # never true), i.e. the gate's value was invariant under the query changing.
+    def weak_vet_ex(intent, ctx_d):
+        return [{"cap_id": "comp-drift", "confidence": 0.1, "vetted": True}]
+    rW = route("qzxv wmpt jjkl", RouteContext(role="AE"), provDR, extractors=[weak_vet_ex])
+    ck("gate.weak_vet_zero_query_falls_back",
+       rW.kind == "fallback",
+       f"kind={rW.kind} top_relevance={rW.top_relevance} (old code: constant 1.0 -> forced decision)")
+    # ...and the other direction: a CURATED-STRENGTH vet (1.0 -> relevance w_q=0.55) still clears
+    # the floor even with zero query overlap -- a curated phrase matching IS relevance evidence.
+    def strong_vet_ex(intent, ctx_d):
+        return [{"cap_id": "comp-drift", "confidence": 1.0, "vetted": True}]
+    rS2 = route("qzxv wmpt jjkl", RouteContext(role="AE"), provDR, extractors=[strong_vet_ex])
+    ck("gate.curated_vet_still_clears",
+       rS2.kind == "decision" and rS2.decision and rS2.decision.cap.id == "comp-drift"
+       and rS2.top_relevance is not None and rS2.top_relevance >= 0.25,
+       f"kind={rS2.kind} top_relevance={rS2.top_relevance}")
+    # (9 -- NFRA_COMPCLOSE) top_relevance is EXPOSED on every non-empty result -- the gate's
+    # quantity is observable, so the floor stays derivable from live results, never re-guessed.
+    ck("gate.top_relevance_exposed",
+       all(r.top_relevance is not None for r in (rV, rW, rS2, rF)),
+       "")
 
     ok = all(c["pass"] for c in checks)
     return ok, checks

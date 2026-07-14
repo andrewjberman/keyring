@@ -66,7 +66,12 @@ RULES = [
       # aua_certification_key) with its S3 path + producer/consumer. Phrase-addition, NOT a new node.
       "output key", "output-key", "output _key", "_key", "_key=", "what key does", "which key does",
       "keyed artifact", "output constant", "output constants", "gold script write", "gold script output",
-      "what does gold script", "what does the gold script", "what does script x write", "write to s3"],
+      "what does gold script", "what does the gold script", "what does script x write", "write to s3",
+      # NFRA_COMPCLOSE vocabulary mining (frozen-cohort sub-floor class, 24x 'produces'): the common
+      # who-makes-this phrasings carried only ONE rule token and routed weak; phrase-anchor them.
+      # + "mdpf" (repeatedly gap-logged: MDPF artifact/coverage questions had no routing vocabulary).
+      "what produces", "who produces", "what consumes", "who consumes", "produced by", "consumed by",
+      "which script writes", "which script produces", "what generates", "writer of", "mdpf"],
      "S3 artifact / who-reads-writes + gold-script output keys",
      ["comp-pipescript io <script>", "comp-pipescript io <script> --firm <bd|inf|cot|mdpf>", "pipescript --resource <key>"],
      "what produces/consumes an S3 key + who reads an artifact + what KEY/artifact a gold script writes (io surfaces the _KEY constants incl FUNC-keys)"),
@@ -331,7 +336,11 @@ RULES = [
       # (run-a-chain) freshness lane. The `artifact <s3-uri>` mode is surfaced here per the MSTR
       # 2026-06-30 audit finding (agents couldn't find the ad-hoc-prefix-freshness mode).
       "current", "actually current", "still current", "how current", "still fresh",
-      "how old is this prefix", "freshness of this s3", "prefix freshness", "s3 prefix", "how old is this s3"],
+      "how old is this prefix", "freshness of this s3", "prefix freshness", "s3 prefix", "how old is this s3",
+      # NFRA_COMPCLOSE: MDPF freshness questions were repeatedly gap-logged with zero routing
+      # vocabulary anywhere ("MDPF aggregate AUA served artifacts freshness..." fell to grep).
+      # comp-freshness's mdpf support is check-only (CLAUDE.md Rule 13) -- still the right route.
+      "mdpf", "aggregate aua"],
      "data freshness (upstream ready to run a chain)",
      ["comp-freshness chain <bd|inf|cot>", "comp-freshness script <id>",
       "comp-freshness artifact <s3://prefix>  # ad-hoc prefix freshness", "comp-freshness ddb <table>"],
@@ -651,6 +660,15 @@ RULES = [
      "which comp-tools are in demand, where the rail-escape coverage gaps cluster (raw greps / denies / "
      "zero-match searches by path), and the GAP x HEAT build-next ranking -- the learning loop's "
      "detection surface (the scorer = comp-learns-score)"),
+    # pipescript -- the CLAUDE.md situation-table's own headline question ("What's in the news/advi/
+    # market/... pipeline?") had NO curated vocabulary and fell to grep (frozen-cohort sub-floor).
+    (["what's in the", "whats in the", "what is in the", "pipeline overview", "named thread",
+      "estate traversal", "pipeline contents", "whole pipeline", "the market pipeline",
+      "the news pipeline", "browse pipelines", "list pipelines", "pipeline map"],
+     "named-thread estate traversal (pipescript)",
+     ["pipescript <name>", "pipescript --list", "pipescript --resource <key>"],
+     "what's in a named pipeline/thread -- every resource + producers->served->frontend + owning tool "
+     "+ debt/reachability flags, whole estate, no silent Unknown (pipescript --list for names)"),
 ]
 
 # Function-relationship intents that ARE a rich-tool job (route, do NOT run-the-primitive):
