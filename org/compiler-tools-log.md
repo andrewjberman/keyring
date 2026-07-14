@@ -17618,3 +17618,63 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-14 ~09:00Z 0.7.0_AE_CloudOps~Z (Z-gates): terraform init/plan (7/1/0 full, 6/0/0 targeted, 0-diff), safe-apply (6/0/0), simulate-principal-policy x3 SEPARATE (discriminates), deploy_ledger.py (4/4 CLOSED), build-derive-image.sh authored+exercised. All PASS. Gap: comp-blast/pipescript don't model globgrph -> live-primitive fallback.
 | 2026-07-14 | 0.7.0_AE_CloudOps~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.7.0_AE_CloudOps~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-pulse --file .tools/safe-co... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-pulse .tools/safe-commit.sh org/modules/graph/comp-coverage... | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_CANONICA... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_RUNNERS_CANONICAL_FORM_CASEBOOK.md | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_49F_SILV... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_RUNNERS_49F_SILVER_DATA_DICTIONARY.md | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/lambda/opal-assets... | FAIL |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/OPAL_ASSETS.V2-8.s... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-pulse --file .tools/comp-wh... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-pulse .tools/comp-which .tools/safe-commit.sh org/modules/g... | FAIL |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_V2_LAMBDA... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-pulse | comp-pulse diff docs/architecture/OPAL_ASSETS_V2_LAMBDA_CONTRACT.md | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/aut... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/smartx_assets_pull/auth_bundle.py infra/aws/lambda/sma... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_ZGROUP_COMMS_PAR... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-iam | comp-iam gaps | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/V2-7_PLAN_RESOURCE_ADDR... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_NERVES_PRD.md --... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_NERVES_PRD.md org/projects/NFRA_NERVES.json org/... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/fedobs/promote_monit... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-pulse | comp-pulse diff infra/aws/globgrph/fedobs/promote_monitor.py org/modules/graph/comp_pro... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse | FAIL |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_V2_LAMBDA... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-pulse | comp-pulse diff docs/architecture/OPAL_ASSETS_V2_LAMBDA_CONTRACT.md | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff data/inf/scripts/silver/build_assets_dim.py | FAIL |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff data/inf/scripts/silver/build_assets_dim.py | FAIL |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff data/inf/scripts/gold/INF_D_02b.top_holdings.py | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/pul... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/smartx_assets_pull/pull.py infra/aws/lambda/smartx_ass... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-14/cvoz_verify_nerves_l5_comp_... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS_49METATABLES.D3.0833-groupa-analysis | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS_49METATABLES.D3.0833-groupa-analysis | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/OPAL_ASSETS_49METATAB... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/D2_FINDINGS_49METATABLES... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/promote_lifecycle_cse... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-pulse | comp-pulse diff org/modules/graph/promote_lifecycle_cse.jsonl org/modules/graph/promote... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/promote_lifecycle_cse... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-pulse | comp-pulse diff org/modules/graph/promote_lifecycle_cse.jsonl org/modules/graph/promote... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_49F_BUIL... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_RUNNERS_49F_BUILD_PLAN.md | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_pulse.py | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp_pulse.py | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_CANONICA... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_RUNNERS_CANONICAL_FORM_CASEBOOK.md | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/opal-assets/silver.tf | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-pulse | comp-pulse diff infra/aws/terraform/opal-assets/silver.tf | PASS |
+| 2026-07-14 ~0937Z | 0.8.0_AE_CloudComp~Z | comp-glob x3, comp-grep x4 (3-importer scope find, 21756-file denominator), comp-to, commit-gate x4, safe-commit x2 | cb6a86177 executed: P3 rewire ONE-change + 7 candidates ruled on served signal | comp-grep importer sweep was the load-bearing call: ruling named 1 consumer, estate had 3 |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
