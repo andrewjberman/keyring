@@ -12,7 +12,7 @@
   ],
   "source_brief": "Andrew's Yang message (two-part consolidation vision) + his expansion directive on the 49F refactor case study + three plan-mode scoping rulings (contracts-only / 49F-first-most-damaged / new project code), 2026-07-14 ~02:0x-02:2xZ.",
   "status": "active",
-  "phase": "Phase 0: PRD v0.1 authored; W1-W5 read-only assessment workstreams commissioning (script census, compute/cost profile, schedule census, 0833 A/B data sufficiency, auth/scrape census). Ratification after evidence lands + CVO pass.",
+  "phase": "Phase 0 EVIDENCE LANDING: W1 delivered-corrected (176 gold scripts, 29 unmapped act-first; 248/40.7% retracted axis error). W4 delivered both halves (0833 sufficient Group B + identity; role/fee = ONE scoped BD dim daily, Andrew ~03:57Z, sec-4.4). W2/W3 with 0.7.0 behind C-series; W5 post-parity. 49F lift opens the case-study estate. Ratification after evidence lands.",
   "current_phase": "W1-W5 assessments (read-only, parallel with OPAL_ASSETS C-series execution). Build waves gate on: monolith P1 accruing (Wave 1), the 49F lift (Wave 2 build), the INF hold resolution (Inflection execution).",
   "blocking": "Nothing blocks the assessments. Build gates by design: 49F build on Andrew's lift (No 49 Yet); Inflection execution on the INF hold; commits currently held estate-wide on the push-block strip (operational, transient).",
   "depends_on": [
@@ -30,5 +30,6 @@
   "pipeline": "monolith silver (opal-data-assets) -> per-partner A/B/C/D analytics runners (49F-0833 greenfield, Inflection reviewed, Cottonwood on contracts) -> monolith gold trees + DynamoDB opal-assets-daily-aua; D-group -> partner platinum buckets (serving unchanged)",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "updated": "2026-07-14"
 }

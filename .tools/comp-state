@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+"""comp-state -- thin PATH wrapper for the registry/TO/PRD state linter (Andrew-direct 2026-07-14).
+
+Routes to the canonical engine org/modules/graph/state_scan.py. comp-which-routable
+("is the registry / a task order / a PRD status BEHIND the estate's actual state? which
+records need updating after tonight's commits?"). ADVISORY / read-only -- NEVER edits a record.
+
+  comp-state                        drift-only report (BEHIND / POST-CLOSE)
+  comp-state --all                  full census incl. CURRENT / QUIET
+  comp-state --project OPAL_ASSETS  one project's records
+  comp-state --days 3               corpus = last 3 days of commits (default: last 400 commits)
+  comp-state --json                 machine-readable
+  comp-state --self-test            plant behind/current/quiet records; the instrument must
+                                    discriminate 3/3 or exit 2. Run it before trusting a report.
+"""
+import os
+import runpy
+import sys
+
+_HERE = os.path.dirname(os.path.abspath(__file__))          # .tools/
+_WS = os.path.dirname(_HERE)                                 # repo root
+_ENGINE = os.path.join(_WS, "org", "modules", "graph", "state_scan.py")
+
+if not os.path.exists(_ENGINE):
+    sys.stderr.write(f"comp-state: engine not found at {_ENGINE}\n")
+    sys.exit(2)
+
+sys.argv = [_ENGINE] + sys.argv[1:]
+runpy.run_path(_ENGINE, run_name="__main__")
