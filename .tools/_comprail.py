@@ -219,7 +219,15 @@ def _under(f: str, ps: str) -> bool:
 # make the never-dead-end rail LIE). data/inf + data/cot are IN-SCOPE firms -- deliberately NOT
 # excluded. --include-held (caller flag) is the audited directed override. Mirrors the
 # comp-constants CC2 guard: enforce the hold at the shared chokepoint, string-only, never read to decide.
-HELD_PREFIXES = ("data/black_diamond/", "data/canonical/schwab/silver/")
+#
+# LIFTED 2026-07-14 (1.0.0_SA_CTO, executing Andrew-direct ~03:3xZ to COO, verbatim: "49 is back on
+# the menu now, take the sovereign block off completely, that is no excuse to not verify the work.").
+# The two entries below WERE the 2026-07-09 49F/Schwab/bd sovereign block; both lift with it. The
+# INF-chain hold is a SEPARATE mechanism (frozen individual FILES + Door 5/6 -- never these trees)
+# and is deliberately not expressible here. THE GUARD MACHINERY STAYS: a future hold is a one-line
+# re-add to this tuple, and --include-held / the LOUD held_note keep working unchanged.
+# Was: ("data/black_diamond/", "data/canonical/schwab/silver/")
+HELD_PREFIXES = ()
 
 
 def _is_held(path: str) -> bool:
