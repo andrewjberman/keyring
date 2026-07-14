@@ -17722,3 +17722,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 0958Z | 0.5.0_AE_OpalETL | commit-gate/surface-check x2, test_silver 13-case suite, 3 bundle API probes (by-UUID x5 / nonzerosleeve / models-summary) | review-response code + credentialed probes; no estate-search question arose |
 | 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-14/cvoz_retake_p3_rewire_53b07... | PASS |
+| 2026-07-14 08-10Z | 2.0.0_SA_COO | comp-assets self-test x3 (14/14 pre-bundle; FAIL caught half-fixed hive-date patch AT LANDING pre-commit; 15/15 post-fix) + comp-manifest-check completeness PASS + 2 live spots + 2 operational listings | suite-15 regression = the control that fired; hive date= gap fixed+pinned; orion 4,640 exact independent |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-14/s... | PASS |
