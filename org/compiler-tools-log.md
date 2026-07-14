@@ -18054,3 +18054,43 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~19:10Z | 0.4.0_DS_ClientPlatform | (verify pass: parquet row-count reads + manifest parse; one rail-checked ls batch) | Andrew-direct output-test, 6/8 pins | ALL MATCH; eclipse 192/192 healed | drain verify waves 1-2 |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/logs/2026-0... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/logs/2026-07-14/session_1852-1915Z_startup.md | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/task_... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/task_orders/OPAL_ASSETS_49METATABLES.... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ANDREW_BRIEF_20260714_taxsm... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/ANDREW_BRIEF_20260714_taxsma_and_ticket_system.md org/tier2... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/MACRO_CODES.md --file org/... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff org/projects/MACRO_CODES.md org/projects/PFMG_TAXSMA.json org/projects/... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/MACRO_CODES.md --file org/... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff org/projects/MACRO_CODES.md org/projects/PFMG_TAXSMA.json org/projects/... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/PFMG_TAXSMA_S0.1_S0.3_close... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/PFMG_TAXSMA_S0.1_S0.3_close_20260714.md | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/opal-assets/silver.tf | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-pulse | comp-pulse diff infra/aws/terraform/opal-assets/silver.tf | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260714T1940Z_schwab-sizing-10240... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/dest... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/m365-mcp-gateway/app/destructive_ops.py infra/aws/ec2/m36... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/EC2_MANIFEST.json | FAIL |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/taxsma-step1/SKILL.md | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/taxsma-step1/SKILL.md | FAIL |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/opal-assets/silver.tf | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff infra/aws/terraform/opal-assets/silver.tf | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/task_orders/OPAL_ASSETS_49METATABLES... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260714T1957Z_orion-sizing-10240_... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/lambda/ticket_cent... | FAIL |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/ticket-center/build... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/ticket-center/build-and-upload.sh org/critical_path... | FAIL |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-14/wave3_position... | PASS |
+| 2026-07-14 20:0xZ | 0.7.0_AE_CloudOps | terraform/safe-apply x3, deploy_ledger x3, drain harness (2 COMPLETE + 2 wall-catches), CW OOM verification x2, manifest parses x2 (pins 6/6) | Andrew parity push: 3 channels closed, 2 walls measured, deploys 4-6 -- session_1830-2005Z log |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
