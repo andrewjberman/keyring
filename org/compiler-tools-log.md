@@ -17844,3 +17844,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-14 11:12-11:36Z 0.4.0_DS: no tool runs (review/record window -- targeted git-show source reads + deliverable existence check; commit-gate auto-PASS x2)
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+- 2026-07-14 1116-1138Z 0.5.0_AE_OpalETL: comp-grep x3 (probe-tooling hunt, honest-zero grounded no-repo-tooling) + rail-checked s3 prefix discovery x2 (_probe/ convention + smartx silver drafts); no code/infra change -- prep window, driver authored in scratchpad.
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
