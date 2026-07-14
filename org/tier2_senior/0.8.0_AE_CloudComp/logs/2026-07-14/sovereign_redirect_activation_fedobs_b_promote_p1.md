@@ -108,3 +108,36 @@ apply; (2) MOTIF.P0's globgrph TF apply -- same one-applier rule. Both are the S
 2. **[me]** MOTIF P0/P1/P2 build-to-the-gate; P2 integration run of lifecycle->materializer on the
    first genuinely-measurable candidate when the measure path opens.
 3. **[CVO~Z]** FEDOBS(b) + PROMOTE.P1 re-verifies per agreed scope.
+
+---
+
+## ADDENDUM (0805-0840Z) -- MOTIF legs closed-to-gates; the two-P1 reconciliation finding
+
+- **FEDOBS(b) CERTED SOUND-AS-SCOPED** (CVO~Z 454394604); both nits fixed @ 01233e8d4 (pin controls
+  now repo tests 6/6; 3-signal count corrected AND baked as a CI assertion); the SNS-exclusion
+  apply-day checklist made durable in fedobs_producer.tf. **PROMOTE.P1 CERTED SOUND** (1952bb774,
+  API-level re-take, 7/7 refusals, manifest byte-identical).
+- **MOTIF.P0 = VERIFY-ONLY** (@ eddc484cb): the 91 clusters were ALREADY LIVE (CLUSTERS=91 exact +
+  241/55; producer in S3 since 06-26). CVO~Z re-confirmed exact-match, formally unblocked P1's
+  C2-in-graph leg, and repaired their own stale 07-07 record (7f8c53dd2).
+- **MOTIF.P1 = VERIFY+RECONCILE, MOTIF.P2 delta BUILT** (@ a1f63a642): DS~B's absorb map was the
+  whole P1 absorb (D6/D8/D9 = stated dispositions); my P2 leg = the cluster co-membership SECOND
+  connectivity signal (NFRA_MOTIF_P2_cluster_cosignal.py, 5/5) -- **both independent structural
+  signals discover the IDENTICAL system (CORROBORATED 1/1, witness cluster:AdvisorIntelligence:0)**.
+  Denominators exact (91 'cluster:' PanelClusters == the graph's 91; 130 nested rc: edges excluded).
+- **0.7.0~Z instantiated as gate-opener**: my proactive Gate A/B payload confirmed NO-MISMATCH by
+  their live pre-flight (targeted plan 6/0/0; zip dry-run PASS w/ fedobs_observe.py). Both gates are
+  ONE COMMAND from Andrew's routing.
+- **!! FINDING against my own certed work (surfaced to CTO~Z + CVO~Z same hour):** the estate has
+  TWO P1 lifecycle implementations -- DS~B's NFRA_PROMOTE_P1_promotion_engine.py (07-08,
+  deliverables-side, DROPPED state + invariant-2-as-measurement-floor + FEDOBS_RATIO_FLOOR consumed
+  by promote_monitor) and my comp_promote_lifecycle.py (07-14, certed). My pre-build sweep missed
+  the DS deliverables dir; the artifact is sound but my "generalized, not greenfielded" CLAIM was
+  wrong. Reconciliation recommendation routed to CTO~Z (canonical home = org/modules/graph,
+  ABSORBING DS~B's three deltas); promote_monitor untouched; P3 wiring held on the ruling.
+  **The lesson is the sweep denominator: "no prior implementation exists" was asserted from a
+  2-directory grep -- name the dirs a negative sweep covered, every time.**
+
+**Compiler Tools (addendum):** comp-kuzu x4 (P0/P1/P2 graph grounding -- provenance header read every
+call, pin==HEAD current); comp-glob/comp-grep (substrate surveys); commit-gate x2 (clean). Raw greps
+carried rail-checked markers (single-known-file API lookups).
