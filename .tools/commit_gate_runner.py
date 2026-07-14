@@ -357,6 +357,166 @@ def _shell_scan_one(f: str) -> int:
     return 0
 
 
+# ---------------------------------------------------------------------------
+# OVERSIZE REFUSAL (CTO exception 2026-07-14, via COO). GitHub's pre-receive hook
+# hard-rejects any blob >100MB. A commit carrying one is STRUCTURALLY UNPUSHABLE:
+# not "risky", not "discouraged" -- it can never reach origin, and the only remedy
+# is a history rewrite, which on a shared branch needs a sovereign override.
+#
+# THE INCIDENT (2026-07-14): a 685MB terraform provider .exe was swept into a
+# commit from an un-ignored .terraform/ cache. It froze CLOUD for EVERY agent and
+# cost an Andrew-authorized history rewrite. It passed commit-gate and
+# comp-surface-check IN SILENCE -- this runner RECEIVED the path and ran ZERO
+# checks on it, because the per-suffix dispatch below has no branch for .exe, so
+# it printed "clean for 0 file(s)" and exited 0.
+#
+#   >> THE ONLY THING THAT STOPPED IT WAS GITHUB'S LIMIT. We were saved by someone
+#      else's control. This check is ours. <<
+#
+# It is deliberately the least alarm-like control that exists: it mirrors an
+# EXTERNAL HARD CONSTRAINT exactly (100MB, GitHub's number, not a taste), so it
+# requires ZERO judgment and has no threshold to argue about. It cannot false-alarm
+# on anything that would have pushed successfully.
+#
+# SUFFIX-INDEPENDENT BY DESIGN -- it runs BEFORE the per-suffix dispatch, on every
+# file. Scoping it to known suffixes would rebuild the exact blind spot that let the
+# .exe through: the gate must not be able to miss a type nobody thought of.
+#
+# OVERRIDE (audited, mirrors SAFE_COMMIT_ALLOW_SENSITIVE -- a binary cannot carry an
+# inline `# never-override:` comment, so the reason travels by env):
+#     COMMIT_GATE_ALLOW_LARGE="<reason>" .tools/safe-commit.sh ...
+# Audited ONLY when it actually SUPPRESSED A REAL BLOCK (RV-0048 F-020: a log that
+# records overrides which never suppressed anything is theater in an audit trail's
+# clothes). COMMIT_GATE_AUDIT routes the test suite's records to a scratch file so
+# the suite cannot poison the governance log it is meant to protect (same F-020).
+# ---------------------------------------------------------------------------
+MAX_FILE_BYTES = 100 * 1024 * 1024  # GitHub's pre-receive hard limit, exactly.
+
+
+def _check_file_size(f: str) -> int:
+    """0 = pass (silent). 1 = BLOCK. Runs on EVERY file, whatever its suffix."""
+    try:
+        size = os.path.getsize(f)
+    except OSError:
+        return 0  # unreadable/vanished -- not this check's business
+    if size < MAX_FILE_BYTES:
+        return 0
+
+    mb = size / (1024 * 1024)
+    reason = os.environ.get("COMMIT_GATE_ALLOW_LARGE", "").strip()
+    if reason:
+        # THE OVERRIDE'S LEGALITY IS CONDITIONED ON ITS AUDIT. So if the audit
+        # cannot be written, the condition is UNMET and the override is REFUSED --
+        # it does NOT fail open (COO review 2026-07-14). "override set -> real block
+        # suppressed -> audit write fails -> pass silently" is an UNAUDITED
+        # SUPPRESSION OF A REAL BLOCK, the F-020 class one layer deeper, delivered
+        # on the failure path nobody tests. Refusing loudly when the log is
+        # unwritable is not a crash -- it is the condition doing its job.
+        if not _audit_oversize(f, size, reason):
+            _echo("", sys.stderr)
+            _echo(f"BLOCKED: {f} is {mb:.1f}MB and the override could NOT be "
+                  "audited.", sys.stderr)
+            _echo("  The large-file override is legal ONLY when it is recorded. "
+                  "The audit log at", sys.stderr)
+            _echo(f"  {_audit_path()} is not writable -- fix that first, then "
+                  "retry.", sys.stderr)
+            _echo("  An override that leaves no record is exactly what the audit "
+                  "exists to prevent.", sys.stderr)
+            return 1
+        _echo(f"WARN: oversize file ALLOWED by audited override: {f} "
+              f"({mb:.1f}MB) reason={reason}", sys.stderr)
+        return 0
+
+    _echo("", sys.stderr)
+    _echo(f"BLOCKED: {f} is {mb:.1f}MB -- at or over GitHub's 100MB limit.",
+          sys.stderr)
+    _echo("  This commit could NEVER be pushed: GitHub's pre-receive hook "
+          "rejects any blob >100MB,", sys.stderr)
+    _echo("  and the only remedy after the fact is a HISTORY REWRITE of a "
+          "shared branch.", sys.stderr)
+    _echo("", sys.stderr)
+    _echo("  UNSTAGE IT:", sys.stderr)
+    _echo(f"      git reset -q HEAD -- {f}", sys.stderr)
+    _echo("", sys.stderr)
+    hint = _ignore_suggestion(f)
+    if hint:
+        _echo("  IF IT IS BUILD/TOOL OUTPUT (a provider cache, a venv, a zip, a "
+              "model file), IGNORE IT:", sys.stderr)
+        _echo(f"      echo '{hint}' >> .gitignore", sys.stderr)
+    else:
+        _echo("  This looks like SOURCE, not build output -- so do NOT reach for "
+              ".gitignore.", sys.stderr)
+        _echo("  A source file this large is almost always data that got pasted "
+              "into it, or a", sys.stderr)
+        _echo("  generated file in a source file's clothing. Look at it before "
+              "you do anything.", sys.stderr)
+    _echo("", sys.stderr)
+    _echo("  IF IT IS DELIBERATE, the override is AUDITED:", sys.stderr)
+    _echo('      COMMIT_GATE_ALLOW_LARGE="<reason>" .tools/safe-commit.sh ...',
+          sys.stderr)
+    return 1
+
+
+#: Suffixes we will suggest ignoring by GLOB. Deliberately a SHORT ALLOWLIST of
+#: things that are always build/tool output. NEVER a source suffix.
+#:
+#: The first version of this returned f"*{suffix}" for anything -- so an oversize
+#: .py produced the remediation `echo '*.py' >> .gitignore`, which would have
+#: untracked EVERY PYTHON FILE IN THE REPO. A gate that hands you a
+#: repo-destroying command as its "help" is worse than a gate that says nothing:
+#: the block is what earns your trust, and then you follow the advice. Caught by
+#: reading the test's own output instead of just its OK column.
+_IGNORABLE_SUFFIXES = {".exe", ".dll", ".so", ".dylib", ".zip", ".tar", ".gz",
+                       ".7z", ".rar", ".jar", ".whl", ".pkl", ".pickle", ".bin",
+                       ".pt", ".pth", ".onnx", ".h5", ".model", ".iso", ".dmg",
+                       ".mp4", ".mov", ".parquet"}
+
+#: Directories that are always tool output, whatever they contain.
+_CACHE_DIRS = {"node_modules", "venv", ".venv", "dist", "build", "__pycache__",
+               "target", ".terraform", ".gradle", ".next", ".cache"}
+
+
+def _ignore_suggestion(f: str) -> str:
+    """A .gitignore line, or "" when we should NOT suggest one.
+
+    Returning "" is a real answer, not a fallback: for an oversize SOURCE file the
+    correct advice is to go look at it, never to ignore it.
+    """
+    parts = f.replace("\\", "/").split("/")
+    for p in parts[:-1]:
+        if p in _CACHE_DIRS:
+            return f"**/{p}/"
+    suffix = Path(f).suffix.lower()
+    if suffix in _IGNORABLE_SUFFIXES:
+        return f"*{suffix}"
+    return ""
+
+
+def _audit_path() -> str:
+    return os.environ.get("COMMIT_GATE_AUDIT") or str(
+        Path(__file__).resolve().parents[1] / "org" / "git-author-override-audit.log")
+
+
+def _audit_oversize(f: str, size: int, reason: str) -> bool:
+    """Record an override that suppressed a REAL block. Returns True iff the
+    record was durably written. A False return is load-bearing: the caller REFUSES
+    the override on it (fail-closed), because the override is legal only when
+    audited. This runs ONLY on the override-suppression path -- never on a pass,
+    where there is nothing to audit and an OSError is correctly ignored."""
+    audit = _audit_path()
+    agent = os.environ.get("OPAL_AGENT_SERIAL", "unknown")
+    ts = __import__("datetime").datetime.now(
+        __import__("datetime").timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    try:
+        os.makedirs(os.path.dirname(audit), exist_ok=True)
+        with open(audit, "a", encoding="utf-8") as fh:
+            fh.write(f"{ts} OVERSIZE-OVERRIDE  {agent}  {f}  {size}B  "
+                     f"reason={reason}\n")
+        return True
+    except OSError:
+        return False  # unwritable -> caller fails CLOSED, never open
+
+
 def process_files(files: list[str]) -> int:
     checked = 0
     # comp-constants config loaded ONCE (read-only; re-reading it per file, like the
@@ -383,6 +543,17 @@ def process_files(files: list[str]) -> int:
         # scope computation.)
         if not os.path.exists(f):
             continue
+
+        # OVERSIZE REFUSAL -- FIRST, and BEFORE the per-suffix dispatch below.
+        # Placement is the control: the dispatch has no branch for .exe/.zip/.pkl,
+        # so anything checked only INSIDE it is invisible to this gate. That blind
+        # spot is exactly how a 685MB binary reached origin's doorstep. A size check
+        # that only ran on .py would be an instrument that cannot fail.
+        # Deliberately does NOT increment `checked`: it is a pure refusal, silent on
+        # pass, so the "clean for N file(s)" line keeps its existing meaning.
+        if _check_file_size(f) != 0:
+            return 1
+
         if _is_python_source(f):
             try:
                 py_compile.compile(f, doraise=True)
