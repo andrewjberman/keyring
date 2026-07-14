@@ -306,6 +306,126 @@ def _read_promote_manifest() -> dict:
 
 
 # ---------------------------------------------------------------------------
+# LIVE METRICS -- the scalar current-state numbers that go stale and that the sibling
+# docs embed (tool counts, recognizer count, observe-diversity, graph marker). Andrew-direct
+# 2026-07-14: "it should refresh tool counts, state, anything that would actually go stale
+# explicitly." One producer, so the number has ONE home; every metric carries {value, source,
+# vintage} and is GROUNDED or honestly UNKNOWN -- NEVER a fabricated fallback. This is the same
+# no-fabrication discipline the class objects run on, applied to the scalars the prose quotes.
+# ---------------------------------------------------------------------------
+def _yaml_len(rel_path: str, key: str):
+    """Length of a top-level mapping/sequence in a graph yaml, or UNKNOWN. yaml is imported
+    defensively (like cse_schema/graph_cache) so a missing dep fails to UNKNOWN, never a crash."""
+    try:
+        import yaml  # noqa: PLC0415  -- defensive/optional; module import must never require it
+        with open(os.path.join(WS, rel_path), encoding="utf-8") as fh:
+            doc = yaml.safe_load(fh)
+        node = doc.get(key)
+        return len(node) if node is not None else UNKNOWN
+    except Exception:  # noqa: BLE001
+        return UNKNOWN
+
+
+def _metric(value, source, vintage) -> dict:
+    return {"value": value, "source": source, "vintage": vintage}
+
+
+def compute_metrics() -> dict:
+    """The canonical live scalars. Keyed by a stable slug the managed-region markers reference
+    (<!--cs:SLUG-->...<!--/cs-->). Each grounded against its ONE authoritative source or UNKNOWN."""
+    MANIFEST = "org/modules/graph/graph-call-manifest.yaml"
+    LEDGER = "org/modules/graph/comp-coverage-map.yaml"
+
+    tools_index = _yaml_len(MANIFEST, "tools_index")
+    tools = _yaml_len(LEDGER, "tools")
+    meta_tools = _yaml_len(LEDGER, "meta_tools")
+    ledger_union = (tools + meta_tools) if UNKNOWN not in (tools, meta_tools) else UNKNOWN
+
+    recs = _read_promote_manifest()
+    fed = _read_fedobs()
+
+    return {
+        "tools_index_count": _metric(
+            tools_index, "graph-call-manifest.yaml:tools_index (mapping length)",
+            "manifest (%s routable entries)" % tools_index),
+        "ledger_union_count": _metric(
+            ledger_union, "comp-coverage-map.yaml: len(tools)+len(meta_tools)",
+            "SoT ledger (%s tools + %s meta = %s)" % (tools, meta_tools, ledger_union)),
+        "recognizers_live": _metric(
+            recs.get("count", UNKNOWN), "promote_recognizer_manifest.json (MATERIALIZED)",
+            recs.get("vintage", UNKNOWN)),
+        "coevolution_pairs": _metric(
+            fed.get("coevolution_pairs", UNKNOWN), "fedobs_frontend_coevolution.json (served)",
+            fed.get("vintage", UNKNOWN)),
+        "cse_measures": _metric(
+            fed.get("cse_log_total", UNKNOWN), "comp-fedobs cse_log_total (served)",
+            fed.get("vintage", UNKNOWN)),
+        "graph_marker": _metric(
+            _kuzu_marker(), "comp-kuzu provenance header (marker-oracle)", _kuzu_marker()),
+    }
+
+
+# ---------------------------------------------------------------------------
+# MANAGED REGIONS -- the refresher that carries the metrics OUT into the sibling docs. A doc
+# opts a live number in by wrapping it: `<!--cs:tools_index_count-->55<!--/cs-->`. comp-system
+# rewrites ONLY the text between the markers with the live value -- never the surrounding
+# hand-authored prose. That is what makes "refresh anything that would go stale" both LITERAL
+# (run the compiler, every marked number updates) and SAFE (bounded to marked spans, no
+# fabrication -- an UNKNOWN metric is REFUSED, the old number is left, and the drift is reported).
+# ---------------------------------------------------------------------------
+import re as _re  # noqa: E402
+
+_REGION_RE = _re.compile(r"(<!--\s*cs:([a-z0-9_]+)\s*-->)(.*?)(<!--\s*/cs\s*-->)", _re.DOTALL)
+_MANAGED_DOCS_DIR = os.path.join(WS, "infra", "system")
+
+
+def refresh_managed_regions(metrics: dict, write: bool):
+    """Rewrite every <!--cs:NAME--> span in infra/system/*.md to metrics[NAME].value.
+
+    Returns (changes, problems): changes = [(file, name, old, new)] spans whose rendered value
+    moved; problems = [(file, name, why)] spans naming an unknown metric or one that is UNKNOWN
+    (NEVER overwritten -- we do not stamp UNKNOWN over a real number). write=False = report only
+    (the --check path); write=True updates the files in place (the compile path)."""
+    changes, problems = [], []
+    try:
+        names = sorted(os.listdir(_MANAGED_DOCS_DIR))
+    except OSError:
+        return changes, problems
+    for fn in names:
+        if not fn.endswith(".md"):
+            continue
+        path = os.path.join(_MANAGED_DOCS_DIR, fn)
+        try:
+            with open(path, encoding="utf-8") as fh:
+                text = fh.read()
+        except OSError:
+            continue
+        file_dirty = False
+
+        def _sub(mobj, _fn=fn, _flag=lambda: None):
+            nonlocal file_dirty
+            open_tag, name, old, close_tag = mobj.group(1), mobj.group(2), mobj.group(3), mobj.group(4)
+            met = metrics.get(name)
+            if met is None:
+                problems.append((_fn, name, "no such metric"))
+                return mobj.group(0)
+            if met["value"] == UNKNOWN or met["value"] is None:
+                problems.append((_fn, name, "metric is UNKNOWN -- left the existing value, not overwritten"))
+                return mobj.group(0)
+            new = str(met["value"])
+            if new != old:
+                changes.append((_fn, name, old, new))
+                file_dirty = True
+            return open_tag + new + close_tag
+
+        new_text = _REGION_RE.sub(_sub, text)
+        if write and file_dirty:
+            with open(path, "w", encoding="utf-8") as fh:
+                fh.write(new_text)
+    return changes, problems
+
+
+# ---------------------------------------------------------------------------
 # Compile -- assemble the model + the provenance header + the diversity metric.
 # ---------------------------------------------------------------------------
 def compile_model() -> dict:
@@ -342,12 +462,25 @@ def compile_model() -> dict:
         except Exception as e:  # noqa: BLE001  -- a collector failure -> UNKNOWN class, never a fabricated one
             classes.append(_class_obj(slug, home, "%s: collector error (%s)" % (UNKNOWN, type(e).__name__),
                                       [], "collector-error", UNKNOWN))
-    return {"header": header, "diversity_metric": diversity, "classes": classes}
+    return {"header": header, "metrics": compute_metrics(), "diversity_metric": diversity, "classes": classes}
 
 
 # ---------------------------------------------------------------------------
 # Emit -- markdown (human + LOCALROOT-index ## anchors) + json (P4 grading).
 # ---------------------------------------------------------------------------
+def _render_metrics(metrics: dict) -> list:
+    """The live-scalars block: one home for every number the sibling docs quote, each with vintage.
+    Rendered inside 06 AND pushed out to the marked spans in the other docs by refresh_managed_regions."""
+    out = ["## Live metrics (the scalars that go stale -- refreshed by `comp-system`; managed-region source)",
+           "",
+           "| metric | value | source (vintage) |",
+           "|---|---|---|"]
+    for name, m in metrics.items():
+        out.append("| `%s` | %s | %s |" % (name, m["value"], m["vintage"]))
+    out.append("")
+    return out
+
+
 def render_markdown(model: dict) -> str:
     h = model["header"]
     d = model["diversity_metric"]
@@ -361,8 +494,10 @@ def render_markdown(model: dict) -> str:
            "**Generated: %s (HEAD %s)** -- a SNAPSHOT of the live system at that moment."
            % (h.get("emitted_at_utc", "UNKNOWN"), h["as_of_head"]),
            "",
-           "**To update: run `comp-system`. That is the whole procedure.** "
-           "(`comp-system --check` first if you only want to know whether it is stale: 0=fresh 2=stale.)",
+           "**To update: run `comp-system`. That is the whole procedure.** It regenerates this doc AND "
+           "refreshes every `<!--cs:NAME-->` managed-region span across `infra/system/` (tool counts, "
+           "recognizer count, observe-diversity, graph marker) from the live sources. "
+           "(`comp-system --check` first if you only want to know whether anything is stale: 0=fresh 2=stale.)",
            "",
            "**AUTO-GENERATED by `comp-system` (NFRA_SYSTEM P3). Do NOT hand-edit -- regenerate.**",
            "",
@@ -373,6 +508,7 @@ def render_markdown(model: dict) -> str:
            "- grounding: %s" % h["grounding"],
            "- auto-refresh: %s" % h["auto_refresh"],
            "",
+           ] + _render_metrics(model.get("metrics", {})) + [
            "## Observe-surface diversity (loop/federated maturity headline)",
            "- %s" % d["metric"],
            "- coevolution_pairs: %s | cse_measures: %s | vintage: %s" % (d["coevolution_pairs"], d["cse_measures"], d["vintage"]),
@@ -398,12 +534,15 @@ def render_markdown(model: dict) -> str:
     return "\n".join(out) + "\n"
 
 
-def _write(model: dict) -> None:
+def _write(model: dict) -> list:
     os.makedirs(os.path.dirname(OUT_MD), exist_ok=True)
     with open(OUT_MD, "w", encoding="utf-8") as fh:
         fh.write(render_markdown(model))
     with open(OUT_JSON, "w", encoding="utf-8") as fh:
         json.dump(model, fh, indent=2)
+    # Carry the live scalars OUT to every marked span in the sibling docs (03/00/README/...).
+    changes, problems = refresh_managed_regions(model.get("metrics", {}), write=True)
+    return changes + [("PROBLEM", p[0], p[1], p[2]) for p in problems]
 
 
 # ---------------------------------------------------------------------------
@@ -449,6 +588,19 @@ def self_test() -> int:
     md = render_markdown(m)
     chk("7  markdown renders with ## <slug> anchors 1:1 with the SS2 knowledge-class slugs",
         all(("### %s" % s) in md for s in slugs))
+    # 8. metrics: every metric carries {value,source,vintage} and >=1 is grounded LIVE (not all UNKNOWN) --
+    #    the no-fabrication invariant applied to the scalars the sibling docs quote.
+    mets = m.get("metrics", {})
+    shape_ok = all(set(v.keys()) == {"value", "source", "vintage"} for v in mets.values())
+    live_ok = any(v["value"] != UNKNOWN for v in mets.values())
+    chk("8  metrics: each is {value,source,vintage} + >=1 grounded live (tool counts read from yaml)",
+        bool(mets) and shape_ok and live_ok)
+    # 9. the refresher is SAFE: report-only run touches no file, and it NEVER stamps UNKNOWN over a
+    #    real number (an unknown metric is reported as a problem, the existing value is preserved).
+    ch, _pb = refresh_managed_regions(mets, write=False)
+    unknown_overwrite = any(mets.get(name, {}).get("value") == UNKNOWN for _fn, name, _o, _n in ch)
+    chk("9  managed-region refresher: report-only, and never overwrites a real number with UNKNOWN",
+        not unknown_overwrite)
 
     n = sum(1 for x in ok if x)
     print("--- self-test: %d/%d passed (grounded-or-UNKNOWN, no fabrication, shape-locked) ---" % (n, len(ok)))
@@ -538,11 +690,20 @@ def check_stale() -> int:
         with open(OUT_JSON, encoding="utf-8") as fh:
             header = json.load(fh).get("header", {})
         stale, reason = _staleness(header)
+        # A managed-region span whose printed number no longer equals the live metric is ALSO stale --
+        # this is the "tool counts etc. drifted in the sibling docs" case the fingerprint cannot see
+        # (the docs are outputs, not fingerprint sources). Report-only: --check never writes.
+        region_changes, _problems = refresh_managed_regions(compute_metrics(), write=False)
     except Exception as e:  # noqa: BLE001 -- a probe that cannot evaluate is an ERROR, never "fresh"
         print("06 UNVERIFIABLE: --check could not evaluate (%s: %s)" % (type(e).__name__, e))
         return 1
+    if region_changes:
+        drift = "; ".join("%s cs:%s %s->%s" % (fn, name, old, new) for fn, name, old, new in region_changes[:6])
+        print("SYSTEM STALE: %d managed-region span(s) drifted from live metrics: %s -- regenerate (comp-system)."
+              % (len(region_changes), drift))
+        return 2
     if not stale:
-        print("06 CURRENT (%s)" % reason)
+        print("SYSTEM CURRENT (06: %s; managed regions: 0 drifted)" % reason)
         return 0
     print("06 STALE: %s -- regenerate (comp-system)." % reason)
     return 2
@@ -566,9 +727,19 @@ def main() -> int:
     if "--stdout" in args:
         print(render_markdown(model))
         return 0
-    _write(model)
+    changes = _write(model)
     print("comp-system: wrote %s + %s (grounded-against-live; as_of HEAD=%s)"
           % (os.path.relpath(OUT_MD, WS), os.path.relpath(OUT_JSON, WS), model["header"]["as_of_head"]))
+    span_changes = [c for c in changes if c[0] != "PROBLEM"]
+    problems = [c for c in changes if c[0] == "PROBLEM"]
+    if span_changes:
+        print("comp-system: refreshed %d managed-region span(s) in the sibling docs:" % len(span_changes))
+        for fn, name, old, new in span_changes:
+            print("  %s  cs:%s  %s -> %s" % (fn, name, old, new))
+    else:
+        print("comp-system: managed-region spans already current (0 changed).")
+    for _tag, fn, name, why in problems:
+        print("  WARN %s cs:%s -- %s" % (fn, name, why))
     return 0
 
 
