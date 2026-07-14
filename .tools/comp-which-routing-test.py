@@ -109,6 +109,33 @@ to both numbers.
   ends). A self-retracted premise is a better artifact than an unexamined one; the rule
   is kept, its bad justification is not.
 
+A FIXTURE THAT CANNOT REACH THE CAP CANNOT TEST THE CAP
+-------------------------------------------------------
+(NFRA_INSTDRILL F1, 2026-07-14. CVO~Z found it in comp-icedrill; it is a doctrine line,
+not a bug report, and it belongs here beside the other controls that lied.)
+
+comp-icedrill silently truncated an S3 listing at 2,000 keys and presented the HORIZON
+as a COMPLETE ANSWER. It shipped with a GREEN self-test on top of the bug. The test could
+not have failed: its stub returned every object in ONE page, so the fixture was
+CAP-BLIND BY CONSTRUCTION -- no number of additional cases would ever have reached the
+2,000-key boundary. The suite was not weak. It was STRUCTURALLY INCAPABLE of the finding.
+
+    A CONTROL IS ONLY A CONTROL AT THE SCALE IT CAN ACTUALLY REACH.
+    ASK OF EVERY FIXTURE: WHAT IS THE SMALLEST INPUT THAT WOULD MAKE THIS FAIL --
+    AND CAN MY FIXTURE EVEN PRODUCE IT?
+
+Two corollaries, both paid for:
+  * THE "INDEPENDENT" CHECK THAT SHARES THE FLAW AGREES WITH ITSELF. The live acceptance
+    claimed parity with "an independent aws s3 ls" -- but the independent check evidently
+    read the same capped axis, so it CORROBORATED the lie. An independent instrument that
+    shares your defect is not a second opinion; it is an echo.
+  * THE CHEAPEST REFUTATION IS AN INTERNAL ONE. What actually killed it needed no external
+    truth at all: a CHILD scope reported 2,000 while its PARENT reported 1,394.
+    child > parent is impossible. LOOK FOR THE INVARIANT YOUR OWN OUTPUT MUST OBEY --
+    it is available even when ground truth is not, and it cannot be corrupted by the
+    same bug.
+Both are now assertions in comp_icedrill's own suite (paginating stub; parent >= child).
+
 THE SUBJECT IS PINNED TO A VINTAGE
 ----------------------------------
 Other lanes edit .tools/comp-which mid-flight (observed twice in one hour during this
