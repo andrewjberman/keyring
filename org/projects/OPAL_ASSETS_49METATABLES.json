@@ -1,0 +1,26 @@
+{
+  "project_code": "OPAL_ASSETS_49METATABLES",
+  "macro_code": "OPAL",
+  "name": "49F metadata tables -- the BD-native advisor split-fee dim + the SmartX model dim join (the join layer the refactored 49F gold runner reads)",
+  "description": "Andrew-direct 2026-07-14 ~08:4xZ (verbatim in PRD sec-0): creation of the black diamond native advisor split fee dims with the join key (account-x-period bridge = design of record @ 2d2ffcd60; txn-grain refuted-as-dim-requirement but recorded as the validation-tier fallback -- the bridge must be PROVEN on live data before the dim ships), plus the smartx model dim join (allocation_account_map on the yaliu bundle, zfill(10) join rule measured 96.4%, residual unpinned pending fresh ACC). Sits between OPAL_ASSETS (silver estate) and OPAL_RUNNERS (gold runners). D3 = 0.6.2's 0833-native Group A analysis/plan (Andrew-named commission). D4 = 0.7.0's connector-infrastructure analysis + silver-lambda verification on the 22a three-layer bar (Andrew addendum ~08:5xZ verbatim in PRD sec-3-bis). CONVERGENCE GATE: all FOUR findings on the record -> Andrew + CTO architect the refactored 49F gold runner (OPAL_RUNNERS sec-4.3 lock).",
+  "prds": [
+    {
+      "path": "docs/architecture/OPAL_ASSETS_49METATABLES_PRD.md",
+      "label": "v1.0 (CTO; Andrew-direct mandate verbatim; D1=DS, D2=0.5.0, D3=0.6.2; convergence gate sec-4)",
+      "date": "2026-07-14"
+    }
+  ],
+  "status": "active",
+  "phase": "EXECUTING day one -- D1 (DS): Option-M dim build + bridge proof (BD REST pull design w/ 0.7.0; allocations feed measured frozen post-06-26, pull replaces it at source). D2 (0.5.0): 452-call closed-identity sweep + feed-9 daily wiring, both CTO-GO'd 084515Z. D3 (0.6.2): 0833 Group-A analysis/plan commissioned this turn. D4 (0.7.0): connector infra analysis + silver-lambda verification, desired/applied/exercised per claim. Design-of-record artifacts: dictionary v0.3 @ a0719ff44, join-dim-2 note @ 2d2ffcd60, feed-9 report @ 518c82213, casebook Entry 1 @ 6a23e4c19.",
+  "blocking": "ANDREW (carried, not blocking): advisor-'type' semantics one-liner; pre-floor history default (feed-floor start unless he rules an import); FAM/SLM vendor spec (naming overlay + row-count control check).",
+  "created": "2026-07-14",
+  "pods": ["0.4", "0.5", "0.6", "0.7", "1.0"],
+  "pipeline": "BD daily REST -> blackdiamond bronze -> ONE SCD2 advisor/fee dim || smartx feed-9 (yaliu bundle) -> allocation_account_map + closed-identity backfill || 0833 CRS silver -> Group A plan; all three -> the refactored 49F gold runner architecture (Andrew + CTO)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": [],
+  "cross_references": {
+    "depends_on": ["OPAL_ASSETS (monolith silver estate; 0.6.2's CRS converters)", "OPAL_RUNNERS (consumes this join layer; casebook + dictionary govern)"],
+    "design_of_record": ["OPAL_RUNNERS_49F_SILVER_DATA_DICTIONARY.md v0.3", "OPAL_RUNNERS_JOINDIM2_BD_ADVISOR_FEE_TETHER_20260714.md @ 2d2ffcd60", "SMARTX_C5_FEED9_DEVELOPMENT_20260714.md @ 518c82213", "OPAL_RUNNERS_CANONICAL_FORM_CASEBOOK.md Entry 1"]
+  }
+}

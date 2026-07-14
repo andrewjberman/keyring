@@ -1323,6 +1323,10 @@ paths:
     lane: CLOUD_OPS_OR_ETL
     note: "FIRMSEP detail/audit docs (PHASE0_AUDIT, ONBOARDING_PLAYBOOK, etc.) — AE-owned per ADVI_FIRMSEP TO authorization (COO 2026-05-07). Top-level ADVI_FIRMSEP.md PRD remains under docs/architecture/** ANY_CTO catch-all. Mirrors INFETL_*/INFLEC_* precedent."
 
+  "docs/architecture/OPAL_ASSETS_*_PRD.md":
+    lane: ANY_CTO
+    note: "OPAL_ASSETS-family top-level PRDs stay CTO-authored. Added 2026-07-14 (CTO): the OPAL_ASSETS_* carve below unintentionally swept CTO PRDs into POD4_OR_AE (blocked the 49METATABLES PRD commit -- the carve's own note declared PRDs stay ANY_CTO but the pattern did not implement it); this longer match restores the declared intent."
+
   "docs/architecture/OPAL_ASSETS_*":
     lane: POD4_OR_AE
     note: "OPAL_ASSETS detail/contract docs (V2_LAMBDA_CONTRACT etc.) — co-owned by AE (0.7.0 TF-side, 0.5.0 smartx feeds) and POD4 DS (V2-8 converter half). CTO grant 2026-07-14 per 0.7.0 ask 074500Z (V2-7/V2-8 lambda contract co-cited by both TOs). Mirrors INFETL_* precedent (Andrew-direct 2026-05-07: DS should be in this path). Top-level OPAL_ASSETS*.md PRDs remain under docs/architecture/** ANY_CTO catch-all."
