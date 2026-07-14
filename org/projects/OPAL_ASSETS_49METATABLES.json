@@ -11,16 +11,30 @@
     }
   ],
   "status": "active",
-  "phase": "EXECUTING -- THREE OF FOUR CONVERGENCE FINDINGS ON THE RECORD (CTO accepted-record 163555Z; D1 in build). D1 (DS): Option-M dim build; D1a daily BD REST pull VEHICLE LIVE + TENANCY GREEN (0.7.0 @ 33ee64c7f: Allocation_Template 390224 fetched, deploy ledger closed 1124Z; the plan tripwire caught an aws_iam_policy ForceNew REPLACE pre-apply -> redesigned pure-add 7/0/0; vehicle plan df7657d38) -- Apply B (pull mode grounded on the fetched template bodies, 02:30Z schedule, fail-loud floors) pending DS tie-confirm, CTO gates; D1 finding = the bridge PROVEN on live data. D2 (0.5.0): FINDINGS DELIVERED @ 826a44082 (identity table in runner-consumable terms: living 7,141/7,144 = 99.96%, closed 1,315/2,381 = 55.2% with the ceiling named as a vendor-grant question, zfill(10) join 96.4% residual honestly unpinned, guards inherited; core doc v1.5.0); operational leg landed = bundle-lane registries @ 1061ef2ed + feed-9 wired into the daily lambda 13ff845d1 + two-writers-one-scope guard fix bc9b7a390. D3 (0.6.2): DELIVERED + accepted @ 378e89453 -- FAM/SLM decoded structurally as the ADVISOR-RELATIONSHIP layer; casebook Entry-1 AMENDMENT 4755818d6. D4 (0.7.0): DELIVERED @ 506989d4c -- connector census + silver-lambda verification, three feed paths on desired/applied/exercised. CONVERGENCE GATE (all FOUR -> Andrew + CTO architect the refactored 49F gold runner, OPAL_RUNNERS sec-4.3): D2/D3/D4 in, OPEN = D1 (bridge proof; Apply B first). Design-of-record: dictionary v0.5 @ 3d599eaf3 (SHAPE-CLASS settle of contract cell 6; supersedes v0.3 a0719ff44), join-dim-2 note @ 2d2ffcd60, feed-9 report @ 518c82213, casebook Entry 1 @ 6a23e4c19 + amendment 4755818d6.",
+  "phase": "EXECUTING -- THREE OF FOUR CONVERGENCE FINDINGS ON THE RECORD (CTO accepted-record 163555Z; D1 in build). D1 (DS): Option-M dim build; D1a daily BD REST pull VEHICLE LIVE + TENANCY GREEN (0.7.0 @ 33ee64c7f: Allocation_Template 390224 fetched, deploy ledger closed 1124Z; the plan tripwire caught an aws_iam_policy ForceNew REPLACE pre-apply -> redesigned pure-add 7/0/0; vehicle plan df7657d38) -- Apply B (pull mode grounded on the fetched template bodies, 02:30Z schedule, fail-loud floors) pending DS tie-confirm, CTO gates; D1 finding = the bridge PROVEN on live data. D2 (0.5.0): FINDINGS DELIVERED @ 826a44082 (identity table in runner-consumable terms: living 7,141/7,144 = 99.96%, closed 1,315/2,381 = 55.2% with the ceiling named as a vendor-grant question, zfill(10) join 96.4% residual honestly unpinned, guards inherited; core doc v1.5.0); operational leg landed = bundle-lane registries @ 1061ef2ed + feed-9 wired into the daily lambda 13ff845d1 + two-writers-one-scope guard fix bc9b7a390. D3 (0.6.2): DELIVERED + accepted @ 378e89453 -- FAM/SLM decoded structurally as the ADVISOR-RELATIONSHIP layer; casebook Entry-1 AMENDMENT 4755818d6. D4 (0.7.0): DELIVERED @ 506989d4c -- connector census + silver-lambda verification, three feed paths on desired/applied/exercised. CONVERGENCE GATE (all FOUR -> Andrew + CTO architect the refactored 49F gold runner, OPAL_RUNNERS sec-4.3): D2/D3/D4 in, OPEN = D1 (bridge proof; Apply B first). Design-of-record: dictionary v0.5 @ 3d599eaf3 (SHAPE-CLASS settle of contract cell 6; supersedes v0.3 a0719ff44), join-dim-2 note @ 2d2ffcd60, feed-9 report @ 518c82213, casebook Entry 1 @ 6a23e4c19 + amendment 4755818d6. >> D1a APPLY B LIVE @ v0.11.0 (0.7.0 deploy 36389f627 18:05Z, ledger 1802Z CLOSED 3/3: 6/1/0 apply, 0-diff, sha tie, schedule live) on DS's tie-confirm @ 7e5cfd4d8 17:23Z (contract v1.2.3 @ 635ff2f21; 390224 tie CONFIRMED-WITH-SHAPE-DELTA -- 49f splits ROLE-DECOMPOSED, no literal AoR/B2B field; D1 dim binds the decomposed model). First scheduled pull 02:30Z = the ADVI_BDAPIMIG close-or-reopen event (COO watches). D1 dim build (DS) remains the open convergence finding.",
   "blocking": "ANDREW (carried, not blocking): advisor-'type' semantics one-liner; pre-floor history default (feed-floor start unless he rules an import); FAM/SLM vendor spec (naming overlay + row-count control check).",
   "created": "2026-07-14",
-  "pods": ["0.4", "0.5", "0.6", "0.7", "1.0"],
+  "pods": [
+    "0.4",
+    "0.5",
+    "0.6",
+    "0.7",
+    "1.0"
+  ],
   "pipeline": "BD daily REST -> blackdiamond bronze -> ONE SCD2 advisor/fee dim || smartx feed-9 (yaliu bundle) -> allocation_account_map + closed-identity backfill || 0833 CRS silver -> Group A plan; all three -> the refactored 49F gold runner architecture (Andrew + CTO)",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
   "threads": [],
   "cross_references": {
-    "depends_on": ["OPAL_ASSETS (monolith silver estate; 0.6.2's CRS converters)", "OPAL_RUNNERS (consumes this join layer; casebook + dictionary govern)"],
-    "design_of_record": ["OPAL_RUNNERS_49F_SILVER_DATA_DICTIONARY.md v0.3", "OPAL_RUNNERS_JOINDIM2_BD_ADVISOR_FEE_TETHER_20260714.md @ 2d2ffcd60", "SMARTX_C5_FEED9_DEVELOPMENT_20260714.md @ 518c82213", "OPAL_RUNNERS_CANONICAL_FORM_CASEBOOK.md Entry 1"]
+    "depends_on": [
+      "OPAL_ASSETS (monolith silver estate; 0.6.2's CRS converters)",
+      "OPAL_RUNNERS (consumes this join layer; casebook + dictionary govern)"
+    ],
+    "design_of_record": [
+      "OPAL_RUNNERS_49F_SILVER_DATA_DICTIONARY.md v0.3",
+      "OPAL_RUNNERS_JOINDIM2_BD_ADVISOR_FEE_TETHER_20260714.md @ 2d2ffcd60",
+      "SMARTX_C5_FEED9_DEVELOPMENT_20260714.md @ 518c82213",
+      "OPAL_RUNNERS_CANONICAL_FORM_CASEBOOK.md Entry 1"
+    ]
   }
 }
