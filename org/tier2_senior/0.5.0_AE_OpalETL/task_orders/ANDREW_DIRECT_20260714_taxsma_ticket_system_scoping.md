@@ -4,8 +4,23 @@
 <issued_by>Andrew (sovereign, direct terminal prompt to the ~A lane session)</issued_by>
 <channel>direct terminal prompt, session 8841a0df-4e0d-4190-9d2e-96fc825f9f23</channel>
 <received>2026-07-14 ~18:52Z</received>
-<status>complete</status>
-<completed>2026-07-14 ~19:25Z — deliverable: docs/briefs/ANDREW_BRIEF_20260714_taxsma_and_ticket_system.md; routed to Andrew (session) + COO + CTO by MCP</completed>
+<status>pending</status>
+<scoping_completed>2026-07-14 ~19:25Z — brief deliverable landed: docs/briefs/ANDREW_BRIEF_20260714_taxsma_and_ticket_system.md (293c062fb)</scoping_completed>
+
+## ADDENDUM — SECOND ANDREW-DIRECT (same session, ~19:30Z): EXECUTION DELEGATION
+
+> "Ok I do not want to interrupt the fabric with these ad hoc projects so I'd rather upon your
+> finishing the briefs, you just take sovereign authority, register the projects if they are not
+> registered as macro_projects, and run the issues through completion."
+
+**Effect (surfaced, recorded):** scope expands from scoping-only to EXECUTION-TO-COMPLETION under
+delegated sovereign authority, fabric-quiet (no dispatch into COO/CTO loops; informational
+broadcast only). Supersedes COO's "I will register the project when the brief lands" for
+TCKT (I register it directly). PFMG_TAXSMA already registered — execution delegation noted in its
+history. STILL BINDING (delegation does not waive law): CLAUDE.md gates (Terraform-only,
+safe-apply/safe-commit, Rule 22/22a grounding + IAM live-primitive verify, Rule 23 SES
+opalinvest.dev), the PRD-level TAXSMA hard guardrail (trade file GENERATED, human executes —
+Yang-sourced, PRD-pinned), bronze-raw 17a, and the standing INF-chain / 22:00Z deconfliction.
 
 ## VERBATIM (the phrasing IS the ruling — scope surfaced, not adjudicated)
 

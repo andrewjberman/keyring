@@ -62,6 +62,7 @@ Responsible pod: `0.3.0_DE` / `0.3.0_DS` / `0.3.0_DT`
 | `DRFR` | DataRefresh | `portal/src/pages/DataRefresh/` | `0.3.3_RD_DataRefresh` | (cross-pipeline) |
 | `SSCN` | SecurityScanner | `portal/src/pages/SecurityScanner/` | `0.3.4_RD_SecurityScanner` | TBD (Pattern 0) |
 | `TAXX` | Tax Strategy (Tax SMA Trade Allocation) | TBD | TBD | TBD |
+| `TCKT` | TicketCenter (internal client-service + trade-request ticketing; AJ Graff <> Andrew 2026-07-14) | `portal/src/pages/TicketCenter/` | TBD (0.3.5_RD_TicketCenter proposed) | opal-ticket-api (new) |
 
 ---
 
