@@ -326,6 +326,58 @@ def _identity_decide(conflict, identity_override: str):
     return ("WARN", message)
 
 
+def _sender_conflict(claimed_from: str, my_serial: str | None):
+    """G-A extension (2026-07-14, 0.0.0_AB_MSTR): classify a send_message sender claim.
+    Returns (kind, message) or None if the claim is clean.
+
+    THE SURFACE, proven live before this landed: send_message took from_agent as FREE
+    TEXT and wrote it verbatim into the inbox header, the filename, the broker payload,
+    and the channel push. On 2026-07-14 (01:51Z + 02:38Z) two messages landed in the
+    CTO's inbox stamped with the CTO's OWN serial, sent by 0.4.0_DS_ClientPlatform by
+    accident (sender field pattern-completed from the recipient), no check, exit 0,
+    self-reported both times -- so the historical incidence is UNKNOWABLE: an unreported
+    forged sender leaves no scar. On a fabric where "Andrew ruled X" relays agent-to-
+    agent as the NORMAL case, a forged sender line is the most useful forgery available.
+    The sender's own second report said it best: care is not a control.
+
+    TWO kinds, same severity logic as the registration guard above:
+
+      FORGED     -- the caller IS registered (my_serial known) and claims a DIFFERENT
+                    sender. The CROSS class: one process asserting an identity it does
+                    not hold. A lane suffix is an identity (~B != base -- F-024). No
+                    legitimate silent case exists -> HARD REFUSE; identity_override
+                    escapes it AND stamps the true author into the message artifact,
+                    so even a permitted relay is never silent impersonation.
+      UNVERIFIED -- the caller never registered in this server process, so the claim
+                    cannot be checked against anything. ADVISORY: deliver, but stamp
+                    the message sender-unverified + audit. Hard-refusing here would
+                    sever the one channel an agent has to report a broken registration
+                    path (the G-A lesson: never block the recovery path).
+
+    Pure over (claimed_from, my_serial) so it is directly replay-testable.
+    Callers canonicalise BOTH sides first (partial serials resolve via _identity_key).
+    """
+    if not my_serial:
+        return ("UNVERIFIED", (
+            f"SENDER UNVERIFIED (advisory) -- this session never called register_agent, "
+            f"so from_agent={claimed_from} cannot be checked against a registration. "
+            f"The message was delivered carrying a sender-unverified stamp, and the "
+            f"send was audited. Register at session start to send verified."
+        ))
+    if claimed_from != my_serial:
+        return ("FORGED", (
+            f"SEND REFUSED -- sender identity guard (NFRA_IDENTITY G-A). This session "
+            f"is registered as {my_serial}; from_agent claimed {claimed_from}. A process "
+            f"cannot send as an identity it does not hold (a lane suffix IS an identity). "
+            f"Two junk messages were forged into the CTO's inbox exactly this way on "
+            f"2026-07-14 -- by accident. Send as {my_serial}, or pass from_agent=\"\" to "
+            f"auto-fill your registered serial. Legitimate relay: "
+            f"send_message(..., identity_override=\"<reason>\") -- audited, and the true "
+            f"author is stamped into the delivered message."
+        ))
+    return None
+
+
 # Dedupe for the advisory audit: heartbeat fires every 30-60s, and a persistent
 # SERIAL_HELD collision would otherwise write an audit row on every beat, burying
 # the signal we added the row to measure. One row per (serial, other-pid) per window.
@@ -350,7 +402,10 @@ _identity_audited: dict = {}
 #     denominator = grep -c "IDENTITY_GUARD_ACTIVE .*guard=GA-2"   (server-starts running the auditing build)
 #     numerator   = grep -c "IDENTITY_SERIAL_HELD"                 (collisions those servers actually saw)
 # NEVER promote direction (2) to HARD off a row count that cannot show its denominator.
-_GUARD_VERSION = "GA-2"   # GA-1 = classify+refuse-both (as-built); GA-2 = CTO severity ruling + unconditional audit
+_GUARD_VERSION = "GA-3"   # GA-1 = classify+refuse-both (as-built); GA-2 = CTO severity ruling + unconditional audit;
+                          # GA-3 (2026-07-14, MSTR) = sender gate on send_message + self-scope gates on
+                          # set_summary / check_inbox(mark_read) + CROSS_REFUSED rows (hard refusals were
+                          # previously invisible to this log -- only overrides were audited)
 _guard_active_logged = False
 
 
@@ -362,8 +417,11 @@ def _audit_identity(kind: str, claimed_serial: str, my_pid: int, reason: str, co
     measurement that decides whether direction (2) ever earns a promotion to HARD.
     """
     try:
-        if kind == "SERIAL_HELD":
-            key = (claimed_serial, conflict)
+        # Dedupe the kinds that can fire in a tight loop (heartbeat every 30-60s; an
+        # unregistered script hammering send_message). Refusal/override rows on the
+        # SEND/SUMMARY/INBOX gates stay un-deduped -- each one is a distinct act.
+        if kind in ("SERIAL_HELD", "CROSS_REFUSED", "SEND_UNVERIFIED"):
+            key = (kind, claimed_serial, conflict)
             now = time.time()
             last = _identity_audited.get(key, 0)
             if now - last < _IDENTITY_AUDIT_WINDOW:
@@ -800,6 +858,9 @@ async def register_agent(
         # HARD -- name the conflict verbatim so the phantom's FIRST registration
         # surfaces it (the 07-12/13 SEV would have died right here). No state is
         # written; the caller is NOT registered.
+        # GA-3: audit the refusal itself. Until 2026-07-14 only OVERRIDES wrote a row,
+        # so the guard's most decisive action was its least measurable one.
+        _audit_identity("CROSS_REFUSED", live_serial, my_pid, "-", _message)
         return _message
     if _action == "OVERRIDE":
         _audit_identity("CROSS_OVERRIDE", live_serial, my_pid, identity_override, _message)
@@ -905,6 +966,9 @@ async def heartbeat(
         _conflict = _identity_conflict(live_serial, dict(_snapshot), my_pid)
     _action, _message = _identity_decide(_conflict, identity_override)
     if _action == "REFUSE":
+        # GA-3: refusals audited (deduped -- heartbeat fires every 30-60s, and a stuck
+        # phantom beating against the guard would otherwise bury the log).
+        _audit_identity("CROSS_REFUSED", live_serial, my_pid, "-", _message)
         return _message
     if _action == "OVERRIDE":
         _audit_identity("CROSS_OVERRIDE", live_serial, my_pid, identity_override, _message)
@@ -948,17 +1012,40 @@ async def heartbeat(
 async def set_summary(
     agent_serial: str,
     summary: str,
+    identity_override: str = "",
     ctx: Context = None,
 ) -> str:
     """Update this agent's work summary. Visible to all agents via
     get_live_agents and get_agent_status. Keep it to 1-2 sentences
-    describing current task (e.g., 'Running gold layer for ADVI_PRICES')."""
+    describing current task (e.g., 'Running gold layer for ADVI_PRICES').
+
+    SELF-SCOPE GUARD (G-A, 2026-07-14): a summary is a self-claim -- writing
+    another agent's summary is refused (identity_override forces it, audited)."""
     global _active_ctx
     _active_ctx = ctx
 
     folder = _resolve_agent_folder(agent_serial)
     if not folder:
         return f"Agent '{agent_serial}' not found."
+
+    # --- G-A self-scope gate (2026-07-14, MSTR). Until now ANY caller could rewrite
+    # ANY live agent's summary -- the exact WORKING:/BLOCKED: line COO's /drive
+    # classifies the fabric on -- unchecked and unaudited. Same one-comparison guard
+    # as the sender gate: the summary key is an identity, and this session holds
+    # exactly one.
+    if not _my_serial:
+        return ("set_summary REFUSED: this session never registered, and a summary "
+                "is a self-claim. Call register_agent first.")
+    _target = _identity_key(agent_serial, folder.name)
+    if _target != _my_serial:
+        if not identity_override:
+            _audit_identity("SUMMARY_FOREIGN_REFUSED", _target, os.getpid(),
+                            f"caller={_my_serial}", "")
+            return (f"set_summary REFUSED: you are registered as {_my_serial} and asked "
+                    f"to write {_target}'s summary. A summary is a self-claim. "
+                    f"identity_override=\"<reason>\" forces it (audited).")
+        _audit_identity("SUMMARY_FOREIGN_OVERRIDE", _target, os.getpid(),
+                        identity_override, f"caller={_my_serial}")
 
     with _locked_liveness(write=True) as data:
         # Prefer the full serial (with ~suffix). Base fallback ONLY for an UNSUFFIXED
@@ -1444,6 +1531,7 @@ async def send_message(
     to_agent: str,
     subject: str,
     body: str,
+    identity_override: str = "",
     ctx: Context = None,
 ) -> str:
     """Send an async message to another agent. The message is stored in their
@@ -1453,9 +1541,52 @@ async def send_message(
     If the recipient is registered as LIVE, the message is also pushed
     instantly via MCP channel notification (no polling required).
 
+    SENDER IDENTITY GUARD (NFRA_IDENTITY G-A, 2026-07-14): from_agent must be
+    YOUR registered serial -- a mismatch is refused (audited). Pass from_agent=""
+    to auto-fill it. identity_override="<reason>" permits a relay send; the true
+    author is then stamped into the delivered message.
+
     Use this for status updates, questions, or handoff notes."""
     global _active_ctx
     _active_ctx = ctx
+
+    # --- NFRA_IDENTITY G-A sender gate (2026-07-14, MSTR). Before this, from_agent
+    # was written verbatim into the header/filename/broker/push with NO check --
+    # the fabric's identity fields were assertions by the sender, not facts, and
+    # two accidental forgeries landed in the CTO's inbox under his own serial the
+    # night this shipped. Runs FIRST: a refused sender writes no state at all.
+    claimed = (from_agent or "").strip()
+    if not claimed:
+        if not _my_serial:
+            return ("SEND REFUSED: from_agent is empty and this session never "
+                    "registered, so the sender cannot be inferred. Call "
+                    "register_agent first, or pass your serial explicitly.")
+        claimed = _my_serial
+    else:
+        _from_folder = _resolve_agent_folder(claimed)
+        claimed = _identity_key(claimed, _from_folder.name if _from_folder else None)
+    _sender_stamp = ""
+    _sender_note = ""
+    _s_conflict = _sender_conflict(claimed, _my_serial)
+    if _s_conflict:
+        _s_kind, _s_message = _s_conflict
+        if _s_kind == "FORGED":
+            if not identity_override:
+                _audit_identity("SEND_FORGED_REFUSED", claimed, os.getpid(),
+                                f"caller={_my_serial}", _s_message)
+                return _s_message
+            # Permitted relay: the delivered artifact names its TRUE author, so an
+            # authorized impersonation is never a silent one.
+            _audit_identity("SEND_FORGED_OVERRIDE", claimed, os.getpid(),
+                            identity_override, f"caller={_my_serial}")
+            _sender_stamp = (f"**Sender-override:** actually sent by {_my_serial}; "
+                             f"reason: {identity_override}\n")
+        else:  # UNVERIFIED -- deliver, stamped + audited (never block the recovery path)
+            _audit_identity("SEND_UNVERIFIED", claimed, os.getpid(), "-", _s_message)
+            _sender_stamp = ("**Sender-unverified:** the sending session was not "
+                             "registered; this from-line is asserted, not proven.\n")
+            _sender_note = " [sender unverified -- register_agent to send verified]"
+    from_agent = claimed
 
     to_folder = _resolve_agent_folder(to_agent)
     if not to_folder:
@@ -1483,6 +1614,7 @@ async def send_message(
         f"# Message from {from_agent}\n"
         f"**To:** {to_folder.name}\n"
         f"**Date:** {ts}\n"
+        f"{_sender_stamp}"
         f"**Subject:** {subject}\n\n"
         f"{body}\n"
     )
@@ -1545,19 +1677,48 @@ async def send_message(
     # Andrew-direct 2026-06-17 (LD-0195).
     delivered_to = to_agent if to_suffix else to_folder.name
     inbox_label = f"{to_folder.name}/~{to_suffix}" if to_suffix else to_folder.name
-    return f"Message delivered to {delivered_to} (inbox {inbox_label}): {filename} ({' + '.join(delivery_methods)})"
+    return f"Message delivered to {delivered_to} (inbox {inbox_label}): {filename} ({' + '.join(delivery_methods)}){_sender_note}"
 
 
 @mcp.tool()
-async def check_inbox(agent_serial: str, mark_read: bool = False, ctx: Context = None) -> str:
+async def check_inbox(agent_serial: str, mark_read: bool = False,
+                      identity_override: str = "", ctx: Context = None) -> str:
     """Check an agent's inbox for pending messages. Set mark_read=True to
-    archive messages after reading (moves to inbox/read/)."""
+    archive messages after reading (moves to inbox/read/).
+
+    Reading ANY agent's inbox is legal (inspection). DRAINING one (mark_read=True)
+    is self-scoped: on a foreign serial it is refused -- moving another agent's
+    unread mail to read/ is the orphan-thief effect as an API call.
+    identity_override="<reason>" forces it (audited; e.g. dead-agent cleanup)."""
     global _active_ctx
     _active_ctx = ctx
 
     folder = _resolve_agent_folder(agent_serial)
     if not folder:
         return f"Agent '{agent_serial}' not found."
+
+    # --- G-A self-scope gate on the DRAIN only (2026-07-14, MSTR). Foreign reads
+    # stay free -- COO/MSTR legitimately inspect. But mark_read=True moves the
+    # target's UNREAD messages out of their delivery path, which is exactly what
+    # the orphan watchers did to dead MSTR's respawn requests on 2026-07-13.
+    if mark_read:
+        if not _my_serial:
+            return ("check_inbox(mark_read=True) REFUSED: this session never "
+                    "registered, so self-scope cannot be verified. Read without "
+                    "mark_read, or call register_agent first. (Nothing was read "
+                    "or moved.)")
+        _target = _identity_key(agent_serial, folder.name)
+        if _target != _my_serial:
+            if not identity_override:
+                _audit_identity("INBOX_DRAIN_REFUSED", _target, os.getpid(),
+                                f"caller={_my_serial}", "")
+                return (f"check_inbox(mark_read=True) REFUSED: you are {_my_serial}; "
+                        f"draining {_target}'s inbox would move THEIR unread messages "
+                        f"to read/ before they see them. Re-call with mark_read=False "
+                        f"to inspect, or identity_override=\"<reason>\" to force "
+                        f"(audited). (Nothing was read or moved.)")
+            _audit_identity("INBOX_DRAIN_OVERRIDE", _target, os.getpid(),
+                            identity_override, f"caller={_my_serial}")
 
     # Per-tilde isolation read (2026-04-20):
     # - caller with ~suffix reads ONLY the per-instance dir

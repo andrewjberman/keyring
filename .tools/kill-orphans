@@ -56,6 +56,14 @@ while [ $# -gt 0 ]; do
     shift
 done
 
+# Show the observation FIRST (2026-07-14, MSTR): one register-hook run died rc=1 with
+# ZERO captured output (ORPHAN-CLEANUP-FAILED, 2026-07-13T21:15Z), and an empty capture
+# cannot distinguish "died before starting" from "died mid-scan" -- a negative result
+# that cannot show its observation is indistinguishable from a missing observation.
+# This banner prints before any fallible work, so a silent set -e death now at least
+# shows how far execution got.
+echo "[kill-orphans] start pid=$$ flags: force=$FORCE stale=$STALE_ONLY global=$GLOBAL serial=${SERIAL_FILTER:-ALL}"
+
 # Build set of LIVE agent serials from liveness.json (used by --stale filter).
 # Live = last_seen within 600s (10min; raised from 120s per LD-0063 to accommodate
 # substantive-work-without-explicit-heartbeat gaps. NOTE: now diverged from

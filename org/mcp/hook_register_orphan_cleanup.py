@@ -179,7 +179,7 @@ def main() -> int:
         rc = proc.returncode
         detail = out_path.read_text(encoding="utf-8", errors="replace").strip()
     except Exception as exc:  # exec failure, timeout
-        _log_failure(workspace, serial, f"{type(exc).__name__}: {exc}")
+        _log_failure(workspace, serial, f"{type(exc).__name__}: {exc} bash={bash}")
         return 0
     finally:
         try:
@@ -188,7 +188,14 @@ def main() -> int:
             pass
 
     if rc != 0:
-        _log_failure(workspace, serial, f"rc={rc} out={detail[:300].replace(chr(10), ' | ')}")
+        # bash= and out_bytes= added 2026-07-14 (MSTR): the one failure row on record
+        # read `rc=1 out=` -- an empty capture that could not say whether kill-orphans
+        # died before its first echo or the capture itself failed. kill-orphans now
+        # also prints a start-banner as its first fallible-work-free line, so this
+        # detail field distinguishes died-at-birth from died-mid-scan.
+        _log_failure(workspace, serial,
+                     f"rc={rc} bash={bash} out_bytes={len(detail)} "
+                     f"out={detail[:300].replace(chr(10), ' | ')}")
         return 0  # NO marker -> the next register retries.
 
     if marker is not None:

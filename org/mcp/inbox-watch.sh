@@ -109,8 +109,43 @@ mkdir -p "$WATCH_DIR/read"
 # tracker -- the whole exit-on-delivery machinery below is bypassed.
 # ===========================================================================
 if [ "$MODE" = "stream" ]; then
-    echo "inbox-watch: STREAM mode for $SERIAL watching $WATCH_DIR (persistent; never exits)" >&2
+    # ------------------------------------------------------------------------
+    # PARENT-LIVENESS SELF-EXIT (2026-07-14, 0.0.0_AB_MSTR -- the orphan-thief
+    # ROOT fix). This loop was `while true` with NO exit path: when a session
+    # died, the harness reaped the Monitor task + eval wrapper but NOT this
+    # child, which kept polling forever -- mv'ing messages to read/ (below)
+    # before echoing into a dead pipe. An orphan is not inert, it is a thief:
+    # dead MSTR's orphan drained both of COO's respawn requests during the
+    # 2026-07-13 70-min zero-builder outage, while every reachability probe
+    # read REACHABLE (w>0 BECAUSE the orphan ran; u==0 BECAUSE it drained).
+    # The register-hook reap treats that symptom at the NEXT registration --
+    # a serial that never returns leaves an orphan nothing collects. THIS
+    # exits the thief at the source, within one poll cycle of parent death.
+    #
+    #   - $PPID is the Monitor's eval wrapper (an MSYS bash -- visible in ps).
+    #     TaskStop/session end reaps the wrapper but not this child (exercised
+    #     2026-07-10: wrapper 701462 reaped, child 701546 survived). kill -0
+    #     on the dead wrapper then fails here -> clean exit 0.
+    #   - PPID<=1 = native/unknown parent (MSYS renders a non-MSYS parent as
+    #     1; a naive check would suicide healthy watchers -- the documented
+    #     7-false-positive trap). FAIL OPEN: skip the check, behavior is
+    #     exactly pre-fix. Never kill on a probe that cannot see its subject.
+    #   - INBOX_WATCH_NO_PARENT_CHECK=1 disables the check (debug/manual runs).
+    #   - Windows PID recycling can only delay the exit by one lifetime, never
+    #     cause a false one mid-flight; the failure direction is the safe one.
+    # ------------------------------------------------------------------------
+    WATCH_PARENT="$PPID"
+    PARENT_CHECK=1
+    if [ -n "${INBOX_WATCH_NO_PARENT_CHECK:-}" ] || [ "$WATCH_PARENT" -le 1 ]; then
+        PARENT_CHECK=0
+    fi
+    echo "inbox-watch: STREAM mode for $SERIAL watching $WATCH_DIR (persistent; parent-tied: $([ "$PARENT_CHECK" -eq 1 ] && echo "pid $WATCH_PARENT" || echo "OFF"))" >&2
     while true; do
+        if [ "$PARENT_CHECK" -eq 1 ] && ! kill -0 "$WATCH_PARENT" 2>/dev/null; then
+            ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo unknown-ts)"
+            echo "$ts  WATCHER-SELF-EXIT  serial=$SERIAL  parent=$WATCH_PARENT gone -- exiting instead of orphaning" >> "$SCRIPT_DIR/orphan-audit.log" 2>/dev/null || true
+            exit 0
+        fi
         for msg in "$WATCH_DIR"/*.md; do
             [ -f "$msg" ] || continue
             base="$(basename "$msg")"
