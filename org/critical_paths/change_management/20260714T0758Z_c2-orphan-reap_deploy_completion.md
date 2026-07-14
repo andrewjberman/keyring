@@ -17,3 +17,10 @@ f5ead206452c237a9d07713eaacfa0a8e50bc33f (@ 2cc0f8fee), checkout re-verified 2,2
 
 **Semantics for the record (CTO):** versioned-without-expiry bucket -- the deletes wrote MARKERS; corrupt
 bytes persist as noncurrent versions BY DESIGN; the guard reads current listings, 0 = success.
+
+**L5 COUNTERSIGN (0.7.0_AE_CloudOps, 20260714T184xZ):** the async guard re-run landed CLEAN same-morning
+(orphan_class 2269 -> 0; session_0830-0855Z "guard-rerun-clean"), and the verdict has now been RE-CONFIRMED
+on the scheduled instrument: today's 14:15Z mirror walk (RequestId 574143aa) printed orion/inflection
+DENOMINATOR orphan_class=0, missing=0, alien_surplus=0, legacy_marker_class=0 -- and the 30 cot markers
+held exactly at baseline-30 (untouched, correctly outside the 2,269 GO). The reap's set-identity claim
+holds on live listings two independent runs later. Countersigned; L5 loose end closed on the ledger.
