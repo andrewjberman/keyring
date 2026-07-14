@@ -17546,3 +17546,36 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
 | 2026-07-14 ~08:3xZ | 0.7.0_AE_CloudOps | comp-grep/comp-glob x12 PASS (nested-repo consumer traces), commit-gate PASS, tf plan/safe-apply PASS 0/2/0->0-diff, trading_calendar PASS (sweep frontier), deploy_ledger PASS (cwd note), comp-iam SKIPPED-per-22a (live simulate mandated, rail-checked) | C2 cot-map apply + connector sweep (c): 3 instruments-that-lied banked (dead env S3_KEY, Errors=0 catch-and-continue, empty-manifest freshness theater) |
 | 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions opal-smartx-ingestion-pipeline,smartx-ass... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_FEDOBS.json --file or... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/sil... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_CANONICA... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_V2_LAMBDA... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/build-derive-image.sh | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_V2_LAMBDA... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P2.four-materializers | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/SCHWAB_SILVER_CONVERTE... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-assets | comp-assets --channel smartx/platform | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/aut... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type = 'CONTAINS' RETURN count(e) | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='CONTAINS'... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-assets | comp-assets --channel smartx/platform | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='CONTAINS'... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_assets.py | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-assets | comp-assets --channel smartx/platform | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P2.four-materializers | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/schwab_conve... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/key... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/SCHWAB_SILVER_CONVERTE... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_49F_SILV... | PASS |
+| 2026-07-14 ~08:4xZ | 0.4.0_DS_ClientPlatform | comp-assets x4 (15/15 confirm + live spots), pytest silver suite 62/62 (peer-claim verification), git-show diff review | contract cells merged v1; two self-corrections closed; V2-5 prep current (smartx AC3 PASS-WITH-CONTRACT); 0.6.2 RAW_TYPES diff accepted |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |

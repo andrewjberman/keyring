@@ -82,3 +82,50 @@ V2-7 TF; (2) V2-5 prep runnable-now cells (AC3 non-emptiness spot-checks per acc
 interval/robustness columns; fold 0.7.0's re-sim + 0.5.0's fence battery). Monitor bvtqozoxc live;
 registered PID 13532; orphan pair from the dead prior session reaped at startup (3890159/3890247,
 nothing drained — newest read/ entry predated that session's close).
+
+---
+
+## SECOND WINDOW (~08:1xZ -> 08:4xZ) — contract cells, two corrections, V2-5 prep, two reviews
+
+**archetype:** MIXED (IMPLEMENT, VALIDATE, COORDINATE)
+
+1. **Contract cells LANDED + MERGED v1** (`89eb76275`; 0.7.0 accepted whole, `d68982c1e`): etf
+   ONE-family with per-vendor typed boundaries + named split triggers; schwab `.zip` (two-instrument
+   agreement w/ 0.6.2); eclipse `.json` with belt-2-LOAD-BEARING caveat in the rule table; **the rule-10
+   catch — root-prefix+.json would EVENT-FIRE ON META KEYS (rulings 21/25 belt-1 violation), replaced
+   with per-feed basename suffixes off the live 6-feed roster, 0.7.0 adopted**; concurrency 2 accepted
+   WITH the backfill-status sweep-only single-writer line (protects the V2-6 writer's read-modify-write);
+   0.6.2's cell 4 reviewed-ACCEPTED w/ 3 riders (UNVERIFIED_BY_T1 vocab for fam/slm; sweep-only status
+   writes via the V2-6 lib; constants-sourced basis labels) — all three folded by 0.6.2 same-hour.
+   ETF suffix cells stay honestly GATED on tonight's 22:00Z first bytes (ruling 26).
+2. **Two self-corrections, both broadcast before anything built on them:** (a) my smartx
+   hive-form-divergence flag was FALSE — the keys ARE ruling-23 hive form; comp-assets' date parser
+   didn't read `date=` segments and I read my instrument's gap as the estate's defect (all four
+   recipients corrected 082541-082614Z; census COUNTS unaffected). (b) My patch for that gap carried a
+   call-site bug (predicate verified in isolation — _normalize_date still mangled hive segments), AND
+   my URGENT about it misread the SHARED WORKTREE mid-landing as a landed defect — COO's premise
+   correction accepted: nothing defective was ever committed; the suite-15 regression FAILED LOUD at
+   his landing exactly as designed; both controls caught it independently pre-commit. Fix landed
+   complete @ `4c8f2803c`; my own confirm on the record (15/15 + live silver renders 2026-07-14).
+   **Banked: verify the PIPELINE not the predicate; a worktree is not a commit.**
+3. **V2-5 prep delta** (`9bbfaf7f8` + `d19d4ad81` + `2306b320d`): 0824 monolith-LANDED row (5,970 obj;
+   ligament verdict corrected to OPEN per COO's precision note — the 064730Z run was an EXERCISE invoke,
+   not the scheduled path; cite the 09:45/10:15Z scheduled fires); smartx rows re-rendered off the live
+   C5 landing (fence battery folded, behavioral leg UNKNOWN); post-sweep IAM re-verify section (router
+   re-scope battery + smartx fence); **AC3 3-object smartx open found the 267B model_allocations object
+   — ruling 26's reference case — routed to 0.5.0, who closed it with the full shape: RE-LANDED
+   07:56:52Z from the re-pointed endpoint (pull.py:136 @ 6832aad86, v1.4.0 deployed) and genuinely
+   unfunded (1 of 3; fleet denominator 9,525 ties the atom count exactly). Cert cell = PASS-WITH-CONTRACT;
+   the lesson banked in the cert: byte-identical empties from two endpoints — bytes alone cannot
+   discriminate; the deployed feed map + fleet denominator do.**
+4. **0.6.2's upstream RAW_TYPES diff (1cd0cc5ef) reviewed-ACCEPTED** — suite verified 62/62 on my own
+   run; his tripwire handling (let it fire, confront the ruling, re-pin STRENGTHENED with the
+   derived-name shape assert, record the confrontation in the docstring) set as the precedent for the
+   next extender.
+
+**Compiler tools (this window):** comp-assets x4 (incl. the 15/15 confirm + live spots), full pytest
+silver suite (62/62 verification of a peer's claim), commit-gate on nothing new (no new .py of mine),
+git-show forensics on 1cd0cc5ef. Board at rest: all dispatched work executed + RAVC-closed; standing
+triggers = ETF 22:00Z bytes (contract rules 6-9 + cert etf rows), AoR 13:22Z re-measure, cottonwood 277
+on the 03:30Z cycle, 0824 scheduled-fire ligament, 0.6.2's FAM/SLM reader diff, 0.5.0's daily-lambda
+first scheduled fire (smartx behavioral fence leg).
