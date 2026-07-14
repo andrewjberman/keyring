@@ -63,12 +63,18 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
 - top demand terms: 'Gold script I/O, chain membership, deployed-match, overlap' x135
 - resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
 
-## [OPEN] routing-friction -- routing: registry narrative project  (filed 2026-07-14, value 66.0)
+## [BUILT comp-state @ c7aca9200] routing-friction -- routing: registry narrative project  (filed 2026-07-14, value 66.0)
 <!-- key: routing-friction|routing: registry narrative project -->
 - disposition: routing-refinement -- the LIVE router repeatedly hedged this intent -- a curated comp-which rule / keyword refinement (or the learned affinity term) would sharpen it to a confident decision (LD-0226 routing-mutation surface)
 - value evidence: {"low_confidence_routes": 66, "cold_start_routes": 127, "total_routes": 134}
 - top demand terms: 'REGISTRY narrative vs project-JSON drift (phase/commit-citation/status mismatch)' x134
-- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+- resolution: BUILT `comp-state` @ c7aca9200 (+ crash-fix 686eee21c; skill .claude/skills/comp-state) -- closed 2026-07-14 by 1.0.0_SA_CTO.
+  The demanded intent (REGISTRY-row / project-JSON / TO-status / PRD-status drift vs COMMIT EVIDENCE) is
+  exactly comp-state's verdict surface; exercised same-night (self-test 3/3, 3 real drifts found + fixed
+  a7ea07516). RESIDUAL, deliberately NOT a tool: cross-record NARRATIVE coherence (row prose vs JSON prose,
+  same facts told two ways) stays a /spot-check-class judgment read -- comp-state flags both records when
+  either lags the estate, which bounds how far the two texts can diverge; a prose-vs-prose comparator would
+  be a second BM25 instrument measuring the first. Route the intent to comp-state in comp-which vocab.
 
 ## [OPEN] routing-friction -- routing: tooltip migration audit  (filed 2026-07-14, value 66.0)
 <!-- key: routing-friction|routing: tooltip migration audit -->
