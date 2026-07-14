@@ -4,14 +4,25 @@
   "name": "The estate's nervous system -- sense / address / accrete / evolve / serve (activate the hive mind)",
   "description": "Andrew-direct via a strategy session compiled by CVO~Z into a commissioning brief (32369d8e7), ferried by Andrew to the CTO lane. GOAL (Andrew, verbatim): know what is hot, cold, evolving, dangerous, fragile -- and let the graph EVOLVE from agent activity, 'like roads that become wider with lots of foot traffic'; the endgame is a fully-lexical, information-liquid hive mind. DIAGNOSIS: the estate has a certified skeleton and NO nervous system -- the graph records STRUCTURE; every signal the goal names is BEHAVIORAL and lives in event streams the graph cannot see (185,563 telemetry rows, 11,999 rail rows, 8,004 route rows, 6,682 commits/35d, 897 memory + 297 ledger files -- all exhaust, none addressed). This is an ACTIVATION project: address the exhaust, turn it into traffic, let traffic weight the graph, feed the certified-but-idle learning loop the evidence it was built for. FIVE LAYERS: L2 ADDRESS (the keystone -- one shared resolver + the universal traffic record), L3 ACCRETE (co-change / attention / outcome / RISK-HOLD-DOCTRINE / cert-vintage edges, all decaying), L1 SENSE (thin standing producers over streams that already flow), L4 EVOLVE (feed the EXISTING certified MOTIF/PROMOTE; C2/C3 populate from evidence; phantom-limb demand map), L5 SERVE (no new UI -- existing tools carry the signal; ONE new primitive comp-pulse; endgame = a pre-commit risk reflex, the danger map as an active immune response). THE HIGHEST-VALUE THING: the RISK edge -- danger zones are ALREADY written down with file:line citations, and an agent blasting a frozen file gets NO warning unless it happened to read the prose. Closing that means comp-blast build_assets_dim.py RETURNS THE HOLD.",
   "prds": [
-    {"path": "docs/architecture/NFRA_NERVES_PRD.md", "label": "v1.0 architecture PRD (CTO~Z)", "date": "2026-07-14"},
-    {"path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_NERVES_COMMISSIONING_BRIEF_20260714.md", "label": "commissioning brief (CVO~Z, Andrew-direct input; goal + diagnosis + property sets)", "date": "2026-07-14"}
+    {
+      "path": "docs/architecture/NFRA_NERVES_PRD.md",
+      "label": "v1.0 architecture PRD (CTO~Z)",
+      "date": "2026-07-14"
+    },
+    {
+      "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_NERVES_COMMISSIONING_BRIEF_20260714.md",
+      "label": "commissioning brief (CVO~Z, Andrew-direct input; goal + diagnosis + property sets)",
+      "date": "2026-07-14"
+    }
   ],
   "status": "active",
-  "phase": "Phase 1 EXECUTING -- L2 (the keystone: the shared resolver + the universal traffic record). Leverage order: L2 -> L3a co-change git backfill -> L3b lexical->RISK edges -> L1 standing producers -> L4 MOTIF/PROMOTE on traffic -> L5 comp-pulse + pre-commit reflex.",
+  "phase": "L2 + L3 SHIPPED (CTO~Z). LANE SPLIT 2026-07-14 ~06:35Z (Andrew sovereign override via CVO~Z): L1 (standing producers) + L4 (EVOLVE -- MOTIF/PROMOTE/FEDOBS activation) REDIRECTED TO 0.8.0_AE_CloudComp~Z; CTO~Z narrows to L5 (comp-pulse + the pre-commit risk reflex) + the unchanged ratify roles (PROMOTE contract, cross-plane promotes). SHIPPED: L2 keystone (nerves_resolve -- the ONE resolver; nerves_traffic -- the universal traffic record: 18,244 events, 60.9% hit-rate, denominators printed, 718 PHANTOM-LIMB events captured); L3a CO_CHANGE (270 decayed edges from 6,688 commits, asymmetry preserved, both control arms held, consumer wired into comp-blast); L3b THE LEXICAL UNLOCK (comp-blast build_assets_dim.py RETURNS THE HOLD -- ALL THREE frozen files carry a HOLD with doc:line citations; the danger map is an active immune response, not a wiki). Substrate handed to 0.8.0~Z with its two hard-won limits (telemetry has no args -> tool-popularity is not node-attention; a ref that was never an address cannot be a missing address).",
   "blocking": "None",
   "created": "2026-07-14",
-  "pods": ["1.0", "3.0"],
+  "pods": [
+    "1.0",
+    "3.0"
+  ],
   "pipeline": "comp-tools / graph / NFRA",
   "thread_counter": 0,
   "threads": [],
@@ -22,8 +33,19 @@
     "OPS PRE-WORK same lane: batch the graph_nodes writer (17,912 commits vs edges' 56), snapshot-expiry + compaction, delete the two cse_test_* warehouse tables, owner-check dormant graph_contracts."
   ],
   "cross_references": {
-    "composes_with": ["NFRA_INSTDRILL (comp-debris = CloudTrail/coldness sense; comp-gitdrill/icedrill = the vintage drill; comp-pydeps closes F-5 and is resolver source #2; the nine comp-which sharpening asks push traffic down the roads) -- REFERENCE, do not re-own"],
-    "activates": ["the MOTIF/PROMOTE/FEDOBS learning loop (built, invariant-gated, CVO-certified -- IDLE since 07-08)", "the GO'd-but-unbuilt Q4 standing-producer cadence (zero EventBridge producers exist today)"],
-    "validation": ["3.0.0_SA_CVO~Z /verify per layer; their re-take numbers win ties"]
+    "composes_with": [
+      "NFRA_INSTDRILL (comp-debris = CloudTrail/coldness sense; comp-gitdrill/icedrill = the vintage drill; comp-pydeps closes F-5 and is resolver source #2; the nine comp-which sharpening asks push traffic down the roads) -- REFERENCE, do not re-own"
+    ],
+    "activates": [
+      "the MOTIF/PROMOTE/FEDOBS learning loop (built, invariant-gated, CVO-certified -- IDLE since 07-08)",
+      "the GO'd-but-unbuilt Q4 standing-producer cadence (zero EventBridge producers exist today)"
+    ],
+    "validation": [
+      "3.0.0_SA_CVO~Z /verify per layer; their re-take numbers win ties"
+    ],
+    "lane_split": [
+      "0.8.0_AE_CloudComp~Z OWNS L1 (standing producers) + L4 (MOTIF/PROMOTE/FEDOBS activation) per Andrew's sovereign override relayed by CVO~Z (14c2aeeba). They CONSUME the L2/L3 substrate; they do not rebuild it.",
+      "1.0.0_SA_CTO~Z owns L5 + the ratify roles. Structural edits to nerves_*.py / comp_pydeps.py / cli.py blast path / the graph node_type SSOT route through CTO~Z (the SSOT is a standing arch-gate -- comp-pydeps was deliberately built as a SEPARATE reference graph to avoid extending it)."
+    ]
   }
 }

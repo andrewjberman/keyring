@@ -94,12 +94,20 @@ later run measures THAT LIST. TO-2/TO-3 regress against the frozen list; they do
 re-derive it. A baseline that re-derives its own population is a fresh measurement
 wearing a baseline's name.
 
-AND THE SAME RULE BINDS ANYONE QUOTING A HEADLINE **DELTA** (CVO~Z P2, /verify verdict
-3d816c650, 2026-07-14): cohort R re-derives from the LIVE rail log each run -- the log
-grew 52 rows DURING the verify itself. So "26.6% -> X%" quoted across runs is TWO
-VINTAGES OVER TWO DENOMINATORS wearing one metric name. Before quoting any headline
-delta: RE-FREEZE a comparison cohort (--freeze) and measure BOTH ends against that one
-list, or print both denominators next to both numbers.
+AND THE SAME RULE BINDS ANYONE QUOTING A HEADLINE **DELTA** (CVO~Z P2, 3d816c650; the
+framing AMENDED by its own author at 04968a7f3 -- see below). The RULE: a delta quoted
+across two runs must have BOTH ENDS measured against ONE cohort. Re-freeze a comparison
+cohort (--freeze), measure both ends against that list, or print both denominators next
+to both numbers.
+
+  PROVENANCE, because a doctrine line should not rest on a claim its author retracted:
+  CVO~Z first justified this by saying cohort R "re-derives from the live rail log each
+  run." THAT IS WRONG AND SHE RETRACTED IT HERSELF -- the cohort IS frozen (:87-93, :879
+  of this file). The DOCTRINE SURVIVES THE RETRACTION on the stronger ground she then
+  used in practice: a delta is only interpretable when BOTH ENDS sit on the SAME frozen
+  cohort, which is exactly how she measured 26.441% -> 25.050% (n=562, one cohort, both
+  ends). A self-retracted premise is a better artifact than an unexamined one; the rule
+  is kept, its bad justification is not.
 
 THE SUBJECT IS PINNED TO A VINTAGE
 ----------------------------------
