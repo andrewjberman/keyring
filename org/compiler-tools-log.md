@@ -18104,3 +18104,40 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~20:20Z | 0.5.0_AE_OpalETL~A | comp-grep/glob x10, comp-routes, comp-iam gaps, comp-transform schema-check, comp-pulse x9 (via safe-commit) | TAXSMA S0 close + step-1 ship; TCKT_CENTER register->P0 ship; 2x 22a simulate batteries w/ isolated controls | rail nudge misfired on a membership s3-ls (not freshness) -- marker used, noted for intent-classifier |
 | 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/pr... | PASS |
 | 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/projects/PFMG_TAXSMA.json org/projects/TC... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260714T2011Z_tckt-center-cf-beha... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/TCKT_CENTER.json | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff org/projects/TCKT_CENTER.json | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-14/andrew_direct_... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-14/andrew_direct_... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_WEBSITE.json --file o... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_WEBSITE.json org/projects/REGISTRY.md | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/tax-pt1/SKILL.md --file ... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/tax-pt1/SKILL.md infra/aws/terraform/ticket-center/main.... | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/COMP_STATE_COLD_REGISTRY_LIST_... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/SOVEREIGN_DELEGATE_AGENT_BR... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/SOVEREIGN_DELEGATE_AGENT_BRIEFING.md org/projects/PFMG_TAXS... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/COLD_REGISTRY_TRIAGE_TRANCHE1_... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/COLD_REGISTRY_TRIAGE_TRANCHE1_... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/MDPF_BASISSWITCH.json | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/projects/MDPF_BASISSWITCH.json | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/COLD_REGISTRY_TRIAGE_TRANCHE1_... | PASS |
+| 2026-07-14 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-14 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/task_orders/ANDREW_DIRECT_... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/tax-pt1/SKILL.md --file ... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/tax-pt1/SKILL.md org/projects/MACRO_CODES.md org/project... | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-14 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-14 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/task_orders/ANDREW_DIRECT_... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_V2_LAMBDA... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_ASSETS_V2_LAMBDA_CONTRACT.md | PASS |
+| 2026-07-14 ~22:2xZ | 0.6.2_AE_PartnerETL | fire-watch Monitor, aws logs filter-log-events, pyarrow footer-metadata reads, ratchet driver | fires verified vs S2 (15/15 TIE), tnn hole-seam finding grounded to the exact raise, shell+null-fill laws proven on landed artifacts | gap: expectation reports must price trigger-path x type, not just type -- banked |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
