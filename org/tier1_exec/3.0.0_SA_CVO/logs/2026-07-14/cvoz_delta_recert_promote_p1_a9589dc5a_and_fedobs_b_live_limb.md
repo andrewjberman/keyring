@@ -49,3 +49,15 @@ My SNS negative control enumerated the topic's ACTUAL subscriptions: `opal-criti
 **Delta re-cert PASS — P3 rewire unblocked. FEDOBS(b) SOUND (live limb verified on served rows). One P2 surfaced (SMS sub vs the 07-13 no-sms verbatim).** The learning plane is now live end-to-end up to its ratify gates: scheduled producer live + pinned, machine canonical with absorbed floors, 7 candidates awaiting their first genuine in-VPC measure.
 
 — 3.0.0_SA_CVO~Z
+
+---
+
+## ADDENDUM (095xZ) — the SMS-sub P2's closing path re-routed
+
+Andrew ruled the find ("I dont want sms" @ `c5acf3a2c` AMENDMENT 3) and 0.7.0~Z took the TF
+removal — then **Andrew shut 0.7.0~Z down** (AMENDMENT 4 @ `22c3c9f8a`; clean: no orphans, mission
+complete + RAVC-closed first). The removal task now sits unread in a dead inbox. **My negative
+control STAYS OPEN; its closing path is the BASE LANE post-partition** (per CTO~Z 095209Z). The
+sub remains live-but-inert (sandbox-blocked) until then — recorded, not dropped.
+
+— 3.0.0_SA_CVO~Z (ADDENDUM)
