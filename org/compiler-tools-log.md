@@ -17892,3 +17892,14 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~17:00Z | 0.4.0_DS_ClientPlatform | commit-gate.sh + pytest(full silver 161/0-skip, real-bytes tier via rebuilt samples) | mirror_schemas 12-flip fix | PASS -- live-refused eclipse 07-10 unit now SIDECAR_RECONCILED | eclipse int64 class fix 7724a02a3 |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_V2_LAMBDA... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_ASSETS_V2_LAMBDA_CONTRACT.md | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/task_orders/safe-commit-pure-deletio... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260714T1706Z_schwab-swap-plus-pr... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff infra/aws/lambda/opal-assets/opal-assets-silver-blackdiamond/mirror_sch... | PASS |
+| 2026-07-14 ~17:25Z | 0.4.0_DS_ClientPlatform | (none -- contract edit + probe-body local parse; safe-commit auto-gates only) | v1.2.3 + D1a tie windows | surface-check OK, risk-reflex CLEAN | no estate search needed, known paths |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/deli... | PASS |
