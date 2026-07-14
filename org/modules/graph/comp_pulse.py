@@ -141,9 +141,12 @@ def rail_signals(days: int):
     it, which is why the phantom-limb map lives here."""
     att = Counter()
     phantom = Counter()
+    newest = {}   # term -> age_days of its FRESHEST event (CVO refinement 110333Z: an attention
+                  # score quotes its AGE beside its magnitude -- residual foot-fall must not
+                  # masquerade as current demand)
     rows = considered = 0
     if not os.path.exists(RAIL):
-        return att, phantom, {"rail_rows": 0, "rows_in_window": 0, "available": False}
+        return att, phantom, newest, {"rail_rows": 0, "rows_in_window": 0, "available": False}
     now = dt.datetime.now(dt.timezone.utc)
     with open(RAIL, encoding="utf-8", errors="replace") as fh:
         for line in fh:
@@ -166,11 +169,13 @@ def rail_signals(days: int):
             term = kv.get("term")
             if term and term not in ("-", "."):
                 att[term] += w
+                prev = newest.get(term)
+                newest[term] = age_d if prev is None else min(prev, age_d)
             matches = kv.get("matches")
             if tag in _PHANTOM_TAGS or (matches is not None and matches == "0"):
                 if term and term not in ("-", "."):
                     phantom[term] += 1
-    return att, phantom, {"rail_rows": rows, "rows_in_window": considered, "available": True}
+    return att, phantom, newest, {"rail_rows": rows, "rows_in_window": considered, "available": True}
 
 
 def run_signals(days: int):
@@ -277,7 +282,7 @@ def render_reflex(hits, denom, risk_src: Source, invocation: str) -> str:
     return "\n".join(L)
 
 
-def danger_x_traffic(risk_src: Source, attention: Counter, top: int):
+def danger_x_traffic(risk_src: Source, attention: Counter, top: int, newest=None):
     """*** THE SECTION THAT MATTERS. *** A node under a HOLD or a recorded INCIDENT that someone is
     ACTIVELY TOUCHING. The danger map firing WHILE the danger is approached.
 
@@ -293,9 +298,11 @@ def danger_x_traffic(risk_src: Source, attention: Counter, top: int):
     for ref, w in attention.items():
         for e in by_key.get(ref.lower().split("/")[-1], []):
             if e["severity"] in ("HOLD", "RISK"):
-                hits.append({"ref": ref, "attention": round(w, 2), "node": e["node"],
-                             "severity": e["severity"], "n_claims": e["n_claims"],
-                             "claim": e["claims"][0]})
+                age = (newest or {}).get(ref)
+                hits.append({"ref": ref, "attention": round(w, 2),
+                             "newest_age_d": round(age, 1) if age is not None else None,
+                             "node": e["node"], "severity": e["severity"],
+                             "n_claims": e["n_claims"], "claim": e["claims"][0]})
                 break
     hits.sort(key=lambda h: ({"HOLD": 0, "RISK": 1}[h["severity"]], -h["attention"]))
     # CVO~Z L5 verify P2-2 (4106268e0): the section must say census-or-cap -- return the
@@ -308,10 +315,10 @@ def compile_pulse(days: int = 7, top: int = 8, invocation: str = "") -> dict:
     edges_src = Source(EDGES, "co-change edges (nerves_accrete)")
     risk_src = Source(RISK, "danger map (nerves_lexical)")
 
-    att, phantom, rail_stats = rail_signals(days)
+    att, phantom, newest, rail_stats = rail_signals(days)
     runs, run_fails, run_stats = run_signals(days)
     evo, evo_stats = evolving(edges_src, top)
-    dxt_res = danger_x_traffic(risk_src, att, top)
+    dxt_res = danger_x_traffic(risk_src, att, top, newest)
     dxt, dxt_total = (None, None) if dxt_res is None else dxt_res
 
     return {
@@ -331,7 +338,9 @@ def compile_pulse(days: int = 7, top: int = 8, invocation: str = "") -> dict:
             "danger": {"available": risk_src.exists, "vintage": risk_src.vintage,
                        "stale": risk_src.stale},
         },
-        "hot": [{"ref": r, "attention": round(w, 2)} for r, w in att.most_common(top)],
+        "hot": [{"ref": r, "attention": round(w, 2),
+                 "newest_age_d": round(newest[r], 1) if r in newest else None}
+                for r, w in att.most_common(top)],
         "hot_tools": [{"tool": t, "runs_decayed": round(w, 2), "fails": run_fails.get(t, 0)}
                       for t, w in runs.most_common(top)],
         "danger_x_traffic": dxt,          # None => UNKNOWN-VINTAGE, never []
@@ -380,7 +389,9 @@ def render(p: dict) -> str:
                  % (len(dxt), p.get("danger_x_traffic_total") or len(dxt)))
         for h in dxt:
             c = h["claim"]
-            L.append("  %-6s attention=%-5s  %s" % (h["severity"], h["attention"], h["node"]))
+            age = h.get("newest_age_d")
+            age_s = ("newest %sd ago" % age) if age is not None else "age unknown"
+            L.append("  %-6s attention=%-5s (%s)  %s" % (h["severity"], h["attention"], age_s, h["node"]))
             L.append("         someone searched/ran: %r" % h["ref"])
             L.append("         %s:%d  \"%s\"" % (c["doc"], c["line"], c["quote"][:72]))
         L += _memory_note_if_needed(h["claim"]["doc"] for h in dxt)
@@ -393,9 +404,12 @@ def render(p: dict) -> str:
     if not p["hot"]:
         L.append("  (no rail traffic in the window)")
     for h in p["hot"]:
-        L.append("  %-6s %s" % (h["attention"], h["ref"][:66]))
+        age = h.get("newest_age_d")
+        age_s = ("newest %sd ago" % age) if age is not None else "age ?"
+        L.append("  %-6s (%s) %s" % (h["attention"], age_s, h["ref"][:56]))
     L.append("  ^ HOT IS NOT GOOD. Traffic is foot-fall, never endorsement -- A WIDE ROAD TO A")
-    L.append("    WRONG ANSWER GETS WIDER. If a hot node is also a danger node, see the section above.")
+    L.append("    WRONG ANSWER GETS WIDER. And AGE RIDES WITH MAGNITUDE: a big score whose newest")
+    L.append("    event is a week old is RESIDUAL foot-fall, not current demand (CVO~Z 110333Z).")
 
     L += ["", "[HOT TOOLS] runs in the window (fails shown -- a busy tool that FAILS is a FIX, not a KEEP):"]
     if not p["hot_tools"]:
@@ -483,7 +497,10 @@ def _self_test() -> int:
                              "claims": [{"kind": "HOLD", "doc": "memory/MEMORY.md", "line": 81,
                                          "quote": "the frozen three -- no verb touches them"}]}]})
     att = Counter({"build_assets_dim.py": 3.4, "harmless_thing.py": 9.9})
-    hits, dxt_total = danger_x_traffic(risk_fx, att, top=5)
+    hits, dxt_total = danger_x_traffic(risk_fx, att, top=5,
+                                       newest={"build_assets_dim.py": 6.8})
+    ck("dxt.age_rides_with_magnitude", hits and hits[0].get("newest_age_d") == 6.8,
+       "residual foot-fall must not masquerade as current demand (CVO 110333Z)")
     ck("dxt.census_total_rides_with_the_slice", dxt_total == 1,
        "the section says showing-N-of-TOTAL, never a cap-blind slice (P2-2)")
     ck("dxt.fires_on_a_held_node_under_traffic",
