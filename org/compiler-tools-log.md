@@ -17591,3 +17591,9 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~08:5xZ | 0.4.0_DS_ClientPlatform | none this close window (coordination-only; session runs tabled in the two prior entries) | session-close log; board at rest on 7 named triggers |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml --file docs/architect... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml docs/architecture/OPAL_ASSETS_49METATABLES_PRD.md org... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | commit-gate (clean) + comp_promote_lifecycle --self-test 29/29 (absorb window; graph/plan grounding logged prior window) | PROMOTE.P1 convergence absorptions @a9589dc5a | no new gaps |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P2.four-materializers | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P2.four-materializers | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
