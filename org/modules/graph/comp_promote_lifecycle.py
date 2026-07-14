@@ -13,16 +13,20 @@ every advance that violates an invariant.
 THE STATE MACHINE (PRD S4.3; every transition CSE-logged -- promotion observes itself):
 
   CANDIDATE -> MEASURED -> PROPOSED -> RATIFIED  -> MATERIALIZED -> MONITORED -> SUSTAINED
-                  |                 -> REJECTED                        |     <-      |
-                  -> PARKED (below-threshold: a measured negative,     -> DEGRADED -> DEMOTED
-                     not a failure)
+      |           |                 -> REJECTED                        |     <-      |
+      |           -> PARKED (below-threshold: a measured negative,     -> DEGRADED -> DEMOTED
+      |              not a failure)
+      -> DROPPED (absorbed @cb6a86177, DS~B lineage: no MEANINGFUL measure even AFTER coverage --
+         de-candidated, not zombie-held; re-candidacy on NEW evidence only)
 
 THE FIVE INVARIANTS (PRD S4.2 -- each a GATE that RAISES, never a doc):
   1 MEASURE-BEFORE-PROMOTE  -> MEASURED needs a real, non-pending measured effect (a correlation is
                                a candidate; a measured effect is the warrant). A PENDING measure
                                REFUSES -- "do NOT fake a measurement" (the P1 TO's honest gate).
-  2 ANTI-GOODHART           -> PROPOSED needs a structural/generalizing attestation; a promotion
-                               cannot be tuned to its own metric.
+  2 ANTI-GOODHART           -> PROPOSED needs a structural/generalizing attestation AND a
+                               MEANINGFUL measurement (the absorbed DS~B floor: focused ratio >=
+                               FEDOBS_RATIO_FLOOR, legacy co_sessions floor fallback) -- a
+                               meaningless-but-well-formed measure never reaches the ratifier.
   3 HUMAN-RATIFY            -> RATIFIED needs the ROUTED ratifier's own record + THEIR commission_id.
                                This module NEVER self-mints a commission (zero auto-mutation:
                                grep-proof -- no substrate write exists in this file; the only writes
@@ -80,6 +84,47 @@ CANDIDATES = os.path.join(WS, "org", "tier2_senior", "0.4.0_DS_ClientPlatform",
 _LIFECYCLE_TYPE_CONFIDENCE = 0.2
 SCOPE = "promote.lifecycle"
 
+# =============================================================================================
+# ABSORBED from 0.4.0_DS_ClientPlatform~B's NFRA_PROMOTE_P1_promotion_engine.py per the CTO~Z
+# convergence ruling @cb6a86177 (canonical = THIS module; DS~B's engine retires WITH PROVENANCE
+# in the same change as the P3 monitor rewire, after the CVO delta re-cert). Lineage preserved:
+#
+# THE ANTI-GOODHART MEASUREMENT FLOOR -- "a single coincidental co-occurrence is NOT a warrant"
+# (CTO ratify-ruling condition 2026-07-08: the 7 candidates were RATIFIED-AS-CANDIDATES with
+# promotion WITHHELD -- the gate firing). meaningless-but-well-formed must not REACH the ratifier.
+MEANINGFUL_CO_OCCURRENCE_FLOOR = max(2, int(os.environ.get("PROMOTE_ANTI_GOODHART_FLOOR", "2")))
+# FEDOBS_RATIO_FLOOR=0.12: the CTO re-calibrated floor for the FOCUSED coupling measure (mid-gap
+# of the natural split 0.094 -> 0.151; threshold-INSENSITIVE, chosen for robustness NOT outcome;
+# the SEMCTL.FINALIZE focused_coupling_ratio@0.12 flip lineage). A PRE-FILTER only: the owner's
+# promotion-ratify stays the FINAL meaningfulness gate (CTO note: 0.12 lets a modest-but-genuine
+# coupling REACH the ratify rather than auto-rejecting). HOMED HERE ONCE (ruling term (c)) --
+# promote_monitor and every other consumer import it from this module.
+try:
+    FEDOBS_RATIO_FLOOR = float(os.environ.get("FEDOBS_RATIO_FLOOR", "0.12"))
+except ValueError:
+    FEDOBS_RATIO_FLOOR = 0.12
+
+
+def measurement_meaningful(m: dict) -> tuple:
+    """Invariant-2's MEASUREMENT arm (DS~B's inv2_anti_goodhart, absorbed): gate on the FOCUSED
+    coupling ratio (breadth-weighted -- discounts broad-commit/sweep inflation), falling back to
+    the raw coupling_ratio (legacy), then to the co_sessions floor (oldest measures). The raw
+    ratio is carried alongside in the reason for transparency. Returns (ok, why)."""
+    m = m or {}
+    focused, raw = m.get("focused_coupling_ratio"), m.get("coupling_ratio")
+    signal = focused if focused is not None else raw
+    if signal is None:
+        co = m.get("co_sessions", 0)
+        return (co >= MEANINGFUL_CO_OCCURRENCE_FLOOR,
+                "co_sessions=%s vs floor %d (legacy: no coupling_ratio)"
+                % (co, MEANINGFUL_CO_OCCURRENCE_FLOOR))
+    label = "focused_coupling_ratio" if focused is not None else "coupling_ratio(raw-fallback)"
+    alongside = "" if (raw is None or focused is None) else " (raw=%.3f, transparency)" % raw
+    if signal >= FEDOBS_RATIO_FLOOR:
+        return True, "%s=%.3f >= floor %.2f%s" % (label, signal, FEDOBS_RATIO_FLOOR, alongside)
+    return False, ("%s=%.3f < floor %.2f -- weak/sweep-inflated, NOT a warrant%s"
+                   % (label, signal, FEDOBS_RATIO_FLOOR, alongside))
+
 # ---------------------------------------------------------------------------------------------
 # The four promotion classes (PRD S4.1) -> target plane + ROUTED ratify owner + materializer lane.
 # All four are cross-plane => CTO ratifies (PRD S8). The routing is DATA so a domain class added
@@ -109,13 +154,17 @@ PROMOTION_CLASSES = {
 }
 
 STATES = ("CANDIDATE", "MEASURED", "PARKED", "PROPOSED", "RATIFIED", "REJECTED",
-          "MATERIALIZED", "MONITORED", "SUSTAINED", "DEGRADED", "DEMOTED")
+          "MATERIALIZED", "MONITORED", "SUSTAINED", "DEGRADED", "DEMOTED", "DROPPED")
 
 # The closed transition table (S4.3). Anything not listed is ILLEGAL and refuses loudly.
+# DROPPED (absorbed, DS~B): a candidate with no MEANINGFUL measure even AFTER coverage is
+# de-candidated -- not zombie-held at CANDIDATE forever. Distinct from PARKED (measured, below
+# promote bar, re-measurable in place): DROPPED asserts the coverage was ATTEMPTED and the
+# candidate is off the active queue; re-candidacy requires NEW EVIDENCE (ruling term (a)).
 LEGAL = {
-    "CANDIDATE": ("MEASURED",),
-    "MEASURED": ("PROPOSED", "PARKED"),
-    "PARKED": ("MEASURED",),                    # re-measure can un-park
+    "CANDIDATE": ("MEASURED", "DROPPED"),
+    "MEASURED": ("PROPOSED", "PARKED", "DROPPED"),
+    "PARKED": ("MEASURED", "DROPPED"),          # re-measure can un-park; exhausted coverage can drop
     "PROPOSED": ("RATIFIED", "REJECTED"),
     "RATIFIED": ("MATERIALIZED",),
     "REJECTED": (),                             # terminal; a measured negative, kept on the record
@@ -124,6 +173,7 @@ LEGAL = {
     "SUSTAINED": ("MONITORED",),                # the standing re-measure cycle (P3)
     "DEGRADED": ("DEMOTED",),
     "DEMOTED": (),                              # terminal; reversal complete, evidence kept
+    "DROPPED": ("CANDIDATE",),                  # re-candidacy on NEW evidence only -- never silent
 }
 
 
@@ -176,6 +226,12 @@ def gate_check(record: dict, to_state: str, evidence: dict) -> list:
             v.append("PARKED needs park_reason (a measured negative is a RESULT -- record it)")
     elif to_state == "PROPOSED":
         v += _real_measurement(record.get("measured_effect"), "record.measured_effect")
+        # invariant-2 MEASUREMENT arm (absorbed per cb6a86177): meaningless-but-well-formed must
+        # not REACH the ratifier -- the floor pre-filters; the owner's ratify stays the final gate.
+        m_ok, m_why = measurement_meaningful(record.get("measured_effect") or {})
+        if not m_ok:
+            v.append("invariant-2 MEASUREMENT FLOOR: " + m_why +
+                     " (a single coincidental co-occurrence is not a warrant -- CTO ratify-ruling)")
         ag = evidence.get("anti_goodhart") or {}
         if not str(ag.get("structural_rationale", "") or "").strip():
             v.append("invariant-2 ANTI-GOODHART: structural_rationale missing -- the warrant must "
@@ -228,6 +284,18 @@ def gate_check(record: dict, to_state: str, evidence: dict) -> list:
         if dr.get("exercised") is not True or not str(dr.get("ref", "") or "").strip():
             v.append("invariant-4: demotion_receipt.{exercised:true, ref} required -- reversal is "
                      "EXERCISED (deregister/rollback receipt), never asserted")
+    elif to_state == "DROPPED":
+        dp = evidence.get("drop") or {}
+        if not str(dp.get("coverage_ref", "") or "").strip():
+            v.append("DROPPED needs drop.coverage_ref -- de-candidation asserts the measure was "
+                     "ATTEMPTED (coverage evidence); dropping unlooked-at is a silent absence")
+        if not str(dp.get("reason", "") or "").strip():
+            v.append("DROPPED needs drop.reason (no meaningful measure AFTER coverage -- state it)")
+    elif to_state == "CANDIDATE":
+        # only reachable from DROPPED (the closed table): re-candidacy needs NEW evidence.
+        if not str((evidence.get("new_evidence") or {}).get("ref", "") or "").strip():
+            v.append("re-candidacy from DROPPED needs new_evidence.ref -- a dropped candidate "
+                     "returns on NEW evidence, never silently")
     return v
 
 
@@ -397,6 +465,10 @@ def advance(record: dict, to_state: str, *, evidence: dict, manifest: dict, acto
         record.setdefault("post_measures", []).append(evidence["post_measure"])
     elif to_state == "DEMOTED":
         record["demotion_receipt"] = evidence["demotion_receipt"]
+    elif to_state == "DROPPED":
+        record.setdefault("drops", []).append(evidence["drop"])
+    elif to_state == "CANDIDATE":
+        record.setdefault("recandidacies", []).append(evidence["new_evidence"])
     why = evidence.get("why", "")
     _emit_transition_cse(record, frm, to_state, why, trail_path)
     record["transitions"].append({"from": frm, "to": to_state,
@@ -479,7 +551,7 @@ def self_test() -> int:
             r1 is not None and "invariant-1" in r1)
         chk("inv1 fail-closed: the refused record did NOT move (state still CANDIDATE)",
             rec["state"] == "CANDIDATE" and rec["measured_effect"] is None)
-        measured = {"pending": False, "effect": 45.0,
+        measured = {"pending": False, "effect": 45.0, "co_sessions": 45,
                     "basis": "co_sessions over the FEDOBS coevolution signal",
                     "source": "fedobs_observations.json signals.coevolution",
                     "vintage": "computed_at 07-08 (marker_head unknown -- pre-pin artifact, "
@@ -586,9 +658,55 @@ def self_test() -> int:
         chk("PARKED: a below-threshold measure parks (a measured negative is a RESULT)",
             rec2["state"] == "PARKED")
 
+        # ---- ABSORBED DS~B DELTAS (cb6a86177) -- each exercised both ways, matching the CVO
+        # delta re-cert checks: planted-below-floor refused / DROPPED both ways / floor identity.
+        cand3 = dict(cand, candidate_id="motif:selftest-3")
+        rec3 = open_candidate(cand3, man, promotion_class="COMPILER_RULE", trail_path=tmp_trail)
+        weak = {"pending": False, "effect": 0.05, "basis": "focused coupling", "source": "fedobs",
+                "vintage": "t", "focused_coupling_ratio": 0.05, "coupling_ratio": 0.30}
+        advance(rec3, "MEASURED", evidence={"why": "weak-but-well-formed measure",
+                                            "measured_effect": weak},
+                manifest=man, actor="t", trail_path=tmp_trail)
+        rF = refused(advance, rec3, "PROPOSED", evidence={"why": "t", "anti_goodhart": ag},
+                     manifest=man, actor="t", trail_path=tmp_trail)
+        chk("absorb(b) NEGATIVE: a PLANTED below-floor well-formed measurement never reaches the "
+            "ratifier (focused 0.05 < 0.12 rules; raw 0.30 alongside for transparency)",
+            rF is not None and "MEASUREMENT FLOOR" in rF and "raw=0.300" in rF)
+        ok2, why2 = measurement_meaningful({"focused_coupling_ratio": 0.18,
+                                            "coupling_ratio": 0.05})
+        chk("absorb(b) POSITIVE: focused 0.18 >= 0.12 is meaningful (focused wins over weak raw)",
+            ok2 and "raw=0.050" in why2)
+        r_dropA = refused(advance, rec3, "DROPPED", evidence={
+            "why": "t", "drop": {"coverage_ref": "", "reason": "x"}},
+            manifest=man, actor="t", trail_path=tmp_trail)
+        chk("absorb(a) NEGATIVE: DROPPED without coverage evidence REFUSES (never drop-unlooked-at)",
+            r_dropA is not None and "coverage_ref" in r_dropA)
+        advance(rec3, "DROPPED", evidence={
+            "why": "no meaningful measure after coverage",
+            "drop": {"coverage_ref": "fedobs coevolution sweep (full candidate coverage)",
+                     "reason": "focused 0.05 < floor 0.12 after coverage -- de-candidated"}},
+            manifest=man, actor="t", trail_path=tmp_trail)
+        chk("absorb(a) POSITIVE: MEASURED -> DROPPED with coverage evidence (not zombie-held)",
+            rec3["state"] == "DROPPED" and rec3.get("drops"))
+        r_rc = refused(advance, rec3, "CANDIDATE", evidence={"why": "t"},
+                       manifest=man, actor="t", trail_path=tmp_trail)
+        chk("absorb(a) NEGATIVE: re-candidacy without NEW evidence REFUSES",
+            r_rc is not None and "new_evidence" in r_rc)
+        advance(rec3, "CANDIDATE", evidence={
+            "why": "new coupling surfaced at a later vintage",
+            "new_evidence": {"ref": "fedobs_observations.json coevolution row @ new marker"}},
+            manifest=man, actor="t", trail_path=tmp_trail)
+        chk("absorb(a) POSITIVE: DROPPED -> CANDIDATE on new_evidence (re-candidacy recorded)",
+            rec3["state"] == "CANDIDATE" and rec3.get("recandidacies"))
+        chk("absorb(c): FEDOBS_RATIO_FLOOR homed in THIS module (0.12 default / env-overridable) "
+            "-- the one import target for the lifecycle AND promote_monitor",
+            isinstance(FEDOBS_RATIO_FLOOR, float)
+            and (os.environ.get("FEDOBS_RATIO_FLOOR") is not None or FEDOBS_RATIO_FLOOR == 0.12))
+
         # ---- CSE trail: one validated row per transition, all schema_validated ----
         rows = [json.loads(ln) for ln in open(tmp_trail, encoding="utf-8")]
-        n_transitions = len(rec["transitions"]) + len(rec2["transitions"])
+        n_transitions = (len(rec["transitions"]) + len(rec2["transitions"])
+                         + len(rec3["transitions"]))
         chk("inv5: trail rows == transitions (%d) and ALL schema_validated @0.4"
             % n_transitions,
             len(rows) == n_transitions and all(
