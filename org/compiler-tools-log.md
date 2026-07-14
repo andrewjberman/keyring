@@ -17148,3 +17148,44 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/migr... | PASS |
 | 2026-07-13 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS C6 | commit-gate, comp-surface-check (auto x6) | Window 2310-0032Z: master plan + TO-6 registry core. commit-gate BLOCKED once on empty tests/__init__.py (Rule 15) -- fixed, gate exercised and working. No graph traversals: plan composed from grounding banked 2136-2310Z; new code is pure-Python framework, zero AWS surface; Rule-20 rides the STAGED TOs. |
 | 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPCLOSE_PRD.md... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/XXX.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | OPAL_ASSETS.C1.monolith-bucket-terraform-router-iam | comp-iam | comp-iam gaps | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/task_... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-ec... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/crs_reader.p... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/_comprail.py --file .tools/comp-... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/rema... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C4.etf-bronze-retarget-one-bucket | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/etfs-pipeline/etfs-net... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/rema... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | OPAL_ASSETS.C1.monolith-bucket-terraform-router-iam | comp-iam | comp-iam gaps | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C4.etf-bronze-retarget-one-bucket | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/etfs-netassets/main... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | OPAL_ASSETS.C1.monolith-bucket-terraform-router-iam | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/s3.tf ... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/raw_json_rea... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | OPAL_ASSETS.C1.monolith-bucket-terraform-router-iam | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/s3.tf | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/rema... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | OPAL_ASSETS.C1.monolith-bucket-terraform-router-iam | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-sentinel-deny/.... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/cottonwood_aua... | PASS |
+| 2026-07-13 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C4.etf-bronze-retarget-one-bucket | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/rema... | PASS |
+| 2026-07-13 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C4.etf-bronze-retarget-one-bucket | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/etfs-netassets/neta... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS C6/C12/C10 | comp-which (ABSTAINED correctly -> comp-grep), comp-grep (printed its own excluded denominator: 972 held paths), commit-gate x8 (BLOCKED 2: comp-constants caught FIRM_ID cross-firm collision; ruff E702), comp-surface-check x4 OK | comp-pipescript io + comp-validate NOT RUN -- explicit gaps, no consumer to signal yet |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
