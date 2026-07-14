@@ -17251,3 +17251,26 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS C3 Schwab->monolith: terraform validate/plan/safe-apply (3/0/0, 0-diff), iam simulate-principal-policy 22a matrix x2 identities (15 calls, controls separate -- comp-iam NOT used per Rule 22a, fails green on new ARNs), commit-gate x N .py, comp-grep/comp-which for grammar+PRD+OPAL_RUNNERS, s3api list-objects-v2 for run-time denominators+storage-class+zip-unwrap. GAP: git reset HEAD~1 unsafe in shared worktree -> CTO gate candidate.
 | 2026-07-13 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~Z | (no-TO) | comp-learns-score | comp-learns-score --self-test | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~Z | (no-TO) | comp-trigger | comp-trigger --self-test | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~Z | (no-TO) | comp-learns-score | comp-learns-score --top 12 --file-candidates | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/kill-orphans --file org/mcp/hook... | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~Z | (no-TO) | comp-blast | comp-blast build_dashbord | FAIL |
+| 2026-07-13 | 3.0.0_SA_CVO~Z | (no-TO) | comp-blast | comp-blast build_dashboard | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~Z | (no-TO) | comp-trigger | comp-trigger inf-gold | PASS |
+| 2026-07-13 | 3.0.0_SA_CVO~Z | (no-TO) | comp-trigger | comp-trigger access-anomaly --days 3 | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/kill-orphans --file org/mcp/hook... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/kill-orphans --file org/mcp/hook... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/kill-orphans --file org/mcp/hook... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/kill-orphans --file org/mcp/hook... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/kill-orphans --file org/mcp/hook... | PASS |
+| 2026-07-13 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/kill-orphans --file org/mcp/hook... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | verify-suite | /verify NFRA_COMPCLOSE: comp-learns-score+comp-trigger+comp-route(+outcome)+manifest+cap-provider self-tests, comp-which x3, comp-blast pair, comp-drift kill-test, routing harness --out scratch | ALL PASS -- verdict SOUND |
+| 2026-07-13 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
