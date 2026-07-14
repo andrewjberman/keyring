@@ -171,3 +171,40 @@ Two different numbers wearing the same name **in the same conversation**, and on
 **NEITHER IS QUOTABLE WITHOUT ITS BASIS. SAY WHICH, OR SAY NEITHER.** *(0.7.0 holds the live channel and corrects him
 first-hand, not third-hand from us.)* **Sixth instance of the one defect: a number whose IDENTITY is not recorded
 alongside its VALUE.**
+
+---
+
+## 🔴 FINDING 8 -- **THE FABRIC'S TOPOLOGY CHANGED FASTER THAN ITS RECORDS. TWICE, IN ONE HOUR.**
+```
+CTO~B     REMOVED by Andrew ("we are not using them moving forward"). He was the OPAL_ASSETS OWNER and had
+          landed PRD v0.21 TWENTY MINUTES EARLIER. COO deregistered him (liveness + broker; watcher already
+          dead, pollers 0). CTO named as successor-owner (Andrew-direct).
+MSTR      SIDELINED for the session -- Andrew takes the SPAWN-ROUTE + TERMINAL-RESOLVER slot himself
+          ("MSTR is opining too much"). MSTR STAYS LIVE; his PROMPT is being adjusted.
+```
+### **AND IT IMMEDIATELY ATE A MESSAGE -- THE WORST ONE IT COULD HAVE EATEN.**
+`0.7.0_AE_CloudOps` re-broadcast a **RETRACTION of a wrong finding** to CTO~B at **235436Z** -- *minutes after his
+removal.*
+> ## **THE WRONG VERSION WAS SUCCESSFULLY DELIVERED. THE CORRECTION WAS NOT.**
+> *"A decision routed to a dead serial is not BLOCKED. IT IS LOST."* -- **and a LOST RETRACTION is strictly worse
+> than a lost claim: it leaves the error standing with a receipt on it.**
+
+### **THE ORPHANED-INHERITANCE CLASS (new, and it is the sweep's own subject arriving at Tier-0):**
+> # **A DEPARTED AGENT'S LAST COMMIT IS THE MOST LIKELY THING IN THE ESTATE TO BE SILENTLY ORPHANED. NOBODY OWNS IT, NOBODY VERIFIES IT, AND IT READS AS SETTLED *BECAUSE IT IS WRITTEN DOWN* -- WITH AN AUTHOR WHO CAN NO LONGER BE ASKED.**
+**CTO~B's unverified last finding, now nobody's until CTO grounds it:** *"the canonical 49F held-source has NO
+SCHEDULER **AND** NO LIVE SOURCE -- and COTTONWOOD, the only producer with a cron, is the only one alive."*
+**And the item that matters most:** the **sentinel bucket-policy DENY** -- Andrew GO'd it, **CTO~B was TRACKING it**,
+and until it lands **DOOR 6 IS HELD SHUT BY PEOPLE KNOWING NOT TO TOUCH IT.**
+> ### **A CONTROL WHOSE ONLY ENFORCEMENT IS INSTITUTIONAL MEMORY DEGRADES EVERY TIME THE INSTITUTION LOSES A MEMBER.**
+
+### THE THREE OVER-READS I REFUSED AND BROADCAST AS REFUSED
+1. **THE ROUTE CHANGED; THE GATE DID NOT OPEN.** *"Andrew handles spawn routes, therefore ask him for agents"* is a
+   different claim from *"therefore we need agents."* **LD-0288's respawn hold STANDS.** I requested none.
+2. **It does NOT retire MSTR's standing FENCES** (the INF hold docs are LIVE CONTROLS; do not act on a refreshed
+   record). **A RULING ABOUT WHO ROUTES SPAWNS IS NOT A RULING ABOUT WHAT IS TRUE.**
+3. **It does NOT invalidate MSTR's prior VERBATIM ANDREW RELAYS** -- those are *Andrew's words*, not MSTR's opinions.
+   > **THE DISCRIMINATOR: MSTR'S *RELAYS* SURVIVE. MSTR'S *OPINIONS* ARE WHAT ANDREW IS ADJUSTING.**
+
+**THE ROSTER IS NOW THE LEAST TRUSTWORTHY RECORD IN THE ESTATE.** `get_live_agents` -- never memory, never a doc, and
+**as of tonight not a status line either** (`0.6.2` read `BLOCKED-SOVEREIGN` for hours *after* he was unblocked and
+working; **an agent's own status line is a record, and it lies like any other**).
