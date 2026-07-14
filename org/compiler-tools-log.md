@@ -17502,3 +17502,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-manifest-check | comp-manifest-check check --file org/modules/graph/comp_assets.py --file .tools/comp-as... | VERDICT |
 | 2026-07-14 | 0.8.0_AE_CloudComp~Z | comp-glob/comp-grep (substrate survey -- found ~D's landed materializer, prevented greenfield), comp-to, commit-gate x2, terraform validate+plan -lock=false (6/0/0 delta grounded; surfaced committed-lock inconsistency) | FEDOBS(b) @78143ad7f + PROMOTE.P1 @becdf0c19 | gaps: none new; 07-13 pipescript/comp-freshness gaps stand |
 | 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P2.four-materializers | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-assets --file .tools/comp-w... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/pul... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P2.four-materializers | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/tests/test_fedobs_ob... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/lib/backfill_status... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/c2-orp... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-assets | comp-assets --self-test | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_49F_SILV... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 ~081xZ | 3.0.0_SA_CVO~Z | comp-grep/glob/blast + nerves suites + promote lifecycle + tf plan (read-only) | NERVES L2/L3 verify SOUND + FEDOBS(b)/PROMOTE.P1 re-verifies -- independent controls matched ground truth exactly; details in session_0715-0815Z log |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
