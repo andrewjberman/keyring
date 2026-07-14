@@ -49,12 +49,23 @@
     ],
     "n_c0_facts": 6
    },
-   "measured_effect": null,
+   "measured_effect": {
+    "basis": "focused git co-evolution coupling (breadth-weighted, certed DS~B run_measure) cross-checked pair-level against the SERVED in-VPC coevolution signal (1072 pairs, git_cochange class 257 CSEs untyped-rate 0.0)",
+    "co_sessions": 5,
+    "coupling_ratio": 0.086,
+    "effect": 0.074,
+    "focused_coupling_ratio": 0.074,
+    "independent": true,
+    "n_frontend_files": 2,
+    "source": "NFRA_FEDOBS_frontend_coevolution_producer.run_measure @ 53b0794f9 + s3://opal-313476888478-globgrph/warehouse/fedobs_signals/observations/fedobs_observations.json",
+    "vintage": "served computed_at=1784019051 (2026-07-14T08:50:51Z) pinned_snapshot_id=7392125655251158233 marker=c155b488abab"
+   },
    "opened_at": 1784015756.1727233,
+   "park_reason": "below FEDOBS_RATIO_FLOOR 0.12 (focused=0.074 raw=0.086 co_sessions=5) on the fresh served signal -- parked re-measurable, NOT dropped (the coupling is real, just weak)",
    "promotion_class": "COMPILER_RULE",
    "ratify": null,
    "recurrence": 2,
-   "state": "CANDIDATE",
+   "state": "PARKED",
    "transitions": [
     {
      "actor": "comp_promote_lifecycle",
@@ -62,6 +73,20 @@
      "from": "",
      "to": "CANDIDATE",
      "why": "admitted from MOTIF candidates"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784021630.2270763,
+     "from": "CANDIDATE",
+     "to": "MEASURED",
+     "why": "in-VPC measure path live (served handshake 08:50:51Z); real measure recorded"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784021630.2290845,
+     "from": "MEASURED",
+     "to": "PARKED",
+     "why": "focused 0.074 < floor 0.12 -- a MEASURED NEGATIVE, not a failure; re-measurable in place (standing 04:30Z producer keeps the signal fresh)"
     }
    ],
    "warrant": {
@@ -138,12 +163,23 @@
     ],
     "n_c0_facts": 8
    },
-   "measured_effect": null,
+   "measured_effect": {
+    "basis": "focused git co-evolution coupling (breadth-weighted, certed DS~B run_measure) cross-checked pair-level against the SERVED in-VPC coevolution signal (1072 pairs, git_cochange class 257 CSEs untyped-rate 0.0)",
+    "co_sessions": 10,
+    "coupling_ratio": 0.097,
+    "effect": 0.094,
+    "focused_coupling_ratio": 0.094,
+    "independent": true,
+    "n_frontend_files": 8,
+    "source": "NFRA_FEDOBS_frontend_coevolution_producer.run_measure @ 53b0794f9 + s3://opal-313476888478-globgrph/warehouse/fedobs_signals/observations/fedobs_observations.json",
+    "vintage": "served computed_at=1784019051 (2026-07-14T08:50:51Z) pinned_snapshot_id=7392125655251158233 marker=c155b488abab"
+   },
    "opened_at": 1784015756.175876,
+   "park_reason": "below FEDOBS_RATIO_FLOOR 0.12 (focused=0.094 raw=0.097 co_sessions=10) on the fresh served signal -- parked re-measurable, NOT dropped (the coupling is real, just weak)",
    "promotion_class": "COMPILER_RULE",
    "ratify": null,
    "recurrence": 121,
-   "state": "CANDIDATE",
+   "state": "PARKED",
    "transitions": [
     {
      "actor": "comp_promote_lifecycle",
@@ -151,6 +187,20 @@
      "from": "",
      "to": "CANDIDATE",
      "why": "admitted from MOTIF candidates"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784021630.2290845,
+     "from": "CANDIDATE",
+     "to": "MEASURED",
+     "why": "in-VPC measure path live (served handshake 08:50:51Z); real measure recorded"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784021630.2301083,
+     "from": "MEASURED",
+     "to": "PARKED",
+     "why": "focused 0.094 < floor 0.12 -- a MEASURED NEGATIVE, not a failure; re-measurable in place (standing 04:30Z producer keeps the signal fresh)"
     }
    ],
    "warrant": {
@@ -209,12 +259,23 @@
     ],
     "n_c0_facts": 6
    },
-   "measured_effect": null,
+   "measured_effect": {
+    "basis": "focused git co-evolution coupling (breadth-weighted, certed DS~B run_measure) cross-checked pair-level against the SERVED in-VPC coevolution signal (1072 pairs, git_cochange class 257 CSEs untyped-rate 0.0)",
+    "co_sessions": 5,
+    "coupling_ratio": 0.086,
+    "effect": 0.074,
+    "focused_coupling_ratio": 0.074,
+    "independent": true,
+    "n_frontend_files": 2,
+    "source": "NFRA_FEDOBS_frontend_coevolution_producer.run_measure @ 53b0794f9 + s3://opal-313476888478-globgrph/warehouse/fedobs_signals/observations/fedobs_observations.json",
+    "vintage": "served computed_at=1784019051 (2026-07-14T08:50:51Z) pinned_snapshot_id=7392125655251158233 marker=c155b488abab"
+   },
    "opened_at": 1784015756.175876,
+   "park_reason": "below FEDOBS_RATIO_FLOOR 0.12 (focused=0.074 raw=0.086 co_sessions=5) on the fresh served signal -- parked re-measurable, NOT dropped (the coupling is real, just weak)",
    "promotion_class": "COMPILER_RULE",
    "ratify": null,
    "recurrence": 4,
-   "state": "CANDIDATE",
+   "state": "PARKED",
    "transitions": [
     {
      "actor": "comp_promote_lifecycle",
@@ -222,6 +283,20 @@
      "from": "",
      "to": "CANDIDATE",
      "why": "admitted from MOTIF candidates"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784021630.2301083,
+     "from": "CANDIDATE",
+     "to": "MEASURED",
+     "why": "in-VPC measure path live (served handshake 08:50:51Z); real measure recorded"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784021630.2301083,
+     "from": "MEASURED",
+     "to": "PARKED",
+     "why": "focused 0.074 < floor 0.12 -- a MEASURED NEGATIVE, not a failure; re-measurable in place (standing 04:30Z producer keeps the signal fresh)"
     }
    ],
    "warrant": {
@@ -387,12 +462,23 @@
     ],
     "n_c0_facts": 8
    },
-   "measured_effect": null,
+   "measured_effect": {
+    "basis": "focused git co-evolution coupling (breadth-weighted, certed DS~B run_measure) cross-checked pair-level against the SERVED in-VPC coevolution signal (1072 pairs, git_cochange class 257 CSEs untyped-rate 0.0)",
+    "co_sessions": 10,
+    "coupling_ratio": 0.051,
+    "effect": 0.027,
+    "focused_coupling_ratio": 0.027,
+    "independent": true,
+    "n_frontend_files": 3,
+    "source": "NFRA_FEDOBS_frontend_coevolution_producer.run_measure @ 53b0794f9 + s3://opal-313476888478-globgrph/warehouse/fedobs_signals/observations/fedobs_observations.json",
+    "vintage": "served computed_at=1784019051 (2026-07-14T08:50:51Z) pinned_snapshot_id=7392125655251158233 marker=c155b488abab"
+   },
    "opened_at": 1784015756.1778843,
+   "park_reason": "below FEDOBS_RATIO_FLOOR 0.12 (focused=0.027 raw=0.051 co_sessions=10) on the fresh served signal -- parked re-measurable, NOT dropped (the coupling is real, just weak)",
    "promotion_class": "COMPILER_RULE",
    "ratify": null,
    "recurrence": 197,
-   "state": "CANDIDATE",
+   "state": "PARKED",
    "transitions": [
     {
      "actor": "comp_promote_lifecycle",
@@ -400,6 +486,20 @@
      "from": "",
      "to": "CANDIDATE",
      "why": "admitted from MOTIF candidates"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784021630.2301083,
+     "from": "CANDIDATE",
+     "to": "MEASURED",
+     "why": "in-VPC measure path live (served handshake 08:50:51Z); real measure recorded"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784021630.2301083,
+     "from": "MEASURED",
+     "to": "PARKED",
+     "why": "focused 0.027 < floor 0.12 -- a MEASURED NEGATIVE, not a failure; re-measurable in place (standing 04:30Z producer keeps the signal fresh)"
     }
    ],
    "warrant": {
@@ -515,13 +615,23 @@
     ],
     "n_c0_facts": 15
    },
-   "measured_effect": null,
+   "measured_effect": {
+    "basis": "focused git co-evolution coupling (breadth-weighted, certed DS~B run_measure) cross-checked pair-level against the SERVED in-VPC coevolution signal (1072 pairs, git_cochange class 257 CSEs untyped-rate 0.0)",
+    "co_sessions": 45,
+    "coupling_ratio": 0.18,
+    "effect": 0.151,
+    "focused_coupling_ratio": 0.151,
+    "independent": true,
+    "n_frontend_files": 5,
+    "source": "NFRA_FEDOBS_frontend_coevolution_producer.run_measure @ 53b0794f9 + s3://opal-313476888478-globgrph/warehouse/fedobs_signals/observations/fedobs_observations.json",
+    "vintage": "served computed_at=1784019051 (2026-07-14T08:50:51Z) pinned_snapshot_id=7392125655251158233 marker=c155b488abab"
+   },
    "opened_at": 1784015756.1727233,
    "pre_p1_note": "HISTORICAL DIVERGENCE, disclosed: this candidate was ALREADY promoted through the pre-P1 FORMING loop (promote_recognizer_manifest.json recognizer:silent-display-fork state=MATERIALIZED under CTO-PROMOTE-20260708T1521Z, exercised by comp_promote_materializer 16/16). This P1 lifecycle record tracks the P1-GOVERNED path only, which starts at CANDIDATE; the live materialized instance predates the machine and is governed by its own commission + the P3 monitor. Do NOT read CANDIDATE here as 'not live'.",
    "promotion_class": "COMPILER_RULE",
    "ratify": null,
    "recurrence": 5,
-   "state": "CANDIDATE",
+   "state": "MEASURED",
    "transitions": [
     {
      "actor": "comp_promote_lifecycle",
@@ -529,6 +639,13 @@
      "from": "",
      "to": "CANDIDATE",
      "why": "admitted from MOTIF candidates"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784021630.2301083,
+     "from": "CANDIDATE",
+     "to": "MEASURED",
+     "why": "in-VPC measure path live (served handshake 08:50:51Z); focused 0.151 >= floor 0.12 -- promote-eligible, PROPOSED is the next gate"
     }
    ],
    "warrant": {
@@ -720,12 +837,28 @@
     ],
     "n_c0_facts": 27
    },
-   "measured_effect": null,
+   "drops": [
+    {
+     "coverage_ref": "s3://opal-313476888478-globgrph/warehouse/fedobs_signals/observations/fedobs_observations.json @ snapshot 7392125655251158233 + run_measure @ 53b0794f9 (full 5-file surface, 45 raw co_sessions observed)",
+     "reason": "zero independent coupling after full coverage (file-subsumption neutralization; the CVO-smell/COO disposition: a system never inherits its member's warrant)"
+    }
+   ],
+   "measured_effect": {
+    "basis": "focused git co-evolution coupling (breadth-weighted, certed DS~B run_measure) cross-checked pair-level against the SERVED in-VPC coevolution signal (1072 pairs, git_cochange class 257 CSEs untyped-rate 0.0)",
+    "co_sessions": 45,
+    "coupling_ratio": 0.0,
+    "effect": 0.0,
+    "focused_coupling_ratio": 0.0,
+    "independent": false,
+    "n_frontend_files": 5,
+    "source": "NFRA_FEDOBS_frontend_coevolution_producer.run_measure @ 53b0794f9 + s3://opal-313476888478-globgrph/warehouse/fedobs_signals/observations/fedobs_observations.json",
+    "vintage": "served computed_at=1784019051 (2026-07-14T08:50:51Z) pinned_snapshot_id=7392125655251158233 marker=c155b488abab"
+   },
    "opened_at": 1784015756.1778843,
    "promotion_class": "KNOWLEDGE_NODE",
    "ratify": null,
    "recurrence": 3,
-   "state": "CANDIDATE",
+   "state": "DROPPED",
    "transitions": [
     {
      "actor": "comp_promote_lifecycle",
@@ -733,6 +866,20 @@
      "from": "",
      "to": "CANDIDATE",
      "why": "admitted from MOTIF candidates"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784021630.2301083,
+     "from": "CANDIDATE",
+     "to": "MEASURED",
+     "why": "in-VPC measure path live (served handshake 08:50:51Z); independence-neutralized zero recorded"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784021630.2301083,
+     "from": "MEASURED",
+     "to": "DROPPED",
+     "why": "no INDEPENDENT co-evolution warrant after full live coverage -- file-subsumed (45 raw co_sessions all attributable to motif:silent-display-fork; independence neutralization re-measures 0.0, consistently). Ruling term (a): de-candidate, never zombie-hold; re-candidacy open on NEW evidence."
     }
    ],
    "warrant": {
