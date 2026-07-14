@@ -90,12 +90,16 @@ def parse_key(key: str) -> Dict[str, Any]:
 
 
 def _is_date_segment(s: str) -> bool:
+    if s.startswith("date="):          # ruling-23 hive partition segment (date=YYYY-MM-DD)
+        s = s[5:]
     if re.fullmatch(r"20\d{2}-\d{2}-\d{2}", s) or re.fullmatch(r"20\d{6}", s):
         return _plausible(_normalize_date(s))
     return False
 
 
 def _normalize_date(s: str) -> str:
+    if s.startswith("date="):          # hive segment reaches here from parse_key raw
+        s = s[5:]
     digits = s.replace("-", "")
     return f"{digits[0:4]}-{digits[4:6]}-{digits[6:8]}"
 
@@ -426,6 +430,9 @@ def _self_test() -> int:
         # deep smartx scope; uuid chunk must NOT parse as a date
         ("smartx/model/00164063-a6e8-4f61/bronze/holdings/20260714/holdings.json",
          10, "2026-07-14T02:34:00Z"),
+        # ruling-23 hive silver key -- the date= segment MUST parse (the smartx misreport regression)
+        ("smartx/platform/silver/allocation_positions/date=2026-07-14/data.parquet",
+         100, "2026-07-14T02:46:20Z"),
         # probe tree
         ("_probe/trueshares/etf/bronze/20260713/x.json", 5, "2026-07-13T22:00:00Z"),
         # unstructured -- no layer segment anywhere
@@ -433,10 +440,10 @@ def _self_test() -> int:
     ]
 
     c = aggregate(listing, include_probe=False)
-    check(c["scanned"] == 8, "scanned denominator wrong")
+    check(c["scanned"] == 9, "scanned denominator wrong")
     check(c["probe_excluded"] == 1, "probe exclusion not counted")
     placed = sum(a.objects for layers in c["channels"].values() for a in layers.values())
-    check(placed == 7, f"accounting does not tie: placed {placed} != 7")
+    check(placed == 8, f"accounting does not tie: placed {placed} != 8")
 
     orion = c["channels"][("orion", "inflection")]
     check(orion["bronze"].objects == 2, "positive control: orion bronze count wrong")
@@ -453,6 +460,10 @@ def _self_test() -> int:
     smartx = c["channels"][("smartx", "model/00164063-a6e8-4f61")]
     check(smartx["bronze"].dates == {"2026-07-14"},
           "smartx date wrong (uuid chunk misread as date?)")
+
+    plat = c["channels"][("smartx", "platform")]
+    check(plat["silver"].dates == {"2026-07-14"},
+          "hive date= segment not parsed (the smartx silver misreport regression)")
 
     stray = c["channels"][("blackdiamond", "")]
     check(stray["(unstructured)"].objects == 1, "unstructured key dropped -- silent Unknown")
@@ -473,7 +484,7 @@ def _self_test() -> int:
         for f in fail:
             print(f"  - {f}")
         return 1
-    print(f"SELF-TEST PASS: {14} checks (parse/aggregate/accounting/probe/dates/"
+    print(f"SELF-TEST PASS: {15} checks (parse/aggregate/accounting/probe/dates/hive-date/"
           f"status-detect/unstructured)")
     return 0
 
