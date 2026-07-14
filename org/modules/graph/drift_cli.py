@@ -60,11 +60,19 @@ BREAK_VERDICTS = {
 UNVERIFIABLE_VERDICTS = {
     "UNVERIFIABLE", "UNKNOWN-VINTAGE", "UNVERIFIABLE-CONSUMER", "NO-ENGINE",
 }
+# COST-GUARDED (NFRA_INSTDRILL item 4, 2026-07-14): a check DELIBERATELY DEFERRED because its
+# engine is expensive in a plain sweep (full-repo scan / all-gold sweep / live network). This is
+# NOT "could not read the seam" (UNVERIFIABLE) -- it is "did not attempt it; run --deep or a
+# <target>". Conflating the two was the whole defect: a plain sweep read as all-UNVERIFIABLE (an
+# alarming could-not-verify) when it had simply deferred every expensive check by design.
+COST_GUARDED_VERDICTS = {"COST-GUARDED"}
 # Operator action per verdict-class (the normalized "what do I do").
 ACTION = {
     "clean": "none",
     "break": "reconcile -- redeploy/repoint/re-derive to restore parity",
     "unverifiable": "investigate -- could not read the seam; do NOT assume clean",
+    "deferred": "run `comp-drift <target>` or `comp-drift sweep --deep` -- this check was skipped "
+                "for cost, NOT attempted; it is neither clean nor broken",
     "dispositioned": "disposition -- abandoned artifact; clean up (not fix)",
     "self_heal": "none -- self-heals on HEAD-advance (informational)",
     "stale": "refresh -- vintage-stale DERIVED layer (behind the marker); re-derive it. NOT an "
@@ -128,6 +136,8 @@ def _kuzu_scalar(out: str) -> str:
 
 def _classify(verdict: str) -> str:
     v = (verdict or "").upper()
+    if v in {x.upper() for x in COST_GUARDED_VERDICTS}:
+        return "deferred"
     if v in {x.upper() for x in UNVERIFIABLE_VERDICTS}:
         return "unverifiable"
     if v in {x.upper() for x in BREAK_VERDICTS}:
@@ -145,7 +155,7 @@ def _record(seam: dict, target: str, verdict: str, grounding: str,
             disposition: str | None = None) -> dict:
     """The normalized cross-seam drift-record envelope (PRD arch-gate (c))."""
     cls = _classify(verdict)
-    sev = {"clean": "OK", "self_heal": "OK", "partial": "INFO",
+    sev = {"clean": "OK", "self_heal": "OK", "partial": "INFO", "deferred": "SKIP",
            "dispositioned": "INFO", "stale": "WARN", "unverifiable": "WARN", "break": "ERROR"}[cls]
     return {
         "seam_id": seam.get("seam_id"),
@@ -175,7 +185,7 @@ def _record(seam: dict, target: str, verdict: str, grounding: str,
 def adapter_comp_heat_drift(seam, target, ctx):
     # comp-heat drift scans the WHOLE repo (slow) -- cost-guard in plain sweep.
     if not ctx.get("deep") and not target:
-        return _record(seam, "<working-tree>", "UNVERIFIABLE",
+        return _record(seam, "<working-tree>", "COST-GUARDED",
                        "comp-heat full-repo drift scan skipped (cost-guard; run a <target> or --deep)")
     rc, out = _bash("comp-heat", "drift", "--json", timeout=120)
     if rc in (124, 125, 127):
@@ -201,7 +211,7 @@ def adapter_comp_heat_drift(seam, target, ctx):
 def adapter_comp_pipescript_deployed(seam, target, ctx):
     # the no-arg form sweeps ALL gold trees (slow) -- cost-guard in plain sweep.
     if not target and not ctx.get("deep"):
-        return _record(seam, "<all-gold>", "UNVERIFIABLE",
+        return _record(seam, "<all-gold>", "COST-GUARDED",
                        "comp-pipescript all-gold deploy sweep skipped (cost-guard; run a <target> or --deep)")
     args = ["deployed"] + ([target] if target else [])
     rc, out = _bash("comp-pipescript", *args, timeout=120)
@@ -227,7 +237,7 @@ def adapter_comp_pipescript_deployed(seam, target, ctx):
 
 def adapter_comp_lambdamap(seam, target, ctx):
     if not ctx.get("deep"):
-        return _record(seam, target or "<lambda>", "UNVERIFIABLE",
+        return _record(seam, target or "<lambda>", "COST-GUARDED",
                        "live 3-leg sha read skipped (cost-guard; run with --deep or a <target>)")
     # parity is WHOLE-ESTATE (iam-style argparse rejects a positional target -> rc=2). Run --json
     # and, when a target is given, filter to THAT lambda's OWN verdict. (E3 fix: the old positional
@@ -281,7 +291,7 @@ def adapter_comp_lambdamap(seam, target, ctx):
 
 def adapter_comp_iam(seam, target, ctx):
     if not ctx.get("deep"):
-        return _record(seam, target or "<iam>", "UNVERIFIABLE",
+        return _record(seam, target or "<iam>", "COST-GUARDED",
                        "live IAM reconcile skipped (cost-guard + stale-census caveat; --deep to run)")
     # reconcile is ESTATE-WIDE: iam_cli.py add_parser('reconcile') takes NO positional (unlike
     # service/role), so we never pass a target -- IAM drift is estate-scoped, not per-artifact.
@@ -361,7 +371,7 @@ def adapter_comp_kuzu_provenance(seam, target, ctx):
 
 def adapter_iceberg_parity(seam, target, ctx):
     if not ctx.get("deep"):
-        return _record(seam, target or "<iceberg>", "UNVERIFIABLE",
+        return _record(seam, target or "<iceberg>", "COST-GUARDED",
                        "live S3 iceberg metadata read skipped (cost-guard; --deep to run)")
     rc, out = _run(["python", os.path.join(WORKSPACE, "infra", "aws", "globgrph", "iceberg_parity.py")])
     # HARDENED: parse the authoritative "NODE ROLLUP: <v> (worst-of)" line, not a per-table token-scan
@@ -376,7 +386,7 @@ def adapter_iceberg_parity(seam, target, ctx):
 
 def adapter_code_heat_parity(seam, target, ctx):
     if not ctx.get("deep"):
-        return _record(seam, target or "<code_heat>", "UNVERIFIABLE",
+        return _record(seam, target or "<code_heat>", "COST-GUARDED",
                        "live code_heat HEAD-pointer read skipped (cost-guard; --deep to run)")
     rc, out = _run(["python", os.path.join(WORKSPACE, "infra", "aws", "globgrph", "code_heat_parity.py")])
     # HARDENED: parse the authoritative "BINDING VERDICT: <v> (worst-of)" line, not a token-scan
@@ -393,7 +403,7 @@ def adapter_tool_activity_parity(seam, target, ctx):
     """seam-6 tool-activity-behavior binding: the COMPLEARN derived-parquet vintage check
     (mirrors code_heat_parity -- VINTAGE-PRIMARY current/BEHIND/UNVERIFIABLE)."""
     if not ctx.get("deep"):
-        return _record(seam, target or "<tool-activity>", "UNVERIFIABLE",
+        return _record(seam, target or "<tool-activity>", "COST-GUARDED",
                        "live tool_activity vintage read skipped (cost-guard; --deep to run)")
     rc, out = _run(["python", os.path.join(WORKSPACE, "infra", "aws", "globgrph",
                     "tool_activity_parity.py")])
@@ -413,7 +423,7 @@ def adapter_trino_catalog_parity(seam, target, ctx):
     catalog = ctx.get("_binding") or ""
     label = "<trino:%s>" % (catalog or "iceberg")
     if not ctx.get("deep"):
-        return _record(seam, target or label, "UNVERIFIABLE",
+        return _record(seam, target or label, "COST-GUARDED",
                        "live Trino federation query skipped (cost-guard ~4min Fargate; --deep to run)")
     cache = ctx.get("_trino_parity")
     if cache is None:
@@ -435,7 +445,7 @@ def adapter_trino_catalog_parity(seam, target, ctx):
 
 def adapter_comp_freshness(seam, target, ctx):
     if not ctx.get("deep"):
-        return _record(seam, target or "<served>", "UNVERIFIABLE",
+        return _record(seam, target or "<served>", "COST-GUARDED",
                        "live served-freshness read skipped (cost-guard; --deep to run)")
     # INVOCATION (grounded on comp-freshness argparse): no-arg prints help+exit2; the full-estate
     # sweep is `all` (bd+inf+cot S3 + DDB), a single artifact is `artifact <s3_prefix>`.
@@ -560,13 +570,46 @@ def walk_seams(topo: dict, target: str | None, ctx: dict,
     return records
 
 
+# the classes that mean a seam was ACTUALLY EVALUATED (a verdict was read from an engine).
+# "deferred" (cost-guarded) and "unverifiable" (could-not-read) are NOT among them -- neither
+# produced a real parity reading.
+_EVALUATED_CLASSES = {"clean", "self_heal", "stale", "break", "dispositioned", "partial"}
+
+
 def rollup_exit(records: list[dict]) -> int:
-    classes = {r["_class"] for r in records}
-    if "break" in classes:
+    classes = [r["_class"] for r in records]
+    cset = set(classes)
+    if "break" in cset:
         return EXIT_BREAK
-    if "unverifiable" in classes:
+    if "unverifiable" in cset:
+        return EXIT_UNVERIFIABLE
+    # VERIFIED-NOTHING (NFRA_INSTDRILL item 4): no break, no could-not-read, but also nothing was
+    # actually EVALUATED -- every seam was cost-guarded/deferred. A green exit 0 here is the lie
+    # (it reads as "estate in parity" when the sweep checked nothing). Exit 2: run --deep.
+    if records and not any(c in _EVALUATED_CLASSES for c in classes):
         return EXIT_UNVERIFIABLE
     return EXIT_CLEAN
+
+
+def _sweep_summary(records: list[dict]) -> str:
+    """The loud counts line + the VERIFIED-NOTHING banner when a plain sweep evaluated nothing."""
+    from collections import Counter as _C
+    c = _C(r["_class"] for r in records)
+    evaluated = sum(c[k] for k in _EVALUATED_CLASSES)
+    lines = ["",
+             "  SWEEP ACCOUNTING: %d evaluated (clean/stale/break/dispositioned) | "
+             "%d cost-guarded (deferred -- run --deep) | %d unverifiable (could-not-read)"
+             % (evaluated, c.get("deferred", 0), c.get("unverifiable", 0))]
+    if records and evaluated == 0:
+        lines += [
+            "",
+            "  " + "!" * 66,
+            "  !!  THIS SWEEP VERIFIED NOTHING. Every seam was cost-guarded or could not be",
+            "  !!  read -- NOT ONE parity check actually ran. A green result here would be a",
+            "  !!  lie. Run `comp-drift sweep --deep` (live engines) or `comp-drift <target>`",
+            "  !!  (one artifact's chain) to get a real verdict. Exit 2.",
+            "  " + "!" * 66]
+    return "\n".join(lines)
 
 
 # ---- P4: fold drift_producer.py's infra/repo drift legs into the sweep board ----------------
@@ -621,7 +664,7 @@ def fold_infra_drift(ctx: dict) -> list[dict]:
             records.append(_infra_rec("infra-tf", "CODE", "INFRA", "UNVERIFIABLE",
                                       "run_terraform_leg raised: %s" % exc))
     else:
-        records.append(_infra_rec("infra-tf", "CODE", "INFRA", "UNVERIFIABLE",
+        records.append(_infra_rec("infra-tf", "CODE", "INFRA", "COST-GUARDED",
                                   "terraform-plan infra-drift leg skipped (cost-guard; --deep to run)"))
     return records
 
@@ -644,7 +687,7 @@ def applicable_seams(target: str) -> set[str] | None:
 
 # ---- RENDER ----------------------------------------------------------------
 
-_SEV_TAG = {"OK": "OK  ", "INFO": "INFO", "WARN": "WARN", "ERROR": "FAIL"}
+_SEV_TAG = {"OK": "OK  ", "INFO": "INFO", "SKIP": "SKIP", "WARN": "WARN", "ERROR": "FAIL"}
 
 
 def render_chain(target: str, records: list[dict]) -> str:
@@ -741,6 +784,7 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps({"mode": "sweep", "exit": code, "records": _strip(records)}, indent=1))
         else:
             print(render_board(topo, records))
+            print(_sweep_summary(records))
             print("\n  EXIT: %d (%s)" % (code, _exit_label(code)))
         return code
 
@@ -766,5 +810,44 @@ def _exit_label(code: int) -> str:
             2: "unverifiable"}.get(code, "?")
 
 
+def _drift_self_test() -> int:
+    """Offline: the classifier + rollup + verified-nothing banner (NFRA_INSTDRILL item 4). No engines."""
+    results = []
+    def ck(name, ok, detail=""):
+        results.append(ok)
+        print(f"  [{'PASS' if ok else 'FAIL'}] {name}" + (f"   ({detail})" if detail else ""))
+
+    def rec(cls_verdict):
+        return _record({"seam_id": "s", "stage_from": "a", "stage_to": "b"}, "t", cls_verdict, "g")
+
+    # 1. cost-guarded is DEFERRED, not unverifiable -- the whole point of the fix.
+    ck("deferred.distinct_from_unverifiable",
+       _classify("COST-GUARDED") == "deferred" and _classify("UNVERIFIABLE") == "unverifiable")
+
+    # 2. VERIFIED-NOTHING: a plain sweep of only cost-guarded seams exits 2 (not a green 0).
+    all_deferred = [rec("COST-GUARDED") for _ in range(6)]
+    ck("verified_nothing.all_deferred_exits_2", rollup_exit(all_deferred) == EXIT_UNVERIFIABLE)
+    ck("verified_nothing.banner_fires", "VERIFIED NOTHING" in _sweep_summary(all_deferred))
+
+    # 3. >=1 real evaluation flips it to a real verdict: deferred + one CLEAN -> exit 0, no banner.
+    mixed = [rec("COST-GUARDED"), rec("COST-GUARDED"), rec("CLEAN")]
+    ck("one_real_eval.exits_clean", rollup_exit(mixed) == EXIT_CLEAN)
+    ck("one_real_eval.no_banner", "VERIFIED NOTHING" not in _sweep_summary(mixed))
+
+    # 4. a genuine break still dominates; a genuine unverifiable still exits 2.
+    ck("break.dominates", rollup_exit([rec("COST-GUARDED"), rec("STALE")]) == EXIT_BREAK)
+    ck("genuine_unverifiable.exits_2",
+       rollup_exit([rec("CLEAN"), rec("UNVERIFIABLE")]) == EXIT_UNVERIFIABLE)
+
+    # 5. empty (no records) is not a false verified-nothing.
+    ck("empty.no_false_banner", "VERIFIED NOTHING" not in _sweep_summary([]))
+
+    ok = all(results)
+    print("\n" + ("OK: all comp-drift self-test cases pass" if ok else "ERROR: comp-drift self-test FAILED"))
+    return 0 if ok else 1
+
+
 if __name__ == "__main__":
+    if "--self-test" in sys.argv:
+        sys.exit(_drift_self_test())
     sys.exit(main())
