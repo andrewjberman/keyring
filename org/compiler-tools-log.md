@@ -17469,3 +17469,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/lo... | PASS |
 | 2026-07-14 0740Z | 0.5.0_AE_OpalETL | comp-surface-check (via safe-commit x5, advisory, read) + commit-gate (PASS x-commits) + targeted terraform plan (fence, 1/0/0) | no comp-* search tools: out-of-estate HAR/probe work + operational own-pipeline verification (Rule 20) + record authorship |
 | 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-blast | comp-blast build_dashboard | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile --file in... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-blast | comp-blast build_assets_dim.py | FAIL |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS.json --file or... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-blast | comp-blast _orion_api_silver_lib.py | FAIL |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-assets | comp-assets | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-blast | comp-blast convert_transactions_to_silver.py | FAIL |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | (none -- live-artifact verify) | 0824 terminality + spot-check grounded on live s3api listings/bytes per Rule 20/22a; comp tools model DESIRED, landed bytes were the question | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
