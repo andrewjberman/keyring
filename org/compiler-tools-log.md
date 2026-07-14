@@ -17435,3 +17435,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
 | 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | verify-suite | /verify NFRA_INSTDRILL: 8 self-test suites + 9 live intents + harness delta both-ends (frozen cohort) + live sweeps (drift/debris/icedrill) + manifest gate | 8/9+P3 SOUND; icedrill BROKEN (silent 2000-key cap, refuted live) |
 | 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_V2_PRD.md | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS.json | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-5 + OPAL_RUNNERS.W4 | comp-state/comp-glob/crs_reader | comp-state --project OPAL_ASSETS+OPAL_RUNNERS (self-test 3/3); comp-glob cot_bronze_ingest; census engine 35 obj both masters | PASS (7+2 BEHIND triaged own-lane; census T1-tied throughout) |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
