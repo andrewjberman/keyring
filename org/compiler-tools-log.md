@@ -17819,3 +17819,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-14 10:44-11:12Z 0.4.0_DS: pytest runners_49f 18/18 (two ordered review fixtures) + commit-gate PASS; no comp-* runs (single-module fix in a not-yet-consumed gold script; trading_calendar consumed read-only)
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/opal-ass... | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | comp-pulse self-test x2 + live x2 (census 8-of-44; age-band 21/21); rail-log pipe-grep + python decay re-derivation (score decompressed EXACT) | window 0955-1110Z: redirect queue closed, bd-client-detail decompression (decommission missed leg), age-rides-with-magnitude landed e1922a013 |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-14/s... | PASS |
