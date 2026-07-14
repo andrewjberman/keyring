@@ -17203,3 +17203,26 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
 | 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C4.etf-bronze-retarget-one-bucket | comp-which / comp-grep / comp-glob / commit-gate / terraform validate+plan | comp-which ABSTAINED (3-way tie, correctly routed to comp-grep); comp-grep found the shared bronze/silver bucket knob (the defect); comp-glob flagged 972 sovereign-held paths EXCLUDED-not-absent | PASS (comp-iam deliberately NOT relied on -- fails GREEN on a new bucket; live simulate deferred to C1) |
 | 2026-07-13 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C4.etf-bronze-retarget-one-bucket | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-learns-score | comp-learns-score --self-test | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/schwab_conve... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-drift | comp-drift coverage | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/ta... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/schwab_conve... | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/rema... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/task_... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/analysis/w1_script_... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast register_agent | FAIL |
+| 2026-07-13 | 0.7.0_AE_CloudOps | OPAL_ASSETS.C1.monolith-bucket-terraform-router-iam | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/opal-assets/router_... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast register_agnet | FAIL |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast build_dashbord | FAIL |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast build_dashbord | FAIL |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast build_dashboard | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-trigger | comp-trigger --self-test | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-learns-score | comp-learns-score --self-test | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS C7 + OPAL_RUNNERS W1 | comp-which (near-tie, REFUSED to rank -- "the order is not a ranking"), comp-grep --include-held (Phase-1 consumer enumeration; and a clean 0-match that SAID "0 matches is a real result here"), commit-gate x3 PASS, comp-surface-check x3 OK | comp-pipescript io still an explicit GAP -- it belongs with the AE deploy half; under new-territory no consumer path changes yet |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
