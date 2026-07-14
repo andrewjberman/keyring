@@ -7,6 +7,34 @@
 <status>pending</status>
 <scoping_completed>2026-07-14 ~19:25Z — brief deliverable landed: docs/briefs/ANDREW_BRIEF_20260714_taxsma_and_ticket_system.md (293c062fb)</scoping_completed>
 
+## ADDENDUM 2 — THIRD ANDREW-DIRECT (same session, ~20:2xZ): THE 13 OPEN-ITEM RULINGS (verbatim)
+
+> "1.) We don't need to focus on step 5 at this point. 2.) No asking schwab, if they dont have the
+> files and we cant derive the files somehow from what we already have then it cant work that way.
+> We do get the SSAVAIL emails every single day though which is the principal automation/parsing
+> aspect of this project. 3.) Yeah that recommendation is a good way to do it, but Alyssa is
+> actually claude-savvy, I think we can just give her skills.md files. 4.) We can give her write
+> access at any time since it's our system/server; check OPLMCP projects and associated work from
+> that period, there should be a permissions layer somewhere in that machine we can adjust at.
+> 5.) I think this is fine, it would be nice to have it go to a dedicated subfolder as well.
+> 6.) Rec is fine. 7.) I'd call it /tax-pt1 (and accordingly tax-pt2 and etc as needed). 8.) Yeah
+> use 2pm for now. 9.) it will be that but he's not hired yet so we'll have to set that up next
+> month. 10.) Teams link is great if we can pull it off that way, emails have too much anti-link
+> IT software would make it clunky. 11.) I don't think this needs to be real analytics, just a
+> flat 'We'll get back to you asap' subjective thing, maybe tagging a notification on there when
+> the ticket is picked up with the name of the person and their email. 12.) Yeah teams shared
+> channel is the way to go here for sure, we can set that up. 13.) Rec is good."
+
+**Operative effects (recorded, not adjudicated):** TAXSMA — step 5 DESCOPED for now; step 2 NO
+Schwab ask, stays manual unless derivable in-estate (verified not: ULN+ACC negative), the SSAVAIL
+email intake/parsing IS the project's principal automation; Alyssa UI = SKILLS.MD FILES (no portal
+runner); skill naming = /tax-pt1, /tax-pt2, ... ; Alyssa gets gateway write access via the OPLMCP
+entitlement layer; mail-subfolder filing is welcome (runner is folder-agnostic). TCKT — cutoff
+2 PM ET interim config; bobby@ parked until hired (~next month); claim links = TEAMS not email;
+external/requester side = flat "we'll get back to you asap" ack + a claimed-by notification
+(name+email), NOT analytics; AI intake monitors a Teams shared channel (to be set up); form
+connector rec stands.
+
 ## ADDENDUM — SECOND ANDREW-DIRECT (same session, ~19:30Z): EXECUTION DELEGATION
 
 > "Ok I do not want to interrupt the fabric with these ad hoc projects so I'd rather upon your
