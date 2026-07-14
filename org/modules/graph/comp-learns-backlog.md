@@ -126,3 +126,14 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   (NFRA_GRAPHS; comp-coverage-check node_type_grain bridge) -- adding a node domain is a
   CTO-arch-gate change with consumers, not a side-effect edit.
 - resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+
+## [OPEN] tooling-gap -- backlog citation-less-closure DETECTOR  (filed 2026-07-14, from CVO~Z /verify verdict 3d816c650)
+<!-- key: tooling-gap|backlog-citationless-closure-detector -->
+- disposition: BUILD-CHEAP -- a comp-learns-status (or comp-manifest-check) flag that scans THIS
+  file for entries whose `resolution:` was flipped off OPEN without a citation (no commit hash /
+  tool path / reason in the resolution line) and prints them LOUD.
+- value evidence: the closure rule ("an entry closed without a citation is drift, not a closure")
+  is PROSE-ONLY -- nothing detects a violation. The verifier who found this had just re-taken six
+  claims precisely because prose rules without detectors are how records drift (CVO~Z, verdict
+  cvoz_verify_nfra_compclose_verdict.md).
+- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)

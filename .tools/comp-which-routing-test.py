@@ -94,6 +94,13 @@ later run measures THAT LIST. TO-2/TO-3 regress against the frozen list; they do
 re-derive it. A baseline that re-derives its own population is a fresh measurement
 wearing a baseline's name.
 
+AND THE SAME RULE BINDS ANYONE QUOTING A HEADLINE **DELTA** (CVO~Z P2, /verify verdict
+3d816c650, 2026-07-14): cohort R re-derives from the LIVE rail log each run -- the log
+grew 52 rows DURING the verify itself. So "26.6% -> X%" quoted across runs is TWO
+VINTAGES OVER TWO DENOMINATORS wearing one metric name. Before quoting any headline
+delta: RE-FREEZE a comparison cohort (--freeze) and measure BOTH ends against that one
+list, or print both denominators next to both numbers.
+
 THE SUBJECT IS PINNED TO A VINTAGE
 ----------------------------------
 Other lanes edit .tools/comp-which mid-flight (observed twice in one hour during this
