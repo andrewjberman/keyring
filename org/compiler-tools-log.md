@@ -17305,3 +17305,13 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~04:21Z | 1.0.0_SA_CTO | C5 design-gate PASS (post-log addendum) | design-gate ruling only (6 Qs on 0.5.0 note a2f02123a); no tools re-run -- the gate was a review of a committed design note, key-grammar + set-identity-guard ruled | gap: none new; the surplus-detection guard half is now the reference template |
 | 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file org/modules/gr... | PASS |
 | 2026-07-14 | 1.0.0_SA_CTO | OPAL_ASSETS.C3.0833-puller-one-bucket-landing (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | OPAL_ASSETS.C3.0833-puller-one-bucket-landing (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.C3.0833-puller-one-bucket-landing (shared) | pipescript | pipescript --list | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/lan... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.C3.0833-puller-one-bucket-landing (shared) | pipescript | pipescript mdpf | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | OPAL_ASSETS.C3.0833-puller-one-bucket-landing (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/key... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file org/module... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | mdpf-gate-first-fire-verify (MEMORY trigger) | comp-freshness | comp-freshness artifact s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/ | FAIL-discounted (no-cadence-config flat-hours fallback; NEVER#1 resolved by calendar+hold) |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
