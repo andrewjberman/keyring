@@ -37,6 +37,7 @@ from __future__ import annotations
 import functools
 import os
 import re
+import subprocess
 import sys
 from dataclasses import dataclass, field
 
@@ -115,6 +116,30 @@ def _graph_index():
 
 
 @functools.lru_cache(maxsize=1)
+def _repo_basenames():
+    """{basename -> [repo-relative path]} over every TRACKED file.
+
+    Found by the L3b acceptance FAILING (not by guessing): `build_assets_dim.py` -- one of the THREE
+    FROZEN FILES -- was UNADDRESSED. The REPO_PATH fallback only matched a FULL path, so a bare
+    filename resolved to nothing, and the most dangerous file in the estate had no address. A file
+    the repo tracks is a node whether or not a higher graph models it (the silver tier is not in the
+    trace graph at all). git ls-files = tracked truth, gitignore-aware, one call."""
+    try:
+        out = subprocess.run(["git", "-C", _WS, "ls-files"], capture_output=True, text=True,
+                             timeout=60, errors="replace")
+        if out.returncode != 0:
+            return {}
+    except Exception:  # noqa: BLE001
+        return {}
+    idx = {}
+    for p in out.stdout.splitlines():
+        p = p.strip().replace("\\", "/")
+        if p:
+            idx.setdefault(os.path.basename(p).lower(), []).append(p)
+    return idx
+
+
+@functools.lru_cache(maxsize=1)
 def _tools_on_disk():
     """Every .tools/ shim by bare name -- INCLUDING THE BASH ONES. comp-pydeps indexes python only
     (shebang-sniffed), so `comp-surface-check` (a bash shim) came back UNADDRESSED 133 times in the
@@ -151,26 +176,47 @@ def resolve(ref: str) -> Resolution:
     if rl in by_path:
         return Resolution(ref, [by_path[rl]], "GRAPH", "EXACT", "trace_graph.file_path")
 
-    # 1c. a basename the graph models (WEAK if ambiguous -- say so, never pick silently)
-    base = os.path.basename(rl)
-    if base in by_base:
-        ids = by_base[base]
-        return Resolution(ref, list(ids), "GRAPH",
-                          "STRONG" if len(ids) == 1 else "WEAK", "trace_graph.basename")
-
     # 2. the COMPILER layer: a .tools/ shim by BARE NAME -- any language (comp-pydeps sees python
     # only; `comp-surface-check` is bash and came back UNADDRESSED x133 in the first live run).
     if r in _tools_on_disk():
         return Resolution(ref, ["tool:%s" % r], "COMPILER", "EXACT", "tools.on_disk")
 
-    # 2b. the COMPILER layer via comp-pydeps (F-5): python modules + their reference graph
+    # 2b. the COMPILER layer via comp-pydeps (F-5): python modules by EXACT stem ONLY.
+    # comp_pydeps._match_target FUZZY-SUBSTRING-matches (it will return `adapter_audit_cli` for a
+    # ref like "audit"). That is right for a human asking "who consumes X" and CATASTROPHIC here:
+    # it attached 991 false HOLD claims to adapter_audit_cli in the first L3b build, from lines that
+    # merely contained the word. A DANGER MAP WITH FALSE CLAIMS IS WORSE THAN NO DANGER MAP -- it
+    # trains agents to ignore the warning. Exact stem or nothing.
     mod, pg = _pydeps()
     if mod and pg:
-        tgt = mod._match_target(pg, r)
-        if tgt and tgt in pg.get("defines", {}):
-            defs = pg["defines"][tgt]
-            return Resolution(ref, ["tool:%s" % tgt], "COMPILER",
-                              "EXACT" if r in (tgt, defs[0]) else "STRONG", "comp_pydeps")
+        defines = pg.get("defines", {})
+        stem = r[:-3] if r.endswith(".py") else r
+        if stem in defines:
+            return Resolution(ref, ["tool:%s" % stem], "COMPILER", "EXACT", "comp_pydeps.exact")
+
+    # 1c. a basename -- MERGE the graph's hits WITH the repo's tracked-file hits.
+    # THE VENDORED-FORK HAZARD, IN MY OWN RESOLVER: `_orion_api_silver_lib.py` (ONE OF THE THREE
+    # FROZEN FILES) resolved to the FIVE VENDORED LAMBDA COPIES and NEVER to the canonical silver
+    # source -- the copies SHADOWED the original, so the frozen file could carry no HOLD. That is the
+    # exact fork-divergence class the frozen-three hold is partly about, reproduced inside the
+    # instrument meant to warn about it. An ambiguous basename returns EVERY candidate, canonical
+    # source INCLUDED, and says WEAK -- it never silently picks, and it never silently omits.
+    base = os.path.basename(rl)
+    graph_ids = list(by_base.get(base, []))
+    repo_ids = ["file:%s" % h for h in _repo_basenames().get(base, [])]
+    if graph_ids or repo_ids:
+        # de-dup: a repo path already modeled by a graph node is not listed twice
+        graph_paths = set()
+        if g:
+            for nid in graph_ids:
+                fp = (getattr(g.nodes.get(nid), "file_path", "") or "").replace("\\", "/")
+                if fp:
+                    graph_paths.add(fp)
+        merged = graph_ids + [rid for rid in repo_ids if rid[5:] not in graph_paths]
+        if merged:
+            return Resolution(ref, merged, "GRAPH" if graph_ids else "REPO_PATH",
+                              "STRONG" if len(merged) == 1 else "WEAK",
+                              "basename(graph+repo)")
 
     # 2c. a bare FUNCTION name or ARTIFACT key the graph models as a node-id LEAF
     #     ("build_dashboard" -> gold:INF_D_04...:build_dashboard; "canonical_prices.parquet" -> s3:...)
@@ -182,6 +228,16 @@ def resolve(ref: str) -> Resolution:
     # 3. any real repo file is a legitimate node even if no higher graph models it yet
     if os.path.exists(os.path.join(_WS, r)) and not os.path.isdir(os.path.join(_WS, r)):
         return Resolution(ref, ["file:%s" % r], "REPO_PATH", "EXACT", "repo.path")
+
+    # 3b. a BARE FILENAME of a tracked file. THE FROZEN-THREE GAP: `build_assets_dim.py` (a silver
+    # script -- the silver tier is NOT in the trace graph) was UNADDRESSED, so the most dangerous
+    # file in the estate had no address and could carry no HOLD edge. A tracked file is a node.
+    # WEAK when the basename is ambiguous (e.g. a vendored copy) -- we return EVERY candidate rather
+    # than silently picking, because picking the wrong one here would attach a hold to the wrong file.
+    hits = _repo_basenames().get(base)
+    if hits:
+        return Resolution(ref, ["file:%s" % h for h in hits], "REPO_PATH",
+                          "STRONG" if len(hits) == 1 else "WEAK", "repo.basename")
 
     # 4. cloud refs -- addressed to the cloud surface (comp-aws/comp-kuzu own the derivation)
     m = _S3_RX.match(r)
@@ -252,6 +308,14 @@ def _self_test() -> int:
     r7 = resolve("build_dashboard")         # a bare FUNCTION name -> a node-id LEAF (x78 miss)
     ck("gap2.bare_function_addressable", r7.addressed and "build_dashboard" in str(r7.node_ids),
        f"{r7.source} -> {r7.node_ids[:1]}")
+
+    # THE FROZEN-THREE GAP (found by the L3b acceptance FAILING): a bare filename of a TRACKED file
+    # must resolve. `build_assets_dim.py` is a silver script -- the silver tier is not in the trace
+    # graph at all -- and it is one of the THREE FROZEN FILES. It had no address, so it could carry
+    # no HOLD. The most dangerous file in the estate was invisible to its own danger map.
+    r8 = resolve("build_assets_dim.py")
+    ck("gap3.frozen_file_addressable", r8.addressed and r8.kind == "REPO_PATH",
+       f"{r8.kind}/{r8.confidence} -> {r8.node_ids}")
 
     # UNADDRESSED IS A FINDING, NOT A DROP -- and it keeps the raw ref.
     r5 = resolve("zzz_not_a_thing_anywhere_xyz")

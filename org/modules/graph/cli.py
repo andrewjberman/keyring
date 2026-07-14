@@ -331,6 +331,81 @@ def _is_producer_pipeline_match(node_id: str, pipeline: str | None) -> bool:
     return True
 
 
+def _risk_hit_for(node_ids: list):
+    """Look up any of these node ids in the NERVES danger map. Returns the edge or None."""
+    try:
+        import os as _os
+        rp = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "nerves-risk-edges.json")
+        if not _os.path.exists(rp):
+            return None
+        with open(rp, encoding="utf-8") as fh:
+            edges = json.load(fh).get("edges", [])
+        want = {x for x in node_ids if x}
+        return next((e for e in edges if e["node"] in want), None)
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _render_risk(hit, stream=None) -> None:
+    """A HOLD IS NOT A FOOTNOTE. It goes to the SAME STREAM as the verdict it qualifies, so a
+    terminal shows it FIRST -- printing a hold on stdout while the NOT-FOUND explanation goes to
+    stderr made the warning land BELOW the noise, which is the same as not warning."""
+    import sys as _s
+    out = stream or _s.stdout
+    def _p(x=""):
+        print(x, file=out)
+    sev = hit["severity"]
+    if sev == "HOLD":
+        _p("!" * 78)
+        _p("!! HOLD -- THE CORPUS SAYS DO NOT TOUCH THIS. %d claim(s)." % hit["n_claims"])
+    elif sev == "RISK":
+        _p("*" * 78)
+        _p("** RISK -- this node is implicated in a recorded incident. %d claim(s)."
+           % hit["n_claims"])
+    else:
+        _p("-- DOCTRINE -- a rule binds how you treat this node. %d claim(s)." % hit["n_claims"])
+    for c in hit["claims"][:4]:
+        amb = "  [ambiguous ref -- verify it is THIS file]" if c.get("ambiguous") else ""
+        _p("   [%s] %s:%d%s" % (c["kind"], c["doc"], c["line"], amb))
+        _p("        \"%s\"" % c["quote"][:104])
+    _p("   ^ GO READ THE CITATION. This is a pointer to the claim, NOT a substitute for it.")
+    _p(("!" if sev == "HOLD" else "*" if sev == "RISK" else "-") * 78)
+    _p()
+
+
+def _print_risk_by_ref(query: str) -> None:
+    """The NOT-FOUND path's danger check: resolve the RAW QUERY through the NERVES keystone and warn
+    even when the structural graph has never heard of the node. A hold is a fact about the FILE."""
+    try:
+        import os as _os
+        import sys as _sys
+        _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+        from nerves_resolve import resolve as _resolve
+        r = _resolve(query)
+        if not r.addressed:
+            return
+        hit = _risk_hit_for(r.node_ids)
+        if hit:
+            import sys as _s
+            _render_risk(hit, stream=_s.stderr)   # same stream as the NOT-FOUND verdict -> prints FIRST
+    except Exception:  # noqa: BLE001
+        return
+
+
+def _print_risk(node) -> None:
+    """NFRA_NERVES L3b CONSUMER -- THE LEXICAL UNLOCK, and the reason the layer exists.
+
+    The danger zones were ALREADY WRITTEN DOWN -- holds, frozen files, incident costs -- in memory/,
+    the ledgers, CLAUDE.md, the critical-path docs, with file:line citations. And an agent running
+    comp-blast on a frozen file got NO WARNING unless it happened to read the prose. That is the gap
+    that nearly cost us the estate three times. Prints FIRST: a hold is not a footnote."""
+    fp = (getattr(node, "file_path", "") or "").replace("\\", "/")
+    ids = [("file:" + fp) if fp else "", getattr(node, "id", "")]
+    hit = _risk_hit_for(ids)
+    if hit:
+        _render_risk(hit)
+
+
 def _print_cochange(node, top: int = 5) -> None:
     """NFRA_NERVES L3a CONSUMER (discipline #2: nothing ships without its consumer wired).
 
@@ -414,6 +489,13 @@ def cmd_blast(args):
 
     matches = g.find_node(query)
     if not matches:
+        # THE DANGER WARNING MUST NOT DEPEND ON THE STRUCTURAL GRAPH MODELLING THE NODE
+        # (NFRA_NERVES L3b). `build_assets_dim.py` -- ONE OF THE THREE FROZEN FILES -- is a SILVER
+        # script, and the trace graph does not model the silver tier at all. So comp-blast returned
+        # NOT-FOUND and exited BEFORE any risk check: the most dangerous file in the estate got no
+        # warning PRECISELY BECAUSE the graph does not know about it. A hold is a fact about the
+        # FILE, not about our modelling of it. Check the corpus FIRST, on the raw query.
+        _print_risk_by_ref(query)
         # NOT-FOUND is LOUD (rc=3). On comp-blast (a Rule-20 "what breaks if I
         # change X" gate) a typo'd target must NEVER exit 0 as if it were a
         # verified "nothing breaks" clear. (false-clear fix, 2026-06-26)
@@ -539,6 +621,7 @@ def cmd_blast(args):
             })
         print(json.dumps({"source": node.id, "consumers": by_type}, indent=2))
     else:
+        _print_risk(node)              # NFRA_NERVES L3b -- THE HOLD PRINTS FIRST. A hold is not a footnote.
         print(format_blast(node.id, downstream))
         _print_cochange(node)          # NFRA_NERVES L3a consumer -- the graph's TRAFFIC layer
         if upstream:
