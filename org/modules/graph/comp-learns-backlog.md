@@ -191,3 +191,21 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   full re-run + manual diff to diagnose.
 - resolution: OPEN -- design ruled at filing; build routes to ~Z-group/0.8.0-class capacity via MSTR
   (base-CTO instruct-usage-never-build). Flips to `BUILT <tool + commit>` at build time.
+
+## [OPEN] coverage-gap -- lambda deployed-artifact drift check (comp-pipescript-deployed for the lambda estate)  (filed 2026-07-14, CTO)
+<!-- key: coverage-gap|lambda-artifact-drift-check -->
+- disposition: MISSING CONTROL, measured live twice today. A stale S3 artifact is INVISIBLE to a TF
+  diff (TF compares state to config, and the config points at the same key) -- so an env-leg apply
+  can pre-clear while the code leg silently never shipped. C4 half-landed exactly this way (env
+  applied 03:05Z; artifact LastModified 07-13T22:41 predates the flip commit; tonight's 22:00Z fire
+  wrote legacy-only; 0.5.0 escalation 230221Z, forward-fix GO'd 230335Z). The vident deploy ran the
+  countermeasure BY HAND x5 (live CodeSha256 == uploaded sha == source-map artifact_sha256).
+- DESIGN RULED: a check that, per lambda-source-map entry, compares (a) live CodeSha256, (b) the S3
+  artifact's content-sha256 metadata, (c) artifact_sha256 in the map, and optionally (d) a
+  build-from-HEAD hash for the files[] set -- any pairwise mismatch = named drift verdict. Belongs
+  beside comp-pipescript deployed (same question, lambda estate instead of EC2 gold). CI candidate:
+  the source map already carries everything but the live read.
+- value evidence: C4 half-landed 20+ hours undetected across two sessions + a ratified-then-falsified
+  'APPLIED' claim (config-read-for-behavioral, 22a); found only when the scheduled fire exercised it.
+- resolution: OPEN -- build routes to ~Z-group/0.8.0-class capacity via MSTR (base-CTO
+  instruct-usage-never-build). Flips to `BUILT <tool + commit>` at build time.
