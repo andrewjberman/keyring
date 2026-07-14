@@ -17678,3 +17678,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~0937Z | 0.8.0_AE_CloudComp~Z | comp-glob x3, comp-grep x4 (3-importer scope find, 21756-file denominator), comp-to, commit-gate x4, safe-commit x2 | cb6a86177 executed: P3 rewire ONE-change + 7 candidates ruled on served signal | comp-grep importer sweep was the load-bearing call: ruling named 1 consumer, estate had 3 |
 | 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_49F_BUIL... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_RUNNERS_49F_BUILD_PLAN.md | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/sil... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/smartx_assets_pull/silver.py infra/aws/lambda/smartx_a... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/promote_lifecycle_cse... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-pulse | comp-pulse diff org/modules/graph/promote_lifecycle_cse.jsonl org/modules/graph/promote... | PASS |
+| 2026-07-14 0940Z | 0.5.0_AE_OpalETL | surface-check+commit-gate x7 (1 risk-reflex HOLD read+proceeded), terraform targeted plan/apply/0-diff x2, simulate-principal-policy x4 (one ARN each, pre/post/negative) | D2 gates: bronze/infra + code-only silver -- no gold tools applicable |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
