@@ -17422,3 +17422,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/SMARTX_INGESTION_ARCHI... | PASS |
 | 2026-07-14 ~06:15Z | 1.0.0_SA_CTO | comp-state (self-test+full+project) + live aws census x4 + 3 source reads at gates | V2 PRD grounded end-to-end; 3 drifts reconciled; grant gate + V2-7 pre-ruling on source | session_CTO_part5_v2_prd_four_rulings_and_the_dispatch_wave.md |
 | 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/sdd-... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/SCHWAB_AUTO_PULL_DESIG... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast build_assets_dim.py | FAIL |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS.json | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast build_assets_dim.py | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast build_assets_dim.py | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast A_00.accounts_dimension.py | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast INF_D_02b.top_holdings.py | FAIL |
+| 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/SMARTX_INGESTION_ARCHI... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cli.py --file org/mod... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | verify-suite | /verify NFRA_INSTDRILL: 8 self-test suites + 9 live intents + harness delta both-ends (frozen cohort) + live sweeps (drift/debris/icedrill) + manifest gate | 8/9+P3 SOUND; icedrill BROKEN (silent 2000-key cap, refuted live) |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
