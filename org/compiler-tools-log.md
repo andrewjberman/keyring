@@ -17917,3 +17917,46 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~17:35Z | 0.4.0_DS_ClientPlatform | pytest (delta-5 suites 72, full silver 169+7) | 0.6.2 delta-5 @ 96867ae10 | PASS -- review ACCEPTED, parity x3 verified | same-day review duty |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/ta... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/task_orders/ADVI_BDAPIMIG.P1-DURAB... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff infra/aws/lambda/opal-assets/opal-assets-bd49f-daily-pull/lambda_functi... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/portfolio_excel_genera... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/portfolio_excel_generator/lambda_function.py infra/aws... | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/portfolio_excel_genera... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/portfolio_excel_generator/lambda_function.py infra/aws... | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/portfolio_excel_genera... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/portfolio_excel_generator/lambda_function.py infra/aws... | FAIL |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/sdd-... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-pulse | comp-pulse diff infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1 infra/aws/terrafo... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-14/apply_b_prefir... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-2.opalinvest-cutover-staging-first | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/tls-cutover.sh | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-2.opalinvest-cutover-staging-first | comp-pulse | comp-pulse diff infra/aws/ec2/website/tls-cutover.sh | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_RUNNERS.json --file o... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_RUNNERS.json org/projects/REGISTRY.md | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff infra/aws/lambda/opal-assets/opal-assets-bd49f-daily-pull/lambda_functi... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-14 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260714T1802Z_d1-apply-b_deploy_c... | PASS |
+| 2026-07-14 ~18:1xZ | 0.7.0_AE_CloudOps~A | comp-to + rail-checked live describe-instances (IMDS mode) + ETag-parity sweep | NFRA_WEBSITE Phase A: parity sweep caught 5 stale S3 scripts; IMDS ground-truth turned a false-refusal into a 1-commit fix (cbd19923d) |
+| 2026-07-14 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-2.opalinvest-cutover-staging-first | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/cr... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-2.opalinvest-cutover-staging-first | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/critical_paths/change_management/20260714... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file f.txt | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff f.txt | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file del.txt --file new.txt | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff del.txt new.txt | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file new.txt | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff new.txt | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file pkg/mod.py | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff pkg/mod.py | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file pkg/real.py | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff pkg/real.py | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-2.opalinvest-cutover-staging-first | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/cr... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-2.opalinvest-cutover-staging-first | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/critical_paths/change_management/20260714... | PASS |
