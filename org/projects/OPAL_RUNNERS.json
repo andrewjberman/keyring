@@ -1,0 +1,34 @@
+{
+  "project_code": "OPAL_RUNNERS",
+  "macro_code": "OPAL",
+  "name": "OPAL Runners - Canonical Ingestion + Partner Analytics Runners (Consolidation Part 2)",
+  "description": "Andrew-commissioned successor to OPAL_ASSETS (the Yang-message Part 2, 2026-07-14): partner-level analytics EC2 runners (~20-30 sequential scripts each) on the Group A/B/C/D structure, incremental-by-design on every table (<=$100/mo per box), rust/polars for heavy tables; channel-level ingest canonicalization (API-only, no scraping; auth bundles + OTP/graphAPI fallback; one canonical schedule board). CENTERPIECE: the 49F refactor case study -- full greenfield on 0833 data, layer-by-layer decomposition of the damaged legacy runner (dormant exclusion rules, the ruled-unacceptable transaction-engine canonical-holdings valuation, reconciliation/injection/phantom-exclusion layers) into THE CANONICAL FORM CASEBOOK that the lighter Inflection/Cottonwood runners are then built against. Canonicalization is of CONTRACTS ONLY (group shape) -- script forks stay per-partner (Andrew ruling). Bound by THE NEW-TERRITORY RULE, the completeness law, the serving boundary, and the 49F/INF holds (design now; 49F build on Andrew's lift).",
+  "prds": [
+    {
+      "path": "docs/architecture/OPAL_RUNNERS_PRD.md",
+      "label": "OPAL_RUNNERS PRD v0.1 (CTO) -- authored per the Andrew-approved plan (deep-forging-sunset); ratification gated on W1-W5 assessment evidence",
+      "date": "2026-07-14"
+    }
+  ],
+  "source_brief": "Andrew's Yang message (two-part consolidation vision) + his expansion directive on the 49F refactor case study + three plan-mode scoping rulings (contracts-only / 49F-first-most-damaged / new project code), 2026-07-14 ~02:0x-02:2xZ.",
+  "status": "active",
+  "phase": "Phase 0: PRD v0.1 authored; W1-W5 read-only assessment workstreams commissioning (script census, compute/cost profile, schedule census, 0833 A/B data sufficiency, auth/scrape census). Ratification after evidence lands + CVO pass.",
+  "current_phase": "W1-W5 assessments (read-only, parallel with OPAL_ASSETS C-series execution). Build waves gate on: monolith P1 accruing (Wave 1), the 49F lift (Wave 2 build), the INF hold resolution (Inflection execution).",
+  "blocking": "Nothing blocks the assessments. Build gates by design: 49F build on Andrew's lift (No 49 Yet); Inflection execution on the INF hold; commits currently held estate-wide on the push-block strip (operational, transient).",
+  "depends_on": [
+    "OPAL_ASSETS"
+  ],
+  "depends_on_note": "Reads ONLY the monolith silver OPAL_ASSETS lands; the C-series' CRS silver tables are W4's subject; inherits its laws (new-territory, completeness, serving boundary, identity tuple).",
+  "owner": "1.0.0_SA_CTO",
+  "created": "2026-07-14",
+  "pods": [
+    "0.4",
+    "0.5",
+    "0.6",
+    "0.7"
+  ],
+  "pipeline": "monolith silver (opal-data-assets) -> per-partner A/B/C/D analytics runners (49F-0833 greenfield, Inflection reviewed, Cottonwood on contracts) -> monolith gold trees + DynamoDB opal-assets-daily-aua; D-group -> partner platinum buckets (serving unchanged)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
