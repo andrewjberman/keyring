@@ -331,6 +331,51 @@ def _is_producer_pipeline_match(node_id: str, pipeline: str | None) -> bool:
     return True
 
 
+def _print_cochange(node, top: int = 5) -> None:
+    """NFRA_NERVES L3a CONSUMER (discipline #2: nothing ships without its consumer wired).
+
+    comp-blast answers "what BREAKS if I change this" from the STRUCTURAL graph. This adds the
+    BEHAVIORAL layer: "what has HISTORICALLY CHANGED WITH this" -- 6,682 commits of co-change,
+    decayed. **CO_CHANGE WITHOUT CO_DEPLOY IS THE DRIFT/BREAKAGE PREDICTOR**: a file that always
+    changes with yours but is not in your diff is a half-landed deploy waiting to happen.
+
+    Advisory. A co-change weight is a COUPLING OBSERVATION (a fact about history), NEVER an
+    endorsement -- Goodhart: a wide road to a wrong answer gets wider. Best-effort: never breaks
+    comp-blast."""
+    try:
+        import os as _os
+        edges_path = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "nerves-edges.json")
+        if not _os.path.exists(edges_path):
+            return
+        with open(edges_path, encoding="utf-8") as fh:
+            doc = json.load(fh)
+        fp = (getattr(node, "file_path", "") or "").replace("\\", "/")
+        nid = getattr(node, "id", "")
+        hits = []
+        for e in doc.get("edges", []):
+            if fp and e["src"] == fp:
+                hits.append((e["dst"], e["weight"], e["support"], e["conf_src_to_dst"]))
+            elif fp and e["dst"] == fp:
+                hits.append((e["src"], e["weight"], e["support"], e["conf_dst_to_src"]))
+            elif nid and (e.get("src_node") == nid or e.get("dst_node") == nid):
+                other = e["dst"] if e.get("src_node") == nid else e["src"]
+                conf = e["conf_src_to_dst"] if e.get("src_node") == nid else e["conf_dst_to_src"]
+                hits.append((other, e["weight"], e["support"], conf))
+        if not hits:
+            return
+        hits.sort(key=lambda h: -h[1])
+        print()
+        print("CO-CHANGE (NFRA_NERVES: what has historically changed WITH this -- %d commits, "
+              "decayed):" % doc.get("stats", {}).get("commits_scanned", 0))
+        for other, w, n, conf in hits[:top]:
+            print("  %.0f%% of the time (n=%d, w=%.1f)  %s" % (100 * conf, n, w, other))
+        print("  ^ CO-CHANGE WITHOUT CO-DEPLOY IS THE DRIFT PREDICTOR: a file that always ships")
+        print("    with yours and is NOT in your diff is a half-landed deploy waiting. Advisory --")
+        print("    a coupling is a fact about history, never an endorsement.")
+    except Exception:  # noqa: BLE001 -- the traffic layer never breaks the structural answer
+        return
+
+
 def cmd_blast(args):
     g = _resolve_graph(args)
 
@@ -495,6 +540,7 @@ def cmd_blast(args):
         print(json.dumps({"source": node.id, "consumers": by_type}, indent=2))
     else:
         print(format_blast(node.id, downstream))
+        _print_cochange(node)          # NFRA_NERVES L3a consumer -- the graph's TRAFFIC layer
         if upstream:
             print()
             print(f"CALLER CHAIN (upstream from {node.id}):")
