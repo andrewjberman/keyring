@@ -510,9 +510,155 @@
    }
   },
   "motif:silent-display-fork": {
-   "anti_goodhart": null,
+   "anti_goodhart": {
+    "generalizes_beyond_fixture": "the idiom fires beyond the discovery fixture: the fresh 0.151 focused re-measure comes from live git at HEAD (not the 07-08 discovery set) and its pair structure is corroborated 3/3 in the SERVED in-VPC coevolution signal (ClientsTab<->DistributionTab=13 co_sessions at pinned snapshot 7392125655251158233)",
+    "not_tuned_to_own_metric": true,
+    "structural_rationale": "a recurring cross-file display-fork idiom: the same conditional display fork appears across 5 portal surfaces (ClientsTab, DistributionTab, ModelPortfolios et al.), co-evolving in 45 sessions -- the coupling is structural (shared display semantics forked per firm), not fixture-fit"
+   },
    "candidate_id": "motif:silent-display-fork",
-   "commission": null,
+   "commission": {
+    "auto_mutates": false,
+    "candidate_id": "motif:silent-display-fork",
+    "grounding": {
+     "anti_goodhart": {
+      "generalizes_beyond_fixture": "the idiom fires beyond the discovery fixture: the fresh 0.151 focused re-measure comes from live git at HEAD (not the 07-08 discovery set) and its pair structure is corroborated 3/3 in the SERVED in-VPC coevolution signal (ClientsTab<->DistributionTab=13 co_sessions at pinned snapshot 7392125655251158233)",
+      "not_tuned_to_own_metric": true,
+      "structural_rationale": "a recurring cross-file display-fork idiom: the same conditional display fork appears across 5 portal surfaces (ClientsTab, DistributionTab, ModelPortfolios et al.), co-evolving in 45 sessions -- the coupling is structural (shared display semantics forked per firm), not fixture-fit"
+     },
+     "decompression_chain": {
+      "c0_evidence": [
+       {
+        "evidence": "out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name :: display/render sink",
+        "fact": "name",
+        "locus": "L291",
+        "source": "portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx"
+       },
+       {
+        "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#advisor_id :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+        "fact": "EmployeeLeaderboardEntry#advisor_id",
+        "locus": "-",
+        "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+       },
+       {
+        "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#name :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+        "fact": "EmployeeLeaderboardEntry#name",
+        "locus": "-",
+        "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+       },
+       {
+        "evidence": "out:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx:3901#count :: display/render sink",
+        "fact": "count",
+        "locus": "L3901",
+        "source": "portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx"
+       },
+       {
+        "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#DistributionStats#histogram :: guard: useLogScale == true",
+        "fact": "DistributionStats#histogram",
+        "locus": "-",
+        "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+       },
+       {
+        "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#HistogramData#counts :: guard: useLogScale == true",
+        "fact": "HistogramData#counts",
+        "locus": "-",
+        "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+       },
+       {
+        "evidence": "out:portal/src/pages/ModelPortfolios.tsx:724#benchmark :: display/render sink",
+        "fact": "benchmark",
+        "locus": "L724",
+        "source": "portal/src/pages/ModelPortfolios.tsx"
+       },
+       {
+        "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_benchmark :: guard: benchmarkType === 'index' == false",
+        "fact": "ModelPortfolioPeriodReturn#etf_benchmark",
+        "locus": "-",
+        "source": "portal/src/api/portal-proxy.ts"
+       },
+       {
+        "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_benchmark :: guard: benchmarkType === 'index' == true",
+        "fact": "ModelPortfolioPeriodReturn#index_benchmark",
+        "locus": "-",
+        "source": "portal/src/api/portal-proxy.ts"
+       },
+       {
+        "evidence": "out:portal/src/pages/ModelPortfolios.tsx:725#spread :: display/render sink",
+        "fact": "spread",
+        "locus": "L725",
+        "source": "portal/src/pages/ModelPortfolios.tsx"
+       },
+       {
+        "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_spread :: guard: benchmarkType === 'index' == false",
+        "fact": "ModelPortfolioPeriodReturn#etf_spread",
+        "locus": "-",
+        "source": "portal/src/api/portal-proxy.ts"
+       },
+       {
+        "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_spread :: guard: benchmarkType === 'index' == true",
+        "fact": "ModelPortfolioPeriodReturn#index_spread",
+        "locus": "-",
+        "source": "portal/src/api/portal-proxy.ts"
+       },
+       {
+        "evidence": "out:portal/src/pages/ModelPortfolios.tsx:727#benchmark_volatility :: display/render sink",
+        "fact": "benchmark_volatility",
+        "locus": "L727",
+        "source": "portal/src/pages/ModelPortfolios.tsx"
+       },
+       {
+        "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_benchmark_volatility :: guard: benchmarkType === 'index' == false",
+        "fact": "ModelPortfolioPeriodReturn#etf_benchmark_volatility",
+        "locus": "-",
+        "source": "portal/src/api/portal-proxy.ts"
+       },
+       {
+        "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_benchmark_volatility :: guard: benchmarkType === 'index' == true",
+        "fact": "ModelPortfolioPeriodReturn#index_benchmark_volatility",
+        "locus": "-",
+        "source": "portal/src/api/portal-proxy.ts"
+       }
+      ],
+      "c1_interactions": [
+       "silent-display-fork @ out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name",
+       "silent-display-fork @ out:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx:3901#count",
+       "silent-display-fork @ out:portal/src/pages/ModelPortfolios.tsx:724#benchmark",
+       "silent-display-fork @ out:portal/src/pages/ModelPortfolios.tsx:725#spread",
+       "silent-display-fork @ out:portal/src/pages/ModelPortfolios.tsx:727#benchmark_volatility"
+      ],
+      "n_c0_facts": 15
+     },
+     "warrant": {
+      "fidelity_pass": true,
+      "motif_type": "SilentDisplayFork",
+      "stable": true,
+      "tier": "gate-ready"
+     }
+    },
+    "kind": "promotion-commission",
+    "promotion_class": "COMPILER_RULE",
+    "proposed_to": {
+     "kind": "materialize-compiler-rule",
+     "materializer": "comp_promote_materializer.materialize_live (GOV-B, exercised dispatch)",
+     "ratifier": "1.0.0_SA_CTO",
+     "target_plane": "NFRA_COMPILERKIT (RecognizerRegistry hot-registration seam)",
+     "title": "PROMOTE motif:silent-display-fork -> COMPILER_RULE into NFRA_COMPILERKIT (RecognizerRegistry hot-registration seam)"
+    },
+    "value_anchor": {
+     "measured_effect": {
+      "basis": "focused git co-evolution coupling (breadth-weighted, certed DS~B run_measure) cross-checked pair-level against the SERVED in-VPC coevolution signal (1072 pairs, git_cochange class 257 CSEs untyped-rate 0.0)",
+      "co_sessions": 45,
+      "coupling_ratio": 0.18,
+      "effect": 0.151,
+      "focused_coupling_ratio": 0.151,
+      "independent": true,
+      "n_frontend_files": 5,
+      "source": "NFRA_FEDOBS_frontend_coevolution_producer.run_measure @ 53b0794f9 + s3://opal-313476888478-globgrph/warehouse/fedobs_signals/observations/fedobs_observations.json",
+      "vintage": "served computed_at=1784019051 (2026-07-14T08:50:51Z) pinned_snapshot_id=7392125655251158233 marker=c155b488abab"
+     },
+     "recurrence": 5
+    },
+    "verdict": "PROPOSE"
+   },
    "decompression_chain": {
     "c0_evidence": [
      {
@@ -631,7 +777,7 @@
    "promotion_class": "COMPILER_RULE",
    "ratify": null,
    "recurrence": 5,
-   "state": "MEASURED",
+   "state": "PROPOSED",
    "transitions": [
     {
      "actor": "comp_promote_lifecycle",
@@ -646,6 +792,13 @@
      "from": "CANDIDATE",
      "to": "MEASURED",
      "why": "in-VPC measure path live (served handshake 08:50:51Z); focused 0.151 >= floor 0.12 -- promote-eligible, PROPOSED is the next gate"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784022054.5855384,
+     "from": "MEASURED",
+     "to": "PROPOSED",
+     "why": "CTO~Z GO 093843Z (ratify-lane ruling 1): promote-eligible on the fresh served signal (focused 0.151 >= floor 0.12); the machine builds the typed commission, the ratifier audits it against the ACTUAL served artifact (snapshot 7392125655251158233)"
     }
    ],
    "warrant": {
