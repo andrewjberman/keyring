@@ -48,6 +48,15 @@ _WS = os.path.abspath(os.path.join(_HERE, "..", "..", ".."))  # repo root
 sys.path.insert(0, os.path.join(_HERE, "debtscan"))
 from dup_scan import BM25  # noqa: E402  -- the proven engine, reused not reimplemented
 
+# The ASCII-only output contract is enforced at the STREAM: scanned records carry arbitrary
+# text (a status field's U+2192 killed the render under cp1252, truncating the report), and
+# every print site inherits this instead of each sanitizing its own fields.
+try:
+    sys.stdout.reconfigure(encoding="ascii", errors="backslashreplace")
+    sys.stderr.reconfigure(encoding="ascii", errors="backslashreplace")
+except AttributeError:
+    pass
+
 TOKEN_RE = re.compile(r"[a-z0-9_]{2,}")
 
 
