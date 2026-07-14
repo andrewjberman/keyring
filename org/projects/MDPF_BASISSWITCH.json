@@ -1,0 +1,38 @@
+{
+  "code": "MDPF_BASISSWITCH",
+  "title": "MDPF 49F custody -> Schwab-native basis (straight RPS positions)",
+  "status": "active",
+  "priority": "P1",
+  "current_phase": "brief-committed -> CTO arch-gate",
+  "owner_primary": "0.5.0_AE_OpalETL",
+  "pods": [
+    0.5,
+    0.4,
+    1.0,
+    3.0
+  ],
+  "opened": "2026-07-01",
+  "origin": "MDPF-P1 (agg-AUA frozen 6d) provenance investigation (0.5.0) found the roll-forward is NOT the fix -- WS-E partner_custody_total reads bd/silver/allocations via the bd/silver/FEES crosswalk (frozen 06-25 = real break), not Schwab RPS silver. Andrew-direct ruling: switch to Schwab-native basis.",
+  "andrew_rulings": [
+    "BASIS SWITCH: MDPF 49F custody -> Schwab-native (removes the frozen-BD-fees dependency; makes Schwab RPS silver the source-of-record).",
+    "SIMPLIFIED (post-brief): DROP the cash -> STRAIGHT RPS positions only (sum RPS Market_Value; Schwab-scoped-by-construction; NO fees crosswalk). 'keep it to assets, easier straight RPS'.",
+    "Cutover drops served 49F custody ~3.6% ($1.65B->$1.591B) -- leaning ACCEPT as a documented methodology step (final accept-vs-rebaseline confirm pending, non-blocking to brief)."
+  ],
+  "design_brief": "docs/briefs/mdpf-49f-custody-schwab-native-basis-switch-design-20260701.md (01773f289)",
+  "flow": "0.5.0 brief (DONE 01773f289) -> CTO arch-gate (routed) -> DS (0.4~A/~B, authored WS-E) implements compute_partner_custody_total = sum(RPS Market_Value) -> CVO live-verify (served == straight-RPS-sum; -3.6% decomposed = 2% dropped-cash + 1.6% coverage/valuation) -> deploy.",
+  "legs": {
+    "brief": "DONE (01773f289)",
+    "cto_arch_gate": "PENDING (0.5.0 routed; open items: OK to drop gold/aua_certification BD-basis cross-check?)",
+    "ds_impl": "PENDING (WS-E compute_partner_custody_total -> straight RPS; certified_aua downstream may need Schwab-basis redefine)",
+    "cvo_verify": "PENDING (live: deployed WS-E reads RPS correctly + served == straight-RPS-sum, multi-day)",
+    "rollforward_source_populate": "RE-SCOPED from the superseded MDPF-fix roll-forward (ledger 20260701T1800Z) -- CONFIRMED feeds the new basis (RPS silver must be current); re-fire needs the Andrew-authorized quartz->01_raw promote; sequencing = populate-then-switch"
+  },
+  "interim_freeze": "MDPF stays frozen until the basis-switch ships (Andrew-decision surfaced: freeze vs interim bd/silver/fees advance -- likely MOOT now that straight-RPS is simple + the roll-forward populates the un-freezing source).",
+  "open_decisions": [
+    "Andrew: accept the ~3.6% cutover step vs re-baseline (leaning accept).",
+    "Andrew: roll-forward re-fire now? (COO recommends GO -- quartz-auth covers it, populate-then-switch).",
+    "CTO: drop the gold/aua_certification cross-check (BD-basis, incompatible)?"
+  ],
+  "sovereign_excluded": true,
+  "sovereign_reason": "SOVEREIGN HOLD -- Andrew, 2026-07-10, verbatim: 'just exclude those items, we will deal with them later.' The escalation is CLOSED. Do NOT hot-list, classify, dispatch on, attest, or 'just verify' this project. It stays status=active in-file and excluded from every consumer until Andrew reopens it."
+}
