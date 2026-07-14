@@ -756,12 +756,39 @@ def pollution_check(before_lines, probes, mirror_root, invocations):
           AN ALIBI BEATS A DENIAL. Account for your own writes; do not merely fail to
           find them somewhere else.
 
+    v4 (NFRA_COMPCLOSE 2026-07-14, CTO~Z) -- v3'S OWN ASSUMPTION EXPIRED UNDER IT. v3 expected
+      mirror_rows == routes_issued because `--route-only` still wrote a rail row per route. Then
+      the route-only rail-silence fix landed in the binary (comp-which:793 -- the very finding #3
+      this harness's author flagged) and every --route-only probe now writes ZERO rail rows --
+      so v3 read 0 >= 713 and convicted the harness of polluting a log it never touched. AN ALIBI
+      KEYED TO A WRITE THE SUBJECT NO LONGER MAKES CONVICTS THE INNOCENT THE MOMENT THE SUBJECT
+      IMPROVES. v4 binds to what the binary writes NOW, in two limbs, both required:
+        (a) SILENCE LIMB: the --route-only sweep leaves the mirror rail log EMPTY (route-only is
+            rail-silent by design; any row here means the silence regressed and our probes DID
+            write somewhere -- fail).
+        (b) POSITIVE-CONTROL LIMB: ONE deliberate NON-route-only invocation inside the mirror
+            MUST land >= 1 row in the MIRROR's rail log. Without this, limb (a)'s empty file is
+            indistinguishable from a broken mirror -- an absence-of-evidence control, the exact
+            class this file exists to kill. The control proves the capture path works; the sweep
+            proves it stayed silent. Together: every write the binary CAN make lands in the
+            mirror, and the sweep made none.
+
     The live-log delta is still REPORTED -- as UNATTRIBUTABLE concurrent traffic, which is
     what it is -- but it can no longer fail the run, because it cannot distinguish us from
     the fabric and a control that cannot discriminate must not be allowed to convict.
     """
     mirror_rail = os.path.join(mirror_root, "org", "mcp", "comp-which-rail.log")
-    captured = len(_readlines(mirror_rail))
+    sweep_rows = len(_readlines(mirror_rail))
+
+    # (b) the positive control: one NON-route-only invocation, inside the mirror, that must
+    # write a mirror rail row (a curated-strong route -- routes + logs, never runs a primitive).
+    exe = os.path.join(mirror_root, ".tools", "comp-which")
+    try:
+        subprocess.run([sys.executable, exe, POSITIVE_CONTROL],
+                       capture_output=True, text=True, timeout=60, cwd=mirror_root)
+    except Exception:
+        pass
+    control_rows = len(_readlines(mirror_rail)) - sweep_rows
 
     after = _readlines(RAIL_LOG)
     new = after[len(before_lines):]
@@ -773,17 +800,18 @@ def pollution_check(before_lines, probes, mirror_root, invocations):
             coincident.append(m.group(1))
 
     return {
-        "method": "AN ALIBI BEATS A DENIAL. A denial is falsifiable only by ABSENCE; an "
-                  "alibi is confirmable by PRESENCE -- and absence-of-evidence controls "
-                  "are exactly the ones that lie. We do not infer innocence from the "
-                  "absence of our fingerprints on a file other lanes are also touching. "
-                  "We PROVE where our writes went: every route we issued landed in the "
-                  "mirror, therefore none landed in the live log. Immune to concurrency, "
-                  "because it never looks at the shared file at all.",
+        "method": "AN ALIBI BEATS A DENIAL (v4). --route-only is rail-silent by design "
+                  "(comp-which:793), so the sweep must leave the mirror rail EMPTY -- and an "
+                  "empty file only counts as silence because the POSITIVE CONTROL (one "
+                  "non-route-only invocation in the mirror) proves the capture path works. "
+                  "Every write the binary can make lands in the mirror; the sweep made none. "
+                  "Immune to concurrency: never looks at the shared file to decide.",
         "routes_issued": invocations,
-        "routes_captured_by_mirror": captured,
-        "all_routes_accounted_for": captured >= invocations,
-        "pass": captured >= invocations,
+        "mirror_rows_from_route_only_sweep": sweep_rows,
+        "route_only_stayed_silent": sweep_rows == 0,
+        "mirror_rows_from_positive_control": control_rows,
+        "mirror_capture_path_proven": control_rows >= 1,
+        "pass": (sweep_rows == 0 and control_rows >= 1),
         "live_log_new_rows": len(new),
         "live_log_rows_matching_a_probe_string": len(coincident),
         "unattributable_note":
@@ -815,6 +843,13 @@ def main():
                     help="git ref to measure (default HEAD). 'WORKING' = the dirty tree.")
     ap.add_argument("--mutate", choices=("zero", "nine"),
                     help="run ONLY the mutation test (prove the harness CAN fail)")
+    ap.add_argument("--out", metavar="PATH", default=None,
+                    help="write the report JSON here instead of the committed TO-1 baseline "
+                         "artifact. A LATER VINTAGE MUST NOT CLOBBER A COMMITTED BASELINE: the "
+                         "default path IS the blob-pinned PRE record, and the first post-fix "
+                         "run of this harness overwrote it in the working tree (caught at "
+                         "git-status, restored from HEAD -- NFRA_COMPCLOSE 2026-07-14). "
+                         "Regression runs pass --out; only a deliberate re-baseline omits it.")
     args = ap.parse_args()
 
     if args.freeze:
@@ -1223,16 +1258,20 @@ def main():
     print("-" * 78)
     print("DID *WE* MUTATE THE MEASURED THING?   (a POSITIVE ALIBI, not a denial)")
     print("-" * 78)
-    print("  routes we issued                      %d" % poll["routes_issued"])
-    print("  routes captured by the MIRROR's log    %d   %s"
-          % (poll["routes_captured_by_mirror"],
-             "ALL ACCOUNTED FOR" if poll["pass"] else "*** SOME ESCAPED ***"))
+    print("  routes we issued (--route-only)       %d" % poll["routes_issued"])
+    print("  mirror rail rows from the sweep        %d   %s"
+          % (poll["mirror_rows_from_route_only_sweep"],
+             "SILENT (by design)" if poll["route_only_stayed_silent"] else "*** ROUTE-ONLY WROTE THE RAIL -- silence regressed ***"))
+    print("  mirror rail rows from POSITIVE CONTROL %d   %s"
+          % (poll["mirror_rows_from_positive_control"],
+             "capture path PROVEN" if poll["mirror_capture_path_proven"] else "*** MIRROR CAPTURES NOTHING -- empty is not silence ***"))
     print("")
-    print("  AN ALIBI BEATS A DENIAL. We do not infer our innocence from the absence of our")
-    print("  fingerprints on a file other lanes are also touching -- we PROVE where our")
-    print("  writes went. Every route we issued landed in the mirror; therefore none landed")
-    print("  in the live log. This is immune to concurrency because it never looks at the")
-    print("  shared file.")
+    print("  AN ALIBI BEATS A DENIAL (v4). --route-only is rail-silent by design, so the sweep")
+    print("  must leave the mirror rail EMPTY -- and that empty file only counts as silence")
+    print("  because ONE deliberate non-route-only invocation in the mirror DID land a row")
+    print("  (the capture path works; the sweep chose silence). Every write the binary can")
+    print("  make lands in the mirror; none landed in the live log. Immune to concurrency:")
+    print("  the verdict never reads the shared file.")
     print("")
     print("  live-log rows added during our run    %d   (UNATTRIBUTABLE, reported only)"
           % poll["live_log_new_rows"])
@@ -1302,7 +1341,9 @@ def main():
         "no_pollution": dict(poll, training_delta=td),
         "row_tag_tally": cohort.get("row_tag_tally", {}),
     }
-    with open(BASELINE, "w", encoding="utf-8") as fh:
+    out_path = args.out or BASELINE
+    os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
+    with open(out_path, "w", encoding="utf-8") as fh:
         json.dump(baseline, fh, indent=1, ensure_ascii=True)
 
     shutil.rmtree(mirror, ignore_errors=True)
@@ -1327,12 +1368,12 @@ def main():
         print("         This is THE DEFECT, faithfully reported. It is NOT a harness bug.")
         print("         TO-2 (the abstain) is what flips this to exit 0. Until it lands,")
         print("         every question this fabric cannot answer gets a confident answer.")
-        print("         baseline -> %s" % os.path.relpath(BASELINE, WS))
+        print("         baseline -> %s" % os.path.relpath(args.out or BASELINE, WS))
         print("=" * 78)
         return 1
     print("VERDICT: PASS -- controls held, zero pollution, and comp-which ABSTAINED on")
     print("         100%% of generated gibberish.")
-    print("         baseline -> %s" % os.path.relpath(BASELINE, WS))
+    print("         baseline -> %s" % os.path.relpath(args.out or BASELINE, WS))
     print("=" * 78)
     return 0
 

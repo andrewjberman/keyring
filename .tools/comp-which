@@ -558,6 +558,99 @@ RULES = [
      ["comp-coverage-check", "comp-coverage-check selfcheck", "comp-coverage-check list"],
      "does every comp-tool have exactly ONE home + is every overlap declared (the COMPUNIFY gate; "
      "tri-state, also asserts the tools_index projection is current) -- the map-true-to-territory gate"),
+    # ---- NFRA_COMPCLOSE Phase A (2026-07-14): curated vocabulary for the newly-registered /
+    # newly-routable tools. These sat on disk for weeks while agents logged "no comp-tool answers
+    # this" -- registration without vocabulary is registration in name only (the self-route
+    # invariant fails a tool comp-which cannot surface for its own use_case). ----
+    (["propagation drift", "propagation parity", "propagation topology", "parity board",
+      "estate in parity", "propagate intact", "propagated intact", "seam coverage",
+      "unguarded seam", "unguarded seams", "drift sweep", "comp-drift", "seam engines",
+      "drift board", "estate parity sweep", "drift coverage", "which seams", "seam parity",
+      "local to git to cloud", "all the way to served",
+      # single-token anchors so the rule clears STRONG on real phrasings: "propagation"/"seam(s)"
+      # are comp-drift-distinctive estate-wide (surface-first steals the "git-in-a-hyphenated-chain"
+      # phrasing for GIT-homed tools otherwise -- comp-drift is META-homed, so only a STRONG curated
+      # vet can put it above the surface drill).
+      "propagation", "seams", "seam"],
+     "estate propagation-drift orchestrator (comp-drift)",
+     ["comp-drift coverage", "comp-drift <target>", "comp-drift sweep [--deep]"],
+     "did X propagate intact local->git->cloud->nessie->kuzu->iceberg->trino->served / where is the "
+     "propagation topology unguarded / is the whole estate in parity (tri-state; UNVERIFIABLE is loud, "
+     "never silently clean). DISTINCT from comp-heat drift (uncommitted writes) + comp-xray (content motion)"),
+    (["tag authorization", "tags load-bearing", "load-bearing tags", "tag-authorized",
+      "resourcetag", "aws:resourcetag", "default_tags", "tag overwrite", "tags grant access",
+      "tag-conditioned", "tag conditioned", "comp-tagauthz", "authorization-bearing",
+      "import overwrite", "pre-import gate", "tags before import", "authorized by tag"],
+     "tag-authorization pre-import gate (comp-tagauthz)",
+     ["comp-tagauthz <resource|tf-tree>"],
+     "are a resource's TAGS load-bearing for authorization (aws:ResourceTag conditions)? A default_tags "
+     "import that 'only changes tags' can silently overwrite the value that GRANTS access -- this measures "
+     "AUTHORIZATION, not attribute surface"),
+    (["who read", "who actually read", "actually read", "did read", "who-did-read",
+      "read the bucket", "object-level reads", "read forensics", "principals read",
+      "principals actually read", "comp-whoread", "cloudtrail data events", "s3 read history",
+      "bucket access history", "who accessed", "reads of the bucket", "who touched the bucket",
+      "which principals touch", "principal touches"],
+     "WHO-DID-READ S3 object-read forensics (comp-whoread)",
+     ["comp-whoread <bucket>[/prefix]"],
+     "the principals that ACTUALLY read a bucket/prefix (CloudTrail object-level data events via Athena) "
+     "+ counts + first/last-seen. Who DID read, not who MAY (who-may = comp-firmsep-sweep/comp-iam). "
+     "Denominator = the coverage window, printed line 1; fails closed on zero events in range"),
+    (["dead grant", "dead grants", "deadgrant", "silently degraded", "silent degrade",
+      "region-mismatched", "fail-silent reader", "cannot reach its secret", "missing secret",
+      "comp-deadgrant", "degraded feature", "wrong region grant", "no data but no error",
+      "swallows the failure", "feature quietly broken"],
+     "dead-grant silent-degrade detector (comp-deadgrant)",
+     ["comp-deadgrant [<lambda|role>]"],
+     "is a feature silently degraded by a DEAD grant -- a secret/permission a fail-silent reader cannot "
+     "actually reach (region-mismatch, missing secret), intersected with live invocations (LIVE vs LATENT "
+     "decided from the last invocation, never from code)"),
+    (["deny test", "denytest", "verify the deny", "explicitdeny", "implicitdeny",
+      "explicit deny", "implicit deny", "simulate-principal-policy", "simulate principal policy",
+      "iam change landed", "verify iam change", "deny landed", "comp-denytest",
+      "did the deny land", "verify the belt", "firm-sep verify"],
+     "firm-sep IAM change verify harness (comp-denytest)",
+     ["comp-denytest <plan|change-spec>"],
+     "verify an IAM change actually landed + evaluates correctly: live simulate-principal-policy with the "
+     "expected verdict DERIVED from the terraform change type (deny-add => explicitDeny; allow-removal => "
+     "implicitDeny). ONE resource-arn per call; condition-context aware; the author cannot pick the criterion"),
+    (["firm separation sweep", "firm-separation sweep", "firmsep", "credential reach",
+      "credential universe", "every role in the account", "firm credential",
+      "comp-firmsep-sweep", "cross-firm reach", "prove the universe", "who may reach",
+      "roles a credential can reach", "which roles can the credential", "sweep every role"],
+     "prove-the-universe firm-separation sweep (comp-firmsep-sweep)",
+     ["comp-firmsep-sweep <firm> [--write-reach]"],
+     "which roles can a firm's credential ACTUALLY reach -- simulates the credential against EVERY role "
+     "and asserts only the firm's own roles allow. Enumerates by SIMULATION (grant-shape greps cannot see "
+     "AWS-managed Resource:'*' policies). Who-MAY-reach; who-DID-read = comp-whoread"),
+    (["tool health", "tool-health", "is the tool healthy", "keep fix retire", "keep-fix-retire",
+      "retire candidate", "tool effective", "rail consistent", "rail-consistent",
+      "comp-tool-health", "which tools are failing", "failing tools", "tool failure rate",
+      "unhealthy tools", "tool verdict", "should we retire", "tool keep or fix"],
+     "comp-tool 3-axis health verdict (comp-tool-health)",
+     ["comp-tool-health [<tool>]", "comp-tool-health --json"],
+     "is comp-tool X used / rail-consistent / effective -> KEEP | FIX | PROMOTE | RETIRE. Value-anchored "
+     "(outcome value + rail quality, never invocation count -- a tool that has always been wrong produces "
+     "a flawless usage log). Read-only advisory; CTO ratifies"),
+    (["tool graph", "toolgraph", "tool coupling", "tools couple", "shared substrate",
+      "shares substrate", "invoked_by", "invoked-by", "undeclared ripple", "comp-toolgraph",
+      "suite graph", "tool import graph", "coupling diff", "which tools share",
+      "comp-tool edges", "tool suite coupling"],
+     "comp-tool suite coupling graph (comp-toolgraph)",
+     ["comp-toolgraph [--json]"],
+     "how the comp-tools couple: shared substrates, write edges, INVOKED_BY edges, and where DECLARED "
+     "overlap groups diverge from the ACTUAL import graph (the undeclared-ripple finding -- an edit "
+     "ripples wider than the coverage map declares)"),
+    (["build next", "build-next", "what tool should we build", "which tool to build",
+      "tool demand", "rail escapes", "gap x heat", "gap heat", "comp-learns-status",
+      "learning loop", "is the learning", "tool backlog", "demand gap cost",
+      "escapes by path", "coverage gap ranking", "what tools are we missing",
+      "missing tools", "tool coverage gaps"],
+     "COMPLEARN demand / gap / build-next surface (comp-learns-status)",
+     ["comp-learns-status", "comp-learns-status gap_heat", "comp-learns-status --json"],
+     "which comp-tools are in demand, where the rail-escape coverage gaps cluster (raw greps / denies / "
+     "zero-match searches by path), and the GAP x HEAT build-next ranking -- the learning loop's "
+     "detection surface (the scorer = comp-learns-score)"),
 ]
 
 # Function-relationship intents that ARE a rich-tool job (route, do NOT run-the-primitive):
@@ -810,8 +903,14 @@ def _log_rail(decision: str, intent: str, term, q: str) -> None:
         ts = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     except Exception:
         ts = "?"
+    # SANITIZE EVERY INTERPOLATED FIELD, not just q (NFRA_COMPCLOSE 2026-07-14): intent/term were
+    # written raw, so a multi-line extracted term (shell-fragment queries via the HUD) wrote
+    # CONTINUATION LINES into the rail -- ~350 junk rows ("=== x216, bare fragments) whose first
+    # token then parsed as a TAG. The rail's own writer must emit rows its readers can parse.
+    def _san(v, cap=120):
+        return str(v if v not in (None, "") else "-").replace("\n", " ").replace("\r", " ")[:cap]
     line = '%s  %s  tool=comp-which  intent=%s  term=%s  q="%s"\n' % (
-        ts, decision, intent, (term or "-"), q.replace("\n", " ")[:120])
+        ts, _san(decision, 40), _san(intent), _san(term), _san(q))
     try:
         os.makedirs(os.path.dirname(RAIL_LOG), exist_ok=True)
         with open(RAIL_LOG, "a", encoding="utf-8") as f:
@@ -833,7 +932,13 @@ def _run_primitive(kind: str, term: str) -> int:
     print("  (on the rail: repo-scoped + .gitignore-aware + logged. If a rich tool SHOULD")
     print("   exist for this recurring intent, that is a TO-5 coverage-gap -> build it.)\n")
     try:
-        rc = subprocess.call([sys.executable, script, term], cwd=WS)
+        # SRC ATTRIBUTION (NFRA_COMPCLOSE 2026-07-14): the child comp-grep/comp-glob logs its own
+        # RUN-GREP/RUN-GLOB rail row, byte-identical to a DIRECT agent invocation -- so the Rule-21
+        # audit rail could not answer "fallback or direct?" (COMPASSURANCE TO-8d). The env var makes
+        # the child's row carry src=comp-which; a direct invocation carries src=direct.
+        env = dict(os.environ)
+        env["COMP_WHICH_CHILD"] = "1"
+        rc = subprocess.call([sys.executable, script, term], cwd=WS, env=env)
         return rc
     except Exception as e:
         # absolute last resort -- still NOT a dead-end: hand the agent the exact on-rail call
@@ -1011,6 +1116,13 @@ def _emit_training_row(row) -> None:
             row.setdefault("serial", os.environ.get("OPAL_AGENT_SERIAL", ""))
             row.setdefault("ts_epoch", time.time())
             row.setdefault("session_id", os.environ.get("CLAUDE_CODE_SESSION_ID", ""))
+            # SRC TAG (NFRA_COMPCLOSE 2026-07-14): --route-only was made rail-silent (the fix above)
+            # but STILL emitted training rows -- so the HUD's PreToolUse pipe filled the flywheel
+            # corpus with raw SEARCH STRINGS, not questions (the same defect, second sink; the rail
+            # fix stopped one sink and this one kept authoring the evidence base). TAG, do not
+            # suppress: consumers filter on src, and the historical corpus is salvageable by the
+            # same key (a suppressed row can never be re-examined; a tagged one can).
+            row.setdefault("src", "hud-route-only" if _ROUTE_ONLY else "live")
         with open(TRAINING_QUEUE, "a", encoding="utf-8") as fh:
             fh.write(json.dumps(row, ensure_ascii=True) + "\n")
     except Exception:

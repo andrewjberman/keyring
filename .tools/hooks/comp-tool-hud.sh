@@ -222,7 +222,11 @@ fi
 if [ "$_gate" = 1 ]; then
   RAIL_LOG="$WS/org/mcp/comp-which-rail.log"
   _ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')"
-  _q80="$(printf '%s' "$query" | head -c 100)"
+  # SANITIZED (NFRA_COMPCLOSE 2026-07-14): _q80 kept raw newlines, so a multi-line command wrote
+  # CONTINUATION LINES into the rail whose first token then parsed as a TAG (the "===/-n/bare-s3
+  # junk-row class, ~350 rows). One line per row is the rail's parse contract; enforce it here.
+  # (q= stays UNQUOTED -- existing parsers read the DENY/RUN-OVERRIDE shape; do not change it.)
+  _q80="$(printf '%s' "$query" | tr '\n\r' '  ' | head -c 100)"
   # OVERRIDE: an explicit, auditable `# rail-checked: <why>` marker -> authorized one-off; allow.
   if printf '%s' "$query" | grep -qE '#[[:space:]]*rail-checked:'; then
     # Log the override REASON in its own field (the TO-5 "repeat override = coverage gap" signal).

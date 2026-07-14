@@ -1,5 +1,14 @@
 # comp-tools.yaml — Agent directive for compiler tools
 #
+# SCOPE DECLARATION (NFRA_COMPCLOSE 2026-07-14): this file is a CURATED DIRECTIVE SUBSET --
+# rich when/cost/output prose for the high-traffic tools -- NOT a registry and NOT a census.
+# It carries ~24 of the 62 on-disk tools BY DESIGN. The authoritative registries are:
+#   comp-coverage-map.yaml   (the router's universe: every tool, one home, explicit routable:)
+#   graph-call-manifest.yaml (tools_index + entries -- the fuzzy-routing vocabulary)
+# both enforced by comp-manifest-check's completeness family (incl. the DISK-IMPLIES-REGISTERED
+# member). Do NOT count tools from this file -- that is how the fabric minted six conflicting
+# tool counts (28/29/~30/42/63/66) with no control catching any of them.
+#
 # These tools replace Explore agents and manual file-by-file tracing
 # for any task that involves understanding how systems connect.
 # They are deterministic, fast (<2s), and cover the full stack:
@@ -104,6 +113,7 @@ tools:
     output: "Typed cloud graph (17 node classes + edge vocab + drift/provenance classes incl AWS_MANAGED/MULTI_STATE_MANAGED) -> .comp-graph; snapshot tarballs -> opal-313476888478-globgrph"
     usage_guide: "org/modules/graph/comp-aws-agent-usage.yaml"
     project: "NFRA_COMPAWS"
+    overlay_role: "The LIVE half of the desired-vs-live overlay (see comp-iam.overlay_pattern): comp-iam parses TF = DESIRED; comp-aws emits the LIVE census; `comp-iam reconcile` overlays live on desired. IAM axis feeds comp-iam reconcile (per-role statements in its contract shape). NOTE 2026-07-14 (NFRA_COMPCLOSE): this file carried a SECOND `comp-aws:` key adjacent to comp-iam -- YAML duplicate-key semantics meant that thin Phase-0 stub SILENTLY REPLACED this canonical entry in every safe_load of this catalog. The stub is now a comment there; this is the one entry."
 
   comp-kuzu:
     command: 'comp-kuzu [--json] [--limit N] [--db-path PATH] "<Cypher>"'
@@ -607,19 +617,17 @@ tools_continued:
     note: "Catches permission gaps before they cause silent failures. The IAM watchdog loop incident (2026-04-09) was caused by s3:DeleteObject missing from bd-exporter-ec2-role -- comp-iam would have flagged this during the Terraform review. V4.024 (2026-05-08) eliminated the two FP classes that surfaced post-V4.022 backfill: (A) EC2-shipped-shell distinction — aws-cli patterns inside triple-quoted strings shipped via run_instances UserData= or send_command commands=[] no longer flag against the Lambda role; (B) AWS-managed-policy attachment parsing — aws_iam_role_policy_attachment with policy_arn = arn:aws:iam::aws:policy/X contributes X's actions to the role's grant set via static lookup table (S3/Lambda/SSM/DynamoDB/SecretsManager/CloudWatch + 21 ARNs) plus aws iam get-policy-version cache+API fallback for unknown ARNs (emits MANAGED_POLICY_UNKNOWN advisory + does NOT claim coverage when offline)."
     overlay_pattern: "DESIRED-vs-LIVE OVERLAY (generalizable + worth knowing): comp-iam parses Terraform = the DESIRED/source state (fast, offline); comp-aws emits the LIVE-AWS census; `comp-iam reconcile` OVERLAYS live ON desired to regress one against the other, surfacing drift the source-parse is structurally blind to (ungoverned/console-created roles, grants added outside IaC, over-perms). The same shape applies to ANY source-parse tool + a live census -- comp-routes (CF/router from TF+index.mjs) and comp-lambdamap (source-map vs TF) are desired-state too and could be overlaid the same way. Source-parse = the cheap always-on check; live census = the periodic regression."
 
-  # comp-aws is placed adjacent to comp-iam ON PURPOSE: they're the two halves of
-  # the overlay/regression pattern above -- comp-iam = desired/source, comp-aws = live.
-  comp-aws:
-    command: "comp-aws <axis>  (early Phase-0; 0.7.0_AE-owned)"
-    segment_scope: cross-segment
-    when: |
-      - Need LIVE-AWS ground truth (vs repo/TF desired-state): the declared-vs-live drift class
-      - Feeds `comp-iam reconcile` (live IAM per-role statements) + S3 declared-vs-live (shadow buckets)
-    output: |
-      Per-resource live census. IAM axis: per-role statements[{effect,actions,resources,condition,source}]
-      + overperm_flags, in comp-iam's reconcile contract shape. Phase-0 shipped as fixtures
-      (docs/briefs/cmpaws-{iam,s3}-*-census-*.json); EC2/Dynamo/eventing/edge/observability WIP + CVO-cert pending.
-    note: "The LIVE half of the desired-vs-live overlay (see comp-iam.overlay_pattern). 0.7.0_AE-owned; comp-iam consumes its IAM census via `reconcile`."
+  # comp-aws was placed adjacent to comp-iam ON PURPOSE (the two halves of the overlay/
+  # regression pattern above -- comp-iam = desired/source, comp-aws = live) -- BUT it was a
+  # DUPLICATE `comp-aws:` KEY: yaml.safe_load keeps the LAST key, so this thin early-Phase-0
+  # stub silently REPLACED the canonical comp-aws entry (line ~95, full derive/classes/metrics/
+  # diff/dual-managed/snapshot/score doc) in every load of this catalog. Found + fixed 2026-07-14
+  # (NFRA_COMPCLOSE Phase A). The canonical entry now carries the overlay_role note; this block
+  # is retained as prose only:
+  #   comp-aws <axis> (early Phase-0; 0.7.0_AE-owned) -- LIVE-AWS ground truth vs repo/TF
+  #   desired-state; feeds `comp-iam reconcile` (per-role statements in its contract shape) +
+  #   S3 declared-vs-live. Phase-0 shipped as fixtures (docs/briefs/cmpaws-{iam,s3}-*-census-*.json);
+  #   EC2/Dynamo/eventing/edge/observability WIP + CVO-cert pending.
 
   comp-registry:
     command: "comp-registry sync ROW=N | --project CODE | --all | (+ --apply)"

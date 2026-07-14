@@ -767,10 +767,102 @@ def _existence_invariant(files) -> int:
     return 1
 
 
+# member 5: only a `.tools/comp-*` add/rename or a registry edit can create a
+# DISK-BUT-UNREGISTERED tool.
+_REGISTRATION_SUBSTRATE = (
+    "org/modules/graph/graph-call-manifest.yaml",
+    "org/modules/graph/comp-coverage-map.yaml",
+)
+
+
+def _registration_invariant(files) -> int:
+    """0 = invariant holds, or not applicable. 1 = BLOCK.
+
+    DISK-IMPLIES-REGISTERED (NFRA_COMPCLOSE 2026-07-14) -- the INVERSE of member 4. Member 4
+    asserts a registered tool exists as a runnable executable; nothing asserted that an existing
+    executable is REGISTERED. Those diverged for weeks: comp-whoread / comp-deadgrant /
+    comp-tool-health (+11 more) were tracked, runnable, and absent from tools_index AND the
+    excluded list -- so comp-which could never route to them, and agents logged "no comp-tool
+    answers this" for questions those exact tools answer. A TOOL NOBODY CAN FIND IS
+    INDISTINGUISHABLE FROM A TOOL THAT WAS NEVER BUILT; this member makes the drift a commit-time
+    fact instead of a quarterly archaeology find.
+
+    THE INVARIANT, two legs, each with its denominator PRINTED (a filter whose complement you did
+    not enumerate is a filter you have not tested):
+      manifest leg -- every tracked `.tools/comp-*` executable is a tools_index key, OR in
+                      excluded_not_graph_use_cases (with its reason), OR the `tool:` of at least
+                      one `entries:` row (comp-which itself is accounted this way).
+      ledger leg   -- every such executable appears in the coverage map's union(tools[],
+                      meta_tools[]) -- the registry the posterior router actually routes on.
+
+    Universe = git-TRACKED `.tools/comp-*` (fresh-clone truth, same rationale as member 4) PLUS
+    any comp-* executable in THIS commit's pathspec (a brand-new tool registers in the same
+    commit). Never os.listdir -- we share one worktree and scratch files are not commitments.
+    Extensionless names only (the launchers); .py/.sh implementation siblings ride along
+    unregistered by design. DETERMINISTIC; ramp-exempt; fail-closed.
+    """
+    norm = _norm(files)
+    touched = (any(f.endswith(s) for s in _REGISTRATION_SUBSTRATE for f in norm)
+               or any("/.tools/" in "/" + f for f in norm))
+    if not touched:
+        return 0
+
+    try:
+        import subprocess as _sp
+        r = _sp.run(["git", "ls-files", ".tools/"], capture_output=True, text=True,
+                    cwd=str(_WORKSPACE))
+        if r.returncode != 0:
+            raise RuntimeError(f"git ls-files failed: {r.stderr.strip()[:120]}")
+        universe = {Path(p).name for p in r.stdout.split()}
+        for f in norm:
+            if "/.tools/" in "/" + f:
+                universe.add(Path(f).name)
+        universe = sorted(t for t in universe if t.startswith("comp-") and "." not in t)
+
+        raw = load_yaml(_MANIFEST)
+        ti = set((raw.get("tools_index") or {}).keys())
+        exc = set(raw.get("excluded_not_graph_use_cases") or [])
+        entry_tools = {str(e.get("tool", "")).split()[0] for e in (raw.get("entries") or [])
+                       if isinstance(e, dict)}
+        led = load_yaml(_WORKSPACE / "org" / "modules" / "graph" / "comp-coverage-map.yaml")
+        ledger = ({t.get("tool") for t in (led.get("tools") or []) if isinstance(t, dict)}
+                  | {t.get("tool") for t in (led.get("meta_tools") or []) if isinstance(t, dict)})
+    except Exception as e:  # fail-closed
+        print(
+            f"\nBLOCKED: the registration-invariant could not be evaluated ({e}).\n"
+            f"  An unevaluable completeness gate does not read as 'passed'."
+        )
+        return 1
+
+    unaccounted = [t for t in universe if t not in ti and t not in exc and t not in entry_tools]
+    unledgered = [t for t in universe if t not in ledger]
+
+    if not unaccounted and not unledgered:
+        print(f"  [manifest-check] registration-invariant PASS: {len(universe)} tracked+committed "
+              f"comp-* executable(s) all accounted (tools_index {len(ti)} + excluded {len(exc)} + "
+              f"entries-tools {len(entry_tools)}) and ledgered (coverage-map {len(ledger)}).")
+        return 0
+
+    print(f"\nBLOCKED: comp-* executable(s) on disk are NOT REGISTERED "
+          f"(universe {len(universe)} tracked+committed; tools_index {len(ti)}, excluded {len(exc)}, "
+          f"entries-tools {len(entry_tools)}, coverage-map {len(ledger)}):")
+    for t in unaccounted:
+        print(f"  - {t:<22} in NEITHER tools_index NOR excluded_not_graph_use_cases NOR any entries: row")
+    for t in unledgered:
+        print(f"  - {t:<22} absent from comp-coverage-map.yaml union(tools[], meta_tools[]) -- the "
+              f"posterior router cannot see it")
+    print(
+        "  A tool nobody can find is indistinguishable from a tool that was never built. FIX:\n"
+        "  register it (tools_index + an entries: row with agent-phrasing use_case + a coverage-map\n"
+        "  home with an explicit routable:), or add it to excluded_not_graph_use_cases WITH a reason."
+    )
+    return 1
+
+
 def _completeness_invariants(files) -> int:
     """The family. Any member blocking blocks the commit. See the design comment above."""
     for member in (_routable_invariant, _placement_invariant, _selfroute_invariant,
-                   _existence_invariant):
+                   _existence_invariant, _registration_invariant):
         if member(files):
             return 1
     return 0

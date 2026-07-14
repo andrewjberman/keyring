@@ -30,7 +30,7 @@
 #   comp-grep / comp-glob                 -- the ON-RAILS SEARCH PRIMITIVES comp-which RUNS when
 #                                            no rich tool fits (the never-dead-end); a search
 #                                            primitive, not a graph-query rich tool you route TO
-excluded_not_graph_use_cases: [comp-learns-status, comp-perf, comp-v5-composite-test, comp-manifest-check, comp-surface-check, comp-to, comp-grep, comp-glob]  # comp-manifest-check = D6 manifest-ENFORCEMENT gate; comp-surface-check = D8 critical-surface commit-gate (polices critical-surfaces.yaml at commit, auto in safe-commit) -- both ENFORCEMENT gates, not graph-query use-cases (so excluded here; they're in CLAUDE.md's invoke-table). comp-to = session-context setter (writes the race-free per-session TO_ID for the comp auto-logger); a startup/context primitive like comp-which/comp-grep/comp-glob, not a graph-query use-case. comp-grep/comp-glob = the on-rails search PRIMITIVES comp-which RUNS when no rich tool fits (the never-dead-end targets); search primitives, not graph-query rich tools you route TO -- now formally accounted so the registry is COMPLETE (every .tools/comp-* is in tools_index, in entries as comp-which the router, or here with a reason). comp-grep/comp-glob registry-accounting added 3.0.0_SA_CVO 2026-06-26 comp-tools campaign (LD-0208 coverage reconcile 2026-06-25, CTO)
+excluded_not_graph_use_cases: [comp-perf, comp-v5-composite-test, comp-manifest-check, comp-surface-check, comp-to, comp-grep, comp-glob, comp-coverage-check, comp-routable-check, comp-kit-striplist-gate, comp-tool-health-gate, comp-canon-motif, comp-passcraft, comp-stitch-refresh]  # NFRA_COMPCLOSE 2026-07-14: (a) comp-learns-status REMOVED from this exclusion -- it IS a graph-query use-case (routable, tools_index entries: meta.learns.demand_gap_cost); (b) ADDED the 7 previously-unaccounted disk tools so the registration invariant (every .tools/comp-* is in tools_index OR excluded-here-with-a-reason) is TRUE again: comp-coverage-check/comp-routable-check/comp-kit-striplist-gate/comp-tool-health-gate = enforcement gates (police, not query); comp-canon-motif = debtscan scorer (worklist producer); comp-passcraft = anti-harness recon scaffolding (stops at the verdict door); comp-stitch-refresh = graph PRODUCER (write-path substrate refresh, not a query target)  # comp-manifest-check = D6 manifest-ENFORCEMENT gate; comp-surface-check = D8 critical-surface commit-gate (polices critical-surfaces.yaml at commit, auto in safe-commit) -- both ENFORCEMENT gates, not graph-query use-cases (so excluded here; they're in CLAUDE.md's invoke-table). comp-to = session-context setter (writes the race-free per-session TO_ID for the comp auto-logger); a startup/context primitive like comp-which/comp-grep/comp-glob, not a graph-query use-case. comp-grep/comp-glob = the on-rails search PRIMITIVES comp-which RUNS when no rich tool fits (the never-dead-end targets); search primitives, not graph-query rich tools you route TO -- now formally accounted so the registry is COMPLETE (every .tools/comp-* is in tools_index, in entries as comp-which the router, or here with a reason). comp-grep/comp-glob registry-accounting added 3.0.0_SA_CVO 2026-06-26 comp-tools campaign (LD-0208 coverage reconcile 2026-06-25, CTO)
 
 contract:
   default: QUERY        # comp-kuzu (cloud/cross-layer) or cached comp-trace/comp-blast (trace)
@@ -882,6 +882,180 @@ entries:
     anti_pattern: "raw grep/Read across portal/src/pages to reconstruct a page's panel->drilldown tree + which components share a data source (text-local; misses the render-subtree nesting + the per-firm cohort fork + cross-panel coupling); comp-cache sees only RQ-key collisions -- comp-cluster generalizes that to the full component<->data-source coupling (the 6-source superset) over the materialized cluster graph"
     status: canonical    # NFRA_TSGRAPH P2-3 (0.4.0_DE 2026-06-30); COO~B GO + CTO inv-2 edge ruling 22cb21116 (CONTAINS_DRILLDOWN->CONTAINS+depth canonical, CLUSTERS/SHARES_SOURCE distinct). Ledger-registered (comp-coverage-map.yaml, ~C). comp-which routing: 'panel/drilldown tree of a page ; which components share a data source ; per-firm cohort component fork' -> comp-cluster (fuzzy backstop auto-includes; curated-rule follow-up).
 
+  # ---- NFRA_COMPCLOSE Phase A (2026-07-14): entries for the FIVE tools_index tools that had
+  # ZERO rows here (comp-depth/comp-dispatch/comp-drift/comp-learns-status/comp-symbols -- invisible
+  # to the _manifest_matches fuzzy backstop) + the SEVEN newly-routable meta tools (they were
+  # routable=False via the _ROUTABLE_META_ROLES silent-drop; declared routable in the coverage map
+  # the same pass). use_case text is deliberately AGENT-PHRASING -- it is the fuzzy vocabulary. ----
+
+  - id: graph.depth.grain_scope
+    use_case: "What grain is this node at -- drill a graph node coarse-to-fine, roll up fine-to-coarse, list every node at a given grain, or run a grain-scoped blast on the marker-head graph?"
+    canonical_call: "comp-depth grains <node-id> | scope <grain> | drill <node-id> --to <grain> | rollup <node-id> --to <grain> | blast <node-id> --grain <g>"
+    tool: comp-depth
+    mode: query
+    layer: graph
+    cost: "~1-2s (marker-head read-handle, provenance-checked)"
+    freshness: "reads the provenance-checked marker-head graph (ONE head, checked every call)"
+    rebuild_trigger: "n/a -- queries the live marker-head graph"
+    anti_pattern: "hand-guessing what level of the CONTAINS ladder a node sits at, or blast-reading at the wrong grain"
+    status: canonical
+
+  - id: pipeline.dispatch.orchestration_dag
+    use_case: "What does the gold dispatch actually run -- which gold scripts, in what order, under which chain groups and conditional gates or skips, and which gold-dir scripts are undispatched (never run by the dispatcher)?"
+    canonical_call: "comp-dispatch <firm> [--chain <name> | --script <ID> | --gates | --undispatched] | comp-dispatch --list"
+    tool: comp-dispatch
+    mode: query
+    layer: pipeline
+    cost: "~1s (read-only parse of gold_dispatch.sh declared blocks; never executes the bash)"
+    freshness: "live file parse of the dispatch script"
+    rebuild_trigger: "n/a"
+    anti_pattern: "grep over gold_dispatch.sh to reconstruct chain order / run order / skip conditions (text-local; misses group flags + conditional gates); comp-pipescript is the per-SCRIPT grain -- this is the CHAIN grain"
+    status: canonical
+
+  - id: drift.coverage.ledger
+    use_case: "Where is the estate's propagation topology unguarded today -- which local-to-git-to-cloud-to-served seams have no drift check covering them?"
+    canonical_call: "comp-drift coverage"
+    tool: comp-drift
+    mode: query
+    layer: estate
+    cost: "~instant (manifest read of drift-topology.yaml)"
+    freshness: "reads the seam-coverage SSOT ledger"
+    rebuild_trigger: "n/a"
+    anti_pattern: "assuming a seam is watched because a tool exists for it; any GAP row is drift you cannot see"
+    status: canonical
+
+  - id: drift.target.chain_walk
+    use_case: "Did my script / lambda / graph node propagate intact all the way local -> git -> cloud -> nessie -> kuzu -> iceberg -> trino -> served?"
+    canonical_call: "comp-drift <target>"
+    tool: comp-drift
+    mode: query
+    layer: estate
+    cost: "~seconds (invokes the seam engines for one target)"
+    freshness: "live per-seam engine calls; tri-state exit 0 clean / 1 break / 2 UNVERIFIABLE (never a silent MATCH)"
+    rebuild_trigger: "n/a -- orchestrates existing seam engines, never re-implements a check"
+    anti_pattern: "verifying only the seam you changed and inferring the rest propagated; an unreadable seam is UNVERIFIABLE, not clean"
+    status: canonical
+
+  - id: drift.sweep.parity_board
+    use_case: "Is the whole estate in propagation parity right now -- fan out across every seam and give me one unified drift board?"
+    canonical_call: "comp-drift sweep [--deep]"
+    tool: comp-drift
+    mode: query
+    layer: estate
+    cost: "~seconds (cheap seams live; live/network engines cost-guarded behind --deep)"
+    freshness: "live sweep; UNVERIFIABLE rows are loud, never silently green"
+    rebuild_trigger: "n/a"
+    anti_pattern: "reading a sweep's cost-guarded SKIP rows as clean; they are unswept, not passing"
+    status: canonical
+
+  - id: meta.learns.demand_gap_cost
+    use_case: "Which comp-tools are actually in demand, where are the coverage gaps (rail escapes by path, zero-match greps, denies), and what tool should we build next (the GAP x HEAT build-next ranking)?"
+    canonical_call: "comp-learns-status [gap_heat|coverage_gaps|tool_demand|...] [--json]"
+    tool: comp-learns-status
+    mode: query
+    layer: meta
+    cost: "~1s (renders the SERVED status JSON; never recomputes)"
+    freshness: "served read-model materialized by comp_learns_produce.py from the live globgrph Trino federation; assembled-at stamped in the header"
+    rebuild_trigger: "comp_learns_produce.py rerun (scheduled/ad-hoc); the reader never rebuilds"
+    anti_pattern: "hand-mining org/mcp/comp-which-rail.log to find tool-coverage gaps (the federation already ranks them, escape-weighted by code heat)"
+    status: canonical
+
+  - id: trace.symbols.file_inventory
+    use_case: "What functions, classes, module constants and imports does this source file declare, with line numbers -- the forward AST inventory of one file?"
+    canonical_call: "comp-symbols <file> [--grep <pattern>] [--kind func|class|const|import] [--json]"
+    tool: comp-symbols
+    mode: query
+    layer: trace
+    cost: "~1s (deterministic ast.parse; read-only, no execution)"
+    freshness: "live file parse"
+    rebuild_trigger: "n/a"
+    anti_pattern: "grep 'def ' over a file to inventory it (misses classes/constants/imports + line spans); comp-xref is the graph-wide OCCURRENCE of a symbol -- this is what ONE FILE defines"
+    status: canonical
+
+  - id: cloud.whoread.object_read_forensics
+    use_case: "Which principals ACTUALLY READ objects in an S3 bucket or prefix -- who did read (CloudTrail object-level data events via Athena), with counts and first/last seen -- not who may read?"
+    canonical_call: "comp-whoread <bucket>[/prefix] [--since ...]"
+    tool: comp-whoread
+    mode: query
+    layer: cloud
+    cost: "~10-60s (Athena over the org-trail data-event partitions)"
+    freshness: "THE DENOMINATOR IS THE COVERAGE WINDOW (printed on line 1): object-level events exist only from the PutEventSelectors date; wider ranges return clean from partitions that never held an event. FAILS CLOSED (rc=1) on zero data events in range"
+    rebuild_trigger: "n/a"
+    anti_pattern: "deriving an IAM narrowing from observed reads (a floor on reachability, not a ceiling); comp-firmsep-sweep answers who MAY reach, comp-iam the grants"
+    status: canonical
+
+  - id: cloud.deadgrant.silent_degrade
+    use_case: "Is a feature silently degraded in production by a DEAD grant -- a secret or permission a fail-silent reader cannot actually reach (region-mismatched grant, missing secret), intersected with whether the consumer is LIVE?"
+    canonical_call: "comp-deadgrant [<lambda|role>]"
+    tool: comp-deadgrant
+    mode: query
+    layer: cloud
+    cost: "~seconds-minutes (live IAM + deployed artifacts + last-invocation evidence)"
+    freshness: "live AWS; LIVE-vs-LATENT decided from the last invocation, never from code"
+    rebuild_trigger: "n/a"
+    anti_pattern: "reading a green error log as feature health -- a fail-silent reader swallows the failure; either axis alone (dead reach / silent reader) is benign, together they degrade with nothing reporting"
+    status: canonical
+
+  - id: cloud.denytest.iam_change_verify
+    use_case: "Verify a firm-separation IAM change actually landed and evaluates correctly -- exercise live IAM (simulate-principal-policy) with the expected verdict DERIVED from the terraform change type (deny-add must explicitDeny; allow-removal must implicitDeny)?"
+    canonical_call: "comp-denytest <plan|change-spec>"
+    tool: comp-denytest
+    mode: query
+    layer: cloud
+    cost: "~seconds (live simulate-principal-policy, one resource-arn per call)"
+    freshness: "live IAM evaluation; refuses multi-ARN batching, takes condition context, demands a discriminator"
+    rebuild_trigger: "n/a"
+    anti_pattern: "citing comp-iam DESIRED or a config read as proof an IAM change is live (Rule 22a: comp-iam models action, never (action, resource), and fails GREEN on new resources)"
+    status: canonical
+
+  - id: cloud.tagauthz.tag_authorization_gate
+    use_case: "Are this resource's TAGS load-bearing for authorization -- would a terraform import or default_tags apply silently overwrite a tag value that an IAM policy conditions access on (aws:ResourceTag)?"
+    canonical_call: "comp-tagauthz <resource|tf-tree>"
+    tool: comp-tagauthz
+    mode: query
+    layer: cloud
+    cost: "~seconds (one account-wide get-account-authorization-details + live resource tags)"
+    freshness: "live IAM + live tags; derives the authorization-bearing (key,value) pairs, never a remembered list; states its own denominator"
+    rebuild_trigger: "n/a"
+    anti_pattern: "asserting 'the plan only changes tags' as safe -- attribute-surface checks PASS the apply that revokes tag-conditioned access"
+    status: canonical
+
+  - id: cloud.firmsep.credential_universe
+    use_case: "Which roles in the account can a firm's credential actually reach -- simulate the credential against EVERY role and assert only the firm's own roles allow (prove the universe, not the grant shape)?"
+    canonical_call: "comp-firmsep-sweep <firm> [--write-reach]"
+    tool: comp-firmsep-sweep
+    mode: query
+    layer: cloud
+    cost: "~minutes (simulation across the full role universe)"
+    freshness: "live IAM simulation; enumerates by SIMULATION because a grep-derived universe missed AWS-managed Resource:'*' policies (4-roles-was-really-6, 2026-07-09)"
+    rebuild_trigger: "n/a"
+    anti_pattern: "lint over our own TF grant shapes as the firm-separation proof -- it cannot see AWS-managed wildcard policies"
+    status: canonical
+
+  - id: meta.toolhealth.keep_fix_retire
+    use_case: "Is comp-tool X healthy -- is it used, rail-consistent, and effective, and should we KEEP, FIX, PROMOTE or RETIRE it (the fused 3-axis, value-anchored health verdict)?"
+    canonical_call: "comp-tool-health [<tool>] [--json]"
+    tool: comp-tool-health
+    mode: query
+    layer: meta
+    cost: "~seconds (COMPLEARN substrate read)"
+    freshness: "value-anchored over outcome value + rail quality, never invocation count; advisory (CTO ratifies)"
+    rebuild_trigger: "n/a"
+    anti_pattern: "reading a tool's raw usage count as its health (the Goodhart trap; a tool that has always been wrong produces a flawless usage log)"
+    status: canonical
+
+  - id: meta.toolgraph.suite_coupling
+    use_case: "How do the comp-tools couple to each other -- shared substrates, write edges, invoked-by edges, and where the DECLARED overlap groups diverge from the ACTUAL import graph (undeclared ripple)?"
+    canonical_call: "comp-toolgraph [--json]"
+    tool: comp-toolgraph
+    mode: query
+    layer: meta
+    cost: "~seconds (measure-only graph over the ratified tool universe)"
+    freshness: "read-only census; the only write is its committed census JSON"
+    rebuild_trigger: "n/a"
+    anti_pattern: "reasoning about a comp-tool edit's blast radius from the coverage map's DECLARED overlap groups alone (the real import graph ripples wider -- the grain_sentinel cluster hit 6 tools declared nowhere)"
+    status: canonical
+
 # ===========================================================================
 # tools_index — per-tool instructional reference (AC1 'instructional for each
 # comp tool'). One block per comp-* tool: what it does, its subcommands, and
@@ -937,7 +1111,17 @@ tools_index:
   comp-dups:     { does: "Estate duplicate/dead-resource CENSUS (NFRA_DEBTSCAN standing dimension): 4 structural duplicate classes (CROSS_FIRM/IAM_POLICY_SPLIT/SERVICE_SPLIT/ENV_TWIN) + dual-evidence dead-confirm (30d reads AND writes); bare=on-demand scan, --nightly=post-derive ledger-write to org/modules/graph/debtscan/ (DUPS_candidates.json + dups_latest.json). DISTINCT from comp-aws dual-managed (TF-state apply-conflict only); removal = worklist+human-confirm. Engine: dup_scan.py", subcommands: ["--class", "--nightly", "--json"], entries: [estate.dups.duplicate_resources] }
   comp-secrets:  { does: "AWS Secrets Manager lens: inventory (firm-tagged + rotation/freshness), SAFE read (redacted shape by default; --reveal=cleartext-to-stdout-never-logged), secret->consumer code/TF map, rotation audit. Read-only; SSL-fallback to the Windows cert store. DISTINCT from comp-iam (the IAM-grant/who-can-read view)", subcommands: [list, get, consumers, rotation], entries: [cloud.secrets.inspect] }
   comp-system:   { does: "NFRA_SYSTEM current-state COMPILER (the dynamic SYSTEM half): reads LIVE compiled-system state across the LOCALROOT knowledge-classes via the EXISTING comp-tools (comp-kuzu graph counts + marker-oracle, cse_schema, comp_coverage_view/TOOLCHECK matrix, comp-fedobs served-artifact, PROMOTE recognizer manifest) -> emits infra/system/06_current_state.{md,json}. ONE source, THREE consumers: the SYSTEM current-state + base COO's LOCALROOT runtime index (per-class ## anchors) + COO~B's P4-maturity grading (parses the .json maturity_evidence -> derives 07_maturity). HARD LINE: every number grounded-against-live or UNKNOWN-VINTAGE, ZERO fabrication (CTO/GOV-A); marker-oracle auto-refresh (--check). Shape: per-LOCALROOT-class object {static_home, current_state, maturity_evidence, maturity_rollup} + provenance header + observe-diversity metric. Engine: org/modules/graph/comp_system.py (AE lane); the 06 output is exec-committable (infra/system/** carve)", subcommands: ["", "--stdout", "--json", "--self-test", "--check"], entries: [system.current_state.compile] }
-  comp-depth:    { does: "DEPTH-scoped querying on the marker-head graph (NFRA_GRAPHDEPTH P3): the GRAIN coordinate of an investigation -- a node's grain and CONTAINS-ladder level, every node at a given grain, coarse-to-fine drill and fine-to-coarse rollup, and a grain-scoped traversal. Grain-calibrated by the grain_contract; composes the provenance-checked marker-head read-handle (ONE head, checked every call). Answers WHAT GRAIN, not what-is-affected.", subcommands: ["grains <node-id>", "scope <grain> [--limit N]", "drill <node-id> --to <grain>", "rollup <node-id> --to <grain>", "blast <node-id> --grain <g>"], entries: [] }
-  comp-dispatch: { does: "The gold-dispatch ORCHESTRATION-DAG (NFRA_COMPROUTE Stage-1 #1; CTO-ratified 2026-07-01 as a distinct one-home node): which gold scripts run, in what order, under which chain/group flags + conditional gates, and which gold-dir scripts are UNDISPATCHED (standalone diagnostics). CHAIN/orchestration grain -- the sibling to comp-pipescript's per-SCRIPT grain. Read-only parse of gold_dispatch.sh's declared blocks; never executes the bash", subcommands: ["<firm>", "<firm> --chain <name>", "<firm> --script <ID>", "<firm> --gates", "<firm> --undispatched", "--list [--json]"], entries: [] }
-  comp-symbols:  { does: "Intra-file SYMBOL INVENTORY (NFRA_COMPROUTE Stage-1 #3; CTO-ratified 2026-07-01 as a distinct one-home node): what functions, classes, module-constants and imports a source FILE declares, with line numbers. Input is a FILE; output is that file's forward AST inventory. Deterministic ast.parse; read-only, no LLM, no execution.", subcommands: ["<file>", "<file> --grep <pattern>", "<file> --kind func|class|const|import", "<file> --json"], entries: [] }
-  comp-learns-status: { does: "The COMPLEARN loop's read-only DEMAND / GAP / COST surface: renders the served status JSON that comp_learns_produce.py materializes from the live globgrph Trino federation (Behavior=tool_activity x Change=code_heat x Estate=iceberg). Reads SERVED state -- never recomputes. (Its sibling use-verb was retired 2026-07-08 per the NFRA_TOOLCHECK P2 ruling.)", subcommands: ["", "<view>  # gap_heat|coverage_gaps|tool_demand|...", "--json", "--source <s3://...|LOCAL.json>"], entries: [] }
+  comp-depth:    { does: "DEPTH-scoped querying on the marker-head graph (NFRA_GRAPHDEPTH P3): the GRAIN coordinate of an investigation -- a node's grain and CONTAINS-ladder level, every node at a given grain, coarse-to-fine drill and fine-to-coarse rollup, and a grain-scoped traversal. Grain-calibrated by the grain_contract; composes the provenance-checked marker-head read-handle (ONE head, checked every call). Answers WHAT GRAIN, not what-is-affected.", subcommands: ["grains <node-id>", "scope <grain> [--limit N]", "drill <node-id> --to <grain>", "rollup <node-id> --to <grain>", "blast <node-id> --grain <g>"], entries: [graph.depth.grain_scope] }
+  comp-dispatch: { does: "The gold-dispatch ORCHESTRATION-DAG (NFRA_COMPROUTE Stage-1 #1; CTO-ratified 2026-07-01 as a distinct one-home node): which gold scripts run, in what order, under which chain/group flags + conditional gates, and which gold-dir scripts are UNDISPATCHED (standalone diagnostics). CHAIN/orchestration grain -- the sibling to comp-pipescript's per-SCRIPT grain. Read-only parse of gold_dispatch.sh's declared blocks; never executes the bash", subcommands: ["<firm>", "<firm> --chain <name>", "<firm> --script <ID>", "<firm> --gates", "<firm> --undispatched", "--list [--json]"], entries: [pipeline.dispatch.orchestration_dag] }
+  comp-symbols:  { does: "Intra-file SYMBOL INVENTORY (NFRA_COMPROUTE Stage-1 #3; CTO-ratified 2026-07-01 as a distinct one-home node): what functions, classes, module-constants and imports a source FILE declares, with line numbers. Input is a FILE; output is that file's forward AST inventory. Deterministic ast.parse; read-only, no LLM, no execution.", subcommands: ["<file>", "<file> --grep <pattern>", "<file> --kind func|class|const|import", "<file> --json"], entries: [trace.symbols.file_inventory] }
+  comp-learns-status: { does: "The COMPLEARN loop's read-only DEMAND / GAP / COST surface: renders the served status JSON that comp_learns_produce.py materializes from the live globgrph Trino federation (Behavior=tool_activity x Change=code_heat x Estate=iceberg). Reads SERVED state -- never recomputes. (Its sibling use-verb was retired 2026-07-08 per the NFRA_TOOLCHECK P2 ruling.)", subcommands: ["", "<view>  # gap_heat|coverage_gaps|tool_demand|...", "--json", "--source <s3://...|LOCAL.json>"], entries: [meta.learns.demand_gap_cost] }
+  # ---- NFRA_COMPCLOSE Phase A (2026-07-14): the 7 newly-routable meta tools, indexed. These were
+  # on disk + in the coverage map but absent here AND routable=False via the role allowlist -- the
+  # "tool nobody can find is indistinguishable from a tool never built" class. ----
+  comp-whoread:  { does: "WHO-DID-READ S3 object-read forensics: the principals that ACTUALLY read a bucket/prefix (CloudTrail object-level data events via Athena) + counts + first/last-seen. Denominator = the coverage window, printed line 1; FAILS CLOSED (rc=1) on zero data events in range. Floor on reachability, never a ceiling -- do not derive IAM narrowings from it", subcommands: ["<bucket>[/prefix]", "--since"], entries: [cloud.whoread.object_read_forensics] }
+  comp-deadgrant: { does: "DEAD-GRANT silent-degrade detector: intersects a dead secret/permission reach (region-mismatched grant, missing secret) with a FAIL-SILENT reader and last-invocation liveness -- the class where a feature degrades in production with nothing reporting it (the daily-agenda github-token case, 2026-07-09)", subcommands: ["[<lambda|role>]"], entries: [cloud.deadgrant.silent_degrade] }
+  comp-denytest: { does: "Firm-sep IAM change VERIFY harness: exercises live IAM (simulate-principal-policy, ONE resource-arn per call, condition-context aware) with the expected verdict DERIVED from the terraform change type (deny-add => explicitDeny; allow-removal => implicitDeny) -- the author can neither pick the criterion nor hold the call wrong", subcommands: ["<plan|change-spec>"], entries: [cloud.denytest.iam_change_verify] }
+  comp-tagauthz: { does: "PRE-IMPORT tag-authorization gate: are a resource's TAGS load-bearing for authorization (aws:ResourceTag conditions)? A default_tags import that 'only changes tags' can silently overwrite the value that GRANTS access -- this measures AUTHORIZATION, not attribute surface", subcommands: ["<resource|tf-tree>"], entries: [cloud.tagauthz.tag_authorization_gate] }
+  comp-firmsep-sweep: { does: "PROVE-THE-UNIVERSE firm-separation sweep: simulates a firm credential against EVERY role in the account and asserts only the firm's own roles allow (optionally write-reach too). Enumerates by SIMULATION because grant-shape greps cannot see AWS-managed Resource:'*' policies", subcommands: ["<firm>", "--write-reach"], entries: [cloud.firmsep.credential_universe] }
+  comp-tool-health: { does: "Fused per-comp-tool 3-axis HEALTH query (used / rail_consistent / effective -> KEEP|FIX|PROMOTE|RETIRE) over the COMPLEARN substrate; value-anchored (outcome value + rail quality, never invocation count); read-only advisory (CTO ratifies). Engine comp_tool_health.py", subcommands: ["[<tool>]", "--json"], entries: [meta.toolhealth.keep_fix_retire] }
+  comp-toolgraph: { does: "The comp-tool SUITE as a measure-only graph: C0 nodes (the ratified universe) + C1 mechanical edges (SHARES_SUBSTRATE/WRITES/INVOKED_BY) + the DECLARED-vs-ACTUAL coupling diff (the undeclared-ripple finding). Engine comp_toolgraph.py", subcommands: ["--json"], entries: [meta.toolgraph.suite_coupling] }

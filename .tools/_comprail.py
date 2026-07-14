@@ -126,8 +126,15 @@ def _utc_ts() -> str:
 
 
 def log_rail(rail_log: str, decision: str, tool: str, term: str, extra: str = "") -> None:
-    term1 = (term or "-").replace("\n", " ")[:120]
-    line = "%s  %s  tool=%s  term=%s  %s\n" % (_utc_ts(), decision, tool, term1, extra)
+    term1 = (term or "-").replace("\n", " ").replace("\r", " ")[:120]
+    # extra was written RAW -- a multi-line pathspec/fragment wrote continuation lines whose first
+    # token then parsed as a rail TAG (the "=== junk-row class). Sanitize every interpolated field.
+    extra1 = (extra or "").replace("\n", " ").replace("\r", " ")[:200]
+    # SRC ATTRIBUTION (NFRA_COMPCLOSE 2026-07-14, COMPASSURANCE TO-8d): a comp-grep row spawned by
+    # comp-which's fallback was byte-identical to a direct agent invocation, so RUN-GREP could not
+    # be attributed and the Rule-21 rail could not answer the question it exists to answer.
+    src = "comp-which" if os.environ.get("COMP_WHICH_CHILD") else "direct"
+    line = "%s  %s  tool=%s  term=%s  src=%s  %s\n" % (_utc_ts(), decision, tool, term1, src, extra1)
     try:
         os.makedirs(os.path.dirname(rail_log), exist_ok=True)
         with open(rail_log, "a", encoding="utf-8") as f:

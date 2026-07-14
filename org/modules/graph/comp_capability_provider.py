@@ -84,15 +84,17 @@ SEAM_KEY = "SEAM"
 META_KEY = "META"
 SURFACE_KEYS = ("LOCAL", "GIT", "AWS-CLOUD", "MS-CLOUD", "TRINO", SEAM_KEY, META_KEY)
 
-# meta_tool roles that ARE routing TARGETS (comp-which routes intents TO them -- they appear in the
-# manifest tools_index). DR2 (default-router): the routable set must match comp-which's actual routing
-# targets, so an agent's intent can reach e.g. pipescript (a pipeline is resources wired by python
-# scripts -- pipescript walks that named thread), comp-build (rebuild the trace cache), comp-coverage
-# (coverage report), comp-drift (drift orchestrator), comp-registry (registry drift). NON-routable =
-# the tooling INFRA that is never a route target: router (comp-which itself), search-primitive
-# (comp-grep/glob -- the never-dead-end FALLBACK, surfaced via route()'s kind="fallback", not a scored
-# candidate), session-primitive (comp-to), enforcement-gate (the commit gates), test-harness,
-# meta-measurement (comp-perf). Present-for-completeness (routable=False) still keeps inventory whole.
+# FALLBACK ONLY (NFRA_COMPCLOSE Phase A, 2026-07-14): routability is now DECLARED per meta_tool in
+# comp-coverage-map.yaml (`routable: true|false` on every entry) -- because this role allowlist was a
+# SILENT-DROP mechanism: any meta-tool whose role was not listed here got routable=False and vanished
+# from the posterior candidate set with no error (bit comp-system per the note below; bit comp-whoread /
+# comp-deadgrant / comp-denytest / comp-tagauthz / comp-firmsep-sweep / comp-tool-health / comp-toolgraph
+# for weeks -- agents logged "no comp-tool answers which principals touch X" while comp-whoread sat on
+# disk). A NEW ROLE STRING => routable must be declared at registration, never inferred here. This set
+# remains only as the fallback for a map entry that omits the key (no-regression path).
+# NON-routable by design: router (comp-which), search-primitives (comp-grep/glob -- the never-dead-end
+# FALLBACK, surfaced via route()'s kind="fallback", not a scored candidate), session-primitive (comp-to),
+# enforcement gates, test harnesses, meta-measurement (comp-perf). routable=False still keeps inventory whole.
 _ROUTABLE_META_ROLES = frozenset({
     "estate-router", "cache-management", "meta-report", "governance",
     "compdrift-loop", "complearn-loop", "fedobs-reflective-reader",
@@ -271,7 +273,11 @@ def _build_capabilities(m: Mapping[str, Any]) -> List[Capability]:
                 affinity_key=META_KEY,
                 declared_grains=tuple(str(g) for g in declared) if declared else (),
                 kind="meta",
-                routable=role in _ROUTABLE_META_ROLES,
+                # DECLARED routability wins (comp-coverage-map.yaml `routable:` per entry, NFRA_COMPCLOSE);
+                # the role allowlist is the fallback for entries that omit the key -- never the primary,
+                # because an unlisted role silently dropped real query tools from the candidate set.
+                routable=(bool(mt["routable"]) if "routable" in mt
+                          else role in _ROUTABLE_META_ROLES),
                 write_path=(tool_id in write_path_tools),
             )
         )
