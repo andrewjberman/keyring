@@ -143,3 +143,32 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   claims precisely because prose rules without detectors are how records drift (CVO~Z, verdict
   cvoz_verify_nfra_compclose_verdict.md).
 - resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+
+## [OPEN] instrument-integrity -- comp-freshness ddb FALSE-EMPTY on populated tables (CF-1)  (filed 2026-07-14, CTO-routed)
+<!-- key: instrument-integrity|comp-freshness-ddb-false-empty-cf1 -->
+- disposition: DEFECT + config gap -- ddb mode's default PK-prefix probe fits neither opal-assets-daily-aua
+  nor opal-news-articles key shapes; "WARN / No items found with PK prefix ''" is byte-indistinguishable
+  from a genuinely empty table (verification law 5: not-knowing rendering as confidence; same family as
+  the NEVER#1 flat-hours fallback made structural @ 50568a481).
+- value evidence: 2/2 false-empty on populated tables (0.7.0 connector sweep,
+  CONNECTOR_SWEEP_C_LANDED_BYTES_INTERIM_20260714.md FINDING CF-1; direct scans return items on both).
+- DESIGN RULED (CTO 2026-07-14 ~18:5xZ): (1) a config-missing/key-shape-mismatch read MUST print a
+  distinct CONFIG-MISS verdict class -- never a WARN that looks measured; the tool needs a channel for
+  "I don't know". (2) per-table config entries carry the REAL PK pattern (+ freshness_basis where
+  applicable) for both named tables, grounded on describe-table key schema, not guessed.
+- resolution: OPEN -- **BUILD RATIFIED, APPROVED-PENDING-BUILDER** (CTO, routed from COO 185255Z; base-CTO
+  is instruct-usage-never-build per the 07-14 scope directive -- route to ~Z-group/0.8.0-class capacity
+  via MSTR when it exists). Flips to `BUILT <tool + commit>` at build time.
+
+## [OPEN] coverage-gap -- the MONOLITH (opal-data-assets) has zero comp-tool coverage  (filed 2026-07-14, CTO)
+<!-- key: coverage-gap|monolith-opal-data-assets-no-comp-tool -->
+- disposition: coverage gap by the rail's own law -- every landing/backfill/freshness verify on the
+  monolith tonight ran raw listings under audited rail-checked markers (org/mcp/comp-which-rail.log,
+  2026-07-14 16:1xZ-18:4xZ, repeated single-intent overrides = build signal). comp-freshness has no
+  opal-data-assets entries; pipescript/comp-aws do not model the {source}/{scope}/{layer} grammar,
+  the sweep verdict manifests (meta/conversions/), or the trading-day frontier for the new channels.
+- value evidence: >= 8 rail-checked raw listings in one session by one agent (CTO), across orion/eclipse/
+  blackdiamond/schwab/smartx/etf channels; the monolith is now the estate's primary data plane.
+- DESIGN NOTE (not binding): the cheapest first cut is comp-freshness family entries per channel with
+  freshness_basis: trading-day-frontier + the manifest listing as the sweep-health oracle.
+- resolution: OPEN -- registry-owner lane to scope; base-CTO files, does not build (07-14 scope directive).
