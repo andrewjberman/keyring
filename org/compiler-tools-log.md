@@ -17478,3 +17478,23 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-blast | comp-blast convert_transactions_to_silver.py | FAIL |
 | 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | (none -- live-artifact verify) | 0824 terminality + spot-check grounded on live s3api listings/bytes per Rule 20/22a; comp tools model DESIRED, landed bytes were the question | PASS |
 | 2026-07-14 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-blast | comp-blast INF_D_02b.top_holdings.py | FAIL |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-assets | comp-assets | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-assets | comp-assets --channel orion | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-assets | comp-assets --channel eclipse --json | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-blast | comp-blast INF_D_00d.cumulative_chart.py | FAIL |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-assets | comp-assets --channel _probe/backfill-status-writer | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS.json --file or... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_NERVES_PRD.md --... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_V2_LAMBDA... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_FEDOBS.json --file or... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P2.four-materializers | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_promote_lifecycl... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P2.four-materializers | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_promote_lifecycl... | PASS |
+| 2026-07-14 07-08Z | 2.0.0_SA_COO | comp-state x3 (self-test 3/3, scoped OPAL_ASSETS, convergence) + 6 rail-checked live-primitive inspections (schedule/lambda/notification/CW) | 2 real BEHINDs fixed; REGROW -S attribution limit diagnosed; mirror 900s-ceiling timeout found in CW logs |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
