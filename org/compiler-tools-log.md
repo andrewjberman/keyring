@@ -17717,3 +17717,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 1.0.0_SA_CTO~Z | comp-state x6 (self-test+4proj+convergence), comp-glob/grep rails, comp-fedobs (ratify audit), comp-which+routing-test, comp-manifest-check, comp-pulse (BUILT: L5 ship 6cccf6c83, 20/20, reflex live) | NERVES L5 ship + first production ratification; gap: comp-state default-corpus per-project >3min (use --days 2) |
 | 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-14/s... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-pulse | comp-pulse diff infra/aws/lambda/opal-assets/opal-assets-silver-blackdiamond/BUILD_MANI... | PASS |
+| 2026-07-14 0958Z | 0.5.0_AE_OpalETL | commit-gate/surface-check x2, test_silver 13-case suite, 3 bundle API probes (by-UUID x5 / nonzerosleeve / models-summary) | review-response code + credentialed probes; no estate-search question arose |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
