@@ -851,6 +851,29 @@ entries:
     status: canonical
     notes: "Andrew-direct build (2026-07-14 ~04:2xZ: 'a bm25-style linter on git commits which you use in tandem with the registry... id make a comp-tool for that, like comp-state'). ENGINE = org/modules/graph/state_scan.py; BM25 class REUSED from debtscan dup_scan.py (one implementation, per Andrew's mix-and-match steer + the comp-dups reference). TOOL = .tools/comp-state (thin wrapper, comp-dups convention). DRIFT RULE: strong evidence (direct-hit code mention OR bm25>=floor) NEWER than the record's last git touch => BEHIND; closed record with newer evidence => POST-CLOSE. ADVISORY: a BEHIND is a place to LOOK never an auto-edit; a CURRENT is absence-of-lexical-evidence NOT a verified record; the assignee's judgment beats the sweep on TO flips (the C10/C12 external-gated-leg case, 2026-07-14). Self-test plants behind/current/quiet records and must discriminate 3/3 or exit 2 (an instrument that cannot fail is not an instrument). Judgment protocol: .claude/skills/comp-state/SKILL.md. comp-which routing string: 'is the registry updated / stale task order status / record behind state / governance drift' -> comp-state."
 
+  # ---- THE ESTATE'S VITAL SIGNS (comp-pulse -- NFRA_NERVES L5, Andrew-direct GO 2026-07-14) ----
+  - id: org.pulse.vital_signs
+    use_case: "What is HOT / COLD / EVOLVING / DANGEROUS right now? What are agents searching for and NOT finding (phantom limbs)? The estate's vital signs, read first each morning -- and above all DANGER x TRAFFIC: a node under a recorded HOLD/incident that someone is touching NOW."
+    canonical_call: "comp-pulse [--days 7] [--top 8] [--json]   # exit 1 = the immune response is FIRING (a held node is under active traffic)"
+    tool: comp-pulse
+    mode: query
+    layer: org
+    cost: "~2-5s (rail + run-sink scan, decayed; co-change + danger maps read from their derived JSONs with vintage printed)"
+    freshness: "rail/runs live at call time; co-change + danger maps carry their own vintage and STALE flag in-output; every number pins its invocation (the 2d2080e1e re-derivability rule)"
+    status: canonical
+    notes: "NFRA_NERVES L5 (the ONE new primitive the PRD allows). COMPOSES, never re-derives: L2 traffic streams + L3a nerves-edges.json + L3b nerves-risk-edges.json; COLD is comp-debris's frontier (one frontier, never two -- pulse points, does not recompute); SYSTEM-grain is a DECLARED UNKNOWN band until MOTIF.P0 materializes C2/C3. Discipline hard-coded + self-tested (19 assertions): NO FABRICATION (absent source => UNKNOWN-VINTAGE, never a confident zero; None != []); HOT IS NOT GOOD (Goodhart: traffic is foot-fall, never endorsement); UNKNOWN is a band. comp-which routing: 'what is hot right now / estate vital signs / danger zones under traffic / what are agents failing to find / morning read' -> comp-pulse."
+
+  - id: org.pulse.risk_reflex
+    use_case: "Am I about to commit a change that touches a node the estate has WRITTEN WARNINGS about (a HOLD, a frozen file, a recorded incident)? Score a proposed/staged file set against the danger map BEFORE the commit -- the pre-commit immune response."
+    canonical_call: "comp-pulse diff [paths...]   # no paths = the staged set; exit 0 clean / 1 REFLEX FIRED / 2 map absent (CANNOT clear != clean)"
+    tool: comp-pulse
+    mode: query
+    layer: org
+    cost: "~1-2s (danger-map index + per-path match; denominators printed)"
+    freshness: "danger map vintage printed per run; an absent map exits 2 -- 'could not check' never renders as 'checked clean'"
+    status: canonical
+    notes: "NFRA_NERVES L5 endgame: the danger map as an ACTIVE IMMUNE RESPONSE, not a wiki. WIRED CONSUMER: safe-commit.sh runs this advisory on every staged set (the [risk-reflex] block, sibling to [surface-check]) -- ADVISORY-ONLY per the LD-0273 lesson (surface-check precedent: an advisory prints, a commit proceeds; blocking is a separate arch decision). Matching is generous by policy (a missed hold can cost the estate; a noisy one costs ten seconds) and every hit prints its doc:line citation -- the alarm points at the claim, never replaces it. Regen: nerves_lexical build (owner + triggers in NFRA_NERVES_PRD SS3.2 -- MANDATORY regen before any hold-lift announcement)."
+
   - id: cloud.secrets.inspect
     use_case: "Inspect an AWS secret WITHOUT a raw get-secret-value: inventory secrets (firm-tagged + rotation/freshness), safe-read (redacted shape by default; --reveal for cleartext to stdout-only/never-logged), map a secret -> the code/TF that consumes it, audit rotation across all secrets."
     canonical_call: "comp-secrets list [--firm bd|cot|inf|mdpf|opal|shared] [--json] ; comp-secrets get <name|arn> [--reveal] ; comp-secrets consumers <name|arn> ; comp-secrets rotation"
@@ -1176,6 +1199,7 @@ tools_index:
   comp-blast:    { does: "Downstream blast radius + upstream callers (cached)", subcommands: ["<node|file>", "--function", "--check-consumers"], entries: [trace.blast.what_breaks] }
   comp-platinum: { does: "Full-stack component->gold trace, FIRM-AWARE (cached, NFRA_GRAPHS D2)", subcommands: [page, reverse, tab-audit, summary, "--firm", "--fresh/--force"], entries: [trace.fullstack.component_to_gold, trace.platinum.reverse] }
   comp-pipescript: { does: "Gold-script DAG: I/O, chains, deployed-match, overlap", subcommands: [io, dag, chain, feeds, consumers, deployed, overlap, stats], entries: [trace.pipeline.gold_dag, pipeline.pipescript.deployed_match] }
+  comp-pulse:    { does: "The estate's VITAL SIGNS (hot/cold/evolving/danger/phantom-limbs; DANGER x TRAFFIC = the immune response) + the pre-commit risk reflex (diff mode, wired advisory into safe-commit)", subcommands: [pulse, diff, "--days", "--top", "--json", "--self-test"], entries: [org.pulse.vital_signs, org.pulse.risk_reflex] }
   pipescript:    { does: "Named-thread estate traversal: `pipescript <name>` -> every resource + producers->served->frontend + owning tool + coverage, no silent Unknown (the human entry point over the whole estate)", subcommands: ["<name>", "--list", "--resource", "--tool", "--validate"], entries: [estate.pipescript.named_thread] }
   comp-routes:   { does: "CloudFront->origin->Lambda serving path", subcommands: [trace, behaviors, origins, rewrites, api-routes, auth-map, edge-versions], entries: [trace.routes.serving_path] }
   comp-iam:      { does: "IAM permission-gap cross-reference (boto3 calls vs grants)", subcommands: [gaps, roles, services, service, role, stats], entries: [cloud.iam.permission_gaps] }

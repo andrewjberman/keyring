@@ -30,6 +30,14 @@
   and every constraint that travels with the work (INF chain hold, frozen three, NEVER rules,
   safe-apply, deploy-completion ledgers); NERVES L5 remains held by CTO~Z pending Andrew's ruling.
 
+## AMENDMENT 2 — L5 GO (2026-07-14 ~08:4xZ, same channel)
+
+Andrew, VERBATIM: > "Do L5 Nwo"
+
+The NERVES L5 hold is LIFTED by sovereign word. CTO~Z executes L5 (comp-pulse + the pre-commit
+risk reflex) immediately. Substrate precondition was already satisfied: L2+L3 VERIFIED SOUND by
+CVO~Z @ `2d2080e1e`.
+
 ## AMENDMENT 1 — P3 extension ruling (2026-07-14 ~07:2xZ, same channel)
 
 CTO~Z surfaced to Andrew: the sovereign redirect (`14c2aeeba`) moved MOTIF P0/P1/P2 but not

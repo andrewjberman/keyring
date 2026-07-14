@@ -419,6 +419,21 @@ if command -v comp-surface-check >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
   fi
 fi
 
+# Advisory NERVES risk reflex (NFRA_NERVES L5; QUERY-only; never blocks). Scores the staged set
+# against the danger map -- a staged file under a recorded HOLD/RISK prints its citation HERE,
+# before the commit, instead of relying on the author having read the prose.
+if command -v comp-pulse >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
+  _rr_args=()
+  while IFS= read -r _f; do
+    [ -z "$_f" ] && continue
+    _rr_args+=("$_f")
+  done <<< "$IN_SCOPE"
+  if [ ${#_rr_args[@]} -gt 0 ]; then
+    comp-pulse diff "${_rr_args[@]}" 2>&1 \
+      | sed 's/^/  [risk-reflex] /' || true
+  fi
+fi
+
 # Advisory comp-coverage-check gate (COMPUNIFY; never blocks).
 if command -v comp-coverage-check >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
   if echo "$IN_SCOPE" | grep -qE 'comp-coverage-map\.yaml|\.tools/comp-'; then

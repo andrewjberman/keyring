@@ -1,0 +1,591 @@
+"""
+comp-pulse -- THE ESTATE'S VITAL SIGNS. Read this first, each morning.
+
+NFRA_NERVES L5 (Andrew-direct: "build comp-pulse"). The goal, verbatim:
+
+    "We want to be able to know what is hot, what is cold, what systems are evolving and how,
+     danger zones, breakage points, high risk... the graph would kind of evolve based on the
+     activity of the agents, like roads that become wider with lots of foot traffic."
+
+This is that, compiled. It INVENTS NOTHING: it composes the NERVES substrate (L2 traffic + L3
+co-change + L3b risk edges) and the rail, and every number carries its VINTAGE and its DENOMINATOR.
+
+THE SECTION THAT MATTERS MOST IS **DANGER x TRAFFIC**.
+Not "what is dangerous" (the corpus already said that, and L3b made it graph-native). Not "what is
+busy" (traffic alone is just noise with a rank). The intersection: **A NODE UNDER A HOLD OR A
+RECORDED INCIDENT THAT SOMEONE IS WALKING INTO RIGHT NOW.** That is the estate's immune response --
+the danger map firing while the danger is being approached, not after.
+
+DISCIPLINE (NERVES non-negotiables, and they bind here hardest because this is the surface people
+will actually read):
+
+  NO FABRICATION, EVER (the comp-system rule). A missing or stale source reads UNKNOWN-VINTAGE and
+  the section says so. It NEVER interpolates, NEVER carries a number forward, NEVER prints a
+  confident-looking zero for a thing it did not measure. **A CONFIDENT ZERO IS THE MOST DANGEROUS
+  OUTPUT A DASHBOARD CAN PRODUCE**, because it reads as "checked, and clean."
+
+  HOT IS NOT GOOD (the Goodhart gate). Traffic is FOOT-FALL, not endorsement. **A WIDE ROAD TO A
+  WRONG ANSWER GETS WIDER.** The HOT list is where attention IS, never where it SHOULD be -- and if
+  a hot node is also a danger node, that is an ALARM, not a badge.
+
+  UNKNOWN IS A BAND. Unaddressed events, absent sources, blind resources: rendered, never dropped.
+
+COLD is deliberately NOT re-derived here: coldness is a LIVE-AWS question and comp-debris owns it
+(one frontier, never two). comp-pulse points at it rather than growing a second, divergent answer.
+
+Read-only. Composes derived artifacts + the rail; no network.
+
+Usage:
+    comp-pulse                 # the vital signs
+    comp-pulse --days 7        # the attention window (default 7)
+    comp-pulse diff [paths..]  # THE PRE-COMMIT RISK REFLEX: score a proposed file set against the
+                               # danger map. No paths = the staged set (git diff --cached).
+                               # exit 0 clean / 1 danger hit / 2 map absent (CANNOT clear).
+    comp-pulse --json
+    comp-pulse --self-test
+Author: 1.0.0_SA_CTO~Z (NFRA_NERVES L5). 2026-07-14.
+"""
+
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import json
+import math
+import os
+import re
+import subprocess
+import sys
+from collections import Counter, defaultdict
+
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_WS = os.path.normpath(os.path.join(_HERE, "..", "..", ".."))
+sys.path.insert(0, _HERE)
+
+RAIL = os.path.join(_WS, "org", "mcp", "comp-which-rail.log")
+RUNS = os.path.join(_WS, "org", "mcp", "comp-tool-runs.jsonl")
+EDGES = os.path.join(_HERE, "nerves-edges.json")
+RISK = os.path.join(_HERE, "nerves-risk-edges.json")
+
+# A derived artifact older than this is STALE -- we still read it, but we SAY SO on every number
+# that came out of it. (Rule 20's UNKNOWN-VINTAGE discipline, applied to our own outputs.)
+STALE_AFTER_HOURS = 36.0
+HALF_LIFE_DAYS = 7.0        # attention decays fast; a road walked last month is not today's road
+
+
+def _decay(age_days: float) -> float:
+    return math.pow(0.5, max(0.0, age_days) / HALF_LIFE_DAYS)
+
+
+class Source:
+    """A source + ITS VINTAGE. Every number in this report is traceable to one of these, and if the
+    source is missing the number is NOT PRINTED -- the section prints UNKNOWN-VINTAGE instead."""
+
+    def __init__(self, path: str, label: str):
+        self.path = path
+        self.label = label
+        self.exists = os.path.exists(path)
+        self.age_h = None
+        self.data = None
+        if self.exists:
+            try:
+                self.age_h = (dt.datetime.now().timestamp() - os.path.getmtime(path)) / 3600.0
+            except OSError:
+                self.age_h = None
+
+    @property
+    def stale(self) -> bool:
+        return self.age_h is not None and self.age_h > STALE_AFTER_HOURS
+
+    @property
+    def vintage(self) -> str:
+        if not self.exists:
+            return "UNKNOWN-VINTAGE (absent -- this section CANNOT be computed and is NOT guessed)"
+        if self.age_h is None:
+            return "UNKNOWN-VINTAGE (unreadable mtime)"
+        tag = "  !! STALE" if self.stale else ""
+        return "%.1fh old%s" % (self.age_h, tag)
+
+    def load_json(self):
+        if not self.exists:
+            return None
+        try:
+            with open(self.path, encoding="utf-8") as fh:
+                self.data = json.load(fh)
+            return self.data
+        except Exception:  # noqa: BLE001
+            self.exists = False   # unreadable == absent; never a half-trusted source
+            return None
+
+
+# ---------------------------------------------------------------------------
+# signals
+# ---------------------------------------------------------------------------
+_RAIL_RX = re.compile(r"^(\S+)\s+(\S+)\s+(.*)$")
+_KV_RX = re.compile(r"(\w+)=(\S+)")
+_PHANTOM_TAGS = {"NOFIT-POSTERIOR", "DENY"}
+
+
+def rail_signals(days: int):
+    """-> (attention Counter{ref: decayed_weight}, phantoms Counter{term: n}, denominators).
+    The rail is the ONLY stream that carries BOTH what an agent looked for AND whether they found
+    it, which is why the phantom-limb map lives here."""
+    att = Counter()
+    phantom = Counter()
+    rows = considered = 0
+    if not os.path.exists(RAIL):
+        return att, phantom, {"rail_rows": 0, "rows_in_window": 0, "available": False}
+    now = dt.datetime.now(dt.timezone.utc)
+    with open(RAIL, encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            m = _RAIL_RX.match(line.strip())
+            if not m:
+                continue
+            rows += 1
+            try:
+                ts = dt.datetime.strptime(m.group(1), "%Y-%m-%dT%H:%M:%SZ").replace(
+                    tzinfo=dt.timezone.utc)
+            except Exception:  # noqa: BLE001
+                continue
+            age_d = (now - ts).total_seconds() / 86400.0
+            if age_d > days:
+                continue
+            considered += 1
+            tag, rest = m.group(2), m.group(3)
+            kv = dict(_KV_RX.findall(rest))
+            w = _decay(age_d)
+            term = kv.get("term")
+            if term and term not in ("-", "."):
+                att[term] += w
+            matches = kv.get("matches")
+            if tag in _PHANTOM_TAGS or (matches is not None and matches == "0"):
+                if term and term not in ("-", "."):
+                    phantom[term] += 1
+    return att, phantom, {"rail_rows": rows, "rows_in_window": considered, "available": True}
+
+
+def run_signals(days: int):
+    """-> Counter{tool: decayed}. The run sink carries OUTCOMES -- the Goodhart-safe weight."""
+    c = Counter()
+    fails = Counter()
+    n = 0
+    if not os.path.exists(RUNS):
+        return c, fails, {"available": False, "rows": 0}
+    now = dt.datetime.now(dt.timezone.utc).timestamp()
+    with open(RUNS, encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            try:
+                r = json.loads(line)
+            except Exception:  # noqa: BLE001
+                continue
+            n += 1
+            age_d = (now - float(r.get("ts_epoch", 0))) / 86400.0
+            if age_d > days or age_d < 0:
+                continue
+            tool = r.get("tool", "?")
+            c[tool] += _decay(age_d)
+            if str(r.get("result", "")).upper().startswith("FAIL"):
+                fails[tool] += 1
+    return c, fails, {"available": True, "rows": n}
+
+
+def evolving(edges_src: Source, top: int):
+    """WHAT IS CHANGING TOGETHER -- the co-change graph's busiest couplings (already decayed at
+    build time). NOT 'what changed most' (that is git, and it is a popularity contest); the
+    COUPLINGS are the interesting object because CO_CHANGE WITHOUT CO_DEPLOY is the drift predictor."""
+    d = edges_src.load_json()
+    if not d:
+        return None, None
+    edges = d.get("edges", [])
+    stats = d.get("stats", {})
+    return sorted(edges, key=lambda e: -e.get("weight", 0))[:top], stats
+
+
+def _risk_index(edges):
+    """Index the danger map by node id + leaf basename (generous by policy -- see nerves_lexical:
+    a missed hold can cost the estate; a noisy one costs ten seconds)."""
+    by_key = defaultdict(list)
+    for e in edges:
+        nid = e["node"]
+        leaf = nid.split(":")[-1].split("/")[-1]
+        by_key[leaf.lower()].append(e)
+        by_key[nid.lower()].append(e)
+    return by_key
+
+
+def risk_reflex(risk_src: Source, paths):
+    """THE PRE-COMMIT REFLEX (NFRA_NERVES L5 endgame): score a PROPOSED file set against the danger
+    map BEFORE the commit exists. Returns (hits|None, denominators). None = the map is absent --
+    the reflex CANNOT clear the diff, which is not the same as clearing it."""
+    d = risk_src.load_json()
+    if d is None:
+        return None, {"files_checked": 0, "danger_nodes": 0}
+    edges = d.get("edges", [])
+    by_key = _risk_index(edges)
+    hits, seen = [], set()
+    for p in paths:
+        rel = str(p).replace("\\", "/").strip()
+        if not rel:
+            continue
+        for k in (os.path.basename(rel).lower(), rel.lower(), "file:" + rel.lower()):
+            for e in by_key.get(k, []):
+                if e["severity"] not in ("HOLD", "RISK"):
+                    continue
+                key = (rel, e["node"])
+                if key in seen:
+                    continue
+                seen.add(key)
+                hits.append({"path": rel, "node": e["node"], "severity": e["severity"],
+                             "kinds": e.get("kinds", []), "n_claims": e["n_claims"],
+                             "claim": e["claims"][0]})
+    hits.sort(key=lambda h: ({"HOLD": 0, "RISK": 1}[h["severity"]], h["path"]))
+    return hits, {"files_checked": len([p for p in paths if str(p).strip()]),
+                  "danger_nodes": len(edges)}
+
+
+def render_reflex(hits, denom, risk_src: Source, invocation: str) -> str:
+    L = ["comp-pulse diff -- THE PRE-COMMIT RISK REFLEX (NFRA_NERVES L5)",
+         "  INVOCATION (pin beside any quoted result): %s" % invocation,
+         "  danger map: %s" % risk_src.vintage]
+    if hits is None:
+        L += ["  UNKNOWN-VINTAGE: the danger map is ABSENT -- the reflex CANNOT clear this diff,",
+              "  and 'could not check' is NOT 'checked clean'. Regenerate: nerves_lexical build."]
+        return "\n".join(L)
+    L.append("  DENOMINATOR: %d file(s) checked against %d danger node(s)"
+             % (denom["files_checked"], denom["danger_nodes"]))
+    if not hits:
+        L.append("  REFLEX CLEAN -- a MEASURED result (map read, every file checked), not a default.")
+        return "\n".join(L)
+    L.append("")
+    for h in hits:
+        c = h["claim"]
+        L.append("  [%s] %s" % (h["severity"], h["path"]))
+        L.append("        -> %s  (%d recorded claim(s))" % (h["node"], h["n_claims"]))
+        L.append("        %s:%d  \"%s\"" % (c["doc"], c["line"], str(c.get("quote", ""))[:70]))
+    L.append("  ^ THE IMMUNE RESPONSE, PRE-COMMIT: you are about to touch a node the estate has")
+    L.append("    WRITTEN WARNINGS ABOUT. GO READ THE CITATION before this commit proceeds.")
+    return "\n".join(L)
+
+
+def danger_x_traffic(risk_src: Source, attention: Counter, top: int):
+    """*** THE SECTION THAT MATTERS. *** A node under a HOLD or a recorded INCIDENT that someone is
+    ACTIVELY TOUCHING. The danger map firing WHILE the danger is approached.
+
+    Matching is deliberately generous on the danger side (a HOLD is over-warned by policy -- see
+    nerves_lexical: a missed hold can cost the estate; a noisy one costs ten seconds), and it always
+    shows the citation so the reader checks the claim rather than trusting this line."""
+    d = risk_src.load_json()
+    if not d:
+        return None
+    edges = d.get("edges", [])
+    by_key = _risk_index(edges)
+    hits = []
+    for ref, w in attention.items():
+        for e in by_key.get(ref.lower().split("/")[-1], []):
+            if e["severity"] in ("HOLD", "RISK"):
+                hits.append({"ref": ref, "attention": round(w, 2), "node": e["node"],
+                             "severity": e["severity"], "n_claims": e["n_claims"],
+                             "claim": e["claims"][0]})
+                break
+    hits.sort(key=lambda h: ({"HOLD": 0, "RISK": 1}[h["severity"]], -h["attention"]))
+    return hits[:top]
+
+
+# ---------------------------------------------------------------------------
+def compile_pulse(days: int = 7, top: int = 8, invocation: str = "") -> dict:
+    edges_src = Source(EDGES, "co-change edges (nerves_accrete)")
+    risk_src = Source(RISK, "danger map (nerves_lexical)")
+
+    att, phantom, rail_stats = rail_signals(days)
+    runs, run_fails, run_stats = run_signals(days)
+    evo, evo_stats = evolving(edges_src, top)
+    dxt = danger_x_traffic(risk_src, att, top)
+
+    return {
+        # CVO~Z verify P2 class (2d2080e1e): a number nobody can re-derive is not evidence --
+        # the resolved invocation rides WITH every number this report produces.
+        "invocation": invocation or "(not recorded -- direct compile_pulse() call)",
+        "window_days": days,
+        "generated_at": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "sources": {
+            "rail": {"available": rail_stats["available"], "vintage": "live (append-only log)",
+                     "rows_total": rail_stats["rail_rows"],
+                     "rows_in_window": rail_stats["rows_in_window"]},
+            "runs": {"available": run_stats["available"], "vintage": "live (append-only sink)",
+                     "rows_total": run_stats["rows"]},
+            "cochange": {"available": edges_src.exists, "vintage": edges_src.vintage,
+                         "stale": edges_src.stale},
+            "danger": {"available": risk_src.exists, "vintage": risk_src.vintage,
+                       "stale": risk_src.stale},
+        },
+        "hot": [{"ref": r, "attention": round(w, 2)} for r, w in att.most_common(top)],
+        "hot_tools": [{"tool": t, "runs_decayed": round(w, 2), "fails": run_fails.get(t, 0)}
+                      for t, w in runs.most_common(top)],
+        "danger_x_traffic": dxt,          # None => UNKNOWN-VINTAGE, never []
+        "evolving": evo,                  # None => UNKNOWN-VINTAGE
+        "evolving_stats": evo_stats,
+        "phantom_limbs": [{"term": t, "n": n} for t, n in phantom.most_common(top)],
+        "phantom_total": sum(phantom.values()),
+        "cold": "NOT computed here -- coldness is a LIVE-AWS question and comp-debris owns it "
+                "(one frontier, never two). Run: comp-debris --days 30",
+        "systems": "UNKNOWN BAND -- system-grain vital signs (which C3 SYSTEMS are hot/fragile) "
+                   "need C2/C3 materialized in the graph; C2 measured at 7 nodes 2026-07-14, "
+                   "materialization rides MOTIF.P0 (0.8.0~Z, gated on the globgrph apply). This "
+                   "band switches on when that lands -- it is declared, never silently omitted.",
+    }
+
+
+def render(p: dict) -> str:
+    W = 78
+    L = ["=" * W,
+         "comp-pulse -- THE ESTATE'S VITAL SIGNS      window %dd   generated %s"
+         % (p["window_days"], p["generated_at"]),
+         "  INVOCATION (pin beside any number you quote): %s" % p.get("invocation", "?"),
+         "=" * W,
+         "SOURCES + VINTAGES (every number below is traceable to one of these):"]
+    for k, s in p["sources"].items():
+        mark = "  " if s["available"] else "!!"
+        L.append("  %s %-9s %s  %s" % (mark, k, "OK     " if s["available"] else "ABSENT ",
+                                       s["vintage"]))
+    L.append("  ^ NO FABRICATION: an absent source yields UNKNOWN-VINTAGE, never an invented number.")
+    L.append("    A CONFIDENT ZERO IS THE MOST DANGEROUS OUTPUT A DASHBOARD CAN PRODUCE.")
+
+    # ---- THE ONE THAT MATTERS ----
+    L += ["", "-" * W,
+          "[!!] DANGER x TRAFFIC -- a node under a HOLD/INCIDENT that someone is TOUCHING NOW",
+          "-" * W]
+    dxt = p["danger_x_traffic"]
+    if dxt is None:
+        L.append("  UNKNOWN-VINTAGE: the danger map is absent. This section is NOT computed and is")
+        L.append("  NOT clean -- run `nerves_lexical build` to regenerate it.")
+    elif not dxt:
+        L.append("  No node under a HOLD or a recorded incident saw traffic in the window.")
+        L.append("  (This IS a measured result -- the danger map and the rail were both read.)")
+    else:
+        for h in dxt:
+            c = h["claim"]
+            L.append("  %-6s attention=%-5s  %s" % (h["severity"], h["attention"], h["node"]))
+            L.append("         someone searched/ran: %r" % h["ref"])
+            L.append("         %s:%d  \"%s\"" % (c["doc"], c["line"], c["quote"][:72]))
+        L.append("  ^ THE IMMUNE RESPONSE: the danger map firing WHILE the danger is approached.")
+        L.append("    GO READ THE CITATION before the next keystroke.")
+
+    # ---- HOT ----
+    L += ["", "-" * W, "[HOT] where the foot-fall IS -- decayed attention (rail terms, %dd)" % p["window_days"],
+          "-" * W]
+    if not p["hot"]:
+        L.append("  (no rail traffic in the window)")
+    for h in p["hot"]:
+        L.append("  %-6s %s" % (h["attention"], h["ref"][:66]))
+    L.append("  ^ HOT IS NOT GOOD. Traffic is foot-fall, never endorsement -- A WIDE ROAD TO A")
+    L.append("    WRONG ANSWER GETS WIDER. If a hot node is also a danger node, see the section above.")
+
+    L += ["", "[HOT TOOLS] runs in the window (fails shown -- a busy tool that FAILS is a FIX, not a KEEP):"]
+    if not p["hot_tools"]:
+        L.append("  (no runs in the window)")
+    for t in p["hot_tools"]:
+        flag = "   <- %d FAIL" % t["fails"] if t["fails"] else ""
+        L.append("  %-6s %-28s%s" % (t["runs_decayed"], t["tool"], flag))
+
+    # ---- EVOLVING ----
+    L += ["", "-" * W, "[EVOLVING] what changes TOGETHER (co-change; the drift predictor)", "-" * W]
+    if p["evolving"] is None:
+        L.append("  UNKNOWN-VINTAGE: the co-change graph is absent. NOT computed, NOT clean --")
+        L.append("  run `nerves_accrete build`.")
+    else:
+        st = p["evolving_stats"] or {}
+        L.append("  from %s commits / %s files / %s edges"
+                 % (st.get("commits_scanned", "?"), st.get("distinct_files", "?"),
+                    st.get("edges_at_min_support", "?")))
+        for e in p["evolving"]:
+            L.append("  w=%-5s %.0f%%/%.0f%%  %s" % (e.get("weight"), 100 * e.get("conf_src_to_dst", 0),
+                                                     100 * e.get("conf_dst_to_src", 0),
+                                                     os.path.basename(e.get("src", ""))))
+            L.append("                     <> %s" % os.path.basename(e.get("dst", "")))
+        L.append("  ^ CO-CHANGE WITHOUT CO-DEPLOY IS THE BREAKAGE PREDICTOR.")
+
+    # ---- PHANTOM LIMBS ----
+    L += ["", "-" * W,
+          "[PHANTOM LIMBS] what agents LOOKED FOR AND DID NOT FIND -- the demand map for",
+          "                knowledge that does not exist yet. %d event(s) in window."
+          % p["phantom_total"], "-" * W]
+    if not p["phantom_limbs"]:
+        L.append("  (none in the window)")
+    for ph in p["phantom_limbs"]:
+        L.append("  x%-4d %s" % (ph["n"], ph["term"][:66]))
+    L.append("  ^ These are the estate's MISSING ORGANS. A repeat phantom is a build-next.")
+
+    # ---- COLD ----
+    L += ["", "-" * W, "[COLD]", "-" * W, "  " + p["cold"]]
+
+    # ---- SYSTEMS (declared UNKNOWN until C2/C3 materialize) ----
+    L += ["", "-" * W, "[SYSTEMS]", "-" * W, "  " + p["systems"], "=" * W]
+    return "\n".join(L)
+
+
+def _self_test() -> int:
+    results = []
+    def ck(name, ok, detail=""):
+        results.append(ok)
+        print(f"  [{'PASS' if ok else 'FAIL'}] {name}" + (f"   ({detail})" if detail else ""))
+
+    # ---- THE NO-FABRICATION CONTROL. Point every source at nothing; the report must render, must
+    # say UNKNOWN-VINTAGE, and must NOT invent a single number. A dashboard that prints a confident
+    # zero for a thing it never measured is worse than no dashboard.
+    global EDGES, RISK, RAIL, RUNS
+    _e, _r, _rail, _runs = EDGES, RISK, RAIL, RUNS
+    EDGES = RISK = RAIL = RUNS = os.path.join(_WS, "__NO_SUCH_FILE__")
+    p_absent = compile_pulse(days=7)
+    txt = render(p_absent)
+    EDGES, RISK, RAIL, RUNS = _e, _r, _rail, _runs
+
+    ck("nofab.absent_sources_are_declared",
+       all(not s["available"] for s in p_absent["sources"].values()))
+    ck("nofab.danger_is_None_not_empty_list",
+       p_absent["danger_x_traffic"] is None,
+       "None = 'not computed'; [] would mean 'computed, clean' -- they are NOT the same")
+    ck("nofab.evolving_is_None_not_zero", p_absent["evolving"] is None)
+    ck("nofab.render_says_UNKNOWN_VINTAGE_and_NOT_clean",
+       "UNKNOWN-VINTAGE" in txt and "NOT clean" in txt)
+    ck("nofab.no_confident_zero_for_danger",
+       "No node under a HOLD" not in txt,
+       "an absent map must NEVER render as 'nothing dangerous is being touched'")
+
+    # ---- DANGER x TRAFFIC fires. Fixture: a HOLD node + attention on its basename.
+    class _S:  # a Source stand-in carrying fixture data
+        exists = True
+        stale = False
+        vintage = "fixture"
+        def __init__(self, d):
+            self._d = d
+        def load_json(self):
+            return self._d
+
+    risk_fx = _S({"edges": [{"node": "file:data/inf/scripts/silver/build_assets_dim.py",
+                             "severity": "HOLD", "n_claims": 47,
+                             "claims": [{"kind": "HOLD", "doc": "memory/MEMORY.md", "line": 81,
+                                         "quote": "the frozen three -- no verb touches them"}]}]})
+    att = Counter({"build_assets_dim.py": 3.4, "harmless_thing.py": 9.9})
+    hits = danger_x_traffic(risk_fx, att, top=5)
+    ck("dxt.fires_on_a_held_node_under_traffic",
+       len(hits) == 1 and hits[0]["severity"] == "HOLD"
+       and "build_assets_dim" in hits[0]["node"],
+       f"{[h['node'] for h in hits]}")
+    ck("dxt.ignores_untouched_and_undangerous",
+       all("harmless" not in h["node"] for h in hits),
+       "a busy-but-safe node is not an alarm; a dangerous-but-idle node is not either")
+    ck("dxt.carries_its_citation",
+       hits and hits[0]["claim"]["doc"] and hits[0]["claim"]["line"],
+       "the alarm points at the claim; it never replaces it")
+
+    # ---- THE PRE-COMMIT REFLEX. Positive control: a staged set containing a held file MUST fire.
+    # Negative control (separate assertion, separate fixture path): a safe file must NOT.
+    reflex_hits, reflex_denom = risk_reflex(
+        risk_fx, ["data/inf/scripts/silver/build_assets_dim.py", "totally/safe/new_file.py"])
+    ck("reflex.fires_on_a_held_file_in_the_diff",
+       reflex_hits is not None and len(reflex_hits) == 1
+       and reflex_hits[0]["severity"] == "HOLD"
+       and reflex_hits[0]["path"].endswith("build_assets_dim.py"))
+    ck("reflex.does_not_flag_the_safe_file",
+       reflex_hits is not None and all("safe" not in h["path"] for h in reflex_hits),
+       "an alarm that fires on everything is an alarm nobody reads")
+    ck("reflex.denominator_counts_every_file", reflex_denom["files_checked"] == 2)
+    ck("reflex.carries_its_citation",
+       bool(reflex_hits) and bool(reflex_hits[0]["claim"].get("doc")))
+
+    class _Absent:  # a Source stand-in for a missing danger map
+        exists = False
+        stale = False
+        vintage = "UNKNOWN-VINTAGE (absent)"
+        def load_json(self):
+            return None
+
+    absent_hits, _ = risk_reflex(_Absent(), ["anything.py"])
+    ck("reflex.absent_map_is_None_not_clean", absent_hits is None,
+       "'could not check' must NEVER render as 'checked clean'")
+    ck("reflex.absent_map_renders_CANNOT_clear",
+       "CANNOT clear" in render_reflex(absent_hits, {"files_checked": 1, "danger_nodes": 0},
+                                       _Absent(), "test"))
+
+    # ---- decay: this week's road is wider than last month's.
+    ck("decay.recent_outweighs_old", _decay(0) > _decay(HALF_LIFE_DAYS) > _decay(30),
+       "roads narrow too")
+
+    # ---- LIVE: the real estate renders and the sources are declared.
+    live = compile_pulse(days=7, invocation="self-test")
+    live_txt = render(live)
+    ck("live.renders", isinstance(live_txt, str) and len(live_txt) > 400)
+    ck("live.every_number_has_a_source_declared", len(live["sources"]) == 4)
+    ck("live.invocation_is_pinned_in_output", "INVOCATION" in live_txt and "self-test" in live_txt,
+       "a number nobody can re-derive is not evidence (CVO P2 class, 2d2080e1e)")
+    ck("live.systems_band_is_declared_not_omitted", "[SYSTEMS]" in live_txt and "UNKNOWN" in live_txt)
+
+    ok = all(results)
+    print("\n" + ("OK: vital signs compile; DANGER x TRAFFIC fires; and an absent source is "
+                  "UNKNOWN-VINTAGE, never a confident zero" if ok else "ERROR: comp-pulse FAILED"))
+    return 0 if ok else 1
+
+
+def _staged_files() -> list:
+    try:
+        out = subprocess.run(["git", "diff", "--cached", "--name-only"], cwd=_WS,
+                             capture_output=True, text=True, timeout=20)
+        return [ln.strip() for ln in out.stdout.splitlines() if ln.strip()]
+    except Exception:  # noqa: BLE001
+        return []
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(prog="comp-pulse",
+                                 description="the estate's vital signs (NFRA_NERVES L5); read first each morning")
+    ap.add_argument("cmd", nargs="?", default="pulse", choices=["pulse", "diff"],
+                    help="pulse = the vital signs; diff = the pre-commit risk reflex")
+    ap.add_argument("paths", nargs="*", help="diff mode: files to score (default: the staged set)")
+    ap.add_argument("--days", type=int, default=7, help="attention window (default 7)")
+    ap.add_argument("--top", type=int, default=8)
+    ap.add_argument("--json", action="store_true")
+    ap.add_argument("--self-test", action="store_true")
+    args = ap.parse_args()
+
+    for s in (sys.stdout, sys.stderr):
+        try:
+            s.reconfigure(errors="replace")
+        except Exception:  # noqa: BLE001
+            pass
+
+    if args.self_test:
+        return _self_test()
+
+    invocation = "cmd=%s days=%d top=%d (argv: %s)" % (
+        args.cmd, args.days, args.top, " ".join(sys.argv[1:]) or "<defaults>")
+
+    if args.cmd == "diff":
+        paths = args.paths or _staged_files()
+        risk_src = Source(RISK, "danger map (nerves_lexical)")
+        hits, denom = risk_reflex(risk_src, paths)
+        if args.json:
+            print(json.dumps({"invocation": invocation, "hits": hits, "denominators": denom,
+                              "map_vintage": risk_src.vintage}, indent=1, default=str))
+        else:
+            print(render_reflex(hits, denom, risk_src, invocation))
+        # exit contract: 0 clean / 1 the reflex FIRED / 2 the map is absent (CANNOT clear --
+        # distinct from clean, because 'could not check' must never read as 'checked clean').
+        if hits is None:
+            return 2
+        return 1 if hits else 0
+
+    p = compile_pulse(args.days, args.top, invocation)
+    if args.json:
+        print(json.dumps(p, indent=1, default=str))
+    else:
+        print(render(p))
+    # EXIT 1 when the immune response is FIRING: a held/incident node is under active traffic. This
+    # is a report, but that condition is not merely informational -- it is the one thing on this
+    # page that should stop someone mid-keystroke.
+    if p["danger_x_traffic"]:
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,9 @@
+#!/bin/bash
+# comp-pulse — the estate's vital signs (NFRA_NERVES L5); read first each morning.
+# Usage: comp-pulse [--days 7] [--json]      the vital signs
+#        comp-pulse diff [paths...]          the pre-commit risk reflex (no paths = staged set)
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_pulse.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-pulse" "$*" $_exit 2>/dev/null
+exit $_exit

@@ -227,6 +227,21 @@ RULES = [
      "cache collisions",
      ["comp-cache collisions"],
      "cache-key collisions / shared keys"),
+    # comp-pulse = NFRA_NERVES L5 (CTO~Z 2026-07-14, Andrew-direct GO). Distinctive vital-signs/
+    # danger-zone/phantom-limb vocab so the morning-read question routes here, and the pre-commit
+    # "am I touching a held/frozen file" question routes to diff mode -- NOT to comp-blast (blast
+    # answers WHAT BREAKS downstream; pulse answers IS IT WARNED-ABOUT, from the danger map).
+    (["vital signs", "vital-signs", "pulse", "estate pulse", "morning read", "read first each morning",
+      "what is hot", "whats hot", "what's hot", "hot right now", "hot nodes", "foot traffic",
+      "danger zones", "danger zone", "danger map", "dangerous right now", "under a hold",
+      "held node", "frozen file", "touching a frozen", "immune response", "risk reflex",
+      "pre-commit risk", "precommit risk", "staged files dangerous", "phantom limb", "phantom limbs",
+      "searched and not found", "looked for and did not find", "demand map", "what is evolving",
+      "evolving together", "estate vital", "estate health snapshot"],
+     "the estate's vital signs + the pre-commit risk reflex",
+     ["comp-pulse", "comp-pulse --days 7", "comp-pulse diff [paths...]"],
+     "vital signs: DANGER x TRAFFIC (held nodes under active traffic), hot/evolving/phantom-limbs; "
+     "diff mode = the pre-commit risk reflex (staged set vs the danger map, citations attached)"),
     # comp-cluster = NFRA_TSGRAPH P2-3 page-rooted PAGE->PANEL->DRILLDOWN cluster view (0.4.0_DE
     # 2026-06-30; landed 2026-07-02 post-MSTR-fold-in). Distinctive cluster/drilldown/cohort-fork
     # vocab so the structural-tree question routes here, not to comp-transform's per-component
