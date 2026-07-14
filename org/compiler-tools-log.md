@@ -17189,3 +17189,17 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C4.etf-bronze-retarget-one-bucket | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/etfs-netassets/neta... | PASS |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS C6/C12/C10 | comp-which (ABSTAINED correctly -> comp-grep), comp-grep (printed its own excluded denominator: 972 held paths), commit-gate x8 (BLOCKED 2: comp-constants caught FIRM_ID cross-firm collision; ruff E702), comp-surface-check x4 OK | comp-pipescript io + comp-validate NOT RUN -- explicit gaps, no consumer to signal yet |
 | 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file org/modules/gr... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-learns-score | comp-learns-score --self-test | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-learns-score | comp-learns-score --top 12 --file-candidates | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-trigger | comp-trigger --self-test | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-trigger | comp-trigger inf-gold | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-trigger | comp-trigger access-anomaly --days 3 | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/rema... | PASS |
+| 2026-07-13 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C4.etf-bronze-retarget-one-bucket | comp-surface-check | comp-surface-check check --mode advisory --file .tools/etfs-parity-check.py --file .too... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/XXX.md --file org/tier2_senior/0.5.... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C4.etf-bronze-retarget-one-bucket | comp-which / comp-grep / comp-glob / commit-gate / terraform validate+plan | comp-which ABSTAINED (3-way tie, correctly routed to comp-grep); comp-grep found the shared bronze/silver bucket knob (the defect); comp-glob flagged 972 sovereign-held paths EXCLUDED-not-absent | PASS (comp-iam deliberately NOT relied on -- fails GREEN on a new bucket; live simulate deferred to C1) |
+| 2026-07-13 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C4.etf-bronze-retarget-one-bucket | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
