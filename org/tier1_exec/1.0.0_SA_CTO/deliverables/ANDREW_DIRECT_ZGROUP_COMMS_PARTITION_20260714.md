@@ -30,6 +30,19 @@
   and every constraint that travels with the work (INF chain hold, frozen three, NEVER rules,
   safe-apply, deploy-completion ledgers); NERVES L5 remains held by CTO~Z pending Andrew's ruling.
 
+## BASE-LANE ROUTING QUEUE (items the partition defers; route via Andrew or post-partition COO fold)
+
+1. **SMS removal + account-wide enumeration** (AMENDMENT 3; executor-gapped per AMENDMENT 4):
+   the globgrph SMS sub TF-removal + the two base-module twins
+   (`opal-infrastructure-alerts`, `ec2-long-running-alerts`).
+2. **`bd-client-detail` stale triggers** (CVO~Z 102738Z, cert `955e39d48`): 3 lake edges incl.
+   2 EventBridge TRIGGERS target `arn:...function:bd-client-detail`, which is **DELETED live**
+   (ResourceNotFoundException under CVO's own call). Corroboration: the same node is the TOP
+   L5 DANGER×TRAFFIC row (attention 2.57, hold-cited) — a phantom-limb and stale-rule drift
+   wearing one name. bd-lane (base group) owns the cleanup decision.
+3. **`cmtque-worker-down` latched alarm** (parked with CMTQUE @ `22c3c9f8a`; CVO P0): return to
+   OK or scope to queue-enabled — next shared-infra hand.
+
 ## AMENDMENT 4 — 0.7.0~Z SHUT DOWN by Andrew + CMTQUE indifference (2026-07-14 ~09:4xZ, same channel)
 
 Andrew, VERBATIM: > "Eh i dont care about it honestly at this point, i had already shut off
