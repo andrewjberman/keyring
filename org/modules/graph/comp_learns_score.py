@@ -561,6 +561,70 @@ def _render(it: dict) -> str:
     return "\n".join(L)
 
 
+BACKLOG = os.path.join(_WS, "org", "modules", "graph", "comp-learns-backlog.md")
+
+_BACKLOG_HEADER = """# comp-learns BACKLOG -- the gap->build bridge (NFRA_COMPCLOSE, 2026-07-14)
+
+THE MISSING HALF OF THE LEARNING LOOP, made durable. Detection worked (comp-learns-status ranked
+gaps for weeks); the build side never closed -- comp-trigger was gap-logged 2026-06-30 and
+re-derived from scratch on 07-13 because a ranked gap that lives only in a report is re-findable
+only the expensive way. This file is the tracked, deduped, append-only record between the two:
+
+  FILE   `comp-learns-score --file-candidates` appends NEW top candidates here (dedup by key;
+         an already-filed entry is NEVER re-written or silently re-ranked -- it is a record).
+  READ   COO /drive reads the OPEN head each cycle; CTO ratifies BUILD/DECLINE (advisory-only
+         discipline preserved -- the scorer never auto-mutates anything).
+  CLOSE  a human flips `resolution: OPEN` to `BUILT <tool/commit>` or `DECLINED <why>` -- with
+         the citation. An entry closed without a citation is drift, not a closure.
+
+Value scores are outcome-anchored (escapes-prevented / drift-caught / cost-per-outcome), never
+usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it on demand).
+"""
+
+
+def file_candidates(it: dict, path: str = BACKLOG, cap: int = 10) -> dict:
+    """Append the top NEW candidates from a run_iteration() result to the tracked backlog.
+    Dedup key = kind|candidate, matched against the `<!-- key: ... -->` markers already in the
+    file -- so re-running never duplicates, re-ranks, or rewrites a filed entry."""
+    import datetime as _dt
+    existing = ""
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as fh:
+            existing = fh.read()
+    seen = set(re.findall(r"<!-- key: (.*?) -->", existing))
+    today = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%d")
+    added, skipped = [], 0
+    blocks = []
+    for c in it["worklist"][:cap]:
+        key = "%s|%s" % (c.get("kind", "?"), c.get("candidate", "?"))
+        if key in seen:
+            skipped += 1
+            continue
+        vm = c.get("value_metric", {})
+        ev = c.get("value_evidence", {})
+        terms = ", ".join("%r x%d" % (t.get("term"), t.get("n", 1)) for t in (ev.get("top_terms") or [])[:3])
+        lines = [
+            "## [OPEN] %s -- %s  (filed %s, value %s)" % (c.get("kind", "?"), c.get("candidate", "?"),
+                                                          today, c.get("value_score")),
+            "<!-- key: %s -->" % key,
+            "- disposition: %s%s" % (c.get("disposition", "?"),
+                                     (" -- " + c["note"]) if c.get("note") else ""),
+            "- value evidence: %s" % (json.dumps(vm, ensure_ascii=True) if vm else "(none)"),
+        ]
+        if terms:
+            lines.append("- top demand terms: %s" % terms)
+        lines.append("- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)")
+        blocks.append("\n".join(lines))
+        added.append(key)
+        seen.add(key)
+    if added:
+        out = existing if existing else _BACKLOG_HEADER
+        out = out.rstrip("\n") + "\n\n" + "\n\n".join(blocks) + "\n"
+        with open(path, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(out)
+    return {"path": os.path.relpath(path, _WS), "added": added, "skipped_already_filed": skipped}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="comp-learns-score -- NFRA_COMPLEARN value-anchored scorer (P2)")
     ap.add_argument("--top", type=int, default=20, help="cap the worklist length (default 20)")
@@ -568,6 +632,12 @@ def main() -> int:
     ap.add_argument("--goodhart-audit", action="store_true",
                     help="prove the ranking is value-driven not usage-driven")
     ap.add_argument("--self-test", action="store_true", help="Goodhart-honesty + evidence-citation self-test")
+    ap.add_argument("--file-candidates", action="store_true",
+                    help="append the top NEW candidates to the tracked backlog "
+                         "(org/modules/graph/comp-learns-backlog.md; deduped, append-only -- "
+                         "the gap->build bridge. /drive reads the OPEN head; CTO ratifies)")
+    ap.add_argument("--backlog-cap", type=int, default=10,
+                    help="max candidates to file per run (default 10)")
     args = ap.parse_args()
 
     if args.self_test:
@@ -619,6 +689,17 @@ def main() -> int:
             for r in retire[:5]:
                 print(f"    {r['tool']}: {r['runs']} runs @ mean outcome {r['mean_outcome']}")
             print(f"  VERDICT: {audit['verdict']}")
+        return 0
+
+    if args.file_candidates:
+        res = file_candidates(it, cap=args.backlog_cap)
+        if args.json:
+            print(json.dumps(dict(res, worklist_top=len(it["worklist"])), indent=2))
+        else:
+            print(_render(it))
+            print("\n[file-candidates] backlog: %s  -- filed %d new (%s), %d already on file (untouched)"
+                  % (res["path"], len(res["added"]), ", ".join(res["added"]) or "none",
+                     res["skipped_already_filed"]))
         return 0
 
     print(json.dumps(it, indent=2) if args.json else _render(it))

@@ -372,9 +372,49 @@ def cmd_blast(args):
         # NOT-FOUND is LOUD (rc=3). On comp-blast (a Rule-20 "what breaks if I
         # change X" gate) a typo'd target must NEVER exit 0 as if it were a
         # verified "nothing breaks" clear. (false-clear fix, 2026-06-26)
-        print(f"NOT-FOUND: no graph node matches '{query}' -- check the name "
-              f"(typo?) or run comp-build. This is a NOT-FOUND, not a "
-              f"'nothing breaks' clear.", file=sys.stderr)
+        #
+        # AND IT PRINTS ITS DENOMINATOR + NEAR-MATCHES (NFRA_COMPCLOSE 2026-07-14): comp-blast
+        # read as "fails a third of runs" on ordinary function names, and a bare NOT-FOUND gave
+        # the agent nothing to discriminate WHY -- typo vs out-of-universe. Measured live:
+        # the graph is structurally BLIND to .tools/ + org/modules/ (the compiler tools
+        # themselves, COMPRAIL PRD F-5) -- `comp-blast comp-which` said NOT-FOUND while 7 real
+        # consumers existed, and a harness author nearly deleted a fail-closed gate's public
+        # symbol on that "clear". A scan whose universe you cannot see is a scan you cannot
+        # reason from: print the universe.
+        print(f"NOT-FOUND: no graph node matches '{query}' -- and here is the universe that "
+              f"verdict is over, so typo and out-of-scope stop looking identical:", file=sys.stderr)
+        from collections import Counter as _Counter
+        _tc = _Counter(n.node_type for n in g.nodes.values())
+        print(f"  denominator: {len(g.nodes)} nodes -- "
+              + ", ".join(f"{t}={c}" for t, c in _tc.most_common()), file=sys.stderr)
+        print("  NOT in this universe (structural, COMPRAIL F-5): .tools/* and org/modules/* -- "
+              "the compiler tools themselves. NOT-FOUND on those names is BLINDNESS, never a "
+              "'no consumers' clear.", file=sys.stderr)
+        import difflib as _difflib
+        _names = list(g.nodes.keys())
+        # node ids are prefixed forms (gold:SCRIPT:function / lambda:name / s3:key), so a bare
+        # function-name typo never fuzzy-matches a full id -- match against each id's LAST
+        # segment too, and map the winners back to their full ids.
+        _by_seg = {}
+        for _n in _names:
+            _seg = _n.replace("\\", "/").split(":")[-1].split("/")[-1]
+            _by_seg.setdefault(_seg.lower(), []).append(_n)
+        _sugg = _difflib.get_close_matches(query, _names, n=5, cutoff=0.55)
+        for _hit in _difflib.get_close_matches(query.lower(), list(_by_seg.keys()), n=5, cutoff=0.6):
+            for _full in _by_seg[_hit]:
+                if _full not in _sugg:
+                    _sugg.append(_full)
+        if not _sugg:
+            _sugg = [n for n in _names if query.lower() in n.lower()][:5]
+        _sugg = _sugg[:6]
+        if _sugg:
+            print("  near-matches in the graph (typo candidates):", file=sys.stderr)
+            for _s in _sugg:
+                print(f"    - {_s}", file=sys.stderr)
+        print("  not a typo? by question: comp-xref <symbol> (graph-wide occurrence) | "
+              "comp-symbols <file> (what a file defines) | comp-grep <pattern> (on-rails text "
+              "search; .tools/ + org/modules INCLUDED).", file=sys.stderr)
+        print("  This is a NOT-FOUND, not a 'nothing breaks' clear.", file=sys.stderr)
         sys.exit(3)
 
     node = matches[0]

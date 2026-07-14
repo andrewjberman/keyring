@@ -213,12 +213,54 @@ if __name__ == "__main__":
                 routes.append(json.loads(line))
             except Exception:  # noqa: BLE001
                 pass
+    # RUN-SIDE CORPUS, in preference order (NFRA_COMPCLOSE 2026-07-14):
+    #   1. org/mcp/comp-tool-runs.jsonl -- the SECOND-granularity sink comp_log_auto now dual-writes.
+    #      This exists because the join was DEAD by construction against the rolling corpus: the
+    #      markdown log is DAY-granular (measured: 15,842/15,904 rows at ts==midnight-ET), and a
+    #      300-SECOND window against a day-granular clock matched 1 of 6,509 joinable routes.
+    #      `outcome: null` on every training row was arithmetic, not accrual.
+    #   2. rail rows carrying serial= (the REJECTED limb's fallback-grep evidence; second-granular).
+    #   3. the rolling corpus -- kept ONLY as context, with the granularity warning printed: rows at
+    #      midnight-ET cannot join and must never be read as "no runs happened".
     runs = []
-    try:
-        from comp_learns_score import load_corpus
-        runs = list(load_corpus().get("rolling", []))
-    except Exception:  # noqa: BLE001
-        pass
+    sink = os.path.join(_WS, "org", "mcp", "comp-tool-runs.jsonl")
+    if os.path.exists(sink):
+        import json as _json
+        for line in open(sink, encoding="utf-8"):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                runs.append(_json.loads(line))
+            except Exception:  # noqa: BLE001
+                pass
+    rail_path = os.path.join(_WS, "org", "mcp", "comp-which-rail.log")
+    if os.path.exists(rail_path):
+        import re as _re
+        import datetime as _dt
+        rail_rx = _re.compile(r"^(\S+)\s+(RUN-GREP|RUN-GLOB)\s+tool=(\S+).*?\bserial=(\S+)")
+        for line in open(rail_path, encoding="utf-8", errors="replace"):
+            m = rail_rx.match(line)
+            if not m or m.group(4) in ("-", ""):
+                continue
+            try:
+                ts = _dt.datetime.strptime(m.group(1), "%Y-%m-%dT%H:%M:%SZ").replace(
+                    tzinfo=_dt.timezone.utc).timestamp()
+            except Exception:  # noqa: BLE001
+                continue
+            runs.append({"tool": m.group(3), "ts_epoch": ts, "serial": m.group(4)})
+    n_fine = len(runs)
+    rolling_note = ""
+    if not runs:
+        try:
+            from comp_learns_score import load_corpus
+            runs = list(load_corpus().get("rolling", []))
+            rolling_note = ("WARNING: run-side corpus is the DAY-GRANULAR rolling log only -- a "
+                            "300s window cannot join it; no_signal here means NO FINE-GRAINED "
+                            "CORPUS EXISTS YET, not that agents ignored routes. The comp-tool-runs "
+                            "sink accrues from 2026-07-14 forward.")
+        except Exception:  # noqa: BLE001
+            pass
     classify = None
     try:
         import comp_which_signals as _sig
@@ -234,5 +276,9 @@ if __name__ == "__main__":
     out = capture_outcomes(joinable, runs, classify=classify)
     out["routes_total"] = len(routes)
     out["routes_joinable_post_fix"] = len(joinable)
+    out["run_corpus"] = ({"source": "comp-tool-runs.jsonl + serial'd rail rows", "rows": n_fine}
+                         if n_fine else
+                         {"source": "rolling (day-granular fallback)", "rows": len(runs),
+                          "warning": rolling_note})
     print(json.dumps({k: v for k, v in out.items() if k != "entries"}, indent=1))
     print("entries:", len(out["entries"]))

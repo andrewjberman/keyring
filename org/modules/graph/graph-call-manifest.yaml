@@ -960,6 +960,30 @@ entries:
     anti_pattern: "hand-mining org/mcp/comp-which-rail.log to find tool-coverage gaps (the federation already ranks them, escape-weighted by code heat)"
     status: canonical
 
+  - id: cloud.trigger.dispatch_forensics
+    use_case: "What fires this lambda / is its EventBridge rule or schedule enabled or disabled / what schedule cron runs it / what targets does the rule dispatch to / did the trigger actually fire recently / does terraform declare it?"
+    canonical_call: "comp-trigger <name-or-target-substring> [--days 7] | comp-trigger --list"
+    tool: comp-trigger
+    mode: query
+    layer: cloud
+    cost: "~seconds (list-rules + list-schedules + per-match list-targets/TriggeredRules; read-only)"
+    freshness: "live AWS control-plane; every scan prints its denominator (rules+schedules scanned, region, window); metric absence reported as absence-of-datapoints, never as never-fired"
+    rebuild_trigger: "n/a"
+    anti_pattern: "raw `aws events list-rules | grep` forensics re-derived per incident (the 2026-06-30 gap-logged / 07-13 expensively-re-derived class); or reading DISABLED as broken -- on a held chain DISABLED is the control working, and this tool structurally cannot re-enable anything"
+    status: canonical
+
+  - id: meta.learns.value_scorer
+    use_case: "Score and rank the tool backlog -- which build-next / route-fix / retire candidates carry the most value (escapes prevented, drift caught), file the top ones to the tracked backlog, and prove the ranking is not a usage proxy?"
+    canonical_call: "comp-learns-score [--top N] [--file-candidates] [--goodhart-audit] [--json]"
+    tool: comp-learns-score
+    mode: query
+    layer: meta
+    cost: "~seconds (rail + rolling + routing corpus read; no LLM)"
+    freshness: "reads the live rail log + rolling corpus + routing flywheel; advisory-only (CTO ratifies; never auto-mutates)"
+    rebuild_trigger: "n/a"
+    anti_pattern: "ranking tools by invocation count (the Goodhart trap -- value = bad outcomes averted, and --goodhart-audit proves rank-inversions vs raw count on demand); or leaving the ranked worklist in a terminal scrollback instead of --file-candidates (an unfiled gap gets re-derived the expensive way -- the comp-trigger class)"
+    status: canonical
+
   - id: trace.symbols.file_inventory
     use_case: "What functions, classes, module constants and imports does this source file declare, with line numbers -- the forward AST inventory of one file?"
     canonical_call: "comp-symbols <file> [--grep <pattern>] [--kind func|class|const|import] [--json]"
@@ -1125,3 +1149,5 @@ tools_index:
   comp-firmsep-sweep: { does: "PROVE-THE-UNIVERSE firm-separation sweep: simulates a firm credential against EVERY role in the account and asserts only the firm's own roles allow (optionally write-reach too). Enumerates by SIMULATION because grant-shape greps cannot see AWS-managed Resource:'*' policies", subcommands: ["<firm>", "--write-reach"], entries: [cloud.firmsep.credential_universe] }
   comp-tool-health: { does: "Fused per-comp-tool 3-axis HEALTH query (used / rail_consistent / effective -> KEEP|FIX|PROMOTE|RETIRE) over the COMPLEARN substrate; value-anchored (outcome value + rail quality, never invocation count); read-only advisory (CTO ratifies). Engine comp_tool_health.py", subcommands: ["[<tool>]", "--json"], entries: [meta.toolhealth.keep_fix_retire] }
   comp-toolgraph: { does: "The comp-tool SUITE as a measure-only graph: C0 nodes (the ratified universe) + C1 mechanical edges (SHARES_SUBSTRATE/WRITES/INVOKED_BY) + the DECLARED-vs-ACTUAL coupling diff (the undeclared-ripple finding). Engine comp_toolgraph.py", subcommands: ["--json"], entries: [meta.toolgraph.suite_coupling] }
+  comp-learns-score: { does: "COMPLEARN P2 value-anchored SCORER: ranks build-next / route-fix / merge-retire candidates by escapes-prevented / drift-caught / cost-per-outcome (NEVER usage count -- the Goodhart gate, provable via --goodhart-audit); --file-candidates appends new top candidates to the tracked backlog comp-learns-backlog.md (the gap->build bridge). Advisory-only; CTO ratifies. Engine comp_learns_score.py", subcommands: ["--top N", "--file-candidates", "--goodhart-audit", "--self-test", "--json"], entries: [meta.learns.value_scorer] }
+  comp-trigger:  { does: "EventBridge/Scheduler trigger-dispatch forensics (READ-ONLY): what fires X, ENABLED/DISABLED live state, targets, fired-evidence (TriggeredRules w/ printed denominator; absence != never-fired), TF declared-ness (text-scan; cannot tell landed from planned). No write path by construction. Engine comp_trigger.py", subcommands: ["<name-or-target-substring>", "--list", "--days N", "--json", "--self-test"], entries: [cloud.trigger.dispatch_forensics] }

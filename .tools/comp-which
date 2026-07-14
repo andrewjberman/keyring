@@ -660,6 +660,29 @@ RULES = [
      "which comp-tools are in demand, where the rail-escape coverage gaps cluster (raw greps / denies / "
      "zero-match searches by path), and the GAP x HEAT build-next ranking -- the learning loop's "
      "detection surface (the scorer = comp-learns-score)"),
+    (["comp-learns-score", "learns score", "score the backlog", "score the gaps", "ranked worklist",
+      "value-anchored", "goodhart", "goodhart audit", "advisory worklist", "file candidates",
+      "file the candidates", "backlog bridge", "retire candidates", "merge retire",
+      "build-next ranking", "score the tool backlog", "worklist ranking"],
+     "COMPLEARN value-anchored scorer (comp-learns-score)",
+     ["comp-learns-score", "comp-learns-score --file-candidates", "comp-learns-score --goodhart-audit"],
+     "rank build-next / route-fix / merge-retire candidates by VALUE (escapes-prevented, drift-caught, "
+     "cost-per-outcome -- never usage count) and file the top ones to the tracked backlog; the scorer "
+     "half of the loop (detection = comp-learns-status)"),
+    # comp-trigger -- the 2026-06-30 gap-logged class, live at last: EventBridge/schedule dispatch
+    # forensics. Distinctive trigger/schedule/fires vocabulary; deliberately NOT bare "dispatch"
+    # (comp-dispatch's gold-orchestration lane) or bare "rule" (too generic).
+    (["what fires", "what triggers", "which rule fires", "trigger enabled", "trigger disabled",
+      "eventbridge", "event bridge", "event rule", "events rule", "schedule expression",
+      "cron schedule", "scheduled trigger", "comp-trigger", "rule enabled", "rule disabled",
+      "did it fire", "did the trigger fire", "last fired", "actually fire", "fires the lambda",
+      "what schedule runs", "trigger forensics", "scheduler schedule", "nightly trigger",
+      "is the cron", "the cron for"],
+     "EventBridge/Scheduler trigger forensics (comp-trigger)",
+     ["comp-trigger <name-or-target-substring>", "comp-trigger --list", "comp-trigger <q> --days 7"],
+     "what fires a lambda / is the rule-schedule ENABLED or DISABLED (live) / targets / did it "
+     "actually fire (TriggeredRules with the denominator) / does TF declare it. READ-ONLY -- on a "
+     "held chain DISABLED is the control working; this tool cannot enable anything"),
     # pipescript -- the CLAUDE.md situation-table's own headline question ("What's in the news/advi/
     # market/... pipeline?") had NO curated vocabulary and fell to grep (frozen-cohort sub-floor).
     (["what's in the", "whats in the", "what is in the", "pipeline overview", "named thread",

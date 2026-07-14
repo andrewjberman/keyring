@@ -1,0 +1,21 @@
+#!/bin/bash
+# comp-learns-score -- the NFRA_COMPLEARN value-anchored scorer (P2), invocable at last.
+#
+# SHIPPED AS A SHIM 2026-07-14 (NFRA_COMPCLOSE Phase C): the engine
+# (org/modules/graph/comp_learns_score.py) existed since 2026-07-01 with a passing Goodhart
+# self-test -- and had NO PATH entry, no registration, no route. The learning loop's scorer was
+# itself unfindable: agents ran it as a bare python module or not at all, and the ranked
+# worklist it produces had no consumer. A tool nobody can find is indistinguishable from a tool
+# that was never built -- and that sentence was ABOUT the gaps this tool ranks.
+#
+# Usage:
+#   comp-learns-score                      # the ranked advisory worklist (CTO ratifies)
+#   comp-learns-score --file-candidates    # append NEW top candidates to the tracked backlog
+#                                          #   (org/modules/graph/comp-learns-backlog.md)
+#   comp-learns-score --goodhart-audit     # prove the ranking is value-driven, not usage-driven
+#   comp-learns-score --self-test          # the Goodhart-honesty suite
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_learns_score.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-learns-score" "$*" $_exit 2>/dev/null
+exit $_exit

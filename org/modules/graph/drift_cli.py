@@ -518,6 +518,15 @@ def _seam_engines(seam: dict) -> list[tuple[str, str | None]]:
 
 def walk_seams(topo: dict, target: str | None, ctx: dict,
                only_seams: set[str] | None = None) -> list[dict]:
+    """LIVE PROGRESS ON STDERR + PER-ADAPTER TIMING (NFRA_COMPCLOSE 2026-07-14). The sweep used to
+    collect everything and render one board at exit -- and python BLOCK-BUFFERS a piped stdout, so
+    an agent's timed-out sweep (the runtime crosses 2-minute defaults on cold caches) showed ZERO
+    output and rc=124: a mute death, logged as a tool FAILURE. Measured: that mute-timeout class +
+    the honest rc=2 UNVERIFIABLE verdict (already VERDICT-classed in comp_log_auto since 07-08)
+    jointly read as 'comp-drift fails ~half its runs' when neither is a defect in the checks
+    themselves. Progress goes to STDERR so stdout stays a parseable board/JSON; each line carries
+    the adapter's elapsed seconds, so a killed run now shows WHERE it died and WHICH leg is slow."""
+    import time as _time
     records = []
     for seam in topo.get("seams", []):
         if only_seams and seam["seam_id"] not in only_seams:
@@ -525,14 +534,28 @@ def walk_seams(topo: dict, target: str | None, ctx: dict,
         for sub_target, engine in _seam_engines(seam):
             adapter = _adapter_for(engine)
             ctx["_binding"] = sub_target   # per-binding catalog label for fan-in adapters (seam-6)
+            t0 = _time.time()
+            try:
+                sys.stderr.write("  [sweep] %-8s %s ...\n" % (seam["seam_id"], engine or "?"))
+                sys.stderr.flush()
+            except Exception:  # noqa: BLE001 -- progress is advisory, never fatal
+                pass
             try:
                 rec = adapter(seam, target, ctx)
             except Exception as exc:  # noqa: BLE001
                 rec = _record(seam, target or "?", "UNVERIFIABLE",
                               "adapter raised: %s" % exc)
+            elapsed = _time.time() - t0
+            try:
+                sys.stderr.write("  [sweep] %-8s %s -> %s (%.1fs)\n"
+                                 % (seam["seam_id"], engine or "?", rec.get("verdict", "?"), elapsed))
+                sys.stderr.flush()
+            except Exception:  # noqa: BLE001
+                pass
             if sub_target:
                 rec["target"] = "%s[%s]" % (rec["target"], sub_target)
                 rec["_engine"] = engine
+            rec["_elapsed_s"] = round(elapsed, 1)
             records.append(rec)
     return records
 
@@ -675,6 +698,14 @@ def render_coverage(topo: dict) -> str:
 # ---- MAIN ------------------------------------------------------------------
 
 def main(argv: list[str] | None = None) -> int:
+    # Line-buffered, uncrashable streams (NFRA_COMPCLOSE 2026-07-14): a piped stdout block-buffers,
+    # so a sweep killed mid-run (agent timeout) printed NOTHING -- a mute death indistinguishable
+    # from a crash-before-start. Line buffering makes every already-printed row survive the kill.
+    for _s in (sys.stdout, sys.stderr):
+        try:
+            _s.reconfigure(line_buffering=True, errors="replace")
+        except Exception:  # noqa: BLE001
+            pass
     ap = argparse.ArgumentParser(
         prog="comp-drift",
         description="Estate propagation-drift orchestrator (calls seam engines; never re-implements).")

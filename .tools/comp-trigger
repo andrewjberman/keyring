@@ -1,0 +1,19 @@
+#!/bin/bash
+# comp-trigger -- EventBridge / Scheduler trigger-dispatch forensics (READ-ONLY).
+#
+# BORN FROM THE LOOP IT PROVES (NFRA_COMPCLOSE Phase C, 2026-07-14): gap-logged 2026-06-30
+# ("candidate comp-trigger"), never built, re-derived expensively 2026-07-13 -- then detected,
+# scored, BUILT, registered and routed in one pass. "What fires X / is the trigger enabled /
+# did it actually fire / does terraform declare it" -- with the denominator on every scan and
+# no write path at all (DISABLED on a held chain is the control WORKING; this tool cannot
+# touch it).
+#
+# Usage:
+#   comp-trigger <name-or-target-substring>   [--days 7] [--region R] [--json]
+#   comp-trigger --list                       # full rule + schedule census with states
+#   comp-trigger --self-test                  # offline fixture suite (no AWS)
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_trigger.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-trigger" "$*" $_exit 2>/dev/null
+exit $_exit

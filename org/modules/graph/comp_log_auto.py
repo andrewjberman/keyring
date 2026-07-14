@@ -245,6 +245,24 @@ def _append_log(workspace: Path, tool: str, args: str, exit_code: int,
         # DISCLOSE, don't swallow (R5/R7): a failed append is a dropped emission -- surface a count/marker.
         _disclose_drop(workspace, tool, f"append-failed: {type(e).__name__}")
 
+    # SECOND-GRANULARITY RUN SINK (NFRA_COMPCLOSE 2026-07-14) -- the missing half of the
+    # route->run outcome join. The markdown row above is DAY-granular by design, and the
+    # charter-2 join window is 300 SECONDS: measured, 15,842 of 15,904 rolling-corpus rows
+    # carried ts_epoch == midnight-ET, so the join returned no_signal on 6,508 of 6,509
+    # joinable routes -- `outcome: null` on every training row was ARITHMETIC, not accident
+    # (a window 288x finer than its corpus's clock can never match). This jsonl row carries
+    # the real clock. Same caller-safety invariant: any failure discloses, never raises.
+    try:
+        import json as _json
+        runs_sink = workspace / "org" / "mcp" / "comp-tool-runs.jsonl"
+        rec = {"ts_epoch": time.time(), "serial": serial, "to_id": to_id, "tool": tool,
+               "args_head": command[:80], "rc": exit_code, "result": result,
+               "session_id": os.environ.get("CLAUDE_CODE_SESSION_ID", "")}
+        with open(runs_sink, "a", encoding="utf-8") as f:
+            f.write(_json.dumps(rec, ensure_ascii=True) + "\n")
+    except Exception as e:
+        _disclose_drop(workspace, tool, f"runs-sink-append-failed: {type(e).__name__}")
+
 
 def main():
     if len(sys.argv) < 4:

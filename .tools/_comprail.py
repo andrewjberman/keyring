@@ -134,7 +134,23 @@ def log_rail(rail_log: str, decision: str, tool: str, term: str, extra: str = ""
     # comp-which's fallback was byte-identical to a direct agent invocation, so RUN-GREP could not
     # be attributed and the Rule-21 rail could not answer the question it exists to answer.
     src = "comp-which" if os.environ.get("COMP_WHICH_CHILD") else "direct"
-    line = "%s  %s  tool=%s  term=%s  src=%s  %s\n" % (_utc_ts(), decision, tool, term1, src, extra1)
+    # SERIAL (best-effort, same pass): the route->run outcome join's REJECTED limb is "the agent
+    # ran a fallback grep instead of the routed tool" -- unprovable while rail rows carried no
+    # actor. env first; the LD-0290 session-keyed serial file second; absent stays absent (never
+    # guessed from the shared .agent_context -- that file answers "what TO", never "who").
+    serial = os.environ.get("OPAL_AGENT_SERIAL", "")
+    if not serial:
+        sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "")
+        if sid:
+            try:
+                sp = os.path.join(os.path.dirname(rail_log), "sessions", sid + ".serial")
+                with open(sp, encoding="utf-8", errors="replace") as fh:
+                    first = fh.read().strip().splitlines()
+                serial = first[0].strip() if first else ""
+            except Exception:
+                serial = ""
+    line = "%s  %s  tool=%s  term=%s  src=%s  serial=%s  %s\n" % (
+        _utc_ts(), decision, tool, term1, src, serial or "-", extra1)
     try:
         os.makedirs(os.path.dirname(rail_log), exist_ok=True)
         with open(rail_log, "a", encoding="utf-8") as f:
