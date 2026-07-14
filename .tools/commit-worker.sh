@@ -293,8 +293,13 @@ cw_process() {
     export GIT_AUTHOR_NAME="$a_name"
     export GIT_AUTHOR_EMAIL="$a_email"
 
-    # (D) stage the declared pathspec (-f: force past .gitignore, mirrors safe-commit).
-    git add -f -- "${REQ_PATHS[@]}" 2>/dev/null || true
+    # (D) stage the declared pathspec via the SHARED measured-state helper
+    # (commit_gate_lib.sh cg_stage_pathspec, pure-deletion TO): pure deletions
+    # stage via `add -A`, already-staged deletions no-op, pycache artifacts are
+    # excluded (SKIP lines land in the worker log), everything else keeps the
+    # existing `add -f`. Error semantics preserved: failures stay non-fatal here
+    # (the gate/commit steps below surface real problems).
+    cg_stage_pathspec "${REQ_PATHS[@]}" || true
 
     # (E) IN_SCOPE = git-expanded files under the pathspec.
     local in_scope
@@ -359,8 +364,12 @@ cw_process() {
     # at 12s with the commit already landed.)
     local attempt=1 rc cout cerr
     local of="${TMPDIR:-/tmp}/cw_out.$REQ_ID" ef="${TMPDIR:-/tmp}/cw_err.$REQ_ID"
+    # AMENDMENT-1 belt (mirrors safe-commit): commit --only re-takes worktree state,
+    # so a mid-gate py_compile artifact would sweep in without the exclude magic.
+    local cw_excludes=() _ex
+    while IFS= read -r _ex; do cw_excludes+=("$_ex"); done < <(cg_commit_exclude_pathspec)
     while [ "$attempt" -le "$COMMIT_MAX_ATTEMPTS" ]; do
-      git -c gc.auto=0 commit --only "${REQ_CARGS[@]}" -- "${REQ_PATHS[@]}" >"$of" 2>"$ef" </dev/null
+      git -c gc.auto=0 commit --only "${REQ_CARGS[@]}" -- "${REQ_PATHS[@]}" "${cw_excludes[@]}" >"$of" 2>"$ef" </dev/null
       rc=$?
       cout="$(cat "$of" 2>/dev/null || true)"; cerr="$(cat "$ef" 2>/dev/null || true)"
       rm -f "$of" "$ef" 2>/dev/null || true

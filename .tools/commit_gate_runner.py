@@ -542,6 +542,9 @@ def process_files(files: list[str]) -> int:
         # crash-instead-of-decide shape as the fail-open-in-disguise found in the family's own
         # scope computation.)
         if not os.path.exists(f):
+            # LOUD, never silent (pure-deletion TO AC-2, the ZERO_CHECKS lesson): a gate
+            # run that skipped a path must stay distinguishable from one that checked it.
+            _echo("SKIP: deleted (nothing to compile/lint): " + f, sys.stdout)
             continue
 
         # OVERSIZE REFUSAL -- FIRST, and BEFORE the per-suffix dispatch below.

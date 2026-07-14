@@ -284,7 +284,11 @@ fi
 ADD_ERR=""
 ADD_OK=0
 for attempt in 1 2 3 4 5; do
-  if ADD_ERR="$(git add -f -- "${PATHSPEC[@]}" 2>&1)"; then
+  # cg_stage_pathspec (commit_gate_lib.sh, pure-deletion TO): ONE measured branch
+  # per path -- pure deletions stage via `add -A`, already-staged deletions no-op
+  # (re-adding them fatals rc=128), pycache artifacts are excluded loud, everything
+  # else keeps the existing `add -f`. Untracked+missing still fails loud below.
+  if ADD_ERR="$(cg_stage_pathspec "${PATHSPEC[@]}" 2>&1)"; then
     ADD_OK=1
     break
   fi
@@ -474,5 +478,19 @@ if [ -n "$IN_SCOPE" ]; then
 fi
 
 # Proceed with the actual scoped commit (plain invocation so the EXIT trap fires).
-git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}"
+#
+# AMENDMENT-1 belt: `commit --only` re-takes the WORKTREE state of the pathspec at
+# commit time, so a .pyc created by the gate's own py_compile AFTER staging (the
+# c36710809 / fbdb335b4 mechanism) would be swept in even though staging filtered
+# it. The exclude magic closes that window; anything it excludes RIGHT NOW is
+# printed first (never silent -- the ZERO_CHECKS lesson).
+COMMIT_EXCLUDES=()
+while IFS= read -r _ex; do COMMIT_EXCLUDES+=("$_ex"); done < <(cg_commit_exclude_pathspec)
+_late_pyc="$(git status --porcelain -- "${PATHSPEC[@]}" 2>/dev/null | cut -c4- | grep -E "$CG_PYCACHE_RE" || true)"
+if [ -n "$_late_pyc" ]; then
+  while IFS= read -r _p; do
+    [ -n "$_p" ] && echo "SKIP: pycache-artifact (never committed): $_p" >&2
+  done <<< "$_late_pyc"
+fi
+git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}" "${COMMIT_EXCLUDES[@]}"
 exit $?
