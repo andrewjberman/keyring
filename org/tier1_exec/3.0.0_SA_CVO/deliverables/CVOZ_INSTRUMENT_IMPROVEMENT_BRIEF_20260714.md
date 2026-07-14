@@ -190,8 +190,22 @@ candidates, not machinery inside comp-debris:
      original property set).
   c. Hold-aware: INF chain + frozen three flagged HELD in inventory, excluded from any
      reap-candidate framing.
+  d. **NEVER-INVOKED is not cold (Andrew-direct, same channel ~04:3xZ, VERBATIM: *"Make sure
+     we're not getting things that are cold simply because they've never been invoked."*).**
+     The coldest-first ranking is DORMANCY-AFTER-ACTIVITY: rank by time-since-last-event only
+     for resources WITH prior-activity evidence. Zero-history resources split by CREATION age
+     (from resource metadata, not CloudTrail) into their own sections, outside the cold rank:
+     `TOO-YOUNG` (created recently, nothing to judge) and `STILLBORN-OR-GUARD` (old + never
+     invoked — could be abandoned half-build OR a control that fires only on rare events;
+     Verification Law 4 cuts both ways here, so this band gets a PURPOSE review, never a
+     coldness rank). Corollary: "no events in the lookback window" on a resource OLDER than
+     the window cannot distinguish dormant from never-invoked — creation time is REQUIRED per
+     row to disambiguate, else the row is UNKNOWN, not cold.
 - **Acceptance:** known-hot control ranks hot (e.g. access-anomaly-scanner, FIRED 72x/3d);
-  a no-visibility resource lands UNKNOWN, exercised; held-exclusion exercised on an INF name.
+  a no-visibility resource lands UNKNOWN, exercised; held-exclusion exercised on an INF name;
+  **a never-invoked-but-old fixture (a guard-class rule, e.g. a DISABLED-by-design or
+  alarm-target resource) must land in STILLBORN-OR-GUARD and NOT appear in the coldest-first
+  reap list, exercised.**
 - **Live pre-validation of the confirmation pass (CVO~Z ran both tools 2026-07-14 ~04:3xZ,
   Andrew-directed):** `comp-heat federated` → 329 cold / 38 warm / 7 hot estate files (the cold
   ocean is real); `comp-dups` → 8 TF EXACT-label collisions (two-states-one-resource class:
