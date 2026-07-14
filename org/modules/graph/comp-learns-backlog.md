@@ -204,7 +204,10 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   artifact's content-sha256 metadata, (c) artifact_sha256 in the map, and optionally (d) a
   build-from-HEAD hash for the files[] set -- any pairwise mismatch = named drift verdict. Belongs
   beside comp-pipescript deployed (same question, lambda estate instead of EC2 gold). CI candidate:
-  the source map already carries everything but the live read.
+  the source map already carries everything but the live read. AMENDMENT (0.5.0, 231613Z): the same
+  build should ship ONE canonical formatter for lambda-source-map.json -- two different writers
+  reformatted the whole file in one night (CTO json.dump indent=2; 0.5.0's edit churned it again),
+  and whole-file churn destroys blame utility on the estate's deploy-truth record.
 - value evidence: C4 half-landed 20+ hours undetected across two sessions + a ratified-then-falsified
   'APPLIED' claim (config-read-for-behavioral, 22a); found only when the scheduled fire exercised it.
 - resolution: OPEN -- build routes to ~Z-group/0.8.0-class capacity via MSTR (base-CTO
