@@ -17789,3 +17789,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-14 08:56-10:44Z 0.4.0_DS: commit-gate x6 PASS (1 ruff catch), pytest silver 56/56 (real-bytes integration) + runners_49f 16/16; no comp-* runs (new-file authoring; the one shared-module edit coordinated directly with its known-closed consumer set)
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/OPAL_ASSETS_49METATABLE... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS_49METATABLES.D3.0833-groupa-analysis | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/schwab_conve... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS_49METATABLES.D3.0833-groupa-analysis | comp-pulse | comp-pulse diff data/assets/scripts/silver/schwab_conversion.py data/assets/scripts/sil... | PASS |
+| 2026-07-14 ~10:55Z | 0.6.2_AE_PartnerETL | comp-to, comp-glob x4, pytest x3, commit-gate x2, s3api landed-verify | V2-8 delta 1+1b + D3 Group-A + both scheduled fires -- all green; gap: contract 7b count-vs-list drift (fixed v1.2.1) |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS_49METATABLES.D3.0833-groupa-analysis | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS_49METATABLES.D3.0833-groupa-analysis | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
