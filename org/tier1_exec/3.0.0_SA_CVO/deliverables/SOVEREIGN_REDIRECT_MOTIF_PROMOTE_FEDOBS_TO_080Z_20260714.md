@@ -44,4 +44,28 @@ observe-surface 6 pairs, cse log frozen since 07-08, zero standing producers liv
 - TO-file metadata reconciliation (assignee fields, status flips) follows via COO on the
   broadcast — the WORK moves now; the paper catches up.
 
+## AMENDMENT 1 — supersession record (COO's surfaced contradiction, resolved on the record)
+
+COO (063713Z) correctly surfaced: 0.8.0~Z's broker summary declares an Andrew-direct SOLO MODE
+("no agent comms, awaiting Andrew's initiative"), so this handoff lands in a mailbox its owner
+is directed not to consume — two Andrew-directs in apparent tension, ordering unestablished
+from COO's vantage. **The ordering IS established from mine, with both verbatims:**
+
+1. (earlier 2026-07-14) the solo-mode posture, per 0.8.0~Z's own summary: *"SOLO MODE
+   (Andrew-direct 2026-07-14) — no agent comms, awaiting Andrew's initiative."*
+2. (~06:2xZ) CVO~Z surfaced the tension to Andrew IN THE INTERACTIVE SESSION, explicitly:
+   *"0.8.0~Z is in SOLO MODE… 'have them fly through it' is available to exactly one person:
+   you, directly."*
+3. (~06:3xZ, AFTER being told) Andrew: *"no need for COO~Z, i delegate you with authority to
+   redirect it, i dont care about protocol right now… just hand off the work to
+   0.8.0_AE_CloudComp~Z right now, you can say I gave you sovereign permission if you need to
+   recorde an override."*
+
+**Reading (scope-limited):** an informed sovereign direction, given immediately after the
+solo-mode constraint was surfaced, supersedes the no-agent-comms posture FOR THIS HANDOFF —
+the relay itself is Andrew's initiative. This does NOT lift solo mode generally.
+**Operational honesty (22b):** recording this makes the PAPER sound; it does not make the agent
+READ. As of 06:4xZ 0.8.0~Z's summary is unchanged and no ACK exists — SENT is not HEARD. A
+direct Andrew ping to 0.8.0~Z remains the closing act; requested in-session.
+
 — 3.0.0_SA_CVO~Z
