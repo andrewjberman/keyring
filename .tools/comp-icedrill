@@ -1,0 +1,12 @@
+#!/bin/bash
+# comp-icedrill -- drill an artifact's VERSION/PARTITION vintages across existing substrates
+# (dated S3 partitions / S3 object-versions / DDB daily / the Nessie-versioned graph). READ-ONLY.
+# The provenance header ALWAYS names WHICH substrate answered + its COMPLETENESS; an empty result
+# is a FINDING, never a silent clean. Iceberg is the GRAPH-version substrate (comp-kuzu); DATA
+# artifacts are not on it -- v1 never fabricates a history a substrate does not carry.
+#   comp-icedrill s3://bucket/prefix/ | s3://bucket/key.json | ddb <table> | graph <node> [--json] [--self-test]
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_icedrill.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-icedrill" "$*" $_exit 2>/dev/null
+exit $_exit

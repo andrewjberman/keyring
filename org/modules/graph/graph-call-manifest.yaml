@@ -985,6 +985,30 @@ entries:
     anti_pattern: "raw `aws events list-rules | grep` forensics re-derived per incident (the 2026-06-30 gap-logged / 07-13 expensively-re-derived class); or reading DISABLED as broken -- on a held chain DISABLED is the control working, and this tool structurally cannot re-enable anything"
     status: canonical
 
+  - id: meta.gitdrill.producer_history
+    use_case: "How did this node's PRODUCER change over time -- its commit history, and what did the producing file look like AT a past vintage (a ref)?"
+    canonical_call: "comp-gitdrill <node|file> [--at <ref> [--diff]]"
+    tool: comp-gitdrill
+    mode: query
+    layer: meta
+    cost: "~1s (git log/show/diff)"
+    freshness: "live git; every line carries its commit-ish + date"
+    rebuild_trigger: "n/a"
+    anti_pattern: "raw `git log` after losing the node->file resolution the graph already holds; or citing file:line without a vintage (resolves to different code at every commit)"
+    status: canonical
+
+  - id: meta.icedrill.vintage_history
+    use_case: "What are this artifact's version or partition vintages over time -- the dated-partition series, S3 object-version history, or DDB daily-bucket vintages?"
+    canonical_call: "comp-icedrill s3://bucket/prefix/ | s3://bucket/key.json | ddb <table> | graph <node>"
+    tool: comp-icedrill
+    mode: query
+    layer: meta
+    cost: "~seconds (ListObjectsV2 / list_object_versions; no body reads)"
+    freshness: "live S3/DDB; provenance header names the substrate + completeness"
+    rebuild_trigger: "n/a"
+    anti_pattern: "reading an empty version list as 'the value never changed' (it may mean the bucket is not versioned -- the tool says which); or implying a full history from a partition-presence series (presence != completeness -- comp-freshness owns that)"
+    status: canonical
+
   - id: meta.pydeps.reference_graph
     use_case: "Who imports / loads / subprocess-invokes this compiler-layer python file (a .tools/ shim or an org/modules engine), or what does it reference -- the dependency graph the trace graph is blind to (COMPRAIL F-5)?"
     canonical_call: "comp-pydeps consumers <name> | comp-pydeps deps <name> | comp-pydeps egress [<name>]"
@@ -1176,4 +1200,6 @@ tools_index:
   comp-toolgraph: { does: "The comp-tool SUITE as a measure-only graph: C0 nodes (the ratified universe) + C1 mechanical edges (SHARES_SUBSTRATE/WRITES/INVOKED_BY) + the DECLARED-vs-ACTUAL coupling diff (the undeclared-ripple finding). Engine comp_toolgraph.py", subcommands: ["--json"], entries: [meta.toolgraph.suite_coupling] }
   comp-learns-score: { does: "COMPLEARN P2 value-anchored SCORER: ranks build-next / route-fix / merge-retire candidates by escapes-prevented / drift-caught / cost-per-outcome (NEVER usage count -- the Goodhart gate, provable via --goodhart-audit); --file-candidates appends new top candidates to the tracked backlog comp-learns-backlog.md (the gap->build bridge). Advisory-only; CTO ratifies. Engine comp_learns_score.py", subcommands: ["--top N", "--file-candidates", "--goodhart-audit", "--self-test", "--json"], entries: [meta.learns.value_scorer] }
   comp-pydeps:   { does: "Repo-wide Python REFERENCE graph incl .tools/ + org/modules (closes COMPRAIL F-5): who imports/loads/subprocess-invokes a compiler-layer file (edge-kind-typed code-consumer vs prose-mention, docstring-aware) + per-file egress. comp-blast consults it on a .tools/org-modules NOT-FOUND. Engine comp_pydeps.py", subcommands: [consumers, deps, egress, build, "--self-test", "--json"], entries: [meta.pydeps.reference_graph] }
+  comp-gitdrill: { does: "TIME-axis drill: node -> producer file's vintage-stamped git history (hash/date/author/subject) + --at <ref> view/diff. Resolves node->file via the trace graph; every line carries its commit-ish. Read-only. Engine comp_gitdrill.py", subcommands: ["<node|file>", "--at <ref>", "--diff", "--limit N", "--json", "--self-test"], entries: [meta.gitdrill.producer_history] }
+  comp-icedrill: { does: "VINTAGE-axis drill: artifact -> version/partition history across existing substrates (dated S3 partitions / S3 object-versions / DDB daily / Nessie graph). Provenance names substrate + completeness; empty is a FINDING; never fabricates an Iceberg history for a data artifact. Read-only. Engine comp_icedrill.py", subcommands: ["s3://...", "ddb <table>", "graph <node>", "--json", "--self-test"], entries: [meta.icedrill.vintage_history] }
   comp-trigger:  { does: "EventBridge/Scheduler trigger-dispatch forensics (READ-ONLY): what fires X, ENABLED/DISABLED live state, targets, fired-evidence (TriggeredRules w/ printed denominator; absence != never-fired), TF declared-ness (text-scan; cannot tell landed from planned). No write path by construction. Engine comp_trigger.py", subcommands: ["<name-or-target-substring>", "--list", "--days N", "--json", "--self-test"], entries: [cloud.trigger.dispatch_forensics] }

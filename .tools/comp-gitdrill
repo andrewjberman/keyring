@@ -1,0 +1,11 @@
+#!/bin/bash
+# comp-gitdrill -- drill an estate node to its PRODUCER's git history at vintage (READ-ONLY).
+# The TIME axis of a node: node -> producing source file(s) via the graph -> vintage-stamped
+# commit history + `--at <ref>` to view/diff the producer AS OF a vintage. Every line carries its
+# commit-ish (CLAUDE.md 22: no citation without a vintage). git log/show/diff only; never mutates.
+#   comp-gitdrill <node|file> [--at <ref> [--diff]] [--limit N] [--json] [--self-test]
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_gitdrill.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-gitdrill" "$*" $_exit 2>/dev/null
+exit $_exit

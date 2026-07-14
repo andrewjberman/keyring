@@ -659,6 +659,24 @@ RULES = [
      "who imports/loads/subprocess-invokes a .tools or org/modules python file (the compiler layer "
      "the trace graph is blind to -- COMPRAIL F-5), edge-kind-typed code-consumer vs prose-mention. "
      "comp-blast consults it on a .tools/org-modules NOT-FOUND"),
+    (["git history", "producer history", "commit history of", "how did it change over time",
+      "who changed", "at what vintage", "at a ref", "at a commit", "producer at vintage",
+      "comp-gitdrill", "history of the producer", "time axis", "what did it look like at",
+      "blob at vintage", "producer commits", "vintage of the code"],
+     "producer git-history drill (comp-gitdrill)",
+     ["comp-gitdrill <node|file>", "comp-gitdrill <node|file> --at <ref> --diff"],
+     "the TIME axis of a node -- its producing file's vintage-stamped commit history, and --at <ref> "
+     "to view/diff the producer AT a vintage; every line carries its commit-ish (comp-gitdrill). "
+     "DISTINCT from comp-icedrill (DATA vintages) and comp-xray (value-motion)"),
+    (["partition history", "version history", "object versions", "s3 versions", "vintages of",
+      "dated partitions", "partition series", "daily buckets", "artifact versions", "comp-icedrill",
+      "how many versions", "version list", "which partitions exist", "data vintages",
+      "vintage list", "partition vintages"],
+     "artifact vintage/partition drill (comp-icedrill)",
+     ["comp-icedrill s3://bucket/prefix/", "comp-icedrill s3://bucket/key.json", "comp-icedrill graph <node>"],
+     "the DATA vintage axis of an artifact -- dated S3 partitions / S3 object-versions / DDB daily / "
+     "Nessie graph vintages, with the substrate + completeness named and empty-is-a-finding "
+     "(comp-icedrill). DISTINCT from comp-gitdrill (producer CODE history)"),
     (["build next", "build-next", "what tool should we build", "which tool to build",
       "tool demand", "rail escapes", "gap x heat", "gap heat", "comp-learns-status",
       "learning loop", "is the learning", "tool backlog", "demand gap cost",
