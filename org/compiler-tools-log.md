@@ -17274,3 +17274,17 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
 | 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | verify-suite | /verify NFRA_COMPCLOSE: comp-learns-score+comp-trigger+comp-route(+outcome)+manifest+cap-provider self-tests, comp-which x3, comp-blast pair, comp-drift kill-test, routing harness --out scratch | ALL PASS -- verdict SOUND |
 | 2026-07-13 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/ta... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which-routing-test.py --fil... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/sdd-... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_PRD.md -... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-ec... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.C1.monolith-bucket-terraform-router-iam | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/task_... | PASS |
+2026-07-14 | 0.7.0_AE_CloudOps | C1 monolith LIVE + C2 mirror collision fix + C9 STOP + 685MB incident | comp-iam gaps (baseline+post, 0 new), simulate-principal-policy (fence + paired control, Rule 22a), comp-grep/glob (rail-checked live-state), terraform validate/fmt/plan (C1 0-diff, C2 8/0/0, fix 0/1/0), commit-gate (clean) | gap: conservation guards must count DISTINCT LANDINGS not writes (now doctrine)
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.C1.monolith-bucket-terraform-router-iam | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
