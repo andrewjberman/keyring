@@ -388,8 +388,31 @@ def cmd_blast(args):
         print(f"  denominator: {len(g.nodes)} nodes -- "
               + ", ".join(f"{t}={c}" for t, c in _tc.most_common()), file=sys.stderr)
         print("  NOT in this universe (structural, COMPRAIL F-5): .tools/* and org/modules/* -- "
-              "the compiler tools themselves. NOT-FOUND on those names is BLINDNESS, never a "
-              "'no consumers' clear.", file=sys.stderr)
+              "the compiler tools themselves.", file=sys.stderr)
+        # F-5 FALLBACK (NFRA_INSTDRILL item 8): consult comp-pydeps, the reference graph that DOES
+        # model the compiler layer, so this is an ANSWER instead of a blindness disclaimer.
+        try:
+            import importlib.util as _ilu
+            import os as _os
+            _pp = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "comp_pydeps.py")
+            _spec = _ilu.spec_from_file_location("comp_pydeps", _pp)
+            _mod = _ilu.module_from_spec(_spec)
+            _spec.loader.exec_module(_mod)
+            _pg = _mod._load()
+            _tgt = _mod._match_target(_pg, query)
+            _cmap = _pg["refs"].get(_tgt, {}) if _tgt else {}
+            _real = {c: k for c, k in _cmap.items() if _mod._REAL_KINDS & set(k)}
+            if _tgt and _tgt in _pg["defines"]:
+                print(f"  -> comp-pydeps DOES model it: '{query}' has {len(_real)} code consumer(s) "
+                      f"in the compiler layer. Run:  comp-pydeps consumers {query}", file=sys.stderr)
+                for _c in sorted(_real)[:6]:
+                    print(f"       {_c}  [{','.join(_real[_c])}]", file=sys.stderr)
+            else:
+                print("  (comp-pydeps has no python file by this name either -- check the spelling.)",
+                      file=sys.stderr)
+        except Exception:  # noqa: BLE001 -- the fallback is advisory; never let it break comp-blast
+            print("  For .tools/org-modules names: comp-pydeps consumers <name> (the reference graph "
+                  "that models the compiler layer).", file=sys.stderr)
         import difflib as _difflib
         _names = list(g.nodes.keys())
         # node ids are prefixed forms (gold:SCRIPT:function / lambda:name / s3:key), so a bare

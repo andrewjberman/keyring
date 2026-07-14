@@ -1,0 +1,20 @@
+#!/bin/bash
+# comp-pydeps -- the repo-wide Python REFERENCE graph incl .tools/ + org/modules (closes COMPRAIL F-5).
+#
+# The trace graph (comp-blast/comp-trace/comp-xref) models the DATA/PORTAL estate and is BLIND to
+# the compiler tools themselves -- `comp-blast comp-which` said NOT-FOUND while 7 real consumers
+# existed, and a gate's public symbol was nearly deleted on that false clear. This is the missing
+# layer: who imports / loads / subprocess-invokes a .tools or org/modules python file (code
+# consumers, edge-kind-typed) vs who merely mentions it in prose.
+#
+# Usage:
+#   comp-pydeps consumers <name>     # who references this module/tool (code consumers vs doc mentions)
+#   comp-pydeps deps <name>          # what this file references
+#   comp-pydeps egress [<name>]      # off-box reach (requests/urllib/boto3/http) per file
+#   comp-pydeps build                # (re)scan + cache
+#   comp-pydeps --self-test          # the F-5 exemplar (comp-which's consumers are found)
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_pydeps.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-pydeps" "$*" $_exit 2>/dev/null
+exit $_exit

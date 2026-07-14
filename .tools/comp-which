@@ -650,6 +650,15 @@ RULES = [
      "how the comp-tools couple: shared substrates, write edges, INVOKED_BY edges, and where DECLARED "
      "overlap groups diverge from the ACTUAL import graph (the undeclared-ripple finding -- an edit "
      "ripples wider than the coverage map declares)"),
+    (["who imports", "who consumes", "consumers of the module", "who calls the module",
+      "python consumers", "reference graph", "comp-pydeps", "who uses this module",
+      "what imports", "import graph", "who references", "module consumers", "python dependency",
+      ".tools consumers", "compiler layer consumers", "who loads", "sourcefileloader consumer"],
+     "repo-wide Python reference graph (comp-pydeps -- closes F-5)",
+     ["comp-pydeps consumers <name>", "comp-pydeps deps <name>", "comp-pydeps egress [<name>]"],
+     "who imports/loads/subprocess-invokes a .tools or org/modules python file (the compiler layer "
+     "the trace graph is blind to -- COMPRAIL F-5), edge-kind-typed code-consumer vs prose-mention. "
+     "comp-blast consults it on a .tools/org-modules NOT-FOUND"),
     (["build next", "build-next", "what tool should we build", "which tool to build",
       "tool demand", "rail escapes", "gap x heat", "gap heat", "comp-learns-status",
       "learning loop", "is the learning", "tool backlog", "demand gap cost",
