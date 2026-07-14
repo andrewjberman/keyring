@@ -17867,3 +17867,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~16:20Z | 0.4.0_DS_ClientPlatform | comp-grep | build_advisor_of_record_fold locate (data/inf) | OK -- fold source + census-10->1 + test activation pattern found | AoR 07-14 row re-measure |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS.json --file or... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_ASSETS.json org/tier2_senior/0.4.0_DS_ClientPlatform/... | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO | (none -- live-state verify of opal-data-assets, no comp-tool models it; rail-checked raw listings audited) | 16:00Z first-conversion read: orion 359 clean + V2-9 fired; eclipse 48/48 dtype refusal grounded to mirror_schemas.py:378 | gap: comp-freshness/comp-aws registration for opal-data-assets prefixes |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-14/s... | PASS |
