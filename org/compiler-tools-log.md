@@ -17239,3 +17239,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_PRD.md | PASS |
 | 2026-07-13 | 0.7.0_AE_CloudOps | OPAL_ASSETS.C1.monolith-bucket-terraform-router-iam | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
 | 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPASSURANCE.md... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_PRD.md | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/sdd-... | PASS |
+| 2026-07-13 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C4.etf-bronze-retarget-one-bucket | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit_gate_runner.py --file .to... | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md --file or... | PASS |
+| 2026-07-13 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C4.etf-bronze-retarget-one-bucket | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/etfs-netassets/.ter... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | NFRA_COMPCLOSE | (review brief) | none -- doc-only window; brief cites the session's already-logged 11-row table | CVO~Z /verify commission brief written + dispatched (Andrew-direct); claims mapped to sharpest re-take commands incl. the --out clobber guard + INF read-only verifier scope guard. |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
