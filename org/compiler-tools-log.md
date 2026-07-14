@@ -17833,3 +17833,14 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-14 1001-1116Z 0.5.0_AE_OpalETL: safe-commit battery x6 PASS; comp-grep/comp-glob x5 (V2-8 TO, cell-6, fact_ census); 4 smartx test suites ALL PASS (+6 new); targeted TF plan/apply via safe-apply 0/1/0 -> 0-diff + live sha match; rail-checked live get-role-policy settled the G8 census dispute (APPLIED==DESIRED, finding falsified -> retracted by owner).
 | 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/sil... | PASS |
 | 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/smartx_assets_pull/silver.py org/compiler-tools-log.md... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS_49METATABLES.D3.0833-groupa-analysis | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/set_identity... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS_49METATABLES.D3.0833-groupa-analysis | comp-pulse | comp-pulse diff data/assets/scripts/silver/set_identity_guard.py data/assets/scripts/si... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_49F_SILV... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_RUNNERS_49F_SILVER_DATA_DICTIONARY.md | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_V2_LAMBDA... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_ASSETS_V2_LAMBDA_CONTRACT.md | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260714T1124Z_d1a-bd-rest-vehicle... | PASS |
+- 2026-07-14 11:12-11:36Z 0.4.0_DS: no tool runs (review/record window -- targeted git-show source reads + deliverable existence check; commit-gate auto-PASS x2)
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
