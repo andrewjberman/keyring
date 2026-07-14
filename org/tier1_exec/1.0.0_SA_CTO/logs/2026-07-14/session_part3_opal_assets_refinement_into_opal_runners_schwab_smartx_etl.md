@@ -131,3 +131,33 @@ STANDS (Door 5/6, frozen-3, never-summed, 17a — all untouched). SmartX egress 
 stores COMPLETE (never Opal-filtered — the emitter/runner is the one parse-down point); backfill and daily
 share ONE pattern per channel (append-only = one pull + dedup; snapshot = accrue-forward); and every
 conservation guard asserts on the REAL landed property (distinct keys / set-identity), never a proxy.
+
+## POST-LOG ADDENDUM (work after this log's commit 85896c6ca)
+**The C5 SmartX design gate: PASSED.** 0.5.0's design note (`a2f02123a`,
+`deliverables/SMARTX_C5_INGEST_DESIGN_NOTE_20260714.md`) authored toward the gate; all 6 decisions ruled
+(by message, no PRD change needed — the rulings bind the TO/design):
+- **Q1 [PERMANENT] — reportedModelId is the model path key** for ALL FOUR model feeds incl. performance
+  (modelId = fetch-param + recorded field ONLY, never a path segment). Closes the two-UUID-space collision
+  (`models/{id}/performance` fetched by modelId vs siblings by reportedModelId) — the exact "one entity,
+  two path roots" C2 class. **This is the permanent-in-bronze key decision; locked.**
+- **Q2 — 2-segment per-entity scope is IN-GRAMMAR** for SmartX (`model/{rmid}`, `account/{acctId}`,
+  `platform`) — still `{source}/{scope}/{layer}/{feed}/{date}`, scope is compound because SmartX's scope
+  IS the entity id (897 models / 452 accounts), unlike C4's single-token ETF scope. Documented as deliberate.
+- **Q3 — fold the holdings `?asOf` probe read-and-record** in backfill pass 1, NON-load-bearing
+  (accrue-forward is the default; a prior-date snapshot only ADDS a dated pull, never blocks).
+- **Q4** credential = Andrew's (build configurable, flag exercised grant). **Q5** gui-era exports OUT
+  (separate step). **Q6** bronze pull != gold re-derive, on the record — operator-driven resumable
+  S3-checkpointed backfill legitimate; daily on the extended `smartx-rest-pull` Lambda.
+- **THE GUARD, ratified as the reference template:** 0.5.0's set-identity check (landed-keys ==
+  enumerated-targets, **RAISE on shortfall OR SURPLUS**, verdict on ListObjectsV2 bytes, mutant-exercised
+  on both a collision AND a surplus key) is BETTER than I specified — surplus detection catches a
+  stray/duplicate write a shortfall-only check misses. **Now the reference pattern for the C2 fix + the
+  connector-sweep conservation audit.**
+
+**0.5.0 build order (RAVC-closed, building now, idle-hours):** (1) the distinct-landing GUARD FIRST —
+self-contained, mutant-exercised, no bronze byte until it RAISES on its collision + surplus mutants;
+(2) auth-bundle retrieval module (reuse `smartx-jwt-refresher`); (3) name exact `smartx/*` +
+`opal-data-assets/smartx/*` ARNs → MCP 0.7.0 for grants AGAINST the ruled key mapping; (4) backfill
+append-only feeds first, then snapshot accrual, then silver. Parity day-2 (22:00Z) preempts without asking.
+**This updates NEXT STEPS §B.1 (the design gate) to DONE — B.2–B.5 remain.** Next contact from 0.5.0:
+the `?asOf` probe result or an architecture fork.

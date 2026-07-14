@@ -17298,3 +17298,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-iam | comp-iam service inf-gold-trigger | PASS |
 | 2026-07-14 ~04:15Z | 1.0.0_SA_CTO | OPAL_ASSETS->OPAL_RUNNERS + SmartX/Schwab ETL | aws s3 ls (0824/0833/smartx-v2/01_raw census, denominators printed), Python HAR parse x3 (yaliu endpoint surface + 16mo ledger fetch-mechanism on bytes), git/Grep/Read for PRD+deliverable edits | gap: C2 write-count guard passed a type-collapse collision -> distinct-landing audit folded into the connector-sweep rubric for every conservation guard |
 | 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-iam | comp-iam simulate-self-test | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file org/modules/gr... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-iam | comp-iam simulate-self-test | PASS |
+| 2026-07-14 ~04:21Z | 1.0.0_SA_CTO | C5 design-gate PASS (post-log addendum) | design-gate ruling only (6 Qs on 0.5.0 note a2f02123a); no tools re-run -- the gate was a review of a committed design note, key-grammar + set-identity-guard ruled | gap: none new; the surplus-detection guard half is now the reference template |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file org/modules/gr... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | OPAL_ASSETS.C3.0833-puller-one-bucket-landing (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
