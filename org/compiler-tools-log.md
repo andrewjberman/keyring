@@ -17383,3 +17383,42 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/pul... | PASS |
 2026-07-14 | 2.0.0_SA_COO | comp-state x4 (BUILT: self-test 3/3, v1 exposed own FP mode, v2 precise, convergence clean) + comp-grep x5 (1 failed its positive control, caught) + comp-glob x1 + comp-manifest-check x2 (caught missing coverage-map home) + pytest x3 (verifier re-runs) | session 0045-0535Z: monolith landed+populated, C1/C2 closed, 49F lift, comp-state shipped
 | 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/pul... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS.json --file or... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam simulate-self-test | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam simulate-self-test | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pydeps | comp-pydeps --self-test | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-gitdrill | comp-gitdrill --self-test | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-icedrill | comp-icedrill --self-test | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-debris | comp-debris --self-test | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check selfcheck | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-ec... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_V2_PRD.md... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-blast | comp-blast comp-which | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_NERVES_PRD.md --... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-drift | comp-drift sweep | VERDICT |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-debris | comp-debris --days 30 | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-drift | comp-drift sweep | VERDICT |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-icedrill | comp-icedrill s3://opal-data-assets/ | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/state_scan.py | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-icedrill | comp-icedrill s3://opal-data-assets/orion/inflection/bronze/ | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-blast | comp-blast etfs-netassets-daily | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-blast | comp-blast upsert_history | FAIL |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file org/modules/graph/ner... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_V2_PRD.md | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS.json | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast build_dashboard | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast lambda-source-map.json | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cli.py --file org/mod... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/analysis/w4_0824_co... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/SMARTX_INGESTION_ARCHI... | PASS |
+| 2026-07-14 ~06:15Z | 1.0.0_SA_CTO | comp-state (self-test+full+project) + live aws census x4 + 3 source reads at gates | V2 PRD grounded end-to-end; 3 drifts reconciled; grant gate + V2-7 pre-ruling on source | session_CTO_part5_v2_prd_four_rulings_and_the_dispatch_wave.md |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
