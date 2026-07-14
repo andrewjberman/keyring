@@ -1,0 +1,747 @@
+{
+ "promotions": {
+  "motif:cross-firm-asymmetry": {
+   "anti_goodhart": null,
+   "candidate_id": "motif:cross-firm-asymmetry",
+   "commission": null,
+   "decompression_chain": {
+    "c0_evidence": [
+     {
+      "evidence": "out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name :: display/render sink",
+      "fact": "name",
+      "locus": "L291",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#advisor_id :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "EmployeeLeaderboardEntry#advisor_id",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#name :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "EmployeeLeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#LeaderboardEntry#name :: display/render sink",
+      "fact": "LeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardEntry#advisor_id :: guard: entry.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "PlatinumLeaderboardEntry#advisor_id",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardEntry#name :: guard: entry.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "PlatinumLeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     }
+    ],
+    "c1_interactions": [
+     "cross-firm-asymmetry @ out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name",
+     "cross-firm-asymmetry @ type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#LeaderboardEntry#name"
+    ],
+    "n_c0_facts": 6
+   },
+   "measured_effect": null,
+   "opened_at": 1784015756.1727233,
+   "promotion_class": "COMPILER_RULE",
+   "ratify": null,
+   "recurrence": 2,
+   "state": "CANDIDATE",
+   "transitions": [
+    {
+     "actor": "comp_promote_lifecycle",
+     "at": 1784015756.1727233,
+     "from": "",
+     "to": "CANDIDATE",
+     "why": "admitted from MOTIF candidates"
+    }
+   ],
+   "warrant": {
+    "fidelity_pass": true,
+    "motif_type": "CrossFirmAsymmetry",
+    "stable": true,
+    "tier": "gate-ready"
+   }
+  },
+  "motif:dead-component": {
+   "anti_goodhart": null,
+   "candidate_id": "motif:dead-component",
+   "commission": null,
+   "decompression_chain": {
+    "c0_evidence": [
+     {
+      "evidence": "rc:portal/src/components/DataAsOf.tsx#DataAsOf :: 0 inbound INSTANTIATES",
+      "fact": "DataAsOf",
+      "locus": "-",
+      "source": "portal/src/components/DataAsOf.tsx"
+     },
+     {
+      "evidence": "rc:portal/src/components/ErrorMessage.tsx#ErrorMessage :: 0 inbound INSTANTIATES",
+      "fact": "ErrorMessage",
+      "locus": "-",
+      "source": "portal/src/components/ErrorMessage.tsx"
+     },
+     {
+      "evidence": "rc:portal/src/components/LoadingSpinner.tsx#LoadingOverlay :: 0 inbound INSTANTIATES",
+      "fact": "LoadingOverlay",
+      "locus": "-",
+      "source": "portal/src/components/LoadingSpinner.tsx"
+     },
+     {
+      "evidence": "rc:portal/src/components/MetricsRow.tsx#MetricsRow :: 0 inbound INSTANTIATES",
+      "fact": "MetricsRow",
+      "locus": "-",
+      "source": "portal/src/components/MetricsRow.tsx"
+     },
+     {
+      "evidence": "rc:portal/src/components/ReturnVolatilityScatter.tsx#CustomTooltip :: 0 inbound INSTANTIATES",
+      "fact": "CustomTooltip",
+      "locus": "-",
+      "source": "portal/src/components/ReturnVolatilityScatter.tsx"
+     },
+     {
+      "evidence": "rc:portal/src/components/market-performance/FearGreedModal.tsx#PeriodToggles :: 0 inbound INSTANTIATES",
+      "fact": "PeriodToggles",
+      "locus": "-",
+      "source": "portal/src/components/market-performance/FearGreedModal.tsx"
+     },
+     {
+      "evidence": "rc:portal/src/components/market-performance/IndexPerformanceModal.tsx#PeriodToggles :: 0 inbound INSTANTIATES",
+      "fact": "PeriodToggles",
+      "locus": "-",
+      "source": "portal/src/components/market-performance/IndexPerformanceModal.tsx"
+     },
+     {
+      "evidence": "rc:portal/src/components/market-performance/MarketRegimeModal.tsx#ChartTooltip :: 0 inbound INSTANTIATES",
+      "fact": "ChartTooltip",
+      "locus": "-",
+      "source": "portal/src/components/market-performance/MarketRegimeModal.tsx"
+     }
+    ],
+    "c1_interactions": [
+     "dead-component @ rc:portal/src/components/DataAsOf.tsx#DataAsOf",
+     "dead-component @ rc:portal/src/components/ErrorMessage.tsx#ErrorMessage",
+     "dead-component @ rc:portal/src/components/LoadingSpinner.tsx#LoadingOverlay",
+     "dead-component @ rc:portal/src/components/MetricsRow.tsx#MetricsRow",
+     "dead-component @ rc:portal/src/components/ReturnVolatilityScatter.tsx#CustomTooltip",
+     "dead-component @ rc:portal/src/components/market-performance/FearGreedModal.tsx#PeriodToggles",
+     "dead-component @ rc:portal/src/components/market-performance/IndexPerformanceModal.tsx#PeriodToggles",
+     "dead-component @ rc:portal/src/components/market-performance/MarketRegimeModal.tsx#ChartTooltip"
+    ],
+    "n_c0_facts": 8
+   },
+   "measured_effect": null,
+   "opened_at": 1784015756.175876,
+   "promotion_class": "COMPILER_RULE",
+   "ratify": null,
+   "recurrence": 121,
+   "state": "CANDIDATE",
+   "transitions": [
+    {
+     "actor": "comp_promote_lifecycle",
+     "at": 1784015756.175876,
+     "from": "",
+     "to": "CANDIDATE",
+     "why": "admitted from MOTIF candidates"
+    }
+   ],
+   "warrant": {
+    "fidelity_pass": true,
+    "motif_type": "DeadComponent",
+    "stable": true,
+    "tier": "candidate-gen"
+   }
+  },
+  "motif:hardcoded-firm-literal": {
+   "anti_goodhart": null,
+   "candidate_id": "motif:hardcoded-firm-literal",
+   "commission": null,
+   "decompression_chain": {
+    "c0_evidence": [
+     {
+      "evidence": "out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name :: display/render sink",
+      "fact": "name",
+      "locus": "L291",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#advisor_id :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "EmployeeLeaderboardEntry#advisor_id",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#name :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "EmployeeLeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#LeaderboardEntry#name :: display/render sink",
+      "fact": "LeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardEntry#advisor_id :: guard: entry.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "PlatinumLeaderboardEntry#advisor_id",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardEntry#name :: guard: entry.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "PlatinumLeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     }
+    ],
+    "c1_interactions": [
+     "hardcoded-firm-literal @ out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name",
+     "hardcoded-firm-literal @ type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#LeaderboardEntry#name"
+    ],
+    "n_c0_facts": 6
+   },
+   "measured_effect": null,
+   "opened_at": 1784015756.175876,
+   "promotion_class": "COMPILER_RULE",
+   "ratify": null,
+   "recurrence": 4,
+   "state": "CANDIDATE",
+   "transitions": [
+    {
+     "actor": "comp_promote_lifecycle",
+     "at": 1784015756.175876,
+     "from": "",
+     "to": "CANDIDATE",
+     "why": "admitted from MOTIF candidates"
+    }
+   ],
+   "warrant": {
+    "fidelity_pass": true,
+    "motif_type": "HardcodedFirmLiteral",
+    "stable": true,
+    "tier": "advisory"
+   }
+  },
+  "motif:orphan-endpoint": {
+   "anti_goodhart": null,
+   "candidate_id": "motif:orphan-endpoint",
+   "commission": null,
+   "decompression_chain": {
+    "c0_evidence": [
+     {
+      "evidence": "endpoint:apiRequest :: 0 inbound FETCHES",
+      "fact": "endpoint:apiRequest",
+      "locus": "-",
+      "source": "apiRequest"
+     },
+     {
+      "evidence": "endpoint:getAAIILatest :: 0 inbound FETCHES",
+      "fact": "endpoint:getAAIILatest",
+      "locus": "-",
+      "source": "getAAIILatest"
+     },
+     {
+      "evidence": "endpoint:getAAIISentiment :: 0 inbound FETCHES",
+      "fact": "endpoint:getAAIISentiment",
+      "locus": "-",
+      "source": "getAAIISentiment"
+     },
+     {
+      "evidence": "endpoint:getAUMFlows :: 0 inbound FETCHES",
+      "fact": "endpoint:getAUMFlows",
+      "locus": "-",
+      "source": "getAUMFlows"
+     },
+     {
+      "evidence": "endpoint:getAUMMetricsWithCalculations :: 0 inbound FETCHES",
+      "fact": "endpoint:getAUMMetricsWithCalculations",
+      "locus": "-",
+      "source": "getAUMMetricsWithCalculations"
+     },
+     {
+      "evidence": "endpoint:getAUMSummary :: 0 inbound FETCHES",
+      "fact": "endpoint:getAUMSummary",
+      "locus": "-",
+      "source": "getAUMSummary"
+     },
+     {
+      "evidence": "endpoint:getAllMarketData :: 0 inbound FETCHES",
+      "fact": "endpoint:getAllMarketData",
+      "locus": "-",
+      "source": "getAllMarketData"
+     },
+     {
+      "evidence": "endpoint:getArchiveRestorePoints :: 0 inbound FETCHES",
+      "fact": "endpoint:getArchiveRestorePoints",
+      "locus": "-",
+      "source": "getArchiveRestorePoints"
+     }
+    ],
+    "c1_interactions": [
+     "orphan-endpoint @ endpoint:apiRequest",
+     "orphan-endpoint @ endpoint:getAAIILatest",
+     "orphan-endpoint @ endpoint:getAAIISentiment",
+     "orphan-endpoint @ endpoint:getAUMFlows",
+     "orphan-endpoint @ endpoint:getAUMMetricsWithCalculations",
+     "orphan-endpoint @ endpoint:getAUMSummary",
+     "orphan-endpoint @ endpoint:getAllMarketData",
+     "orphan-endpoint @ endpoint:getArchiveRestorePoints"
+    ],
+    "n_c0_facts": 8
+   },
+   "measured_effect": null,
+   "opened_at": 1784015756.175876,
+   "promotion_class": "COMPILER_RULE",
+   "ratify": null,
+   "recurrence": 49,
+   "state": "CANDIDATE",
+   "transitions": [
+    {
+     "actor": "comp_promote_lifecycle",
+     "at": 1784015756.175876,
+     "from": "",
+     "to": "CANDIDATE",
+     "why": "admitted from MOTIF candidates"
+    }
+   ],
+   "warrant": {
+    "fidelity_pass": true,
+    "motif_type": "OrphanEndpoint",
+    "stable": true,
+    "tier": "advisory"
+   }
+  },
+  "motif:render-without-null-guard": {
+   "anti_goodhart": null,
+   "candidate_id": "motif:render-without-null-guard",
+   "commission": null,
+   "decompression_chain": {
+    "c0_evidence": [
+     {
+      "evidence": "type:portal/src/App.tsx#NavItem#requiresAdmin :: nullable field, RENDERS target",
+      "fact": "NavItem#requiresAdmin",
+      "locus": "-",
+      "source": "portal/src/App.tsx"
+     },
+     {
+      "evidence": "type:portal/src/App.tsx#NavItem#requiresDev :: nullable field, RENDERS target",
+      "fact": "NavItem#requiresDev",
+      "locus": "-",
+      "source": "portal/src/App.tsx"
+     },
+     {
+      "evidence": "type:portal/src/App.tsx#NavItem#requiresTier :: nullable field, RENDERS target",
+      "fact": "NavItem#requiresTier",
+      "locus": "-",
+      "source": "portal/src/App.tsx"
+     },
+     {
+      "evidence": "type:portal/src/App.tsx#NavSection#dividerAbove :: nullable field, RENDERS target",
+      "fact": "NavSection#dividerAbove",
+      "locus": "-",
+      "source": "portal/src/App.tsx"
+     },
+     {
+      "evidence": "type:portal/src/App.tsx#NavSection#requiresDev :: nullable field, RENDERS target",
+      "fact": "NavSection#requiresDev",
+      "locus": "-",
+      "source": "portal/src/App.tsx"
+     },
+     {
+      "evidence": "type:portal/src/api/endpoints/advisor-intelligence.ts#InflectionCashDragRow#account_label :: nullable field, RENDERS target",
+      "fact": "InflectionCashDragRow#account_label",
+      "locus": "-",
+      "source": "portal/src/api/endpoints/advisor-intelligence.ts"
+     },
+     {
+      "evidence": "type:portal/src/api/endpoints/aum.ts#AUMFlowsWithMetricsResponse#dates :: nullable field, RENDERS target",
+      "fact": "AUMFlowsWithMetricsResponse#dates",
+      "locus": "-",
+      "source": "portal/src/api/endpoints/aum.ts"
+     },
+     {
+      "evidence": "type:portal/src/api/endpoints/aum.ts#AUMWithMetrics#account_count :: nullable field, RENDERS target",
+      "fact": "AUMWithMetrics#account_count",
+      "locus": "-",
+      "source": "portal/src/api/endpoints/aum.ts"
+     }
+    ],
+    "c1_interactions": [
+     "render-without-null-guard @ type:portal/src/App.tsx#NavItem#requiresAdmin",
+     "render-without-null-guard @ type:portal/src/App.tsx#NavItem#requiresDev",
+     "render-without-null-guard @ type:portal/src/App.tsx#NavItem#requiresTier",
+     "render-without-null-guard @ type:portal/src/App.tsx#NavSection#dividerAbove",
+     "render-without-null-guard @ type:portal/src/App.tsx#NavSection#requiresDev",
+     "render-without-null-guard @ type:portal/src/api/endpoints/advisor-intelligence.ts#InflectionCashDragRow#account_label",
+     "render-without-null-guard @ type:portal/src/api/endpoints/aum.ts#AUMFlowsWithMetricsResponse#dates",
+     "render-without-null-guard @ type:portal/src/api/endpoints/aum.ts#AUMWithMetrics#account_count"
+    ],
+    "n_c0_facts": 8
+   },
+   "measured_effect": null,
+   "opened_at": 1784015756.1778843,
+   "promotion_class": "COMPILER_RULE",
+   "ratify": null,
+   "recurrence": 197,
+   "state": "CANDIDATE",
+   "transitions": [
+    {
+     "actor": "comp_promote_lifecycle",
+     "at": 1784015756.1778843,
+     "from": "",
+     "to": "CANDIDATE",
+     "why": "admitted from MOTIF candidates"
+    }
+   ],
+   "warrant": {
+    "fidelity_pass": true,
+    "motif_type": "RenderWithoutNullGuard",
+    "stable": true,
+    "tier": "advisory"
+   }
+  },
+  "motif:silent-display-fork": {
+   "anti_goodhart": null,
+   "candidate_id": "motif:silent-display-fork",
+   "commission": null,
+   "decompression_chain": {
+    "c0_evidence": [
+     {
+      "evidence": "out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name :: display/render sink",
+      "fact": "name",
+      "locus": "L291",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#advisor_id :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "EmployeeLeaderboardEntry#advisor_id",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#name :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "EmployeeLeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "out:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx:3901#count :: display/render sink",
+      "fact": "count",
+      "locus": "L3901",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#DistributionStats#histogram :: guard: useLogScale == true",
+      "fact": "DistributionStats#histogram",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#HistogramData#counts :: guard: useLogScale == true",
+      "fact": "HistogramData#counts",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "out:portal/src/pages/ModelPortfolios.tsx:724#benchmark :: display/render sink",
+      "fact": "benchmark",
+      "locus": "L724",
+      "source": "portal/src/pages/ModelPortfolios.tsx"
+     },
+     {
+      "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_benchmark :: guard: benchmarkType === 'index' == false",
+      "fact": "ModelPortfolioPeriodReturn#etf_benchmark",
+      "locus": "-",
+      "source": "portal/src/api/portal-proxy.ts"
+     },
+     {
+      "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_benchmark :: guard: benchmarkType === 'index' == true",
+      "fact": "ModelPortfolioPeriodReturn#index_benchmark",
+      "locus": "-",
+      "source": "portal/src/api/portal-proxy.ts"
+     },
+     {
+      "evidence": "out:portal/src/pages/ModelPortfolios.tsx:725#spread :: display/render sink",
+      "fact": "spread",
+      "locus": "L725",
+      "source": "portal/src/pages/ModelPortfolios.tsx"
+     },
+     {
+      "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_spread :: guard: benchmarkType === 'index' == false",
+      "fact": "ModelPortfolioPeriodReturn#etf_spread",
+      "locus": "-",
+      "source": "portal/src/api/portal-proxy.ts"
+     },
+     {
+      "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_spread :: guard: benchmarkType === 'index' == true",
+      "fact": "ModelPortfolioPeriodReturn#index_spread",
+      "locus": "-",
+      "source": "portal/src/api/portal-proxy.ts"
+     },
+     {
+      "evidence": "out:portal/src/pages/ModelPortfolios.tsx:727#benchmark_volatility :: display/render sink",
+      "fact": "benchmark_volatility",
+      "locus": "L727",
+      "source": "portal/src/pages/ModelPortfolios.tsx"
+     },
+     {
+      "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_benchmark_volatility :: guard: benchmarkType === 'index' == false",
+      "fact": "ModelPortfolioPeriodReturn#etf_benchmark_volatility",
+      "locus": "-",
+      "source": "portal/src/api/portal-proxy.ts"
+     },
+     {
+      "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_benchmark_volatility :: guard: benchmarkType === 'index' == true",
+      "fact": "ModelPortfolioPeriodReturn#index_benchmark_volatility",
+      "locus": "-",
+      "source": "portal/src/api/portal-proxy.ts"
+     }
+    ],
+    "c1_interactions": [
+     "silent-display-fork @ out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name",
+     "silent-display-fork @ out:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx:3901#count",
+     "silent-display-fork @ out:portal/src/pages/ModelPortfolios.tsx:724#benchmark",
+     "silent-display-fork @ out:portal/src/pages/ModelPortfolios.tsx:725#spread",
+     "silent-display-fork @ out:portal/src/pages/ModelPortfolios.tsx:727#benchmark_volatility"
+    ],
+    "n_c0_facts": 15
+   },
+   "measured_effect": null,
+   "opened_at": 1784015756.1727233,
+   "pre_p1_note": "HISTORICAL DIVERGENCE, disclosed: this candidate was ALREADY promoted through the pre-P1 FORMING loop (promote_recognizer_manifest.json recognizer:silent-display-fork state=MATERIALIZED under CTO-PROMOTE-20260708T1521Z, exercised by comp_promote_materializer 16/16). This P1 lifecycle record tracks the P1-GOVERNED path only, which starts at CANDIDATE; the live materialized instance predates the machine and is governed by its own commission + the P3 monitor. Do NOT read CANDIDATE here as 'not live'.",
+   "promotion_class": "COMPILER_RULE",
+   "ratify": null,
+   "recurrence": 5,
+   "state": "CANDIDATE",
+   "transitions": [
+    {
+     "actor": "comp_promote_lifecycle",
+     "at": 1784015756.1727233,
+     "from": "",
+     "to": "CANDIDATE",
+     "why": "admitted from MOTIF candidates"
+    }
+   ],
+   "warrant": {
+    "fidelity_pass": true,
+    "motif_type": "SilentDisplayFork",
+    "stable": true,
+    "tier": "gate-ready"
+   }
+  },
+  "system:firm-conditional-display": {
+   "anti_goodhart": null,
+   "candidate_id": "system:firm-conditional-display",
+   "commission": null,
+   "decompression_chain": {
+    "c0_evidence": [
+     {
+      "evidence": "out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name :: display/render sink",
+      "fact": "name",
+      "locus": "L291",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#advisor_id :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "EmployeeLeaderboardEntry#advisor_id",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#name :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "EmployeeLeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "out:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx:3901#count :: display/render sink",
+      "fact": "count",
+      "locus": "L3901",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#DistributionStats#histogram :: guard: useLogScale == true",
+      "fact": "DistributionStats#histogram",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#HistogramData#counts :: guard: useLogScale == true",
+      "fact": "HistogramData#counts",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "out:portal/src/pages/ModelPortfolios.tsx:724#benchmark :: display/render sink",
+      "fact": "benchmark",
+      "locus": "L724",
+      "source": "portal/src/pages/ModelPortfolios.tsx"
+     },
+     {
+      "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_benchmark :: guard: benchmarkType === 'index' == false",
+      "fact": "ModelPortfolioPeriodReturn#etf_benchmark",
+      "locus": "-",
+      "source": "portal/src/api/portal-proxy.ts"
+     },
+     {
+      "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_benchmark :: guard: benchmarkType === 'index' == true",
+      "fact": "ModelPortfolioPeriodReturn#index_benchmark",
+      "locus": "-",
+      "source": "portal/src/api/portal-proxy.ts"
+     },
+     {
+      "evidence": "out:portal/src/pages/ModelPortfolios.tsx:725#spread :: display/render sink",
+      "fact": "spread",
+      "locus": "L725",
+      "source": "portal/src/pages/ModelPortfolios.tsx"
+     },
+     {
+      "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_spread :: guard: benchmarkType === 'index' == false",
+      "fact": "ModelPortfolioPeriodReturn#etf_spread",
+      "locus": "-",
+      "source": "portal/src/api/portal-proxy.ts"
+     },
+     {
+      "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_spread :: guard: benchmarkType === 'index' == true",
+      "fact": "ModelPortfolioPeriodReturn#index_spread",
+      "locus": "-",
+      "source": "portal/src/api/portal-proxy.ts"
+     },
+     {
+      "evidence": "out:portal/src/pages/ModelPortfolios.tsx:727#benchmark_volatility :: display/render sink",
+      "fact": "benchmark_volatility",
+      "locus": "L727",
+      "source": "portal/src/pages/ModelPortfolios.tsx"
+     },
+     {
+      "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_benchmark_volatility :: guard: benchmarkType === 'index' == false",
+      "fact": "ModelPortfolioPeriodReturn#etf_benchmark_volatility",
+      "locus": "-",
+      "source": "portal/src/api/portal-proxy.ts"
+     },
+     {
+      "evidence": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_benchmark_volatility :: guard: benchmarkType === 'index' == true",
+      "fact": "ModelPortfolioPeriodReturn#index_benchmark_volatility",
+      "locus": "-",
+      "source": "portal/src/api/portal-proxy.ts"
+     },
+     {
+      "evidence": "out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name :: display/render sink",
+      "fact": "name",
+      "locus": "L291",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#advisor_id :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "EmployeeLeaderboardEntry#advisor_id",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#name :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "EmployeeLeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#LeaderboardEntry#name :: display/render sink",
+      "fact": "LeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardEntry#advisor_id :: guard: entry.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "PlatinumLeaderboardEntry#advisor_id",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardEntry#name :: guard: entry.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "PlatinumLeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name :: display/render sink",
+      "fact": "name",
+      "locus": "L291",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#advisor_id :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "EmployeeLeaderboardEntry#advisor_id",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#EmployeeLeaderboardEntry#name :: guard: e.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "EmployeeLeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#LeaderboardEntry#name :: display/render sink",
+      "fact": "LeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardEntry#advisor_id :: guard: entry.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "PlatinumLeaderboardEntry#advisor_id",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     },
+     {
+      "evidence": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardEntry#name :: guard: entry.advisor_id === 'inflection_wealth_management' == false",
+      "fact": "PlatinumLeaderboardEntry#name",
+      "locus": "-",
+      "source": "portal/src/pages/AdvisorIntelligence/_shared/types.ts"
+     }
+    ],
+    "c1_interactions": [
+     "silent-display-fork @ out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name",
+     "silent-display-fork @ out:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx:3901#count",
+     "silent-display-fork @ out:portal/src/pages/ModelPortfolios.tsx:724#benchmark",
+     "silent-display-fork @ out:portal/src/pages/ModelPortfolios.tsx:725#spread",
+     "silent-display-fork @ out:portal/src/pages/ModelPortfolios.tsx:727#benchmark_volatility",
+     "cross-firm-asymmetry @ out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name",
+     "cross-firm-asymmetry @ type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#LeaderboardEntry#name",
+     "hardcoded-firm-literal @ out:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:291#name",
+     "hardcoded-firm-literal @ type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#LeaderboardEntry#name"
+    ],
+    "n_c0_facts": 27
+   },
+   "measured_effect": null,
+   "opened_at": 1784015756.1778843,
+   "promotion_class": "KNOWLEDGE_NODE",
+   "ratify": null,
+   "recurrence": 3,
+   "state": "CANDIDATE",
+   "transitions": [
+    {
+     "actor": "comp_promote_lifecycle",
+     "at": 1784015756.1778843,
+     "from": "",
+     "to": "CANDIDATE",
+     "why": "admitted from MOTIF candidates"
+    }
+   ],
+   "warrant": {
+    "fidelity_pass": true,
+    "motif_type": null,
+    "stable": true,
+    "tier": null
+   }
+  }
+ },
+ "surface": "promote_lifecycle_manifest (P1 state snapshot; event trail = promote_lifecycle_cse.jsonl)"
+}
