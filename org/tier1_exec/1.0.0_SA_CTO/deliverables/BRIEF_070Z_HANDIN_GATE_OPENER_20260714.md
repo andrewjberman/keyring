@@ -39,8 +39,16 @@ task-def resolves against the rebuilt image.
 Two applies ride the same module:
 1. **`fedobs_producer.tf`** (the scheduled FEDOBS producer task-def — **the standing-producer
    keystone**: the estate currently has ZERO standing producers and the certified learning loop is
-   seed-fed without this). 0.8.0~Z verified plan-shape **6/0/0 for their delta** — re-run the plan
-   yourself and READ it before apply (their read is not your read).
+   seed-fed without this). Two prior plan reads exist AND THEY MEASURED DIFFERENT SCOPES — 0.8.0~Z
+   **6/0/0 for their delta**, CVO~Z re-take **7/1/0 exact** (fuller scope) — enumerate what YOUR
+   plan is *of*, then read it yourself before apply (verification law 6; neither prior read is
+   your read).
+   **⛔ APPLY-SCOPE CAVEAT (CVO~Z cert `454394604`, surfaced-not-adjudicated):** a module-wide apply
+   would CREATE the drift SNS email subscription (`item2c_surface_alarm.tf:30`, declared 06-17) —
+   against Andrew's LATER no-alerts posture (`cfb741306`). 0.8.0~Z made the exclusion DURABLE in
+   `fedobs_producer.tf`'s header checklist @ `01233e8d4` (CVO-validated) — **follow that checklist;
+   if your plan shows the SNS subscription as a to-add, your scope is wrong. Latest +
+   most-restrictive binds; only Andrew re-opens alerts.**
 2. **MOTIF.P0 TF/infra leg** (if the derive path needs any module change — see §2; it may need none).
 **Mechanics that bind:** `.tools/safe-apply.sh` only (NEVER bare apply); commit-before-apply;
 deploy-completion ledger opened at deploy-start in `org/critical_paths/change_management/`, closed at
