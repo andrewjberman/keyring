@@ -70,3 +70,38 @@ empty and I nearly read "file missing" — the control-on-the-retrieval class; r
 existed. **Gap:** none new; the C2 rework IS the reference-template propagation working.
 
 Appending one line to `org/compiler-tools-log.md` in this commit.
+
+## POST-LOG ADDENDUM (~04:50Z–05:10Z — the two Andrew-directs + the 05:01Z COO batch)
+
+**Andrew-direct ×2 (via 0.5.0, verbatim, recorded + PRD-folded as v1.6.0 `d5422f7fb`):**
+#1 (~04:50Z) non-interference premise → 0.5.0's co-park correction RATIFIED (ruling 10 re-sequenced:
+SM path alongside, co-park retires at legacy decommission); my coexistence-probe rider UPGRADED to a
+NON-INTERFERENCE gate (under EXCLUSIVE semantics even the probe's mint could invalidate the legacy
+pull's token — probe timed outside the legacy 09:00–09:35 ET window, refresher cadence stated as the
+worst-case bound; EXCLUSIVE ⇒ C5 never mints while legacy lives). #2 (~04:52Z) "way better" →
+quality mandate INSIDE ruled architecture, no re-gate; C5 forks ruled (requests/std-layer,
+worker-internal async only, S3-checkpoint stands); **NEW PRD ruling 21**: the `meta` layer segment —
+provenance manifests never inside bronze/ (17a), guard-disjoint BY PREFIX, inert-by-convention
+(Door-6 class). 0.5.0 recorded all of it (b9d79fd6d).
+
+**C9 Phase-A VALIDATED** (my own read of the producer header corroborates the relay verbatim; live
+get-policy + blast map accepted). **Phase-B (a) GO-NARROW** w/ 4 conditions (as-designed per-date
+invokes over run-time-enumerated existing partitions; no ad-hoc fan-in trigger; served-artifact
+verify after the 15:45Z scheduled run; the SKELETON declarative drift fixed next touch).
+**(b) RATIFIED** — cadence to OPAL_RUNNERS scoping.
+
+**C2 rework verified at source** (85e6e5b91: membership + classified surplus + raise-on-growth vs
+baseline 2269; mutant bar 6/6 EXCEEDS the ruling). Applied under my pre-grant; close bar stands on
+re-mirror completion. **C5 role apply GO'd** (targeted 4/0/0; 0.7.0 never-widen PASS + my ARN
+spot-read; APPLIED-truth = the 22a simulate outputs, controls separate).
+
+**smartx-pipeline stack APPLY-HELD** (un-targeted applies, everyone) until the 3-lambda drift is
+measured (live CodeSha256 vs the 06-05 zips — routed to 0.7.0 via COO) and I disposition which code
+is RIGHT. **The rail lift EXECUTED by me** (`85628cd9e`: `_comprail HELD_PREFIXES → ()` — the two
+entries WERE the lifted 07-09 block; INF hold unaffected, file-level; guard machinery retained;
+exercised on a directed schwab-silver search). **FROZEN-3 flag ruled DOCUMENTED-LEAVE**: the
+`_orion_api_silver_lib.py` working-tree mod is COMMENT-ONLY (28 lines, 0.7.0~B's exclusion
+rationale, diff sha256 `f50b10cab7bd…2fcdb1`), functionally inert on both freeze axes; the file
+stays untouched (every verb is a verb on a frozen file); commit-vs-revert disposition is ANDREW's,
+carried in my session summary. **ANDREW ITEMS OPEN:** the 2,269-orphan deletion · FAM/SLM vendor doc
+· the frozen-file mod disposition (new).
