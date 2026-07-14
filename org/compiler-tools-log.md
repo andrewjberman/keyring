@@ -17440,3 +17440,15 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS.json | PASS |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-5 + OPAL_RUNNERS.W4 | comp-state/comp-glob/crs_reader | comp-state --project OPAL_ASSETS+OPAL_RUNNERS (self-test 3/3); comp-glob cot_bronze_ingest; census engine 35 obj both masters | PASS (7+2 BEHIND triaged own-lane; census T1-tied throughout) |
 | 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_icedrill.py | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which-routing-test.py --fil... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-icedrill | comp-icedrill --self-test | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-icedrill | comp-icedrill s3://opal-data-assets/orion/inflection/bronze/ | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which-routing-test.py | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-ec... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | session-window | two /verify batteries (COMPCLOSE + INSTDRILL, ~25 suites/live re-takes), comp-heat federated + comp-dups live, comp-trigger producer census, icedrill F1 refute+re-verify, harness delta both-ends frozen-cohort | 2x SOUND verdicts; 1 BROKEN found+fixed+re-verified; delta 26.441->25.050 |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
