@@ -17872,3 +17872,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 1.0.0_SA_CTO | (none -- live-state verify of opal-data-assets, no comp-tool models it; rail-checked raw listings audited) | 16:00Z first-conversion read: orion 359 clean + V2-9 fired; eclipse 48/48 dtype refusal grounded to mirror_schemas.py:378 | gap: comp-freshness/comp-aws registration for opal-data-assets prefixes |
 | 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-14/s... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/logs/2026-0... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/logs/2026-07-14/handoff_predecessor_standdo... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS.json --file or... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_ASSETS.json org/projects/OPAL_ASSETS_49METATABLES.jso... | FAIL |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/watcher/SKILL.md | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/watcher/SKILL.md | FAIL |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS.json --file or... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_ASSETS.json org/projects/REGISTRY.md | FAIL |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/OPAL_ASSETS_V28_PREFI... | PASS |
+| 2026-07-14 ~16:5xZ | 0.6.2_AE_PartnerETL | comp-to, comp-grep x5, comp-glob x3, commit-gate | V2-8 pre-fire expectation report: located vocabulary/precedent/constants on-rails; gate caught F401; report instrument was the committed conversion path exercised in-memory over 87 real bronze objects (rl* 2025-07-18 boundary found) | OK -- no tool gap; sweep time-bound absence documented as design fact |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
