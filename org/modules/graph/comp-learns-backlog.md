@@ -172,3 +172,22 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
 - DESIGN NOTE (not binding): the cheapest first cut is comp-freshness family entries per channel with
   freshness_basis: trading-day-frontier + the manifest listing as the sweep-health oracle.
 - resolution: OPEN -- registry-owner lane to scope; base-CTO files, does not build (07-14 scope directive).
+
+## [OPEN] instrument-integrity -- comp-state REGROW touch-dating blind to in-row edits + record-keeping corpus noise  (filed 2026-07-14, CTO)
+<!-- key: instrument-integrity|comp-state-regrow-s-dating-and-fold-noise -->
+- disposition: TWO measured defects from the 07-14 convergence pass. (A) Row touch-dating uses
+  `git log -S<code>` = occurrence-COUNT change detection: COO's fold 4f92bdf51 (20:49Z) directly
+  edited REGISTRY:OPAL_ASSETS yet the record's last-touch still dated 08:53Z -- the scan then lists
+  the fold itself as EVIDENCE for a BEHIND verdict on the very record the fold fixed. A row updated
+  without changing its code's token count is INVISIBLE as a touch => rows read permanently BEHIND
+  under active maintenance. Candidate fix: -G<regex> or row-line-range blame or row-content-hash
+  dating. (B) Under high commit velocity, record-keeping commits (org(board)/log/record/deliverable
+  prefixes) dominate the evidence corpus -- each fold re-flags every other record within minutes;
+  convergence-to-CURRENT is unachievable while the fabric commits faster than folds land. Candidate
+  fix: an --exclude-recordkeeping corpus filter (prefix-based) so evidence means ESTATE motion, not
+  bookkeeping about it.
+- value evidence: 07-14 21:0xZ convergence re-run: hot set verified CURRENT by direct read of the
+  fold commits, yet instrument read BEHIND 14/1/2 across three projects; the false-BEHIND cost one
+  full re-run + manual diff to diagnose.
+- resolution: OPEN -- design ruled at filing; build routes to ~Z-group/0.8.0-class capacity via MSTR
+  (base-CTO instruct-usage-never-build). Flips to `BUILT <tool + commit>` at build time.
