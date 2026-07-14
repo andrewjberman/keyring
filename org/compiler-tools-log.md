@@ -18094,3 +18094,13 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 20:0xZ | 0.7.0_AE_CloudOps | terraform/safe-apply x3, deploy_ledger x3, drain harness (2 COMPLETE + 2 wall-catches), CW OOM verification x2, manifest parses x2 (pins 6/6) | Andrew parity push: 3 channels closed, 2 walls measured, deploys 4-6 -- session_1830-2005Z log |
 | 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/portal-auth/cloudfr... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff infra/aws/terraform/portal-auth/cloudfront-distribution.tf | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-transform | comp-transform schema-check TicketCenter | FAIL |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/App.tsx --file portal/src/ap... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff portal | FAIL |
+| 2026-07-14 ~20:20Z | 0.5.0_AE_OpalETL~A | comp-grep/glob x10, comp-routes, comp-iam gaps, comp-transform schema-check, comp-pulse x9 (via safe-commit) | TAXSMA S0 close + step-1 ship; TCKT_CENTER register->P0 ship; 2x 22a simulate batteries w/ isolated controls | rail nudge misfired on a membership s3-ls (not freshness) -- marker used, noted for intent-classifier |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/pr... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/projects/PFMG_TAXSMA.json org/projects/TC... | PASS |
