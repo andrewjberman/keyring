@@ -107,16 +107,49 @@ def _file_touches(changed: str, watched: list[str]) -> list[str]:
     return hits
 
 
+def _submodule_changed(subdir: str = "portal") -> list[str]:
+    """The changed files INSIDE a submodule, prefixed with the submodule dir (NFRA_INSTDRILL item 2,
+    2026-07-14). The parent repo's `git diff` sees a submodule as a SINGLE POINTER, so every SEV1
+    surface -- which lives in portal/src/... -- was INVISIBLE to a parent-scoped scan (comp-surface-
+    check's correct verdicts ran on files it could not see; the WIRING half of the F-5-adjacent gap
+    CVO~Z named). We diff the submodule in its OWN repo and re-prefix. Working-tree + staged +
+    committed-since-HEAD^ are all covered so the portal pre-commit and the workspace-side check
+    agree. Best-effort: an absent/uninitialized submodule yields [] (never a crash)."""
+    sub = os.path.join(_WS, subdir)
+    if not os.path.isdir(os.path.join(sub, ".git")) and not os.path.isfile(os.path.join(sub, ".git")):
+        return []
+    seen = []
+    for diff_args in (["diff", "--name-only", "HEAD"],          # working tree vs HEAD
+                      ["diff", "--name-only", "--cached"],       # staged
+                      ["diff", "--name-only", "HEAD~1", "HEAD"]):  # the just-made commit
+        try:
+            r = subprocess.run(["git", "-C", sub, *diff_args],
+                               capture_output=True, text=True, timeout=20)
+            if r.returncode == 0:
+                for ln in r.stdout.splitlines():
+                    p = ("%s/%s" % (subdir, ln.strip())) if ln.strip() else ""
+                    if p and p not in seen:
+                        seen.append(p)
+        except Exception:  # noqa: BLE001 -- a missing HEAD~1 (shallow) etc. is not fatal
+            continue
+    return seen
+
+
 def _changed_files(args) -> list[str]:
     if args.file:
         return args.file
+    files = []
     try:
         r = subprocess.run(["git", "diff", "--name-only", "HEAD"],
                            cwd=_WS, capture_output=True, text=True, check=True)
-        return [ln.strip() for ln in r.stdout.splitlines() if ln.strip()]
+        files = [ln.strip() for ln in r.stdout.splitlines() if ln.strip()]
     except Exception as e:
         print(f"ADVISORY: could not read git diff ({type(e).__name__}: {e}); pass --file", file=sys.stderr)
-        return []
+    # FOLD IN THE PORTAL SUBMODULE (the SEV1 surfaces live there; the parent diff cannot see them).
+    for p in _submodule_changed("portal"):
+        if p not in files:
+            files.append(p)
+    return files
 
 
 # ---------------------------------------------------------------------------
@@ -554,6 +587,33 @@ def cmd_selfcheck(args) -> int:
         print(f"  -> rc={rc} (want {want}) {'PASS' if ok else 'FAIL'}")
         if not ok:
             fails.append(label)
+    # PORTAL-SUBMODULE VISIBILITY (NFRA_INSTDRILL item 2): the SEV1 surfaces live in portal/src/...
+    # which a parent-repo `git diff` cannot see. Prove (a) the SEV1 set IS portal-rooted (so the
+    # visibility matters) and (b) _changed_files now FOLDS a portal-side change into the set +
+    # cmd_check BLOCKS on it -- exercised through a stubbed submodule diff, not config-read.
+    print("\n--- portal-submodule visibility (expect the portal SEV1 file SEEN + BLOCKED) ---")
+    portal_sev1 = next((w for w in sorted(sev1_tokens) if w.startswith("portal/") or "src/" in w), sev1_file)
+    ck_portal = str(portal_sev1 or "").replace("\\", "/")
+    if not ck_portal.startswith("portal/"):
+        ck_portal = "portal/" + ck_portal.lstrip("/")
+    _g = globals()   # this module's namespace (run as __main__ via the shim -- no re-import)
+    _orig = _g["_submodule_changed"]
+    _g["_submodule_changed"] = lambda subdir="portal": [ck_portal]
+    try:
+        seen = _changed_files(argparse.Namespace(file=None))
+        vis_ok = ck_portal in seen
+        print(f"  _changed_files folded the portal change: {vis_ok} ({ck_portal})")
+        saved = os.environ.pop("SURFACE_ACK", None)
+        rc = cmd_check(argparse.Namespace(file=[ck_portal], mode="blocking", contract_layer=False))
+        if saved is not None:
+            os.environ["SURFACE_ACK"] = saved
+        block_ok = rc == 2
+        print(f"  -> BLOCKED on the portal SEV1 file: rc={rc} (want 2) {'PASS' if block_ok else 'FAIL'}")
+        if not (vis_ok and block_ok):
+            fails.append("portal-visibility")
+    finally:
+        _g["_submodule_changed"] = _orig
+
     print("\nSELFCHECK:", "ALL PASS" if not fails else f"FAIL {fails}")
     return 0 if not fails else 1
 
