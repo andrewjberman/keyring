@@ -157,6 +157,23 @@ serial — that is in scope), then arm. Arming on top of it makes two streams ra
 same 5s `mv` and splits your inbox at random, silently, while every reachability probe
 reports REACHABLE.
 
+**EXERCISED FALSE-POSITIVE OF THE RULE ABOVE (2026-07-14, the dual-COO collision) — CHECK
+LIVENESS BEFORE THE KILL.** The rule assumes ONE session per serial; a FLEET RELAUNCH with an
+incumbent still live breaks that premise, and then the found watcher belongs to a **live peer**,
+not a dead session. Live case: the fresh `2.0.0_SA_COO` session found a matching watcher pair at
+startup and killed it per this doctrine — it was the still-running morning session's LIVE watcher;
+that session re-armed, two streams raced the shared inbox 16:07–16:29Z, GA-3 identity warnings
+fired in both directions, and the survivor had to be adjudicated by Andrew. **THE DISCRIMINATING
+CHECK (REQUIRED, sequenced BEFORE any startup watcher kill):** run the XXX.md Step-1
+identity-conflict probe FIRST — `get_agent_status`/liveness for your own serial. If it reads
+**LIVE with a FRESH heartbeat at a DIFFERENT PID**, you may be looking at a live peer session's
+watcher: **STOP — surface the identity conflict (Andrew/CTO) and resolve it BEFORE killing
+anything.** Only when the serial reads STALE/absent — or the registration is demonstrably a
+leftover (no heartbeat advance across two spaced probes) — is the found process an orphan and the
+kill correct. Incident record: spawn-audit GA-3 entries 16:08:08Z + 16:27:11Z, predecessor
+handoff 163144Z (its stand-down correctly reaped the bash child that `TaskStop` leaves behind),
+CTO item-4 ACK 163221Z.
+
 Only arm a new Monitor if **none** of these confirm a live one (genuinely fresh
 session / restart / a death notification you actually saw). When unsure, check
 (2) — the task-id check is the only one that observes a *consumer*. Never re-arm off
