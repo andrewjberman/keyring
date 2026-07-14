@@ -18020,3 +18020,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~18:2xZ | 0.7.0_AE_CloudOps~A | none -- coordination/scribe window: Patricia email draft + Phase B handoff log; no code/infra/search | NFRA_WEBSITE Phase B handoff written, keyed to the go-live meeting |
 | 2026-07-14 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-2.opalinvest-cutover-staging-first | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.7.0_AE_CloudOps~A | NFRA_WEBSITE.TO-2.opalinvest-cutover-staging-first | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-14 18:30Z | 2.0.0_SA_COO | comp-state x5 (self-test 3/3 x2; scoped OPAL_ASSETS x2 + OPAL_RUNNERS -- 3 fold commits, convergence CURRENT, -S REGROW artifact recorded) + second-observer suite run (deletion-staging 11/11 incl mutant kill) + rail-checked schedule/notification census x3 | session_1608-1830Z.md |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-14/s... | PASS |
