@@ -18035,3 +18035,22 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~18:4xZ | 0.6.2_AE_PartnerETL | terraform plan x3, safe-apply, get-role-policy (rail-checked), simulate-principal-policy x6, comp-grep x2 | V2-2(b) IAM deploy: 0/1/0 applied, battery 6/6 byte-exact (pen-separation measured as its own invocation) | OK -- HUD rail correctly gated the bare IAM read; marker path used |
 | 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260714T0758Z_c2-orphan-reap_depl... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/CONNECTOR_SWEEP_C_LANDE... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/task_... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/task_orders/ANDREW_DIRECT_20260714_ta... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/CONNECTOR_SWEEP_C_LANDE... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS.json --file or... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_ASSETS.json org/projects/OPAL_RUNNERS.json org/projec... | FAIL |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/CONNECTOR_SWEEP_C_LANDE... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS_49METATABLES.j... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_ASSETS_49METATABLES.json org/tier2_senior/0.7.0_AE_Cl... | PASS |
+| 2026-07-14 ~19:10Z | 0.4.0_DS_ClientPlatform | (verify pass: parquet row-count reads + manifest parse; one rail-checked ls batch) | Andrew-direct output-test, 6/8 pins | ALL MATCH; eclipse 192/192 healed | drain verify waves 1-2 |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
