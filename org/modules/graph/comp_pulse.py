@@ -67,6 +67,15 @@ RUNS = os.path.join(_WS, "org", "mcp", "comp-tool-runs.jsonl")
 EDGES = os.path.join(_HERE, "nerves-edges.json")
 RISK = os.path.join(_HERE, "nerves-risk-edges.json")
 
+# CVO~Z L5 verify P2-1 (4106268e0): 'memory/...' citations 404 from the repo CWD -- the corpus
+# roots them at the agent memory dir (nerves_lexical.py:68-70). Printed once wherever they appear.
+_MEMORY_ROOT_NOTE = ("NOTE: memory/... citations root at the AGENT MEMORY DIR, not the repo: "
+                     "~/.claude/projects/C--Users-AndrewBerman-Desktop-ajb-workspace/memory")
+
+
+def _memory_note_if_needed(claims_docs) -> list:
+    return ["  " + _MEMORY_ROOT_NOTE] if any(str(d).startswith("memory/") for d in claims_docs) else []
+
 # A derived artifact older than this is STALE -- we still read it, but we SAY SO on every number
 # that came out of it. (Rule 20's UNKNOWN-VINTAGE discipline, applied to our own outputs.)
 STALE_AFTER_HOURS = 36.0
@@ -262,6 +271,7 @@ def render_reflex(hits, denom, risk_src: Source, invocation: str) -> str:
         L.append("  [%s] %s" % (h["severity"], h["path"]))
         L.append("        -> %s  (%d recorded claim(s))" % (h["node"], h["n_claims"]))
         L.append("        %s:%d  \"%s\"" % (c["doc"], c["line"], str(c.get("quote", ""))[:70]))
+    L += _memory_note_if_needed(h["claim"]["doc"] for h in hits)
     L.append("  ^ THE IMMUNE RESPONSE, PRE-COMMIT: you are about to touch a node the estate has")
     L.append("    WRITTEN WARNINGS ABOUT. GO READ THE CITATION before this commit proceeds.")
     return "\n".join(L)
@@ -288,7 +298,9 @@ def danger_x_traffic(risk_src: Source, attention: Counter, top: int):
                              "claim": e["claims"][0]})
                 break
     hits.sort(key=lambda h: ({"HOLD": 0, "RISK": 1}[h["severity"]], -h["attention"]))
-    return hits[:top]
+    # CVO~Z L5 verify P2-2 (4106268e0): the section must say census-or-cap -- return the
+    # total alongside the shown slice so render can print 'showing N of TOTAL'.
+    return hits[:top], len(hits)
 
 
 # ---------------------------------------------------------------------------
@@ -299,7 +311,8 @@ def compile_pulse(days: int = 7, top: int = 8, invocation: str = "") -> dict:
     att, phantom, rail_stats = rail_signals(days)
     runs, run_fails, run_stats = run_signals(days)
     evo, evo_stats = evolving(edges_src, top)
-    dxt = danger_x_traffic(risk_src, att, top)
+    dxt_res = danger_x_traffic(risk_src, att, top)
+    dxt, dxt_total = (None, None) if dxt_res is None else dxt_res
 
     return {
         # CVO~Z verify P2 class (2d2080e1e): a number nobody can re-derive is not evidence --
@@ -322,6 +335,7 @@ def compile_pulse(days: int = 7, top: int = 8, invocation: str = "") -> dict:
         "hot_tools": [{"tool": t, "runs_decayed": round(w, 2), "fails": run_fails.get(t, 0)}
                       for t, w in runs.most_common(top)],
         "danger_x_traffic": dxt,          # None => UNKNOWN-VINTAGE, never []
+        "danger_x_traffic_total": dxt_total,   # census behind the shown slice (P2-2)
         "evolving": evo,                  # None => UNKNOWN-VINTAGE
         "evolving_stats": evo_stats,
         "phantom_limbs": [{"term": t, "n": n} for t, n in phantom.most_common(top)],
@@ -362,11 +376,14 @@ def render(p: dict) -> str:
         L.append("  No node under a HOLD or a recorded incident saw traffic in the window.")
         L.append("  (This IS a measured result -- the danger map and the rail were both read.)")
     else:
+        L.append("  showing %d of %d matched (the census, not a cap-blind slice):"
+                 % (len(dxt), p.get("danger_x_traffic_total") or len(dxt)))
         for h in dxt:
             c = h["claim"]
             L.append("  %-6s attention=%-5s  %s" % (h["severity"], h["attention"], h["node"]))
             L.append("         someone searched/ran: %r" % h["ref"])
             L.append("         %s:%d  \"%s\"" % (c["doc"], c["line"], c["quote"][:72]))
+        L += _memory_note_if_needed(h["claim"]["doc"] for h in dxt)
         L.append("  ^ THE IMMUNE RESPONSE: the danger map firing WHILE the danger is approached.")
         L.append("    GO READ THE CITATION before the next keystroke.")
 
@@ -466,7 +483,9 @@ def _self_test() -> int:
                              "claims": [{"kind": "HOLD", "doc": "memory/MEMORY.md", "line": 81,
                                          "quote": "the frozen three -- no verb touches them"}]}]})
     att = Counter({"build_assets_dim.py": 3.4, "harmless_thing.py": 9.9})
-    hits = danger_x_traffic(risk_fx, att, top=5)
+    hits, dxt_total = danger_x_traffic(risk_fx, att, top=5)
+    ck("dxt.census_total_rides_with_the_slice", dxt_total == 1,
+       "the section says showing-N-of-TOTAL, never a cap-blind slice (P2-2)")
     ck("dxt.fires_on_a_held_node_under_traffic",
        len(hits) == 1 and hits[0]["severity"] == "HOLD"
        and "build_assets_dim" in hits[0]["node"],
