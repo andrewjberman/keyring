@@ -98,6 +98,13 @@ An OPEN deploy ledger entry = a begun deploy with an unverified leg. **Route it 
 
 **Freshness grounds on rows or values read out of the artifact — never its name, mtime, size, or existence.** When two freshness instruments disagree, **the disagreement is the signal**; resolve it by finding which one reads the property. → `DRIVE.md §3`
 
+**Read `org/modules/graph/comp-learns-backlog.md` OPEN head each cycle** — the gap→build bridge
+(NFRA_COMPCLOSE, 2026-07-14). Entries are deduped, append-only, closed only by human edit with citation;
+an unread backlog is how a gap logged 06-30 got re-derived from scratch on 07-13. Route BUILD/DECLINE
+ratification to CTO. *(While `/drive` is OFF by Andrew's standing order, the standing reader is the COO
+session-start step in `org/ref/COO_STARTUP.md` — this line exists so the read survives any future
+Andrew-authorized re-arm.)*
+
 **Act on each bucket THIS cycle:**
 
 - **DEAF / UNREACHABLE** → **always write it `DEAF (INFERRED)`.** The fabric cannot detect that an agent died (`F-008`); this classifier detects *absence*. Respawn-request to MSTR **only if the lane has live pending work**; if its unit is done and rerouted, reap it. **Ground the cause before reaping** — multiple lanes DEAF at once, or MSTR also unreachable, or a fresh no-summary spawn ⇒ suspect an Anthropic-side outage; do NOT reap during one. → `DRIVE.md §4`

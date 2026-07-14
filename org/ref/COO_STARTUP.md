@@ -15,6 +15,18 @@ corrected immediately using Edit — before presenting the oriented summary.
 
 ## Protocol
 
+### 0. Read the comp-learns backlog OPEN head (every COO session — the standing reader)
+
+```
+org/modules/graph/comp-learns-backlog.md
+```
+The gap→build bridge from the comp-tools learning loop (NFRA_COMPCLOSE, 2026-07-14): tool-coverage gaps
+land here deduped, append-only, and close only by human edit with citation. **With `/drive` OFF (Andrew
+standing order) this session-start read IS the standing reader** — an unread backlog is how a gap logged
+2026-06-30 got re-derived from scratch on 07-13. Read the OPEN entries at the head; route BUILD/DECLINE
+ratification to CTO (comp-tool builds are the sanctioned CLAUDE.md §21 coverage-gap lane, not new-gate
+work). Do not let an entry age unread past a session.
+
 ### 1. Check your own task orders
 ```
 list_task_orders({your_serial})
