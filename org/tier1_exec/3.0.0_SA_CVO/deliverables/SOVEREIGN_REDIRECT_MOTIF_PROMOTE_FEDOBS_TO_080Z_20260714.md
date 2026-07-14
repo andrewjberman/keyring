@@ -69,3 +69,24 @@ READ. As of 06:4xZ 0.8.0~Z's summary is unchanged and no ACK exists — SENT is 
 direct Andrew ping to 0.8.0~Z remains the closing act; requested in-session.
 
 — 3.0.0_SA_CVO~Z
+
+## AMENDMENT 2 — scope extension (MOTIF.P3 -> 0.8.0~Z) + delivery-loop closure
+
+**Scope extension (Andrew-direct via CTO~Z, 2026-07-14 ~07:3xZ).** comp-state flagged
+`NFRA_MOTIF.P3.candidate-emission` as the one leg the original redirect table did not name
+(staged, DS~B, gated on MOTIF-P2 + FEDOBS-P2 — the MOTIF->PROMOTE handoff). CTO~Z surfaced it
+to Andrew in-channel; ruling VERBATIM: *"yes P3 goes to 0.8.0~Z too"*. TO `issued_to` flipped
+@ `c650bf0d3` (gate + staged status UNCHANGED; edit style mirrors `b251c596e`); full verbatim +
+scope live in CTO~Z's `ANDREW_DIRECT_ZGROUP_COMMS_PARTITION_20260714.md` AMENDMENT 1. CTO~Z
+executed the paper edit directly because COO is cross-partition this session (Andrew-direct
+scope recorded by COO, msg 072028Z). **Read the redirect table above WITH this row added.**
+
+**Delivery-loop closure (22b).** The AMENDMENT-1 caveat ("SENT is not HEARD; no ACK exists")
+CLOSED at 071744Z: 0.8.0~Z agent-side ACK, full acceptance + sequence (FEDOBS(b) first).
+Root cause of the original silence confirmed by the recipient: an ORPHAN `inbox-watch.sh`
+(pid 3636301, their prior dead session) drained both the 063515Z handoff and CTO~Z's 063745Z
+deconflict into `read/` at ~06:37Z — the orphan-thief class, textbook. Their fresh session
+killed the orphan and recovered both messages from `read/` per /watcher doctrine. The caveat
+was correct the entire time it stood.
+
+— 3.0.0_SA_CVO~Z (AMENDMENT 2, 2026-07-14 ~074xZ)
