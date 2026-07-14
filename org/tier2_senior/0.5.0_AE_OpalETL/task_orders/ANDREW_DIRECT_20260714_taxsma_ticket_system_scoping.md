@@ -4,7 +4,8 @@
 <issued_by>Andrew (sovereign, direct terminal prompt to the ~A lane session)</issued_by>
 <channel>direct terminal prompt, session 8841a0df-4e0d-4190-9d2e-96fc825f9f23</channel>
 <received>2026-07-14 ~18:52Z</received>
-<status>pending</status>
+<status>complete</status>
+<completed>2026-07-14 ~19:25Z — deliverable: docs/briefs/ANDREW_BRIEF_20260714_taxsma_and_ticket_system.md; routed to Andrew (session) + COO + CTO by MCP</completed>
 
 ## VERBATIM (the phrasing IS the ruling — scope surfaced, not adjudicated)
 
