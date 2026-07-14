@@ -1,0 +1,57 @@
+{
+  "project_code": "OPAL_TICKET",
+  "macro_code": "OPAL",
+  "code": "OPAL_TICKET",
+  "title": "Opal Ticket System (Ticket Center)",
+  "name": "Opal Ticket System",
+  "description": "Internal client-service + trade-request ticketing, designed in tandem with the Portal (AJ Graff <> Andrew call 2026-07-14). Typed tickets (trade_request / service_request), role-based routing matrix, Open->In Progress->Completed with one-touch claim, cutoff-aware auto-acks (trading-calendar 'next trading day'), reminder/escalation sweeps, portal Ticket Center page in the Tools nav, response-time metrics, internal-first visibility with later external filer access via the firm-access matrix. AI intake for service requests (confidence-gated, zero silent drops); Menachem's existing SharePoint trade form connected unchanged. Architecture mirrors the opal-data-refresh-api precedent: DynamoDB opal-tickets + Lambda opal-ticket-api + EventBridge sweeps + SES (opalinvest.dev) / Teams notifications.",
+  "status": "active",
+  "owner": "0.5.0_AE_OpalETL~A",
+  "authority": "ANDREW-DIRECT execution delegation 2026-07-14 ~19:30Z (verbatim: org/tier2_senior/0.5.0_AE_OpalETL/task_orders/ANDREW_DIRECT_20260714_taxsma_ticket_system_scoping.md ADDENDUM) -- registered + executed by 0.5.0~A under delegated sovereign authority, fabric-quiet (no COO/CTO dispatch loops). CLAUDE.md gates remain binding.",
+  "pods": [
+    "0.3",
+    "0.5"
+  ],
+  "created": "2026-07-14",
+  "current_phase": "P0 SHIPPED 2026-07-14 ~20:1xZ -- backend LIVE (ticket-center-v1.0.0: opal-tickets + opal-ticket-api, 14/0/0 apply, 0-diff, 22a battery 5/5 + isolated pos/neg controls both axes, e2e lifecycle exercised GREEN incl. 409 claim-race; ledger CLOSED 20260714T1958Z) + portal page LIVE on DEV (portal 11a638fb: /ticket-center in Tools nav, board/create/claim/complete/metrics; typecheck clean; submodule pointer 16c4ee8a1). REACHABILITY CLOSED 20:1xZ: CF twin behaviors LIVE @ portal-auth-v1.19.0 (0.7.0, ledger closed) -- INDEPENDENTLY exercise-verified by 0.5.0~A (unauthenticated curls on BOTH paths return 401 authorizer JSON through the edge, zero SPA masking). The P0 chain is end-to-end wired: page -> CF -> authorizer -> Lambda -> table. NEXT: P1 (cutoff/EOD sweeps trading-calendar-aware, claim links via Teams+SES opalinvest.dev, escalations) -> P2 (AI intake confidence-gated + Menachem-form connector) -> P3 (external filer visibility via firm matrix + requester scoping). OPEN HUMAN ITEMS unchanged: cutoff time from the agreement (AJ); bobby@ address confirm before P1 sends; external visibility timing. RULINGS 07-14 (applied): cutoff 2PM ET interim config LIVE; bobby parked ~2026-08; P1 claim links TEAMS-ONLY; requester side = flat asap-ack + claimed-by(name+email) notification, not analytics; P2 intake = Teams shared channel (pending Andrew/team channel setup).",
+  "prds": [
+    {
+      "path": "docs/briefs/ANDREW_BRIEF_20260714_taxsma_and_ticket_system.md",
+      "label": "Implementation brief Part 2 (requirements from the AJ Graff call transcript, timestamped; portal seams named at vintage; phasing + acceptance)",
+      "date": "2026-07-14"
+    }
+  ],
+  "related": [
+    "TRSB",
+    "AUTH",
+    "PFMG_TAXSMA"
+  ],
+  "history": [
+    {
+      "date": "2026-07-14T21:0xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "ANDREW-DIRECT RENAME (verbatim: 'let's make sure ticket project is registered as OPAL_TICKET in the registry.'): TCKT_CENTER -> OPAL_TICKET, macro TCKT -> OPAL (the firm-platform macro OPAL_ASSETS/OPAL_RUNNERS already use; its missing MACRO_CODES row added this commit, closing that lag). The one-project TCKT macro row removed same-day it was added. All infra naming (ticket-center TF module/tag, opal-ticket-api, opal-tickets) unchanged -- project-code rename only."
+    },
+    {
+      "date": "2026-07-14T20:4xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "ANDREW RULINGS FOLDED + config APPLIED (0/1/0, 0-diff): CUTOFF_ET=14:00 interim ('use 2pm for now'); bobby@ PARKED until hired ~2026-08 (routing matrix updated live); claim links = TEAMS-ONLY (email anti-link software makes links clunky); requester-facing = flat 'we'll get back to you asap' ack + claimed-by notification (name+email), NOT analytics; AI intake = Teams shared channel (Andrew sets up); Menachem-form connector rec stands."
+    },
+    {
+      "date": "2026-07-14T20:1xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "REACHABILITY CLOSED: CF behaviors live @ portal-auth-v1.19.0 (0.7.0 exercise-verified + 0.5.0~A independent edge probes, RAVC-4 closed). TCKT_CENTER P0 fully end-to-end."
+    },
+    {
+      "date": "2026-07-14T20:1xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "P0 SHIPPED same-day as registration: backend deployed+verified+exercised (dac504b1c ledger close), portal page on DEV (11a638fb), CF behaviors CTO-approved -> 0.7.0. All under the Andrew-direct delegation, fabric-quiet (the one shared-infra item routed via CTO's own collision channel, his dispatch not mine)."
+    },
+    {
+      "date": "2026-07-14T19:3xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "PROJECT REGISTERED under ANDREW-DIRECT execution delegation (same-session verbatim: 'I do not want to interrupt the fabric with these ad hoc projects so I'd rather upon your finishing the briefs, you just take sovereign authority, register the projects if they are not registered as macro_projects, and run the issues through completion.'). New macro TCKT added to MACRO_CODES.md (Pod 3 -- TradingOperations). Source material: Call with AJ Graff transcript (Downloads, .vtt/.docx read in full); design brief Part 2 @ 293c062fb. Supersedes COO's brief-first-then-COO-registers ordering (COO 18:58Z msg) per latest-Andrew-word. Informational broadcast to COO/CTO/MSTR sent same turn; no fabric dispatch."
+    }
+  ],
+  "renamed_from": "TCKT_CENTER"
+}

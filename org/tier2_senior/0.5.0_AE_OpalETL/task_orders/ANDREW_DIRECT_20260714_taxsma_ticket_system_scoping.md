@@ -7,6 +7,17 @@
 <status>pending</status>
 <scoping_completed>2026-07-14 ~19:25Z — brief deliverable landed: docs/briefs/ANDREW_BRIEF_20260714_taxsma_and_ticket_system.md (293c062fb)</scoping_completed>
 
+## ADDENDUM 4 — FIFTH ANDREW-DIRECT (same session, ~21:0xZ): REGISTRY NAMING (verbatim)
+
+> "let's make sure ticket project is registered as OPAL_TICKET in the registry. also OPAL_TAXSMA
+> if not registered already."
+
+**Executed same turn:** TCKT_CENTER -> OPAL_TICKET and PFMG_TAXSMA -> OPAL_TAXSMA (JSONs renamed
+with renamed_from chains + history events; REGISTRY row updated for TICKET and ADDED for TAXSMA —
+the 06-26 registration had been JSON-only; the one-day TCKT macro row retired; the missing OPAL
+macro row added to MACRO_CODES.md, rule-6 conformance). Infra naming (ticket-center TF module/tag,
+opal-ticket-api, opal-tickets, /tax-pt1) unchanged — project-code rename only.
+
 ## ADDENDUM 3 — FOURTH ANDREW-DIRECT (same session, ~20:5xZ): NEW SOVEREIGN-DELEGATE AGENT (verbatim)
 
 > "I also am going to instantiate another agent, 0.2.0_DT_PortfolioAnalytics, which I need briefed

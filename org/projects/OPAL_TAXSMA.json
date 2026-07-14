@@ -1,0 +1,63 @@
+{
+  "project_code": "OPAL_TAXSMA",
+  "macro_code": "OPAL",
+  "code": "OPAL_TAXSMA",
+  "title": "Tax SMA Rebalancing Automation (Yang Liu / OCIO-PM ops)",
+  "name": "Tax SMA Rebalancing Automation",
+  "description": "Automate Tax SMA rebalancing for Yang Liu / OCIO-PM ops (renamed from ADVI_TAXSMA; macro PFMG = PortfolioManagement). Discovery-gated (S0 grounds 3 load-bearing unknowns before any build leg, Rule-22). HARD GUARDRAIL every leg: the system GENERATES the trade file, a HUMAN reviews + executes -- never auto-execute/auto-upload to Schwab, no Schwab/Factset creds in code. CTO PRD docs/architecture/ADVI_TAXSMA_PRD.md.",
+  "status": "active",
+  "owner": "0.4.0_DS_ClientPlatform",
+  "renamed_from": "PFMG_TAXSMA (2026-07-14; earlier ADVI_TAXSMA -> PFMG_TAXSMA 2026-06-26)",
+  "pods": [
+    "0.4",
+    "0.8",
+    "3.0",
+    "0.3.1"
+  ],
+  "created": "2026-06-26",
+  "current_phase": "P1 EXECUTING (0.5.0~A delegate). SCOPE PER ANDREW RULINGS 07-14: the SSAVAIL intake/parsing (/tax-pt1) IS the principal automation; step-2 cost-basis MANUAL by ruling (no Schwab ask; not derivable in-estate); step-5 DESCOPED for now; step-3 conversion = /tax-pt3 when a fresh Tax Lot date exists; Alyssa operates via skills (write_files entitlement LIVE on-box). SHIPPED: gateway attachment tools (633941502, import-proven) + /tax-pt1 runner skill. PENDING: first live /tax-pt1 run on next m365 MCP reconnect (byte-confirms S0.3 attachment naming). S0 fully closed (df17cbeb0). Hard guardrail moot-by-descope but the canonical converters stay locked in-repo.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_TAXSMA_PRD.md",
+      "label": "CTO Tax SMA PRD (discovery-gated, S0-first, 5 steps, hard trade-file-generated-not-executed guardrail) -- CTO renaming ->PFMG_TAXSMA_PRD.md",
+      "date": "2026-06-26"
+    }
+  ],
+  "related": [
+    "PFMG_VISPOL",
+    "SCTY_MCPGUARD",
+    "NFRA_MSGRAPH"
+  ],
+  "history": [
+    {
+      "date": "2026-07-14T21:0xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "ANDREW-DIRECT RENAME (verbatim: 'also OPAL_TAXSMA if not registered already.'): PFMG_TAXSMA -> OPAL_TAXSMA, macro PFMG -> OPAL. Second rename in this project's history (ADVI->PFMG was Andrew-direct 06-26); latest word governs. REGISTRY row ADDED this commit -- the project never had one (06-26 registration lag, JSON-only). PRD paths/docs keep their historical names; the JSON is the authoritative close-state."
+    },
+    {
+      "date": "2026-07-14T20:4xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "ANDREW RULINGS FOLDED (verbatim in the ~A TO ADDENDUM 2): step-5 DESCOPED for now; step-2 NO-SchWAB-ASK, stays manual (not derivable in-estate, ULN/ACC negative on record) -- 'We do get the SSAVAIL emails every single day though which is the principal automation/parsing aspect of this project'; Alyssa UI = SKILLS.MD files (claude-savvy), naming /tax-pt1 (renamed + live), /tax-pt2+ as needed; her write_files entitlement APPLIED on-box (OPLMCP entitlements.txt hot-reload layer, idempotent, content verified); mail-subfolder filing welcome (runner folder-agnostic by design); no backfill."
+    },
+    {
+      "date": "2026-07-14T20:1xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "S0 CLOSED (S0.1 not-a-lookup two-table two-axis; S0.3 attachment-name-primary rule from live feed + Yang's own folder ground truth) + STEP-1 CAPABILITY DEPLOYED (gateway attachment tools 633941502, guard-wired fail-closed, write_files class activated) + /taxsma-step1 runner skill. Feed verified LIVE in Andrew's mailbox (Yang auto-forward, 2x daily, 07-10 four-send day banked as the extras case)."
+    },
+    {
+      "date": "2026-07-14T19:3xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "ANDREW-DIRECT EXECUTION DELEGATION (verbatim: 'I do not want to interrupt the fabric with these ad hoc projects so I'd rather upon your finishing the briefs, you just take sovereign authority, register the projects if they are not registered as macro_projects, and run the issues through completion.'). Registration confirmed already-existing (this JSON); 0.5.0~A assumes execution of the remaining legs fabric-quiet: close S0.1 + S0.3, build step-1 (email->Short Sale, incl. the attachment-fetch capability the gateway lacks -- verified today), step-2 per S0.1 verdict, step-3/5 verbatim-converter runners, step-4 handoff, Alyssa UI. Reconciliation brief @ 293c062fb (feed VERIFIED live in Andrew's mailbox: Yang auto-forward ~3-4min lag, 2x daily 5:0x+6:47 ET, 07-10 a four-email day). Guardrail + gates unchanged and binding."
+    },
+    {
+      "date": "2026-06-26T18:41Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "ANDREW-DIRECT RECLASSIFY + DECISIONS (via 0.0.1_UA_mstools 184149Z). (1) MACRO ADVI->PFMG: project code ADVI_TAXSMA->PFMG_TAXSMA (PFMG=PortfolioManagement, existing macro, owner 0.3.1_RD); registry/JSON renamed, CTO to rename the PRD doc. My keep-ADVI call superseded -- correct outcome (I flagged it as a decision; should have checked MACRO_CODES.md for the existing PFMG fit before defaulting to keep-as-is). (2) UI = HYBRID (CTO lean confirmed; local runner + status surface, finalize post-S0.1). (3) STEP-3 = Yang's convert_cost_basis.py VERBATIM, parameterize {BASE}+{date} only. Folded into current_phase + relayed to S0 owners (DS gets #3 for S0.2). 0.3.1_RD FYI'd as build-phase PFMG-pod angle. S0 dispatch (CVO/DS/0.8.0) unchanged."
+    },
+    {
+      "date": "2026-06-26T18:36Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "PROJECT REGISTERED (as ADVI_TAXSMA) + /allocation FIRED (CTO decomp handoff 183439Z, PRD 90e4d889c). Andrew-sovereign (Yang Liu 'Tax SMA Automation'). DISCOVERY-GATED S0-first. S0 decomposed+dispatched parallel: S0.1->CVO (Schwab-lot lever), S0.2->0.4.0_DS (converter-scripts review, role-fit split from CTO's AE-suggestion; DS freed by ADVI_COTMVP D1 stand-down), S0.3->0.8.0_AE (FIS email rule, M365 fit, freed by MSGRAPH re-scope hold). Build legs HELD until S0->RAVC CTO. Hard guardrail (trade-file generated-not-executed, no creds) every leg."
+    }
+  ]
+}

@@ -62,7 +62,6 @@ Responsible pod: `0.3.0_DE` / `0.3.0_DS` / `0.3.0_DT`
 | `DRFR` | DataRefresh | `portal/src/pages/DataRefresh/` | `0.3.3_RD_DataRefresh` | (cross-pipeline) |
 | `SSCN` | SecurityScanner | `portal/src/pages/SecurityScanner/` | `0.3.4_RD_SecurityScanner` | TBD (Pattern 0) |
 | `TAXX` | Tax Strategy (Tax SMA Trade Allocation) | TBD | TBD | TBD |
-| `TCKT` | TicketCenter (internal client-service + trade-request ticketing; AJ Graff <> Andrew 2026-07-14) | `portal/src/pages/TicketCenter/` | TBD (0.3.5_RD_TicketCenter proposed) | opal-ticket-api (new) |
 
 ---
 
@@ -85,6 +84,7 @@ Assign the DE/DS/DT of the primary pod, or the AE for pipeline-only projects.
 
 | Code | Surface Area | Primary Owner |
 |------|-------------|---------------|
+| `OPAL` | Opal firm platform (cross-pod umbrella): asset consolidation + runners + internal ops. Projects: `OPAL_ASSETS`, `OPAL_RUNNERS`, `OPAL_ASSETS_49METATABLES`, `OPAL_TICKET`, `OPAL_TAXSMA`. *(Row added 2026-07-14 by 0.5.0~A under Andrew delegation, closing a lag: the macro had been in REGISTRY use since OPAL_ASSETS with no row here — rule 6 conformance.)* | Per-project (see `org/projects/OPAL_*.json`; OPAL_ASSETS/RUNNERS = CTO-led base group) |
 | `YALP` | Yang pipeline (cross-pod) | `0.5.0_AE_OpalETL` |
 | `YANG` | Yang ad-hoc portal/feature requests (distinct from YALP = the Yang data pipeline) | `1.0.0_SA_CTO` intake -> pods |
 | `BDPL` | BD pipeline | `0.6.0_AE_PartnerETL` |
