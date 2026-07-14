@@ -153,10 +153,23 @@ group's current build — ALL partner/asset ETL into one S3). Sequencing note, s
 adjudicated: per-surface deprecation should key off the never-widen parity gate ("multi-day
 CLEAN streak IS the cutover gate" — already a filed friction intent), never off the calendar.
 
-### 9. comp-debris (new tool — the fusion/verdict layer over signals we already have)
-Core, per Andrew: enumerate cloud resources (Lambdas, EventBridge rules/schedules, S3
-buckets/prefixes, DDB tables, SQS, EC2, IAM roles) and rank by INVOCATION/READ coldness,
-**coldest first**. The single-signal instruments already exist — comp-debris is the JOIN:
+### 9. comp-debris (new tool — REFINED by Andrew same channel ~04:3xZ: keep v1 SIMPLE)
+**Sovereign refinement (VERBATIM, three messages):** *"There should still be a comp-debris or
+something which is just checking cloudtrail and organizing resources by oldest last invocation"*
+· *"i feel like that is just obvious and easy to do"* · *"then you can always run comp-heat
+federated and comp-dups on those items for further confirmation"*.
+
+**v1 CORE (build this, plainly):** CloudTrail-driven inventory — enumerate cloud resources,
+attribute each its most recent CloudTrail event (last invocation / last touch), sort
+**oldest-first**. That is the tool. One honesty line, not gold-plating: where CloudTrail is
+structurally blind (management-event history is ~90d; S3/Lambda data-plane events only if the
+trail logs data events), the row reads `UNKNOWN-beyond-window` / `UNKNOWN-not-logged` — never
+"cold" (no-datapoint != never-invoked). Cheap CW-metrics fallback per service is fine where it
+sharpens a row.
+
+**CONFIRMATION PASS (pipeline, not built-in fusion):** the cold tail then gets run through the
+existing instruments for corroboration — per Andrew, that is a second step you run ON the
+candidates, not machinery inside comp-debris:
 
   | Axis | Existing instrument it consumes |
   |---|---|
@@ -169,23 +182,30 @@ buckets/prefixes, DDB tables, SQS, EC2, IAM roles) and rank by INVOCATION/READ c
   | zero-consumers (graph) | comp-blast / comp-kuzu (WITH the F-5 disclosure until item 8 lands) |
   | dead credentials | comp-deadgrant |
 
-- **Properties wanted:**
-  a. Ranked coldest-first REAP LEDGER, per-resource evidence bundle (which axes say cold, each
-     with its observation WINDOW + denominator printed). ADVISORY-ONLY — never deletes, never
-     disables; the reap verb stays human + never-widen-gated (CLAUDE.md NEVER#2/#3 class).
-  b. **UNKNOWN is a band, not cold.** A resource with no metric visibility must NOT rank cold —
-     "no datapoint" != "never invoked" (comp-trigger's own render rule; the anti-correlation
-     trap: instruments that render not-knowing as a verdict are how this estate gets burned).
-  c. Window-aware: coldness quoted AS "0 invocations in N days [window printed]"; configurable
-     window; a seasonal consumer (quarterly job) at 30d is UNKNOWN-SEASONAL, not dead.
-  d. Hold-aware: sovereign-held paths, the INF chain, and the frozen three are excluded from
-     candidate REAP output entirely (they may appear as INVENTORY, flagged HELD).
-  e. Same-name twin fusion: when comp-dups pairs a hot resource with a cold twin, the ledger
-     row says WHICH is canonical (deployed-parity + reads decide), never just "duplicate".
-- **Acceptance:** positive control — a known-hot resource (e.g. access-anomaly-scanner, FIRED
-  72x/3d) must rank HOT; a known-dead fixture ranks coldest WITH its evidence bundle; a
-  no-visibility resource lands in UNKNOWN, exercised (feed it a resource whose metrics you
-  deliberately cannot read); the held-exclusion exercised on an INF-chain name.
+- **Properties (v1, trimmed to the refinement):**
+  a. Oldest-last-invocation-first listing; every row: resource ARN/name, last event, event
+     source, AGE, and the lookback window it was measured in. ADVISORY-ONLY — never deletes,
+     never disables; any reap stays human + never-widen-gated (CLAUDE.md NEVER#2/#3 class).
+  b. **UNKNOWN is a band, not cold** (as above — the one non-negotiable carried from the
+     original property set).
+  c. Hold-aware: INF chain + frozen three flagged HELD in inventory, excluded from any
+     reap-candidate framing.
+- **Acceptance:** known-hot control ranks hot (e.g. access-anomaly-scanner, FIRED 72x/3d);
+  a no-visibility resource lands UNKNOWN, exercised; held-exclusion exercised on an INF name.
+- **Live pre-validation of the confirmation pass (CVO~Z ran both tools 2026-07-14 ~04:3xZ,
+  Andrew-directed):** `comp-heat federated` → 329 cold / 38 warm / 7 hot estate files (the cold
+  ocean is real); `comp-dups` → 8 TF EXACT-label collisions (two-states-one-resource class:
+  `events_invoke_ssm` role+policy declared in BOTH canonical-schwab-ec2 AND
+  canonical-schwab-si2-schedule; `bd_exporter` role/SG/instance-profile in BOTH
+  infra/aws/ec2/bd-exporter/terraform AND infra/aws/terraform/bd-pipeline; `s3_access` in
+  bd-exporter AND shared-infra; `allow_eventbridge` in ec2-auto-shutdown-enforcer AND the
+  served-guard module; `opal_data_bd` lifecycle in bd-bucket-lifecycle AND bd-pipeline), one
+  248-line byte-exact Lambda body dup (`data/smartx/scripts/lambda_smartx_query.py` ==
+  `infra/aws/lambda/smartx_query/lambda_function.py`), and TWO norm=1.0 vendored copies of
+  `lib/trading_calendar.py` (schwab-bronze-freshness, bd-served-vintage-alarm) — currently
+  identical, nothing keeps them synced, and that file is the ONE frontier definition NEVER#1
+  depends on. The confirmation layer already finds real debris; comp-debris supplies the
+  missing runtime-coldness axis.
 
 ---
 
