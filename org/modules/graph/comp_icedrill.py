@@ -55,20 +55,39 @@ def _split_uri(uri: str):
     return (m.group(1), m.group(2)) if m else (None, None)
 
 
-def dated_partitions(client, bucket: str, prefix: str, max_keys: int = 2000) -> dict:
+def dated_partitions(client, bucket: str, prefix: str, max_keys=None) -> dict:
     """The DATED-PARTITION substrate: keys under a {date}-grammar prefix, one vintage per date found
-    in the key. COMPLETENESS: this is the set of dates PRESENT -- a gap is a missing partition, and a
-    present date is not proof the partition is complete (that's comp-freshness's job)."""
+    in the key.
+
+    PAGINATES TO EXHAUSTION BY DEFAULT (max_keys=None). Fixed 2026-07-14 after CVO~Z REFUTED my
+    "matches an independent aws s3 ls" claim: this silently stopped at 2,000 keys
+    (`len(keys) >= max_keys` broke the pagination loop), so the root scope reported 1,394 vintages
+    against a true 2,273, and a SUBSCOPE reported EXACTLY 2000 -- child(2000) > parent(1394), an
+    internal self-refutation that needed no external instrument. **A SILENT CAP IS THE EXACT CLASS
+    THIS TOOL EXISTS TO CATCH, AND IT WAS IN THE TOOL.** My "independent" check had evidently shared
+    the capped axis, which is why it agreed with itself.
+
+    A cap is now OPT-IN and, when it BINDS, it is DISCLOSED (`truncated: True`, a loud line, and a
+    nonzero exit) -- never a silent horizon presented as a complete answer.
+
+    COMPLETENESS: the set of dates PRESENT under the prefix. A gap is a missing partition, and a
+    present date is not proof the partition is complete (that is comp-freshness's job)."""
     token, keys = None, []
+    pages = 0
+    truncated = False
     while True:
         kw = {"Bucket": bucket, "Prefix": prefix, "MaxKeys": 1000}
         if token:
             kw["ContinuationToken"] = token
         resp = client.list_objects_v2(**kw)
+        pages += 1
         for o in resp.get("Contents", []):
             keys.append((o["Key"], o.get("LastModified"), o.get("Size"), o.get("ETag")))
         token = resp.get("NextContinuationToken")
-        if not token or len(keys) >= max_keys:
+        if not token:
+            break
+        if max_keys is not None and len(keys) >= max_keys:
+            truncated = True          # the cap BOUND and there was more -> say so, loudly
             break
     vintages = {}
     for key, lm, size, etag in keys:
@@ -82,36 +101,79 @@ def dated_partitions(client, bucket: str, prefix: str, max_keys: int = 2000) -> 
                                 "last_modified": str(lm) if lm else None})
         vintages[d]["keys"] += 1
     series = sorted(vintages.values(), key=lambda v: v["date"])
+    completeness = ("dates PRESENT under the prefix (FULL listing, paginated to exhaustion: "
+                    "%d keys over %d page(s)); a missing date is a missing partition; presence is "
+                    "not completeness (use comp-freshness for that)" % (len(keys), pages))
+    if truncated:
+        completeness = ("!! TRUNCATED at %d keys (cap) -- this listing is INCOMPLETE and the vintage "
+                        "set below is a LOWER BOUND. Re-run without --max-keys." % len(keys))
     return {"substrate": "s3-dated-partitions", "bucket": bucket, "prefix": prefix,
-            "completeness": "dates PRESENT under the prefix; a missing date is a missing partition; "
-                            "presence is not completeness (use comp-freshness for that)",
-            "n_keys_scanned": len(keys), "n_vintages": len(series), "vintages": series}
+            "completeness": completeness,
+            "n_keys_scanned": len(keys), "pages": pages, "truncated": truncated,
+            "n_vintages": len(series), "vintages": series}
 
 
-def object_versions(client, bucket: str, key: str, max_versions: int = 200) -> dict:
-    """The OBJECT-VERSION substrate: list_object_versions on a concrete key (needs bucket versioning).
-    COMPLETENESS: the full retained version history IF versioning was on for the whole window; a
-    version list on a never-versioned bucket is EMPTY, which is not 'the value never changed'."""
-    resp = client.list_object_versions(Bucket=bucket, Prefix=key, MaxKeys=max_versions)
+def object_versions(client, bucket: str, key: str, max_versions=None) -> dict:
+    """The OBJECT-VERSION substrate: list_object_versions on a concrete key (needs bucket
+    versioning). PAGINATES TO EXHAUSTION (same silent-cap fix as dated_partitions -- the old
+    MaxKeys=200 was a horizon presented as a history).
+
+    COMPLETENESS: the full retained version history IF versioning was on for the whole window; an
+    EMPTY list on a never-versioned bucket is NOT 'the value never changed'."""
     versions = []
-    for v in resp.get("Versions", []):
-        if v.get("Key") != key:
-            continue
-        versions.append({"version_id": v.get("VersionId"), "last_modified": str(v.get("LastModified")),
-                         "size": v.get("Size"), "etag": (v.get("ETag") or "").strip('"'),
-                         "is_latest": v.get("IsLatest", False)})
+    kmark = vmark = None
+    pages = 0
+    truncated = False
+    while True:
+        kw = {"Bucket": bucket, "Prefix": key, "MaxKeys": 1000}
+        if kmark:
+            kw["KeyMarker"] = kmark
+        if vmark:
+            kw["VersionIdMarker"] = vmark
+        resp = client.list_object_versions(**kw)
+        pages += 1
+        for v in resp.get("Versions", []):
+            if v.get("Key") != key:
+                continue
+            versions.append({"version_id": v.get("VersionId"),
+                             "last_modified": str(v.get("LastModified")),
+                             "size": v.get("Size"), "etag": (v.get("ETag") or "").strip('"'),
+                             "is_latest": v.get("IsLatest", False)})
+        if not resp.get("IsTruncated"):
+            break
+        kmark = resp.get("NextKeyMarker")
+        vmark = resp.get("NextVersionIdMarker")
+        if not kmark and not vmark:
+            break
+        if max_versions is not None and len(versions) >= max_versions:
+            truncated = True
+            break
     versions.sort(key=lambda x: x["last_modified"])
-    note = ("full retained version history" if versions
-            else "NO versions returned -- either the key does not exist OR the bucket is not "
-                 "versioned. EMPTY here is NOT 'the value never changed'")
+    if truncated:
+        note = ("!! TRUNCATED at %d versions (cap) -- INCOMPLETE; this is a LOWER BOUND."
+                % len(versions))
+    elif versions:
+        note = "full retained version history (paginated to exhaustion, %d page(s))" % pages
+    else:
+        note = ("NO versions returned -- either the key does not exist OR the bucket is not "
+                "versioned. EMPTY here is NOT 'the value never changed'")
     return {"substrate": "s3-object-versions", "bucket": bucket, "key": key,
-            "completeness": note, "n_versions": len(versions), "vintages": versions}
+            "completeness": note, "n_versions": len(versions), "pages": pages,
+            "truncated": truncated, "vintages": versions}
 
 
 def _render(d: dict) -> str:
     L = ["comp-icedrill -- vintage drill",
          "  SUBSTRATE: %s" % d.get("substrate"),
          "  COMPLETENESS: %s" % d.get("completeness")]
+    if d.get("truncated"):
+        L.insert(1, "  " + "!" * 70)
+        L.insert(2, "  !! TRUNCATED LISTING -- THE NUMBERS BELOW ARE A LOWER BOUND, NOT AN ANSWER.")
+        L.insert(3, "  " + "!" * 70)
+    if d.get("pages"):
+        L.append("  SCAN: %d key(s)/version(s) over %d page(s), paginated%s"
+                 % (d.get("n_keys_scanned", d.get("n_versions", 0)), d["pages"],
+                    " TO EXHAUSTION" if not d.get("truncated") else " UNTIL THE CAP BOUND"))
     if "bucket" in d:
         L.append("  scope: s3://%s/%s" % (d["bucket"], d.get("prefix", d.get("key", ""))))
     vints = d.get("vintages", [])
@@ -136,15 +198,31 @@ def _self_test() -> int:
         print(f"  [{'PASS' if ok else 'FAIL'}] {name}" + (f"   ({detail})" if detail else ""))
 
     class StubS3:
-        def __init__(self, contents=None, versions=None):
+        """A PAGINATING stub. The ORIGINAL returned everything in ONE page -- it was CAP-BLIND BY
+        CONSTRUCTION and could NEVER have caught the 2,000-key silent truncation no matter how many
+        cases I added to it. A FIXTURE THAT CANNOT REACH THE CAP CANNOT TEST THE CAP. (CVO~Z, F1.)"""
+        def __init__(self, contents=None, versions=None, page_size=1000):
             self._c = contents or []
             self._v = versions or []
+            self.ps = page_size
+            self.pages_served = 0
         def list_objects_v2(self, **kw):
-            pref = kw.get("Prefix", "")
-            return {"Contents": [o for o in self._c if o["Key"].startswith(pref)]}
+            items = [o for o in self._c if o["Key"].startswith(kw.get("Prefix", ""))]
+            start = int(kw.get("ContinuationToken") or 0)
+            self.pages_served += 1
+            out = {"Contents": items[start:start + self.ps]}
+            if start + self.ps < len(items):
+                out["NextContinuationToken"] = str(start + self.ps)
+            return out
         def list_object_versions(self, **kw):
-            pref = kw.get("Prefix", "")
-            return {"Versions": [v for v in self._v if v["Key"].startswith(pref)]}
+            items = [v for v in self._v if v["Key"].startswith(kw.get("Prefix", ""))]
+            start = int(kw.get("KeyMarker") or 0)
+            self.pages_served += 1
+            nxt = start + self.ps
+            out = {"Versions": items[start:nxt], "IsTruncated": nxt < len(items)}
+            if nxt < len(items):
+                out["NextKeyMarker"] = str(nxt)
+            return out
 
     import datetime as _dt
     # dated-partition fixture: 3 dates, one with 2 keys.
@@ -180,9 +258,43 @@ def _self_test() -> int:
     ck("empty.is_a_finding_not_clean",
        ov_empty["n_versions"] == 0 and "NOT 'the value never changed'" in ov_empty["completeness"])
 
+    # ---- THE SCALE CLASS (CVO~Z F1). The original fixtures were single-page: CAP-BLIND BY
+    # CONSTRUCTION. These force pagination well past any cap this tool ever shipped.
+    big = [{"Key": "silver/x/2026-07-%02d/p-%d.parquet" % ((i % 28) + 1, i),
+            "LastModified": _dt.datetime(2026, 7, (i % 28) + 1), "Size": 1, "ETag": "e"}
+           for i in range(2500)]
+    stub = StubS3(big, page_size=2)
+    d_full = dated_partitions(stub, "buck", "silver/x/")
+    ck("scale.paginates_to_exhaustion",
+       d_full["n_keys_scanned"] == 2500 and not d_full["truncated"] and stub.pages_served > 1,
+       f"{d_full['n_keys_scanned']} keys over {d_full['pages']} pages")
+    ck("scale.completeness_states_exhaustion", "paginated to exhaustion" in d_full["completeness"])
+
+    d_cap = dated_partitions(StubS3(big, page_size=2), "buck", "silver/x/", max_keys=10)
+    ck("scale.bound_cap_DISCLOSED_not_silent",
+       d_cap["truncated"] and "TRUNCATED" in d_cap["completeness"]
+       and "LOWER BOUND" in d_cap["completeness"],
+       f"scanned {d_cap['n_keys_scanned']} and SAID so")
+
+    # THE SELF-REFUTATION INVARIANT CVO~Z USED TO EXPOSE THE BUG: a CHILD scope can never exceed
+    # its PARENT. child(2000) > parent(1394) needed no external instrument to prove me wrong.
+    parent = dated_partitions(StubS3(big, page_size=500), "buck", "silver/")
+    child = dated_partitions(StubS3(big, page_size=500), "buck", "silver/x/")
+    ck("scale.parent_ge_child_invariant",
+       parent["n_keys_scanned"] >= child["n_keys_scanned"],
+       f"parent {parent['n_keys_scanned']} >= child {child['n_keys_scanned']}")
+
+    manyv = [{"Key": "gold/s.json", "VersionId": "v%d" % i,
+              "LastModified": _dt.datetime(2026, 7, 1) + _dt.timedelta(seconds=i),
+              "Size": 1, "ETag": '"e"', "IsLatest": i == 499} for i in range(500)]
+    ov_full = object_versions(StubS3(versions=manyv, page_size=3), "buck", "gold/s.json")
+    ck("scale.versions_paginate_to_exhaustion",
+       ov_full["n_versions"] == 500 and not ov_full["truncated"],
+       f"{ov_full['n_versions']} versions over {ov_full['pages']} pages")
+
     ok = all(results)
-    print("\n" + ("OK: partition/version parity holds; empty is a finding, substrate + completeness named"
-                  if ok else "ERROR: comp-icedrill self-test FAILED"))
+    print("\n" + ("OK: parity + THE SCALE CLASS (exhaustion / disclosed caps / parent>=child); "
+                  "empty is a finding" if ok else "ERROR: comp-icedrill self-test FAILED"))
     return 0 if ok else 1
 
 
@@ -192,6 +304,9 @@ def main() -> int:
     ap.add_argument("target", nargs="?", help="s3://bucket/prefix or s3://bucket/key.json, or 'ddb'/'graph'")
     ap.add_argument("extra", nargs="?", help="ddb: table name | graph: node")
     ap.add_argument("--pk", default=None, help="ddb: partition-key prefix")
+    ap.add_argument("--max-keys", type=int, default=None,
+                    help="OPT-IN cap. The DEFAULT IS EXHAUSTION. A cap that BINDS is disclosed "
+                         "loudly and exits 2 -- never a silent horizon presented as a full answer.")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
@@ -236,13 +351,17 @@ def main() -> int:
     client = _s3()
     # a concrete object key (has an extension) -> version history; else a prefix -> partition series.
     if key and re.search(r"\.[A-Za-z0-9]{1,6}$", key):
-        d = object_versions(client, bucket, key)
+        d = object_versions(client, bucket, key, max_versions=args.max_keys)
     else:
-        d = dated_partitions(client, bucket, key)
+        d = dated_partitions(client, bucket, key, max_keys=args.max_keys)
     if args.json:
         print(json.dumps(d, indent=1, default=str))
     else:
         print(_render(d))
+    # A BOUND CAP IS A FINDING (exit 2): an INCOMPLETE listing must never exit 0 as if it were
+    # complete. That is precisely how the silent 2,000-key horizon passed as a full answer.
+    if d.get("truncated"):
+        return 2
     # empty vintage set is a FINDING (exit 3), never a silent clean.
     return 0 if d.get("vintages") else 3
 
