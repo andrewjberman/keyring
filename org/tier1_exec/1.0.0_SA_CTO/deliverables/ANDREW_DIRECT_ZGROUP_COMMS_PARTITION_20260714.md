@@ -30,4 +30,17 @@
   and every constraint that travels with the work (INF chain hold, frozen three, NEVER rules,
   safe-apply, deploy-completion ledgers); NERVES L5 remains held by CTO~Z pending Andrew's ruling.
 
+## AMENDMENT 1 — P3 extension ruling (2026-07-14 ~07:2xZ, same channel)
+
+CTO~Z surfaced to Andrew: the sovereign redirect (`14c2aeeba`) moved MOTIF P0/P1/P2 but not
+`NFRA_MOTIF.P3.candidate-emission` (staged, DS~B, gated on MOTIF-P2 + FEDOBS-P2 — the
+MOTIF->PROMOTE handoff leg). Andrew, VERBATIM:
+
+> "yes P3 goes to 0.8.0~Z too"
+
+Executed same turn: P3 `issued_to` -> `0.8.0_AE_CloudComp~Z` (this commit), mirroring the
+b251c596e reconciliation style; gated legs and staged status UNCHANGED (the gate is P2+FEDOBS-P2
+completion, not a new GO). Paper edit made by CTO~Z rather than COO's lane solely because the
+comms partition holds this session; COO re-folds on the record when the partition lifts.
+
 — 1.0.0_SA_CTO~Z
