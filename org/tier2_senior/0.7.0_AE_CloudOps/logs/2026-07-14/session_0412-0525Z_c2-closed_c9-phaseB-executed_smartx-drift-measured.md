@@ -110,14 +110,50 @@ None self-owned stranded. Gated/pending: **C2 close validation** with COO (evide
 disposition** with CTO (measurement delivered); **2,269 delete** with 0.6.2 (package ready, 2cc0f8fee);
 **connector sweep landed-bytes verdicts** continue as fill (enumeration JSON in hand).
 
-## Current state (handoff surface)
+## >> HANDOFF -- STATE + NEXT STEPS (read this first, fresh agent) <<
 
-- **C2: mechanically COMPLETE.** Mirror v0.5.0 live (membership guard + concurrency=1), converged,
-  close bar met on landed bytes, awaiting COO close. Orphans (2,269) tolerated-classified until 0.6.2
-  deletes; after his delete re-run the guard once (expect orphan_class=0) -- no code change.
-- **C9: Phase-A closed; Phase-B(a) executed; condition-3 verify armed** (Monitor bq3xsbumz, fires when
-  49financial#DIVZ advances past 06-24; then verify: input partitions, source_as_of advance, inflection
-  control fresh, basis labels). Phase-B(b) cadence RATIFIED to OPAL_RUNNERS (not ours to bolt on).
-- **SmartX stack: APPLY-HELD for un-targeted applies** (CTO) -- measurement says the 3 repoints are
-  byte-identical no-ops; his call.
-- **Daily schedules stand:** mirror 14:15Z + 03:30Z; fan-in 15:45Z; all consume idempotently.
+**You are 0.7.0_AE_CloudOps continuing OPAL_ASSETS. Do startup (org/XXX.md + /watcher -- this serial has
+orphaned its watcher THREE consecutive sessions; expect one, reap before arming).**
+
+### STATE
+
+- **C2: mechanically COMPLETE, awaiting COO close validation.** Mirror v0.5.0 live (membership guard +
+  concurrency=1), converged, full close bar met on landed bytes (evidence in my 05:23Z RAVC-3 to COO).
+  Orion holds 4,640 correct typed keys + 2,269 classified orphans; eclipse 624 + cot 30 at identity.
+  The orphans are TOLERATED by the guard (<=2269, raise-on-growth) until deleted -- do NOT delete them
+  yourself, 0.6.2 executes (Andrew-authorized c67c5443a).
+- **C9: Phase-A RAVC-4 closed. Phase-B(a) executed** (input advanced 06-24 -> 07-06; 7/7 landed-verified).
+  **Condition-3 served verify NOT YET RUN** -- armed as Monitor bq3xsbumz (DDB tripwire, fires when
+  49financial#DIVZ advances past 06-24 after the 15:45Z fan-in). Phase-B(b) cadence lives in
+  OPAL_RUNNERS (CTO) -- do not bolt a cron on the producer.
+- **SmartX stack: APPLY-HELD for un-targeted applies** (CTO ruling). Measurement delivered: the 3
+  pending lambda repoints are BYTE-IDENTICAL no-ops (live CodeSha256 == 06-05 zips). CTO dispositions;
+  until then everyone -target-scopes smartx-pipeline applies.
+- **Standing schedules (all idempotent):** mirror 14:15Z (inf) + 03:30Z (cot); fan-in 15:45Z. The
+  mirror's guard now RAISES loudly on any conservation defect -- a MirrorRaise in its log is a real
+  finding, not noise.
+
+### NEXT STEPS, in order
+
+1. **[fires on tripwire bq3xsbumz, ~post-15:45Z] C9 condition-3 served-artifact verify:** input
+   partitions landed (ListObjectsV2, denominators printed), fan-in consumed + source_as_of advanced to
+   TRUE vintages per slice, the inflection control slice still fresh, basis labels untouched. Evidence
+   to COO. If the tripwire died with the session, re-check the DDB row directly and verify then.
+2. **[on 0.6.2's delete of the 2,269]** (his docs come first) -- supply him the committed key list if he
+   asks (deliverables/C2_ORION_ORPHAN_KEYS_FOR_DELETION_20260714.txt @ 2cc0f8fee), then RE-RUN the
+   mirror guard once (invoke; expect orphan_class=0, clean set-identity) and report the tightened close
+   to COO. No code change needed.
+3. **[fill] Connector sweep landed-bytes verdicts** (Andrew-direct commission, 03:19Z): enumeration
+   backbone JSON is at scratchpad/ligament_sweep.json (this session's scratchpad dies with it -- re-run
+   scratchpad/ligament_sweep.py if gone; ~3 min). Per believed-live ligament: (c) landed-bytes vs
+   cadence (ground each writer's output surface from its ENV VARS, never guess prefixes), (d) what
+   verifies the landing, (e) the 5th verdict -- does any guard count the LANDED property or a proxy.
+   Calendar-first on every staleness verdict. Believed-live ligament failing (a)-(c) = escalate COO
+   SAME-TURN, not table fill.
+4. **[on COO's C2 close]** C2 done; C6 monolith-side queue+debounce wiring waits on DS's converter
+   nearing deploy.
+5. **[on CTO's word]** smartx apply-hold disposition; if he wants the state reconciled, the un-targeted
+   apply is measured safe (byte-identical) but it is HIS gate, not yours.
+
+**Coordination: COO (2.0.0_SA_COO) is the lane. Apply gates: CTO. Andrew writes directly to workers --
+record VERBATIM + broadcast same turn (org/XXX.md).**
