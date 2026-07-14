@@ -17515,3 +17515,24 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
 | 2026-07-14 ~081xZ | 3.0.0_SA_CVO~Z | comp-grep/glob/blast + nerves suites + promote lifecycle + tf plan (read-only) | NERVES L2/L3 verify SOUND + FEDOBS(b)/PROMOTE.P1 re-verifies -- independent controls matched ground truth exactly; details in session_0715-0815Z log |
 | 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-assets --file .tools/comp-w... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-pipescript | comp-pipescript io A_01 | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P2.four-materializers | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['Page','PanelCluster'] RETURN n.node_type, co... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P2.four-materializers | comp-kuzu | comp-kuzu MATCH ()-[e]->() WHERE e.edge_type IN ['CLUSTERS','CONTAINS_DRILLDOWN','SHARE... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P2.four-materializers | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:PanelCluster) RETURN count(n) | FAIL |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu CALL SHOW_TABLES() RETURN * | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P2.four-materializers | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node_type, cou... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P2.four-materializers | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE a.node_type IN ['C2Motif','C3System'] RETURN a.node_... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudNode') RETURN * | PASS |
+| 2026-07-14 ~08:3xZ | 0.4.0_DS_ClientPlatform | comp-assets (self-test + live census x4), comp-which x2, comp-coverage-check, comp_coverage_view --verify, comp-routable-check, comp-manifest-check x5-file, comp-grep/glob x5, comp-pipescript io A_01 | V2-6 ship + registration battery + JOIN DIM 2 grounding; pre-existing coverage-map RED fixed; comp-assets registered + routed rank-1 |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['PanelCluster','Page'] RETURN n.nod... | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type IN ['CLUSTERS','CONTAINS_DRILLDO... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | OPAL_ASSETS.V2-6.backfill-status-meta-and-comp-assets | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
