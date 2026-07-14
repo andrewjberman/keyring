@@ -17133,3 +17133,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-13 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which-routing-test.py --fil... | PASS |
 | 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript smartx | PASS |
 | 2026-07-13 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which-routing-test.py --fil... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/silver_regis... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/silver_regis... | PASS |
+| 2026-07-13 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/schwab-bronze-freshnes... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 ~00:30Z | 1.0.0_SA_CTO | OPAL_ASSETS consolidation PRD v1.0 | comp-blast emitter (lower-bound no-consumers + SHA-drift warn), pipescript smartx (CHANGED THE PRD: TO-C5 re-shape, trigger drives superseded legacy path), pipescript --list, comp-grep x4 (registry-row absence + router/bucket confirmed NEW + held-paths denominator printed) | gap: dynamic DDB readers unedged -> C11 mandates literal-key grep |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
