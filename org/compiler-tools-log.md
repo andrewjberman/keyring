@@ -17604,3 +17604,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~08:55Z | 0.7.0_AE_CloudOps | none this window (review/coordination; operational CloudWatch reads + git diff, off-rail) | contract MERGED v1 + guard re-run verdict read: orphan 2269->0, backfill 277/277 landed early; watch instrument lied (date %3N) -- positive-control your watches |
 | 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/crs_reader.p... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/silver/crs_reader.py data/assets/scripts/silver/cs_... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/OPAL_ASSETS_49META... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-8 | pytest x4 + commit-gate x3 + live-byte grounding | CS-path reader family (80/80) + RAW_TYPES 14; fam/slm grounded on live bytes pre-authoring | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
