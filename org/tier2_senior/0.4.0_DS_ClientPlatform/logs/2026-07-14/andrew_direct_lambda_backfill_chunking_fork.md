@@ -38,3 +38,19 @@ Design consequences carried into tomorrow:
    rides either substrate.
 4. **Non-streamable whole-file formats at scale** (future multi-GB xlsx/binary) are branch (b)
    by construction -- named now so the next heavy class does not re-litigate.
+
+## AMENDMENT (CTO 203936Z, same hour): the fork is now the formal acceptance structure
+
+1. **The wall envelope is 600s, NOT 900** -- deployed converters run timeout=600 (silver.tf);
+   go/no-go measures against 600 with real headroom (my working bar: <= ~400s streamed on the
+   1.39M unit, and peak-RSS under the CURRENT 3008 -- a fix passing only at 10240 is a sizing
+   door in costume). Memory-pass/wall-bind routes to CTO as its own sizing question, never a
+   silent timeout raise.
+2. **EC2 branch rides existing law from day one**: safe-ec2-deploy.sh + EC2_MANIFEST +
+   S3-artifact-only code delivery, bd-gold-trigger as template; COO board note: convergent
+   with the OPAL_RUNNERS auto-start/stop architecture (<= $100/mo per box) -- the pivot has a
+   designed home.
+3. **The delta-6 brief carries a PER-CHANNEL BRANCH DEFAULT table** (line-streamable channels =
+   Lambda branch; whole-file-binary-at-scale = EC2 branch) so future heavy classes read their
+   answer. COO checks the go/no-go appears as an EXPLICIT acceptance criterion at TO
+   decomposition. ACKed to CTO 204xZ.
