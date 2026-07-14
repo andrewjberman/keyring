@@ -112,6 +112,65 @@ try:
 except Exception:
     _tcal = None
 
+
+# ---- FAIL-CLOSED BASIS (NFRA_INSTDRILL item 5, 2026-07-14; NEVER#1 made structural) ------------
+# The Monday-false-alarm mechanism was: a content-mode entry WITHOUT `freshness_basis:
+# trading-day-frontier` silently fell to flat wall-clock hours, so an AUM/holdings/trading artifact
+# correctly at T-1 (Friday's data, read Monday) tripped a flat 96h threshold and FALSE-ALARMED --
+# held off only by CLAUDE.md prose. This makes it structural: for an artifact whose CONTENT is an
+# AUM/holdings/trading quantity, a MISSING basis is not a licence to use flat-hours. It DEFAULTS to
+# the trading-day frontier when the calendar lib is present, and REFUSES the verdict loudly
+# (UNVERIFIABLE-BASIS) when it is not -- never a silent flat-hours verdict on this artifact class.
+# A non-trading artifact (a log, a config, a report) legitimately keeps flat-hours.
+# `_`/`-`-aware boundaries: `\b` treats `_` as a word char, so `\baua\b` MISSES `aggregate_aua`
+# and `\bholdings\b` MISSES `canonical_holdings` -- the exact key shapes this must catch. Use
+# explicit non-alnum lookaround so underscores and hyphens act as separators.
+_TRADING_ARTIFACT_RX = re.compile(
+    r"(?<![a-z0-9])(aum|aua|nna|holdings?|positions?|portfolio|leaderboard|net[_-]?assets|"
+    r"trading|prices?|priced|market[_-]?value)(?![a-z0-9])", re.I)
+
+
+def _is_trading_artifact(entry: dict) -> bool:
+    """Is this entry's CONTENT an AUM/holdings/trading quantity (so T-1 + a weekend is HEALTHY,
+    and flat wall-clock hours would false-alarm every Monday)? Explicit opt-out/opt-in wins; else
+    inferred from the s3 key / prefix / id. Explicit `trading_artifact: false` forces flat-hours."""
+    if "trading_artifact" in entry:
+        return bool(entry["trading_artifact"])
+    hay = " ".join(str(entry.get(k, "")) for k in ("s3_prefix", "s3_key", "prefix", "key", "id", "label"))
+    return bool(_TRADING_ARTIFACT_RX.search(hay))
+
+
+def _basis_decision(entry: dict, has_tcal: bool) -> str:
+    """The FAIL-CLOSED basis selector, pure + unit-testable. Returns one of:
+      'frontier'      -> evaluate on the trading-day frontier (declared, or defaulted for a
+                         trading artifact when the calendar lib is present).
+      'unverifiable'  -> a trading artifact whose staleness IS a trading-day question, but the ONE
+                         frontier definition is unavailable -> REFUSE a flat-hours verdict (it would
+                         false-alarm every Monday). NOT a pass, NOT a fail.
+      'flat'          -> a non-trading artifact (log/config/report) whose staleness genuinely is
+                         wall-clock hours.
+    The one outcome that can NEVER occur: a silent flat-hours verdict on a trading artifact."""
+    declared = entry.get("freshness_basis") == "trading-day-frontier"
+    trading = declared or _is_trading_artifact(entry)
+    if not trading:
+        return "flat"
+    return "frontier" if has_tcal else "unverifiable"
+
+
+def _frontier_verdict(as_of_date, now, warn_tdb, fail_tdb, severity, tcal):
+    """PURE trading-day-frontier verdict -> (status, tdb, expected_iso). Extracted so the mtime and
+    content paths cannot drift AND so the Monday mutant is testable offline with a stub calendar.
+    tcal must expose expected_last_trading_day(now) + trading_days_behind(date, expected)."""
+    expected = tcal.expected_last_trading_day(now)
+    tdb = tcal.trading_days_behind(as_of_date, expected)
+    if fail_tdb is not None and tdb >= fail_tdb:
+        status = "FAIL" if severity == "ERROR" else "WARN"
+    elif tdb >= warn_tdb:
+        status = "WARN" if (severity != "ERROR" or fail_tdb is None) else "FAIL"
+    else:
+        status = "PASS"
+    return status, tdb, expected.isoformat()
+
 CADENCE_LABELS = {
     "daily":          "daily",
     "business-daily": "business-daily (Mon-Fri)",
@@ -821,29 +880,50 @@ def _evaluate_artifact(entry: dict, now: datetime.datetime,
         # lag BUT misses a 1-trading-day freeze AND false-warns a post-holiday Tuesday). One
         # definition shared with the freshness probes + the served-aua-stale alarm (CTO-gated
         # convergence 2026-06-26). Falls back to flat-hours if the lib is unavailable (guarded).
-        if entry.get("freshness_basis") == "trading-day-frontier" and _tcal is not None:
-            expected = _tcal.expected_last_trading_day(now)
-            tdb = _tcal.trading_days_behind(as_of_dt.date(), expected)
-            warn_tdb = entry.get("frontier_warn_trading_days", 2)
-            fail_tdb = entry.get("frontier_fail_trading_days")
+        # BASIS SELECTION -- FAIL-CLOSED (NFRA_INSTDRILL item 5). Three inputs decide: does the entry
+        # DECLARE the trading-day basis, is the artifact's CONTENT a trading quantity, and is the
+        # calendar lib present. The one thing that must NEVER happen is a silent flat-hours verdict on
+        # a trading artifact (the Monday false-alarm). Precedence:
+        declared = entry.get("freshness_basis") == "trading-day-frontier"
+        warn_tdb = entry.get("frontier_warn_trading_days", 2)
+        fail_tdb = entry.get("frontier_fail_trading_days")
+        decision = _basis_decision(entry, _tcal is not None)
+
+        if decision == "unverifiable":
+            # A trading artifact whose staleness is a TRADING-DAY question, but the ONE frontier
+            # definition (lib/trading_calendar.py) is unavailable -> REFUSE the verdict loudly.
+            # This is the fail-closed replacement for the old silent flat-hours fallback: a flat-hours
+            # number here is exactly the Monday false alarm, so we decline to emit one.
+            result["status"] = "UNVERIFIABLE-BASIS"
+            result["notes"] = (result["notes"] + " | UNVERIFIABLE-BASIS: trading-day artifact "
+                               "but lib/trading_calendar.py is unavailable -- refusing a "
+                               "flat-wall-clock verdict (it would false-alarm every Monday). "
+                               "NOT a pass, NOT a fail: the basis could not be evaluated").strip(" |")
+            return result
+
+        if decision == "frontier":
+            status, tdb, frontier_iso = _frontier_verdict(
+                as_of_dt.date(), now, warn_tdb, fail_tdb, severity, _tcal)
+            result["status"] = status
             result["trading_days_behind"] = tdb
-            result["frontier"] = expected.isoformat()
-            if fail_tdb is not None and tdb >= fail_tdb:
-                result["status"] = "FAIL" if severity == "ERROR" else "WARN"
-            elif tdb >= warn_tdb:
-                result["status"] = "WARN" if severity != "ERROR" or fail_tdb is None else "FAIL"
-            else:
-                result["status"] = "PASS"
+            result["frontier"] = frontier_iso
+            if not declared:
+                # basis was DEFAULTED (inferred trading artifact) -- say so, loudly. Silent defaulting
+                # would just be the old bug's mirror image.
+                result["basis_defaulted"] = True
+                result["notes"] = (result["notes"] + " | BASIS DEFAULTED to trading-day-frontier "
+                                   "(content is an AUM/holdings/trading quantity; declare "
+                                   "freshness_basis: trading-day-frontier to silence this note)").strip(" |")
             if result["status"] in ("FAIL", "WARN") and mtime_status == "PASS":
                 result["notes"] = (result["notes"] + f" | MTIME-FRESH-BUT-CONTENT-STALE: mtime "
                                    f"{result['age_h']}h PASS but internal as_of {raw_val} is "
-                                   f"{tdb} trading day(s) behind the {expected.isoformat()} "
+                                   f"{tdb} trading day(s) behind the {frontier_iso} "
                                    f"frontier").strip(" |")
             return result
 
-        # flat-hours content-mode (artifacts without a frontier basis)
+        # flat-hours content-mode -- ONLY for a non-trading artifact (a log/config/report whose
+        # staleness genuinely is wall-clock). A trading artifact never reaches here.
         result["status"] = _status_from_age(content_age_h, warn_h, fail_h, severity)
-        # the dangerous direction made LOUD: mtime says fresh, content says stale
         if result["status"] in ("FAIL", "WARN") and mtime_status == "PASS":
             result["notes"] = (result["notes"] + f" | MTIME-FRESH-BUT-CONTENT-STALE: "
                                f"mtime age {result['age_h']}h PASS but internal as_of "
@@ -955,13 +1035,26 @@ def print_results(results: list[dict], label: str = "") -> int:
     print(_fmt_header())
     print("-" * (_COL_ID + _COL_KEY + _COL_TS + _COL_AGE + _COL_FAIL + _COL_ST + 15))
     any_fail = False
+    any_unverifiable = False
     for r in results:
         print(_fmt_row(r))
         if r["status"] == "FAIL":
             any_fail = True
             if r.get("notes"):
                 print(f"  NOTE: {r['notes']}")
-    return 1 if any_fail else 0
+        elif r["status"] == "UNVERIFIABLE-BASIS":
+            # NEVER a clean exit (Verification Law: could-not-verify IS a finding). exit 2 = the
+            # instrument could not evaluate the basis -- distinct from 1 (a real staleness FAIL).
+            any_unverifiable = True
+            if r.get("notes"):
+                print(f"  NOTE: {r['notes']}")
+    if any_fail:
+        return 1
+    if any_unverifiable:
+        print("  EXIT 2: one or more artifacts were UNVERIFIABLE-BASIS -- refused rather than "
+              "guessed. Restore lib/trading_calendar.py or declare the basis; this is NOT a pass.")
+        return 2
+    return 0
 
 
 # ---------------------------------------------------------------------------
@@ -1237,6 +1330,77 @@ def cmd_list() -> int:
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
+def _freshness_self_test() -> int:
+    """THE MONDAY MUTANT, both arms, offline (NFRA_INSTDRILL item 5). Stubs the trading calendar so
+    it runs anywhere. Every case is a verdict the flat-hours fallback got WRONG."""
+    import datetime as _dt
+
+    class StubCal:
+        """A minimal trading calendar. expected_last_trading_day(Monday) = the prior Friday;
+        trading_days_behind counts business days between an as_of date and that frontier."""
+        def expected_last_trading_day(self, now):
+            d = now.date() if hasattr(now, "date") else now
+            while d.weekday() >= 5:      # Sat/Sun -> back to Friday
+                d -= _dt.timedelta(days=1)
+            return d
+        def trading_days_behind(self, as_of_date, expected):
+            if as_of_date >= expected:
+                return 0
+            n, d = 0, as_of_date
+            while d < expected:
+                d += _dt.timedelta(days=1)
+                if d.weekday() < 5:
+                    n += 1
+            return n
+
+    cal = StubCal()
+    results = []
+    def ck(name, ok, detail=""):
+        results.append(ok)
+        print(f"  [{'PASS' if ok else 'FAIL'}] {name}" + (f"   ({detail})" if detail else ""))
+
+    monday = _dt.datetime(2026, 7, 13, 9, 0)   # a Monday 09:00 (a trading day)
+    friday = _dt.date(2026, 7, 10)             # the prior trading day -- a T-1 pipeline's data
+    tue_3d = _dt.date(2026, 7, 8)              # 3 trading days behind the Monday frontier
+
+    # ARM 1 -- THE MONDAY FALSE-ALARM KILLED. On a Monday the frontier IS Monday (real lib:
+    # expected_last_trading_day returns today when today trades). A T-1 pipeline's Friday data is
+    # then 1 trading day behind -- and that is HEALTHY, absorbed by the default warn>=2 threshold,
+    # NOT flagged by a flat 96h wall-clock. The healthiness is the THRESHOLD doing its job; assert
+    # PASS with the expected T-1 lag, not tdb==0.
+    st, tdb, _fr = _frontier_verdict(friday, monday, warn_tdb=2, fail_tdb=None, severity="ERROR", tcal=cal)
+    ck("monday.friday_data_is_healthy", st == "PASS" and tdb <= 1, f"status={st} tdb={tdb}")
+
+    # ARM 2 -- the over-suppression control: genuinely 3 trading days behind still ALARMS (both arms
+    # per the gate-2 discipline -- a fix that only silences the false alarm could suppress a real one).
+    st2, tdb2, _ = _frontier_verdict(tue_3d, monday, warn_tdb=2, fail_tdb=3, severity="ERROR", tcal=cal)
+    ck("monday.three_days_behind_still_alarms", st2 == "FAIL" and tdb2 == 3, f"status={st2} tdb={tdb2}")
+
+    # ARM 3 -- classifier: AUM/holdings artifacts ARE trading artifacts (underscore-joined too);
+    # a plain log is not; an explicit opt-out forces flat-hours.
+    ck("classify.aua_underscore", _is_trading_artifact({"s3_prefix": "platinum/mdpf/aggregate_aua/x.json"}))
+    ck("classify.holdings_underscore", _is_trading_artifact({"id": "canonical_holdings"}))
+    ck("classify.log_is_not_trading", not _is_trading_artifact({"s3_prefix": "logs/run-summary.json"}))
+    ck("classify.explicit_optout_wins",
+       not _is_trading_artifact({"s3_prefix": "aum/x.json", "trading_artifact": False}))
+
+    # ARM 4 -- the FAIL-CLOSED decision, all four cells exercised directly (the pure selector):
+    trade = {"s3_prefix": "platinum/mdpf/aggregate_aua/x.json"}
+    log = {"s3_prefix": "logs/run.json"}
+    ck("basis.trading_no_cal_is_unverifiable", _basis_decision(trade, has_tcal=False) == "unverifiable")
+    ck("basis.trading_with_cal_is_frontier", _basis_decision(trade, has_tcal=True) == "frontier")
+    ck("basis.declared_no_cal_still_unverifiable",
+       _basis_decision({"freshness_basis": "trading-day-frontier"}, has_tcal=False) == "unverifiable")
+    ck("basis.nontrading_is_flat", _basis_decision(log, has_tcal=False) == "flat")
+    # the one outcome that must be UNREACHABLE: flat-hours on a trading artifact.
+    ck("basis.trading_never_flat",
+       _basis_decision(trade, has_tcal=True) != "flat" and _basis_decision(trade, has_tcal=False) != "flat")
+
+    ok = all(results)
+    print("\n" + ("OK: all fail-closed-basis cases pass" if ok else "ERROR: fail-closed-basis FAILED"))
+    return 0 if ok else 1
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         prog="comp-freshness",
@@ -1284,6 +1448,7 @@ Examples:
                        help="PK prefix pattern override (e.g. 'FIRM#'); uses config default if omitted")
 
     sub.add_parser("all", help="Check all S3 (bd+inf+cot) + all DDB entries in one pass")
+    sub.add_parser("self-test", help="offline fail-closed-basis suite (the Monday mutant; no AWS)")
 
     parser.add_argument("--list", action="store_true", help="Print all cadence config (S3 + DDB)")
 
@@ -1310,6 +1475,8 @@ Examples:
             return cmd_ddb(args.table, getattr(args, "pattern", None))
         if args.command == "all":
             return cmd_all()
+        if args.command == "self-test":
+            return _freshness_self_test()
         parser.print_help()
         return 2
     except ConfigError as e:

@@ -196,6 +196,11 @@ def _is_duplicate(workspace: Path, dedup_key: str, window_secs: int = 30) -> boo
 VERDICT_EXIT_TOOLS = frozenset({
     "comp-drift", "comp-lambdamap", "comp-xray", "comp-parity",          # tri-state (integrity / parity / scope)
     "comp-validate", "comp-manifest-check", "comp-surface-check", "comp-honesty",  # gate-firing (real violation found)
+    # comp-freshness: exit 1 = real staleness FAIL, exit 2 = UNVERIFIABLE-BASIS (refused, not guessed --
+    # NFRA_INSTDRILL item 5). A tri-state; a nonzero is a contracted verdict, not a tool crash.
+    "comp-freshness", "comp-iam", "comp-trigger",
+    # comp-iam simulate: 1 DENIED-control-proven, 2 conditioned/suspect/unproven (22a). comp-trigger:
+    # 2 could-not-evaluate. Both carry contracted nonzero verdicts, not failures.
 })
 
 
