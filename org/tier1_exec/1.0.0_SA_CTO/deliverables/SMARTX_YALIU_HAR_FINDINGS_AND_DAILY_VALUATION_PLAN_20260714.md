@@ -111,6 +111,52 @@ upgrade over opal7, just not a free one.
 
 ---
 
+## 2b. HAR #2 (`yaliu2`, 728 entries) — THE HISTORY QUESTION, ANSWERED (nuanced)
+
+HAR #2 exercised the account-drill screens HAR #1 did not. **Verdict: yaliu is HIGHER FIDELITY than the
+original design at the account / flow / valuation layers — and per-holding daily history is
+RECONSTRUCTABLE from far richer inputs than opal7 gave, though still not a single direct time-series
+pull.** New data endpoints:
+
+| endpoint | what it carries | fidelity vs original |
+|---|---|---|
+| **`api/3.1/accounts/{id}/activity`** | **`ledger`: 572 dated events spanning 2025-03-04 → 2026-07-10** (16 months), each `{activityTimestamp, amount, activity, symbol, quantity}`. Activity types: Deposit · Withdrawal · Cash Dividend · Cash Dividend Accrual · Interest Received · Advisor/Management/Misc Fee · Cash Adjustment | **MAJOR UPGRADE.** 16 months of dated account-level CASH-FLOW history — the original SmartX design had NO account flow history. This is the NNA/flow reconstruction spine. **CAVEAT: these are CASH events, NOT buy/sell trades** — no position-quantity events here (trades live in `changerequesthistory`, D4) |
+| **`api/3.1/accounts/{id}/holdings`** | 14 items: `{symbol, quantity, price, multiplier, marketValue, percentOfPortfolio}` | **UPGRADE.** Account-level holdings with a REAL price + marketValue + multiplier — vs the D4 `reportedmodels/holdings` whose `assetType` was uniformly-wrong "equity" and had no clean price. Still a SNAPSHOT (no date param seen) |
+| **`api/4.1/cashmanagement/calendar?fromDate=&toDate=`** | `{transactions}`, **date-RANGE parameterized** (unix from/to) | a genuinely date-windowed endpoint — the first `?fromDate/toDate` we've seen honor a range; scheduled cash txns |
+| **`enterprises/reports/model/{id}/allocations`** | per-model rollup: **3,182 account allocations, each `{accountId, accountNumber, aumValue}` + model `totalAum`** | the model→accounts AUM rollup — direct per-account AUM under a model |
+| `api/3.1/allocations/statistics?accountId=&status=` | per-allocation `{value, cash, exposure{long/short/net/gross}, returns{today,mtd,qtd,ytd}}` | account-allocation valuation + return stat |
+| `analytics.gtw.prod.smartx.us/mutual-funds`, `accounts/{id}/{statistics,exclusions}`, `targetweightgroups/{id}/details`, `cashmanagement/schedules/*` | mutual-fund reference, per-account stats/exclusions, target-weight detail | reference + config |
+
+**The honest answer to "historic daily position value of each model holding, back as far as possible":**
+- **Per-holding daily QUANTITY is not a single endpoint** — holdings stay snapshots (`?asOf` was NOT
+  exercised on holdings even in HAR#2; the calendar range param is on cash txns, not holdings). So the
+  D4 opal7 finding is not overturned for holdings specifically.
+- **BUT the reconstruction is now well-fed and goes back ~16 months**: `holdings` snapshot (anchor,
+  with real price/marketValue) + `changerequesthistory` (D4, the trade/rebalance events that move
+  quantities) + `activity.ledger` (16mo dated cash/dividend/fee flows) + `models/{id}/performance`
+  daily series (model return) → daily per-holding value reconstructed to 2025-03. That is materially
+  higher fidelity than the original opal7-based design, which had a snapshot-only holdings view and no
+  account flow history at all.
+- **RECOMMENDED next probe to fully close it (cheap, one capture):** on a holdings/composition screen,
+  explicitly change the AS-OF DATE and confirm whether `accounts/{id}/holdings?asOf=` or a sibling
+  returns a prior-date snapshot. If yes, per-holding daily history is a direct pull and reconstruction
+  is unnecessary. That is the last unknown.
+
+**Bronze/silver additions (fold into §4a/§4b):** add `smartx/{account}/bronze/activity/{YYYYMMDD}/` (the
+16-mo ledger — pulled once, then daily delta), `smartx/{account}/bronze/holdings/{YYYYMMDD}/` (daily
+snapshot anchor), `smartx/{model}/bronze/model_allocations/{YYYYMMDD}/` (the 3,182-account rollup).
+Silver: `activity` → account-flow fact (the NNA spine); `holdings` → account-position fact (daily
+snapshot); reconstruction of daily per-holding value is a GOLD derivation, not silver.
+
+## 4a. BASIS-LABEL DISCIPLINE ON ANY 49F/SMARTX AUM FIGURE (folded from COO's 2026-07-14 lift-era verify)
+When the SmartX runner or the OPAL_RUNNERS 49F case doc quotes "~1.62b," it MUST carry its basis — the
+same totalValue/managedValue precedent (a number without its basis is this project's defining defect).
+The lift-era bd-49f verify found the record had paired the **BLENDED-PREFERRED total (~$1,621.6mm)**
+with a feeder serving the **SCHWAB-RPS basis (~$1,390mm + ~$23mm SMA)** — **two different quantities on
+partly different account universes, NOT a $230mm shortfall** (grounded `schwab_bd_cohort_framework.md:79`;
+MEMORY.md now carries the labels). SmartX's `models/summary` stats and `nonzerosleeve` equity are their
+OWN basis again — every emitted 49F/SmartX AUM row declares which one it is.
+
 ## 5. AUTH / OPERATIONAL NOTES
 - Same OIDC/ROPC model as D4; one JWT spans `api.`/`performance.`/`identity.`. The `yaliu` credential
   is a **different, higher-grant principal** than the pipeline's `opal7` — using it recurrently is the
