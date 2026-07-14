@@ -1,0 +1,22 @@
+{
+  "project_code": "NFRA_COMPCLOSE",
+  "macro_code": "NFRA",
+  "name": "Comp-tools: close the learning loop, fix the router, repair the registries",
+  "description": "Andrew-direct consolidated execution: wire the COMPLEARN loop shut (scorer shim + backlog bridge + outcome join + ship comp-trigger, the oldest recorded-then-lost gap), fix comp-which/comp_route's uncertainty channel (constant vetted gate, distribution-derived abstain floor, vocabulary mining against 0.8.0~Z's frozen cohort), and reconcile the six conflicting tool registries behind a RED-provable registration gate. Single-agent execution (1.0.0_SA_CTO~Z), no subagents, sovereign authority granted on plan approval.",
+  "prds": [
+    {"path": "docs/architecture/NFRA_COMPCLOSE_PRD.md", "label": "v1.0 execution PRD (Andrew-approved plan)", "date": "2026-07-14"}
+  ],
+  "status": "active",
+  "phase": "Phase 0 complete (registration + strand cleanup + 9847445cd confirmed on origin). Phase A executing: registries + rail hygiene.",
+  "blocking": "None",
+  "created": "2026-07-14",
+  "pods": ["1.0"],
+  "pipeline": "comp-tools / NFRA",
+  "thread_counter": 0,
+  "threads": [],
+  "cross_references": {
+    "executes": ["NFRA_COMPASSURANCE TO-8-class routing remedies", "NFRA_COMPASSURANCE TO-4-class registry reconciliation (registry files only; not TOOLGRAPH census plane)", "NFRA_COMPASSURANCE_COMPWHICH_TOPK TO-2 held rulings (abstain floor)", "NFRA_COMPLEARN P2 wiring (scorer invocable + consumer ritual)"],
+    "ratifies": ["0.8.0_AE_CloudComp~Z NFRA_COMPASSURANCE.TO-1 harness (quality verdict HIGH, review at source 2026-07-14)"],
+    "does_not_touch": ["NFRA_TOOLGRAPH census/assurance plane", "NFRA_PASSCRAFT scaffolding", "NFRA_TOOLPASS hand-run"]
+  }
+}
