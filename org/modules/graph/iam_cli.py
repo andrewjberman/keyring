@@ -27,6 +27,7 @@ for a call that returned AccessDenied. The verdict was invariant to the truth.
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -533,6 +534,217 @@ def cmd_resource_sweep(args):
     return 1 if flagged else 0
 
 
+def cmd_simulate(args):
+    """The APPLIED-plane wrapper (NFRA_INSTDRILL item 1b, 2026-07-14) -- the three safe-invocation
+    rules of CLAUDE.md 22a made STRUCTURAL instead of prose:
+
+      RULE 1  ONE resource ARN per call. A call carrying 2+ --resource-arns flips the HELD ones to
+              implicitDeny (measured; the instrument's own false-deny mode 1). Structural here:
+              one positional ARN, and a comma-joined smuggle is refused with the citation.
+      RULE 2  The POSITIVE CONTROL runs as a SEPARATE INVOCATION -- a control batched with its
+              target is corrupted by its own presence. Auto-derived from the role's DESIRED grants
+              when possible, or --control-arn; skipping it (--no-control) downgrades any DENY
+              verdict to UNPROVEN, never silently.
+      RULE 3  A conditioned statement with no --context evaluates implicitDeny BYTE-IDENTICAL to a
+              real deny (false-deny mode 2). The response's missingContextValues IS the detector:
+              non-empty => verdict CONDITIONED-UNEVALUATED (rc=2), never DENIED.
+
+    PLANE: APPLIED (live simulate-principal-policy at call time). Still not EXERCISED -- only
+    running the real call is. SCPs/permission boundaries evaluate per the API's semantics.
+    Read-only: simulate-principal-policy + get_role mutate nothing.
+
+    Exit: 0 ALLOWED (control-proven when run) | 1 DENIED (control-proven) | 2 CONDITIONED-
+    UNEVALUATED / INSTRUMENT-SUSPECT / UNPROVEN -- never a silent verdict from a suspect instrument.
+    """
+    if "," in args.resource_arn:
+        print("REFUSED: one resource ARN per call (CLAUDE.md 22a false-deny mode 1 -- a call")
+        print("  carrying 2+ --resource-arns flips the HELD ones to implicitDeny). Run each ARN")
+        print("  as its own invocation; that isolation is the point of this wrapper.")
+        return 2
+
+    ctx_entries = []
+    for c in (args.context or []):
+        # Key=type:value[,value...]  e.g. aws:SourceVpc=string:vpc-123
+        try:
+            key, rest = c.split("=", 1)
+            ctype, vals = rest.split(":", 1)
+            ctx_entries.append({"ContextKeyName": key.strip(),
+                                "ContextKeyValues": [v.strip() for v in vals.split(",")],
+                                "ContextKeyType": ctype.strip()})
+        except ValueError:
+            print(f"REFUSED: malformed --context '{c}' (want Key=type:val[,val...], e.g. "
+                  f"aws:SourceVpc=string:vpc-123)")
+            return 2
+
+    client = getattr(args, "_client", None)
+    if client is None:
+        import boto3  # lazy; the self-test injects a stub
+        client = boto3.client("iam")
+
+    role = args.role
+    role_arn = role if role.startswith("arn:") else None
+    if role_arn is None:
+        try:
+            role_arn = client.get_role(RoleName=role)["Role"]["Arn"]
+        except Exception as e:
+            print(f"ROLE RESOLUTION FAILED for '{role}': {e}")
+            return 2
+
+    def _one_call(arn, label):
+        """One isolated simulate invocation -> (decision, missing_context, raw)."""
+        resp = client.simulate_principal_policy(
+            PolicySourceArn=role_arn, ActionNames=[args.action],
+            ResourceArns=[arn], **({"ContextEntries": ctx_entries} if ctx_entries else {}))
+        ev = (resp.get("EvaluationResults") or [{}])[0]
+        decision = ev.get("EvalDecision", "?")
+        missing = [m.get("ContextKeyName", str(m)) if isinstance(m, dict) else str(m)
+                   for m in ev.get("MissingContextValues", [])]
+        print(f"  [{label}] {args.action} on {arn}")
+        print(f"      decision={decision}" + (f"  missingContextValues={missing}" if missing else ""))
+        return decision, missing
+
+    print("=" * 78)
+    print("PLANE: APPLIED (live simulate-principal-policy, evaluated now). Not EXERCISED --")
+    print("  only running the real call is. One ARN per invocation, by construction.")
+    print("=" * 78)
+    t_dec, t_missing = _one_call(args.resource_arn, "TARGET")
+
+    if t_missing:
+        print("\nVERDICT: CONDITIONED-UNEVALUATED -- a conditioned statement was evaluated with")
+        print("  no context, and that returns implicitDeny BYTE-IDENTICAL to a real deny")
+        print("  (22a false-deny mode 2). This is NOT a deny verdict. Re-run with:")
+        for k in t_missing:
+            print(f"    --context {k}=<type>:<value>")
+        return 2
+
+    # ---- the positive control: a SEPARATE invocation, never batched with the target ----
+    control_arn = args.control_arn
+    control_note = ""
+    if not control_arn and not args.no_control:
+        # auto-derive from DESIRED: a concrete (non-*) resource this role holds for this action.
+        # Best-effort over the TF-parsed roles; any failure just leaves control_arn None (-> UNPROVEN,
+        # never a silent pass). Uses only the real IamRole API (.role_name / .statements / .actions
+        # / .resources / .effect) -- no invented method.
+        try:
+            report = _build()
+            al = args.action.lower()
+            for r in getattr(report, "roles", []):
+                if not (r.role_name == role or role_arn.endswith("/" + r.role_name)):
+                    continue
+                for stmt in r.statements:
+                    if stmt.effect.lower() != "allow":
+                        continue
+                    holds = any(a == "*" or a.lower() == al or
+                                ("*" in a and re.fullmatch(re.escape(a.lower()).replace(r"\*", ".*"), al))
+                                for a in stmt.actions)
+                    if not holds:
+                        continue
+                    for res in stmt.resources:
+                        if "*" not in res and res != args.resource_arn:
+                            control_arn = res
+                            control_note = " (auto-derived from DESIRED grants)"
+                            break
+                    if control_arn:
+                        break
+                break
+        except Exception:
+            control_arn = None
+    if control_arn == args.resource_arn:
+        control_arn, control_note = None, ""
+
+    if control_arn:
+        c_dec, c_missing = _one_call(control_arn, f"CONTROL{control_note}")
+        control_ok = (c_dec == "allowed" and not c_missing)
+    elif args.no_control:
+        control_ok = None
+        print("\n  CONTROL SKIPPED (--no-control).")
+    else:
+        control_ok = None
+        print("\n  NO CONTROL DERIVABLE from DESIRED grants -- pass --control-arn <arn the role")
+        print("  is KNOWN to hold>. A deny with no proven-able-to-allow instrument is UNPROVEN.")
+
+    print()
+    if t_dec == "allowed":
+        print("VERDICT: ALLOWED (APPLIED plane)." +
+              ("" if control_ok in (True, None) else "  (control anomaly noted below)"))
+        if control_ok is False:
+            print("  NOTE: the control DENIED on a resource DESIRED says is held -- census/TF")
+            print("  drift or missing context on the control; does not weaken an ALLOWED target.")
+        return 0
+    if control_ok is True:
+        print(f"VERDICT: DENIED ({t_dec}), control-proven -- the instrument demonstrably CAN say")
+        print("  allowed for this role, so this deny discriminates. APPLIED plane.")
+        return 1
+    print(f"VERDICT: DENIED-UNPROVEN ({t_dec}) -- rc=2, NOT 1: no passing positive control ran")
+    print("  in isolation, so this deny is indistinguishable from an instrument failure")
+    print("  (stale principal, missing context on a conditioned allow, wrong role).")
+    print("  An instrument that cannot fail is not an instrument; one that cannot PASS is not one either.")
+    return 2
+
+
+def _simulate_self_test():
+    """Offline mutant suite for cmd_simulate (stubbed client; zero AWS). Every case is a lie the
+    live instrument has actually told (22a's two false-deny modes + the new-resource fail-GREEN)."""
+    import types as _t
+
+    class Stub:
+        def __init__(self, decisions, missing=None):
+            self.decisions = dict(decisions)   # arn -> decision
+            self.missing = dict(missing or {}) # arn -> [keys]
+            self.calls = []
+        def get_role(self, RoleName):
+            return {"Role": {"Arn": f"arn:aws:iam::123:role/{RoleName}"}}
+        def simulate_principal_policy(self, PolicySourceArn, ActionNames, ResourceArns, **kw):
+            assert len(ResourceArns) == 1, "wrapper must never batch ARNs"
+            self.calls.append(list(ResourceArns))
+            arn = ResourceArns[0]
+            return {"EvaluationResults": [{
+                "EvalDecision": self.decisions.get(arn, "implicitDeny"),
+                "MissingContextValues": self.missing.get(arn, [])}]}
+
+    def _args(**kw):
+        d = dict(role="r1", action="s3:GetObject", resource_arn="arn:aws:s3:::B/new",
+                 context=None, control_arn=None, no_control=False)
+        d.update(kw)
+        return _t.SimpleNamespace(**d)
+
+    results = []
+    def ck(name, ok):
+        results.append((name, ok))
+        print(f"  [{'PASS' if ok else 'FAIL'}] {name}")
+
+    # 1. RULE-1 structural: comma-smuggled multi-ARN refused before any call.
+    s = Stub({})
+    rc = cmd_simulate(_args(resource_arn="arn:a,arn:b", _client=s))
+    ck("rule1.multi_arn_refused_no_call", rc == 2 and s.calls == [])
+
+    # 2. THE RED MUTANT (fail-GREEN class): role holds GetObject on A; new bucket B denies.
+    #    The verdict must be a DENY-class, NEVER anything readable as GRANTED/ALLOWED.
+    s = Stub({"arn:aws:s3:::A/held": "allowed"})  # B/new -> implicitDeny by default
+    rc = cmd_simulate(_args(control_arn="arn:aws:s3:::A/held", _client=s))
+    ck("red.new_resource_denies_control_proven_rc1", rc == 1 and len(s.calls) == 2
+       and all(len(c) == 1 for c in s.calls))
+
+    # 3. RULE-3: missing context => CONDITIONED-UNEVALUATED (rc=2), never DENIED.
+    s = Stub({}, missing={"arn:aws:s3:::B/new": ["aws:SourceVpc"]})
+    rc = cmd_simulate(_args(_client=s))
+    ck("rule3.missing_context_rc2_not_deny", rc == 2)
+
+    # 4. RULE-2: deny with a control that ALSO denies => INSTRUMENT-SUSPECT rc=2, never rc=1.
+    s = Stub({})  # everything denies, incl. the control
+    rc = cmd_simulate(_args(control_arn="arn:aws:s3:::A/held", _client=s))
+    ck("rule2.control_deny_means_unproven_rc2", rc == 2)
+
+    # 5. allowed target => rc=0 (and the control cannot flip it).
+    s = Stub({"arn:aws:s3:::B/new": "allowed", "arn:aws:s3:::A/held": "allowed"})
+    rc = cmd_simulate(_args(control_arn="arn:aws:s3:::A/held", _client=s))
+    ck("allow.rc0", rc == 0)
+
+    ok = all(o for _, o in results)
+    print("\n" + ("OK: all simulate self-test cases pass" if ok else "ERROR: simulate self-test FAILED"))
+    return 0 if ok else 1
+
+
 _DEFAULT_CENSUS = "docs/briefs/cmpaws-iam-axis-census-20260603.json"
 
 
@@ -654,6 +866,19 @@ def main():
     p_gaps = sub.add_parser('gaps-filtered', help='Show gaps for one service')
     p_gaps.add_argument('service', nargs='?', default='', help='Filter by service name')
 
+    p_sim = sub.add_parser('simulate',
+                           help='APPLIED-plane live simulate-principal-policy wrapper (22a rules structural)')
+    p_sim.add_argument('role', help='role name or ARN')
+    p_sim.add_argument('action', help='the IAM action, e.g. s3:GetObject')
+    p_sim.add_argument('resource_arn', help='ONE resource ARN (a comma-list is refused by construction)')
+    p_sim.add_argument('--context', action='append',
+                       help='Key=type:value for a conditioned statement (repeatable), e.g. aws:SourceVpc=string:vpc-123')
+    p_sim.add_argument('--control-arn', default=None,
+                       help='a resource the role IS known to hold (the positive control; auto-derived from DESIRED if omitted)')
+    p_sim.add_argument('--no-control', action='store_true',
+                       help='skip the positive control (a resulting DENY is UNPROVEN, never rc=1)')
+    sub.add_parser('simulate-self-test', help='offline mutant suite for the simulate wrapper (no AWS)')
+
     args = parser.parse_args()
 
     # Default: gaps if no subcommand given, but also handle gaps with optional --service
@@ -680,6 +905,10 @@ def main():
         sys.exit(cmd_resource_sweep(args))
     elif args.command == 'attach-census':
         sys.exit(cmd_attach_census(args))
+    elif args.command == 'simulate':
+        sys.exit(cmd_simulate(args))
+    elif args.command == 'simulate-self-test':
+        sys.exit(_simulate_self_test())
     else:
         parser.print_help()
 

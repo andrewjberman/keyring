@@ -683,6 +683,36 @@ RULES = [
      "what fires a lambda / is the rule-schedule ENABLED or DISABLED (live) / targets / did it "
      "actually fire (TriggeredRules with the denominator) / does TF declare it. READ-ONLY -- on a "
      "held chain DISABLED is the control working; this tool cannot enable anything"),
+    # ---- NFRA_INSTDRILL item 3 (Andrew follow-on, CVO~Z brief ae81e209b): the three of the nine
+    # popular friction intents still hedging post-COMPCLOSE. All three were the STRUCTURAL
+    # co-equal-fuzzy tie class (confident manifest-fuzzy emits top-3 co-equal vetted 0.5 -> a
+    # guaranteed 1.50 three-way disambiguation); a curated-strong rule (>=1.67) ends the hedge. ----
+    (["field-threading", "field threading", "adapter audit", "adapter function", "portal adapter",
+      "pre-ship audit", "adapter field", "comp-adapter-audit", "threading audit",
+      "field-threading audit", "audit of a portal adapter", "adapter fields threaded"],
+     "portal adapter field-threading audit (comp-adapter-audit)",
+     ["comp-adapter-audit <adapter-fn> [--severity warn|error]"],
+     "pre-ship field-threading audit of a portal adapter function -- which fields the adapter "
+     "threads vs drops (the silent-drop class); DISTINCT from comp-transform (component schema "
+     "render-check) which audits the COMPONENT side"),
+    (["constant drift", "firm constant", "firm constants", "firm_id", "canonical config",
+      "marker drift", "marker constant", "marker constants", "comp-constants", "constants drift",
+      "thresholds vs the canonical", "vs the canonical config", "constant vs config",
+      "marker firm constant"],
+     "marker / firm-constant drift vs canonical config (comp-constants)",
+     ["comp-constants check [--lane bd|inf|cot|multifirm]", "comp-constants index"],
+     "marker/firm-constant drift (FIRM_ID, thresholds) vs the canonical config -- the "
+     "constants-drift lane; DISTINCT from comp-xray config (content-motion of a config FILE) and "
+     "comp-drift (propagation seams)"),
+    (["list cloud resources", "inspect cloud resources", "resources of a type", "all lambdas",
+      "all s3 buckets", "all roles", "all buckets", "list all lambdas", "every lambda",
+      "cloud resource census", "resources by type", "list the lambdas", "every s3 bucket",
+      "all the roles", "inventory of cloud"],
+     "cloud resources of a type -- census/list (comp-kuzu, the Rule-20 QUERY default)",
+     ["comp-kuzu \"MATCH (n:LAMBDA) RETURN n.id\"  # ~ms, canonical graph; swap the label per type"],
+     "list/inspect cloud resources of a type (all Lambdas / S3 buckets / roles): comp-kuzu is the "
+     "fast query layer over the canonical cloud graph; comp-aws classes/derive is the live census "
+     "(WRITE-path derive is compute-intent). Rule 20: default to QUERY, never rebuild to answer a traversal"),
     # pipescript -- the CLAUDE.md situation-table's own headline question ("What's in the news/advi/
     # market/... pipeline?") had NO curated vocabulary and fell to grep (frozen-cohort sub-floor).
     (["what's in the", "whats in the", "what is in the", "pipeline overview", "named thread",
