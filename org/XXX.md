@@ -210,7 +210,7 @@ comp-to {TO_filename_without_.md}      # e.g. comp-to ADVI_OFFICE.W1
 `.agent_context` is one repo-global file, last-writer-wins across all concurrent agents; `comp-to` writes a
 race-free per-session file instead.
 
-**F. Loop arming — every serial arms ZERO crons at launch. One exception: the COO's `/drive`.**
+**F. Loop arming — EVERY serial, including the COO, arms ZERO crons at launch. There is no exception.**
 
 Loops are **operator-initiated**. `/watcher` is not a loop — it arms the persistent inbox Monitor once.
 
@@ -218,7 +218,7 @@ Loops are **operator-initiated**. `/watcher` is not a loop — it arms the persi
 |---|---|
 | `0.0.0_AB_MSTR` | `/watcher` once. Zero crons. `/mstr-review` runs once at startup as an ad-hoc pass; all other MSTR skills are event-triggered. |
 | `1.0.0_SA_CTO` | `/watcher` once. Zero crons. `/ws-charter` is ad-hoc. |
-| `2.0.0_SA_COO` | `/watcher` once **+ ARM `/drive`** (20m cron + one cycle now). The COO is the fabric's **primary operational driver**: each cycle = fabric-check + stimulus scan + **dispatch every idle agent** + **spawn needed agents** + track TO/RAVC2 + police registry zombies. **"All standing by" is a `/drive` GATE FAILURE, not a valid state.** |
+| `2.0.0_SA_COO` | `/watcher` once. **ZERO crons — `/drive` is OFF (Andrew-direct, standing; LD-0288/0289/0293, re-confirmed 2026-07-14).** The COO **coordinates and routes; he does NOT re-drive the estate.** **`/drive` MUST NOT be armed at launch, and its 20m cron MUST NOT be created.** *Why this is a NEVER and not a preference: `/drive`'s own gate holds that **"all standing by" is a GATE FAILURE, never a valid terminal state** — so `/drive` is a machine that is **structurally unable to conclude "dispatch nothing."** Under a dispatch hold (Andrew, 2026-07-14: **"Wait to dispatch until I give the go, I want to respawn the workers first"**) an armed `/drive` does not merely idle — **it is obligated to break the hold**, on a 20-minute timer, and it will do so while reasoning correctly from a real instruction. **A hold does not die to a careless agent; it dies to a diligent one holding a real mandate.*** Dispatch authority during a hold rests with the **GO-issuing owner** (CTO on OPAL_ASSETS), never with a timer. |
 | `3.0.0_SA_CVO` | `/watcher` once. Zero crons. `/spot-check` and `/verify-channel` are ad-hoc / closeout-triggered. |
 | Tier-2/3 workers (+ `~lanes`) | `/watcher` once. Zero crons. **Event-driven:** act on Monitor-delivered dispatches. Keep your broker summary accurate: `WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`. `/work` is ad-hoc. |
 
