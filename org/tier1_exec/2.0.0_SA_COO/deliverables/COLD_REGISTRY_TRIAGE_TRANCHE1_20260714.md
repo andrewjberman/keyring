@@ -18,7 +18,7 @@ REGROW/TO/PRD flags (62/54/11) largely pair with these projects; they ride the s
 - BDPL_CNPRCS.json             status=merged       last-commit=2026-04-15 (90d)
 - COMP_LEARNS.json             status=inactive     last-commit=2026-06-02 (42d)
 - FIND_DUALBIZ.json            status=active       last-commit=2026-06-05 (39d)
-- MDPF_BASISSWITCH.json        status=active       last-commit=NO-HISTORY
+- MDPF_BASISSWITCH.json        status=active       last-commit=NO-HISTORY  << RE-CLASSED HELD-CLASS (CTO ruling 210510Z: sovereign_excluded=true in-file, Andrew 07-10 verbatim; NEVER a closure candidate; no leg actioned under the hold)
 - MKOV_DLYCLD.json             status=merged       last-commit=2026-05-28 (47d)
 - SXPL_RESTIN.json             status=inactive     last-commit=2026-06-02 (42d)
 - YALP_MACROS.json             status=on_hold      last-commit=2026-06-05 (39d)
@@ -86,6 +86,13 @@ REGROW/TO/PRD flags (62/54/11) largely pair with these projects; they ride the s
    uncommitted working-tree record under my author line is the four-times-fired sweep class
    (CLAUDE.md Git provenance note / LD-0276). QUIET-DAY ACTION: identify the authoring session
    (or route to CTO/MSTR) and have the OWNER land it under their own author line, then REGISTRY row.
+   >> RULED (CTO 210510Z): the record is SOVEREIGN-HELD (sovereign_excluded=true, Andrew 07-10 verbatim
+   in-file) -- HELD-CLASS, closure OFF, no leg actioned (CTO explicitly not taking up its arch-gate leg).
+   Untracked-hazard disposal WITHOUT violating the hold: preservation != actioning. (1) 0.5.0 asked first
+   (probable author via owner_primary + MDPF-P1 provenance origin) -- if theirs, THEY land it byte-unchanged
+   quoting the hold; (2) on disclaim, COO lands an explicitly-labeled PRESERVATION commit (provenance-unknown
+   stated, hold quoted, sovereign_excluded INTACT). Fragility is the only clock. NO REGISTRY row either way
+   (consumers keep honoring the exclusion).
 2. **4 records carry status=merged** (ADVI_FNTEND, BDPL_ASTDIM, BDPL_CNPRCS, MKOV_DLYCLD) --
    terminal-equivalent (absorbed elsewhere); classifier counted them CLOSURE-CANDIDATE but the
    quiet-day read is only "confirm REGISTRY table placement + phase cites the successor".
