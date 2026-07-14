@@ -132,3 +132,16 @@ approval; DS D1 thread open + cell-1 landed + the-word-given; 0.5.0 roster-flag 
 None stranded. Everything at a gate is CTO's by design; everything event-armed is listed in NEXT
 STEPS with its check. The 0/2/0 plan is saved and safe: nothing fires real schwab conversion until
 CTO's GO, and today's 12:15Z sweep hit the harmless loud stub.
+
+## POST-WIND-DOWN ADDENDUM (~11:5xZ) -- C9 tripwire FIRED EARLY, confirmed real, full verify handed off
+
+The PRIOR session's DDB tripwire (bmo4bphqz) survived that session after all and FIRED at ~11:5xZ
+-- hours BEFORE the expected post-15:45Z fan-in -- then its stream ended (it is now DEAD; nothing
+re-fires). CONFIRMED against the served table directly (query on the real key schema, client_etf):
+newest 49financial#DIVZ row = date 2026-07-06, source_as_of 2026-07-06, source_artifact
+s3://opal-data-bd/schwab/silver/rps/date=20260706/data.parquet -- advanced from the 06-24 baseline,
+and the row carries the TRUE vintage of a REAL partition (the condition-3 shape). NOT verified
+(successor's NEXT STEP 2, unchanged): per-slice source_as_of vintages, the inflection control
+slice freshness, basis labels untouched -- evidence to COO. Two facts for that check: (1) the
+advance PRECEDED 15:45Z, so find which producer moved it before crediting the fan-in; (2) the
+tripwire is dead -- check the row directly, do not wait on a monitor.
