@@ -109,6 +109,54 @@ def compare(date: str) -> tuple:
     return (not fails), compared, fails
 
 
+def verdict(green: int, total: int,
+            required: int = REQUIRED_TRADING_DAYS) -> tuple:
+    """THE EXIT-CODE CONTRACT. Returns (exit_code, [lines to print]).
+
+    PURE -- no S3, no network, no I/O -- so it can be EXERCISED, which is the
+    entire point. This logic used to live inline in main(), reachable only by
+    running the whole tool against real S3. That made "does this gate actually
+    block?" a question you could only answer by re-deriving it at the shell --
+    and the obvious way to do that (`python parity-check.py | tail; echo $?`)
+    reads TAIL'S exit code, not this one. I did exactly that on 2026-07-14 and
+    got a meaningless 0. The claim happened to be true; THE CHECK COULD NOT HAVE
+    TOLD ME EITHER WAY.
+
+    So the contract is now a function with a test (tests/test_etfs_parity_contract.py):
+
+        EXIT 0 IS REACHABLE ONLY ON all-green AND green >= required.
+        EVERY other outcome exits 1.
+
+    A gate whose blocking behaviour can only be confirmed by a human running it
+    correctly is one careless pipe away from being an advisory.
+    """
+    if green == total and green >= required:
+        return 0, [
+            "  VERDICT: CUTOVER-READY on the DATA.",
+            "  Cutover is still a 4-STEP ORDER, and step 4 is LAST:",
+            "    1. (this) >=3 trading days green",
+            '    2. flip local.silver_root to "" -> safe-apply',
+            "    3. VERIFY the cloud writes LIVE silver (fresh stamp, not 18:00)",
+            "    4. ONLY THEN disable the Windows task; say so in the ledger",
+            "  A GREEN HERE IS NOT AN ALL-CLEAR FOR THE ETF CHANNEL:",
+            "  this is the NUMERATOR. LD-0292 ($528mm, partner_held_etf) is the",
+            "  SUBTRAHEND, a different feeder, and it stays OPEN.",
+        ]
+
+    if green < total:
+        return 1, [
+            "  VERDICT: NOT CUTOVER-READY -- a day is RED. DO NOT CUT OVER.",
+            "  THE LAPTOP STAYS ON.",
+        ]
+
+    return 1, [
+        f"  VERDICT: NOT CUTOVER-READY -- only {green} of "
+        f"{required} required trading days.",
+        "  THE LAPTOP STAYS ON. An exact day-1 is not parity; that is the",
+        "  whole reason the threshold exists.",
+    ]
+
+
 def main() -> int:
     if len(sys.argv) > 1:
         dates = sorted(sys.argv[1:])
@@ -147,28 +195,10 @@ def main() -> int:
           f"(threshold: {REQUIRED_TRADING_DAYS})")
     print()
 
-    if green == len(dates) and green >= REQUIRED_TRADING_DAYS:
-        print("  VERDICT: CUTOVER-READY on the DATA.")
-        print("  Cutover is still a 4-STEP ORDER, and step 4 is LAST:")
-        print("    1. (this) >=3 trading days green")
-        print("    2. flip local.silver_root to \"\" -> safe-apply")
-        print("    3. VERIFY the cloud writes LIVE silver (fresh stamp, not 18:00)")
-        print("    4. ONLY THEN disable the Windows task; say so in the ledger")
-        print("  A GREEN HERE IS NOT AN ALL-CLEAR FOR THE ETF CHANNEL:")
-        print("  this is the NUMERATOR. LD-0292 ($528mm, partner_held_etf) is the")
-        print("  SUBTRAHEND, a different feeder, and it stays OPEN.")
-        return 0
-
-    if green < len(dates):
-        print("  VERDICT: NOT CUTOVER-READY -- a day is RED. DO NOT CUT OVER.")
-        print("  THE LAPTOP STAYS ON.")
-        return 1
-
-    print(f"  VERDICT: NOT CUTOVER-READY -- only {green} of "
-          f"{REQUIRED_TRADING_DAYS} required trading days.")
-    print("  THE LAPTOP STAYS ON. An exact day-1 is not parity; that is the")
-    print("  whole reason the threshold exists.")
-    return 1
+    code, lines = verdict(green, len(dates))
+    for ln in lines:
+        print(ln)
+    return code
 
 
 if __name__ == "__main__":
