@@ -761,6 +761,11 @@
     ],
     "n_c0_facts": 15
    },
+   "materialize_receipt": {
+    "demotion_path": "comp_promote_materializer.demote_live (hot-deregister, fail-loud, dispatch-verified) + recognizer_materializer.demote (manifest exact-inverse + DEMOTED CSE) + promote_monitor sustained-degradation auto-demote (CTO-governed --arm)",
+    "exercised": true,
+    "receipt_ref": "comp_promote_materializer CSE (materialize, recognizer:silent-display-fork, live_as_of=8731509080d736b9) + DS trail promote_materializer_cse.jsonl (materialize, recognizer:silent-display-fork) + recognizer manifest entry recognizer:silent-display-fork [standing=CTO-PROMOTE-20260714T0950Z-silent-display-fork, superseded=CTO-PROMOTE-20260708T1521Z-silent-display-fork]"
+   },
    "measured_effect": {
     "basis": "focused git co-evolution coupling (breadth-weighted, certed DS~B run_measure) cross-checked pair-level against the SERVED in-VPC coevolution signal (1072 pairs, git_cochange class 257 CSEs untyped-rate 0.0)",
     "co_sessions": 45,
@@ -775,9 +780,13 @@
    "opened_at": 1784015756.1727233,
    "pre_p1_note": "HISTORICAL DIVERGENCE, disclosed: this candidate was ALREADY promoted through the pre-P1 FORMING loop (promote_recognizer_manifest.json recognizer:silent-display-fork state=MATERIALIZED under CTO-PROMOTE-20260708T1521Z, exercised by comp_promote_materializer 16/16). This P1 lifecycle record tracks the P1-GOVERNED path only, which starts at CANDIDATE; the live materialized instance predates the machine and is governed by its own commission + the P3 monitor. Do NOT read CANDIDATE here as 'not live'.",
    "promotion_class": "COMPILER_RULE",
-   "ratify": null,
+   "ratify": {
+    "commission_id": "CTO-PROMOTE-20260714T0950Z-silent-display-fork",
+    "ratifier": "1.0.0_SA_CTO",
+    "ref": "CTO~Z MCP 20260714T094918Z RATIFIED w/ 5-limb first-hand audit record (served snapshot 7392125655251158233 exact-match; pair 13/6/5 via comp-fedobs; floor c5fd9d85f predates measure; machinery triple-certed; registration different-surfaces resolved @ e99da4a39)"
+   },
    "recurrence": 5,
-   "state": "PROPOSED",
+   "state": "MONITORED",
    "transitions": [
     {
      "actor": "comp_promote_lifecycle",
@@ -799,6 +808,27 @@
      "from": "MEASURED",
      "to": "PROPOSED",
      "why": "CTO~Z GO 093843Z (ratify-lane ruling 1): promote-eligible on the fresh served signal (focused 0.151 >= floor 0.12); the machine builds the typed commission, the ratifier audits it against the ACTUAL served artifact (snapshot 7392125655251158233)"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784022748.7411292,
+     "from": "PROPOSED",
+     "to": "RATIFIED",
+     "why": "CTO~Z ratified 094918Z on a 5-limb first-hand audit; commission minted on the ratifier's record (machine self-mints nothing)"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784022748.7411292,
+     "from": "RATIFIED",
+     "to": "MATERIALIZED",
+     "why": "GOV-B materialize_live exercised: hot-registered + verified IN the live dispatch set (a no-op registration cannot certify green); DS manifest entry written under the same commission with legacy era superseded-with-provenance"
+    },
+    {
+     "actor": "0.8.0_AE_CloudComp~Z",
+     "at": 1784022750.4391525,
+     "from": "MATERIALIZED",
+     "to": "MONITORED",
+     "why": "P3 standing monitor re-measured the promotion on its first post-materialize tick: SUSTAINED (0.180 >= 0.12)"
     }
    ],
    "warrant": {
