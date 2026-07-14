@@ -127,6 +127,17 @@ pull.** New data endpoints:
 | `api/3.1/allocations/statistics?accountId=&status=` | per-allocation `{value, cash, exposure{long/short/net/gross}, returns{today,mtd,qtd,ytd}}` | account-allocation valuation + return stat |
 | `analytics.gtw.prod.smartx.us/mutual-funds`, `accounts/{id}/{statistics,exclusions}`, `targetweightgroups/{id}/details`, `cashmanagement/schedules/*` | mutual-fund reference, per-account stats/exclusions, target-weight detail | reference + config |
 
+**HAR #3 (`yaliu3`) + the exported CSV — the fetch mechanism is CONFIRMED, and it is BETTER than
+ranging:** the CSV (`WILLIAM_CHAN…activity_ledger`, 18 rows, 05/01–05/29/2026) is a **client-side
+date-filter** — the browser fetches the FULL ledger once (`accounts/{id}/activity` with **NO date
+params**, returning all 572 events / 16 months) and the CSV export slices to the UI-selected range
+in-browser (the account's full ledger has 19 events in 2026-05; the CSV had 18 — a boundary edge, not
+a different dataset). **So the pull is the simplest possible: ONE unparameterized GET per account
+returns the complete account history — no ranging, no pagination, no from/to iteration.** (The
+date-range params that DO exist are on `cashmanagement/calendar?fromDate=&toDate=` and
+`calendar/detail?date=` — scheduled-cash surfaces, not the position/activity history.) This confirms
+the 16-month account-flow ledger is trivially, completely pullable.
+
 **The honest answer to "historic daily position value of each model holding, back as far as possible":**
 - **Per-holding daily QUANTITY is not a single endpoint** — holdings stay snapshots (`?asOf` was NOT
   exercised on holdings even in HAR#2; the calendar range param is on cash txns, not holdings). So the
