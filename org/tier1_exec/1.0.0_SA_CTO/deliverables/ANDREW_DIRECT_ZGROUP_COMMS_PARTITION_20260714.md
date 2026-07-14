@@ -40,6 +40,15 @@
    (ResourceNotFoundException under CVO's own call). Corroboration: the same node is the TOP
    L5 DANGER×TRAFFIC row (attention 2.57, hold-cited) — a phantom-limb and stale-rule drift
    wearing one name. bd-lane (base group) owns the cleanup decision.
+   **CHARACTERIZATION UPGRADE (CTO~Z decompression, 2026-07-14 ~10:3xZ):** not mysterious drift —
+   the Lambda was **deliberately decommissioned 07-07 with its own ledger**
+   (`org/critical_paths/change_management/20260707T1702Z_bd-client-detail-decommission_deploy_completion.md`),
+   whose L3 verify leg IS the ResourceNotFoundException. The ledger scoped "Lambda + API GW
+   route/integration removed" — **EventBridge rules were not in its scope**; the 2 surviving
+   triggers are that decommission's MISSED LEG. The attention score decompresses to the
+   decommission crew's own 5 searches (07-07 15:48–16:49Z, re-derived exactly: 5 × ~0.51 decay
+   = 2.55 at 10:3xZ). Cleanup = delete the 2 rules + AMEND the named ledger (a closed ledger
+   with a missed leg is the NEVER#5 class discovered late).
 3. **`cmtque-worker-down` latched alarm** (parked with CMTQUE @ `22c3c9f8a`; CVO P0): return to
    OK or scope to queue-enabled — next shared-infra hand.
 
