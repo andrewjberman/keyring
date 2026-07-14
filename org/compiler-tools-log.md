@@ -17104,3 +17104,32 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-13 22:10-23:15Z 0.5.0_AE_OpalETL (ETF net-assets LAPTOP->CLOUD): comp-grep/raw (rail-checked, off-books probe + WS-D2 feeder locate) PASS; aws bucket-notification Door-6 check + POSITIVE CONTROL on opal-data-inf PASS (empty was a TRUE empty, and the control re-confirmed the sentinel door); commit-gate PASS; safe-commit x3 PASS; safe-apply x2 PASS (10 added/0 changed/0 destroyed, then 0-diff); deploy_ledger OPEN->CLOSED 4/4; ci/build-and-upload.sh PASS (after a hand-rolled cp printed rc=0 on a FAILED upload -- caught only by head-object 404); NEW .tools/etfs-parity-check.py PASS (day1 GREEN, verdict NOT CUTOVER-READY 1/3, exit 1). Gap: upload-verify gate on 1 of 4 call sites; MEMORY.md at 178/~200 with SILENT truncation -- both routed to CTO, not actioned.
 | 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | pipescript | pipescript --list | PASS |
 | 2026-07-13 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | pipescript | pipescript model-portfolios | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_PRD.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/schwab-bronze-freshnes... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_PRD.md | PASS |
+| 2026-07-13 | 2.0.0_SA_COO~Z | (no-TO) | comp-routes | comp-routes trace /api/partners/etfs-ownership | PASS |
+| 2026-07-13 | 2.0.0_SA_COO~Z | (no-TO) | comp-transform | comp-transform schema-check eventbridge | FAIL |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/sdd-... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_PRD.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_PRD.md | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_PRD.md | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-ec... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_PRD.md | PASS |
+| 2026-07-13 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-13 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast opal-assets-daily-emitter | PASS |
+| 2026-07-13 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/sdd-... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-13 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which-routing-test.py --fil... | PASS |
+| 2026-07-13 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript smartx | PASS |
+| 2026-07-13 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which-routing-test.py --fil... | PASS |
