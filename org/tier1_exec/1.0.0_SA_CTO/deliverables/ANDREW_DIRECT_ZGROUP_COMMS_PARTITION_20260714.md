@@ -30,6 +30,23 @@
   and every constraint that travels with the work (INF chain hold, frozen three, NEVER rules,
   safe-apply, deploy-completion ledgers); NERVES L5 remains held by CTO~Z pending Andrew's ruling.
 
+## AMENDMENT 4 — 0.7.0~Z SHUT DOWN by Andrew + CMTQUE indifference (2026-07-14 ~09:4xZ, same channel)
+
+Andrew, VERBATIM: > "Eh i dont care about it honestly at this point, i had already shut off
+> 0.7.0~Z because they werent really doing anything and I wanted to save CPU"
+
+Scope as recorded: (a) **NFRA_CMTQUE** — sovereign indifference; parked-explicit same turn (JSON →
+on-hold + REGISTRY row → Inactive/On Hold, with verbatim, measured wake trigger, and the two known
+live defects named). (b) **0.7.0~Z is DOWN by Andrew's hand.** Grounded post-shutdown: CLEAN — no
+orphan watcher, no poller (ps swept both), broker NOT REGISTERED; their gate mission was complete
+and RAVC-closed before shutdown; nothing stranded. **Consequences recorded:** the AMENDMENT-3 SMS
+TF-removal task (092439Z) sits UNREAD in their inbox — the globgrph SMS sub (+1786…, TF-declared,
+sandbox-blocked/inert) remains live-but-inert; **executor gap** — removal queues for the base lane
+post-partition (or a future ~Z CloudOps spawn), consistent with Andrew's save-CPU posture (the sub
+delivers nothing meanwhile). The account-wide SMS enumeration (incl. the two base-module twins on
+opal-infrastructure-alerts + ec2-long-running-alerts) queues with it. The globgrph one-applier
+seat is VACANT — no globgrph applies this session.
+
 ## AMENDMENT 3 — NO SMS (2026-07-14 ~09:2xZ, same channel)
 
 Andrew, VERBATIM: > "I dont want sms"

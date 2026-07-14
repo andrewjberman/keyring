@@ -4,13 +4,19 @@
   "name": "Commit Queue",
   "description": "Async git-commit serialization pipeline. Converts commit serialization from a synchronous per-agent mkdir-mutex on a shared index (which chokes the fabric under high commit concurrency -- head-of-line-blocked sessions, a 60s-timeout 'commit storm', and a fragile shared-index contamination guard) to an asynchronous single-consumer queue modeled on the graph-update SQS/Lambda pattern, adapted for a LOCAL repo (the consumer is a local commit-worker daemon, not a cloud Lambda, because the git repo is on-disk). Agents enqueue a commit-request via the byte-for-byte-preserved safe-commit.sh interface (1338 callers) and a single concurrency=1 worker owns all git-index access -- structurally eliminating the contamination race, the timeout-storm, and blocked sessions, while preserving every gate (sensitive-leak, owned-paths, ds-gate, author identity, atomic per-agent commit).",
   "prds": [
-    {"path": "docs/architecture/NFRA_CMTQUE_PRD.md", "label": "Commit Queue PRD (Andrew-direct)", "date": "2026-07-06"}
+    {
+      "path": "docs/architecture/NFRA_CMTQUE_PRD.md",
+      "label": "Commit Queue PRD (Andrew-direct)",
+      "date": "2026-07-06"
+    }
   ],
-  "status": "active",
-  "phase": "3 TOs issued; TO-4 (observability/alarms) and TO-5F (contamination-guard retirement + worker gate re-assert) are both COMPLETE, closed 2026-07-07 with live-exercised evidence (not config-read): TO-4 proved a real worker-killed alarm fire + DLQ alarm fire + a real SNS subscriber; TO-5F proved owned-paths rejection, non-compiling-.py rejection (catching 2 real self-fixed bugs), and confirmed the legacy contamination apparatus was never ported into the queue path. TO-1/TO-2/TO-3 landed via direct commits without their own formal TO files. THE CORE GOAL IS NOT YET REALIZED: the commit queue is fully built + tested but has never been switched on fabric-wide -- every agent commit still runs through the old lock-based system. The load test (TO-6R) proving many-agent concurrent commits work is built but deliberately locked pending explicit leadership sign-off, gated on a scheduled low-activity window; the 1,338-caller fabric-wide rollout hasn't started. As of 2026-07-07, leadership confirmed the queue is still dormant and made finishing this cutover a priority.",
-  "blocking": "TO-6R (load test) gated on a CPU/quiet-activity window sign-off (COO self-monitoring, not yet cleared as of this pass). Fabric-wide rollout of the 1,338 commit-trigger call sites is the actual remaining goal-critical work, sequenced after TO-6R.",
+  "status": "on-hold",
+  "phase": "3 TOs issued; TO-4 (observability/alarms) and TO-5F (contamination-guard retirement + worker gate re-assert) are both COMPLETE, closed 2026-07-07 with live-exercised evidence (not config-read): TO-4 proved a real worker-killed alarm fire + DLQ alarm fire + a real SNS subscriber; TO-5F proved owned-paths rejection, non-compiling-.py rejection (catching 2 real self-fixed bugs), and confirmed the legacy contamination apparatus was never ported into the queue path. TO-1/TO-2/TO-3 landed via direct commits without their own formal TO files. THE CORE GOAL IS NOT YET REALIZED: the commit queue is fully built + tested but has never been switched on fabric-wide -- every agent commit still runs through the old lock-based system. The load test (TO-6R) proving many-agent concurrent commits work is built but deliberately locked pending explicit leadership sign-off, gated on a scheduled low-activity window; the 1,338-caller fabric-wide rollout hasn't started. As of 2026-07-07, leadership confirmed the queue is still dormant and made finishing this cutover a priority. || PARKED-EXPLICIT 2026-07-14 (Andrew-direct to CTO~Z, verbatim: Eh i dont care about it honestly at this point): built through TO-5F and CVO-verified, NEVER cut over, zero fabric commits ever (CVO close-refusal 07-09 stands). WAKE TRIGGER (measured, not vibes): recurring index.lock contention events or agent-count growth; wake path = TO-6R preceded by re-auditing the worker against the July orphan doctrine (parent-liveness, reap-on-register -- the worker predates it). KNOWN LIVE DEFECTS AT PARK: (1) cmtque-worker-down alarm LATCHED IN ALARM since ~07-09 (blind detector on the ops topic; CVO P0) -- no executor this session (0.7.0~Z shut down by Andrew, base 0.7.0 cross-partition), queued for the next shared-infra hand; (2) two-path drift ACTIVE: the risk-reflex advisory (6cccf6c83) exists on the legacy path only -- any cutover re-audits the legacy-vs-worker gate delta first.",
+  "blocking": "PARKED by Andrew word 2026-07-14; no executor assigned. Unblock = sovereign re-prioritization or the measured contention wake trigger.",
   "created": "2026-07-06",
-  "pods": ["0.7"],
+  "pods": [
+    "0.7"
+  ],
   "pipeline": "fabric-infra (local commit-worker daemon + local durable queue; CloudWatch for observability only)",
   "thread_counter": 0,
   "threads": []
