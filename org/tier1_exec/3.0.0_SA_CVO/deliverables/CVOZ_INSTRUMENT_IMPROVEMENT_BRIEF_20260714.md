@@ -115,10 +115,18 @@ Artifact/data node -> its VERSION/PARTITION history across the substrates we act
 dated S3 partitions, S3 object versions where enabled, the DynamoDB daily buckets, graph
 vintages. Provenance header prints WHICH substrate answered and its completeness (a partition
 series is not a full version history — say so, never imply more than the substrate carries).
-- **CAUTION (surfaced, not adjudicated):** Iceberg is NOT in the estate (verified 07-14,
-  comp-grep zero real hits). v1 drills existing substrates. Adopting actual Iceberg is a
-  substrate decision for Andrew — surface it separately if you think it's warranted; do not
-  fold it silently into the tool.
+- **CORRECTED 2026-07-14 ~04:2xZ (supersedes the caution as first committed):** Iceberg IS in
+  the estate — scoped. The ESTATE GRAPH is versioned to Iceberg tables via pyiceberg + a Nessie
+  catalog (`comp_aws_cli.py` `commit_to_iceberg` / `comp-aws iceberg-commit`; deployed layer
+  `infra/aws/lambda/layers/pyiceberg-nessie-deps/`). The DATA pipelines are NOT on it
+  (corrected scan: 0/797 files under `data/`). My original "zero real hits" claim came from a
+  flawed invocation — `comp-grep -il "iceberg" ...` searched for the literal pattern `-il`
+  (comp-grep is pattern-first); the two "spurious matches" I quoted contained `-il`, not
+  iceberg, and I failed to ask why they matched at all. Re-taken correctly this turn.
+  **Consequence for icedrill: BETTER than first thought** — graph-node vintage history is
+  drillable from the Nessie-cataloged Iceberg tables TODAY; the substrate-adoption question
+  remaining for Andrew is only whether DATA artifacts ever move onto it. v1 = Nessie/Iceberg
+  for graph vintages + S3 partitions/DDB daily buckets for data artifacts.
 - **Acceptance:** drill a known artifact (e.g. an mdpf/platinum key or a silver partition
   series) and the vintage list matches a live `s3 ls` / DDB read taken independently.
 
@@ -130,6 +138,54 @@ new query dialect.
 - **Acceptance (the F-5 exemplar):** `comp-blast comp-which` finds its real consumers (today:
   NOT-FOUND while 7 exist). Positive + negative controls: a known-isolated module reads empty
   WITHOUT the F-5 disclaimer firing falsely.
+
+## Part 3 — comp-debris (Andrew-direct add, 2026-07-14 ~04:2xZ, same channel)
+
+**Sovereign words (VERBATIM):** *"Another thing I really want to figure out is how we can use
+comp-heat or comp-drift or comp-dups, something, to figure out deprecated resources... especially
+half-finished, half-deployed, same name but old or untouched or stale resources that float
+around, which is endemic with AI coding and iteration."* → *"yeah comp-debris is an interesting
+tool idea actually, literally just scanning for cloud resources that havent been invoked in a
+long time, the least invoked ones ranked from coldest down or something."*
+
+**Context:** the deprecation wave follows the opal-data-assets monolith cutover (the base
+group's current build — ALL partner/asset ETL into one S3). Sequencing note, surfaced not
+adjudicated: per-surface deprecation should key off the never-widen parity gate ("multi-day
+CLEAN streak IS the cutover gate" — already a filed friction intent), never off the calendar.
+
+### 9. comp-debris (new tool — the fusion/verdict layer over signals we already have)
+Core, per Andrew: enumerate cloud resources (Lambdas, EventBridge rules/schedules, S3
+buckets/prefixes, DDB tables, SQS, EC2, IAM roles) and rank by INVOCATION/READ coldness,
+**coldest first**. The single-signal instruments already exist — comp-debris is the JOIN:
+
+  | Axis | Existing instrument it consumes |
+  |---|---|
+  | last-invoked (Lambda/rules) | comp-trigger fired-evidence + CW Invocations metrics |
+  | last-read (S3) | comp-whoread live read evidence + last-write mtime |
+  | dead-twin / same-name-but-old | comp-dups (BM25 dup/dead-twin, --validate-dead, class filters) |
+  | half-deployed | comp-pipescript deployed (MATCH/STALE/MISSING) + comp-lambdamap parity |
+  | half-finished (repo side) | comp-heat drift (writes not in a commit) + comp-heat freshness cold-subtrees |
+  | code-heat x asset join | comp-heat federated (Trino, graph-joined) — the nearest existing ancestor |
+  | zero-consumers (graph) | comp-blast / comp-kuzu (WITH the F-5 disclosure until item 8 lands) |
+  | dead credentials | comp-deadgrant |
+
+- **Properties wanted:**
+  a. Ranked coldest-first REAP LEDGER, per-resource evidence bundle (which axes say cold, each
+     with its observation WINDOW + denominator printed). ADVISORY-ONLY — never deletes, never
+     disables; the reap verb stays human + never-widen-gated (CLAUDE.md NEVER#2/#3 class).
+  b. **UNKNOWN is a band, not cold.** A resource with no metric visibility must NOT rank cold —
+     "no datapoint" != "never invoked" (comp-trigger's own render rule; the anti-correlation
+     trap: instruments that render not-knowing as a verdict are how this estate gets burned).
+  c. Window-aware: coldness quoted AS "0 invocations in N days [window printed]"; configurable
+     window; a seasonal consumer (quarterly job) at 30d is UNKNOWN-SEASONAL, not dead.
+  d. Hold-aware: sovereign-held paths, the INF chain, and the frozen three are excluded from
+     candidate REAP output entirely (they may appear as INVENTORY, flagged HELD).
+  e. Same-name twin fusion: when comp-dups pairs a hot resource with a cold twin, the ledger
+     row says WHICH is canonical (deployed-parity + reads decide), never just "duplicate".
+- **Acceptance:** positive control — a known-hot resource (e.g. access-anomaly-scanner, FIRED
+  72x/3d) must rank HOT; a known-dead fixture ranks coldest WITH its evidence bundle; a
+  no-visibility resource lands in UNKNOWN, exercised (feed it a resource whose metrics you
+  deliberately cannot read); the held-exclusion exercised on an INF-chain name.
 
 ---
 
