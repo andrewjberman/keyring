@@ -7,6 +7,19 @@
 <status>pending</status>
 <scoping_completed>2026-07-14 ~19:25Z — brief deliverable landed: docs/briefs/ANDREW_BRIEF_20260714_taxsma_and_ticket_system.md (293c062fb)</scoping_completed>
 
+## ADDENDUM 3 — FOURTH ANDREW-DIRECT (same session, ~20:5xZ): NEW SOVEREIGN-DELEGATE AGENT (verbatim)
+
+> "I also am going to instantiate another agent, 0.2.0_DT_PortfolioAnalytics, which I need briefed
+> on this style of work we're doing on a governance basis, i.e., they are not on the main fabric
+> and they have sovereign authority to write PRDs, register projects, and carry through to
+> completion. I will need a short text summary i can paste for them to brief on that layout."
+
+**Effect:** the fabric-quiet sovereign-delegate pattern this session exercised becomes a REUSABLE
+governance layout; 0.2.0_DT_PortfolioAnalytics is its second instance (Andrew-instantiated,
+off-fabric, PRD+register+execute authority). Deliverable: the paste-block brief at
+`docs/briefs/SOVEREIGN_DELEGATE_AGENT_BRIEFING.md` (authored + committed this window).
+Broadcast to COO/CTO/MSTR same turn — the fabric must know a second delegate exists.
+
 ## ADDENDUM 2 — THIRD ANDREW-DIRECT (same session, ~20:2xZ): THE 13 OPEN-ITEM RULINGS (verbatim)
 
 > "1.) We don't need to focus on step 5 at this point. 2.) No asking schwab, if they dont have the
