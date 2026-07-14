@@ -985,6 +985,18 @@ entries:
     anti_pattern: "raw `aws events list-rules | grep` forensics re-derived per incident (the 2026-06-30 gap-logged / 07-13 expensively-re-derived class); or reading DISABLED as broken -- on a held chain DISABLED is the control working, and this tool structurally cannot re-enable anything"
     status: canonical
 
+  - id: cloud.assets.backfill_census
+    use_case: "What is actually IN the OPAL_ASSETS monolith per channel -- per-folder object counts, bytes, feeds, date frontier, zero-byte keys, and what each channel's own backfill-status declaration claims (frontier, completeness, named holes, guard verdict) next to the landed listing?"
+    canonical_call: "comp-assets [--channel <source[/scope]>] [--probe] [--json]"
+    tool: comp-assets
+    mode: query
+    layer: cloud
+    cost: "~10-30s (one paginated ListObjectsV2 over s3://opal-data-assets, ~30K objects; status docs GET only for exactly-rendered channels)"
+    freshness: "LIVE listing every call; provenance header prints the read time + the object denominator, and the census accounting ties to it (no silent Unknown -- unplaceable keys render as unstructured)"
+    rebuild_trigger: "n/a -- live read, no cache"
+    anti_pattern: "raw `aws s3 ls --recursive | wc -l` census re-derived per session (loses feeds/frontier/declared-status and drops keys silently); or reading this tool's declared-vs-listed divergence as an ALARM -- it is a census fact, the no-alarms constraint stands (V2-6; ruling 21 meta home)"
+    status: canonical
+
   - id: meta.gitdrill.producer_history
     use_case: "How did this node's PRODUCER change over time -- its commit history, and what did the producing file look like AT a past vintage (a ref)?"
     canonical_call: "comp-gitdrill <node|file> [--at <ref> [--diff]]"
@@ -1179,6 +1191,7 @@ tools_index:
   comp-tooltip:  { does: "Tooltip migration/coverage audit", subcommands: ["<args>"], entries: [meta.tooltip.migration] }
   comp-validate: { does: "Gold artifact invariant validation pre-upload", subcommands: ["<script_id> --artifact", "--list"], entries: [pipeline.validate.artifact] }
   comp-freshness: { does: "Is upstream S3 data fresh enough to run a gold chain", subcommands: [chain, script, artifact, ddb, all], entries: [pipeline.freshness.chain_ready] }
+  comp-assets:   { does: "READ-ONLY backfill census over the OPAL_ASSETS monolith (s3://opal-data-assets): per channel folder, per-layer counts/bytes/feeds + date FRONTIER + 0-byte count, PLUS the channel's declared meta/backfill-status.json (V2-6 schema: frontier/completeness/counts/NAMED holes/guard verdict) rendered next to the listing -- declared-vs-listed divergence visible, neither silently wins. A TOOL, not an alarm (exit 0 on any census content). DISTINCT from comp-freshness (cadence-gated gold-run readiness; this is completeness, no cadence, no gate)", subcommands: ["", "--channel <source[/scope]>", "--probe", "--json", "--bucket <name>", "--self-test"], entries: [cloud.assets.backfill_census] }
   comp-chainrun: { does: "Snapshot/diff gold artifacts around an atomic bundle", subcommands: [snapshot, diff], entries: [pipeline.chainrun.atomic_bundle] }
   comp-constants: { does: "Marker/firm-constant drift vs canonical config", subcommands: [check, index, new, list], entries: [pipeline.constants.drift] }
   comp-incrparity: { does: "Incremental BD-pipeline parity (cache vs oracle)", subcommands: ["<args>"], entries: [pipeline.incrparity.bd] }

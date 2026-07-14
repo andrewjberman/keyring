@@ -520,6 +520,7 @@ tool_grain_calibration:
     comp-dispatch:     [chain]             # orchestration grain (ABOVE per-script): the gold-dispatch DAG. NFRA_COMPROUTE S1. `chain` is a SOURCE-ONLY grain (see source_only_grains) -- comp-dispatch parses the CHAIN_* vars from SOURCE, not the graph; the graph-traversal S4-AUDIT EXEMPTS it (COO~B ruling b, S4-audit close 20260701)
     comp-validate:     [object]
     comp-freshness:    [object]
+    comp-assets:       [object]           # OPAL_ASSETS monolith backfill census (V2-6): per-channel counts/frontier/holes/guard verdicts
     comp-incrparity:   [object]
     comp-parity:       [object]
     comp-chainrun:     [object]
@@ -574,6 +575,7 @@ tools:
       - { tool: comp-freshness, shared_resource: freshness, my_concern: "estate-object write-freshness (repo files)", their_concern: "pipeline-DATA S3/DDB freshness (gold-run readiness)" }
       - { tool: comp-graph,     shared_resource: freshness, my_concern: "estate-object write-freshness (repo files)", their_concern: "graph-cache VINTAGE (derived-model staleness)" }
       - { tool: comp-xray,      shared_resource: freshness, my_concern: "estate-object write-freshness (wrapper mtime/size)", their_concern: "value-MOTION (frozen-but-fresh CONTENT)" }
+      - { tool: comp-assets,    shared_resource: freshness, my_concern: "estate-object write-freshness (repo files)", their_concern: "OPAL_ASSETS monolith backfill COMPLETENESS census (S3 objects)" }
 
   # ====================== GIT surface ======================
   - tool: comp-xray
@@ -585,6 +587,7 @@ tools:
       - { tool: comp-heat,      shared_resource: freshness, my_concern: "value-MOTION (frozen-but-fresh content)", their_concern: "estate-object write-freshness (wrapper mtime/size)" }
       - { tool: comp-freshness, shared_resource: freshness, my_concern: "value-MOTION (content)", their_concern: "pipeline-DATA S3/DDB freshness" }
       - { tool: comp-graph,     shared_resource: freshness, my_concern: "value-MOTION (content)", their_concern: "graph-cache VINTAGE" }
+      - { tool: comp-assets,    shared_resource: freshness, my_concern: "value-MOTION (frozen-but-fresh CONTENT of a served key)", their_concern: "OPAL_ASSETS monolith backfill COMPLETENESS census (presence/frontier of landed keys)" }
 
   - tool: comp-pipescript
     surface: GIT
@@ -723,6 +726,18 @@ tools:
     distinct_from:
       - { tool: comp-heat,  shared_resource: freshness, my_concern: "pipeline-DATA S3/DDB freshness", their_concern: "estate-object write-freshness (repo files)" }
       - { tool: comp-graph, shared_resource: freshness, my_concern: "pipeline-DATA S3/DDB freshness", their_concern: "graph-cache VINTAGE" }
+      - { tool: comp-xray,  shared_resource: freshness, my_concern: "pipeline-DATA S3/DDB freshness (wrapper age)", their_concern: "value-MOTION (frozen-but-fresh CONTENT)" }   # pre-existing gap (gate RED at HEAD) fixed in the V2-6 registration pass -- comp-xray already declared this pair from its side
+      - { tool: comp-assets, shared_resource: freshness, my_concern: "pipeline-DATA S3/DDB freshness (cadence-gated gold-run readiness)", their_concern: "OPAL_ASSETS monolith backfill COMPLETENESS census (counts/frontier/declared-holes/guard verdicts; no cadence, no gate)" }
+  - tool: comp-assets
+    surface: AWS-CLOUD
+    granularity: object
+    concern: "OPAL_ASSETS monolith backfill COMPLETENESS census (V2-6) -- per channel folder of s3://opal-data-assets: per-layer object/byte counts, feed breakdown, date FRONTIER, 0-byte count, PLUS the channel's own declared meta/backfill-status.json (frontier/completeness/counts/NAMED holes/guard verdict) rendered next to the listing so declared-vs-listed divergence is visible. A TOOL, not an alarm (no-alarms constraint; exit 0 on any census content)"
+    touches_resource: [freshness]
+    distinct_from:
+      - { tool: comp-freshness, shared_resource: freshness, my_concern: "monolith backfill COMPLETENESS census (what landed vs what the channel claims)", their_concern: "pipeline-DATA S3/DDB freshness (cadence-gated gold-run readiness)" }
+      - { tool: comp-heat,      shared_resource: freshness, my_concern: "monolith backfill COMPLETENESS census (S3 objects)", their_concern: "estate-object write-freshness (repo files)" }
+      - { tool: comp-graph,     shared_resource: freshness, my_concern: "monolith backfill COMPLETENESS census (S3 objects)", their_concern: "graph-cache VINTAGE (derived-model staleness)" }
+      - { tool: comp-xray,      shared_resource: freshness, my_concern: "monolith backfill COMPLETENESS census (presence/frontier of landed keys)", their_concern: "value-MOTION (frozen-but-fresh CONTENT of a served key)" }
       - { tool: comp-xray,  shared_resource: freshness, my_concern: "pipeline-DATA S3/DDB freshness", their_concern: "value-MOTION (content)" }
   - tool: comp-secrets
     surface: AWS-CLOUD
@@ -811,6 +826,7 @@ tools:
       - { tool: comp-freshness, shared_resource: freshness, my_concern: "graph-cache VINTAGE (derived-model staleness)", their_concern: "pipeline-DATA S3/DDB freshness" }
       - { tool: comp-heat,      shared_resource: freshness, my_concern: "graph-cache VINTAGE", their_concern: "estate-object write-freshness (repo files)" }
       - { tool: comp-xray,      shared_resource: freshness, my_concern: "graph-cache VINTAGE", their_concern: "value-MOTION (content)" }
+      - { tool: comp-assets,    shared_resource: freshness, my_concern: "graph-cache VINTAGE (derived-model staleness)", their_concern: "OPAL_ASSETS monolith backfill COMPLETENESS census (S3 objects)" }
   - tool: comp-depth
     surface: TRINO
     granularity: graph-node

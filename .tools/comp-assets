@@ -1,0 +1,13 @@
+#!/bin/bash
+# comp-assets -- READ-ONLY backfill census over the OPAL_ASSETS monolith (s3://opal-data-assets).
+# Per channel folder ({source}/{scope}): per-layer object/byte counts, feed breakdown, date span +
+# FRONTIER, 0-byte count, and the channel's own declared meta/backfill-status.json (V2-6 schema:
+# frontier / completeness / counts / NAMED holes / guard verdict) rendered NEXT TO the listing so
+# declared-vs-listed divergence is visible. A TOOL, NOT AN ALARM (no thresholds, no staleness
+# verdicts, exit 0 on any census content). Provenance header prints the live listing denominator.
+#   comp-assets [--channel <source[/scope]>] [--probe] [--json] [--bucket <name>] [--self-test]
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_assets.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-assets" "$*" $_exit 2>/dev/null
+exit $_exit
