@@ -20,21 +20,27 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
 - disposition: routing-refinement -- the LIVE router repeatedly hedged this intent -- a curated comp-which rule / keyword refinement (or the learned affinity term) would sharpen it to a confident decision (LD-0226 routing-mutation surface)
 - value evidence: {"low_confidence_routes": 130, "cold_start_routes": 130, "total_routes": 137}
 - top demand terms: 'Pre-ship field-threading audit of a portal adapter function' x137
-- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+- resolution: OPEN -- **BUILD RATIFIED, APPROVED-PENDING-BUILDER** (CTO, msg 20260714T032105Z, the bridge's
+  first ratified read-through: sec-21 coverage-gap lane, sanctioned; route to 0.8.0-class capacity when it
+  exists). Flips to `BUILT <tool + commit>` at build time.
 
 ## [OPEN] routing-friction -- routing: marker firm constant  (filed 2026-07-14, value 128.0)
 <!-- key: routing-friction|routing: marker firm constant -->
 - disposition: routing-refinement -- the LIVE router repeatedly hedged this intent -- a curated comp-which rule / keyword refinement (or the learned affinity term) would sharpen it to a confident decision (LD-0226 routing-mutation surface)
 - value evidence: {"low_confidence_routes": 128, "cold_start_routes": 128, "total_routes": 135}
 - top demand terms: 'Marker/firm constant drift (FIRM_ID, thresholds) vs the canonical config' x135
-- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+- resolution: OPEN -- **BUILD RATIFIED, APPROVED-PENDING-BUILDER** (CTO, msg 20260714T032105Z; sec-21
+  coverage-gap lane, sanctioned; route to 0.8.0-class capacity when it exists). Flips to
+  `BUILT <tool + commit>` at build time.
 
-## [OPEN] routing-friction -- routing: compiler task order  (filed 2026-07-14, value 123.0)
+## [DECLINED] routing-friction -- routing: compiler task order  (filed 2026-07-14, value 123.0)
 <!-- key: routing-friction|routing: compiler task order -->
 - disposition: routing-refinement -- the LIVE router repeatedly hedged this intent -- a curated comp-which rule / keyword refinement (or the learned affinity term) would sharpen it to a confident decision (LD-0226 routing-mutation surface)
 - value evidence: {"low_confidence_routes": 123, "cold_start_routes": 123, "total_routes": 130}
 - top demand terms: "Compiler/task-order coverage report (what's covered vs gaps)" x130
-- resolution: OPEN   <- flip to `BUILT <tool + commit>` or `DECLINED <why>` (human edit, citation required)
+- resolution: DECLINED pending-a-concrete-instance (CTO, msg 20260714T032105Z: "its description reads as
+  process-shaped, and the no-new-process constraint gets the benefit of the doubt tonight." Re-openable by
+  a new concrete instance with a named consumer -- refile as a fresh entry, do not un-decline this one.)
 
 ## [OPEN] routing-friction -- routing: list inspect cloud  (filed 2026-07-14, value 123.0)
 <!-- key: routing-friction|routing: list inspect cloud -->
