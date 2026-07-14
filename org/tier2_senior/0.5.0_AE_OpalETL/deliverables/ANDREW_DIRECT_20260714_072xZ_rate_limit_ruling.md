@@ -24,3 +24,16 @@ rate limit to 17/min pending CTO ratification of the crashed session's unreprodu
   17/min CTO-attribution updated to cite this ruling.
 - Supersedence chain on this constraint: D4 §8.7 inherited ceiling → CTO Q6 ruling (premised on
   that ceiling being a vendor fact) → **this Andrew-direct ruling (governing)**.
+
+## Clarification (same channel, minutes later, verbatim) — GOVERNING FORM OF THE RULING
+
+> I don't think you really get it, we're not rate limited so stop saying we are. The limit was
+> more likely i/o to s3
+
+- **There is NO vendor rate limit.** The "rate limit" framing itself is dead, not just the number.
+  The observed throughput ceiling (269/min sequential → 2,357/min at x32; ~35/s on the real
+  backfill) is most likely **our own S3 write I/O**, not SmartX.
+- Applied (supersedes the 600/min default from the first message): `smartx_client.py` pacing
+  **DISABLED by default** (`SMARTX_RATE_PER_MIN=0` = unpaced; the TokenBucket short-circuits).
+  The env knob stays as a dormant safety valve only; `SMARTX_MAX_WORKERS` is the throughput
+  lever; 429 remains in the ordinary retry set as client hygiene, not as "the vendor limit."
