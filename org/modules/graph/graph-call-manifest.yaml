@@ -997,6 +997,18 @@ entries:
     anti_pattern: "raw `git log` after losing the node->file resolution the graph already holds; or citing file:line without a vintage (resolves to different code at every commit)"
     status: canonical
 
+  - id: cloud.debris.coldness_ledger
+    use_case: "Which cloud resources have gone cold -- ranked coldest-first by oldest last invocation (dormancy after activity), with never-invoked resources split off for purpose review, not reaped?"
+    canonical_call: "comp-debris [--days 30] [--hot-days 7]"
+    tool: comp-debris
+    mode: query
+    layer: cloud
+    cost: "~seconds-minutes (list_functions + per-fn CloudWatch Invocations)"
+    freshness: "live CloudWatch; per-row creation time required; windows + denominators printed"
+    rebuild_trigger: "n/a"
+    anti_pattern: "reaping a never-invoked resource as cold (it may be a rare-event guard -- VL4); reading a metric-blind row as dead (UNKNOWN is a band); or treating this advisory ledger as a delete list (the reap verb is human + never-widen-gated)"
+    status: canonical
+
   - id: meta.icedrill.vintage_history
     use_case: "What are this artifact's version or partition vintages over time -- the dated-partition series, S3 object-version history, or DDB daily-bucket vintages?"
     canonical_call: "comp-icedrill s3://bucket/prefix/ | s3://bucket/key.json | ddb <table> | graph <node>"
@@ -1202,4 +1214,5 @@ tools_index:
   comp-pydeps:   { does: "Repo-wide Python REFERENCE graph incl .tools/ + org/modules (closes COMPRAIL F-5): who imports/loads/subprocess-invokes a compiler-layer file (edge-kind-typed code-consumer vs prose-mention, docstring-aware) + per-file egress. comp-blast consults it on a .tools/org-modules NOT-FOUND. Engine comp_pydeps.py", subcommands: [consumers, deps, egress, build, "--self-test", "--json"], entries: [meta.pydeps.reference_graph] }
   comp-gitdrill: { does: "TIME-axis drill: node -> producer file's vintage-stamped git history (hash/date/author/subject) + --at <ref> view/diff. Resolves node->file via the trace graph; every line carries its commit-ish. Read-only. Engine comp_gitdrill.py", subcommands: ["<node|file>", "--at <ref>", "--diff", "--limit N", "--json", "--self-test"], entries: [meta.gitdrill.producer_history] }
   comp-icedrill: { does: "VINTAGE-axis drill: artifact -> version/partition history across existing substrates (dated S3 partitions / S3 object-versions / DDB daily / Nessie graph). Provenance names substrate + completeness; empty is a FINDING; never fabricates an Iceberg history for a data artifact. Read-only. Engine comp_icedrill.py", subcommands: ["s3://...", "ddb <table>", "graph <node>", "--json", "--self-test"], entries: [meta.icedrill.vintage_history] }
+  comp-debris:   { does: "Coldest-first cloud-resource invocation-coldness ledger (advisory; NEVER deletes): ranks lambdas by oldest last-invocation (dormancy AFTER activity). never-invoked!=cold (STILLBORN-OR-GUARD purpose review by creation age); UNKNOWN is a band; hold-aware; fusion is a separate confirmation pass. Read-only. Engine comp_debris.py", subcommands: ["--days N", "--hot-days N", "--json", "--self-test"], entries: [cloud.debris.coldness_ledger] }
   comp-trigger:  { does: "EventBridge/Scheduler trigger-dispatch forensics (READ-ONLY): what fires X, ENABLED/DISABLED live state, targets, fired-evidence (TriggeredRules w/ printed denominator; absence != never-fired), TF declared-ness (text-scan; cannot tell landed from planned). No write path by construction. Engine comp_trigger.py", subcommands: ["<name-or-target-substring>", "--list", "--days N", "--json", "--self-test"], entries: [cloud.trigger.dispatch_forensics] }

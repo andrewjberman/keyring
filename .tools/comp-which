@@ -677,6 +677,15 @@ RULES = [
      "the DATA vintage axis of an artifact -- dated S3 partitions / S3 object-versions / DDB daily / "
      "Nessie graph vintages, with the substrate + completeness named and empty-is-a-finding "
      "(comp-icedrill). DISTINCT from comp-gitdrill (producer CODE history)"),
+    (["cold resources", "coldest", "least invoked", "dormant", "unused lambdas", "reap",
+      "debris", "comp-debris", "last invocation", "oldest last invocation", "invocation coldness",
+      "which resources are cold", "stale resources", "abandoned resources", "unused resources",
+      "resource coldness"],
+     "coldest-first resource invocation ledger (comp-debris)",
+     ["comp-debris [--days 30] [--hot-days 7]"],
+     "which cloud resources have gone cold -- ranked coldest-first by oldest last invocation "
+     "(dormancy AFTER activity; never-invoked is a purpose review, not a reap rank). Advisory, "
+     "NEVER deletes, hold-aware (comp-debris)"),
     (["build next", "build-next", "what tool should we build", "which tool to build",
       "tool demand", "rail escapes", "gap x heat", "gap heat", "comp-learns-status",
       "learning loop", "is the learning", "tool backlog", "demand gap cost",

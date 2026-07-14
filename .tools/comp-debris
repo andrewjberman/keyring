@@ -1,0 +1,14 @@
+#!/bin/bash
+# comp-debris -- coldest-first cloud-resource INVOCATION-coldness ledger (ADVISORY; NEVER deletes).
+# Ranks lambdas by oldest last-invocation (dormancy AFTER activity), coldest down. THE RULES
+# (Andrew-direct): never-invoked != cold (zero-history splits TOO-YOUNG vs STILLBORN-OR-GUARD by
+# creation age -- a purpose review, never a reap rank); UNKNOWN is a band (a blind row is not a
+# dead row); hold-aware (INF/frozen/sovereign excluded); advisory -- the reap verb stays human +
+# never-widen-gated. Fusion (comp-heat/comp-dups/comp-deadgrant/comp-trigger) is a SEPARATE
+# confirmation pass ON the cold tail, not machinery in here. Read-only (list_functions + metrics).
+#   comp-debris [--days 30] [--hot-days 7] [--json] [--self-test]
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_debris.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-debris" "$*" $_exit 2>/dev/null
+exit $_exit
