@@ -17796,3 +17796,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~10:55Z | 0.6.2_AE_PartnerETL | comp-to, comp-glob x4, pytest x3, commit-gate x2, s3api landed-verify | V2-8 delta 1+1b + D3 Group-A + both scheduled fires -- all green; gap: contract 7b count-vs-list drift (fixed v1.2.1) |
 | 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS_49METATABLES.D3.0833-groupa-analysis | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS_49METATABLES.D3.0833-groupa-analysis | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/runners_49f/a0... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/a00_dim_account.py data/assets/scr... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_ZGROUP_COMMS_PAR... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/D2_FINDINGS_49METATABLES... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/lambda/opal-assets... | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_pulse.py | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp_pulse.py | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/smartx-pipeline/ass... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/smartx-pipeline/assets-pull-iam.tf org/tier2_senior... | PASS |
+| 2026-07-14 ~1030Z | 0.8.0_AE_CloudComp~Z | none -- table-arithmetic correction on a certed deliverable, no code/infra change | FEDOBS(c) cert SOUND received; F-nit reconciled (322==322) @ d2675d1c1 | queue formally COMPLETE per CVO 955e39d48 |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.8.0_AE_CloudComp~Z | NFRA_PROMOTE.P3.reversibility-loop | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
