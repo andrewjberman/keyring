@@ -17369,3 +17369,17 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/comp-state/SKILL.md | PASS |
 | 2026-07-14 ~05:25Z | 0.7.0_AE_CloudOps | comp-grep/comp-glob (C9+C5, --include-held pre-rail-fix), pipescript, comp-blast (honest-gap on etfs-canon), commit-gate x2, tf plan/safe-apply (C2 0/1/0->0-diff), trading_calendar (NEVER#1) | C2 membership-guard rework applied+converged; C9 Phase-A/B(a); comp-blast/pipescript gap on etfs-canon estate noted |
 | 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-14 | 0.0.0_AB_MSTR | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-14 | 0.0.0_AB_MSTR | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/pul... | PASS |
+| 2026-07-14 | 0.0.0_AB_MSTR | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/pul... | PASS |
+| 2026-07-14 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/00_synthesis.md --file inf... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/pul... | PASS |
+2026-07-14 | 2.0.0_SA_COO | comp-state x4 (BUILT: self-test 3/3, v1 exposed own FP mode, v2 precise, convergence clean) + comp-grep x5 (1 failed its positive control, caught) + comp-glob x1 + comp-manifest-check x2 (caught missing coverage-map home) + pytest x3 (verifier re-runs) | session 0045-0535Z: monolith landed+populated, C1/C2 closed, 49F lift, comp-state shipped
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
