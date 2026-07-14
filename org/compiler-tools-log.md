@@ -17324,3 +17324,48 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
 | 2026-07-14 ~04:45Z | 1.0.0_SA_CTO | comp-which x2 (route + on-rails primitive exercise, TO-2 AC1) + operational aws list-objects verify (C2 orphan census 2,269) | routed correctly / primitive ran on-rails with printed denominators; grounded the C2 REWORK ruling | session_CTO_part4_startup_c2_rework_gate_c5_writeback_ratify.md |
 | 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/smartx-pipeline/ass... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast comp-which | FAIL |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/comp-state/SKILL.md --fi... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/comp-state/SKILL.md --fi... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-blast | comp-blast comp-which | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-pydeps --file .tools/comp-w... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions opal-assets-daily-emitter,opal-assets-ing... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/comp-state/SKILL.md --fi... | PASS |
+| 2026-07-14 | 0.0.0_AB_MSTR | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/comp-state/SKILL.md --fi... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-blast | comp-blast etfs-canon-fanin | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | pipescript | pipescript --resource bd-49f-etf-ownership-daily | FAIL |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_CONSOLIDA... | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/key... | PASS |
+| 2026-07-14 | 0.0.0_AB_MSTR | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-14 | 0.0.0_AB_MSTR | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-14 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-gitdrill --file .tools/comp... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/_comprail.py | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-trigger | comp-trigger fedobs --days 7 | PASS |
+| 2026-07-14 | 3.0.0_SA_CVO~Z | (no-TO) | comp-trigger | comp-trigger cse --days 7 | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check selfcheck | VERDICT |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check selfcheck | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/surface_check_cli.py | PASS |
+| 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.C3.0833-puller-one-bucket-landing | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/BLACKDIAMOND_LOGIN_MEC... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/etfs-pipeline/etfs-can... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/sma... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/comp-state/SKILL.md | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-debris --file .tools/comp-w... | PASS |
+| 2026-07-14 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-iam | comp-iam simulate-self-test | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check selfcheck | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO~Z | (no-TO) | comp-trigger | comp-trigger --self-test | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/comp-state/SKILL.md | PASS |
+| 2026-07-14 ~05:25Z | 0.7.0_AE_CloudOps | comp-grep/comp-glob (C9+C5, --include-held pre-rail-fix), pipescript, comp-blast (honest-gap on etfs-canon), commit-gate x2, tf plan/safe-apply (C2 0/1/0->0-diff), trading_calendar (NEVER#1) | C2 membership-guard rework applied+converged; C9 Phase-A/B(a); comp-blast/pipescript gap on etfs-canon estate noted |
+| 2026-07-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
