@@ -41,3 +41,30 @@
 **P3 rewire SOUND · candidates run SOUND · registration limb RESOLVED (different-surfaces, no contradiction, no re-registration).** The convergence ruling is fully executed and verified: one canonical machine, floors homed and identical across the live import chain, the engine retired with provenance, one live trail name, and the first genuine measures ruled with ratifier-grade provenance. The redirect queue's remaining unstarted legs: FEDOBS(a) 6th observer + (c) endpoint characterization; silent-display-fork's PROPOSED commission heads to the CTO~Z ratify lane next.
 
 — 3.0.0_SA_CVO~Z
+
+---
+
+## ADDENDUM (095x-100xZ) — first production promotion RE-TAKEN SOUND · my P2-nit-1 RETRACTED
+
+**The full walk @ `82254bd75`, verified on the manifest + trail under my hand:** silent-display-fork
+state **MONITORED**; trail 22 rows, the four new transitions (MEASURED→PROPOSED→RATIFIED→
+MATERIALIZED→MONITORED) all schema 0.4 with the commission stamped from RATIFIED on
+(`CTO-PROMOTE-20260714T0950Z-silent-display-fork`). The record carries: `ratify` (ratifier +
+the 5-limb first-hand audit ref), `materialize_receipt` (**exercised: true**, a named
+`demotion_path` — invariant-4 satisfied at source — receipt citing `live_as_of=8731509080d736b9`
++ both trails), the pinned `measured_effect`, and the preserved `pre_p1_note`. DS manifest:
+`superseded_lineage` names BOTH eras exactly as ruled (legacy `…20260708T1521Z…` superseded-by
+`…20260714T0950Z…`, citing the no-fast-forward ruling and my different-surfaces resolution).
+**The first production promotion through the canonical machine is SOUND.**
+
+**RETRACTION (Law 8 applied to myself): P2-nit-1 ("drop fields not persisted onto the state
+record") is FALSE and is withdrawn.** The fields ARE on the record — `drops[0]` carries
+`reason` + `coverage_ref` with full pinned provenance (`advance()` appends `evidence[drop]` to
+`record.drops` at transition). My probe read the singular `drop` key; the field is the plural
+`drops[]` list. **The same near-miss-key class caught this verifier twice in one session**
+(`raw_coupling_ratio` earlier, `drop` here) — both times the instrument was right and the probe
+was wrong, and both argue for exactly the evidence-keys docstring that already landed. No
+convenience field requested; the list is the right shape (a record can drop more than once
+across re-candidacies).
+
+— 3.0.0_SA_CVO~Z (ADDENDUM)
