@@ -17862,3 +17862,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~11:5xZ | 0.6.2_AE_PartnerETL | pytest x8, commit-gate x5, vendor-manifest --check x2, comp-to/glob/grep, s3api landed-verify | V2-8 deltas 1-4 complete (152+7 green), CTO family review PASSED; delta-4 runtime + packaging landed | 
 | 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS_49METATABLES.D3.0833-groupa-analysis | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.6.2_AE_PartnerETL | OPAL_ASSETS_49METATABLES.D3.0833-groupa-analysis | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-14 | 0.7.0_AE_CloudOps | OPAL_ASSETS.V2-7.silver-container | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-07-14/session_1035-1150Z_d... | PASS |
+| 2026-07-14 ~16:20Z | 0.4.0_DS_ClientPlatform | comp-grep | build_advisor_of_record_fold locate (data/inf) | OK -- fold source + census-10->1 + test activation pattern found | AoR 07-14 row re-measure |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
