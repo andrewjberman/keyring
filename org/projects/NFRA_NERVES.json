@@ -1,0 +1,29 @@
+{
+  "project_code": "NFRA_NERVES",
+  "macro_code": "NFRA",
+  "name": "The estate's nervous system -- sense / address / accrete / evolve / serve (activate the hive mind)",
+  "description": "Andrew-direct via a strategy session compiled by CVO~Z into a commissioning brief (32369d8e7), ferried by Andrew to the CTO lane. GOAL (Andrew, verbatim): know what is hot, cold, evolving, dangerous, fragile -- and let the graph EVOLVE from agent activity, 'like roads that become wider with lots of foot traffic'; the endgame is a fully-lexical, information-liquid hive mind. DIAGNOSIS: the estate has a certified skeleton and NO nervous system -- the graph records STRUCTURE; every signal the goal names is BEHAVIORAL and lives in event streams the graph cannot see (185,563 telemetry rows, 11,999 rail rows, 8,004 route rows, 6,682 commits/35d, 897 memory + 297 ledger files -- all exhaust, none addressed). This is an ACTIVATION project: address the exhaust, turn it into traffic, let traffic weight the graph, feed the certified-but-idle learning loop the evidence it was built for. FIVE LAYERS: L2 ADDRESS (the keystone -- one shared resolver + the universal traffic record), L3 ACCRETE (co-change / attention / outcome / RISK-HOLD-DOCTRINE / cert-vintage edges, all decaying), L1 SENSE (thin standing producers over streams that already flow), L4 EVOLVE (feed the EXISTING certified MOTIF/PROMOTE; C2/C3 populate from evidence; phantom-limb demand map), L5 SERVE (no new UI -- existing tools carry the signal; ONE new primitive comp-pulse; endgame = a pre-commit risk reflex, the danger map as an active immune response). THE HIGHEST-VALUE THING: the RISK edge -- danger zones are ALREADY written down with file:line citations, and an agent blasting a frozen file gets NO warning unless it happened to read the prose. Closing that means comp-blast build_assets_dim.py RETURNS THE HOLD.",
+  "prds": [
+    {"path": "docs/architecture/NFRA_NERVES_PRD.md", "label": "v1.0 architecture PRD (CTO~Z)", "date": "2026-07-14"},
+    {"path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_NERVES_COMMISSIONING_BRIEF_20260714.md", "label": "commissioning brief (CVO~Z, Andrew-direct input; goal + diagnosis + property sets)", "date": "2026-07-14"}
+  ],
+  "status": "active",
+  "phase": "Phase 1 EXECUTING -- L2 (the keystone: the shared resolver + the universal traffic record). Leverage order: L2 -> L3a co-change git backfill -> L3b lexical->RISK edges -> L1 standing producers -> L4 MOTIF/PROMOTE on traffic -> L5 comp-pulse + pre-commit reflex.",
+  "blocking": "None",
+  "created": "2026-07-14",
+  "pods": ["1.0", "3.0"],
+  "pipeline": "comp-tools / graph / NFRA",
+  "thread_counter": 0,
+  "threads": [],
+  "discipline_non_negotiable": [
+    "GOODHART GATE on ALL reinforcement: usage != value -- a wide road to a wrong answer gets wider. Every traffic->weight update routes through the EXISTING certified machinery (PROMOTE's 5 invariants; comp-learns-score's outcome-anchored values). The hive mind learns from OUTCOMES, never popularity.",
+    "NO NEW CERTIFIED-BUT-IDLE MACHINERY: every layer ships WITH its consumer wired or it does not ship. 'Exercised on real state' is necessary and NO LONGER SUFFICIENT -- UTILIZATION IS A NEW MATURITY AXIS (07_maturity grades 'can it work'; nothing grades 'does it work daily', which is exactly how everything got built-proven-and-idle).",
+    "UNKNOWN IS A BAND EVERYWHERE: unaddressed events, unresolvable entities, no-visibility resources -- rendered visibly, never dropped, never defaulted to a verdict.",
+    "OPS PRE-WORK same lane: batch the graph_nodes writer (17,912 commits vs edges' 56), snapshot-expiry + compaction, delete the two cse_test_* warehouse tables, owner-check dormant graph_contracts."
+  ],
+  "cross_references": {
+    "composes_with": ["NFRA_INSTDRILL (comp-debris = CloudTrail/coldness sense; comp-gitdrill/icedrill = the vintage drill; comp-pydeps closes F-5 and is resolver source #2; the nine comp-which sharpening asks push traffic down the roads) -- REFERENCE, do not re-own"],
+    "activates": ["the MOTIF/PROMOTE/FEDOBS learning loop (built, invariant-gated, CVO-certified -- IDLE since 07-08)", "the GO'd-but-unbuilt Q4 standing-producer cadence (zero EventBridge producers exist today)"],
+    "validation": ["3.0.0_SA_CVO~Z /verify per layer; their re-take numbers win ties"]
+  }
+}
