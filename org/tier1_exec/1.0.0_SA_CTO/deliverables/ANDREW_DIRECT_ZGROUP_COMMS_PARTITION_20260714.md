@@ -30,6 +30,25 @@
   and every constraint that travels with the work (INF chain hold, frozen three, NEVER rules,
   safe-apply, deploy-completion ledgers); NERVES L5 remains held by CTO~Z pending Andrew's ruling.
 
+## AMENDMENT 3 — NO SMS (2026-07-14 ~09:2xZ, same channel)
+
+Andrew, VERBATIM: > "I dont want sms"
+
+Context: CVO~Z's negative control (0962f259d item 3) found a LIVE SMS subscription on
+`opal-critical-surface-alerts` (+17862617679, TF-declared @ `ade04b01a` in
+`infra/aws/terraform/globgrph/item2c_surface_alarm.tf:32-35`, sandbox-blocked per `446f00eca`) —
+in conflict with the earlier 07-13 no-sms posture (`cfb741306`). This ruling settles it.
+
+**Disposition (CTO~Z routing):** the globgrph SMS sub is TF-declared in the module 0.7.0~Z holds
+session applier authority for → 0.7.0~Z removes it AS A TF CHANGE (resource delete → commit →
+targeted plan expecting exactly 1 destroy → safe-apply → 0-diff → NEVER#5 ledger → live
+list-subscriptions verify). A CLI unsubscribe alone would silently revert on the next apply.
+**Scope note (surfaced, not adjudicated):** `ade04b01a` records the same number confirmed on
+`opal-infrastructure-alerts` + `ec2-long-running-alerts` — the unqualified ruling plainly reaches
+them, but they are base-owned modules; 0.7.0~Z enumerates the account-wide SMS-sub denominator and
+the base-module hits route back to Andrew for base-lane execution. SMS ONLY — the ruling does not
+touch email subs (the Gate-B email exclusion stands on its own record).
+
 ## AMENDMENT 2 — L5 GO (2026-07-14 ~08:4xZ, same channel)
 
 Andrew, VERBATIM: > "Do L5 Nwo"
