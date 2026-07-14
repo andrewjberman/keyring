@@ -218,7 +218,7 @@ Loops are **operator-initiated**. `/watcher` is not a loop — it arms the persi
 |---|---|
 | `0.0.0_AB_MSTR` | `/watcher` once. Zero crons. `/mstr-review` runs once at startup as an ad-hoc pass; all other MSTR skills are event-triggered. |
 | `1.0.0_SA_CTO` | `/watcher` once. Zero crons. `/ws-charter` is ad-hoc. |
-| `2.0.0_SA_COO` | `/watcher` once. **ZERO crons — `/drive` is OFF (Andrew-direct, standing; LD-0288/0289/0293, re-confirmed 2026-07-14).** The COO **coordinates and routes; he does NOT re-drive the estate.** **`/drive` MUST NOT be armed at launch, and its 20m cron MUST NOT be created.** *Why this is a NEVER and not a preference: `/drive`'s own gate holds that **"all standing by" is a GATE FAILURE, never a valid terminal state** — so `/drive` is a machine that is **structurally unable to conclude "dispatch nothing."** Under a dispatch hold (Andrew, 2026-07-14: **"Wait to dispatch until I give the go, I want to respawn the workers first"**) an armed `/drive` does not merely idle — **it is obligated to break the hold**, on a 20-minute timer, and it will do so while reasoning correctly from a real instruction. **A hold does not die to a careless agent; it dies to a diligent one holding a real mandate.*** Dispatch authority during a hold rests with the **GO-issuing owner** (CTO on OPAL_ASSETS), never with a timer. |
+| `2.0.0_SA_COO` | `/watcher` once. **ZERO crons — `/drive` is OFF (Andrew-direct, standing; LD-0288/0289/0293).** The COO **coordinates and routes; he does NOT re-drive the estate.** Mechanism: `/drive`'s own gate treats "all standing by" as a failure, so it is **structurally unable to conclude "dispatch nothing"** — armed during any dispatch hold it is obligated to break the hold on a timer, reasoning correctly from a real mandate. Dispatch authority during a hold rests with the **GO-issuing owner**, never a timer. Incident + full reasoning: `014de1937` (2026-07-14). |
 | `3.0.0_SA_CVO` | `/watcher` once. Zero crons. `/spot-check` and `/verify-channel` are ad-hoc / closeout-triggered. |
 | Tier-2/3 workers (+ `~lanes`) | `/watcher` once. Zero crons. **Event-driven:** act on Monitor-delivered dispatches. Keep your broker summary accurate: `WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`. `/work` is ad-hoc. |
 
@@ -265,8 +265,11 @@ One paragraph: what projects you're on, what's pending, what's blocked, **what y
 ## `/loop` — operator-initiated only
 
 `/loop` is fired by Andrew or an operator at a specific agent, on demand. **Nothing self-ticks.** It is not
-a launch mechanism and not a standing mode: the fabric is event-driven, your inbox Monitor delivers the
-work, and COO's `/drive` is the centralized tick that finds blocked agents.
+a launch mechanism and not a standing mode: the fabric is event-driven, and your inbox Monitor delivers the
+work. **There is no centralized tick — `/drive` is OFF (Andrew standing order; see the COO row in Step
+1b-F).** Blocked-agent discovery is event-driven too: keep your broker summary accurate
+(`BLOCKED: <what>`), escalate blockers to COO/CTO by MCP, and COO/CTO run `/fabric-check` +
+`/stimulus-scan` ad hoc — on signals, not on a timer.
 
 ---
 
