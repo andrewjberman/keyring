@@ -93,6 +93,9 @@ REGROW/TO/PRD flags (62/54/11) largely pair with these projects; they ride the s
    quoting the hold; (2) on disclaim, COO lands an explicitly-labeled PRESERVATION commit (provenance-unknown
    stated, hold quoted, sovereign_excluded INTACT). Fragility is the only clock. NO REGISTRY row either way
    (consumers keep honoring the exclusion).
+   >> CLOSED 21:15Z: 0.5.0 claimed origin+content, landed BYTE-UNCHANGED @ 6709cc81e (pushed) with an
+   honest attestation decomposition (post-07-10 annotations preserved-as-found, not attested);
+   COO-validated (tracked, exclusion intact). The untracked hazard is DEAD; HELD-CLASS status unchanged.
 2. **4 records carry status=merged** (ADVI_FNTEND, BDPL_ASTDIM, BDPL_CNPRCS, MKOV_DLYCLD) --
    terminal-equivalent (absorbed elsewhere); classifier counted them CLOSURE-CANDIDATE but the
    quiet-day read is only "confirm REGISTRY table placement + phase cites the successor".
