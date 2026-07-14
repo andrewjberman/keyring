@@ -42,6 +42,15 @@ see PROMOTION_CLASSES. The commission builder generalizes clause-A's shape: verd
 (the candidate + warrant), grounding (evidence the ratifier reads, not the label), proposed_to
 (typed action + ratifier), auto_mutates: False -- always.
 
+EVIDENCE KEYS, exact (integrator's map -- CVO re-cert nit @0962f259d; a near-miss key silently
+loses only its rider, so spell them): measured_effect{effect, basis, source, vintage
+[, focused_coupling_ratio, coupling_ratio, co_sessions]} -- the invariant-2 floor reads
+focused_coupling_ratio, falls back to coupling_ratio (raw; carried alongside for transparency),
+then legacy co_sessions; drop{reason, coverage_ref}; new_evidence{ref};
+ratify{commission_id, ratifier, ref}; materialize_receipt{exercised, receipt_ref, demotion_path};
+demotion_receipt{exercised, ref}; post_measure{...measured_effect keys, verdict};
+anti_goodhart{structural_rationale, not_tuned_to_own_metric, generalizes_beyond_fixture}.
+
 Storage (event-log-vs-state-snapshot separation, mirroring DS~B's manifest design):
   promote_lifecycle_manifest.json  -- the STATE snapshot {promotions: {candidate_id: record}}
   promote_lifecycle_cse.jsonl      -- the append-only transition CSE trail
