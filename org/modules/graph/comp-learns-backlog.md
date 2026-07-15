@@ -212,3 +212,28 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   'APPLIED' claim (config-read-for-behavioral, 22a); found only when the scheduled fire exercised it.
 - resolution: OPEN -- build routes to ~Z-group/0.8.0-class capacity via MSTR (base-CTO
   instruct-usage-never-build). Flips to `BUILT <tool + commit>` at build time.
+
+## [OPEN] coverage-gap -- portal light-fg silver-canvas commit-time nudge (WARN-level, announce-then-enforce)  (filed 2026-07-15, CTO; routed from 0.5.0~A CC of Andrew-direct #6)
+<!-- key: coverage-gap|portal-light-fg-silver-canvas-nudge -->
+- disposition: MISSING CONTROL, Andrew-named recurring footgun (light text/buttons outside a dark
+  panel on the SILVER canvas). Scope exactly as specced by 0.5.0~A: a commit-time WARN when a
+  portal/src/pages/**.tsx adds light-fg classes (text-white*, text-*-100..300, bg-white/N) in a
+  file with NO Panel-primitive import. WARN-level per announce-then-enforce -- the deterministic
+  instrument stays the SCREENSHOT (portal/scripts/ui-smoke.mjs is the exercised-path primitive; a
+  grep cannot see containment/contrast -- 0.5.0~A's own file part-evaded a naive lint via
+  bg-black/30 inputs, the recorded evasion witness).
+- LAW SOURCE (amended per Andrew-direct #7, 2026-07-15 ~16:1xZ): cite design/brand/COLOR_ARCHETYPES.md
+  (the root design/ canonical repository, UIUX macro) as the color law, not portal/CLAUDE.md alone.
+- extension point noted: comp-transform schema-check has no color/contrast dimension; ui-smoke.mjs
+  is the primitive a COMP lane would build on.
+- resolution: OPEN -- build routes to ~Z-group/0.8.0-class capacity via MSTR (base-CTO
+  instruct-usage-never-build). Flips to `BUILT <tool + commit>` at build time.
+
+## [OPEN] coverage-gap -- design/ tree missing from doc-globbing comp-tool scan roots  (filed 2026-07-15, CTO; routed from 0.5.0~A CC of Andrew-direct #7)
+<!-- key: coverage-gap|design-tree-scan-roots -->
+- disposition: NEW top-level tree design/ (Andrew-direct #7: THE canonical design repository,
+  anti-sprawl law, ws 210f70a9a + portal 3df9231e). comp-grep/comp-glob are repo-scoped and cover it
+  automatically; ANY comp tool with HARDCODED doc scan roots (surface maps, graph doc-derives,
+  systems-context doc indexing) needs design/ added or it silently omits the canonical design law
+  from every answer. Audit which registries hardcode roots, then add.
+- resolution: OPEN -- rides the same ~Z/0.8.0 registry-touch wave; small.
