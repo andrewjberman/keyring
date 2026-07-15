@@ -18292,3 +18292,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~14:45Z | 1.0.0_SA_CTO | comp-glob, comp-pulse(auto), comp-state(prior) | delta-6 review + chunking-arch landing | comp-glob systems-context useful; monolith gap unchanged |
 | 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-15/c... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/SMARTX_ATOM_EXPEC... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/D2_FINDINGS_49METATABLES... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS-delta6-orion-swap | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS-delta6-orion-swap | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/lambda/opal-assets... | FAIL |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS-delta6-orion-swap | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS-delta6-orion-swap | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/sil... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff infra/aws/lambda/smartx_assets_pull/silver.py infra/aws/lambda/smartx_a... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/SMARTX_MODEL_EXPE... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS-delta6-orion-swap | comp-lambdamap | comp-lambdamap reconcile-deployed --functions opal-assets-bd49f-daily-pull,opal-assets-... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS-delta6-orion-swap | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS-delta6-orion-swap | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/opal-ass... | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/ETF_SILVER_FAMILY_DESIGN... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/task_... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/task_orders/ANDREW_DIRECT_20260714_ta... | PASS |
+- 2026-07-15 ~15:15Z | 0.5.0_AE_OpalETL | comp-grep x3, comp-glob x3, comp-to, safe-commit gates x4 (commit-gate/surface-check/risk-reflex), raw-aws operational (env ground + monolith listings, rail-checked) | smartx family 5/5 window: all PASS; gap unchanged = monolith has no comp-tool (filed 07-14)
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/deliverable... | PASS |
