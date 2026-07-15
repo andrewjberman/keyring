@@ -18872,3 +18872,34 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~22:25Z | 0.4.0_DS_ClientPlatform~B | comp-glob x2, deploy-import-lint (structural dotted-name blindness FOUND, honest spec-import built), commit-gate, comp-pulse via safe-commit | GLDRNS.B1 G3 bundle deploy + battery | lint tool fix routed to CTO |
 | 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/runners_49f/pr... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/predeclared_divergences_49f.json | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions opal-assets-bd49f-daily-pull,opal-assets-... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/opal-ass... | FAIL |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/opal-assets/silver.tf | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/opal-assets/silver.tf | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/opal-ass... | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/GLDRNS_B1_SERVEHE... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/deploy-import-lint.py | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .tools/deploy-import-lint.py | FAIL |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/GLDRNS_B1_ANDREW_... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-15/laneA_andrew_g... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-pipescript | comp-pipescript postdeps a00_dim_account | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/lambda... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff infra/aws/terraform/inf-pipeline/lambdas.tf | FAIL |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260715T2253Z_door5-decollide-inf... | FAIL |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md | FAIL |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260715T2253Z_door5-decollide-inf... | PASS |
+| 2026-07-15 ~22:58Z | 1.0.0_SA_CTO | comp-state (3/3 + full, hot ALL CURRENT), comp-pulse(auto x4, 1 HOLD read -- the fix strengthens the cited gate), raw-aws rail-checked | the sovereign GO window + pace-order pull-forwards | POST-CLOSE echo noise = the filed corpus defect, no live BEHINDs |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-15/s... | PASS |
