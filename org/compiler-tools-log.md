@@ -18565,3 +18565,14 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-grep | comp-grep ligament docs org/critical_paths infra -- ligament four-verdict definition hunt | PASS |
 | 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/deliverable... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/BRIEF_CONSOLIDATION_R... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/etf_conversi... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/silver/etf_conversion.py data/assets/scripts/silver... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/item2a.tf | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-pulse | comp-pulse diff infra/aws/terraform/globgrph/item2a.tf | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/tax-pt1/SKILL.md | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/tax-pt1/SKILL.md | FAIL |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | OPAL_BBGTML | comp-pulse auto x9 (2 measured HOLDs, citations read+cleared); rail-checked grep x1 (env plumbing); journal-via-SSM as the traceback isolator | flip execution window -- grounding queries ran prior window |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
