@@ -18793,3 +18793,41 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~21:4xZ | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1 | commit-gate x2, bash -n, NEW manifest-lint.py (3 arms), NEW build-index.py (349/8 denominators, drift arm both directions), CW telemetry reads (si2 pilot), safe-commit/comp-pulse x5 | ph5 closed (lint shipped+wired+accepted); ph6 TF-protocol + ph7 generated-INDEX authored, relay-staged to CTO lanes |
 | 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/heatmap/ms_heat_index.py | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff org/modules/heatmap/ms_heat_index.py | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/heatmap/ms_heat_index.py | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff org/modules/heatmap/ms_heat_index.py | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/tests/reproduce_a... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff data/inf/scripts/gold/tests/reproduce_aor_fold_gate.py | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-blast | comp-blast cot_silver_merge | FAIL |
+| 2026-07-15 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/NFRA_WEBSITE_DNS_IP_MIS... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/A_00.accounts_dim... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pulse | comp-pulse diff data/cot/scripts/gold/A_00.accounts_dimension.py org/tier2_senior/0.4.0... | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/C_06.client_mix_t... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pulse | comp-pulse diff data/cot/scripts/gold/C_06.client_mix_timeseries.py | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/silver/cot_silver_merg... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pulse | comp-pulse diff data/cot/scripts/silver/cot_silver_merge.py | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/B_00.canonical_ho... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pulse | comp-pulse diff data/cot/scripts/gold/B_00.canonical_holdings.py | FAIL |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHFEED.json | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_GRAPHFEED.json | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0299.md | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0299.md | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pipescript | comp-pipescript deployed data/cot/scripts/gold/A_00.accounts_dimension.py | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pipescript | comp-pipescript deployed data/cot/scripts/gold/C_06.client_mix_timeseries.py | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pipescript | comp-pipescript deployed data/cot/scripts/gold/B_00.canonical_holdings.py | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pipescript | comp-pipescript deployed data/cot/scripts/silver/cot_silver_merge.py | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/s3.tf | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff infra/aws/terraform/shared-infra/s3.tf | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/cot_gold_bughunt_reports/FIX_L... | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_GRAPHFEED.W1.wave.md | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/COT_GLDRNS_C1_FIX... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_CONSOLIDATION.json --... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_CONSOLIDATION.json org/tier1_exec/1.0.0_SA_CTO/delive... | PASS |
+| 2026-07-15 ~21:5xZ | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1 | none this window -- inbound CTO disposition + broker state flip only; the window's artifact is the log itself | Z1 event-gated boundary recorded (ph6/7 landings queued ~23:0xZ at CTO) |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
