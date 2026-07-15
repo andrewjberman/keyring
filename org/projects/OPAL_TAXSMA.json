@@ -15,7 +15,7 @@
     "0.3.1"
   ],
   "created": "2026-06-26",
-  "current_phase": "P1 LIVE -- FIRST /tax-pt1 RUN GREEN 2026-07-15 ~16:58Z (Andrew observing, step-by-step): 2 emails found (FIS 5:02/6:47 ET), S0.3 byte-CONFIRMED with correction (pair = SSAVAIL early / SSAVAIL2 late, not SSAVAIL1/2; FINAL base matches Yang kept files), both saved to TAX/Short Sale (SSAVAIL 20260715 PRELIM.ASC 12,694,286 B sha256 8cddb66c...; SSAVAIL2 20260715.ASC 12,934,060 B sha256 6292e2e9...), listing-verified. SCOPE PROOF (exercised): upload rides consented Files.ReadWrite.All alone -- no Sites.ReadWrite.All, NO IT ask. Yang spec email re-read fresh from source pre-run (Tax SMA Automation 06-26). OPEN with Andrew/Yang: backfill 06-26->07-14 gap (mail has attachments); spec-vs-practice delta (Yang keeps FINALs only, sparse dates; automation saves both daily per spec). NEXT: daily cadence decision (EventBridge-scheduled vs on-demand skill run); /tax-pt3 on a fresh Tax Lot export.",
+  "current_phase": "GUARDRAILS LIVE (Andrew-direct #8 executed end-to-end 2026-07-15): Content Contract v1.0 (corpus 35/35) -> validator DEPLOYED a89bb53e6 (sequenced behind DT BBGTML flip, SSM-verified) -> EXERCISED both rails (todays PRELIM+FINAL PASS w/ sha256 tie to saves; 07-10 stub FLAG-STUB w/ C4/C5 passing = discriminates on the right axis) -> shared-cloud locations LIVE (TAX/Short Sale/Intake Logs + Flagged Files w/ operator README; Graph auto-creates on colon-path). /tax-pt1 v2 = validate-before-save flow w/ pinned trading-calendar recipe (expected_last_trading_day(D-1) -- D itself is included by the fn, caught live). Gateway drive-read bug (httpx redirects) found+fixed en route. OPEN: daily-schedule architecture decision w/ Andrew; Yang word on 07-01 swap + backfill ack; /tax-pt3 (upload_text_to_site seeds the write path).",
   "prds": [
     {
       "path": "docs/architecture/ADVI_TAXSMA_PRD.md",
@@ -34,6 +34,11 @@
     "NFRA_MSGRAPH"
   ],
   "history": [
+    {
+      "date": "2026-07-15T18:4xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "VALIDATOR COMMISSIONED: deployed a89bb53e6 post-DT-signal (deconflict clean, their ENABLED_INTEGRATIONS preserved), exercised positive (2x PASS, sha256==saves) + negative (stub FLAG-STUB, flags on C7-only = right axis), first run-log + Flagged Files README landed in SharePoint. 8/8 unit battery incl. lying-checksum case."
+    },
     {
       "date": "2026-07-15T18:2xZ",
       "agent": "0.5.0_AE_OpalETL~A",

@@ -39,9 +39,11 @@ silently drop or silently rename an unexpected extra send; write anywhere but `T
    run byte-confirmed the S0.3 names (2026-07-15): early send = `SSAVAIL.ASC`, late = `SSAVAIL2.ASC`.
 3. **VALIDATE every attachment BEFORE any save (Content Contract v1.0 — Andrew-direct #8;
    requires the 2026-07-15 validator gateway deploy):**
-   a. Compute the expected as-of = PRIOR TRADING DAY of DATE via the estate's ONE calendar:
-      `python -c "from lib.trading_calendar import expected_last_trading_day; ..."` (never
-      hand-compute; the calendar authority stays workspace-side).
+   a. Compute the expected as-of = PRIOR TRADING DAY of DATE via the estate's ONE calendar.
+      **EXACT RECIPE (pinned 2026-07-15 — `expected_last_trading_day(D)` INCLUDES D itself,
+      so pass D minus one day):**
+      `python -c "from lib.trading_calendar import expected_last_trading_day; from datetime import date, timedelta; print(expected_last_trading_day(date(YYYY,M,D) - timedelta(days=1)).strftime('%Y%m%d'))"`
+      (corpus-verified incl. Monday-over-weekend and holiday cases; never hand-compute).
    b. For each attachment: `validate_ssavail_attachment(message_id, attachment_id,
       expected_asof=YYYYMMDD)` → verdict PASS | FLAG with per-check results (C1 fixed-width /
       C2 ascii / C3 header / C4 as-of / C5 trailer-tie / C6 records / C7 volume envelope /
