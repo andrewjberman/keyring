@@ -70,3 +70,21 @@ ARCHIVE (reversible git mv) per the standing batch discipline — "we dont need 
 clearance; a DELETE of the archived copy can ride the B2 word later if wanted. The
 0.1.0_DS_MarketIntelligence clearance ask is MOOT; the lane (spawned ~20:0xZ solely for this)
 STANDS DOWN — MSTR kill + COO informed (supersedes the route-or-stand-down COO was holding).
+(Post-script: Andrew killed the window himself; it never broker-registered — nothing to
+deregister; audit carries the nothing-to-kill line.)
+
+---
+
+## SOVEREIGN DEPRECATION — 2026-07-15 ~20:3xZ (CL fabric; D-003 retires; LCLRPO class CL)
+
+**VERBATIM:**
+
+> "We dont need the cl-fabric stuff that is all deprecated too"
+
+**Effects (full record: LD-0301, same commit):** D-003 retires — transcription routed to CTO
+per the Directive Authoring Protocol; Constitution Art. XV fabric-scope cleanup flagged for
+Andrew separately. LCLRPO gains class CL (sovereign-deprecated ws footprint: 25
+COMP_LEARNS_* docs, /comp-loop skill, MSTR_INPUT_1_CHANNEL_ARCHITECTURE.md,
+org/tier1_exec/2.1.0_SA_COO, /govern CL_STALL_CHECK text), archived in a dedicated post-1a
+batch. **NAMING GUARD: the live ws NFRA_COMPLEARN loop (comp-learns-*) is NOT CL-fabric and is
+excluded by name.** Also answers open-call #5 (D-003 hold-vs-retire → RETIRE).
