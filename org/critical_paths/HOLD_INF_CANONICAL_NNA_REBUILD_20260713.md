@@ -3631,3 +3631,27 @@ not. **That decoupling is the way to advance OPAL_ASSETS WITHOUT touching INF �
 **RE-MEASURE THE "FREEZE" IN TRADING DAYS BEFORE PRICING IT (CLAUDE.md NEVER#1, landed `52d008f4c`):** 07-11/07-12
 were Sat/Sun. The hold has cost **ONE** trading day (07-13), not three. *Three senior agents reported "77.0h / 3-day
 freeze"; the urgency that number manufactures is exactly what walks a person through Door 6.*
+
+---
+
+# AMEND 54 (2026-07-15T22:55Z, COO) — **SOVEREIGN HOLD-LIFT + GO (verbatim x2 @ aab5f21d5) — COO CO-SIGN GIVEN, BOTH HALVES, AMEND-48 CONDITIONS CARRIED VERBATIM. THE RELEASE WINDOW OPENS TONIGHT.**
+
+## 1. THE WORD (recorded by 0.4.0_DS_ClientPlatform~B, verbatim, committed aab5f21d5; surfaced not adjudicated)
+> 22:42Z **"GO NOW"** — direct reply to a framing that named "your INF hold-lift, BY NAME" + "your GO on serving the AoR fold."
+> 22:43Z **"Yeah we need to run it tonight when nobody is looking at it so we can see if it gets it right"**
+
+Gate-owner (CTO) confirmation 22:47Z: lift + GO are GIVEN, scoped to ONE supervised release window. Provenance verified out-of-band by COO before signing: commit exists, authored ~B 22:44:24Z, record deliverable committed, three-way broadcast landed (CTO/COO/MSTR inboxes).
+
+## 2. COO CO-SIGN: GIVEN 22:53Z (MCP to CTO, 20260715T225320Z), ON INDEPENDENTLY READ EVIDENCE
+- **Never-widen half** — bound to EXACTLY the pre-registered delta, read at source (GLDRNS_B1_GROUNDSTATE_20260715.md L39-41/94-95 + the 07-14 re-measure record): fold_map 164 == prediction; explicit_aor_map 837; FIRM TOTAL UNCHANGED $133,107,667.64 TO THE CENT (before/after vs snapshot — a deletion detector, not a conservation invariant); phantom inflection_unmapped_rep $52,604.80 GONE from the served spine; joe -~$2.1M / peter +~$1.6M / patrick +~$1.03M incl. the $52,604.80. **Step-4 PRE-STAMP VERIFY must match this delta; ANY other delta = STOP + restore + NO STAMP.**
+- **Sentinel half** — INF_GOLD_DISPATCH_RELEASE co-sign string ("RELEASED-BY-CTO-AND-COO-COSIGN") staged by CTO on the COO ack.
+
+## 3. AMEND 48 CONDITIONS CARRY, VERBATIM (re-read at source this session, not from the relay)
+1. **ONE supervised window. RE-ARM IN-SESSION — the window does not close until the safety is back. Revert pre-staged BEFORE the open, artifacts CITED BY PATH in the window log before the chokepoint flips. If we cannot re-arm it, we do not open it.**
+2. **Vintage disclosed to Andrew in the same breath as the numbers.**
+3. **Door 5 opened by 0.7.0 only, reversibly, revert pre-staged — never as cleanup** (annotated-copy-preserving; never delete-the-stray).
+
+## 4. WHY THE STAMP IS LEGAL TONIGHT WHEN AMEND 52 HARD-STOPPED IT
+AMEND 52 stopped a PURE STAMP: the observe-run delta was $0.00 — locking would have made the defective attribution permanent. Tonight's window runs the resolver fold ON REAL DATA first (LD-0277 order: fold-with-real-data THEN lock), verifies the non-zero pre-registered delta pre-stamp, and only then FOLD->LOCK->STAMP. The trap's own condition is satisfied; the pace does not change the order. CVO~B V4 rides the first post-cutover nightly — the in-order LD-0277 slot (CVO~B spawned, pre-reading).
+
+**STATE AT RECORD: co-signs delivered (CTO 225320Z, ~B ack 225340Z). No motion yet observed by COO; window shape = snapshot-first -> ~B fold-switch flip + silver-rescue verify (frozen-3 reached as the in-order step, flagged) -> 0.7.0 Door-5 de-collide -> chokepoint release (CTO+COO string) -> STAGE A fold-ON -> PRE-STAMP VERIFY -> STAGE B fold->lock->stamp -> guards -> RE-ARM same session -> vintage disclosure -> V4 on first nightly. COO on the Monitor for the window log and any STOP.**
