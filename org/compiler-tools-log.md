@@ -18576,3 +18576,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | OPAL_BBGTML | comp-pulse auto x9 (2 measured HOLDs, citations read+cleared); rail-checked grep x1 (env plumbing); journal-via-SSM as the traceback isolator | flip execution window -- grounding queries ran prior window |
 | 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_CONSOLIDATION_PR... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_CONSOLIDATION_PRD.md | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/SMARTX_PART2_EXPE... | PASS |
+- 2026-07-15 18:10-19:15Z 0.4.0_DS_ClientPlatform: comp-grep 1x (producer discovery, PASS); commit-gate per .py PASS; surface-check+risk-reflex 4x CLEAN (1239-node denom); pytest etf 26 + full silver 234+7 ALL PASS; measure_etf_bronze committed harness (md5==ETag basis); part-2 served-parquet validation 26/26 (scratchpad one-shot, evidence in report amendment fecdcd358).
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
