@@ -1,0 +1,32 @@
+{
+  "project_code": "OPAL_GLDRNS",
+  "macro_code": "OPAL",
+  "name": "OPAL Gold Runners - the three-firm runner audit + fit/validation program (49F B/C->D fit; INF AoR production-ready; Cottonwood review)",
+  "description": "Andrew-directed (2026-07-15 ~19:0x-19:1xZ, directives 3+4 verbatim in memory project_opal_consolidation_andrew_directive_20260715): the runner audit and fit/validation work persisted as its own project. THREE LANES, three new DS sub-agents: (~A) 49F -- proceed through the B & C group scripts and establish the fit to the Group-D publishers; the D-group enumeration (CTO, same turn) found EIGHT bd fold-in points (D_00/00b/00c/00f/01/02/03/04; D_04 alone emits ~5,300+ platinum files) -- pin each output contract, census D-consumed inputs, sufficiency-verdict the planned C shapes, build the fit-validation harness incl. a read-only dry-fit. (~B) INF -- the AoR refactor state is uncertain, portal shows no AoR updates (FE pair shipped 07-15 but backend fold switch-OFF behind the INF hold), update schedule frozen by the AoR edits: work ALL of it out and make it PRODUCTION READY IMMEDIATELY on the EXISTING inf gold runner -- SOLE task; ~B is AUTHORIZED for code deploys AND infra/TF deploys on that runner as needed for validation and push; the drive executes the existing LD-0277 gate chain IN ORDER (fold-with-REAL-data THEN lock; change-2; CVO~B V4 re-take; sovereign-worded gates queued to Andrew at their moments). (~C) Cottonwood -- /gold-runner-code-review through the cot gold runner; identify efficacy and pattern. Feeds OPAL_CONSOLIDATION WS-C (gate C5b cites this project as executor); the 49F lane's output contract is the S4/S5 target artifact.",
+  "prds": [
+    {
+      "path": "docs/architecture/OPAL_CONSOLIDATION_PRD.md",
+      "label": "Master PRD (OPAL_CONSOLIDATION) sec-5 WS-C -- GLDRNS executes gate C5b + the runner audits; TO series OPAL_GLDRNS.A1-A3/B1/C1 are the work specs",
+      "date": "2026-07-15"
+    }
+  ],
+  "source_brief": "Andrew-direct directives 3+4, 2026-07-15 (CTO terminal, verbatim recorded + broadcast). Directive 4 names the project: 'I think we probably need to make a new project for this runner audit and work so that it is persisted properly, id called it OPAL_GLDRNS.'",
+  "status": "active",
+  "phase": "REGISTERED + TO SERIES AUTHORED (2026-07-15 ~19:1xZ). Lanes ~A/~B/~C spawn via MSTR; GOs issue on registration. ~A = OPAL_GLDRNS.A1 (platinum output contract, 8 scripts) -> A2 (input census + sufficiency verdict; MISSING class -> CTO pre-spec-freeze) -> A3 (fit harness + read-only dry-fit vs canonical C outputs). ~B = OPAL_GLDRNS.B1 (INF AoR production-ready drive, sole task, deploy-authorized; stamp-order preserved in-order; CVO~B re-spawn rides it). ~C = OPAL_GLDRNS.C1 (/gold-runner-code-review over cot). CTO holds all review gates; consolidation C5b rule stands: no Wave-3 C-port spec freezes until A2's verdict.",
+  "current_phase": "Spawn-pending (MSTR); CTO D-group enumeration done (the 8 fold-in points + output-key scaffold, directive-3 same-turn grounding).",
+  "blocking": "MSTR spawns ~A/~B/~C. ~B's sovereign-worded gates (hold-lift by name, GO) queue to Andrew at their in-order moments -- the drive itself is NOT blocked.",
+  "depends_on": [
+    "OPAL_CONSOLIDATION"
+  ],
+  "depends_on_note": "Executes OPAL_CONSOLIDATION WS-C gate C5b + the runner-audit scope; the AoR lane (~B) rides WS-D's law-vs-scope split -- LD-0277/hold-doc/stamp-order remain standalone-authoritative safety law the drive executes IN ORDER.",
+  "owner": "1.0.0_SA_CTO",
+  "created": "2026-07-15",
+  "pods": [
+    "0.4"
+  ],
+  "pipeline": "49F: legacy D-group (8 publishers) output-contract pin -> B/C sufficiency -> fit harness -> feeds WS-C S4/S5. INF: existing gold runner AoR chain -> production-ready -> portal-visible. COT: review -> efficacy/pattern findings -> casebook.",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": [],
+  "updated": "2026-07-15"
+}

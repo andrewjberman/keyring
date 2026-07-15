@@ -1,0 +1,32 @@
+{
+  "project_code": "OPAL_STNDRD",
+  "macro_code": "OPAL",
+  "name": "OPAL Standardization - estate-wide resource standards: medallion/trigger/lambda/EC2/TF/repo-docs (the 0.6.2 brief, CTO-ratified, 0.7.0~Z-executed)",
+  "description": "Andrew-directed (2026-07-15 ~18:4xZ two-message mandate via 0.6.2's terminal + ~19:1xZ spawn word via COO + CTO terminals: 0.7.0_AE_CloudOps~Z is Andrew-spawned and 'will be responsible for the project OPAL_STNDRD which is detailed in a brief from 0.6.2'). Source of truth: org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/BRIEF_CONSOLIDATION_RESOURCE_STANDARDIZATION_20260715.md @ 20b52be25 (mandate verbatim sec-0; 10/10 ingestion coverage verdict sec-1; the two-scheduling-services census finding sec-2). CTO RATIFICATION (2026-07-15 ~19:2xZ, all six axes): A medallion law AS WRITTEN; B trigger standard w/ the open call MADE -- EventBridge SCHEDULER for all NEW cron-class triggers (Rules remain for event-PATTERN only), grammar {unit}-{function}-{cadence}, absence-check twin REQUIRED per daily producer, trigger-map.json at infra/aws/lambda/ci/ w/ CI drift gate; C lambda standard (naming on natural touches only; BUILD_MANIFEST sizing_basis = measured acceptance, memory_mb = TF-desired; chunking law = lib/stream_parquet, CANONICAL on the n=2 AC-1 number); D EC2 standard (telemetry AT PROVISION, right-sizing review recorded, autoshutdown DEFAULT w/ manifest-declared exceptions); E TERRAFORM_PROTOCOL.md consolidation (mechanism moves, law stays in CLAUDE.md); F ONE registry home = infra/aws/lambda/ci/ + docs/architecture/INDEX.md keyed by resource type + instruments-not-cadence maintenance. Execution phases 1-7 per brief sec-5; renames ride natural touches, NEVER big-bang.",
+  "prds": [
+    {
+      "path": "org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/BRIEF_CONSOLIDATION_RESOURCE_STANDARDIZATION_20260715.md",
+      "label": "The brief IS the program spec (mandate verbatim + measured state + ratified axes + phase plan); TO OPAL_STNDRD.Z1 binds the ratification",
+      "date": "2026-07-15"
+    }
+  ],
+  "source_brief": "Andrew-direct mandate 2026-07-15 ~18:4xZ (verbatim in brief sec-0) + spawn word ~19:1xZ (CTO+COO terminals). Synergistic with OPAL_CONSOLIDATION per Andrew's own word ('this should be a synergistic process with the greater OPAL_CONSOLIDATION').",
+  "status": "active",
+  "phase": "REGISTERED + RATIFIED + TO AUTHORED (2026-07-15 ~19:2xZ). 0.7.0_AE_CloudOps~Z Andrew-spawned, GO on registration. Phase order: (1) ratified grammars/schemas [DONE at registration -- this record], (2) trigger-map census script + first committed map (0.6.2's half-written script = a bounded handoff contribution; ~Z owns), (3) absence-twin rollout on the 4-unit gap list, (4) renames on natural touches, (5) EC2 telemetry/right-sizing + si2 pilot, (6) TERRAFORM_PROTOCOL.md, (7) INDEX.md. Sec-4 gaps 1-5 = the opening work queue. CTO holds TF-apply + gate-shape reviews; every new standard ships gate-enforced per the CLAUDE.md rule-shape.",
+  "current_phase": "Awaiting ~Z registration -> GO. Opening queue = brief sec-4 gaps (pathfinder feeder owner-claim; the DISABLED smartx-model Scheduler entry verify; the 4-unit absence-twin list; BUILD_MANIFEST semantics fix; trigger-map build).",
+  "blocking": "None structural. ~Z registration only.",
+  "depends_on": [
+    "OPAL_CONSOLIDATION"
+  ],
+  "depends_on_note": "Synergistic per Andrew verbatim; the standards bind the consolidation's new builds (box, runners, converters) as they land -- gate-enforced, never retroactive-big-bang.",
+  "owner": "1.0.0_SA_CTO",
+  "created": "2026-07-15",
+  "pods": [
+    "0.7"
+  ],
+  "pipeline": "standards ratified -> registries + CI drift gates built -> gap rollout -> natural-touch renames -> docs consolidation/INDEX",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": [],
+  "updated": "2026-07-15"
+}
