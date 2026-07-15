@@ -1,7 +1,8 @@
 # ALL-CHANNEL BRONZE/SILVER PARITY CERTIFICATION + TRIGGER-CONFIRMATION MATRIX
 
-**Status: DRAFT — ASSEMBLING; completes at tonight's 22:00Z fire-read (two cells remain, both
-mechanism-gated on tonight's artifacts). NOT YET CERTIFIED.**
+**Status: ★ CERTIFIED — 2026-07-15 22:03Z ★** (both fire cells closed on the certifying officer's
+own instruments at 22:01-22:03Z; completion block below). **The full-resource gate is DISCHARGED;
+OPAL_CONSOLIDATION WS-C flips FULL-RESOURCE with this commit.**
 **Certifying officer:** 1.0.0_SA_CTO. **Directive:** Andrew-direct 2026-07-14 ~18:5xZ (verbatim in
 log 1d0f11228): ad-hoc drain every silver converter to bronze/silver parity + confirm scheduled-
 ingest & silver-event triggers; certification flips OPAL_RUNNERS (now OPAL_CONSOLIDATION WS-C) to
@@ -86,12 +87,25 @@ escalates instead.*
 ---
 ## COMPLETION BLOCK (pre-staged ~20:35Z; the two cells drop in at fire-read)
 
-**Cell 1 — ETF day-3 parity:** [PENDING FIRE-READ: the 07-15 row verdict from
-.tools/etfs-parity-check.py on the laptop-leg artifact — GREEN = 3/3 streak complete; COO's V2-1 GO
-cites the same read (mutual-citation agreement 183843Z).]
+**Cell 1 — ETF day-3 parity: ✅ CLOSED 22:03Z, MY OWN RUN of .tools/etfs-parity-check.py:**
+2026-07-13 GREEN / 2026-07-14 GREEN / 2026-07-15 GREEN — 52 fields, 0 mismatches each; 3/3 at the
+threshold. VERDICT: CUTOVER-READY ON THE DATA. (The tool's own caveats carried verbatim: the
+CUTOVER remains its 4-step order — this green is step 1; SILVER_ROOT flip → live-write verify →
+only-then disable the laptop leg are 0.5.0's sequenced cutover, NOT part of this cert. And
+LD-0292/$528mm partner_held_etf is a DIFFERENT FEEDER and STAYS OPEN — already sec-5.) COO's V2-1
+GO cites this read per the mutual-citation agreement.
 
-**Cell 2 — ETF scheduled-trigger leg:** [PENDING FIRE-READ: refreshed LastModified >= 21:55Z on the
-4 vendor-prefix keys + invocation log — never key-existence (same-key rewrite hazard).]
+**Cell 2 — ETF scheduled-trigger leg: ✅ CLOSED 22:01Z, MY OWN LISTING:** all 4 vendor-prefix keys
+refreshed at LastModified **22:00:10Z** (divz.html 462,322B / DailyNAV.csv 543B / idvz.html
+252,697B / ETF_Holdings.csv 14,305B) — the scheduled fire ran 10 seconds into its window and
+rewrote every key. Discriminator = LastModified >= 21:55Z per the same-key-rewrite hazard; the
+pre-fire baseline (14:28 local, the manual fire) was captured at 21:42Z for the diff.
+
+**BONUS EVIDENCE, same window:** the schwab box-guard MAIDEN FIRE (21:45:52Z, 0833) attested a
+clean guarded no-op — enumerated 267 / downloaded 0 / skipped 267 / failed 0, guard zeros,
+trading_frontier 2026-07-14 (T-1 correct). The guarded puller works; V2-2 evidence captured for
+0.6.2's revival. (Consequence: no conversions fired at 21:45Z, so the early AC-1 number did not
+materialize — the canonical-stamp number rides tomorrow's real delivery, per the standing ruling.)
 
 **On both cells GREEN, this document's status flips to CERTIFIED and the following execute
 same-turn:** (1) PushNotification to Andrew (the residual line rides verbatim-adjacent per cert-AC
