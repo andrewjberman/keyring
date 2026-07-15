@@ -78,6 +78,17 @@ silently drop or silently rename an unexpected extra send; write anywhere but `T
       flag_class, failing checks, sizes, sha256s, disposition).
    On failure at any step: MCP note to `0.5.0_AE_OpalETL` as well.
 
+## Cadence (Andrew ruling 2026-07-15: "Yes B now, we will do A later.")
+
+- **Option B (LIVE): operator-cadence.** This skill IS the daily runner — Alyssa or Andrew says
+  "run tax pt1" every trading morning. Primary run: **after ~7:00 ET** (both normal sends in by
+  6:47). **If ANY attachment FLAGs or the pair is incomplete: re-run after ~9:00 ET** — the
+  corpus shows FIS corrections arrive 8:10–8:20 ET on bad-send days; re-sends are updated
+  snapshots. Collisions on the re-run are the already-filed signal, not errors.
+- **Option A (DEFERRED): scheduled-autonomous** (EventBridge → server-side runner). Revisit
+  after the validator has run live for a week or two; the orchestration port inherits this
+  skill's flow verbatim.
+
 ## First-run addendum — CLOSED 2026-07-15 (first live run GREEN, Andrew observing)
 
 - S0.3 names byte-confirmed with correction (`SSAVAIL`/`SSAVAIL2`, not SSAVAIL1/2); dated

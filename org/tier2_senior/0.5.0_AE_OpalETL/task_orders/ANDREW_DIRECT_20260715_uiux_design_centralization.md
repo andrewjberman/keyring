@@ -24,6 +24,13 @@ follow_redirects=False swallowed Graph's 302-to-download-URL as empty bytes (gra
 detected because empty parses as valid. Fixed same turn + server-side `profile_site_file`
 analysis tool built in the same deploy (content profiling without 12MB rides on the MCP channel).
 
+**SCHEDULE RULING (Andrew, same session ~18:4xZ, verbatim): "Yes B now, we will do A later."**
+Option B = operator-cadence daily run (the guarded /tax-pt1 skill, Alyssa-operable) LIVE now;
+Option A = scheduled-autonomous (EventBridge -> server-side runner) DEFERRED until the validator
+has live mileage. #8 build arc CLOSED with this ruling: contract (35/35 corpus) -> validator
+(deployed a89bb53e6, exercised both rails) -> Flagged Files + Intake Logs live in SharePoint ->
+cadence ruled. Remaining under #8: Yang words (07-01 swap; backfill ack) -- parked, not blocking.
+
 ---
 
 # ANDREW-DIRECT #7 — UIUX macro + UIUX_DESIGN: centralized /design repository + process repoint (verbatim record)

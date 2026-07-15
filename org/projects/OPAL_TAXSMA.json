@@ -37,6 +37,11 @@
     {
       "date": "2026-07-15T18:4xZ",
       "agent": "0.5.0_AE_OpalETL~A",
+      "event": "ANDREW SCHEDULE RULING (verbatim: Yes B now, we will do A later.): daily cadence = OPERATOR-RUN guarded /tax-pt1 (Alyssa-operable; primary ~7:00 ET, FLAG/incomplete -> re-run after ~9:00 ET for the 8:10-8:20 correction tail). Scheduled-autonomous DEFERRED pending live mileage. Andrew-direct #8 build arc CLOSED."
+    },
+    {
+      "date": "2026-07-15T18:4xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
       "event": "VALIDATOR COMMISSIONED: deployed a89bb53e6 post-DT-signal (deconflict clean, their ENABLED_INTEGRATIONS preserved), exercised positive (2x PASS, sha256==saves) + negative (stub FLAG-STUB, flags on C7-only = right axis), first run-log + Flagged Files README landed in SharePoint. 8/8 unit battery incl. lying-checksum case."
     },
     {
