@@ -15,7 +15,7 @@
     "0.3.1"
   ],
   "created": "2026-06-26",
-  "current_phase": "P1 EXECUTING (0.5.0~A delegate). SCOPE PER ANDREW RULINGS 07-14: the SSAVAIL intake/parsing (/tax-pt1) IS the principal automation; step-2 cost-basis MANUAL by ruling (no Schwab ask; not derivable in-estate); step-5 DESCOPED for now; step-3 conversion = /tax-pt3 when a fresh Tax Lot date exists; Alyssa operates via skills (write_files entitlement LIVE on-box). SHIPPED: gateway attachment tools (633941502, import-proven) + /tax-pt1 runner skill. PENDING: first live /tax-pt1 run on next m365 MCP reconnect (byte-confirms S0.3 attachment naming). S0 fully closed (df17cbeb0). Hard guardrail moot-by-descope but the canonical converters stay locked in-repo.",
+  "current_phase": "P1 LIVE -- FIRST /tax-pt1 RUN GREEN 2026-07-15 ~16:58Z (Andrew observing, step-by-step): 2 emails found (FIS 5:02/6:47 ET), S0.3 byte-CONFIRMED with correction (pair = SSAVAIL early / SSAVAIL2 late, not SSAVAIL1/2; FINAL base matches Yang kept files), both saved to TAX/Short Sale (SSAVAIL 20260715 PRELIM.ASC 12,694,286 B sha256 8cddb66c...; SSAVAIL2 20260715.ASC 12,934,060 B sha256 6292e2e9...), listing-verified. SCOPE PROOF (exercised): upload rides consented Files.ReadWrite.All alone -- no Sites.ReadWrite.All, NO IT ask. Yang spec email re-read fresh from source pre-run (Tax SMA Automation 06-26). OPEN with Andrew/Yang: backfill 06-26->07-14 gap (mail has attachments); spec-vs-practice delta (Yang keeps FINALs only, sparse dates; automation saves both daily per spec). NEXT: daily cadence decision (EventBridge-scheduled vs on-demand skill run); /tax-pt3 on a fresh Tax Lot export.",
   "prds": [
     {
       "path": "docs/architecture/ADVI_TAXSMA_PRD.md",
@@ -29,6 +29,11 @@
     "NFRA_MSGRAPH"
   ],
   "history": [
+    {
+      "date": "2026-07-15T16:5xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "FIRST LIVE /tax-pt1 RUN GREEN (Andrew observing). S0.3 closed-with-correction (SSAVAIL/SSAVAIL2); Files.ReadWrite.All scope proof exercised (no IT ask); PRELIM+FINAL landed + listing-verified in TAX/Short Sale. Skill + S0 close doc updated same turn (mangled rename literals in SKILL.md also cleaned)."
+    },
     {
       "date": "2026-07-14T21:0xZ",
       "agent": "0.5.0_AE_OpalETL~A",

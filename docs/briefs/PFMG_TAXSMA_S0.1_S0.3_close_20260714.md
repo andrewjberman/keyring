@@ -84,3 +84,19 @@ first attachment-metadata read once the fetch capability lands (it is the first 
   run the CANONICAL converters verbatim (BASE+date injected), push `Initial Holding/{date}` /
   `Trade/{date}` back. Step-4 = the waiting-on-Yang gate + Teams/mail notify.
 - The trade file is GENERATED, never executed/uploaded — unchanged, non-negotiable.
+
+---
+
+## S0.3 CONFIRMED — first live /tax-pt1 run, 2026-07-15 (byte-grounded)
+
+The attachment-name-primary hypothesis is CONFIRMED with one correction: the actual base pair is
+**`SSAVAIL` (early send) / `SSAVAIL2` (late send)** — not SSAVAIL1/SSAVAIL2 as hypothesized.
+Evidence (Graph, verbatim): 5:02:10 ET send carries `SSAVAIL.ASC` (12,694,603 attachment bytes);
+6:47:41 ET send carries `SSAVAIL2.ASC` (12,934,383). Name rule and time-fallback agree. FINAL base
+matches Yang's own kept files exactly (`SSAVAIL2 YYYYMMDD.ASC`, verified against his 6 manual saves
+Apr 06 - Jun 25). First-run writes, listing-verified: `SSAVAIL 20260715 PRELIM.ASC` (12,694,286 B,
+sha256 8cddb66c...fbe2d) + `SSAVAIL2 20260715.ASC` (12,934,060 B, sha256 6292e2e9...8988) in
+TAX/Short Sale. Scope note: upload rode the consented `Files.ReadWrite.All` alone — no
+Sites.ReadWrite.All needed, no IT ask (exercised, not inferred). Practice observation on record:
+Yang's folder holds FINALs only, sparse dates — spec says save both; automation follows the spec
+pending his word. Backfill question (last manual save 06-25 -> go-live) OPEN with Andrew/Yang.
