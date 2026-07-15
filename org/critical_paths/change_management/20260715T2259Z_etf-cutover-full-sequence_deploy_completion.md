@@ -1,7 +1,9 @@
 # DEPLOY-COMPLETION LEDGER: ETF cutover, full sequence (laptop leg retires)
 
 **Opened:** 2026-07-15T22:59:49Z by 0.5.0_AE_OpalETL (on 0.7.0's leg-1 START ping 225949Z -- the true start, not the ETA)
-**Status:** OPEN -- legs in flight
+**Status:** CLOSED 2026-07-15T23:47Z -- ALL FIVE LEGS COMPLETE; the laptop leg is RETIRED.
+AC3 rider stands: tomorrow 22:00Z = the named full-letter confirmation (new date partition ->
+the converter WRITES fresh); a FAIL there = re-enable immediately + report, no adjudication.
 
 ## Motion
 The ruled 4-step ETF cutover, completed in one sequence TONIGHT plus the two gated pre-legs:
@@ -52,9 +54,26 @@ precedent (Andrew-ordered, 18:26Z) is the ruling that a manual fire satisfies a 
    (i) clean-by-mechanism -> leg 5 tonight, or (ii) leg 5 waits on tomorrow's natural 22:00Z
    full-path write. Converter-silence calibration on the record: the 23:30 WRITING run also
    printed zero application lines -- log-silence discriminates nothing for this lambda.
-5. [HELD at the leg-4 STOP, 0.5.0] Disable Windows task "ETF NetAssets Daily Probe" (root
-   TaskPath; next run 07-16 6:00 PM ET) + ledger CLOSE + evidence to CTO/COO. Fires only on
-   CTO's leg-4 disposition (i), or after tomorrow's natural fire under (ii).
+5. [DONE 23:45Z, 0.5.0] LEG-4 RULED CLEAN-BY-MECHANISM (CTO 234422Z, option i) with both
+   riders satisfied:
+   - RIDER 1 (writer identity) GREEN: the 23:30 writer WAS opal-assets-silver-etf itself --
+     single invocation RequestId 1be4423f, START 23:30:13.8 -> END 23:30:16.4, the fact-table
+     stamps (23:30:15-16) inside its window; duration 2,549ms (a WRITING run) vs the 156-780ms
+     skip runs at 23:37 -- the write/skip paths visibly distinct executions of ONE function.
+   - PROVENANCE (0.7.0 234531Z, source-confirmed): the invoker was the container SWEEP --
+     EventBridge opal-assets-silver-etf-sweep-daily cron(30 23 * * ? *), TriggeredRules Sum=1
+     @ 23:30:00Z exactly; negative controls close all other cells (leg-1 exercises both
+     errored pre-conversion; leg 2 zero invocations; S3 events cannot retro-fire). NET:
+     tonight exercised BOTH paths -- sweep-write (23:30) AND event-skip (23:37) -- against
+     one partition with byte identity. Stronger leg-4 than designed.
+   - Windows task "ETF NetAssets Daily Probe" DISABLED 23:45Z, verified State=Disabled.
+     THE LAPTOP LEG IS RETIRED.
+   - RIDER 2, THE RECOVERY RUNBOOK (reversal is ONE command + one hand-fire, bounded 1 day
+     on a T-1 basis):
+       Enable-ScheduledTask -TaskName "ETF NetAssets Daily Probe"
+     then hand-fire the pull once (aws lambda invoke etfs-netassets-daily, payload {}) or
+     Start-ScheduledTask for the legacy path. AC3 FAIL tomorrow => run the runbook
+     immediately + report to CTO/COO; no adjudication needed.
 
 ## Rollback
 Per leg: 0.7.0's swap/TF legs each carry their own plan-gated revert (artifact re-swap /
