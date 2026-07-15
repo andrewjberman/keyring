@@ -21,6 +21,11 @@
       "path": "docs/architecture/ADVI_TAXSMA_PRD.md",
       "label": "CTO Tax SMA PRD (discovery-gated, S0-first, 5 steps, hard trade-file-generated-not-executed guardrail) -- CTO renaming ->PFMG_TAXSMA_PRD.md",
       "date": "2026-06-26"
+    },
+    {
+      "path": "docs/briefs/OPAL_TAXSMA_SSAVAIL_CONTENT_CONTRACT.md",
+      "label": "SSAVAIL Content Contract v1.0 (corpus-derived, 35/35 denominator; the intake-validation law)",
+      "date": "2026-07-15"
     }
   ],
   "related": [
@@ -29,6 +34,11 @@
     "NFRA_MSGRAPH"
   ],
   "history": [
+    {
+      "date": "2026-07-15T18:2xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "CORPUS ANALYSIS COMPLETE (Andrew-direct #8, plan approved): 35/35 files profiled server-side (profile_site_file, deployed c0cd853c1 after fixing the gateway-wide silent drive-read bug). CONTENT CONTRACT v1.0 derived + committed (docs/architecture/OPAL_TAXSMA_SSAVAIL_CONTENT_CONTRACT.md): FIS 0164 fixed-width 200-char, header/detail/trailer, trailer count==total lines (35/35 tie), as-of==prior trading day (holiday-proven), volume envelope 53k-77k lines. TWO failure modes with mechanical signatures: STUB (404B, trailer==2, 4 observed) and TRUNCATED-VALID (07-01: tying trailer at 22 pct of envelope -- only the volume check catches it; FIS re-sends are UPDATED SNAPSHOTS not replays). 07-01 adjudication content-resolved: EXTRA-1 is the complete file; swap awaits Yang word. NEXT: validator + Flagged Files + shared-cloud run log + compiled flag report + schedule decision."
+    },
     {
       "date": "2026-07-15T17:4xZ",
       "agent": "0.5.0_AE_OpalETL~A",
