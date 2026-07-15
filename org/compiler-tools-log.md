@@ -18723,3 +18723,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~21:20Z | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A2 | comp-kuzu x3 (provenance read, graph_nodes STALE noted, corroboration-only use; CloudEdge schema learned), comp-glob x1, comp-pipescript io cited from A1; custom static column extractor (method+caveat in deliverable) | verdict: deliverables/BC_TO_D_SUFFICIENCY_VERDICT_49F_20260715.md |
 | 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A2.dconsumed-census-and-sufficiency-verdict | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A2.dconsumed-census-and-sufficiency-verdict | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/deli... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/absence-config.json... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff infra/aws/lambda/ci/absence-config.json infra/aws/lambda/ci/lambda-sour... | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/GLDRNS_B1_G2_FLIP... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-axes --file .tools/comp-whi... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff .tools/comp-axes .tools/comp-which org/modules/graph/axes_history.jsonl... | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-07-15/session_feed9_now_and... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(n) | PASS |
+| 2026-07-15 ~21:15Z | 0.4.0_DS_ClientPlatform~B | comp-grep x3, comp-glob x2, comp-pipescript deployed (inf sweep -> G3 manifest), comp-pulse x5 | GLDRNS.B1 step-1 ground-state + bundle staging | sweep denominators printed; danger map ~38h stale (noted) |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
