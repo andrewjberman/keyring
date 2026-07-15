@@ -7,6 +7,32 @@
 <status>pending</status>
 <scoping_completed>2026-07-14 ~19:25Z — brief deliverable landed: docs/briefs/ANDREW_BRIEF_20260714_taxsma_and_ticket_system.md (293c062fb)</scoping_completed>
 
+## ADDENDUM 5 — SIXTH ANDREW-DIRECT (2026-07-15 ~14:0xZ): TICKET-CENTER UI + THE UI-DESIGN PROCESS (verbatim)
+
+> "This is good, the frontend view is not quite right because of the nature of the UI coloring.
+> The primary background of the Portal is silver, which you should be able to identify if you
+> employ a screenshot through /frontend-dev or some kind of playwright solution. As a result,
+> whenever designing UI, if there are buttons or text that are not encapsulated within a darker
+> shaded panel or container, they cannot be light hex codes (e.g. white, gray, silver). This is
+> a footgun that appears over and over when designing UI for the portal. I want you to assess
+> how we can first, fix this design on the ticketing system, and second, somehow inform our UI
+> design process so that when adding new features/pages/etc., that we do not add light text and
+> light buttons on a light background."
+
+**Executed same window:** (1) TicketCenter.tsx rebuilt on the Panel primitives (all content into
+`Panel variant="chart"`, action buttons into `PanelHeader actions`, canvas error banner flipped
+dark-on-light) — before/after screenshot-verified headlessly (canvas grounded live at
+`rgb(195,202,218)` = `--palette-silver 222 24% 81%`); stale "light blue" comments in
+Panel.tsx/SectionCard.tsx corrected (tokens resolve NAVY 25% at current brand — the rebrand-lag
+comment trap that helped cause this). (2) Process controls: NEW `portal/CLAUDE.md` (canvas color
+law + container tier table, auto-loads for every portal agent), NEW `portal/scripts/ui-smoke.mjs`
+(auth-stubbed headless screenshot instrument, works without credentials), NEW `/frontend-dev`
+skill (the render→LOOK→commit loop; named to Andrew's handle — no such skill existed anywhere
+before this). Portal-side commit HELD at authoring time for COO's DEV-push freeze (POSN_BMKVIZ
+promote window); commits on release relay. Root cause on record: the page was built by copying
+SecurityScanner's text idiom without its Panel containment, and was never once rendered and
+looked at before ship — the control is the screenshot, not more care.
+
 ## ADDENDUM 4 — FIFTH ANDREW-DIRECT (same session, ~21:0xZ): REGISTRY NAMING (verbatim)
 
 > "let's make sure ticket project is registered as OPAL_TICKET in the registry. also OPAL_TAXSMA
