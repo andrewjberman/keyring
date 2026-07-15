@@ -9,6 +9,9 @@ The portal's page canvas is **light silver** (`--bg-page`, `222 24% 81%`). Dark 
 float on it. Every recurring UI defect in this class is the same mistake: white-text idiom
 (`text-white*`, `text-{color}-300`, `bg-white/N`) placed directly on the canvas instead of
 inside a dark container. The law + container table: `portal/CLAUDE.md` ("Color law").
+**Canonical design repository: `design/`** (workspace root — brand law
+`design/brand/COLOR_ARCHETYPES.md`, portal system `design/systems/portal/`, verification law
+`design/process/UI_VERIFICATION.md`).
 Reference implementation: `portal/src/pages/SecurityScanner/` + `portal/src/ui/components/panels/`.
 
 ## The loop (run for EVERY new/changed portal page or visual component)

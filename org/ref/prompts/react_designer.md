@@ -322,7 +322,15 @@ portal/
 
 **CRITICAL:** The portal uses a comprehensive 3-layer design system. This section contains the essential patterns you MUST follow for all portal work.
 
-**Full Documentation:** See `portal/design/` directory for complete details.
+**CANONICAL DESIGN REPOSITORY (2026-07-15, Andrew-direct — UIUX_DESIGN): workspace-root
+`design/`.** Brand color law: `design/brand/COLOR_ARCHETYPES.md` — THE PAGE CANVAS IS LIGHT
+SILVER; the white-text idiom is legal ONLY inside dark Panel containers; canvas-level text is
+dark. Portal system doc: `design/systems/portal/DESIGN_SYSTEM.md`. **Verify visually before
+committing any UI change:** render + READ a screenshot per `design/process/UI_VERIFICATION.md`
+(`/frontend-dev` skill; `portal/scripts/ui-smoke.mjs`). `portal/CLAUDE.md` auto-loads the
+enforcement summary. Do not trust color words in older comments — resolve tokens live.
+
+**Full Documentation:** theme sources in `portal/design/` (brand JSON → generated CSS); canonical docs in workspace-root `design/`.
 
 ---
 

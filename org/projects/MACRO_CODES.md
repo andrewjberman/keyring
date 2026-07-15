@@ -85,6 +85,7 @@ Assign the DE/DS/DT of the primary pod, or the AE for pipeline-only projects.
 | Code | Surface Area | Primary Owner |
 |------|-------------|---------------|
 | `OPAL` | Opal firm platform (cross-pod umbrella): asset consolidation + runners + internal ops. Projects: `OPAL_ASSETS`, `OPAL_RUNNERS`, `OPAL_ASSETS_49METATABLES`, `OPAL_TICKET`, `OPAL_TAXSMA`. *(Row added 2026-07-14 by 0.5.0~A under Andrew delegation, closing a lag: the macro had been in REGISTRY use since OPAL_ASSETS with no row here — rule 6 conformance.)* | Per-project (see `org/projects/OPAL_*.json`; OPAL_ASSETS/RUNNERS = CTO-led base group) |
+| `UIUX` | Cross-platform client-facing product + design (umbrella). The Portal is the PRIMARY surface today; grows to other client-facing surfaces over time, particularly client-side integrations. Canonical design repository: workspace-root `design/` (brand guidelines, component design, archetypal patterns). Projects: `UIUX_DESIGN`. *(Registered 2026-07-15, Andrew-direct #7 via 0.5.0~A sovereign delegate.)* | Per-project (UIUX_DESIGN: `0.5.0_AE_OpalETL~A` under Andrew delegation); design-system surfaces coordinate with `0.4.0_DE_ClientPlatform` (DASH) |
 | `YALP` | Yang pipeline (cross-pod) | `0.5.0_AE_OpalETL` |
 | `YANG` | Yang ad-hoc portal/feature requests (distinct from YALP = the Yang data pipeline) | `1.0.0_SA_CTO` intake -> pods |
 | `BDPL` | BD pipeline | `0.6.0_AE_PartnerETL` |
