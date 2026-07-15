@@ -1,3 +1,31 @@
+# ANDREW-DIRECT #7 + #8 — UIUX centralization; TAXSMA intake guardrails (verbatim records)
+
+## ANDREW-DIRECT #8 (same session, ~17:5xZ): TAXSMA CONTENT GUARDRAILS + DAILY SCHEDULE (verbatim)
+
+> "We do need a daily schedule here but this is exactly why I want to analyze these files that
+> are coming in so we understand exactly what type of content to expect and create a parsing
+> strategy not only on the size of the file, but on the contents of the file, so we can make
+> sure our outputs are robust, and if there is a data issue or something is off expectations,
+> it is flagged at that point. We have to overengineer this to some extent, because Alyssa, who
+> will be running the skill workflow, may or may not be able to assess/flag a 'suspicious' file,
+> so we need to analyze everything that has come through in line with Yang's intent (which is
+> also not beyond reproach), and build in guardrails accordingly. Logging everything in a shared
+> cloud location is a good start. I think we also need a new folder for /flagged_files, or some
+> kind of python-compiled report that establishes the flagged features (e.g. stub based on size)."
+
+**Operative effects:** (1) daily schedule CONFIRMED as direction; (2) corpus content analysis of
+every received SSAVAIL file -> derive the expected-content contract; (3) intake validation on
+CONTENT, not just size -- deliberately overengineered because the operator (Alyssa) cannot be the
+suspicious-file detector; (4) Yang's intent itself is validatable, not gospel; (5) run logging to
+a shared cloud location; (6) a flagged_files quarantine folder AND/OR a python-compiled flag
+report (flag taxonomy seeded with stub-by-size). **Execution finding at recon start:** gateway
+`read_site_file`/`read_file` returned empty-success on ALL drive files -- httpx default
+follow_redirects=False swallowed Graph's 302-to-download-URL as empty bytes (graph.py:39); never
+detected because empty parses as valid. Fixed same turn + server-side `profile_site_file`
+analysis tool built in the same deploy (content profiling without 12MB rides on the MCP channel).
+
+---
+
 # ANDREW-DIRECT #7 — UIUX macro + UIUX_DESIGN: centralized /design repository + process repoint (verbatim record)
 
 <issued_to>0.5.0_AE_OpalETL~A</issued_to>
