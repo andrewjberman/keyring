@@ -89,5 +89,7 @@
       "agent": "2.0.0_SA_COO",
       "event": "PROJECT REGISTERED (as ADVI_TAXSMA) + /allocation FIRED (CTO decomp handoff 183439Z, PRD 90e4d889c). Andrew-sovereign (Yang Liu 'Tax SMA Automation'). DISCOVERY-GATED S0-first. S0 decomposed+dispatched parallel: S0.1->CVO (Schwab-lot lever), S0.2->0.4.0_DS (converter-scripts review, role-fit split from CTO's AE-suggestion; DS freed by ADVI_COTMVP D1 stand-down), S0.3->0.8.0_AE (FIS email rule, M365 fit, freed by MSGRAPH re-scope hold). Build legs HELD until S0->RAVC CTO. Hard guardrail (trade-file generated-not-executed, no creds) every leg."
     }
-  ]
+  ],
+  "phase": "P1 EXECUTING (0.5.0_AE_OpalETL~A sovereign delegate, Andrew-direct 07-14; fabric-quiet). S0 fully closed. #7-#8 WINDOW CLOSED 2026-07-15 (e8dea4f6b): UIUX_DESIGN built; /tax-pt1 FIRST LIVE RUN executed + 27-file backfill + guardrails (content contract + validator deployed a89bb53e6 (469b07c79) + quarantine + shared-cloud logging; 2 SSM-verified gateway deploys, DT-deconflicted; verify SOUND). Cadence RULED (099b1162c, Andrew verbatim 'Yes B now, we will do A later.'): operator-cadence daily /tax-pt1 LIVE (~7 ET primary, FLAG -> ~9 ET re-run per corpus correction tail); scheduled-autonomous DEFERRED. Scope corrections carried: Pathfinder = SMA not Tax-SMA (981797593). Step-2 cost basis MANUAL by ruling; step-5 DESCOPED; Alyssa operates via skills.md.",
+  "blocking": "None blocking. Pending timing-not-blocks: /tax-pt3 conversion runner on a fresh Tax Lot date. Parked non-blocking: Yang 07-01 swap word, backfill ack."
 }
