@@ -18834,3 +18834,20 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1 | comp-kuzu x2 + comp-which (honest abstain = gap) + ms_heat_index (NEW, 8/8 + live 5519/5519) + rail full-tally + lifecycle check-fired read | TO-4 closed zero-touch, TO-5 served+accepted, retention shape corrected pre-incident | PASS |
 | 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-07-15/session_fire_close_21... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-15 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-imgread --file org/modules/... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-imgread org/modules/graph/comp-coverage-map.yaml org/module... | FAIL |
+| 2026-07-15 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-imgread --file org/modules/... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-imgread org/modules/graph/comp-coverage-map.yaml | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_CONSOLIDATION.json | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_CONSOLIDATION.json | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/lambda/etfs-pipeli... | FAIL |
+- 2026-07-15 22:1xZ 2.0.0_SA_COO: s3-listing census x1 (66,369-obj bucket state, denominators printed), comp-glob/grep x5 (TO enumeration + goldfish/C4 checks), surface-check x9 OK + pulse-diff x9 (8 CLEAN, 1 known-class HOLD resolved by the supersede-banner fix) -- S1-cert + constellation-onboarding window; /open-calls first live run produced 2 same-hour rulings.
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md --file docs/architecture/INDE... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff CLAUDE.md docs/architecture/INDEX.md docs/architecture/build-index.py d... | FAIL |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-15/s... | PASS |
