@@ -237,3 +237,10 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   systems-context doc indexing) needs design/ added or it silently omits the canonical design law
   from every answer. Audit which registries hardcode roots, then add.
 - resolution: OPEN -- rides the same ~Z/0.8.0 registry-touch wave; small.
+
+## [OPEN] tool-defect -- comp-blast cp1252 crash on non-ASCII in corpus quotes  (filed 2026-07-15, CTO; found by 0.4.0_DS~A on the A1 sweep)
+<!-- key: tool-defect|comp-blast-cp1252-print-crash -->
+- disposition: comp-blast crashes under cp1252 console encoding when a corpus quote carries U+2192
+  (and any non-ASCII); utf-8 retry works. Fix: cli.py _p() encode-safe (errors=replace or
+  reconfigure stdout utf-8). Workaround in use: utf-8 env retry.
+- resolution: OPEN -- small; rides the next comp-tool touch or the ~Z/0.8.0 wave.
