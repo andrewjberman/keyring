@@ -37,33 +37,44 @@ silently drop or silently rename an unexpected extra send; write anywhere but `T
 2. **Attachments:** for each message, `list_email_attachments(message_id)`. Expect exactly one
    non-inline attachment each, `.ASC`, ~10-15 MB. **Log the attachment names verbatim** — the first
    run byte-confirmed the S0.3 names (2026-07-15): early send = `SSAVAIL.ASC`, late = `SSAVAIL2.ASC`.
-3. **Map PRELIM vs FINAL (the S0.3 rule, in order):**
-   0. **STUB floor (added 2026-07-15, backfill-evidenced):** an attachment **< 1 MB is a STUB**,
-      never canonical — FIS has a recurring bad-send mode delivering ~404-byte error placeholders
-      (observed 06-30 x2, 07-01, 07-10; real files run 2.8-15.6 MB). Save as
-      `{base} {DATE} STUB{ext}` and report loudly. Canonical mapping below considers only
-      qualifying (>= 1 MB) sends.
-   a. **Attachment-name primary:** if the base names differ in a self-identifying way (e.g.
-      `SSAVAIL` vs `SSAVAIL2` — the CONFIRMED live pair — or an explicit prelim marker), map by
-      name: first QUALIFYING send of each base takes the canonical name.
-   b. **Time fallback (names identical):** FIS send time (from the forwarded header block in the
-      body, or receivedDateTime − ~4 min) **before 6:00 ET = PRELIM**; first send ≥ 6:00 ET = FINAL.
-   c. Beyond the mapped pair: EXTRA (see step 5). A qualifying re-send of an already-mapped base
-      is EXTRA-n — flag it loudly (it is usually FIS correcting a bad earlier send; a suspiciously
-      small canonical + a larger EXTRA needs Yang's adjudication, never a silent swap).
-4. **Save both files** with `save_email_attachment_to_site`:
-   - PRELIM → `{base} {DATE} PRELIM{ext}` (e.g. `SSAVAIL 20260715 PRELIM.ASC`)
-   - FINAL → `{base} {DATE}{ext}` (e.g. `SSAVAIL2 20260715.ASC` — must match Yang's kept pattern)
-   - `folder_path="TAX/Short Sale"`, site id above. Record each returned `sha256` + `bytes` + item id.
-5. **Extra sends (the 07-10 case):** any 3rd+ email/attachment saves as
-   `{base} {DATE} EXTRA-{n}{ext}` AND is reported loudly in the run summary (never silently mapped
-   to FINAL). If a name collision errors (`conflictBehavior=fail`), that IS the re-run/duplicate
-   signal — report it, do not work around it.
-6. **Verify:** `list_site_files(site_id, "TAX/Short Sale")` — confirm the new items by name + size
-   (listing-based acceptance, matching the landing-verification house rule).
-7. **Report** (chat + broker summary; on failure also MCP `0.5.0_AE_OpalETL`): DATE, emails found,
-   attachment names verbatim, mapping used (name-based vs time-fallback), files written
-   (name/bytes/sha256), extras/collisions, verification listing result.
+3. **VALIDATE every attachment BEFORE any save (Content Contract v1.0 — Andrew-direct #8;
+   requires the 2026-07-15 validator gateway deploy):**
+   a. Compute the expected as-of = PRIOR TRADING DAY of DATE via the estate's ONE calendar:
+      `python -c "from lib.trading_calendar import expected_last_trading_day; ..."` (never
+      hand-compute; the calendar authority stays workspace-side).
+   b. For each attachment: `validate_ssavail_attachment(message_id, attachment_id,
+      expected_asof=YYYYMMDD)` → verdict PASS | FLAG with per-check results (C1 fixed-width /
+      C2 ascii / C3 header / C4 as-of / C5 trailer-tie / C6 records / C7 volume envelope /
+      C9 warn). Contract: `docs/briefs/OPAL_TAXSMA_SSAVAIL_CONTENT_CONTRACT.md`. Known classes:
+      STUB (404B, trailer==2) and TRUNCATED-VALID (trailer TIES but volume ~22% of envelope —
+      the checksum lies; only C7 catches it).
+4. **Map + route by verdict (the S0.3 rule on PASS files only):**
+   a. **Attachment-name primary:** `SSAVAIL` vs `SSAVAIL2` (the confirmed live pair) — first
+      PASS send of each base takes the canonical name:
+      PRELIM → `{base} {DATE} PRELIM{ext}` · FINAL → `{base} {DATE}{ext}`
+   b. **Time fallback (names identical):** FIS send < 6:00 ET = PRELIM; first ≥ 6:00 ET = FINAL.
+   c. **FLAG files** → `folder_path="TAX/Short Sale/Flagged Files"`, name
+      `{base} {DATE} FLAGGED-{flag_class}{ext}` (e.g. `SSAVAIL 20260710 FLAGGED-STUB.ASC`).
+      NEVER canonical, NEVER silently dropped; every flag goes in the run report.
+   d. **Extras:** a PASS re-send of an already-mapped base → `{base} {DATE} EXTRA-{n}{ext}`,
+      loud. Re-sends are UPDATED SNAPSHOTS (07-10: +809 rows), never discard unseen; a small
+      canonical + larger EXTRA needs Yang's adjudication, never a silent swap.
+   All saves via `save_email_attachment_to_site`; record sha256 + bytes + item id (the sha256
+   must MATCH the validator's — a mismatch means the attachment changed between validate and
+   save: STOP and re-run).
+5. **Collisions:** `conflictBehavior=fail` — a name collision IS the re-run/duplicate signal;
+   report it, never work around it.
+6. **Verify:** `list_site_files` on BOTH folders (`TAX/Short Sale`, `TAX/Short Sale/Flagged Files`)
+   — listing-based acceptance by name + size.
+7. **Report + shared-cloud log (Andrew-direct #8):**
+   a. Chat + broker summary: DATE, emails, verdicts per attachment (verbatim flag_reasons),
+      mapping, files written (name/bytes/sha256), flags/extras/collisions, listing result.
+   b. Write the run log via `upload_text_to_site` →
+      `TAX/Short Sale/Intake Logs/{DATE}-{HHMMSS}Z intake-log.md` (timestamped = never collides;
+      newest file IS latest). If ANY flag: also write
+      `{DATE}-{HHMMSS}Z flag-report.md` there — the compiled flagged-features report (file,
+      flag_class, failing checks, sizes, sha256s, disposition).
+   On failure at any step: MCP note to `0.5.0_AE_OpalETL` as well.
 
 ## First-run addendum — CLOSED 2026-07-15 (first live run GREEN, Andrew observing)
 
