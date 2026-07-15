@@ -85,12 +85,28 @@ def import_in_fresh_interpreter(mod: str, path: str) -> tuple[bool, str]:
     A fresh process per module is load-bearing: in a shared process, an earlier successful import
     populates sys.modules and a later broken module can resolve its dependency from memory rather
     than from the bucket -- which is precisely the fault we are hunting.
+
+    GLDRNS.B1 fix (2026-07-15, found by 0.4.0_DS~B on the serve-held bundle deploy): the original
+    body was `importlib.import_module("<basename-minus-.py>")`. The estate's gold scripts carry
+    DOTS in their basenames (INF_A_00.accounts_dimension.py), and import_module parses a dot as
+    package.submodule -- so EVERY dotted script FAILED BY CONSTRUCTION, healthy or not, while only
+    libs and undotted names were truly tested. A FAIL census that fails everything is a silence,
+    not a reading. The honest form is a FILE-based spec load (dots in the filename are irrelevant),
+    with the flat dir still on sys.path so intra-prefix dependencies resolve exactly as they do on
+    the runner (sync_scripts() flattens to one dir). The runner itself executes these as FILES
+    (bash -> python <file>), never as dotted module imports -- so the spec load is also the more
+    faithful model of production. Self-test: --self-test (three arms, incl. a dotted healthy name).
     """
+    fname = mod + '.py'
     code = (
         'import sys; sys.path.insert(0, r"%s")\n'
-        'import importlib\n'
-        'importlib.import_module("%s")\n'
-    ) % (path, mod)
+        'import importlib.util, os\n'
+        'f = os.path.join(r"%s", r"%s")\n'
+        'safe = "lint_" + r"%s".replace(".", "_").replace("-", "_")\n'
+        'spec = importlib.util.spec_from_file_location(safe, f)\n'
+        'm = importlib.util.module_from_spec(spec)\n'
+        'spec.loader.exec_module(m)\n'
+    ) % (path, path, fname, mod)
     proc = subprocess.run([sys.executable, '-c', code], capture_output=True, text=True, timeout=120)
     if proc.returncode == 0:
         return True, ''
@@ -98,14 +114,59 @@ def import_in_fresh_interpreter(mod: str, path: str) -> tuple[bool, str]:
     return False, err[-1] if err else f'exit {proc.returncode}'
 
 
+def run_self_test() -> int:
+    """Three arms, each of which can fail, none of which touches S3:
+      1. a DOTTED healthy script imports OK      (the arm the old body failed BY CONSTRUCTION)
+      2. an undotted healthy lib imports OK      (the arm the old body could already do)
+      3. a deliberately-broken module FAILS      (the lint can still go red -- a lint never
+                                                  observed failing has not been shown able to)
+    """
+    tmp = tempfile.mkdtemp(prefix='deploy-import-lint-selftest-')
+    try:
+        with open(os.path.join(tmp, 'INF_X_99.dotted_healthy.py'), 'w') as fh:
+            fh.write('from lint_dep_lib import VALUE\nRESULT = VALUE + 1\n')
+        with open(os.path.join(tmp, 'lint_dep_lib.py'), 'w') as fh:
+            fh.write('VALUE = 41\n')
+        with open(os.path.join(tmp, 'broken_missing_dep.py'), 'w') as fh:
+            fh.write('import lib_that_was_never_deployed\n')
+        arms = [
+            ('INF_X_99.dotted_healthy', True),
+            ('lint_dep_lib', True),
+            ('broken_missing_dep', False),
+        ]
+        bad = 0
+        for mod, want_ok in arms:
+            ok, err = import_in_fresh_interpreter(mod, tmp)
+            verdict = 'PASS' if ok == want_ok else 'FAIL'
+            if ok != want_ok:
+                bad += 1
+            print(f'  [{verdict}] self-test {mod}: imported={ok} wanted={want_ok}'
+                  + (f'  ({err})' if err and not ok else ''))
+        if bad:
+            print(f'[import-lint] SELF-TEST FAILED: {bad}/3 arms wrong. DO NOT TRUST THIS LINT.')
+            return 1
+        print('[import-lint] SELF-TEST PASS 3/3: dotted-healthy OK, lib OK, broken FAILS.')
+        return 0
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--bucket', required=True)
-    p.add_argument('--prefix', required=True, help='e.g. code/gold/lib/')
+    p.add_argument('--bucket', required=False, default=None)
+    p.add_argument('--prefix', required=False, default=None, help='e.g. code/gold/lib/')
     p.add_argument('--expect-fail', action='store_true',
                    help='SELF-TEST: assert the lint DOES find a broken module (a lint never observed '
                         'to fail has not been shown to be able to).')
+    p.add_argument('--self-test', action='store_true',
+                   help='Run the offline three-arm self-test (dotted-healthy OK / lib OK / broken '
+                        'FAILS) and exit. No S3 access, no bucket/prefix needed.')
     args = p.parse_args()
+
+    if args.self_test:
+        return run_self_test()
+    if not args.bucket or not args.prefix:
+        p.error('--bucket and --prefix are required unless --self-test')
 
     s3 = boto3.client('s3', region_name='us-east-1')
     tmp = tempfile.mkdtemp(prefix='deploy-import-lint-')
