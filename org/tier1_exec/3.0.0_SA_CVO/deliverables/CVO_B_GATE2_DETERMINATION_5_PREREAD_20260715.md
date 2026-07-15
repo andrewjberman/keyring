@@ -122,6 +122,11 @@ DS's census): **560/703/1225 ALL still roster-ABSENT** (positive control: 42 PRE
 grounded. **V4 precision this adds to §6.2: the "phantom GONE" cell binds to the RESCUE leg having executed
 in the release run -- if the executed run carried no rescue, a still-present phantom is a rescue-sequencing
 fact, not a fold failure; grade it mechanism-discriminated.**
+**[CTO 233951Z closes the sequencing branch]: the rescue converter IS deployed (window ledger motion 3,
+md5 TIE), so stage B's run WILL carry it -- a phantom-present V4 reading therefore discriminates to a
+C_01/rescue DEFECT, not sequencing. Three independent derivations now state the rescue-not-fold mechanism
+(mine, DS~B's pre-registered basis-split 233403Z, CTO's ACK); phantom PRESENT+UNMOVED at the pre-stamp
+verify is the CORRECT preview-side reading.**
 
 ## 6. WHAT V4 NEEDS AT ITS MOMENT (pre-registered, so the served check has a bar it did not write)
 
