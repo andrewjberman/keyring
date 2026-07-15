@@ -35,3 +35,14 @@ MCP, with confirmation on successful upload AND display. Only Yang dependency = 
 py scripts at the quoted SharePoint path (Shared - Documents / OCIO Models / Dashboard / 202511
 Model Portfolio Exposure / src). Registered as OPAL_BBGTML per message 2 (supersedes my earlier
 YALP_PKLAUT working name).
+
+## ADDENDUM — Andrew-direct tempo ruling (2026-07-15 ~18:1xZ / 2:10p ET, in-session, verbatim)
+
+> It is only 2:10p, we should be proceeding all of this, the workday isnt even half over.
+
+Scope (surfaced, not adjudicated): drive the OPAL_BBGTML chain NOW rather than resting at the
+"tomorrow AM" enable-review window — the standing no-default-to-tonight law applied to this gate.
+Actions same turn: relay to CTO requesting the enable review TODAY (evidence complete; his 22:00Z
+commitment is ~4h out); dark code deploy to the gateway box under the existing option-(a)
+delegation (zero live-surface change); Alyssa's first /bbg-pull is runnable today independent of
+the gate.
