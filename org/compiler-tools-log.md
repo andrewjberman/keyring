@@ -18696,3 +18696,30 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~20:5xZ | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1 | comp-to, comp-grep x5 (22k-file denominators), commit-gate x3, safe-commit/comp-pulse x4, NEW trigger-census.py (two-service census; both failure arms exercised) | phase-2 census+map+gate delivered/accepted; declared axis state-grounded after grep false-positive lesson; registry-self-match bug caught+fixed |
 | 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/COT_GLDRNS_C1_TRI... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0301.md | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0301.md | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHFEED.json | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_GRAPHFEED.json | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/OPAL_GLDRNS.C1.cot... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-axes --file .tools/comp-whi... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff .tools/comp-axes .tools/comp-which org/modules/graph/axes_history.jsonl... | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/SMARTX_INGESTION_ARCHI... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff data/assets/docs/SMARTX_INGESTION_ARCHITECTURE.md org/tier2_senior/0.5.... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A2.dconsumed-census-and-sufficiency-verdict | comp-kuzu | comp-kuzu MATCH (a)-[r:READS]->(b) WHERE b.name CONTAINS 'account_performance' RETURN a... | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A2.dconsumed-census-and-sufficiency-verdict | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/SMARTX_INGESTION_ARCHI... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff data/assets/docs/SMARTX_INGESTION_ARCHITECTURE.md org/tier2_senior/0.5.... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A2.dconsumed-census-and-sufficiency-verdict | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE b.name CONTAINS 'accou... | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/GLDRNS_B1_SERVEHE... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A2.dconsumed-census-and-sufficiency-verdict | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE b.name CONTAINS 'accou... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/COT_GLDRNS_C1_TRI... | PASS |
+| 2026-07-15 ~21:20Z | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A2 | comp-kuzu x3 (provenance read, graph_nodes STALE noted, corroboration-only use; CloudEdge schema learned), comp-glob x1, comp-pipescript io cited from A1; custom static column extractor (method+caveat in deliverable) | verdict: deliverables/BC_TO_D_SUFFICIENCY_VERDICT_49F_20260715.md |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A2.dconsumed-census-and-sufficiency-verdict | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A2.dconsumed-census-and-sufficiency-verdict | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/deli... | PASS |
