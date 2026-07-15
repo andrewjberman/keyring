@@ -18761,3 +18761,35 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~21:45Z | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3 | commit-gate x4 (2 real blocks fixed at source), pytest 32/32, fit_harness --self-test 3/3 controls vs served bytes (read-only); postdeps deferred to dry-fit execution (harness not a registered gold script) | harness: data/assets/scripts/gold/runners_49f/fit_harness.py |
 | 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/runners_49f/fi... | PASS |
 | 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/fit_harness.py data/assets/scripts... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/SMARTX_INGESTION_ARCHI... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff data/assets/docs/SMARTX_INGESTION_ARCHITECTURE.md org/tier2_senior/0.5.... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_GRAPHFEED_TO4_COM... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/manifest-lint.py --file i... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff infra/aws/ec2/manifest-lint.py infra/aws/ec2/safe-ec2-deploy.sh | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-pipescript | comp-pipescript postdeps D_04.client_portal_summary | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-pipescript | comp-pipescript postdeps D_00f.advisor_nna_canonical | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type STARTS WITH 'MS_' RETURN n.node_type, c... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0298.md | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0298.md | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type = 'MS_FILE' RETURN n.snapshot_ts, n.pro... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/SMARTX_INGESTION_ARCHI... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff data/assets/docs/SMARTX_INGESTION_ARCHITECTURE.md org/tier2_senior/0.5.... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-lambdamap | comp-lambdamap reconcile-deployed --functions inf-accounts-v2-daily,inf-api-positions,i... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/inf-pipe... | FAIL |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/STNDRD_PHASE6_TERRAFORM... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/inf-pipe... | FAIL |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/INDEX.md --file docs/... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff docs/architecture/INDEX.md docs/architecture/build-index.py | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/STNDRD_PHASE7_INDEX_GEN... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/SMARTX_INGESTION_ARCHI... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff data/assets/docs/SMARTX_INGESTION_ARCHITECTURE.md org/tier2_senior/0.5.... | PASS |
+| 2026-07-15 ~21:4xZ | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1 | commit-gate x2, bash -n, NEW manifest-lint.py (3 arms), NEW build-index.py (349/8 denominators, drift arm both directions), CW telemetry reads (si2 pilot), safe-commit/comp-pulse x5 | ph5 closed (lint shipped+wired+accepted); ph6 TF-protocol + ph7 generated-INDEX authored, relay-staged to CTO lanes |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
