@@ -106,6 +106,23 @@ why it saw what the sentinel-set census could not.
 | `aor_phantom_advisor_arm` | **RED until the first post-flip artifact serves, then MUST flip GREEN** | the phantom ($52,604.80) is still on the served 07-10 spine; its disappearance IS V4's headline |
 | `aor_phantom_switch_arm` | **EXPECTED TO CHANGE STATE -- and that is the arm WORKING** | its det-#4 green was DATA-DEPENDENT (the 3 phantom accounts were roster-absent on the 07-12 basis; I named switch-dependence REACHABLE in det-#4 §3). On the real basis the release pre-registration asserts the switch moves the phantom bucket to patrick (+$1.03M incl. $52,604.80) -- the fold doing its job under Andrew's backfill ruling, not a regression. A CHANGED verdict here confirms det-#4 §3's warning, and I record that NOW so nobody (including me) reads it as a break |
 
+**[FIRED 23:3xZ, CTO-commissioned 232947Z -- and my phantom_switch prediction was WRONG; the annotation
+stands, the prediction does not get rewritten.]** Battery at `327db12ea`: **exit 0 -- 9 GREEN + 1 expected
+RED (phantom_advisor), every arm at its det-#4 expectation** (evidence:
+`CVO_B_GATE2_BATTERY_FIRE_327db12ea_20260715.txt`; denominator: 10 live arms / 10 declared exclusions --
+the four 07-13-PM time-lock-chapter arms declared EXCLUDED with reasons before firing). `phantom_switch_arm`
+did **NOT** change state, and it is RIGHT: **my §5 row above mis-attributed the phantom-move mechanism.**
+The release delta's "phantom GONE / patrick UP incl. $52,604.80" rides the **SILVER-RESCUE leg (G4)** --
+real `rep_id`s at silver, so the accounts never floor to the phantom -- **not the AoR fold**; the arm
+correctly measures the fold in isolation (its PC1-PC3 controls all catch). Residual I closed myself: the
+arm's "TODAY ... grounded live, 873 rows" line is a **hardcoded 07-13 label** (the arm is hermetic -- its
+own §15 class). Re-grounded LIVE on `silver/api_dims/accounts_v2/snapshot_date=2026-07-15` (874 rows, ties
+DS's census): **560/703/1225 ALL still roster-ABSENT** (positive control: 42 PRESENT); the +1 account since
+07-12 is `4364`, not one of the three. Switch-independence of the phantom HOLDS on the live basis, freshly
+grounded. **V4 precision this adds to §6.2: the "phantom GONE" cell binds to the RESCUE leg having executed
+in the release run -- if the executed run carried no rescue, a still-present phantom is a rescue-sequencing
+fact, not a fold failure; grade it mechanism-discriminated.**
+
 ## 6. WHAT V4 NEEDS AT ITS MOMENT (pre-registered, so the served check has a bar it did not write)
 
 1. The SERVED artifact of the **first post-flip nightly** (`platinum/firm/advisor_nna_canonical.json` +

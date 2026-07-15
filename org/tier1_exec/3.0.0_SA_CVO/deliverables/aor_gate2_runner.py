@@ -72,6 +72,24 @@ EXCLUDED = {
     'aor_r1_two_vintage_matrix.py':
         'HISTORICAL (R1 round). Crashes at HEAD (IndexError) -- an INSTRUMENT BREAK, not a verdict. '
         'Its question (does the 2-vintage matrix discriminate?) was answered NO and superseded.',
+    # -- declared 2026-07-15 (det-#5 pre-read; the four arms built 07-13 PM, after this runner) --------
+    'aor_timelock_bar.py':
+        'TIME-LOCK CHAPTER, and SUPERSEDED BY v2 ON THE GRAIN: DS ran it and found the as_of oracle '
+        'truncates the quarter it was cut in (fork-BLIND, not fork-neutral -- it never checked Q2-2026, '
+        'the quarter holding the contested money). Not a gate-2 arm.',
+    'aor_timelock_bar_v2_account_grain.py':
+        'TIME-LOCK CHAPTER (the pre-registered lock bar, account grain). Fires at the LOCK MOMENT on the '
+        'dry-run/served artifacts per the stamp-order law -- inside the V4 window, NOT the gate-2 '
+        'mechanism battery. Running it tonight would grade a lock that has never executed.',
+    'aor_property_and_provenance_arm.py':
+        'TIME-LOCK CHAPTER (P1-P3: backfill property vs named instance; row-keyed provenance). The '
+        'properties now live in the timelock suite at HEAD; the arm re-fires with the lock verify at the '
+        'V4 window, not in the gate-2 mechanism battery.',
+    'aor_served_layer_stamp_arm.py':
+        'RIDES THE SERVE MOMENT (V4): asserts stamp-survival on the SERVED layer, which cannot be '
+        'exercised before the first stamped artifact exists. Its question is folded into det-#5 section-6 '
+        '(V4 bar). NOTE 07-15: its INF_09:406 serve-time re-fold citation is one of the three consumers '
+        'whose --upload legs CTO held this window (194d3d674) -- the arm and the hold agree.',
 }
 
 print('=' * 100)
