@@ -14,11 +14,15 @@ seconds -- restart timestamp recorded below for any concurrent-call forensics.
 
 | # | Leg | Status |
 |---|---|---|
-| 1 | Commit the enable (deploy script env line + comment) before deploy | OPEN |
-| 2 | safe-ec2-deploy (S3 artifact -> SSM pull -> .env -> restart -> on-box health+smoke) | OPEN |
-| 3 | Restart timestamp recorded + gateway healthy (health 200, /mcp 401-unauth) | OPEN |
-| 4 | FIRST ENABLED DRY_RUN (date=20260710, real delegated-Graph leg -- closes the substitution) | OPEN |
-| 5 | Evidence to CTO | OPEN |
+| 1 | Commit the enable before deploy | CLOSED -- 3cf844107 (enable line + provenance comment; 0.5.0~A's queued tools verified NOT in tree; their committed c0cd853c1 redirect fix rides intentionally) |
+| 2 | safe-ec2-deploy | CLOSED -- DEPLOYMENT COMPLETE; wrapper's manifest auto-record lane-blocked, recorded manually per the wrapper's own instruction @ b3084df84 |
+| 3 | Restart + health | CLOSED -- restart 18:21:25Z (journal); on-box smoke passed in-deploy (health 200 local, AS metadata 200, /mcp 401); independent: public /mcp 401 Bearer-enforcement @ 18:23:18Z (ALB /health 302 = its normal OIDC front). REGISTRATION PROOF: journal 18:21:25Z '[integrations] enabled: [ycharts, opal_portal]' w/ tools=[opal_data_refresh_upload] + the full spec incl. 4 consumer-annotated hosts |
+| 4 | FIRST ENABLED DRY_RUN (date=20260710, real delegated-Graph leg) | OPEN -- the tool is LIVE on the gateway surface; a dry_run needs a FRESH MCP client connection (session clients fix their tool list at connect; this session's predates the restart). Runs on the first fresh connection (Andrew reconnect / any new session) |
+| 5 | Evidence to CTO | CLOSED -- sent 18:2xZ w/ the journal proof + leg-4 state |
+
+**Legs 1-3+5 CLOSED same-session; leg 4 rides the first fresh MCP connection (minutes-class,
+not a box operation -- 0.5.0~A's queued deploy is NOT held by it; box cycle complete, the
+enable persists in the deploy script so their redeploy keeps it).**
 
 **Rollback:** redeploy with ENABLED_INTEGRATIONS=ycharts (one env line) -- the integration
 disables fail-closed; code presence is inert. Secret + grant may stay (inert without the enable).
