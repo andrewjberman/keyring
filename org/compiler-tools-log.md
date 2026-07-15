@@ -18434,3 +18434,40 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~17:25Z | 1.0.0_SA_CTO | comp-glob x3, comp-pulse(auto x6), raw-s3 censuses rail-checked | S2 lock + orion cert + CRS n=2 gates | filed-vs-said gap self-caught (c9cbeb3cb); monolith gap unchanged |
 | 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/chunking_lambda_archi... | PASS |
 | 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/chunking_lambda_architecture.md org/compiler-tools-lo... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-si2/rema... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/canonical-schwab-si2/remap-bronze-to-monolith.py infra/aw... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/inte... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/m365-mcp-gateway/app/integrations/opal_portal/__init__.py... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0_exec/0.0.0_AB_MSTR/task_order... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0_exec/0.0.0_AB_MSTR/task_orders/ANDREW_DIRECT_20260715_startup... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0297.md --file org/... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0297.md org/tier0_exec/0.0.0_AB_MSTR/task_orders/AN... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/D1_PREFLOOR_COVER... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/sil... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff infra/aws/lambda/smartx_assets_pull/silver.py infra/aws/lambda/smartx_a... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/ta... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/task_orders/OPAL_ASSETS.C3.0833-pu... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_49F_SILV... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_RUNNERS_49F_SILVER_DATA_DICTIONARY.md | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/consolidation-gold-runner... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-pulse | comp-pulse diff infra/aws/ec2/consolidation-gold-runner/run-gold.sh infra/aws/ec2/conso... | FAIL |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-pulse | comp-pulse diff infra/aws/ec2/EC2_MANIFEST.json | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/OPAL_RUNNERS_JOIN... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/sil... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff infra/aws/lambda/smartx_assets_pull/silver.py infra/aws/lambda/smartx_a... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/tax-pt1/SKILL.md --file ... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/tax-pt1/SKILL.md docs/briefs/PFMG_TAXSMA_S0.1_S0.3_close... | FAIL |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/inte... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/m365-mcp-gateway/app/integrations/opal_portal/integration... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/consolidation-gold-... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-pulse | comp-pulse diff infra/aws/terraform/consolidation-gold-runner/runner-trigger.tf | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/sil... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff infra/aws/lambda/smartx_assets_pull/silver.py | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0048.md --file org... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/reviews/RV-0048.md org/tier0/reviews/RV-0050.md | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | consolidation-gold-runner | terraform+simulate-custom-policy | EC2 box authored: plan 12-to-add 0/0/0, validate PASS, 22a fence battery 5-allow/7-implicitDeny (platinum-by-absence, bronze-17a, other-master/source, no-ec2:*) | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
