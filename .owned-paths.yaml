@@ -1092,6 +1092,15 @@ paths:
     lane: ANY
     note: "Daily logs written by any agent"
 
+  "archive/**":
+    lane: ANY
+    note: "OPAL_LCLRPO cold-archive tree (archive/2026-07/<original-path>, git-mv w/ batch manifests).
+      ANY: archives are historical copies whose provenance lives in the batch manifests + git history;
+      gate value here is low and follow-up manifest fixes/Batch-N adds must not dead-end (the /code-review
+      F7 dangle: rollout_phase=2 BLOCKS unmapped paths). Distinct from org/audit/archive/** (tamper-
+      sensitive evidence, its own lane above). Added 2026-07-15 by ws CTO per MSTR pre-batch ask; SoD
+      held (CTO grants, MSTR executes the batch)."
+
   "org/ka_testing/**":
     lane: BASE_EXEC
 
