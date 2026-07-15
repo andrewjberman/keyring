@@ -33,6 +33,15 @@ promote window); commits on release relay. Root cause on record: the page was bu
 SecurityScanner's text idiom without its Panel containment, and was never once rendered and
 looked at before ship — the control is the screenshot, not more care.
 
+**SCOPE RULING (Andrew, same session ~14:5xZ, verbatim):** *"No we don't need the sweep because
+there are no issues currently because all pages are in developed states. The issue is when
+creating new pages/functions, we have to always reiterate the coloring/UI design to fix the
+light text on light backgrounds, so ideally after your edits, when we create new pages and UI
+this will no longer be an issue."* — Estate-wide screenshot audit DECLINED (existing pages are
+developed and clean). The defect class is NEW-page/UI creation time; the controls' success
+criterion is that the coloring rule never needs restating to an agent again (portal/CLAUDE.md
+auto-load = the standing reiteration).
+
 ## ADDENDUM 4 — FIFTH ANDREW-DIRECT (same session, ~21:0xZ): REGISTRY NAMING (verbatim)
 
 > "let's make sure ticket project is registered as OPAL_TICKET in the registry. also OPAL_TAXSMA
