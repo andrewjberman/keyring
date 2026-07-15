@@ -18911,3 +18911,33 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~23:20Z | 0.4.0_DS_ClientPlatform~A | WAVE-2 first live runs (CTO 224453Z) | comp-pipescript postdeps a00 (PASS-EMPTY), commit-gate x3 (1 block fixed), rail-marked listings = Rule 22a input verification pre-run | a00+a01 gold-grammar writes LANDED+VERIFIED; W-2 measured; c04 exercised 32/5999 flags |
 | 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/runners_49f/a0... | PASS |
 | 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/a00_runner.py data/assets/scripts/... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/lambda/opal-assets... | FAIL |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_CONSOLIDATION.json --... | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_CONSOLIDATION.json org/projects/OPAL_GLDRNS.json org/... | PASS |
+| 2026-07-15 | 3.0.0_SA_CVO~B | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_00d | PASS |
+| 2026-07-15 | 3.0.0_SA_CVO~B | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_00d.cumulative_chart.py | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/etfs-pipeline/etfs-net... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff infra/aws/lambda/etfs-pipeline/etfs-netassets-daily/lambda_function.py | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/lambda... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/inf-pipeline/lambdas.tf | FAIL |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/lambda... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/inf-pipeline/lambdas.tf | FAIL |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/lambda/opal-assets... | FAIL |
+| 2026-07-15 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-15 | 3.0.0_SA_CVO~B | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_B_GATE2_DETERMINATION_5_PR... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/GL... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/GLDRNS_B1_AOR_RELEASE_WINDOW_20260... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/lambda... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/inf-pipeline/lambdas.tf | FAIL |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions opal-assets-silver-etf --settle-retry-sec... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/opal-ass... | FAIL |
+| 2026-07-15 ~23:0xZ | 3.0.0_SA_CVO~B | comp-pipescript deployed (sweep) + comp-glob x3 + comp-grep x1 | gate-2 det-#5 pre-read: sweep found D_02c/D_04/INF_09 pre-migration STALE (the census-boundary finding); single-script form misroutes to bd tree w/ stale hold config -- gap flagged |
+| 2026-07-15 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 3.0.0_SA_CVO~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-15/c... | PASS |
