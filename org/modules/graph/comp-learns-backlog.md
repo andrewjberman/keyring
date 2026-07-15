@@ -244,3 +244,17 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   (and any non-ASCII); utf-8 retry works. Fix: cli.py _p() encode-safe (errors=replace or
   reconfigure stdout utf-8). Workaround in use: utf-8 env retry.
 - resolution: OPEN -- small; rides the next comp-tool touch or the ~Z/0.8.0 wave.
+
+## [OPEN] tool-defect -- comp-state REGROW convergence structurally unclosable (pickaxe blind to count-neutral row edits)  (filed 2026-07-15, COO; found on the OPAL macro sweep)
+<!-- key: tool-defect|comp-state-regrow-pickaxe-count-neutral -->
+- disposition: REGISTRY-row last-touch = git log -1 -S <code> -- REGISTRY.md, and -S fires only when
+  the occurrence COUNT of <code> changes. A row rewrite that keeps the code's count unchanged (the
+  NORMAL reconciliation edit) is invisible: the row stays BEHIND forever and protocol rule 7
+  (re-run -> fixed records read CURRENT) cannot close for REGROW. Verified live: 6 rows fixed at
+  beab2082e, all 6 re-read BEHIND; the 4 JSONs + 1 TO in the same commit read CURRENT.
+  Fix candidates: -G"\| \x60?<code>\x60?" regex-diff instead of -S; or per-row content hash mapped to
+  last commit touching REGISTRY.md that changed that row's line. Second cost item, same engine:
+  load_records computes per-record git last-touch for ALL ~1,700 TOs BEFORE the --project filter
+  (~5-8 min per invocation on this host); filter-first would make --project seconds.
+- resolution: OPEN -- rides the next comp-state touch; sweep results remain valid (agent = precision
+  layer; the gap is the convergence loop, not the recall).
