@@ -1,0 +1,37 @@
+{
+  "project_code": "OPAL_CONSOLIDATION",
+  "macro_code": "OPAL",
+  "name": "OPAL Consolidation - Master wrapper: OPAL_ASSETS + 49METATABLES + OPAL_RUNNERS + INF AoR, P0 end-to-end to platinum continuity",
+  "description": "Andrew-directed (2026-07-15 ~15:1xZ, verbatim in the PRD + memory record) master project WRAPPING the four consolidation bodies -- OPAL_ASSETS (+V2 PRD/TOs), OPAL_ASSETS_49METATABLES, OPAL_RUNNERS, and the inf-pipeline AoR work -- into one P0 spine. End state: every partner channel flows bronze -> monolith silver -> the new A/B/C/D gold runners -> the EXISTING per-firm platinum output locations in the EXISTING platinum shape (firm-specific preserved), so the Portal reads exactly what it reads today with zero frontend change. WRAP-DON'T-MERGE: constituents stay open with their own gates and history; the wrapper owns sequence + seams (S1 parity cert -> S2 arch session -> S3 A-to-D build -> S4 parallel D-outputs / per-firm platinum parity streak -> S5 cutover w/ never-widen co-sign -> S6 AoR validation through the EXISTING LD-0277 gate chain -> S7 close). Guard-preservation clauses folded (COO 151503Z): AoR validation rides the existing gates (fold-then-lock, CVO~B V4, INF hold/Door 5/6 untouched until Andrew lifts by name); 0824/0833 never-summed carries into the platinum refactor.",
+  "prds": [
+    {
+      "path": "docs/architecture/OPAL_CONSOLIDATION_PRD.md",
+      "label": "Master PRD v0.1 DRAFT (CTO) -- AWAITING ANDREW RATIFICATION; P0 activates on his word",
+      "date": "2026-07-15"
+    }
+  ],
+  "source_brief": "Andrew-direct 2026-07-15 ~15:1xZ (CTO terminal): consolidation defined as the four bodies; begin proceeding into OPAL_RUNNERS; refactor into existing platinum shape + locations (stays firm-specific) for Portal continuity; wrap into one master project P0'd end-to-end across the fabric. Durable record: memory/project_opal_consolidation_andrew_directive_20260715.md.",
+  "status": "active",
+  "phase": "AUTHORED, AWAITING RATIFICATION (2026-07-15 ~15:2xZ). PRD v0.1 draft delivered to Andrew in-session with the four-body state summary. NOT YET P0 -- fabric-wide P0 + the COO TO wave activate on Andrew's ratification. Standing work continues on existing gates regardless: parity cert (S1) closes tonight on the 22:00Z ETF leg; the arch session (S2) is armed; nothing in this wrapper compresses a hold or a gate bar.",
+  "current_phase": "Ratification-pending. Live parallel motion: OPAL_ASSETS parity legs closing (0833 draining, delta-6 drain in flight, smartx 5/5 live, ETF tonight); 49METATABLES at feed-8-only open; RUNNERS Wave-2 authored live-run-gated; AoR measurement banked w/ V4 gap explicit.",
+  "blocking": "Andrew ratification (activates P0 + decomposition). Constituent gates unchanged and listed in their own records.",
+  "depends_on": [
+    "OPAL_ASSETS",
+    "OPAL_ASSETS_49METATABLES",
+    "OPAL_RUNNERS"
+  ],
+  "depends_on_note": "Wrapper, not merge: constituent records stay authoritative for their own law/gates; this record owns the P0 spine + cross-project seams. INF AoR work is the fourth body (lives across the ADVI_INF* records + LD-0277; no single project code to depend_on).",
+  "owner": "1.0.0_SA_CTO",
+  "created": "2026-07-15",
+  "pods": [
+    "0.4",
+    "0.5",
+    "0.6",
+    "0.7"
+  ],
+  "pipeline": "bronze (monolith, per channel) -> silver fact_* (monolith) -> A/B/C/D gold runners (49F greenfield first, casebook-canonical) -> EXISTING per-firm platinum locations (shape-identical, never-cross-firm) -> Portal (zero frontend change)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": [],
+  "updated": "2026-07-15"
+}
