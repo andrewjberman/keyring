@@ -55,3 +55,18 @@ while the NFRA_GRAPHFEED wave (LD-0299) runs at 0.8.0~Z.
 every named owner; Batch-1 (source-map-clear families only) proceeds on ACKs per Andrew's
 "once that is established, we can proceed Batch-1". B2 deletions + yang_pkl still await
 Andrew's words (asks #2/#3 open).
+
+---
+
+## SOVEREIGN CLEARANCE — 2026-07-15 ~20:1xZ (data/seeking-alpha; POD1 clearance waived)
+
+**VERBATIM:**
+
+> "We dont need 0.1.0_DS to tell you about data/seeking-alpha/ i can tell you as sovereign we
+> dont need that"
+
+**Effect:** `data/seeking-alpha/` (73 files) is SOVEREIGN-CLEARED for Batch-1. Disposition stays
+ARCHIVE (reversible git mv) per the standing batch discipline — "we dont need that" is the
+clearance; a DELETE of the archived copy can ride the B2 word later if wanted. The
+0.1.0_DS_MarketIntelligence clearance ask is MOOT; the lane (spawned ~20:0xZ solely for this)
+STANDS DOWN — MSTR kill + COO informed (supersedes the route-or-stand-down COO was holding).
