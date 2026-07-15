@@ -18487,3 +18487,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | OPAL_BBGTML | comp-grep x8 + comp-glob x3 (backend/CF/IAM grounding), comp-pulse auto x6; rail-checked live-IAM primitives per 22a | merge-dark build to the CTO enable gate; 22a 3-leg verify; dark staging exercised |
 | 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/sil... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff infra/aws/lambda/smartx_assets_pull/silver.py infra/aws/lambda/smartx_a... | PASS |
+- 2026-07-15 ~18:10Z | 0.5.0_AE_OpalETL | handoff-scribe window: test suite x2 (68 OK) + safe-commit gate; no new estate search (17-min delta, tools tabled in the two prior logs)
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
