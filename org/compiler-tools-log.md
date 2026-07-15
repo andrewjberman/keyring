@@ -18314,3 +18314,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-15 ~15:15Z | 0.5.0_AE_OpalETL | comp-grep x3, comp-glob x3, comp-to, safe-commit gates x4 (commit-gate/surface-check/risk-reflex), raw-aws operational (env ground + monolith listings, rail-checked) | smartx family 5/5 window: all PASS; gap unchanged = monolith has no comp-tool (filed 07-14)
 | 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/deliverable... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_CONSOLIDATION_PR... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_CONSOLIDATION_PRD.md org/projects/OPAL_CONSOLIDA... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff portal | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/SMARTX_7FEED_TABL... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0277.md | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0277.md | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/POSN_BMKVIZ.json --file or... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/projects/POSN_BMKVIZ.json org/projects/REGISTRY.md | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | POSN_BMKVIZ | comp-grep x5 (estate mapping), comp-transform schema-check PositioningSummary (clean), comp-pulse auto x5 (1 measured HOLD on portal gitlink, sanctioned op) | FE-only build+promote v2.1.136; no IAM/gold surface |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
