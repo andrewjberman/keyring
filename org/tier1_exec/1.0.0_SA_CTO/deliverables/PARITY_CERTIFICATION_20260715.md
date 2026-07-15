@@ -82,3 +82,19 @@ already in place — the flip releases BUILD EXECUTION, not design.
 *Draft assembled 18:3xZ 07-15. Completion + certification + the Andrew PushNotification occur at
 fire-read (~22:05-22:20Z) provided sec-2's two cells read clean; any FAIL branch holds the cert and
 escalates instead.*
+
+---
+## COMPLETION BLOCK (pre-staged ~20:35Z; the two cells drop in at fire-read)
+
+**Cell 1 — ETF day-3 parity:** [PENDING FIRE-READ: the 07-15 row verdict from
+.tools/etfs-parity-check.py on the laptop-leg artifact — GREEN = 3/3 streak complete; COO's V2-1 GO
+cites the same read (mutual-citation agreement 183843Z).]
+
+**Cell 2 — ETF scheduled-trigger leg:** [PENDING FIRE-READ: refreshed LastModified >= 21:55Z on the
+4 vendor-prefix keys + invocation log — never key-existence (same-key rewrite hazard).]
+
+**On both cells GREEN, this document's status flips to CERTIFIED and the following execute
+same-turn:** (1) PushNotification to Andrew (the residual line rides verbatim-adjacent per cert-AC
+(ii)); (2) OPAL_CONSOLIDATION WS-C flips FULL-RESOURCE (project JSON phase note + broadcast);
+(3) the tonight-clean word to 0.7.0 (the 5-motion batch) ; (4) DS's a00/a01 first-live-run GO.
+FAIL branch: HOLD + escalate to Andrew, no partial cert, batch reverts to tomorrow.
