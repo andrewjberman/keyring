@@ -141,6 +141,63 @@ cg_commit_exclude_pathspec() {
   printf '%s\n' ':(exclude,glob)**/__pycache__/**' ':(exclude,glob)**/*.pyc'
 }
 
+# --------------------------------------------------------------------------
+# LOG-COMMIT SOURCE-SWEEP GUARD (safe-commit-pure-deletion-staging AMENDMENT-2,
+# CTO ratified 190021Z). THE DEFECT: commit 64b6b9d65 (subject
+# "log(COMP_LEARNS.session13)...") DELETED all 15 exec-summary-generator source
+# files and SAT UNNOTICED 11 WEEKS (ES-1, Rule-10-class). The surviving sibling
+# of AMENDMENT-1's pycache class: a source-tree sweep riding an unrelated
+# session-log commit. This guard makes a log(-class commit that DELETES paths
+# OUTSIDE the session-log/org-record surface refuse loud, per-path.
+# Shared by BOTH commit sites (safe-commit.sh + commit-worker.sh) -- no drift.
+# --------------------------------------------------------------------------
+# The log-commit subject class. Session-log commits are `log(scope): ...` or
+# `log: ...` (the /log skill convention). Conservative: a false MATCH only makes
+# a non-log commit's out-of-surface deletion loud (recoverable via override); a
+# false MISS re-enables the ES-1 class (silent). So err toward matching.
+CG_LOG_SUBJECT_RE='^[[:space:]]*log[(:]'
+
+# cg_path_is_log_surface <path> -- true if a deletion of this path is a
+# legitimate session-close/record operation (session logs OR org-record tree).
+# Per the AMENDMENT-2 ruling's "session-log/org-record surface". Deliberately
+# does NOT include source/infra/tooling -- deleting those in a log commit is the
+# ES-1 defect. (org/ breadth is the ruling's "org-record surface"; tightenable.)
+cg_path_is_log_surface() {
+  case "$1" in
+    logs/*|*/logs/*) return 0 ;;   # session logs (any depth)
+    org/*) return 0 ;;             # org records: ledgers, TOs, projects, memory, compiler-tools-log
+    *) return 1 ;;
+  esac
+}
+
+# cg_extract_subject <COMMIT_ARGS...> -- echo the commit subject (first line)
+# from a -m argument or the first line of a -F file. Empty if neither present.
+# Parse-free: reads the -F FILE, never evaluates it (the -F safety property).
+cg_extract_subject() {
+  local prev="" a
+  for a in "$@"; do
+    if [ "$prev" = "-m" ]; then printf '%s' "${a%%$'\n'*}"; return 0; fi
+    if [ "$prev" = "-F" ]; then [ -f "$a" ] && head -n 1 "$a" 2>/dev/null; return 0; fi
+    prev="$a"
+  done
+}
+
+# cg_log_sweep_offenders <subject> <staged_deletions_newline_list>
+# Pure detector (no side effects). Echoes the OFFENDING deletions (one per line)
+# -- deleted paths OUTSIDE the log/org-record surface -- ONLY when <subject> is a
+# log-commit-class subject. Empty otherwise (non-log commit, or all deletions
+# are log-surface). The CALLER decides refuse/scream/override (mirrors
+# cg_sensitive_hits: detection lives in exactly one place).
+cg_log_sweep_offenders() {
+  local subject="$1" dels="$2" f
+  printf '%s' "$subject" | grep -qE "$CG_LOG_SUBJECT_RE" || return 0
+  [ -n "$dels" ] || return 0
+  while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    cg_path_is_log_surface "$f" || printf '%s\n' "$f"
+  done <<< "$dels"
+}
+
 # cg_selftest -- verify the detector fires on unambiguous secrets, spares
 # exemptions, and spares ordinary files. (The gitignored-contextual case is
 # exercised end-to-end in commit-worker.sh --selftest, which has a real repo.)
@@ -161,7 +218,18 @@ cg_selftest() {
   [ -z "$hits" ] || { echo "FAIL: .tools/comp-secrets should be exact-path allowlisted: [$hits]"; return 1; }
   hits="$(cg_sensitive_hits ".tools/comp-secrets.pem")"
   [ "$hits" = ".tools/comp-secrets.pem" ] || { echo "FAIL: allowlist must be EXACT-PATH -- a .pem at a comp-secrets-like path must still be caught (a): [$hits]"; return 1; }
-  echo "PASS: commit_gate_lib selftest (ALWAYS caught, EXCLUDE exempt, ordinary spared, comp-secrets allowlisted exact-path)"
+  # AMENDMENT-2 log-commit source-sweep detector (unit).
+  local off
+  off="$(cg_log_sweep_offenders 'log(COMP_LEARNS.session13): x' "$(printf 'infra/aws/lambda/exec-summary-generator/lambda_function.py\norg/tier2_senior/x/logs/2026/s.md')")"
+  [ "$off" = "infra/aws/lambda/exec-summary-generator/lambda_function.py" ] || { echo "FAIL: ES-1 shape -- source deletion in a log( commit not flagged / log deletion flagged: [$off]"; return 1; }
+  off="$(cg_log_sweep_offenders 'log: session wind-down' "$(printf 'org/critical_paths/change_management/old.json\norg/tier2_senior/x/logs/2026/s.md')")"
+  [ -z "$off" ] || { echo "FAIL: a log commit deleting only org/+logs paths must have ZERO offenders: [$off]"; return 1; }
+  off="$(cg_log_sweep_offenders 'feat(x): refactor' "$(printf 'infra/aws/lambda/exec-summary-generator/lambda_function.py')")"
+  [ -z "$off" ] || { echo "FAIL: a NON-log commit must never flag (guard is log-subject-scoped): [$off]"; return 1; }
+  off="$(cg_extract_subject --author 'a <b>' -m 'log(x): hi
+body')"
+  [ "$off" = "log(x): hi" ] || { echo "FAIL: cg_extract_subject -m first-line: [$off]"; return 1; }
+  echo "PASS: commit_gate_lib selftest (sensitive gate + log-sweep detector + subject extract)"
   return 0
 }
 

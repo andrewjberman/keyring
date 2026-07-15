@@ -410,6 +410,47 @@ if [ "$N_EXTRA" -gt 0 ]; then
   fi
 fi
 
+# LOG-COMMIT SOURCE-SWEEP GUARD (fail-closed; AMENDMENT-2, CTO ratified 190021Z).
+# A log(-class commit (session-log commit) whose staged set DELETES paths OUTSIDE
+# the session-log/org-record surface REFUSES loud, per-path -- the ES-1 class
+# (64b6b9d65 deleted 15 exec-summary source files under a "log(...)" subject and
+# sat unnoticed 11 weeks). Detection is the shared cg_log_sweep_offenders (no
+# drift with the worker). Audited override: SAFE_COMMIT_ALLOW_LOG_DELETIONS.
+_SC_SUBJECT="$(cg_extract_subject "${COMMIT_ARGS[@]}")"
+_SC_DELS="$(git diff --cached --diff-filter=D --name-only -- "${PATHSPEC[@]}" 2>/dev/null || true)"
+LOG_SWEEP=()
+if [ -n "$_SC_DELS" ]; then
+  while IFS= read -r _f; do
+    [ -n "$_f" ] && LOG_SWEEP+=("$_f")
+  done <<< "$(cg_log_sweep_offenders "$_SC_SUBJECT" "$_SC_DELS")"
+fi
+if [ "${#LOG_SWEEP[@]}" -gt 0 ]; then
+  mkdir -p "$(dirname "$AUDIT_LOG")"
+  if [ -n "${SAFE_COMMIT_ALLOW_LOG_DELETIONS:-}" ]; then
+    echo "${ISO_TS} LOG-SWEEP-OVERRIDE  ${AGENT}  ${#LOG_SWEEP[@]}  (${LOG_SWEEP[*]})  reason=${SAFE_COMMIT_ALLOW_LOG_DELETIONS}" >> "$AUDIT_LOG"
+    echo "WARN: SAFE_COMMIT_ALLOW_LOG_DELETIONS override -- a log( commit is deleting ${#LOG_SWEEP[@]} non-log/non-org path(s):" >&2
+    printf '  %s\n' "${LOG_SWEEP[@]}" >&2
+    echo "  Audit: ${AUDIT_LOG}" >&2
+  else
+    # Unstage the offending deletions (mirror the sensitive/contamination reject:
+    # a BLOCKED request must not leave its deletions staged for a later inherit).
+    for _f in "${LOG_SWEEP[@]}"; do git reset -q HEAD -- "$_f" 2>/dev/null || true; done
+    echo "${ISO_TS} LOG-SWEEP-BLOCK  ${AGENT}  ${#LOG_SWEEP[@]}  (${LOG_SWEEP[*]})" >> "$AUDIT_LOG"
+    echo "ERROR: BLOCKED -- a log( session-log commit is DELETING source/infra path(s) outside the log/org-record surface." >&2
+    echo "       This is the ES-1 class: commit 64b6b9d65 deleted 15 exec-summary source files under a" >&2
+    echo "       \"log(...)\" subject and sat unnoticed 11 weeks (Rule-10 rebuild hole). A session-log commit" >&2
+    echo "       should ADD a log + touch org records, never sweep source." >&2
+    echo "" >&2
+    echo "Offending deletion(s) (${#LOG_SWEEP[@]}) -- now UNSTAGED for you:" >&2
+    printf '  %s\n' "${LOG_SWEEP[@]}" >&2
+    echo "" >&2
+    echo "Fix: commit the deletions in a SEPARATE, honestly-subjected commit (fix/chore/refactor)," >&2
+    echo "     not under a log( subject. Legitimately-intended mixed commit?" >&2
+    echo "     SAFE_COMMIT_ALLOW_LOG_DELETIONS=\"reason\" (audited)." >&2
+    exit 1
+  fi
+fi
+
 # Advisory surface-check gate (QUERY-only; never blocks).
 if command -v comp-surface-check >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
   _sc_args=()

@@ -146,9 +146,56 @@ if ! printf '%s\n' "$REAL_STAGED" | grep -qE '\.pyc$'; then
   pass "e5 real lib on the identical shape stages zero .pyc"
 else fail "e5 real lib staged a .pyc: [$REAL_STAGED]"; fi
 
+say "== (f) log-commit source-sweep guard (AMENDMENT-2 -- the ES-1 class) =="
+# f1: REPLAY 64b6b9d65's shape -- a log( commit whose pathspec DELETES a source
+# path (outside org/ + logs/) must REFUSE, unstage it, print it, and NOT commit.
+D="$(mkrepo f1)"; ( cd "$D" && mkdir -p infra org/logs \
+  && printf 'code\n' > infra/mod.txt && printf 'log\n' > org/logs/s.md \
+  && git add -A . && git commit -qm base && git rm -q infra/mod.txt )
+run_wrapper "$D" "log(SESSION.13): wind-down" infra/mod.txt
+F_TREE="$(cd "$D" && git ls-tree -r --name-only HEAD)"
+if [ "$RC" -ne 0 ] && [ "$LANDED" = no ] && printf '%s\n' "$F_TREE" | grep -qxF infra/mod.txt; then
+  pass "f1 log( commit deleting source REFUSED (rc=$RC, no commit, source still in HEAD)"
+else fail "f1 log-sweep (rc=$RC landed=$LANDED)"; fi
+if printf '%s\n' "$ERR" | grep -qF infra/mod.txt; then
+  pass "f2 offending deletion printed per-path (never silent)"
+else fail "f2 no per-path line: ${ERR:0:200}"; fi
+
+# f3: positive control, SEPARATE run -- a log( commit deleting ONLY log/org-record
+# paths lands clean (the legitimate session-close deletion).
+D="$(mkrepo f_pos)"; ( cd "$D" && mkdir -p org/critical_paths logs \
+  && printf 'x\n' > org/critical_paths/old.json && printf 'y\n' > logs/s.md \
+  && git add -A . && git commit -qm base && git rm -q org/critical_paths/old.json )
+run_wrapper "$D" "log(SESSION.14): retire stale ledger" org/critical_paths/old.json
+if [ "$RC" -eq 0 ] && [ "$LANDED" = yes ] && ! in_head "$D" org/critical_paths/old.json; then
+  pass "f3 positive control: log( commit deleting only org-record path lands clean"
+else fail "f3 positive control (rc=$RC landed=$LANDED err=${ERR:0:160})"; fi
+
+# f4: non-log commit deleting source is NOT flagged by this guard (it is a normal
+# deletion the staging branch already handles) -- proves the guard is subject-scoped.
+D="$(mkrepo f_nonlog)"; ( cd "$D" && mkdir -p infra \
+  && printf 'code\n' > infra/mod.txt && git add -A . && git commit -qm base && git rm -q infra/mod.txt )
+run_wrapper "$D" "chore: remove dead infra stub" infra/mod.txt
+if [ "$RC" -eq 0 ] && [ "$LANDED" = yes ] && ! in_head "$D" infra/mod.txt; then
+  pass "f5 non-log commit deleting source lands (guard is log-subject-scoped, no false-block)"
+else fail "f5 non-log deletion (rc=$RC landed=$LANDED)"; fi
+
+say "== (f) MUTANT kill (unit level, mutated COPY of the lib) =="
+MUTF="$TMPROOT/commit_gate_lib.mutantf.sh"
+# Neuter the log-subject predicate so no subject ever matches -> detector never fires.
+sed 's|^CG_LOG_SUBJECT_RE=.*|CG_LOG_SUBJECT_RE="^NEVER_MATCHES_ANY_SUBJECT_7z9"|' "$LIB" > "$MUTF"
+MUTF_OFF="$( bash -c "source '$MUTF'; cg_log_sweep_offenders 'log(x): y' 'infra/mod.txt'" )"
+if [ -z "$MUTF_OFF" ]; then
+  pass "f6 MUTANT KILL: neutered subject-predicate returns ZERO offenders on the ES-1 shape -> f1's REFUSE assertion would fail (the guard can fail)"
+else fail "f6 mutant still flagged -- guard cannot fail = not a control (off=[$MUTF_OFF])"; fi
+REALF_OFF="$( bash -c "source '$LIB'; cg_log_sweep_offenders 'log(x): y' 'infra/mod.txt'" )"
+if [ "$REALF_OFF" = "infra/mod.txt" ]; then
+  pass "f7 real lib on the identical shape flags the source deletion"
+else fail "f7 real lib missed the offender: [$REALF_OFF]"; fi
+
 rm -rf "$TMPROOT" 2>/dev/null || true
 say ""
 say "================================================================"
 say "PASS: $PASSES   FAIL: $FAILS"
-[ "$FAILS" -eq 0 ] && say "ALL CHECKS PASS -- deletion staging + pycache exclusion." || say "SUITE RED."
+[ "$FAILS" -eq 0 ] && say "ALL CHECKS PASS -- deletion staging + pycache exclusion + log-sweep guard." || say "SUITE RED."
 [ "$FAILS" -eq 0 ]

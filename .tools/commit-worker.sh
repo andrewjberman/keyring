@@ -324,6 +324,29 @@ cw_process() {
       fi
     fi
 
+    # (F1b) LOG-COMMIT SOURCE-SWEEP GUARD (fail-closed; AMENDMENT-2). Parity with
+    # safe-commit's legacy path via the SHARED cg_log_sweep_offenders (no drift):
+    # a log(-class commit deleting non-log/non-org paths is the ES-1 class -> REJ,
+    # unless SAFE_COMMIT_ALLOW_LOG_DELETIONS is set (audited).
+    local sc_subject sc_dels sweep
+    sc_subject="$(cg_extract_subject "${REQ_CARGS[@]}")"
+    sc_dels="$(git diff --cached --diff-filter=D --name-only -- "${REQ_PATHS[@]}" 2>/dev/null || true)"
+    sweep="$(cg_log_sweep_offenders "$sc_subject" "$sc_dels")"
+    if [ -n "$sweep" ]; then
+      local sn; sn="$(printf '%s\n' "$sweep" | grep -c .)"
+      if [ -n "${SAFE_COMMIT_ALLOW_LOG_DELETIONS:-}" ]; then
+        mkdir -p "$(dirname "$audit_log")" 2>/dev/null || true
+        echo "${ts} LOG-SWEEP-OVERRIDE  ${a_name}  ${sn}  ($(printf '%s' "$sweep" | tr '\n' ' '))  reason=${SAFE_COMMIT_ALLOW_LOG_DELETIONS}" >> "$audit_log"
+      else
+        local sf
+        while IFS= read -r sf; do [ -n "$sf" ] && git reset -q HEAD -- "$sf" 2>/dev/null || true; done <<< "$sweep"
+        mkdir -p "$(dirname "$audit_log")" 2>/dev/null || true
+        echo "${ts} LOG-SWEEP-BLOCK  ${a_name}  ${sn}  ($(printf '%s' "$sweep" | tr '\n' ' '))" >> "$audit_log"
+        echo "REJ|1|log-commit source-sweep blocked (${sn} non-log/non-org deletion(s) under a log( subject): $(printf '%s' "$sweep" | tr '\n' ' ')"
+        exit 0
+      fi
+    fi
+
     # (F2) NFRA_CMTQUE TO-5F -- worker-side commit-gate RE-ASSERT (py_compile/ds-precommit-
     # check/ruff/comp-constants/manifest-check/log-open-lint, CLAUDE.md Rule 14). Previously
     # this gate was AGENT-SIDE-ONLY fail-fast (an agent runs commit-gate.sh BEFORE enqueuing,
