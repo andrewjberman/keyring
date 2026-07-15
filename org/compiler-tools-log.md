@@ -18492,3 +18492,76 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-15 ~18:10Z | 0.5.0_AE_OpalETL | handoff-scribe window: test suite x2 (68 OK) + safe-commit gate; no new estate search (17-min delta, tools tabled in the two prior logs)
 | 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/task_orders/ANDREW_DIRECT_... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-07-15/handoff_context_reset... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_TAXSMA_SSAVAIL_C... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_TAXSMA_SSAVAIL_CONTENT_CONTRACT.md org/projects/... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/inte... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/m365-mcp-gateway/app/integrations/opal_portal/integration.py | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/OPAL_TAXSMA_SSAVAIL_CONTENT... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/OPAL_TAXSMA_SSAVAIL_CONTENT_CONTRACT.md org/projects/OPAL_T... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN label(n) AS lbl, count(*) AS n ORDER BY n DESC LIMIT 25 | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/deploy-t... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/m365-mcp-gateway/deploy-to-ec2.sh org/critical_paths/chan... | FAIL |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.node_type AS t, count(*) AS n ORDER BY n DESC LIMIT 30 | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE a.node_type STARTS WITH 'MS_' OR b.node_type STARTS ... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/EC2_MANIFEST.json | FAIL |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type = 'MS_FILE' RETURN n.node_id AS id, n.props AS pr... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/EC2_MANIFEST.json | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/tax-pt1/SKILL.md --file ... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/tax-pt1/SKILL.md infra/aws/ec2/m365-mcp-gateway/app/dest... | FAIL |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260715T1820Z_opal-bbgtml-gateway... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0298.md --file org/... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0298.md org/tier0_exec/0.0.0_AB_MSTR/deliverables/N... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/EC2_MANIFEST.json | FAIL |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/task_... | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/task_orders/OPAL_ASSETS.C4.etf-bronze... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/FRONTIER_0710_INGESTI... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/PARITY_CERTIFICATION_20260715.md | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/opal-ass... | FAIL |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0299.md --file org/... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0299.md org/tier0_exec/0.0.0_AB_MSTR/task_orders/AN... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/PARITY_CERTIFICATION_20260715.md | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0299.md --file org/... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0299.md org/tier0_exec/0.0.0_AB_MSTR/task_orders/AN... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/tests/measur... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/silver/tests/measure_etf_bronze.py org/tier2_senior... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_ASSETS_V2_LAMBDA... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_ASSETS_V2_LAMBDA_CONTRACT.md | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_GRAPHFEED.W1.wave.md | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/item2a.tf | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/globgrph/item2a.tf | FAIL |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHFEED.json --file... | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_GRAPHFEED.json org/projects/NFRA_MSGRAPH.json org/pro... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/tax-pt1/SKILL.md --file ... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/tax-pt1/SKILL.md org/projects/OPAL_TAXSMA.json | FAIL |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/inte... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/m365-mcp-gateway/app/integrations/opal_portal/integration.py | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHFEED.json | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_GRAPHFEED.json | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/EC2_MANIFEST.json | FAIL |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/EC2_MANIFEST.json | FAIL |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260715T1820Z_opal-bbgtml-gateway... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/tax-pt1/SKILL.md --file ... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/tax-pt1/SKILL.md org/projects/OPAL_TAXSMA.json org/tier2... | FAIL |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/PARITY_CERTIFICATION_20260715.md | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_BBGTML.json | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_BBGTML.json | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-grep | comp-grep ligament docs org/critical_paths infra -- ligament four-verdict definition hunt | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/deliverable... | PASS |
