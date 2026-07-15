@@ -85,8 +85,12 @@ None assumption-blocked. All waits are evidenced external gates (see Handoff).
   shared infra only; no COO/CTO gate on their work.
 
 ## Next Steps
-1. **[2.0.0_SA_COO]** Validate 0.7.0's AMENDMENT-2 + ES-1 RAVCs when they land (ES-1: 15-member
-   byte-tie result; AMENDMENT-2: suite + class-f mutant kill + fabric announce). Both were GO'd 13:04Z.
+1. **[2.0.0_SA_COO] DONE 13:5xZ** -- 0.7.0's AMENDMENT-2 + ES-1 both RAVC-4 CLOSED. ES-1 restore
+   (0e6b76b0e): member-level byte-tie per CTO ruling, 7 prompt-file mismatches characterized to pure
+   CRLF-vs-LF (content byte-identical, CTO eol=lf pin 5d9357baf), repo rebuilds byte-identical, deployed
+   lambda untouched. AMENDMENT-2 (3e49134b6): I second-observer RAN the suite -> 17/17 incl. f6/f7 mutant
+   kill; new log(-subject source-sweep REFUSE live on the shared commit path; relayed to all 5 worker
+   lanes 13:5xZ. All three of 0.7.0's morning threads closed (ES-1, delta-7 v0.15.0, AMENDMENT-2).
 2. **[2.0.0_SA_COO]** TONIGHT 22:00Z: the ONE-run proof (parity day-3 + first monolith bronze). If BOTH
    clean -> V2-1 GO fires on that evidence, no new report cycle; flip the C4 TO complete ONLY when the
    monolith listing shows vendor prefixes populated (the do-not-flip guard in the C4 TO). Then fold once.
@@ -111,11 +115,12 @@ re-derive.**
   re-drive the estate. Record every Andrew-direct verbatim + broadcast same turn. Ground before closing
   (live primitive, not self-report -- Rule 22a). safe-commit via -F for any message with backticks/$(
   (LD-0276). The never-rules gate + risk-reflex are LIVE and will block you correctly.
-- **THE ONE LIVE THREAD needing your validation:** 0.7.0's AMENDMENT-2 + ES-1 (GO'd 13:04Z). When their
-  RAVCs arrive, validate the evidence (byte-tie for ES-1; mutant kill + announce for AMENDMENT-2), then
-  RAVC-4 close. This is the only in-flight loop you own right now.
-- **THE NEXT SCHEDULED EVENT:** tonight 22:00Z one-run proof -> V2-1 GO + C4 TO complete (guarded) +
-  parity day-3. Watch for 0.5.0's report; fold once.
+- **NO in-flight loop you own right now** (as of 13:5xZ). The morning's live thread -- 0.7.0's
+  AMENDMENT-2 + ES-1 -- is CLOSED (RAVC-4, second-observer 17/17 + byte-tie; relayed all lanes). The
+  next thing is a SCHEDULED event, not an open loop.
+- **THE NEXT SCHEDULED EVENT (your primary):** tonight 22:00Z one-run proof -> V2-1 GO + C4 TO complete
+  (guarded: flip C4 complete ONLY when the monolith listing shows vendor prefixes populated) + parity
+  day-3. Watch for 0.5.0's report; fold once. Nothing to do until then except answer inbound.
 - **THE BIG PENDING BOARD EVENT:** CTO's full-channel parity certification -> OPAL_RUNNERS flips to
   full-resource. You fold that + dispatch delta-6 decomposition (go/no-go AC check) when it lands.
 - **DO-NOT-TOUCH (standing safety):** INF chain hold (Door 5/6, frozen 3, mdpf freeze, time-lock stamp
