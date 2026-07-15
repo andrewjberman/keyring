@@ -23,11 +23,17 @@ precedent (Andrew-ordered, 18:26Z) is the ruling that a manual fire satisfies a 
   (stays at CTO review; tonight runs on certified v1.1.0).
 
 ## Legs
-1. [IN FLIGHT 22:59:49Z, 0.7.0] V2-8 converter artifact swap (vendor check -> build-and-upload
-   -> BUILD_MANIFEST + source-map commit -> targeted plan module.silver_converter["etf"] ->
-   safe-apply -> live sha tie -> 0-diff -> tag).
-2. [PENDING, 0.7.0] Notification rules 6-8 per DS fill @ de7342780 (rule 9 struck by the msn
-   ruling; the TF never adds it).
+1. [DONE 23:25Z, 0.7.0, v0.20.0] V2-8 converter artifact swap -- WITH a caught+corrected
+   defect on the record (their 232543Z): first build vendored only the 2 reviewed files;
+   import-health smoke returned Runtime.ImportModuleError (pandas; the etf silver.tf row still
+   carried the layerless py3.12 STUB profile). ZERO events wired at the time -- nothing
+   consumed the broken artifact. Corrected closure: reviewed files (sha256s UNCHANGED
+   623568f3/1a08de39) + the 6-module mirror closure + runtime 3.11 + pandas layer; rebuilt sha
+   a14fYacw (51,829B write-verified) -> targeted apply -> live tie -> RE-SMOKE = the DESIGNED
+   REFUSAL from etf_conversion.lambda_entry (import closure proven ON the deployed artifact)
+   -> targeted 0-diff -> tag opal-assets-v0.20.0.
+2. [IN FLIGHT 23:25Z, 0.7.0] Notification rules 6-8 per DS fill @ de7342780 (rule 9 struck by
+   the msn ruling; the TF never adds it).
 3. [PENDING, 0.7.0] SILVER_ROOT="" flip (etfs-netassets locals) -> safe-apply.
 4. [PENDING, 0.5.0] Manual verify fire + step-4 harness (staged + failure-proven pre-legs:
    DIRTY w/ 16 named problems; scratchpad etf_cutover_verify_step4.py). Verifies bronze-fresh,
