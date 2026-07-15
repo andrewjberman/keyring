@@ -18851,3 +18851,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff CLAUDE.md docs/architecture/INDEX.md docs/architecture/build-index.py d... | FAIL |
 | 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-15/s... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/lambda/etfs-pipeli... | FAIL |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/graph-call-manifest.yaml | FAIL |
+| 2026-07-15 ~22:25Z | 1.0.0_SA_CTO | etfs-parity-check (my run, cert cell 1), comp-glob x3, comp-pulse(auto, 3 HOLDs read), raw-aws cert instruments rail-checked | THE CERTIFICATION + fire window | LastModified was the only sound oracle tonight (ETag+existence both blind) -- banked |
+| 2026-07-15 ~19:19-22:25Z | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pipescript deployed (sweep/--firm cot/x6 per-script, 4/4 fix-wave MATCH), pipescript advi-cot, comp-freshness chain cot/bd, comp-grep x7, comp-blast (NOT-FOUND gap: no silver coverage), commit-gate x4, comp-to | triage + fix wave; 2 tool gaps filed to CTO backlog |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-15/c... | PASS |
