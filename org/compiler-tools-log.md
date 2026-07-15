@@ -18588,3 +18588,40 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0300.md org/tier0_exec/0.0.0_AB_MSTR/task_orders/AN... | PASS |
 | 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_GLDRNS.json --file or... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_GLDRNS.json org/projects/OPAL_STNDRD.json org/project... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile --file in... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff infra/aws/globgrph/Dockerfile infra/aws/globgrph/cse_producers_nightly.... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-15/gldrns_b_sessi... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-15/laneA_startup_... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile --file in... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff infra/aws/globgrph/Dockerfile infra/aws/globgrph/cse_producers_nightly.... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-15/lane_c_session... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/OPAL_GLDRNS.B1.inf... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/task_orders/OPAL_STNDRD.Z1.standardi... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | pipescript | pipescript --list | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A1.dgroup-platinum-output-contract | comp-pipescript | comp-pipescript io D_00.portal_aggregates | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | pipescript | pipescript advi-cot | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A1.dgroup-platinum-output-contract | comp-pipescript | comp-pipescript io D_00b.portal_timeseries | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A1.dgroup-platinum-output-contract | comp-pipescript | comp-pipescript io D_00c.portal_leaderboard | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A1.dgroup-platinum-output-contract | comp-pipescript | comp-pipescript io D_00f.advisor_nna_canonical | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff CLAUDE.md | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-07-15/ANDREW_DIRECT_1913Z_f... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A1.dgroup-platinum-output-contract | comp-pipescript | comp-pipescript io D_01.partner_analytics | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A1.dgroup-platinum-output-contract | comp-pipescript | comp-pipescript io D_02.advisor_client_detail | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A1.dgroup-platinum-output-contract | comp-pipescript | comp-pipescript io D_03.composition_artifacts | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A1.dgroup-platinum-output-contract | comp-pipescript | comp-pipescript io D_04.client_portal_summary | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A1.dgroup-platinum-output-contract | comp-blast | comp-blast D_04.client_portal_summary | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A1.dgroup-platinum-output-contract | comp-blast | comp-blast D_04.client_portal_summary | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_CONSOLIDATION_TO_REPA... | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_CONSOLIDATION_TO_REPARENTING.md org/projects/OPAL_LCL... | PASS |
+| 2026-07-15 ~19:35Z | 1.0.0_SA_CTO | comp-glob (D-publisher enum), comp-pulse(auto x8, 2 immune-HOLDs read), raw-aws leg instruments rail-checked | GLDRNS+STNDRD stand-up + 0833 cert + one-motion + codeheat | immune response worked twice; monolith gap unchanged |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-15/g... | PASS |
