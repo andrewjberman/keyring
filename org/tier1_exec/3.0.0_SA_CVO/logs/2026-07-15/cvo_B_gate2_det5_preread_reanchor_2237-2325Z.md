@@ -75,3 +75,26 @@ DEFINITION; the census-boundary scope ruling is CTO's.
 - **[1.0.0_SA_CTO]** the 232031Z finding's scope ruling; battery re-fire sequencing.
 - **[2.0.0_SA_COO]** never-widen co-sign scope precision (sent, theirs).
 - **[Andrew]** nothing from this lane. Nothing in this window authorizes anything.
+
+---
+
+## DELTA 23:28Z-23:38Z — ruling consumed, battery FIRED, one prediction worn
+
+- **CTO 232824Z** (`194d3d674`): my finding ruled the **named stage-B precondition** — the three `--upload`
+  legs HELD this window; exclusion oracle (listings UNCHANGED) ledger-recorded; stage A dispatched with the
+  release sentinel live. Det-#5 §6.5 annotated to parity (`02ec19aea`). **28 minutes of margin** between my
+  232031Z and the flip — the pre-read landed where it had to.
+- **CTO 232947Z commissioned the battery re-fire NOW.** Fired at `327db12ea`: **exit 0 — 9 GREEN + 1
+  expected RED**, denominator 10 live / 10 declared exclusions (the four 07-13-PM time-lock-chapter arms
+  declared EXCLUDED before firing — the runner's no-silent-caps guard refused until they were). Evidence
+  transcript + runner declarations + det-#5 annotation @ `84e7e2dcc`. **Gate-2 now stands on a FIRED
+  battery at HEAD.** Reported to CTO 233820Z with denominator per his rider (b).
+- **The one outside-§5 reading, worn not buried:** `phantom_switch_arm` stayed GREEN — **my pre-registered
+  prediction was wrong** (I mis-attributed the release's "phantom GONE" to the fold; it rides the
+  silver-rescue leg G4). Triage found the arm's "grounded live 873 rows" line is a **hardcoded 07-13
+  label** (hermetic arm — its own §15 class); re-grounded LIVE on `api_dims/accounts_v2` 07-15 (874 rows):
+  560/703/1225 ALL still roster-ABSENT, control 42 PRESENT, the +1 is account 4364. **V4 precision
+  banked:** the "phantom GONE" cell binds to the rescue leg having executed — grade mechanism-discriminated.
+- Compiler-tools delta: boto3 direct-read for the roster re-ground (the aws-shim-from-Python lesson
+  honored); one NoSuchKey on an assumed prefix corrected by listing (`silver/api_dims/accounts_v2/`, not
+  `silver/accounts_v2/`) — assumed paths are hypotheses too.
