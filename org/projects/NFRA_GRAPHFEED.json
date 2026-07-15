@@ -1,0 +1,23 @@
+{
+  "project_code": "NFRA_GRAPHFEED",
+  "macro_code": "NFRA",
+  "name": "Graph estate feed completion -- the LD-0298 six: standing CSE emitters, codeheat flip, comp-axes v1, comp-which top-k, MSGRAPH S3 GO, hygiene",
+  "description": "Andrew-direct GO 2026-07-15 ~18:5xZ (MSTR terminal) on all six LD-0298 assessment recommendations, VERBATIM: 'Yes we want all of these. Start with 1) as that is the highest leverage, but proceed through all 6 items.' Charter LD-0299 @ c9273c438 (MSTR, S2, mandate_distance 0; LD-0297 no-interference hold LIFTED FOR THIS SCOPE ONLY). The six, Andrew-sequenced from item 1: (1) STANDING CSE EMITTERS -- graph_head --full backfill + scheduled per-producer emits + cse marker stamp (PRIORITY-1; AC = additive + idempotent w/ dedup proof, ZERO graph_nodes/edges mutation); (2) GLOBGRPH_CODEHEAT_ENABLED=1 in-derive nightly heat emit (CTO direct, safe-apply/HALTGT; emit branch best-effort -- a heat failure never fails the nightly, verified at derive_runner source; ~Z verifies next-morning vintage); (3) comp-axes v1 (axis directory + dated snapshot rows = the delta store); (4) comp-which top-k per the COMPASSURANCE PRD (AC pins the comp-which-routing-baseline.json regression guard -- must not regress the PASSED routing baseline; zero-rate measured before/after); (5) MSGRAPH S3 heat-map GO (held condition MET per LD-0298: 4,498 MS_FILE + 1,021 MS_FOLDER live in the canonical kuzu at pin==HEAD) + Component-3 decomposition (CTO+COO) + breadth widening (needs an Andrew scope word at decomposition); (6) hygiene singles -- kuzu incremental rc=2 RCA, graph_contracts disposition, registry JSON refresh. Emitter schedule shape (EventBridge-vs-consumption) NOT pre-claimed -- CTO arch gate rules it on the TO-1 diff.",
+  "prds": [],
+  "source_brief": "LD-0298 assessment (263124baf, live-exercised evidence; org/tier0/ledger/LD-0298.md) -> Andrew GO verbatim -> LD-0299 charter (org/tier0/ledger/LD-0299.md @ c9273c438) + MSTR verbatim record org/tier0_exec/0.0.0_AB_MSTR/task_orders/ANDREW_DIRECT_20260715_nfra_graphfeed_go_all6.md.",
+  "status": "active",
+  "phase": "WAVE DISPATCHED (LD-0299, 2026-07-15 ~18:4xZ): builder lane 0.8.0_AE_CloudComp~Z spawned via MSTR carrying the sequenced 6-TO list (TO-1 CSE emitters PRIORITY-1 -> TO-2 codeheat-flip verify -> TO-3 comp-axes -> TO-4 top-k -> TO-5 MSGRAPH S3 -> TO-6 hygiene; wave TO org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_GRAPHFEED.W1.wave.md); CTO holds item-2's flip directly + EVERY gate. COO legs EXECUTED same turn: project registered (this record + REGISTRY row), NFRA_MSGRAPH.S3 re-staffed to ~Z + GO-hold released (condition met per LD-0298), NFRA_MSGRAPH registry record refreshed, Component-3 decomposition thread opened w/ CTO (queued behind tonight's 22:00Z fire-read).",
+  "blocking": "None structural. Item-5 breadth widening (sites/OneDrive) needs an Andrew scope word when Component-3 decomposes; TO-4 must clear the pinned routing-baseline regression guard; kuzu rc=2 fix rides CTO's gate.",
+  "owner": "0.0.0_AB_MSTR (wave-owner) | builder: 0.8.0_AE_CloudComp~Z | gates: 1.0.0_SA_CTO | records/registry: 2.0.0_SA_COO",
+  "related": [
+    "NFRA_MSGRAPH",
+    "NFRA_GLOBGRPH",
+    "NFRA_COMPRAIL",
+    "HEATMAP_OBJECT"
+  ],
+  "created": "2026-07-15",
+  "sovereign": "Andrew (direct GO, all six)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
