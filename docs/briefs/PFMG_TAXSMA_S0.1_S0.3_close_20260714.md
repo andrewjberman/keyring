@@ -100,3 +100,17 @@ TAX/Short Sale. Scope note: upload rode the consented `Files.ReadWrite.All` alon
 Sites.ReadWrite.All needed, no IT ask (exercised, not inferred). Practice observation on record:
 Yang's folder holds FINALs only, sparse dates — spec says save both; automation follows the spec
 pending his word. Backfill question (last manual save 06-25 -> go-live) OPEN with Andrew/Yang.
+
+## BACKFILL COMPLETE + STUB RULE ADDED -- 2026-07-15 (Andrew-direct, live session)
+
+Backfilled all trading days 06-29 -> 07-14 (07-03 holiday correctly absent): 27 files saved,
+listing-verified 35/35 in TAX/Short Sale. NEW EVIDENCE from the sweep: FIS has a RECURRING
+BAD-SEND MODE -- ~404-byte error-placeholder attachments (06-30 BOTH sends, 07-01 early, 07-10
+early; the two 06-30 stubs byte-identical sha256 98ea39e5...27ff), corrected by full-size
+re-sends hours later. This is what the "extra sends" always were. RULE AMENDED (skill step 3.0):
+<1 MB = STUB, never canonical, saved as "{base} {DATE} STUB.ASC"; canonical = first >=1MB send
+per base; qualifying re-sends = EXTRA-n, loud. OPEN FOR YANG (one item): 07-01 FINAL ambiguity --
+canonical SSAVAIL2 20260701.ASC is 2.9 MB (6:47 send, 4-5x smaller than every neighbor) while
+SSAVAIL2 20260701 EXTRA-1.ASC (8:20 re-send) is 13.6 MB; rule kept the 6:47 canonical, flagged
+not swapped. Also standing: the 06-26 18:03 batch (Yang bulk-forwarded ~15 Nov-Dec 2025 vintage
+files while writing the spec) is historical sample material, NOT filed.

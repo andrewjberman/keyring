@@ -38,11 +38,19 @@ silently drop or silently rename an unexpected extra send; write anywhere but `T
    non-inline attachment each, `.ASC`, ~10-15 MB. **Log the attachment names verbatim** — the first
    run byte-confirmed the S0.3 names (2026-07-15): early send = `SSAVAIL.ASC`, late = `SSAVAIL2.ASC`.
 3. **Map PRELIM vs FINAL (the S0.3 rule, in order):**
+   0. **STUB floor (added 2026-07-15, backfill-evidenced):** an attachment **< 1 MB is a STUB**,
+      never canonical — FIS has a recurring bad-send mode delivering ~404-byte error placeholders
+      (observed 06-30 x2, 07-01, 07-10; real files run 2.8-15.6 MB). Save as
+      `{base} {DATE} STUB{ext}` and report loudly. Canonical mapping below considers only
+      qualifying (>= 1 MB) sends.
    a. **Attachment-name primary:** if the base names differ in a self-identifying way (e.g.
-      `SSAVAIL` vs `SSAVAIL2` — the CONFIRMED live pair — or an explicit prelim marker), map by name.
+      `SSAVAIL` vs `SSAVAIL2` — the CONFIRMED live pair — or an explicit prelim marker), map by
+      name: first QUALIFYING send of each base takes the canonical name.
    b. **Time fallback (names identical):** FIS send time (from the forwarded header block in the
       body, or receivedDateTime − ~4 min) **before 6:00 ET = PRELIM**; first send ≥ 6:00 ET = FINAL.
-   c. Beyond the mapped pair: EXTRA (see step 5).
+   c. Beyond the mapped pair: EXTRA (see step 5). A qualifying re-send of an already-mapped base
+      is EXTRA-n — flag it loudly (it is usually FIS correcting a bad earlier send; a suspiciously
+      small canonical + a larger EXTRA needs Yang's adjudication, never a silent swap).
 4. **Save both files** with `save_email_attachment_to_site`:
    - PRELIM → `{base} {DATE} PRELIM{ext}` (e.g. `SSAVAIL 20260715 PRELIM.ASC`)
    - FINAL → `{base} {DATE}{ext}` (e.g. `SSAVAIL2 20260715.ASC` — must match Yang's kept pattern)

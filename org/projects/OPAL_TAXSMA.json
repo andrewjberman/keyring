@@ -30,6 +30,11 @@
   ],
   "history": [
     {
+      "date": "2026-07-15T17:4xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "BACKFILL COMPLETE (Andrew-direct live): 27 files, all trading days 06-29->07-14, listing-verified 35/35. DISCOVERY: FIS recurring bad-send mode (404-byte stubs, corrected by re-sends) -- the extra-send days explained; STUB rule (<1MB never canonical) added to /tax-pt1 step 3.0. Yang adjudication flagged: 07-01 FINAL 2.9MB vs 13.6MB re-send (kept per rule, not swapped). Folder now continuous daily from Yang last-manual-save through today."
+    },
+    {
       "date": "2026-07-15T16:5xZ",
       "agent": "0.5.0_AE_OpalETL~A",
       "event": "FIRST LIVE /tax-pt1 RUN GREEN (Andrew observing). S0.3 closed-with-correction (SSAVAIL/SSAVAIL2); Files.ReadWrite.All scope proof exercised (no IT ask); PRELIM+FINAL landed + listing-verified in TAX/Short Sale. Skill + S0 close doc updated same turn (mangled rename literals in SKILL.md also cleaned)."
