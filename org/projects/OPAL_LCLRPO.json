@@ -1,0 +1,21 @@
+{
+  "project_code": "OPAL_LCLRPO",
+  "macro_code": "OPAL",
+  "name": "Local repo polish -- workspace cold-archival census + execution batches + the canonization seam with OPAL_STNDRD",
+  "description": "Andrew-direct 2026-07-15 ~19:1xZ (MSTR terminal; verbatim in org/tier0_exec/0.0.0_AB_MSTR/task_orders/ANDREW_DIRECT_20260715_opal_lclrpo.md; charter LD-0300 @ d406f38b2): polish ajb_workspace significantly -- archive-or-remove material untouched ~4 months (comp-heat freshness census identifies it; root goldfish/ named as the class exemplar), tighten up, and canonize functions HAND-IN-HAND with CTO's forthcoming OPAL_STNDRD (per 0.6.2's BRIEF_CONSOLIDATION_RESOURCE_STANDARDIZATION_20260715.md). SHAPE: P0 = MEASUREMENT NOT MOVEMENT -- comp-heat (4-month cold threshold, ranked cold subtrees) x comp-debris (invocation coldness) x blast-radius cross-check (comp-blast/comp-pydeps, so nothing cold-but-load-bearing is mis-binned) -> a disposition census (ARCHIVE / DELETE-on-Andrew-word / KEEP-with-reason) for Andrew's batch review. P1 = execution in REVIEWED BATCHES: archive moves via git mv (history-preserving, one revert restores a batch), deletions ONLY on Andrew's explicit per-batch word (recursive deletion = human-confirm class), off-peak + shared-worktree-coordinated (cross-domain MCP before touching another lane's active paths). COMPONENT-B SEAM: LCLRPO never archives an OPAL_STNDRD canonization target mid-flight -- STNDRD defines the canon, LCLRPO retires superseded copies AFTER call sites repoint (retire-with-provenance). KEEP-CLASS REGARDLESS OF AGE: org/tier0 records, audit logs, docs/references incidents, ledger/reviews -- the record is the product; coldness is not junk there.",
+  "prds": [],
+  "source_brief": "LD-0300 charter (org/tier0/ledger/LD-0300.md @ d406f38b2) + the paired Andrew verbatim record + 0.6.2's BRIEF_CONSOLIDATION_RESOURCE_STANDARDIZATION_20260715.md (the STNDRD seam input).",
+  "status": "active",
+  "phase": "P0 CENSUS (MSTR-executed, opened 2026-07-15 ~19:1xZ): the comp-heat x comp-debris x blast-radius disposition census toward Andrew's batch review. Parallel-tracked with NFRA_GRAPHFEED (LD-0299); the fabric's consolidation P0 + tonight's fire-read are untouched (measurement only, no moves in P0). COO registration executed same evening (this record + REGISTRY row).",
+  "blocking": "None in P0 (census is a document). P1 gates BY DESIGN: Andrew batch review before any movement; per-batch Andrew word for deletions; the OPAL_STNDRD canonization seam (a function being canonized is not archive-eligible until call sites repoint); shared-worktree move coordination with live lanes.",
+  "owner": "0.0.0_AB_MSTR",
+  "related": [
+    "NFRA_GRAPHFEED",
+    "OPAL_CONSOLIDATION"
+  ],
+  "created": "2026-07-15",
+  "sovereign": "Andrew (direct commission)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

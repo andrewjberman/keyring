@@ -45,10 +45,17 @@ which remains authoritative for build ACs, cited from WS-C4.)
 
 ## Not re-parented (deliberate)
 
-- **WS-D (inf-AoR):** NO open TOs exist and none issue from this map — the WORK is covered in WS-D,
-  but **LD-0277, the INF hold doc, and the stamp-order records stay STANDALONE-AUTHORITATIVE safety law**
-  (the ratified law-vs-scope split, PRD sec-2/sec-6a). WS-D actions are event-gated on their own chain
-  (fold-with-real-data -> lock; CVO~B re-spawn event-armed on the hold-lift; V4 = post-cutover re-take).
+- **WS-D (inf-AoR):** NO open TOs existed at map authoring and none issue FROM THIS MAP — the WORK is
+  covered in WS-D, but **LD-0277, the INF hold doc, and the stamp-order records stay
+  STANDALONE-AUTHORITATIVE safety law** (the ratified law-vs-scope split, PRD sec-2/sec-6a). WS-D
+  actions are event-gated on their own chain (fold-with-real-data -> lock; V4 = post-cutover re-take).
+  **AMENDED 2026-07-15 ~19:3xZ (COO, the directive-6 oversight cross-check):** OPAL_GLDRNS.B1 now
+  exists (Andrew directive-4 authority, CTO-issued, lane DS~B, deploy-authorized SCOPED to the inf
+  runner) — it RIDES the standalone gate chain IN ORDER (stamp-order absolute, Door 6 banned, frozen-3
+  flag-before-touch, Wednesday-ceiling sealed, sovereign gates queued to Andrew at their moments,
+  never-widen co-sign named). It is a sovereign-directed drive THROUGH the law, not a P0-wave TO over
+  it; the split is unchanged. CVO~B re-spawn wiring UPDATED: routes CTO->MSTR at B1 step 4 (supersedes
+  the earlier COO-explicit trigger; COO CC'd at the ask).
 - **Inherited tails already homed in WS-C8** (SCHWABAUTO prod-repoint; BDAPIMIG closed-superseded 07-15
   on the 02:30Z scheduled-fire evidence; C9(b) manual-monthly cadence) — carried by the build plan, not TO files.
 - **Other-project TOs** (ADVI_*, NFRA_*, delegate lanes) are OUT OF SCOPE — the supersede covers the three
