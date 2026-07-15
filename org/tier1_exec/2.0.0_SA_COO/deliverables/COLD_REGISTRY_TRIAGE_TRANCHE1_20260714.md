@@ -107,3 +107,7 @@ REGROW/TO/PRD flags (62/54/11) largely pair with these projects; they ride the s
    row-less/held (118c6166f: 22 ROW-MISSING -> 15 backfilled + 7 HELD with reasons; loader
    b8e7a298f filters at the read). Before closing ANY cold record, check it is not in the held
    class -- a "stale" record may be a sovereign exclusion working as designed.
+
+## ADDENDUM (2026-07-15 01:5xZ, CTO 23:2xZ pass): +3 cold rows
+ETFS_AVGCAP / ETFS_SETUP / ETFS_CANON legacy JSONs lit up by C4's lexical overlap (corpus noise, not new
+drift) -- join the quiet-day judgment-read list with the original 13. Same F-013 held-class check applies.
