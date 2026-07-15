@@ -18625,3 +18625,21 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~19:35Z | 1.0.0_SA_CTO | comp-glob (D-publisher enum), comp-pulse(auto x8, 2 immune-HOLDs read), raw-aws leg instruments rail-checked | GLDRNS+STNDRD stand-up + 0833 cert + one-motion + codeheat | immune response worked twice; monolith gap unchanged |
 | 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-15/g... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/OPAL_GLDRNS.B1.inf... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0300.md --file org/... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0300.md org/tier0_exec/0.0.0_AB_MSTR/deliverables/O... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pipescript | comp-pipescript deployed C_00.canonical_performance.py | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pipescript | comp-pipescript deployed C_02.client_performance.py | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pipescript | comp-pipescript deployed | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/FEED9_ENUMERATION_FINDIN... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/BRIEF_DSB_DOOR5_AND_T... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pipescript | comp-pipescript deployed --help | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~C | OPAL_GLDRNS.C1 | comp-pipescript | comp-pipescript deployed --firm cot | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | schwab-onemotion + globgrph-codeheat | terraform-targeted-plan/apply + build-and-upload + lambda-invoke | schwab v0.17.0 (delta-6 CRS + 3008, targeted 0/1/0, AC-1 skip 946MB) + globgrph CODEHEAT=1 (rev5, targeted 1/1/1); -target excluded held cell-3 + 3 unrelated; comp-tagauthz MSYS gotcha banked | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/tests/test_e... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/silver/tests/test_etf_conversion.py | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
