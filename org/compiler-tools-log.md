@@ -18903,3 +18903,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~22:58Z | 1.0.0_SA_CTO | comp-state (3/3 + full, hot ALL CURRENT), comp-pulse(auto x4, 1 HOLD read -- the fix strengthens the cited gate), raw-aws rail-checked | the sovereign GO window + pace-order pull-forwards | POST-CLOSE echo noise = the filed corpus defect, no live BEHINDs |
 | 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-15/s... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260715T2259Z_etf-cutover-full-se... | PASS |
+| 2026-07-15 | 3.0.0_SA_CVO~B | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/GL... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff org/critical_paths/change_management/GLDRNS_B1_AOR_RELEASE_WINDOW_20260... | PASS |
+| 2026-07-15 ~23:20Z | 0.4.0_DS_ClientPlatform~A | WAVE-2 first live runs (CTO 224453Z) | comp-pipescript postdeps a00 (PASS-EMPTY), commit-gate x3 (1 block fixed), rail-marked listings = Rule 22a input verification pre-run | a00+a01 gold-grammar writes LANDED+VERIFIED; W-2 measured; c04 exercised 32/5999 flags |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/runners_49f/a0... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/a00_runner.py data/assets/scripts/... | PASS |
