@@ -18867,3 +18867,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 | 0.7.0_AE_CloudOps~A | (no-TO, Andrew-direct NFRA_WEBSITE) | comp-grep x5, comp-manifest-check completeness x2, comp-imgread (NEW, +controls) | PASS | .188-vs-.186 RCA: comp-grep 0/22,119 denominator = the decisive absence; comp-imgread shipped @ 5861a974f + exercised on the incident artifact; gap closed: image-content reading now has a comp tool |
 | 2026-07-15 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/globgrph/incremental_u... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff infra/aws/lambda/globgrph/incremental_updater/incremental_updater.zip | PASS |
+| 2026-07-15 ~22:25Z | 0.4.0_DS_ClientPlatform~B | comp-glob x2, deploy-import-lint (structural dotted-name blindness FOUND, honest spec-import built), commit-gate, comp-pulse via safe-commit | GLDRNS.B1 G3 bundle deploy + battery | lint tool fix routed to CTO |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
