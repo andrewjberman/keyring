@@ -38,7 +38,7 @@ which remains authoritative for build ACs, cited from WS-C4.)
 | OPAL_ASSETS.C10.cottonwood-aua-cohort | DS | **WS-A5** | External-gated leg |
 | OPAL_ASSETS.C11.emitter-one-bucket-only | DS | **WS-A5** | Staged (C3+C6) |
 | OPAL_ASSETS.C12.legacy-prefix-inventory | DS | **WS-A5** | Doc-only leg |
-| OPAL_ASSETS.P0-A (daily-AUM bucket skeleton) | 0.8.0_AE_CloudComp | **WS-A5** | STAFFING FLAG: assignee not live on the fabric; absorb into the emitter path (C11) or re-staff at the wave |
+| OPAL_ASSETS.P0-A (daily-AUM bucket skeleton) | 0.8.0_AE_CloudComp | **WS-A5** | STAFFING RULED (CTO 155711Z): ABSORB into the C11/emitter path; do NOT re-staff 0.8.0 pre-emptively -- decide at the wave that actually needs it, with the work in front of us |
 | OPAL_ASSETS_49METATABLES.D1.bd-advisor-fee-dim-build | DS | **WS-B2** | THE LAST convergence finding (bridge proof on live data); P0 critical path to WS-C2 (arch session lock) |
 | OPAL_ASSETS_49METATABLES.D1-CELL3.allocation-floor-parser | 0.7.0 | **WS-B2** (x-ref WS-A5) | Tracked-behind-parity residual; feeds D1 |
 | OPAL_ASSETS_49METATABLES.D2.feed9-lane-rebadge | 0.5.0 | **WS-B (D2 tail)** | Thin wrapper; D2 findings delivered @ 826a44082; feed-8 question = WS-B1 (S2 sitting) |
