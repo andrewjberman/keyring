@@ -42,11 +42,19 @@ own instruments, never a producer self-report)
 
 ## 4. Named residuals (per cert-AC (i): denominators + close conditions; NONE block the cert)
 
-1. **smartx part-2 build wave** (6 ruled-FACT tables, 0 of 6 landed at draft time; wave EXECUTING
-   under batch GO w/ halt-on-refuse; DS pins filed @ a289cc2fe, library PASS @ 6ce907696).
-   Close: per-family landed read-back == DS pin. The RULING half of Andrew's
-   table-or-exemption bar is fully satisfied (6 FACT + 1 exemption + meta exempt-by-construction);
-   this residual is BUILD EXECUTION only. **This cert cannot be read as "smartx complete."**
+1. **smartx part-2 build wave — CLOSED 18:51Z, superseded by a sharper named finding.** Wave
+   completed 6/6 under the batch GO, ZERO refusals, every DS pin EXACT (evidence 185139Z; manifests
+   at smartx/platform/meta/pulls/*). The smartx family = 12 tables LIVE (5 planned + 6 part-2 +
+   map); Andrew's table-or-exemption bar fully satisfied AS BUILT. **REPLACING residual (named at
+   cert per AC-i): the MODEL-TIER ENUMERATION GAP** — the resolver's living-model set enumerates
+   11 of >=14 living models (9 allocation-ids, open dates 2023-09..2025-11, resolve to 3 models
+   OUTSIDE the set: Vanguard S&P 100/0 ETF (7), Martin U.S. Investing (1), Suncoast Dividend
+   Growth (1); vintage-skew REFUTED on open_ts; will NOT self-heal — the enumeration itself is
+   short). ALL model-tier feeds inherit it (holdings/performance/changerequests/aum/roster cover
+   the 11, not the >=14). Owner: feed-9 lane (0.5.0 producer enumeration + DS expectation update).
+   Close: enumeration returns the full living set; the 3 named models' feeds land; the 9 ids map.
+   **The smartx ACCOUNT-tier tables (sweep/detail/nonzerosleeve/positions/valuation/map) are
+   complete-universe and unaffected — the gap is model-tier coverage breadth only.**
 2. **cell-3 floor-parser** (bd49f pull; inert-not-wrong, extent 92 > measured 70 floor): fix
    STAGED (plan 0/1/0, live sha unchanged); swap gates on tonight-clean; runtime-confirm rides
    tomorrow's 02:30Z fire.
