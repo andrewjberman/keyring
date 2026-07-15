@@ -18643,3 +18643,44 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/silver/tests/test_etf_conversion.py | PASS |
 | 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS_49METATABLES.D1-CELL3 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/cse_producers_nightl... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff infra/aws/globgrph/cse_producers_nightly.py infra/aws/terraform/globgrp... | FAIL |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0_exec/0.0.0_AB_MSTR/task_order... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0_exec/0.0.0_AB_MSTR/task_orders/ANDREW_DIRECT_20260715_opal_lc... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0300.md --file org/... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0300.md org/tier0_exec/0.0.0_AB_MSTR/task_orders/AN... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse --top 3 --json | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/FEED9_ENUMERATION_FINDIN... | PASS |
+- 2026-07-15 19:15-20:00Z 0.4.0_DS_ClientPlatform: pytest etf 26/26 re-run post-docstring-edit PASS; commit-gate 1x PASS; surface-check+risk-reflex 1x CLEAN; scoped TO-status grep (8 files, MEASURED -- full-dir loop times out, scope scans to the named set).
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-debris | comp-debris | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/trigger-map-drift.yml... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff .github/workflows/trigger-map-drift.yml infra/aws/lambda/ci/trigger-cen... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/trigger-census.py -... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff infra/aws/lambda/ci/trigger-census.py infra/aws/lambda/ci/trigger-map.json | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/lam... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff infra/aws/lambda/smartx_assets_pull/lambda_function.py infra/aws/lambda... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/tes... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff infra/aws/lambda/smartx_assets_pull/test_smartx_client.py | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0300.md --file org/... | PASS |
+| 2026-07-15 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0300.md org/tier0_exec/0.0.0_AB_MSTR/task_orders/AN... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/STNDRD_PHASE3_ABSENCE_T... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/trigger-map-drift.yml | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .github/workflows/trigger-map-drift.yml | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse --top 3 --json | FAIL |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-debris | comp-debris | PASS |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/GLDRNS_B1_GROUNDS... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/PARITY_CERTIFICATION_20260715.md | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/trigger-census.py -... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps~Z | OPAL_STNDRD.Z1.standardization-program-execution | comp-pulse | comp-pulse diff infra/aws/lambda/ci/trigger-census.py infra/aws/lambda/ci/trigger-map.json | PASS |
+- 2026-07-15 ~20:4xZ 0.6.2_AE_PartnerETL: window 16:2x-20:4xZ -- aws events/scheduler/cw/iam-simulate/lambda-config battery (frontier check + coverage sweep + AC5 evidence + swap grounding); terraform 0/1/0 apply via safe-apply (PreFloorRestore removal, tag v1.5.0); S3 census scripts x2 (per-suffix raw-vs-parquet discriminator; 10-tree sweep); lib/trading_calendar; read-only gold-vs-silver diff (AoR TODO verified). No comp-* graph tools: dispatch evidence shapes demanded live primitives (22a); the one code edit is a leaf.
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
