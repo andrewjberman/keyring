@@ -18362,3 +18362,20 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~16:00Z | 1.0.0_SA_CTO | comp-pulse(auto x7); suites exercised (219+ tests, skipped-witness catch); raw-s3 censuses rail-checked | consolidation ratification + smartx/ETF rulings + delta-6 gates | exercising suites myself caught the env-gated witness skip; monolith gap unchanged |
 | 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-15/c... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/crs_reader.p... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/silver/crs_reader.py data/assets/scripts/silver/sch... | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/frontend-dev/SKILL.md --... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/frontend-dev/SKILL.md design/README.md design/brand/COLO... | FAIL |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-blast | comp-blast parse_crs | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/CLAUDE.md --file portal/docs/DES... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/chunking_lambda_archi... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/chunking_lambda_architecture.md | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/tests/measur... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/silver/tests/measure_delta6_schwab.py | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_BBGTML.json --file or... | PASS |
+| 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_BBGTML.json org/projects/REGISTRY.md org/tier2_senior... | PASS |
+- 2026-07-15 ~16:2xZ 0.6.2_AE_PartnerETL: comp-blast parse_crs (NOT-FOUND w/ denominator 1424 -- converter blast = the schwab lambda, family-established); aws lambda get-function-configuration (exposed source-map memory 3008 vs live/TF 10240 drift -> fixed); aws s3 ls/cp (0833 drain counts, rlu 20260109 heavy unit + live artifact pulls); measure_delta6_schwab x3 (3-dim acceptance PASS, Table.equals content-identity vs deployed, post-move re-run); vendor-manifest.sh --check (11/11); commit-gate (11 files); pytest 182+3-integration passed. Window: delta-6 CRS streaming landed 6bfea3fdf + harness canonical 7f2f79763.
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
