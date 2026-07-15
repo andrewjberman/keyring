@@ -64,14 +64,22 @@ the delta since is folded into Current State below.
 - Cutover order (do not compress): 3d parity -> SILVER_ROOT="" -> verify live write -> disable
   legacy.
 
-## OPEN LOOPS (exactly one open at others; everything else closed)
+## OPEN LOOPS -- NONE. THE WAVE IS EXECUTE-READY (batch GO in hand)
 
-- **[1.0.0_SA_CTO] per-family GO for the part-2 conversion wave** (my RAVC-REQ 180230Z).
-  When a GO lands: run 1 = `python "/c/.../17c57e5a-0149-4046-ae44-c2536b762cc3/scratchpad/part2_run1_sweep_conversion.py"`
-  (sweep, run partition 2026-07-14; every DS pin wired as refuse-gate; R3 matrix + presence-law
-  fleet measurement + cadence note manifested). Then families 2-6 in the pinned order
-  (nonzerosleeve -> detail -> holdings -> performance -> changerequests), same form -- authoring
-  each next driver off run-1's template is ~15min each. Fire outranks any GO landing in-window.
+- **ADDENDUM 18:11Z -- CTO BATCH GO RECEIVED (181013Z), the loop closed as this handoff
+  committed.** One batch authorization for ALL SIX in pinned order (sweep -> nonzerosleeve ->
+  detail -> holdings -> performance -> changerequests), each DS pin a REFUSE GATE, v28
+  discipline. **STOP CONDITION: any pin-miss/refuse-gate/containment surprise HALTS the wave at
+  that family pending CTO's read -- never continue past a refusal.** Per-family evidence lands
+  as each converts (landed read-back + manifest cite); NO per-family ack needed -- the batch GO
+  covers the sequence. Delta triage approved as stated (biconditionals measure-first;
+  containment = named-finding-never-refuse; cadence manifested honestly). Fire window law:
+  anything in flight at 22:00Z queues behind the fire; the wave resumes after.
+- **Reset session runs the wave FIRST (before 21:56Z), starting with the staged driver:**
+  `python "/c/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman-Desktop-ajb-workspace/17c57e5a-0149-4046-ae44-c2536b762cc3/scratchpad/part2_run1_sweep_conversion.py"`
+  (sweep, partition 2026-07-14; ~3 min). Then author drivers 2-6 off run-1's template (~15 min
+  each; same gates from the DS pin sections). The wave was NOT started pre-reset deliberately --
+  no conversion stranded mid-write by the session kill.
 
 ## CURRENT STATE (zero-prior-context)
 
