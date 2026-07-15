@@ -18283,3 +18283,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~14:3xZ | 0.6.2_AE_PartnerETL | aws lambda invoke (live exercise), aws s3/lambda config, source review | delta-7 exercised on deployed artifact (real tnn key -> ok+skipped-hole); delta-6 primitive reviewed (accepted, /tmp residual grounded) | session-close; ratchet driving 0833 to parity in background |
 | 2026-07-15 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/chunking_lambda_archi... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/chunking_lambda_architecture.md | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/frontend-dev/SKILL.md --... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/frontend-dev/SKILL.md org/tier2_senior/0.5.0_AE_OpalETL/... | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/sil... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/smartx_assets_pull/silver.py infra/aws/lambda/smartx_a... | PASS |
+| 2026-07-15 ~14:45Z | 1.0.0_SA_CTO | comp-glob, comp-pulse(auto), comp-state(prior) | delta-6 review + chunking-arch landing | comp-glob systems-context useful; monolith gap unchanged |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-15/c... | PASS |
