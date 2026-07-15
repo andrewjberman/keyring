@@ -1,0 +1,197 @@
+#!/usr/bin/env python3
+"""comp-imgread <image> [--crop X,Y,W,H] [--grid CxR] [--scale N] [--out DIR] -- the
+NATIVE-RESOLUTION image-region reader (NFRA_WEBSITE .188-vs-.186 incident, Andrew-direct
+2026-07-15: canonize pixel-for-pixel analysis for image parsing).
+
+THE PROBLEM THIS SOLVES: model vision DOWNSAMPLES large images before reading them. A
+2940x1912 screenshot is not seen at 2940x1912 -- small glyphs land on too few effective
+pixels, and closed-glyph pairs (6/8, 3/8, 5/6, 0/8) flip SILENTLY, rendering as confidence
+(the visual channel has no error signal). Live incident: a machine-drafted client email
+quoted a GoDaddy apex A record as 185.230.63.188; the row said .186; the client caught it.
+
+WHAT IT DOES: cuts the image into overlapping regions at NATIVE resolution, magnifies each
+(LANCZOS) to a size the vision channel reads without downsampling, writes the tiles as PNGs,
+and prints their paths -- the agent then Reads EACH TILE it cares about. Tiles overlap so a
+digit string at a seam appears whole in at least one tile. If tesseract exists on the box it
+is run per-tile as an INDEPENDENT second channel (guarded command -v per Rule 16; absent on
+the standard box -- its absence is printed, never silent).
+
+WHAT IT DOES NOT DO: it does not make a visual read TRUE. Every value read from a tile is
+still a HYPOTHESIS -- ground any outward-quoted value on live state or the estate record
+(Rule 22 family; memory: feedback_photo_parsed_numbers_are_hypotheses_ground_before_outward_quote).
+The tool shrinks the misread probability; the grounding rule catches the remainder.
+
+Read-only on the input; writes tiles to a temp dir (or --out). Deterministic, ASCII-only.
+"""
+from __future__ import annotations
+
+import os
+import shutil
+import subprocess
+import sys
+import tempfile
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _comprail  # noqa: E402
+
+WS = _comprail.repo_root()
+RAIL_LOG = os.path.join(WS, "org", "mcp", "comp-which-rail.log")
+
+TILE_TARGET = 1100      # native px per tile edge the auto-grid aims for
+TILE_OVERLAP = 60       # native px shared between adjacent tiles (seam-split guard)
+MAG_TARGET = 1500       # magnify each tile so its long side ~= this
+MAG_CAP = 4.0           # never upscale beyond 4x (blur past this helps nothing)
+MAX_TILES_DEFAULT = 24
+
+
+def _err(msg: str) -> int:
+    print("comp-imgread: ERROR: %s" % msg)
+    return 2
+
+
+def _parse_int_list(s: str, n: int, what: str):
+    parts = s.replace("x", ",").split(",")
+    if len(parts) != n:
+        raise ValueError("%s wants %d comma-separated integers, got %r" % (what, n, s))
+    return [int(p) for p in parts]
+
+
+def main() -> int:
+    _comprail.harden_stdout()
+    argv = sys.argv[1:]
+    if not argv or argv[0] in ("-h", "--help"):
+        print("comp-imgread <image> [flags] -- native-resolution region reader for image parsing.")
+        print("  --crop X,Y,W,H   one region (native px) instead of a grid")
+        print("  --grid CxR       explicit grid (e.g. 3x2); default: auto (~%dpx tiles)" % TILE_TARGET)
+        print("  --scale N        explicit magnification; default: auto to ~%dpx long side (cap %.0fx)" % (MAG_TARGET, MAG_CAP))
+        print("  --out DIR        tile output dir; default: a fresh temp dir")
+        print("  --max-tiles N    safety cap (default %d)" % MAX_TILES_DEFAULT)
+        print("  Read each printed tile with the Read tool. A tile read is a HYPOTHESIS --")
+        print("  ground outward-quoted values on live state / the estate record (Rule 22 family).")
+        return 0
+
+    try:
+        from PIL import Image
+    except ImportError:
+        return _err("Pillow is not importable in this python (pip show pillow); no fallback -- "
+                    "a degraded read here is exactly the failure mode this tool exists to stop.")
+
+    crop = grid = None
+    scale = 0.0
+    out_dir = ""
+    max_tiles = MAX_TILES_DEFAULT
+    positional = []
+    i = 0
+    while i < len(argv):
+        a = argv[i]
+        if a == "--crop":
+            i += 1
+            crop = _parse_int_list(argv[i], 4, "--crop")
+        elif a == "--grid":
+            i += 1
+            grid = _parse_int_list(argv[i], 2, "--grid")
+        elif a == "--scale":
+            i += 1
+            scale = float(argv[i])
+        elif a == "--out":
+            i += 1
+            out_dir = argv[i]
+        elif a == "--max-tiles":
+            i += 1
+            max_tiles = int(argv[i])
+        else:
+            positional.append(a)
+        i += 1
+
+    if not positional:
+        return _err("no image given. Usage: comp-imgread <image> [--crop X,Y,W,H] [--grid CxR]")
+    src = positional[0]
+    if not os.path.isfile(src):
+        return _err("image not found: %s" % src)
+
+    try:
+        img = Image.open(src)
+        img.load()
+    except Exception as e:
+        return _err("cannot open %s as an image: %s" % (src, e))
+    if img.mode not in ("RGB", "L"):
+        img = img.convert("RGB")
+    w, h = img.size
+    print("comp-imgread: %s  native=%dx%d  mode=%s  bytes=%d" % (
+        os.path.basename(src), w, h, img.mode, os.path.getsize(src)))
+    print("  WHY TILES: model vision DOWNSAMPLES a large image -- glyphs this size flip (6/8, 3/8,")
+    print("  5/6, 0/8) with no error signal. Read the TILES below, not the full frame.")
+
+    # regions: --crop > --grid > auto-grid, all with seam overlap
+    regions = []  # (label, x, y, rw, rh)
+    if crop:
+        x, y, rw, rh = crop
+        if rw <= 0 or rh <= 0 or x < 0 or y < 0 or x + rw > w or y + rh > h:
+            return _err("--crop %s is outside the %dx%d image" % (crop, w, h))
+        regions.append(("crop", x, y, rw, rh))
+    else:
+        if grid:
+            cols, rows = grid
+        else:
+            cols = max(1, (w + TILE_TARGET - 1) // TILE_TARGET)
+            rows = max(1, (h + TILE_TARGET - 1) // TILE_TARGET)
+        while cols * rows > max_tiles and (cols > 1 or rows > 1):
+            if cols >= rows and cols > 1:
+                cols -= 1
+            elif rows > 1:
+                rows -= 1
+        tw = (w + cols - 1) // cols
+        th = (h + rows - 1) // rows
+        for r in range(rows):
+            for c in range(cols):
+                x = max(0, c * tw - (TILE_OVERLAP if c else 0))
+                y = max(0, r * th - (TILE_OVERLAP if r else 0))
+                x2 = min(w, (c + 1) * tw + TILE_OVERLAP)
+                y2 = min(h, (r + 1) * th + TILE_OVERLAP)
+                regions.append(("r%dc%d" % (r + 1, c + 1), x, y, x2 - x, y2 - y))
+
+    if not out_dir:
+        out_dir = tempfile.mkdtemp(prefix="comp-imgread-")
+    os.makedirs(out_dir, exist_ok=True)
+
+    tess = shutil.which("tesseract")  # Rule 16: guarded, optional second channel
+    base = os.path.splitext(os.path.basename(src))[0]
+
+    print("  tiles -> %s  (overlap=%dpx so seam-split text appears whole in a neighbor)" % (out_dir, TILE_OVERLAP))
+    for label, x, y, rw, rh in regions:
+        tile = img.crop((x, y, x + rw, y + rh))
+        mag = scale if scale > 0 else min(MAG_CAP, max(1.0, float(MAG_TARGET) / max(rw, rh)))
+        if mag != 1.0:
+            tile = tile.resize((int(rw * mag), int(rh * mag)), Image.LANCZOS)
+        path = os.path.join(out_dir, "%s_%s.png" % (base, label))
+        tile.save(path, "PNG")
+        line = "  TILE %-6s region=(x=%d,y=%d,w=%d,h=%d) mag=%.2fx out=%dx%d  %s" % (
+            label, x, y, rw, rh, mag, tile.size[0], tile.size[1], path)
+        print(_comprail.ascii_safe(line))
+        if tess:
+            try:
+                r = subprocess.run([tess, path, "stdout", "--psm", "6"],
+                                   capture_output=True, text=True, timeout=60)
+                txt = " / ".join(t.strip() for t in r.stdout.splitlines() if t.strip())[:300]
+                print(_comprail.ascii_safe("    OCR(2nd channel): %s" % (txt or "(no text found)")))
+            except Exception as e:
+                print("    OCR(2nd channel): FAILED (%s) -- one channel only, weigh accordingly" % e)
+    if not tess:
+        print("  tesseract: not installed on this box -- NO independent OCR channel ran; every read")
+        print("  below is single-channel model vision. (Installing tesseract upgrades this tool.)")
+
+    print("")
+    print("OK: comp-imgread -- %d tile(s) from %dx%d native. NOW Read each tile you care about." % (
+        len(regions), w, h))
+    print("  A TILE READ IS A HYPOTHESIS. Before quoting any value outward (email/ticket/vendor),")
+    print("  ground it on live state (nslookup / aws describe / the served artifact) or the estate")
+    print("  record -- Rule 22 family; the .188-vs-.186 incident is what happens otherwise.")
+
+    _comprail.log_rail(RAIL_LOG, "RUN-IMGREAD", "comp-imgread", os.path.basename(src),
+                       "tiles=%d native=%dx%d out=%s ocr=%s" % (
+                           len(regions), w, h, out_dir, "yes" if tess else "absent"))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

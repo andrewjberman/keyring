@@ -845,6 +845,7 @@ meta_tools:
   - { tool: comp-which,             role: router, routable: false,             not_homed_reason: "the rail ENTRY -- maps a plain-English question to the canonical homed tool; it ROUTES, it is not a surface inspection (PRD deliverable 4 reorgs it surface-first)" }
   - { tool: comp-grep,              role: search-primitive, routable: false,   not_homed_reason: "on-rails grep comp-which RUNS when no rich tool fits (never-dead-end); a search primitive, not a surface tool" }
   - { tool: comp-glob,              role: search-primitive, routable: false,   not_homed_reason: "on-rails glob comp-which RUNS when no rich tool fits; a search primitive" }
+  - { tool: comp-imgread,           role: vision-primitive, routable: false,   not_homed_reason: "native-resolution image-region tiler for pixel-level reads (the .188-vs-.186 misread class, Andrew-direct 2026-07-15); an inspection primitive on LOCAL image files, not a graph/surface query" }
   - { tool: comp-to,                role: session-primitive, routable: false,  not_homed_reason: "session-context setter (race-free per-session TO_ID for the comp auto-logger); a startup primitive" }
   - { tool: comp-build,             role: cache-management, routable: true,   not_homed_reason: "rebuilds the trace-graph cache (the trace WRITE-PATH); operates on the tooling cache, not a surface" }
   - { tool: comp-manifest-check,    role: enforcement-gate, routable: false,   not_homed_reason: "D6 manifest-ENFORCEMENT commit-gate; polices the manifest, not a surface query" }
