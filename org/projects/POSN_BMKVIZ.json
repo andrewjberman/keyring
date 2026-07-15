@@ -1,0 +1,25 @@
+{
+  "project_code": "POSN_BMKVIZ",
+  "macro_code": "POSN",
+  "name": "Positioning Custom View -- Benchmark Basis + Juxtaposed Model-Actual Bars",
+  "description": "Expansion of POSN_CUSTOM (complete 2026-07-10, portal-v2.1.135). Two parts, both FE-only in portal/src/pages/Positioning/. PART 1 -- BENCHMARK BASIS: the Custom view currently computes the blend + matrix over the models' PORTFOLIO (actual) data (PositioningSummary.tsx dataMode falls back to 'portfolio' when Custom is engaged); flip it to 'benchmark' so the custom blend, allocation bars, and the full expanded-characteristics matrix (yield/cost/duration/beta + sub-categories) all derive from the models' BENCHMARK values -- stable per-model anchors, so the client-mix math is not chased by market drift (Yang, call 2026-07-10 02:35-04:32: 'the calculator should be based upon the benchmark... intermediate term is always 60%, short term is always 15%... using benchmark kind of eliminates that concern'; Andrew 2026-07-14: 'using the benchmark toggle data as opposed to the model toggle data'). PART 2 -- JUXTAPOSED BARS: in the Custom view ONLY, every stacked allocation bar becomes a PAIR -- the opaque bar carries the benchmark basis, and a slightly transparent companion bar carries the model's ACTUAL portfolio allocation, so the intentional tilt (Yang's '69 vs 60') stays visible; ALL SIX columns pair (the 5 models AND the Custom blend bar, whose companion is the same weights over model-actual data). Both scope decisions Andrew-selected in-session 2026-07-14 (AskUserQuestion: 'Custom view only' + 'Yes, pair it too'). Mode B (target-equity) explicitly NOT in scope (Andrew 2026-07-14: 'we dont need the mode b, its just the visualization piece'). Portfolio/Benchmark/Relative views unchanged; HoldingsTab CSM unchanged (holdings blend stays over actual model holdings -- benchmarks carry no holdings).",
+  "authority": "Registered by 0.2.0_DT_PortfolioAnalytics under Andrew's standing sovereign delegation (docs/briefs/SOVEREIGN_DELEGATE_AGENT_BRIEFING.md; activation record 306834fa6). Basis instruction recorded verbatim at b36cf961b + the 2026-07-14 in-session clarifications ('expansion of the recent POSN project'; 'no mode b'). Fabric-quiet: no COO/CTO dispatch; closure commit CC COO.",
+  "prds": [
+    {"path": "docs/architecture/POSN_CUSTOM.md", "label": "Parent design of record (POSN_CUSTOM PRD v0.2 as-built)", "date": "2026-07-10"},
+    {"path": "org/tier2_senior/0.2.0_DT_PortfolioAnalytics/task_orders/ANDREW_DIRECT_20260714_yang_call_next_project_scoping.md", "label": "Basis instruction (verbatim record)", "date": "2026-07-14"}
+  ],
+  "status": "active",
+  "phase": "REGISTERED + BUILDING 2026-07-14 (same-session, 0.2.0_DT sovereign delegate). Seams grounded before registration: PositioningSummary.tsx:536 dataMode fallback ('portfolio'->'benchmark'), renderBarInner single-bar markup gains an optional translucent companion, call sites at :938 (models) + :946 (custom blend). Build -> tsc/eslint -> visual QA on dev -> portal DEV commit -> Andrew smoke -> PROD promote on his word.",
+  "blocking": "None.",
+  "depends_on": ["POSN_CUSTOM"],
+  "depends_on_note": "Pure FE expansion over POSN_CUSTOM's shipped custom-blend machinery (customBlend.ts blendSeries + the lifted page state). Benchmark values already served per model (portfolio.benchmark.allocation/characteristics/sub_categories) -- no backend/DS/Lambda/S3 change, no new query key. Files touched: panels/PositioningSummary.tsx only.",
+  "absorbs": [],
+  "created": "2026-07-14",
+  "pods": ["0.2"],
+  "pipeline": "portal/src/pages/Positioning (FE-only; no pipeline tag). 0.2.0_DT sovereign-delegate build + promote.",
+  "thread_counter": 0,
+  "threads": [],
+  "history": [
+    {"date": "2026-07-14", "event": "Registered by 0.2.0_DT_PortfolioAnalytics (sovereign delegate) off Andrew-direct: Yang 07-10 call = project basis (b36cf961b); clarified same-session to the two-part POSN expansion (benchmark basis + juxtaposed transparent/opaque bars, no Mode B). Scope decisions Andrew-selected: pair in Custom view only; all six columns paired."}
+  ]
+}
