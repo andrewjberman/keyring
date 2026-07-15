@@ -32,16 +32,29 @@ precedent (Andrew-ordered, 18:26Z) is the ruling that a manual fire satisfies a 
    a14fYacw (51,829B write-verified) -> targeted apply -> live tie -> RE-SMOKE = the DESIGNED
    REFUSAL from etf_conversion.lambda_entry (import closure proven ON the deployed artifact)
    -> targeted 0-diff -> tag opal-assets-v0.20.0.
-2. [IN FLIGHT 23:25Z, 0.7.0] Notification rules 6-8 per DS fill @ de7342780 (rule 9 struck by
-   the msn ruling; the TF never adds it).
-3. [PENDING, 0.7.0] SILVER_ROOT="" flip (etfs-netassets locals) -> safe-apply.
-4. [PENDING, 0.5.0] Manual verify fire + step-4 harness (staged + failure-proven pre-legs:
-   DIRTY w/ 16 named problems; scratchpad etf_cutover_verify_step4.py). Verifies bronze-fresh,
-   event->converter fired, monolith fact tables per-fund w/ conservation tie + read-back,
-   legacy live silver fresh-stamped post-flip.
-5. [PENDING, 0.5.0] Disable Windows task "ETF NetAssets Daily Probe" (root TaskPath; last run
-   2026-07-15 6:00:01 PM ET rc=0; next run 07-16 6:00 PM ET = the run that never happens) +
-   ledger CLOSE + evidence to CTO/COO.
+2. [DONE 23:36Z, 0.7.0, v0.21.0] Notification rules 6-8 LIVE exactly as DS filled them
+   (silver-etf-divz/-idvz .html + silver-etf-filepoint .csv -> opal-assets-silver-etf);
+   14 configs live-verified, all 11 pre-existing intact (plan-JSON net-set check). Rule 9
+   msn: struck, never landed.
+3. [DONE 23:36Z, 0.7.0, tag etfs-netassets-v1.2.0] SILVER_ROOT="" LIVE (env read-back exact
+   empty string; other 3 vars intact; 0-diff). NOTE: the v1.2.0 tag consumed by this leg;
+   the V2-1+msn producer swap re-tags v1.3.0 (CTO 233744Z).
+4. [STOP-AND-REPORT 23:42Z, 0.5.0 -- at CTO's gate, NOT a failure] Verify fire executed
+   23:37:27Z (pre-fire live env read: SILVER_ROOT="" exact, sha 40KaO/7j held -- one
+   variable). GREEN: bronze 4/4 refreshed 23:37:34; legacy LIVE silver 5/5 fresh 23:37:39
+   (the flip PROVEN on live keys); event wiring PROVEN behaviorally (4 bronze writes -> 4
+   converter invocations timed to them, clean); fact-table content green (6 tables read back;
+   conservation 85+23=108 ties). THE GAP (letter of clause c): fact tables carry 23:30:15-16
+   stamps -- a single silent invocation pre-fire wrote them from the 22:00 bronze (provenance
+   asked of 0.7.0: leg-2 exercise vs container sweep; both lawful); my fire's invocations
+   SKIPPED-IF-LANDED (idempotent discipline, bytes identical) -- so post-re-fire fresh fact
+   stamps are impossible BY DESIGN on an already-converted date. Disposition at CTO's gate:
+   (i) clean-by-mechanism -> leg 5 tonight, or (ii) leg 5 waits on tomorrow's natural 22:00Z
+   full-path write. Converter-silence calibration on the record: the 23:30 WRITING run also
+   printed zero application lines -- log-silence discriminates nothing for this lambda.
+5. [HELD at the leg-4 STOP, 0.5.0] Disable Windows task "ETF NetAssets Daily Probe" (root
+   TaskPath; next run 07-16 6:00 PM ET) + ledger CLOSE + evidence to CTO/COO. Fires only on
+   CTO's leg-4 disposition (i), or after tomorrow's natural fire under (ii).
 
 ## Rollback
 Per leg: 0.7.0's swap/TF legs each carry their own plan-gated revert (artifact re-swap /
