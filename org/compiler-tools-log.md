@@ -18246,3 +18246,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~12:56Z | 0.5.0_AE_OpalETL | none (status+handoff-scribe window) | context-reset handoff log; no code/infra/estate-search work this window; ~A lane's c5a9418dd carried its own Rule-20 verification |
 | 2026-07-15 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | comp-state (self-test + scoped convergence); raw aws s3 ls rail-checked (parity census + bd49f served-verify) | morning parity gates: 0824 CERTIFIED, D1 served-verified, delta-7 live+exercised, ES-1 Rule-10 closed | monolith no-comp-tool gap unchanged (filed 07-14) |
+| 2026-07-15 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/partners-api/api-ga... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | safe-commit-pure-deletion-staging | comp-pulse | comp-pulse diff infra/aws/terraform/partners-api/api-gateway.tf | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-15/m... | PASS |
