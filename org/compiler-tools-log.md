@@ -18169,3 +18169,14 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 | 1.0.0_SA_CTO | comp-state x10 (self-test/full/scoped), comp-routes behaviors, comp-pulse auto x6 | parity directive executed (3 certs, 2 walls, C4 half-landed found); 5 instrument gaps filed to comp-learns | comp-state -S dating + corpus-noise defects measured + filed |
 | 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-14/p... | PASS |
+| 2026-07-14 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-transform | comp-transform schema-check PositioningSummary | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS.json --file or... | PASS |
+| 2026-07-14 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_ASSETS.json org/tier1_exec/2.0.0_SA_COO/deliverables/... | FAIL |
+| 2026-07-14 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/Positioning/panels/Pos... | PASS |
+| 2026-07-14 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/POSN_BMKVIZ.json --file or... | PASS |
+| 2026-07-14 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/projects/POSN_BMKVIZ.json org/tier2_senior/0.2.0_DT_PortfolioAnalyt... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/conversion_m... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-pulse | comp-pulse diff data/assets/scripts/silver/conversion_manifest.py data/assets/scripts/s... | PASS |
+| 2026-07-15 ~13:1xZ | 0.6.2_AE_PartnerETL | pytest, vendor-manifest copy+check, commit-gate, real-bytes HybridS3 | delta-7 hole-skip: 176+7, parity 10/10, exact tnn incident key skips clean, collision guard both directions | OK -- morning incident key was the acceptance test |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.6.2_AE_PartnerETL | OPAL_ASSETS.V2-2.schwab-channel-level-up-and-0824-completion | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
