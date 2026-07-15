@@ -18327,3 +18327,30 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | POSN_BMKVIZ | comp-grep x5 (estate mapping), comp-transform schema-check PositioningSummary (clean), comp-pulse auto x5 (1 measured HOLD on portal gitlink, sanctioned op) | FE-only build+promote v2.1.136; no IAM/gold surface |
 | 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/CLAUDE.md --file portal/docs/DES... | VERDICT |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_CONSOLIDATION_PR... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_CONSOLIDATION_PRD.md org/projects/OPAL_CONSOLIDA... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/CLAUDE.md --file portal/docs/DES... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/ETF_SILVER_FAMILY_DESIGN... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS-delta6-orion-swap | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS-delta6-orion-swap | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/chunking_lambda_pattern... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/chunking_lambda_archi... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/chunking_lambda_architecture.md | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/ETF_SILVER_FAMILY_DESIGN... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/chunking_lambda_archi... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/chunking_lambda_architecture.md | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ASSETS.json --file or... | PASS |
+| 2026-07-15 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_ASSETS.json org/projects/OPAL_ASSETS_49METATABLES.jso... | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/chunking_arch_can... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/task_... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/task_orders/OPAL_ASSETS_49METATABLES.... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS-delta6-orion-swap | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | OPAL_ASSETS-delta6-orion-swap | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/task_orders/OPAL_ASSETS.V2-7.silver-... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/chunking_lambda_archi... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/chunking_lambda_architecture.md | PASS |
+- 2026-07-15 ~A lane (0.5.0_AE_OpalETL~A): comp-pulse diff 3x auto PASS (basename FP HOLDs read); workspace surface-check 3x PASS; PORTAL SEV1 surface gate BLOCKED->SURFACE_ACK on comment-only BenchmarkHeatmap diff (verified pre-ack); rail-checked raw aws x2 (get-authorizer, list-user-pools) grounded the no-Cognito verdict. Gap: no comp tool models frontend color/contrast containment -- CTO routed WARN-lint to comp-learns backlog item 6; screenshot (ui-smoke.mjs) is the instrument.
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
