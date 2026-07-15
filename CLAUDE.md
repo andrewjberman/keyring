@@ -85,7 +85,7 @@ All in `.tools/` (PATH). Full catalog + tools_index: `org/modules/graph/graph-ca
 
 ## Detailed Documentation
 
-- **Lambda / EC2 deploy protocols:** `docs/deployment/LAMBDA_DEPLOYMENT_PROTOCOL.md`, `docs/deployment/EC2_DEPLOYMENT_PROTOCOL.md`, `docs/deployment/EC2_CODE_DEPLOYMENT_STANDARD.md`
+- **Lambda / EC2 deploy protocols:** `docs/deployment/LAMBDA_DEPLOYMENT_PROTOCOL.md`, `docs/deployment/EC2_DEPLOYMENT_PROTOCOL.md`, `docs/deployment/EC2_CODE_DEPLOYMENT_STANDARD.md`, `docs/deployment/TERRAFORM_PROTOCOL.md` (the one-document TF mechanism; law stays in this file), `docs/deployment/EC2_TELEMETRY_RIGHTSIZING_STANDARD.md`
 - **Terraform strategy:** `infra/aws/TERRAFORM_PIPELINE_STRATEGY.md`
 - **Graph platform (versioned global graph, freshness/HEAD-oracle):** `docs/architecture/NFRA_GLOBGRPH_PRD.md`
 - **Critical-surfaces watch + ledger (D8):** `docs/architecture/NFRA_GRAPHS.md` §10 · `org/critical_paths/README.md`
