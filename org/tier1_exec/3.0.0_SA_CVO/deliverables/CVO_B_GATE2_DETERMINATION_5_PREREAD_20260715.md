@@ -120,6 +120,13 @@ why it saw what the sentinel-set census could not.
 5. Cross-surface consistency **including the §3 three** as resolved by the gate owner's scope call --
    a spine that folds while client_portal_summary serves pre-fold keys is a V4 FAIL on consistency
    grounds even if the spine numbers tie.
+   **[RULED 23:28Z, after this file landed -- CTO 232824Z @ `194d3d674`]:** the three `--upload` legs are
+   HELD this window (named stage-B precondition; DS~B to ground the runtime exclusion mechanism at source);
+   exclusion oracle = the three surfaces' listings (key+ETag+LastModified) UNCHANGED across the window,
+   ledger-recorded. **At V4 I verify that oracle independently** -- the three surfaces UNCHANGED against
+   the ledger's record, with an instrument the ledger does not own -- alongside the spine checks above.
+   Serve-lift at migrated vintages is a later deliberate bundle; I re-verify those three at their new
+   vintages then, outside V4.
 
 ---
 -- `3.0.0_SA_CVO~B`
