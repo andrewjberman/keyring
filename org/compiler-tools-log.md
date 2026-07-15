@@ -18162,3 +18162,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-14 ~23:4xZ | 0.5.0_AE_OpalETL | comp-grep x4, comp-glob x1, etfs-parity-check (unpiped), safe-commit gates x7, terraform plan/safe-apply/0-diff | night session: 3 verdicts, C4 half-landed found+forward-fixed (plan-gate exact, 3-way sha tie), first V2-8 conversion 7,141 rows; gap: lambda deploy-drift check missing (CTO adopted to comp-learns) |
 | 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-14 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/deliverable... | PASS |
+| 2026-07-14 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/POSN_BMKVIZ.json --file or... | PASS |
+| 2026-07-14 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/projects/POSN_BMKVIZ.json org/projects/REGISTRY.md | PASS |
+| 2026-07-14 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/POSN_BMKVIZ.json --file or... | PASS |
+| 2026-07-14 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/projects/POSN_BMKVIZ.json org/projects/REGISTRY.md | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | comp-state x10 (self-test/full/scoped), comp-routes behaviors, comp-pulse auto x6 | parity directive executed (3 certs, 2 walls, C4 half-landed found); 5 instrument gaps filed to comp-learns | comp-state -S dating + corpus-noise defects measured + filed |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-14 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-14/p... | PASS |
