@@ -478,6 +478,18 @@ tools:
       flip in chainrun_cli.py. Anchor: DWSPLT chain #26 partial-refactor leak.
       PRD: docs/architecture/ADHC_VALGATE.md section 4.B.
 
+  comp-axes:
+    command: "comp-axes [--axes a,b] [--no-snapshot] [--json] | comp-axes delta [--since ISO-DATE]"
+    segment_scope: cross-segment
+    when: |
+      - "Where should I look? / give me the estate overview by axis" -- ONE screen of every analytic
+        axis (heat/pulse/freshness/debt/debris/depth/learns-gaps/fedobs-signals) with its live
+        vintage + top-3 + the canonical drill command. THIN: it runs the existing readers; a
+        failed/absent reader is an HONEST degraded row, never a silent omission.
+      - "What got hotter / colder / more dangerous / staler since <date>?" -> comp-axes delta
+        (diffs two dated snapshot rows per axis; the append-only history each directory run feeds:
+        org/modules/graph/axes_history.jsonl + S3 mirror).
+      - NOT for drilling INTO one axis -- use the per-axis reader the directory row points at.
   comp-freshness:
     command: "comp-freshness {chain {bd|inf} | script <id> | artifact <s3-prefix> | ddb <table> [--pattern PK#] | all} [--list]"
     segment_scope: segment-aware

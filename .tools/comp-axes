@@ -1,0 +1,525 @@
+#!/usr/bin/env python
+"""comp-axes -- the ANALYTIC-AXIS DIRECTORY + the estate's first axis time-series (NFRA_GRAPHFEED TO-3).
+
+THE GAP (LD-0298 secs 3-4): the estate's analytic axes live in 8+ scattered readers (heat/pulse/
+freshness/debris/depth/learns-status/fedobs/debt) with no single entry point and NO MEMORY -- every
+axis is a snapshot that forgets yesterday ("the graph substrate is version-travelable; every
+analytic axis on top of it is a snapshot that forgets yesterday"). comp-axes is the THIN fix:
+
+  1. DIRECTORY  -- one screen: every axis with its LIVE VINTAGE + top-3 entries + the canonical
+                   drill command. READ-ONLY AGGREGATION: this tool computes NOTHING new -- it runs
+                   the existing readers and extracts what they already print. A reader that fails/
+                   times out/is absent renders an HONEST degraded row (TIMEOUT / READER ABSENT /
+                   ERROR), never a silent omission (LAW: silence is not success).
+  2. SNAPSHOT   -- each directory run appends one dated row per axis to the append-only history
+                   (org/modules/graph/axes_history.jsonl + a per-run S3 mirror object under the
+                   globgrph warehouse) -- retrofitting delta-tracking onto every axis at once.
+  3. DELTA      -- diff two dated rows per axis: "what got hotter / colder / more dangerous /
+                   staler since <date>" becomes a diff of two rows, not a rebuild.
+
+Usage:
+  comp-axes                     directory (all axes) + append snapshot rows   [the default]
+  comp-axes --no-snapshot       directory only (no history write)
+  comp-axes --axes heat,pulse   directory scoped to named axes (others skipped loud)
+  comp-axes --json              machine-readable directory
+  comp-axes delta [--since D]   per-axis diff: latest row vs previous (or vs last row <= D, ISO date)
+  comp-axes --self-test         dev-box pure-logic self-test (no reader invocations)
+
+Vintage discipline: every row carries the READER'S OWN vintage line where the reader is
+vintage-stamped (fedobs/learns-status/pulse), else 'live-probe' for readers that measure at call
+time (heat/freshness/debris/depth). A stale-flagged source is carried STALE -- never re-badged.
+
+Author: 0.8.0_AE_CloudComp~Z   TO: NFRA_GRAPHFEED.W1 TO-3 (LD-0299)   Date: 2026-07-15
+Read-only over the estate; the only writes are the append-only history + its S3 mirror.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import re
+import subprocess
+import sys
+import time
+from datetime import datetime, timezone
+
+WS = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+TOOLS = os.path.join(WS, ".tools")
+HISTORY_PATH = os.path.join(WS, "org", "modules", "graph", "axes_history.jsonl")
+MIRROR_BUCKET = "opal-313476888478-globgrph"
+MIRROR_PREFIX = "warehouse/axes_history/rows/"  # per-run object => append-only by construction
+
+DEFAULT_TIMEOUT_S = 240
+FRESHNESS_TIMEOUT_S = 420  # comp-freshness all = whole-estate S3+DDB pass
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _git_bash() -> str:
+    """The GIT BASH executable, resolved EXPLICITLY. A bare 'bash' from a python subprocess on
+    Windows resolves to the System32 WSL relay (execvpe(/bin/bash) fails: no distro) -- measured
+    2026-07-15 on this tool's own first live run; every bash-shebang reader died silently."""
+    for cand in (r"C:\Program Files\Git\bin\bash.exe",
+                 r"C:\Program Files\Git\usr\bin\bash.exe"):
+        if os.path.isfile(cand):
+            return cand
+    return "bash"  # non-Windows / custom install: trust PATH
+
+
+def _run(cmd: list, timeout_s: int) -> tuple:
+    """Run a reader; return (rc, stdout, elapsed_s, err_note). NEVER raises -- an axis
+    adapter's failure must render as an honest degraded row, not kill the directory.
+    stderr's first line rides err_note on any failure (a blind failure note is no note)."""
+    t0 = time.time()
+    try:
+        p = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_s,
+                           cwd=WS, encoding="utf-8", errors="replace")
+        stderr_head = ((p.stderr or "").strip().splitlines() or [""])[0][:160]
+        note = "" if p.returncode == 0 else f"rc={p.returncode}" + (f"; stderr: {stderr_head}" if stderr_head else "")
+        return p.returncode, p.stdout or "", time.time() - t0, note
+    except subprocess.TimeoutExpired:
+        return None, "", time.time() - t0, f"TIMEOUT after {timeout_s}s"
+    except FileNotFoundError:
+        return None, "", time.time() - t0, "READER ABSENT (not on PATH / not in .tools)"
+    except Exception as e:  # noqa: BLE001 -- adapter isolation is the contract
+        return None, "", time.time() - t0, f"{type(e).__name__}: {e}"
+
+
+# ---------------------------------------------------------------------------------------------
+# Per-axis adapters. Each returns a row dict:
+#   {axis, vintage, summary: {numeric...}, top3: [{ref, metric}...], drill, status, note}
+# status: OK | DEGRADED (reader ran, parse partial) | TIMEOUT | ABSENT | ERROR
+# ---------------------------------------------------------------------------------------------
+def _fail_row(row: dict, err: str) -> dict:
+    row.update(status="ABSENT" if "ABSENT" in err else "TIMEOUT" if "TIMEOUT" in err else "ERROR",
+               vintage="unknown", summary={}, top3=[], note=err)
+    return row
+
+
+def axis_heat() -> dict:
+    rc, out, el, err = _run([sys.executable, os.path.join(TOOLS, "comp-heat"),
+                             "freshness", "--top", "3", "--json"], DEFAULT_TIMEOUT_S)
+    row = {"axis": "heat", "drill": "comp-heat freshness [path] --top N", "elapsed_s": round(el, 1)}
+    if rc is None:
+        return _fail_row(row, err)
+    try:
+        d = json.loads(out)
+        s = d.get("summary", {})
+        row.update(status="OK", vintage="live-probe (git mtimes at call time)",
+                   summary={"n": s.get("n"), **(s.get("bands") or {}),
+                            "cold_frac": round(s.get("cold_frac", 0), 4)},
+                   top3=[{"ref": p.get("path"), "metric": f"{p.get('band')} {p.get('score')}"}
+                         for p in (d.get("paths") or [])[:3]], note="")
+    except Exception as e:  # noqa: BLE001
+        row.update(status="DEGRADED", vintage="live-probe", summary={}, top3=[],
+                   note=f"parse: {type(e).__name__}: {e}")
+    return row
+
+
+def axis_pulse() -> dict:
+    # exit 1 = the immune response FIRING -- a DATA state, not a failure (canonical_call note).
+    # bash-shebang reader -> _git_bash() (a bare 'bash' resolves to the WSL relay and dies).
+    rc, out, el, err = _run([_git_bash(), os.path.join(TOOLS, "comp-pulse"),
+                             "--top", "3", "--json"], DEFAULT_TIMEOUT_S)
+    row = {"axis": "pulse", "drill": "comp-pulse [--days 7] [--top 8]", "elapsed_s": round(el, 1)}
+    if rc is None:
+        return _fail_row(row, err)
+    try:
+        d = json.loads(out)
+        srcs = d.get("sources", {})
+        stale_srcs = sorted(k for k, v in srcs.items() if (v or {}).get("stale"))
+        row.update(status="OK",
+                   vintage=f"generated {d.get('generated_at')}"
+                           + (f"; STALE sources: {','.join(stale_srcs)}" if stale_srcs else ""),
+                   summary={"rail_rows_in_window": (srcs.get("rail") or {}).get("rows_in_window"),
+                            "firing": 1 if rc == 1 else 0, "stale_sources": len(stale_srcs)},
+                   top3=[{"ref": h.get("ref"), "metric": f"attention {h.get('attention')}"}
+                         for h in (d.get("hot") or [])[:3]],
+                   note="REFLEX FIRING (exit 1) -- a held node is under active traffic" if rc == 1 else "")
+    except Exception as e:  # noqa: BLE001
+        row.update(status="DEGRADED", vintage="unknown", summary={}, top3=[],
+                   note=f"parse: {type(e).__name__}: {e}")
+    return row
+
+
+_FRESH_ROW = re.compile(r"^(\S+)\s+\|\s+(\S+)\s+\|\s+(\S+)\s+\|\s+([\d.]+h|N/A)\s+\|\s+\S+\s+\|\s+(PASS|WARN|FAIL)\s*$")
+
+
+def axis_freshness() -> dict:
+    rc, out, el, err = _run([sys.executable, os.path.join(TOOLS, "comp-freshness"), "all"],
+                            FRESHNESS_TIMEOUT_S)
+    row = {"axis": "freshness", "drill": "comp-freshness chain {bd|inf} | script <id>",
+           "elapsed_s": round(el, 1)}
+    if rc is None:
+        return _fail_row(row, err)
+    counts = {"PASS": 0, "WARN": 0, "FAIL": 0}
+    fails = []
+    for ln in out.splitlines():
+        m = _FRESH_ROW.match(ln.strip())
+        if m:
+            counts[m.group(5)] += 1
+            if m.group(5) == "FAIL":
+                age = m.group(4)
+                fails.append({"ref": m.group(1), "metric": f"FAIL age={age}"})
+    fails.sort(key=lambda r: float(r["metric"].split("=")[-1].rstrip("h"))
+               if r["metric"].split("=")[-1].rstrip("h").replace(".", "").isdigit() else 0,
+               reverse=True)
+    row.update(status="OK" if sum(counts.values()) else "DEGRADED",
+               vintage="live-probe (S3/DDB LastModified at call time)",
+               summary=counts, top3=fails[:3],
+               note="ages are WALL-CLOCK -- resolve the trading calendar before reading any FAIL "
+                    "as an outage (CLAUDE.md NEVER#1; T-1 default)")
+    return row
+
+
+def axis_debt() -> dict:
+    # HONEST-ABSENT: the designed reader (NFRA_COMPDEBT_PRD.md) has no landed executable in the
+    # working set (verified 2026-07-15: comp-glob + repo-wide comp-grep, 0 hits in .tools).
+    exe = os.path.join(TOOLS, "comp-debt")
+    if os.path.isfile(exe):
+        rc, out, el, err = _run([sys.executable, exe], DEFAULT_TIMEOUT_S)
+        return {"axis": "debt", "drill": "comp-debt", "elapsed_s": round(el, 1),
+                "status": "OK" if rc == 0 else "DEGRADED", "vintage": "see reader",
+                "summary": {}, "top3": [], "note": (out.splitlines() or [""])[0][:160] or err}
+    return {"axis": "debt", "drill": "docs/architecture/NFRA_COMPDEBT_PRD.md (design)",
+            "elapsed_s": 0.0, "status": "ABSENT", "vintage": "unknown", "summary": {}, "top3": [],
+            "note": "READER ABSENT -- comp-debt designed (NFRA_COMPDEBT_PRD) but no executable "
+                    "landed in .tools; this row goes green when it lands (no silent omission)"}
+
+
+_DEBRIS_BANDS = re.compile(r"bands:\s+HOT=(\d+)\s+COLD-DORMANT=(\d+)\s+TOO-YOUNG=(\d+)\s+"
+                           r"STILLBORN-OR-GUARD=(\d+)\s+UNKNOWN=(\d+)")
+_DEBRIS_REAP = re.compile(r"^\s+(\d+)d dormant\s+last=(\S+)\s+created=\S+\s+(\S+)\s*$")
+
+
+def axis_debris() -> dict:
+    rc, out, el, err = _run([_git_bash(), os.path.join(TOOLS, "comp-debris")], DEFAULT_TIMEOUT_S)
+    row = {"axis": "debris", "drill": "comp-debris", "elapsed_s": round(el, 1)}
+    if rc is None:
+        return _fail_row(row, err)
+    m = _DEBRIS_BANDS.search(out)
+    summary = {}
+    if m:
+        summary = {"hot": int(m.group(1)), "cold_dormant": int(m.group(2)),
+                   "too_young": int(m.group(3)), "stillborn_or_guard": int(m.group(4)),
+                   "unknown": int(m.group(5))}
+    top3 = []
+    for ln in out.splitlines():
+        mm = _DEBRIS_REAP.match(ln)
+        if mm and len(top3) < 3:
+            top3.append({"ref": mm.group(3), "metric": f"{mm.group(1)}d dormant (last={mm.group(2)})"})
+    row.update(status="OK" if summary else "DEGRADED",
+               vintage="live-probe (lambda invocation metrics at call time)",
+               summary=summary, top3=top3,
+               note="ADVISORY ledger -- reap verb stays human + never-widen-gated")
+    return row
+
+
+def axis_depth() -> dict:
+    rc, out, el, err = _run([_git_bash(), os.path.join(TOOLS, "comp-depth"),
+                             "scope", "resource", "--limit", "3"], DEFAULT_TIMEOUT_S)
+    row = {"axis": "depth", "drill": "comp-depth grains|scope|drill|rollup|blast",
+           "elapsed_s": round(el, 1)}
+    if rc is None:
+        return _fail_row(row, err)
+    vint = next((ln.strip() for ln in out.splitlines()
+                 if "marker" in ln.lower() or "vintage" in ln.lower() or "HEAD" in ln), "")
+    rows = [ln.strip() for ln in out.splitlines()
+            if ln.strip() and not ln.startswith(("=", "#", " ")) and ":" in ln][:3]
+    row.update(status="OK" if rc == 0 else "DEGRADED",
+               vintage=vint or "marker-head read-handle (see reader header)",
+               summary={"sample_grain": "resource"},
+               top3=[{"ref": r[:100], "metric": "resource-grain"} for r in rows],
+               note="" if rc == 0 else f"rc={rc}")
+    return row
+
+
+_LEARNS_HDR = re.compile(r"assembled-at:\s+(\S+)\s+\|\s+DATA VINTAGE:\s+(\S+)\s+\((\w+)[^)]*lag=([\d.]+)h")
+_LEARNS_ROW = re.compile(r"^\s{2}(\S+)\s{2,}\S*\s+(\d+)\s+([\d.]+)\s+(hot|warm|cold)")
+
+
+def axis_learns() -> dict:
+    rc, out, el, err = _run([_git_bash(), os.path.join(TOOLS, "comp-learns-status")], DEFAULT_TIMEOUT_S)
+    row = {"axis": "learns-gaps", "drill": "comp-learns-status", "elapsed_s": round(el, 1)}
+    if rc is None:
+        return _fail_row(row, err)
+    m = _LEARNS_HDR.search(out)
+    if rc != 0 and not m:
+        return _fail_row(row, err or f"rc={rc}, header unparsed")
+    vint = (f"assembled {m.group(1)}; data {m.group(2)} ({m.group(3)}, lag {m.group(4)}h)"
+            if m else "see reader header")
+    top3 = []
+    for ln in out.splitlines():
+        mm = _LEARNS_ROW.match(ln)
+        if mm and len(top3) < 3:
+            top3.append({"ref": mm.group(1), "metric": f"escapes={mm.group(2)} heat={mm.group(3)} {mm.group(4)}"})
+    row.update(status="OK" if m else "DEGRADED", vintage=vint,
+               summary={"behind": 1 if (m and m.group(3) == "BEHIND") else 0,
+                        "lag_h": float(m.group(4)) if m else None},
+               top3=top3,
+               note="BEHIND flag carried from the reader -- views computed over a stale catalog"
+                    if (m and m.group(3) == "BEHIND") else "")
+    return row
+
+
+_FEDOBS_HDR = re.compile(r"as-of\s+(\S+)\s+marker_head=(\S+)\s+source=\S+\s+cse_log_total=(\d+)")
+
+
+def axis_fedobs() -> dict:
+    rc, out, el, err = _run([sys.executable, os.path.join(TOOLS, "comp-fedobs")], DEFAULT_TIMEOUT_S)
+    row = {"axis": "fedobs-signals", "drill": "comp-fedobs [coevolution|coverage|direff]",
+           "elapsed_s": round(el, 1)}
+    if rc is None:
+        return _fail_row(row, err)
+    m = _FEDOBS_HDR.search(out)
+    if rc != 0 and not m:
+        return _fail_row(row, err or f"rc={rc}, header unparsed")
+    vint = f"SERVED as-of {m.group(1)} marker={m.group(2)}" if m else "see reader header"
+    pair_rows = []
+    for ln in out.splitlines():
+        parts = [p.strip() for p in ln.split("|")]
+        if len(parts) >= 3 and parts[0].startswith(("portal/", "infra/", "org/", ".tools/")) \
+                and parts[2].isdigit():
+            pair_rows.append({"ref": f"{parts[0]} <-> {parts[1]}", "metric": f"co_sessions={parts[2]}"})
+    row.update(status="OK", vintage=vint,
+               summary={"cse_log_total": int(m.group(3)) if m else None},
+               top3=pair_rows[:3], note="")
+    return row
+
+
+ADAPTERS = {
+    "heat": axis_heat,
+    "pulse": axis_pulse,
+    "freshness": axis_freshness,
+    "debt": axis_debt,
+    "debris": axis_debris,
+    "depth": axis_depth,
+    "learns-gaps": axis_learns,
+    "fedobs-signals": axis_fedobs,
+}
+
+
+# ---------------------------------------------------------------------------------------------
+# History (append-only) + S3 mirror
+# ---------------------------------------------------------------------------------------------
+def append_history(rows: list, run_at: str) -> None:
+    os.makedirs(os.path.dirname(HISTORY_PATH), exist_ok=True)
+    with open(HISTORY_PATH, "a", encoding="utf-8") as f:
+        for r in rows:
+            f.write(json.dumps({"run_at": run_at, **r}, sort_keys=True, default=str) + "\n")
+    print(f"OK: HISTORY_APPENDED rows={len(rows)} -> {os.path.relpath(HISTORY_PATH, WS)}")
+    try:
+        import boto3
+        key = f"{MIRROR_PREFIX}{run_at.replace(':', '').replace('-', '')}.jsonl"
+        body = "".join(json.dumps({"run_at": run_at, **r}, sort_keys=True, default=str) + "\n"
+                       for r in rows).encode()
+        boto3.client("s3", region_name="us-east-1").put_object(
+            Bucket=MIRROR_BUCKET, Key=key, Body=body, ContentType="application/json")
+        print(f"OK: HISTORY_MIRRORED s3://{MIRROR_BUCKET}/{key}")
+    except Exception as e:  # noqa: BLE001 -- mirror is best-effort; local history already landed
+        print(f"WARN: HISTORY_MIRROR_FAIL err={type(e).__name__}: {e} (local history landed)")
+
+
+def load_history() -> list:
+    if not os.path.isfile(HISTORY_PATH):
+        return []
+    out = []
+    with open(HISTORY_PATH, encoding="utf-8") as f:
+        for ln in f:
+            ln = ln.strip()
+            if ln:
+                try:
+                    out.append(json.loads(ln))
+                except ValueError:
+                    print(f"WARN: HISTORY_ROW_UNPARSEABLE (skipped): {ln[:80]}")
+    return out
+
+
+# ---------------------------------------------------------------------------------------------
+# Delta
+# ---------------------------------------------------------------------------------------------
+def compute_delta(rows: list, since: str | None) -> list:
+    """Per axis: latest row vs baseline (previous row, or the last row at/before `since`).
+    Returns [{axis, from, to, summary_delta:{k:(old,new)}, entered:[refs], left:[refs]}]."""
+    by_axis: dict = {}
+    for r in sorted(rows, key=lambda x: x.get("run_at", "")):
+        by_axis.setdefault(r.get("axis"), []).append(r)
+    out = []
+    for axis, hist in sorted(by_axis.items()):
+        if len(hist) < 2:
+            out.append({"axis": axis, "note": f"only {len(hist)} row(s) -- no delta yet"})
+            continue
+        latest = hist[-1]
+        if since:
+            base = next((h for h in reversed(hist[:-1]) if h.get("run_at", "") <= since), hist[0])
+        else:
+            base = hist[-2]
+        sd = {}
+        for k in sorted(set(latest.get("summary") or {}) | set(base.get("summary") or {})):
+            old, new = (base.get("summary") or {}).get(k), (latest.get("summary") or {}).get(k)
+            if old != new:
+                sd[k] = (old, new)
+        old_refs = {t.get("ref") for t in (base.get("top3") or [])}
+        new_refs = {t.get("ref") for t in (latest.get("top3") or [])}
+        out.append({"axis": axis, "from": base.get("run_at"), "to": latest.get("run_at"),
+                    "summary_delta": sd,
+                    "entered": sorted(new_refs - old_refs), "left": sorted(old_refs - new_refs)})
+    return out
+
+
+# ---------------------------------------------------------------------------------------------
+# Rendering
+# ---------------------------------------------------------------------------------------------
+def render_directory(rows: list, run_at: str) -> None:
+    print("=" * 98)
+    print(f"comp-axes -- ANALYTIC-AXIS DIRECTORY  [run {run_at}]  (thin: existing readers, nothing recomputed)")
+    print("  per-row vintage = THE READER'S OWN; live-probe = measured at call time. Degraded rows are LOUD.")
+    print("=" * 98)
+    for r in rows:
+        flag = "" if r["status"] == "OK" else f"  !! {r['status']}"
+        print(f"\n[{r['axis']}]{flag}  vintage: {r['vintage']}  ({r['elapsed_s']}s)")
+        if r.get("summary"):
+            print(f"  summary: {json.dumps(r['summary'], default=str)}")
+        for t in r.get("top3") or []:
+            print(f"    - {t['ref']}  [{t['metric']}]")
+        if not r.get("top3") and r["status"] == "OK":
+            print("    (no ranked entries -- an empty ranked list from a healthy reader)")
+        if r.get("note"):
+            print(f"  note: {r['note']}")
+        print(f"  drill: {r['drill']}")
+
+
+def render_delta(deltas: list) -> int:
+    print("=" * 98)
+    print("comp-axes delta -- what changed since the baseline row (per axis)")
+    print("=" * 98)
+    nonzero = 0
+    for d in deltas:
+        print(f"\n[{d['axis']}]", end="")
+        if "note" in d:
+            print(f"  {d['note']}")
+            continue
+        print(f"  {d['from']} -> {d['to']}")
+        if d["summary_delta"]:
+            nonzero += 1
+            for k, (old, new) in sorted(d["summary_delta"].items()):
+                print(f"    {k}: {old} -> {new}")
+        if d["entered"]:
+            print(f"    entered top-3: {', '.join(d['entered'])}")
+        if d["left"]:
+            print(f"    left top-3:    {', '.join(d['left'])}")
+        if not d["summary_delta"] and not d["entered"] and not d["left"]:
+            print("    (no change)")
+    print(f"\nOK: DELTA axes_changed={nonzero} of {len(deltas)}")
+    return 0
+
+
+# ---------------------------------------------------------------------------------------------
+# Self-test (pure logic -- no reader invocations, no AWS)
+# ---------------------------------------------------------------------------------------------
+def _self_test() -> bool:
+    results = []
+
+    def check(name, cond, detail=""):
+        results.append(bool(cond))
+        print(f"  [{'PASS' if cond else 'FAIL'}] {name}" + (f"  -> {detail}" if detail and not cond else ""))
+
+    print("=== comp-axes self-test (parsers / delta / honest-degrade) ===")
+
+    # 1: freshness row parser
+    ln = "inf_silver_transactions                | s3://x/                 | 2026-07-10T13:44:22+00:00  | 126.4h   | 48h      | FAIL"
+    m = _FRESH_ROW.match(ln.strip())
+    check("1  freshness row parser (id/age/status)", bool(m) and m.group(5) == "FAIL" and m.group(4) == "126.4h")
+
+    # 2: debris bands + reap-rank parsers
+    b = _DEBRIS_BANDS.search("  bands: HOT=145 COLD-DORMANT=3 TOO-YOUNG=0 STILLBORN-OR-GUARD=40 UNKNOWN=0")
+    r = _DEBRIS_REAP.match("      15d dormant  last=2026-06-30  created=2026-06-26  yang-generate-peer-performance")
+    check("2  debris parsers (bands + reap rank)", bool(b) and b.group(2) == "3"
+          and bool(r) and r.group(3) == "yang-generate-peer-performance")
+
+    # 3: learns header parser incl. BEHIND
+    h = _LEARNS_HDR.search("  assembled-at: 2026-07-15T04:00:53Z  |  DATA VINTAGE: 2026-07-08T18:45:51Z  (BEHIND, binding=code_heat, lag=153.3h)")
+    check("3  learns-status header parser (vintage + BEHIND + lag)", bool(h) and h.group(3) == "BEHIND" and h.group(4) == "153.3")
+
+    # 4: fedobs header parser
+    f = _FEDOBS_HDR.search("[SERVED vintage (NOT live) as-of 2026-07-15T04:30:38Z  marker_head=cdcdc289bbc9  source=iceberg.globgrph.cse  cse_log_total=342]")
+    check("4  fedobs header parser (as-of + marker + cse_log_total)", bool(f) and f.group(3) == "342")
+
+    # 5: delta -- numeric change + top3 membership
+    rows = [
+        {"run_at": "2026-07-14T00:00:00Z", "axis": "heat", "summary": {"hot": 10}, "top3": [{"ref": "a"}]},
+        {"run_at": "2026-07-15T00:00:00Z", "axis": "heat", "summary": {"hot": 12}, "top3": [{"ref": "b"}]},
+    ]
+    d = compute_delta(rows, None)[0]
+    check("5  delta: numeric (10->12) + entered/left membership",
+          d["summary_delta"].get("hot") == (10, 12) and d["entered"] == ["b"] and d["left"] == ["a"])
+
+    # 6: delta --since picks the right baseline
+    rows.append({"run_at": "2026-07-16T00:00:00Z", "axis": "heat", "summary": {"hot": 15}, "top3": [{"ref": "b"}]})
+    d2 = next(x for x in compute_delta(rows, "2026-07-14T23:59:59Z") if x["axis"] == "heat")
+    check("6  delta --since baselines at the last row <= since", d2["from"] == "2026-07-14T00:00:00Z"
+          and d2["summary_delta"].get("hot") == (10, 15))
+
+    # 7: single-row axis renders an honest no-delta note
+    d3 = compute_delta([{"run_at": "x", "axis": "solo", "summary": {}, "top3": []}], None)[0]
+    check("7  single-row axis -> honest 'no delta yet' (never a fabricated zero)", "note" in d3)
+
+    # 8: the axis set covers the TO-3 eight
+    check("8  adapter registry covers the 8 TO-3 axes",
+          set(ADAPTERS) == {"heat", "pulse", "freshness", "debt", "debris", "depth",
+                            "learns-gaps", "fedobs-signals"}, str(sorted(ADAPTERS)))
+
+    total, passed = len(results), sum(results)
+    print(f"=== {passed}/{total} PASS ===")
+    return passed == total
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description="comp-axes -- axis directory + snapshot + delta (thin)")
+    ap.add_argument("mode", nargs="?", default="directory", choices=["directory", "delta"])
+    ap.add_argument("--since", default=None, help="delta baseline: last row at/before this ISO date")
+    ap.add_argument("--axes", default=None, help="comma-scoped axis subset (directory mode)")
+    ap.add_argument("--no-snapshot", action="store_true", help="directory only; no history append")
+    ap.add_argument("--json", action="store_true", help="machine-readable directory")
+    ap.add_argument("--self-test", action="store_true")
+    args = ap.parse_args()
+
+    if args.self_test:
+        return 0 if _self_test() else 1
+
+    if args.mode == "delta":
+        hist = load_history()
+        if not hist:
+            print("ERROR: no history at org/modules/graph/axes_history.jsonl -- run `comp-axes` "
+                  "(directory mode) at least twice to have a delta")
+            return 1
+        return render_delta(compute_delta(hist, args.since))
+
+    wanted = [a.strip() for a in args.axes.split(",")] if args.axes else list(ADAPTERS)
+    unknown = [a for a in wanted if a not in ADAPTERS]
+    if unknown:
+        print(f"ERROR: unknown axes {unknown}; known: {sorted(ADAPTERS)}")
+        return 2
+    run_at = _now_iso()
+    rows = []
+    for name in ADAPTERS:
+        if name not in wanted:
+            print(f"INFO: AXIS_SKIPPED {name} (--axes scope)")
+            continue
+        rows.append(ADAPTERS[name]())
+    if args.json:
+        print(json.dumps({"run_at": run_at, "axes": rows}, indent=2, default=str))
+    else:
+        render_directory(rows, run_at)
+    if not args.no_snapshot:
+        append_history(rows, run_at)
+    degraded = [r["axis"] for r in rows if r["status"] != "OK"]
+    if degraded:
+        print(f"\nWARN: degraded axes (loud, never silent): {degraded}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

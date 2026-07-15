@@ -874,6 +874,29 @@ entries:
     status: canonical
     notes: "NFRA_NERVES L5 endgame: the danger map as an ACTIVE IMMUNE RESPONSE, not a wiki. WIRED CONSUMER: safe-commit.sh runs this advisory on every staged set (the [risk-reflex] block, sibling to [surface-check]) -- ADVISORY-ONLY per the LD-0273 lesson (surface-check precedent: an advisory prints, a commit proceeds; blocking is a separate arch decision). Matching is generous by policy (a missed hold can cost the estate; a noisy one costs ten seconds) and every hit prints its doc:line citation -- the alarm points at the claim, never replaces it. Regen: nerves_lexical build (owner + triggers in NFRA_NERVES_PRD SS3.2 -- MANDATORY regen before any hold-lift announcement)."
 
+  # ---- THE ANALYTIC-AXIS DIRECTORY + TIME-SERIES (comp-axes -- NFRA_GRAPHFEED TO-3, LD-0299) ----
+  - id: org.axes.directory
+    use_case: "Where should I look? ONE screen of every analytic axis (heat/pulse/freshness/debt/debris/depth/learns-gaps/fedobs-signals) with its live vintage + top-3 entries + the canonical drill command -- the axis DIRECTORY an agent reads before picking a lens. Also the SNAPSHOT writer: each run appends one dated row per axis to the append-only history (the estate's first axis time-series)."
+    canonical_call: "comp-axes [--axes a,b] [--no-snapshot] [--json]"
+    tool: comp-axes
+    mode: query
+    layer: org
+    cost: "~3-4 min full (it RUNS the 8 readers; freshness ~2min + debris ~40s dominate); --axes scopes it down"
+    freshness: "per-row = THE READER'S OWN vintage (fedobs/learns/pulse carry served/assembled vintages; heat/freshness/debris/depth are live-probe at call time). A stale-flagged source is carried STALE, never re-badged."
+    status: canonical
+    notes: "NFRA_GRAPHFEED TO-3 (LD-0298 sec-4: axes scattered across 8+ readers, no single entry, NO MEMORY). THIN by ruling: computes NOTHING new -- runs the existing readers, extracts what they already print; a failed/absent reader renders an HONEST degraded row (debt = ABSENT until comp-debt lands; never a silent omission). History: org/modules/graph/axes_history.jsonl + per-run S3 mirror under warehouse/axes_history/rows/ (append-only by construction). comp-which routing: 'axis directory / where should i look / all the axes / estate overview by axis / axis vintages' -> comp-axes."
+
+  - id: org.axes.delta
+    use_case: "What got HOTTER / COLDER / more DANGEROUS / STALER since <date>? The axis DELTA -- diff two dated snapshot rows per axis (numeric summary deltas + top-3 entered/left membership) instead of rebuilding anything."
+    canonical_call: "comp-axes delta [--since ISO-DATE]"
+    tool: comp-axes
+    mode: query
+    layer: org
+    cost: "<1s (local history diff -- no reader invocations)"
+    freshness: "bounded by the two snapshot rows compared -- both run_at stamps printed per axis; a single-row axis renders an honest 'no delta yet', never a fabricated zero"
+    status: canonical
+    notes: "The delta store LD-0298 sec-3 found missing everywhere ('every analytic axis is a snapshot that forgets yesterday'). Baseline picking: latest vs previous by default; --since D = latest vs the last row at/before D."
+
   - id: cloud.secrets.inspect
     use_case: "Inspect an AWS secret WITHOUT a raw get-secret-value: inventory secrets (firm-tagged + rotation/freshness), safe-read (redacted shape by default; --reveal for cleartext to stdout-only/never-logged), map a secret -> the code/TF that consumes it, audit rotation across all secrets."
     canonical_call: "comp-secrets list [--firm bd|cot|inf|mdpf|opal|shared] [--json] ; comp-secrets get <name|arn> [--reveal] ; comp-secrets consumers <name|arn> ; comp-secrets rotation"
@@ -1200,6 +1223,7 @@ tools_index:
   comp-platinum: { does: "Full-stack component->gold trace, FIRM-AWARE (cached, NFRA_GRAPHS D2)", subcommands: [page, reverse, tab-audit, summary, "--firm", "--fresh/--force"], entries: [trace.fullstack.component_to_gold, trace.platinum.reverse] }
   comp-pipescript: { does: "Gold-script DAG: I/O, chains, deployed-match, overlap", subcommands: [io, dag, chain, feeds, consumers, deployed, overlap, stats], entries: [trace.pipeline.gold_dag, pipeline.pipescript.deployed_match] }
   comp-pulse:    { does: "The estate's VITAL SIGNS (hot/cold/evolving/danger/phantom-limbs; DANGER x TRAFFIC = the immune response) + the pre-commit risk reflex (diff mode, wired advisory into safe-commit)", subcommands: [pulse, diff, "--days", "--top", "--json", "--self-test"], entries: [org.pulse.vital_signs, org.pulse.risk_reflex] }
+  comp-axes:     { does: "The ANALYTIC-AXIS DIRECTORY (all 8 axes: vintage + top-3 + drill command, one screen) + the append-only axis TIME-SERIES (dated snapshot rows) + per-axis DELTA (what got hotter/colder/staler since <date>). THIN: runs the existing readers, computes nothing new", subcommands: [directory, delta, "--axes", "--since", "--no-snapshot", "--json", "--self-test"], entries: [org.axes.directory, org.axes.delta] }
   pipescript:    { does: "Named-thread estate traversal: `pipescript <name>` -> every resource + producers->served->frontend + owning tool + coverage, no silent Unknown (the human entry point over the whole estate)", subcommands: ["<name>", "--list", "--resource", "--tool", "--validate"], entries: [estate.pipescript.named_thread] }
   comp-routes:   { does: "CloudFront->origin->Lambda serving path", subcommands: [trace, behaviors, origins, rewrites, api-routes, auth-map, edge-versions], entries: [trace.routes.serving_path] }
   comp-iam:      { does: "IAM permission-gap cross-reference (boto3 calls vs grants)", subcommands: [gaps, roles, services, service, role, stats], entries: [cloud.iam.permission_gaps] }

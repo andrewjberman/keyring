@@ -487,6 +487,20 @@ RULES = [
      "the DEPTH/GRAIN coordinate of an investigation -- a node's grain + CONTAINS-ladder, every node at a "
      "grain, coarse->fine drill / fine->coarse rollup. DISTINCT from the BREADTH tools (comp-blast impact, "
      "comp-xref graph-wide occurrence): same marker-head graph, different axis"),
+    # NFRA_GRAPHFEED TO-3 (2026-07-15, LD-0299): comp-axes -- the axis DIRECTORY + DELTA. Distinctive
+    # directory/overview/delta-since vocabulary; deliberately NOT bare "hot"/"stale"/"danger" (those
+    # are the per-axis readers' rules -- the directory is for "which lens", the readers are the lens).
+    (["axis directory", "axes directory", "all the axes", "every axis", "analytic axes",
+      "which axis", "which lens", "where should i look", "estate overview by axis",
+      "axis vintages", "axis overview", "axis map", "one screen of the estate",
+      "what got hotter since", "what got colder since", "hotter or colder since",
+      "changed since last week", "axis delta", "axes delta", "delta since",
+      "axis time-series", "axis history", "snapshot rows"],
+     "the ANALYTIC-AXIS DIRECTORY + time-series delta (comp-axes)",
+     ["comp-axes", "comp-axes --axes heat,pulse", "comp-axes delta --since <ISO-date>"],
+     "one screen of every analytic axis (vintage + top-3 + drill command) and the per-axis delta "
+     "between dated snapshot rows -- the entry point BEFORE picking a per-axis reader; DISTINCT "
+     "from the readers themselves (comp-heat/pulse/freshness/debris/depth/learns-status/fedobs)"),
     # NFRA_TOOLCHECK P3 follow-on (2026-07-09): comp-learns-status had NO curated rule -- same story.
     # Distinctive COMPLEARN-only vocabulary. Deliberately NOT bare "coverage gaps" (that phrase is
     # comp-fedobs's compiler-coverage rule) -- underscore forms + "complearn" keep the lanes apart.
