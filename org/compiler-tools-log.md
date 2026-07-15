@@ -18431,3 +18431,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-15 ~17:2xZ 0.4.0_DS_ClientPlatform: comp-glob/comp-grep x8 (D1 discovery, rail); commit-gate x3 PASS (1 silver-id BLOCK resolved via sanctioned padded-string marker); pytest D1 26/26 + full silver 208+7; safe-commit x5 CLEAN; owned-paths gate 1 correct BLOCK (dictionary fold -> CTO lane). Window: WS-B2/D1 build+land+verify.
 | 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-15 ~17:25Z | 1.0.0_SA_CTO | comp-glob x3, comp-pulse(auto x6), raw-s3 censuses rail-checked | S2 lock + orion cert + CRS n=2 gates | filed-vs-said gap self-caught (c9cbeb3cb); monolith gap unchanged |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/chunking_lambda_archi... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/chunking_lambda_architecture.md org/compiler-tools-lo... | PASS |
