@@ -18754,3 +18754,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1 | comp-axes (NEW) + session summary | built+registered comp-axes (8-axis directory/snapshot/delta; manifest-check PASS 72); comp-fedobs/learns-status/kuzu BEFORE states; 22a simulate battery -> the :4-vs-:5 stranded-grant URGENT | PASS |
 | 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-15 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/deployment/EC2_TELEMETRY_RIGHTSIZI... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/deployment/EC2_TELEMETRY_RIGHTSIZING_STANDARD.md | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-15 ~21:45Z | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3 | commit-gate x4 (2 real blocks fixed at source), pytest 32/32, fit_harness --self-test 3/3 controls vs served bytes (read-only); postdeps deferred to dry-fit execution (harness not a registered gold script) | harness: data/assets/scripts/gold/runners_49f/fit_harness.py |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/runners_49f/fi... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/fit_harness.py data/assets/scripts... | PASS |
