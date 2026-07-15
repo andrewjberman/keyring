@@ -1,6 +1,6 @@
 ---
 name: tax-pt1
-description: OPAL_TAXSMA part-1 daily runner (Andrew naming ruling 2026-07-14, "/tax-pt1; tax-pt2 etc as needed") -- pull the morning's FIS "Short Sale Avail File" attachments from the monitored mailbox and file them into the SharePoint TAX/Short Sale folder with Yang's exact naming (S0.3 rule). THE SSAVAIL EMAIL INTAKE/PARSING IS THE PRINCIPAL AUTOMATION ASPECT OF THIS PROJECT (Andrew ruling #2, 2026-07-14). Uses the m365 gateway's list_email_attachments + save_email_attachment_to_site (server-side transfer; the 10-15MB .ASC never rides the MCP channel). Run every trading morning after ~7:00 ET, or on demand ("run tax pt1" / "pull the short sale files"). Alyssa-operable: master AND standard tiers are write_files-entitled (standard granted on-box 2026-07-14 per Andrew ruling #4). Idempotent: conflictBehavior=fail means a re-run can never overwrite -- collisions are loud.
+description: OPAL_TAXSMA part-1 daily runner (Andrew naming ruling 2026-07-14, "/tax-pt1; tax-pt2 etc as needed") -- pull the morning's FIS "Short Sale Avail File" attachments from the monitored mailbox and file them into the SharePoint TAX/Short Sale folder with Yang's exact naming (S0.3 rule). THE SSAVAIL EMAIL INTAKE/PARSING IS THE PRINCIPAL AUTOMATION ASPECT OF THIS PROJECT (Andrew ruling #2, 2026-07-14). Uses the m365 gateway's list_email_attachments + save_email_attachment_to_site (server-side transfer; the 10-15MB .ASC never rides the MCP channel). TRIGGER: the /tax-pt1 skill invocation (Andrew ruling 2026-07-15 -- the slash command IS the interface, not a natural-language phrase). Run every trading morning after ~7:00 ET. Alyssa-operable: master AND standard tiers are write_files-entitled (standard granted on-box 2026-07-14 per Andrew ruling #4). Idempotent: conflictBehavior=fail means a re-run can never overwrite -- collisions are loud.
 ---
 
 # /tax-pt1 — Short Sale file intake (OPAL_TAXSMA part 1)
@@ -80,8 +80,8 @@ silently drop or silently rename an unexpected extra send; write anywhere but `T
 
 ## Cadence (Andrew ruling 2026-07-15: "Yes B now, we will do A later.")
 
-- **Option B (LIVE): operator-cadence.** This skill IS the daily runner — Alyssa or Andrew says
-  "run tax pt1" every trading morning. Primary run: **after ~7:00 ET** (both normal sends in by
+- **Option B (LIVE): operator-cadence.** This skill IS the daily runner — Alyssa or Andrew invokes
+  **/tax-pt1** every trading morning (the slash command is the interface). Primary run: **after ~7:00 ET** (both normal sends in by
   6:47). **If ANY attachment FLAGs or the pair is incomplete: re-run after ~9:00 ET** — the
   corpus shows FIS corrections arrive 8:10–8:20 ET on bad-send days; re-sends are updated
   snapshots. Collisions on the re-run are the already-filed signal, not errors.
