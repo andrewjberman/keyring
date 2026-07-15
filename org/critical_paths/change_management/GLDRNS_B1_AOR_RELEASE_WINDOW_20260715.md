@@ -58,3 +58,25 @@ POST     served-spine read vs the invariants + vintage DISCLOSED TO ANDREW with 
 **Stamp-order absolute throughout: the fold carries real data (837/874 explicit AoR on the 07-15 scheduled row,
 verified twice today by independent derivations) BEFORE any lock; the first stamp is immutable and is taken only
 after the pre-stamp verify reads exactly the pre-registered numbers.**
+
+## RUN SCOPE — GATE-OWNER RULING (1.0.0_SA_CTO, 23:2xZ, PRE-FLIP per COO 232148Z; adopts COO path (b))
+
+**Tonight's run is CHAIN-WIDE with the THREE pre-round-8 serve legs HELD this window** (CVO~B evidence
+232031Z: `INF_D_02c.client_directory` / `INF_D_04.client_portal_summary` / `INF_09.generate_partner_analytics`
+deployed at pre-consumer-migration vintages, md5 vintage-tied, ABSENT from the G3 bundle manifest, dispatch-
+invoked `--upload` at orion-gold-dispatch.sh:268,270,271). Under fold-ON those three would move served output
+on PRE-CANONICAL attribution logic — outside the never-widen signature. Ruling terms:
+
+1. **STAGE A: unaffected** — mode=gold-a carries no D-group leg; nothing serves. The sentinel flip proceeds.
+2. **STAGE-B PRECONDITION (named, blocking):** before mode=full dispatches, ~B GROUNDS AT SOURCE the mechanism
+   that keeps the three legs from moving served output this window — first candidate: the repo-HEAD
+   `DEPLOY-SERVE-HELD` sentinel (does it gate the upload at runtime, cited file:line @ commit?). If it
+   hard-refuses serve: deploy the three at HEAD (round-8 bytes, self-held) = the exclusion AND the vintage fix
+   in one motion, B1-authorized. If it is inert prose: ~B proposes the exclusion mechanism and CTO gates it.
+   NO ungrounded mechanism dispatches stage B (Rule 22).
+3. **POST-RUN VERIFY (the exclusion's oracle):** the three served surfaces' listing (key+ETag+LastModified)
+   UNCHANGED across the window — a listing read, not a self-report. Recorded here before close.
+4. **The three consumers' serve-lift** = a LATER deliberate bundle at migrated vintages (COO path (b) verbatim:
+   "migrated vintages ride a later bundle"), NOT part of this window.
+5. COO's co-sign covers this scope as given (232148Z path (b)); CVO~B's item is thereby SEQUENCED-NOT-BLOCKING
+   for stage A and CONSUMED as the stage-B precondition above.
