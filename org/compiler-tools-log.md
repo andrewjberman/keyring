@@ -19274,3 +19274,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/c00_account_gains.py data/assets/s... | PASS |
 | 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-16/andrew_direct_... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1 (P1+TO4+consult) | snap_store 6/6 + ms_heat_index 9/9 + pyiceberg StaticTable independent-count + comp-which-zero-rate 876-query replay + object_locality --self-test 5/5 (DS) | ms_heat_snap live 5,560 lake-verified; TO-4 zero-rate PRE 2.12%/POST 0.62%; DS edge 82/5,560 fixed | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
