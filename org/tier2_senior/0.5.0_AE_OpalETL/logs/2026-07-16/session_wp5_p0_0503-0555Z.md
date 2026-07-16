@@ -78,3 +78,22 @@ In: CTO x7 (P0 dispatch, rulings x3 waves, R4 PASS-with-fix, bridge GO, apply GO
 (C5 contract ask -- answered grounded on live config + the drift flag). Out: 12 (ACKs,
 evidence bundles, the C5 invocation contract, DS/MSTR notifies). Every loop closed except
 the canonical-build tail.
+
+## ADDENDUM 12:01-12:10Z -- the snapshot-only re-verification (CTO 120145Z, Andrew-challenge class)
+
+**archetype:** VALIDATE
+
+The new law (from the eclipse reopen): A VENDOR-CAPABILITY CLAIM CITES THE VENDOR SURFACE,
+NEVER CLIENT CODE. My WP5 fork message had grounded 'snapshot-only' on the feeder's own doc --
+right claim, client-code-grade citation. Census run live at 12:0xZ, BOTH grants:
+5 date-param spellings on enterprises/allocations VALUE-DISCRIMINATED against the $7.4M
+true-07-14-vs-today difference (all IGNORED, todays sum to the penny every time); the D4
+never-exercised yaliu accounts-holdings ?asOf cell closed (IGNORED); reportedmodels ?date
+re-confirmed at current vintage (the surface drifts). INSTRUMENT SELF-CATCH: the first
+whole-response comparator read DIFFERS on two cells -- envelope requestId/timestamp noise;
+re-scoped to the data payload -> IGNORED. Banked: whole-response identity is structurally
+impossible on this vendor. OUTCOME: holes 07-09/10/13 STAND; the S3 hole manifest amended
+in place with the census + D4 citation + the honest bound (as-exercised-at-07-16, not
+provably-cannot-exist). CTO ACCEPTED IN FULL 121020Z: census design = the standard;
+comparator catch banked; both re-verifications (eclipse + smartx) closed with the record
+stronger in both directions. Next named read: the 22:00Z AC3 fire.
