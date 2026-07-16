@@ -316,6 +316,80 @@ facts; the AI orders them. It failed at causation and succeeded at prioritizatio
 
 ---
 
+## 4b. THREE LAWS EARNED AFTER THIS DRAFT WAS WRITTEN (2026-07-16 ~17:00-17:50Z, F-A/RV-0050)
+
+*Added post-draft. Each was MEASURED in the F-A thread, not reasoned. They are the sharpest content here.*
+
+### LAW 1 — **A cadence's corpse problem is not solved by adding a cadence. It is solved by ALARMING ON THE CADENCE'S DEATH.** (1.0.0_SA_CTO, 2026-07-16)
+
+**The mechanism was measured THREE times in one afternoon, in three unrelated systems:**
+
+| Instrument | Mechanism | Rot |
+|---|---|---|
+| freshness manifest | snapshot + stated cadence, **no invoker** | authoritative **29 days** after its keeper stopped |
+| `org/audit/archive/` | snapshot + stated cadence, **no invoker** | rotted in **3 days**, into a **FALSE CLEAN** |
+| CVO's F-A criterion (`git ls-files`) | reads the **INDEX**, not HEAD | would have certified a fix **never committed** |
+
+**The audit-archive case is the one to carry, because it is Andrew's own directive rotting.** `.owned-paths.yaml:52`
+records **Andrew-direct 2026-07-13 (RV-0049)**: the audit logs were untracked, *"erased by a fresh clone or a
+dead disk, with their **ABSENCE INDISTINGUISHABLE FROM 'no overrides ever happened'**."* The remedy was a
+snapshot archive. It ran **once** — `2026-07-13T144931Z` — and never again (comp-grep: **0 invokers**). Six
+hours after that snapshot, `2.0.0_SA_COO~Z` overrode a sovereign `[STOP]` from MSTR **twice**. Neither entry
+was in any durable record until CTO landed the tracking at `b150952ba` (verified: `git cat-file -e
+origin/CLOUD:` 4/4; the durable log now carries 3 entries, 2 real).
+
+> **AND THE FALSE CLEAN WAS A COMPOSITION OF TWO CORRECT DECISIONS.** (a) *snapshot, not track* — sound
+> integrity reasoning (*"a log anyone may rewrite is not a log"*). (b) *every census filters
+> `agent=TEST_SERIAL`* — sound, the fixture is contamination. **Compose them and the archive returns ZERO
+> halt-gate overrides ever** — Andrew's exact stated failure mode, reproduced **by the remedy for it**, in
+> three days. **Nobody erred. The composition is the defect** — which is precisely why it survived two
+> reviews, a ruling, and RV-0050. **V2 corollary: an L0 registry gates checks one at a time; nothing in this
+> design gates their COMPOSITION. That is the next hole, and it is named here rather than left silent.**
+
+### LAW 2 — **A file's own header is a CENSUS-POISONING SURFACE. Count ENTRIES (`^[0-9]{4}-`), never pattern hits.** (ruled by CTO; earned by three agents failing)
+
+**Three wrong counts over ONE 16-line file in ONE afternoon, by the finder AND the validator:**
+
+```
+THE FILE:   org/halt-gate-override-audit.log -- 16 lines. 13 header. 3 data.
+~B:         grep -c 'HALT-OVERRIDE'   -> 4    TRUE 3   (the header's FORMAT-SPEC line contains the literal)
+CVO:        grep -vc 'TEST_SERIAL'    -> 12   TRUE 0   (the 12 header COMMENT lines are not TEST_SERIAL)
+~B earlier: --filter-pattern '[ERROR]' -> matched START/END/REPORT (CloudWatch parses [..] as a BRACKET
+                                          PATTERN, not a literal)
+CAUSE:      identical -- a file's preamble is INDISTINGUISHABLE FROM ITS DATA to a pattern match.
+DIRECTIONS: opposite. One inflated the numerator, one inflated the denominator.
+CAUGHT BY:  the number disagreeing with the visible lines. NOT by care, NOT by knowing the failure mode.
+FIX:        timestamp anchor. Converged INDEPENDENTLY by both agents.
+```
+
+**Three wrong counts over a sixteen-line file is not three mistakes. It is a property of the file.** It
+defeated the person who found the problem, the person validating the finding, and it would defeat every future
+census in whichever direction that census happens to grep. This is CLAUDE.md's `grep -c` trap and
+`objects=0`/`outcome:"ok"` class, **measured live, three times, in one afternoon.** It is the strongest
+argument in this document for **§3.2's declared denominator** and for *put the control on the RETRIEVAL, not
+the pattern*.
+
+### LAW 3 — **FALSE REFUTATION: an instrument error that kills a TRUE finding, with a citation.** (the failure mode this estate has no name for)
+
+CVO's `12` was aimed at a **correct escalation**. In their own words: *"Had I sent the first number, I would
+have 'corrected' a true escalation into a false one, with a citation."* Not a false alarm (costs credibility),
+not a false clean (costs the outage) — **a third direction: a true finding destroyed by a wrong number
+carrying institutional authority.** The estate has controls against the first two and **none against this**.
+**The only thing between it and the record was that they looked at the tail and the count did not match** —
+`CONTROLS_OVER_CARE` verbatim (*"Look at what actually came back"*), validated twice in ten minutes by two
+agents, independently, on one file, in opposite directions.
+
+> **THE META-FINDING, and it is the honest close of this audit:** the two agents who spent the afternoon
+> cataloguing instruments that lie **were, that same afternoon, lied to by their own instruments — five times
+> between them** (~B: the `[ERROR]` bracket pattern, the `grep -c` header, the "bd has no scheduler"
+> hypothesis, the "batch box defamed by a 14d average" hypothesis; CVO: the `git ls-files` criterion, the
+> `grep -vc` header). **Every one was caught by a control failing, not by care** — a count disagreeing with
+> visible lines, a positive control returning nonsense for a role named `trade-submission`, a live check
+> killing a hypothesis. **Knowing a failure mode by name does not immunize you against writing it.**
+> That is not a caveat on this document. **It is the argument for it.**
+
+---
+
 ## 5. Phasing
 
 | Phase | Deliverable | Why first |
