@@ -125,8 +125,18 @@ record can never read as a moved goalpost):**
   carries the magnitudes. The served-spine bar is OTHERWISE UNCHANGED (phantom GONE / Patrick's $52,604.80
   home / noel present / sum ties to the cent / the three-leg exclusion oracle).
 
+**COO FRESH SIGNATURE: IN (AMEND 57, ARM-2's numbers named exactly). The resumed-verify bar is now, in
+full: {the five ARM-2 deltas TO THE CENT · conservation −0.00 · changed_rows 1,257 SET-IDENTICAL to the
+164 movers' historical rows · NAMED-KEYS-ONLY x/1,257 with denominator (both sides of every re-attribution
+within the named canonical set; ZERO catchall/unknown/unmapped either side — conservation cannot see
+garbage-into-catchall, the 04-28 lesson; iwm as donor = the catchall SHRINKING, and the check proves no row
+flows the other way) · phantom present-and-unmoved} at preview; the unchanged served-spine bar after.
+Instrument built + syntax-checked: resumption_verify.py (single script, prints every arm with PASS/FAIL +
+denominators, exits nonzero on any miss = STOP). ONLY ANDREW'S WORD REMAINS.**
+
 **RESUMPTION SHAPE (window closes clean if Andrew's word is not tonight; resumes on his word):**
-(i) HELD script: bank + empty the ledger (revert = one sync back, printed in the script's own output) ->
+(i) HELD script: bank + empty the ledger (revert = ONE SYNC BACK from the script's own banked output —
+the bank path prints at run time and is cited here as the row-9 revert artifact by construction) ->
 (ii) CTO flip -> gold-a re-run (resolver seeds the true baseline via first_run; dims re-derive) ->
 (iii) PRE-STAMP VERIFY must read the ARM-2 numbers EXACTLY -> (iv) CTO flip -> mode=full (stamp + serve;
 exclusion in the live dispatch) -> (v) served-spine co-read (phantom GONE, Patrick's $52,604.80 home, noel
