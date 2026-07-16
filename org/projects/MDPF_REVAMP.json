@@ -1,0 +1,41 @@
+{
+  "project_code": "MDPF_REVAMP",
+  "macro_code": "MDPF",
+  "code": "MDPF_REVAMP",
+  "title": "Model Portfolios page rerouted onto the opal-data-assets monolith, managed via the gold DDB",
+  "name": "MDPF Revamp",
+  "description": "Andrew-direct (CTO terminal ~16:0xZ 2026-07-16): reroute the Model Portfolios page (Selected groups: Global / 49 Financial / Inflection) to draw against opal-data-assets, ideally all manageable via the gold DynamoDB table (opal-assets-daily-aua). Today the DDB reads the SERVED mdpf partition -- downstream of the thing being replaced; the revamp INVERTS the flow: monolith silver fact_* -> new gold dim_* projections -> /portal consumption artifacts + DDB rows, with the DDB as the management/registry layer. Full audit + design: docs/briefs/mdpf-revamp-audit-brief-20260716.md.",
+  "status": "active",
+  "owner": "1.0.0_SA_CTO",
+  "pods": [
+    "1.0",
+    "0.4",
+    "0.5",
+    "0.7"
+  ],
+  "created": "2026-07-16",
+  "current_phase": "AUDIT COMPLETE (2026-07-16): page query census, YANG-family census, gold-DDB grounding, served-shape census (7 artifacts read incl. the opal-data-mdpf feeds bucket find), cross-reference table -- every served field has a monolith source; the work is gold authorship + the flow inversion, not data acquisition. Bucketing proposed: portal/{channel}/{client}/ CHANNEL-FIRST (WP7 purpose-axis rationale). YANG family rec'd phase-2. FOUR OPEN CALLS AT ANDREW (brief section 6): (1) bucketing axis ratification [rec channel/client]; (2) YANG scope [rec phase-2]; (3) 49F basis selection for the served model-AUA (blended-preferred ~$1.6215B vs SCHWAB-RPS ~$1,390+23mm -- artifact carries a basis label either way, never a sum); (4) confirm the DDB registry-inversion reading before gold authorship starts. NEXT after rulings: gold dim_* projection authorship (DS lane), build-alongside per the new-territory rule, parity streak N=3 vs served mdpf, never-widen co-signed re-point.",
+  "prds": [
+    {
+      "path": "docs/briefs/mdpf-revamp-audit-brief-20260716.md",
+      "label": "CTO audit brief: census + cross-reference + inversion design + channel-first bucketing proposal + open calls",
+      "date": "2026-07-16"
+    }
+  ],
+  "related": [
+    "OPAL_CONSOLIDATION",
+    "OPAL_ASSETS"
+  ],
+  "history": [
+    {
+      "date": "2026-07-16T~16:0xZ",
+      "agent": "1.0.0_SA_CTO",
+      "event": "OPENED on Andrew-direct at the CTO terminal. Audit ran to ~60% pre-context-refresh (session_close log @ 57111c5c7): page query census via comp-cache (MDPF + YANG families), YANG thread via pipescript (8 threads/17 resources, 2 orphan flags), gold DDB grounded (opal-assets-daily-aua, emitter reads the SERVED partition -- the inversion insight), per-firm artifacts located."
+    },
+    {
+      "date": "2026-07-16T~17:4xZ",
+      "agent": "1.0.0_SA_CTO",
+      "event": "AUDIT COMPLETED post-refresh: shape census of all 7 served artifact families (agg root 441KB columnar 427-date arrays w/ source_vintage_last per-feeder block; per-firm platinum copies; account-distribution self-naming its opal-data-mdpf feeds source; non_model_assets w/ evolving schema + methodology meta; the platinum dailies w/ reconciliation). Cross-reference table: NO served field lacks a monolith source. Brief + record committed; four open calls staged for Andrew."
+    }
+  ]
+}
