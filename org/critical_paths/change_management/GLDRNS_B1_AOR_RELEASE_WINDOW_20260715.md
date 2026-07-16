@@ -16,6 +16,17 @@ chain logs (no death unreadable again), the recursive collision census as the st
 confirmation 224747Z · COO both-halves co-sign 225320Z/225340Z (AMEND-48 conditions verbatim) · Door-5 open by
 0.7.0 225853Z (their ledger closed 22:58Z)**
 
+## POST-CLOSE LESSON (CTO 042755Z, from a COO find — recorded beside the call-site law)
+
+Run-7's write of `gold/meta/pipeline-complete.json` (the chain's DESIGNED completion artifact — not Door 6,
+which bans HAND-writing it) legitimately fired `mdpf-daily-trigger`'s S3 subscription at ~04:04Z — a
+downstream the window plan never enumerated (the exclusions censused the D-group serve legs; nobody censused
+the completion key's SUBSCRIBERS). Outcome benign on CTO's reads (the post-LD-0292 roll-forward guards fired
+as designed: the 49financial $1.6215B block rolled whole + honestly stamped, decomp-excluded, residual
+asserted — no fresh misclassification served). THE LAW, one layer downstream of the call-site census:
+**RELEASING A HELD CHAIN REQUIRES A CENSUS OF EVERYTHING SUBSCRIBED TO ITS COMPLETION ARTIFACTS.**
+Both laws ride to the STNDRD release playbook.
+
 ## REVERT ARTIFACTS — CITED BY PATH, PRE-STAGED BEFORE THE CHOKEPOINT FLIPS (the binding condition)
 
 | # | surface | revert artifact (path) | exercised? |
