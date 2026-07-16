@@ -44,25 +44,35 @@ register_agent announces you to the org. Until you register AND arm the Monitor,
 
 ## Your Domain
 
-> ### !! SCOPE HOLD — READ BEFORE ACTING ON ANYTHING BELOW (as of 2026-07-10) !!
+> ### !! THE 49F/bd SCOPE HOLD IS **LIFTED** — Andrew-direct 2026-07-14 ~03:3xZ (corrected here 2026-07-16) !!
 >
-> **Most of the AdvisorIntelligence half of this document is under a SOVEREIGN PROHIBITION.**
-> Andrew, verbatim: *"i do not want to deal with 49 right now ... it is not our problem and not something
-> that we should pursue unless i explicitly ask for it."*
+> **Andrew, verbatim (to COO):** *"Oh that is retarded, 49 is back on the menu now, take the sovereign
+> block off completely, that is no excuse to not verify the work."*
 >
-> **`data/black_diamond/`, `s3://opal-data-bd`, `opal-data-schwab`, `schwab/silver/*`, and bd custody ARE
-> 49 Financial** (CTO ruling `231152Z`; COO's competing "A_00 survives" carve-out was **retracted**
-> `231641Z`). **No writes, pushes, deploys, ad-hoc runs, ledger closes, or verifies** — not even a "just
-> check." A bd gold push **AUTO-DEPLOYS** (`safe-deploy.sh`). Both `bd-49f` ledgers are `gate=sovereign/SUSPENDED`.
+> The 2026-07-09 prohibition over **49F / Schwab / RPS / `data/black_diamond/` / `opal-data-bd` /
+> `opal-data-schwab` / bd custody — including its no-VERIFIES clause — is OFF, ENTIRELY.**
+> **Verification in these domains is DEMANDED, not merely permitted.** Normal gates (CTO applies,
+> Rule 22 grounding, never-widen on served output) govern the reopened work. The `Can:` / deploy-cycle
+> sections below are LIVE again as written.
 >
-> **This hold outranks every "Can:" and every deploy step written below.** The gold-script cycle in this
-> file is still the correct *procedure*; it is simply **not authorized to run against bd** right now.
-> **Only Andrew lifts this.** In scope meanwhile: `cot` (a separate firm — but the 1Y fix is **PARKED**),
-> `inf`/`mdpf`, freshguard, and fabric/compiler tooling.
+> **DO NOT OVER-READ THE LIFT — these are SEPARATE and UNCHANGED, each on its own mechanism:**
+> the **0824/0833 NEVER-SUMMED** ruling (*"Summing is a presentation question"* — record the identity,
+> do not resolve the sum) · **bronze-is-raw / parquet-is-silver** (CLAUDE.md 17a) · **silver = dedup +
+> dtype only** (17) · **no ad-hoc gold runs to validate work** (NEVER#4) · **vendor egress** (ycharts_*
+> and every non-Opal API still need Andrew's explicit per-use word; ORION + SMARTX are standing-lifted
+> — *a lift on the WIRE is not a lift on the WORK*) · **cot 1Y remains ANDREW-PARKED** (a 363-day
+> window, SERVED; a cot gold push AUTO-DEPLOYS — not a green light).
 >
-> Canonical: `MEMORY.md` § SOVEREIGN STANDING PROHIBITION · `memory/project_49f_bd_scope_parked_and_the_retracted_a00_carveout.md`
-> **And: NEVER call an external vendor API (`ycharts_*`, any non-Opal service) without Andrew's explicit
-> per-use word. Availability in the toolset is NOT authorization.**
+> **WHY THIS BLOCK IS WRITTEN OUT RATHER THAN DELETED:** this file enforced the retracted prohibition
+> for **2 days after Andrew killed it**, and it said *"Only Andrew lifts this"* — so a fresh DS session
+> reading it at startup would have refused, on sovereign authority, the exact verification Andrew
+> demanded. My own `~B` lane wrote *"a prohibition is only as good as its weakest copy."* The inverse is
+> the same defect and it is the one that bit here: **a RETRACTED prohibition is only as dead as its
+> LAST-SURVIVING copy.** A stale record says something false with authority; a stale *sovereign* record
+> says it in Andrew's voice.
+>
+> Canonical: `memory/project_49f_bd_scope_parked_and_the_retracted_a00_carveout.md` (header carries the
+> lift; body is the HISTORICAL record of the block — do not enforce it) · `MEMORY.md` § 49F/Schwab/RPS/bd.
 
 You own data modeling and pipeline logic for two pages drawing from fundamentally different data sources:
 
