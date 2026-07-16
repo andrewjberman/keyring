@@ -21,6 +21,42 @@ project that patches the real holes. **Method is Andrew-set: line by line, in-se
 
 ---
 
+## THE GOVERNING FRAME (Andrew-direct, 2026-07-16 ~15:4xZ / ~11:4x ET, same terminal) — VERBATIM
+
+> "Yeah I think the way this whole audit should work is not necessarily "fixing" the calibrations if the
+> calibrations are just wrong. The idea is to identify what is actually important, what are actually good ideas
+> in this report, and then we grab those and refine as needed, and throw out all the trash. That is a good
+> framework through which to guide this analysis process."
+
+**THIS SUPERSEDES "noise vs real" AS THE UNIT OF ANALYSIS.** The verdict is no longer rendered on a *line of
+today's output* — it is rendered on **the CHECK ITSELF**. This is a **SALVAGE**, not a repair:
+
+```
+KEEP     the idea is good AND the implementation works  -> promote it, it is being drowned
+REFINE   the idea is good, the implementation is broken -> keep the idea, rebuild the mechanism
+DISCARD  the check is not a good idea                   -> delete it. Do NOT recalibrate it.
+```
+
+**THE DISCRIMINATOR (the blade this frame hands us): _if this check fires, is there something a human would
+DO?_ If no -> TRASH, regardless of whether it is ACCURATE.** This is sharper than noise-vs-real because some
+checks are *accurate and still worthless*: "this DynamoDB table uses the AWS-owned default key" is ~true and
+entirely unactionable. Accuracy is not the bar. **Actionability is.**
+
+**AND IT CORRECTS THE OBVIOUS-BUT-WRONG REMEDY.** The instinct (mine, and MSTR's charter constraint as first
+drafted) was *"add the missing suppression layer"*. But **suppressing a bad check KEEPS the bad check** -- its
+maintenance cost, its confusion cost, and the standing risk that someone un-suppresses it in six months and
+re-earns the fatigue. A check that can never produce an action should be **deleted, not muted**. Suppression is
+the right remedy ONLY for a *good* check whose findings are *accepted/known* (the INF hold, the deprecated
+artifacts). The two remedies are not interchangeable, and conflating them is how a monitor accretes forever.
+
+**COROLLARY (why 83.6% is a design verdict, not a tuning problem):** if a check's output is unactionable **by
+construction** -- as the AWS-managed-policy `Resource:*` rule is, since AWS ships those policies that way and
+they are not grantable per-resource -- then no threshold, exclusion list, or severity tweak rescues it. Tuning
+it to exclude AWS-managed policies leaves a check whose remaining yield is ~0 findings. **That is not a
+calibration bug. It was never a good check.**
+
+---
+
 ## THESIS — the report is not merely noisy; its severity is INVERTED
 
 The 2026-06-16 CVO revamp diagnosed *"raw counts of everything"* and fixed it by **adding the missing signals**
@@ -196,6 +232,69 @@ count) · **INSTRUMENT** (the monitor is broken, not the estate) · **OPEN** (no
 | S-5 | 10 SNS topics, 0 subscribers | **REAL** | incl. the AMEND-62 kill-switch alarm |
 
 *(Freshness per-line, automation per-function, cost, and the security composition are walked next, in session.)*
+
+---
+
+---
+
+# THE SALVAGE LEDGER — what we grab, what we refine, what we throw out
+
+*Per the governing frame. Verdict is on the CHECK, not the line. Blade: **would a human DO something?***
+
+## KEEP — good idea, working implementation. These are being DROWNED and should be PROMOTED.
+
+| Check | Why it is good | Evidence it earns its place |
+|---|---|---|
+| **SNS egress verification** ("does this alarm reach a human?") | **The best idea in the report.** Nothing else in the estate asks it. It is the only check here that tests a control's LAST HOP rather than its existence. | Found 10 topics paging NOBODY — incl. `inf-gold-dispatch-release-alarm`, the AMEND-62 kill-switch, and `bd-allocation-file-missing`, which is the exact alarm for the exact bd outage happening right now. COO elevated it to a CTO supervision condition within the hour. |
+| **INERT never-widen tripwire detection** | Tests whether a guard **can fire at all** — the rarest and most valuable class of check. Directly instantiates verification law #4. | Found 5 tripwires naming 0 live IAM role across 2 contracts. A NEVER-rule surface with a decorative guard. |
+| **UNCONTRACTED SEV1 detection** ("LOUD unreviewed") | Reports what it **cannot** see instead of silently omitting it. This is false-clean discipline done right. | Found `advisor_intelligence` + `model_portfolios.headline` ungoverned. |
+| **Deprecation labeling w/ reason + date** | Distinguishes *dead-on-purpose* from *dead-by-accident* — the exact distinction the rest of the report lacks. | `inf_gold_fee_rate_history` and `yang_volatility_data` are handled **correctly**, with reason, date, and owning TO. This is the model for everything else. |
+| **`BD-source-bound` freshness basis** | Genuinely sophisticated: binds a derived artifact's freshness to its SOURCE's as-of rather than wall-clock. | It **caught the real cot 07-09 freeze** and correctly rated it WATCH (fail=None). Working as designed. |
+| **`serving-day` vs `wall-clock` basis mapping** | The trading-calendar discipline (NEVER#1) encoded as a pure function of cadence. Correct design. | `business-daily`/`vendor-daily` -> calendar-aware. Not the defect anywhere I looked. |
+| **Self-reported blindness** (`31/46 assessable`, `manifest stale`, `loaded NO baseline`) | The instinct to **report its own coverage** is excellent and rare. | Every blind spot I found, the report had already ADMITTED. It just rated them below the blind readings. |
+| **Cost: per-pipeline + biggest movers** | The section Andrew values; per-pipeline is how the firm thinks. | Works. See REFINE for the denominator. |
+
+## REFINE — the idea is right, the mechanism is broken. Keep the idea; rebuild the mechanism.
+
+| Check | Keep | Broken because | Refine to |
+|---|---|---|---|
+| **Served-artifact FRESHNESS** | The idea is **THE** signal this firm gets bitten by (CVO 06-16 was right). | **The manifest has no invoker** (D-2). Frozen 2026-06-17; the estate moved on. It now indicts a HEALTHIER estate every morning. | Give the generator a scheduler/CI leg **and** a retirement path (an artifact whose consumers were repointed must leave the set — cf. `accounts_dim`, repointed 06-30). |
+| **Blindness reporting** | Reporting coverage is right. | Blindness is rated **BELOW** the readings taken while blind (WATCH under an OVERALL: RED). | **A blind monitor's blindness must OUTRANK its readings.** If the manifest is stale, the freshness verdict is UNKNOWN, not RED. |
+| **`[standing]` vs `[NEW]`** | The discriminator **already exists in the data**. | The rollup ignores it — today's ONE `[NEW]` sits among ~25 `[standing]` at equal volume. | Promote to the rollup. **Cheapest highest-yield fix in the document.** |
+| **TF drift coverage** | Knowing what drifted is right. | 15 `archive_file` "ERROR"s are the monitor's OWN env missing zips — **blindness framed as estate breakage**. The 4 `DENY` lines are by-design and already `[recorded]` correctly. | Reframe: "the drift check is blind on 33% of modules" = ONE finding, not 15 errors. |
+| **Cost per-pipeline** | Right axis (pipelines, not services). | `(untagged) $255.24 = 70% of MTD` — attribution covers 30% of spend and reports `OVERALL: OK`. | State the coverage denominator; tag the estate. An attribution over 30% is not OK. |
+| **EC2 right-size** | Real money, real idea. | **Wrong axis**: 14d-avg CPU on a BATCH box. `inf-gold-layer-runner` (c6a.4xlarge, 0.9%) runs ~80min/night **by design** — that is a healthy batch box, not waste. | Measure CPU **while running**, or measure idle-hours-billed. Avg-over-14d structurally defames every batch box. |
+| **AI error triage** | Triage is the whole point (CVO: "the actionability engine"). | **Falsified 3/3. It ANTI-triages** — no window discipline, no state model. Rated a live degrading security control LOW and a fixed function MEDIUM. | Rebuild with: window discipline (is this error IN the window?), a state model (is it already fixed?), and a mandate to say **"I don't know"**. Until then it is **negative value** — see DISCARD. |
+
+## DISCARD — not a good check. Delete it. Do NOT recalibrate.
+
+| Check | Count | Why it is trash (the blade: what would a human DO?) |
+|---|---:|---|
+| **AWS-managed-policy `Resource:*`** (`AWSLambdaBasicExecutionRole` x53, `AmazonSSMManagedInstanceCore` x48, `AmazonECSTaskExecutionRolePolicy` x1) | **102** | **Nothing. There is no action.** AWS ships these policies with `Resource:*`; `ssmmessages`/`ec2messages` are **not grantable per-resource**, and `AWSLambdaBasicExecutionRole` is on every Lambda on earth. Unactionable **by construction** -> no threshold rescues it. **Worse: it is ANTI-correlated with good work** — today's `+2 HIGH` is our own new `consolidation-gold-runner-role` being flagged for having AWS's standard SSM policy attached. **A metric that punishes correct infrastructure will be ignored, and should be.** |
+| **DynamoDB "Table encryption not enabled"** | **11** | **Factually impossible.** DynamoDB encrypts at rest by default since 2018 and **it cannot be disabled**. The scanner reads `SSEDescription == null` and renders "not enabled" — but null means **AWS-owned default key**. Control: 11+ other tables DO populate `SSEType: KMS`, so the field works. Same conflation class as cot's "missing/unreadable": **a conclusion the observation cannot support.** (If CMK-vs-default is a real policy, that is a *different*, informational check — not a HIGH.) |
+| **AI security briefing's "TREND: No prior baseline / establish T0"** | — | Contradicts the deterministic `TREND (vs 2026-07-15): HIGH +2` **in the same document**. It has been declaring T0 against an existing baseline. Delete the narrative trend; the mechanical one is right. |
+| **cot rows in THIS monitor** | 5 | **Architectural, not calibration.** The monitor is IAM-denied on `opal-data-cot` **BY DESIGN** (firm separation, CLAUDE.md #13 — gate + IAM enforced). Proven: target implicitDeny, 2 isolated positive controls allowed. **Do NOT widen a role across a firm boundary to make a report green.** Either cot gets its own monitor inside its boundary, or these rows leave. |
+| **"Idle functions: 88"** | — | CVO already called this in 06-16 and it survived: an event-driven function that did not fire in 24h is not broken. Conflates supposed-to-be-idle with dead cruft. (Refine target, if wanted: "idle >30d AND not event-wired".) |
+| **`employee_leaderboard` row** | 1 | Watches a key that does not exist; the real file is `leaderboard.json`. A wrong key is not a finding about the estate. |
+
+## FIX (trivial, not a design question)
+
+- **D-1 the header lies by 4h.** `cron(0 13 ? * MON-FRI *)` with no `ScheduleExpressionTimezone` = UTC, fires 09:00 ET, stamps "13:03 **ET**". Violates the CLAUDE.md quick-ref (times to Andrew = ET, never UTC).
+- **"SECURITY (Daily 7 AM Sweep)"** — the sub-report honestly stamps `12:02 UTC` = **08:02 ET**. The "7 AM" label is hardcoded for EST and is wrong for ~8 months of the year. Same TZ family as D-1.
+
+## THE SCORE, UNDER THE FRAME
+
+| | |
+|---|---|
+| SECURITY | **122 HIGH -> 9 non-trash -> ~5 genuinely real** (3 shared Lambda roles/SOC2 CC6.2; patricia console w/o MFA — already investigated 07-14; 1 unencrypted EBS snapshot). The 4 SG findings are 2 on a zero-instance ALB (the AI itself says suppress) + 2 on a **public WordPress site** — a public web server on 80/443 is not a finding. **~96% of the headline number is trash.** |
+| FRESHNESS | 18 flagged -> **4 confirmed FALSE, 7 retired-path noise, 3 REAL, 2 real-and-known, 2 correct-as-is.** The one that matters: `model-portfolios 0/3` (producer freeze 2026-07-12, 4 trading days, calendar-resolved) — **which is also an UNCONTRACTED SEV1 surface.** |
+| AI TRIAGE | **3/3 falsified.** Negative value as implemented. |
+| **The keepers** | SNS egress · INERT tripwires · UNCONTRACTED SEV1 · deprecation labeling · BD-source-bound basis · self-reported blindness · cost-by-pipeline. **These are good. They are drowning.** |
+
+**The one-line answer to "is this business useful":** *the report's real product today is not information — it is
+camouflage.* A live, degrading, hourly **security control** (`access-anomaly-scanner`, 50% timeout, failure mode
+== success mode == silence) was rated **LOW** and sat under a `122 HIGH` headline that is ~96% AWS-managed-policy
+noise. **The noise did not merely waste attention. It hid the one thing on the page that mattered.**
 
 ---
 
