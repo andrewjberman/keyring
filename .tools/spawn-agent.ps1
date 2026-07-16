@@ -266,10 +266,33 @@ while ((Get-Date) -lt $deadline -and (-not $claudePid -or -not $hostPid)) {
                                $_.CommandLine -like "*$marker*" -and $_.CommandLine -like "*$Serial*" })
             if ($ps.Count -ge 1) { $hostPid = ($ps | Sort-Object CreationDate -Descending | Select-Object -First 1).ProcessId }
         }
-        if (-not $claudePid) {
-            # Same object kill-agent.ps1 resolves: claude.exe carrying this serial.
+        if (-not $claudePid -and $hostPid) {
+            # PARENTAGE-BOUND (2026-07-16, MSTR -- an EXERCISED defect, not a hardening):
+            # this previously resolved "the NEWEST claude.exe whose CommandLine matches the
+            # serial", with NO tie to the window we just launched. When a spawn produces no
+            # claude.exe (window died, ajb failed, or the serial was ALREADY LIVE), the newest
+            # match is SOMEBODY ELSE'S SESSION -- and it got stamped into the audit as ours.
+            # LIVE INCIDENT: 18:11:18Z SPAWN 0.2.0_DT recorded pid=35656, an ANDREW-LAUNCHED
+            # session alive since 13:31:41 that this spawn had no part in.
+            # WHAT IT COSTS -- stated precisely, because the author of this fix first claimed
+            # it wider and was WRONG: kill-agent.ps1 NEVER reads this log (measured: 2
+            # Add-Content, 0 Get-Content) -- it re-resolves targets live from Win32_Process
+            # with a tilde-precise boundary regex. So a false pid= here CANNOT drive a wrong
+            # kill. The damage is to the ONE THING F-008 built this field for: correlating a
+            # birth with its death. A false birth pid ties SOMEONE ELSE'S death to our spawn --
+            # and it is exactly the "confident wrong field is worse than an absent one" failure
+            # the header 20 lines up warns against, committed by the resolver the header
+            # describes. "Never guess" was already the rule here; the resolver guessed anyway.
+            # THE BIND: our claude.exe is a CHILD of the marker window we launched ($hostPid).
+            # Measured on both shapes -- spawned 0.5.0: claude 38028 parent=5508=host_pid;
+            # Andrew-launched 0.2.0_DT: claude 35656 parent=29364 (its OWN shell, never ours).
+            # Parentage is what makes "ours" decidable; a serial match never could.
+            # It also retires the substring hazard here for free: a base-serial spawn used to
+            # be able to match a ~LANE's claude.exe ("*0.5.0_AE_OpalETL*" matches
+            # "0.5.0_AE_OpalETL~A"), but OUR child carries the right serial by construction.
+            # Requires $hostPid first -- hence the -and above. No host, no claim: UNKNOWN.
             $cl = @(Get-CimInstance Win32_Process -Filter "Name='claude.exe'" -ErrorAction Stop |
-                Where-Object { $_.ProcessId -ne $PID -and $_.CommandLine -and $_.CommandLine -like "*$Serial*" })
+                Where-Object { $_.ProcessId -ne $PID -and $_.ParentProcessId -eq $hostPid })
             if ($cl.Count -ge 1) { $claudePid = ($cl | Sort-Object CreationDate -Descending | Select-Object -First 1).ProcessId }
         }
     } catch {
