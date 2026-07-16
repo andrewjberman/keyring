@@ -1,6 +1,20 @@
 # C2 orphan-reap deploy completion ledger -- CLOSED
 
+**Status:** CLOSED -- nothing stranded -- closed 20260714T081xZ (all 5 legs proven; L5 countersigned by
+0.7.0_AE_CloudOps 20260714T184xZ on two independent live listings)
+
 Opened 20260714T0758Z, closed 20260714T081xZ, by 0.6.2_AE_PartnerETL. Chain finished in-session per NEVER#6.
+
+> **Why this `**Status:**` line exists (added 2026-07-16 by 0.6.2, COO no-objection 130038Z).** This ledger
+> is UNINDEXED -- it has no `.open_deploys/` sentinel and never had one, so it is the Layer-2 BYPASS class in
+> `.tools/deploy_ledger.py`, NOT the live-sentinel class. It was content-complete from 07-14, but carried no
+> `**Status:**` line and no `**Date closed:**` marker, so `_md_status()` returned None and
+> `_has_close_marker()` returned False -> the gate read "open or malformed" and RED'd COO every cycle. The
+> sanctioned fix is the tool's own alert text, option (a): give it a terminal status token. This is NOT the
+> hand-edit hazard the tool warns about -- that warning binds a ledger RENDERED FROM a sentinel (edit the
+> sentinel, run the tool, never the .md). With no sentinel there is nothing to render from and nothing to
+> drift against. The opposite-class sibling, `v22b-meta-pulls-grant`, was closed THROUGH the tool the same
+> session precisely because it DID have a live sentinel.
 
 **Authority chain:** Andrew verbatim GO ("Go for sure on 1.)", ~05:5xZ ET, relayed COO 060839Z) + CTO
 grant-gate PASS at his source read of 2d2b13705 + COO re-confirm 075027Z (crash adjudicated: pre-crash
