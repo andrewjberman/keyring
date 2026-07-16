@@ -143,6 +143,16 @@ denominators, exits nonzero on any miss = STOP). ONLY ANDREW'S WORD REMAINS.**
 > satisfied BY CONSTRUCTION. Ruling: fork option (a) — the 07-13 fold-OFF seed is NOT "the first available
 > AoR"; re-seed via BANKED-EMPTY; finish under AMEND-54 + AMEND-57.
 
+**THE FORK-HEAL EXECUTED (02:18-02:20Z, CTO GO 021535Z riders 1-5 ALL SATISFIED):** promotion source
+byte-tied to the RUNNING Lambda artifact (md5 c6bcb30e == infra repo == the exercised bytes; CodeSha256
+1hNkq/apHg cited); promoted to repo canonical @ 57538722f; 3 old copies banked
+(backup/pre_pullheal_20260716T0218Z/); deployed byte-identical x3 (gold + manual_api + bronze-runner) and
+download-verified TIE each; census oracle PRE-STATED 189/175/10/0, READ 189/175/10/0 — PASS. **PER RIDER 4:
+THE REDISPATCH IS THE SAME CO-SIGNED FINISHING RUN — AMEND-57 numbers UNCHANGED (the abort was 40+ scripts
+before C_01; the fold basis and the true-baseline ledger are untouched); AMEND-58's word covers mode=full
+reaching the stamp on those numbers.** Bronze revival recorded as the window's own deliverable landing early,
+THROUGH the authorized run (inside co-signed mode=full, not a back door).
+
 **RUN 5 OUTCOME (01:44Z dispatch, mode=full): ABORTED AT INF_A_0 — TWO GUARDS RIGHT, ONE FORK HOLE.
 NOTHING STAMPED, NOTHING SERVED.** The pull phase ran healthy — **THE BRONZE FEED IS REVIVED (txn/perf/
 positions current for the first time since 07-10; the rescued txn converter ran; the ceiling self-healed)**
