@@ -288,3 +288,13 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
 - fix shape: date REGROW rows by the REGISTRY.md file's last commit intersected with a line-range blame
   for the row, or fall back to blame on the row's first cell; pickaxe stays as the fast path.
 - resolution: OPEN -- CTO-filed 2026-07-16 ~12:15Z.
+
+## [OPEN] tool-defect -- deploy_ledger _md_status regex misses colon-inside-bold Status variants (Layer-3 drift detector blind on its own hunting quadrant)  (filed 2026-07-16, COO; found by 0.6.2 on the v22b close)
+<!-- key: tool-defect|deploy-ledger-md-status-colon-inside-bold -->
+- disposition: _md_status() requires the exact token `**Status:**`; a ledger carrying `**Status: CLOSED, 2/2 legs**`
+  (colon INSIDE the bold) returns None, so the Layer-3 DRIFT detector never fired on a ledger whose PROSE said
+  CLOSED over two unproven legs -- precisely the drift-dangerous quadrant the detector exists for, missed on a
+  cosmetic variant. Layer 1 caught that instance (nothing lost), but the detector's coverage is narrower than its
+  docstring implies. Fix candidate: tolerant regex (\*\*Status:?\*\*:? / colon either side) + a self-test planting
+  the colon-inside variant. Evidence: 0.6.2 131410Z + 291a28fc8.
+- resolution: OPEN -- CTO ratification per the gap->build routing; rides the next deploy_ledger touch.
