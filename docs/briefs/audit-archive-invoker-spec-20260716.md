@@ -40,7 +40,28 @@ NEVER ON:   "are there >= 2 snapshots"          -> passes forever after snapshot
 > **Snapshot #2 closed the window AND removed the tell that found it.** An existence/count check would now
 > report GREEN forever on a corpse.
 
-### 2. Integrity — the prefix test, **baselined S2-FORWARD** *(CVO measurement, CTO-binding)*
+### 2. Integrity — the prefix test, **baselined S2-FORWARD** *(CVO's instrument, CTO-ratified; CVO measurement, CTO-binding)*
+
+**THE MECHANISM (CVO built, CTO ratified — it replaces the membership diff as the F-A append-only instrument):**
+```sh
+head -n <archive_line_count> <live_log> | cmp -s - <archive_copy>
+#   -> the ARCHIVE must be a BYTE-EXACT PREFIX of the LIVE log.
+```
+**Why this shape and not a byte-compare or a membership diff:** it is **byte/order/insertion-sensitive AND
+churn-tolerant** — *tail growth is the one permitted delta, which is the only thing an append-only log may
+legally do.* So it **discriminates APPEND from CORRUPTION**, where a plain byte-compare false-alarms on every
+legitimate append and the membership diff is blind to order, bytes, and insertion (it proves content-presence
+against a baseline only).
+
+**Baseline provenance (CVO-measured, load-bearing for §2):** **snapshot #2 is byte-faithful** — UTF-8+CRLF ==
+live. **#1 was Non-ISO extended-ASCII+LF (their F-D, now cured)** — which is the *second*, independent reason
+S1 cannot be the baseline, on top of the redaction sitting between S1 and S2. **The prefix test runs clean
+against #2.**
+
+> **THE TWO CHECKS HAVE DIFFERENT JOBS AND NEITHER CATCHES THE OTHER'S FAILURE — which is exactly why the
+> invoker carries BOTH** (CVO): **prefix test = INTEGRITY** (*did history change?*) · **age-of-newest =
+> LIVENESS** (*is the baseline current?*). A tampered log with a fresh snapshot passes liveness. A pristine log
+> with a dead cadence passes integrity. **Only both, together, cover the space.**
 - **Baseline = S2 (`2026-07-16T175907Z`). The chain NEVER looks at S1.**
 - **S1 (`2026-07-13T144931Z`) is recorded as a KNOWN-DIVERGENT pre-redaction baseline WITH its authority
   citation** — not a tamper, not a fix target.
