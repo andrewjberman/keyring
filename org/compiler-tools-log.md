@@ -19287,10 +19287,20 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/OPAL_GLDRNS.A4.wav... | PASS |
 | 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/heatmap/ms_heat_index.py | PASS |
 | 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff org/modules/heatmap/ms_heat_index.py | PASS |
-| 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-which | comp-which "where is heat_map.py and the object_locality clustering module" | FAIL (no-route: "NO CURATED RULE MATCHED", top-3 fuzzy @0.41 all wrong; comp-heat owns this engine yet is unreachable by name -- ROUTER GAP) |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-which | comp-which "where is heat_map.py and the object_locality clustering module" | PASS (correct negative -- CORRECTED 14:3xZ, I first logged this FAIL/ROUTER-GAP and was WRONG: comp-heat answers "what is stale/archivable", NOT "where does this source live"; declining a source-location question + routing to comp-grep IS the router working. Phantom gap WITHDRAWN, nothing to route) |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-grep | comp-grep 'heat_map' | PASS (the sanctioned fallback located the engine + refs; did the work comp-which could not) |
 - 2026-07-16 12:45-14:25Z 0.7.0_AE_CloudOps: comp-grep x9 + comp-glob x2 (mechanism grounding: accounts_v2/marker/mirror-rows/lambda_calc census), deploy_ledger.py close cycle (HELD line drop verified), simulate-principal-policy 22a pair (PutMetricData implicitDeny MEASURED + isolated positive control), 4 bounded Monitors w/ alarm legs + rail-checked aws primitives (pre-fire baselines -> post-fire delta attribution on all three timed reads).
 | 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
 | 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/.unind... | PASS |
 | 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/.open_deploys/.unindexed_red_state.json org/critical... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/P0_INGESTION_CENSUS_ACCEPTANCE... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/WAVE3_SPEC_CELLS_... | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/absence-config.json... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/absence-config.json infra/aws/terraform/opal-assets... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |

@@ -104,7 +104,7 @@ denominator printed -- his 07-14 lift was recorded correctly and still left my c
 
 | Tool | Invocation | Result | Note |
 |---|---|---|---|
-| `comp-which` | "where is heat_map.py and the object_locality clustering module" | **FAIL (gap)** | "NO CURATED RULE MATCHED"; top-3 fuzzy at score 0.41 (comp-symbols/comp-platinum/comp-cluster) -- none correct. Its own footer's fallback (`comp-grep`) was the right answer. **A registered tool (`comp-heat`) owns this module and the router could not reach it.** |
+| `comp-which` | "where is heat_map.py and the object_locality clustering module" | **PASS (correct negative)** -- *see CORRECTION below; I first logged this as a router GAP and I was wrong* | "NO CURATED RULE MATCHED" + top-3 fuzzy @0.41 flagged AS guesses, footer -> `comp-grep`. That is the RIGHT answer: `comp-heat`'s registered use_cases are "what estate files are stale/dead/archivable" + "what have I written that isn't committed" -- NOT "where does this source file live". comp-which declining to route a source-location question to a staleness-query tool is the router WORKING. |
 | `comp-grep` | `'heat_map'` | PASS | located the engine + every reference w/ context; the sanctioned fallback did the work comp-which could not |
 | `commit-gate.sh` | object_locality.py | PASS | py_compile + AST + ruff |
 | `comp-surface-check` | auto via safe-commit x2 | PASS | no critical surface touched |
@@ -123,13 +123,33 @@ a known-present file (`.tools/comp-heat`) that comp-grep had already proven exis
 reporting silence, exactly per Verification Law #10. Also: a `--since="13:30"` in UTC against git's local
 UTC-4 clock queried the FUTURE and returned zero commits -- same class, harmless here.
 
-**Gap found (routed nowhere yet -- flagging for whoever owns the router):** `comp-which` cannot route
-"where is heat_map.py / object_locality" despite `comp-heat` being a registered, catalogued tool over
-exactly that engine. It returned the honest "NO CURATED RULE MATCHED" banner (the banner did its job --
-it stopped me picking a 0.41 guess), but a module with a dedicated comp-tool should be reachable by name.
-**The CWD-lingering class is ALSO broader than the doctrine states:** XXX.md/1a and the /log skill both
-name `portal/` specifically; my case was a subdir of `org/` and produced the identical silent
-wrong-denominator failure. The defect is the LINGERING CWD, not the portal repo.
+**CORRECTION TO THIS LOG (self-caught at 14:3xZ, after the first commit 664c3525b): THE comp-which
+"GAP" I FILED WAS A PHANTOM. IT IS WITHDRAWN.** I logged "a registered tool (`comp-heat`) owns this
+module and the router could not reach it". Wrong -- I never checked what comp-heat ANSWERS. Its
+manifest use_cases (graph-call-manifest.yaml:778-792) are `estate.heat.object_freshness` ("what
+repo/estate files are stale / dead / safe to archive") and `estate.heat.uncommitted_drift` ("what have
+I written that isn't committed"). **None of them answers "where does heat_map.py live".** My question
+was a SOURCE-LOCATION question; comp-heat is a STALENESS-QUERY tool over the estate. Routing me to it
+would have been WRONG. comp-which declined, labelled its 0.41 candidates as guesses, and pointed at
+`comp-grep` -- which was the correct answer and the one that worked. **The router was right and I was
+the defect.** Nothing to route; no line filed.
+
+**Why this correction is the most useful thing in this log:** it is the SAME class I caught CTO on
+ninety minutes earlier -- a claim grounded one layer short of its object (he named comp-heat a
+shared-defect class without reading its call site; I named it a routing gap without reading its
+use_case). **I made it in the same window in which I refused HIS phantom backlog line and wrote up why
+phantom findings are costly** ("the next reader would 'fix' a working guard"). I nearly did to
+comp-which exactly what I stopped him doing to comp-heat, about the same tool, from the other side.
+The class does not care who is paying attention, and knowing a failure mode by name does not immunize
+you against writing it (CONTROLS_OVER_CARE). Third instance of it in my own hands this window, after
+the stale CWD and the UTC/local `--since`.
+
+**Gap found (REAL, and the only one that survives):** the CWD-lingering class is broader than the
+doctrine states. XXX.md/1a and the /log skill Step 0 both name `portal/` specifically, as if the hazard
+were the portal submodule; my case was a plain subdir of `org/` and produced the identical silent
+failure -- wrong denominator, no error. **The defect is the LINGERING CWD, not the portal repo**, and
+naming only portal teaches agents to guard the one instance instead of the class. Flagged for whoever
+owns XXX.md; not mine to edit.
 
 ## Blockers
 
