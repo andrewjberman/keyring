@@ -28,8 +28,10 @@ battery 14/14) · bd49f D1 converter 03:05Z (new, battery 9/9, first fire tomorr
 **Named residuals, all owned:** WP4 500-ing smartx feed = producer defect (0.5.0 artifact swap at CTO
 gate) -- not an ingestion gap · WP6 ETF laptop-era history (P1, approved shape) · WP7 converter
 re-point (PROMOTED: holding cost = one manual bridge/day, L5 next at ~A) · rps staleness backstop
-(one-line alarm, routed to 0.7.0's batch, retires with WP7) · PutMetricData grant (the box's metrics
-were IAM-mute for its whole life -- why the FATAL era was invisible; 0.7.0's batch) · 17a monolith
+(one-line alarm, routed to 0.7.0's batch, retires with WP7) · ~~PutMetricData grant~~ **CORRECTED-RETRACTED 15:19Z (0.7.0's own re-simulate): the grant EXISTS
+(namespace-conditioned, inf-bronze-runner.tf:154); the original simulate omitted --context-entries against a
+conditioned statement = 22a false-deny mode (2), re-demonstrated live under 0.7.0's authorship. The empty-metrics
+fact STANDS with mechanism UNKNOWN-not-IAM (discriminators queued to next natural box-up)** · 17a monolith
 deny gate (parquet-under-bronze; 0.7.0's batch; the inf-tree dual-writer instance dies with the
 re-point).
 
