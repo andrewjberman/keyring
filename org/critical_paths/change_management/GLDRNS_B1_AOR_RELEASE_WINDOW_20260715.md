@@ -134,6 +134,20 @@ flows the other way) · phantom present-and-unmoved} at preview; the unchanged s
 Instrument built + syntax-checked: resumption_verify.py (single script, prints every arm with PASS/FAIL +
 denominators, exits nonzero on any miss = STOP). ONLY ANDREW'S WORD REMAINS.**
 
+## 🟢 ANDREW'S WORD — VERBATIM RECORD (the fork ruling)
+
+> **"Go a"** — Andrew-direct, CTO terminal, **~01:2xZ 2026-07-16** (time per CTO's correction 012807Z; his
+> broadcast landed 01:27:44Z immediately after the reply). SCOPE: a direct reply to CTO's recommendation
+> package carrying the threefold (a)-authority + the ARM-2 magnitudes INCLUDING noel +$8.40M / peter
+> −$18.74M + the banked-empty form + the resumption sequence — so COO's post-dates-magnitudes condition is
+> satisfied BY CONSTRUCTION. Ruling: fork option (a) — the 07-13 fold-OFF seed is NOT "the first available
+> AoR"; re-seed via BANKED-EMPTY; finish under AMEND-54 + AMEND-57.
+
+**STEP (1) EXECUTED on the word (01:28:40Z):** bank `s3://opal-data-inf/backup/aor_ledger_pre_reseed_20260716T012840Z/`
+(2 event files / 17,838B — count+bytes TIED to live pre-delete — + the state cache); all three keys deleted;
+ledger verified ABSENT (0 objects) = the design's legitimate-zero. **ROW-9 REVERT (from the script's own
+output): one `aws s3 sync` back from the bank + one `cp` for the state cache — cited verbatim in the run log.**
+
 **RESUMPTION SHAPE (window closes clean if Andrew's word is not tonight; resumes on his word):**
 (i) HELD script: bank + empty the ledger (revert = ONE SYNC BACK from the script's own banked output —
 the bank path prints at run time and is cited here as the row-9 revert artifact by construction) ->
