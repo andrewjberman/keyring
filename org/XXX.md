@@ -172,6 +172,13 @@ chat notification. **Arm once — it never exits and you never relaunch it.** If
 >   *watcher*, not the agent. **Only an agent-side ACK proves an agent HEARD a message.**
 > - **A fresh session that finds a matching `inbox-watch.sh` process has found an ORPHAN, not a watcher.**
 >   Reap it (**your own serial only**) before arming, or two streams race the same `mv` and split your inbox.
+> - **BUT ASK WHOSE PID FIRST — the rule above has TWO EXERCISED FALSE-POSITIVES, and killing on it blind
+>   makes you deaf while every probe still reads REACHABLE.** Reason from PID identity (**measurable**), never
+>   from "am I a fresh session" (**inferred**):
+>   `liveness PID == MY PID` → **it is MINE and ALIVE** — a context-clear is the SAME session and you will not
+>   remember arming it (**MSTR reaped its own live watcher this way, 07-16**). **DO NOT KILL.**
+>   `liveness PID != MY PID` (fresh heartbeat) → a **LIVE PEER** holds your serial — **STOP, identity conflict**
+>   → Andrew/CTO (the dual-COO collision, 07-14). · `STALE`/absent → genuine orphan; reap your own, then arm.
 >
 > Depth: `.claude/skills/watcher/SKILL.md`.
 

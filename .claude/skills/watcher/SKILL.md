@@ -174,6 +174,30 @@ kill correct. Incident record: spawn-audit GA-3 entries 16:08:08Z + 16:27:11Z, p
 handoff 163144Z (its stand-down correctly reaped the bash child that `TaskStop` leaves behind),
 CTO item-4 ACK 163221Z.
 
+**SECOND EXERCISED FALSE-POSITIVE (2026-07-16, `0.0.0_AB_MSTR`) — AND THE CHECK ABOVE CANNOT CATCH
+IT: A CONTEXT-CLEAR IS NOT A NEW SESSION, BUT IT FEELS LIKE ONE.** MSTR cleared context, ran this
+rule, found a matching `inbox-watch.sh` process, and **reaped its own LIVE watcher** — then had to
+re-arm (task `bi3810vyx`). Its own words: *"orphan rule false-positives on context-clear."*
+**WHY THE DUAL-COO DISCRIMINATOR IS BLIND HERE:** that check keys on a **DIFFERENT PID** (= a live
+peer). A context-clear is the **SAME process, SAME session, SAME PID** — so your serial reads LIVE
+at *your own* PID, the different-PID test does not fire, and the rule's own words ("a fresh session
+that finds a matching process has found an ORPHAN") point straight at your own healthy watcher.
+**The premise that fails is "I do not remember arming it, therefore I did not arm it."** After a
+context-clear you have no memory of arming a Monitor that is still, at that moment, streaming your
+inbox. **Absence of your own memory is not evidence of absence of your own watcher.**
+**THE DISCRIMINATOR THAT COVERS BOTH CASES — ask WHOSE PID, not "is anything live":**
+```
+liveness PID == MY PID   -> IT IS MINE, ALIVE. Context-clear (or a forgotten arm). DO NOT KILL.
+                            Confirm with TaskOutput(<id>) -> running if you still have the id.
+liveness PID != MY PID   -> a LIVE PEER holds the serial. STOP: identity conflict -> Andrew/CTO.
+serial STALE / absent    -> genuine orphan (predecessor died). Kill YOUR OWN serial's, then arm.
+```
+**Both false-positives share one root: the rule reasons from "fresh session" — a state the agent
+INFERS — instead of from PID identity, which it can MEASURE.** Infer-vs-measure is the whole bug.
+*Cost so far: one adjudicated dual-COO collision (07-14) and one self-reaped live watcher (07-16).
+A watcher killed here is not inert — the agent goes deaf while every reachability probe still reads
+REACHABLE, because the orphan/absent watcher drained the inbox.*
+
 Only arm a new Monitor if **none** of these confirm a live one (genuinely fresh
 session / restart / a death notification you actually saw). When unsure, check
 (2) — the task-id check is the only one that observes a *consumer*. Never re-arm off
