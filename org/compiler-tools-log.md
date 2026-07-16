@@ -19378,3 +19378,20 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-16 14:25-16:15Z 0.7.0_AE_CloudOps: comp-grep/glob x14 (resource-address + dependency grounding), deploy_ledger 2 ledgers open+close, terraform plan/safe-apply x3 targeted (twin 1/0/0, globgrph 2/4/1 w/ dependency-census fix, 17a 1/0/0 all 0-diff), simulate-principal-policy WITH context-entries (PutMetricData mode-2 retraction), commit-gate caught 4 ruff fixes, risk-reflex HOLD read+cleared, aws primitives (APPLIED-truth + 17a deny behavioral exercise w/ isolated positive control).
 | 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/drive_log_20260716T1600Z.md | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache ModelPortfolios | FAIL |
+| 2026-07-16 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum page PartnerAnalytics --firm inflection | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_INFRPT_V2_PRD.md | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_INFRPT_V2_PRD.md | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache map | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (WP1 census) | comp-grep | comp-grep DC2 org/ docs/ | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (WP1 census) | comp-grep | comp-grep orioneclipse | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (WP1 census) | comp-glob | comp-glob *DATA_ANALYTICS* | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/silver/_canonical... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff data/canonical/schwab/silver/_canonical_silver_lib.py data/canonical/sc... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform~B/lo... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform~B/lo... | PASS |
