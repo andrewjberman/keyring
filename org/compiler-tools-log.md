@@ -19568,3 +19568,40 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 | 3.0.0_SA_CVO | (no-TO) | raw git plumbing (cat-file -e / ls-tree / cmp / numstat) + rail-checked greps | F-A validation window 1700-1835Z: NO commits by me (SoD -- I validate, CTO/~B author), so no comp-pulse/surface-check rows. GAP CLOSED, not just found: no comp-tool fronts durable-record or append-only verification -- built + CTO-ratified the PREFIX TEST (`head -n <archive_lines> <live> | cmp -s - <archive>`; byte+order+insertion-sensitive AND churn-tolerant; a prefix violation is definitionally a non-append edit). It FIRES on the 17-record redaction that RV-0050's numstat walk PASSED on, localizes to line 12925, and independently audits MSTR's claim (12 CTO fixtures + 5 MSTR harness = exact). Replaces my membership diff in the F-A record. My own `git ls-files` criterion RETRACTED (reads the INDEX, not HEAD; shared mutable) -> `git cat-file -e origin/CLOUD:<path>`. | PASS |
 | 2026-07-16 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-16/f... | PASS |
+| 2026-07-16 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-16 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/opal_taxsma/E... | PASS |
+| 2026-07-16 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-16 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/SESSION_BRIEF... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-assets | comp-assets --self-test | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-debris | comp-debris --self-test | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-learns-score | comp-learns-score --self-test | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pydeps | comp-pydeps --self-test | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-trigger | comp-trigger --self-test | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/comp-state_first-completed-run... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/website/tls-cutover.sh | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/website/tls-cutover.sh | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/SCHWAB_BUCKET_DECOMMISSI... | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/SCHWAB_BUCKET_DECOMMISSI... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/spawn-agent.ps1 | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/spawn-agent.ps1 | FAIL |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/drive_log_20260716T2010Z.md | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/spawn-agent.ps1 --file org/tier0... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/spawn-agent.ps1 org/tier0/ledger/LD-0303.md | FAIL |
+| 2026-07-16 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/WP8_D3_UNIQUE_CONTENT_CO... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/spawn-agent.ps1 --file org/tier0... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/spawn-agent.ps1 org/tier0/ledger/LD-0303.md | FAIL |
+| 2026-07-16 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/WP8_D3_UNIQUE_CONTENT_CO... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/comp-state_first-completed-run... | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/WP8_D3_UNIQUE_CONTENT_CO... | PASS |
+| 2026-07-16 20:45Z | 0.5.0_AE_OpalETL | none run -- monolith schwab bronze census/copy window; standing comp-tool coverage gap (7th log); boto3 listings w/ printed denominators | session_fresh_spawn_wp8_d3_copy_and_restore_1955-2045Z.md |
+| 2026-07-16 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
