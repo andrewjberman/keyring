@@ -203,6 +203,51 @@ def build_index(rows: list, params: HeatParams, now: datetime) -> dict:
 
 
 # ---------------------------------------------------------------------------------------------
+# TO-7 P1: the DELTA-SIBLING projection (ms_heat_snap rows, staged for the in-VPC ingest)
+# ---------------------------------------------------------------------------------------------
+SNAP_PENDING_PREFIX = "warehouse/snap_ingest/pending/ms_heat_snap/"
+
+
+def sibling_rows(index: dict) -> list:
+    """Project the index's write_heat nodes into ms_heat_snap rows (the 4 standard convention
+    columns + the payload; snap_store.py's SURFACES registry is the schema of record). Pure."""
+    gen = index["generated_at"]
+    snapshot_date = gen[:10]
+    computed_at = int(datetime.fromisoformat(gen.replace("Z", "+00:00")).timestamp() * 1000)
+    marker = (index.get("graph_vintage") or {}).get("marker_committed_at") or ""
+    producer_ref = f"ms_heat_index-{gen}"
+    out = []
+    for n in index["dimensions"]["write_heat"]["nodes"]:
+        out.append({"snapshot_date": snapshot_date, "computed_at": computed_at,
+                    "producer_ref": producer_ref, "marker_head": str(marker),
+                    "node_id": n.get("node_id"), "path": n.get("path"),
+                    "node_type": n.get("node_type"), "age_days": n.get("age_days"),
+                    "score": n.get("score"), "band": n.get("band"),
+                    "cluster": n.get("cluster"), "size": n.get("size"),
+                    "file_type": n.get("file_type"), "owner_upn": n.get("owner_upn")})
+    return out
+
+
+def stage_sibling(index: dict) -> None:
+    """STAGE-THEN-INGEST (TO-7 rider R2): the dev box cannot reach Nessie, so the sibling batch
+    stages as JSONL under warehouse/snap_ingest/pending/ms_heat_snap/; the in-VPC snap_store
+    --ingest-pending leg appends it + writes the R1 twin heartbeat. Best-effort: a staging
+    failure never fails the index write (the twin ages toward alarm -- the designed catch)."""
+    rows = sibling_rows(index)
+    key = f"{SNAP_PENDING_PREFIX}{index['generated_at'].replace(':', '').replace('-', '')}.jsonl"
+    try:
+        import boto3
+        body = "".join(json.dumps(r, default=str) + "\n" for r in rows).encode()
+        boto3.client("s3", region_name="us-east-1").put_object(
+            Bucket=S3_BUCKET, Key=key, Body=body, ContentType="application/json")
+        print(f"OK: SIBLING_STAGED s3://{S3_BUCKET}/{key} rows={len(rows)} "
+              "(in-VPC snap_store --ingest-pending appends it; twin heartbeat on land)")
+    except Exception as e:  # noqa: BLE001
+        print(f"WARN: SIBLING_STAGE_FAIL err={type(e).__name__}: {e} -- index unaffected; "
+              "the ms_heat_snap twin will age toward alarm until a batch lands")
+
+
+# ---------------------------------------------------------------------------------------------
 # Persistence (latest + dated snapshot; retention = declared S3 lifecycle, never a code delete)
 # ---------------------------------------------------------------------------------------------
 def persist(index: dict, local_only: bool) -> None:
@@ -285,6 +330,16 @@ def _self_test() -> bool:
     check("8  guardrail: params.signal names the timestamp-only source (content/comms never read)",
           "content/comms NEVER read" in idx["params"]["signal"])
 
+    # 9: TO-7 P1 sibling projection -- pure, 4 standard cols populated, 1 row per node
+    idx["graph_vintage"] = {"marker_committed_at": "2026-07-16T03:33:01Z"}
+    srows = sibling_rows(idx)
+    check("9  sibling_rows: 1:1 with nodes, snapshot_date/computed_at/producer_ref/marker_head set",
+          len(srows) == len(idx["dimensions"]["write_heat"]["nodes"])
+          and srows[0]["snapshot_date"] == "2026-07-15"
+          and srows[0]["computed_at"] > 0
+          and srows[0]["producer_ref"].startswith("ms_heat_index-")
+          and srows[0]["marker_head"] == "2026-07-16T03:33:01Z")
+
     total, passed = len(results), sum(results)
     print(f"=== {passed}/{total} PASS ===")
     return passed == total
@@ -296,6 +351,9 @@ def main() -> int:
     ap.add_argument("--hot-days", type=float, default=DEFAULT_PARAMS.hot_days)
     ap.add_argument("--warm-days", type=float, default=DEFAULT_PARAMS.warm_days)
     ap.add_argument("--local-only", action="store_true", help="write local index only (no S3)")
+    ap.add_argument("--emit-sibling", action="store_true",
+                    help="TO-7 P1: also stage the ms_heat_snap sibling batch (JSONL to the "
+                         "snap_ingest pending lane; the in-VPC leg appends it)")
     ap.add_argument("--dry-run", action="store_true", help="compute + summary, write NOTHING")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
@@ -315,6 +373,8 @@ def main() -> int:
         print("OK: DRY_RUN (0 writes)")
         return 0
     persist(idx, local_only=args.local_only)
+    if args.emit_sibling and not args.local_only:
+        stage_sibling(idx)
     return 0
 
 
