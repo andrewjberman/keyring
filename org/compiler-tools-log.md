@@ -19100,3 +19100,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 ~04:15Z | 0.4.0_DS_ClientPlatform~B | comp-grep/glob (censuses w/ denominators), comp-blast (HOLD corpus read), comp-pipescript deployed, comp-freshness (exercised, taught the .013 lesson), commit-gate, comp-pulse | GLDRNS.B1 release window: 7 runs -> STAMP LANDED + SPINE SERVES | 5 instruments built, 4 caught lying incl. 2 of mine |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~B | OPAL_GLDRNS.B1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/HOLD_INF_CANONICAL_N... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md | FAIL |
+- 2026-07-16 04:2xZ 1.0.0_SA_CTO: AoR window close (runs 4-7 -> STAMP): comp-grep verify_09 locate; comp-pulse ~8 commits (Door-2 HOLD reads each flip, ceiling untouched); raw-aws rail-checked = flip verifies x3 + oracle BEFORE/AFTER listings + target enumeration + cot corrosion instrument (dim versions + source census). Lesson: call-site census (to STNDRD).
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-16/a... | PASS |
