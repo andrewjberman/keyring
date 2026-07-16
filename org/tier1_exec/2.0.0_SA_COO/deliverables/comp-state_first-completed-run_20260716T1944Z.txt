@@ -1,0 +1,582 @@
+# comp-state -- THE FIRST COMPLETED RUN THIS ESTATE HAS EVER PRODUCED
+#
+# Produced 2026-07-16 19:34:00Z -> 19:44:29Z by 2.0.0_SA_COO during the CTO-assigned dig.
+#   invocation : comp-state --commits 5   (detached, 900s budget)
+#   result     : rc=0  elapsed=629s (10.5 min)  stdout=37,277 bytes
+#   records    : 2,095 (TO 1708 / JSON 255 / REGROW 72 / PRD 60)
+#   verdicts   : BEHIND/POST-CLOSE 129 | CURRENT 0 | QUIET 1966
+#
+# WHY THIS FILE EXISTS AND WHY IT NEARLY DID NOT:
+#   comp-state is not broken. It is SILENT -- 10.5 minutes, 2,095 records x ~2 uncached git
+#   subprocess calls, no subprocess timeout (state_scan.py:68), ZERO progress output. It is
+#   indistinguishable from a hang for its entire runtime, so every operator who ever ran it
+#   KILLED IT. That is why these 129 findings had never been read.
+#   The author of this file killed it TWICE inside 20 minutes -- the second time at 19:44:40Z,
+#   ELEVEN SECONDS AFTER IT SUCCEEDED, acting on a record estimate that was 7x low and a runtime
+#   projection 2.6x over. The output survived by a single tee to /tmp. Persisted per CTO 194803Z.
+#
+# SEPARATELY (source-confirmed, independent of timing): --self-test returns at state_scan.py:269
+#   BEFORE ANY GIT CALL. The gate has never once exercised the scan path. Fix acceptance requires
+#   a self-test that runs ONE REAL BOUNDED SCAN. Build routed to NFRA_TOOLCHECK.P2 (CTO 194803Z).
+#
+# READ THIS AS THE TOOL ASKS: a BEHIND is A PLACE TO LOOK, never an auto-edit. The instrument is
+#   recall-not-precision BY DESIGN -- it accrues ranked candidates; a human is the precision layer.
+#   Triage owed by COO on tomorrow's Step-2b cadence (CTO 194803Z ask 3).
+#
+# TRIAGE SAMPLE (COO, at persist time): NFRA_WEBSITE.json flags BEHIND and goes LIVE TODAY --
+#   but its cited evidence (ec13addee TAXSMA spec / 59276856b CVO log / 5410e1a9b 0.6.2 log) is
+#   LEXICAL NOISE, unrelated to the website. The record IS 2 days stale (07-14 20:49Z) against a
+#   go-live-today project -- real, but NOT what the tool found. Correct-by-accident. That distinction
+#   IS the precision layer, and it is why a BEHIND is never an auto-edit.
+
+comp-state -- registry/TO/PRD state linter (ADVISORY; BM25 over git; read-only)
+  corpus: 5 commits (last 5 commits) | records: 2095 (TO 1708 / JSON 255 / REGROW 72 / PRD 60)
+  verdicts: BEHIND/POST-CLOSE 129 | CURRENT 0 | QUIET 1966
+  A BEHIND is a place to LOOK, never an auto-edit. CURRENT = no lexical drift evidence, NOT a verified record.
+
+[BEHIND] REGROW REGISTRY:NFRA_EDGES
+    status: active-row | record last touched 07-08 21:02Z
+    ev 83c62805b 07-16 19:30Z [bm25=7.28] docs(session brief 20260716): taxsma pt2 premise-kill + BD HAR methodology + dim_taxsma_costbasis gold leg + e
+    ev ec13addee 07-16 19:23Z [bm25=6.31] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.21] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   ADHC_PREFLT.json
+    status: active | record last touched 07-01 04:20Z
+    ev ec13addee 07-16 19:23Z [bm25=6.02] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] JSON   ADVI_TAGATTR.json
+    status: active | record last touched 07-13 06:52Z
+    ev ec13addee 07-16 19:23Z [bm25=7.41] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.67] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   ETFS_CANON.json
+    status: scoping | record last touched 06-25 19:00Z
+    ev ec13addee 07-16 19:23Z [bm25=7.19] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] JSON   MDPF_REVAMP.json
+    status: active | record last touched 07-16 17:52Z
+    ev ec13addee 07-16 19:23Z [bm25=7.46] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+    ev 5410e1a9b 07-16 19:17Z [bm25=8.88] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   NFRA_GCONTR.json
+    status: active | record last touched 07-09 15:07Z
+    ev ec13addee 07-16 19:23Z [bm25=7.0] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.41] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   NFRA_PASSCRAFT.json
+    status: active | record last touched 07-10 17:03Z
+    ev ec13addee 07-16 19:23Z [bm25=6.12] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] JSON   NFRA_TOOLGRAPH.json
+    status: active | record last touched 07-10 17:03Z
+    ev ec13addee 07-16 19:23Z [bm25=6.12] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] JSON   NFRA_WEBSITE.json
+    status: active | record last touched 07-14 20:49Z
+    ev ec13addee 07-16 19:23Z [bm25=6.47] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+    ev 59276856b 07-16 19:17Z [bm25=8.27] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=8.47] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   OPAL_TAXSMA.json
+    status: active | record last touched 07-15 23:18Z
+    ev ec13addee 07-16 19:23Z [bm25=6.17] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] JSON   OPAL_TICKET.json
+    status: active | record last touched 07-14 21:21Z
+    ev ec13addee 07-16 19:23Z [bm25=8.25] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] REGROW REGISTRY:OPAL_TAXSMA
+    status: active-row | record last touched 07-15 16:16Z
+    ev ec13addee 07-16 19:23Z [bm25=6.17] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] REGROW REGISTRY:NFRA_COMPASSURANCE
+    status: active-row | record last touched 07-10 17:03Z
+    ev ec13addee 07-16 19:23Z [bm25=6.12] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] REGROW REGISTRY:NFRA_PASSCRAFT
+    status: active-row | record last touched 07-10 17:11Z
+    ev ec13addee 07-16 19:23Z [bm25=6.12] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] REGROW REGISTRY:NFRA_TOOLGRAPH
+    status: active-row | record last touched 07-10 17:11Z
+    ev ec13addee 07-16 19:23Z [bm25=6.12] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] REGROW REGISTRY:NFRA_TERRAFORM
+    status: active-row | record last touched 07-08 17:33Z
+    ev ec13addee 07-16 19:23Z [bm25=6.31] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] REGROW REGISTRY:NFRA_TOOLHEALTH
+    status: active-row | record last touched 07-09 20:37Z
+    ev ec13addee 07-16 19:23Z [bm25=6.31] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] REGROW REGISTRY:ADHC_PREFLT
+    status: active-row | record last touched 07-01 04:16Z
+    ev ec13addee 07-16 19:23Z [bm25=6.64] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+    ev 59276856b 07-16 19:17Z [bm25=6.3] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[BEHIND] REGROW REGISTRY:NFRA_OPLMCP
+    status: active-row | record last touched 07-09 19:05Z
+    ev ec13addee 07-16 19:23Z [bm25=8.03] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] REGROW REGISTRY:HEATMAP_PROCESS
+    status: active-row | record last touched 07-11 00:03Z
+    ev ec13addee 07-16 19:23Z [bm25=6.45] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[BEHIND] JSON   ADHC_TMSTEL.json
+    status: inactive | record last touched 04-13 18:15Z
+    ev 59276856b 07-16 19:17Z [bm25=6.49] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[BEHIND] JSON   ADVI_BREAKS.json
+    status: active | record last touched 07-07 17:56Z
+    ev 59276856b 07-16 19:17Z [bm25=9.96] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=8.38] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   ADVI_COTETL.json
+    status: active | record last touched 06-26 16:27Z
+    ev 59276856b 07-16 19:17Z [bm25=7.1] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.93] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   ADVI_VALFIN.json
+    status: inactive | record last touched 06-02 20:30Z
+    ev 59276856b 07-16 19:17Z [bm25=6.06] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[BEHIND] JSON   BDPL_ASTDIM.json
+    status: merged | record last touched 04-15 15:28Z
+    ev 59276856b 07-16 19:17Z [bm25=6.17] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.74] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   COMP_LEARNS.json
+    status: inactive | record last touched 06-02 16:17Z
+    ev 59276856b 07-16 19:17Z [bm25=6.71] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[BEHIND] JSON   EXPAND_AUTHEDGE.json
+    status: scoping | record last touched 06-25 19:07Z
+    ev 59276856b 07-16 19:17Z [bm25=6.12] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[BEHIND] JSON   MDPF_COTMDL.json
+    status: active | record last touched 07-07 19:40Z
+    ev 59276856b 07-16 19:17Z [bm25=8.17] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=13.82] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+    ev a61a72795 07-16 19:17Z [bm25=6.08] spec(F-A tail) amend: the prefix test's MECHANISM was NAMED but never DEFINED -- a spec that names an instrume
+
+[BEHIND] JSON   NFRA_LOCALROOT.json
+    status: active | record last touched 07-09 02:11Z
+    ev 59276856b 07-16 19:17Z [bm25=8.49] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.81] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   NFRA_WRKFLW.json
+    status: active | record last touched 06-24 16:06Z
+    ev 59276856b 07-16 19:17Z [bm25=7.95] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[BEHIND] JSON   SCTY_PREMCP.json
+    status: active | record last touched 07-07 17:56Z
+    ev 59276856b 07-16 19:17Z [bm25=7.6] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=9.85] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+    ev a61a72795 07-16 19:17Z [bm25=7.9] spec(F-A tail) amend: the prefix test's MECHANISM was NAMED but never DEFINED -- a spec that names an instrume
+
+[BEHIND] JSON   SXPL_RESTIN.json
+    status: inactive | record last touched 06-02 20:30Z
+    ev 59276856b 07-16 19:17Z [bm25=6.06] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[BEHIND] JSON   TRSB_LEDGER.json
+    status: inactive | record last touched 06-16 21:47Z
+    ev 59276856b 07-16 19:17Z [bm25=6.06] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[BEHIND] REGROW REGISTRY:NFRA_TOOLCHECK
+    status: active-row | record last touched 07-14 03:13Z
+    ev 59276856b 07-16 19:17Z [bm25=7.86] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[BEHIND] REGROW REGISTRY:NFRA_EXPAND
+    status: active-row | record last touched 07-11 00:03Z
+    ev 59276856b 07-16 19:17Z [bm25=6.31] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[BEHIND] REGROW REGISTRY:NFRA_WEBSITE
+    status: active-row | record last touched 07-14 04:57Z
+    ev 59276856b 07-16 19:17Z [bm25=6.38] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[BEHIND] REGROW REGISTRY:ADVI_COTSNP
+    status: active-row | record last touched 07-11 00:03Z
+    ev 59276856b 07-16 19:17Z [bm25=6.78] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[BEHIND] JSON   ADVI_BDAPIMIG.json
+    status: active | record last touched 07-13 06:52Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.42] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   ADVI_BFIX4.json
+    status: inactive | record last touched 05-22 13:39Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.24] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   ADVI_COTPPLADVFIX.json
+    status: active | record last touched 07-07 19:37Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.16] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   ADVI_ETLFIX.json
+    status: active | record last touched 07-07 17:56Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=8.49] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   ADVI_FIRMSEP.json
+    status: inactive | record last touched 05-22 13:39Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.24] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   ADVI_FNTEND.json
+    status: merged | record last touched 04-15 15:28Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.67] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   ADVI_INFFEE.json
+    status: active | record last touched 07-07 17:56Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.89] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   BDPL_CNPRCS.json
+    status: merged | record last touched 04-15 15:28Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=9.56] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   DATA_PLATFORM.json
+    status: active | record last touched 06-29 14:35Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.72] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   EXPAND_MSCLOUD.json
+    status: scoping | record last touched 06-26 15:12Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.41] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   MKOV_DLYCLD.json
+    status: merged | record last touched 05-28 19:52Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.49] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   MKOV_TRSRCE.json
+    status: active | record last touched 07-07 16:56Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=8.69] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   NFRA_CMTQUE.json
+    status: on-hold | record last touched 07-14 09:51Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.63] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   NFRA_COMPLEARN.json
+    status: active | record last touched 07-11 03:08Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.24] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   NFRA_COMPTEAM.json
+    status: active | record last touched 07-07 17:56Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=9.15] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   NFRA_EDGES.json
+    status: active | record last touched 07-09 07:28Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=8.73] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   NFRA_EXPAND.json
+    status: scoping | record last touched 06-26 15:12Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.65] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   NFRA_GRAPHFEED.json
+    status: active | record last touched 07-15 21:55Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=10.36] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   NFRA_GRAPHS.json
+    status: active | record last touched 06-16 21:47Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=8.1] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   OPAL_BBGTML.json
+    status: active | record last touched 07-15 18:53Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=10.58] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   OPAL_CONSOLIDATION.json
+    status: active | record last touched 07-16 19:02Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.17] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   OPAL_GLDRNS.json
+    status: active | record last touched 07-16 12:02Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=9.4] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   OPAL_LCLRPO.json
+    status: active | record last touched 07-16 15:01Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=9.06] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   SCTY.json
+    status: active | record last touched 07-07 17:56Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=10.32] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] JSON   UIUX_DESIGN.json
+    status: active | record last touched 07-15 16:10Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.3] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] REGROW REGISTRY:OPAL_BBGTML
+    status: active-row | record last touched 07-15 16:16Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.31] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] REGROW REGISTRY:OPAL_LCLRPO
+    status: active-row | record last touched 07-15 19:33Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.02] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] REGROW REGISTRY:OPAL_CONSOLIDATION
+    status: active-row | record last touched 07-15 19:20Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.21] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] REGROW REGISTRY:UIUX_DESIGN
+    status: active-row | record last touched 07-15 16:10Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.35] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] REGROW REGISTRY:NFRA_COMPLEARN
+    status: active-row | record last touched 07-10 17:23Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.34] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] REGROW REGISTRY:NFRA_GRAPHS
+    status: active-row | record last touched 07-09 19:05Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=8.92] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] REGROW REGISTRY:SCTY_PREMCP
+    status: active-row | record last touched 07-09 19:05Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.19] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] REGROW REGISTRY:ADVI_COTPPLADVFIX
+    status: active-row | record last touched 07-11 00:03Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.25] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] REGROW REGISTRY:MDPF_COTMDL
+    status: active-row | record last touched 07-07 18:05Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=8.16] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] REGROW REGISTRY:NFRA_LOCALROOT
+    status: active-row | record last touched 07-09 19:05Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.37] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] REGROW REGISTRY:ADVI_VALFIN
+    status: active-row | record last touched 05-23 07:41Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.15] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] REGROW REGISTRY:NFRA_GCONTR
+    status: active-row | record last touched 07-11 00:03Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.77] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[BEHIND] REGROW REGISTRY:NFRA_INSTDRILL
+    status: active-row | record last touched 07-14 05:52Z
+    ev a61a72795 07-16 19:17Z [bm25=7.48] spec(F-A tail) amend: the prefix test's MECHANISM was NAMED but never DEFINED -- a spec that names an instrume
+
+[POST-CLOSE] JSON   ADHC_COMPIL_V5.json
+    status: complete | record last touched 05-26 18:36Z
+    ev 83c62805b 07-16 19:30Z [bm25=6.15] docs(session brief 20260716): taxsma pt2 premise-kill + BD HAR methodology + dim_taxsma_costbasis gold leg + e
+    ev ec13addee 07-16 19:23Z [bm25=7.0] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[POST-CLOSE] JSON   ADVI_COTMVP.json
+    status: complete | record last touched 07-07 17:56Z
+    ev ec13addee 07-16 19:23Z [bm25=6.58] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.3] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   NFRA_FEDOBS.json
+    status: complete | record last touched 07-14 08:27Z
+    ev ec13addee 07-16 19:23Z [bm25=8.25] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[POST-CLOSE] JSON   NFRA_OPLMCP.json
+    status: build-complete | record last touched 06-25 21:29Z
+    ev ec13addee 07-16 19:23Z [bm25=8.46] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.02] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   YALP_CORREL.json
+    status: complete | record last touched 05-26 19:18Z
+    ev ec13addee 07-16 19:23Z [bm25=7.41] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[POST-CLOSE] JSON   YALP_FACTOR.json
+    status: complete | record last touched 05-26 19:18Z
+    ev ec13addee 07-16 19:23Z [bm25=7.41] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[POST-CLOSE] JSON   YALP_POSITN.json
+    status: complete | record last touched 05-26 19:18Z
+    ev ec13addee 07-16 19:23Z [bm25=7.41] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[POST-CLOSE] JSON   YALP_VALUAT.json
+    status: complete | record last touched 05-26 19:18Z
+    ev ec13addee 07-16 19:23Z [bm25=7.41] feat(OPAL_TAXSMA/OPLMCP): entitlements domain-split build spec v0.1 (Andrew-direct 2026-07-16) -- ms|aws domai
+
+[POST-CLOSE] JSON   ADHC_DESIGN.json
+    status: complete | record last touched 04-21 16:06Z
+    ev 59276856b 07-16 19:17Z [bm25=6.32] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[POST-CLOSE] JSON   ADVI_49FRECN.json
+    status: complete | record last touched 05-04 17:34Z
+    ev 59276856b 07-16 19:17Z [bm25=6.36] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.34] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_INFALM.json
+    status: complete | record last touched 05-20 21:20Z
+    ev 59276856b 07-16 19:17Z [bm25=6.81] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[POST-CLOSE] JSON   BD_RPSAUTO.json
+    status: cancelled | record last touched 07-13 06:57Z
+    ev 59276856b 07-16 19:17Z [bm25=7.29] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.69] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   DECK_CLAUDE.json
+    status: complete | record last touched 06-18 20:33Z
+    ev 59276856b 07-16 19:17Z [bm25=7.06] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.29] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   FIND_INSURE.json
+    status: complete | record last touched 06-05 20:45Z
+    ev 59276856b 07-16 19:17Z [bm25=8.19] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.76] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   MDLP_VOLAUD.json
+    status: complete | record last touched 05-20 15:44Z
+    ev 59276856b 07-16 19:17Z [bm25=6.31] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[POST-CLOSE] JSON   MDLP_WYNCHT.json
+    status: complete | record last touched 03-11 22:39Z
+    ev 59276856b 07-16 19:17Z [bm25=7.21] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[POST-CLOSE] JSON   NFRA_COMPROUTE.json
+    status: complete | record last touched 07-01 14:29Z
+    ev 59276856b 07-16 19:17Z [bm25=7.08] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.14] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+    ev a61a72795 07-16 19:17Z [bm25=7.76] spec(F-A tail) amend: the prefix test's MECHANISM was NAMED but never DEFINED -- a spec that names an instrume
+
+[POST-CLOSE] JSON   NFRA_DTAFLP.json
+    status: complete | record last touched 06-12 18:19Z
+    ev 59276856b 07-16 19:17Z [bm25=7.38] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.1] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   NFRA_INFRPT.json
+    status: complete | record last touched 07-08 03:33Z
+    ev 59276856b 07-16 19:17Z [bm25=6.19] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+
+[POST-CLOSE] JSON   NFRA_SEMCTL.json
+    status: complete | record last touched 07-09 21:00Z
+    ev 59276856b 07-16 19:17Z [bm25=7.75] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=8.77] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+    ev a61a72795 07-16 19:17Z [bm25=6.6] spec(F-A tail) amend: the prefix test's MECHANISM was NAMED but never DEFINED -- a spec that names an instrume
+
+[POST-CLOSE] JSON   OPAL_ASSETS_49METATABLES.json
+    status: complete-as-superseded | record last touched 07-15 15:47Z
+    ev 59276856b 07-16 19:17Z [bm25=7.86] log(3.0.0_SA_CVO): F-A validation + the PREFIX TEST 1700-1835Z -- watermark mstr-review-0046 VERIFIED at 67aa9
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.58] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADHC_GLDINC.json
+    status: complete | record last touched 06-25 21:29Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.95] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADHC_HISTRY.json
+    status: complete | record last touched 04-06 11:39Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.29] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADHC_VALGATE.json
+    status: complete | record last touched 05-22 13:01Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.71] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_BIWNDW.json
+    status: complete | record last touched 05-22 13:39Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.43] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_BKSCMP.json
+    status: complete | record last touched 03-31 02:20Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.44] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_DWSPLT.json
+    status: complete | record last touched 05-15 16:05Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.39] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_INCMTL.json
+    status: complete | record last touched 04-21 14:29Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=9.65] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_INFDRF.json
+    status: complete | record last touched 05-22 13:39Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.05] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_INFETL.json
+    status: complete | record last touched 05-25 06:48Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.46] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_INFFIN.json
+    status: complete | record last touched 05-22 13:39Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.31] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_INFGRD.json
+    status: complete | record last touched 04-30 13:28Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.81] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_INFGRO.json
+    status: cancelled | record last touched 05-23 05:07Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.56] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_INFPRTY.json
+    status: complete | record last touched 04-29 21:25Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.36] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_INFREL.json
+    status: complete | record last touched 05-22 13:39Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.06] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_MIXV2.json
+    status: complete | record last touched 03-20 17:41Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.49] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_MVP318.json
+    status: complete | record last touched 03-20 17:41Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.36] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_ORIAPI.json
+    status: complete | record last touched 06-08 14:46Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.71] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_PRTORG.json
+    status: complete | record last touched 06-17 18:39Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.13] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_PSCFIX.json
+    status: complete | record last touched 03-12 14:54Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.46] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_ROLEAUA.json
+    status: complete | record last touched 05-22 13:39Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.13] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_ROLLUP.json
+    status: complete | record last touched 05-22 13:39Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.66] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_RPBKTPI.json
+    status: complete | record last touched 05-22 13:39Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.64] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_SHARED.json
+    status: complete | record last touched 06-09 22:31Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=10.33] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   ADVI_SLEEVE.json
+    status: complete | record last touched 05-22 13:39Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.13] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   MDLP_DISTFIX.json
+    status: complete | record last touched 06-25 21:29Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.74] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   MDPF_COUNTS.json
+    status: complete | record last touched 06-25 21:29Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.96] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   NFRA_COMPAWS.json
+    status: complete | record last touched 07-09 19:05Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.21] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+    ev a61a72795 07-16 19:17Z [bm25=6.89] spec(F-A tail) amend: the prefix test's MECHANISM was NAMED but never DEFINED -- a spec that names an instrume
+
+[POST-CLOSE] JSON   NFRA_COMPPROOF.json
+    status: complete | record last touched 07-07 06:54Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=7.18] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   NFRA_DEBTSCAN.json
+    status: complete | record last touched 07-09 18:50Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.39] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   NFRA_ENDPOINTS.json
+    status: complete | record last touched 07-09 18:50Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=12.4] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   NFRA_GRAPHDEPTH.json
+    status: complete | record last touched 07-01 06:02Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=8.13] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   NFRA_GRAPHUNI.json
+    status: complete | record last touched 07-01 06:13Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.15] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
+[POST-CLOSE] JSON   NFRA_INTEGRATIONS.json
+    status: complete | record last touched 07-08 20:58Z
+    ev 5410e1a9b 07-16 19:17Z [bm25=6.16] log(0.6.2 session close 1500-1900Z): two Andrew-direct rulings recorded+broadcast, WP7 finding ruled into the 
+
