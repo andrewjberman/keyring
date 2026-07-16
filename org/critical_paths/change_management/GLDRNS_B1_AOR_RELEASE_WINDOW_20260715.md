@@ -143,6 +143,17 @@ denominators, exits nonzero on any miss = STOP). ONLY ANDREW'S WORD REMAINS.**
 > satisfied BY CONSTRUCTION. Ruling: fork option (a) — the 07-13 fold-OFF seed is NOT "the first available
 > AoR"; re-seed via BANKED-EMPTY; finish under AMEND-54 + AMEND-57.
 
+**RUN 5 OUTCOME (01:44Z dispatch, mode=full): ABORTED AT INF_A_0 — TWO GUARDS RIGHT, ONE FORK HOLE.
+NOTHING STAMPED, NOTHING SERVED.** The pull phase ran healthy — **THE BRONZE FEED IS REVIVED (txn/perf/
+positions current for the first time since 07-10; the rescued txn converter ran; the ceiling self-healed)**
+— but the runner's pull copy (05-12 vintage, repo-same) lacks change-3's roster half (_emit_roster lives
+ONLY in the Lambda fork), so the converter's join hit its documented silent fall-through and emitted a
+columnless 07-16 accounts_v2; the round-8.2 re-pin honestly moved to those bytes; the resolver's firebreak
+REFUSED them, verbatim: "accounts_v2 has NO advisor_of_record_raw column... Refusing to serve pre-fold
+under an active switch." FIX PROPOSED (CTO gate pending 021429Z): promote the Lambda pull to repo canonical
++ byte-identical deploy to both flatten copies; rerun self-heals the 07-16 partition in-run. AMEND-57
+numbers UNCHANGED; the true-baseline ledger untouched by the abort.
+
 **STEP (4) IN FLIGHT: CO-READ COMPLETE, BOTH HALVES PASS** (CTO 014029Z; COO 014125Z/AMEND 58 — the
 145-subset ruled IN-BAR by row-set identity both directions, 1,257/1,257). **MODE=FULL WORD GIVEN 014157Z.**
 First dispatch 409'd on run-4's stale lock (that chain had provably exited — its 250,074B log shipped by its
