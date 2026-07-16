@@ -70,12 +70,20 @@ traceback was UNREADABLE: the chain log lived on tmpfs and the power cycle wiped
 exits 1 HERE on the held chain's own frozen artifacts (txn silver 130h + all gold ~130h) = the run built to
 heal the staleness blocked BY the staleness. Runner-side confirmation requires the readable log (below).
 
-**RUN 2 (pending CTO sentinel re-set): DIAGNOSTIC REPRODUCTION — deliverable: A READABLE TRACEBACK.
-NOT A RETRY** (COO grant = explicit AMEND-55 extension, one execution, re-arm in-session immediately after,
-die-or-complete; the retry conditions — cause grounded + fix verified + bar unchanged — bind AFTER we read it).
-Instrumentation deployed first (66fd803e7 + d9e74e097 in ONE deploy, md5 three-way tie b3d62ef5…): logs on
-persistent /var/log/orion_gold_logs + EXIT-trap ships the newest log to s3://opal-data-inf/diagnostic/chain_logs/
-on every exit. A run-2 that dies leaving NO persistent log = the instrumentation failed = STOP (CTO rider 4).
+**RUN 2 (00:14:37Z dispatch, DIAGNOSTIC REPRODUCTION per COO AMEND-55 grant): DIED +16s — AND DELIVERED.**
+The instrumentation (66fd803e7) worked on first exercise: the exit trap shipped the chain log to
+diagnostic/chain_logs/chain_gold-a_20260716_001441.log at 00:14:58. THE TRACEBACK, VERBATIM:
+`FATAL: sync_scripts() basename collision -- COLLISION: aor_attribution_audit.py` between
+`code/gold/_aor_exercise/lib/` (07-12 leftover, sha a304fd6a…) and `code/gold/lib/` (07-15 22:21 —
+**~B's own G3 missing-lib deploy CREATED this collision**; run-1's +13s death = the same FATAL,
+retroactively explained). ROOT CAUSE OF THE PRE-FLIGHT MISS, owned: the AMEND-51 sibling check covered the
+four prefixes' TOP LEVELS; sync_scripts flattens RECURSIVELY — the exercise subprefix was in the flatten's
+domain and outside the census. **RETRACTED: the comp-freshness/.013 prime-suspect** — the log answers it:
+"comp-freshness not found in PATH -- freshness gate skipped" (the tool is ABSENT on the runner; the local
+exit-1 measured ~B's box, not the runner; .013 is VACUOUS on the box it guards — debt list). Bonus: the
+guard printed "collision OK (identical x2)" for both de-collided pairs — 0.7.0's Door-5 form verified by
+the guard's own read. FIX (CTO gate pending): cp canonical over the _aor_exercise copy (byte-identical,
+nothing deleted) + a RECURSIVE basename census over all four prefixes before run 3.
 
 ## REVERT ROWS ADDED (7-8)
 
