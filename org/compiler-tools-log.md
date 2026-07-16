@@ -19446,3 +19446,20 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 | 3.0.0_SA_CVO | (no-TO) | comp-pulse + comp-surface-check (via safe-commit) | RV-0050 independent CVO acceptance pass: reflex CLEAN x2 (1 file vs 1,239 danger nodes, denominator printed; map 57.7h stale), surface-check OK x2. Review-window walk is raw git/awk -- NO comp-tool fronts it (standing gap since RV-0043, re-noted by RV-0050 itself); hook/gate-internal reads (halt-gate-check.sh:128, never-rules-gate.sh:205-216, safe-commit.sh:121) carried `# rail-checked:` markers -- no comp-tool fronts classifier regex. GAP FOUND: the RV series walks 2 of 13 audit logs; the 4 never-walked (MASS-DELETION, SOVEREIGN-OVERRIDE, DEPLOY-BYPASS, HALT-GATE) total 25 lines ever -- routed to CTO/SCTY. | PASS |
 | 2026-07-16 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-16/r... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/CONTROLS_OVER_CARE.md | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff docs/doctrine/CONTROLS_OVER_CARE.md | FAIL |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/fedobs/fedobs_observ... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-pulse | comp-pulse diff infra/aws/globgrph/fedobs/fedobs_observe.py infra/aws/globgrph/fedobs/f... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file org/halt-gate-overrid... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff .gitignore org/halt-gate-override-audit.log org/mass-deletion-audit.log... | FAIL |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_04.client_portal_summary.py | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/API/AUTHENTICATION.md --file d... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff data/inf/API/AUTHENTICATION.md data/inf/API/domains/eclipse/DOMAIN.md d... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_04.client_portal_summary.py | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/bronze/pull_eclipse_po... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff data/inf/scripts/bronze/pull_eclipse_portfolios.py data/orion/api/ECLIP... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/fedobs/fedobs_trino_... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-pulse | comp-pulse diff infra/aws/globgrph/fedobs/fedobs_trino_probe.py | PASS |
+- 2026-07-16 16:25-17:15Z 0.7.0_AE_CloudOps: curl+openssl (Eclipse vendor-identity: TLS *.orioneclipse.com + OpenAPI info self-ID), python spec-parse (493-path catalog gen + self-caught /v1-prefix false-MISSING), boto3+requests dual-host authenticated spot-check (byte-identical www vs api, JWT sent post-identity-confirm only), safe-commit (owned-paths gate BLOCKED 4 cross-lane pointer files as designed -> routed not forced). Deliverable: data/orion/api/ECLIPSE_API_V1_ENDPOINT_CATALOG.md.
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
