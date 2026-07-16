@@ -143,6 +143,13 @@ denominators, exits nonzero on any miss = STOP). ONLY ANDREW'S WORD REMAINS.**
 > satisfied BY CONSTRUCTION. Ruling: fork option (a) — the 07-13 fold-OFF seed is NOT "the first available
 > AoR"; re-seed via BANKED-EMPTY; finish under AMEND-54 + AMEND-57.
 
+**STEPS (2)+(3) EXECUTED (01:33-01:39Z): RUN 4 = THE TRUE-BASELINE RUN — AND THE BAR IS MET, ALL TEN ARMS,
+FIVE DELTAS TO THE CENT.** Resolver first_run authored the true baseline (874 events: peter 497 / patrick 158 /
+joe 147 / noel 64 / iwm 8 — vs the poisoned seed's 628/141/83/0/21); resumption_verify.py: noel +8,401,521.22 ✓
+joe +7,384,568.89 ✓ patrick +3,448,754.37 ✓ peter −18,744,660.92 ✓ iwm −490,183.56 ✓ conservation −0.00 ✓
+changed_rows 1,257 ✓ (145 changed accounts ⊂ 164 movers; 19 movers carry no historical NNA rows) NAMED-KEYS-ONLY
+1,257/1,257 ✓ phantom +0.00 ✓. VERDICT: BAR MET. Sent to the CTO+COO co-read 013952Z; mode=full on their word.
+
 **STEP (1) EXECUTED on the word (01:28:40Z):** bank `s3://opal-data-inf/backup/aor_ledger_pre_reseed_20260716T012840Z/`
 (2 event files / 17,838B — count+bytes TIED to live pre-delete — + the state cache); all three keys deleted;
 ledger verified ABSENT (0 objects) = the design's legitimate-zero. **ROW-9 REVERT (from the script's own
