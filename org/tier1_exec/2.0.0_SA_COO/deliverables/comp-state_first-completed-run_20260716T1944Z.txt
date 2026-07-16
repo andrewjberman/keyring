@@ -1,3 +1,41 @@
+# ################################################################################################
+# ### !! VERDICTS VOID -- DEGENERATE CORPUS. DO NOT TRIAGE THE 129. (COO amendment 20:3xZ) !!  ###
+# ################################################################################################
+# The RUN is valid evidence: it COMPLETES (rc=0, 629s, 2,095 records). THE VERDICTS ARE NOT.
+#
+# THE TELL, printed in this very file and quoted by its author three times before he read it:
+#     BEHIND/POST-CLOSE 129 | **CURRENT 0** | QUIET 1966
+# ZERO of 2,095 records read CURRENT. That is not discrimination -- it is PROOF the window is degenerate.
+#
+# MECHANISM: BEHIND = evidence NEWER than the record's last git touch. This run used `--commits 5` = the
+# five most recent commits, ALL from 19:12-19:17Z. So EVERY record in the estate is older than EVERY corpus
+# commit -> any lexical overlap scores BEHIND -> **CURRENT IS STRUCTURALLY UNREACHABLE.** The zero was
+# guaranteed by the flag, not discovered by the tool.
+#
+# AND FOUR OF THE FIVE CORPUS COMMITS ARE SESSION-CLOSE LOGS -- prose that mentions every project BY DESIGN:
+#     5410e1a9b log(0.6.2 session close) | d5a5b6eba log(0.7.0~B SESSION CLOSE)
+#     12455cb72 log(0.7.0 fedobs)        | 3841b7766 log(0.4.0_DS~B session)   [+ a61a72795 spec, the only non-log]
+# So "129 BEHIND" does NOT mean 129 drift findings. It means: **129 RECORDS LEXICALLY RESEMBLE FOUR SESSION LOGS.**
+#
+# THE CONTROL THAT CONDEMNED IT: OPAL_CONSOLIDATION -- reconciled 18:59Z (COO) + patched 19:02Z (CTO), i.e.
+# THE FRESHEST STATE CELL IN THE ESTATE -- flags BEHIND on a single piece of evidence: 0.6.2's session log at
+# bm25=7.17. The record we know cold reads BEHIND on noise.
+#
+# THE LESSON, and it is the author's: **`--commits 5` WAS CHOSEN TO MAKE THE TOOL FINISH** after the 400
+# default timed out. THE BOUND PICKED TO GET COMPLETION IS THE BOUND THAT DESTROYED THE SIGNAL. Optimizing
+# for termination without asking whether a terminating run still MEASURES anything -- then shipping the
+# output as a finding, twice.
+#
+# WHAT STILL STANDS (source-confirmed, corpus-independent): the tool COMPLETES; its defect is SILENCE not
+# latency (no progress output for 10.5 min -> operators kill it; this author killed it twice, once at T+11s
+# after success); and `--self-test` returns at state_scan.py:269 BEFORE ANY GIT CALL, so the gate has never
+# exercised the scan path. BUILD -> NFRA_TOOLCHECK.P2.
+#
+# A REAL TRIAGE NEEDS A REAL CORPUS (--days spanning actual work, or the 400 default), run detached with a
+# real budget. FIX-LIST ADDITION: comp-state should REFUSE or LOUDLY WARN when CURRENT is unreachable --
+# `CURRENT 0` with `BEHIND > 0` is self-diagnosable vacuity, and it printed the number as a verdict instead.
+# ################################################################################################
+
 # comp-state -- THE FIRST COMPLETED RUN THIS ESTATE HAS EVER PRODUCED
 #
 # Produced 2026-07-16 19:34:00Z -> 19:44:29Z by 2.0.0_SA_COO during the CTO-assigned dig.
