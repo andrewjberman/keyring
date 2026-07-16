@@ -19424,3 +19424,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 1246-1635Z | 0.4.0_DS_ClientPlatform~A | comp-glob/grep, pipescript io, commit-gate x19, pytest 64/64 | A4 L0/L1/L2/L5+F-AMT+WP7; io EMPTY on B_00 (dynamic keys); gap: no comp-tool for parquet-schema/zip-member reads |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/etf_dashboards/ETFS_SECIDX_recomme... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff data/etf_dashboards/ETFS_SECIDX_recommendations.md data/etf_dashboards/... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io D_04.client_portal_summary.py | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/SCHWAB_BUCKET_DECOMMISSI... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/etf_dashboards/ETFS_SECIDX_recomme... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff data/etf_dashboards/ETFS_SECIDX_recommendations.md data/etf_dashboards/... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/logs/2026-0... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/logs/2026-07-16/andrew_direct_49schwabconv_... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04.client_portal_summary.py | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-07-16/session_wp7_deploy_an... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/logs/2026-0... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/logs/2026-07-16/session_1418-1655Z.md | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/logs/2026-0... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/logs/2026-07-16/session_1418-1655Z.md | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inf-d04-stranded-since-0710... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/inf-d04-stranded-since-0710-aor-round8-suspect-20260716.md | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-blast | comp-blast fedobs_observe | FAIL |
+| 2026-07-16 | 3.0.0_SA_CVO | (no-TO) | comp-pulse + comp-surface-check (via safe-commit) | RV-0050 independent CVO acceptance pass: reflex CLEAN x2 (1 file vs 1,239 danger nodes, denominator printed; map 57.7h stale), surface-check OK x2. Review-window walk is raw git/awk -- NO comp-tool fronts it (standing gap since RV-0043, re-noted by RV-0050 itself); hook/gate-internal reads (halt-gate-check.sh:128, never-rules-gate.sh:205-216, safe-commit.sh:121) carried `# rail-checked:` markers -- no comp-tool fronts classifier regex. GAP FOUND: the RV series walks 2 of 13 audit logs; the 4 never-walked (MASS-DELETION, SOVEREIGN-OVERRIDE, DEPLOY-BYPASS, HALT-GATE) total 25 lines ever -- routed to CTO/SCTY. | PASS |
+| 2026-07-16 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-16/r... | PASS |
