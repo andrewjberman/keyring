@@ -19226,3 +19226,44 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-16 ~13:1xZ | 0.4.0_DS_ClientPlatform~C | doc-only dormancy fold + lane close (no code/infra change): comp-surface-check PASS (1 file, no critical surface) + comp-pulse diff risk-reflex CLEAN (denominator printed: 1 file vs 1239 danger nodes; danger map 54.7h STALE, disclosed) both auto via safe-commit; safe-deploy PASS on push ("no deploy-scope script files detected") = the MEASURED proof nothing auto-deployed to cot gold, not an intention. GAP FOUND: get_agent_status("<lane>") counts a lane's messages off a different path than inbox-watch.sh watches (reported 2, actual 3 per inbox-watch.sh:28-30,74-100 nested-dir rule) -- the missed one was the session-defining CTO dispatch; source-grounded rather than trusted.
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/snap_store.py --file... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff infra/aws/globgrph/snap_store.py infra/aws/terraform/globgrph/freshness... | FAIL |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_LCLRPO.json --file or... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_LCLRPO.json org/projects/REGISTRY.md | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/snap_store.py --file... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff infra/aws/globgrph/snap_store.py infra/aws/terraform/globgrph/freshness... | FAIL |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pipescript | comp-pipescript io B_00.canonical_holdings | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/drive_log_20260716T1349Z.md | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_LCLRPO.json --file or... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_LCLRPO.json org/projects/REGISTRY.md | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_CONSOLIDATION_PR... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_CONSOLIDATION_PRD.md | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_LCLRPO.json --file or... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_LCLRPO.json org/projects/REGISTRY.md org/tier0/ledger... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_RUNNERS_CANONICA... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff docs/architecture/OPAL_RUNNERS_CANONICAL_FORM_CASEBOOK.md | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/CASEBOOK_ENTRY5_B... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript --resource partner_analytics | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/infra-report-noise-vs-real-... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/infra-report-noise-vs-real-triage-20260716.md | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/comp_which_zero_rate_h... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_CONSOLIDATION_PR... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_CONSOLIDATION_PRD.md | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/runners_49f/c0... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/c00_account_gains.py data/assets/s... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/heatmap/object_locality.py | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/modules/heatmap/object_locality.py | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/prompt.md | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_GRAPHFEED_TO4_ZER... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/ta... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/task_orders/OPAL_ASSETS.V2-2.schwa... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | OPAL_CONSOLIDATION /drive | fabric-check + deploy_ledger (~20 ea) + aws lock/listing reads (~10) + comp-learns filing | cycles 10-37: P0 wave closed, standing release co-signed+verified, 4 ledger arcs resolved through the gate, _md_status gap filed | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-16/d... | PASS |
