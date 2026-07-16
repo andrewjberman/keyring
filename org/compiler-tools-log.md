@@ -19463,3 +19463,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-16 16:25-17:15Z 0.7.0_AE_CloudOps: curl+openssl (Eclipse vendor-identity: TLS *.orioneclipse.com + OpenAPI info self-ID), python spec-parse (493-path catalog gen + self-caught /v1-prefix false-MISSING), boto3+requests dual-host authenticated spot-check (byte-identical www vs api, JWT sent post-identity-confirm only), safe-commit (owned-paths gate BLOCKED 4 cross-lane pointer files as designed -> routed not forced). Deliverable: data/orion/api/ECLIPSE_API_V1_ENDPOINT_CATALOG.md.
 | 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/emit_fedobs_snap.py ... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-pulse | comp-pulse diff infra/aws/globgrph/emit_fedobs_snap.py infra/aws/globgrph/snap_store.py | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/orion-gold-dispat... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff data/inf/scripts/gold/orion-gold-dispatch.sh | FAIL |
+- 2026-07-16 1645-1735Z 0.8.0_AE_CloudComp~Z: comp-blast (NOT-FOUND w/ denominator -> comp-pydeps route), comp-grep (fedobs TF/Dockerfile/SQL-copy sweep), commit-gate x3 PASS, snap_store self-test 12/12, emit_fedobs_snap dry-run gate-hold; operational aws run-task exercise (949 pairs no-OOM PASS).
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
