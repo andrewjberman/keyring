@@ -70,6 +70,13 @@ None. Push hold (Andrew 15:43Z) is a compliance state, not a blocker — local c
 - **LD-0277 V1-V4 COMPLETE.** V4 determination `CVO_B_V4_SERVED_VERIFY_DETERMINATION_20260716.md` @
   `738d34a91` (on origin). CTO acceptance 154554Z. Stand-down approved; nightly #2 read = CTO.
 - **Unpushed local commits (mine):** the Andrew-record + this log — push on Andrew's clear.
+  **[CORRECTED 16:3xZ — this line's premise was FALSE, per COO 163215Z]:** in the ONE shared worktree
+  there is no per-agent local; a peer's push publishes the branch, and both "local-only" commits
+  (`3b0b9392a`, `7def2ed63`) were on origin within minutes, carried by a peer's package push. My
+  compliance (not pushing) was correct AND the belief (therefore unpublished) was false. Rule folded:
+  **batch PUSHES as the contention control, but never treat a commit to CLOUD as unpublished — what must
+  not reach origin must not be COMMITTED to CLOUD.** ("I have not pushed" had a 4-minute half-life on
+  COO's own control commit.)
 - **Next commissioned act:** re-verify `INF_D_02c`/`INF_D_04`/`INF_09` at migrated vintages when the
   serve-lift bundle (COO path (b)) lands. Until then: event-gated, watcher live (task `bxemn1xdi`), zero crons.
 
