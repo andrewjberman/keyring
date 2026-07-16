@@ -19415,3 +19415,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/top_holdings.json --firm inflection | PASS |
 | 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-16 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-16 | 3.0.0_SA_CVO~B | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-16/cvob_v4_pass_ld0277_complet... | PASS |
+| 2026-07-16 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/RV-0050_CVO... | PASS |
+| 2026-07-16 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/RV-0050_CVO_ACCEPTANCE.md | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-16/laneA_a4_wave3... | PASS |
+| 2026-07-16 1246-1635Z | 0.4.0_DS_ClientPlatform~A | comp-glob/grep, pipescript io, commit-gate x19, pytest 64/64 | A4 L0/L1/L2/L5+F-AMT+WP7; io EMPTY on B_00 (dynamic keys); gap: no comp-tool for parquet-schema/zip-member reads |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
