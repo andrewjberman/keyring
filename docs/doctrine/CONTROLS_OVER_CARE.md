@@ -52,6 +52,29 @@ was recorded PASS. It was RIGGED, NOT PASSED.*
 **A CONTROL CAN PASS BECAUSE BOTH SIDES ARE EQUALLY BROKEN.**
 *A harness compared `HEAD_FAILED` against `HEAD_FAILED` off a 404 and scored it green.*
 
+**A CONTROL THAT FAILS LOUDLY GETS FIXED. A CONTROL THAT PASSES VACUOUSLY GETS TRUSTED.**
+**And a number that is merely WRONG gets QUOTED — because nothing about a wrong number announces itself.**
+Three costumes, one shape; all three ran on 2026-07-16 and only the loud one summoned anyone:
+- **FAILED LOUD** → the RV watermark stopped advancing. Andrew noticed and spawned a CVO. *Fixed.*
+- **PASSED VACUOUS** → "Append-only integrity: PASS both logs" — both logs untracked + gitignored, in-window
+  commits `0` and `0`, so the `numstat` walk measured an **EMPTY SET AND COULD NOT FAIL**. It reported PASS
+  straight through a real in-window non-append edit. *Trusted, for weeks.*
+- **JUST WRONG** → `7` overrides "this window" was the **07-14 DAY**; the window was **10**; the review built to
+  catch exactly that carried its own third number (`6`). **Three records, three numbers, none of them right,
+  none noticing the others** — and the wrong one was spent justifying a permanent grant.
+**A wrong number has no failure mode; it has a readership.** *(CVO `3.0.0_SA_CVO`, RV-0050 F-F, 2026-07-16.)*
+
+**SCRUPULOSITY IS NOT RIGOR. IT HAS THE SAME POSTURE AND NONE OF THE CONTROLS.**
+Care that *feels* like rigor reaches for the first mechanism that confirms the worry — and never opens the log.
+**Correcting toward your anxiety is not the same as correcting toward the evidence, and it looks identical from
+the inside.** The test is not how uncomfortable the correction makes you; it is whether you ran anything.
+*COO filed a self-correction impeaching its own number via a "census that never walks the sovereign-override
+log." The number came from a walked log. The log invoked contained exactly ONE line — COO's own read event. The
+correction was built with no control at all: **the accuser never opened the file it was accusing.** A peer opened
+it; one read killed the whole thing. And the error ran the other way — the true count made the grant MORE
+justified, not less.* **A correct finding mis-applied is still a wrong record — and it is the durable kind,
+because it arrives with a citation.**
+
 **A POSITIVE CONTROL IS ONLY A CONTROL IF IT IS RUN IN ISOLATION FROM THE TARGET.**
 A control batched with the thing it is controlling for is corrupted by its own presence.
 *`simulate-principal-policy` with 2+ `--resource-arns` flips the HELD ones to `implicitDeny` — it silently
@@ -377,6 +400,19 @@ AGENT'S unsaved work — and it LOOKS read-only and reversible while being NEITH
 **A `git push` IS A DEPLOY.** `safe-deploy` is a pre-push hook. **An agent who obeys a "do not deploy" order to
 the letter — commits, pushes, never touches the AWS CLI — HAS DEPLOYED.**
 **Deploying is not a thing an agent CHOOSES to do; it is a thing that HAPPENS to them.**
+
+**AND THE COROLLARY AT THE OTHER END: YOU CAN BE PUBLISHED BY A COLLEAGUE'S PUSH, HAVING CHOSEN NOTHING.**
+`git push` pushes **THE BRANCH**, not the caller's commits. One worktree, one branch, N agents ⇒ **any** peer's
+push publishes **every** agent's local commits on it. **"I have not pushed" is therefore not a control — it is a
+hope, and its measured half-life is four minutes.**
+*2026-07-16: COO wrote "this log is LOCAL-ONLY until 16:30Z" INSIDE the commit message of `9825431c9` (16:18:59Z)
+and did not push. At 16:24:30Z `git push` returned "Everything up-to-date" — DS~A's honest 16:23:07Z
+package-close push had already published it, along with CVO~B's Andrew-record. DS~A obeyed the push binding
+perfectly and chose none of it.*
+**THE CONTENTION CONTROL SURVIVES; THE PROMISE DOES NOT.** Batching PUSHES is real (fewer operations ⇒ fewer
+ref-lock races ⇒ nobody reaching for `--force` or a rebase to "fix" one). But **publication control is COMMIT
+control**: if it must not reach origin, it must not be **committed** to the shared branch — keep it uncommitted
+or on a scratch branch. **A hold that the estate can break without consulting you was never yours to give.**
 
 ---
 
