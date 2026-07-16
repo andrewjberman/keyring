@@ -55,21 +55,40 @@
 # the LD-0082 self-tick loop set below is RETIRED. The fabric is now fully event-driven
 # (persistent inbox Monitor) with ZERO loops armed at launch (LD-0175, Andrew direct:
 # "I don't want any loops initiated at launch ... if I want a loop to run, I will
-# initiate the looped skill"). EXCEPTION (Andrew-direct 2026-06-18): the COO
-# AUTO-ARMS /drive at launch -- the COO is the primary operational driver, so the
-# ZERO-loops rule does NOT apply to the COO's /drive. Per-role posture now:
+# initiate the looped skill").
+#
+# SUPERSESSION-2 (LD-0288/0289/0293, Andrew-direct 2026-07-13/14): the COO /drive
+# auto-arm carve-out (LD-0204, 2026-06-18) is RETRACTED and was DELETED from org/XXX.md
+# at 014de1937. THERE IS NOW NO STANDING EXCEPTION TO THE ZERO-CRONS RULE -- not even the
+# COO's. The COO coordinates and routes; he does not re-drive the estate.
+#   >> THIS LAUNCHER ENFORCED THE RETRACTED CARVE-OUT FOR ~2 DAYS AFTER ITS DELETION
+#   >> (found 2026-07-16 ~14:4xZ by 2.0.0_SA_COO, whose own launch prompt cited the dead
+#   >> LD-0204 as live authority). A RETRACTED RULE IS ONLY AS DEAD AS ITS LAST-SURVIVING
+#   >> COPY: deleting it from XXX.md did not delete it here, and this file is what a fresh
+#   >> session reads FIRST. Same class as 0.4.0_DS's prompt.md retracted-hold correction
+#   >> (454c816ec). Do not re-add a loop carve-out here from memory or an older copy.
+#
+# DESIGN RULE (why this file no longer names a cadence): a SCOPED, TIME-BOUNDED loop
+# authorization lives ONLY in the org/XXX.md Step 1b-F role row, which carries its stop
+# condition and its date. If this launcher hardcoded one, it would keep arming the loop
+# after the authorization expired -- re-acquiring the exact bug above. The launcher states
+# the standing law and DEFERS; XXX.md 1b-F is the single source of truth.
+#
+# Per-role posture now:
 #   - /watcher: arm-at-load ONCE, NOT a cron (LD-0166). No serial arms a /watcher cron.
 #   - /work (all workers) + /ws-charter (ws CTO): RETIRED to ad-hoc (LD-0157).
-#   - /drive (COO): AUTO-ARMED at launch (Andrew-direct 2026-06-18, carve-out to
-#     LD-0175 -- the COO is the primary operational driver; /drive runs by default,
-#     20m cron). All OTHER loops remain ad-hoc; only the COO's /drive is exempt.
+#   - /drive (COO): NOT auto-armed. OFF by default (LD-0288/0289/0293). Any live scoped
+#     authorization is read from org/XXX.md 1b-F at startup, honored to its stop
+#     condition, and turned off when that condition reads true.
 #   - /mstr-review (MSTR) + /spot-check (both CVOs): RETIRED to ad-hoc (LD-0164).
 #   - /cl-charter (CL CTO) + /verify-channel (both CVOs) + /case-find (CL CVO):
 #     RETIRED to ad-hoc (LD-0175).
-#   - Standing crons armed at launch: NONE. Every loop is Andrew/operator-initiated
-#     on demand; skills retain their loop bodies when invoked.
+#   - Standing crons armed at launch: NONE, for every serial. Every loop is
+#     Andrew/operator-initiated on demand; skills retain their loop bodies when invoked.
 #   - Workers announce blocks via broker STATUS (WORKING:/IDLE:/BLOCKED:), NOT a
-#     [BLOCKED-ASK] polling-announce -- COO /drive (AUTO-ARMED at launch) is the tick driver.
+#     [BLOCKED-ASK] polling-announce. THERE IS NO CENTRALIZED TICK: blocked-agent
+#     discovery is event-driven, and COO/CTO run /fabric-check + /stimulus-scan ad hoc,
+#     on signals rather than on a timer.
 # Original LD-0082 design notes (historical): Q1 per-skill CronCreate; Q2 /watcher
 # cron for MSTR+COO; Q3 /stimulus-scan retired; Q4 /verify-channel 2h; Q5 /case-find
 # chains /case-mgmt; Q6 /comp-ferry event-triggered; Q7 /work 20m uniform.
@@ -80,20 +99,20 @@ function Get-AgentLoopDirective {
     # Strip tilde-lane suffix for role detection.
     $base = $Serial -replace '~[A-Za-z0-9]+$', ''
 
-    $header = "Loop arming (LD-0157/0164/0166/0175 -- ALL self-tick loops retired; ZERO crons armed at launch, SOLE EXCEPTION = the COO /drive carve-out (LD-0204, Andrew-direct 2026-06-18); /watcher arms ONCE at load, NOT a cron):"
+    $header = "Loop arming (LD-0157/0164/0166/0175 + LD-0288/0289/0293 -- ALL self-tick loops retired; EVERY serial arms ZERO crons at launch, INCLUDING the COO: there is no standing exception. /watcher arms ONCE at load and is NOT a loop. A SCOPED, TIME-BOUNDED loop authorization (if one is live) is recorded in org/XXX.md Step 1b-F -- that row is the ONLY source of truth; this launcher never carries one):"
 
     switch -Regex ($base) {
         '^0\.0\.0_AB_MSTR$' {
             return "$header`n  MSTR -- arms ZERO crons (LD-0164 + LD-0166).`n  1. Run /watcher ONCE (arm-at-load; no /watcher cron).`n  2. Run /mstr-review ONCE at startup as an ad-hoc pass (LD-0164 -- no 12h cron).`n  Event-triggered: /mstr-spawn, /mstr-kill, /mstr-charter, /comp-ferry, /govern (Andrew-discretion, LD-0147), embedded LD ratification."
         }
         '^1\.0\.0_SA_CTO$' {
-            return "$header`n  ws CTO -- arms ZERO crons (LD-0157).`n  1. Run /watcher ONCE (arm-at-load).`n  /ws-charter is AD-HOC -- run it when you have charter work, not as a loop. Event-driven: Andrew directives + CVO findings via the Monitor; COO /drive is the centralized tick driver. Event-triggered: REPAIR-AMENDMENT scribes (gated on CVO finding)."
+            return "$header`n  ws CTO -- arms ZERO crons (LD-0157).`n  1. Run /watcher ONCE (arm-at-load).`n  /ws-charter is AD-HOC -- run it when you have charter work, not as a loop. Event-driven: Andrew directives + CVO findings via the Monitor. THERE IS NO CENTRALIZED TICK -- /drive is OFF by standing order (LD-0288/0289/0293); run /fabric-check + /stimulus-scan ad hoc, on signals, not on a timer. Event-triggered: REPAIR-AMENDMENT scribes (gated on CVO finding)."
         }
         '^1\.1\.0_SA_CTO$' {
             return "$header`n  CL CTO -- arms ZERO crons (LD-0175, Andrew direct 2026-06-10).`n  1. Run /watcher ONCE (arm-at-load).`n  /cl-charter is AD-HOC -- run it when you have CL charter / queue-pull work, not as a launch loop. Event-driven: CL queue items + Andrew directives via the Monitor. If a stale /cl-charter cron exists from a prior session, CronList->CronDelete it."
         }
         '^2\.[01]\.0_SA_COO$' {
-            return "$header`n  COO -- EXCEPTION to the ZERO-crons header: the COO is the PRIMARY OPERATIONAL DRIVER and ARMS /drive at launch (Andrew-direct 2026-06-18, carve-out to LD-0175). Reactive-only (just answering the inbox) is the failure this fixes.`n  1. Run /watcher ONCE (arm-at-load; no /watcher cron -- LD-0166).`n  2. Run /drive -- arms the 20m recurring cron + runs one cycle NOW. /drive is the proactive driver: each cycle runs fabric-check + the embedded agent-state/stimulus scan, dispatches EVERY idle agent, SPAWNS agents we need via respawn-request to MSTR (do NOT defer the spawn to Andrew), tracks TO completion + RAVC2, and polices the registry for zombies. 'All standing by' is a /drive GATE FAILURE, never a valid terminal state. Stop only on an explicit Andrew /drive off."
+            return "$header`n  COO -- arms ZERO crons (LD-0288/0289/0293, Andrew-direct standing). /drive is OFF by default. The COO COORDINATES and ROUTES; he does NOT re-drive the estate, and the old 'PRIMARY OPERATIONAL DRIVER' auto-arm carve-out (LD-0204) was DELETED from org/XXX.md at 014de1937 -- do not reinstate it from memory or from an older launcher/prompt copy.`n  1. Run /watcher ONCE (arm-at-load; no /watcher cron -- LD-0166).`n  2. DO NOT arm /drive from this launcher. READ the org/XXX.md Step 1b-F COO row: if a SCOPED, TIME-BOUNDED /drive authorization is live there, it states its own cadence AND its stop condition -- honor both, and turn /drive OFF the moment the stop condition reads true. If that row carries no live scoped authorization, arm nothing.`n  WHY THIS IS NOT A NICETY: /drive's own gate treats 'all standing by' as a GATE FAILURE, so it is structurally unable to conclude 'dispatch nothing'. Armed during a dispatch hold it is obligated to break the hold on a timer, reasoning correctly from a stale mandate. Dispatch authority during a hold belongs to the GO-issuing owner, never to a timer."
         }
         '^3\.0\.0_SA_CVO$' {
             return "$header`n  ws CVO -- arms ZERO crons (LD-0175, Andrew direct 2026-06-10; /spot-check + /verify-channel both AD-HOC).`n  1. Run /watcher ONCE (arm-at-load).`n  /verify-channel + /spot-check: run on-demand / at closeout-class signals -- NOT a launch cron. If a stale /verify-channel or /spot-check cron exists from a prior session, CronList->CronDelete it."
@@ -102,13 +121,13 @@ function Get-AgentLoopDirective {
             return "$header`n  CL CVO -- arms ZERO crons (LD-0175, Andrew direct 2026-06-10; /spot-check + /verify-channel + /case-find all AD-HOC).`n  1. Run /watcher ONCE (arm-at-load).`n  /verify-channel + /case-find + /spot-check: run on-demand -- NOT launch crons. If a stale cron for any exists from a prior session, CronList->CronDelete it."
         }
         '^0\.[0-9]+\.[0-9]+_AE_CloudOps(~[A-Za-z0-9]+)?$' {
-            return "$header`n  AE_CloudOps lane (ws fabric) -- arms ZERO crons (LD-0157; event-driven).`n  0. FIRST after /watcher: invoke /cloud-ops once to load operational reference + permissions profile + current CLAUDE.md Rules 1-19 cross-reference + LD-cycle pointers + pipeline/bucket/secrets/KMS inventory (skill at .claude/skills/cloud-ops/SKILL.md). Not a cron -- session-orient one-shot.`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate (WORKING:/IDLE:/BLOCKED:) so COO /drive finds blocks. /work is AD-HOC (off-cycle pass if useful)."
+            return "$header`n  AE_CloudOps lane (ws fabric) -- arms ZERO crons (LD-0157; event-driven).`n  0. FIRST after /watcher: invoke /cloud-ops once to load operational reference + permissions profile + current CLAUDE.md Rules 1-19 cross-reference + LD-cycle pointers + pipeline/bucket/secrets/KMS inventory (skill at .claude/skills/cloud-ops/SKILL.md). Not a cron -- session-orient one-shot.`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate (WORKING:/IDLE:/BLOCKED:) so COO/CTO find blocks (escalate blockers by MCP too -- /drive is OFF by standing order, so there is no timer that will come find you). /work is AD-HOC (off-cycle pass if useful)."
         }
         '^0\.8\.0_AE_CloudComp(~[A-Za-z0-9]+)?$' {
-            return "$header`n  AE_CloudComp lane (ws fabric tester for CL compiler tools) -- arms ZERO crons (LD-0157; event-driven).`n  0. FIRST after /watcher: invoke /cloud-ops once to load operational reference (you do cloud-ops-class work testing compilers on real ws workload).`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate so COO /drive finds blocks. /work is AD-HOC. Read MSTR queue at org/mcp/comp_ferry_queue.json for ferry test scheduling context."
+            return "$header`n  AE_CloudComp lane (ws fabric tester for CL compiler tools) -- arms ZERO crons (LD-0157; event-driven).`n  0. FIRST after /watcher: invoke /cloud-ops once to load operational reference (you do cloud-ops-class work testing compilers on real ws workload).`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate so COO/CTO find blocks (escalate blockers by MCP too -- /drive is OFF by standing order, so there is no timer that will come find you). /work is AD-HOC. Read MSTR queue at org/mcp/comp_ferry_queue.json for ferry test scheduling context."
         }
         '^0\.[0-9]+\.[0-9]+_(DS|AE|DE|DT|RD)_' {
-            return "$header`n  Tier-2/3 worker (ws fabric) -- arms ZERO crons (LD-0157; event-driven).`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered dispatches/TOs as they arrive; keep broker STATUS accurate (WORKING:/IDLE:/BLOCKED:) so COO /drive finds blocks. /work is AD-HOC (off-cycle pass if useful)."
+            return "$header`n  Tier-2/3 worker (ws fabric) -- arms ZERO crons (LD-0157; event-driven).`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered dispatches/TOs as they arrive; keep broker STATUS accurate (WORKING:/IDLE:/BLOCKED:) so COO/CTO find blocks (escalate blockers by MCP too -- /drive is OFF by standing order, so there is no timer that will come find you). /work is AD-HOC (off-cycle pass if useful)."
         }
         '^1\.[0-9]+\.[0-9]+_DS_CompLearns(~[A-Za-z0-9]+)?$' {
             return "$header`n  CL Tier-2 DS (CompLearns) -- arms ZERO crons (LD-0157; event-driven).`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate so CL COO finds blocks. /work is AD-HOC."
