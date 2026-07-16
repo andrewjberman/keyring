@@ -19304,3 +19304,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/absence-config.json infra/aws/terraform/opal-assets... | PASS |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/SILENT_MISS_CLASS_THE... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-16/andrew_direct_... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/ref/COO_LOOP_OPS.md --file org/tier... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/ref/COO_LOOP_OPS.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-16/and... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-glob | comp-glob *eclipse* data/ | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io convert_eclipse_portfolios_to_silver.py | WARN |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-grep | comp-grep opal-assets-ingest-mirror-inf | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_LCLRPO.json --file or... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_LCLRPO.json org/tier0/ledger/LD-0300.md | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform~B/lo... | PASS |
