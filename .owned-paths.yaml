@@ -49,7 +49,7 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
-    description: "The fabric's AUDIT EVIDENCE BASE (org/audit/archive/**) -- immutable dated snapshots of the override, ledger, comp-rail, mass-deletion, sovereign-override, deploy-bypass and halt-gate logs. Andrew-directed 2026-07-13 (MSTR RV-0049): ALL of them were UNTRACKED -- local-only, unreviewable by any other agent, and erased by a fresh clone or a dead disk, with their ABSENCE INDISTINGUISHABLE FROM 'no overrides ever happened'. MSTR is on this lane because OVERRIDE_REVIEW is his instrument and he must be able to archive the evidence he is required to walk; the execs are on it so a second party can. NOT world-writable: this is tamper-sensitive evidence, and a log anyone may rewrite is not a log. The LIVE logs stay gitignored (ten agents append continuously; a tracked append-only file conflicts on every pull, forever) -- we track only the SNAPSHOT, which is a new file each time and can never conflict. Added 2026-07-13 by ws CTO."
+    description: "The fabric's AUDIT EVIDENCE BASE (org/audit/archive/**) -- immutable dated snapshots of the override, ledger, comp-rail, mass-deletion, sovereign-override, deploy-bypass and halt-gate logs. Andrew-directed 2026-07-13 (MSTR RV-0049): ALL of them were UNTRACKED -- local-only, unreviewable by any other agent, and erased by a fresh clone or a dead disk, with their ABSENCE INDISTINGUISHABLE FROM 'no overrides ever happened'. MSTR is on this lane because OVERRIDE_REVIEW is his instrument and he must be able to archive the evidence he is required to walk; the execs are on it so a second party can. NOT world-writable: this is tamper-sensitive evidence, and a log anyone may rewrite is not a log. The LIVE logs stay gitignored (ten agents append continuously; a tracked append-only file conflicts on every pull, forever) -- we track only the SNAPSHOT, which is a new file each time and can never conflict. Added 2026-07-13 by ws CTO. AMENDED 2026-07-16 by ws CTO (RV-0050 F-A): the 'LIVE logs stay gitignored' clause is NARROWED -- its rationale is true for the HIGH-CHURN logs only (git-author-override ~589 lines/day incl. safe-commit's own mid-commit append; ledger-hook ~413/day) and those stay snapshot-only; the FOUR rare bypass-class logs (mass-deletion, sovereign-registry-override, safe-deploy-bypass, halt-gate-override: 25 lines / 4,295 bytes across ALL history, measured 2026-07-16 by CVO + 0.7.0~B independently, no commit-path writer) are TRACKED LIVE as of 2026-07-16 -- four explicit path rules below + four explicit .gitignore un-ignores. The 07-13 blanket was correct reasoning applied to the wrong population, and it is WHY the four stayed invisible (0.7.0~B's triply-orphaned finding). Also on the record: org/audit/archive/ holds exactly ONE snapshot (2026-07-13T144931Z) -- the snapshot cadence was never kept; cadence ownership rides the SCTY foundation cell."
 
   TIER0_TIER1_STARTUP_DOCS:
     permitted_agents:
@@ -669,6 +669,24 @@ paths:
   "org/audit/**":
     lane: GOVERNANCE_AUDIT
     note: "Immutable dated snapshots of the audit trail. TRACK BEFORE YOU CLEAN -- deleting from an untracked file is unrecoverable, and this snapshot is what makes Andrew's phantom-override cleanup provably lossless."
+  # The four LIVE bypass-class audit logs -- TRACKED as of 2026-07-16 (CTO ruling, RV-0050 F-A; see the
+  # GOVERNANCE_AUDIT lane description amendment). These were TRIPLY ORPHANED (0.7.0~B, 2026-07-16):
+  # git-invisible (.gitignore *.log), lane-UNDEFINED (no path rule -- closed here), never walked
+  # (RV-0050: the review series read 2 of 13 logs). Rare appends only (25 lines all-history); when a
+  # gate append needs landing, a GOVERNANCE_AUDIT member commits it (or the writer uses the audited
+  # override) -- refinable at the SCTY foundation cell if friction is ever measured.
+  "org/mass-deletion-audit.log":
+    lane: GOVERNANCE_AUDIT
+    note: "LIVE mass-deletion gate audit log -- tracked 2026-07-16 (RV-0050 F-A)."
+  "org/safe-deploy-bypass-audit.log":
+    lane: GOVERNANCE_AUDIT
+    note: "LIVE safe-deploy bypass audit log -- tracked 2026-07-16 (RV-0050 F-A). Known format defect: actor=UNKNOWN on all 3 historical entries; writer patch at CTO gate (0.7.0~B proposes, copying halt-gate's agent= format)."
+  "org/halt-gate-override-audit.log":
+    lane: GOVERNANCE_AUDIT
+    note: "LIVE halt-gate override audit log -- tracked 2026-07-16 (RV-0050 F-A). Line 1 is a TEST_SERIAL fixture: append-only integrity beats tidiness -- censuses over this log filter agent=TEST_SERIAL; the line stays."
+  "org/mcp/sovereign-registry-override-audit.log":
+    lane: GOVERNANCE_AUDIT
+    note: "LIVE sovereign-registry unfiltered-read audit log -- tracked 2026-07-16 (RV-0050 F-A). Overrides the org/mcp/** catch-all per longest-match-wins."
 
   "org/tier0/CONSTITUTION.md":
     lane: TIER0_LAW
