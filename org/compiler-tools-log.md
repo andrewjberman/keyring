@@ -19470,3 +19470,32 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-16 1645-1735Z 0.8.0_AE_CloudComp~Z: comp-blast (NOT-FOUND w/ denominator -> comp-pydeps route), comp-grep (fedobs TF/Dockerfile/SQL-copy sweep), commit-gate x3 PASS, snap_store self-test 12/12, emit_fedobs_snap dry-run gate-hold; operational aws run-task exercise (949 pairs no-OOM PASS).
 | 2026-07-16 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.8.0_AE_CloudComp~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/CONTROLS_OVER_CARE.md | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff docs/doctrine/CONTROLS_OVER_CARE.md | FAIL |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04.client_portal_summary.py | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file .owned-paths.yaml | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .gitignore .owned-paths.yaml | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/halt-gate-override-audit.log --file... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/halt-gate-override-audit.log org/mass-deletion-audit.log org/mcp/so... | FAIL |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_PLATFORM_D3_orio... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/DATA_PLATFORM_D3_orion_eclipse_arch_spec.md | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/API/AUTHENTICATION.md --file d... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff data/inf/API/AUTHENTICATION.md data/inf/API/domains/eclipse/DOMAIN.md d... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0050.md | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/reviews/RV-0050.md | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md --file docs/briefs/mdpf-revam... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff CLAUDE.md docs/briefs/mdpf-revamp-audit-brief-20260716.md org/projects/... | FAIL |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/NFRA_INFRPT_V2_PRD-draft-20... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/NFRA_INFRPT_V2_PRD-draft-20260716.md | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/runners_49f/c0... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/c01_account_performance.py data/as... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/audit/archive/2026-07-16T175907Z/or... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/audit/archive/2026-07-16T175907Z/org_git-author-override-audit.log ... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/.unind... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/.open_deploys/.unindexed_red_state.json org/critical... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0292.md | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0292.md | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | SCTY/INFRPT + F-A/RV-0050 | comp-grep x4 + simulate-principal-policy (2-arm ISOLATED) + git check-ignore/cat-file + python parse | 122/122 HIGH decomposed (102 AWS-managed Resource:* + 11 impossible DDB "encryption not enabled" -> ~5 real); comp-grep source-confirmed the ADVI_INFREF 06-30 repoint, the config.py:8 missing `opal-` prefix, and ZERO invokers on org/audit/archive; THE FAILED POSITIVE CONTROL on trade-submission-lambda-role is what caught the phantom table (target-alone would have confirmed the AI's wrong fix); cat-file -e origin/CLOUD adopted as the durable criterion over git ls-files (index != HEAD) | PASS (4 of my own hypotheses killed by live checks; 2 safe-commits BLOCKED by owned-paths and NOT overridden) |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
