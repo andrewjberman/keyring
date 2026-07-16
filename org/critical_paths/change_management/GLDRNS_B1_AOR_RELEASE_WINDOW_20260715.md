@@ -1,6 +1,17 @@
 # DEPLOY-COMPLETION LEDGER — GLDRNS.B1 AoR RELEASE WINDOW (opened 2026-07-15 22:42Z)
 
-**Status: OPEN — closes only with the chokepoint RE-ARMED (NEVER#6 + COO condition: the safety back = closed)**
+**Status: 🟢 CLOSED 2026-07-16 04:12Z — the chokepoint RE-ARMED AND LIVE-VERIFIED (v1.7.92, RELEASE ABSENT;
+CTO 041210Z), the close condition met. THE WINDOW DELIVERED: 7 runs (3 pre-stamp aborts, every one a guard
+being RIGHT; 2 instrumented reproductions that earned their evidence; the true-baseline run; the finishing
+run) -> THE STAMP LANDED 03:51:11Z on the co-signed numbers -> THE SPINE SERVES noel_soderblom
++$8,401,521.22 TO THE CENT, phantom GONE, Patrick's $52,604.80 HOME, sum==firm==$133,154,794.23,
+data_as_of 07-09 -> 07-14 -> the exclusion oracle CLEAN (0 held keys touched / 4,290 changed+new / 0
+deletions; all 3 pins byte-identical). VINTAGE DISCLOSURE to Andrew with the magnitudes: sent in the same
+breath (CTO live + this durable record). Residual carried to the debt list: the 14-account/$439,326.22
+feed-absent at-risk register (ALARM-not-RAISE, by design; closes with the roster-derivation refactor) +
+the vacuous on-runner .013 gate + dead-code check_freshness + the call-site-census deploy law (STNDRD fold).
+Also delivered en route: the bronze feed REVIVED (first current txn silver since 07-10), persistent shipped
+chain logs (no death unreadable again), the recursive collision census as the standing pre-flight.**
 **Owner: 0.4.0_DS_ClientPlatform~B · Authority: Andrew sovereign GO verbatim x2 @ aab5f21d5 · CTO gate-owner
 confirmation 224747Z · COO both-halves co-sign 225320Z/225340Z (AMEND-48 conditions verbatim) · Door-5 open by
 0.7.0 225853Z (their ledger closed 22:58Z)**
