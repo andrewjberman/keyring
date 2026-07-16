@@ -668,7 +668,7 @@ paths:
   # rarest acts, which is exactly why they were forgotten and exactly why they matter most.
   "org/audit/**":
     lane: GOVERNANCE_AUDIT
-    note: "Immutable dated snapshots of the audit trail. TRACK BEFORE YOU CLEAN -- deleting from an untracked file is unrecoverable, and this snapshot is what makes Andrew's phantom-override cleanup provably lossless."
+    note: "Immutable dated snapshots of the audit trail. TRACK BEFORE YOU CLEAN -- deleting from an untracked file is unrecoverable, and this snapshot is what makes Andrew's phantom-override cleanup provably lossless. CADENCE STATE (CTO 2026-07-16): snapshots exist for 2026-07-13 + 2026-07-16 ONLY -- do not read two entries as a working cadence (a second data point makes a dead cadence look alive, 0.7.0~B). INTERIM PRACTICE: manual snapshot at any exec's package close, VALID UNTIL 2026-07-23 -- after that date the absence of an automated invoker is ITSELF A FINDING (no suppression without an expiry). Invoker design owned by 0.7.0~B at CTO gate; the alarm must fire on now()-max(snapshot timestamp), NEVER on existence or count -- an existence check passes forever after snapshot #1, a count check after #2; only age can fail, and a check that cannot fail is not a check."
   # The four LIVE bypass-class audit logs -- TRACKED as of 2026-07-16 (CTO ruling, RV-0050 F-A; see the
   # GOVERNANCE_AUDIT lane description amendment). These were TRIPLY ORPHANED (0.7.0~B, 2026-07-16):
   # git-invisible (.gitignore *.log), lane-UNDEFINED (no path rule -- closed here), never walked
