@@ -19214,3 +19214,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | (none) | 1210-1305Z window: pure MCP coordination (WP6/WP7 numbering + 0.6.2 correction) -- no code/infra motion; builds carry their own checks on TO | N/A-OK |
 | 2026-07-16 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/COT_GLDRNS_C1_FIX... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/v22b-m... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/.open_deploys/v22b-meta-pulls-grant.json org/critica... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/OPAL_GLDRNS.A4.wav... | PASS |
+| 2026-07-16 13:1xZ | 3.0.0_SA_CVO~B | none -- record-closure window (one det-#5 annotation commit + RAVC traffic); commit-gate/comp-pulse rode safe-commit automatically, CLEAN | V4 armed on the first post-cutover nightly (CTO 130604Z) |
+| 2026-07-16 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 3.0.0_SA_CVO~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-16/c... | PASS |
