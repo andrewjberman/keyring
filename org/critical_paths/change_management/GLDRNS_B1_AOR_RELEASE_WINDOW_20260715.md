@@ -110,6 +110,21 @@ reads **1,257 rows re-keyed / noel +$8,401,521.22 / joe +$7,384,568.89 / patrick
 peter −$18,744,660.92 / iwm −$490,183.56 / conservation −0.00 / phantom unmoved** — THE TRUE A1-BACKFILL
 NUMBERS, superseding the pre-fold trio as the preview bar (co-read to pre-register before resumption).
 
+**BAR RE-REGISTRATION (CTO governance precision 005003Z — TWO COMPUTATIONS, TWO BASES, discriminated so the
+record can never read as a moved goalpost):**
+- **The OLD preview trio** (joe −$2.1M / peter +$1.6M / patrick +$1.03M) was the **PRE-FOLD, TIME-LOCK-ONLY
+  prediction** — the correction of the 07-08 transfer's nightly-rewrite, computed BEFORE Andrew's A1-backfill
+  ruling existed. It was the never-widen half's named basis (225320Z). It is NOT wrong; it answers a
+  question the ruled computation no longer asks.
+- **The ARM-2 numbers** (noel +$8,401,521.22 / joe +$7,384,568.89 / patrick +$3,448,754.37 /
+  peter −$18,744,660.92 / iwm −$490,183.56; conservation −0.00; changed_rows 1,257 == the 164 mover
+  accounts' historical rows; phantom present-and-unmoved at the preview instrument) are the **RULED A1
+  BACKFILL over the TRUE baseline** — the computation Andrew's "we backfill the first available AoR"
+  actually commands. **$18.7M moving off peter's history is a magnitude the signatories see, not inherit:**
+  COO's FRESH signature is asked explicitly on these numbers (CTO's ask in flight); Andrew's fork word
+  carries the magnitudes. The served-spine bar is OTHERWISE UNCHANGED (phantom GONE / Patrick's $52,604.80
+  home / noel present / sum ties to the cent / the three-leg exclusion oracle).
+
 **RESUMPTION SHAPE (window closes clean if Andrew's word is not tonight; resumes on his word):**
 (i) HELD script: bank + empty the ledger (revert = one sync back, printed in the script's own output) ->
 (ii) CTO flip -> gold-a re-run (resolver seeds the true baseline via first_run; dims re-derive) ->
