@@ -275,3 +275,16 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   DECIDE, don't leave the WARN-skip. check_freshness: retire or re-point its reference artifacts.
 - resolution: OPEN -- CTO-filed post-incident 2026-07-16 ~00:21Z; NOT touched mid-window (guard-state
   change rule). Route: DS~B refactor lane (the dispatch is theirs under B1) or the STNDRD deploy standard.
+
+## [OPEN] instrument-gap -- comp-state REGROW row dating is blind to same-count edits  (filed 2026-07-16, CTO)
+<!-- key: instrument-gap|comp-state regrow pickaxe same-count blind -->
+- disposition: state_scan.py dates a REGISTRY row via `git log -S<code>` (pickaxe), which fires only when
+  the OCCURRENCE COUNT of the code changes. A row-content rewrite that keeps the count identical (the
+  2026-07-16 670452627 reconcile: window-OPEN text -> CLOSED-STAMPED text, code appears only in the row's
+  first cell, untouched) is INVISIBLE -- the row then reads BEHIND forever against newer evidence even
+  though it is current. Found by exercising protocol rule 7 (convergence) on the reconcile's own fix.
+- value evidence: a reconcile that cannot converge trains agents to ignore convergence failures -- the
+  check dies as a control.
+- fix shape: date REGROW rows by the REGISTRY.md file's last commit intersected with a line-range blame
+  for the row, or fall back to blame on the row's first cell; pickaxe stays as the fast path.
+- resolution: OPEN -- CTO-filed 2026-07-16 ~12:15Z.
