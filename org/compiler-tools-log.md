@@ -19518,3 +19518,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (ad-hoc P0 INF_D_04) | comp-pipescript | io INF_D_04 (blast radius PASS; WRITES glob over-matched INF_09 base artifact -- gap logged) + deployed filter no inf coverage (FAIL, fell back to GET-compare) | PARTIAL |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/cr... | PASS |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/critical_paths/change_management/20260716... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/audit-archive-invoker-spec-... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/audit-archive-invoker-spec-20260716.md | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/mcp/.last-drive-2.0.0_SA_COO | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff CLAUDE.md | FAIL |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/bd-exp... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/.open_deploys/bd-exporter-monolith-schwab-read.json ... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform~B/deliverables/ECLIPSE_HISTORY... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (ad-hoc eclipse _history GO) | (none) | one-shot vendor window pull; no comp-tool models the Eclipse surface; raw inspections rail-checked | SKIPPED |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
