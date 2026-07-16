@@ -19361,3 +19361,20 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/c02_client_performance.py data/ass... | PASS |
 | 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-16/p... | PASS |
+| 2026-07-16 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/RV-0050_CVO... | PASS |
+| 2026-07-16 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/RV-0050_CVO_ACCEPTANCE.md | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/WP7_CONVERTER_REP... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum --help | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum summary | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum page InflectionInsightsPanel | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform~B/deliverables/ECLIPSE_ENDPOIN... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript model-portfolios | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file archive/2026-07/analysis/bd_bronze_silv... | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff archive/2026-07/analysis/bd_bronze_silver_pipeline_diagram_gen.py archi... | FAIL |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript model-portfolios | PASS |
+- 2026-07-16 14:25-16:15Z 0.7.0_AE_CloudOps: comp-grep/glob x14 (resource-address + dependency grounding), deploy_ledger 2 ledgers open+close, terraform plan/safe-apply x3 targeted (twin 1/0/0, globgrph 2/4/1 w/ dependency-census fix, 17a 1/0/0 all 0-diff), simulate-principal-policy WITH context-entries (PutMetricData mode-2 retraction), commit-gate caught 4 ruff fixes, risk-reflex HOLD read+cleared, aws primitives (APPLIED-truth + 17a deny behavioral exercise w/ isolated positive control).
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
