@@ -19402,3 +19402,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-16 16:3xZ 1.0.0_SA_CTO: WP7 seam + MDPF_REVAMP audit window: comp-which (routed), pipescript (--list + model-portfolios thread, 2 orphan flags), comp-cache map (the MP page's full query-key census), raw-aws rail-checked (gold-DDB TF+emitter reads, per-firm served artifact listings).
 | 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-16/s... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/header_metrics.json --firm inflection | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/partner_analytics_monthly.json --firm inflection | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/dashboard.json --firm inflection | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/client_directory.json --firm inflection | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/fee_efficiency.json --firm inflection | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/timeseries_chart.json --firm inflection | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/leaderboard.json --firm inflection | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/firm_concentrations.json --firm inflection | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1 (P2+OOM-RCA) | snap_store 10/10 + run-task DDL x2 + StaticTable independent-counts + run_id-cardinality root-cause + fedobs_observe coevolution SQL read | P2 fired (code_heat_snap 24,101 + fedobs_coverage_snap 7 lake-verified); coevolution OOM root-caused SEMANTIC (graph_head run_id = 56,115 = 1.57B pairs), fix source<>graph_head | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/clients_tab.json --firm inflection | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/top_holdings.json --firm inflection | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
