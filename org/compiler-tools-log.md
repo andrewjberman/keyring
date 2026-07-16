@@ -19319,3 +19319,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_LCLRPO.json org/tier0/ledger/LD-0300.md | PASS |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform~B/lo... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/code_heat_emit.py --... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff infra/aws/globgrph/code_heat_emit.py infra/aws/globgrph/emit_fedobs_sna... | FAIL |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0299.md | PASS |
+| 2026-07-16 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0299.md | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/freshness_... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff infra/aws/terraform/globgrph/freshness_alarm.tf | FAIL |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | SCTY/INFRPT (Andrew-direct) | comp-which + comp-grep x5 + lib/trading_calendar + simulate-principal-policy (3-arm) | infra-report triage: comp-grep found the CVO prior-art + the 20-ref/0-caller manifest denominator + the ADVI_INFREF 06-30 repoint (raw grep -rn TIMED OUT at 120s -- Rule 21 earned it); trading_calendar discharged NEVER#1 before any staleness call; IAM battery (1 ARN/call, positives ISOLATED) proved monitor is implicitDeny on opal-data-cot vs allowed on portal-v2 + inf | PASS (comp-which PARTIAL: near-tie x3, no cell for "where is the source of X" -> correctly declined to guess, routed to comp-grep) |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
