@@ -64,6 +64,21 @@ Three costumes, one shape; all three ran on 2026-07-16 and only the loud one sum
   none noticing the others** — and the wrong one was spent justifying a permanent grant.
 **A wrong number has no failure mode; it has a readership.** *(CVO `3.0.0_SA_CVO`, RV-0050 F-F, 2026-07-16.)*
 
+**AND THE UNCOMFORTABLE COROLLARY: THE THING THAT ACTUALLY WORKED HAS NO GATE BEHIND IT.**
+Every catch on 2026-07-16 ran through the same uninstrumented path — **somebody read the thing and checked**:
+the wrong-key `0` (read the artifact's real schema), the `'*'` wildcard misread as *"1 member, not permitted"*
+(read the value behind the verdict), the retracted LD-0204 carve-out (read the authority before obeying it),
+the day-quoted-as-window (a peer opened the log the accusation named), the `trn_nna` gap (read the box's actual
+output leg-by-leg instead of accepting *"the box does it"*). **Not one was caught by a gate.**
+*And the gate that looked like it fired did not: a peer's `STOP --` was the bare English word, not the `[STOP]`
+token — `halt-gate-check.sh:128` requires literal brackets, so nothing classified and nothing hard-blocked. The
+record was stopped by being READ. Crediting the token would have been the very error under correction:
+**attributing an outcome to a mechanism that was not involved.** The peer got the proportionality right by
+accident — brackets would have hard-blocked a whole lane over a documentation error.*
+**Do not let a near-miss be written up as a gate working.** A gate that did not run gets no credit, and an
+instrument that was not consulted gets no blame. **Write down which one actually caught it** — because the
+estate will fund the mechanism the story names, and today the story's true subject was reading.
+
 **SCRUPULOSITY IS NOT RIGOR. IT HAS THE SAME POSTURE AND NONE OF THE CONTROLS.**
 Care that *feels* like rigor reaches for the first mechanism that confirms the worry — and never opens the log.
 **Correcting toward your anxiety is not the same as correcting toward the evidence, and it looks identical from
