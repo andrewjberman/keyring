@@ -19342,3 +19342,22 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io build_mdpf_etf_ownership_timeseries.py | PASS |
 | 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/freshness_... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff infra/aws/terraform/globgrph/freshness_alarm.tf | FAIL |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/aws_access.py --file infra/aw... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/aws_access.py infra/aws/terraform/globgrph/item2a.tf infra/aw... | FAIL |
+| 2026-07-16 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-16 | 3.0.0_SA_CVO~B | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_B_V4_SERVED_VERIFY_DETERMI... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/infra-report-noise-vs-real-... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/infra-report-noise-vs-real-triage-20260716.md | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/aws_access.py --file infra/aw... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/aws_access.py infra/aws/terraform/globgrph/item2a.tf infra/aw... | FAIL |
+| 2026-07-16 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-16 | 3.0.0_SA_CVO~B | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-16/andrew_direct_push_hold_154... | PASS |
+| 2026-07-16 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-16 | 3.0.0_SA_CVO~B | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-16/cvob_v4_pass_ld0277_complet... | PASS |
+- 2026-07-16 15:5xZ 1.0.0_SA_CTO: P0 wave + nightly1 + V4 + LD-0292 window: comp-state (self-test 3/3, reconcile + convergence, REGROW blind spot filed); pipescript (CLA trace); comp-grep/glob routine; comp-pulse per-commit (Door-2 reads clean); raw-aws rail-checked = 2x 66k-key censuses + nightly/spine/DIVZ reads + CW REPORT (AC-1) + rules-target enumeration.
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/runners_49f/c0... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/c02_client_performance.py data/ass... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-16/p... | PASS |
