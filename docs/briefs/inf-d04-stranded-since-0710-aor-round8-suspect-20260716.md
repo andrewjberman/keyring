@@ -27,6 +27,39 @@ platinum/firm/timeseries_chart.json       written 2026-07-10T14:51:24Z
 rendered field is `data.data_as_of` via the `auaDonutSegments` transform — the header is faithfully
 printing the artifact. **There is no cache to bust.**
 
+> ## CORRECTION (2026-07-16 ~18:2xZ, after the cure) — §2's "1:1" WAS AN OVER-CLAIM, AND §4 WAS WRONG
+>
+> **RESOLVED: (b) never-dispatched.** CTO read `chain_full_20260716_134730.log:112` — `INF_D_04`,
+> `INF_D_02c`, `INF_09` were **ABSENT from the dispatched set**. Mechanism source-confirmed at
+> `orion-gold-dispatch.sh:344-346/364-368`: his own **GLDRNS.B1 window exclusion** (`194d3d674`) of three
+> pre-Round-8-migration consumers, whose **restore clause never fired** when the window stamped 07-16
+> 03:51Z. Cured same session (restore `1ca265e6d`; supervised singles; all 11 artifacts rewritten;
+> `data_as_of` 07-09 → **07-15**, page-consistent).
+>
+> **§4's AoR-raise suspicion was a RED HERRING.** The Round-8 `household_headline_map(expect_nonempty=...)`
+> call was never reached — the script never ran. Refusing to assert it (§5) is the only reason DS~B did not
+> spend the P0 editing correct code. **§4 is retained unedited as the record of a wrong lead held at the
+> right confidence.**
+>
+> **§2's "PROVEN 1:1" was NOT a 1:1 — it was a COINCIDENCE OF COUNTS, and it is my error.** The 11 stranded
+> artifacts were never D_04's 11 writes; they were the **union of the excluded TRIO's** outputs —
+> `client_directory.json` is **INF_D_02c**'s, and base `partner_analytics.json` is **INF_09**'s single write
+> (the `partner_analytics_{*}` glob over-matched it). Both returned `<no script mapped>` in my reverse-map
+> and **I moved past two unresolved rows instead of asking why they would not resolve.** The counts matched
+> only because the trio was co-excluded. **Had they not been, "one script" would have sent the fix hunting a
+> single-script cause for a three-script exclusion.** The conclusion survived; the proof did not.
+>
+> **THE LESSON, EARNED SYMMETRICALLY ON ONE SCRIPT IN ONE AFTERNOON (0.4.0_DS_ClientPlatform~B caught the
+> second half):** a `comp-pipescript io` manifest's **READS enumerate REFERENCED-not-required** (§6's bronze
+> dead end) and its **WRITES enumerate GLOB-MATCHED-not-owned** (this one). **Neither list is an ownership
+> claim, and a count that matches across both is not evidence of anything.** Direct consequence for the
+> Door-6 marker cell: **a script census must come from the DISPATCHER's own IDs, never from a manifest's
+> globs** — an artifact-derived census would have reproduced exactly this error.
+>
+> **The marker finding STANDS, sharpened by the cure:** `chain:"full"` was **honest-per-run-set** —
+> chain-literal-scoped — so a consumer cannot distinguish "all 44" from "41 of 44, three ruled out".
+> `git_sha:"unknown"` compounds it. At CTO's gate as two cells.
+
 ## 2. Scope: ONE script, not the D group — and the mapping is 1:1
 
 `comp-pipescript io INF_D_04.client_portal_summary.py` declares **11 WRITES**. The platinum/firm
