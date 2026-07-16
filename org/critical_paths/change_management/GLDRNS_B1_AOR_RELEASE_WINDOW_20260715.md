@@ -143,6 +143,14 @@ denominators, exits nonzero on any miss = STOP). ONLY ANDREW'S WORD REMAINS.**
 > satisfied BY CONSTRUCTION. Ruling: fork option (a) — the 07-13 fold-OFF seed is NOT "the first available
 > AoR"; re-seed via BANKED-EMPTY; finish under AMEND-54 + AMEND-57.
 
+**STEP (4) IN FLIGHT: CO-READ COMPLETE, BOTH HALVES PASS** (CTO 014029Z; COO 014125Z/AMEND 58 — the
+145-subset ruled IN-BAR by row-set identity both directions, 1,257/1,257). **MODE=FULL WORD GIVEN 014157Z.**
+First dispatch 409'd on run-4's stale lock (that chain had provably exited — its 250,074B log shipped by its
+own trap at 01:35:03); released explicitly by the mechanism's own form (delete, logged), re-dispatched
+**01:44:00Z (cmd d738fc87, lock-full-f54c4581113f): FOLD -> LOCK -> STAMP -> SERVE, three legs excluded,
+guard battery in-run.** Watch armed on stamp/serve/exit; the launcher's empty-log first-ship is a known
+monitor artifact (the chain re-ships the same key on its real exit).
+
 **STEPS (2)+(3) EXECUTED (01:33-01:39Z): RUN 4 = THE TRUE-BASELINE RUN — AND THE BAR IS MET, ALL TEN ARMS,
 FIVE DELTAS TO THE CENT.** Resolver first_run authored the true baseline (874 events: peter 497 / patrick 158 /
 joe 147 / noel 64 / iwm 8 — vs the poisoned seed's 628/141/83/0/21); resumption_verify.py: noel +8,401,521.22 ✓
