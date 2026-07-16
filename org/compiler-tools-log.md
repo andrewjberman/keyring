@@ -18981,3 +18981,20 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-15 ~23:55Z | 0.4.0_DS_ClientPlatform~A | Wave-3 C_03 authoring + ruling folds | commit-gate x4, pytest 40/40 (7 new C_03 fixtures), rail-marked listings (jd1 prefix verify pre-commit) | c03_nna.py fixture-first; M1/M6 drafts @ acfdb2c6d |
 | 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/runners_49f/c0... | PASS |
 | 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/c03_nna.py data/assets/scripts/gol... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/WAVE3_SPEC_CELLS_... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/etfs-net... | FAIL |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/WAVE3_SPEC_CELLS_... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260715T2349Z_etfs-netassets-v1.3... | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/EC2_MANIFEST.json | FAIL |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-15 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-07-15/session_cutover_night... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/runners_49f/c0... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/c03_nna.py data/assets/scripts/gol... | PASS |
+| 2026-07-16 ~00:10Z | 0.4.0_DS_ClientPlatform~A | C_03 runner wiring (CTO word 235953Z) | commit-gate x5, pytest 42/42, dry-exercise on live 07-14 partition (evidence bar printed; Decimal boundary lesson pinned) | c03_runner.py wired; first live run rides tomorrow's partition |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/runners_49f/c0... | PASS |
+| 2026-07-15 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A3.fit-validation-harness-and-dryfit | comp-pulse | comp-pulse diff data/assets/scripts/gold/runners_49f/c03_nna.py data/assets/scripts/gol... | PASS |
