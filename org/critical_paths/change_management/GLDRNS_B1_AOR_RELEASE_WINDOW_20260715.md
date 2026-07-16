@@ -85,6 +85,16 @@ guard printed "collision OK (identical x2)" for both de-collided pairs — 0.7.0
 the guard's own read. FIX (CTO gate pending): cp canonical over the _aor_exercise copy (byte-identical,
 nothing deleted) + a RECURSIVE basename census over all four prefixes before run 3.
 
+**RUN 3 (pending CTO's fourth flip): THE WINDOW'S OWN STAGE A — rides the ORIGINAL AMEND-54 co-sign
+byte-unchanged** (COO ack 002044Z; scope 194d3d674, split bar, reverts, exclusion oracle, in-session re-arm).
+Pre-dispatch evidence, cited per COO's fold-in: DIGEST PIN resolved by computation (repo HEAD lib =
+md5 b7a9e89fd4f5f10ed7c9d1d2fc30a4d5 AND sha256 b06f8a6724639a03… — ONE set of bytes; the FATAL cited
+sha256, the census cited md5/ETag, same file); (1) the cp executed 00:21Z, both keys ETag b7a9e89f/20,149B;
+(2) census oracle PRE-STATED 189/175/10/0, READ 189/175/10/0 EXACTLY — step zero provably clear;
+run-2's dead lock (lock-gold-a-9e70319ac26a) verified-held then RELEASED EXPLICITLY by the mechanism's own
+form (delete of gold/dispatch-lock.json — trigger :118/:508, dispatch :182), confirmed ABSENT. Debt filed
+by CTO (comp-learns-backlog): the vacuous on-runner .013 gate + dead-code check_freshness — post-window.
+
 ## REVERT ROWS ADDED (7-8)
 
 | 7 | dispatch pre-exclusion bytes | `s3://opal-data-inf/backup/pre_exclusion_dispatch_20260715T2335Z/orion-gold-dispatch.sh` (ETag 3aef4ae7… == the bytes deployed before tonight's exclusion+hotfix deploy; one cp back restores) | banked + ETag-verified vs pre-deploy live |
