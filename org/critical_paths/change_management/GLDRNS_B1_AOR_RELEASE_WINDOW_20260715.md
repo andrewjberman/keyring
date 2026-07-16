@@ -59,6 +59,29 @@ POST     served-spine read vs the invariants + vintage DISCLOSED TO ANDREW with 
 verified twice today by independent derivations) BEFORE any lock; the first stamp is immutable and is taken only
 after the pre-stamp verify reads exactly the pre-registered numbers.**
 
+## RUN LOG (appended as the window executes)
+
+**RUN 1 (23:29:20Z dispatch, mode=gold-a): DIED AT +13 SECONDS.** Launch receipt clean (fold forward echoed,
+pin set); background chain exited 23:30:43 (pinned by its own exit-trap 5-sudo fingerprint in the journal);
+zero S3 writes; watchdog CORRECTLY reaped the idle box at boot+10min (its persistent log, verbatim: "no gold
+process; last sighting 452975s ago" — and the same log shows 07-11/07-12 with identical signatures). The
+traceback was UNREADABLE: the chain log lived on tmpfs and the power cycle wiped it. Prime-suspect mechanism
+(grounded locally, NOT yet confirmed on-box): the dispatch's ADHC_COMPIL.013 gate — `comp-freshness chain inf`
+exits 1 HERE on the held chain's own frozen artifacts (txn silver 130h + all gold ~130h) = the run built to
+heal the staleness blocked BY the staleness. Runner-side confirmation requires the readable log (below).
+
+**RUN 2 (pending CTO sentinel re-set): DIAGNOSTIC REPRODUCTION — deliverable: A READABLE TRACEBACK.
+NOT A RETRY** (COO grant = explicit AMEND-55 extension, one execution, re-arm in-session immediately after,
+die-or-complete; the retry conditions — cause grounded + fix verified + bar unchanged — bind AFTER we read it).
+Instrumentation deployed first (66fd803e7 + d9e74e097 in ONE deploy, md5 three-way tie b3d62ef5…): logs on
+persistent /var/log/orion_gold_logs + EXIT-trap ships the newest log to s3://opal-data-inf/diagnostic/chain_logs/
+on every exit. A run-2 that dies leaving NO persistent log = the instrumentation failed = STOP (CTO rider 4).
+
+## REVERT ROWS ADDED (7-8)
+
+| 7 | dispatch pre-exclusion bytes | `s3://opal-data-inf/backup/pre_exclusion_dispatch_20260715T2335Z/orion-gold-dispatch.sh` (ETag 3aef4ae7… == the bytes deployed before tonight's exclusion+hotfix deploy; one cp back restores) | banked + ETag-verified vs pre-deploy live |
+| 8 | run-1 forensic artifacts | watchdog log + last-gold stamp read live (quoted in the ledger above); boot log + watchdog diag already in S3 | n/a (evidence, not a revert) |
+
 ## RUN SCOPE — GATE-OWNER RULING (1.0.0_SA_CTO, 23:2xZ, PRE-FLIP per COO 232148Z; adopts COO path (b))
 
 **Tonight's run is CHAIN-WIDE with the THREE pre-round-8 serve legs HELD this window** (CVO~B evidence
