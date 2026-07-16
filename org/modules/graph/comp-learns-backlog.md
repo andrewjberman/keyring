@@ -258,3 +258,20 @@ usage counts (the Goodhart gate; `comp-learns-score --goodhart-audit` proves it 
   (~5-8 min per invocation on this host); filter-first would make --project seconds.
 - resolution: OPEN -- rides the next comp-state touch; sweep results remain valid (agent = precision
   layer; the gap is the convergence loop, not the recall).
+
+## [OPEN] instrument-gap -- the .013 freshness gate is VACUOUS on the orion gold runner  (filed 2026-07-16, CTO)
+<!-- key: instrument-gap|comp-freshness absent on orion-gold-runner PATH -->
+- disposition: deploy-gap + dead-reference cleanup -- TWO cells, same family, found by run-2's readable log
+  (AoR window forensics, GLDRNS_B1 ledger): (1) `comp-freshness` is NOT on the orion gold runner's PATH, so
+  the dispatch's ADHC_COMPIL.013 gate prints "WARN: comp-freshness not found in PATH -- freshness gate
+  skipped" and proceeds EVERY run -- a gate that cannot fire on the box it guards (verification law 4: a
+  guard nothing invokes == no guard). (2) `check_freshness` in the same dispatch is dead code against the
+  current estate: silver/aum_snapshot/ is an EMPTY prefix and gold/artifacts/header_metrics.json is a 404 --
+  both inputs empty -> proceed-on-WARN every run (a gate whose reference artifacts no longer exist).
+- value evidence: the gate's absence was DISCOVERED because its hypothesized firing fit a real +13s death;
+  a vacuous gate is worse than no gate -- it reads as coverage in every census of the dispatch's protections.
+- fix shape: stage comp-freshness (+ its trading-calendar lib dep) into the runner's code/ closure per
+  Rule-12, OR delete the .013 call from the dispatch and route freshness to the container-side sweep --
+  DECIDE, don't leave the WARN-skip. check_freshness: retire or re-point its reference artifacts.
+- resolution: OPEN -- CTO-filed post-incident 2026-07-16 ~00:21Z; NOT touched mid-window (guard-state
+  change rule). Route: DS~B refactor lane (the dispatch is theirs under B1) or the STNDRD deploy standard.
