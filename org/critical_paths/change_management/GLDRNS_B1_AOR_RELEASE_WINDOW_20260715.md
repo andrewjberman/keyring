@@ -101,6 +101,23 @@ CTO+COO (+ Andrew's one-liner likely, it construes his "first available AoR"): s
 (re-seed, intent) vs seed-as-first-observation (letter, contradicts the project's purpose). Window paused at
 the bar; chokepoint re-arm triggered on the exit report 003314Z.
 
+**THE FIX, BUILT + DRY-VERIFIED (write HELD for Andrew's word):** the design's own docstring
+(advisor_timelock.py:489-491) rules the fork in (a)'s favor in the code's own voice — "ABSENT (0 keys) ->
+a LEGITIMATE zero... the current resolution IS the first observation and it backfills all history." Fix form
+= BANKED-EMPTY (bank ledger+state, empty both; the producer's own first_run seeds the TRUE baseline — no
+hand-authored history). DRY ORACLE RED-then-GREEN: live-ledger arm reproduces 0-change; ledger-absent arm
+reads **1,257 rows re-keyed / noel +$8,401,521.22 / joe +$7,384,568.89 / patrick +$3,448,754.37 /
+peter −$18,744,660.92 / iwm −$490,183.56 / conservation −0.00 / phantom unmoved** — THE TRUE A1-BACKFILL
+NUMBERS, superseding the pre-fold trio as the preview bar (co-read to pre-register before resumption).
+
+**RESUMPTION SHAPE (window closes clean if Andrew's word is not tonight; resumes on his word):**
+(i) HELD script: bank + empty the ledger (revert = one sync back, printed in the script's own output) ->
+(ii) CTO flip -> gold-a re-run (resolver seeds the true baseline via first_run; dims re-derive) ->
+(iii) PRE-STAMP VERIFY must read the ARM-2 numbers EXACTLY -> (iv) CTO flip -> mode=full (stamp + serve;
+exclusion in the live dispatch) -> (v) served-spine co-read (phantom GONE, Patrick's $52,604.80 home, noel
+present, exclusion oracle: the three legs' listings unchanged) -> re-arm -> vintage disclosed to Andrew ->
+ledger CLOSED. Nothing stamped, nothing served, all reverts banked meanwhile.
+
 **RUN 3 (as planned pre-dispatch): THE WINDOW'S OWN STAGE A — rides the ORIGINAL AMEND-54 co-sign
 byte-unchanged** (COO ack 002044Z; scope 194d3d674, split bar, reverts, exclusion oracle, in-session re-arm).
 Pre-dispatch evidence, cited per COO's fold-in: DIGEST PIN resolved by computation (repo HEAD lib =
