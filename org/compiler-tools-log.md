@@ -19395,3 +19395,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform~B/lo... | PASS |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform~B/lo... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/NFRA_INFRPT_V2_PRD-draft-20... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/NFRA_INFRPT_V2_PRD-draft-20260716.md | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-16 | 0.5.0_AE_OpalETL | OPAL_ASSETS.C5.smartx-holdings-activity-etl | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-07-16/ANDREW_DIRECT_16xxZ_d... | PASS |
+- 2026-07-16 16:3xZ 1.0.0_SA_CTO: WP7 seam + MDPF_REVAMP audit window: comp-which (routed), pipescript (--list + model-portfolios thread, 2 orphan flags), comp-cache map (the MP page's full query-key census), raw-aws rail-checked (gold-DDB TF+emitter reads, per-firm served artifact listings).
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-16/s... | PASS |
