@@ -167,6 +167,19 @@ def build_index(rows: list, params: HeatParams, now: datetime) -> dict:
                            "owner_upn": p.get("owner_upn")}
 
     clusters = aggregate_tree(scores)
+    # DS fix 262cda2e8 (root-locus + disclosed coverage): TreeAgg carries clustered_n/total_n.
+    # Print UNCONDITIONALLY (a disclosure that only prints when bad is invisible on every good
+    # day -- how the 82 stayed hidden). getattr-guarded for pre-fix lib compat.
+    clustered_n = getattr(clusters, "clustered_n", None)
+    total_n = getattr(clusters, "total_n", None)
+    if clustered_n is not None:
+        verdict = "OK" if clustered_n == total_n else "WARN"
+        print(f"{verdict}: CLUSTER_COVERAGE clustered_n={clustered_n} total_n={total_n}"
+              + ("" if clustered_n == total_n else
+                 " -- ROLLUP UNDER-COVERS (the slash-less drop class has returned; ping DS)"))
+    else:
+        print("WARN: CLUSTER_COVERAGE_UNDISCLOSED (pre-262cda2e8 object_locality in use -- "
+              "the rollup denominator is unverifiable; pull the lib fix)")
 
     def _cluster_of(path: str) -> str:
         parts = path.replace("\\", "/").split("/")[:-1]
@@ -192,7 +205,8 @@ def build_index(rows: list, params: HeatParams, now: datetime) -> dict:
                    "signal": "write_heat: props.last_modified_dt (S2 metadata; content/comms NEVER read)"},
         "denominators": {"rows_read": len(rows), **{f"n_{k.lower()}": v for k, v in n_by_type.items()},
                          "scored": len(scores), "skipped_no_last_modified": skipped_no_ts,
-                         "unparseable_props": unparseable, "bands": bands},
+                         "unparseable_props": unparseable, "bands": bands,
+                         "cluster_coverage": {"clustered_n": clustered_n, "total_n": total_n}},
         "dimensions": {
             "write_heat": {"nodes": nodes, "clusters": clusters},
             # S5 lands /insights read-heat + /permissions access HERE, additively (invariant #3).
