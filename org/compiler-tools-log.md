@@ -19505,3 +19505,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 ~18:15Z | 0.4.0_DS_ClientPlatform~A | comp-glob, comp-grep x3, comp-pipescript io C_01 (EMPTY manifest -> manual review), comp-which rail-checked (parquet reads) | A4 L4: G->C survey + trn_nna consumer census + price-matrix census (0/41 w/ denominator); gap re-noted: no comp-tool reads parquet schemas/values |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/watcher/SKILL.md --file ... | PASS |
+| 2026-07-16 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/watcher/SKILL.md org/XXX.md | FAIL |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/iam.tf ... | PASS |
+| 2026-07-16 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/bd-pipeline/iam.tf org/critical_paths/.open_deploys... | FAIL |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~A | OPAL_GLDRNS.A4.wave3-c-core-ports | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/WAVE3_SPEC_CELLS_... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inf-d04-stranded-since-0710... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/inf-d04-stranded-since-0710-aor-round8-suspect-20260716.md | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (ad-hoc P0 INF_D_04) | comp-pipescript | io INF_D_04 (blast radius PASS; WRITES glob over-matched INF_09 base artifact -- gap logged) + deployed filter no inf coverage (FAIL, fell back to GET-compare) | PARTIAL |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/cr... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/critical_paths/change_management/20260716... | PASS |
