@@ -6,7 +6,10 @@
 record:        RV-0050 CVO acceptance
 reviewer:      3.0.0_SA_CVO (independent; Andrew-direct, this session)
 subject:       org/tier0/reviews/RV-0050.md  (window mstr-review-0045..67aa99d3f)
-verdict:       ACCEPTED-CVO -- on independently re-derived grounds, with 5 carried findings.
+verdict:       ACCEPTED-CVO -- on independently re-derived grounds, with 6 carried findings.
+               (F-F added post-acceptance 2026-07-16; verdict UNAFFECTED -- it is an attribution
+               error inside a census whose total reproduces exact, not a conduct finding. But it
+               is HIGH and it is owed BEFORE Andrew rules F-001.)
 watermark:     ADVANCE AUTHORIZED. Tag `mstr-review-0046` at 67aa99d3f -- MSTR applies it
                (tagging is MSTR's mechanism + the comp-tagauthz gate; the CVO does not tag).
 re-measured:   2026-07-16, at live HEAD 0b3786846 (NOT RV-0050's pinned END) per LD-0278.
@@ -166,6 +169,44 @@ close that gap — F-A does, and it is owed.
                    for real.
   owner:           1.0.0_SA_CTO
   due:             next window
+
+- id:              F-F
+  severity:        high
+  type:            truth_gap
+  linked_ld:       null
+  required_action: **THE NUMBER ANDREW IS BEING ASKED TO RULE ON (F-001) IS WRONG IN EVERY RECORD
+                   THAT CARRIES IT, AND ALL THREE UNDERSTATE IT.** Added 2026-07-16 post-acceptance,
+                   triggered by COO's 162052Z self-correction. Measured in-window, positive- AND
+                   negative-controlled: MSTR OVERRIDE lines = **12 total** (10 BASE_EXEC + 2
+                   MSTR-XLANE); BASE_EXEC by date = 3 on 07-13, **7 on 07-14**. In circulation:
+                   RV-0050 sec-3/F-001 says "MSTR BASE_EXEC x6"; the ANY_EXEC_OR_AE grant
+                   justification (7882fbbbd, COO author line, Andrew-blessed) says "7 audited
+                   GIT_COMMIT_AUTHOR_OVERRIDE uses this window alone". **Neither is the window
+                   figure. The 7 is exactly the 07-14 DAY count quoted as a WINDOW count; the 6
+                   matches nothing.** Truth is 10 BASE_EXEC / 12 total.
+                   **DIRECTION MATTERS AND IT CUTS THE OTHER WAY FROM COO'S WORRY: the gap bites
+                   HARDER than any record says, so the grant is MORE justified, not less.** Andrew
+                   chose (a) ENUMERATE over (b) bless-the-override-permanently on a count of 6-7
+                   when the real count is 10-12; the ruling is unaffected in direction but it was
+                   made on an understated denominator.
+                   **ALSO CORRECTS COO'S SELF-CORRECTION (mechanism):** COO recorded that the 7 is
+                   suspect because "the census does not walk the SOVEREIGN-OVERRIDE log". That is a
+                   MIS-MAPPING. A GIT_COMMIT_AUTHOR_OVERRIDE lands in
+                   org/git-author-override-audit.log, which IS one of the two logs the RV series
+                   DOES walk. org/mcp/sovereign-registry-override-audit.log contains exactly **1
+                   line** and it is a `SOVEREIGN_UNFILTERED_READ` by COO on 07-13 -- **not an author
+                   override at all**. My 2/13 finding does NOT undermine the 7 by that route. The 7
+                   is wrong for an ordinary reason (a day quoted as a window), not an exotic one.
+                   **A correct finding mis-applied to the wrong mechanism is still a wrong record**
+                   -- and it would have landed as a permanent self-correction citing an unread log
+                   that has nothing in it.
+                   ACTION: MSTR correct RV-0050 sec-3/F-001 to 10 BASE_EXEC / 12 total before
+                   Andrew rules; COO correct the 7882fbbbd justification to "a day count, not a
+                   window count; window = 10". VERDICT UNAFFECTED -- the 36 OVERRIDE total
+                   reproduces exact; this is the ATTRIBUTION breakdown, not the census, and the
+                   window's conduct is unchanged.
+  owner:           0.0.0_AB_MSTR (RV record) / 2.0.0_SA_COO (grant justification) / andrew (F-001 ruling input)
+  due:             BEFORE Andrew rules F-001
 
 - id:              F-E
   severity:        low
