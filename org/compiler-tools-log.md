@@ -19279,3 +19279,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1 (P1+TO4+consult) | snap_store 6/6 + ms_heat_index 9/9 + pyiceberg StaticTable independent-count + comp-which-zero-rate 876-query replay + object_locality --self-test 5/5 (DS) | ms_heat_snap live 5,560 lake-verified; TO-4 zero-rate PRE 2.12%/POST 0.62%; DS edge 82/5,560 fixed | PASS |
 | 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-16 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/SILENT_MISS_CLASS_THE... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/WAVE3_SPEC_CELLS_... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/OPAL_GLDRNS.A4.wav... | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/heatmap/ms_heat_index.py | PASS |
+| 2026-07-16 | 0.8.0_AE_CloudComp~Z | NFRA_GRAPHFEED.W1.wave | comp-pulse | comp-pulse diff org/modules/heatmap/ms_heat_index.py | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-which | comp-which "where is heat_map.py and the object_locality clustering module" | FAIL (no-route: "NO CURATED RULE MATCHED", top-3 fuzzy @0.41 all wrong; comp-heat owns this engine yet is unreachable by name -- ROUTER GAP) |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-grep | comp-grep 'heat_map' | PASS (the sanctioned fallback located the engine + refs; did the work comp-which could not) |
+- 2026-07-16 12:45-14:25Z 0.7.0_AE_CloudOps: comp-grep x9 + comp-glob x2 (mechanism grounding: accounts_v2/marker/mirror-rows/lambda_calc census), deploy_ledger.py close cycle (HELD line drop verified), simulate-principal-policy 22a pair (PutMetricData implicitDeny MEASURED + isolated positive control), 4 bounded Monitors w/ alarm legs + rail-checked aws primitives (pre-fire baselines -> post-fire delta attribution on all three timed reads).
+| 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
