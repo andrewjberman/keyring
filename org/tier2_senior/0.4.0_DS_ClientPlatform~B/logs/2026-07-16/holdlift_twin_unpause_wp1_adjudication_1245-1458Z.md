@@ -57,7 +57,7 @@ base-serial folder (newest: gldrns_b1_release_window_close_2242-0415Z.md).
   pure-to-add, applied get-schedule ENABLED, ledger closed 3/3. First fire TODAY 15:45Z --
   0.7.0 reads the verdict (bounded watcher + not-invoked alarm 16:20Z). Nothing further mine.
 
-### 4. WP1 scope adjudication received (14:53Z)
+### 4. WP1 scope adjudication received (14:53Z) — **SUPERSEDED, see AMENDED 15:2xZ below**
 - Eclipse dated bronze backfill 07-11..15 = NO -- adjudicated (executor's read from 0.7.0; CTO's
   formal word rides my 14:33Z flag). Grounds: vendor API is current-state-only; --date labels the
   PARTITION never the fetch, so a dated pull today would fabricate vintage (the class
@@ -121,3 +121,38 @@ record govern unless CTO says otherwise.)
 - Stand by event-driven (daily cadence per CTO's standing order). Monitor wakes on inbox.
 - ~03:15Z 07-17: bd49f first-fire verdict (mine, as contract author).
 - On CTO's formal eclipse word: acknowledge; no further motion expected.
+
+## AMENDED 2026-07-16 15:2xZ (Andrew-direct correction -- follow-up commit, original text above stands as the record of what was believed at 14:58Z)
+
+**ANDREW-DIRECT (my terminal, ~15:0xZ, scope = the WP1 eclipse 07-11..15 adjudication), VERBATIM:**
+"We already established that there is backfill for eclipse, and that we cannot conflate the
+shape of our tool with the shape of the data eclipse offers and endpoint structure. Please talk
+to CTO about it and revise the log. If there is confusion, then your task is investigating the
+endpoint structure for Eclipse (which we should have laying around via the DATA_PLATFORM and
+DATA_ANALYTICS projects)."
+
+**CORRECTION of section 4:** the "vendor API is current-state-only" grounds I logged were OUR
+PULLER's endpoint set (the 5 calls in pull_eclipse_portfolios.py / endpoints/README.md), not
+Eclipse's surface. The D3 arch spec's own completeness basis (DATA_PLATFORM_D3:27) states the
+cataloged surface is "the endpoints we USE + the HAR-captured contract -- NOT every endpoint
+Orion/Eclipse exposes." The 074e2530b manifest's residual (DC2 audit-endpoint census pending)
+was the honest tell the surface was uncensused. This is the SAME conflation the manifest's own
+AMENDED block corrected once already (Andrew challenge @ cd12d0d07; law folded: A
+VENDOR-CAPABILITY CLAIM CITES THE VENDOR SURFACE, NEVER CLIENT CODE) -- re-committed by the
+adjudication relay and by me in accepting it.
+
+**CTO FORMAL WORD (15:23:53Z):** WP1's 07-13..15 no-backfill disposition REOPENED. Stands
+un-relitigated: the loss-~nil finding (21 changed portfolios named by vendor editedOn, models
+static) + the weekend decomposition. Reopened question: is the INTERIOR (07-13/14/15 as-of
+states) vendor-recoverable? MY TASK = the WP1 close instrument: records-map first
+(DATA_PLATFORM / DATA_ANALYTICS / domain docs), then an EXERCISED endpoint census --
+value-discriminated probes of candidate history/audit/as-of endpoints (discriminator: a
+known-changed portfolio's editedOn date), on standing grants, zero speculative vendor load.
+IF history exists -> true-vintage backfill 07-13..15, manifest amends (coordinate with 0.7.0,
+their authorship), WP1 = FILLED. IF not -> manifest citation upgraded to
+exercised-vendor-surface grade, holes stand permanently. Findings to CTO.
+
+**Current-state deltas vs the section above:** WP1 eclipse disposition = REOPENED (not
+adjudicated-closed); my open legs now (1) the eclipse endpoint-structure investigation +
+exercised census [reports to 1.0.0_SA_CTO], (2) bd49f first-fire verdict ~03:15Z 07-17,
+(3) manifest amendment coordination with [0.7.0_AE_CloudOps] on the census outcome.
