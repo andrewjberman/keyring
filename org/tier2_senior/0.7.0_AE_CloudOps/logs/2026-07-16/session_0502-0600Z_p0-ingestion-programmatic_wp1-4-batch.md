@@ -83,3 +83,14 @@ None stranded. OPEN WATCHES (a successor picks these up if the session ends):
 - 03:05Z tomorrow: bd49f converter maiden fire (~B reads as contract author; twin 05:00Z backs it).
 - Batch-3 answers (portal-calc + infrastructure_monitor) to MSTR; aws_access.py renormalize; Door-5
   revert.sh armed untouched until the AoR window closes.
+
+## AMEND (07:00Z) -- WP2 CLOSED: 5/5 landed on dispatch 3; both failures loud-and-caught
+
+Dispatch 1: box role 403 on code/manual_api/ (reads code/bronze/ only) + MY OWN SSM harness swallowed the
+rc through a tail-pipe (ssm=Success over a dead pull -- the watcher's expiry alarm caught it; the
+watcher's own key-query was ALSO malformed -- two broken instruments, one working alarm leg). Dispatch 2:
+import closure (rate_limiter -- third closure-class catch tonight). Dispatch 3 (full 3-file closure from
+code/bronze/, pipefail + explicit rc): bronze/positions/2026-07-{11..15}.jsonl.gz ALL LANDED 06:50-06:58Z
+(2.178-2.188MB each, true vendor vintage, ONE ranged invocation). Mode marker RESTORED to bronze-pull
+shape + box STOPPED (ledger-close conditions). ~B's dated conversions firing. CTO evidence 070042Z.
+WP1+WP2 acceptance census waits only on the 13:30Z box fire + 14:15Z mirror walk reads + eclipse twin arm.
