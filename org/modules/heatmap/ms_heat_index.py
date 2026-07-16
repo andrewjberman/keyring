@@ -389,6 +389,19 @@ def main() -> int:
     persist(idx, local_only=args.local_only)
     if args.emit_sibling and not args.local_only:
         stage_sibling(idx)
+    # DS RAVC-step-4 finding (141751Z): a printed WARN is not a guard on an unattended run
+    # ("a guard nothing invokes == no guard"). Warn-and-ship is kept (the write already
+    # happened -- per-node rows are correct, halting the emit would be disproportionate), BUT
+    # the coverage gap now reaches the emit's RETURN SIGNAL: exit 2 so an eventual scheduled
+    # wrapper's exit-status is the consumer that outlives a reader's attention. clustered_n/
+    # total_n also ride the served denominators (a durable surface, not stdout-only).
+    cov = (idx.get("denominators") or {}).get("cluster_coverage") or {}
+    cn, tn = cov.get("clustered_n"), cov.get("total_n")
+    if cn is not None and tn is not None and cn != tn:
+        print(f"WARN: CLUSTER_COVERAGE_GAP_ON_WRITE clustered_n={cn} total_n={tn} -- index/"
+              "sibling WRITTEN (warn-and-ship) but exiting 2 so an unattended run signals the "
+              "gap (the slash-less drop class; ping 0.4.0_DS_ClientPlatform)")
+        return 2
     return 0
 
 
