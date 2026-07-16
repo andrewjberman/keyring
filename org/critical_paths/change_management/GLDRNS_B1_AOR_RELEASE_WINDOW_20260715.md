@@ -85,7 +85,23 @@ guard printed "collision OK (identical x2)" for both de-collided pairs — 0.7.0
 the guard's own read. FIX (CTO gate pending): cp canonical over the _aor_exercise copy (byte-identical,
 nothing deleted) + a RECURSIVE basename census over all four prefixes before run 3.
 
-**RUN 3 (pending CTO's fourth flip): THE WINDOW'S OWN STAGE A — rides the ORIGINAL AMEND-54 co-sign
+**RUN 3 OUTCOME (00:25:32Z dispatch): STAGE A MECHANICALLY COMPLETE — AND THE PRE-STAMP BAR FIRED. STAGE B
+STOPPED.** Step zero passed (census fix held); resolver ran fold-ON in production first-ever (SSOT 00:25:54Z,
+874 rows / 164 movers / pinned digest tie); A-group dims rebuilt 00:26:00-55Z; 250KB chain log shipped;
+box self-stopped; NOTHING STAMPED, NOTHING SERVED. VERIFY: fold 164 ✓, explicit 837 ✓, firm total
+$133,107,667.64 to the cent ✓, phantom present-unmoved ✓ — **CHANGED ROWS 0 of 9,510 vs the pre-registered
+mover backfill = ANY-OTHER-READING = STOP.** MECHANISM (grounded from the ledger's own events): the 07-13
+fold-OFF seed wrote 873 'baseline' events carrying THE SERVICING KEYS as AoR (peter 628/patrick 141/joe 83/
+iwm 21 == the rep_id map); run-3 wrote the 164 real 'change' events (noel 64/joe 64/patrick 22/peter 15);
+first-observation-extends-backward therefore resolves ALL history to servicing and noel inherits nothing.
+A stamp tonight would have FROZEN SERVICING HISTORY FOREVER WITH EVERY GUARD GREEN — the stamp-order trap's
+live firing, CAUGHT BY THE PRE-STAMP CONTROL. The fold-then-lock order is why this is a pre-stamp DESIGN FIX
+(re-seed the ledger baseline from the real first-available AoR) and not a recovery. FORK SURFACED to
+CTO+COO (+ Andrew's one-liner likely, it construes his "first available AoR"): seed-as-infrastructure-artifact
+(re-seed, intent) vs seed-as-first-observation (letter, contradicts the project's purpose). Window paused at
+the bar; chokepoint re-arm triggered on the exit report 003314Z.
+
+**RUN 3 (as planned pre-dispatch): THE WINDOW'S OWN STAGE A — rides the ORIGINAL AMEND-54 co-sign
 byte-unchanged** (COO ack 002044Z; scope 194d3d674, split bar, reverts, exclusion oracle, in-session re-arm).
 Pre-dispatch evidence, cited per COO's fold-in: DIGEST PIN resolved by computation (repo HEAD lib =
 md5 b7a9e89fd4f5f10ed7c9d1d2fc30a4d5 AND sha256 b06f8a6724639a03… — ONE set of bytes; the FATAL cited
