@@ -19954,3 +19954,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/TAXSMA_PT2_SC... | PASS |
 | 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/WP8_DECOM_CELL3_SI2_C... | PASS |
+- 2026-07-17 ~1940-1950Z | 0.8.0_AE_CloudComp~C | session-close cap (P3-CENSUS v0.1.2 @7d076fcfa delivered; OPAL_TAXONOMY handoff to ~B locked both ways). No new tool runs this window -- close cap; census tool evidence in the two prior logs.
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
