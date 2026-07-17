@@ -1420,7 +1420,7 @@ Examples:
   comp-freshness ddb opal-users-v2 --pattern "FIRM#"
   comp-freshness all
   comp-freshness artifact s3://opal-data-bd/silver/prices/canonical_prices.parquet
-  comp-freshness artifact s3://opal-data-schwab/silver/RPS/
+  comp-freshness artifact s3://opal-data-assets/schwab/08242234/silver/fact_rps/
   comp-freshness --list
 """,
     )
