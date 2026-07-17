@@ -19892,3 +19892,26 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-17 ~1815-1845Z 0.2.0_DT_PortfolioAnalytics (VARFLAG post-close self-review): no new comp-tool runs this window -- pure adversarial re-read + redeploy of yang-varflag-check (v1.5.1 baseline-horizon hardening). Prior window carried the comp-grep/comp-glob SFN+TF discovery. Gap named: pre-deploy replays are single-point-in-time, structurally blind to baseline-window-exhaustion (a time-accumulation defect); shadow phase + manual review are the compensating controls.
 | 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/GRAPH_REFRESH_AUDIT_AND_KUZ... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/GRAPH_REFRESH_AUDIT_AND_KUZU_SPLIT_20260717.md | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/OPAL_CONSOLIDATION_TAX... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.node_type AS node_type, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/GRAPH_REFRESH_AUDIT_AND_KUZ... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/GRAPH_REFRESH_AUDIT_AND_KUZU_SPLIT_20260717.md org/tier0/le... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/OPAL_CONSOLIDATION_TAX... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.arn IS NOT NULL AND n.arn <> '' RETURN n.node_type AS node_... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.arn IS NOT NULL AND n.arn <> '' RETURN count(*) AS arn_bearing | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(*) AS total_nodes | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/WP8_STEP1_POINTER_LEDGER... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/drive_log_20260717T1851Z.md | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='S3_BUCKET' RETURN n.node_id AS node_id, n.arn AS... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/DECOMMISSION_TOOLING_A... | PASS |
+- 2026-07-17 ~1745-1900Z | 0.8.0_AE_CloudComp~C | P3-CENSUS taxonomy conformance census v0.1: comp-which (route), comp-aws classes, comp-kuzu (enumeration denominator: 132 nodes/38 buckets/33 EC2/32 roles @snap 8829022918628754404), comp-state --self-test PASS 3/3 + --project OPAL_CONSOLIDATION reconcile (no self-drift). 14 named deviation classes; both Phase-2 controls PASS. @68d0d74d4
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | comp-grep x6 (WP8 pointer/prefix census, trn_nna producer-consumer trace) -- on-rails, denominators printed; comp-freshness help-example repointed schwab->monolith | worked; standing gap: no comp-tool models dying-bucket prefixes |
