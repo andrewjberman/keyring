@@ -108,3 +108,37 @@ record (base drafted it, my lane). GCONTR final close on CVO's evidence.
 4. **[0.2.0_DT]** WS-1 dry build (live call on Andrew's egress word); WS-4 IAM plan to CTO.
 5. **[3.0.0_SA_CVO]** GCONTR value-check + empty-hash on the 2 signed SEV1 rows -> hand to 0.7.0 for load.
 6. **[ANDREW]** the vendor-egress word (49F reporting API); carried: bd-49f, PAT/MS-token.
+
+## UPDATE 21:15Z -> 21:42Z (the builds started executing + /handoff skill shipped)
+
+**Commits (mine) this delta:** `9e8558302` (this log) · `3c5bbe7ef` (/handoff skill) · `142015a0e` (TAXSMA WS-2).
+
+1. **NEW SKILL /handoff shipped @3c5bbe7ef** (Andrew-direct: "make a skill called /handoff which is creating
+   these reinstantiation text blocks"). `.claude/skills/handoff/SKILL.md` — generates a gate-forward,
+   copy-pasteable reinstantiation block so a fresh session resumes with zero ramp. Distinct from /log (record)
+   + /overview (human status). Forms: bare/brief/<CODE>/save. Auto-discovered + live.
+2. **KUZUSPLIT P0 COMPLETE (~D @b0c94d9ff) -> P1 sequenced to CTO code-gate.** Exemplary Rule-22a measurement:
+   FULL reload = 482s (+35% WORSE than the PRD's ~356s guess); ambush = ~487s/worker PROVEN (M3 forced a real
+   large delta) -> the §4 serve-labeled-stale gate is LOAD-BEARING not cosmetic. Shared-warm CONFIRMED. Sharp
+   finding: NO persistent fallback-log sink (ephemeral stderr only) -> argues for the P3 comp-graph-status line.
+   ~D flagged the org/modules/graph ANY_EXEC carve-out it needs from CTO for P1 commits (GRANTOR-LANDED).
+3. **COMPSIMILAR PH1 grounded+specced (~D @758632bc6).** ADOPTED base 0.8.0's already-built corpus engine
+   (summary_corpus.py, self-test 4/4 @30591c1d5) — the anti-double-build caught + resolved. Coupling RECONCILED
+   (the standing condition): the summary is an editorial OVERLAY re-applied after BOTH comp-kuzu-full+inc ->
+   ONE refresh path, not two. ~D correctly SURFACED a write-path fork to CTO (my PH1 TO's `glue:CreateTable`
+   IAM hint contradicted the PRD's Nessie design — my imprecision; ~D routed it rather than following it).
+4. **OPAL_TAXSMA_PT2 chain advancing:** WS-1 bronze DRY-COMPLETE (DT @454dedf0e — egress refusal built INTO the
+   code: DRY_RUN=1 default, `_request()` raises "EGRESS BLOCKED" until deliberately cleared; the NEVER-rule
+   enforced in CODE). Bronze shape published -> I CUT WS-2 silver to DS @142015a0e (build-against-shape now, live
+   run on live bronze). WS-4 gateway-IAM plan routed to CTO's plan-gate. DT holding at exactly its two gates,
+   NOT over-building the deploy/trigger TF ahead of scope (correct discipline).
+5. **SmartX 500 RESOLVED (0.5.0, Andrew-direct "only yaliu"):** the models_summary daily 500 I'd carried as a
+   VENDOR outage was OUR wrong-platform-id bug (opal7 500s, yaliu 200s) — fixed+deployed (smartx-pipeline-v1.7.0,
+   verified CLEAN) -> C5 platform silver UNBLOCKED, DirtyRunError cured. Diagnose-the-mechanism paid off. Open
+   fork (yaliu view-only grant upgrade for the owned book) correctly at CTO.
+6. **MSTR spawn-refusal for ~D** (redundant — Andrew-launched pid 7944 ~16:29Z; 3rd 1pt process-truth catch this
+   session, LD-0304/0305 working). My TOs routed to the live ~D organically.
+
+**Net state:** all 4 projects building or cleanly gated-on-CTO; the ONE live gate at Andrew is the 49F
+reporting-API vendor-egress word (WS-1 live pull; DT holding, live call impossible until cleared). COO holding
+the phase GOs (KUZUSPLIT P1, COMPSIMILAR table+projection, TAXSMA WS-3) to fire as CTO's gates clear.
