@@ -58,3 +58,25 @@ resource's purpose-summary comes from (AWS has Description fields on SOME resour
 role, EventBridge rule, SG — but not S3/DDB; tags; the TF-declared description; or the comp-graph
 node summary the estate already builds). Engine reuse from comp-dups (dup_scan BM25) is the stated
 intent; the novel part is the summary-corpus sourcing. Folded into the assessment as a design section.
+
+## ADDENDUM 2 — Andrew-direct, same terminal, ~18:3xZ (THE JOINT-SIGNAL SCAN HEURISTIC)
+
+VERBATIM:
+
+> yes the premise is essentially cross-referencing the biggest divergence on hot vs cold score on
+> similarly named resources and cross referencing that score with very high similarity resource
+> summary. that would be how we'd most likely scan very fast for this kind of thing
+
+Receiving agent's read (non-binding): this is the DETECTION ALGORITHM, and it is precise. A
+decommission candidate = the INTERSECTION of two signals over a cluster of similarly-named resources:
+  (1) the LARGEST hot-vs-cold heat DIVERGENCE inside a similar-name cluster (one sibling HOT, one
+      COLD -- divergence, not mere coldness, is the "one superseded the other" tell), AND
+  (2) VERY HIGH resource-SUMMARY similarity (comp-similarity confirms they are functional twins, not
+      coincidental name overlap).
+Name-similar + summary-similar + heat-divergent = a SUPERSEDED resource whose hot twin is its live
+replacement. This is exactly the monolith-cutover shape (old inf/cot/bd bucket COLD next to its hot
+opal-data-assets successor, names + summaries near-identical). The three signals are individually
+weak and jointly sharp: name alone false-positives (cross-firm same-name is expected + already
+suppressed by comp-dups); coldness alone can't distinguish superseded from a rare-event guard;
+summary-similarity confirms function; the heat DIVERGENCE is the supersession tell. This joint scan
+is the assessment's centerpiece.
