@@ -19731,3 +19731,13 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 16:4xZ | 0.4.0_DS_ClientPlatform | comp-glob, comp-pulse (via safe-commit) | C12 ruling-20 set-diff + C10 grounding window; comp-glob located silver_registry estate; no gold edit so no pipescript io |
 | 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions opal-assets-bd49f-dim-convert --settle-re... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/opal-ass... | FAIL |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/analysis/MD... | PASS |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/analysis/MDPF_VARFLAG_final_guard_scope_202... | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | MDPF_VARFLAG cell | none -- render question; /frontend-dev loop is the instrument (comp tools have no tab-residency view); source corroboration via native Grep/Read, vintage-cited | Benchmark-tab verdict routed CTO+CVO |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DE_PortfolioAnalytics/... | PASS |
