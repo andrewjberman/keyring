@@ -94,17 +94,61 @@ def load_commits(max_n: int, days: Optional[int]) -> list[dict]:
 
 # ---- records ------------------------------------------------------------------------------
 def _last_touch_file(path: str) -> int:
+    """Per-file fallback ONLY. 277ms/call measured 2026-07-17 -- 2,080 records made this the
+    entire 300-630s runtime (the 'comp-state hangs' Andrew reported). Bulk path is the map."""
     out = _git("log", "-1", "--format=%ct", "--", path).strip()
     return int(out) if out.isdigit() else 0
 
 
-def _last_touch_string(needle: str, path: str) -> int:
-    out = _git("log", "-1", "--format=%ct", "-S", needle, "--", path).strip()
-    return int(out) if out.isdigit() else 0
+def build_last_touch_map() -> dict[str, int]:
+    """ONE streaming history walk -> {path: last-commit-ts}. Replaces N per-record
+    'git log -1 -- path' subprocesses (measured: 4.1s total vs 277ms EACH; validated
+    5/5 exact-match against the per-file answers on 2026-07-17)."""
+    raw = _git("log", "--format=%x01%ct", "--name-only")
+    last: dict[str, int] = {}
+    ts = 0
+    for ln in raw.splitlines():
+        if ln.startswith("\x01"):
+            try:
+                ts = int(ln[1:])
+            except ValueError:
+                ts = 0
+        elif ln and ts:
+            if ln not in last:          # log is newest-first: first seen = last touch
+                last[ln] = ts
+    return last
+
+
+def build_registry_line_touch(rel: str) -> dict[int, int]:
+    """ONE 'git blame --line-porcelain' -> {1-based line number: last-touch ts} for the
+    working-tree REGISTRY. Replaces a 0.5s pickaxe (-S) subprocess PER active row.
+    Uncommitted lines blame to sha 0*40 with ts=now -- correct here (the row was just touched,
+    so no corpus commit can postdate it)."""
+    raw = _git("blame", "--line-porcelain", "--", rel)
+    out: dict[int, int] = {}
+    cur_ts = 0
+    cur_line = 0
+    for ln in raw.splitlines():
+        m = re.match(r"^[0-9a-f]{40} \d+ (\d+)", ln)
+        if m:
+            cur_line = int(m.group(1))
+        elif ln.startswith("committer-time "):
+            try:
+                cur_ts = int(ln.split()[1])
+            except (IndexError, ValueError):
+                cur_ts = 0
+            if cur_line:
+                out[cur_line] = cur_ts
+    return out
 
 
 def load_records(only_code: Optional[str]) -> list[dict]:
     recs: list[dict] = []
+    touch = build_last_touch_map()
+
+    def _last(rel: str) -> int:
+        return touch.get(rel) or _last_touch_file(rel)
+
     # (a) task orders -------------------------------------------------------------------
     to_glob = subprocess.run(
         ["git", "ls-files", "org/*/*/task_orders/*.md", "org/*/task_orders/*.md"],
@@ -123,7 +167,7 @@ def load_records(only_code: Optional[str]) -> list[dict]:
         comp = parts_[1].lower() if len(parts_) > 1 else ""
         recs.append({"kind": "TO", "id": stem, "code": code, "status": status,
                      "tokey": tokey, "comp": comp,
-                     "path": rel, "last": _last_touch_file(rel),
+                     "path": rel, "last": _last(rel),
                      "query": _tok(stem.replace(".", " ").replace("-", " "))})
     # (b) project JSONs -----------------------------------------------------------------
     pj_dir = os.path.join(_WS, "org", "projects")
@@ -135,13 +179,13 @@ def load_records(only_code: Optional[str]) -> list[dict]:
             d = json.load(open(os.path.join(pj_dir, fn), encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             recs.append({"kind": "JSON", "id": fn, "code": fn[:-5], "status": "UNPARSEABLE",
-                         "path": rel, "last": _last_touch_file(rel), "query": _tok(fn)})
+                         "path": rel, "last": _last(rel), "query": _tok(fn)})
             continue
         code = fn[:-5]
         phase = str(d.get("phase", d.get("current_phase", "")))[:300]
         recs.append({"kind": "JSON", "id": fn, "code": code,
                      "status": str(d.get("status", "?")),
-                     "path": rel, "last": _last_touch_file(rel),
+                     "path": rel, "last": _last(rel),
                      "query": _tok(code.replace("_", " ") + " " + phase)[:24]})
     # (c) REGISTRY rows (active table only: rows above the Completed/Archived heading) ---
     reg_rel = "org/projects/REGISTRY.md"
@@ -150,11 +194,14 @@ def load_records(only_code: Optional[str]) -> list[dict]:
     except OSError:
         reg = ""
     active_part = re.split(r"^#+\s*(Completed|Archived)", reg, maxsplit=1, flags=re.M)[0]
+    # Per-row last-touch from ONE blame call (was: one -S pickaxe subprocess per row).
+    line_ts = build_registry_line_touch(reg_rel) if reg else {}
     for m in re.finditer(r"^\|\s*`([A-Z0-9_]{3,})`\s*\|(.+)$", active_part, flags=re.M):
         code, rest = m.group(1), m.group(2)
+        line_no = active_part.count("\n", 0, m.start()) + 1
         recs.append({"kind": "REGROW", "id": f"REGISTRY:{code}", "code": code,
                      "status": "active-row",
-                     "path": reg_rel, "last": _last_touch_string(code, reg_rel),
+                     "path": reg_rel, "last": line_ts.get(line_no, 0),
                      "query": _tok(code.replace("_", " ") + " " + rest[:200])[:24]})
     # (d) PRD Status: lines ----------------------------------------------------------------
     prd_list = subprocess.run(["git", "ls-files", "docs/architecture/*PRD*.md"],
@@ -170,7 +217,7 @@ def load_records(only_code: Optional[str]) -> list[dict]:
         stem = os.path.basename(rel)[:-3]
         recs.append({"kind": "PRD", "id": stem, "code": stem.replace("_PRD", ""),
                      "status": m.group(1).strip()[:100],
-                     "path": rel, "last": _last_touch_file(rel),
+                     "path": rel, "last": _last(rel),
                      "query": _tok(stem.replace("_", " "))})
     if only_code:
         oc = only_code.lower()
@@ -262,24 +309,40 @@ def main() -> int:
     ap.add_argument("--floor", type=float, default=6.0, help="BM25 evidence floor (default 6.0)")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--all", action="store_true", help="show CURRENT/QUIET too (default: drift only)")
+    ap.add_argument("--top", type=int, default=60,
+                    help="max records rendered in the report (default 60; 0 = unlimited). "
+                         "JSON output is never truncated.")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
 
     if args.self_test:
         return self_test()
 
+    # Stage timings go to stderr so a stall is diagnosable mid-run (the 2026-07-17 incident:
+    # 2,080 serial git subprocesses = 300-630s with ZERO output, indistinguishable from a hang).
+    t0 = time.time()
     commits = load_commits(args.commits, args.days)
+    t1 = time.time()
+    print(f"[stage] corpus: {len(commits)} commits in {t1 - t0:.1f}s", file=sys.stderr)
     if not commits:
         print("comp-state: EMPTY CORPUS -- git log returned nothing. That is an instrument "
               "failure, not a clean estate.", file=sys.stderr)
         return 2
     recs = load_records(args.project)
+    t2 = time.time()
+    print(f"[stage] records: {len(recs)} loaded (last-touch map + blame) in {t2 - t1:.1f}s",
+          file=sys.stderr)
     bm = BM25([c["doc"] for c in commits])
 
     results = []
-    for r in recs:
+    for i, r in enumerate(recs):
+        if i and i % 500 == 0:
+            print(f"[stage] scoring: {i}/{len(recs)}", file=sys.stderr)
         a = assess(r, commits, bm, args.floor)
         results.append({**{k: r[k] for k in ("kind", "id", "code", "status", "path", "last")}, **a})
+    t3 = time.time()
+    print(f"[stage] scoring: {len(recs)} records x {len(commits)} commits in {t3 - t2:.1f}s "
+          f"(total {t3 - t0:.1f}s)", file=sys.stderr)
 
     drift = [x for x in results if x["verdict"] in ("BEHIND", "POST-CLOSE")]
     if args.json:
@@ -302,7 +365,12 @@ def main() -> int:
           "evidence, NOT a verified record.")
     print()
     show = results if args.all else drift
-    for x in sorted(show, key=lambda z: (z["verdict"], -z["newest_ev"])):
+    show = sorted(show, key=lambda z: (z["verdict"], -z["newest_ev"]))
+    dropped = 0
+    if args.top and len(show) > args.top:
+        dropped = len(show) - args.top
+        show = show[:args.top]
+    for x in show:
         age_rec = time.strftime("%m-%d %H:%M", time.gmtime(x["last"])) if x["last"] else "never"
         print(f"[{x['verdict']}] {x['kind']:6s} {x['id']}")
         print(f"    status: {x['status'][:90]} | record last touched {age_rec}Z")
@@ -311,6 +379,9 @@ def main() -> int:
             tag = "DIRECT" if e["score"] >= 999 else f"bm25={e['score']}"
             print(f"    ev {e['sha']} {ets}Z [{tag}] {e['subject']}")
         print()
+    if dropped:
+        print(f"  ... TRUNCATED: {dropped} more record(s) not shown (denominator above is the "
+              f"true count; --top 0 for all, --json for machine-readable full set).")
     if not show:
         print("  no drift found in window (run --all for the full census).")
     return 0
