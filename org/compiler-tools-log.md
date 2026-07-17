@@ -20089,3 +20089,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.8.0_AE_CloudComp~D | NFRA_KUZUSPLIT.P0 + NFRA_COMPSIMILAR.PH1 | comp-kuzu (schema ground + live incremental corroboration), kuzu_nessie_load/kuzu_incremental_refresh (M1/M2/M3 timed exercises); comp-manifest-check not-yet-due (binds at P1 executable land) |
 | 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | OPAL_TAXONOMY | commit-gate/safe-commit/install-telemetry-hook | --enforce-grammar built (@e9b271291, 9 controls) + DC-5 hook-fix cycle (reinstall + positive-control PASS + sweep); org/mcp/hooks safe-commit correctly BLOCKED (BASE_EXEC lane) -> CTO | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
