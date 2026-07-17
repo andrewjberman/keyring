@@ -20184,3 +20184,24 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-17T23:03Z 0.4.0_DS_ClientPlatform~A (flip-evidence truth, Andrew-direct): read-only live grounding -- aws s3 ls/cp (canonical_nna+silver/transactions freshness, gold/logs 58-byte SKIP logs, deployed gold_dispatch.sh freshness gate, header_metrics data_as_of); aws events list-rules (bd-gold-nightly-fallback 23:00Z Mon-Sat); python lib.schwab_flows (monolith 07-14..07-16 gap days +$5.93M net). Diagnosed freeze = dead-allocations gate (re-keyed to transactions), separated from flip correctness (26,504/0 seam parity = the proof). No ad-hoc gold run (NEVER rule). Gap: full-C_01 dry-run not laptop-friendly (256-way gains bulk-load + full transactions scan -> S3 ReadTimeout).
 | 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/summary_corp... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/debtscan/summary_corpus.py | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/_canonical.py --file... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff infra/aws/globgrph/_canonical.py infra/aws/globgrph/_provenance.py infr... | FAIL |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/ANDREW_DIRECT_20260717... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260717T2245Z_opal-assets-bd49f-r... | PASS |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_GCONTR_SEV1_value_check_C... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260717T2317Z_schwab-si2-code-reh... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/resource_s... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/globgrph/resource_summaries_producer.tf | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_KUZUSPLIT.json --file... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_KUZUSPLIT.json org/projects/REGISTRY.md | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | NFRA_KUZUSPLIT.P1 + NFRA_COMPSIMILAR.PH1 | comp-manifest-check (commit-gate, blocked unregistered exec = correct SoD, PASS after coverage-map placement), comp-kuzu/-inc/-full (back-compat + AC-P1 exercise + wrapper parse), terraform fmt/validate/plan (producer TF + COND-1, 0-change/0-destroy), commit-gate (all .py CLEAN) |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
