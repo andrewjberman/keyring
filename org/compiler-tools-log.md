@@ -19973,3 +19973,29 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260717T2008Z_globgrph-alert-reso... | PASS |
 | 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/deli... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/TAXSMA_PT2_BD... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n) WHERE n.arn IS NOT NULL AND n.arn <> '' RETURN n.node_type A... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (c:GraphContract) RETURN c.contract_id, c.ratified_at, c.active LIMIT 10 | FAIL |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/task_orders/OPAL_STNDRD.Z1.standardi... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n) WHERE n.node_type IN ['S3_BUCKET','LAMBDA'] RETURN n LIMIT 2 | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH ()-[e]->() RETURN DISTINCT label(e) AS rel | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e]->(b:CloudNode) RETURN a.node_id AS src, e AS e... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e]->(b:CloudNode) WHERE a.arn='arn:aws:s3:::opal-... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/manifest-lint.py | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/manifest-lint.py | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_COMPSIMILAR.PH1.co... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/references/FRESHNESS_GATE_MANIFEST... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/references/FRESHNESS_GATE_MANIFEST_20260717.md | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn LIMIT 3 | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/references/FRESHNESS_GATE_MANIFEST... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/references/FRESHNESS_GATE_MANIFEST_20260717.md | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_COMPSIMILAR.PH2.en... | PASS |
+- 2026-07-17 ~1940-2010Z | 0.4.0_DS_ClientPlatform (base) | /open-calls sweep (Andrew-triggered): raw grep over own task_orders + logs for Andrew-call markers -> 0 open sovereign calls at lane; DS-2/B1 verified closed; orion carve-out is CTO-carried (NOT-MINE). Read-only, no comp-* proper (self-folder marker scan).
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.node_type... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.arn <> '' AND... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
