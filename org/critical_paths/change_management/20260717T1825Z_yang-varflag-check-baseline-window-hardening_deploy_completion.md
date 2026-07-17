@@ -1,6 +1,7 @@
 # Deploy-Completion Ledger -- yang-varflag-check (baseline-window hardening)
 
-**Status:** OPEN
+**Status:** COMPLETE
+**Closed:** 2026-07-17T18:3xZ
 **Opened:** 2026-07-17T18:25Z
 **Owner:** 0.2.0_DT_PortfolioAnalytics (post-close adversarial review of yang-pipeline-v1.5.0)
 **Lambda:** yang-varflag-check (pipeline: yang-pipeline)
@@ -23,14 +24,22 @@ the monthly laggard's lookback depth -- one manifest read/candidate, sub-second,
 well under the 120s timeout. No behavior change for the common (all-recent) case.
 
 ## Legs
-- [ ] 1. Source committed (commit-gate)
-- [ ] 2. build-and-upload.sh yang-pipeline yang-varflag-check
-- [ ] 3. terraform plan (expect: lambda artifact swap ONLY)
-- [ ] 4. safe-apply
-- [ ] 5. 0-diff plan
-- [ ] 6. record-terraform-deploy + tag yang-pipeline-v1.5.1 + push --follow-tags
-- [ ] 7. Behavior verify: invoke on 53a06944 -> peers still baselines to exec-0e10d5d56164
+- [x] 1. Source committed (commit-gate)
+- [x] 2. build-and-upload.sh yang-pipeline yang-varflag-check
+- [x] 3. terraform plan (expect: lambda artifact swap ONLY)
+- [x] 4. safe-apply
+- [x] 5. 0-diff plan
+- [x] 6. record-terraform-deploy + tag yang-pipeline-v1.5.1 + push --follow-tags
+- [x] 7. Behavior verify: invoke on 53a06944 -> peers still baselines to exec-0e10d5d56164
         (06-30) + 0 flags/600 cells (identity with v1.5.0's terminal result)
 
 ## Rollback surface
 Prior artifact version in S3 (versioned); revert = re-point s3_object_version / prior zip + apply.
+
+## Closure evidence (exercised)
+- Commit chain: source + map committed -> artifact VERIFIED (size 9642, sha256 match) ->
+  plan (1 change, lambda-only) -> safe-apply -> 0-diff -> tag yang-pipeline-v1.5.1 pushed.
+- Behavior verify on 53a06944: peers STILL baselines to exec-0e10d5d56164 (06-30), benchmarks/ts
+  to exec-c14fb8176125 (07-10), 0 flags / 600 cells -- byte-identical outcome to v1.5.0's terminal
+  run, confirming the change is behavior-preserving today and only extends the laggard lookback.
+- Deploy-completion discipline: opened + closed in-session, no stranded leg.
