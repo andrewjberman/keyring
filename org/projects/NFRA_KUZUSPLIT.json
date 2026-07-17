@@ -1,0 +1,18 @@
+{
+  "project_code": "NFRA_KUZUSPLIT",
+  "macro_code": "NFRA",
+  "name": "Graph-refresh scheduling + comp-kuzu-full/comp-kuzu-inc split -- MSTR-startup pays the daily full, workers ride incremental; follow-on to NFRA_GLOBGRPH",
+  "status": "active",
+  "current_phase": "PRD AUTHORED 2026-07-17 (CTO, from MSTR brief @5bd82a280 + LD-0307), AWAITING ANDREW RATIFICATION. HEADLINE (D-002 guard): the symmetric local incremental ALREADY EXISTS (kuzu_incremental_refresh.py, 07-08, CTO GO 195732Z, 92x faster) -- DO NOT REBUILD; the gap is scheduling+surfacing, not existence. Three-tool model RESOLVED at source (LD-0307): comp-aws derive = cloud producer (nightly, NEVER at MSTR startup) / comp-kuzu-full = local full projection (MSTR startup once) / comp-kuzu-inc = local incremental (workers, pre-query). 4 OPEN CALLS: O-1 the §5.1 fork (comp-kuzu-inc = incremental-OR-serve-labeled-stale NEVER incremental-or-full -- needs Andrew's EXPLICIT yes, gates Phase 1) / O-2 P0-instrument-first confirm / O-3 new-project-vs-reopen-closed-NFRA_GLOBGRPH (my call: new follow-on) / O-4 P4 two-machine distribute now-or-defer. Phases: P0 instrument -> P1 split commands -> P2 MSTR-startup hook (idempotent) -> P3 document (ships WITH P1) -> P4 optional two-machine distribute. Build not begun.",
+  "owner": "0.8.0_AE_CloudComp",
+  "owner_note": "0.8.0_AE_CloudComp builds (NFRA_GLOBGRPH platform owner, deepest in the kuzu/derive surfaces); CTO arch-gates (owns the globgrph platform + arch-gated the original 2026-07-08 incremental); MSTR governs the CLAUDE.md/XXX.md/MEMORY.md doc-law edits (Art. VI, ships same wave as the code so docs never lead reality).",
+  "coo_lane": "2.0.0_SA_COO",
+  "created": "2026-07-17",
+  "pods": ["0.8.0", "1.0", "0.0.0"],
+  "depends_on": ["NFRA_GLOBGRPH"],
+  "depends_on_note": "Follow-on to NFRA_GLOBGRPH (versioned-graph platform, CLOSED-COMPLETE 2026-06-16). Modifies that platform's local-projection refresh (kuzu_cli.py, .tools/comp-kuzu, kuzu_nessie_load / kuzu_incremental_refresh / _canonical.ensure_fresh); does NOT reopen the platform. The cloud 2a full-derive + 2b incremental_updater (globgrph) are UNCHANGED -- this project only splits + schedules the LOCAL projection.",
+  "prds": [
+    {"path": "docs/architecture/NFRA_KUZUSPLIT_PRD.md", "label": "NFRA_KUZUSPLIT PRD v0.1 (CTO implementation contract; phases + ACs + open calls)", "date": "2026-07-17"},
+    {"path": "docs/briefs/GRAPH_REFRESH_AUDIT_AND_KUZU_SPLIT_20260717.md", "label": "Design source of truth: the graph-refresh audit + kuzu-split (MSTR, LD-0307, incl. comp-aws-derive != comp-kuzu-full correction)", "date": "2026-07-17", "ref": "@5bd82a280"}
+  ]
+}
