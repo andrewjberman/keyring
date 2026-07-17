@@ -20205,3 +20205,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.8.0_AE_CloudComp~D | NFRA_KUZUSPLIT.P1 + NFRA_COMPSIMILAR.PH1 | comp-manifest-check (commit-gate, blocked unregistered exec = correct SoD, PASS after coverage-map placement), comp-kuzu/-inc/-full (back-compat + AC-P1 exercise + wrapper parse), terraform fmt/validate/plan (producer TF + COND-1, 0-change/0-destroy), commit-gate (all .py CLEAN) |
 | 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GCONTR.json | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_GCONTR.json | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_KUZUSPLIT_PRD.md | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_KUZUSPLIT_PRD.md | PASS |
+2026-07-17 | 0.5.0_AE_OpalETL | comp-glob/comp-grep x12+ (SmartX endpoint provenance, opal7-instance sweep, WP8 census, /49-schwab-conv step-5), ruff 0.15.11 PASS, py_compile+3 test suites PASS, tf plan/safe-apply (smartx-pipeline-v1.7.0), rail-checked raw aws (events/logs/s3/iam-simulate/invoke) | GAP(11th+): no comp-tool models the monolith schwab/smartx trees
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
