@@ -963,6 +963,14 @@ paths:
     lane: ANY_EXEC
     note: "debtscan config surface (suppressions, scan config, any non-.md) — exec-locked per the governance boundary above; canon-patterns.yaml is CTO-authored (lives at org/modules/graph/, not here)."
 
+  "org/modules/graph/debtscan/summary_corpus.py":
+    lane: ANY_EXEC_OR_AE
+    note: "NFRA_COMPSIMILAR PH1 comp-similar corpus builder (derive-at-scan BM25 summary corpus) -- lives in debtscan/ because it imports dup_scan.BM25 (sibling). Builder lane 0.8.0_AE_CloudComp~D (in ANY_EXEC_OR_AE) self-commits it. A comp-tool CODE file, same class as comp_*/extract_*/graph_*/contract_engine*.py (all ANY_EXEC_OR_AE). MORE SPECIFIC than debtscan/** ANY_EXEC (longest-match), so it opens the comp-similar CODE only -- the debtscan GOVERNANCE LOCK (suppression_v1.yaml / any .yaml / scan config) STAYS exec-locked under debtscan/** (the do-er cannot weaken its own gate). Decompose-time grant per the RV-0033/0034 convention. Grantor-landed 2026-07-17 by 1.0.0_SA_CTO (SoD -- grantee ~D does not commit own grant)."
+
+  "org/modules/graph/debtscan/comp_similar*.py":
+    lane: ANY_EXEC_OR_AE
+    note: "NFRA_COMPSIMILAR PH2 comp-similar tool modules (comp_similar_cli.py etc.) -- same builder ~D, same rationale as summary_corpus.py above: comp-tool CODE only; suppression_v1.yaml + scan config STAY exec-locked under debtscan/** (do-er cannot weaken its own gate). Longest-match overrides debtscan/** ANY_EXEC. Grantor-landed 2026-07-17 by 1.0.0_SA_CTO (SoD)."
+
   "org/compiler-tools-log.md":
     lane: ANY
     note: "Append-only compiler tools log — any agent appends after each session"
