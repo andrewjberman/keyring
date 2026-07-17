@@ -19915,3 +19915,5 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
 | 2026-07-17 | 0.5.0_AE_OpalETL | comp-grep x6 (WP8 pointer/prefix census, trn_nna producer-consumer trace) -- on-rails, denominators printed; comp-freshness help-example repointed schwab->monolith | worked; standing gap: no comp-tool models dying-bucket prefixes |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-07-17/session_wp8_lead_v25_... | PASS |
