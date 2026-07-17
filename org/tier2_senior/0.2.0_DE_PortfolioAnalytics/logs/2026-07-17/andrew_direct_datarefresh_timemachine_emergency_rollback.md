@@ -23,3 +23,16 @@ mid TO_PORTALREFRESH_FE_01 build.
 2. "Emergency Rollback" tab — SKETCH-FIRST: ASCII options presented in-session; Andrew's approval of
    one option gates implementation. Reuses FE_01 confirm/lockout/progress machinery against the
    existing rollback endpoint, targeted at the most recent successful upload.
+
+## Follow-on Andrew-direct rulings (same session, same channel)
+
+3. **Option pick** (~14:2xZ): verbatim: *"Option A"* — the hero-panel design. Implemented.
+4. **manifest.json scrub** (~14:3xZ): verbatim: *"Also please scan through data refresh and take out
+   any references to manifest.json; users have never uploaded manifest.json nor do they know what
+   that is. manifest.json is an internal framework we use for timestamping and audit, there is no
+   need to make any mention of that on the front end"* — all user-visible references removed
+   (UploadTab step copy + file-type card, FileDropZone hint/preview/tag, Invalid-Manifest toast,
+   CurrentStatePanel error copy, ManifestPreview component deleted, BE step names ReadManifest/
+   GenerateManifest display-aliased). Internal parse machinery untouched.
+5. **Tab order** (~14:4xZ): verbatim: *"I would also put emergency rollback as the second tab, not
+   the third tab. It should sit between 'upload' and 'history'."* — applied.
