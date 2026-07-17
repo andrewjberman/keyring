@@ -51,9 +51,24 @@ No comp-blast: nothing deleted; touched components' consumers are the DataRefres
 (verified by import grep). No pod_inventory.xml update: DataRefresh is not a pod-0.2 inventory page
 (admin surface, MSTR-assigned); structural additions recorded here instead.
 
+## Phase 2 (same session): Emergency Rollback tab + manifest scrub — portal DEV `064658cd2`
+
+Andrew picked **Option A** (sketch-gate closed by the sovereign pick). Built under CTO constraints
+a/b/c: `tabs/EmergencyRollbackTab.tsx` (new, 2nd tab per Andrew's ordering ruling) — hero panel,
+single action, target (date/exec/files/duration) displayed pre-acknowledge, same confirm dialog +
+lockout + PipelineProgress; calm busy state for concurrent runs (FE-side now, DT's 409 guard slots
+in with zero FE change). **manifest.json scrub** (Andrew-direct): all user-visible references
+removed — UploadTab step copy + file-type card, FileDropZone hint/preview/row-tag + dead parse
+state, `ManifestPreview.tsx` deleted, Invalid-Manifest toast dropped, CurrentStatePanel copy,
+`ReadManifest`/`GenerateManifest` display-aliased in PipelineProgress. Internal machinery untouched.
+
+Exercised (emergency scenarios added to the same script): cancel=0 POSTs; 6 clicks=1 POST;
+target-displayed assert PASS; success terminal "Restored to 2026-07-14"; 409 → calm busy, no error
+wall. typecheck/lint/`comp-transform schema-check EmergencyRollbackTab` clean. Hero + dialog +
+terminal + scrubbed-Upload screenshots read vs silver-canvas law (all content inside dark panels).
+
 ## Next Steps
 
-- [Andrew] Pick an Emergency Rollback sketch option (A/B/C) — implementation follows on approval.
-- [0.2.0_DT] Batch-promote DEV: `3b516623` + `84b24af8` + `9374414d4` (CTO: one batch).
-- [me] Implement Emergency Rollback tab per approved option + CTO constraints; RD POSN_CUSTOM
-  handback review (07-10) still queued behind this dispatch.
+- [0.2.0_DT] Push DEV + batch-promote: `3b516623` + `84b24af8` + `064658cd2` head (promote was
+  HELD for my final head — ping sent 20260717T144455Z; DE cannot push per role).
+- [me] RD POSN_CUSTOM handback review (07-10) still queued behind this dispatch.
