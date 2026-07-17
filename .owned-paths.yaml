@@ -1039,6 +1039,10 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "Compiler-tool shared SUPPORT modules (graph_cache.py freshness/query-vs-rebuild contract, etc.) imported by the *_cli.py entrypoints. AE owns per ADHC_COMPIL_V4 / NFRA_GRAPHS D2-D3 (graph_cache.py 2026-06-11). Structural completion of the comp_*/extract_*/cli.py AE-glob set — NOT a new grant; AE authoring comp-graph-tool code is long-established. Excludes graph-call-manifest.yaml (CTO D1 artifact; .yaml, not .py). Added by COO 2026-06-11 unblocking base-AE D2/D3 commit; same gap-class as the prior comp_*/extract_* adds."
 
+  "org/modules/graph/kuzu_*.py":
+    lane: ANY_EXEC_OR_AE
+    note: "NFRA_KUZUSPLIT P1 kuzu graph-refresh engines (kuzu_cli.py mode-flag + kuzu_nessie_load.py full / kuzu_incremental_refresh.py inc + the -inc serve-labeled-stale fallback logic). Builder lane 0.8.0_AE_CloudComp~D (already in ANY_EXEC_OR_AE) self-commits the engine code. The OTHER P1 surfaces are already permitted: kuzu_cli.py via *_cli.py; the two .tools/comp-kuzu-{full,inc} wrappers via .tools/** (ANY); comp-tools.yaml via its own ANY_EXEC_OR_AE rule -- this rule closes the ONLY gap, the non-cli kuzu_*.py engine files that otherwise fall to org/modules/** ANY_EXEC (excludes AE). Same NEW-engine-module class as contract_engine*.py / comp_*/extract_*/graph_*.py. DECOMPOSE-TIME proactive grant per the RV-0033/0034 convention (CTO-ratified 2026-06-15: a PRD assigning a graph-module tool to AE -> add the inclusive lane rule at open-time). graph-call-manifest.yaml comp-which registration STAYS the exec/COO SoD step. Added 2026-07-17 by 1.0.0_SA_CTO (grantor; SoD -- grantee ~D does not commit its own grant) at the KUZUSPLIT P1 arch-gate. Longest-match overrides org/modules/** ANY_EXEC."
+
   "org/modules/graph/comp-tools.yaml":
     lane: ANY_EXEC_OR_AE
     note: "Compiler tool registry. AE adds rows when shipping new compiler tools per ADHC_COMPIL_V4 family. Execs revise wider scope."
