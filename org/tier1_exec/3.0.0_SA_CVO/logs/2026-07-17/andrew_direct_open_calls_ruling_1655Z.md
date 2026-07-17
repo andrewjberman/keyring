@@ -21,9 +21,15 @@
 3. **RV-0050 F-001 (ENUMERATE grant) = GRANTED** on the corrected denominator (10 BASE_EXEC / 12
    total). (Rec: "grant — chosen on an understated denominator, better supported than originally
    argued.")
-4. **RV-0050 F-004 (D-003 hold-vs-retire): NOT RULED** — this lane's rec was explicitly "no
+4. **RV-0050 F-004 (D-003 hold-vs-retire): NOT RULED here** — this lane's rec was explicitly "no
    recommendation" (the D-003 evidence lives in MSTR's record), so "use your recs" adopts
-   nothing here. **F-004 remains OPEN at Andrew**; routed to MSTR to supply the rec.
+   nothing here. ~~F-004 remains OPEN at Andrew~~ **CORRECTED same hour (MSTR 170021Z): F-004 was
+   ALREADY RULED by Andrew 2026-07-16 — LD-0301, verbatim "we dont need the cl-fabric stuff, all
+   deprecated" → RETIRE.** My /open-calls listed it open because the ruling landed in MSTR's lane
+   and the DIRECTIVES.md transcription (CTO scribe) has not landed yet — the exact
+   ruled-elsewhere hazard the skill warns on; my inbox sweep could not see MSTR's record.
+   **Residual = CTO landing the D-003 retirement transcription** (routed to CTO 07-16 by MSTR;
+   today's relay is a second carrier).
 
 ## Scope note (surfaced, not adjudicated)
 
