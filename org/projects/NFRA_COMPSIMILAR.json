@@ -1,0 +1,28 @@
+{
+  "project_code": "NFRA_COMPSIMILAR",
+  "macro_code": "NFRA",
+  "name": "comp-similar -- the functional-overlap axis: BM25 similarity over a resource's SUMMARY (not its name) + the superseded-twin decommission heuristic that ties the comp-debris/heat/dups/drift family into one usable decommission workflow",
+  "description": "Andrew-direct (0.8.0_AE_CloudComp terminal, 2026-07-17; verbatim recorded @dc4207c7c / 1d81e760b / 3d326af47). A new comp-tool AND the doctrine + usage playbook around it, scoped explicitly by Andrew as three things in one: the WHY (why a functional-similarity tool exists and how deprecated/overlapping resources confuse agents), the HOW (how to USE comp-similar together with comp-dups/comp-debris/comp-heat/comp-drift to find decommission candidates), and the WHAT (the infrastructure). comp-similar scores BM25 lexical similarity over a resource's SUMMARY (what it DOES) where comp-dups scores over its name/file-body (what it IS/is-made-of) -- the functional-overlap axis the decommission family lacks. Headline mode = Andrew's superseded-twin fast-scan: a decommission candidate = a similar-name cluster with VERY HIGH summary similarity AND a LARGE hot-vs-cold heat divergence (one resource quietly replaced another, the old left running). Engine = the existing dup_scan.py BM25 class (copy-reuse, Andrew's stated intent). The one novel substrate = a STABLE resource-summary corpus: a new ARN-keyed append-only Iceberg table resource_summaries in the globgrph Nessie catalog (NOT a graph_nodes column -- that table is derived+regenerated+clobbered), projected into Kuzu as a node `summary` property via LEFT-JOIN so a re-derive never clobbers the editorial overlay. v1 corpus = derive-at-scan from the graph neighborhood (pipescript-style projection, uniform across resource types, no producer change); the authored one-off pass (~549 prime targets of ~841 independent resources / 1,894 ARN-bearing) is the enrichment. Advisory, never deletes, hold-aware -- same discipline as comp-dups + comp-debris. Disposal stays OPAL_LCLRPO's CTO-gated Andrew-delete-word path (no second disposal path).",
+  "prds": [
+    "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_COMPSIMILAR_PRD_v0.1_DRAFT.md (CTO promotes to docs/architecture/ at gate)"
+  ],
+  "source_brief": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/DECOMMISSION_TOOLING_ASSESSMENT_20260717.md @890e66375 (the research assessment -- comp-iam gaps + trino heat platform gap + compose-the-triad pipeline + Part E summary-authoring costing); Andrew-direct verbatim records org/tier2_senior/0.8.0_AE_CloudComp/deliverables/ANDREW_DIRECT_20260717_compiam-heat-decommission.md.",
+  "status": "active",
+  "phase": "PRD v0.1 DRAFTED 2026-07-17 (0.8.0_AE_CloudComp, Andrew-direct) @ org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_COMPSIMILAR_PRD_v0.1_DRAFT.md (CTO promotes to docs/architecture/ at gate) -- AWAITING CTO ARCH-GATE. The brief carries all three Andrew-scoped pillars (WHY doctrine + HOW playbook + WHAT infrastructure), the joint-signal superseded-twin algorithm, the ARN-keyed resource_summaries overlay + Kuzu projection design (grounded: graph_nodes has NO summary field today, props empty on the sampled S3 node -> the stable summary location must be ESTABLISHED not read), the registration plan (COMPCLOSE invariant: tools_index + curated comp-which rule + routing-test + comp-manifest-check), the five failure-modes-it-must-not-ship-with + dogfood (the monolith-cutover superseded pairs), and the six open arch decisions for CTO. Phases: ph0 CTO gate -> ph1 corpus (resource_summaries table + Kuzu projection + derive-at-scan populate) -> ph2 comp-similar engine + supersede mode + registration -> ph3 authored one-off summary pass (~549 prime targets first). CTO's early design lean folded (corpus = graph node summary not AWS Description -- Description is blind to S3/DDB = most of the surface; but the field does not exist yet, so derive-at-scan for v1, node-writer enrichment as follow-on). Registry record: COO to formally own/refresh (this JSON drafted per Andrew-direct).",
+  "blocking": "CTO ARCH-GATE on the PRD (registration invariant + the six open arch decisions: v1 corpus derive-at-scan-vs-authored; the resource_summaries Iceberg table + Kuzu LEFT-JOIN projection approval, 0.7.0-coordinated on the derive/refresh side; comp-similar own-tool-vs-comp-dups-mode; where the ~549-841 authoring fan-out runs; the heat source for supersede). Priority P3 (OPAL_CONSOLIDATION cleanup) -- the compose-the-triad half of the source assessment leads; comp-similar FEEDS the decommission column (the superseded-twin scan IS the overlap detector) so it is in-scope for consolidation, not a deferral. No build lands without CTO's gate + comp-manifest-check PASS.",
+  "owner": "builder: 0.8.0_AE_CloudComp (Andrew-direct reserved session) | gate: 1.0.0_SA_CTO (registration + arch) | records/registry: 2.0.0_SA_COO | sovereign: Andrew-direct",
+  "related": [
+    "OPAL_CONSOLIDATION",
+    "OPAL_LCLRPO",
+    "NFRA_GRAPHFEED",
+    "NFRA_GLOBGRPH",
+    "NFRA_DEBTSCAN",
+    "HEATMAP_OBJECT",
+    "OPAL_STNDRD"
+  ],
+  "created": "2026-07-17",
+  "sovereign": "Andrew (direct, comp-similar + the decommission-tooling doctrine)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
