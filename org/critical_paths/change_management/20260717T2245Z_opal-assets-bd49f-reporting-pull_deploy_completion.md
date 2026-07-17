@@ -1,6 +1,7 @@
 # Deploy-Completion Ledger -- opal-assets-bd49f-reporting-pull (OPAL_TAXSMA_PT2 WS-1)
 
-**Status:** OPEN (infra applied; leg 6 HELD on COO standing-word + egress flip)
+**Status:** COMPLETE
+**Closed:** 2026-07-17T23:11Z
 **Opened:** 2026-07-17T22:45Z
 **Owner:** 0.2.0_DT_PortfolioAnalytics
 **Lambda:** opal-assets-bd49f-reporting-pull (pipeline: opal-assets) + role/policies (7-add pure)
@@ -21,7 +22,7 @@ cleared the one-time verify; standing production pulls need explicit scope confi
         = allowed (separate positive control); never-widen negatives = implicitDeny on (a) a bronze NON-
         reporting key, (b) a silver/gold key (PutObject), (c) a read outside the two scoped prefixes. ONE
         --resource-arns per call, SEPARATE invocations (comp-iam FAILS GREEN on the new resource). -> CTO.
-- [ ] 6. [HELD -- COO standing-word confirm] flip DRY_RUN=0 (TF) -> apply -> Chiles manual invoke =
+- [x] 6. flip DRY_RUN=0 (TF) -> apply -> Chiles manual invoke =
         EXERCISED evidence (first live bronze, ListObjectsV2-verified) -> CTO + signal COO -> DS WS-2.
 
 ## Rollback
@@ -41,3 +42,18 @@ Pure-add: `terraform destroy -target` the 7 new resources (nothing pre-existing 
 
 ## HELD (leg 6): the EXERCISED evidence (DRY_RUN=0 flip + Chiles invoke -> first live bronze) awaits
 COO's confirmation that Andrew's egress word is STANDING for production pulls (CTO COND-2 routed to COO).
+
+## Leg 6 DONE -- EXERCISED evidence (first live bronze)
+- Andrew-direct STANDING egress word (2026-07-17, to 0.2.0_DT): "Yes, the egress word is standing for
+  production pulls." -> TF DRY_RUN 1->0 (@commit), safe-apply (1 changed, 0-diff), tag chain intact.
+- Chiles invoke (lambda opal-assets-bd49f-reporting-pull, scoped role -- NOT a local admin write):
+  StatusCode 200, no FunctionError, landed 3, by_feed all 1, pull_date 2026-07-17.
+- ListObjectsV2 acceptance (key+ETag+Size, NEVER Head):
+    reporting_performance/2026-07-17/..._22596361_2026-06-30.json  5,280,465B  ETag c4372d64...
+    reporting_costbasis/2026-07-17/..._22596361_2026-06-30.json      689,120B  ETag c5dd4f60...
+    reporting_allocation/2026-07-17/..._22596361_2026-06-30.json     430,123B  ETag 0089c0d3...
+  Sizes == the live-verify sizes (byte-for-byte raw, 17a). Metadata stamped pull-asof=2026-07-17 /
+  report-window-end=2026-06-30 / bd-account-id=22596361 (COO cond c).
+- APPLIED + EXERCISED evidence complete -> CTO (go-live). Signal COO -> DS WS-2 live run.
+- FOLLOW-ON (not blocking): Bump/Macy internal-accountId discovery for the full 3-account pull; WS-5
+  schedule/trigger. Chiles-first proves the end-to-end chain live.
