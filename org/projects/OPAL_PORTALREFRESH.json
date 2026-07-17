@@ -3,7 +3,7 @@
   "macro_code": "OPAL",
   "name": "OPAL Portal Refresh - DataRefresh rollback feature rectification (FE dialog/lockout/progress + BE ID-namespace seam/concurrency guard)",
   "status": "active",
-  "current_phase": "P1 - TOs issued, FE leg immediate, BE leg sequenced behind P0 ST-Benchmark residual",
+  "current_phase": "SHIPPED-LIVE 2026-07-17 ~15:02Z: portal v2.1.137 (PROD f11c15a1 = DEV 064658cd2, tag peel-verified, CI success) carries the FULL scope both legs -- FE_01 (confirm dialog + hook-level lockout + progress terminals, exercise-grade evidence) + Andrew adds (Time Machine panel REMOVED, Emergency Rollback tab per his Option A pick, manifest.json scrub, tab reorder) + BE_01 v2.3.0 (F1 version-restore seam FIXED reader-side + exercised, F2 409 REJECTED_ALREADY_RUNNING live, F3 emoji cleanup, F4 authorizer.lambda.email extraction runtime-proven). RESIDUAL: F4 formal acceptance = first REAL portal action writing a real-email history row (DT watches); Andrew's call on attributedTo annotation for today's dev@test.com rows; DT lane-grant question at COO.",
   "owner": "1.0.0_SA_CTO",
   "workers": {
     "frontend": "0.2.0_DE_PortfolioAnalytics",
