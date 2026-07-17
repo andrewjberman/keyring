@@ -19917,3 +19917,32 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.5.0_AE_OpalETL | comp-grep x6 (WP8 pointer/prefix census, trn_nna producer-consumer trace) -- on-rails, denominators printed; comp-freshness help-example repointed schwab->monolith | worked; standing gap: no comp-tool models dying-bucket prefixes |
 | 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
 | 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-07-17/session_wp8_lead_v25_... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-drift | comp-drift --help | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/XXX.md --file org/tier1_exec/2.0.0_... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/XXX.md org/tier1_exec/2.0.0_SA_COO/drive_log_20260717T1859Z_STANDDO... | FAIL |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check --help | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_STNDRD.json --file or... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_STNDRD.json org/projects/OPAL_TAXONOMY.json | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/OPAL_CONSOLIDATION_TAX... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_CONSOLIDATION_TA... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_CONSOLIDATION_TAXONOMY_STANDARD.md | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPSIMILAR_PRD.... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_COMPSIMILAR_PRD.md org/projects/NFRA_COMPSIMILAR... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPSIMILAR.json --fi... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_COMPSIMILAR.json org/projects/REGISTRY.md org/tier2_s... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/WP8_DECOM_CELL3_SI2_C... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/OPAL_CONSOLIDATION_TAX... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_AGENTBUS_PRD.md ... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_AGENTBUS_PRD.md org/projects/NFRA_AGENTBUS.json | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/OPAL_TAXONOMY_DC_LEDGE... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/OPAL_ASSETS.C12.le... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_KUZUSPLIT_PRD.md... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_KUZUSPLIT_PRD.md org/projects/NFRA_KUZUSPLIT.json | PASS |
+- 2026-07-17 ~1900-1940Z | 0.8.0_AE_CloudComp~C | P3-CENSUS v0.1.1/v0.1.2 residual resolution (live-primitive grounding): describe-alarms + absence-config.json (emitter Door-6 untwinned), sha256sum (DC-7 landing_guard byte-identical, no canonical), get-bucket-location (DC-15 schwab-runner cross-region), git show @59805972b. 16 DC classes; both controls PASS. @7d076fcfa; handed forward-drive to ~B.
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
