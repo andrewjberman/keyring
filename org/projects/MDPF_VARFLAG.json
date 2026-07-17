@@ -1,0 +1,21 @@
+{
+  "project_code": "MDPF_VARFLAG",
+  "macro_code": "MDPF",
+  "name": "MDPF Variance Flag - 2-sigma variance gate on critical served cells (Benchmark + Peers tabs, Model Portfolios) with acknowledge-or-cancel upload flow",
+  "status": "active",
+  "current_phase": "P0 - proposal at CVO for review + enhancement; implementation phasing (shadow -> gate -> extend) pends CVO pass + Andrew ratification",
+  "owner": "1.0.0_SA_CTO",
+  "workers": {
+    "backend_pipeline": "0.2.0_DT_PortfolioAnalytics (planned)",
+    "frontend": "0.2.0_DE_PortfolioAnalytics (planned)",
+    "verification": "3.0.0_SA_CVO (proposal review, then instrument verification)"
+  },
+  "created": "2026-07-17T14:2xZ",
+  "description": "Andrew-direct framework (2026-07-17, from his message to Yang, verbatim in the proposal doc): critical cells (Opal performance benchmarks, AUM figures) are locked with a variance flag -- an update presenting a number outside 2 standard deviations from normal is flagged and the user must manually acknowledge or cancel the upload. Registered as MDPF_VARFLAG per Andrew naming ruling (CTO session ~14:2xZ). Initial scope: everything on the Benchmark and Peers tabs of Model Portfolios. Motivating must-catch test case: the 2026-07-16 ST wrong-security substitution (.ST Index CIX collision; served ST YTD 1.72 -> -7.76, vol 3.32 -> 25.9, caught by human eyeball a day later). Design spine (proposal v0.1): flag on vintage-over-vintage DELTA per cell (not level), sigma-floors per cell class against cry-wolf, MAD-vs-classical std at CVO's pick; runs IN-PIPELINE post-generation pre-publication via staging keys + SFN waitForTaskToken pause; AWAITING_ACKNOWLEDGMENT surfaces in Data Refresh UI with all-or-nothing acknowledge (audited with real identity -- depends on OPAL_PORTALREFRESH F4) or cancel (staging discarded, served untouched); 24h auto-CANCEL fail-closed; rollback executions bypass the gate (never block the escape hatch). Phasing: P1 SHADOW (log-only, calibrate false-positive rate) -> P2 GATE (arm) -> P3 EXTEND (AUM + further surfaces, config-only). Five failure modes pre-registered for CVO attack in the proposal. Sibling controls, distinct layers: validate_data_pkl.py (pkl INPUT gate, @2d62804b6) and OPAL_PORTALREFRESH Emergency Rollback (escape hatch); VARFLAG is the SERVED-OUTPUT gate.",
+  "references": {
+    "proposal": "docs/architecture/MDPF_VARFLAG_PROPOSAL.md",
+    "input_gate_precedent": "org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/opal_bbgtml/validate_data_pkl.py @ 2d62804b6",
+    "sibling_project": "org/projects/OPAL_PORTALREFRESH.json",
+    "incident": "P0 ST-Benchmark 2026-07-17 (this session's record + DT closure)"
+  }
+}
