@@ -20142,3 +20142,37 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/OPAL_TAXONOMY_DC_LEDGE... | PASS |
 | 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/SCHWAB_AUTO_PULL_DESIG... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff data/assets/docs/SCHWAB_AUTO_PULL_DESIGN.md infra/aws/ec2/canonical-sch... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/bd-pipel... | FAIL |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(n) AS n | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu-inc | comp-kuzu-inc MATCH (n:CloudNode) RETURN count(n) AS n | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu-full | comp-kuzu-full --schema | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check existence | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0309.md --file org/... | PASS |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0309.md org/tier0/reviews/RV-0051.md | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/WP8_DECOM_PREFIX_DISPOSI... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/opal-assets/bd49f_r... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/opal-assets/bd49f_reporting_pull.tf org/critical_pa... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-kuzu-full --file .tools/com... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-kuzu-full .tools/comp-kuzu-inc infra/aws/globgrph/_canonica... | FAIL |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_DECOMTOOL.TO-1.lan... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260717T2245Z_opal-assets-bd49f-r... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0309.md --file org/... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0309.md org/tier0/reviews/RV-0051.md | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-kuzu-full --file .tools/com... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-kuzu-full .tools/comp-kuzu-inc infra/aws/globgrph/_canonica... | FAIL |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/mdpf-pip... | FAIL |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0309.md --file org/... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0309.md org/tier0/reviews/RV-0051.md | PASS |
+2026-07-17 ~2255Z | 2.0.0_SA_COO | COORDINATE/VALIDATE | git diff+show(+positive-control) grounded MSTR KUZUSPLIT drift = already-fixed (no empty commit); safe-commit x2 (35c627d98 registry, f15046871 TO) surface-check+risk-reflex CLEAN; grep state-checks. No comp-* (routing/records, no code/infra touch).
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-17/s... | PASS |
