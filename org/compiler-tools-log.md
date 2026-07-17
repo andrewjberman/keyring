@@ -20044,3 +20044,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-17/s... | PASS |
 | 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0_exec/0.0.0_AB_MSTR/logs/2026-... | PASS |
 | 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0_exec/0.0.0_AB_MSTR/logs/2026-07-17/session_1237-2100Z_andrew-... | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/WP8_TRN_NNA_OPTIO... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/hooks/post-tool-telemetry.sh | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/mcp/hooks/post-tool-telemetry.sh | FAIL |
+- 2026-07-17T21:14Z 0.4.0_DS_ClientPlatform~A (WP8 D1 land + D2 file): aws iam get-role-policy + simulate-principal-policy (bd-exporter-ec2-role, fact_trn exact key + pos/neg controls SEPARATE -> APPLIED GetObject confirmed, negative implicitDeny discriminates); commit-gate x2 (3 .py D1 + 1 md D2, clean); comp-blast load_schwab_flows_by_date (empty, honestly reported -- consumers pre-censused C_01 bd only / cot separate). Gap: AC1 re-run + fact-vs-dim identity remain boto3/pandas parquet reads, no comp-tool covers.
+| 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
