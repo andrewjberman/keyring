@@ -20026,3 +20026,19 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.8.0_AE_CloudComp~B | OPAL_TAXONOMY | commit-gate/safe-commit/surface-check/comp-pulse | W1 lint builds -- manifest-lint.py DC-13+15 (@4ee2888e3) + trigger-census.py DC-8..11 reconcile (@1ed893633); all commit-gate PASS, controls exercised; --build live sweep timed out (offline harness workaround) | PASS |
 | 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/TAXSMA_PT2_BD... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-blast | comp-blast load_schwab_flows_by_date | FAIL |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/smartx_assets_pull/bac... | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/smartx_assets_pull/backfill.py infra/aws/lambda/smartx... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/lib/sch... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff data/black_diamond/scripts/gold/lib/schwab_flows.py data/black_diamond/... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/task_orders/OPAL_TAXSMA_PT... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/trigger-census.py | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/trigger-census.py | PASS |
+
+- 2026-07-17 (1.0.0_SA_CTO, 1249-2103Z): comp-which/pipescript routed the P0 ST-benchmark to the benchmark thread; comp-grep existence-check caught the pre-existing NFRA_AGENTBUS (avoided a duplicate PRD); freshness_manifest_gen + comp-freshness built the served-artifact freshness layer (54 rows, 19-cluster miscalibration); comp-state --self-test 3/3 but full/--project runs hung on the serial-subprocess bug (COO fixed 629s->12s same session); comp-blast NOT-FOUND on dynamic-key rollback consumers (used Explore census).
+2026-07-17 | 0.0.0_AB_MSTR | session log | comp-which/comp-grep/comp-glob (PKL loc, kuzu, GCONTR routing), comp-kuzu provenance-read (graph_contracts 745h vintage = decisive for GCONTR unloaded-rows + graph-refresh audit), comp-graph status, value_check_benchmark_period_defs.py (exit 0, 250/250, exercised) | all PASS | gap: none new (reconfirmed CloudWatch-emoji charmap + gzip .json S3 read hazards)
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-17/s... | PASS |
