@@ -65,11 +65,38 @@ machine** (mkdir-mutex + atomic-swap), so one agent's refresh warms the DB for i
 2. **Cold start** (no local DB) → full.
 3. **Guard trip** (count mismatch / rc=1 error) → full.
 
-**The "10-minute" disambiguation — HONEST, and Phase-0 work, not an assumption:** the measured local
-full-reload is ~6min (356s). A ~10min "derive" is more consistent with **`comp-aws derive`** (the live-AWS
-scan that *builds* `graph_nodes`, a different operation from projecting the Iceberg HEAD into Kuzu) run
-directly, or machine variance on the nessie-load. **Phase 0 must instrument which path the operator
-actually hits before the fix is sized** — do not conflate the AWS-scan derive with the Iceberg→Kuzu reload.
+### 3.1 `comp-aws derive` is NOT `comp-kuzu-full` — RESOLVED at source (Andrew asked; this is the answer)
+
+The two are different operations on different data in different directions. This was left open as
+"Phase-0 instrument which" in the first draft; it is now resolved at `comp_aws_cli.py:2539` (`cmd_derive`)
++ `:2677` + `kuzu_nessie_load` / `_canonical`:
+
+| | `comp-aws derive` | `comp-kuzu-full` (= `kuzu_nessie_load`) |
+|---|---|---|
+| Reads from | **LIVE AWS** (describe, ~30 classes) + TF | **Iceberg/Nessie HEAD** (S3) |
+| Produces | typed graph **JSON** (nightly Fargate then `commit_to_iceberg → Nessie`) | **local KuzuDB file** (the query surface) |
+| Direction | **BUILDS** the cloud graph content (producer) | **PROJECTS** cloud HEAD into local query DB (consumer) |
+| Cloud-mutating | only when explicitly committed — the nightly does; **bare CLI just writes JSON** | **No** — local file only |
+| Cost | **~10 min** (AWS scan is the slow part) | ~6 min (Iceberg→Kuzu) |
+
+**Two consequences that fix a premise of this brief:**
+1. Bare `comp-aws derive` **does not refresh the local query surface at all** — `comp-kuzu`'s DB is "built
+   from NESSIE/Iceberg" (`comp_aws_cli.py:2677`), not from a manual derive's JSON. So the ~10-min derive is
+   the *cloud producer*, not a local-refresh path. If the operator's recurring 10-min hit is
+   `comp-aws derive`, it is the **wrong tool for refreshing local** — heavy, and it doesn't even update
+   what `comp-kuzu` queries.
+2. Therefore **"full derive at MSTR startup" = `comp-kuzu-full`, never `comp-aws derive`.** MSTR must not
+   run `comp-aws derive` at startup: deriving+committing the cloud graph is the nightly Fargate's job, and
+   re-running it is redundant ~10-min AWS churn racing the nightly. MSTR needs to PROJECT the cloud's
+   already-fresh HEAD (kept current by 2a nightly + 2b incremental) into local Kuzu — that is
+   `comp-kuzu-full` (~6 min, once).
+
+**The clean three-tool model this design stands on:** `comp-aws derive` = cloud producer (nightly owns it,
+rarely hand-run) · `comp-kuzu-full` = local projection, full, MSTR-startup once · `comp-kuzu-inc` = local
+projection, incremental, every other agent pre-query.
+
+(Residual Phase-0 item, now narrow: confirm the operator's historical 10-min command was in fact
+`comp-aws derive` vs a `--force` kuzu reload, so the doc can name the exact habit being replaced.)
 
 ## 4. So the real gap is three things, none of them "existence"
 
