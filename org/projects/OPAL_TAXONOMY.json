@@ -1,0 +1,18 @@
+{
+  "project_code": "OPAL_TAXONOMY",
+  "macro_code": "OPAL",
+  "name": "OPAL Taxonomy - universal naming/structural consistency across the consolidation estate, cloud-first (opal-data-assets) then local (data/assets/) then runners; ABSORBS OPAL_STNDRD",
+  "status": "active",
+  "current_phase": "REGISTERED 2026-07-17 (Andrew-direct, CTO terminal ~18:5xZ). Founding artifact ALREADY IN HAND: the taxonomy standard @cc1cd96dd + the P3-CENSUS v0.1 @68d0d74d4 (14 named deviation classes DC-1..DC-14, both Phase-2 controls PASS). Opening queue = CTO dispositions on the 14 DCs (migrate-now/next-touch/carve-out) -> DC-* lints on existing hooks. Awaiting driver spawn.",
+  "owner": "1.0.0_SA_CTO",
+  "driver": "0.8.0_AE_CloudComp~B (Andrew-spawned 2026-07-17 ~18:5xZ as the OPAL_TAXONOMY driver; sibling ~C holds the live census it feeds from)",
+  "created": "2026-07-17",
+  "description": "Andrew-direct (CTO terminal 2026-07-17 ~18:5xZ, verbatim intent): universal taxonomy consistency across the OPAL_CONSOLIDATION subjects, CLOUD FIRST. Sequenced scope: PHASE 1 CLOUD = the opal-data-assets bucket -- every key conforms to the monolith grammar {source}/{scope}/{layer}/{type|feed}/{date}, schedulers/{unit}-{function}-{cadence}, IAM {resource}-role, per the standard; PHASE 2 LOCAL = the data/assets/ repo folder -- same grammar mirrored (three-layer split, canonical libs, no foreign subtrees); PHASE 3 EXPAND = runner resources (EC2 OS baseline AL2023, Lambda/chunking/autostart patterns, scheduler grammar, absence-twins, TF, OS+IAM) 'and so on'. GOAL: rules adhered to UNIVERSALLY in those locations, not aspirationally. MECHANISM (already proven on hour one): census (0.8.0~C) -> CTO ruling per deviation (migrate-now / migrate-at-next-touch / recorded carve-out, the ruling-20 pattern) -> DC-* lints riding EXISTING hooks (commit-gate / safe-deploy / comp-manifest-check registration invariant) -- gate-what-you-measured, never speculative lint, renames ride NATURAL TOUCHES never big-bang. FOLDS IN OPAL_STNDRD (Andrew-direct: 'examine OPAL_STNDRD ... folded in ... and consolidated'): OPAL_STNDRD's CTO-ratified 6 axes (A medallion / B trigger-scheduler / C lambda / D EC2 / E terraform / F registry-home; 0.6.2 brief @20b52be25) become OPAL_TAXONOMY's standards library; OPAL_STNDRD superseded->reference-point (its Z1 executor lane 0.7.0~Z died and never re-registered -- that stall is WHY it folds into a live-driven project). RELATIONSHIP TO OPAL_CONSOLIDATION: OPAL_TAXONOMY is the P3 'consistency spine' PROMOTED to its own registered project -- OPAL_CONSOLIDATION stays the master bronze->platinum migration; OPAL_TAXONOMY owns the naming/structural consistency of the resources that migration produces. Spine doc: docs/architecture/OPAL_CONSOLIDATION_TAXONOMY_STANDARD.md.",
+  "references": {
+    "standard": "docs/architecture/OPAL_CONSOLIDATION_TAXONOMY_STANDARD.md @cc1cd96dd",
+    "census_v0.1": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/OPAL_CONSOLIDATION_TAXONOMY_CENSUS_20260717.md @68d0d74d4 (14 DCs)",
+    "folded_project": "org/projects/OPAL_STNDRD.json (superseded-into)",
+    "folded_brief": "org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/BRIEF_CONSOLIDATION_RESOURCE_STANDARDIZATION_20260715.md @20b52be25 (the 6-axis standards library)",
+    "master": "org/projects/OPAL_CONSOLIDATION.json"
+  }
+}
