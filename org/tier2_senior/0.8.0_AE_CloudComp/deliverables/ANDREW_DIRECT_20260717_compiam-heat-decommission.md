@@ -37,3 +37,24 @@ Three asks, sequenced by Andrew himself:
 
 Note for the record: this is research/assessment scope. Any actual decommission/delete action
 remains gated by existing law (human confirmation for destructive ops; NEVER-rules; CTO applies).
+
+## ADDENDUM — Andrew-direct, same terminal, ~18:2xZ (comp-similarity, a proposed NEW tool)
+
+VERBATIM:
+
+> Yes there is another part of this, a tool that does not exist yet but should. i'd call it
+> comp-similarity. the idea would be that it would be some kind of bm25 lexical similarity score
+> between a summary of a resource, same as comp-dups but instead of name-based, it would somehow
+> get a stable summary location of the resource. i dont know if aws has a summary field somewhere
+> or where we'd get that, so would have to think about hwo that would work. Depending on the
+> design of comp-dups, it could likely use a very similar engine, its just the target is slightly
+> different.
+
+Receiving agent's read (non-binding): a 4th research component. comp-dups today scores BM25 over
+NAMES + a content corpus; comp-similarity scores BM25 over a per-resource SUMMARY string, to catch
+resources that DO the same thing under different names (the "overlapping resources" half of the
+original ask). OPEN DESIGN QUESTION Andrew named explicitly: the "stable summary location" — where a
+resource's purpose-summary comes from (AWS has Description fields on SOME resources — Lambda, IAM
+role, EventBridge rule, SG — but not S3/DDB; tags; the TF-declared description; or the comp-graph
+node summary the estate already builds). Engine reuse from comp-dups (dup_scan BM25) is the stated
+intent; the novel part is the summary-corpus sourcing. Folded into the assessment as a design section.
