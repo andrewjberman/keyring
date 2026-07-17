@@ -19666,3 +19666,24 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/api/portal-proxy.ts --file p... | PASS |
 | 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DE_PortfolioAnalytics/... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DRFR_VARFLAG_PROPOSAL.md | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/DRFR_VARFLAG_PROPOSAL.md | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_VARFLAG_PROPOSAL... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_VARFLAG_PROPOSAL.md org/projects/MDPF_VARFLAG.json | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-transform | comp-transform schema-check EmergencyRollbackTab | PASS |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/responses/M... | PASS |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/responses/MDPF_VARFLAG_cvo_review_20260717.md | PASS |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-17/startup_and_mdpf_varflag_re... | PASS |
+2026-07-17T14:33Z | 3.0.0_SA_CVO | comp-grep(bucket lineage) PASS, comp-pulse CLEAN via safe-commit; MDPF_VARFLAG review grounding
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260715T1815Z_opal-bbgtml-gateway... | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-transform | comp-transform schema-check EmergencyRollbackTab | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/DataRefresh/DataRefres... | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DE_PortfolioAnalytics/logs/2026-07-17/andrew_dir... | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DE_PortfolioAnalytics/logs/2026-07-17/datarefres... | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 close | comp-transform schema-check x3 PASS; comp-surface-check file-level SEV1 -> verified-additive ACK; comp-to | session close 1335-1450Z |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DE_PortfolioAnalytics/... | PASS |
