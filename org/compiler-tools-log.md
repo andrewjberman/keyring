@@ -19834,3 +19834,22 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 ~18:15Z | 0.4.0_DS_ClientPlatform~A | comp-which x1, comp-grep x6, comp-glob x1, commit-gate x6 | flip-block diagnosis + allocations census + L5b conv-seven re-point; parquet-read rail gap re-noted (3rd) |
 | 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gold_di... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff data/black_diamond/scripts/gold/gold_dispatch.sh | FAIL |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions yang-varflag-check --settle-retry-seconds... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/yang-pip... | FAIL |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file org/tier2_... | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-freshness org/tier2_senior/0.5.0_AE_OpalETL/deliverables/WP... | FAIL |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260717T1745Z_yang-varflag-check-... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/logs/2026-07-17/varflag-sh... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | OPAL_CONSOLIDATION.P3-CENSUS.taxonomy-conformance-census | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name =~ '.*(daily|assets).*' AND n.node_type =~ '... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-debris | comp-debris --help | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260716T1948Z_nfra-website-phaseB... | PASS |
+| 2026-07-17 ~18:15Z | 0.4.0_DS_ClientPlatform~A | none (delta window) | split-lane re-key handoff closure -- pure MCP coordination, no tool runs; grounding logged in the 385af8176 window |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
