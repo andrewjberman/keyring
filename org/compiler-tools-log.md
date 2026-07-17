@@ -20042,3 +20042,5 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-17 | 0.0.0_AB_MSTR | session log | comp-which/comp-grep/comp-glob (PKL loc, kuzu, GCONTR routing), comp-kuzu provenance-read (graph_contracts 745h vintage = decisive for GCONTR unloaded-rows + graph-refresh audit), comp-graph status, value_check_benchmark_period_defs.py (exit 0, 250/250, exercised) | all PASS | gap: none new (reconfirmed CloudWatch-emoji charmap + gzip .json S3 read hazards)
 | 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-17/s... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0_exec/0.0.0_AB_MSTR/logs/2026-... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0_exec/0.0.0_AB_MSTR/logs/2026-07-17/session_1237-2100Z_andrew-... | PASS |
