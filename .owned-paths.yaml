@@ -308,6 +308,21 @@ lanes:
       - 0.2.0_DT_PortfolioAnalytics
     description: "yang-pipeline deploy lane — the full AE CLOUD_OPS_OR_ETL set (PRESERVED verbatim, so AE deploys of all pipelines via the shared source map are unaffected) PLUS 0.2.0_DT_PortfolioAnalytics, who holds Full DT Authority over yang-pipeline and whose lambda deploys MECHANICALLY write the source map + yang TF CHANGELOG. SCOPED to yang-pipeline — NOT a blanket infra/aws grant. Closes the DT-enum gap (3 audited GIT_COMMIT_AUTHOR_OVERRIDE on the clean yang-v2.4.12 deploy 2026-06-26 — a repeat override for a STANDING role-authorized action = a coverage gap to close). Mirrors the TRADE_PIPELINE_INFRA (DT 0.3.0) + YCHARTS (DS) code-owner-gets-scoped-infra precedents. Drafted by 0.2.0_DT per COO approval 20260626T154102Z; CTO arch-gated 2026-06-26 — DT authority SOURCE-VERIFIED (prompt.md:39 'yang-pipeline — Full DT Authority' + deliverables/deployment_map.xml:26 module name=yang-pipeline authority=full), and AE set verified == CLOUD_OPS_OR_ETL exactly (no AE regression on the shared source map). Grantor-landed (SoD: grantee does not commit its own permission grant). 0.8.0_AE_CloudComp added 2026-07-02 by 2.0.0_SA_COO~B: base 0.8.0 is an AE (LD-0218 unified AWS+MS compiler/AE owner of infra/aws/globgrph) now deploying a globgrph lambda (opal-globgrph-tool-activity-freshness, NFRA_TOOLHEALTH emit-wiring L4 a0e340134) whose deploy MECHANICALLY writes the shared source map (Rule 4) -- the same code-owner-gets-the-shared-source-map use as the DT-yang precedent; scoped to the ONE source-map file by the exact-file longest-match; cross-pipeline mis-writes bounded by the CI drift detection like every lane member. Same recurring AE-enumeration gap as the ANY_EXEC_OR_AE base-0.8.0 add earlier this session. CC CTO."
 
+  DATA_REFRESH_DEPLOY:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 0.2.0_DT_PortfolioAnalytics
+    description: "data_refresh Lambda deploy lane -- the full AE CLOUD_OPS_OR_ETL set (PRESERVED verbatim, no AE regression) PLUS 0.2.0_DT_PortfolioAnalytics, sovereign-delegate DT for the PortfolioAnalytics pod whose CTO-issued TOs (TO_PORTALREFRESH_BE_01, TO 56b9d938d) assign this Lambda and whose deploys write its source. SCOPED to infra/aws/lambda/data_refresh/** only -- NOT a blanket infra grant; the control is the scope boundary, not the grant cadence. Closes the DT-enum gap (audited GIT_COMMIT_AUTHOR_OVERRIDE 2026-07-17T14:01:05Z on the clean BE01 v2.3.0 deploy -- repeat-override-for-a-standing-role = coverage gap, same class as the yang-v2.4.12 precedent). Mirrors YANG_PIPELINE_DEPLOY exactly. DT-routed the decision to COO (SoD) 143722Z; COO ruled permanent-scoped; CTO ARCH-GATE PASS 20260717T163706Z (permanent, not TO-temporary; Andrew's standing routing pattern at that pod cited). Grantor-landed by 2.0.0_SA_COO (SoD: grantee does not commit its own grant)."
+
   TIER0_LAW:
     permitted_agents: []
     description: "Tier-0 governance law -- Constitution, Stakes Matrix, Directives. NO agent; Andrew-only (human commit). Constitution Art. III. The owned-paths hook fails OPEN for a no-serial human committer (owned-paths-check.sh lines 67-72: GIT_AUTHOR_NAME unset -> skip), so Andrew commits the law docs unimpeded while any agent serial hits the empty permitted_agents and is blocked. Added 2026-05-22 by COO per Andrew directive (Tier-0 framework)."
@@ -1287,6 +1302,10 @@ paths:
   "infra/aws/terraform/yang-pipeline/**":
     lane: YANG_PIPELINE_DEPLOY
     note: "yang-pipeline Terraform (CHANGELOG.json written by record-terraform-deploy + the pipeline TF DT 0.2.0 holds Full DT Authority on). DT 0.2.0 + full AE set. Longest-match overrides infra/aws/** AE-only. COO-approved 20260626T154102Z, CTO-gated (DT authority source-verified prompt.md:39 + deployment_map.xml:26)."
+
+  "infra/aws/lambda/data_refresh/**":
+    lane: DATA_REFRESH_DEPLOY
+    note: "data_refresh Lambda source -- full AE set preserved + DT 0.2.0 (sovereign-delegate DT holding the CTO-issued TO authority on this Lambda; deployed BE01 v2.3.0 under audited override 2026-07-17). Longest-match overrides infra/aws/** AE-only. COO grantor-landed on CTO arch-gate pass 20260717T163706Z; mirrors YANG_PIPELINE_DEPLOY."
 
   "infra/aws/lambda/ci/lambda-source-map.json":
     lane: YANG_PIPELINE_DEPLOY
