@@ -20212,3 +20212,13 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-17 | 0.5.0_AE_OpalETL | comp-glob/comp-grep x12+ (SmartX endpoint provenance, opal7-instance sweep, WP8 census, /49-schwab-conv step-5), ruff 0.15.11 PASS, py_compile+3 test suites PASS, tf plan/safe-apply (smartx-pipeline-v1.7.0), rail-checked raw aws (events/logs/s3/iam-simulate/invoke) | GAP(11th+): no comp-tool models the monolith schwab/smartx trees
 | 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/TAXSMA_ACCOUN... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-debris-ext | comp-debris-ext --types s3 --days 30 --hot-days 7 | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+
+2026-07-17 ~2000-2351Z 0.2.0_DT_PortfolioAnalytics (OPAL_TAXSMA_PT2 assess->WS-1 live->registry brief): comp-grep/comp-glob for the Cottonwood REST ingest template + monolith taxonomy grammar + the one_way_fan_in_fence policy. comp-iam DELIBERATELY NOT the WS-1 IAM verdict instrument (it FAILS GREEN on a new (action,resource)) -- used live aws iam simulate-principal-policy, 5 separate one-resource calls, proving PutObject reporting-only allowed + 4 never-widen denials incl the cross-firm fence.
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
