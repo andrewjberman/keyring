@@ -323,6 +323,21 @@ lanes:
       - 0.2.0_DT_PortfolioAnalytics
     description: "data_refresh Lambda deploy lane -- the full AE CLOUD_OPS_OR_ETL set (PRESERVED verbatim, no AE regression) PLUS 0.2.0_DT_PortfolioAnalytics, sovereign-delegate DT for the PortfolioAnalytics pod whose CTO-issued TOs (TO_PORTALREFRESH_BE_01, TO 56b9d938d) assign this Lambda and whose deploys write its source. SCOPED to infra/aws/lambda/data_refresh/** only -- NOT a blanket infra grant; the control is the scope boundary, not the grant cadence. Closes the DT-enum gap (audited GIT_COMMIT_AUTHOR_OVERRIDE 2026-07-17T14:01:05Z on the clean BE01 v2.3.0 deploy -- repeat-override-for-a-standing-role = coverage gap, same class as the yang-v2.4.12 precedent). Mirrors YANG_PIPELINE_DEPLOY exactly. DT-routed the decision to COO (SoD) 143722Z; COO ruled permanent-scoped; CTO ARCH-GATE PASS 20260717T163706Z (permanent, not TO-temporary; Andrew's standing routing pattern at that pod cited). Grantor-landed by 2.0.0_SA_COO (SoD: grantee does not commit its own grant)."
 
+  BD49F_CONVERT_DEPLOY:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 0.2.0_DT_PortfolioAnalytics
+    description: "opal-assets bd49f dim-convert deploy lane -- full AE set PRESERVED + 0.2.0_DT, scoped to the ONE converter (lambda source dir + its dedicated TF file), per CTO arch-gate 20260717T170500Z ('APPROVED... permanent, scoped to the bd49f converter dir only'; premise: Andrew's standing routing of BD/tax-pt2 pod work at DT -- second Andrew-direct tasking there 07-17). NOT an opal-assets-wide grant: the shared opal-assets CHANGELOG.json + other converters stay AE-only (CLOUD_OPS_OR_ETL); if the CI deploy-record write frictions on the shared CHANGELOG, that is a surfaced seam, not a silent widen. Closes the 4-override cluster 2026-07-17 16:33-16:56Z (audited, clean three-defect cure @opal-assets-v0.26.0). Grantor-landed by 2.0.0_SA_COO (SoD). Mirrors DATA_REFRESH_DEPLOY / YANG_PIPELINE_DEPLOY."
+
   TIER0_LAW:
     permitted_agents: []
     description: "Tier-0 governance law -- Constitution, Stakes Matrix, Directives. NO agent; Andrew-only (human commit). Constitution Art. III. The owned-paths hook fails OPEN for a no-serial human committer (owned-paths-check.sh lines 67-72: GIT_AUTHOR_NAME unset -> skip), so Andrew commits the law docs unimpeded while any agent serial hits the empty permitted_agents and is blocked. Added 2026-05-22 by COO per Andrew directive (Tier-0 framework)."
