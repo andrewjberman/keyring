@@ -20073,3 +20073,19 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/TAXSMA_PT2_WS... | PASS |
 | 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/handoff/SKILL.md | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/handoff/SKILL.md | FAIL |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions smartx-assets-daily-pull --settle-retry-s... | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/smartx-p... | FAIL |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/comp_similar_phase1/PH... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/DC5_telemetry_hook_fix... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/OPAL_TAXONOMY_DC_LEDGE... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/OPAL_TAXSMA_PT2.WS... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | NFRA_KUZUSPLIT.P0 + NFRA_COMPSIMILAR.PH1 | comp-kuzu (schema ground + live incremental corroboration), kuzu_nessie_load/kuzu_incremental_refresh (M1/M2/M3 timed exercises); comp-manifest-check not-yet-due (binds at P1 executable land) |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
