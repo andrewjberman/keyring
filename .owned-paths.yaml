@@ -1318,6 +1318,14 @@ paths:
     lane: YANG_PIPELINE_DEPLOY
     note: "yang-pipeline Terraform (CHANGELOG.json written by record-terraform-deploy + the pipeline TF DT 0.2.0 holds Full DT Authority on). DT 0.2.0 + full AE set. Longest-match overrides infra/aws/** AE-only. COO-approved 20260626T154102Z, CTO-gated (DT authority source-verified prompt.md:39 + deployment_map.xml:26)."
 
+  "infra/aws/lambda/opal-assets/opal-assets-bd49f-dim-convert/**":
+    lane: BD49F_CONVERT_DEPLOY
+    note: "bd49f dim-convert Lambda source -- AE set + DT 0.2.0 per CTO arch-gate 170500Z. Longest-match overrides infra/aws/** AE-only."
+
+  "infra/aws/terraform/opal-assets/bd49f_convert.tf":
+    lane: BD49F_CONVERT_DEPLOY
+    note: "bd49f converter's dedicated TF file (exact-file longest-match; the rest of infra/aws/terraform/opal-assets/ stays AE-only incl. the shared CHANGELOG.json)."
+
   "infra/aws/lambda/data_refresh/**":
     lane: DATA_REFRESH_DEPLOY
     note: "data_refresh Lambda source -- full AE set preserved + DT 0.2.0 (sovereign-delegate DT holding the CTO-issued TO authority on this Lambda; deployed BE01 v2.3.0 under audited override 2026-07-17). Longest-match overrides infra/aws/** AE-only. COO grantor-landed on CTO arch-gate pass 20260717T163706Z; mirrors YANG_PIPELINE_DEPLOY."
