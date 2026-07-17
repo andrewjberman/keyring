@@ -19999,3 +19999,30 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.arn <> '' AND... | PASS |
 | 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/summary_corp... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/debtscan/summary_corpus.py | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0308.md --file org/... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0308.md org/tier1_exec/3.0.0_SA_CVO/deliverables/NF... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_KUZUSPLIT.P0-P1.in... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0308.md | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0308.md | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_GCONTR_SEV1_value_check_r... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-ec... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/canonical-schwab-ec2/iam.tf | FAIL |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/references/FRESHNESS_GATE_MANIFEST... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/references/FRESHNESS_GATE_MANIFEST_20260717.md | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/trigger-census.py | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/trigger-census.py | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/comp_similar_phase1/PH... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/OPAL_TAXONOMY_DC_LEDGE... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_COMPSIMILAR.PH1.co... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_TAXSMA_PT2_PRD.m... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_TAXSMA_PT2_PRD.md org/projects/OPAL_TAXSMA_PT2.json | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | OPAL_TAXONOMY | commit-gate/safe-commit/surface-check/comp-pulse | W1 lint builds -- manifest-lint.py DC-13+15 (@4ee2888e3) + trigger-census.py DC-8..11 reconcile (@1ed893633); all commit-gate PASS, controls exercised; --build live sweep timed out (offline harness workaround) | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
