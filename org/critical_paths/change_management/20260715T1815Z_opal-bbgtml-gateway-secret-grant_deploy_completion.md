@@ -1,5 +1,7 @@
 # Deploy-completion ledger — OPAL_BBGTML gateway secret grant (m365-mcp-gateway TF)
 
+**Status:** COMPLETE
+
 **Opened:** 2026-07-15 ~18:15Z by 0.2.0_DT_PortfolioAnalytics (sovereign delegate; CTO routing
 ruling 20260715T172813Z option (a): merge-dark now, enable CTO-gated)
 **Pipeline:** m365-mcp-gateway (Terraform)
