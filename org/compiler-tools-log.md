@@ -19621,3 +19621,48 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-16 1805-2127Z 1.0.0_SA_CTO: operational aws (get-role-policy APPLIED verify for the flip GO; fact_rld daily listing; restore evidence) + git probes (9-shape MSYS matrix w/ stderr captured -> CLAUDE.md rule fix; cited-commit verification x3 for the TO disposition) + to-check.py + rail-checked TO section reads -- pre-registration was the working method everywhere (D_04 delta, frontier matrix, comp-state calibration); gap filed: comp-render (headless render + console read).
 | 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-16 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-16/e... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript model-portfolios | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-routes | comp-routes | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-routes | comp-routes trace /api/public/benchmarks/model_portfolio_benchmarks.json | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-routes | comp-routes origins | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/opal_bbgtml/v... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/opal_bbgtml/v... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/logs/2026-07-17/p0-st-benc... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast rollbackDataRefresh | FAIL |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast handle_rollback | FAIL |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast data_refresh | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast opal-data-refresh-api | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_PORTALREFRESH.json --... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_PORTALREFRESH.json org/tier2_senior/0.2.0_DE_Portfoli... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DE_PortfolioAnalytics/task_orders/TO_PORTALREFRE... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_PORTALREFRESH.json --... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_PORTALREFRESH.json org/tier2_senior/0.2.0_DT_Portfoli... | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-transform | comp-transform schema-check HistoryTab | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-transform | comp-transform schema-check RollbackConfirmDialog | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/data_refresh/lambda_fu... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/data_refresh/lambda_function.py org/critical_paths/cha... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/data_refresh/lambda_fu... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/data_refresh/lambda_function.py org/critical_paths/cha... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DE_PortfolioAnalytics/logs/2026-07-17/andrew_dir... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DE_PortfolioAnalytics/task_orders/TO_PORTALREFRE... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions opal-data-refresh-api --settle-retry-seco... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/data-ref... | FAIL |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/data-ref... | FAIL |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/api/portal-proxy.ts --file p... | VERDICT |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-surface-check | comp-surface-check | VERDICT |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-surface-check | comp-surface-check check | VERDICT |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/api/portal-proxy.ts --file p... | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.2.0_DE_PortfolioAnalytics | TO_PORTALREFRESH_FE_01 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DE_PortfolioAnalytics/... | PASS |
