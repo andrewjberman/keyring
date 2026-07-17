@@ -66,8 +66,26 @@ of its own lanes; over-broad matching inflates NON-ZERO reads and poisons the po
 per-hit).
 
 - `hits.Count > 0` → **REFUSE the spawn.** A live claude.exe carries the serial regardless of who launched
-  it. If it carries no spawn marker it is an **Andrew-launched session** — surface that explicitly
-  ("Andrew-launched, redirect work to the existing session") rather than as a generic duplicate.
+  it.
+- `hits.Count > 0` with NO spawn marker → **ANDREW-LAUNCHED SESSION: REFUSE, and the session is
+  presumptively RESERVED** (Andrew-ratified 2026-07-17, LD-0305). Andrew direct-spawns a session when he
+  has a specific task for it (his verbatim: *"usually if I spawn an agent direct rather than having it go
+  through you by way of COO, I usually have a specific task i want that agent to do and probably don't
+  want them borrowed unless additional tasks are directly relevant to what I asked them to do"*).
+
+  **DISPOSITION DEFAULT — do not redirect the requested work into the base session.** Instead:
+    1. Read the session's own broadcasts (the record+broadcast law makes Andrew's tasking visible within
+       minutes of launch) to judge DIRECT relevance.
+    2. DIRECTLY RELEVANT means: the requested work is an INPUT to or DELIVERABLE OF what Andrew asked
+       that session to do. Adjacent-topic, same-domain, or "it would be efficient" all FAIL the test.
+    3. Fails the test — or no broadcast yet to judge from (unjudgeable defaults to reserved) → spawn a
+       TILDE LANE for the fabric work; base session untouched.
+    4. Passes the test → still surface to Andrew before merging work into his session; his silence
+       ≥1 /govern cycle → the LD-0026 corroboration path, never a silent merge.
+  **TIE-BREAK: when in doubt, LANE.** A lane is reversible (merging later is one message); a distracted
+  sovereign session is not. Andrew overrides any of this with a word, either direction.
+  Requester guidance (not a gate): a spawn request that names its intended task (COO 172203Z is the model
+  — task + staged TO + gate + first-message plan) is what makes the relevance test judgeable in minutes.
 - `hits.Count == 0` → proceed to 1a/1b (they still catch the just-spawned-window-not-yet-claude case and
   the concurrency census).
 
