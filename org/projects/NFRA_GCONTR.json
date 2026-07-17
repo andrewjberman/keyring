@@ -17,7 +17,7 @@
   ],
   "status": "active",
   "phase": "Phase 1: PRD authored + SCHEMA RATIFIED (§3) + §9 POLICY RESOLVED (Andrew-direct 2026-06-16, PRD v0.2) -- BOTH gates cleared, COO decomposition FULLY UNBLOCKED. §9 rulings: enforcement=ADVISORY-FIRST RAMP (Q2 warns, CTO ramp-flip to hard-block on low-FP evidence); ratified_by=TIERED (Andrew-only for SEV1; CTO+COO for SEV2 and below); scope ceiling=SEV1+SEV2 critical-surfaces set for v1 (not every artifact); value_check=CVO-owned. PRD §7 TO candidates ready: TO-1 CTO schema-ratify (DONE PRD §3); TO-2 AE (globgrph lane) stand up the graph_contracts Iceberg table on Nessie main + Q1/Q2 diff queries (comp-aws diff extension) + wire Q2 into comp-surface-check in ADVISORY mode (the long pole); TO-3 CVO author SEV1 rows first (model_portfolios.benchmark/headline, advisor_intelligence/NNA) then SEV2 (peers, aum) + the period_defs value-check; TO-4 DS wire pipescript --contract / --flipped.",
-  "blocking": "3/5 ROWS LIVE+RATIFIED (definitive, AE in-VPC contract_engine read 2026-07-09T14:55Z): benchmark [Andrew-signed 06-16], peers + aum [CTO+COO-ratified 06-16] -- all real-hash, active, last-write 06-16. SEV2 leg DONE (already-landed, NOT 2-new; today COO+CTO co-ratify STANDS as re-attestation). aum canonical_writer RECONCILED = smartx-ingestion-lambda-role CORRECT (CVO this-session guess was wrong ARTIFACT, prior-me correct; no --overwrite). REMAINING = 2/5: headline + advisor_intelligence (SEV1, authored 06-16/17, UNSIGNED) -> Andrew sign-off (ANDREW_SOVEREIGN_QUEUE #1) + load on AE hardened image; + CVO runnable BMKAUD-WS-2 value-check (owed) + CVO empty-hash verify. The stall is precisely the 2 SEV1 rows on the queue. Registry PENDING string was stale-proxy (benchmark was signed all along) -- ground the live table not the YAML status.",
+  "blocking": "VALUE-CHECK GATE PASSED 2026-07-17 (CVO independent re-review CONCUR all 4 limbs @38bb33d79): BMKAUD-WS-2 benchmark reproduces 250/250 violations-0 DISCRIMINATING at this as-of, vacuity-gate @409d9a85a PASS (250 cells not 0), no empty-hash-in-a-real-slot (the 2 SEV1 rows unloaded, so no real slot to be empty), headline convergence clean, advisor inf clean + reconciliation all_pass, bd frozen-known-cause, cot absent. The 2 SEV1 rows (headline + advisor_intelligence) are now ANDREW-SIGNED @f5cee1a8a. 3/5 rows LOADED (graph_contracts last-write 06-16); the 2 SEV1 ROW-LOADS + all-5-live are HELD per Andrew-direct ('i dont want to deploy this until MDPF is totally done') -- an EXTERNAL deploy-hold, NOT a stall: verification is COMPLETE, nothing to load onto the hardened image until MDPF finishes. POST-MDPF FOLLOW-ON (carried, COO): 0.7.0 loads the 2 signed SEV1 rows -> all-5-live -> COO closes. 3 Andrew-facing open items in CVO record (benchmark re-sign, cot scope, bd load-day freshness). DO NOT record 'all 5 live' until the load fires.",
   "created": "2026-06-15",
   "pods": [
     "1.0",
@@ -28,6 +28,6 @@
   "pipeline": "globgrph (Nessie/Iceberg) + comp-surface-check + pipescript",
   "thread_counter": 0,
   "threads": [],
-  "last_drive_touch": "2026-07-09T14:56Z",
-  "gcontr_progress": "3of5_live_ratified"
+  "last_drive_touch": "2026-07-17T23:30Z",
+  "gcontr_progress": "value_check_PASSED_2SEV1_signed_load_HELD_to_MDPF"
 }
