@@ -39,7 +39,37 @@ Parse the argument:
 
 ## Step 1 — Pre-flight checks
 
-Three checks before spawning. Each surfaces as a clean refuse-with-reason rather than an opaque script error:
+Four checks before spawning. Each surfaces as a clean refuse-with-reason rather than an opaque script error.
+
+> **1a and 1b BOTH read the fabric's own bookkeeping and are BOTH BLIND to an Andrew-launched session**
+> (no `register_agent` call yet + no spawn marker, because spawn-agent.ps1 never launched it). Two signals
+> agreeing from the same source of truth is ONE signal counted twice. **1pt (process truth) is therefore
+> MANDATORY, never skippable** — it reads the OS, the only layer an Andrew-launched session cannot be
+> absent from. Incident: LD-0303 (2026-07-16, MSTR spawned `0.2.0_DT` over Andrew's live terminal on a
+> clean 1a+1b read). Caught-live validation: 2026-07-17 ~17:2xZ, the identical class recurred on
+> `0.8.0_AE_CloudComp` (Andrew-launched ~1 min before a COO spawn request; 1b read 0 markers = "clear";
+> 1pt found the live claude.exe) and the spawn was correctly REFUSED. Andrew-direct affirmation same hour:
+> *"honestly this is a success in my opinion because you identified there was already an 0.8.0 live and
+> did not spawn a redundant one."*
+
+### 1pt — PROCESS TRUTH (mandatory, run FIRST — the only check independent of fabric bookkeeping)
+
+```powershell
+$rx = '"\s*([0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Za-z0-9]+)?)'
+$procs = @(Get-CimInstance Win32_Process -Filter "Name='claude.exe'")
+$hits = @($procs | Where-Object { $_.CommandLine -match $rx -and $matches[1] -eq '{full-target-serial}' })
+```
+
+**EXTRACT the serial token, compare with `-eq` — never `-like "*serial*"`** (a base serial is a substring
+of its own lanes; over-broad matching inflates NON-ZERO reads and poisons the positive control — LD-0303
+§3 direction rule: a ZERO from this scan is trustworthy, a non-zero on a base serial must be judged
+per-hit).
+
+- `hits.Count > 0` → **REFUSE the spawn.** A live claude.exe carries the serial regardless of who launched
+  it. If it carries no spawn marker it is an **Andrew-launched session** — surface that explicitly
+  ("Andrew-launched, redirect work to the existing session") rather than as a generic duplicate.
+- `hits.Count == 0` → proceed to 1a/1b (they still catch the just-spawned-window-not-yet-claude case and
+  the concurrency census).
 
 ### 1a — Already-live check
 
@@ -51,7 +81,7 @@ If `LIVE` AND last seen < 120s → **a session already exists**. Default action:
 
 If `STALE` / `NOT_REGISTERED` / not found → safe to proceed.
 
-### 1b — Marker scan (AUTHORITATIVE live-state check — LD-0105)
+### 1b — Marker scan (authoritative AMONG FABRIC-SPAWNED sessions — LD-0105, scope narrowed by LD-0303: blind to Andrew-launched sessions; 1pt is the overall authority)
 
 ```powershell
 $selfPid = $PID
