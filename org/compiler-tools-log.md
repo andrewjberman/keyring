@@ -20375,3 +20375,26 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/COMPSIMILAR_PH2_MOTIF_... | PASS |
 | 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_DECOMTOOL.TO-1.lan... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check completeness | VERDICT |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-describe --file .tools/comp... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-describe .tools/comp-which org/modules/graph/comp-coverage-... | FAIL |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_ONTOLOGY.json --file ... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_ONTOLOGY.json org/projects/REGISTRY.md org/tier0/ledg... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/COMPSIMILAR_PH2_MOTIF_... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~B | NFRA_DECOMTOOL.TO-1 | comp-manifest-check / comp-which / comp-debris --self-test+--types-s3 / comp-iam-usage self-test+role-cold / commit-gate | PASS | DECOMTOOL landing: registration-invariant PASS (76 accounted, no BLOCKED); comp-which reachable rank-3; debris v1 7/7 + ext 11/11 (false-outage mutant) + live inf/assets HOT trading-days; iam-usage 9/9 (3-limits-named) + live role-cold. Found the completeness-fail-closed + exec-fold-bundle seams. |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_ONTOLOGY.json --file ... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_ONTOLOGY.json org/projects/REGISTRY.md org/tier0/ledg... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform | OPAL_TAXSMA_PT2 (closure) | (none) | ruling-receipt + WS-2/WS-3 closure coordination + cot re-arm memory persist; no code/infra change this window | N/A |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-mdpf' RETURN... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-mdpf' RETURN... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-describe | comp-describe arn:aws:s3:::opal-data-mdpf | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_system.py | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp_system.py | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
