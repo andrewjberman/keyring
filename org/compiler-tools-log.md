@@ -20222,3 +20222,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-17 ~2000-2351Z 0.2.0_DT_PortfolioAnalytics (OPAL_TAXSMA_PT2 assess->WS-1 live->registry brief): comp-grep/comp-glob for the Cottonwood REST ingest template + monolith taxonomy grammar + the one_way_fan_in_fence policy. comp-iam DELIBERATELY NOT the WS-1 IAM verdict instrument (it FAILS GREEN on a new (action,resource)) -- used live aws iam simulate-principal-policy, 5 separate one-resource calls, proving PutObject reporting-only allowed + 4 never-widen denials incl the cross-firm fence.
 | 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/contracts/g... | PASS |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/contracts/graph_contracts.yaml | FAIL |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-debris-ext | comp-debris-ext --types s3 --json | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-iam-usage | comp-iam-usage role-cold --limit 8 --days 90 | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/deliverables/WP8_DECOM_PREFIX_DISPOSI... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/SCHWAB_BOX_ARCHETYPE.md | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff data/assets/docs/SCHWAB_BOX_ARCHETYPE.md | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/globgrph... | FAIL |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-manifest-check | comp-manifest-check check --file .tools/comp-debris-ext --file .tools/comp-iam-usage --... | VERDICT |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+2026-07-17T2359Z 3.0.0_SA_CVO -- RV-0051 ACCEPTED-CVO + GCONTR value-check re-review + nightly-#2 parity-confirm: comp-kuzu (graph_contracts vintage 748.2h -> 2 rows unloaded/hold-intact); comp-which (honest no-route); raw git/awk window walks w/ printed denominators + positive controls (0 constitutional / 60 commit-scope); aws s3 head/get/ls (rail-checked) for the value-check exercised limbs; comp-pulse reflex CLEAN x3.
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-17/s... | PASS |
