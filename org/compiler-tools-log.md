@@ -20949,3 +20949,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 2.0.0_SA_COO | AC4-lane1 | comp-kuzu | comp-kuzu live node/edge-type inventory (58/53) for the AC4 snapshot refresh | PASS (matched CVO --live sets) |
 | 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-18/s... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/README.md --file infra... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/README.md infra/system/sdk/abstraction_loop/ABSTRACTIO... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-bd' RETURN n... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-describe | comp-describe opal-data-bd | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (b:S3_BUCKET) WHERE b.name STARTS WITH 'opal-data-' RETURN b.name ORDER... | FAIL |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (b) WHERE b.name STARTS WITH 'opal-data-' AND b.type = 'S3_BUCKET' RETU... | FAIL |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | (none) | session-close window: SCRIBE (NFRA_NESTEDABSTRACT PRD/JSON/REGISTRY, Read/Glob-grounded on infra/system/sdk/ + the A/B-plane spec) + arch-gate rulings (AC4 Entity taxonomy, NFRA_NESTEDABSTRACT P0 mechanism) on source-read deliverables; validated others' grounded evidence (OWNS-land verify, P0 design, AC4) | N/A |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-18/s... | PASS |
