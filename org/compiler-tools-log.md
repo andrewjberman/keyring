@@ -20621,3 +20621,54 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 0.8.0_AE_CloudComp | NFRA_ONTOLOGY (coherence-keeper) | source-Read grounding (cse_schema/comp_ladder/ontology docs) + summary_corpus --self-test/--describe (verify ~D C2 live) + grep cse_schema (C-1 collision) | comp-pulse+comp-surface-check auto in safe-commit x6 | PASS |
 | 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/01_provision/modules/g... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/01_provision/modules/globgrph/derive.tf infra/system/s... | FAIL |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/01_provision/modules/g... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/01_provision/modules/globgrph/intraday.tf | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_CLOSED_S... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_ONTOLOGY.json | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_ONTOLOGY.json | PASS |
+| 2026-07-18 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0311.md | PASS |
+| 2026-07-18 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0311.md | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_RULE_BAN... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/genesis_cli.py --file ... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/genesis_cli.py infra/system/sdk/gensdk/bringup.py | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/task_orders/NFRA_ONTOLOGY.AB-MAT-S1.dsb-ext... | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type IN ['SERVED_FROM','RENDERS','ORIGIN','RE... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_OWNS_BUM... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/genesis_cli.py | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/genesis_cli.py | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/canon-patterns.yaml | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/canon-patterns.yaml | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-kuzu-inc | comp-kuzu-inc | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS nt, count(*) AS c ORDER BY... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS et, count(*) AS c O... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_GENESIS_CHARTER_L... | PASS |
+| 2026-07-18 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0312.md | PASS |
+| 2026-07-18 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0312.md | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPREG.json --file o... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_COMPREG.json org/projects/REGISTRY.md | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/gensdk/scaffold.py | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/gensdk/scaffold.py | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TOOLCHECK.json | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_TOOLCHECK.json | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/README.md --file org/t... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/README.md org/tier2_senior/0.8.0_AE_CloudComp/delivera... | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_GENESIS_PRD.md -... | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_GENESIS_PRD.md org/projects/NFRA_GENESIS.json | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/NFRA_MOTIF_P1_can... | PASS |
+| 2026-07-18 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml --file org/modules/gr... | PASS |
+| 2026-07-18 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml org/modules/graph/COMPTOOL_REGISTRATION_FLOW.md org/t... | PASS |
+| 2026-07-18 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml --file org/modules/gr... | PASS |
+| 2026-07-18 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml org/modules/graph/COMPTOOL_REGISTRATION_FLOW.md org/t... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-kuzu-inc + comp-kuzu + probe + module | Phase-1 freshness PASS (HEAD 8797848286033539361, 0.0h) + no-refreeze PASS (C2Motif/C3System in NODE_TYPE_LAYER); 13 A+B detectors measured live (3 spec recurrence errors corrected); emit resolve 4201/4201 (100pct), fidelity PASS; C3 over-merge SURFACED to COO | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
