@@ -32,7 +32,14 @@ outrun.
    as the population moves; the denominator report (with a LOUD WARN) is the live check.
 3. **OWNED_BY census** — a live census of the ownership edges, not a frozen count carried forward.
 4. **AC4 `--live-coverage`** — coverage verified against the live surface, not a frozen coverage
-   assumption that ages out.
+   assumption that ages out. **CONCRETE RUN-#1 CATCH (2026-07-18):** the live-cadence lane-2 check
+   (sha-verified container==HEAD) caught **2 unmapped edge-types (`IN_SUBNET`, `SENDS_TO`)** that
+   lane-1's careful point-verification MISSED — root cause an AXIS error (Verification Law #6):
+   lane-1 read comp-kuzu PROJECTED (53 edge-types), the producer emits from the RAW `graph_edges`
+   table (55); the 2 raw-only types lived in the gap (CTO source-confirmed: both absent from
+   cse_schema.py; cse_emit_graphhead.py:152 scans raw `graph_edges`). A rigorous instrument on the
+   WRONG axis survived review; the live-cadence detector on the RIGHT axis caught it first run. This
+   instance is not just a principle — it has a scalp.
 5. **NFRA_NESTEDABSTRACT (the SDK altitude)** — the GENESIS SDK is *itself* a frozen abstraction of
    Opal's mechanism; as Opal's mechanism evolves, the SDK drifts from it silently. NFRA_NESTEDABSTRACT
    is the live-cadence loop (IDENTIFY the abstraction behind every enhancement → LOG → INCORPORATE +
