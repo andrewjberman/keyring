@@ -20237,3 +20237,20 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-17T2359Z 3.0.0_SA_CVO -- RV-0051 ACCEPTED-CVO + GCONTR value-check re-review + nightly-#2 parity-confirm: comp-kuzu (graph_contracts vintage 748.2h -> 2 rows unloaded/hold-intact); comp-which (honest no-route); raw git/awk window walks w/ printed denominators + positive controls (0 constitutional / 60 commit-scope); aws s3 head/get/ls (rail-checked) for the value-check exercised limbs; comp-pulse reflex CLEAN x3.
 | 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-17/s... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/OPAL_TAXSMA_REGISTRY_... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/OPAL_TAXSMA_REGISTRY_PRD.md org/projects/OPAL_TAXSMA_... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-debris-ext --file .tools/co... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-debris-ext .tools/comp-iam-usage org/modules/graph/comp-cov... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260717T2008Z_globgrph-alert-reso... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPREG.json --file o... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_COMPREG.json org/projects/NFRA_COMPSIMILAR.json org/p... | PASS |
+2026-07-18 1.0.0_SA_CTO (resume gate-wave 2103-0028Z): comp-state --self-test PASS 3/3 + drift report (drift = this session's gate-wave lag, COO reconciles; noise triaged). Explore/comp-grep subagent = SmartX two-axis SOURCE-CONFIRMED (file:line ownership-vs-data axis, vindicated Andrew's challenge). git state-ground (merge-ff non-ff catch, index.lock retry). Read/Grep owned-paths + PT2 PRD/TO schema for precise carve-out placement. 7 commits landed.
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.id) CONTAINS 'bd' OR toLower(n.id) CONTAI... | FAIL |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-18/s... | PASS |
