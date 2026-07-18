@@ -111,6 +111,19 @@ entries:
     anti_pattern: "comp-aws derive to reason about a single role's grants"
     status: canonical
 
+  - id: cloud.iam.usage_coldness
+    use_case: "Is this IAM role/grant still USED, and who still REACHES a resource -- the access-plane decommission signal comp-iam lacks (role last-used coldness; who-can-reach an ARN via APPLIED resource policies; a (principal,action,resource) reachability verdict on live simulate)?"
+    canonical_call: "comp-iam-usage {role-cold | who-can-reach <arn> | reach-check <role> <action> <arn> | limits}"
+    tool: comp-iam-usage
+    mode: query
+    layer: cloud
+    cost: "~seconds-minutes (per-role get-role for RoleLastUsed; get-*-policy; one simulate per reach-check; read-only)"
+    freshness: "live AWS IAM (APPLIED, not DESIRED); RoleLastUsed coldness bands; Rule-22a fix-or-carry NAMED in output; an unreadable policy is UNKNOWN not no-reach"
+    rebuild_trigger: "n/a"
+    anti_pattern: "using comp-iam (DESIRED, (action)-not-(action,resource)) to answer a reachability/usage question -- the exact fails-GREEN class Rule 22a warns about; silently inheriting comp-iam's 3 limits (this tool NAMES the fix-or-carry); or enabling an Access Analyzer (HELD under the alert-suspension)"
+    status: canonical
+    notes: "comp-which routing: 'is this IAM role unused / role last used / who can reach this bucket / access-plane coldness / decommission a role or grant' -> comp-iam-usage. The lifecycle SIBLING of comp-iam (deploy-time correctness); NFRA_DECOMTOOL access plane."
+
   - id: cloud.derive.refresh
     use_case: "Rebuild the cloud graph from live AWS (the WRITE-PATH — scheduled, not agent-default)."
     canonical_call: "comp-aws derive --out <path>    # full; or --resource <arn> for bounded"
@@ -1090,7 +1103,7 @@ entries:
 
   - id: cloud.debris.coldness_ledger
     use_case: "Which cloud resources have gone cold -- ranked coldest-first by oldest last invocation (dormancy after activity), with never-invoked resources split off for purpose review, not reaped?"
-    canonical_call: "comp-debris [--days 30] [--hot-days 7]"
+    canonical_call: "comp-debris [--types ddb|s3|ec2|events] [--days 30] [--hot-days 7]   # default --types lambda"
     tool: comp-debris
     mode: query
     layer: cloud
@@ -1260,6 +1273,7 @@ tools_index:
   pipescript:    { does: "Named-thread estate traversal: `pipescript <name>` -> every resource + producers->served->frontend + owning tool + coverage, no silent Unknown (the human entry point over the whole estate)", subcommands: ["<name>", "--list", "--resource", "--tool", "--validate"], entries: [estate.pipescript.named_thread] }
   comp-routes:   { does: "CloudFront->origin->Lambda serving path", subcommands: [trace, behaviors, origins, rewrites, api-routes, auth-map, edge-versions], entries: [trace.routes.serving_path] }
   comp-iam:      { does: "IAM permission-gap cross-reference (boto3 calls vs grants)", subcommands: [gaps, roles, services, service, role, stats], entries: [cloud.iam.permission_gaps] }
+  comp-iam-usage: { does: "Access-plane coldness + reach (the lifecycle sibling of comp-iam): is this role/grant still USED, who still REACHES a resource. role-cold (comp_debris.classify on the identity plane -- RoleLastUsed coldness), who-can-reach <arn> (APPLIED resource-policy principals), reach-check (a (principal,action,resource) verdict on live simulate). RULE-22a fix-or-carry NAMED in output (never silently inherited): (a) (action,resource)-precise; (b) ONE --resource-arns per call + separate positive control; (c) --context-entries else UNKNOWN not a false deny; (+) APPLIED not DESIRED. Access Analyzer HELD. Read-only, advisory, NEVER deletes. Engine comp_iam_usage.py", subcommands: ["role-cold", "who-can-reach <arn>", "reach-check <role> <action> <arn>", "limits", "self-test"], entries: [cloud.iam.usage_coldness] }
   comp-build:    { does: "Rebuild the trace-graph cache (the trace WRITE-PATH)", subcommands: ["--check"], entries: [trace.rebuild.refresh] }
   comp-diff:     { does: "Map git/uncommitted changes to graph blast radius", subcommands: ["--ref", "--staged"], entries: [trace.diff.staged_blast] }
   comp-xref:     { does: "Symbol cross-ref (cached) + graph-state drift-vs-baseline", subcommands: ["<symbol>", "--save"], entries: [trace.xref.symbol, trace.xref.graph_drift] }
@@ -1308,5 +1322,5 @@ tools_index:
   comp-pydeps:   { does: "Repo-wide Python REFERENCE graph incl .tools/ + org/modules (closes COMPRAIL F-5): who imports/loads/subprocess-invokes a compiler-layer file (edge-kind-typed code-consumer vs prose-mention, docstring-aware) + per-file egress. comp-blast consults it on a .tools/org-modules NOT-FOUND. Engine comp_pydeps.py", subcommands: [consumers, deps, egress, build, "--self-test", "--json"], entries: [meta.pydeps.reference_graph] }
   comp-gitdrill: { does: "TIME-axis drill: node -> producer file's vintage-stamped git history (hash/date/author/subject) + --at <ref> view/diff. Resolves node->file via the trace graph; every line carries its commit-ish. Read-only. Engine comp_gitdrill.py", subcommands: ["<node|file>", "--at <ref>", "--diff", "--limit N", "--json", "--self-test"], entries: [meta.gitdrill.producer_history] }
   comp-icedrill: { does: "VINTAGE-axis drill: artifact -> version/partition history across existing substrates (dated S3 partitions / S3 object-versions / DDB daily / Nessie graph). Provenance names substrate + completeness; empty is a FINDING; never fabricates an Iceberg history for a data artifact. Read-only. Engine comp_icedrill.py", subcommands: ["s3://...", "ddb <table>", "graph <node>", "--json", "--self-test"], entries: [meta.icedrill.vintage_history] }
-  comp-debris:   { does: "Coldest-first cloud-resource invocation-coldness ledger (advisory; NEVER deletes): ranks lambdas by oldest last-invocation (dormancy AFTER activity). never-invoked!=cold (STILLBORN-OR-GUARD purpose review by creation age); UNKNOWN is a band; hold-aware; fusion is a separate confirmation pass. Read-only. Engine comp_debris.py", subcommands: ["--days N", "--hot-days N", "--json", "--self-test"], entries: [cloud.debris.coldness_ledger] }
+  comp-debris:   { does: "Coldest-first cloud-resource invocation-coldness ledger (advisory; NEVER deletes): ranks lambdas by oldest last-invocation (dormancy AFTER activity). never-invoked!=cold (STILLBORN-OR-GUARD purpose review by creation age); UNKNOWN is a band; hold-aware; fusion is a separate confirmation pass. Read-only. Extended IN-PLACE (ruling B @97f6a8b70) to a MULTI-RESOURCE-PLANE ledger via --types ddb,s3,ec2,events (default lambda byte-for-byte unchanged) -- one classify, N adapters (debris_adapters.py), reusing classify/BANDS/_HELD_RX with trading-calendar dormancy (T-1 data) + cadence-aware windowing folded. Engine comp_debris.py", subcommands: ["--types <lambda|ddb|s3|ec2|events>", "--days N", "--hot-days N", "--json", "--self-test"], entries: [cloud.debris.coldness_ledger] }
   comp-trigger:  { does: "EventBridge/Scheduler trigger-dispatch forensics (READ-ONLY): what fires X, ENABLED/DISABLED live state, targets, fired-evidence (TriggeredRules w/ printed denominator; absence != never-fired), TF declared-ness (text-scan; cannot tell landed from planned). No write path by construction. Engine comp_trigger.py", subcommands: ["<name-or-target-substring>", "--list", "--days N", "--json", "--self-test"], entries: [cloud.trigger.dispatch_forensics] }
