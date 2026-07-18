@@ -227,7 +227,8 @@ def collect_system_content() -> dict:
             if "tools_index" in line or "ledger union" in line:
                 tools_line = line.strip()[:180]
                 break
-    comps.append({"name": "comp-tools: the ~55-tool suite (catalog + comp-which + COMPRAIL)",
+    comps.append({"name": "comp-tools: the %s-tool suite (catalog + comp-which + COMPRAIL)"
+                          % _yaml_len("org/modules/graph/graph-call-manifest.yaml", "tools_index"),
                   "maturity_evidence": _evidence(
                       cert_status="NFRA_TOOLCHECK P1+P2 CVO-certed (3.0.0_SA_CVO)",
                       works_broken="works (TOOLCHECK: 0 hard breaks; comp-learns-run RETIRED, comp-tooltip fixed)",
@@ -276,8 +277,10 @@ def collect_runtime_compilation() -> dict:
 
 
 def _read_fedobs() -> dict:
-    """Grounded read of the served FEDOBS artifact (the DS~B frontend-co-evolution measure) -- the
-    diversity metric source. Returns {} keys UNKNOWN if the artifact is absent (never fabricated)."""
+    """Grounded read of the served FRONTEND FEDOBS artifact (the DS~B frontend-co-evolution measure)
+    -- the SURFACED/curated co-evolution subset. Since 2026-07-18 (CTO ruling option-b) this is the
+    *_surfaced SECONDARY; the PRIMARY realized-diversity headline is _read_snap_realized(). Returns
+    UNKNOWN keys if the artifact is absent (never fabricated)."""
     path = os.path.join(WS, "org", "tier2_senior", "0.4.0_DS_ClientPlatform", "deliverables",
                         "fedobs_frontend_coevolution.json")
     try:
@@ -285,10 +288,35 @@ def _read_fedobs() -> dict:
             data = json.load(fh)
         measures = data.get("measures", [])
         pairs = sum(1 for m in measures if (m.get("co_sessions") or 0) > 0)
-        return {"cse_log_total": len(measures), "coevolution_pairs": pairs,
-                "vintage": "served artifact %s (%d measures)" % (os.path.basename(path), len(measures))}
+        return {"cse_log_total": len(measures), "coevolution_pairs_surfaced": pairs,
+                "vintage": "served artifact %s (%d measures, frontend-surfaced subset)"
+                           % (os.path.basename(path), len(measures))}
     except Exception:  # noqa: BLE001
-        return {"cse_log_total": UNKNOWN, "coevolution_pairs": UNKNOWN, "vintage": UNKNOWN}
+        return {"cse_log_total": UNKNOWN, "coevolution_pairs_surfaced": UNKNOWN, "vintage": UNKNOWN}
+
+
+def _read_snap_realized() -> dict:
+    """Grounded read of the REALIZED co-evolution diversity -- the GRAPHFEED standing snap
+    (fedobs_coevolution_snap), the audit's #1 maturity lever (CTO ruling option-b, 2026-07-18).
+    Source = the snap's own served summary key: the R1 twin heartbeat snap_store.py OVERWRITES after
+    every nightly append, s3://{SNAPSHOT_BUCKET}/warehouse/snap_ingest/last_append/
+    fedobs_coevolution_snap.json -> {"appended": N}. The nightly producer writes the FULL current
+    pair set each run (not a delta), so 'appended' == the realized pair count of the latest
+    snapshot_date. boto3/S3 imported+called DEFENSIVELY: no creds / off-VPC / absent -> UNKNOWN, never
+    fabricated (comp-system stays runnable everywhere; the number is honest-or-absent). If the
+    producer ever moves to true-delta appends, track an explicit realized_pairs in the heartbeat."""
+    bucket = os.environ.get("SNAPSHOT_BUCKET", "opal-313476888478-globgrph")
+    key = "warehouse/snap_ingest/last_append/fedobs_coevolution_snap.json"
+    try:
+        import boto3  # noqa: PLC0415  -- defensive/optional; module import must never require it
+        body = boto3.client("s3", region_name="us-east-1").get_object(Bucket=bucket, Key=key)["Body"].read()
+        hb = json.loads(body)
+        realized = hb.get("appended", UNKNOWN)
+        return {"realized_pairs": realized,
+                "vintage": "snap heartbeat s3://%s/%s (appended=%s @ %s)"
+                           % (bucket, key, realized, hb.get("at", "?"))}
+    except Exception:  # noqa: BLE001
+        return {"realized_pairs": UNKNOWN, "vintage": UNKNOWN}
 
 
 def _read_promote_manifest() -> dict:
@@ -343,6 +371,7 @@ def compute_metrics() -> dict:
 
     recs = _read_promote_manifest()
     fed = _read_fedobs()
+    snap = _read_snap_realized()
 
     return {
         "tools_index_count": _metric(
@@ -355,7 +384,12 @@ def compute_metrics() -> dict:
             recs.get("count", UNKNOWN), "promote_recognizer_manifest.json (MATERIALIZED)",
             recs.get("vintage", UNKNOWN)),
         "coevolution_pairs": _metric(
-            fed.get("coevolution_pairs", UNKNOWN), "fedobs_frontend_coevolution.json (served)",
+            snap.get("realized_pairs", UNKNOWN),
+            "fedobs_coevolution_snap heartbeat (realized, GRAPHFEED nightly)",
+            snap.get("vintage", UNKNOWN)),
+        "coevolution_pairs_surfaced": _metric(
+            fed.get("coevolution_pairs_surfaced", UNKNOWN),
+            "fedobs_frontend_coevolution.json (surfaced subset)",
             fed.get("vintage", UNKNOWN)),
         "cse_measures": _metric(
             fed.get("cse_log_total", UNKNOWN), "comp-fedobs cse_log_total (served)",
@@ -430,6 +464,7 @@ def refresh_managed_regions(metrics: dict, write: bool):
 # ---------------------------------------------------------------------------
 def compile_model() -> dict:
     fed = _read_fedobs()
+    snap = _read_snap_realized()
     header = {
         "generated_by": "comp-system (NFRA_SYSTEM P3)",
         # PROVENANCE, not the staleness predicate. It truthfully records the HEAD this was compiled
@@ -448,10 +483,12 @@ def compile_model() -> dict:
                         "run comp-system --check (0=fresh 2=stale 1=error) then comp-system.",
     }
     diversity = {"metric": "observe-surface DIVERSITY (co-evolution pairs; CTO Q4: diversity not raw volume)",
-                 "coevolution_pairs": fed.get("coevolution_pairs", UNKNOWN),
+                 "coevolution_pairs": snap.get("realized_pairs", UNKNOWN),
+                 "coevolution_pairs_surfaced": fed.get("coevolution_pairs_surfaced", UNKNOWN),
                  "cse_measures": fed.get("cse_log_total", UNKNOWN),
-                 "note": "the loop/federated maturity headline; thin-seed until PROMOTE + frontend producers diversify it",
-                 "vintage": fed.get("vintage", UNKNOWN)}
+                 "note": "PRIMARY = realized diversity from the GRAPHFEED standing snap (nightly); "
+                         "*_surfaced = the frontend-curated subset -- label-the-basis, CTO ruling option-b",
+                 "vintage": snap.get("vintage", UNKNOWN)}
     classes = []
     for slug, home, collector in KNOWLEDGE_CLASSES:
         if collector is None:
@@ -511,7 +548,8 @@ def render_markdown(model: dict) -> str:
            ] + _render_metrics(model.get("metrics", {})) + [
            "## Observe-surface diversity (loop/federated maturity headline)",
            "- %s" % d["metric"],
-           "- coevolution_pairs: %s | cse_measures: %s | vintage: %s" % (d["coevolution_pairs"], d["cse_measures"], d["vintage"]),
+           "- coevolution_pairs (realized): %s | coevolution_pairs_surfaced (frontend): %s | cse_measures: %s | vintage: %s"
+           % (d["coevolution_pairs"], d.get("coevolution_pairs_surfaced", "UNKNOWN"), d["cse_measures"], d["vintage"]),
            "- note: %s" % d["note"],
            "",
            "## Runtime current-state, keyed by LOCALROOT knowledge-class (anchors 1:1 with the infra/README index)",
