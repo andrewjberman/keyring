@@ -1,0 +1,33 @@
+{
+  "project_code": "NFRA_GENESIS",
+  "macro_code": "NFRA",
+  "name": "The runnable 'spin up a new company's semantic system' SDK (genesis provisioner)",
+  "description": "Andrew-direct 2026-07-18. Productize the process Opal used to build its compiled semantic system into a RUNNABLE provisioner: `genesis up <company>` stands up a new tenant's graph + ontology-binding + learning loop + tool suite on the proven stack (Nessie/Iceberg/Kuzu/Trino + AWS), parameterized. Opal is the reference instance; the SDK generalizes it. CORE IDEA = PACKAGE + PARAMETERIZE, not rebuild: the machinery already exists + is proven runnable (comp_recognizer_sdk / comp_ladder / cse_schema / the graph infra / the learning loop / the marker-oracle); generalization is narrow -- exactly TWO bespoke-per-company pieces (the recognizer keystone + the binding adapter), everything else becomes tenant-neutral via a company.yaml manifest. Home: infra/system/sdk/. Acceptance (this pass): local/sandbox proof -- genesis verify --local proves the loop CLOSES on a scratch Nessie namespace + local Kuzu (zero new cloud spend); genesis up --dry-run proves TF validate/plan clean. Plan of record: docs/architecture/NFRA_GENESIS_PRD.md (CTO arch-gate) + ~/.claude/plans.",
+  "status": "active",
+  "phase": "P0 BUILDING (Andrew-direct 2026-07-18, plan-approved). SDK skeleton + the frozen company.yaml v1 manifest contract (00_manifest/schema.json) + validator + projector + genesis CLI skeleton landed under infra/system/sdk/ (ANY_EXEC_OR_AE, AE-committable). Owner 0.8.0_AE_CloudComp~A drives + owns (Andrew decision); exec-locked engine pieces (the TF module extraction P1, the comp-tool registration P5) route to CTO. Governance PENDING: the charter LD + the CTO PRD (draft authored in the 0.8.0_AE deliverables lane, routed to CTO for docs/architecture promotion + arch-gate) + REGISTRY row. Phasing P0..P6 (P6 = deferred: real tree-sitter front-end, slot the CTO-gated NFRA_ONTOLOGY vocab, enable marker-CAS). NON-GOALS: not authoring/gating the ontology (~C's NFRA_ONTOLOGY, a pluggable dependency); not re-platforming Opal's live graph; not extending the CSE algebra (governed shared version-bump only); not NFRA_SYSTEM's comp-system; not a store-abstraction/multi-cloud SDK.",
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_GENESIS_PRD.md",
+      "label": "NFRA_GENESIS PRD (draft authored 0.8.0_AE_CloudComp~A -> CTO promote+arch-gate)",
+      "date": "2026-07-18",
+      "status": "draft-routed-to-CTO"
+    }
+  ],
+  "blocking": "None to P0 build. Governance is in-flight (charter LD + CTO PRD arch-gate) -- not a build blocker; the SDK kit is AE-committable and building in parallel per the Andrew 'I drive + own it' decision. The exec-locked engine generalizations (P1 TF module in org-owned infra, P5 comp-tool registration in org/modules/graph ANY_EXEC) route to CTO as normal SoD when they land.",
+  "owner": "0.8.0_AE_CloudComp",
+  "owner_note": "Andrew-direct 'I drive + own it' (2026-07-18). ~A drives; exec-locked pieces route to CTO.",
+  "coo_lane": "2.0.0_SA_COO",
+  "created": "2026-07-18",
+  "pods": ["0.8", "1.0", "2.0"],
+  "depends_on": [
+    "NFRA_SYSTEM",
+    "NFRA_ONTOLOGY",
+    "NFRA_COMPILERKIT",
+    "NFRA_GLOBGRPH",
+    "NFRA_PROMOTE",
+    "NFRA_COMPREG"
+  ],
+  "depends_on_note": "CONSUMES (does not rebuild): the C0-C3 compression mechanism (NFRA_SYSTEM/SEMCTL: comp_ladder/cse_schema), the archetype vocabulary (NFRA_ONTOLOGY ~C -- pluggable versioned dependency, not yet CTO-gated), the recognizer/front-end framework (NFRA_COMPILERKIT: comp_recognizer_sdk), the graph substrate + marker-oracle (NFRA_GLOBGRPH), the promote lifecycle (NFRA_PROMOTE: comp_promote_lifecycle), the comp-tool registration flow (NFRA_COMPREG: the ATOMIC-BUNDLE law). GENESIS is the provisioner that composes these into a repeatable per-company spin-up.",
+  "ledger_refs": [],
+  "threads": []
+}
