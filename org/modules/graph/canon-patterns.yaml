@@ -18,6 +18,7 @@ meta:
   version: "0.1"
   ratified_by: "1.0.0_SA_CTO"
   ratified_at: "2026-06-18"
+  roles_vocab: "C2 enrichment role-labels (structural-position -> canon label) added per-class 2026-07-18 (COMPSIMILAR PH2, CTO-blessed); SERVED_LINEAGE first (structurally derivable today), remaining classes blessed at the ~D arch-gate. CLOSED vocab: a position with no label emits NO clause (no invented tokens). C2 = canon-scoped role; C3 system-membership + agnostic-archetype binding HELD to NFRA_ONTOLOGY (LD-0310)."
   pairs_with:
     - org/modules/graph/graph-call-manifest.yaml   # the node/edge vocabulary this extends
     - org/modules/graph/debtscan/suppression_v1.yaml # the FP gate every deviation passes through
@@ -89,6 +90,16 @@ patterns:
       - recompute_fork: "a recompute/guarded FLOWS_TO rendering differently per cohort/firm (the OFC / NFRA_TSGRAPH P3 class) -- canon-deviation when the fork is undeclared"
       - dangling_served: "a ServedURL with no backing object (the 4 positioning/sentiment stale-FE URLs) -- VISIBLE-unresolved, not a false edge"
     twin_shadow_guard: "per-firm rendered cohorts are designed; flag only an ASYMMETRIC fork (one firm's path diverges from the others without a declared reason)"
+    # C2 enrichment vocabulary (COMPSIMILAR PH2, CTO-blessed 2026-07-18): structural-position -> the
+    # canon ROLE LABEL spliced into a node's per-ARN summary ("... the <label> of a served-lineage
+    # motif"). CLOSED + governed -- a scanned node's position maps to exactly one label; a position
+    # with NO label emits NO clause (never an invented token). Keys match the ~D enricher design.
+    roles:
+      gold_field: "served gold field"   # (Field gold) -- the SERVED_FROM source field
+      served_url: "served URL"          # (ServedURL) -- the served endpoint
+      data_fetch: "data fetch"          # (DataFetch) -- the FETCHES client (edge/route fn)
+      jsx_render: "render terminal"     # (JSXRender) -- the FLOWS_TO render terminal
+      s3:         "S3 tail"             # the backing S3 object under the ServedURL
     incident_anchors: ["OFC cohort/ternary display-fork", "cross-firm conditional asymmetry"]
 
 # --- Motif-outlier semantics (how the scorer flags) -----------------------------------------------
