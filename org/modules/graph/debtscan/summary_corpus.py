@@ -300,6 +300,166 @@ def build_corpus() -> dict[str, SummaryDoc]:
     return corpus
 
 
+# ---- DESCRIBE: single-resource find + describe (the thin pull-forward) ---------------------
+# NFRA_COMPSIMILAR describe surface -- Andrew-direct pull-forward (2026-07-18) AHEAD of the
+# KUZUSPLIT-P1 projection. "find an AWS resource + what does it do" for ONE resource, servable
+# NOW off the LANDED derive-at-scan engine reading the EXISTING comp-kuzu QUERY path. Decoupled
+# from BOTH gates by construction: NO Kuzu summary-property projection (KUZUSPLIT-P1-gated) and
+# NO resource_summaries Iceberg table (CTO plan-gated) -- derive-at-scan means there is no
+# projected property to survive a refresh, so it sidesteps the exact risk those gates cover.
+#
+# Cheap: an exact-ARN describe is TWO targeted comp-kuzu queries (the node + its edge
+# neighborhood), never the full-corpus build_corpus(). Resolution is LEXICAL (exact ARN ->
+# exact name -> substring) -- a FIND convenience, explicitly NOT the BM25 summary-similarity
+# ("nearest by purpose") path, which stays KUZUSPLIT-P1 + table gated as comp-similar Phase-2.
+
+
+def _q_escape(s: str) -> str:
+    """Escape a value for embedding in a Kuzu single-quoted string literal. ARNs carry no
+    quotes in practice, but escape defensively (backslash-escape backslash then quote)."""
+    return (s or "").replace("\\", "\\\\").replace("'", "\\'")
+
+
+def _partition_edges(rows: list[dict], arn: str) -> tuple[list[dict], list[dict]]:
+    """Split a combined (self on either end) edge result into (out_edges, in_edges) from THIS
+    resource's vantage -- the same {edge_type, other_type, other_name, other_arn} shape
+    load_graph() produces, so derive_summary consumes it unchanged. A self-loop (src==dst==arn)
+    is correctly BOTH an out- and an in-edge. Pure (offline-testable)."""
+    out_edges: list[dict] = []
+    in_edges: list[dict] = []
+    for r in rows:
+        src, dst = r.get("src"), r.get("dst")
+        if src == arn:
+            out_edges.append({"edge_type": r.get("et"), "other_type": r.get("bt"),
+                              "other_name": r.get("bn"), "other_arn": dst})
+        if dst == arn:
+            in_edges.append({"edge_type": r.get("et"), "other_type": r.get("st"),
+                             "other_name": r.get("sn"), "other_arn": src})
+    return out_edges, in_edges
+
+
+def load_one(arn: str) -> tuple[dict | None, list, list]:
+    """Targeted single-ARN load: the node + its in/out edge neighborhood (2 comp-kuzu queries).
+    Returns (node|None, out_edges, in_edges). node is None LOUDLY when the ARN is absent from the
+    graph -- the caller distinguishes 'not modeled' from 'stale vintage' (positive-control
+    doctrine), never a silent empty describe."""
+    a = _q_escape(arn)
+    node_rows = _kuzu_json(
+        f"MATCH (n:CloudNode) WHERE n.arn = '{a}' "
+        "RETURN n.arn AS arn, n.node_type AS node_type, n.name AS name, n.layer AS layer, "
+        "n.drift_class AS drift_class, n.source AS source LIMIT 1")
+    if not node_rows:
+        return None, [], []
+    edge_rows = _kuzu_json(
+        f"MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) "
+        f"WHERE (a.arn = '{a}' OR b.arn = '{a}') AND a.arn <> '' AND b.arn <> '' "
+        "RETURN a.arn AS src, e.edge_type AS et, b.arn AS dst, "
+        "a.node_type AS st, a.name AS sn, b.node_type AS bt, b.name AS bn")
+    out_edges, in_edges = _partition_edges(edge_rows, arn)
+    return node_rows[0], out_edges, in_edges
+
+
+def resolve_query(query: str) -> tuple[str | None, list[dict]]:
+    """Resolve a describe query to a single ARN. Ladder (all LEXICAL, never BM25):
+      1. exact ARN            -> (arn, [])
+      2. exact name (unique)  -> (arn, [])   ; ambiguous -> (None, candidates)
+      3. substring over arn|name (unique) -> (arn, []) ; else (None, candidates)
+    Returns (arn|None, candidates). candidates=[] with arn=None means NOTHING matched at all
+    (distinct from 'ambiguous' which returns a populated candidates list)."""
+    exact = _kuzu_json(f"MATCH (n:CloudNode) WHERE n.arn = '{_q_escape(query)}' "
+                       "RETURN n.arn AS arn LIMIT 1")
+    if exact:
+        return query, []
+    # one light (arn, name, type) sweep; resolve exact-name then substring in Python (no reliance
+    # on Kuzu string-op syntax, and one query serves both fallbacks).
+    allrows = _kuzu_json("MATCH (n:CloudNode) WHERE n.arn <> '' "
+                         "RETURN n.arn AS arn, n.name AS name, n.node_type AS node_type")
+    ql = (query or "").lower()
+    name_exact = [r for r in allrows if (r.get("name") or "").lower() == ql]
+    if len(name_exact) == 1:
+        return name_exact[0].get("arn"), []
+    if len(name_exact) > 1:
+        return None, name_exact
+    subs = [r for r in allrows
+            if ql and (ql in (r.get("name") or "").lower() or ql in (r.get("arn") or "").lower())]
+    if len(subs) == 1:
+        return subs[0].get("arn"), []
+    return None, subs
+
+
+def describe(query: str) -> dict:
+    """Find + describe ONE resource from the live graph. Advisory / read-only; NEVER a verdict."""
+    arn, candidates = resolve_query(query)
+    if arn is None:
+        return {"query": query, "resolved": None, "candidates": candidates}
+    node, out_edges, in_edges = load_one(arn)
+    if node is None:
+        return {"query": query, "resolved": arn, "node_absent": True}
+    doc = derive_summary(arn, node, out_edges, in_edges)
+
+    def _rel(edges, incoming):
+        seen = []
+        for e in edges:
+            et = e.get("edge_type") or ""
+            seen.append(f"{et} <- {e.get('other_type')} '{e.get('other_name')}'" if incoming
+                        else f"{et} -> {e.get('other_type')} '{e.get('other_name')}'")
+        return seen
+
+    return {
+        "query": query, "resolved": arn, "arn": arn,
+        "node_type": doc.node_type, "name": doc.name,
+        "layer": node.get("layer") or "", "drift_class": node.get("drift_class") or "",
+        "source": node.get("source") or "",
+        "band": "UNKNOWN-thin" if doc.thin else "summarized",
+        "held": doc.held, "n_purpose": doc.n_purpose,
+        "prose": doc.prose,
+        "produced_by": _rel(in_edges, incoming=True),
+        "consumes_or_serves": _rel(out_edges, incoming=False),
+        "n_in": len(in_edges), "n_out": len(out_edges),
+    }
+
+
+def render_describe(result: dict) -> str:
+    """Human render of a describe() result (ASCII-only; CloudWatch/charmap safe)."""
+    q = result.get("query")
+    if result.get("resolved") is None:
+        cands = result.get("candidates") or []
+        lines = [f"comp-describe: '{q}' did NOT resolve to a single resource."]
+        if cands:
+            lines.append(f"  {len(cands)} candidate(s) (LEXICAL substring/name match -- NOT similarity):")
+            for c in cands[:20]:
+                lines.append(f"    {c.get('arn')}   {c.get('node_type')} '{c.get('name')}'")
+            if len(cands) > 20:
+                lines.append(f"    (+{len(cands) - 20} more -- refine the query)")
+            lines.append("  Pass the exact ARN, or a more specific name. (Nearest-BY-PURPOSE is")
+            lines.append("  comp-similar, KUZUSPLIT-P1-gated -- describe is exact/lexical find only.)")
+        else:
+            lines.append("  0 matches (exact ARN, exact name, or lexical substring). If you expected a")
+            lines.append("  hit, the local graph may be BEHIND -- `comp-kuzu-inc` to refresh then retry --")
+            lines.append("  or this ARN is not modeled in the graph. (Broken retrieval != absent resource.)")
+        return "\n".join(lines)
+    if result.get("node_absent"):
+        return (f"comp-describe: '{q}' resolved to {result.get('resolved')} but the node vanished "
+                f"between resolve and load (concurrent refresh?) -- retry.")
+    flags = (" [HELD]" if result.get("held") else "")
+    lines = [
+        f"=== comp-describe: {result['arn']} ===",
+        f"  RESOURCE : {result['node_type']} '{result['name']}'  layer={result['layer'] or '-'}  "
+        f"band={result['band']}{flags}",
+        f"  SUMMARY  : {result['prose']}",
+    ]
+    if result.get("produced_by"):
+        lines.append(f"  PRODUCED BY / inbound ({result['n_in']}): " + "; ".join(result["produced_by"][:10]))
+    if result.get("consumes_or_serves"):
+        lines.append(f"  CONSUMES / outbound ({result['n_out']}): " + "; ".join(result["consumes_or_serves"][:10]))
+    if result.get("drift_class"):
+        lines.append(f"  drift_class={result['drift_class']}  source={result.get('source') or '-'}  "
+                     f"purpose_tokens={result.get('n_purpose')}")
+    lines.append("  provenance: derive-at-scan over the live comp-kuzu graph (no projected "
+                 "property, no resource_summaries table).")
+    return "\n".join(lines)
+
+
 # ---- BM25 over the corpus ------------------------------------------------------------------
 class SimilarityIndex:
     """Wrap the reused BM25 engine over a summary corpus. Non-thin docs only carry twin
@@ -397,7 +557,26 @@ def self_test() -> int:
     ok &= m4
     print(f"  M4 name-exclusion (own name absent from tokens): tokens={d.tokens} {'PASS' if m4 else 'FAIL'}")
 
-    print(f"=== self-test: {'PASS' if ok else 'FAIL'} (4/4) ===" if ok else "=== self-test: FAIL ===")
+    # M5 DESCRIBE edge-partition control (offline; the describe pull-forward's pure core): a
+    # combined edge result splits correctly into out/in from the resource's vantage, and a
+    # self-loop is BOTH. Guards the single-ARN load's partition against a src/dst swap.
+    rows = [
+        {"src": "arn:self", "dst": "arn:down", "et": "WRITES", "st": "LAMBDA", "sn": "w",
+         "bt": "S3_BUCKET", "bn": "bucket"},                                   # self -> down (out)
+        {"src": "arn:up", "dst": "arn:self", "et": "TRIGGERS", "st": "EVENT_RULE", "sn": "rule",
+         "bt": "LAMBDA", "bn": "self"},                                        # up -> self (in)
+        {"src": "arn:self", "dst": "arn:self", "et": "ASSUMES", "st": "T", "sn": "self",
+         "bt": "T", "bn": "self"},                                            # self-loop (both)
+    ]
+    out_e, in_e = _partition_edges(rows, "arn:self")
+    m5 = (len(out_e) == 2 and len(in_e) == 2
+          and {e["other_arn"] for e in out_e} == {"arn:down", "arn:self"}
+          and {e["other_arn"] for e in in_e} == {"arn:up", "arn:self"})
+    ok &= m5
+    print(f"  M5 describe edge-partition (out={len(out_e)} in={len(in_e)}, self-loop both): "
+          f"{'PASS' if m5 else 'FAIL'}")
+
+    print(f"=== self-test: {'PASS' if ok else 'FAIL'} (5/5) ===" if ok else "=== self-test: FAIL ===")
     return 0 if ok else 1
 
 
@@ -410,12 +589,25 @@ def main(argv=None) -> int:
     ap.add_argument("--self-test", action="store_true", help="offline mutant gate (no graph)")
     ap.add_argument("--build", action="store_true", help="build the corpus from the live graph; print coverage + samples")
     ap.add_argument("--neighbors", metavar="ARN", help="summary-similar neighbors of an ARN (proves the corpus is consumable)")
+    ap.add_argument("--describe", metavar="ARN_OR_NAME",
+                    help="find + describe ONE resource (exact ARN, exact name, or lexical substring); "
+                         "cheap 2-query derive-at-scan -- the comp-describe surface")
     ap.add_argument("--samples", type=int, default=6, help="how many sample summaries to print under --build")
     ap.add_argument("--json", action="store_true", help="emit machine JSON")
     args = ap.parse_args(argv)
 
     if args.self_test:
         return self_test()
+
+    if args.describe:
+        result = describe(args.describe)
+        if args.json:
+            print(json.dumps(result, indent=2))
+        else:
+            print(render_describe(result))
+        # exit 1 when nothing resolved (a describe that finds nothing is a non-zero outcome a
+        # caller/script can branch on), 0 on a real description.
+        return 0 if result.get("resolved") is not None and not result.get("node_absent") else 1
 
     if args.build or args.neighbors:
         corpus = build_corpus()

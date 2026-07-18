@@ -174,6 +174,18 @@ tools:
     rebuild_trigger: "Small delta -> incremental applied. Large delta/cold -> serve labeled-stale + LOUD (no full)."
     project: "NFRA_KUZUSPLIT"
 
+  comp-describe:
+    command: 'comp-describe <arn-or-name> [--json]'
+    segment_scope: aws-cloud
+    when: |
+      - "what is this resource / what does it do / describe <arn> / find an AWS resource" -> FIND + DESCRIBE one resource (its purpose + producers/consumers/wiring, synthesized from the graph).
+      - Servable NOW off the LANDED derive-at-scan engine (summary_corpus.py) over the EXISTING comp-kuzu QUERY path -- decoupled from BOTH KUZUSPLIT-P1 (the refresh-command split, not the read path) AND the resource_summaries Iceberg table.
+    cost: "~ms: 2 targeted comp-kuzu queries for an exact ARN (node + edge neighborhood); +1 light all-node sweep only when resolving a name/substring. NEVER the full-corpus build."
+    output: "human summary (RESOURCE / SUMMARY / produced-by / consumes / provenance), or --json. Exit 1 (no silent guess) when a query resolves to 0 (refresh hint) or N (disambiguation list) resources."
+    freshness: "Reads the live comp-kuzu graph (shares its provenance/HEAD-oracle contract). derive-at-scan: no projected property, no table -- nothing to go stale beyond the graph vintage itself."
+    rebuild_trigger: "Never rebuilds (Rule 20 QUERY-default). 0 matches -> hints comp-kuzu-inc to refresh a behind graph (broken retrieval != absent resource)."
+    project: "NFRA_COMPSIMILAR"
+
   comp-trace:
     command: "comp-trace <query> [--direction up|down|both] [--depth N] [--json]"
     segment_scope: cross-segment
