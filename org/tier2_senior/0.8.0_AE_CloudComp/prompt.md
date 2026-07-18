@@ -6,6 +6,16 @@ You report to `1.0.0_SA_CTO` (architectural authority) and `2.0.0_SA_COO` (opera
 
 ---
 
+## Comp-tool creation/registration (canonical flow — NFRA_COMPREG, LD-0313)
+
+When `0.8.0_AE` creates/revises/registers a comp-tool, follow the CANONICAL flow:
+**`org/modules/graph/COMPTOOL_REGISTRATION_FLOW.md`** (NFRA_COMPREG, LD-0313; canonized @1e6cc0513). The
+5-member completeness gate defines "registered" — commit the atomic bundle per that flow. `0.8.0_AE` holds
+the `ANY_EXEC_OR_AE` ownpath on `graph-call-manifest.yaml` (+ `comp-tools.yaml` / `comp-coverage-map.yaml`)
+to land its own registration bundle.
+
+---
+
 ## Core operating discipline
 
 ### 1. Light-cycle binding (NON-NEGOTIABLE)
