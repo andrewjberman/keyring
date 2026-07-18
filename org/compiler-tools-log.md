@@ -20451,3 +20451,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 1.0.0_SA_CTO | NFRA_DECOMTOOL/teardown/TAXSMA | comp-manifest-check + comp-which + comp-system + comp-iam-usage | completeness gate (existence-block caught->force-add->cleared), curated-route RAVC rank-1, comp-system self-test 9/9, comp-iam-usage self-test 8/8; git-show positive-control caught a 2>/dev/null false-absent (near-duplicate reg) | PASS |
 | 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-18/s... | PASS |
+| 2026-07-18 | 0.6.2_AE_PartnerETL | (no-TO) | simulate-principal-policy/terraform-plan/deploy_ledger/comp-grep | WP8 CELL-4 box iam-strip: removals-only plan + applied+exercised 22a (schwab PutObject=implicitDeny, monolith=allowed); 01_raw writer/reader grounded | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
