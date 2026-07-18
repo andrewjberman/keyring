@@ -18,7 +18,7 @@ meta:
   version: "0.1"
   ratified_by: "1.0.0_SA_CTO"
   ratified_at: "2026-06-18"
-  roles_vocab: "C2 enrichment role-labels (structural-position -> canon label) added per-class 2026-07-18 (COMPSIMILAR PH2, CTO-blessed); SERVED_LINEAGE first (structurally derivable today), remaining classes blessed at the ~D arch-gate. CLOSED vocab: a position with no label emits NO clause (no invented tokens). C2 = canon-scoped role; C3 system-membership + agnostic-archetype binding HELD to NFRA_ONTOLOGY (LD-0310)."
+  roles_vocab: "C2 enrichment role-labels (structural-position -> canon label) added per-class 2026-07-18 (COMPSIMILAR PH2, CTO-blessed); SERVED_LINEAGE first (structurally derivable today), PIPELINE/AUTH/DEPLOY blessed 2026-07-18 at the ~D C2 arch-gate -- each fires ONLY once its instance-grain source wires (graceful-degrade; DEPLOY=code/-prefix nodes, AUTH=comp-routes behavior, PIPELINE=pipescript interior -- all UNWIRED on the canonical DB today, so no clause fires yet). CLOSED vocab: a position with no label emits NO clause (no invented tokens). C2 = canon-scoped role; C3 system-membership + agnostic-archetype binding HELD to NFRA_ONTOLOGY (LD-0310/LD-0311)."
   pairs_with:
     - org/modules/graph/graph-call-manifest.yaml   # the node/edge vocabulary this extends
     - org/modules/graph/debtscan/suppression_v1.yaml # the FP gate every deviation passes through
@@ -53,6 +53,15 @@ patterns:
       - orphan_stage: "a gold/silver artifact with no downstream consumer (served-no-render) or no upstream writer (render-no-source)"
       - dual_writer: "two producers writing the same S3 key with split consumers (ADVI_DWSPLT class)"
     twin_shadow_guard: "bd / cot / inf parallel pipeline instances are DESIGNED firm-separated TWINS -- NOT deviations. Key motif-identity on (firm, layer, logical-stage); a parallel firm path matching the SAME motif is canonical. Only a fork-SHADOW (a partial copy that DIVERGED from its twin -- the 9-RED / bd-cot-fork lesson) is debt."
+    # C2 enrichment vocabulary (COMPSIMILAR PH2, CTO-blessed 2026-07-18 at the ~D arch-gate). CLOSED +
+    # governed -- a position with NO label emits NO clause (no invented tokens); keys match the ~D enricher.
+    # SOURCE UNWIRED: the pipescript interior (bronze..gold) is NOT typed in the canonical DB, so these fire
+    # only when the pipescript-interior source wires (a separate gated increment). served_s3 OVERLAPS SERVED_LINEAGE.s3.
+    roles:
+      bronze:    "bronze stage"       # the raw-ingest stage node
+      silver:    "silver stage"       # the dedup/dtype stage node
+      gold:      "gold stage"         # the business-logic producer stage
+      served_s3: "served S3 tail"     # the S3 object the gold writer serves (overlaps SERVED_LINEAGE.s3)
     incident_anchors: ["inf bare-vs-INF_ 29-file shadow", "orphan D_04", "INFLECTION_REP_IDS x5 config drift"]
 
   - id: AUTH_CANON
@@ -67,6 +76,14 @@ patterns:
       - silent_rewrite_noop: "a Lambda@Edge router whose rewrite rule matches nothing -> request falls through (the pre-rewrite-URI silent no-op)"
       - past_route_fetch: "a component FETCHES an S3 object directly, bypassing the route/auth layer"
     twin_shadow_guard: "per-firm auth paths (49financial/cottonwood/inflection FIRM_CONFIG) are DESIGNED parallels -- not deviations"
+    # C2 enrichment vocabulary (COMPSIMILAR PH2, CTO-blessed 2026-07-18 at the ~D arch-gate). CLOSED +
+    # governed -- a position with NO label emits NO clause; keys match the ~D enricher.
+    # SOURCE UNWIRED: the route->auth-edge TRIGGERS behavior is unmodeled on the canonical graph
+    # (comp-routes BEHAVIOR); these fire only when that source wires.
+    roles:
+      route:     "served route"       # (API_ROUTE|ServedURL) -- the served entry
+      edge_fn:   "auth edge fn"       # (LAMBDA edge-fn) -- the auth-validator-edge gate
+      origin_s3: "origin S3"          # (S3_BUCKET) -- the origin read behind the gate
     incident_anchors: ["pre-rewrite-URI Lambda@Edge silent no-op", "auth-validator-edge blacklist-model coverage gap"]
 
   - id: DEPLOY_CANON
@@ -79,12 +96,28 @@ patterns:
       - runnerless: "a runner with no traceable S3 code source (console/inline deploy -- NEVER-rule violation)"
       - stale_baked_asset: "an EC2 baked copy diverged from the S3 code (the ec2-baked-asset proof class)"
     twin_shadow_guard: "per-firm runners (bd-gold / cot-gold / inf) are DESIGNED parallels; the PURPOSE-KEPT start-on-demand boxes (bd-gold-qa-runner) are intentional 0-run-hour, NOT orphans -- cross-ref NFRA_COSTAWS D1"
+    # C2 enrichment vocabulary (COMPSIMILAR PH2, CTO-blessed 2026-07-18 at the ~D arch-gate). CLOSED +
+    # governed -- a position with NO label emits NO clause; keys match the ~D enricher.
+    # SOURCE UNWIRED: the canonical DB is BUCKET-grain (no code/ prefix nodes), so a bucket-grain "code-runner"
+    # cannot be told from a data-reader -> HOLD; these fire only when the code/-prefix source wires.
+    roles:
+      code_prefix: "code prefix"      # (S3_BUCKET 'code/' prefix) -- the deploy target
+      runner:      "code runner"      # (EC2_INSTANCE|LAMBDA|ECS_TASK_DEFINITION) -- reads its code from the prefix
     incident_anchors: ["globgrph derive CodeBuild-from-S3-zip stale-image", "3-stranded-layer half-landed cutover"]
 
   - id: SERVED_LINEAGE_CANON
     canon: "gold-field -> ServedURL -> DataFetch -> FLOWS_TO -> JSXRender (the P4 SERVED_FROM-backed fine lineage)"
     graph_source: canonical
-    motif: "(Field gold)-[SERVED_FROM]->(ServedURL)-[FETCHES]->(DataFetch)-[FLOWS_TO*]->(JSXRender)"
+    motif: "(Field gold)-[SERVED_FROM]->(ServedURL)-[FETCHES]->(DataFetch)-[FLOWS_TO*]->(JSXRender)"   # v0.1 IDEALIZED (P4 fine lineage) -- see live-grounding below
+    # LIVE-GROUNDED 2026-07-18 (CTO, comp-kuzu; nodes snap 1340897725499525102 / edges snap 864711927912877876;
+    # Nessie HEAD current). The idealized motif above has DRIFTED from the live stitch on EVERY edge (~D DRIFT
+    # finding; base + CTO independently exercised). LIVE serve/render topology (edge src->dst, n):
+    #   RENDERS  JSXRender->Field 2447 | FLOWS_TO Field->Field 956 | READS_URL Endpoint->ServedURL 48
+    #   FETCHES  Hook->Endpoint 109   | SERVED_FROM ServedURL->S3_BUCKET_POLICY 29 | ORIGIN CLOUDFRONT->S3_BUCKET 5
+    # The role KEYS below anchor on node_type, so classify_motif (the C2 enricher) is CORRECT regardless of the
+    # idealized edge-string. OPEN (untraced -- do NOT rewrite the motif blind): whether the fine Field-level
+    # SERVED_FROM lineage is a stitch GAP (should exist, absent) or a remodel (the coarse ServedURL->S3_BUCKET_POLICY
+    # serve edge replaced it). Trace the SERVED_LINEAGE scorer's consumers (comp-blast) before replacing the motif.
     dominant_expectation: "a served field that a component renders traces to a gold producer; FLOWS_TO carries its KIND (passthrough|rename|recompute/guarded)"
     deviation_classes:
       - recompute_fork: "a recompute/guarded FLOWS_TO rendering differently per cohort/firm (the OFC / NFRA_TSGRAPH P3 class) -- canon-deviation when the fork is undeclared"
@@ -94,12 +127,12 @@ patterns:
     # canon ROLE LABEL spliced into a node's per-ARN summary ("... the <label> of a served-lineage
     # motif"). CLOSED + governed -- a scanned node's position maps to exactly one label; a position
     # with NO label emits NO clause (never an invented token). Keys match the ~D enricher design.
-    roles:
-      gold_field: "served gold field"   # (Field gold) -- the SERVED_FROM source field
-      served_url: "served URL"          # (ServedURL) -- the served endpoint
-      data_fetch: "data fetch"          # (DataFetch) -- the FETCHES client (edge/route fn)
-      jsx_render: "render terminal"     # (JSXRender) -- the FLOWS_TO render terminal
-      s3:         "S3 tail"             # the backing S3 object under the ServedURL
+    roles:  # keys/labels UNCHANGED (node_type-anchored); comments refreshed to the live edges (2026-07-18 grounding above)
+      gold_field: "served gold field"   # (Field) -- rendered by JSXRender-[RENDERS]->Field; the FLOWS_TO lineage source
+      served_url: "served URL"          # (ServedURL) -- Endpoint-[READS_URL]->ServedURL; ServedURL-[SERVED_FROM]->S3_BUCKET_POLICY
+      data_fetch: "data fetch"          # (DataFetch) -- FE-stitch fetch node (0-ARN; corpus-scope-expansion, not on the ARN corpus today)
+      jsx_render: "render terminal"     # (JSXRender) -- the RENDERS terminal (JSXRender-[RENDERS]->Field)
+      s3:         "S3 tail"             # (S3_BUCKET) -- CLOUDFRONT_DISTRIBUTION-[ORIGIN]->S3_BUCKET; the SOLE operative role on the ARN corpus today
     incident_anchors: ["OFC cohort/ternary display-fork", "cross-firm conditional asymmetry"]
 
 # --- Motif-outlier semantics (how the scorer flags) -----------------------------------------------
