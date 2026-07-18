@@ -20254,3 +20254,13 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.id) CONTAINS 'bd' OR toLower(n.id) CONTAI... | FAIL |
 | 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-18/s... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT labels(n) AS l, count(*) AS c ORDER BY c DESC LIMIT 15 | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE toLower(n.id) CONTAINS 'bd' RETURN n.id LIMIT 12 | FAIL |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 2 --json | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/00_synthesis.md --file inf... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/00_synthesis.md infra/system/02_graph_infra.md infra/syste... | PASS |
+- 2026-07-18T00:37Z 0.4.0_DS_ClientPlatform~A (flip confirm + lane-split): read-only aws s3 ls/cp -- nightly dispatch log chain_full_20260717_230100.log ([monolith] line 509 partitions + source_system bd_diff_flagged/schwab_imputed + FATAL=0), canonical_nna partitions (07-14/07-15 bd_diff_flagged merge proof), D-series telemetry (D_00..D_04 fresh, D_00f last phase), header_metrics data_as_of flip 07-13->07-15. Flip confirmed clean end-to-end, step-5 GO'd to 0.5.0. Gap: base-serial inbox invisible to ~A-suffixed Monitor (halt-gate was the only detector for 3 base messages).
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.arn) CONTAINS 'bd' OR toLower(n.arn) CONT... | PASS |
+2026-07-18T00:40Z | 0.8.0_AE_CloudComp | summary_corpus.py --self-test PASS 4/4 (corpus-land gate); safe-commit no-op (corpus pre-landed by CTO @3fe0eedf0); Read/Grep grounding of the registration surface (comp-manifest-check + graph-call-manifest.yaml + .owned-paths.yaml) for the ~B SoD walkthrough -- known-file inspection, no graph/estate search needed.
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
