@@ -20573,3 +20573,27 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR | [session-summary] | --describe resolve fix: comp-kuzu root-ground (bare-arn policy node) + comp-describe exercised (bucket+motif, tie disambiguates) + self-test 8/8 (M8) + commit-gate clean; Variance C3/Twin contract review (no tool, design coordination) | PASS |
 | 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='PanelCluster' RETURN DISTINCT n.name A... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='Pipeline' RETURN n.name AS name | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3_BUCKET' RETURN n.name AS name ORDER... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3_BUCKET' AND n.name CONTAINS 'opal-d... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['PanelCluster','Pipeline'] RETURN n... | FAIL |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_C3_SYSTE... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_FIXED_PO... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_EMPIRICA... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/.gitignore --file infr... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/.gitignore infra/system/sdk/01_provision/modules/globg... | FAIL |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/00_manifest/examples/s... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/00_manifest/examples/sandbox.company.yaml infra/system... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/CSE_OWNER_RULING_... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/genesis_cli.py --file ... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/genesis_cli.py infra/system/sdk/gensdk/scaffold.py inf... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_FIXED_PO... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE(consult) | python-ast + Grep/Read | AST enum-count of cse_schema.py @adf056d74 (Entity=29/Rel=23 denominator correction) + source-cite grounding for the CSE-owner AXIS-2 + C-1 owns ruling; 2 targeted Bash greps un-rail-marked (single-file, noted in log) | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
