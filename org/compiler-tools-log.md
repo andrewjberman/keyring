@@ -20883,3 +20883,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-18 | 3.0.0_SA_CVO | comp-kuzu(~20), comp-grep/glob, comp-which, python(scratch self-test 22/22 + live parity mutant), py_compile | round-trip cert @HEAD 1276 (5077/5079 PASS) + OWNS-bump 0.4->0.5 re-sign (CLEAR); comp-which gap on semctl surface noted; AC4 live-coverage gap surfaced (6 node+1 edge types)
 | 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-18/s... | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | (none) | governed-tail arch-gates -- SOURCE-READ rulings (DS~B OWNS spec @66a30da7c, ~C LLM-overlay @9469ef463) + validated OTHERS' grounded evidence (COO estate-sweep grep, CVO 22/22+live-parity mutant); no repo/graph query by me this window | N/A |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-18/s... | PASS |
