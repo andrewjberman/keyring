@@ -20597,3 +20597,22 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_CSE(consult) | python-ast + Grep/Read | AST enum-count of cse_schema.py @adf056d74 (Entity=29/Rel=23 denominator correction) + source-cite grounding for the CSE-owner AXIS-2 + C-1 owns ruling; 2 targeted Bash greps un-rail-marked (single-file, noted in log) | PASS |
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_BINDING_... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/.gitignore --file infr... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/.gitignore infra/system/sdk/genesis_cli.py infra/syste... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_FIXED_PO... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/README.md --file org/p... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/README.md org/projects/NFRA_GENESIS.json | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_CLOSED_S... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_BINDING_... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/00_manifest/projector.... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/00_manifest/projector.py infra/system/sdk/01_provision... | FAIL |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_FIXED_PO... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu, comp-grep, comp-glob | NFRA_ONTOLOGY empirical grain scan (58 node/53 edge/109 triple/92 motif distributions + recurrence sizing + C3-naming sources) -> grain decision + canonical motif catalog + owner-ratified closed set | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
