@@ -20282,3 +20282,68 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/absence-config.json infra/aws/lambda/ci/lambda-sour... | FAIL |
 | 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPSIMILAR.json --fi... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_COMPSIMILAR.json org/projects/REGISTRY.md | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io data/assets/scripts/silver/build_fact_taxsma_report.py | FAIL |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/graph-call-manifest.yaml | FAIL |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/COMPSYSTEM_COEVOLUTION... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' AND n.node_type='LAMBDA' RETURN ... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/docs/BD_API_DESIGN.md | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff data/assets/docs/BD_API_DESIGN.md | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:lambda:us-east-1:3134768884... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:lambda:us-east-1:3134768884... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'opal-cot-value-parity' RETURN n.arn... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'zzz-nonexistent-resource-xyz' RETUR... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/build_fact_t... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/silver/build_fact_taxsma_report.py | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'fees-runner-role' RETURN n.arn AS a... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:lambda:us-east-1:3134768884... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:lambda:us-east-1:3134768884... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'trending-topics-portal-publisher' R... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn<>'' AND n.node_type='S3_BUCKET' AND n.... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'opal-data-mdpf' RETURN n.arn AS arn... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-mdpf' RETURN... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-mdpf' RETURN... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-ec... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/canonical-schwab-ec2/runner-trigger.tf infra/aws/te... | FAIL |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-mdpf' RETURN... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-describe | comp-describe arn:aws:s3:::opal-data-mdpf | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'opal-data-mdpf' RETURN n.arn AS arn... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-describe | comp-describe opal-data-mdpf --json | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/04_federated.md | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/04_federated.md | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check check --file org/modules/graph/comp-coverage-map.yaml --file org/mo... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yam... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp-coverage-map.yaml org/modules/graph/comp-tools.y... | FAIL |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-manifest-check | comp-manifest-check completeness | VERDICT |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-iam-usage | comp-iam-usage self-test | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-iam-usage --file org/module... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-iam-usage org/modules/graph/comp_iam_usage.py org/modules/g... | FAIL |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-si... | PASS |
+| 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/canonical-schwab-si2-schedule/schedule.tf | FAIL |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-validate | comp-validate --help | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check | VERDICT |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-validate | comp-validate build_dim_taxsma_report --artifact C:/Users/ANDREW~1/AppData/Local/Temp/c... | VERDICT |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check scan | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/build_dim_taxs... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/gold/build_dim_taxsma_report.py | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/WP8_CELL4_SCHWAB_BOX_... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/COMPDESCRIBE_ROUTING_S... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | freshness-alarm-teardown-20260717 | safe-apply/safe-commit/deploy_ledger/terraform | freshness clean-house teardown 7/10 (inf/cot/bd/mdpf/globgrph/opalassets/schwab) + INF nna-guard excusal + set-e/pipeline-failed hardening; per-pipeline gated, -target for contaminated states, deploy_ledger L1-L7 closed. No comp-* rail (native terraform/aws deploy work). | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
