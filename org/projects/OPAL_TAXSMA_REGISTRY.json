@@ -1,0 +1,18 @@
+{
+  "project_code": "OPAL_TAXSMA_REGISTRY",
+  "macro_code": "OPAL",
+  "name": "Tax SMA Account Registry + seamless onboarding (/tax-newacc) -- an S3-JSON registry is the source-of-truth for which accounts are in the Tax SMA ETL; Alyssa enrolls new accounts by EXACT account number via the MCP gateway, which (1) runs tax-pt2 ad-hoc now + (2) adds the account to the daily ETL in perpetuity",
+  "status": "active",
+  "current_phase": "PRD AUTHORED 2026-07-17 (CTO, direct from 0.2.0_DT's brief @e43e9d0de per Andrew-direct 'get that written up'; CTO writes the TOs directly, NOT via COO). D1-D6 ruled: D1 registry=S3 JSON versioned at blackdiamond/49f/_ops/taxsma_roster.json (ETag-conditional RMW); D2 resolver=CONTINGENT ladder (xref fast-path -> sanctioned exact-number query -> account-api full-number), EXACT + fail-loud, NO fuzzy; D3 egress CONTINGENT (account-api = new surface -> Andrew word extension, only if the sanctioned exact-number query is infeasible); D4 gateway IAM extension = net-new (invoke tax producer + RW roster key ONLY) -> CTO plan-gate + Rule 22a; D5 ad-hoc/daily = distinct pull_date snapshots (no silent overwrite); D6 seed = exact-resolved + human-confirmed. 5 WS TOs written (WS-R1 registry+seed / WS-R2 resolver / WS-R3 ETL-reads-registry / WS-R4 /tax-newacc skill / WS-R5 gateway IAM extension).",
+  "owner": "1.0.0_SA_CTO",
+  "coo_lane": "2.0.0_SA_COO",
+  "created": "2026-07-17",
+  "pods": ["0.2.0", "1.0"],
+  "related": ["OPAL_TAXSMA", "OPAL_TAXSMA_PT2"],
+  "related_note": "The onboarding/scaling layer on top of OPAL_TAXSMA_PT2. EXTENDS PT2 (does not fork it): WS-1 producer (live @opal-assets-v0.27.0) gains the registry read (WS-R3); WS-4 gateway IAM (plan-gate PASS) gains the onboarding grants (WS-R5); WS-5 schedule pulls the registry set. Fixes the WS-1 discover_accounts() stub (first pull ran hardcoded Chiles). Andrew-direct 2026-07-17 (routed CTO, not COO): CTO registers + writes the TOs from DT's WS spec.",
+  "depends_on_note": "Reuses (does NOT rebuild): the live 49F reporting producer + its scoped role (WS-1 @v0.27.0); the WS-4 gateway per-employee scoped-IAM (opal-mcp-emp-alyssa-read) + the opal-mcp-emp-* namespace-governance invariant; dim_account_xref (schwab->bd bridge, the resolver's zero-call fast-path). NON-NEGOTIABLE (Andrew-direct): EXACT account-number resolution, fail-loud on absent-or-!=1, NEVER fuzzy name/last-4/surname.",
+  "prds": [
+    {"path": "docs/architecture/OPAL_TAXSMA_REGISTRY_PRD.md", "label": "OPAL_TAXSMA_REGISTRY implementation PRD v0.1 (CTO; D1-D6 rulings + 5 WS decomposition + gates)", "date": "2026-07-17"},
+    {"path": "org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/TAXSMA_ACCOUNT_REGISTRY_AND_ONBOARDING_BRIEF_20260717.md", "label": "Architecture brief (0.2.0_DT): the registry + /tax-newacc vision + endpoint grounding + WS spec", "date": "2026-07-17"}
+  ]
+}
