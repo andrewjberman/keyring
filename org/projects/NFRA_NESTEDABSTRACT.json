@@ -1,0 +1,26 @@
+{
+  "project_code": "NFRA_NESTEDABSTRACT",
+  "macro_code": "NFRA",
+  "name": "The ongoing abstraction-incorporation loop -- keep the GENESIS SDK live with Opal's evolving mechanism",
+  "description": "Andrew-direct 2026-07-18 (VERBATIM): 'in that /system/sdk/ folder, where we kind of abstract everything for any organization, we need to create an ongoing pattern where as we enhance the mechanism, we update that abstracted version with the abstracted version of the enhancements... we also clearly want to establish what id call territories, like how we're doing it in Opal with A as AWS, B as Git, C and D were portal and Microsoft... the idea of abstracting surfaces to a territory is key... we need to have some kind of mechanism where as we build anything, we also assess its abstracted logic and incorporate it into that sdk... should include something of an improvement loop where we have a mechanism and process for every improvement where we identify the abstraction behind it, log it, and incorporate it into the sdk.' The GENESIS SDK (infra/system/sdk/) is a FROZEN abstraction of Opal at abstraction-time; without an ongoing loop it drifts from the live mechanism -- the SAME check-live-not-frozen anti-pattern this session surfaced 4x (materialize emit-vs-applied / semctl denominator / OWNED_BY census-guard / AC4 --live-coverage). NFRA_NESTEDABSTRACT is the cadence that keeps the abstraction live: a 3-step loop (IDENTIFY the tenant-neutral abstraction behind every enhancement -> LOG it in an append-only abstraction-ledger -> INCORPORATE the abstracted, zero-Opal-literal form into the SDK) + an ENFORCEMENT mechanism (a drift-gate so a core-mechanism enhancement with no ledger disposition is a tracked gap, never a silent skip). Two seed abstractions from Andrew's examples: (1) TERRITORY -- abstract Opal's recognizer planes (A=Cloud/IAM/Serve/AWS, B=Pipeline/Data/git-sourced, C=Frontend/Portal, D=M365/Microsoft) into a first-class tenant-declared TERRITORY concept in company.yaml + per-territory recognizer scaffolds; (2) LLM-SEMANTIC-CLASSIFICATION of aggregates -- abstract this session's additive-LLM-overlay (llm_class/description on motifs/systems) into an invariant-guarded SDK capability (the one-way structure->label invariant as a lint). STANDING process: P0-P2 build the machine, the loop then runs perpetually.",
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_NESTEDABSTRACT.md",
+      "label": "NFRA_NESTEDABSTRACT PRD v0.1 (CTO-authored, Andrew-direct 2026-07-18): the abstraction-incorporation loop + ledger + drift-gate + the territory/LLM seed abstractions",
+      "date": "2026-07-18"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete (CTO-authored, Andrew-direct 2026-07-18), COO decomposition + ~A build pending. P0 = the loop+ledger+drift-gate DESIGN (CTO arch-gate); P1 = seed the 2 abstractions (territory: company.yaml tenant-declared territories + per-territory recognizer scaffold + tenant-parameterized planes; LLM-classification: invariant-guarded SDK module) + retro-populate the ledger + back-sweep the session's other enhancements; P2 = the enforcement drift-gate (makes it ONGOING, not a one-time catch-up); ONGOING = the loop runs on every enhancement (standing).",
+  "blocking": "COO task-order decomposition (or direct ~A kickoff). No build blocker -- the SDK kit is AE-committable (infra/system/sdk/** ANY_EXEC_OR_AE); ~A builds. Exec-locked pieces (any org/modules/graph registration for an SDK comp-tool, per NFRA_COMPREG) route to CTO as normal SoD.",
+  "owner": "0.8.0_AE_CloudComp~A",
+  "owner_note": "Andrew-direct 'conceptually a task for ~A' -- ~A owns the GENESIS SDK (infra/system/sdk/). CTO arch-gates the abstraction rulings (does X abstract / its abstract form / the drift-gate mechanism) + exec-locked pieces. COO coordinates the review loop.",
+  "coo_lane": "2.0.0_SA_COO",
+  "created": "2026-07-18",
+  "pods": ["0.8", "1.0", "2.0"],
+  "sovereign": "Andrew (direct, the ongoing-abstraction-loop mandate)",
+  "depends_on": ["NFRA_GENESIS", "NFRA_ONTOLOGY", "NFRA_SYSTEM", "NFRA_COMPREG"],
+  "depends_on_note": "KEEPS-LIVE NFRA_GENESIS (the SDK being kept in sync with the mechanism). SOURCES its seed concepts from NFRA_ONTOLOGY (the A/B planes -> territory abstraction; the LLM-classification overlay). ABSTRACTS FROM NFRA_SYSTEM (the evolving mechanism). REGISTERS any SDK comp-tool via NFRA_COMPREG (atomic-bundle flow). NON-goal: re-abstracting from scratch (GENESIS did the base; this keeps it LIVE) or re-platforming Opal.",
+  "thread_counter": 0,
+  "threads": []
+}
