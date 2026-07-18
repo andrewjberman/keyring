@@ -20701,3 +20701,93 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | module self-test + live re-emit + comp-kuzu | C3 re-emit = overlapping-domain-cover (MSTR-blessed): 3 C3System (object-data/compute-orch/pipeline), b-io overlap, resolve held 4201/4201 (100pct), fidelity PASS, no-refreeze; self-test 9/9; caught+fixed b-io polymorphic-alias mislabel | PASS |
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_C3_OVERL... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-genesis --file .tools/comp-... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-genesis .tools/comp-which org/modules/graph/comp-coverage-m... | FAIL |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-genesis | comp-genesis status demo | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPROUTE.json | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_COMPROUTE.json | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.y... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/graph-call-manifest.yaml org/projects/NFRA_GENESIS.json | FAIL |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node_type AS t... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/gensdk/recognizer_sdk/... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/gensdk/recognizer_sdk/smoke.py | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node_type AS t... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/README.md | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/README.md | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile --file in... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/globgrph/Dockerfile infra/aws/globgrph/derive_runner.py | FAIL |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/gensdk/recognizer_sdk/... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/gensdk/recognizer_sdk/frontends/python_resolved.py inf... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/README.md --file infra... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/README.md infra/system/sdk/docs/AUTHORING.md | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node_type AS t... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node_type AS t... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --help | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc MATCH (n) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node_type ... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (n) RETURN n.node_id AS id | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (m)-[e:CONTAINS]->(t) WHERE m.node_id IN ['motif:a-store','m... | FAIL |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (s)-[e:CONTAINS]->(m) WHERE m.node_id='motif:b-io' AND s.nod... | FAIL |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --schema | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (m:CloudNode)-[e:CloudEdge]->(t:CloudNode) WHERE m.node_id I... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (m:CloudNode)-[e:CloudEdge]->(t:CloudNode) WHERE m.node_id S... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE m.node_id='... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (m:CloudNode)-[e:CloudEdge]->(t:CloudNode) WHERE m.node_id I... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (m:CloudNode)-[e:CloudEdge]->(t:CloudNode) WHERE m.node_id I... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (n:CloudNode) WHERE n.node_id IN ['arn:aws:lambda:us-east-1:... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (n:CloudNode) WHERE n.node_id IN ['arn:aws:ec2:us-east-1:313... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (n:CloudNode) WHERE n.node_type='EC2_INSTANCE' RETURN n.node... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/genesis_cli.py --file ... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/genesis_cli.py infra/system/sdk/gensdk/loop/local_loop... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/README.md --file org/p... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/README.md org/projects/NFRA_GENESIS.json | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (n:CloudNode) WHERE n.node_type IN ['S3_BUCKET','LAMBDA'] RE... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/README.md --file infra... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/README.md infra/system/sdk/requirements-sandbox.txt or... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (n:CloudNode) WHERE n.node_id IN ['motif:a-store','motif:b-i... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (n:CloudNode) WHERE n.node_type='EC2_INSTANCE' RETURN n.node... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='C3System' RETURN n.name AS name, n.nod... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='C2Motif' RETURN count(*) AS c2motif_count | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/README.md --file infra... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/README.md infra/system/sdk/genesis_cli.py | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type='C3System'... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type='C3System'... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (m:CloudNode) WHERE m.node_type='C2Motif' AND (m.node_id CONTAINS 'moti... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type='C3System'... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode) WHERE s.node_type='C3System' AND s.node_id CONTAINS 'syst... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPREG.json --file o... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_COMPREG.json org/projects/REGISTRY.md | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/globgrph/derive_runner.py | FAIL |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/globgrph/derive_runner.py | FAIL |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_SEMCTL.json --file or... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_SEMCTL.json org/tier2_senior/0.8.0_AE_CloudComp/deliv... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/genesis_cli.py --file ... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/genesis_cli.py infra/system/sdk/gensdk/loop/nessie_ver... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/genesis_cli.py --file ... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/genesis_cli.py infra/system/sdk/gensdk/loop/nessie_ver... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_GENESIS_INVPC_NES... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['LAMBDA','EC2_INSTANCE','IAM_ROLE',... | FAIL |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc MATCH (n) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node_type ... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc MATCH (n) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node_type ... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (m:CloudNode)-[e:CloudEdge]->(t:CloudNode) WHERE m.node_id I... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (m:CloudNode)-[e:CloudEdge]->(t:CloudNode) WHERE m.node_id I... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (n:CloudNode) WHERE n.node_id IN ['arn:aws:cloudwatch:us-eas... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE m.node_id='... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/gensdk/loop/nessie_ver... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/gensdk/loop/nessie_verify.py | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-kuzu-inc | comp-kuzu-inc | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu-full | comp-kuzu-full MATCH (n) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.node_type... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='C3System' AND n.node_id CONTAINS 'syst... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='C3System' AND n.node_id CONTAINS 'syst... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type='C3System'... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type='C3System'... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (m:CloudNode) WHERE m.node_type='C2Motif' AND (m.node_id CONTAINS 'moti... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (m:CloudNode)-[e:CloudEdge]->(c:CloudNode) WHERE m.node_type='C2Motif' ... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | json-analysis + comp-kuzu-inc + applied_verify (live post-ingest) | applied C2->C1 seam grounded producer-side (my targets = canonical ARNs = comp-kuzu node_ids); 0.7.0 fix verified: 13/13+3/3 nodes, 5077/5079 C2->C1, 9/9 C3->C2 materialized live @snap 1276252256517924052; 2 misses = confirmed estate drift | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
