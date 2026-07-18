@@ -59,6 +59,19 @@ _SURFACE_NOISE = {"surface", "tool", "tools", "inspect", "cloud", "aws", "git", 
 
 # Curated rules: (any-keyword list, label, [calls], why). Order = CVO bypass-volume rank.
 RULES = [
+    # comp-genesis = NFRA_GENESIS provisioner (P5). Distinctive spin-up/provision/generalize-to-a-new-company
+    # vocabulary so it does NOT collide with the estate-query tools (comp-system = Opal's OWN current state;
+    # comp-genesis = build a NEW company's whole system). Routes an agent to the PROVISIONER SDK.
+    (["spin up a new company", "spin up a new companys", "new company", "provision a company",
+      "provision a new company", "bootstrap a company", "onboard a company", "generalize the compiler",
+      "generalize our compiler", "generalize to a new company", "new tenant", "new tenant graph",
+      "spin up a graph for", "genesis", "nfra_genesis", "nfra genesis", "company.yaml", "companyyaml",
+      "spin up learning loop", "new company graph", "stand up a new company", "provision a tenant"],
+     "NFRA_GENESIS -- spin up a NEW company's semantic system (graph + learning loop + ontology)",
+     ["comp-genesis new <c>", "comp-genesis verify --local <c>", "comp-genesis up --dry-run <c>"],
+     "how do I spin up / generalize our compiled semantic system (graph + ontology-binding + closed learning "
+     "loop) to a NEW company -> comp-genesis (the NFRA_GENESIS SDK at infra/system/sdk/). Routes to the "
+     "PROVISIONER for a NEW company; distinct from comp-system, which reads OPAL's OWN current-state"),
     (["produce", "produces", "consume", "consumes", "who reads", "who writes", "what writes",
       "what reads", "artifact", "s3 key", "s3://", "parquet", "platinum/", "/gold/", "/silver/",
       # ~E COMPROUTE S1 L4 route-fix #1 (LD-0226): "what KEY/artifact does gold script X write" was a

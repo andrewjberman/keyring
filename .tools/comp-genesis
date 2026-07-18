@@ -1,0 +1,10 @@
+#!/bin/bash
+# comp-genesis -- the NFRA_GENESIS provisioner entry point: spin up a NEW company's semantic system
+# (versioned graph + ontology-binding + closed learning loop, on the proven Opal stack) from a single
+# company.yaml. Tenant-neutral; Opal is the reference instance. Thin shim -> the SDK CLI at
+# infra/system/sdk/genesis (which dispatches genesis_cli.py). Rule-16 clean (cd/dirname/pwd/python only).
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+"$WORKSPACE/infra/system/sdk/genesis" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-genesis" "$*" $_exit 2>/dev/null
+exit $_exit

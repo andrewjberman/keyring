@@ -103,6 +103,11 @@ _ROUTABLE_META_ROLES = frozenset({
     # declares its comp-which routing string). Omitting the role left comp_route.py:329's routable
     # filter dropping it from the candidate set entirely, so no curated rule could ever surface it.
     "system-compiler",
+    # genesis-provisioner (comp-genesis, NFRA_GENESIS P5): a cross-surface META/tooling provisioner homed
+    # in meta_tools[] (like system-compiler) that IS a routing target -- an agent asking "spin up a new
+    # company" routes to the SDK. Omitting the role would drop it from comp_route.py's routable candidate
+    # filter, so no curated rule could surface it (the same class as system-compiler above).
+    "genesis-provisioner",
 })
 
 # Minimal stopword set for keyword extraction (query_match wants a rich bag-of-words,

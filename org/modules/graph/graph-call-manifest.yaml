@@ -659,6 +659,18 @@ entries:
     anti_pattern: "asserting a claim GREEN without exercising the honesty bar -- silent-missing / aggregate-hides-per-case / dead-guard"
     status: canonical
 
+  - id: meta.genesis.provision_new_company
+    use_case: "How do I SPIN UP / PROVISION / BOOTSTRAP a NEW company -- its graph + ontology-binding + learning loop -- generalizing our process to a new company?"
+    canonical_call: "comp-genesis {new <c> | validate <c> | up --dry-run <c> | verify --local <c> | selftest | status <c>}"
+    tool: comp-genesis
+    mode: query
+    layer: meta
+    cost: "~seconds (validate / up --dry-run / verify --local are creds-free + local, zero cloud spend)"
+    freshness: "n/a -- a provisioner SDK, not a query over Opal's estate"
+    anti_pattern: "hand-forking Opal's globgrph TF + recognizers per new company instead of parameterizing via company.yaml (two bespoke pieces + reuse)"
+    status: canonical
+    notes: "comp-which routing: 'spin up / provision / bootstrap / generalize to a NEW company (graph + learning loop + ontology)' -> comp-genesis (the NFRA_GENESIS SDK at infra/system/sdk/). Routes an agent to the PROVISIONER; NOT a query over Opal's own estate graph. Tenant-neutral (operates on ANY tenant; a tenant's recognizers/adapters are DATA under tenants/<c>/, never comp-tools)."
+
   - id: meta.fedobs.co_evolution
     use_case: "Which artifacts/systems consistently CHANGE TOGETHER (CSEs co-occurring in a producer session) -- the coupling/blast-radius signal MOTIF composes into C2."
     canonical_call: "comp-fedobs coevolution | comp-fedobs"
@@ -1276,6 +1288,7 @@ entries:
 #   python org/modules/graph/comp_coverage_view.py            # emit the ledger projection
 #   python org/modules/graph/comp_coverage_view.py --verify   # CI guard: exit 2 on drift
 tools_index:
+  comp-genesis:  { does: "NFRA_GENESIS provisioner -- SPIN UP a NEW company: bootstrap its graph + ontology-binding + closed learning loop (versioned Nessie/Iceberg -> Kuzu -> Trino + the C0-C3 ladder) from a single company.yaml, on the proven Opal stack (parameterized; Opal is the reference instance). Two bespoke-per-company pieces (recognizer keystone + binding adapter); everything else reused. verify --local closes the loop at zero cloud spend. NOT a query over Opal's OWN estate (that is comp-system). Thin shim -> infra/system/sdk/genesis", subcommands: ["new <c>", "validate <c>", "project <c>", "up [--dry-run] <c>", "verify --local <c>", "loop --tick --local <c>", "status <c>", "selftest", "down <c>"], entries: [meta.genesis.provision_new_company] }
   comp-kuzu:     { does: "Cypher query the loaded Kuzu graph (cloud + cross-layer); the FAST default read-path", subcommands: ["<cypher>", "--db-path", "--json", "--limit"], entries: [cloud.lookup.nodes_by_type, cloud.reachability.transitive, cloud.blast.what_breaks, xlayer.fullstack.firm_component_to_bucket] }
   comp-aws:      { does: "Live-AWS + Terraform-state cloud-graph compiler (the WRITE-PATH + cert)", subcommands: [derive, score, snapshot, metrics, diff, contract-diff, dual-managed, classes, iceberg-commit], entries: [cloud.derive.refresh, cloud.derive.class, cloud.score.cert, cloud.score.reconcile, cloud.classes.list, cloud.metrics.summary, cloud.diff.snapshot, cloud.contract_diff, cloud.dual_managed.conflict, cloud.snapshot.archive, cloud.iceberg.persist] }
   comp-trace:    { does: "Bidirectional dependency walk from any repo node (cached)", subcommands: ["<node>", "--direction", "--depth", "--json"], entries: [trace.walk.dependency_chain] }

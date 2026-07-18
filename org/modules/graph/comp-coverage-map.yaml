@@ -842,6 +842,7 @@ tools:
 # meta_tools) == the full .tools/comp-* + pipescript inventory (CVO completeness).
 # =============================================================================
 meta_tools:
+  - { tool: comp-genesis,           role: genesis-provisioner, routable: true, not_homed_reason: "NFRA_GENESIS provisioner SDK: spins up a NEW company's semantic system (graph + ontology-binding + closed learning loop) from company.yaml on the proven Opal stack, parameterized -- a cross-surface META/tooling provisioner (like comp-system), ROUTED to when an agent asks how to generalize/bootstrap to a new company. Tenant-neutral (operates on ANY tenant; a tenant's recognizers/adapters are DATA under tenants/<c>/, never comp-tools). Thin shim -> infra/system/sdk/genesis. Registered 2026-07-18 (NFRA_GENESIS P5, LD-0313 ownpath)" }
   - { tool: comp-which,             role: router, routable: false,             not_homed_reason: "the rail ENTRY -- maps a plain-English question to the canonical homed tool; it ROUTES, it is not a surface inspection (PRD deliverable 4 reorgs it surface-first)" }
   - { tool: comp-grep,              role: search-primitive, routable: false,   not_homed_reason: "on-rails grep comp-which RUNS when no rich tool fits (never-dead-end); a search primitive, not a surface tool" }
   - { tool: comp-glob,              role: search-primitive, routable: false,   not_homed_reason: "on-rails glob comp-which RUNS when no rich tool fits; a search primitive" }
