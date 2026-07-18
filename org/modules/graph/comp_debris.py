@@ -25,14 +25,22 @@ CREATION TIME IS REQUIRED PER ROW -- it is the only thing that disambiguates "no
 lookback" for a resource older than the window, and the only basis for the TOO-YOUNG vs
 STILLBORN-OR-GUARD split.
 
-v1 scope: Lambda functions (the clearest coldness signal -- CloudWatch Invocations + LastModified).
-Read-only: list_functions + get_metric_statistics only.
+Scope: Lambda (default, --types lambda -- the clearest coldness signal, CloudWatch Invocations +
+LastModified) PLUS the AWS-resource plane via --types ddb,s3,ec2,events (the NFRA_DECOMTOOL extension:
+per-type activity adapters in debris_adapters.py, reusing classify()/BANDS/_HELD_RX VERBATIM -- ONE
+classify, N adapters). The extension folds two load-bearing controls: T-1 pipeline/data dormancy
+counted in NYSE TRADING days (lib/trading_calendar) and scheduled rules judged against their OWN
+cadence -- so a data bucket write-cold over a weekend/holiday, or a monthly rule cold 23d, is NOT
+false-flagged debris (NEVER#1). Read-only throughout.
 
 Usage:
-    comp-debris [--days 30] [--hot-days 7] [--json]     # the coldest-first ledger
-    comp-debris --self-test                             # offline: the band mutants (no AWS)
+    comp-debris [--days 30] [--hot-days 7] [--json]              # v1 Lambda coldest-first ledger
+    comp-debris --types s3,ddb,ec2,events [--days N] [--json]    # the resource-plane extension
+    comp-debris --self-test                                      # offline band + control mutants (no AWS)
 
-Author: 1.0.0_SA_CTO~Z (NFRA_INSTDRILL Part 3). 2026-07-14. Read-only, advisory-never-deletes.
+Author: 1.0.0_SA_CTO~Z (NFRA_INSTDRILL Part 3, v1 Lambda). 2026-07-14.
+--types resource-plane extension (debris_adapters.py): 0.8.0_AE_CloudComp~B (NFRA_DECOMTOOL.TO-1).
+2026-07-17. Read-only, advisory-never-deletes.
 """
 
 from __future__ import annotations
@@ -105,10 +113,17 @@ def _parse_created(last_modified: str):
         return None
 
 
-def classify(row: dict, hist: dict, now_date, days: int, hot_days: int) -> dict:
+def classify(row: dict, hist: dict, now_date, days: int, hot_days: int, *, age_fn=None) -> dict:
     """Assign a BAND. Requires the creation date (LastModified) to disambiguate zero-history rows.
     THE INVARIANTS: never-invoked is NEVER 'cold'; an unreadable/blind row is UNKNOWN; a held name
-    is not classified here (filtered upstream)."""
+    is not classified here (filtered upstream).
+
+    age_fn: OPTIONAL (now_date, last_activity_date) -> int dormancy-days override. Default None =
+    wall-clock calendar days (the v1 Lambda behavior, UNCHANGED -- every existing caller omits it).
+    comp-debris-ext injects a TRADING-DAY counter (lib/trading_calendar) for T-1 pipeline/data
+    resources, so a data bucket write-cold over a weekend/holiday is NOT false-flagged COLD-DORMANT
+    (NEVER#1 -- the false-outage hazard). The trading-day frontier stays the ONE definition in
+    lib/trading_calendar; classify only accepts the injected count -- it does not re-implement it."""
     created = _parse_created(row.get("last_modified", ""))
     window_start = now_date - dt.timedelta(days=days)
     r = {"name": row["name"], "created": created.isoformat() if created else "UNKNOWN"}
@@ -120,7 +135,7 @@ def classify(row: dict, hist: dict, now_date, days: int, hot_days: int) -> dict:
     last = hist.get("last_invoked_day")
     if last:
         last_d = dt.date.fromisoformat(last)
-        age_days = (now_date - last_d).days
+        age_days = age_fn(now_date, last_d) if age_fn else (now_date - last_d).days
         if age_days <= hot_days:
             return dict(r, band="HOT", last_invoked=last, dormant_days=age_days,
                         why="invoked within %dd" % hot_days)
@@ -247,7 +262,14 @@ def _self_test() -> int:
     ok = all(results)
     print("\n" + ("OK: never-invoked!=cold, UNKNOWN-is-a-band, hold-aware, never-deletes -- all held"
                   if ok else "ERROR: comp-debris self-test FAILED"))
-    return 0 if ok else 1
+
+    # NFRA_DECOMTOOL extension controls: the per-type band mutants + the trading-calendar false-outage
+    # mutant + the cadence mutant live in the debris_adapters submodule (--types path). Run them here so
+    # `comp-debris --self-test` exercises the WHOLE tool, v1 + resource-plane.
+    import debris_adapters as da
+    print()
+    ext_ok = da.self_test()
+    return 0 if (ok and ext_ok) else 1
 
 
 def main() -> int:
@@ -255,6 +277,9 @@ def main() -> int:
                                  description="coldest-first cloud-resource invocation ledger (advisory; NEVER deletes)")
     ap.add_argument("--days", type=int, default=30, help="coldness window (default 30)")
     ap.add_argument("--hot-days", type=int, default=7, help="recent-enough-to-be-HOT window (default 7)")
+    ap.add_argument("--types", default="lambda",
+                    help="comma list: lambda,ddb,s3,ec2,events (default lambda; the resource-plane "
+                         "types extend past Lambda -- NFRA_DECOMTOOL, trading-calendar + cadence aware)")
     ap.add_argument("--region", default=os.environ.get("AWS_DEFAULT_REGION", "us-east-1"))
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--self-test", action="store_true")
@@ -269,16 +294,30 @@ def main() -> int:
     if args.self_test:
         return _self_test()
 
-    lam, cw, region = _clients(args.region)
-    rows = list_lambdas(lam)
-    hists = {r["name"]: invocation_history(cw, r["name"], args.days) for r in rows}
+    types = [x.strip() for x in args.types.split(",") if x.strip()]
     now_date = dt.datetime.now(dt.timezone.utc).date()
-    led = build_ledger(rows, hists, now_date, args.days, args.hot_days)
-    led["region"] = region
-    if args.json:
-        print(json.dumps(led, indent=1, default=str))
-    else:
-        print(_render(led))
+
+    if types == ["lambda"]:
+        # v1 path -- UNCHANGED (preserves the existing Lambda ledger + output byte-for-byte).
+        lam, cw, region = _clients(args.region)
+        rows = list_lambdas(lam)
+        hists = {r["name"]: invocation_history(cw, r["name"], args.days) for r in rows}
+        led = build_ledger(rows, hists, now_date, args.days, args.hot_days)
+        led["region"] = region
+        print(json.dumps(led, indent=1, default=str) if args.json else _render(led))
+        return 0
+
+    # resource-plane path (S3/DDB/EC2/EventBridge [+lambda]) -- the debris_adapters submodule, folding
+    # the two load-bearing controls (trading-calendar dormancy for T-1 data; cadence-aware windowing).
+    import debris_adapters as da  # lazy import breaks the import cycle (da imports comp_debris)
+    records, errors = da.collect(types, args.region, args.days)
+    for e in errors:
+        sys.stderr.write(e + "\n")
+    led = da.multi_ledger(records, now_date, args.days, args.hot_days)
+    led["region"] = args.region
+    led["types"] = types
+    led["trading_calendar_source"] = da.tc.calendar_source()
+    print(json.dumps(led, indent=1, default=str) if args.json else da.multi_render(led))
     return 0
 
 
