@@ -659,6 +659,11 @@ entries:
     anti_pattern: "asserting a claim GREEN without exercising the honesty bar -- silent-missing / aggregate-hides-per-case / dead-guard"
     status: canonical
 
+  # LOAD-BEARING DISCRIMINATOR (CTO 2026-07-18): the "NOT a query over Opal's OWN estate -> comp-system"
+  # line in use_case/does/notes STAYS. comp-genesis<->comp-system adjacency is STRUCTURAL (both are about
+  # "compiled systems" -- Opal's OWN vs a NEW company's), so a query-theft collision RECURS on any vocab
+  # drift. ANY edit to this entry's use_case/does MUST re-run comp-which-routing-test.py AND a targeted
+  # comp-system rank-1 spot-check ("what is our current compiled system state" -> comp-system, NOT genesis).
   - id: meta.genesis.provision_new_company
     use_case: "How do I SPIN UP / PROVISION / BOOTSTRAP a NEW company -- its graph + ontology-binding + learning loop -- generalizing our process to a new company?"
     canonical_call: "comp-genesis {new <c> | validate <c> | up --dry-run <c> | verify --local <c> | selftest | status <c>}"
