@@ -5,6 +5,20 @@
 **Authorization:** Andrew-direct 2026-07-17 (SES/SNS/CloudWatch alert-suspension during the consolidation) + CTO ruling 200739Z. Memory: `feedback_suspend_new_alert_systems_during_consolidation`.
 **Opened:** 2026-07-17 ~20:08Z
 
+## >> ADDENDUM 2026-07-18 ~00:1xZ -- RESOURCE #1 (coevolution twin) SUBSUMED into the L5 freshness-teardown <<
+
+The freshness-alarm teardown (Andrew clean-house; CTO P1) L5-globgrph leg **DELETED the entire
+`infra/aws/terraform/globgrph/freshness_alarm.tf` mechanism** (commit **22becbb76**, applied 44-destroy).
+Resource #1 below (the coevolution twin) was a **registry entry inside that file's
+`freshness_producer_registry`**, so it was removed WITH the file -- it is no longer a
+"committed-but-unapplied registry entry awaiting a standalone globgrph apply." **Its re-arm is now a
+`git revert` of the L5 teardown commit 22becbb76** (which restores freshness_alarm.tf including the twin's
+registry entry), NOT a standalone globgrph apply. Nothing was applied for it; the twin never went live.
+**Resource #2 (the andrew@ critical-surface subscription, item2c) is UNCHANGED -- still parked
+committed-but-unapplied** (item2c_surface_alarm.tf was NOT touched by L5; the L5 -target apply explicitly
+EXCLUDED `aws_sns_topic_subscription.critical_surface_alerts_email`, which remains a config-ahead-of-state
+create that stays unapplied). The shared `opal-critical-surface-alerts` topic SURVIVES.
+
 ## What is held + WHY
 
 Andrew-direct: be very parsimonious/judicious about SES/SNS alert systems; SUSPEND creating NEW alert infrastructure during OPAL_CONSOLIDATION / OPAL_TAXONOMY (most current alerts are useless / for deprecated assets / miscalibrated / assigned to mid-migration surfaces). A freshness/staleness alarm on a mid-consolidation surface is precisely the suspended class. The two resources below are committed to the repo but were **held from apply** (I stopped the CTO-sequenced globgrph apply when Andrew's directive landed). This note exists so they are (a) not lost and (b) not silently applied on some future globgrph `terraform apply`.
