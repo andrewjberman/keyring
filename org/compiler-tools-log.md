@@ -20454,3 +20454,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 0.6.2_AE_PartnerETL | (no-TO) | simulate-principal-policy/terraform-plan/deploy_ledger/comp-grep | WP8 CELL-4 box iam-strip: removals-only plan + applied+exercised 22a (schwab PutObject=implicitDeny, monolith=allowed); 01_raw writer/reader grounded | PASS |
 | 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (c:CloudNode)-[e:CloudEdge {edge_type:'ORIGIN'}]->(b:CloudNode {... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/01_substrate.md | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/01_substrate.md | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/astn-pipeline/orche... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/astn-pipeline/orchestrator.tf | FAIL |
+2026-07-18 | 0.0.0_AB_MSTR | comp-which, comp-kuzu, summary_corpus.py --neighbors, comp-canon-motif/canon-patterns.yaml, comp-state --self-test (PASS 3/3), /registry-check | RV-0051 governance review + live ARN-summary demo + NFRA_ONTOLOGY charter grounding (C0-C3 CSE algebra source-confirmed @comp_ladder.py:208) | GAP: comp-which does not route 'find an AWS resource + its description' (ARN-summary tool-surface, ~D pulling forward, closes it)
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier0_exec/0.0.0_AB_MSTR/logs/2026-07-18/... | PASS |
