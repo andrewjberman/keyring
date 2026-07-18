@@ -20616,3 +20616,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu, comp-grep, comp-glob | NFRA_ONTOLOGY empirical grain scan (58 node/53 edge/109 triple/92 motif distributions + recurrence sizing + C3-naming sources) -> grain decision + canonical motif catalog + owner-ratified closed set | PASS |
 | 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/01_provision/modules/g... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/01_provision/modules/globgrph/outputs.tf infra/system/... | FAIL |
+| 2026-07-18 | 0.8.0_AE_CloudComp | NFRA_ONTOLOGY (coherence-keeper) | source-Read grounding (cse_schema/comp_ladder/ontology docs) + summary_corpus --self-test/--describe (verify ~D C2 live) + grep cse_schema (C-1 collision) | comp-pulse+comp-surface-check auto in safe-commit x6 | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
