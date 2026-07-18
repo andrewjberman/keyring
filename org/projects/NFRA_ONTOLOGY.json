@@ -1,0 +1,16 @@
+{
+  "project_code": "NFRA_ONTOLOGY",
+  "macro_code": "NFRA",
+  "name": "Universal relational-archetypal ontology -- the substrate-agnostic, plain-English C3-level LANGUAGE (rule bank) for how estate resources relate; the universal archetype layer above the AWS-scoped canon-patterns binding",
+  "status": "active",
+  "current_phase": "CHARTERED 2026-07-18 (Andrew-direct, LD-0310). Build lane 0.8.0_AE_CloudComp~C spawned + tasked (deep-work). Design principles (Andrew, binding): AGNOSTIC (not aws/opal-scoped) / PLAIN-ENGLISH semantics / RELATIONAL-ARCHETYPAL. LAYERED: universal archetype layer ABOVE, canon-patterns.yaml (CTO-ratified v0.1) becomes the AWS-binding adapter. Consumers: canon-deviation scorer + COMPSIMILAR node-summary C3 enrichment (C3 clause HELD pending this layer). PRD authoring routes through Tier 1; CTO arch-gates. Distinct from OPAL_TAXONOMY (naming axis).",
+  "owner": "0.8.0_AE_CloudComp~C",
+  "owner_note": "~C BUILDS/authors the ontology language + rule bank (dedicated deep-work lane, Andrew-direct 2026-07-18). base 0.8.0_AE_CloudComp COORDINATES + FEEDS (reserved per LD-0305, NOT re-tasked to build -- COO flagged, Andrew kept base as coordinator). CTO arch-gates (owns canon-patterns.yaml + the graph platform). MSTR governs the doctrine (the agnostic/archetypal principles = a standard).",
+  "coo_lane": "2.0.0_SA_COO",
+  "created": "2026-07-18",
+  "pods": ["0.8.0", "1.0", "0.0.0"],
+  "depends_on": ["NFRA_COMPSIMILAR", "NFRA_GLOBGRPH"],
+  "depends_on_note": "Elevates the CTO-ratified canon-patterns.yaml (v0.1, 2026-06-18) from AWS-scoped scorer-frame to the binding adapter under a universal layer. Consumed by NFRA_COMPSIMILAR (node-summary C3 enrichment -- that C3 clause is HELD pending this layer; C2 motif+role proceeds independently) and the canon-deviation scorer. Distinct axis from OPAL_TAXONOMY (naming/structural consistency) -- they compose, do not merge (CTO arch guardrail).",
+  "prds": [],
+  "ledger_refs": ["LD-0310"]
+}
