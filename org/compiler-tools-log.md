@@ -20486,3 +20486,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 0.7.0_AE_CloudOps | freshness-alarm-teardown-20260717 | safe-apply/safe-commit/deploy_ledger/terraform | teardown COMPLETE 10/10 (L8-consolidation/L9-etfs/L10-astn final legs) + ledger closed; per-leg 0/0/0 converge + phantom andrew@-sub strips (etfs/astn). Native terraform/aws deploy work, no comp-* rail. | PASS |
 | 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_COMPSIMILAR.PH2-C2... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/00_synthesis.md --file inf... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/00_synthesis.md infra/system/03_comp_tools.md infra/system... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/C2_MOTIF_ARCHGATE_ROLE... | PASS |
+2026-07-18 | 0.0.0_AB_MSTR | (none this window -- targeted source-reads infra/system/01_substrate.md + comp_ladder.py:208 to ground the C0-C3 CSE algebra; Read-class, not a search) | NFRA_ONTOLOGY C0-C3 alignment + ownership structure + CSE-seam doctrine fork | prior-window comp runs @91f7a2cd3
+| 2026-07-18 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier0_exec/0.0.0_AB_MSTR/logs/2026-07-18/... | PASS |
