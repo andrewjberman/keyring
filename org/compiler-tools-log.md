@@ -20414,3 +20414,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-18 | 0.5.0_AE_OpalETL | boto3 verify(5977/5977 byte-identical)+delete(5977, 0 err)+estate-recount(collisions=0), tf plan/safe-apply (download-schedule DISABLED), scoped Grep (comp-grep over infra TIMED OUT), lib/trading_calendar (NEVER#1), rail-checked raw aws (s3/events/scheduler) | GAP: comp-grep perf on infra/ + no comp-tool for schwab monolith trees (12th+)
 | 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/etfs-netassets/neta... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/etfs-netassets/netassets-lambda.tf infra/aws/terraf... | FAIL |
+| 2026-07-18 | 0.8.0_AE_CloudComp | NFRA_COMPSIMILAR.PH2-C2 | comp-pulse+comp-surface-check (auto in safe-commit x3); source-Read grounding (design/feasibility session) | comp-canon-motif --self-test attempted, did not complete -- grounded scorer via source Read | CLEAN |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
