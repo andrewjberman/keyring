@@ -20835,3 +20835,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-which | comp-which x2 (GENESIS P5 disposition: comp-system rank-1 Opal-state / comp-genesis rank-1 provision -- collision resolved) | PASS |
 | 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-18/s... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_GENESIS_INVPC_NES... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPSIMILAR.json --fi... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_COMPSIMILAR.json org/projects/REGISTRY.md | PASS |
+- 2026-07-18 2.0.0_SA_COO (session 1346-2130Z, NFRA-only drive): comp-manifest-check completeness PASS rc=0 (KUZUSPLIT P1 registration verified already-GREEN, corrected CTO stale "residual" vs live) . git show/log/merge-base ground-truthing every source ref before acting (spec/catalog/COMPREG @990927f89/LD-0312/base-prompt-ref @db139f938; commit ancestry preserved through concurrent ~A worktree churn) . safe-commit x9 all clean (risk-reflex measured; REGISTRY row-join side-effect caught+fixed pre-commit) . one transient Glob anomaly -> Bash-ls fallback. Verify-vs-live caught 2 stale records + avoided 1 redundant TO.
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-18/s... | PASS |
