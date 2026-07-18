@@ -458,32 +458,61 @@ def load_one(arn: str) -> tuple[dict | None, list, list]:
     return node_rows[0], out_edges, in_edges
 
 
+def _is_real_arn(s: str) -> bool:
+    """A canonical AWS ARN starts with 'arn:'. Some graph nodes carry a BARE name in their arn
+    field (e.g. an S3_BUCKET_POLICY whose arn is literally 'opal-data-bd') -- an attachment node,
+    not the primary resource. Real-ARN nodes are preferred when a bare name matches both."""
+    return (s or "").startswith("arn:")
+
+
+def _prefer_resolve(rows: list[dict]) -> tuple[str | None, list[dict]]:
+    """rows (each {arn,name,node_type}) -> (arn|None, candidates). PREFER canonical real-ARN
+    resources over bare-arn attachment nodes (a bucket over its policy); a genuine tie WITHIN the
+    preferred tier -> candidates (no silent guess). PURE -> offline-testable."""
+    if not rows:
+        return None, []
+    real = [r for r in rows if _is_real_arn(r.get("arn") or "")]
+    pref = real if real else rows
+    if len(pref) == 1:
+        return pref[0].get("arn"), []
+    return None, pref
+
+
 def resolve_query(query: str) -> tuple[str | None, list[dict]]:
-    """Resolve a describe query to a single ARN. Ladder (all LEXICAL, never BM25):
-      1. exact ARN            -> (arn, [])
-      2. exact name (unique)  -> (arn, [])   ; ambiguous -> (None, candidates)
-      3. substring over arn|name (unique) -> (arn, []) ; else (None, candidates)
-    Returns (arn|None, candidates). candidates=[] with arn=None means NOTHING matched at all
-    (distinct from 'ambiguous' which returns a populated candidates list)."""
-    exact = _kuzu_json(f"MATCH (n:CloudNode) WHERE n.arn = '{_q_escape(query)}' "
-                       "RETURN n.arn AS arn LIMIT 1")
-    if exact:
-        return query, []
-    # one light (arn, name, type) sweep; resolve exact-name then substring in Python (no reliance
-    # on Kuzu string-op syntax, and one query serves both fallbacks).
+    """Resolve a describe query to a single ARN. LEXICAL (never BM25):
+      - an ARN query ('arn:...') -> exact-ARN match.
+      - a BARE-NAME query -> exact-name then substring, PREFERRING a canonical real-ARN resource
+        over a bare-arn attachment node (bucket over its policy); ambiguous within the preferred
+        tier -> candidates. A bare token that is literally some node's arn is the last resort.
+    Returns (arn|None, candidates). (None, []) = nothing matched; (None, [rows]) = ambiguous.
+    Fix (2026-07-18, base finding): `--describe opal-data-bd` used to land on the S3_BUCKET_POLICY
+    (arn == the bare name 'opal-data-bd') instead of the S3_BUCKET (arn 'arn:aws:s3:::opal-data-bd')
+    -- the exact-arn step matched the policy's bare arn first. Now a bare name prefers the resource."""
+    q = query or ""
+    if _is_real_arn(q):
+        exact = _kuzu_json(f"MATCH (n:CloudNode) WHERE n.arn = '{_q_escape(q)}' "
+                           "RETURN n.arn AS arn LIMIT 1")
+        if exact:
+            return q, []
+    # one light (arn, name, type) sweep serves exact-name + substring (no Kuzu string-op reliance).
     allrows = _kuzu_json("MATCH (n:CloudNode) WHERE n.arn <> '' "
                          "RETURN n.arn AS arn, n.name AS name, n.node_type AS node_type")
-    ql = (query or "").lower()
+    ql = q.lower()
     name_exact = [r for r in allrows if (r.get("name") or "").lower() == ql]
-    if len(name_exact) == 1:
-        return name_exact[0].get("arn"), []
-    if len(name_exact) > 1:
-        return None, name_exact
-    subs = [r for r in allrows
-            if ql and (ql in (r.get("name") or "").lower() or ql in (r.get("arn") or "").lower())]
-    if len(subs) == 1:
-        return subs[0].get("arn"), []
-    return None, subs
+    if name_exact:
+        return _prefer_resolve(name_exact)
+    if ql:
+        subs = [r for r in allrows
+                if ql in (r.get("name") or "").lower() or ql in (r.get("arn") or "").lower()]
+        if subs:
+            return _prefer_resolve(subs)
+    # last resort: a deliberate bare-arn query (a node whose arn IS this bare token).
+    if not _is_real_arn(q) and q:
+        bare = _kuzu_json(f"MATCH (n:CloudNode) WHERE n.arn = '{_q_escape(q)}' "
+                          "RETURN n.arn AS arn LIMIT 1")
+        if bare:
+            return q, []
+    return None, []
 
 
 def describe(query: str) -> dict:
@@ -711,7 +740,26 @@ def self_test() -> int:
           f"data-s3-excluded={('SERVED_LINEAGE_CANON','s3') not in data_b}, fe-type={('SERVED_LINEAGE_CANON','served_url') in fe}): "
           f"{'PASS' if m7 else 'FAIL'}")
 
-    print(f"=== self-test: {'PASS' if ok else 'FAIL'} (7/7) ===" if ok else "=== self-test: FAIL ===")
+    # M8 resolve preference (base finding): a bare name matching a REAL-ARN resource AND its
+    # bare-arn attachment (bucket vs policy) resolves to the RESOURCE, not the attachment; a tie
+    # between two real resources -> candidates (no silent guess).
+    bucket_vs_policy = [
+        {"arn": "arn:aws:s3:::opal-data-bd", "name": "opal-data-bd", "node_type": "S3_BUCKET"},
+        {"arn": "opal-data-bd", "name": "opal-data-bd", "node_type": "S3_BUCKET_POLICY"},
+    ]
+    two_real = [
+        {"arn": "arn:aws:iam::x:role/foo", "name": "foo", "node_type": "IAM_ROLE"},
+        {"arn": "arn:aws:lambda:x:function:foo", "name": "foo", "node_type": "LAMBDA"},
+    ]
+    r_arn, r_cand = _prefer_resolve(bucket_vs_policy)
+    t_arn, t_cand = _prefer_resolve(two_real)
+    m8 = (r_arn == "arn:aws:s3:::opal-data-bd" and r_cand == []
+          and t_arn is None and len(t_cand) == 2)
+    ok &= m8
+    print(f"  M8 resolve-prefer (bucket-over-policy={r_arn=='arn:aws:s3:::opal-data-bd'}, "
+          f"two-real->candidates={t_arn is None and len(t_cand)==2}): {'PASS' if m8 else 'FAIL'}")
+
+    print(f"=== self-test: {'PASS' if ok else 'FAIL'} (8/8) ===" if ok else "=== self-test: FAIL ===")
     return 0 if ok else 1
 
 
