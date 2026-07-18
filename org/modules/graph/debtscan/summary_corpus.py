@@ -390,9 +390,15 @@ def derive_summary(arn: str, node: dict, out_edges: list, in_edges: list) -> Sum
                       thin=thin, held=held, n_purpose=n_purpose, motifs=motif_fired)
 
 
-def build_corpus() -> dict[str, SummaryDoc]:
-    """Build the {arn -> SummaryDoc} derive-at-scan corpus from the live graph."""
-    nodes, out_edges, in_edges = load_graph()
+def build_corpus(graph_tuple=None) -> dict[str, SummaryDoc]:
+    """Build the {arn -> SummaryDoc} derive-at-scan corpus from the live graph.
+
+    graph_tuple: an optional pre-loaded (nodes, out_edges, in_edges) in the load_graph() contract.
+    When provided -- the IN-VPC path, where the store reads graph_nodes/graph_edges DIRECTLY from
+    Iceberg (CTO cond-1, 2026-07-18: comp-kuzu + a local Kuzu DB are absent in the derive container)
+    -- it is consumed verbatim. When None (the dev-box default, UNCHANGED) load_graph() runs the
+    comp-kuzu path. This decouples the corpus TRANSFORM from the graph SOURCE (one job per layer)."""
+    nodes, out_edges, in_edges = graph_tuple if graph_tuple is not None else load_graph()
     corpus: dict[str, SummaryDoc] = {}
     for arn, node in nodes.items():
         corpus[arn] = derive_summary(arn, node, out_edges.get(arn, []), in_edges.get(arn, []))
