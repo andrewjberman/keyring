@@ -20270,3 +20270,15 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.arn <> '' AND... | PASS |
 | 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_debris.py --file... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp_debris.py org/modules/graph/debris_adapters.py | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-kuzu-full --file .tools/com... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-kuzu-full .tools/comp-kuzu-inc .tools/comp-which org/module... | FAIL |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-grep/pipescript/deploy_ledger | WP8 cell-3 Schwab-Box code re-home: consumer sweep + canonical-schwab thread + 2 deploy ledgers; BD/Schwab-Box doc grounding | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_DECOMTOOL_MANIFES... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/absence-config.json... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/absence-config.json infra/aws/lambda/ci/lambda-sour... | FAIL |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
