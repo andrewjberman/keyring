@@ -195,6 +195,15 @@ RULES = [
      "IAM role/policy",
      ["comp-iam service <lambda>", "comp-iam gaps"],
      "perms before deploy (note: a Principal:* on Effect=Deny is a GUARDRAIL, not a public grant)"),
+    (["unused", "cold", "coldness", "last-used", "lastused", "rolelastused", "reach", "reaches",
+      "reachable", "who-can-reach", "decommission", "dormant", "usage", "still-used", "role-cold",
+      "break-glass"],
+     "IAM usage / reachability (lifecycle)",
+     ["comp-iam-usage role-cold", "comp-iam-usage who-can-reach <arn>",
+      "comp-iam-usage reach-check <role> <action> <arn>"],
+     "is this role/grant still USED / who still REACHES a resource / access-plane coldness -- the "
+     "lifecycle SIBLING of comp-iam (deploy-time correctness). Discriminator: usage/lifecycle/"
+     "reachability -> comp-iam-usage; grant-sufficiency/correctness -> comp-iam"),
     (["what resources", "aws resource", "which thread owns", "estate", "cloud graph", "blast radius of"],
      "AWS resources / thread ownership",
      ["comp-aws", "pipescript <name>", "comp-pipescript deployed"],
