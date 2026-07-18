@@ -39,13 +39,17 @@ from comp_ladder import Node as LadderNode, fidelity_check  # noqa: E402,F401
 #   COMPUNIFY coverage-sweep. A recognizer needing an off-enum value emits Concept(untyped)+low +
 #   a coverage-gap CSE -- it NEVER invents a value (LAW 1).
 # ===========================================================================
-SCHEMA_VERSION = "0.4"   # 0.1->0.2: FLOWS_TO EdgeKind + condition. 0.2->0.3 (CTO-ratified 2026-07-07,
+SCHEMA_VERSION = "0.5"   # 0.1->0.2: FLOWS_TO EdgeKind + condition. 0.2->0.3 (CTO-ratified 2026-07-07,
 # Option A): add Entity.TYPE + Entity.SYMBOL first-class. TypeDecl/symbol: were parked in CONCEPT (the
 # honest-degrade target) but are lexically-CERTAIN -- the AC4 full-graph round-trip (NFRA_CSE_P2_ac4_
 # fullgraph_parity.py) surfaced the CONCEPT/S3.5 collision (807 nodes + 4269 edges couldn't round-trip
 # at honest conf=1.0). CONCEPT stays the PURE honest-degrade target; TypeDecl/symbol now carry a certain type.
 # 0.3->0.4 (CTO-arch-gated + CVO-re-signed 2026-07-08, R4 GOV-B): +ProducerKind.PROMOTE (governed 5th-producer
 # emission-contract for the promote-materializer's MATERIALIZED/DEMOTED recognizer transition; back-compat additive).
+# 0.4->0.5 (CTO-arch-gated + CVO-re-signed 2026-07-18, LD-0311 downstream): +Relationship.OWNS (the governed
+# CUSTODY primitive) + OWNED_BY target-typed disambiguation (custody->OWNS / containment-inverse->CONTAINS via
+# map_cloudedge); freed by the D3 narrow-governs split (@d16e269bf). Additive enum-extend (back-compat: the
+# validator auto-accepts via _REL_VALUES); the OWNED_BY re-map is a CSE-log materializer migration.
 MIGRATION_NOTE = (
     "Add a primitive -> version-bump + COMPUNIFY coverage-sweep (which compilers must now handle "
     "it); a gap is a tracked coverage-gap, not a silent skip. Remove/rename -> version-bump + a "
@@ -100,6 +104,11 @@ class Relationship(enum.Enum):
     GOVERNS = "governs"
     DERIVES_FROM = "derives_from"
     SUPERSEDES = "supersedes"
+    OWNS = "owns"                      # 0.5: the governed CUSTODY/stewardship relation -- "A holds / is-
+    #                                    responsible-for B" (an actor OWNS a resource). The C-1 custody sense
+    #                                    of OWNED_BY, split out of the NARROWED governs (D3/D6, LD-0311). NOT
+    #                                    governance (policy/authority stays GOVERNS); NOT containment (the
+    #                                    S3Key sense is CONTAINS). Abstract tier (agnostic).
     # code/infra (CloudEdge discriminators)
     CALLS = "calls"
     IMPORTS = "imports"
@@ -303,7 +312,7 @@ CLOUDEDGE_TO_RELATIONSHIP: dict = {
     "RUNS": Relationship.PRODUCES, "CONSUMES": Relationship.CONSUMES, "SUBSCRIBES": Relationship.CONSUMES,
     "NOTIFIES": Relationship.TRIGGERS, "INVOKES": Relationship.CALLS, "ORIGIN": Relationship.SERVED_FROM,
     # governance / auth / requires
-    "OWNED_BY": Relationship.GOVERNS, "HAS_POLICY": Relationship.GOVERNS,
+    "OWNED_BY": Relationship.OWNS, "HAS_POLICY": Relationship.GOVERNS,
     "ASSUMES": Relationship.AUTHORIZES, "CAN_ASSUME": Relationship.AUTHORIZES, "GRANTS": Relationship.AUTHORIZES,
     "ENCRYPTS_WITH": Relationship.REQUIRES, "USES_OAC": Relationship.REQUIRES,
     "USES_OAI": Relationship.REQUIRES, "USES_SG": Relationship.REQUIRES, "IN_VPC": Relationship.DEPENDS_ON,
@@ -351,6 +360,37 @@ def map_cloudnode(nid: str, node_type: str = "") -> Entity:
         if str(nid).startswith(pfx):
             return ent
     return None
+
+
+# Live-grounded (OWNED_BY object distribution @HEAD): the two OWNED_BY object classes. Extensible via the same
+# governed bump if a new object type appears (a coverage-gap, caught by owned_by_object_census, reconciled, not guessed).
+_OWNED_BY_CONTAINER_TYPES: frozenset = frozenset({"S3_BUCKET"})   # containment-inverse -> CONTAINS
+_OWNED_BY_ACTOR_TYPES: frozenset = frozenset({"MS_USER"})          # custody -> OWNS
+
+
+def map_cloudedge(edge_type: str, dst_node_type: str = "") -> "Relationship":
+    """AC3 (edge): resolve a CloudEdge to its algebra Relationship. TARGET-TYPED for the polysemous OWNED_BY
+    (0.5, R3): object is a CONTAINER (S3_BUCKET) -> CONTAINS (containment-inverse, the fine->coarse rollup;
+    NO new primitive); else (object is an actor, e.g. MS_USER) -> OWNS (custody). All other edges resolve by
+    the flat CLOUDEDGE_TO_RELATIONSHIP map. Returns None on a coverage gap (caller fail-closes).
+    THE SANCTIONED EDGE RESOLVER -- a direct CLOUDEDGE_TO_RELATIONSHIP.get('OWNED_BY') returns only the custody
+    DEFAULT (it lacks the object type); container disambiguation REQUIRES this function (see Sec 5 co-migration)."""
+    if edge_type == "OWNED_BY":
+        if dst_node_type in _OWNED_BY_CONTAINER_TYPES:
+            return Relationship.CONTAINS   # containment-inverse: the OBJECT (bucket) is the container
+        return Relationship.OWNS           # custody (default; actor object -- MS_USER, 5613/5845)
+    return CLOUDEDGE_TO_RELATIONSHIP.get(edge_type)
+
+
+def owned_by_object_census(owned_by_object_types) -> tuple:
+    """Forward denominator-guard (semctl contract): given the LIVE OWNED_BY object node_types (one re-derive),
+    return (ok, unknown_object_types). An object type in neither _OWNED_BY_ACTOR_TYPES nor
+    _OWNED_BY_CONTAINER_TYPES currently DEFAULTS to OWNS via map_cloudedge -- which is WRONG for a new CONTAINER.
+    Surface it for a governed whitelist-bump (add to the container set, or affirm custody), NEVER silently
+    default. Print the distribution on each re-derive so a new object type is seen, not absorbed."""
+    known = _OWNED_BY_ACTOR_TYPES | _OWNED_BY_CONTAINER_TYPES
+    unknown = sorted(set(owned_by_object_types) - known)
+    return (not unknown, unknown)
 
 
 # ===========================================================================
@@ -607,6 +647,28 @@ def _self_test(live_nodes=None, live_edges=None) -> bool:
     check("11 governed edge-kind (RECOMPUTE_GUARDED) ACCEPTED + decompresses (0.2)", ok, str(e))
     ok, e = validate(_mk_kinded("smuggled_kind"))
     check("12 off-enum edge-kind REJECTED (governed-closed, LAW 1)", not ok)
+    # OWNS bump (0.5)
+    check("OWNS on-enum (validator auto-accepts)", "owns" in _REL_VALUES)
+    check("R2: OWNED_BY flat default re-mapped OUT of GOVERNS onto OWNS",
+          CLOUDEDGE_TO_RELATIONSHIP["OWNED_BY"] is Relationship.OWNS)
+    check("R2: HAS_POLICY stays GOVERNS (governance stays narrow, not swept into OWNS)",
+          CLOUDEDGE_TO_RELATIONSHIP["HAS_POLICY"] is Relationship.GOVERNS)
+    check("R3: OWNED_BY -> MS_USER (actor) resolves OWNS (custody)",
+          map_cloudedge("OWNED_BY", "MS_USER") is Relationship.OWNS)
+    check("R3: OWNED_BY -> S3_BUCKET (container) resolves CONTAINS (containment-inverse, no new primitive)",
+          map_cloudedge("OWNED_BY", "S3_BUCKET") is Relationship.CONTAINS)
+    check("R3: OWNED_BY with no object type falls back to the custody DEFAULT (OWNS)",
+          map_cloudedge("OWNED_BY", "") is Relationship.OWNS)
+    check("R3: a non-polysemous edge still resolves by the flat map",
+          map_cloudedge("HAS_POLICY", "") is Relationship.GOVERNS)
+    check("R4: OWNERSHIP Qualifier + OWNS Relationship COEXIST (AUTHORITY:AUTHORIZES precedent)",
+          "ownership" in _QUAL_VALUES and "owns" in _REL_VALUES
+          and "authority" in _QUAL_VALUES and "authorizes" in _REL_VALUES)
+    # forward denominator-guard (Sec 4a)
+    check("4a: census FLAGS an unknown OWNED_BY object type (not silently defaulted to OWNS)",
+          owned_by_object_census({"MS_USER", "S3_BUCKET", "SOME_NEW_CONTAINER"}) == (False, ["SOME_NEW_CONTAINER"]))
+    check("4a: census PASSES the known object set (MS_USER actor + S3_BUCKET container)",
+          owned_by_object_census({"MS_USER", "S3_BUCKET"}) == (True, []))
     # CTO guidance: mid-band typed = inference smell (non-blocking, just report)
     smell = inference_smell(_mk_cse(conf=0.5))
     print(f"  [INFO] inference-smell tracker: typed+mid-band(0.5) flagged = {smell} (LAW-1 honesty signal)")
