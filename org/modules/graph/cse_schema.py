@@ -269,6 +269,12 @@ CLOUDNODE_TYPE_TO_ENTITY: dict = {
     "MS_FILE": Entity.ARTIFACT, "MS_USER": Entity.PERSON, "MS_GROUP": Entity.ORGANIZATION,
     "MS_DRIVE_ONEDRIVE": Entity.DATASET,
     "Pipeline": Entity.SERVICE, "PipelineScript": Entity.MODULE, "PipelineFunction": Entity.FUNCTION,
+    # AC4 coverage-sweep 2026-07-18 (CVO-re-signed; CTO Entity rulings @224227Z) -- 4 estate types that
+    # appeared since the 07-07 snapshot froze; reuse EXISTING Entities, no enum change:
+    "SCHEDULE": Entity.SCHEDULE,          # a schedule IS a Schedule (EVENT_RULE also maps here; SCHEDULE node_type was never added)
+    "CODEBUILD_PROJECT": Entity.SERVICE,  # a managed CI/build service (same class as ECS_*/API_GW -> SERVICE)
+    "LAMBDA_LAYER": Entity.MODULE,        # a reusable shared-code/dependency package functions USES_LAYER (MODULE; CTO-ruled over ARTIFACT)
+    "SSM_DOCUMENT": Entity.ARTIFACT,      # a stored declarative automation/runbook DEFINITION (like MS_FILE; SSM SERVICE executes it) (CTO-ruled)
 }
 
 # (b) node id PREFIX -> Entity (CTO S4 nid-prefix scheme)
@@ -315,7 +321,9 @@ CLOUDEDGE_TO_RELATIONSHIP: dict = {
     "OWNED_BY": Relationship.OWNS, "HAS_POLICY": Relationship.GOVERNS,
     "ASSUMES": Relationship.AUTHORIZES, "CAN_ASSUME": Relationship.AUTHORIZES, "GRANTS": Relationship.AUTHORIZES,
     "ENCRYPTS_WITH": Relationship.REQUIRES, "USES_OAC": Relationship.REQUIRES,
-    "USES_OAI": Relationship.REQUIRES, "USES_SG": Relationship.REQUIRES, "IN_VPC": Relationship.DEPENDS_ON,
+    "USES_OAI": Relationship.REQUIRES, "USES_SG": Relationship.REQUIRES,
+    "USES_LAYER": Relationship.REQUIRES,  # AC4 2026-07-18: a function REQUIRES its layer (the USES_* dependency family)
+    "IN_VPC": Relationship.DEPENDS_ON,
     # implements / imports (code)
     "IMPLEMENTS": Relationship.IMPLEMENTS, "IMPORTS": Relationship.IMPORTS,
     "DEPENDS_ON": Relationship.DEPENDS_ON,
@@ -326,29 +334,38 @@ CLOUDEDGE_TO_RELATIONSHIP: dict = {
     "AUTHORIZES": Relationship.AUTHORIZES,
 }
 
+# SEMCTL META-node types: the C2/C3 COMPRESSION-LAYER nodes (motifs/systems materialized by the semctl
+# layer, e.g. AB-MAT 2026-07-18) -- they DESCRIBE the estate, they are NOT estate resources, so they carry
+# NO algebra Entity BY DESIGN (an Entity is an estate noun). EXPLICITLY excluded from the coverage
+# requirement -- a NAMED exclusion, never a silent None (AC4 2026-07-18; CVO: intentionally-excluded, not missing).
+SEMCTL_META_NODE_TYPES: frozenset = frozenset({"C2Motif", "C3System"})
+
 # LIVE inventory snapshot (comp-kuzu, 2026-07-07, kuzu_nessie_db 19917 nodes/34948 edges) -- the
 # AC4 ground-truth CTO's condition binds against (verify totality vs REALITY, not a hardcoded count).
 # CVO re-pulls fresh (assert_live_coverage accepts a freshly-pulled set); this is the P1 snapshot.
-LIVE_NODE_TYPES_20260707 = frozenset({
-    "API_GW", "API_ROUTE", "CLOUDFRONT_DISTRIBUTION", "CW_ALARM", "Component", "DYNAMODB_TABLE",
-    "DataFetch", "EC2_INSTANCE", "ECS_CLUSTER", "ECS_TASK_DEFINITION", "EVENT_RULE", "EVENT_SOURCE",
-    "Endpoint", "Field", "Hook", "IAM_POLICY", "IAM_ROLE", "IAM_USER", "INSTANCE_PROFILE", "JSXElement",
-    "JSXRender", "KMS_KEY", "LAMBDA", "LOAD_BALANCER", "LOG_GROUP", "MS_FILE", "MS_FOLDER", "MS_LIBRARY",
-    "MS_SITE", "MS_USER", "Module", "Page", "PanelCluster", "Pipeline", "PipelineFunction",
-    "PipelineScript", "Prop", "ROUTE53_RECORD", "ReactComponent", "ReactQueryKey", "S3Key", "S3_BUCKET",
-    "S3_BUCKET_POLICY", "SECRET", "SECURITY_GROUP", "SERVICE_PRINCIPAL", "SNS_TOPIC", "SQS_QUEUE",
+LIVE_NODE_TYPES_20260718 = frozenset({   # AC4 refresh 2026-07-18 (was _20260707 @52 types; +6 live: C2Motif, C3System, CODEBUILD_PROJECT, LAMBDA_LAYER, SCHEDULE, SSM_DOCUMENT). Live-pulled @HEAD.
+    "API_GW", "API_ROUTE", "C2Motif", "C3System", "CLOUDFRONT_DISTRIBUTION", "CODEBUILD_PROJECT",
+    "CW_ALARM", "Component", "DYNAMODB_TABLE", "DataFetch", "EC2_INSTANCE", "ECS_CLUSTER",
+    "ECS_TASK_DEFINITION", "EVENT_RULE", "EVENT_SOURCE", "Endpoint", "Field", "Hook", "IAM_POLICY",
+    "IAM_ROLE", "IAM_USER", "INSTANCE_PROFILE", "JSXElement", "JSXRender", "KMS_KEY", "LAMBDA",
+    "LAMBDA_LAYER", "LOAD_BALANCER", "LOG_GROUP", "MS_FILE", "MS_FOLDER", "MS_LIBRARY", "MS_SITE",
+    "MS_USER", "Module", "Page", "PanelCluster", "Pipeline", "PipelineFunction", "PipelineScript",
+    "Prop", "ROUTE53_RECORD", "ReactComponent", "ReactQueryKey", "S3Key", "S3_BUCKET", "S3_BUCKET_POLICY",
+    "SCHEDULE", "SECRET", "SECURITY_GROUP", "SERVICE_PRINCIPAL", "SNS_TOPIC", "SQS_QUEUE", "SSM_DOCUMENT",
     "STATE_MACHINE", "ServedURL", "TypeDecl", "VPC_ENDPOINT",
 })
-LIVE_EDGE_TYPES_20260707 = frozenset({
+LIVE_NODE_TYPES_20260707 = LIVE_NODE_TYPES_20260718   # backward-compat alias (AC4 Part-3; references resolve to the refreshed live set)
+LIVE_EDGE_TYPES_20260718 = frozenset({   # AC4 refresh 2026-07-18 (was _20260707; +USES_LAYER live). Live-pulled @HEAD.
     "ALIAS_TO", "ASSUMES", "CALLS", "CAN_ASSUME", "CLUSTERS", "CONTAINS", "CONTAINS_DRILLDOWN",
     "DEAD_LETTERS_TO", "DECLARES", "EMITS_TO", "ENCRYPTS_WITH", "FETCHES", "FLOWS_TO", "GRANTS",
     "HAS_FIELD", "HAS_KEY", "HAS_POLICY", "HAS_PROFILE", "HAS_PROP", "HAS_PROPS_TYPE", "HAS_ROUTE",
     "HAS_TYPE", "INSTANTIATES", "INVOKES", "IN_VPC", "IS_ENDPOINT", "LOGS_TO", "MONITORS", "NOTIFIES",
     "ORIGIN", "OWNED_BY", "PROJECTS_TO", "PROP_PASSES", "PUBLISHES_TO", "READS", "READS_FIELD",
     "READS_S3", "READS_SECRET", "READS_URL", "REFERENCES_TYPE", "RENDERS", "ROUTES_TO", "RUNS",
-    "SERVED_FROM", "SHARES_SOURCE", "SUBSCRIBES", "TRIGGERS", "USES_OAC", "USES_OAI", "USES_SG",
-    "WRITES", "WRITES_S3",
+    "SERVED_FROM", "SHARES_SOURCE", "SUBSCRIBES", "TRIGGERS", "USES_LAYER", "USES_OAC", "USES_OAI",
+    "USES_SG", "WRITES", "WRITES_S3",
 })
+LIVE_EDGE_TYPES_20260707 = LIVE_EDGE_TYPES_20260718   # backward-compat alias (AC4 Part-3)
 
 
 def map_cloudnode(nid: str, node_type: str = "") -> Entity:
@@ -509,7 +526,7 @@ def coverage_sweep(observed_node_types: set, observed_edge_types: set) -> tuple:
     rather than this local set-diff) is the AC1 antecedent -- flagged as the one external wire to
     confirm with CTO/COMPUNIFY owner; this local check is the deterministic fallback.
     """
-    un_n = sorted(t for t in observed_node_types if t not in CLOUDNODE_TYPE_TO_ENTITY)
+    un_n = sorted(t for t in observed_node_types if t not in CLOUDNODE_TYPE_TO_ENTITY and t not in SEMCTL_META_NODE_TYPES)
     un_e = sorted(t for t in observed_edge_types if t not in CLOUDEDGE_TO_RELATIONSHIP)
     return (not un_n and not un_e, un_n, un_e)
 
@@ -525,7 +542,7 @@ def assert_live_coverage(live_node_types: set = None, live_edge_types: set = Non
     """
     ln = set(live_node_types) if live_node_types is not None else set(LIVE_NODE_TYPES_20260707)
     le = set(live_edge_types) if live_edge_types is not None else set(LIVE_EDGE_TYPES_20260707)
-    un_n = sorted(t for t in ln if t not in CLOUDNODE_TYPE_TO_ENTITY)
+    un_n = sorted(t for t in ln if t not in CLOUDNODE_TYPE_TO_ENTITY and t not in SEMCTL_META_NODE_TYPES)
     un_e = sorted(t for t in le if t not in CLOUDEDGE_TO_RELATIONSHIP)
     return (not un_n and not un_e, un_n, un_e)
 
@@ -669,6 +686,15 @@ def _self_test(live_nodes=None, live_edges=None) -> bool:
           owned_by_object_census({"MS_USER", "S3_BUCKET", "SOME_NEW_CONTAINER"}) == (False, ["SOME_NEW_CONTAINER"]))
     check("4a: census PASSES the known object set (MS_USER actor + S3_BUCKET container)",
           owned_by_object_census({"MS_USER", "S3_BUCKET"}) == (True, []))
+    # AC4 coverage-sweep (2026-07-18)
+    check("AC4: SEMCTL meta-nodes explicitly EXCLUDED (not silent-None)",
+          "C2Motif" in SEMCTL_META_NODE_TYPES and "C3System" in SEMCTL_META_NODE_TYPES)
+    check("AC4: the 4 estate types now map to an Entity",
+          all(t in CLOUDNODE_TYPE_TO_ENTITY for t in ("SCHEDULE", "CODEBUILD_PROJECT", "LAMBDA_LAYER", "SSM_DOCUMENT")))
+    check("AC4: USES_LAYER maps to REQUIRES",
+          CLOUDEDGE_TO_RELATIONSHIP.get("USES_LAYER") is Relationship.REQUIRES)
+    check("AC4: live coverage GREEN with meta excluded + new mappings + refreshed snapshot",
+          assert_live_coverage()[0] is True)
     # CTO guidance: mid-band typed = inference smell (non-blocking, just report)
     smell = inference_smell(_mk_cse(conf=0.5))
     print(f"  [INFO] inference-smell tracker: typed+mid-band(0.5) flagged = {smell} (LAW-1 honesty signal)")
