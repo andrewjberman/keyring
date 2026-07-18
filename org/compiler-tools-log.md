@@ -20693,3 +20693,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | genesis-verify | genesis up --dry-run sandbox (GENESIS P1 acceptance) + grep-proof zero Opal literals across module+tenant | PASS |
 | 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-18/s... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-genesis | comp-genesis status demo | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/NFRA_MOTIF_P1_can... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | module self-test + live re-emit + comp-kuzu | C3 re-emit = overlapping-domain-cover (MSTR-blessed): 3 C3System (object-data/compute-orch/pipeline), b-io overlap, resolve held 4201/4201 (100pct), fidelity PASS, no-refreeze; self-test 9/9; caught+fixed b-io polymorphic-alias mislabel | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
