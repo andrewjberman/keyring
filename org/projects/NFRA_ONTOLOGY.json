@@ -9,8 +9,8 @@
   "coo_lane": "2.0.0_SA_COO",
   "created": "2026-07-18",
   "pods": ["0.8.0", "1.0", "0.0.0"],
-  "depends_on": ["NFRA_COMPSIMILAR", "NFRA_GLOBGRPH"],
-  "depends_on_note": "Elevates the CTO-ratified canon-patterns.yaml (v0.1, 2026-06-18) from AWS-scoped scorer-frame to the binding adapter under a universal layer. Consumed by NFRA_COMPSIMILAR (node-summary C3 enrichment -- that C3 clause is HELD pending this layer; C2 motif+role proceeds independently) and the canon-deviation scorer. Distinct axis from OPAL_TAXONOMY (naming/structural consistency) -- they compose, do not merge (CTO arch guardrail).",
+  "depends_on": ["NFRA_COMPSIMILAR", "NFRA_GLOBGRPH", "NFRA_SYSTEM"],
+  "depends_on_note": "Elevates the CTO-ratified canon-patterns.yaml (v0.1, 2026-06-18) from AWS-scoped scorer-frame to the binding adapter under a universal layer. Consumed by NFRA_COMPSIMILAR (node-summary C3 enrichment -- that C3 clause is HELD pending this layer; C2 motif+role proceeds independently) and the canon-deviation scorer. Distinct axis from OPAL_TAXONOMY (naming/structural consistency) -- they compose, do not merge (CTO arch guardrail). Depends on NFRA_SYSTEM (complete 2026-07-08): the archetype vocabulary CLASSIFIES INTO NFRA_SYSTEM's C0-C3 CSE/C3System ladder -- NFRA_ONTOLOGY CONSUMES NFRA_SYSTEM's C3System detection, it does not re-implement it (a foundational-capability dependency that persists past NFRA_SYSTEM's closure, like NFRA_GLOBGRPH). Records-flag from 0.8.0_AE_CloudComp~C (MSTR G2), COO-recorded 2026-07-18.",
   "prds": [],
   "ledger_refs": ["LD-0310"]
 }
