@@ -20419,3 +20419,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 0.8.0_AE_CloudComp | NFRA_COMPSIMILAR.PH2-C2 | comp-pulse+comp-surface-check (auto in safe-commit x3); source-Read grounding (design/feasibility session) | comp-canon-motif --self-test attempted, did not complete -- grounded scorer via source Read | CLEAN |
 | 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-which | FAIL |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/etfs-netassets/neta... | PASS |
+| 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/etfs-netassets/netassets-lambda.tf infra/aws/terraf... | FAIL |
+2026-07-18 03:25Z 3.0.0_SA_CVO -- TAXSMA_PT2 WS-3 gold PII verify: no comp-* run; SEV1 client-data PII verify demanded direct EXERCISE of served artifact + DEPLOYED code path (aws s3 list/cp operational, MD5==ETag, pyarrow reads, imported the actual gold module + ran mutants M1-M4 + discrimination control vs real silver). Rule 22a: a comp-tool models DESIRED/state, cannot mutant-test a gate's landed behavior.
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-18/t... | PASS |
