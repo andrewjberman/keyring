@@ -20791,3 +20791,42 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | json-analysis + comp-kuzu-inc + applied_verify (live post-ingest) | applied C2->C1 seam grounded producer-side (my targets = canonical ARNs = comp-kuzu node_ids); 0.7.0 fix verified: 13/13+3/3 nodes, 5077/5079 C2->C1, 9/9 C3->C2 materialized live @snap 1276252256517924052; 2 misses = confirmed estate drift | PASS |
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS total_nodes | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='C2Motif' RETURN n.id AS id ORDER BY id | FAIL |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='C3System' RETURN n.id AS id ORDER BY id | FAIL |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu CALL table_info('CloudNode') RETURN * | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu CALL table_info('CloudEdge') RETURN * | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='C2Motif' RETURN n.node_id, n.layer ORD... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='C2Motif' RETURN count(*) AS c2motif_count | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='C3System' RETURN n.node_id, n.layer OR... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type='C3System'... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode {node_id:'motif:b-io'}) WHERE... | FAIL |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (m:CloudNode)-[e:CloudEdge]->(c:CloudNode) WHERE m.node_type='C2Motif' ... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (m:CloudNode)-[e:CloudEdge]->(c:CloudNode) WHERE m.node_type='C2Motif' ... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (m:CloudNode) WHERE m.node_type='C2Motif' AND (m.node_id STARTS WITH 'm... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile --file in... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/globgrph/Dockerfile infra/aws/globgrph/resource_summaries_sto... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode {node_id:'motif:a-grant'})-[e:CloudEdge]->(c:CloudN... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode {node_id:'motif:a-watch'})-[e:CloudEdge]->(c:CloudN... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id='arn:aws:iam::313476888478:role/quartz-si... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id='arn:aws:cloudwatch:us-east-1:31347688847... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'quartz-si2' RETURN n.node_id, n... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'etfs-netassets' AND n.node_type... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (m:CloudNode) WHERE m.node_type='C2Motif' AND (m.node_id STARTS WITH 'm... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type='C3System'... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['C2Motif','C3System'] RETURN n.laye... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.layer='UNCATEGORIZED' OR n.layer IS NULL RETURN c... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='C2Motif' AND (n.node_id STARTS WITH 'm... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['C2Motif','C3System'] AND (n.props ... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='C2Motif' RETURN count(*) AS c2 | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-18/semctl_ab_materialize_round... | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu MATCH (s)-[e]->(m) WHERE s.node_type='C3System' AND m.node_type='C2Motif' RET... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/resource_s... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/globgrph/resource_summaries_producer.tf | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_ONTOLOGY.json --file ... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_ONTOLOGY.json org/projects/NFRA_SEMCTL.json org/tier1... | PASS |
+- 2026-07-18 ~1534-2120Z 0.7.0_AE_CloudOps: NFRA batched wake (WS-1 A+B materialize + WS-2 COMPSIMILAR PH1). comp-kuzu/comp-kuzu-inc/comp-kuzu-full (live grounding, provenance-header vintage discipline, caught SERVED-STALE inc-mode); commit-gate.sh x5 PASS; safe-commit.sh x5; safe-apply.sh (targeted 5-resource + read-grant, HALTGT); deploy_ledger.py x2 (4+5 legs closed); terraform plan (targeted, no alert-drift); aws iam simulate-principal-policy (22a+re-22a, ISOLATED one-resource-arn each). Both material defects caught by EXERCISE not config-read.
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
