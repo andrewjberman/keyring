@@ -1,0 +1,33 @@
+#!/bin/bash
+# comp-describe -- NFRA_COMPSIMILAR describe surface: FIND + DESCRIBE one AWS resource.
+# "what is this resource / what does it do / find an AWS resource" for ONE resource, answered
+# NOW off the LANDED derive-at-scan engine (summary_corpus.py) over the EXISTING comp-kuzu QUERY
+# path. Andrew-direct pull-forward (2026-07-18) AHEAD of the KUZUSPLIT-P1 projection.
+#
+# DECOUPLED from BOTH gates by construction: NO Kuzu summary-property projection
+# (KUZUSPLIT-P1-gated) and NO resource_summaries Iceberg table (CTO plan-gated) -- derive-at-scan
+# has no projected property to survive a refresh, so it sidesteps the exact risk those gates
+# cover. Resolution is LEXICAL (exact ARN -> exact name -> substring); the nearest-BY-PURPOSE
+# summary-similarity path is comp-similar Phase-2 and stays gated.
+#
+# Usage (query FIRST, matches the module's --neighbors ARN convention):
+#   comp-describe <arn-or-name> [--json]
+#   comp-describe arn:aws:lambda:us-east-1:313476888478:function:bd-49f-fees-runner
+#   comp-describe opal-data-mdpf --json
+# Exit 0 = one resource described; exit 1 = query did not resolve to a single resource
+# (0 matches -> refresh hint; N candidates -> disambiguation list; never a silent guess).
+# Advisory / read-only. NEVER a verdict, NEVER deletes.
+if [ "$#" -eq 0 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+  echo "comp-describe -- FIND + DESCRIBE one AWS resource (NFRA_COMPSIMILAR describe surface)."
+  echo "Usage: comp-describe <arn-or-name> [--json]"
+  echo "  <arn-or-name>  exact ARN, exact name, or a lexical substring (unique -> described;"
+  echo "                 ambiguous -> disambiguation list; 0 matches -> comp-kuzu-inc refresh hint)."
+  echo "  --json         machine JSON instead of the human summary."
+  echo "Reads the live comp-kuzu graph (derive-at-scan; no projection, no table). Advisory/read-only."
+  exit 2
+fi
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/debtscan/summary_corpus.py" --describe "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-describe" "$*" $_exit 2>/dev/null
+exit $_exit

@@ -170,6 +170,20 @@ entries:
     status: canonical
     notes: "NFRA_KUZUSPLIT P1 (code @5de839ff0, 0.8.0_AE_CloudComp~D; registration COO-SoD-landed). Refresh-mode VARIANT of the comp-kuzu graph-query surface (SAME store). O-1 (Andrew-ratified): serves incremental OR labeled-stale, NEVER incremental-or-full. In-band provenance header (COND-1) + persistent .fallback.jsonl sink (COND-2) + COMPSIMILAR overlay hook both paths (COND-3). comp-which routing: 'refresh the graph / update the graph / my graph is behind / default worker graph refresh' -> comp-kuzu-inc."
 
+  - id: cloud.describe.resource
+    use_case: "What IS this resource / what does it do / describe this ARN / find + describe one AWS resource -- ONE resource's purpose synthesized from the graph (type + layer + producers/consumers/wiring)."
+    canonical_call: "comp-describe <arn-or-name> [--json]   # find + describe ONE resource off the derive-at-scan engine"
+    tool: comp-describe
+    mode: query
+    write_path: false
+    layer: cloud
+    cost: "~ms: 2 targeted comp-kuzu queries for an exact ARN (node + edges); +1 light all-node sweep only for name/substring resolution. Never the full-corpus build."
+    freshness: "reads the live comp-kuzu graph (shares its provenance/HEAD-oracle); derive-at-scan -- no projected property, no table, nothing to go stale beyond the graph vintage. 0 matches -> hints comp-kuzu-inc (broken retrieval != absent)."
+    rebuild_trigger: "never (Rule 20 QUERY-default)"
+    anti_pattern: "using it for NEAREST-BY-PURPOSE similarity (that is comp-similar Phase-2, KUZUSPLIT-P1 + table gated) -> describe is exact/lexical find of ONE resource. Arbitrary Cypher traversal -> comp-kuzu; blast radius -> comp-blast; a named pipeline thread -> pipescript."
+    status: canonical
+    notes: "NFRA_COMPSIMILAR describe surface (Andrew-direct pull-forward 2026-07-18, code @ff21627b0, 0.8.0_AE_CloudComp~D; registration COO-SoD -- grantee cannot self-register). Servable off the LANDED derive-at-scan engine (summary_corpus.py @3fe0eedf0) over the EXISTING comp-kuzu QUERY path; decoupled from BOTH the KUZUSPLIT-P1 projection AND the resource_summaries table. Resolution LEXICAL (exact ARN -> exact name -> substring); ambiguous -> disambiguation list, no silent guess."
+
   - id: cloud.derive.class
     use_case: "Is this RESOURCE TYPE under Terraform control? Bounded per-class drift ledger (L1 grain: one class)."
     canonical_call: "comp-aws derive --class <ClassName>   # L1 (type-managed?) -- distinct from --resource (L0, one ARN) and bare derive (L2, full edge graph)"

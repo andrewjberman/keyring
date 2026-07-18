@@ -434,6 +434,21 @@ RULES = [
      "REFRESH the LOCAL kuzu projection incrementally -- the DEFAULT a worker runs pre-query: serves the "
      "incremental delta OR a labeled-stale prior-vintage projection, NEVER a mid-task full rebuild (Andrew "
      "O-1). DISTINCT from comp-build (trace cache), comp-graph (graph vintage), comp-aws derive (cloud producer)"),
+    # comp-describe -- NFRA_COMPSIMILAR describe surface (Andrew-direct pull-forward 2026-07-18, COO-SoD land
+    # @ff21627b0 AE half). describe/what-is/what-does-it-do vocab = the clean gap (no curated rule matched these
+    # pre-land). Deliberately NOT bare "find an aws resource" (fuzzy-hits comp-assets 1.85) -- steered to describe.
+    (["what is this resource", "what does this resource do", "describe this resource",
+      "describe the resource", "describe this arn", "describe this lambda", "describe this bucket",
+      "what is this arn", "what does this lambda do", "what does this bucket do",
+      "what does this resource", "explain this resource", "summarize this resource",
+      "purpose of this resource", "what is this aws resource", "look up this resource",
+      "find and describe a resource", "describe a resource by name"],
+     "find + describe ONE AWS resource (comp-describe)",
+     ["comp-describe <arn-or-name>"],
+     "FIND + DESCRIBE one AWS resource -- its purpose (type + layer + producers/consumers/wiring) "
+     "synthesized from the graph. DISTINCT from comp-kuzu (arbitrary Cypher traversal), comp-blast "
+     "(what breaks if I change X), pipescript (a named pipeline thread). Nearest-BY-PURPOSE similarity "
+     "is comp-similar Phase-2 (gated) -- this is exact/lexical find of ONE resource"),
     # rule-2: comp-surface-check -- "touching MP/benchmarks/ADVI backend" routed to comp-registry.
     # comp-surface-check is THE must-always-be-right SEV1-surface guard for MP/benchmarks/ADVI.
     (["model portfolios", "model portfolio", "benchmarks backend", "benchmark surface",
