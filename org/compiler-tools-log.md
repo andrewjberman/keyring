@@ -20903,3 +20903,23 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | (CSE AC4 follow-on) | comp-kuzu (distinct types) + python assert_live_coverage | reproduced CVO finding exactly: ok=FALSE, unmapped nodes [C2Motif,C3System,CODEBUILD_PROJECT,LAMBDA_LAYER,SCHEDULE,SSM_DOCUMENT] + edge [USES_LAYER]; grounds the 3-part coverage-sweep spec | PASS |
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n) WHERE n.node_type = 'C2Motif' RETURN n.node_id AS node_id, n... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n) WHERE n.node_id = 'motif:a-store' RETURN n | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a)-[e:CloudEdge]->(b) WHERE a.node_id = 'motif:a-store' AND e.e... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/CSE_AC4_LIVE_COVE... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n) WHERE n.node_type='C3System' RETURN n.node_id AS node_id, n.... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type='C2... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type='C3... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_CSE.json --file org/p... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_CSE.json org/projects/NFRA_ONTOLOGY.json | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t ORDER BY t | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH ()-[x:CloudEdge]->() RETURN DISTINCT x.edge_type AS t ORDER BY t | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-bd' RETURN n... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+2026-07-18 | 3.0.0_SA_CVO | comp-kuzu --json(x3), python(patch 6/6 + self-test 27/27 + live exercise), py_compile | AC4 coverage-sweep re-sign lane-1 CLEAR: assert_live_coverage --live ok=TRUE patched vs ok=FALSE canon (mutant); caught HEAD advance to snap 3069777708130810660
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-18/a... | PASS |
