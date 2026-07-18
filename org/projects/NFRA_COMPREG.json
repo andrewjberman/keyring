@@ -1,0 +1,26 @@
+{
+  "project_code": "NFRA_COMPREG",
+  "macro_code": "NFRA",
+  "name": "Canonical comp-tool creation/revision/registration flow -- ONE standardized process across ~62 tools + a registration-gap audit + colocated canonized spec",
+  "description": "Andrew-direct 2026-07-17 ~2256Z ET (to 0.8.0_AE_CloudComp base + ~B; verbatim recorded @04bee845a, memory/project_canonical_comptool_registration_flow.md). The mechanism to register a comp-tool exists (comp-manifest-check enforces registered-or-excluded at commit; comp-which routing + comp-which-routing-test) but there is NO documented, standardized PROCESS tying create -> register (comp-tools.yaml + comp-coverage-map + graph-call-manifest tools_index + curated comp-which routing rule + routing-test) -> validate (manifest-check + routing no-regress) -> ownpath/commit -> a colocated canonized spec. With ~62 executables (gate-maintained count; 62 exec / 49 routable at 2026-07-14) and constantly growing, ad-hoc per-lane registration risks untracked/unregistered tools. Andrew wants ONE canonical flow, canonized and persisted colocated to the tools and referenced in 0.8.0_AE prompt.md, plus an audit that scans every comp-tool for registration gaps and closes each gap THROUGH that flow. Verbatim: 'we need to make sure that all the comp tools are properly tracked... make a canonical flow for comp tool creation/revision/and registration. Then... scan all the comp-tools and establish if there are any that are not properly registered and make sure they get registered through that canonical flow. Then... write a spec on the flow and process and get that over to MSTR because it needs to be canonized and persisted in some key, colocated location to the tools, probably should be referenced in the prompt.md for 0.8.0_AE that they ownpath alongside CTO/CVO for committing tools according to that process... probably ANY_EXEC_OR_AE for ease of ops'.",
+  "prds": [],
+  "source_brief": "memory/project_canonical_comptool_registration_flow.md (Andrew-direct verbatim @04bee845a); org/tier2_senior/0.8.0_AE_CloudComp/deliverables/ANDREW_DIRECT_20260717_comp_tool_canonical_flow_and_registration.md",
+  "status": "queued",
+  "phase": "QUEUED -- registered by COO 2026-07-17 (Andrew-direct via CTO @000137Z: 'get everything updated in the registry, including the canonical comp-tool-flow which is in their todo'). NOT yet active: sequenced AFTER ~B finishes NFRA_DECOMTOOL landing + ~B's taxonomy priority (Andrew: 'once you are done with your tasks here'). STAFFING SETTLED (COO ruling 234105Z, base ACK 235713Z): ~B BUILDS the canonical flow + spec; base 0.8.0 COORDINATES + FEEDS registration-surface knowledge only (LD-0305: Andrew-reserved base is NOT a build lane; base authored the 4 recent tools + knows the NFRA_COMPCLOSE registration surface). NO-RETROFIT: the flow is EXTRACTED FROM real registrations -- ~B's NFRA_DECOMTOOL registrations (comp-debris-ext + comp-iam-usage) + ~D's KUZUSPLIT-P1 comp-kuzu-full/comp-kuzu-inc registration (COO-landed as the SoD exemplar) are the first worked examples.",
+  "blocking": "SEQUENCED behind NFRA_DECOMTOOL landing + ~B taxonomy priority (not a stall -- a real ordering gate; nothing functionally blocked). Deliverables: (1) ONE canonical flow for comp-tool creation/revision/registration; (2) scan all ~62 comp-tools for registration gaps + register each gap THROUGH the flow; (3) write the spec -> MSTR canonizes + persists it COLOCATED to the tools + references it in 0.8.0_AE prompt.md; (4) governance: ownpath ANY_EXEC_OR_AE for 0.8.0_AE (alongside CTO/CVO) for committing tools per the process. GATES (all after ~B builds): CTO arch-gates the spec + lands the ANY_EXEC_OR_AE owned-paths grant (rides the spec; DESIGNED TO PRESERVE the deliberate exec-locks -- e.g. the debtscan do-er-gate; CTO 000137Z); MSTR canonizes the spec. base flagged for the spec to reconcile: the comp-manifest-check chicken-and-egg (routing entry required before executables/routable-flip committable) + a live debtscan AE-vs-exec commit-boundary discrepancy. COO files ~B's TO on DECOMTOOL land + carries sequencing.",
+  "owner": "builder: 0.8.0_AE_CloudComp~B (post-NFRA_DECOMTOOL + taxonomy) | coordinate/feed: 0.8.0_AE_CloudComp base (LD-0305 Andrew-reserved; feeds registration-surface knowledge, NOT a build lane) | arch-gate spec + ANY_EXEC_OR_AE ownpath grant: 1.0.0_SA_CTO | canonization: 0.0.0_AB_MSTR | records/registry + sequencing + TO: 2.0.0_SA_COO | sovereign: Andrew-direct",
+  "related": [
+    "NFRA_DECOMTOOL",
+    "NFRA_COMPSIMILAR",
+    "NFRA_KUZUSPLIT",
+    "NFRA_COMPCLOSE",
+    "NFRA_COMPROUTE",
+    "NFRA_COMPUNIFY",
+    "NFRA_COMPASSURANCE"
+  ],
+  "created": "2026-07-17",
+  "sovereign": "Andrew (direct, 2026-07-17 ~2256Z ET, recorded @04bee845a)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
