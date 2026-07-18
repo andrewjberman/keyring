@@ -20859,3 +20859,27 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | (CSE OWNS-bump) | comp-kuzu + grep (source+estate) + git show | OWNED_BY object dist live (MS_USER 5613->OWNS / S3_BUCKET 232->CONTAINS, no residual) grounds R3; _REL_VALUES enum-derived (validator auto-extends); caught co-migration seam cse_emit_graphhead.py:102 direct-.get() | PASS |
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/CSE_OWNS_BUMP_0.4... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='OWNED_BY'... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='OWNED_BY' RETURN count(*) AS to... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (m:CloudNode) WHERE m.node_type='C2Motif' RETURN CASE WHEN m.node_id CO... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode) WHERE s.node_type='C3System' RETURN CASE WHEN s.node_id C... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='OW... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t ORDER BY t | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH ()-[x:CloudEdge]->() RETURN DISTINCT x.edge_type AS t ORDER BY t | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-18/owns_bump_0.4_to_0.5_resign.md | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (m:CloudNode)-[e:CloudEdge]->(c:CloudNode) WHERE m.node_type='C2Motif' ... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (m:CloudNode)-[:CloudEdge]->(c:CloudNode) WHERE m.node_type='C2Motif' A... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_ARN_MEMB... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_RULE_BAN... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/NFRA_CSE_P1_cse_s... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cse_schema.py | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/cse_schema.py | PASS |
+2026-07-18 | 3.0.0_SA_CVO | comp-kuzu(~20), comp-grep/glob, comp-which, python(scratch self-test 22/22 + live parity mutant), py_compile | round-trip cert @HEAD 1276 (5077/5079 PASS) + OWNS-bump 0.4->0.5 re-sign (CLEAR); comp-which gap on semctl surface noted; AC4 live-coverage gap surfaced (6 node+1 edge types)
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-18/s... | PASS |
