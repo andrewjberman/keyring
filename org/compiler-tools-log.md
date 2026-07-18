@@ -20426,3 +20426,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-18 03:25Z 3.0.0_SA_CVO -- TAXSMA_PT2 WS-3 gold PII verify: no comp-* run; SEV1 client-data PII verify demanded direct EXERCISE of served artifact + DEPLOYED code path (aws s3 list/cp operational, MD5==ETag, pyarrow reads, imported the actual gold module + ran mutants M1-M4 + discrimination control vs real silver). Rule 22a: a comp-tool models DESIRED/state, cannot mutant-test a gate's landed behavior.
 | 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-18/t... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_UNIVERSA... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS et ORDER BY et | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type IN ['Field','ServedURL','DataFet... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/01_substrate.md | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/01_substrate.md | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260718T0331Z_schwab-box-cell4-ia... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (multi) | comp-which,comp-manifest-check,comp-coverage-check,git-show,comp_capability_provider | 3 SoD comp-tool registration lands (KUZUSPLIT-P1/comp-iam-usage/comp-describe rank-1) + KUZUSPLIT drift HEAD-ground-truth (git-diff-vs-git-show-HEAD trap) + routable-logic grounded @comp_capability_provider:279 | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS et ORDER BY et | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-17/s... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.node_type='Se... | PASS |
