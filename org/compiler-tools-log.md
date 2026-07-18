@@ -20508,3 +20508,13 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
 | 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
 | 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-mdpf' RETURN... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-bd' RETURN n... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-bd' RETURN n... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'opal-data-bd' RETURN n.arn AS arn L... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'opal-data-bd' RETURN n.arn AS arn, ... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'opal-... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-grep, comp-glob | NFRA_ONTOLOGY founding design: located LD-0310/canon-patterns/cse_schema/01_substrate seed substrate (design-doc session, no heavy comp tools) | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
