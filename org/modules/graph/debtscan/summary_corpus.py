@@ -232,6 +232,7 @@ class SummaryDoc:
     held: bool = False                                 # hold-aware mark
     n_purpose: int = 0                                 # purpose-token count (coverage signal)
     motifs: list = field(default_factory=list)         # C2: [(class, role_key, label)] that fired
+    membership: dict = field(default_factory=dict)     # C3: {"c2":[(id,class)],"c3":[(id,class)]} member-of
 
 
 def _edge_phrase(edge: dict, incoming: bool) -> tuple[list[str], str]:
@@ -345,11 +346,129 @@ def motif_prose_and_tokens(matches: list, canon_roles: dict) -> tuple[list[str],
     return clauses, tokens, fired
 
 
-def derive_summary(arn: str, node: dict, out_edges: list, in_edges: list) -> SummaryDoc:
+# ---- C3/Twin: per-ARN C2/C3 MEMBERSHIP clause (NFRA_COMPSIMILAR PH2, contract @4fe909153) --------
+# The long-HELD COMPSIMILAR C3 clause, now concrete on the materialized A+B layer (13 motifs / 3
+# systems). For each ARN the summary gains a SIBLING clause listing every C2 motif + C3 system the
+# node is a MEMBER of. TWO strictly separate reads (the no-feedback governance line, CTO arch-gate
+# @214500Z / NFRA_ONTOLOGY_LLM_CLASSIFICATION sec.1a):
+#   1. MEMBERSHIP RESOLUTION is DETERMINISTIC -- reverse the materialized CONTAINS edges (a node's
+#      motifs = the C2Motifs whose CONTAINS points at it; its systems = the C3Systems whose CONTAINS
+#      points at ANY of those motifs). It NEVER reads an llm_* attribute. ("motif/system membership
+#      resolution" is on the FORBIDDEN-llm-consumer list precisely because it must stay structural;
+#      this keeps it structural -- a class value can never change the membership SET.)
+#   2. The CLASS LABEL is the ADDITIVE readability overlay -- read from the motif/system node's
+#      llm_class attribute FOR DISPLAY ONLY (a summary is a human/agent read = the PERMITTED consumer,
+#      "~D consumes freely"). Absent (not yet emitted -- the attach rides the OWNS-bump) -> the BARE
+#      id, no guess. When the governed emit lands llm_class in the node props the "(class)" parens
+#      appear with ZERO code change. NEVER a BM25 token (class must not drive similarity) and NEVER
+#      folded into the C2 motif-role splice -- a PARALLEL sibling clause (same shape as variance_verdict).
+_MEMBERSHIP_HASH = re.compile(r":[0-9a-f]{6,}$")
+
+
+def _membership_id(node_id: str) -> str:
+    """Display id from a C2Motif/C3System node_id: strip the 'motif:'/'system:' prefix and a trailing
+    ':<hash>' discriminator -- 'system:object-data:ff0f4d26' -> 'object-data'; 'motif:a-store' ->
+    'a-store'. PURE. The ':<hash>$' anchor requires the ':' separator, so a bare id is never truncated."""
+    s = node_id or ""
+    for pre in ("motif:", "system:"):
+        if s.startswith(pre):
+            s = s[len(pre):]
+            break
+    return _MEMBERSHIP_HASH.sub("", s)
+
+
+def _llm_class_from_props(props) -> str | None:
+    """Read the ADDITIVE llm_class overlay from a node's props (JSON string or dict). None when the
+    attr is absent (unemitted) -> the caller renders the bare id (no-guess). GRACEFUL: any parse
+    failure -> None. This is the ONLY llm_* read in the membership path, and it is DISPLAY-ONLY."""
+    if not props:
+        return None
+    try:
+        d = json.loads(props) if isinstance(props, str) else (props if isinstance(props, dict) else {})
+    except (ValueError, TypeError):
+        return None
+    c = d.get("llm_class") if isinstance(d, dict) else None
+    return str(c) if c else None
+
+
+def _assemble_membership(c2_rows: list, c3_rows: list) -> dict:
+    """PURE core: raw CONTAINS-edge rows -> {'c2': [(id, class|None)...], 'c3': [(id, class|None)...]}.
+      c2_rows: motif-CONTAINS->node rows for ONE node -- {mid, mprops}.
+      c3_rows: system-CONTAINS->motif rows (any)      -- {sid, sprops, mid}.
+    Membership is DETERMINISTIC (the node's motifs = the mids in c2_rows; its systems = the systems
+    whose CONTAINS points at any of THOSE motifs -- so the c3 set filters c3_rows by this node's
+    motifs). The class is looked up separately per (2). De-duped by display id + sorted (determinism).
+    Offline-testable (no graph, no file)."""
+    sys_by_motif: dict[str, dict] = {}
+    for r in c3_rows:
+        mid, sid = r.get("mid"), r.get("sid")
+        if not mid or not sid:
+            continue
+        sys_by_motif.setdefault(mid, {})[_membership_id(sid)] = _llm_class_from_props(r.get("sprops"))
+    c2: dict[str, str | None] = {}
+    c3: dict[str, str | None] = {}
+    for r in c2_rows:
+        mid = r.get("mid")
+        if not mid:
+            continue
+        c2[_membership_id(mid)] = _llm_class_from_props(r.get("mprops"))
+        for sdisp, scls in sys_by_motif.get(mid, {}).items():
+            c3[sdisp] = scls
+    return {"c2": sorted(c2.items()), "c3": sorted(c3.items())}
+
+
+def membership_prose(membership: dict) -> str:
+    """Render a membership dict as a one-line clause, or '' when the node is in no motif (no-guess):
+    'member of C2 [a-store(object-storage), b-io] C3 [object-data(data-platform), pipeline]'. An entry
+    with no class label renders as the bare id (the class rides the attachment). PURE -> testable."""
+    if not membership:
+        return ""
+    c2 = membership.get("c2") or []
+    c3 = membership.get("c3") or []
+    if not c2 and not c3:
+        return ""
+
+    def _fmt(entries):
+        return ", ".join(f"{mid}({cls})" if cls else mid for mid, cls in entries)
+
+    segs = []
+    if c2:
+        segs.append(f"C2 [{_fmt(c2)}]")
+    if c3:
+        segs.append(f"C3 [{_fmt(c3)}]")
+    return "member of " + " ".join(segs)
+
+
+def load_memberships() -> dict:
+    """{arn -> {'c2': [...], 'c3': [...]}} for every ARN-bearing node that is a motif member. TWO
+    graph reads (all motif-CONTAINS->arn edges; all system-CONTAINS->motif edges). The motif source
+    node has arn='' so these edges sit OUTSIDE load_graph()'s (arn<>'' on BOTH ends) edge set BY
+    DESIGN -- this is a SEPARATE read. Empty {} LOUDLY on a comp-kuzu absence/error -> the caller just
+    emits no membership clause (graceful)."""
+    c2_rows = _kuzu_json(
+        "MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) "
+        "WHERE m.node_type = 'C2Motif' AND e.edge_type = 'CONTAINS' AND b.arn <> '' "
+        "RETURN b.arn AS arn, m.node_id AS mid, m.props AS mprops")
+    c3_rows = _kuzu_json(
+        "MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) "
+        "WHERE s.node_type = 'C3System' AND e.edge_type = 'CONTAINS' AND m.node_type = 'C2Motif' "
+        "RETURN s.node_id AS sid, s.props AS sprops, m.node_id AS mid")
+    by_arn: dict[str, list] = {}
+    for r in c2_rows:
+        arn = r.get("arn")
+        if arn:
+            by_arn.setdefault(arn, []).append(r)
+    return {arn: _assemble_membership(rows, c3_rows) for arn, rows in by_arn.items()}
+
+
+def derive_summary(arn: str, node: dict, out_edges: list, in_edges: list,
+                   membership: dict | None = None) -> SummaryDoc:
     """Synthesize a resource's functional summary from the graph. The BM25 document is the
     PURPOSE vocabulary (type + layer + edge neighborhood); the resource's OWN name is kept in
     the prose but NOT in the tokens (the corpus-collapse control). C2: appends canonical motif
-    class+role clauses (read from canon-patterns roles:) to the prose and tokens."""
+    class+role clauses (read from canon-patterns roles:) to the prose and tokens. C3: appends the
+    per-ARN C2/C3 MEMBERSHIP sibling clause (deterministic reverse-CONTAINS, passed in via
+    `membership`) to the prose ONLY -- NOT the tokens (the class overlay must not drive similarity)."""
     node_type = node.get("node_type") or ""
     name = node.get("name") or arn
     layer = node.get("layer") or ""
@@ -386,22 +505,38 @@ def derive_summary(arn: str, node: dict, out_edges: list, in_edges: list) -> Sum
     if motif_clauses:
         prose += "; " + "; ".join(motif_clauses)
 
+    # C3 membership sibling clause (deterministic reverse-CONTAINS; class = display-only overlay).
+    # Prose ONLY (readability) -- deliberately NOT added to `tokens` (keeps the llm_class overlay out
+    # of the BM25 similarity computation, and keeps membership resolution structurally separate).
+    memb = membership or {}
+    memb_clause = membership_prose(memb)
+    if memb_clause:
+        prose += "; " + memb_clause
+
     return SummaryDoc(arn=arn, node_type=node_type, name=name, tokens=tokens, prose=prose,
-                      thin=thin, held=held, n_purpose=n_purpose, motifs=motif_fired)
+                      thin=thin, held=held, n_purpose=n_purpose, motifs=motif_fired, membership=memb)
 
 
-def build_corpus(graph_tuple=None) -> dict[str, SummaryDoc]:
+def build_corpus(graph_tuple=None, memberships=None) -> dict[str, SummaryDoc]:
     """Build the {arn -> SummaryDoc} derive-at-scan corpus from the live graph.
 
     graph_tuple: an optional pre-loaded (nodes, out_edges, in_edges) in the load_graph() contract.
     When provided -- the IN-VPC path, where the store reads graph_nodes/graph_edges DIRECTLY from
     Iceberg (CTO cond-1, 2026-07-18: comp-kuzu + a local Kuzu DB are absent in the derive container)
     -- it is consumed verbatim. When None (the dev-box default, UNCHANGED) load_graph() runs the
-    comp-kuzu path. This decouples the corpus TRANSFORM from the graph SOURCE (one job per layer)."""
+    comp-kuzu path. This decouples the corpus TRANSFORM from the graph SOURCE (one job per layer).
+
+    memberships: an optional {arn -> {'c2','c3'}} membership map. When None on the DEV-BOX path
+    (graph_tuple None) it is loaded via load_memberships() (comp-kuzu). On the IN-VPC path (graph_tuple
+    given, comp-kuzu absent) it defaults to {} -- no comp-kuzu call, so the membership clause is simply
+    omitted there until the caller threads a membership source in (graceful, symmetric with graph_tuple)."""
     nodes, out_edges, in_edges = graph_tuple if graph_tuple is not None else load_graph()
+    if memberships is None:
+        memberships = {} if graph_tuple is not None else load_memberships()
     corpus: dict[str, SummaryDoc] = {}
     for arn, node in nodes.items():
-        corpus[arn] = derive_summary(arn, node, out_edges.get(arn, []), in_edges.get(arn, []))
+        corpus[arn] = derive_summary(arn, node, out_edges.get(arn, []), in_edges.get(arn, []),
+                                     membership=memberships.get(arn))
     return corpus
 
 
@@ -462,6 +597,26 @@ def load_one(arn: str) -> tuple[dict | None, list, list]:
         "a.node_type AS st, a.name AS sn, b.node_type AS bt, b.name AS bn")
     out_edges, in_edges = _partition_edges(edge_rows, arn)
     return node_rows[0], out_edges, in_edges
+
+
+def load_one_membership(arn: str) -> dict:
+    """Targeted single-ARN membership (the describe path): the C2 motifs that CONTAIN this arn + the
+    C3 systems that CONTAIN those motifs. Returns {'c2': [...], 'c3': [...]} -- {'c2': [], 'c3': []}
+    when the node is in no motif (no-guess). The system->motif edge set is tiny (a handful), so it is
+    read whole and _assemble_membership filters it to THIS node's motifs. NEVER reads llm_* to resolve
+    membership (structural); llm_class rides along only as the display overlay (see _assemble_membership)."""
+    a = _q_escape(arn)
+    c2_rows = _kuzu_json(
+        f"MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) "
+        f"WHERE m.node_type = 'C2Motif' AND e.edge_type = 'CONTAINS' AND b.arn = '{a}' "
+        "RETURN m.node_id AS mid, m.props AS mprops")
+    if not c2_rows:
+        return {"c2": [], "c3": []}
+    c3_rows = _kuzu_json(
+        "MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) "
+        "WHERE s.node_type = 'C3System' AND e.edge_type = 'CONTAINS' AND m.node_type = 'C2Motif' "
+        "RETURN s.node_id AS sid, s.props AS sprops, m.node_id AS mid")
+    return _assemble_membership(c2_rows, c3_rows)
 
 
 def _is_real_arn(s: str) -> bool:
@@ -529,7 +684,7 @@ def describe(query: str) -> dict:
     node, out_edges, in_edges = load_one(arn)
     if node is None:
         return {"query": query, "resolved": arn, "node_absent": True}
-    doc = derive_summary(arn, node, out_edges, in_edges)
+    doc = derive_summary(arn, node, out_edges, in_edges, membership=load_one_membership(arn))
 
     def _rel(edges, incoming):
         seen = []
@@ -548,6 +703,10 @@ def describe(query: str) -> dict:
         "held": doc.held, "n_purpose": doc.n_purpose,
         "prose": doc.prose,
         "motifs": [{"class": c, "role_key": rk, "label": lb} for (c, rk, lb) in doc.motifs],
+        "membership": {
+            "c2": [{"id": i, "class": c} for (i, c) in (doc.membership.get("c2") or [])],
+            "c3": [{"id": i, "class": c} for (i, c) in (doc.membership.get("c3") or [])],
+        },
         "produced_by": _rel(in_edges, incoming=True),
         "consumes_or_serves": _rel(out_edges, incoming=False),
         "n_in": len(in_edges), "n_out": len(out_edges),
@@ -586,6 +745,16 @@ def render_describe(result: dict) -> str:
     if result.get("motifs"):
         lines.append("  MOTIF    : " + "; ".join(
             f"{m['class']} as {m['label']}" for m in result["motifs"]))
+    memb = result.get("membership") or {}
+    if memb.get("c2") or memb.get("c3"):
+        def _fmt_memb(entries):
+            return ", ".join(f"{e['id']}({e['class']})" if e.get("class") else e["id"] for e in entries)
+        parts = []
+        if memb.get("c2"):
+            parts.append(f"C2 [{_fmt_memb(memb['c2'])}]")
+        if memb.get("c3"):
+            parts.append(f"C3 [{_fmt_memb(memb['c3'])}]")
+        lines.append("  MEMBERSHIP: " + " ".join(parts))
     if result.get("produced_by"):
         lines.append(f"  PRODUCED BY / inbound ({result['n_in']}): " + "; ".join(result["produced_by"][:10]))
     if result.get("consumes_or_serves"):
@@ -641,12 +810,16 @@ def coverage(corpus: dict[str, SummaryDoc]) -> dict:
     thin = sum(1 for d in corpus.values() if d.thin)
     held = sum(1 for d in corpus.values() if d.held)
     motif_matched = sum(1 for d in corpus.values() if d.motifs)   # C2: >=1 motif clause fired
+    memb_matched = sum(1 for d in corpus.values()                 # C3: >=1 C2/C3 membership
+                       if (d.membership or {}).get("c2") or (d.membership or {}).get("c3"))
     return {"total_arn_resources": total, "summarized": total - thin,
             "unknown_thin": thin, "held_marked": held,
             "motif_matched": motif_matched, "motif_unmatched": total - motif_matched,
+            "membership_matched": memb_matched, "membership_unmatched": total - memb_matched,
             "note": f"scanned {total} ARN resources; {total - thin} with purpose summary; "
                     f"{thin} UNKNOWN-thin (no twin known); {held} hold-marked; "
-                    f"{motif_matched} matched >=1 canonical motif, {total - motif_matched} unmatched (no motif clause)"}
+                    f"{motif_matched} matched >=1 canonical motif, {total - motif_matched} unmatched (no motif clause); "
+                    f"{memb_matched} carry a C2/C3 membership clause, {total - memb_matched} in no canonical motif"}
 
 
 # ---- self-test (offline; the registration invariant's regression gate) --------------------
@@ -765,7 +938,54 @@ def self_test() -> int:
     print(f"  M8 resolve-prefer (bucket-over-policy={r_arn=='arn:aws:s3:::opal-data-bd'}, "
           f"two-real->candidates={t_arn is None and len(t_cand)==2}): {'PASS' if m8 else 'FAIL'}")
 
-    print(f"=== self-test: {'PASS' if ok else 'FAIL'} (8/8) ===" if ok else "=== self-test: FAIL ===")
+    # M9 C3 MEMBERSHIP control (offline; the contract @4fe909153 shape + the no-feedback separation).
+    # Fake CONTAINS rows mirroring the LIVE opal-data-bd membership (verified on the graph 2026-07-18):
+    # motifs {a-store,a-access,a-serve,b-io}; systems object-data (all 4) + pipeline (via the b-io overlap);
+    # compute-orchestration (a-event/a-orch) must NOT appear (the node is in neither). b-io has NO class ->
+    # bare id (the class rides the attachment). Then MUTATE every class value: the membership SET must be
+    # INVARIANT (membership resolution is structural, never reads llm_* -- the forbidden-consumer line).
+    bd_c2 = [
+        {"mid": "motif:a-store", "mprops": '{"llm_class": "object-storage"}'},
+        {"mid": "motif:a-access", "mprops": '{"llm_class": "compute-object-access"}'},
+        {"mid": "motif:a-serve", "mprops": '{"llm_class": "content-serving"}'},
+        {"mid": "motif:b-io", "mprops": "{}"},                       # no class -> bare id (no-guess)
+    ]
+    all_c3 = [
+        {"sid": "system:object-data:ff0f4d26", "sprops": '{"llm_class": "data-platform"}', "mid": "motif:a-store"},
+        {"sid": "system:object-data:ff0f4d26", "sprops": '{"llm_class": "data-platform"}', "mid": "motif:a-access"},
+        {"sid": "system:object-data:ff0f4d26", "sprops": '{"llm_class": "data-platform"}', "mid": "motif:a-serve"},
+        {"sid": "system:object-data:ff0f4d26", "sprops": '{"llm_class": "data-platform"}', "mid": "motif:b-io"},
+        {"sid": "system:pipeline:d944eb81", "sprops": '{"llm_class": "data-pipeline"}', "mid": "motif:b-struct"},
+        {"sid": "system:pipeline:d944eb81", "sprops": '{"llm_class": "data-pipeline"}', "mid": "motif:b-run"},
+        {"sid": "system:pipeline:d944eb81", "sprops": '{"llm_class": "data-pipeline"}', "mid": "motif:b-io"},
+        {"sid": "system:compute-orchestration:7628b54d", "sprops": '{"llm_class": "orchestration-platform"}', "mid": "motif:a-event"},
+    ]
+    mem = _assemble_membership(bd_c2, all_c3)
+    c2_ids = [i for (i, _) in mem["c2"]]
+    c3_ids = [i for (i, _) in mem["c3"]]
+    m9a = c2_ids == ["a-access", "a-serve", "a-store", "b-io"] and c3_ids == ["object-data", "pipeline"]
+    c2_cls = dict(mem["c2"])
+    m9b = c2_cls.get("a-store") == "object-storage" and c2_cls.get("b-io") is None  # class overlay + bare-id
+    clause = membership_prose(mem)
+    m9c = ("member of C2 [" in clause and "a-store(object-storage)" in clause
+           and "C3 [" in clause and "object-data(data-platform)" in clause and "pipeline" in clause)
+    # no-feedback exercise: MUTATE every class -> membership SET unchanged (class never drives membership).
+    mut_c2 = [dict(r, mprops='{"llm_class": "MUTANT"}') for r in bd_c2]
+    mut_c3 = [dict(r, sprops='{"llm_class": "MUTANT"}') for r in all_c3]
+    mem_mut = _assemble_membership(mut_c2, mut_c3)
+    m9d = ([i for (i, _) in mem_mut["c2"]] == c2_ids and [i for (i, _) in mem_mut["c3"]] == c3_ids)
+    # id derivation (prefix + hash strip) + no-motif -> empty clause (no-guess).
+    m9e = (_membership_id("system:object-data:ff0f4d26") == "object-data"
+           and _membership_id("motif:a-store") == "a-store"
+           and _assemble_membership([], all_c3) == {"c2": [], "c3": []}
+           and membership_prose({"c2": [], "c3": []}) == "")
+    m9 = m9a and m9b and m9c and m9d and m9e
+    ok &= m9
+    print(f"  M9 C3 membership (bd-shape[4motif/2sys,b-io-overlap]={m9a}, class-overlay+bare-id={m9b}, "
+          f"prose={m9c}, SET-invariant-under-class-mutation={m9d}, id-derivation+no-guess={m9e}): "
+          f"{'PASS' if m9 else 'FAIL'}")
+
+    print(f"=== self-test: {'PASS' if ok else 'FAIL'} (9/9) ===" if ok else "=== self-test: FAIL ===")
     return 0 if ok else 1
 
 
