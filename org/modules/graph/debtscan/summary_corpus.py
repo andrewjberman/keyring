@@ -231,6 +231,7 @@ class SummaryDoc:
     thin: bool = False                                 # UNKNOWN-band (blind-row control)
     held: bool = False                                 # hold-aware mark
     n_purpose: int = 0                                 # purpose-token count (coverage signal)
+    motifs: list = field(default_factory=list)         # C2: [(class, role_key, label)] that fired
 
 
 def _edge_phrase(edge: dict, incoming: bool) -> tuple[list[str], str]:
@@ -253,10 +254,102 @@ def _edge_phrase(edge: dict, incoming: bool) -> tuple[list[str], str]:
     return tokens, frag
 
 
+# ---- C2 MOTIF ENRICHMENT (NFRA_COMPSIMILAR PH2) --------------------------------------------
+# Splice the canonical MOTIF CLASS + ROLE a node instantiates into its derive_summary output --
+# "instantiates <CLASS> as <label>". DETERMINISTIC: the STRUCTURAL position -> role_key mapping
+# is code (classify_motif); the spliced LABEL is READ from canon-patterns.yaml's per-class
+# `roles:` field (CTO-owned CLOSED vocab) -- a position with NO blessed label emits NO clause
+# (the no-invented-token governance control, CTO 20260718T021711Z). Because it enriches
+# derive_summary's OUTPUT it lands in --describe (and later --neighbors) with zero surface change.
+#
+# SERVED_LINEAGE_CANON is the first class (roles: blessed @ddfe05ae9). Its role predicates are
+# GROUNDED on the LIVE graph topology (verified 2026-07-18), which DRIFTS from the canon motif
+# PROSE (prose: (Field)-[SERVED_FROM]->(ServedURL); live: ServedURL-[SERVED_FROM]->S3_BUCKET_POLICY,
+# Endpoint-[READS_URL]->ServedURL, JSXRender-[RENDERS]->Field, CLOUDFRONT-[ORIGIN]->S3_BUCKET).
+# The blessed role KEYS anchor on node_type, so the drift does not block the mapping; the one role
+# needing a STRUCTURAL (not type-only) predicate is `s3` -- only a CloudFront-served bucket is an
+# "S3 tail", never a pure pipeline/data bucket. DEPLOY/AUTH/PIPELINE roles + C3/Twin/Fork-Shadow
+# are OUT OF SCOPE here (their instance-grain source is unwired / held to NFRA_ONTOLOGY LD-0310).
+_CANON_PATTERNS = _GRAPH_DIR / "canon-patterns.yaml"
+_CANON_ROLES_CACHE: dict | None = None
+
+
+def _load_canon_roles() -> dict:
+    """Return {class_id -> {role_key -> label}} from canon-patterns.yaml's per-pattern `roles:`
+    field (CTO-owned CLOSED vocab). Cached. GRACEFUL: any read/parse failure or an absent field
+    returns {} -> NO motif clauses splice (the mechanism ships + degrades cleanly, never crashes,
+    never invents a label). Read-from-file, NEVER a hardcoded label dict (governance)."""
+    global _CANON_ROLES_CACHE
+    if _CANON_ROLES_CACHE is not None:
+        return _CANON_ROLES_CACHE
+    roles: dict[str, dict] = {}
+    try:
+        import yaml  # PyYAML present in the graph-module runtime (manifest_check_cli.py:41)
+        with open(_CANON_PATTERNS, encoding="utf-8") as fh:
+            doc = yaml.safe_load(fh) or {}
+        for pat in doc.get("patterns", []) or []:
+            if isinstance(pat, dict) and pat.get("id") and isinstance(pat.get("roles"), dict):
+                roles[pat["id"]] = {str(k): str(v) for k, v in pat["roles"].items()}
+    except (OSError, ImportError, ValueError, TypeError):
+        roles = {}
+    _CANON_ROLES_CACHE = roles
+    return roles
+
+
+# structural node_type -> SERVED_LINEAGE role_key (type-anchored; the FE-stitch types ARE
+# served-lineage members by construction). `s3` is handled separately (structural, below).
+_SERVED_LINEAGE_TYPE_ROLE = {
+    "ServedURL": "served_url",
+    "DataFetch": "data_fetch",
+    "JSXRender": "jsx_render",
+    "Field": "gold_field",
+}
+
+
+def classify_motif(node: dict, in_edges: list, out_edges: list) -> list[tuple[str, str]]:
+    """Deterministic per-node structural matcher over the LOCAL neighborhood (the SAME
+    {node_type, in_edges, out_edges} derive_summary already loads -- no new full-corpus scan).
+    Returns [(CLASS, role_key) ...] for every canonical motif position the node occupies. PURE
+    (no graph, no file) -> offline-testable. role_key is a code-internal STRUCTURAL id; the canon
+    LABEL is looked up separately (governance: nothing spliced is invented here)."""
+    node_type = node.get("node_type") or ""
+    matches: list[tuple[str, str]] = []
+
+    # SERVED_LINEAGE_CANON -- the first blessed class. FE-stitch types are members by type; the
+    # S3 tail is STRUCTURAL: only a CloudFront-served bucket (an incoming ORIGIN edge from a
+    # CLOUDFRONT_DISTRIBUTION), NEVER a pure pipeline/data bucket -> no mislabel, no guess.
+    if node_type in _SERVED_LINEAGE_TYPE_ROLE:
+        matches.append(("SERVED_LINEAGE_CANON", _SERVED_LINEAGE_TYPE_ROLE[node_type]))
+    elif node_type == "S3_BUCKET":
+        if any((e.get("edge_type") == "ORIGIN"
+                and (e.get("other_type") in ("CLOUDFRONT_DISTRIBUTION", "") or not e.get("other_type")))
+               for e in in_edges):
+            matches.append(("SERVED_LINEAGE_CANON", "s3"))
+    return matches
+
+
+def motif_prose_and_tokens(matches: list, canon_roles: dict) -> tuple[list[str], list[str], list[tuple]]:
+    """Turn structural (class, role_key) matches into (prose_clauses, bm25_tokens, fired) by
+    reading the LABEL from canon_roles[class][role_key]. A match whose label is ABSENT emits NO
+    clause (the no-invented-token control). PURE -> offline-testable with a fake canon_roles."""
+    clauses: list[str] = []
+    tokens: list[str] = []
+    fired: list[tuple] = []
+    for cls, role_key in matches:
+        label = (canon_roles.get(cls) or {}).get(role_key)
+        if not label:
+            continue  # unblessed position -> no clause, never a guessed token
+        clauses.append(f"instantiates {cls} as {label}")
+        tokens += _tok(label)          # the motif membership is a strong similarity signal
+        fired.append((cls, role_key, label))
+    return clauses, tokens, fired
+
+
 def derive_summary(arn: str, node: dict, out_edges: list, in_edges: list) -> SummaryDoc:
     """Synthesize a resource's functional summary from the graph. The BM25 document is the
     PURPOSE vocabulary (type + layer + edge neighborhood); the resource's OWN name is kept in
-    the prose but NOT in the tokens (the corpus-collapse control)."""
+    the prose but NOT in the tokens (the corpus-collapse control). C2: appends canonical motif
+    class+role clauses (read from canon-patterns roles:) to the prose and tokens."""
     node_type = node.get("node_type") or ""
     name = node.get("name") or arn
     layer = node.get("layer") or ""
@@ -274,7 +367,11 @@ def derive_summary(arn: str, node: dict, out_edges: list, in_edges: list) -> Sum
         purpose_tokens += toks
         frags.append(frag)
 
-    tokens = base_tokens + purpose_tokens          # name intentionally EXCLUDED
+    # C2 motif enrichment -- structural class+role, label read from canon-patterns roles:.
+    motif_matches = classify_motif(node, in_edges, out_edges)
+    motif_clauses, motif_tokens, motif_fired = motif_prose_and_tokens(motif_matches, _load_canon_roles())
+
+    tokens = base_tokens + purpose_tokens + motif_tokens   # name intentionally EXCLUDED
     n_purpose = len(set(purpose_tokens))
     thin = n_purpose < THIN_PURPOSE_FLOOR
     held = bool(_HELD_RX.search(name))
@@ -286,9 +383,11 @@ def derive_summary(arn: str, node: dict, out_edges: list, in_edges: list) -> Sum
             prose += f"; (+{len(frags) - 8} more)"
     else:
         prose += ": no modeled edges (UNKNOWN-thin)"
+    if motif_clauses:
+        prose += "; " + "; ".join(motif_clauses)
 
     return SummaryDoc(arn=arn, node_type=node_type, name=name, tokens=tokens, prose=prose,
-                      thin=thin, held=held, n_purpose=n_purpose)
+                      thin=thin, held=held, n_purpose=n_purpose, motifs=motif_fired)
 
 
 def build_corpus() -> dict[str, SummaryDoc]:
@@ -413,6 +512,7 @@ def describe(query: str) -> dict:
         "band": "UNKNOWN-thin" if doc.thin else "summarized",
         "held": doc.held, "n_purpose": doc.n_purpose,
         "prose": doc.prose,
+        "motifs": [{"class": c, "role_key": rk, "label": lb} for (c, rk, lb) in doc.motifs],
         "produced_by": _rel(in_edges, incoming=True),
         "consumes_or_serves": _rel(out_edges, incoming=False),
         "n_in": len(in_edges), "n_out": len(out_edges),
@@ -448,6 +548,9 @@ def render_describe(result: dict) -> str:
         f"band={result['band']}{flags}",
         f"  SUMMARY  : {result['prose']}",
     ]
+    if result.get("motifs"):
+        lines.append("  MOTIF    : " + "; ".join(
+            f"{m['class']} as {m['label']}" for m in result["motifs"]))
     if result.get("produced_by"):
         lines.append(f"  PRODUCED BY / inbound ({result['n_in']}): " + "; ".join(result["produced_by"][:10]))
     if result.get("consumes_or_serves"):
@@ -502,10 +605,13 @@ def coverage(corpus: dict[str, SummaryDoc]) -> dict:
     total = len(corpus)
     thin = sum(1 for d in corpus.values() if d.thin)
     held = sum(1 for d in corpus.values() if d.held)
+    motif_matched = sum(1 for d in corpus.values() if d.motifs)   # C2: >=1 motif clause fired
     return {"total_arn_resources": total, "summarized": total - thin,
             "unknown_thin": thin, "held_marked": held,
+            "motif_matched": motif_matched, "motif_unmatched": total - motif_matched,
             "note": f"scanned {total} ARN resources; {total - thin} with purpose summary; "
-                    f"{thin} UNKNOWN-thin (no twin known); {held} hold-marked"}
+                    f"{thin} UNKNOWN-thin (no twin known); {held} hold-marked; "
+                    f"{motif_matched} matched >=1 canonical motif, {total - motif_matched} unmatched (no motif clause)"}
 
 
 # ---- self-test (offline; the registration invariant's regression gate) --------------------
@@ -576,7 +682,36 @@ def self_test() -> int:
     print(f"  M5 describe edge-partition (out={len(out_e)} in={len(in_e)}, self-loop both): "
           f"{'PASS' if m5 else 'FAIL'}")
 
-    print(f"=== self-test: {'PASS' if ok else 'FAIL'} (5/5) ===" if ok else "=== self-test: FAIL ===")
+    # M6 C2 MOTIF no-invented-token / determinism control (offline; the binding governance test):
+    # (a) an ABSENT canon label -> NO clause; (b) a blessed label -> the clause splices and the
+    # spliced token is EXACTLY the canon label; (c) an OFF-CANON role_key never splices.
+    fake_absent: dict = {}
+    fake_blessed = {"SERVED_LINEAGE_CANON": {"s3": "S3 tail"}}
+    cl_absent, tk_absent, _ = motif_prose_and_tokens([("SERVED_LINEAGE_CANON", "s3")], fake_absent)
+    cl_bless, tk_bless, fired_bless = motif_prose_and_tokens([("SERVED_LINEAGE_CANON", "s3")], fake_blessed)
+    cl_off, _, _ = motif_prose_and_tokens([("SERVED_LINEAGE_CANON", "not_a_real_role")], fake_blessed)
+    m6a = cl_absent == [] and tk_absent == []
+    m6b = any("S3 tail" in c for c in cl_bless) and "s3" in " ".join(tk_bless).lower() and len(fired_bless) == 1
+    m6c = cl_off == []
+    m6 = m6a and m6b and m6c
+    ok &= m6
+    print(f"  M6 C2 no-invented-token (absent->no-clause={m6a}, blessed->splices={m6b}, "
+          f"off-canon->no-clause={m6c}): {'PASS' if m6 else 'FAIL'}")
+
+    # M7 classify_motif STRUCTURAL control: a CloudFront-served S3 bucket -> s3 role; a pure
+    # data/pipeline bucket (no ORIGIN in-edge) -> NO s3 role (no mislabel of a data store).
+    served = classify_motif({"node_type": "S3_BUCKET", "name": "b"}, [{"edge_type": "ORIGIN", "other_type": "CLOUDFRONT_DISTRIBUTION"}], [])
+    data_b = classify_motif({"node_type": "S3_BUCKET", "name": "b"}, [{"edge_type": "WRITES", "other_type": "LAMBDA"}], [])
+    fe = classify_motif({"node_type": "ServedURL", "name": "u"}, [], [])
+    m7 = (("SERVED_LINEAGE_CANON", "s3") in served
+          and ("SERVED_LINEAGE_CANON", "s3") not in data_b
+          and ("SERVED_LINEAGE_CANON", "served_url") in fe)
+    ok &= m7
+    print(f"  M7 classify_motif structural (served-s3={('SERVED_LINEAGE_CANON','s3') in served}, "
+          f"data-s3-excluded={('SERVED_LINEAGE_CANON','s3') not in data_b}, fe-type={('SERVED_LINEAGE_CANON','served_url') in fe}): "
+          f"{'PASS' if m7 else 'FAIL'}")
+
+    print(f"=== self-test: {'PASS' if ok else 'FAIL'} (7/7) ===" if ok else "=== self-test: FAIL ===")
     return 0 if ok else 1
 
 
