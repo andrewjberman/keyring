@@ -20347,3 +20347,14 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-17 | 0.7.0_AE_CloudOps | freshness-alarm-teardown-20260717 | safe-apply/safe-commit/deploy_ledger/terraform | freshness clean-house teardown 7/10 (inf/cot/bd/mdpf/globgrph/opalassets/schwab) + INF nna-guard excusal + set-e/pipeline-failed hardening; per-pipeline gated, -target for contaminated states, deploy_ledger L1-L7 closed. No comp-* rail (native terraform/aws deploy work). | PASS |
 | 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-describe | comp-describe | FAIL |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'opal-data-mdpf' RETURN n.arn AS arn... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-iam-usage --file org/module... | PASS |
+| 2026-07-17 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-iam-usage org/modules/graph/comp_iam_usage.py org/modules/g... | FAIL |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-mdpf' RETURN... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-17 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-describe | comp-describe opal-data-mdpf | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform | OPAL_TAXSMA_PT2.WS2/WS3 | comp-grep, comp-which, commit-gate, comp-validate, comp-surface-check | cot-drift source+config grounding; WS-2/3 gate+validate; comp-validate NO_CONFIG (net-new gold); surface-check clean-for-change | MIXED (grounding PASS; comp-pipescript io/validate gold-only = gap for net-new scripts) |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
