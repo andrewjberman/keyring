@@ -20672,3 +20672,24 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-kuzu-inc + comp-kuzu + probe + module | Phase-1 freshness PASS (HEAD 8797848286033539361, 0.0h) + no-refreeze PASS (C2Motif/C3System in NODE_TYPE_LAYER); 13 A+B detectors measured live (3 spec recurrence errors corrected); emit resolve 4201/4201 (100pct), fidelity PASS; C3 over-merge SURFACED to COO | PASS |
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/00_manifest/examples/f... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/00_manifest/examples/fork-attempt.company.yaml infra/s... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/pro... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/prompt.md | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_C3_OVERL... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/.gitignore --file infr... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/.gitignore infra/system/sdk/genesis_cli.py | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPREG.json --file o... | PASS |
+| 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_COMPREG.json org/projects/REGISTRY.md | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/README.md --file infra... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/README.md infra/system/sdk/docs/AUTHORING.md | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_AB_MATER... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/genesis_cli.py | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/genesis_cli.py | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-manifest-check | comp-manifest-check completeness (COMPREG denom + TOOLCHECK AC-0 ground: 77 tracked/0 gaps) | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu MATCH SERVED_FROM/RENDERS/ORIGIN/READS_URL/FETCHES/FLOWS_TO (SERVED_LINEAGE drift live-ground) | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | genesis-verify | genesis up --dry-run sandbox (GENESIS P1 acceptance) + grep-proof zero Opal literals across module+tenant | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-18/s... | PASS |
