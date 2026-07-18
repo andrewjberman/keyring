@@ -409,6 +409,31 @@ RULES = [
      ["comp-kuzu \"MATCH ...\""],
      "an ARBITRARY cross-layer graph query (Cypher MATCH) over the canonical auto-refreshing DB -- "
      "DISTINCT from comp-xref (graph-wide OCCURRENCE of one symbol) and pipescript (a named thread)"),
+    # ---- NFRA_KUZUSPLIT P1 (COO-SoD land 2026-07-17, code @5de839ff0): the two LOCAL kuzu-projection
+    # REFRESH MODES. Meta-homed -> they need a STRONG curated rule (the fuzzy backstop under-serves meta
+    # tools). Distinctive vocabulary per the anti-collision discipline: comp-build owns the TRACE cache,
+    # comp-graph owns graph VINTAGE, comp-aws derive owns the CLOUD nightly producer -- these own the LOCAL
+    # kuzu-projection refresh ONLY. full = MSTR-startup warm-once (rebuild/reset/reconcile verbs); inc =
+    # worker pre-query default (refresh/update/behind verbs). First worked example of the canonical flow.
+    (["full rebuild the local", "full rebuild my local graph", "full rebuild the local projection",
+      "ground-truth reset", "ground truth reset", "reconcile the local projection", "reconcile the local kuzu",
+      "reconcile my local graph", "mstr startup graph", "mstr-startup graph", "warm the canonical graph",
+      "full kuzu reload", "unconditional full kuzu load", "reset my local graph", "full projection rebuild"],
+     "full local kuzu-projection rebuild (comp-kuzu-full)",
+     ["comp-kuzu-full \"MATCH ...\""],
+     "FORCE a full kuzu_nessie_load of the LOCAL projection -- the MSTR-startup warm-once that absorbs the "
+     "daily whole-table delta. DISTINCT from comp-build (trace cache), comp-graph (graph vintage), comp-aws "
+     "derive (the CLOUD nightly producer). A mid-task refresh -> comp-kuzu-inc, not this"),
+    (["my graph is behind", "my local graph is behind", "graph is behind", "refresh my local graph",
+      "refresh the local graph", "update my local graph", "update the local projection",
+      "bring my local graph up to date", "incremental graph refresh", "incremental kuzu refresh",
+      "refresh before querying", "pre-query graph refresh", "my dependency graph is stale",
+      "refresh the local projection", "refresh the local kuzu projection"],
+     "incremental local kuzu-projection refresh (comp-kuzu-inc)",
+     ["comp-kuzu-inc \"MATCH ...\""],
+     "REFRESH the LOCAL kuzu projection incrementally -- the DEFAULT a worker runs pre-query: serves the "
+     "incremental delta OR a labeled-stale prior-vintage projection, NEVER a mid-task full rebuild (Andrew "
+     "O-1). DISTINCT from comp-build (trace cache), comp-graph (graph vintage), comp-aws derive (cloud producer)"),
     # rule-2: comp-surface-check -- "touching MP/benchmarks/ADVI backend" routed to comp-registry.
     # comp-surface-check is THE must-always-be-right SEV1-surface guard for MP/benchmarks/ADVI.
     (["model portfolios", "model portfolio", "benchmarks backend", "benchmark surface",

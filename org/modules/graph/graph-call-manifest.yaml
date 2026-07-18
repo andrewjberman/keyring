@@ -124,6 +124,39 @@ entries:
     anti_pattern: "running this to answer a traversal -> query comp-kuzu instead"
     status: canonical
 
+  # ---- LOCAL-PROJECTION REFRESH MODES (comp-kuzu-full / comp-kuzu-inc -- NFRA_KUZUSPLIT P1, code @5de839ff0) ----
+  # Refresh WRITE-PATH counterparts to cloud.derive.refresh, but for the LOCAL kuzu projection (kuzu_nessie_load),
+  # NOT the Nessie derive. Bare comp-kuzu stays the READ default; these are the two named REFRESH modes (LD-0307
+  # three-tool model). Registration is COO-SoD (grantee ~D cannot self-register); landed as the first worked
+  # example of the emerging canonical comp-tool registration flow.
+  - id: cloud.refresh.full
+    use_case: "Full rebuild / ground-truth reset / reconcile the LOCAL kuzu projection from Nessie -- the once-per-session MSTR-startup warm that absorbs the whole-table daily delta and warms the shared canonical for peers."
+    canonical_call: "comp-kuzu-full [--json] [--limit N] \"<Cypher>\"   # forces a FULL kuzu_nessie_load unconditionally, then serves the query"
+    tool: comp-kuzu-full
+    mode: rebuild
+    write_path: false   # SERVES the Cypher query after a refresh-first (read-WITH-refresh: `comp-kuzu-full "<Cypher>"` returns results), NOT a pure producer like comp-aws derive. Must stay in the read/navigate candidate set or the DR1 write_path pre-filter EXCLUDES it from the very 'reconcile then query' intents it owns (measured 2026-07-17).
+    layer: cloud
+    cost: "~482s (measured P0 @b0c94d9ff -- absorbs the daily whole-table delta once)"
+    freshness: "post-run = current Nessie HEAD (unconditional full load); the MSTR-startup warm-once mode"
+    rebuild_trigger: "MSTR session startup (once), or an explicit ground-truth reset when the local projection is untrusted"
+    anti_pattern: "running comp-kuzu-full mid-task to answer a traversal (a 482s full rebuild to serve a read) -> bare comp-kuzu (auto) or comp-kuzu-inc"
+    status: canonical
+    notes: "NFRA_KUZUSPLIT P1 (code @5de839ff0, 0.8.0_AE_CloudComp~D; registration COO-SoD-landed -- grantee cannot self-register). Refresh-mode VARIANT of the comp-kuzu graph-query surface (SAME kuzu_nessie_db store, NOT a new surface). Three-tool model (LD-0307): comp-aws derive = cloud producer (nightly, never MSTR-startup) / comp-kuzu-full = local full (MSTR startup once) / comp-kuzu-inc = local incremental (workers, pre-query). comp-which routing: 'full rebuild / ground-truth reset / reconcile the local projection / MSTR startup graph' -> comp-kuzu-full."
+
+  - id: cloud.refresh.incremental
+    use_case: "Refresh / update the graph / my graph is behind -- the DEFAULT every non-MSTR worker runs pre-query: serve the incremental delta, OR serve a LABELED-STALE prior-vintage projection, but NEVER a mid-task full rebuild."
+    canonical_call: "comp-kuzu-inc [--json] [--limit N] \"<Cypher>\"   # incremental-OR-serve-labeled-stale (Andrew O-1 / sec-4 hard gate), then serves the query"
+    tool: comp-kuzu-inc
+    mode: rebuild
+    write_path: false   # SERVES the Cypher query after an incremental refresh (read-WITH-refresh: `comp-kuzu-inc "<Cypher>"` returns results), NOT a pure producer. Must stay in the read candidate set: "my graph is behind, refresh then query" is a READ intent, and write_path==true DR1-excludes it before its curated route can fire (measured 2026-07-17).
+    layer: cloud
+    cost: "~5.2s (measured P0 @b0c94d9ff -- incremental delta) / instant when serving labeled-stale"
+    freshness: "post-run = current HEAD when the delta is small; ELSE a LABELED-STALE prior-vintage projection with an in-band SERVED-LABELED-STALE header (COND-1) -- honestly labeled, never a silent stale read"
+    rebuild_trigger: "any worker, pre-query, when the local projection may be behind -- the default refresh"
+    anti_pattern: "a mid-task FULL rebuild (Andrew O-1 forbids incremental-or-full; the fork is incremental-OR-labeled-stale) -> comp-kuzu-full is MSTR-startup-only"
+    status: canonical
+    notes: "NFRA_KUZUSPLIT P1 (code @5de839ff0, 0.8.0_AE_CloudComp~D; registration COO-SoD-landed). Refresh-mode VARIANT of the comp-kuzu graph-query surface (SAME store). O-1 (Andrew-ratified): serves incremental OR labeled-stale, NEVER incremental-or-full. In-band provenance header (COND-1) + persistent .fallback.jsonl sink (COND-2) + COMPSIMILAR overlay hook both paths (COND-3). comp-which routing: 'refresh the graph / update the graph / my graph is behind / default worker graph refresh' -> comp-kuzu-inc."
+
   - id: cloud.derive.class
     use_case: "Is this RESOURCE TYPE under Terraform control? Bounded per-class drift ledger (L1 grain: one class)."
     canonical_call: "comp-aws derive --class <ClassName>   # L1 (type-managed?) -- distinct from --resource (L0, one ARN) and bare derive (L2, full edge graph)"
