@@ -20495,3 +20495,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-18 | 0.0.0_AB_MSTR | (none this window -- targeted source-reads infra/system/01_substrate.md + comp_ladder.py:208 to ground the C0-C3 CSE algebra; Read-class, not a search) | NFRA_ONTOLOGY C0-C3 alignment + ownership structure + CSE-seam doctrine fork | prior-window comp runs @91f7a2cd3
 | 2026-07-18 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier0_exec/0.0.0_AB_MSTR/logs/2026-07-18/... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_COMPREG/ownpath_g... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_BINDING_... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'opal-data-bd' RETURN n.arn AS arn L... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'opal-data-bd' RETURN n.arn AS arn, ... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'opal-... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2-C2 | [session-summary] | C2 SERVED_LINEAGE build: comp-kuzu live grounding (found prose-vs-live drift) + comp-describe exercised (opal-data-bd S3-tail clause) + self-test 7/7 (M6 no-invented-token, M7 structural) + manifest-check exit 0 | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'opal-data-mdpf' RETURN n.arn AS arn... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-mdpf' RETURN... | PASS |
