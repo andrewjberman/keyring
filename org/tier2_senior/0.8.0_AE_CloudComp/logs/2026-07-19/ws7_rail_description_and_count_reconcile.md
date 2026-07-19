@@ -10,7 +10,7 @@ reallocation-by-context). Ground-truth spec: `docs/briefs/NFRA_SYSPARITY_BRIEF_2
 
 | Part | Ask | Done |
 |---|---|---|
-| (a) | `03_comp_tools.md` names the rail but not its ENFORCEMENT | Added `## Rail enforcement (COMPRAIL -- CLAUDE.md Rule 21)`: marker-gated DENY (`# rail-checked`), HUD nudge, audit log (`org/mcp/comp-which-rail.log`), `/freeform`, announce-then-enforce + the STAGED-UNARMED broad-hard-DENY tier. |
+| (a) | `03_comp_tools.md` names the rail but not its ENFORCEMENT | Added `## Rail enforcement (COMPRAIL -- Rule 21)`, grounded on `.tools/hooks/comp-tool-hud.sh`: LIVE marker-escapable hard-DENY on **graph-backed classes ONLY** (raw-aws-inspection + `infra/.tf`-grep); broad repo-`grep`/`find`/`rg` + native `Grep`/`Glob` = STAGED-AS-NUDGE (advisory); Read/operational-aws/pipe-greps = free; audit log + `/freeform`. **Self-corrected post-accept @<fix> -- v1 (@2f5018048) OVERSTATED the broad-grep tier as a live deny (see Self-correction below).** |
 | (b) | "tenant-neutral comp-tools" over-reach | Corrected `README.md` Generalization: the MECHANISM (C0-C3/graph/FEDOBS/loop) is tenant-neutral; the comp-tool CLIs are NOT -- only comp-genesis + comp-which parameterize; ~61 query CLIs hardcode `opal-313476888478`/`opal-data-*`; porting is UNBUILT (P6). (`:39` "comp-genesis registered tenant-neutral" is TRUE -- left.) |
 | (c) | SDK front-end docstring 3->4 | `frontends/__init__.py` enumerated 3 and OMITTED `python_resolved` (the REAL whole-project RESOLVED_SEMANTIC tier, landed 2026-07-18) while mislabeling `tree_sitter_stub` as THE resolved tier. Corrected to FOUR front-ends across three tiers; tree_sitter_stub reframed as the TS/JS-only remaining gap. commit-gate PASS. |
 | (d) | Reconcile remaining docs/memory count copies to the live gate | Live gate authority (comp-manifest-check) = **79 exec / 61 routable / 66 entries-tools / 82 coverage-map** at run time. The one present-tense stale copy -- `NFRA_SYSTEM_PRD.md:9`+`:28` "~30 tools" -- is an **ANY_CTO-lane architecture doc**: the owned-paths gate correctly BLOCKED my edit, so it is **ROUTED TO CTO** (recommend "~60 tools; gate-maintained -- see comp-manifest-check"), not self-applied. No in-my-lane count edit remained -- (d) is entirely identify + route + confirm-gate-managed. |
@@ -56,6 +56,23 @@ rather than freezing a digit. A hand-counted number is stale the moment the next
 comp-which not run live (a live probe pollutes the rail log it feeds; the enforcement I documented is
 source-grounded on CLAUDE.md Rule 21 + the gate this session already exercised). `org/compiler-tools-log.md`
 row appended same commit.
+
+## Self-correction (post-accept) -- I OVERSTATED my own (a), and caught it by EXERCISING the gate
+
+v1 (@2f5018048, the version COO accepted) said the (a) enforcement subsection was: "Bash raw repo-grep/find/rg
++ a raw aws INSPECTION ... DENY unless the call carries a `# rail-checked` marker." **That overstates.** Grounding
+against the LIVE gate (`.tools/hooks/comp-tool-hud.sh:184-198`): HARD-DENY fires ONLY on the graph-backed classes
+-- raw-aws-INSPECTION (tier 1) + `infra/*.tf` grep (tier 2a). The **broad repo-grep/find/rg tier is STAGED-AS-NUDGE**
+(hook:193-194: "STAGED as nudge ... today it routes to the comp-which advisory nudge, NOT a deny"); native
+`Grep`/`Glob` NEVER deny (hook:189). My first bullet even CONTRADICTED my own last bullet (which correctly called
+the broad-grep hard-DENY STAGED-UNARMED). Corrected 03 to the live tiers + flagged that CLAUDE.md Rule 21's prose
+is itself the announce-phase TARGET, not the live state.
+
+**Why this is the finding, not just a fix:** WS-7 (a) exists BECAUSE "03 names the rail without its enforcement."
+I then described the enforcement OVERSTATED -- representation-over-reality, in the fix FOR a representation gap,
+which is the exact class NFRA_SYSPARITY is about. Root cause: I followed Rule 21's PROSE instead of exercising the
+hook. It was caught by running the control (reading the actual gate before recording the PASS), not by care --
+"CARE IS NOT A CONTROL." Self-flagged to CVO before its verdict.
 
 ## LD-0318 CVO gate
 
