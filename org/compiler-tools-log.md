@@ -21609,3 +21609,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2 | comp_similar --self-test / comp-manifest-check | PH2 close re-confirm (5 controls + registration invariant) | PASS 7/7 + invariant PASS; CVO supersede-path PASS @193302Z closes PH2 |
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0317.md | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0317.md | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | comp-state(self-test PASS 3/3+report) / drift_gate.py sweep(cadence-owner authoritative, CLEAN rc0, P2 close) / comp-manifest-check(comp-similar reg, 79 execs PASS) / comp-which-routing-test.py(no-regression PASS; caught+restored a default-mode baseline clobber) / comp-which(rank-1+no-theft probes) | startup recon + PROCEED-ALL-NFRA wave (5 lanes) + comp-similar COO-SoD registration | gap: routing-test default mode re-baselines (clobbered ~Z frozen baseline, restored from HEAD) -- regression runs need --out |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-19/s... | PASS |
