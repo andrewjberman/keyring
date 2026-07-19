@@ -123,6 +123,19 @@ CLEAN (was: flagged risk) -- but still MEASURED post-fix (a retracted risk is a 
 check). Fix confirmed SINGLE-CAUSE: cot has registry + working build branch + current scripts + s3_layout; the
 SOLE gap is the producer not iterating cot.
 
+## Addendum 5 -- cot fix DECOUPLED from the bd sovereign-hold ruling (grounded, 025749Z)
+
+COO surfaced (0.7.0 finding, CTO-routed) that 4 extract_pipeline.py chokepoints (_parse_s3_layout /
+_extract_script_io / _parse_dispatch / parse_gold_direct_invoke) hard-hold bd (only 1 of 5 got the 07-14
+block-lift). _parse_s3_layout is ON my cot re-sign path -- so I grounded whether the bd-hold collides with the
+cot fix. IT DOES NOT: the chokepoints gate on _held_path_hit vs SOVEREIGN_HELD_MARKERS =
+(data/black_diamond/, data/canonical/schwab/silver/, schwab/silver/, opal-data-bd, opal-data-schwab); cot's
+paths test NOT held (data/cot/scripts/gold/lib/s3_layout.py -> None). So the sovereign hold is path-scoped to
+black_diamond/schwab; the cot fix + the CTO bd-hold ruling are INDEPENDENT threads. **Re-sign implication: my
+cot path through _parse_s3_layout is clean regardless of the bd-hold ruling -- no need to re-check it at
+re-sign time.** (Separate puzzle flagged to CTO/~B for their ruling: bd shows 113/153 S3Keys materialized
+despite the hold -> stale, or a non-held bd path -- theirs to resolve, not mine.)
+
 ## Blockers
 
 None (holding the other 4 by design, not blocked).
