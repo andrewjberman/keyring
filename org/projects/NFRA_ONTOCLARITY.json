@@ -1,0 +1,34 @@
+{
+  "project_code": "NFRA_ONTOCLARITY",
+  "macro_code": "NFRA",
+  "name": "Ontology semantic-clarity audit -- establish the ontology's rules on layering/nesting/definitions/processes are unambiguous, non-contradictory, single-sourced, then correctly logged + referenced in infra/system + sdk (NFRA_SYSPARITY Part 2)",
+  "description": "Andrew-direct 2026-07-19 (VERBATIM): 'a pt 2 of this will be a separate audit that is devoted to establishing that there is no semantic fogginess in ontology, that there are clear rules on layering, nesting, definitions, processes, etc. and again, once established, that they are correctly logged and referenced in the system and sdk folders.' + (promoting to a live project): 'we should have CTO register NFRA_ONTOCLARITY... and have your brief on the subject rendered into a PRD and issued to COO for decomposition and dispatch.' The DEFINITIONS/CLARITY audit (distinct from NFRA_ONTOLOGY which BUILDS the 14/10/6 layer, and from NFRA_SYSPARITY which measures REPRESENTATION parity). Seeded by the SYSPARITY ontology analyst: 10 grounded semantic-fog spots -> Andrew's 4 axes. ROOT FOG: 'ontology' is one word for two layers (CSE C0-C3 algebra vs the 14/10/6 archetype layer above it), never disambiguated. LOAD-BEARING METHOD NOTE: fog is a SEMANTIC property -- a word-grep verifies clarity in NEITHER direction (CVO proved this); acceptance is CVO's semantic-axis confirmation the ambiguity is GONE, not reworded. Prefer enforce-over-prose (a lint/decision-rule over a documented exception). WS-A DEFINITIONS (root two-layer fix + single-source the vocab + resolve Observer contradiction + purge Fork-Shadow=debt + variance_dimensions name) / WS-B LAYERING+NESTING (5-scheme crosswalk + enforce the Relation-vs-Role exception as a lint) / WS-C PROCESSES (deterministic tie-breakers for polymorphic Role + incorporation-mode decision-rule + pinned C2->C3 ownership) / WS-D LOGGED in system/sdk (RIDES SYSPARITY WS-4, supplies clarified defs, does not duplicate).",
+  "prds": [
+    {
+      "path": "docs/briefs/NFRA_ONTOCLARITY_BRIEF_20260719.md",
+      "label": "NFRA_ONTOCLARITY brief (MSTR, 2026-07-19, LD-0320): the definitional/clarity audit; 10 grounded fog-spots organized by Andrew's 4 axes; recommended WS-A..D; the semantic-not-word-grep method binding. Issued to CTO to register + PRD.",
+      "date": "2026-07-19"
+    },
+    {
+      "path": "docs/architecture/NFRA_ONTOCLARITY_PRD.md",
+      "label": "NFRA_ONTOCLARITY PRD v0.1 (CTO, 2026-07-19): WS-A (DEFINITIONS, root two-layer fix first) / WS-B (LAYERING+NESTING, 5-scheme crosswalk + enforce Relation-vs-Role as a lint) / WS-C (PROCESSES, deterministic tie-breakers) / WS-D (LOGGED, rides SYSPARITY WS-4). Each WS acceptance = CVO SEMANTIC-axis confirmation (never a word-grep). Enforce-over-prose. Ready for COO decomposition; ~C ontology lane = build owner.",
+      "date": "2026-07-19"
+    }
+  ],
+  "status": "active",
+  "phase": "REGISTERED + PRD AUTHORED 2026-07-19 (CTO, LD-0320 Andrew-direct via MSTR). Charter signal GREEN -- SYSPARITY WS-1 scope contract landed @62b28c5fb, so ONTOCLARITY has its defined ontology scope. WS-A/B/C (definitional half) startable NOW; WS-D (logged in system/sdk) rides SYSPARITY WS-1 (landed) + WS-4 (represent). Acceptance is CVO SEMANTIC-axis (a word-grep mis-verifies clarity both ways). NEXT: COO decomposes WS-A..D to TOs (WS-A first, the root two-layer fix) + REGISTRY row; ~C ontology lane builds; CVO burns down the 10 fog-spot assumption list on the semantic axis.",
+  "blocking": "None -- REGISTERED + PRD authored (CTO 2026-07-19). NEXT = COO decomposes WS-A..D to TOs (WS-A first) + adds the REGISTRY.md row. WS-A/B/C startable now (definitional, independent of the SYSPARITY scope contract). WS-D rides SYSPARITY WS-1 (landed @62b28c5fb) + WS-4 (represent the ontology) -- coordinate, do NOT duplicate WS-4. Not a build blocker.",
+  "owner": "1.0.0_SA_CTO",
+  "owner_note": "Andrew-direct 'have CTO register NFRA_ONTOCLARITY... rendered into a PRD and issued to COO' -- CTO registers (JSON + PRD) + arch-owns. MSTR holds the charter (LD-0320) + brief + governance. COO decomposes to TOs + REGISTRY row + dispatch. CVO runs the standing SEMANTIC-axis verification. ~C (0.8.0_AE_CloudComp~C, the ontology lane) = natural build owner of the definitional workstreams.",
+  "coo_lane": "2.0.0_SA_COO",
+  "cvo_lane": "3.0.0_SA_CVO",
+  "build_lane": "0.8.0_AE_CloudComp~C",
+  "created": "2026-07-19",
+  "pods": ["1.0", "0.8", "2.0", "3.0", "0.0.0"],
+  "sovereign": "Andrew (direct, the ontology semantic-clarity mandate; the 'once established, correctly logged in system+sdk' logging half)",
+  "depends_on": ["NFRA_ONTOLOGY", "NFRA_SYSPARITY", "NFRA_SYSTEM", "NFRA_GENESIS"],
+  "depends_on_note": "AUDITS the CLARITY of NFRA_ONTOLOGY's 14/10/6 layer (does NOT build/alter it). Part 2 of NFRA_SYSPARITY -- its clarified definitions are the INPUT to SYSPARITY WS-4 (represent the ontology); WS-D rides WS-4, never duplicates it. Clarifies (not folds) for NFRA_GENESIS's SDK + NFRA_SYSTEM's tree. NON-goal: building the ontology, duplicating WS-4, or accepting a reworded-but-ambiguous rule as resolved.",
+  "parent_project": "NFRA_SYSPARITY (Part 2 / brief S8; SYSPARITY WS-4 logs ONTOCLARITY's clarified definitions)",
+  "thread_counter": 0,
+  "threads": []
+}
