@@ -92,6 +92,26 @@ Explicit confirmed-vs-inferred boundary kept -- I refine the hypothesis, I do NO
 mechanism (avoids the mirror of the projection-drop wrong-guess). I re-sign the fix on the RAW graph_nodes axis
 when it lands.
 
+## Addendum 3 -- root CONFIRMED at the output; fix seats with ~D/~A; my re-sign criteria set (020731Z)
+
+0.7.0 source-sighted the caller at the PRODUCED ARTIFACT (stronger than code): s3://opal-313476888478-globgrph/
+producers/graphuni/storage_s3keys.json (producer graphuni-storage, generated 2026-06-30, STALE) -> S3Key
+coverage bd=113 / inf=55 / mdpf=1 / cot=0. So the storage producer iterates {bd,inf}, NEVER cot. DEFINITIVE at
+the output. Honest boundary: the producer EMITTER code is uncommitted (a ~D/~A Phase-A tool; NFRA_GRAPHUNI has
+only emit_b_stitchers.py + the output JSONs), so the literal firm-iteration line is not code-sighted -- confirmed
+at the output, not the code. Nuance: the live graph_nodes cot=1 I measured is a DIFFERENT source (the config-file
+node), not this producer (cot=0 in it).
+
+FIX SEATING (confirmed): primary = ~D/~A's uncommitted P1-A storage emitter (add cot iteration via
+build_firm_gold_dag(firm='cot') + build_mdpf_dag for mdpf) -> CTO arch-gate. AE compiler-engine
+(build_firm_gold_dag(cot)) already works -> likely no change. 0.7.0 drives the s3_layout residual measurement.
+
+MY RE-SIGN CRITERIA (set + agreed, TWO axes because two sources): (1) PRODUCER axis -- regenerated
+storage_s3keys.json iterates cot (>0) + mdpf; (2) LIVE graph axis -- live graph_nodes cot S3Key count RISES to
+cot's materialized set (raw graph_nodes, the served truth, not the stale JSON / producer self-report), firm-clean
+(no bd bleed). RE-RUN REQUIREMENT: the JSON is stale -> this is NOT code-only; sequence is ~D/~A code -> producer
+RE-RUN -> AB-MAT re-materialize -> live. I re-sign strictly on the live end-state + the s3_layout residual.
+
 ## Blockers
 
 None (holding the other 4 by design, not blocked).
