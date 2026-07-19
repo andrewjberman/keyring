@@ -21669,3 +21669,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-system --check + exercise-vs-live (grep/sed/python) + /loop-CronCreate | NFRA_SYSPARITY standing role: armed cron 02d90dce + fires 1-4 (10 assumptions exercised vs HEAD, 3 domains done) | PASS |
 | 2026-07-19 | 3.0.0_SA_CVO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 3.0.0_SA_CVO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/s... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | none of my own (project-decomposition + records window) -- decomposition comp-mandates embedded IN the WS TOs; CVO LD-0318 verify-loop (comp-system/molecule/verify/prd-delta) is the project standing tool-regime | NFRA_SYSPARITY decompose (4 WS TOs) + idle-agent reallocation records | n/a |
+| 2026-07-19 | 2.0.0_SA_COO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-19/s... | PASS |
