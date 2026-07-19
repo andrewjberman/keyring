@@ -55,6 +55,8 @@ LIVENESS_FILE = Path(__file__).resolve().parent / "liveness.json"
 BROKER_SCRIPT = Path(__file__).resolve().parent / "broker.py"
 # NFRA_CMTQUE commit-worker daemon (MSTR internal-ops lane, LD-0246/0251; singleton v2 verified).
 COMMIT_WORKER = Path(__file__).resolve().parents[2] / ".tools" / "commit-worker.sh"  # repo/.tools/
+sys.path.insert(0, str(WORKSPACE_ROOT / ".tools"))  # for the shared python->bash resolver
+from git_bash_resolver import git_bash  # noqa: E402  NEVER bare 'bash' (python-spawned -> System32 WSL stub)
 CQ_HB_STALE_SEC = 30
 BROKER_PORT = int(os.environ.get("OPAL_BROKER_PORT", "7800"))
 BROKER_URL = f"http://127.0.0.1:{BROKER_PORT}"
@@ -571,25 +573,36 @@ def _ensure_commit_worker() -> bool:
     if _commit_worker_alive():
         return True
     log.info("Starting commit-worker daemon...")
+    # Resolve bash explicitly: a python(Windows) subprocess invoking bare 'bash' Windows-resolves to the
+    # System32 WSL stub, which SILENTLY fails (Popen succeeds, stub dies, stderr->DEVNULL, we return True on
+    # a dead worker -- the 12-day silent-outage class, 0.7.0_AE_CloudOps~B 2026-07-19). Use the shared resolver.
+    bash_exe = git_bash() or ("bash" if sys.platform != "win32" else None)
+    if bash_exe is None:
+        log.warning("commit-worker launch: no Git Bash resolved (bare 'bash' -> WSL stub); refusing to launch")
+        return False
     try:
+        popen_kw = dict(stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL)
         if sys.platform == "win32":
             CREATE_NEW_PROCESS_GROUP = 0x00000200
             DETACHED_PROCESS = 0x00000008
-            subprocess.Popen(
-                ["bash", str(COMMIT_WORKER), "--daemon"],
-                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL,
-                creationflags=CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS,
-            )
+            subprocess.Popen([bash_exe, str(COMMIT_WORKER), "--daemon"],
+                             creationflags=CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS, **popen_kw)
         else:
-            subprocess.Popen(
-                ["bash", str(COMMIT_WORKER), "--daemon"],
-                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL,
-                start_new_session=True,
-            )
-        return True
+            subprocess.Popen([bash_exe, str(COMMIT_WORKER), "--daemon"], start_new_session=True, **popen_kw)
     except Exception as exc:
         log.warning("commit-worker launch failed: %s", exc)
         return False
+    # VERIFY, do not ASSUME: a Popen that spawned a doomed WSL stub raises nothing. Poll for the worker to
+    # write a FRESH heartbeat before reporting success -- otherwise this reports success on a dead worker.
+    # Cap sized above the measured cold-start (~4.25s on this host, 0.7.0_AE_CloudOps~B 2026-07-19 exercise)
+    # so a legitimately-slow startup is not false-negatived; a real WSL-stub death never advances the hb.
+    for _ in range(32):                       # ~8s cap; only reached when the worker was down (rare path)
+        _time.sleep(0.25)
+        if _commit_worker_alive():
+            log.info("commit-worker daemon confirmed live (fresh heartbeat)")
+            return True
+    log.warning("commit-worker launched but no fresh heartbeat within 8s (silent-launch guard tripped)")
+    return False
 
 
 # ---------------------------------------------------------------------------
