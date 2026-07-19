@@ -57,6 +57,8 @@ if _GRAPH not in sys.path:
 from sovereign_held import is_held_path, is_held_bucket  # noqa: E402 -- scratch-target sovereign guard
 
 _WS = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(_HERE))))  # compproof->graph->modules->org->ws
+sys.path.insert(0, os.path.join(_WS, ".tools"))
+from git_bash_resolver import git_bash as _shared_git_bash  # noqa: E402  canonical python->bash resolver
 
 AUTHOR_ID = harness.AUTHOR_ID                         # the probe AUTHOR (seals the corpus)
 JUDGE_ID = "TH-A-effective-scorer"                    # the automated REACH/USABILITY judge (distinct)
@@ -118,11 +120,8 @@ def isolation_gate(probe: dict, *, solver_id: str, judge_id: str = JUDGE_ID,
 # from a Windows-python subprocess; the same gotcha harness.py sidesteps by calling kuzu_cli via
 # sys.executable). Resolve the real git-bash for bash-shebang tools; None -> fall back to PATH "bash".
 def _git_bash() -> str | None:
-    for c in (r"C:\Program Files\Git\bin\bash.exe", r"C:\Program Files\Git\usr\bin\bash.exe",
-              os.environ.get("GIT_BASH", "")):
-        if c and os.path.exists(c):
-            return c
-    return None
+    # Delegate to the shared resolver (retires this local hardcoded-list duplicate); keep GIT_BASH override.
+    return os.environ.get("GIT_BASH") or _shared_git_bash()
 
 
 def _resolve_invocation(argv: list) -> list:

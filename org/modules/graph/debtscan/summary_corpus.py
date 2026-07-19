@@ -53,6 +53,8 @@ _HERE = Path(__file__).resolve()
 _DEBTSCAN = _HERE.parent          # .../debtscan
 _GRAPH_DIR = _HERE.parents[1]     # .../graph
 REPO = _HERE.parents[4]           # debtscan -> graph -> modules -> org -> ajb_workspace (matches dup_scan.py)
+sys.path.insert(0, str(REPO / ".tools"))
+from git_bash_resolver import git_bash  # noqa: E402  canonical python->bash resolver (never bare/WSL bash)
 
 # Reuse the BM25 engine + the comp-kuzu invocation helper (same debtscan family; DRY).
 if str(_DEBTSCAN) not in sys.path:
@@ -148,7 +150,8 @@ def _kuzu_cmd() -> list[str]:
     import os
     import shutil
     tool = REPO / ".tools" / "comp-kuzu"
-    bash = os.environ.get("COMP_DRIFT_BASH") or shutil.which("bash") or "bash"
+    # shutil.which("bash") CAN resolve the System32 WSL stub -> git_bash() first (retires the silent risk).
+    bash = os.environ.get("COMP_DRIFT_BASH") or git_bash() or shutil.which("bash") or "bash"
     py = sys.executable or shutil.which("python") or "python"
     try:
         first = tool.read_text(encoding="utf-8", errors="replace").splitlines()[:1]

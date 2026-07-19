@@ -46,13 +46,16 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(REPO / ".tools"))
+from git_bash_resolver import git_bash  # noqa: E402  canonical python->bash resolver (never bare/WSL bash)
 
 # ---- comp-tool invocation (Windows-safe) --------------------------------------------------
 # .tools/comp-* are extensionless bash scripts. A bare subprocess(["comp-blast", ...]) fails
 # on Windows (CreateProcess can't launch a shebang script) and silently falls back -- so the
 # graph/vintage legs would go permanently dark. Resolve the REAL Git Bash (NOT the WSL relay)
-# and dispatch each tool by its shebang, mirroring org/modules/graph/drift_cli.py's pattern.
-_BASH_EXE = (os.environ.get("COMP_DRIFT_BASH") or shutil.which("bash") or "bash")
+# via the shared resolver, and dispatch each tool by its shebang (drift_cli.py's pattern).
+# shutil.which("bash") CAN return the System32 WSL stub -> git_bash() first (retires that silent risk).
+_BASH_EXE = (os.environ.get("COMP_DRIFT_BASH") or git_bash() or shutil.which("bash") or "bash")
 _PYTHON_EXE = (sys.executable or shutil.which("python3") or shutil.which("python") or "python")
 
 
