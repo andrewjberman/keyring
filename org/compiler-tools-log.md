@@ -21192,3 +21192,79 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | (raw git + Read/Grep + awk) | byte-level canon re-verify + git-history governance audit + F-005 append-only sharp-test (11296 lines, 0 backjumps>60s) -- graph not the axis, live/source grounding per Rule 22 | N/A-justified |
 | 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/s... | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0052.md | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/reviews/RV-0052.md | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0052.md | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/reviews/RV-0052.md | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/andrew_dire... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_direct_20260719T1713Z_respawn_D.md | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/andrew_dire... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_direct_20260719T1713Z_respawn_D.md | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[r:READS]->(t:CloudNode) WHERE t.node_type IN ['EC2_INSTA... | FAIL |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN name, type | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[r:CloudEdge]->() RETURN r.edge_type AS et, count(*) AS n ORDER BY n... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS nt, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[r:CloudEdge]->(t:CloudNode) WHERE r.edge_type='TRIGGERS'... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[r:CloudEdge]->(t:CloudNode) WHERE r.edge_type='RUNS' RET... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3Key' AND (n.id CONTAINS 'code' OR n.... | FAIL |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[r:CloudEdge]->(t:CloudNode) WHERE t.node_type IN ['EC2_I... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-bd' RETURN n... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' AND n.node_type = 'S3_BUCKET' AN... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-describe | comp-describe opal-data-bd | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-bd' RETURN n... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' AND n.node_type = 'S3_BUCKET' AN... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-describe | comp-describe opal-data-bd | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-mdpf' RETURN... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-describe | comp-describe opal-data-mdpf | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.node_type... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.arn <> '' AND... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_COMPSIMILAR.PH2-C2... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-bd' RETURN n... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' AND n.node_type = 'S3_BUCKET' AN... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-describe | comp-describe opal-data-bd | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-cot' RETURN ... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' AND n.node_type = 'S3_BUCKET' AN... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-describe | comp-describe opal-data-cot | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPSIMILAR.json --fi... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-pulse | comp-pulse diff org/projects/NFRA_COMPSIMILAR.json org/tier1_exec/2.0.0_SA_COO/andrew_d... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-inf' RETURN ... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' AND n.node_type = 'S3_BUCKET' AN... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-describe | comp-describe opal-data-inf | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2-C2 | comp-which | comp-which "describe an ARN's per-resource summary with motif enrichment" | PASS (routed -> comp-describe) |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2-C2 | comp-kuzu | Rule-22a live grounding: edge/node census + TRIGGERS/RUNS endpoints + code-prefix/S3->runner presence (DEPLOY/AUTH/PIPELINE sources) | PASS (all 3 confirmed source-UNWIRED) |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2-C2 | comp-describe | comp-describe opal-data-bd (CF-served) + opal-data-mdpf (control) | PASS (bd->S3-tail renders; mdpf graceful no-clause) |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.node_type... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
