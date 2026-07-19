@@ -21559,3 +21559,30 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' AND n.node_type = 'LAMBDA' AND n... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-describe | comp-describe cot-etf-ownership-daily | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.name AS n... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:lambda:us-east-1:3134768884... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' AND n.node_type = 'LAMBDA' AND n... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-describe | comp-describe inf-etf-ownership-daily | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-similar --file .tools/comp-... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-similar .tools/comp-which org/modules/graph/graph-call-mani... | FAIL |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check check --file .tools/comp-similar | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yam... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp-coverage-map.yaml org/modules/graph/comp-tools.yaml | FAIL |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/audit-archive-invoker.py --file ... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff .tools/audit-archive-invoker.py .tools/git_bash_resolver.py | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_COMPSIMILAR.PH2.en... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check check --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | audit-archive-invoker | commit-gate | .tools/commit-gate.sh on audit-archive-invoker.py + test + git_bash_resolver.py (~8 runs) | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | audit-archive-invoker | comp-which | comp-which "is there an absence-registry/liveness mechanism" -> fell back to comp-grep (no route) | GAP |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
