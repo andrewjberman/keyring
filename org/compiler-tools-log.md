@@ -21698,3 +21698,5 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 | comp-system --self-test / --gate | part-b gate engine (fail-closed, staleness-conditioned) exercised both directions | self-test 13/13 + live seed->fire/age->WARN/fixed->clear |
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_SYSPARITY.WS-7 | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/03_comp_tools.md --file in... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_SYSPARITY.WS-7 | comp-pulse | comp-pulse diff infra/system/03_comp_tools.md infra/system/README.md infra/system/sdk/g... | PASS |
