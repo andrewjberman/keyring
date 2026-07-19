@@ -21584,6 +21584,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-manifest-check | comp-manifest-check check --file org/modules/graph/graph-call-manifest.yaml | PASS |
 | 2026-07-19 | 0.7.0_AE_CloudOps~B | audit-archive-invoker | commit-gate | .tools/commit-gate.sh on audit-archive-invoker.py + test + git_bash_resolver.py (~8 runs) | PASS |
 | 2026-07-19 | 0.7.0_AE_CloudOps~B | audit-archive-invoker | comp-which | comp-which "is there an absence-registry/liveness mechanism" -> fell back to comp-grep (no route) | GAP |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-8 | comp-iam | comp-iam roles (via git_bash_resolver) -- WS-8 IAM live-TF-modeled leg | PASS (37 globgrph roles rc=0) |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-8 | comp-aws | comp-aws --help -- Phase-1 interface grounding (no raw resource-inventory subcommand; used TF source + comp-iam) | PASS |
 | 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
 | 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.node_type... | PASS |
@@ -21747,3 +21749,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-2 (shared) | comp-iam | comp-iam --help | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_SYSPARITY.WS-5 | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/README.md --file org/c... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_SYSPARITY.WS-5 | comp-pulse | comp-pulse diff infra/system/sdk/README.md org/compiler-tools-log.md org/tier2_senior/0... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/abstraction_loop/LIVE_... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff infra/system/sdk/abstraction_loop/LIVE_DERIVED_SURFACE_DESIGN.md infra/... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-2 (shared) | comp-iam | comp-iam roles | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/_ws2gatetest.yaml | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/modules/graph/_ws2gatetest.yaml | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-system | comp-system --gate --changed org/modules/graph/_ws2gatetest.yaml | FAIL |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff CLAUDE.md | FAIL |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk_crosswalk.py | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff infra/system/sdk_crosswalk.py | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md --file org/tie... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/projects/REGISTRY.md org/tier2_senior/0.8.0_AE_CloudComp/task_order... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/_ws2gatetest.yaml | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/modules/graph/_ws2gatetest.yaml | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-system | comp-system --gate --changed org/modules/graph/_ws2gatetest.yaml | FAIL |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY.WS-4.represent-the-ontology | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/00_synthesis.md --file inf... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY.WS-4.represent-the-ontology | comp-pulse | comp-pulse diff infra/system/00_synthesis.md infra/system/01_substrate.md infra/system/... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_SYSPARITY.WS-2 (shared) | comp-iam | comp-iam roles | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
