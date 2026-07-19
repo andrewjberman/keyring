@@ -62,6 +62,9 @@ import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # .tools/ so the shared resolver imports
+from git_bash_resolver import git_bash  # noqa: E402  canonical python->bash resolver (.tools/git_bash_resolver.py)
+
 # workspace root: two parents up (portable across shells). AUDIT_INVOKER_WS overrides it for tests.
 WS = (Path(os.environ["AUDIT_INVOKER_WS"]).resolve()
       if os.environ.get("AUDIT_INVOKER_WS") else Path(__file__).resolve().parent.parent)
@@ -370,27 +373,8 @@ def take_snapshot(now: datetime, paths: list[str], dry: bool) -> tuple[str, str]
             pass
 
 
-def git_bash() -> str | None:
-    """The EXPLICIT Git-for-Windows bash. NEVER bare 'bash'/'/bin/bash': a Windows (python) subprocess
-    Windows-resolves those to the System32 WSL stub (execvpe(/bin/bash) failed) -- the bug CTO's exec run
-    caught 2026-07-19. Passing the absolute path launches Git Bash directly, bypassing PATH resolution."""
-    for c in (r"C:\Program Files\Git\usr\bin\bash.exe",
-              r"C:\Program Files\Git\bin\bash.exe",
-              r"C:\Program Files (x86)\Git\usr\bin\bash.exe"):
-        if Path(c).is_file():
-            return c
-    git = shutil.which("git")            # derive from the git install (e.g. <root>\mingw64\bin\git.exe)
-    if git:
-        for anc in Path(git).resolve().parents:
-            for rel in ("usr/bin/bash.exe", "bin/bash.exe"):
-                b = anc / rel
-                if b.is_file():
-                    return str(b)
-    return None
-
-
 def safe_commit(author_serial: str, pathspec: list[str], msg: str) -> tuple[int, str]:
-    bash = git_bash()
+    bash = git_bash()  # shared resolver -- absolute Git Bash, never the System32 WSL stub
     if not bash:
         return (127, "no Git Bash found (bare 'bash' would Windows-resolve to the WSL stub) -- cannot run safe-commit.sh")
     author = f"{author_serial} <{author_serial}@opal.agent>"
