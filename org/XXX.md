@@ -143,6 +143,16 @@ if [ -n "${CLAUDE_CODE_SESSION_ID:-}" ]; then
 fi
 ```
 
+**A.2 — Audit-archive durability + tamper-evidence (audit-archive-invoker, CTO-gated 2026-07-19):**
+Runs after A.1 (it reads the serial file to resolve the exec-permitted author). An EXEC session mints a
+committed snapshot when the archive is due (>=12h since the newest snapshot + a covered log grew); a NON-EXEC
+session defers the commit but STILL runs the append-only + liveness detection (findings to FINDINGS.md +
+stdout). Never blocks startup. Owner `0.7.0_AE_CloudOps`, gate `1.0.0_SA_CTO`; design/why in
+`docs/briefs/audit-archive-invoker-spec-20260716.md` + the gate-2 deliverable.
+```bash
+python .tools/audit-archive-invoker.py || true   # append-only verify + archive-when-due; never blocks startup
+```
+
 **B. Check inbox — BOTH paths, both required:**
 ```bash
 check-inbox {your_serial}           # filesystem: inbox/{serial}/ + inbox/{base}/
