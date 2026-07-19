@@ -21450,3 +21450,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/debtscan/comp_similar.py | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPASSURANCE.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which-routing-test.py --fil... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPASSURANCE.TO-1 | comp-pulse | comp-pulse diff .tools/comp-which-routing-test.py org/compiler-tools-log.md org/tier2_s... | FAIL |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2 | comp-manifest-check | registration invariant before/after registering comp-similar | coverage-map placed; blocks on tools_index/entries (COO SoD) |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2 | comp-similar | --self-test + live cluster/supersede/--heat-json/pairwise on the 1790-node corpus | self-test PASS 7/7; live pipeline surfaces HIGH candidate |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2 | comp-debris / comp-heat | ground heat sources for --supersede divergence | comp-debris live >2min (slow); comp-heat repo-scoped -- open heat-plumbing item |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
