@@ -41,6 +41,14 @@ arch-gate); CVO verifies on land.
 CVO = verify-on-land across the wave (bars above, pre-staged 180149Z, same-turn on each land, no crons). Loop CVO
 the moment each lane's build lands. cot-reconcile stays on its own track (graph-derive-fix gated).
 
-**Status: WAVE RELEASED + DISPATCHED. ~D driving; ~A/~Z/~C/0.7.0~B spawning via MSTR (confirm each live -> hand
+**Status: WAVE LIVE + DRIVING (all 5 lanes registered + dispatched with resume direction + CVO closure bar, ~18:08Z). (was: spawning via MSTR -> hand
 resume pointer + CVO bar -> drive to closure). COO coordinates; discharges when all wave lanes reach closure or a
 lane surfaces a hard block. Andrew: "not waiting."**
+
+## Coordination log
+
+- **18:08Z SEAM ~C<->~D RESOLVED (a collision risk CTO caught):** initially sequenced ~C-first / ~D-holds. ~D then DECLARED its edit surface (180932Z) = NEW module `org/modules/graph/debtscan/comp_similar.py` + `.tools/comp-similar` + registration files, importing summary_corpus's public API READ-ONLY, **ZERO summary_corpus.py edits**. So it's partition-by-file, NOT a collision -> BOTH proceed FULLY PARALLEL. ~C = sole editor of summary_corpus.py `_position_key`/grouping; ~D = new files. Conditional caveat: if ~D must expose a new public API from summary_corpus.py it HOLDS that edit for ~C's land + re-declares (whoever lands second merges).
+- **~D gate scoping:** PH2 comp-similar = READ/scan tool, no store-writer/apply this leg (resource_summaries TABLE is behind KUZUSPLIT per CTO §9) -> gate = comp-manifest-check + registration, NO plan-gate/22a. ~D confirms with CTO on submission.
+- **~D registration SoD:** ~D self-commits comp-tools.yaml + coverage-map (AE); COO lands the graph-call-manifest tools_index routing row + comp-which routing rule (exec/COO SoD, NFRA_COMPREG) on ~D's tool-land.
+- **~A NESTEDABSTRACT P2 -- cadence-owner rulings (181027Z):** disposition model BLESSED (`abstraction-ledger: {NA-<id>|bespoke|n-a}` trailer OR SHA-referenced-by-ledger; gap = trigger-surface commit with neither). Sweep window = MOVING CHECKPOINT `(last-swept-SHA, HEAD]`, no gap; sweep posts to COO (ACK-or-escalate), alert-suspension-clean (Python engine + inbox, zero new CloudWatch/SNS/SES TF). Option-B-vs-BLOCK reconciled: ONE fail-closed engine (CVO bar: exercised to STOP a seeded drift) deployed cadence/report-mode first (COO cadence lane, avoids commit-block false-fire risk); hard-enforcement POINT (pre-commit/CI/cadence-CI) = CTO arch-call, routed with a working exercised block.
+- **FEDOBS coevolution residual = CLOSED (CTO 180838Z, banked per request):** ~Z surfaced a possibly-open FEDOBS coevolution-twin gate at startup (3 stale 07-16 msgs). CTO grounded + closed: coevolution snap FIRED HEALTHY 07-17 04:30Z nightly (@85a4b4e00, 1729 pairs, lake-verified), gate MET; freshness twin deliberately PARKED per alert-suspension. NFRA_FEDOBS = COMPLETE (P1-P3 CVO-certed). A stale note (VL#8), NOT a wave item; ~Z stays on COMPASSURANCE. Closed-on-record so it doesn't resurface as a phantom.
