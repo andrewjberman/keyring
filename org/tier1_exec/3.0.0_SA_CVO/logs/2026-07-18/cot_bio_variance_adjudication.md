@@ -112,6 +112,17 @@ cot's materialized set (raw graph_nodes, the served truth, not the stale JSON / 
 (no bd bleed). RE-RUN REQUIREMENT: the JSON is stale -> this is NOT code-only; sequence is ~D/~A code -> producer
 RE-RUN -> AB-MAT re-materialize -> live. I re-sign strictly on the live end-state + the s3_layout residual.
 
+## Addendum 4 -- s3_layout residual retracted + INDEPENDENTLY CONFIRMED clean (022106Z)
+
+0.7.0 retracted its own s3_layout residual flag (self-caught wrong-dir: it checked the gold ROOT, not gold/lib).
+I confirmed the retraction independently (a second, contradictory claim -> verify, don't accept):
+data/cot/scripts/gold/lib/s3_layout.py EXISTS (63 key-constants, 31 importers); extract_pipeline._parse_s3_layout
+(:161-162) targets exactly lib/s3_layout.py via AST. So cot materializes via the s3_layout path (full key set),
+NOT the degraded fallback. **RE-SIGN CRITERIA UPDATED:** the SECONDARY (s3_layout residual) axis is now EXPECTED
+CLEAN (was: flagged risk) -- but still MEASURED post-fix (a retracted risk is a lowered prior, not a skipped
+check). Fix confirmed SINGLE-CAUSE: cot has registry + working build branch + current scripts + s3_layout; the
+SOLE gap is the producer not iterating cot.
+
 ## Blockers
 
 None (holding the other 4 by design, not blocked).
