@@ -640,6 +640,19 @@ def self_test() -> int:
     chk("9  managed-region refresher: report-only, and never overwrites a real number with UNKNOWN",
         not unknown_overwrite)
 
+    # 10-13. --gate (WS-2): staleness-CONDITIONED fail-closed, exercised BOTH directions on the PURE
+    #        verdict. Genuine drift (source-fingerprint / managed-region) FAILS-CLOSED (rc 2); age>=TTL
+    #        ALONE is a WARN, never a block (the false-Monday distinction, NEVER#1); CURRENT is open.
+    chk("10 gate: source-fingerprint drift -> FAIL-CLOSED (rc 2)",
+        _gate_verdict(True, "source drift: fingerprint (1, 2) -> (3, 4)", [])[0] == 2)
+    chk("11 gate: managed-region drift -> FAIL-CLOSED (rc 2)",
+        _gate_verdict(False, "sources unchanged, age 0h < TTL 24h",
+                      [("03_comp_tools.md", "tools_index_count", 59, 61)])[0] == 2)
+    chk("12 gate: age>=TTL ALONE -> WARN not block (rc 0) -- staleness-conditioned, no false-Monday",
+        _gate_verdict(True, "age 30h exceeds TTL 24h (live-grounded values may have moved)", [])[0] == 0)
+    chk("13 gate: CURRENT -> gate open (rc 0)",
+        _gate_verdict(False, "sources unchanged, age 0h < TTL 24h", [])[0] == 0)
+
     n = sum(1 for x in ok if x)
     print("--- self-test: %d/%d passed (grounded-or-UNKNOWN, no fabrication, shape-locked) ---" % (n, len(ok)))
     return 0 if n == len(ok) else 1
@@ -747,6 +760,69 @@ def check_stale() -> int:
     return 2
 
 
+# --------------------------------------------------------------------------------------------------
+# --gate : the WS-2 fail-closed, STALENESS-CONDITIONED enforcement probe (NFRA_SYSPARITY.WS-2).
+# Mirrors the NFRA_NESTEDABSTRACT drift-gate shape (fail-closed / genuine-drift-only / exercised /
+# on-demand). REUSES _staleness() -- ONE predicate, not a forked copy (the module's own discipline).
+# --------------------------------------------------------------------------------------------------
+def _gate_verdict(stale: bool, reason: str, region_changes: list) -> tuple:
+    """PURE gate decision (offline-testable, both directions). Distinguishes GENUINE DRIFT from the
+    wall-clock age>=TTL case:
+      GENUINE drift -- a source INPUT the artifact reads changed (fingerprint), a managed-region span
+        drifted from a live metric, or a pre-predicate/absent artifact -> 06 is FACTUALLY behind the
+        estate a commit just changed -> (2, DRIFT) FAIL-CLOSED.
+      age>=TTL ALONE -- no source/region drift, only the live-grounded-values-may-have-moved TTL ->
+        (0, AGE-WARN). NEVER a block: blocking on wall-clock idle is the false-Monday class (NEVER#1);
+        the response is an on-demand refresh, not stopping a working commit.
+      else -> (0, CURRENT).
+    Returns (rc, verdict_str)."""
+    genuine = []
+    if region_changes:
+        drift = "; ".join("%s cs:%s %s->%s" % (fn, nm, o, n) for fn, nm, o, n in region_changes[:6])
+        genuine.append("%d managed-region span(s) drifted from live metrics: %s"
+                       % (len(region_changes), drift))
+    if stale and not reason.startswith("age "):   # source-drift / pre-predicate / not-emitted
+        genuine.append(reason)
+    if genuine:
+        return 2, "SYSTEM DRIFT (fail-closed): " + " | ".join(genuine)
+    if stale:                                      # the only remaining stale case is age>=TTL
+        return 0, "SYSTEM AGE-WARN (not a block): " + reason
+    return 0, "SYSTEM CURRENT (no genuine drift)"
+
+
+def gate() -> int:
+    """The --gate ENFORCEMENT PROBE (fail-closed, staleness-conditioned). Live wrapper over
+    _gate_verdict: reads the committed 06 header + the live source-fingerprint + managed-region
+    metrics, then applies the PURE verdict. Distinct from --check (which reports ANY staleness incl.
+    the age>=TTL auto-refresh case): --gate fail-closes ONLY on GENUINE drift, so it is safe to wire
+    as a blocking enforcement point (a source-touch commit that did not regenerate 06) without
+    false-Monday-blocking on wall-clock idle.
+
+    Exit: 0 = gate OPEN (current, or age-only WARN) | 2 = FAIL-CLOSED genuine drift | 1 = tool error.
+    Escape valve (mirrors the never-rules / drift-gate audited override): a legitimate deferral is a
+    one-line AUDITED marker at the enforcement point, not gate removal -- teach-at-violation-time.
+    NOTE: this is the inert ENGINE; the enforcement WIRING (a commit-gate leg on a comp-system
+    _SOURCES touch) is CTO-arch-gated (WS-2 part b), mirroring the drift-gate's enforcement-to-CTO."""
+    try:
+        if not os.path.exists(OUT_JSON):
+            print("SYSTEM DRIFT (fail-closed): 06 not emitted -- run comp-system.")
+            return 2
+        with open(OUT_JSON, encoding="utf-8") as fh:
+            header = json.load(fh).get("header", {})
+        stale, reason = _staleness(header)
+        region_changes, _problems = refresh_managed_regions(compute_metrics(), write=False)
+    except Exception as e:  # noqa: BLE001 -- a gate that cannot evaluate is FAIL-CLOSED, never a pass
+        print("SYSTEM UNVERIFIABLE (fail-closed): --gate could not evaluate (%s: %s)"
+              % (type(e).__name__, e))
+        return 1
+    rc, verdict = _gate_verdict(stale, reason, region_changes)
+    suffix = (" -- regenerate (comp-system) or add an audited override." if rc == 2
+              else " -- refresh recommended (on-demand); gate stays open." if "AGE-WARN" in verdict
+              else " -- gate open.")
+    print(verdict + suffix)
+    return rc
+
+
 def main() -> int:
     for _s in (sys.stdout, sys.stderr):
         try:
@@ -758,6 +834,8 @@ def main() -> int:
         return self_test()
     if "--check" in args:
         return check_stale()
+    if "--gate" in args:
+        return gate()
     model = compile_model()
     if "--json" in args:
         print(json.dumps(model, indent=2))

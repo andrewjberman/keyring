@@ -8,6 +8,9 @@
 #   comp-system --stdout       # compile -> print the markdown (no write)
 #   comp-system --json         # compile -> print the json model
 #   comp-system --check        # is 06 stale vs the current HEAD marker? (auto-refresh oracle)
+#   comp-system --gate         # WS-2 fail-closed STALENESS-CONDITIONED enforcement probe: rc 2 on
+#                              #   GENUINE drift (source-fingerprint/managed-region), WARN (rc 0) on
+#                              #   age>=TTL alone (no false-Monday). Distinct from --check.
 #   comp-system --self-test    # prove the no-fabrication invariant (grounded|UNKNOWN, shape-locked)
 #
 # Rule-16 clean: uses only cd / dirname / pwd / python (all present in Git Bash 3.6.7).
