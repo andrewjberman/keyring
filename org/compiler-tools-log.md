@@ -21897,3 +21897,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 0.7.0_AE_CloudOps~B | IAM-fidelity sweep | aws iam get-role-policy | Deny-boundary census on real globgrph task roles (applied truth) -- only fedobs carries a Deny | PASS |
 | 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | session-close | comp-manifest-check / drift_gate / routing-test (read) | session-close window: COMPREG phantom-check + COMPROUTE gate-hole verify + abstraction-leg warrant | all verified at source; registration CLEAN; leg wave-specific |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
