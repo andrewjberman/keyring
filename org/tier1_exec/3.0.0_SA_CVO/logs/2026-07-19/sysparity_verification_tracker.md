@@ -81,6 +81,36 @@ was COMMENT-ONLY, logic untouched -- git-confirmed). Re-verify on the committed 
   fire-8 post-compaction hook-init deny-miss transient]; COO routes to CTO when rail-hardening is
   prioritized post-phase-steer. NOT open CVO items -- deferred+owned. Transient becomes a real reliability
   item IF the batch prioritizes (a deny missable in an init window = a coverage hole).
+
+## fire-8b (2345Z): WS-6 CVO-CLEAR = SYSPARITY 8/8 + WS-7(a) correction re-verify CONFIRMED
+**WS-6 (incorporation-debt SLA, the 8/8 closer) @5e85e2583 -- CVO-CLEAR, BOTH conditions EXERCISED on
+ledger-derived rows (not just ~A's synthetic self-test).** incorporation_sla.py: self-test 6/6 PASS; live =
+6 deferred / 0 within-SLA / 0 breach / VERDICT CLEAN; --enforce rc0 on clean.
+- **cond (i) DISPOSITIONED-not-dated: CONFIRMED (two-layer).** CODE enforces PRESENCE (:80 `if deferred_until`
+  = ANY truthy clears) -- my mutants on REAL NA-0001: strip+age30d -> SILENT-PENDING breach (sp=1); bad-date+
+  undisposed -> breach (fail-toward-surfacing); hand-wave 'x'+age30d -> CLEARS (breach=False, proving
+  presence-only). QUALITY judged by ME (the review ~A asked for): all 6 deferred_until name a SPECIFIC concrete
+  SDK trigger (NA-0001 materialize-stage / 0002 cse_schema-pin / 0004 territories+recognizer-scaffold / 0005
+  LLM-stage / 0006 freshness-gate / 0007 variance-vocab) -- real flip-triggers, not dates, not hand-waves.
+  NA-0003 incorporated/terminal (correctly not chased).
+- **cond (ii) BURN-DOWN > GENERATION: CONFIRMED convergence-BY-CONSTRUCTION.** bounded feed = INHERITED from
+  the WS-3 drift-gate denominator I already verified (only abstractable enters; n-a/bespoke gated out); forced
+  disposition @14d (mutant A); no-deferred-forever @60d (mutant B: keep-defer+age90d -> deferral_review breach)
+  + age monotonic from FIXED logged_utc so re-defer can't reset the clock. ENFORCED-BY-REVIEW (on-demand report,
+  alert-suspension-clean, joins COO milestone set) -- NOT an auto-gate, directive-compliant. Not a rate-race.
+- **REC (not a blocker):** the code is PRESENCE-ONLY on deferred_until -- so cond (i)'s trigger-QUALITY judgment
+  MUST stay part of the recurring milestone review, else a future hand-wave clears silently (mutant C). ~A
+  designed this human-in-the-loop; flagged so the review keeps the quality check, not just the script run.
+  >> SYSPARITY 8/8 workstreams now CVO-verified. <<
+
+**WS-7 (a) CORRECTION re-verify @634f1efba -- CONFIRMED (doc<->live parity, incl. ~Z's throttle refinement).**
+~Z corrected 03 per COO (b): doc now states EXERCISED hard-DENY = {bare data/*/scripts, .../bronze/, infra/aws,
+.tf}; gold/silver/platinum-layer + portal/src shadowed to ADVISORY (s3_artifact :144 / portal :150). ~Z's
+refinement (silver read FREE not ADVISE) = the s3_artifact nudge is THROTTLED -> I CONFIRMED by re-probe WITH a
+sid: silver hit#1 ADVISORY then #2-5 FREE; gold same; the ADVISE-vs-FREE is THROTTLE state, same advisory class,
+NEVER deny. INVARIANT control: bare comp_which grep denied ALL 3 hits (deny path exits before throttle, not
+throttled). My earlier consistent-ADVISORY read = my probe passed NO sid (throttle path skipped) -- reconciled.
+Doc also carries the compound-shape evasion + (a)->CTO. WS-7 (a) thread CLOSED end-to-end.
 - **TRANSIENT (honest, low-confidence, VL#5):** command-3 (`grep -rn "def" data/inf/scripts/`) PROCEEDED once at
   turn-top (393KB), then the SAME command hard-blocked on re-run; HEAD-advance range 3ff196bfc..d371bca1e touched
   NEITHER hook/marker/settings (git-confirmed). Non-reproducible; best read = a post-compaction hook-init window
