@@ -1,0 +1,44 @@
+# variance_dimensions.yaml -- the GOVERNED declared-variance-dimension catalog
+#
+# Owner: NFRA_ONTOLOGY (0.8.0_AE_CloudComp~C). Consumer: summary_corpus.py variance_verdict (~D wire @566ea8cd7).
+# Contract: NFRA_ONTOLOGY_VARIANCE_FIRM_CATALOG_AND_CONTRACT.md @1f258ee21. Mechanism: @f904033ea.
+# Proposed canonical location: org/modules/graph/variance_dimensions.yaml (EXEC-LANDS -- debtscan/graph canon
+#   is exec-locked; ~C authors content, CTO/MSTR co-canonize; graceful-degrade: absent file -> no clause).
+#
+# CTO GATE CRITERION (arch-steer 004446Z): allowed_facets=[] REQUIRES strictly-advisory (verified in ~D's
+#   clause). A populated allowed_facet MUST cite its grounding or the gate REJECTS it (invented facets =
+#   manufactured authority). GROUND-THEN-POPULATE: firm facets are populated ONLY from grounded per-firm
+#   variance traces (never by invention). This v1 is empty+advisory -> passes clean.
+
+dimensions:
+  firm:
+    # the token that appears in a resource NAME at the firm position; position_key strips it (name-minus-firm).
+    values: [bd, cot, inf]
+    # firm-config display names (auth/edge substrate); metadata for rendering, NOT the keying token.
+    # grounding: canon-patterns.yaml:78 + comp-constants-seed-multifirm.yaml:13 (FIRM_BUCKET_MAP).
+    firm_names: { bd: 49financial, cot: cottonwood, inf: inflection }
+    scope: parallel-firm-pipeline     # buckets + their C2 motifs on the daily-pull firm pipelines
+    allowed_facets: []                # EMPTY = firms' legitimate shape-differences are NOT YET GROUNDED.
+                                      # With [] every off-key shape-diff is a Fork-Shadow CANDIDATE, never a
+                                      # finding -> firm verdicts are STRICTLY ADVISORY (candidate until
+                                      # CVO-adjudicated). Populate per-firm facets later, each citing a grounded
+                                      # variance trace (ground-then-populate). grounding: canon-patterns.yaml:55
+                                      # twin_shadow_guard (bd/cot/inf are DESIGNED firm-separated twins).
+    canonical: modal                  # ref = the MODAL membership-SET among PRESENT firms (NOT a fixed firm --
+                                      # a fixed ref inverts on a ref-firm divergence, hiding that firm's drift).
+                                      # @f904033ea §3: "designated OR the modal structure" -> default modal.
+
+# advisory: firm verdicts are strictly advisory while allowed_facets=[] (see above). A consumer renders the
+#   verdict as a CANDIDATE clause; it is NEVER a filed finding and NEVER auto-acts (canon-patterns binding:
+#   every outlier is ADVISORY until CVO-adjudicated; the scorer files 0 mutations).
+advisory: true
+
+# verdict clause-phrasing (interface #4 -- GOVERNED, read-from-file, NOT hardcoded in the enricher).
+# <D> = dimension name ("firm"); <of_name(s)> = human-readable sibling reference name(s).
+phrasing:
+  Canonical:   "canonical <D>-twin (reference) of <of_names>"
+  Twin:        "canonical <D>-twin of <of_name>"
+  Variant:     "<D>-variant of <of_name>"          # unreachable for firm (allowed_facets=[]); present for env/region
+  Fork-Shadow: "divergent fork-shadow of <of_name> (debt)"
+  Superseded:  "superseded by <by_name>"
+  Orphan:      "orphan (no twin, no consumer)"
