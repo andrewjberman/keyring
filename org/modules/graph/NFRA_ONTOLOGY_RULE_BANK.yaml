@@ -1,0 +1,135 @@
+# NFRA_ONTOLOGY -- machine-readable rule bank (NEXT-3)
+#
+# The ratified universal ontology (LD-0311, doctrine @086238604) encoded so a CONSUMER can load it and
+# CLASSIFY the live graph into archetypes -- the canon-deviation scorer, COMPSIMILAR, the adapter, future
+# tools. Human design-of-record: NFRA_ONTOLOGY_CLOSED_SET.md @be1fd38b1. Author: 0.8.0_AE_CloudComp~C.
+#
+# DRAFT (my lane). Canonical placement (org/modules/graph, exec-locked) routes through CTO -- like the
+# census. Bindings grounded on comp-kuzu @2026-07-18T02:18Z (58 node-types / 53 edge-types) + the CSE-owner
+# D0-D7 ruling (@d16e269bf). ASCII-only. Extend only by EXPLICIT PROMOTION with a printed denominator (LAW-2).
+
+meta:
+  version: "1.1"   # 1.1 = NEXT-3 variance fold: the VARIANCE section brought current with the WIRED+LANDED
+                   # mechanism (grouping_key (node_type,position_key), modal-ref, membership-SET narrowing,
+                   # []+advisory candidate regime, empty-modal/no-majority) -- contract @1f258ee21 + catalog v2 @136999d97 (co-land LD-0315)
+  ratified: "LD-0311 @086238604"
+  frame: "1 C0-C3 CSE ladder + 3 orthogonal axes {TYPE=CSE / RELATION=CSE-re-layered / ROLE=net-new} + VARIANCE operator"
+  determinism: "every assignment is structure-derived; no match -> no label (counted in the denominator); no inference"
+
+# --- AXIS: ROLE (C0 label, edge-derived) -- 14, closed --------------------------------------------
+roles:
+  Source:      { derive: "no within-system inbound; outbound produces" }
+  Store:       { derive: "object of produces/consumes; no outbound derives-from" }
+  Producer:    { derive: "outbound produces; no inbound derive-dependency" }
+  Transformer: { derive: "inbound consumes/derives-from AND outbound produces" }
+  Consumer:    { derive: "inbound consumes" }
+  Sink:        { derive: "inbound consumes; no outbound" }
+  Gateway:     { derive: "sole carrier of projects/boundary edges for a zone" }
+  Guard:       { derive: "interposed on a consumes/routes-to path; carries guards (IN the flow)" }
+  Router:      { derive: "one inbound, multiple outbound routes-to by predicate" }
+  Trigger:     { derive: "outbound triggers (control, not payload)" }
+  Registry:    { derive: "object of resolves-through (identity/location lookup)" }
+  Container:   { derive: "subject of contains toward its parts" }
+  Observer:    { derive: "watches a node side-channel via MONITORS; OUT of the flow (13th, CTO GRANTED)" }
+  Custodian:   { derive: "the OWNER -- subject of owns (= object of concrete OWNED_BY); e.g. MS_USER owns MS_FILE (14th)" }
+
+# polymorphic types resolve ONE role per instance from edges (not a fixed binding)
+contextual_types: [LAMBDA, Service, Component, ReactComponent, Hook, "Person", "Organization", MS_USER, SERVICE_PRINCIPAL, STATE_MACHINE]
+
+# --- AXIS: RELATION (C1, CSE re-layered) -- 10, owner-ratified --------------------------------------
+# each abstract relation lists the concrete graph/CSE edge_types that BIND UP to it (the adapter).
+relations:
+  produces:      { binds_up: [WRITES, WRITES_S3, EMITS_TO, PUBLISHES_TO] }
+  consumes:      { binds_up: [READS, READS_S3, READS_FIELD, READS_SECRET, READS_URL, FETCHES] }
+  derives-from:  { binds_up: [FLOWS_TO], carries: EdgeKind(passthrough|rename|recompute_guarded), note: "D5: EdgeKind stays on flows_to" }
+  depends-on:    { binds_up: [DEPENDS_ON, REQUIRES, IMPORTS, USES_LAYER], note: "D1: requires is concrete" }
+  contains:      { binds_up: [CONTAINS, CONTAINS_DRILLDOWN, HAS_FIELD, HAS_PROP, HAS_KEY, HAS_ROUTE, HAS_PROPS_TYPE, CLUSTERS, HAS_PROFILE] }
+  triggers:      { binds_up: [TRIGGERS, CALLS, RUNS, INVOKES], note: "a data-returning CALL also emits consumes" }
+  guards:        { binds_up: [HAS_POLICY, ASSUMES, CAN_ASSUME, AUTHENTICATES, AUTHORIZES, ALLOWED], note: "D3: the GATING archetype, parent of the auth family" }
+  governs:       { binds_up: [GOVERNS], note: "D3: narrow policy/authority -- SPLIT from guards" }
+  denies:        { binds_up: [DENIED], note: "explicit prohibition (guard-family outcome, kept named)" }
+  owns:          { binds_up: [OWNED_BY], sense: custody, note: "D6: a governed CSE OWNS primitive -- 0.4->0.5 bump LANDED (CVO 22/22 + live-parity mutant PASS; COO wave-GO @221142Z). OWNED_BY(custody, ->Person/Org actor)->OWNS (RE-POINTED FROM GOVERNS); OWNED_BY(fine->coarse containment, ->Container)->contains-inverse (no new primitive)" }
+
+# concrete relations carried by a Role + a base relation (NOT standalone primitives) -- D4/D7
+relation_composites:
+  projects:         { concrete: SERVED_FROM, binds_up: derives-from, role: Gateway, also: [PROJECTS_TO, ORIGIN, USES_OAI] }
+  routes-to:        { concrete: ROUTES_TO, binds_up: derives-from, role: Router }
+  resolves-through: { concrete: REFERENCES, binds_up: depends-on, role: Registry }
+
+# graph edges that are NOT relations -- inputs to other axes
+non_relation_edges:
+  MONITORS:      { axis: ROLE, assigns: Observer }
+  SHARES_SOURCE: { axis: VARIANCE, note: "lateral-sibling signal -- a candidate twin input, not a flow relation" }
+  ENCRYPTS_WITH: { binds_up: depends-on, note: "a security dependency (KMS)" }
+  IS_ENDPOINT:   { binds_up: projects, note: "boundary" }
+  DECLARES: { axis: TYPE, note: "definitional (D8 axis)" }
+  INSTANTIATES: { binds_up: contains, note: "component composition" }
+  REFERENCES_TYPE: { axis: TYPE, note: "definitional" }
+  HAS_TYPE: { axis: TYPE, note: "definitional" }
+
+# --- AXIS: VARIANCE (cross-instance operator) -- 6, mechanism @f904033ea; WIRED+LANDED (NEXT-3 fold) -------
+# LIVE: contract @1f258ee21 (rev.3), ~D wire @566ea8cd7 (self-test 10/10 incl M10 mutants), governed catalog
+# variance_dimensions.yaml v2 @136999d97 exec-landed (co-land LD-0315), render EXERCISE-verified
+# (bd=Canonical / inf=Twin / cot=Fork-Shadow rendered "(candidate -- advisory, pending adjudication)", NOT "(debt)").
+variance:
+  labels: [Canonical, Twin, Variant, Fork-Shadow, Superseded, Orphan]
+  catalog: "org/modules/graph/variance_dimensions.yaml  # governed dimensions + allowed_facets + verdict phrasing; read-from-file, graceful-degrade (absent -> no clause)"
+  mechanism:
+    grouping_key: "(node_type, position_key)   # NOT position_key alone -- a bucket's twin is a BUCKET, not its same-named policy (empty-membership collision inverted the verdict; fix @566ea8cd7)"
+    position_key: "logical identity with the declared dimension token STRIPPED (name-minus-firm: opal-data-bd -> opal-data-{firm}); dimension-stripped, NO structure. unchanged-key -> no verdict (in denominator)"
+    structure_compared: "generic (motif-shape, role, edge-set); at the firm/aggregate grain NARROWED to the C2 motif-membership SET (reuses the computed membership; base-ratified narrowing). COMPARED not keyed"
+    ref: "the MODAL membership-SET among PRESENT siblings (NOT a fixed instance -- a fixed ref INVERTS on a ref-instance divergence, hiding its drift). Canonical = a deterministic label-badge among modal-matchers (alpha-first). @f904033ea: 'designated OR modal' -> modal default"
+    dimensions_are: "{name, values[], scope, allowed_facets[]}   # governed, read-from-file (the catalog above)"
+    test: "group by (node_type, position_key); compare each present sibling's structure to the MODAL; allowed_facets scopes legitimate off-modal diffs"
+    empty_modal: "SUPPRESS -> no verdict (an empty set is not a reference; never let an empty-membership node define the modal)"
+    no_majority: "no unique modal (tie / all-distinct) -> flag ALL as Fork-Shadow 'no canonical majority'; NEVER silently pick a ref"
+    verdicts:
+      Canonical:   "a modal-matcher designated the reference (label-badge; of_names = the siblings)"
+      Twin:        "present + structure == the MODAL"
+      Variant:     "off-modal diff WITHIN allowed_facets  (UNREACHABLE for firm; allowed_facets=[])"
+      Fork-Shadow: "off-modal diff OUTSIDE allowed_facets, OR undeclared-missing sibling  (the only DEBT-CANDIDATE verdict -- advisory, see below)"
+      Superseded:  "same (position_key, dim_value); one supersedes the other"
+      Orphan:      "singleton, no sibling, no consumer"
+    polarity: "CLEARS designed parallels (Canonical/Twin/Variant); FLAGS only Fork-Shadow/Orphan"
+    advisory: "firm verdicts are STRICTLY ADVISORY while allowed_facets=[] -- every Fork-Shadow is a CANDIDATE, never a filed finding (CVO-adjudicated). A candidate can ground out to: real-debt / graph-coverage-gap / designed-legit-difference (ground-then-populate). LIVE EXAMPLE: opal-data-cot b-io grounded to a 0.7.0 derive coverage-gap, NOT debt (trace @1fe0f5e6f)"
+    render_disposition: "v2 (CTO 013249Z, advisory-CONDITIONAL): the visible Fork-Shadow suffix must match the regime's certainty+direction. advisory (allowed_facets=[]) -> DISPOSITION-NEUTRAL '(candidate -- advisory, pending adjudication)' (asserts NEITHER certainty NOR direction -- the render can't know the downstream adjudication); grounded (allowed_facets populated+cited) -> '(debt)' (confirmed). enricher branches on the flag. cot proves a candidate can be NON-debt"
+    hard_invariant: "firm dimension: allowed_facets=[]; firms NEVER interchangeable (adapter denies); Twin != fungible; the operator READS firm, never authorizes a merge (Rule 13)"
+    no_feedback: "structure -> verdict ONLY; NEVER reads an llm_* attribute (the membership-SET is deterministic; same discipline as the C2/C3 membership clause)"
+
+# --- LINEAGE (C2 motif; compositional grammar, no new primitives) ----------------------------------
+lineage:
+  definition: "a canonical composition of Role-nodes joined by Relations"
+  grain: "typed multi-hop path @ recurrence >= 50-100  (the max-signal grain; ~70-90 motifs / 98% coverage)"
+  catalog: "NFRA_ONTOLOGY_CANONICAL_MOTIF_CATALOG.md @ef94dafda  (~20 named families across 4 planes)"
+  a_b_detectors: "NFRA_ONTOLOGY_AB_MATERIALIZE_SPEC.md @7892f3fbc  (13 A+B detectors, materialize-first)"
+
+# --- C3 SYSTEM naming (inherited, never invented) --------------------------------------------------
+c3_naming_ladder:
+  1_capability_cluster: "shared PanelCluster/named-thread -> its capability (AdvisorIntelligence/Attribution/Correlation)"
+  2_pipeline_thread:    "shared Pipeline -> its thread (bd-gold/inf-gold/mdpf-gold)"
+  3_resource_domain:    "shared firm/domain token -> the domain (opal-data-bd -> bd)"
+  4_governed_catalog:   "where 1-3 underdetermine -> a blessed read-from-file name for the component signature"
+  5_never_invented:     "no inheritable name + no catalog entry -> unnamed placeholder, counted (honest-degrade)"
+  emergence: "NFRA_SYSTEM C2->C3 union-find (>=2 connected motifs); ontology CONSUMES it, does not re-implement"
+
+# --- TYPE axis + scope-outs (distinct from OPAL_TAXONOMY -- what a node is CALLED) ------------------
+scope_outs:
+  Type: definitional/taxonomy axis (D8)
+  Symbol: definitional/taxonomy axis (D8)
+  Concept: honest-degrade (no forced Role, counted in the denominator)
+  implements_spec: definitional  # structural-conformance stays IN as Variance (D3)
+
+# --- KEY node_type -> Role adapter bindings (grounded in the scan; derivation rules cover the tail) --
+node_bindings:
+  Store: [S3_BUCKET, S3Key, DYNAMODB_TABLE, SECRET, SECRETREF, Field, LOG_GROUP, LAMBDA_LAYER, SNS_TOPIC, SQS_QUEUE, KMS_KEY, MS_FILE, Prop, SSM_DOCUMENT]
+  Registry: [IAM_ROLE, INSTANCE_PROFILE]   # Table -> Store, or Registry if a catalog (Nessie ref/obj)
+  Gateway: [API_GW, API_ROUTE, Endpoint, ServedURL, CLOUDFRONT_DISTRIBUTION]
+  Guard: [IAM_POLICY, IAM_STATEMENT, S3_BUCKET_POLICY, SECURITY_GROUP]
+  Trigger: [EVENT_RULE, EVENT_SOURCE, SCHEDULE]
+  Observer: [CW_ALARM]
+  Container: [Module, GraphScope, Tier, Pipeline, PipelineScript, PanelCluster, Page, MS_FOLDER, MS_LIBRARY, MS_SITE]
+  Transformer: [PipelineFunction, Tool]     # Function/Component -> contextual
+  Sink: [JSXRender, JSXElement]
+  Consumer: [DataFetch, Hook, ReactQueryKey]
+  contextual: [LAMBDA, Service, Component, ReactComponent, "Person", "Organization", MS_USER, SERVICE_PRINCIPAL, STATE_MACHINE]
+  scope_out: [TypeDecl, Type, Symbol, Concept]
