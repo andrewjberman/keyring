@@ -21602,3 +21602,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | drift_gate.py + audit-archive-invoker.py + comp_similar.py + comp-which | PROCEED-ALL-NFRA wave verify-on-land: 3 primary lands + etf all PASS exercised (block/fail-fire/displacement + own controls) | PASS |
 | 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/s... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/andrew_dire... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_direct_20260719T1758Z_proceed_all_nf... | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/exec-sum/SKILL.md --file... | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/exec-sum/SKILL.md org/tier0/ledger/LD-0316.md | FAIL |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2 | comp_similar --self-test / comp-manifest-check | PH2 close re-confirm (5 controls + registration invariant) | PASS 7/7 + invariant PASS; CVO supersede-path PASS @193302Z closes PH2 |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
