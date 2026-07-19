@@ -21744,3 +21744,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 2.0.0_SA_COO | system_parity.py (RAVC WS-1 metric reproducibility=PASS) + git merge-base/status (RAVC WS-1@62b28c5fb + WS-7@2f5018048 committed-not-just-working-tree) | NFRA_SYSPARITY decomposition-complete (8 WS) + idle-reallocation full-cycle | RAVC-vs-git caught WS-7 apparent-uncommitted (timing race, resolved) |
 | 2026-07-19 | 2.0.0_SA_COO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 2.0.0_SA_COO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-19/s... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-2 (shared) | comp-iam | comp-iam --help | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_SYSPARITY.WS-5 | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/README.md --file org/c... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_SYSPARITY.WS-5 | comp-pulse | comp-pulse diff infra/system/sdk/README.md org/compiler-tools-log.md org/tier2_senior/0... | PASS |
