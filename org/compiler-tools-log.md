@@ -21683,3 +21683,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 1.0.0_SA_CTO | git_bash-class | Grep | victim-scan python->bash callers | FOUND (4 ad-hoc + server.py 12-day-dead broker worker) |
 | 2026-07-19 | 1.0.0_SA_CTO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 1.0.0_SA_CTO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-19/s... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY.WS-4.represent-the-ontology | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY.WS-4.represent-the-ontology | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_SYSPARITY_WS4_REP... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_SYSPARITY.WS-7 | comp-manifest-check / commit-gate | rail-description + count reconcile: added COMPRAIL enforcement subsection to 03_comp_tools.md; corrected tenant-neutral over-reach (README); SDK front-end docstring 3->4 (python_resolved added); NFRA_SYSTEM_PRD ~30 ROUTED to CTO (ANY_CTO lane, owned-paths gate blocked self-edit); 03 auto-managed + memory clean; live gate 79/61 | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.WS-2 (shared) | comp-system | comp-system --check | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_SYSPARITY.WS-7 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_SYSTEM_PRD.md --... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_SYSPARITY.WS-7 | comp-pulse | comp-pulse diff docs/architecture/NFRA_SYSTEM_PRD.md infra/system/03_comp_tools.md infr... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-manifest-check | comp-manifest-check check --file org/modules/graph/comp_system.py --file .tools/comp-sy... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-system --file org/modules/g... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff .tools/comp-system org/modules/graph/comp_system.py | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/GIT_BASH_CLASS_FOLLOWON... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 | comp-system (regen/--check) | part-a de-stale 06_current_state | SYSTEM CURRENT (ledger 80->82/tools 59->61/cse_schema 0.4->0.5) |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 | comp-system --self-test / --gate | part-b gate engine (fail-closed, staleness-conditioned) exercised both directions | self-test 13/13 + live seed->fire/age->WARN/fixed->clear |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
