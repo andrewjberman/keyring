@@ -49,6 +49,23 @@ representation -- caught + corrected before the verdict.
 (docstring + error message) -- use return/AST-shape analysis, not token presence. Same wrong-representation
 class as comp-kuzu-projected-vs-raw.
 
+## Addendum -- AC4 CLASS CLOSED + landed-artifact exercise-confirm (013130Z)
+
+Co-land COMPLETE (COO 012713Z): leg1 cse_schema @c90390409 (self-test 31/31 == my cleared count), leg2 helper
+@8b4e4910e; CodeBuild 6e7ae508, origin == HEAD. AC4 CLASS CLOSED; NA-0003 flipped.
+
+I closed on my side against the LANDED artifact (verify-the-served, not the report): imported the LANDED
+canonical cse_schema (@c90390409) + LANDED helper (@8b4e4910e) from the working tree at HEAD and re-ran the
+full (a)/(b) exercise on the SHIPPED code (not my scratch): (a) landed helper distinct == my independent
+raw-55 (symdiff 0), landed assert_live_coverage(58, raw-55) ok=TRUE 0-unmapped, both rulings; (b) helper-error
++ 0-rows both -> LivePullError. PASS -- the CLEAR covers the deployed artifact, exercised (verification-law #1:
+deployed = downloaded AND imported AND run), not accepted from sha-verify + self-test.
+
+My self-caught wrong-representation false-fire (text-match on the wrapper docstring/raise-message -> replaced
+with AST return-analysis) became a CONTROLS_OVER_CARE corollary @ed6301688: "a control only discriminates
+within the axis it samples" -- the through-line of the whole arc (projected-vs-raw denominator / wrong-axis
+re-sign / text-match false-fires / cot derive-vs-projection).
+
 ## Blockers
 
 None.
