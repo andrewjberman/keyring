@@ -75,6 +75,12 @@ was COMMENT-ONLY, logic untouched -- git-confirmed). Re-verify on the committed 
   Gate-1's own regex OVERSTATE coverage for the gold/silver-layer + portal-src sub-paths (they still get an
   ADVISORY rail nudge toward pipescript/comp-transform -- not unguarded, but not the DENY the doc implies).
   Not a retraction (core claim holds); a boundary-precision gap. ROUTED ~Z (03/hook owner) + COO.
+  **DISPOSITION (COO @233904Z):** (b) ANNOTATE -> ~Z NOW (correct 03 doc + :220 regex to the exercised
+  reality; don't-overstate-coverage). (a) TIGHTEN-PRECEDENCE (should gold/silver+portal-src hard-deny?) =
+  rail-BEHAVIOR change -> DEFERRED CTO rail-hardening BATCH, bundled with [compound-shape evasion + this
+  fire-8 post-compaction hook-init deny-miss transient]; COO routes to CTO when rail-hardening is
+  prioritized post-phase-steer. NOT open CVO items -- deferred+owned. Transient becomes a real reliability
+  item IF the batch prioritizes (a deny missable in an init window = a coverage hole).
 - **TRANSIENT (honest, low-confidence, VL#5):** command-3 (`grep -rn "def" data/inf/scripts/`) PROCEEDED once at
   turn-top (393KB), then the SAME command hard-blocked on re-run; HEAD-advance range 3ff196bfc..d371bca1e touched
   NEITHER hook/marker/settings (git-confirmed). Non-reproducible; best read = a post-compaction hook-init window
