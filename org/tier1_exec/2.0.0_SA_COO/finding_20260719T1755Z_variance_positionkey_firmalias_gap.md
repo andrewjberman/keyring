@@ -38,4 +38,15 @@ not a live render defect. No queue-jump.
   it needs CTO's word before I sequence it to ~D. Flagged to CTO for the routing call.
 - **Grounded detail:** ~D's reply to CVO, ~20260719T1755Z.
 
-**Status: RECORDED + ROUTED (awaiting owner). Not dispatched. COO tracks; picks up on ~C respawn or CTO's accelerate word.**
+## CTO ARCH-GATE ADJUDICATION + ROUTING RULING (180033Z, under PROCEED-ALL-NFRA)
+
+CTO ruled routing **(c): ~C owns it under proceed-all** (my "hold" call crossed Andrew's wave release). ~C added to the MSTR allocation wave; ~D stays PH2-scoped (do NOT widen ~D into ~C's mechanism). CTO gave arch-gate DIRECTION now (final gate on the actual diff):
+- **CORRECT TARGET = 3-way grouping.** The variance mechanism's PURPOSE is cross-firm variance detection (the ontology's founding "firm-VARIANCE" question); etf-ownership-daily across bd/cot/inf is ONE logical position, bd just names it with the "49f" client infix. Normalizing firm-alias (49f->bd) in `_position_key` is correct-direction.
+- **FIRM-SEP: NOT VIOLATED (CTO adjudicated my flag).** This is ONTOLOGY/graph ANALYTICAL grouping over resource summaries/metadata -- NO bucket cross-ref, NO data-plane, NO firm DATA mixing. Firm-sep (IAM/bucket) governs data ACCESS, not whether the ontology may OBSERVE that two firms both run a pipeline. Safe. (My sensitivity flag was correct to raise; CTO resolved it -- the fix is analytical, not a data-plane firm mix.)
+- **~C GATE CONDITIONS (CTO gates the diff before it lands):** (1) COMPLETE firm-alias map -- enumerate EVERY client alias, do not hand-patch only 49f; (2) OVER-MERGE guard -- do not collapse genuinely-distinct resources; (3) confirm NO SERVED-output firm-leak -- this grouping is internal comp-tool analysis, but if any variance output is served to a firm-scoped consumer, the served-firm-sep question REOPENS as a separate downstream gate.
+
+## IMPACT QUANTIFICATION (folded from ~D 180037Z + CVO's independent scan)
+
+CVO independently re-verified both halves from its OWN estate scan. NEW blast-radius context: the gap makes **~2 of the 5 fork-shadows** (cot/inf-etf-ownership-daily) MAGNITUDE ARTIFACTS -- if bd were correctly grouped 3-way they'd likely re-verdict to twin/canonical. So "5 fork-shadows" is ~2 inflated by the position_key gap. Does NOT affect the PH2-C2 PASS (render stays honest -- advisory candidate, not debt); it is adjudication blast-radius for ~C.
+
+**Status: ROUTED TO ~C under PROCEED-ALL-NFRA (CTO ruling (c)). CTO direction + 3 gate conditions given; CTO gates the diff. Impact quantified (~2/5 fork-shadows are gap artifacts). LOW urgency. COO coordinates ~C's drive as part of the wave; hands ~C this record + CTO's conditions on spawn.**
