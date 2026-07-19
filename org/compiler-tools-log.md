@@ -21268,3 +21268,24 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.node_type... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.arn <> '' AND... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.node_type... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.arn <> '' AND... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.node_type... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.arn <> '' AND... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.node_type... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.arn <> '' AND... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPSIMILAR.json | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-pulse | comp-pulse diff org/projects/NFRA_COMPSIMILAR.json | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-describe + summary_corpus --build | item-2 COMPSIMILAR semantic-axis exercise: bd/cot/inf variance verdicts + estate scan (1790/46/5); render-honesty PASS (0 "(debt)" / 5770 lines) | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-which | routing "variance verdict on firm bucket" near-tied, no clean route -> used comp-describe directly (routing gap flagged to ~D/AE) | GAP |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPSIMILAR.PH2-C2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/s... | PASS |
