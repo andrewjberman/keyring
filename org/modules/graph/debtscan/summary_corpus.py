@@ -45,6 +45,7 @@ import json
 import re
 import subprocess
 import sys
+from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -233,6 +234,7 @@ class SummaryDoc:
     n_purpose: int = 0                                 # purpose-token count (coverage signal)
     motifs: list = field(default_factory=list)         # C2: [(class, role_key, label)] that fired
     membership: dict = field(default_factory=dict)     # C3: {"c2":[(id,class)],"c3":[(id,class)]} member-of
+    variance: dict = field(default_factory=dict)        # C3/Twin: firm-variance verdict {kind,dim,of_name(s)}
 
 
 def _edge_phrase(edge: dict, incoming: bool) -> tuple[list[str], str]:
@@ -461,14 +463,207 @@ def load_memberships() -> dict:
     return {arn: _assemble_membership(rows, c3_rows) for arn, rows in by_arn.items()}
 
 
+# ---- C3/Twin: the VARIANCE clause (NFRA_ONTOLOGY variance mechanism @f904033ea; contract @1f258ee21) --
+# The declared-dimension SYMMETRY test, realized for the `firm` dimension. Per ARN, a sibling clause naming
+# how this instance relates to its firm-siblings (bd/cot/inf parallel replicas): Twin / Canonical / Fork-Shadow.
+# STRUCTURE = the C2 motif-membership SET this module already computes -- NO separate producer (the light-gate
+# framing). The compare is SET-symmetry across firm-siblings sharing a position_key (name-minus-firm-token).
+#
+# GOVERNANCE (no-feedback, contract sec.2.6 + bank sec.1a): the verdict is DETERMINISTIC from the membership
+# SET (structure), NEVER from an llm_* attribute -- a class value can never change a verdict. Same discipline
+# as the membership clause. Direction is strictly structure -> verdict. Display-only; graceful-degrades to no
+# clause. The dimension catalog + the clause PHRASING are READ-FROM-FILE (variance_dimensions.yaml, GOVERNED,
+# exec-landed like canon-patterns.yaml) -- NEVER hardcoded strings. Absent catalog -> no verdict (graceful).
+#
+# v1 SCOPE (firm dimension): Twin / Canonical (alphabetically-first modal-matcher) / Fork-Shadow (of the MODAL
+# ref -- NOT a fixed firm, so a divergence OF the ref-firm is still detectable; base 234142Z) / no-unique-modal
+# -> flag-all "no canonical majority". DEFERRED: Orphan (needs consumer-edge semantics), Superseded (needs a
+# supersede edge), Variant (unreachable for firm -- allowed_facets=[]). Singleton (no firm-sibling) -> no clause.
+_VARIANCE_DIMS = _GRAPH_DIR / "variance_dimensions.yaml"
+_VARIANCE_CACHE: tuple | None = None
+
+
+def _load_variance_catalog() -> tuple:
+    """Return (dimensions, phrasing) from variance_dimensions.yaml (GOVERNED, read-from-FILE -- mirrors
+    _load_canon_roles). Cached. GRACEFUL: any absence/parse failure -> ({}, {}) -> no verdict + no clause
+    (the mechanism ships + lights up when the exec-landed catalog exists; never crashes, never hardcodes)."""
+    global _VARIANCE_CACHE
+    if _VARIANCE_CACHE is not None:
+        return _VARIANCE_CACHE
+    dims: dict = {}
+    phrasing: dict = {}
+    try:
+        import yaml
+        with open(_VARIANCE_DIMS, encoding="utf-8") as fh:
+            doc = yaml.safe_load(fh) or {}
+        if isinstance(doc, dict):
+            dims = doc.get("dimensions") if isinstance(doc.get("dimensions"), dict) else {}
+            phrasing = doc.get("phrasing") if isinstance(doc.get("phrasing"), dict) else {}
+    except (OSError, ImportError, ValueError, TypeError):
+        dims, phrasing = {}, {}
+    _VARIANCE_CACHE = (dims, phrasing)
+    return _VARIANCE_CACHE
+
+
+def _firm_values(dims: dict) -> list:
+    """The declared firm value-tokens ([bd, cot, inf]) from the catalog; [] when absent (no verdicts)."""
+    firm = dims.get("firm") if isinstance(dims, dict) else None
+    vals = firm.get("values") if isinstance(firm, dict) else None
+    return [str(v) for v in vals] if isinstance(vals, list) else []
+
+
+def _position_key(name: str, firm_values: list) -> tuple:
+    """(position_key, firm_value) -- `name` with the FIRST declared firm value-token (at an alnum word
+    boundary) replaced by '{firm}'. (name, None) when no firm token matches -> no firm dimension -> no
+    verdict (counted, never guessed). Structure is NOT in the key (the load-bearing Q1 fix). PURE.
+    opal-data-bd -> (opal-data-{firm}, bd); opal-data-demo -> (opal-data-demo, None)."""
+    s = name or ""
+    for v in firm_values:
+        if not v:
+            continue
+        new, n = re.subn(r"(?<![A-Za-z0-9])" + re.escape(v) + r"(?![A-Za-z0-9])", "{firm}", s, count=1)
+        if n:
+            return new, v
+    return s, None
+
+
+def _variance_verdict(this_firm: str, group: dict) -> dict | None:
+    """PURE verdict for one instance. group = {firm_value: (name, structure_frozenset, arn)} for the PRESENT
+    firms sharing a position_key. ref = the MODAL membership-SET among present (strict plurality; NOT a fixed
+    firm -- a fixed ref inverts on a ref-firm divergence, base 234142Z). Canonical = alphabetically-first
+    modal-matcher (a LABEL badge, not the ref STRUCTURE). NEVER reads a class label -- structure is the
+    membership SET only (the no-feedback line). Returns the verdict dict or None (singleton / this_firm absent)."""
+    if this_firm not in group:
+        return None
+    present = sorted(group)
+    if len(present) < 2:
+        return None  # singleton -> no firm-sibling; Orphan/Superseded deferred v1
+    this_struct = group[this_firm][1]
+    counts = Counter(group[f][1] for f in present)
+    max_c = max(counts.values())
+    modal_sets = [s for s, c in counts.items() if c == max_c]
+    others = sorted(group[f][0] for f in present if f != this_firm)
+    if len(modal_sets) != 1 or max_c < 2:
+        # tie for plurality (all-distinct / even split) -> NO canonical majority; flag all, never pick a ref.
+        return {"kind": "Fork-Shadow", "dim": "firm", "of_names": others, "note": "no canonical majority"}
+    modal = modal_sets[0]
+    if not modal:
+        return None  # all-empty modal -> no meaningful structural reference (e.g. attachment/policy nodes)
+    canonical_firm = sorted(f for f in present if group[f][1] == modal)[0]
+    if this_struct == modal:
+        if this_firm == canonical_firm:
+            return {"kind": "Canonical", "dim": "firm", "of_names": others}
+        return {"kind": "Twin", "dim": "firm", "of_name": group[canonical_firm][0], "of": group[canonical_firm][2]}
+    return {"kind": "Fork-Shadow", "dim": "firm", "of_name": group[canonical_firm][0], "of": group[canonical_firm][2]}
+
+
+def variance_prose(verdict: dict | None, phrasing: dict) -> str:
+    """Render a verdict via the GOVERNED phrasing catalog (NEVER hardcoded). '' when verdict is None or its
+    `kind` has no blessed phrasing (governance -> no clause, same control as the motif no-invented-token).
+    Fills <D>/<of_name>/<of_names>/<by_name>; a 'no canonical majority' note qualifies the fork-shadow. PURE."""
+    if not verdict:
+        return ""
+    tmpl = (phrasing or {}).get(verdict.get("kind"))
+    if not tmpl:
+        return ""
+    of_names = verdict.get("of_names") or []
+    of_name = verdict.get("of_name")
+    if of_name is None and of_names:
+        of_name = "/".join(of_names)
+    s = (str(tmpl)
+         .replace("<D>", verdict.get("dim", ""))
+         .replace("<of_names>", "/".join(of_names))
+         .replace("<of_name>", of_name or "")
+         .replace("<by_name>", verdict.get("by_name", "")))
+    if verdict.get("note") == "no canonical majority":
+        s = s.replace("(debt)", "-- no canonical majority (debt)") if "(debt)" in s else s + " -- no canonical majority"
+    return s
+
+
+def _compute_variances(nodes: dict, memberships: dict, firm_values: list) -> dict:
+    """{arn -> verdict|None} for the whole corpus (the FREE build_corpus path -- the sibling groups are the
+    already-loaded set). Groups by (NODE_TYPE, position_key); structure = the C2 membership SET (reuse
+    memberships). The node_type in the key keeps a resource's twin the SAME KIND -- an S3_BUCKET's firm-twin
+    is a bucket, NOT the same-named S3_BUCKET_POLICY (whose bare arn holds no motif membership; colliding them
+    inverted the verdict). Within a (type,firm) slot a real-ARN node wins over a bare-arn one. Empty firm_values
+    (catalog absent) -> {}. Graph-free given its inputs."""
+    if not firm_values:
+        return {}
+    groups: dict = {}
+    node_firm: dict = {}
+    for arn, node in nodes.items():
+        pk, firm = _position_key(node.get("name") or arn, firm_values)
+        if firm is None:
+            continue
+        key = (node.get("node_type") or "", pk)
+        struct = frozenset(i for (i, _) in (memberships.get(arn, {}).get("c2") or []))
+        slot = groups.setdefault(key, {})
+        prev = slot.get(firm)
+        if prev is None or (_is_real_arn(arn) and not _is_real_arn(prev[2])):
+            slot[firm] = (node.get("name") or arn, struct, arn)
+        node_firm[arn] = (firm, key)
+    return {arn: _variance_verdict(firm, groups.get(key, {})) for arn, (firm, key) in node_firm.items()}
+
+
+def load_one_variance(arn: str, node_name: str, node_type: str, this_membership: dict,
+                      firm_values: list) -> dict | None:
+    """Single-ARN variance (the --describe path): find the SAME-node_type firm-siblings sharing this node's
+    position_key and compute the verdict. None when the catalog is absent (firm_values=[]) or the node carries
+    no firm dimension. node_type is part of the sibling identity -- a bucket's firm-twin is a bucket, not the
+    same-named policy. Cost = at most TWO TARGETED comp-kuzu queries (no full-graph sweep): sibling names are
+    the position_key with '{firm}' substituted back per declared value (that IS the sibling model), fetched by
+    an exact name-IN + node_type filter; then ONE BATCHED motif-membership read for all sibling ARNs."""
+    if not firm_values:
+        return None
+    pk, firm = _position_key(node_name or arn, firm_values)
+    if firm is None:
+        return None
+    this_struct = frozenset(i for (i, _) in (this_membership.get("c2") or []))
+    # reconstruct each firm-sibling's exact NAME by substituting the firm token back into the position_key.
+    name_to_firm = {pk.replace("{firm}", v): v for v in firm_values}
+    name_list = ", ".join("'" + _q_escape(n) + "'" for n in name_to_firm)
+    rows = _kuzu_json(
+        f"MATCH (n:CloudNode) WHERE n.arn <> '' AND n.node_type = '{_q_escape(node_type or '')}' "
+        f"AND n.name IN [{name_list}] RETURN n.arn AS arn, n.name AS name")
+    group = {firm: (node_name or arn, this_struct, arn)}   # self, membership already in hand
+    sib_arn_by_firm: dict = {}
+    for r in rows:
+        rarn, rname = r.get("arn"), r.get("name") or ""
+        rfirm = name_to_firm.get(rname)
+        if not rarn or rarn == arn or rfirm is None or rfirm == firm:
+            continue
+        prev = sib_arn_by_firm.get(rfirm)               # prefer a real-ARN sibling over a bare-arn one
+        if prev is None or (_is_real_arn(rarn) and not _is_real_arn(prev)):
+            sib_arn_by_firm[rfirm] = rarn
+            group[rfirm] = (rname, None, rarn)           # placeholder; structure filled from the batch read
+    sib_arns: list = list(sib_arn_by_firm.values())
+    if sib_arns:
+        arn_list = ", ".join("'" + _q_escape(a) + "'" for a in sib_arns)
+        mrows = _kuzu_json(
+            f"MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) "
+            f"WHERE m.node_type = 'C2Motif' AND e.edge_type = 'CONTAINS' AND b.arn IN [{arn_list}] "
+            "RETURN b.arn AS arn, m.node_id AS mid")
+        struct_by_arn: dict = {}
+        for mr in mrows:
+            a2, mid = mr.get("arn"), mr.get("mid")
+            if a2 and mid:
+                struct_by_arn.setdefault(a2, set()).add(_membership_id(mid))
+        for f, (n, s, a) in list(group.items()):
+            if s is None:
+                group[f] = (n, frozenset(struct_by_arn.get(a, set())), a)
+    return _variance_verdict(firm, group)
+
+
 def derive_summary(arn: str, node: dict, out_edges: list, in_edges: list,
-                   membership: dict | None = None) -> SummaryDoc:
+                   membership: dict | None = None, variance: dict | None = None) -> SummaryDoc:
     """Synthesize a resource's functional summary from the graph. The BM25 document is the
     PURPOSE vocabulary (type + layer + edge neighborhood); the resource's OWN name is kept in
     the prose but NOT in the tokens (the corpus-collapse control). C2: appends canonical motif
     class+role clauses (read from canon-patterns roles:) to the prose and tokens. C3: appends the
     per-ARN C2/C3 MEMBERSHIP sibling clause (deterministic reverse-CONTAINS, passed in via
-    `membership`) to the prose ONLY -- NOT the tokens (the class overlay must not drive similarity)."""
+    `membership`) to the prose ONLY -- NOT the tokens (the class overlay must not drive similarity).
+    C3/Twin: appends the firm-VARIANCE verdict clause (passed in via `variance`, phrasing read from the
+    governed catalog) to the prose ONLY -- a relative verdict must not cluster in BM25 (prose, no token)."""
     node_type = node.get("node_type") or ""
     name = node.get("name") or arn
     layer = node.get("layer") or ""
@@ -513,11 +708,19 @@ def derive_summary(arn: str, node: dict, out_edges: list, in_edges: list,
     if memb_clause:
         prose += "; " + memb_clause
 
+    # C3/Twin firm-variance verdict clause (deterministic sibling-symmetry; phrasing from the governed
+    # catalog). Prose ONLY -- a per-sibling verdict is a relative fact, never a BM25 similarity driver.
+    _, _var_phrasing = _load_variance_catalog()
+    var_clause = variance_prose(variance, _var_phrasing)
+    if var_clause:
+        prose += "; " + var_clause
+
     return SummaryDoc(arn=arn, node_type=node_type, name=name, tokens=tokens, prose=prose,
-                      thin=thin, held=held, n_purpose=n_purpose, motifs=motif_fired, membership=memb)
+                      thin=thin, held=held, n_purpose=n_purpose, motifs=motif_fired, membership=memb,
+                      variance=variance or {})
 
 
-def build_corpus(graph_tuple=None, memberships=None) -> dict[str, SummaryDoc]:
+def build_corpus(graph_tuple=None, memberships=None, variances=None) -> dict[str, SummaryDoc]:
     """Build the {arn -> SummaryDoc} derive-at-scan corpus from the live graph.
 
     graph_tuple: an optional pre-loaded (nodes, out_edges, in_edges) in the load_graph() contract.
@@ -533,10 +736,14 @@ def build_corpus(graph_tuple=None, memberships=None) -> dict[str, SummaryDoc]:
     nodes, out_edges, in_edges = graph_tuple if graph_tuple is not None else load_graph()
     if memberships is None:
         memberships = {} if graph_tuple is not None else load_memberships()
+    if variances is None:
+        # in-VPC (graph_tuple) has no motif/variance substrate -> {}; dev-box computes from memberships.
+        variances = {} if graph_tuple is not None else _compute_variances(
+            nodes, memberships, _firm_values(_load_variance_catalog()[0]))
     corpus: dict[str, SummaryDoc] = {}
     for arn, node in nodes.items():
         corpus[arn] = derive_summary(arn, node, out_edges.get(arn, []), in_edges.get(arn, []),
-                                     membership=memberships.get(arn))
+                                     membership=memberships.get(arn), variance=variances.get(arn))
     return corpus
 
 
@@ -684,7 +891,10 @@ def describe(query: str) -> dict:
     node, out_edges, in_edges = load_one(arn)
     if node is None:
         return {"query": query, "resolved": arn, "node_absent": True}
-    doc = derive_summary(arn, node, out_edges, in_edges, membership=load_one_membership(arn))
+    memb = load_one_membership(arn)
+    dims, var_phrasing = _load_variance_catalog()
+    var = load_one_variance(arn, node.get("name") or "", node.get("node_type") or "", memb, _firm_values(dims))
+    doc = derive_summary(arn, node, out_edges, in_edges, membership=memb, variance=var)
 
     def _rel(edges, incoming):
         seen = []
@@ -707,6 +917,8 @@ def describe(query: str) -> dict:
             "c2": [{"id": i, "class": c} for (i, c) in (doc.membership.get("c2") or [])],
             "c3": [{"id": i, "class": c} for (i, c) in (doc.membership.get("c3") or [])],
         },
+        "variance": doc.variance or {},
+        "variance_clause": variance_prose(doc.variance, var_phrasing),
         "produced_by": _rel(in_edges, incoming=True),
         "consumes_or_serves": _rel(out_edges, incoming=False),
         "n_in": len(in_edges), "n_out": len(out_edges),
@@ -755,6 +967,8 @@ def render_describe(result: dict) -> str:
         if memb.get("c3"):
             parts.append(f"C3 [{_fmt_memb(memb['c3'])}]")
         lines.append("  MEMBERSHIP: " + " ".join(parts))
+    if result.get("variance_clause"):
+        lines.append("  VARIANCE : " + result["variance_clause"])
     if result.get("produced_by"):
         lines.append(f"  PRODUCED BY / inbound ({result['n_in']}): " + "; ".join(result["produced_by"][:10]))
     if result.get("consumes_or_serves"):
@@ -812,14 +1026,19 @@ def coverage(corpus: dict[str, SummaryDoc]) -> dict:
     motif_matched = sum(1 for d in corpus.values() if d.motifs)   # C2: >=1 motif clause fired
     memb_matched = sum(1 for d in corpus.values()                 # C3: >=1 C2/C3 membership
                        if (d.membership or {}).get("c2") or (d.membership or {}).get("c3"))
+    var_verdicts = sum(1 for d in corpus.values() if d.variance)  # C3/Twin: a firm-variance verdict fired
+    fork_shadows = sum(1 for d in corpus.values()
+                       if (d.variance or {}).get("kind") == "Fork-Shadow")
     return {"total_arn_resources": total, "summarized": total - thin,
             "unknown_thin": thin, "held_marked": held,
             "motif_matched": motif_matched, "motif_unmatched": total - motif_matched,
             "membership_matched": memb_matched, "membership_unmatched": total - memb_matched,
+            "variance_verdicts": var_verdicts, "fork_shadows": fork_shadows,
             "note": f"scanned {total} ARN resources; {total - thin} with purpose summary; "
                     f"{thin} UNKNOWN-thin (no twin known); {held} hold-marked; "
                     f"{motif_matched} matched >=1 canonical motif, {total - motif_matched} unmatched (no motif clause); "
-                    f"{memb_matched} carry a C2/C3 membership clause, {total - memb_matched} in no canonical motif"}
+                    f"{memb_matched} carry a C2/C3 membership clause, {total - memb_matched} in no canonical motif; "
+                    f"{var_verdicts} carry a firm-variance verdict ({fork_shadows} fork-shadow(s))"}
 
 
 # ---- self-test (offline; the registration invariant's regression gate) --------------------
@@ -985,7 +1204,75 @@ def self_test() -> int:
           f"prose={m9c}, SET-invariant-under-class-mutation={m9d}, id-derivation+no-guess={m9e}): "
           f"{'PASS' if m9 else 'FAIL'}")
 
-    print(f"=== self-test: {'PASS' if ok else 'FAIL'} (9/9) ===" if ok else "=== self-test: FAIL ===")
+    # M10 C3/Twin VARIANCE control (offline; contract @1f258ee21 sec.3 worked examples). Verdict is PURE over
+    # the membership-SETs -- no graph, no catalog, NO class read (no-feedback by construction: _variance_verdict
+    # takes no llm_* input). FULL = the bd/cot/inf shared set; PART = a diverging set.
+    FULL = frozenset({"a-access", "a-serve", "a-store", "b-io"})
+    PART = frozenset({"a-store", "a-access"})
+    FV = ["bd", "cot", "inf"]
+
+    def _grp(**kw):  # firm -> (name, structure, arn)
+        return {f: (f"opal-data-{f}", s, f"arn:{f}") for f, s in kw.items()}
+
+    # (a) position_key: strip the firm token at a boundary; no-firm -> None (denominator, no guess).
+    m10a = (_position_key("opal-data-bd", FV) == ("opal-data-{firm}", "bd")
+            and _position_key("opal-data-demo", FV) == ("opal-data-demo", None)
+            and _position_key("bd-49f-runner", FV) == ("{firm}-49f-runner", "bd"))
+
+    # (b) TWIN case: all three identical -> bd=Canonical (alpha-first), cot/inf=Twin of bd.
+    gt = _grp(bd=FULL, cot=FULL, inf=FULL)
+    vb, vc, vi = _variance_verdict("bd", gt), _variance_verdict("cot", gt), _variance_verdict("inf", gt)
+    m10b = (vb["kind"] == "Canonical" and set(vb["of_names"]) == {"opal-data-cot", "opal-data-inf"}
+            and vc["kind"] == "Twin" and vc["of_name"] == "opal-data-bd"
+            and vi["kind"] == "Twin" and vi["of_name"] == "opal-data-bd")
+
+    # (c) FORK-SHADOW (inf diverges): bd/cot=modal, inf differs -> inf=Fork-Shadow of bd; bd=Canonical, cot=Twin.
+    gi = _grp(bd=FULL, cot=FULL, inf=PART)
+    m10c = (_variance_verdict("inf", gi)["kind"] == "Fork-Shadow"
+            and _variance_verdict("inf", gi)["of_name"] == "opal-data-bd"
+            and _variance_verdict("bd", gi)["kind"] == "Canonical"
+            and _variance_verdict("cot", gi)["kind"] == "Twin")
+
+    # (d) FORK-SHADOW (BD diverges -- the case a FIXED ref=bd would have HIDDEN, base 234142Z): cot/inf=modal,
+    # bd differs -> bd=Fork-Shadow of cot (alpha-first modal-matcher); cot=Canonical, inf=Twin. Modal ref detects it.
+    gb = _grp(bd=PART, cot=FULL, inf=FULL)
+    m10d = (_variance_verdict("bd", gb)["kind"] == "Fork-Shadow"
+            and _variance_verdict("bd", gb)["of_name"] == "opal-data-cot"
+            and _variance_verdict("cot", gb)["kind"] == "Canonical"
+            and _variance_verdict("inf", gb)["kind"] == "Twin")
+
+    # (e) NO unique modal (all distinct) -> flag ALL "no canonical majority", never pick a ref.
+    gn = _grp(bd=frozenset({"a-store"}), cot=frozenset({"a-access"}), inf=frozenset({"b-io"}))
+    nb = _variance_verdict("bd", gn)
+    m10e = (nb["kind"] == "Fork-Shadow" and nb.get("note") == "no canonical majority"
+            and set(nb["of_names"]) == {"opal-data-cot", "opal-data-inf"})
+
+    # (f) PROSE from a fake governed catalog (never hardcoded); no-majority qualifier; absent phrasing -> no clause.
+    ph = {"Canonical": "canonical <D>-twin (reference) of <of_names>",
+          "Twin": "canonical <D>-twin of <of_name>",
+          "Fork-Shadow": "divergent fork-shadow of <of_name> (debt)"}
+    m10f = (variance_prose(vb, ph) == "canonical firm-twin (reference) of opal-data-cot/opal-data-inf"
+            and variance_prose(vc, ph) == "canonical firm-twin of opal-data-bd"
+            and variance_prose(_variance_verdict("inf", gi), ph) == "divergent fork-shadow of opal-data-bd (debt)"
+            and "no canonical majority (debt)" in variance_prose(nb, ph)
+            and variance_prose(vb, {}) == "")  # catalog absent -> no clause (graceful, no hardcode)
+
+    # (g) singleton -> None (no firm-sibling; Orphan deferred); this_firm absent -> None.
+    m10g = _variance_verdict("bd", _grp(bd=FULL)) is None and _variance_verdict("xx", gt) is None
+
+    # (h) EMPTY-modal suppression: an all-empty group (attachment/policy nodes -- no motif membership) -> None,
+    # NOT a spurious "empty twin". But a node EMPTY against a NON-empty modal is a real divergence -> Fork-Shadow.
+    m10h = (_variance_verdict("bd", _grp(bd=frozenset(), cot=frozenset(), inf=frozenset())) is None
+            and _variance_verdict("inf", _grp(bd=FULL, cot=FULL, inf=frozenset()))["kind"] == "Fork-Shadow"
+            and _variance_verdict("bd", _grp(bd=FULL, cot=FULL, inf=frozenset()))["kind"] == "Canonical")
+
+    m10 = m10a and m10b and m10c and m10d and m10e and m10f and m10g and m10h
+    ok &= m10
+    print(f"  M10 C3/Twin variance (posn-key={m10a}, twin={m10b}, fork-inf={m10c}, "
+          f"fork-BD[modal-ref-detects]={m10d}, no-majority={m10e}, prose-from-catalog={m10f}, "
+          f"singleton->none={m10g}, empty-modal-suppressed={m10h}): {'PASS' if m10 else 'FAIL'}")
+
+    print(f"=== self-test: {'PASS' if ok else 'FAIL'} (10/10) ===" if ok else "=== self-test: FAIL ===")
     return 0 if ok else 1
 
 
