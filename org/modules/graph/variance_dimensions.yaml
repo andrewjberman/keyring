@@ -30,7 +30,9 @@ dimensions:
 
 # advisory: firm verdicts are strictly advisory while allowed_facets=[] (see above). A consumer renders the
 #   verdict as a CANDIDATE clause; it is NEVER a filed finding and NEVER auto-acts (canon-patterns binding:
-#   every outlier is ADVISORY until CVO-adjudicated; the scorer files 0 mutations).
+#   every outlier is ADVISORY until CVO-adjudicated; the scorer files 0 mutations). The advisory status ALSO
+#   binds the VISIBLE render (CTO 013249Z): under advisory, the Fork-Shadow disposition suffix asserts no
+#   disposition (see fork_shadow_disposition) -- so the string cannot say "(debt)" for an unadjudicated candidate.
 advisory: true
 
 # verdict clause-phrasing (interface #4 -- GOVERNED, read-from-file, NOT hardcoded in the enricher).
@@ -39,6 +41,16 @@ phrasing:
   Canonical:   "canonical <D>-twin (reference) of <of_names>"
   Twin:        "canonical <D>-twin of <of_name>"
   Variant:     "<D>-variant of <of_name>"          # unreachable for firm (allowed_facets=[]); present for env/region
-  Fork-Shadow: "divergent fork-shadow of <of_name> (debt)"
+  Fork-Shadow: "divergent fork-shadow of <of_name> <disposition>"   # base clause; <disposition> filled by regime (below)
   Superseded:  "superseded by <by_name>"
   Orphan:      "orphan (no twin, no consumer)"
+
+# v2 -- CTO ruling 013249Z (render-honesty, advisory-CONDITIONAL): the visible string's CERTAINTY + DIRECTION
+# must match the governance regime. A Fork-Shadow on an ADVISORY (ungrounded, allowed_facets=[]) dimension is a
+# CANDIDATE that pre-judges NO disposition -- it can ground out to debt / graph-coverage-gap / designed-difference
+# (opal-data-cot grounded to a coverage-gap, NOT debt -- @1fe0f5e6f: the live proof a Fork-Shadow candidate can be
+# NON-debt). Only a GROUNDED dimension (allowed_facets populated+cited) asserts "(debt)". The enricher fills
+# <disposition> from the dimension's grounding: advisory (allowed_facets==[]) vs grounded (allowed_facets populated).
+fork_shadow_disposition:
+  advisory: "(candidate -- advisory, pending adjudication)"   # ungrounded dim: assert NEITHER certainty NOR direction
+  grounded: "(debt)"                                          # grounded dim (allowed_facets populated+cited): confirmed debt
