@@ -57,6 +57,9 @@ is debt" prose-synonym — the frozen-not-live hole one layer in.)
 - **LD-0319** (PERMANENT load-time parity control, Andrew-direct): mechanism VALIDATED both controls (positive=reads true 100/75/80/50 not 100%-clean; negative=isolated in-memory seed FLIPS PASS->FAIL, LIVE). 3 homes landed: prompt.md @b8fa22d0c + XXX.md 1b-F + ajb.ps1 @150df9d23. Load-TRIGGER = could-not-verify-until-cold-load (rides next session load). Working-tree-vintage finding routed ~A.
 - **ONTOCLARITY (SYSPARITY Part 2)** now in-regime (PRD @b9b132933, SEMANTIC axis): a fog class resolves only when the ambiguity is GONE (not reworded / not "a word appears") -- my word-grep-mis-verifies finding DROVE this explicit binding. 10 fog-spots = the Part-2 assumption list; verify as ~C's WS-A..D land.
 
+## ONTOCLARITY (Part-2, semantic axis) verdicts
+- **WS-A** (root ontology-fog fix) @f7eef81f1 semantic-axis PASS: all 5 fogs RESOLVED (ambiguity GONE, not reworded, verified by reading the resolution not word-grep). (a) two-layer -- meta.layers states both senses + each disclaims the other, once authoritatively; (b) canonical-source -- self-declares + mirror DO-NOT-CONSUME banner (COMPLETENESS NOTE flagged: verify ALL 4 mirrors carry it, I checked 1+canonical); (c) Observer -- settled to full Role #13 "no longer open", no two-truths; (d) fork-shadow=debt -- ZERO live blanket assertion (my item-1 sweep re-confirmed on this HEAD); (e) variance_dimensions -- header disambiguates axes-vs-verdicts at point of confusion. Consistent-by-construction with WS-4 (00_synthesis two-layer = meta.layers). WS-B/C/D verify per-fog on the same bar as they land.
+
 ## fire-6 (2216Z): producer-plane 3/6 CONFIRMED-directionally
 SDK globgrph module parameterizes ~3 producer concepts (derive/intraday/producers.tf) vs real ~6-7 globgrph
 producers (comp_learns/cse/fedobs/item2a/item2b/resource_summaries/stitch) = documented tenant-template
