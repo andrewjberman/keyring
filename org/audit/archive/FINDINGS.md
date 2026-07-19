@@ -15,3 +15,8 @@ Format per entry:
     - action: <what the invoker did>
 
 <!-- entries append below this line -->
+
+## 2026-07-19T191123Z -- LIVENESS -- STALE-BASELINE
+<!-- sig: LIVENESS|STALE-BASELINE||baseline #-#-#T#Z is #.#h old (>#.#h) AND uncaptured tail exists -->
+- detail: baseline 2026-07-16T175907Z is 73.2h old (>24.0h) AND uncaptured tail exists
+- action: minting fresh snapshot below
