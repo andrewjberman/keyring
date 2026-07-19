@@ -548,13 +548,20 @@ def _position_key(name: str, firm_values: list, firm_aliases: dict | None = None
         new, n = re.subn(r"(?<![A-Za-z0-9])" + re.escape(v) + r"(?![A-Za-z0-9])", "{firm}", s, count=1)
         if n:
             aliases = (firm_aliases or {}).get(v) or []
+            stripped = False
             for a in sorted(aliases, key=len, reverse=True):   # longest-first: strip '49financial' before '49f'
                 if a:
-                    new = re.sub(r"(?<![A-Za-z0-9])" + re.escape(a) + r"(?![A-Za-z0-9])", "", new)
-            if aliases:
-                # collapse separator debris the alias removal left ('{firm}--etf' -> '{firm}-etf') + edge-trim.
+                    new, cnt = re.subn(r"(?<![A-Za-z0-9])" + re.escape(a) + r"(?![A-Za-z0-9])", "", new)
+                    stripped = stripped or bool(cnt)
+            if stripped:
+                # clean ONLY the separator debris an actual alias removal left: collapse an internal run
+                # ('{firm}--etf' -> '{firm}-etf') + trim a trailing residue (alias at the name end). NEVER trim a
+                # LEADING separator -- a '/aws/lambda/...' log group legitimately starts with '/', and the firm
+                # identity can never be the leading char as debris (it became '{firm}'), so leading debris cannot
+                # occur. Guarded on `stripped`: a name with NO alias removed is byte-identical to the value-only
+                # key (e.g. /aws/lambda/bd-pipeline-trigger stays /aws/lambda/{firm}-pipeline-trigger).
                 new = re.sub(r"([-_/. ])[-_/. ]+", r"\1", new)
-                new = re.sub(r"^[-_/. ]+|[-_/. ]+$", "", new)
+                new = re.sub(r"[-_/. ]+$", "", new)
             return new, v
     return s, None
 
@@ -1326,6 +1333,12 @@ def self_test() -> int:
             and _position_key("cot-etf-ownership-daily", FV, FA) == ("{firm}-etf-ownership-daily", "cot")
             and _position_key("bd-49f-runner", FV, FA) == ("{firm}-runner", "bd")
             and _position_key("opal-data-bd", FV, FA) == ("opal-data-{firm}", "bd")          # no alias residual
+            # LEADING-SEP REGRESSION (the cleanup must NOT eat a leading '/' of a log-group name): WITH an alias
+            # removed, the slash survives + collapses debris -> keys 3-way; WITHOUT an alias, byte-identical to
+            # value-only (the cleanup is guarded on an actual strip).
+            and _position_key("/aws/lambda/bd-49f-etf-ownership-daily", FV, FA) == ("/aws/lambda/{firm}-etf-ownership-daily", "bd")
+            and _position_key("/aws/lambda/bd-pipeline-trigger", FV, FA) == ("/aws/lambda/{firm}-pipeline-trigger", "bd")
+            and _position_key("/aws/lambda/bd-pipeline-trigger", FV) == _position_key("/aws/lambda/bd-pipeline-trigger", FV, FA)  # no-alias: alias-path == value-only
             # SCOPE GUARD: case-sensitive VALUE-token match -> 'Inflection Models' is NOT firm-keyed (no verdict)
             and _position_key("Inflection Models", FV, FA) == ("Inflection Models", None))
 
