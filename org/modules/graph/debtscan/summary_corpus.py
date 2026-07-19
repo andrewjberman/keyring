@@ -484,14 +484,16 @@ _VARIANCE_CACHE: tuple | None = None
 
 
 def _load_variance_catalog() -> tuple:
-    """Return (dimensions, phrasing) from variance_dimensions.yaml (GOVERNED, read-from-FILE -- mirrors
-    _load_canon_roles). Cached. GRACEFUL: any absence/parse failure -> ({}, {}) -> no verdict + no clause
-    (the mechanism ships + lights up when the exec-landed catalog exists; never crashes, never hardcodes)."""
+    """Return (dimensions, phrasing, fork_shadow_disposition) from variance_dimensions.yaml (GOVERNED,
+    read-from-FILE -- mirrors _load_canon_roles). Cached. GRACEFUL: any absence/parse failure -> ({}, {}, {})
+    -> no verdict + no clause. `fork_shadow_disposition` is the v2 advisory-conditional suffix map (CTO
+    013249Z); absent on a v1 catalog -> the enricher's disposition branch is a no-op (backward-compatible)."""
     global _VARIANCE_CACHE
     if _VARIANCE_CACHE is not None:
         return _VARIANCE_CACHE
     dims: dict = {}
     phrasing: dict = {}
+    disposition: dict = {}
     try:
         import yaml
         with open(_VARIANCE_DIMS, encoding="utf-8") as fh:
@@ -499,9 +501,10 @@ def _load_variance_catalog() -> tuple:
         if isinstance(doc, dict):
             dims = doc.get("dimensions") if isinstance(doc.get("dimensions"), dict) else {}
             phrasing = doc.get("phrasing") if isinstance(doc.get("phrasing"), dict) else {}
+            disposition = doc.get("fork_shadow_disposition") if isinstance(doc.get("fork_shadow_disposition"), dict) else {}
     except (OSError, ImportError, ValueError, TypeError):
-        dims, phrasing = {}, {}
-    _VARIANCE_CACHE = (dims, phrasing)
+        dims, phrasing, disposition = {}, {}, {}
+    _VARIANCE_CACHE = (dims, phrasing, disposition)
     return _VARIANCE_CACHE
 
 
@@ -557,10 +560,15 @@ def _variance_verdict(this_firm: str, group: dict) -> dict | None:
     return {"kind": "Fork-Shadow", "dim": "firm", "of_name": group[canonical_firm][0], "of": group[canonical_firm][2]}
 
 
-def variance_prose(verdict: dict | None, phrasing: dict) -> str:
+def variance_prose(verdict: dict | None, phrasing: dict, disposition_map: dict | None = None,
+                   dims: dict | None = None) -> str:
     """Render a verdict via the GOVERNED phrasing catalog (NEVER hardcoded). '' when verdict is None or its
     `kind` has no blessed phrasing (governance -> no clause, same control as the motif no-invented-token).
-    Fills <D>/<of_name>/<of_names>/<by_name>; a 'no canonical majority' note qualifies the fork-shadow. PURE."""
+    Fills <D>/<of_name>/<of_names>/<by_name>. FORK-SHADOW DISPOSITION (CTO 013249Z render-honesty, v2): the
+    <disposition> suffix is ADVISORY-CONDITIONAL -- keyed on the dimension's grounding (allowed_facets EMPTY
+    -> the disposition-NEUTRAL 'advisory' string; POPULATED -> the 'grounded' string, e.g. '(debt)'), read
+    from `disposition_map` (governed, no hardcode). Backward-compatible: a v1 template with no <disposition>
+    placeholder + no disposition_map renders the literal phrasing unchanged. PURE."""
     if not verdict:
         return ""
     tmpl = (phrasing or {}).get(verdict.get("kind"))
@@ -570,14 +578,26 @@ def variance_prose(verdict: dict | None, phrasing: dict) -> str:
     of_name = verdict.get("of_name")
     if of_name is None and of_names:
         of_name = "/".join(of_names)
+    disposition = ""
+    if verdict.get("kind") == "Fork-Shadow" and "<disposition>" in str(tmpl):
+        dim = verdict.get("dim", "")
+        af = (dims.get(dim) or {}).get("allowed_facets") if isinstance(dims, dict) else None
+        disp_key = "grounded" if af else "advisory"   # populated allowed_facets = grounded; [] / absent = advisory
+        base_disp = (disposition_map or {}).get(disp_key, "")
+        note = "-- no canonical majority " if verdict.get("note") == "no canonical majority" else ""
+        disposition = (note + str(base_disp)).strip()
     s = (str(tmpl)
          .replace("<D>", verdict.get("dim", ""))
          .replace("<of_names>", "/".join(of_names))
          .replace("<of_name>", of_name or "")
-         .replace("<by_name>", verdict.get("by_name", "")))
-    if verdict.get("note") == "no canonical majority":
+         .replace("<by_name>", verdict.get("by_name", ""))
+         .replace("<disposition>", disposition))
+    # v1-catalog backward-compat: a legacy Fork-Shadow template with a literal disposition (no <disposition>
+    # placeholder) still needs the no-canonical-majority qualifier (v2 folds it into <disposition> above).
+    if (verdict.get("kind") == "Fork-Shadow" and "<disposition>" not in str(tmpl)
+            and verdict.get("note") == "no canonical majority"):
         s = s.replace("(debt)", "-- no canonical majority (debt)") if "(debt)" in s else s + " -- no canonical majority"
-    return s
+    return s.strip()
 
 
 def _compute_variances(nodes: dict, memberships: dict, firm_values: list) -> dict:
@@ -710,8 +730,8 @@ def derive_summary(arn: str, node: dict, out_edges: list, in_edges: list,
 
     # C3/Twin firm-variance verdict clause (deterministic sibling-symmetry; phrasing from the governed
     # catalog). Prose ONLY -- a per-sibling verdict is a relative fact, never a BM25 similarity driver.
-    _, _var_phrasing = _load_variance_catalog()
-    var_clause = variance_prose(variance, _var_phrasing)
+    _var_dims, _var_phrasing, _var_disp = _load_variance_catalog()
+    var_clause = variance_prose(variance, _var_phrasing, _var_disp, _var_dims)
     if var_clause:
         prose += "; " + var_clause
 
@@ -892,7 +912,7 @@ def describe(query: str) -> dict:
     if node is None:
         return {"query": query, "resolved": arn, "node_absent": True}
     memb = load_one_membership(arn)
-    dims, var_phrasing = _load_variance_catalog()
+    dims, var_phrasing, var_disp = _load_variance_catalog()
     var = load_one_variance(arn, node.get("name") or "", node.get("node_type") or "", memb, _firm_values(dims))
     doc = derive_summary(arn, node, out_edges, in_edges, membership=memb, variance=var)
 
@@ -918,7 +938,7 @@ def describe(query: str) -> dict:
             "c3": [{"id": i, "class": c} for (i, c) in (doc.membership.get("c3") or [])],
         },
         "variance": doc.variance or {},
-        "variance_clause": variance_prose(doc.variance, var_phrasing),
+        "variance_clause": variance_prose(doc.variance, var_phrasing, var_disp, dims),
         "produced_by": _rel(in_edges, incoming=True),
         "consumes_or_serves": _rel(out_edges, incoming=False),
         "n_in": len(in_edges), "n_out": len(out_edges),
@@ -1266,11 +1286,26 @@ def self_test() -> int:
             and _variance_verdict("inf", _grp(bd=FULL, cot=FULL, inf=frozenset()))["kind"] == "Fork-Shadow"
             and _variance_verdict("bd", _grp(bd=FULL, cot=FULL, inf=frozenset()))["kind"] == "Canonical")
 
-    m10 = m10a and m10b and m10c and m10d and m10e and m10f and m10g and m10h
+    # (i) v2 ADVISORY-CONDITIONAL disposition (CTO 013249Z render-honesty): a v2 template with <disposition>
+    # renders the disposition-NEUTRAL 'advisory' suffix for an UNGROUNDED dim (allowed_facets=[]) and '(debt)'
+    # ONLY for a GROUNDED dim (allowed_facets populated) -- read from the catalog map, never hardcoded. This is
+    # the "cot must not say (debt)" fix: firm is advisory today, so a firm Fork-Shadow is a candidate string.
+    ph2 = {"Fork-Shadow": "divergent fork-shadow of <of_name> <disposition>"}
+    disp = {"advisory": "(candidate -- advisory, pending adjudication)", "grounded": "(debt)"}
+    fk = _variance_verdict("inf", gi)   # Fork-Shadow of opal-data-bd
+    m10i = (variance_prose(fk, ph2, disp, {"firm": {"allowed_facets": []}})
+            == "divergent fork-shadow of opal-data-bd (candidate -- advisory, pending adjudication)"
+            and variance_prose(fk, ph2, disp, {"firm": {"allowed_facets": ["memory_size"]}})
+            == "divergent fork-shadow of opal-data-bd (debt)"
+            and "-- no canonical majority (candidate -- advisory"
+            in variance_prose(nb, ph2, disp, {"firm": {"allowed_facets": []}}))
+
+    m10 = m10a and m10b and m10c and m10d and m10e and m10f and m10g and m10h and m10i
     ok &= m10
     print(f"  M10 C3/Twin variance (posn-key={m10a}, twin={m10b}, fork-inf={m10c}, "
-          f"fork-BD[modal-ref-detects]={m10d}, no-majority={m10e}, prose-from-catalog={m10f}, "
-          f"singleton->none={m10g}, empty-modal-suppressed={m10h}): {'PASS' if m10 else 'FAIL'}")
+          f"fork-BD[modal-ref-detects]={m10d}, no-majority={m10e}, prose-v1={m10f}, "
+          f"singleton->none={m10g}, empty-modal-suppressed={m10h}, v2-advisory-disposition={m10i}): "
+          f"{'PASS' if m10 else 'FAIL'}")
 
     print(f"=== self-test: {'PASS' if ok else 'FAIL'} (10/10) ===" if ok else "=== self-test: FAIL ===")
     return 0 if ok else 1
