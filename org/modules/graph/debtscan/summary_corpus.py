@@ -567,8 +567,9 @@ def variance_prose(verdict: dict | None, phrasing: dict, disposition_map: dict |
     Fills <D>/<of_name>/<of_names>/<by_name>. FORK-SHADOW DISPOSITION (CTO 013249Z render-honesty, v2): the
     <disposition> suffix is ADVISORY-CONDITIONAL -- keyed on the dimension's grounding (allowed_facets EMPTY
     -> the disposition-NEUTRAL 'advisory' string; POPULATED -> the 'grounded' string, e.g. '(debt)'), read
-    from `disposition_map` (governed, no hardcode). Backward-compatible: a v1 template with no <disposition>
-    placeholder + no disposition_map renders the literal phrasing unchanged. PURE."""
+    from `disposition_map` (governed, no hardcode). A 'no canonical majority' note nests before the
+    disposition. NO hardcoded '(debt)' in this function -- the disposition string is ALWAYS the catalog's
+    (the render-honesty full-denominator invariant, CTO NEXT-3). PURE."""
     if not verdict:
         return ""
     tmpl = (phrasing or {}).get(verdict.get("kind"))
@@ -592,11 +593,6 @@ def variance_prose(verdict: dict | None, phrasing: dict, disposition_map: dict |
          .replace("<of_name>", of_name or "")
          .replace("<by_name>", verdict.get("by_name", ""))
          .replace("<disposition>", disposition))
-    # v1-catalog backward-compat: a legacy Fork-Shadow template with a literal disposition (no <disposition>
-    # placeholder) still needs the no-canonical-majority qualifier (v2 folds it into <disposition> above).
-    if (verdict.get("kind") == "Fork-Shadow" and "<disposition>" not in str(tmpl)
-            and verdict.get("note") == "no canonical majority"):
-        s = s.replace("(debt)", "-- no canonical majority (debt)") if "(debt)" in s else s + " -- no canonical majority"
     return s.strip()
 
 
@@ -1267,14 +1263,14 @@ def self_test() -> int:
     m10e = (nb["kind"] == "Fork-Shadow" and nb.get("note") == "no canonical majority"
             and set(nb["of_names"]) == {"opal-data-cot", "opal-data-inf"})
 
-    # (f) PROSE from a fake governed catalog (never hardcoded); no-majority qualifier; absent phrasing -> no clause.
+    # (f) PROSE for the NON-Fork-Shadow kinds (Canonical/Twin) from a fake governed catalog + absent phrasing
+    # -> no clause. Fork-Shadow disposition rendering (both regimes) is m10i. NO '(debt)' fixture here: the v2
+    # catalog is canonical, so the obsolete v1 literal-'(debt)' backward-compat path was removed (CTO NEXT-3
+    # render-honesty full-denominator -- the only legit '(debt)' is a GROUNDED-dimension render, m10i).
     ph = {"Canonical": "canonical <D>-twin (reference) of <of_names>",
-          "Twin": "canonical <D>-twin of <of_name>",
-          "Fork-Shadow": "divergent fork-shadow of <of_name> (debt)"}
+          "Twin": "canonical <D>-twin of <of_name>"}
     m10f = (variance_prose(vb, ph) == "canonical firm-twin (reference) of opal-data-cot/opal-data-inf"
             and variance_prose(vc, ph) == "canonical firm-twin of opal-data-bd"
-            and variance_prose(_variance_verdict("inf", gi), ph) == "divergent fork-shadow of opal-data-bd (debt)"
-            and "no canonical majority (debt)" in variance_prose(nb, ph)
             and variance_prose(vb, {}) == "")  # catalog absent -> no clause (graceful, no hardcode)
 
     # (g) singleton -> None (no firm-sibling; Orphan deferred); this_firm absent -> None.
@@ -1303,7 +1299,7 @@ def self_test() -> int:
     m10 = m10a and m10b and m10c and m10d and m10e and m10f and m10g and m10h and m10i
     ok &= m10
     print(f"  M10 C3/Twin variance (posn-key={m10a}, twin={m10b}, fork-inf={m10c}, "
-          f"fork-BD[modal-ref-detects]={m10d}, no-majority={m10e}, prose-v1={m10f}, "
+          f"fork-BD[modal-ref-detects]={m10d}, no-majority={m10e}, prose-nonfork={m10f}, "
           f"singleton->none={m10g}, empty-modal-suppressed={m10h}, v2-advisory-disposition={m10i}): "
           f"{'PASS' if m10 else 'FAIL'}")
 
