@@ -17,6 +17,22 @@ dimensions:
     # firm-config display names (auth/edge substrate); metadata for rendering, NOT the keying token.
     # grounding: canon-patterns.yaml:78 + comp-constants-seed-multifirm.yaml:13 (FIRM_BUCKET_MAP).
     firm_names: { bd: 49financial, cot: cottonwood, inf: inflection }
+    # CLIENT-ALIAS tokens that appear at a firm-identity position in a resource NAME redundantly WITH the firm
+    # VALUE token -- e.g. bd's "49f" in "bd-49f-etf-ownership-daily". _position_key strips these AFTER the VALUE
+    # token has matched, so a firm's two identity tokens collapse to one {firm}: bd-49f-etf-ownership-daily ->
+    # {firm}-etf-ownership-daily, which groups 3-way with cot/inf-etf-ownership-daily (the C2 finding @c2a0cd66b
+    # -- bd was silently excluded, reading a 2-way {cot,inf} group). An alias NEVER creates a firm match on its
+    # own (the VALUE token identifies the firm, case-sensitive as the estate names it); it only removes a
+    # residual once the value matched -- so NOTHING is newly firm-keyed (Cottonwood/Inflection in data-file /
+    # portal-component names carry no bd/cot/inf value token and are untouched). grounding: comp-kuzu name census
+    # + .tools/comp-secrets:58 firm regex (2026-07-19). cot/inf carry NO alias infix in infra names today;
+    # enumerated for completeness + symmetry (CTO arch-gate cond.1: complete map, not a 49f hand-patch).
+    # SCOPE NOTE: only "49f" fires in the current estate (value-adjacent strip); the standalone-alias / fused
+    # "bd49f" (opal-assets-bd49f-*) / case-insensitive normalization is DEFERRED to a CTO widen-ruling.
+    firm_aliases:
+      bd:  [49financial, blackdiamond, bd49f, 49f]
+      cot: [cottonwood]
+      inf: [inflection]
     scope: parallel-firm-pipeline     # buckets + their C2 motifs on the daily-pull firm pipelines
     allowed_facets: []                # EMPTY = firms' legitimate shape-differences are NOT YET GROUNDED.
                                       # With [] every off-key shape-diff is a Fork-Shadow CANDIDATE, never a
