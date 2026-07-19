@@ -471,6 +471,23 @@ RULES = [
      "synthesized from the graph. DISTINCT from comp-kuzu (arbitrary Cypher traversal), comp-blast "
      "(what breaks if I change X), pipescript (a named pipeline thread). Nearest-BY-PURPOSE similarity "
      "is comp-similar Phase-2 (gated) -- this is exact/lexical find of ONE resource"),
+    # comp-similar -- NFRA_COMPSIMILAR PH2 engine (COO-SoD routing land; ~D engine @b63b18853). The DOES axis:
+    # functional-similarity / SUPERSEDE / decommission-candidate vocab. Deliberately NOT bare "duplicate" (comp-dups
+    # owns the IS axis -- NAME/body) nor "describe / what does X do" (comp-describe, single resource) -- steered to
+    # same-JOB / superseded / functional-overlap so it does not steal comp-dups/comp-describe rank-1.
+    (["do two resources do the same job", "same job", "functional duplicate", "functionally similar",
+      "resources that do the same thing", "which resources do the same thing", "same purpose as",
+      "nearest by purpose", "functional twin", "what overlaps with this resource", "functional overlap",
+      "is anything superseded", "superseded resource", "find the superseded resource",
+      "decommission candidate", "decommission candidates", "old resource left running next to its replacement",
+      "replaced but still running", "map functional overlap across the estate", "cluster resources by purpose"],
+     "functional-similarity / supersede scan (comp-similar)",
+     ["comp-similar <arn-or-name> [<arn-or-name>] | supersede | cluster"],
+     "FIND functionally-similar / SUPERSEDED resources by PURPOSE -- BM25 over the summary corpus (what a "
+     "resource DOES). supersede = summary-twin x heat-DIVERGENT (cold candidate -> hot replacement, "
+     "confidence-graded), advisory/HYPOTHESIS, NO delete verb. DISTINCT from comp-dups (the IS axis -- NAME/body "
+     "structural duplicate CENSUS), comp-describe (describe ONE resource), comp-kuzu (arbitrary Cypher). "
+     "Name-EXCLUDED corpus (no comp-dups collapse)"),
     # rule-2: comp-surface-check -- "touching MP/benchmarks/ADVI backend" routed to comp-registry.
     # comp-surface-check is THE must-always-be-right SEV1-surface guard for MP/benchmarks/ADVI.
     (["model portfolios", "model portfolio", "benchmarks backend", "benchmark surface",

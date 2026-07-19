@@ -1,0 +1,38 @@
+#!/bin/bash
+# comp-similar -- NFRA_COMPSIMILAR Phase-2: BM25 SUMMARY similarity (what a resource DOES) +
+# the superseded-twin --supersede scan. Sibling to comp-dups (NAME/body -- what a resource IS):
+# different corpus, different question (CTO arch-gate ruling 3, own tool not a comp-dups mode).
+#
+#   "do two resources do the same JOB?"                  -> comp-similar <a> <b>
+#   "what is functionally similar to X?"                 -> comp-similar <X>
+#   "is anything SUPERSEDED / a decommission candidate?" -> comp-similar supersede
+#   "map functional overlap across the estate"           -> comp-similar cluster [--type T]
+#
+# --supersede = the joint scan: SUMMARY-similar (functional twin) x heat-DIVERGENT (one HOT one
+# COLD, comp-heat data-cold AND comp-debris invoke-cold, CONFIDENCE-GRADED: both-cold HIGH /
+# one-cold MEDIUM) x NOT a designed parallel (firm-cross/env/service suppressed) x NOT held.
+# Emits the COLD member as a decommission CANDIDATE + its HOT replacement. Advisory, read-only,
+# hold-aware, NO delete verb -- the candidate feed is OPAL_LCLRPO input, deletion stays
+# per-batch Andrew-word (LD-0300). Similarity is a HYPOTHESIS, never a verdict alone.
+#
+# Usage:
+#   comp-similar <arn-or-name> [<arn-or-name>]   # one-vs-corpus neighbors | pairwise score
+#   comp-similar supersede [--top N] [--json]    # the superseded-twin scan (headline)
+#   comp-similar cluster [--type T] [--json]     # functional-overlap census
+#   comp-similar --self-test                     # offline mutant gate (the 5 controls; no graph/AWS)
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+  echo "comp-similar -- BM25 SUMMARY similarity + superseded-twin scan (NFRA_COMPSIMILAR PH2)."
+  echo "Usage:"
+  echo "  comp-similar <arn-or-name> [<arn-or-name>]   one-vs-corpus neighbors | pairwise score"
+  echo "  comp-similar supersede [--top N] [--json]    superseded-twin decommission candidates"
+  echo "  comp-similar cluster [--type T] [--json]     functional-overlap census"
+  echo "  comp-similar --self-test                     offline mutant gate (no graph/AWS)"
+  echo "Reads the live comp-kuzu derive-at-scan corpus + comp-heat/comp-debris heat."
+  echo "Advisory / read-only / hold-aware. Similarity is a hypothesis, never a verdict alone."
+  exit 2
+fi
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/debtscan/comp_similar.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-similar" "$*" $_exit 2>/dev/null
+exit $_exit
