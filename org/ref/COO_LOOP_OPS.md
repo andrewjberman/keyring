@@ -153,3 +153,18 @@ This replaces the old single-project "wait for CTO before resuming" behavior. Cr
 
 ---
 
+
+## STANDING RESPONSIBILITY -- COO owns idle-agent reallocation by working-context (Andrew-direct 2026-07-19, via MSTR)
+
+**VERBATIM (Andrew-direct, relayed via MSTR ~20:5xZ):** "Tell COO to take charge of agent reallocation of idling
+agents based on the context of what they were working on, that is their responsibility."
+
+- **STANDING responsibility:** when an agent goes IDLE, COO reallocates it based on the CONTEXT of what it was
+  working on -- continue/extend its own thread, its next phase, or an ADJACENT workstream that fits its domain.
+  NOT random backlog; NOT idle-waiting for Andrew to steer.
+- **This is COORDINATION authority (the COO's explicit lane), NOT a /drive re-arm.** /drive stays OFF. Decide by
+  judgment on CONTEXT, not on a timer.
+- **DISCHARGES the "where does freed capacity go" decision** -- Andrew delegated it DOWN to COO. Do NOT surface it
+  up to Andrew anymore; decide it. Escalate only a genuine scope/priority collision (normal triggers).
+- **Spawns still route via MSTR** (a reallocation needing a spawn/kill -> ask MSTR).
+- Recall + first application: `memory/feedback_coo_owns_idle_agent_reallocation_by_context.md`.
