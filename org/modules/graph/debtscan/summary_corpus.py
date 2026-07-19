@@ -515,17 +515,46 @@ def _firm_values(dims: dict) -> list:
     return [str(v) for v in vals] if isinstance(vals, list) else []
 
 
-def _position_key(name: str, firm_values: list) -> tuple:
-    """(position_key, firm_value) -- `name` with the FIRST declared firm value-token (at an alnum word
-    boundary) replaced by '{firm}'. (name, None) when no firm token matches -> no firm dimension -> no
-    verdict (counted, never guessed). Structure is NOT in the key (the load-bearing Q1 fix). PURE.
-    opal-data-bd -> (opal-data-{firm}, bd); opal-data-demo -> (opal-data-demo, None)."""
+def _firm_aliases(dims: dict) -> dict:
+    """{firm_value: [client-alias tokens]} from the catalog's firm_aliases map; {} when absent (no strip,
+    graceful). An ALIAS is a client-name token that appears at a firm-identity position in a resource NAME
+    REDUNDANTLY with the firm VALUE token -- e.g. bd's '49f' in 'bd-49f-etf-ownership-daily'. It is GOVERNED
+    (variance_dimensions.yaml firm_aliases), never inferred. It NEVER creates a firm match on its own (the
+    value token identifies the firm); it only lets _position_key strip a residual so a firm's two identity
+    tokens collapse to one '{firm}'. Absent map -> {} -> _position_key returns the pre-fix value-only key."""
+    firm = dims.get("firm") if isinstance(dims, dict) else None
+    al = firm.get("firm_aliases") if isinstance(firm, dict) else None
+    if not isinstance(al, dict):
+        return {}
+    return {str(k): [str(t) for t in v] for k, v in al.items() if isinstance(v, list)}
+
+
+def _position_key(name: str, firm_values: list, firm_aliases: dict | None = None) -> tuple:
+    """(position_key, firm_value) -- `name` with the firm identity collapsed to '{firm}': the FIRST declared
+    firm VALUE token (at an alnum word boundary) -> '{firm}', then any REDUNDANT same-firm client-ALIAS token
+    (governed firm_aliases, e.g. bd's '49f') stripped with its separator debris. (name, None) when no firm
+    VALUE token matches -> no firm dimension -> no verdict (counted, never guessed). Structure is NOT in the
+    key (the load-bearing Q1 fix). The firm is identified by the VALUE token ONLY (case-sensitive, as the
+    estate names them) -- an alias NEVER creates a firm match, it only removes a residual after the value has
+    matched, so NOTHING is newly firm-keyed (a name lacking a bd/cot/inf value token is untouched). PURE.
+    firm_aliases None/{} (catalog omits the map, or the value-only path) -> the pre-fix value-only key.
+      opal-data-bd -> (opal-data-{firm}, bd); opal-data-demo -> (opal-data-demo, None)
+      bd-49f-etf-ownership-daily + {bd:[49f]} -> ({firm}-etf-ownership-daily, bd)  [now keys with cot/inf]
+      bd-49f-runner              + {bd:[49f]} -> ({firm}-runner, bd)."""
     s = name or ""
     for v in firm_values:
         if not v:
             continue
         new, n = re.subn(r"(?<![A-Za-z0-9])" + re.escape(v) + r"(?![A-Za-z0-9])", "{firm}", s, count=1)
         if n:
+            aliases = (firm_aliases or {}).get(v) or []
+            for a in sorted(aliases, key=len, reverse=True):   # longest-first: strip '49financial' before '49f'
+                if a:
+                    new = re.sub(r"(?<![A-Za-z0-9])" + re.escape(a) + r"(?![A-Za-z0-9])", "", new)
+            if aliases:
+                # collapse separator debris the alias removal left ('{firm}--etf' -> '{firm}-etf') + edge-trim.
+                new = re.sub(r"([-_/. ])[-_/. ]+", r"\1", new)
+                new = re.sub(r"^[-_/. ]+|[-_/. ]+$", "", new)
             return new, v
     return s, None
 
@@ -596,62 +625,114 @@ def variance_prose(verdict: dict | None, phrasing: dict, disposition_map: dict |
     return s.strip()
 
 
-def _compute_variances(nodes: dict, memberships: dict, firm_values: list) -> dict:
+def _compute_variances(nodes: dict, memberships: dict, firm_values: list,
+                       firm_aliases: dict | None = None) -> dict:
     """{arn -> verdict|None} for the whole corpus (the FREE build_corpus path -- the sibling groups are the
     already-loaded set). Groups by (NODE_TYPE, position_key); structure = the C2 membership SET (reuse
     memberships). The node_type in the key keeps a resource's twin the SAME KIND -- an S3_BUCKET's firm-twin
     is a bucket, NOT the same-named S3_BUCKET_POLICY (whose bare arn holds no motif membership; colliding them
     inverted the verdict). Within a (type,firm) slot a real-ARN node wins over a bare-arn one. Empty firm_values
-    (catalog absent) -> {}. Graph-free given its inputs."""
+    (catalog absent) -> {}. Graph-free given its inputs.
+
+    OVER-MERGE GUARD (CTO arch-gate cond.2): firm-alias normalization (firm_aliases) collapses a firm's
+    redundant identity tokens (bd-49f-* -> {firm}-*) so a resource keys with its cross-firm twins. That could,
+    in principle, collapse two GENUINELY-DISTINCT same-firm resources (bd-49f-x and a bare bd-x both -> {firm}-x)
+    and silently drop one. The guard is a two-pass detect-then-revert: if >=2 DISTINCT value-only keys among
+    REAL-ARN nodes land in one (node_type, firm, normalized_key) slot, the strip merged distinct resources ->
+    revert those to their value-only (pre-alias) key so they stay apart (never guess which is the twin). Grounded
+    ZERO real collisions in the live estate (2026-07-19); the guard is a safety net, not a live corrector. With
+    firm_aliases None/{} every normalized key == its value-only key -> the guard is inert and this is the pre-fix
+    behavior byte-for-byte."""
     if not firm_values:
         return {}
-    groups: dict = {}
-    node_firm: dict = {}
+    firm_aliases = firm_aliases or {}
+    # pass 1: per surviving node, the normalized key (nk, alias-stripped) + value-only key (vk, over-merge oracle)
+    recs: list = []
     for arn, node in nodes.items():
-        pk, firm = _position_key(node.get("name") or arn, firm_values)
+        name = node.get("name") or arn
+        nk, firm = _position_key(name, firm_values, firm_aliases)
         if firm is None:
             continue
-        key = (node.get("node_type") or "", pk)
+        vk, _ = _position_key(name, firm_values)          # value-only key == pre-alias-strip behavior
+        recs.append((arn, node, name, nk, vk, firm))
+    # detect over-merge: a (node_type, firm, nk) slot holding >=2 distinct value-only keys among real ARNs
+    vk_by_slot: dict = {}
+    for arn, node, name, nk, vk, firm in recs:
+        if _is_real_arn(arn):
+            vk_by_slot.setdefault(((node.get("node_type") or ""), firm, nk), set()).add(vk)
+    overmerged = {slot for slot, vks in vk_by_slot.items() if len(vks) > 1}
+    # pass 2: group; over-merged slots fall back to the value-only key (distinct resources stay distinct)
+    groups: dict = {}
+    node_firm: dict = {}
+    for arn, node, name, nk, vk, firm in recs:
+        ntype = node.get("node_type") or ""
+        use_key = vk if (ntype, firm, nk) in overmerged else nk
+        key = (ntype, use_key)
         struct = frozenset(i for (i, _) in (memberships.get(arn, {}).get("c2") or []))
         slot = groups.setdefault(key, {})
         prev = slot.get(firm)
         if prev is None or (_is_real_arn(arn) and not _is_real_arn(prev[2])):
-            slot[firm] = (node.get("name") or arn, struct, arn)
+            slot[firm] = (name, struct, arn)
         node_firm[arn] = (firm, key)
     return {arn: _variance_verdict(firm, groups.get(key, {})) for arn, (firm, key) in node_firm.items()}
 
 
 def load_one_variance(arn: str, node_name: str, node_type: str, this_membership: dict,
-                      firm_values: list) -> dict | None:
+                      firm_values: list, firm_aliases: dict | None = None) -> dict | None:
     """Single-ARN variance (the --describe path): find the SAME-node_type firm-siblings sharing this node's
     position_key and compute the verdict. None when the catalog is absent (firm_values=[]) or the node carries
     no firm dimension. node_type is part of the sibling identity -- a bucket's firm-twin is a bucket, not the
     same-named policy. Cost = at most TWO TARGETED comp-kuzu queries (no full-graph sweep): sibling names are
     the position_key with '{firm}' substituted back per declared value (that IS the sibling model), fetched by
-    an exact name-IN + node_type filter; then ONE BATCHED motif-membership read for all sibling ARNs."""
+    an exact name-IN + node_type filter; then ONE BATCHED motif-membership read for all sibling ARNs.
+
+    ALIAS-NORMALIZE (firm_aliases): the forward key is now LOSSY (bd-49f-* collapsed the '49f'), so a bare
+    value-substitution ('{firm}'->'bd') would MISS the real bd-49f-* sibling. Over-generate the candidate names
+    per firm -- the bare value AND value+alias forms (fused + common separators) -- so the name-IN query finds
+    the real sibling however it is spelled. Over-generation is SAFE (phantom candidates match no node). If TWO
+    DISTINCT real-ARN siblings match one firm (the over-merge case), it is ambiguous which is the twin -> drop
+    that firm from the group (never guess), mirroring _compute_variances' guard on the corpus path."""
     if not firm_values:
         return None
-    pk, firm = _position_key(node_name or arn, firm_values)
+    firm_aliases = firm_aliases or {}
+    pk, firm = _position_key(node_name or arn, firm_values, firm_aliases)
     if firm is None:
         return None
     this_struct = frozenset(i for (i, _) in (this_membership.get("c2") or []))
-    # reconstruct each firm-sibling's exact NAME by substituting the firm token back into the position_key.
-    name_to_firm = {pk.replace("{firm}", v): v for v in firm_values}
+    # reconstruct each firm-sibling's candidate NAME(s): '{firm}' -> the value AND value+alias forms (lossy
+    # forward key -> over-generate the inverse). name_to_firm maps every candidate spelling back to its firm.
+    name_to_firm: dict = {}
+    for v in firm_values:
+        forms = {v}
+        for a in firm_aliases.get(v, []):
+            if a:
+                forms.add(v + a)                        # fused (bd49f)
+                for sep in ("-", "_"):
+                    forms.add(v + sep + a)              # value-sep-alias (bd-49f / bd_49f)
+        for form in forms:
+            name_to_firm[pk.replace("{firm}", form)] = v
     name_list = ", ".join("'" + _q_escape(n) + "'" for n in name_to_firm)
     rows = _kuzu_json(
         f"MATCH (n:CloudNode) WHERE n.arn <> '' AND n.node_type = '{_q_escape(node_type or '')}' "
         f"AND n.name IN [{name_list}] RETURN n.arn AS arn, n.name AS name")
     group = {firm: (node_name or arn, this_struct, arn)}   # self, membership already in hand
     sib_arn_by_firm: dict = {}
+    ambiguous_firms: set = set()
     for r in rows:
         rarn, rname = r.get("arn"), r.get("name") or ""
         rfirm = name_to_firm.get(rname)
         if not rarn or rarn == arn or rfirm is None or rfirm == firm:
             continue
         prev = sib_arn_by_firm.get(rfirm)               # prefer a real-ARN sibling over a bare-arn one
+        if prev is not None and prev != rarn and _is_real_arn(prev) and _is_real_arn(rarn):
+            ambiguous_firms.add(rfirm)                  # over-merge: 2 distinct real siblings -> can't pick
+            continue
         if prev is None or (_is_real_arn(rarn) and not _is_real_arn(prev)):
             sib_arn_by_firm[rfirm] = rarn
             group[rfirm] = (rname, None, rarn)           # placeholder; structure filled from the batch read
+    for f in ambiguous_firms:                            # drop ambiguous firms entirely (never guess the twin)
+        sib_arn_by_firm.pop(f, None)
+        group.pop(f, None)
     sib_arns: list = list(sib_arn_by_firm.values())
     if sib_arns:
         arn_list = ", ".join("'" + _q_escape(a) + "'" for a in sib_arns)
@@ -754,8 +835,9 @@ def build_corpus(graph_tuple=None, memberships=None, variances=None) -> dict[str
         memberships = {} if graph_tuple is not None else load_memberships()
     if variances is None:
         # in-VPC (graph_tuple) has no motif/variance substrate -> {}; dev-box computes from memberships.
+        _vc_dims = _load_variance_catalog()[0]
         variances = {} if graph_tuple is not None else _compute_variances(
-            nodes, memberships, _firm_values(_load_variance_catalog()[0]))
+            nodes, memberships, _firm_values(_vc_dims), _firm_aliases(_vc_dims))
     corpus: dict[str, SummaryDoc] = {}
     for arn, node in nodes.items():
         corpus[arn] = derive_summary(arn, node, out_edges.get(arn, []), in_edges.get(arn, []),
@@ -909,7 +991,8 @@ def describe(query: str) -> dict:
         return {"query": query, "resolved": arn, "node_absent": True}
     memb = load_one_membership(arn)
     dims, var_phrasing, var_disp = _load_variance_catalog()
-    var = load_one_variance(arn, node.get("name") or "", node.get("node_type") or "", memb, _firm_values(dims))
+    var = load_one_variance(arn, node.get("name") or "", node.get("node_type") or "", memb,
+                            _firm_values(dims), _firm_aliases(dims))
     doc = derive_summary(arn, node, out_edges, in_edges, membership=memb, variance=var)
 
     def _rel(edges, incoming):
@@ -1226,14 +1309,25 @@ def self_test() -> int:
     FULL = frozenset({"a-access", "a-serve", "a-store", "b-io"})
     PART = frozenset({"a-store", "a-access"})
     FV = ["bd", "cot", "inf"]
+    # firm-alias map (mirrors variance_dimensions.yaml firm_aliases) -- the client-alias tokens _position_key
+    # strips once the VALUE token matched (offline fixture; the live catalog is read via _firm_aliases).
+    FA = {"bd": ["49financial", "blackdiamond", "bd49f", "49f"], "cot": ["cottonwood"], "inf": ["inflection"]}
 
     def _grp(**kw):  # firm -> (name, structure, arn)
         return {f: (f"opal-data-{f}", s, f"arn:{f}") for f, s in kw.items()}
 
-    # (a) position_key: strip the firm token at a boundary; no-firm -> None (denominator, no guess).
+    # (a) position_key: strip the firm VALUE token at a boundary; no-firm -> None (denominator, no guess).
+    #   value-only path (no alias map) is UNCHANGED / graceful; the alias path collapses bd-49f-* -> {firm}-*.
     m10a = (_position_key("opal-data-bd", FV) == ("opal-data-{firm}", "bd")
             and _position_key("opal-data-demo", FV) == ("opal-data-demo", None)
-            and _position_key("bd-49f-runner", FV) == ("{firm}-49f-runner", "bd"))
+            and _position_key("bd-49f-runner", FV) == ("{firm}-49f-runner", "bd")          # value-only: unchanged
+            # ALIAS-STRIP (the @c2a0cd66b fix): 49f collapses so bd keys WITH cot/inf --------------------------
+            and _position_key("bd-49f-etf-ownership-daily", FV, FA) == ("{firm}-etf-ownership-daily", "bd")
+            and _position_key("cot-etf-ownership-daily", FV, FA) == ("{firm}-etf-ownership-daily", "cot")
+            and _position_key("bd-49f-runner", FV, FA) == ("{firm}-runner", "bd")
+            and _position_key("opal-data-bd", FV, FA) == ("opal-data-{firm}", "bd")          # no alias residual
+            # SCOPE GUARD: case-sensitive VALUE-token match -> 'Inflection Models' is NOT firm-keyed (no verdict)
+            and _position_key("Inflection Models", FV, FA) == ("Inflection Models", None))
 
     # (b) TWIN case: all three identical -> bd=Canonical (alpha-first), cot/inf=Twin of bd.
     gt = _grp(bd=FULL, cot=FULL, inf=FULL)
@@ -1296,12 +1390,38 @@ def self_test() -> int:
             and "-- no canonical majority (candidate -- advisory"
             in variance_prose(nb, ph2, disp, {"firm": {"allowed_facets": []}}))
 
-    m10 = m10a and m10b and m10c and m10d and m10e and m10f and m10g and m10h and m10i
+    # (j) ALIAS-FIX end-to-end via _compute_variances: 3-way grouping (the @c2a0cd66b fix) + the OVER-MERGE
+    # GUARD (CTO arch-gate cond.2). All nodes share ONE identical membership so GROUPING (not structure) is
+    # what is exercised. Real ARNs so the guard's real-ARN test engages.
+    def _n(nm):   # (arn, node) -- a real-ARN LAMBDA node named nm
+        return f"arn:aws:lambda:us-east-1:0:function:{nm}", {"name": nm, "node_type": "LAMBDA"}
+
+    def _arn(nm):
+        return f"arn:aws:lambda:us-east-1:0:function:{nm}"
+
+    # (j1) THE FIX: bd-49f-y groups 3-way with cot-y/inf-y (no bare bd-y) -> all three verdict, bd=Canonical.
+    n1 = dict([_n("bd-49f-y"), _n("cot-y"), _n("inf-y")])
+    m1 = {a: {"c2": [("a-x", "")], "c3": []} for a in n1}
+    r1 = _compute_variances(n1, m1, FV, FA)
+    m10j1 = (r1[_arn("bd-49f-y")] is not None and r1[_arn("cot-y")] is not None
+             and r1[_arn("inf-y")] is not None and r1[_arn("bd-49f-y")]["kind"] == "Canonical"
+             and r1[_arn("cot-y")]["kind"] == "Twin" and r1[_arn("inf-y")]["kind"] == "Twin")
+    # (j2) THE GUARD: bd-49f-z AND a bare bd-z both alias-normalize to {firm}-z -> ambiguous which is cot-z's
+    # twin -> revert to value-only keys so they stay DISTINCT (never silently drop one). bd-z pairs with cot-z;
+    # bd-49f-z is a singleton -> None. Nothing merged. (Grounded: this collision does NOT occur in the estate.)
+    n2 = dict([_n("bd-49f-z"), _n("bd-z"), _n("cot-z")])
+    m2 = {a: {"c2": [("a-x", "")], "c3": []} for a in n2}
+    r2 = _compute_variances(n2, m2, FV, FA)
+    m10j2 = (r2[_arn("bd-49f-z")] is None                       # kept apart -- NOT merged into the group
+             and r2[_arn("bd-z")] is not None and r2[_arn("cot-z")] is not None)  # the genuine {firm}-z pair survives
+    m10j = m10j1 and m10j2
+
+    m10 = m10a and m10b and m10c and m10d and m10e and m10f and m10g and m10h and m10i and m10j
     ok &= m10
-    print(f"  M10 C3/Twin variance (posn-key={m10a}, twin={m10b}, fork-inf={m10c}, "
+    print(f"  M10 C3/Twin variance (posn-key+alias={m10a}, twin={m10b}, fork-inf={m10c}, "
           f"fork-BD[modal-ref-detects]={m10d}, no-majority={m10e}, prose-nonfork={m10f}, "
-          f"singleton->none={m10g}, empty-modal-suppressed={m10h}, v2-advisory-disposition={m10i}): "
-          f"{'PASS' if m10 else 'FAIL'}")
+          f"singleton->none={m10g}, empty-modal-suppressed={m10h}, v2-advisory-disposition={m10i}, "
+          f"alias-3way+overmerge-guard={m10j}): {'PASS' if m10 else 'FAIL'}")
 
     print(f"=== self-test: {'PASS' if ok else 'FAIL'} (10/10) ===" if ok else "=== self-test: FAIL ===")
     return 0 if ok else 1
