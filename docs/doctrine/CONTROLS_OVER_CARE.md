@@ -292,6 +292,31 @@ field.**
 
 ---
 
+## III-a. An exercise that cannot REACH the governed state tests nothing — and a describing-comment never beats the state file
+
+Two edges the session's "exercise, don't assume" discipline did not cover, earned when the VERIFIER ITSELF
+passed a false verdict: CVO cleared *"broad repo-grep = staged-nudge"* while COMPRAIL Gate-1's estate-scoped
+broad-grep DENY was **ARMED** (`org/mcp/comprail-gate1.enforce` present); ~Z caught it, CVO retracted + owned.
+**The regime worked on the controller** — which is the point, and the deepest cut of the discipline.
+
+> **INPUT-REACHABILITY: exercising an input OUTSIDE the control's governed domain proves nothing about the
+> governed state.** "Exercise the path that fails if the claim is false" (Rule 22a) has a hidden precondition:
+> the input must actually **reach** the governed case. Both agents *did* exercise — on NON-governed paths
+> (non-estate files) — and both exercises passed while the governed case (an estate-scoped path) would have
+> DENIED. A test on an input the control never evaluates looks like a control and tests nothing. **Before you
+> accept a GREEN, ask: did my exercise input actually reach the branch the claim is about?** A positive
+> control run outside the governed domain is not a control; it is a comfort.
+
+> **STATE-FILE > DESCRIBING-COMMENT: when the live state and prose that describes the default disagree, the
+> state wins, always.** The same miss had contradictory evidence — a marker FILE saying ARMED vs a hook
+> COMMENT saying staged — and it resolved toward the comment. The comment describes the DEFAULT/intent; the
+> marker file IS the live state. A describing-comment is a *claim about* the state, not the state; ground on
+> the enforce-marker / applied config / live primitive, never the prose that narrates it. Same family as VL#8
+> (a stale record speaks with authority) and comp-iam's DESIRED-vs-APPLIED — the describing layer drifts from
+> the enforcing layer, and only the enforcing layer is true.
+
+---
+
 ## III-b. Conservation is a nearly-useless oracle
 
 > # **CONSERVATION IS INVARIANT UNDER A SWAP — AND UNDER A SIMULTANEOUS BOTH-SIDES DELETION.**
