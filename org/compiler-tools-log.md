@@ -21672,3 +21672,14 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 2.0.0_SA_COO | none of my own (project-decomposition + records window) -- decomposition comp-mandates embedded IN the WS TOs; CVO LD-0318 verify-loop (comp-system/molecule/verify/prd-delta) is the project standing tool-regime | NFRA_SYSPARITY decompose (4 WS TOs) + idle-agent reallocation records | n/a |
 | 2026-07-19 | 2.0.0_SA_COO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 2.0.0_SA_COO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-19/s... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-system | comp-system --self-test | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-system | comp-system --gate | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_debt/grounding_l... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/modules/graph/comp_debt/grounding_lib.py org/modules/graph/compproo... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_NESTEDABSTRACT.P2 | drift_gate.py | --self-test / check (exit-code gate; re-measured off broken pipe-tail rc) | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_COMPSIMILAR.PH2 | comp-similar | --self-test (~D engine gate) | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_COMPSIMILAR.PH2 | comp-manifest-check | completeness (~D registration; 78/60) | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | audit-archive-invoker | audit-archive-invoker.py | exec exercise -> caught dead WSL-bash commit path; minted S3 + re-run rc0 post-fix | PARTIAL-then-PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | git_bash-class | Grep | victim-scan python->bash callers | FOUND (4 ad-hoc + server.py 12-day-dead broker worker) |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-19/s... | PASS |
