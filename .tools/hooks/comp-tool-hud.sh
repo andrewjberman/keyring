@@ -214,6 +214,12 @@ fi
 # graph-backed path. No-graph (new project / non-estate lib [exited above via the deck_generation carve-out]
 # / generic / pathless) stays advisory, NEVER denied (governing principle + AC#5 over-gate guard). The
 # #rail-checked override + /freeform are honored by the shared deny path below. FP-test: comprail-gate1-fptest.sh.
+# SCOPE PRECISION (exercised 2026-07-19, ~Z): Gate-1 fires ONLY on class=comp_which, so EARLIER classifiers
+# SHADOW two estate sub-shapes to ADVISORY before Gate-1 sees them -- s3_artifact (:144, (gold|silver|platinum)/)
+# captures data/*/scripts/{gold,silver}, and portal (:150) captures portal/src. So the estate regex below
+# MATCHES data/*/scripts|portal/src, but the LIVE HARD-DENY reaching Gate-1 is NARROWER: {bare data/*/scripts,
+# .../bronze/, infra/aws, .tf}. gold/silver-layer + portal-src get the earlier class's ADVISORY nudge (railed,
+# not denied). Tightening this shadow (should they hard-deny?) = a DEFERRED rail-behavior call, not a doc fix.
 if [ "$tool" = Bash ] && [ "$class" = comp_which ] && [ -f "$WS/org/mcp/comprail-gate1.enforce" ]; then
   if ! printf '%s' "$query" | grep -qE '\|' \
      && printf '%s' "$query" | grep -qE '(grep[[:space:]]+-[A-Za-z]*[rR]|(^|[^A-Za-z])rg[[:space:]]|(^|[^A-Za-z])find[[:space:]])' \
