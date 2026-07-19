@@ -1,5 +1,15 @@
 # variance_dimensions.yaml -- the GOVERNED declared-variance-dimension catalog
 #
+# >> NAME NOTE (NFRA_ONTOCLARITY WS-A fog-e, CTO-approved ANNOTATE 221516Z): "dimensions" here = the variance
+#    AXES (e.g. `firm`) along which cross-instance variance is measured -- NOT the variance VOCABULARY. The 6
+#    Variance VERDICTS (Canonical / Twin / Fork-Shadow / Variant / Superseded / Orphan) ARE the vocabulary; they
+#    live in `phrasing:` below + the rule-bank. Do NOT read the axis-names as the verdict set. (Name kept, not
+#    renamed: the v1 schema is frozen additive-only with live consumers -- annotation resolves the mis-read at
+#    zero blast radius.)
+# >> CANONICAL AUTHORITY (WS-A fog-b): the ratified ontology vocab's single machine source-of-record is
+#    org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml (meta.canonical_source). This catalog is the FIRM-dimension
+#    realization the rule-bank's VARIANCE section references -- not an independent vocab copy.
+#
 # Owner: NFRA_ONTOLOGY (0.8.0_AE_CloudComp~C). Consumer: summary_corpus.py variance_verdict (~D wire @566ea8cd7).
 # Contract: NFRA_ONTOLOGY_VARIANCE_FIRM_CATALOG_AND_CONTRACT.md @1f258ee21. Mechanism: @f904033ea.
 # Proposed canonical location: org/modules/graph/variance_dimensions.yaml (EXEC-LANDS -- debtscan/graph canon

@@ -13,7 +13,17 @@ meta:
                    # mechanism (grouping_key (node_type,position_key), modal-ref, membership-SET narrowing,
                    # []+advisory candidate regime, empty-modal/no-majority) -- contract @1f258ee21 + catalog v2 @136999d97 (co-land LD-0315)
   ratified: "LD-0311 @086238604"
-  frame: "1 C0-C3 CSE ladder + 3 orthogonal axes {TYPE=CSE / RELATION=CSE-re-layered / ROLE=net-new} + VARIANCE operator"
+  # CANONICAL SOURCE-OF-RECORD (NFRA_ONTOCLARITY WS-A #1, CTO 221516Z): THIS FILE is THE single machine-authority
+  # for the ratified ontology vocab. The deliverable mirrors + canon-patterns.yaml + CLOSED_SET.md DEFER to it
+  # (each carries a banner saying so) -- never consume a copy. Version scheme = meta.version, bumped ONLY by
+  # explicit promotion with a printed denominator (LAW-2); no separate v0.x pin.
+  canonical_source: "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml"
+  # ROOT TWO-LAYER DISAMBIGUATION (WS-A fog-a -- the never-disambiguated ROOT fog): "ontology" is ONE WORD for
+  # TWO DISTINCT LAYERS. Stated here ONCE, authoritatively; every consumer REFERENCES this, never re-states it.
+  layers:
+    layer_1_cse_algebra: "the CSE C0-C3 ALGEBRA -- the compiled-system ladder (C0 facts -> C1 interactions -> C2 motifs -> C3 systems); the TYPE axis; cse_schema.py. The SUBSTRATE the archetype layer classifies -- NOT what 'the ontology' means when someone means the classification."
+    layer_2_archetype:   "the ARCHETYPE layer ABOVE the ladder -- 14 Roles / 10 Relations / 6 Variance verdicts; agnostic, plain-english, edge-derived. Concrete substrate types bind DOWN onto it via the adapter (canon-patterns.yaml). THIS is 'the ontology' when someone means the agnostic classification, distinct from the algebra."
+  frame: "1 C0-C3 CSE ladder (= layers.layer_1_cse_algebra) + 3 orthogonal axes {TYPE=CSE / RELATION=CSE-re-layered / ROLE=net-new} + VARIANCE operator (= layers.layer_2_archetype)"
   determinism: "every assignment is structure-derived; no match -> no label (counted in the denominator); no inference"
 
 # --- AXIS: ROLE (C0 label, edge-derived) -- 14, closed --------------------------------------------

@@ -1,5 +1,10 @@
 # canon-patterns.yaml -- NFRA_DEBTSCAN P2 canon-deviation pattern library
 #
+# >> DEFERS TO THE RULE-BANK (NFRA_ONTOCLARITY WS-A fog-b, CTO 221516Z): the single canonical machine
+#    source-of-record for the ratified ARCHETYPE vocab (14 Roles / 10 Relations / 6 Variance) is
+#    org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml (meta.canonical_source). This file is the concrete-type ->
+#    archetype ADAPTER/binding that CONSUMES that vocab, NOT an independent copy of it.
+#
 # CTO-authored architecture artifact (TO-D3, NFRA_DEBTSCAN PRD section 2c + AC4). Defines the
 # CANONICAL path-motifs of the estate so the DE/AE scorer can (a) enumerate every concrete instance
 # per pattern-class and (b) flag motif-frequency OUTLIERS -- a path-shape occurring 1-2x where the
