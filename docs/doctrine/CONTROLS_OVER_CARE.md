@@ -52,6 +52,17 @@ was recorded PASS. It was RIGGED, NOT PASSED.*
 **A CONTROL CAN PASS BECAUSE BOTH SIDES ARE EQUALLY BROKEN.**
 *A harness compared `HEAD_FAILED` against `HEAD_FAILED` off a 404 and scored it green.*
 
+**A CONTROL ONLY DISCRIMINATES WITHIN THE AXIS IT SAMPLES — THE AXIS IS PART OF THE STATE SPACE.**
+*CVO's AC4 lane-1 mutant (patched `ok=TRUE` vs canon `ok=FALSE`) was a REAL control — but BOTH arms ran
+comp-kuzu's PROJECTED edge inventory (53), so it was structurally blind to a RAW-axis error: 2 edge-types
+(`IN_SUBNET`, `SENDS_TO`) live only on the producer's raw `graph_edges` (55) and were invisible to the
+projected sample. A rigorous point-verification survived review because it sampled the WRONG axis
+(Verification Law #6); the live-cadence check on the CONSUMER's raw axis caught both on run #1. This
+sharpens "enumerate the state space before choosing a control" (Rule 22b): the AXIS is part of the state
+space — a control that does not enumerate the axis it samples is measuring less than it thinks, and
+reports full confidence while doing so. (CVO surfaced, CTO generalized, COO consolidated; paired with the
+LD-0314 CHECK-LIVE-NOT-FROZEN instance-#4 run-#1 catch, 2026-07-18.)*
+
 **A CONTROL THAT FAILS LOUDLY GETS FIXED. A CONTROL THAT PASSES VACUOUSLY GETS TRUSTED.**
 **And a number that is merely WRONG gets QUOTED — because nothing about a wrong number announces itself.**
 Three costumes, one shape; all three ran on 2026-07-16 and only the loud one summoned anyone:
