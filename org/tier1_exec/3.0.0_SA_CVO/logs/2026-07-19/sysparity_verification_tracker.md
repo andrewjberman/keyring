@@ -18,7 +18,7 @@ verdicts roll into THIS tracker + the WS only — NO MSTR/COO turn (don't genera
 
 | # | Domain | Assumption (brief) | Status | Exercise evidence @HEAD |
 |---|---|---|---|---|
-| b | ontology | 06 reports cse_schema @0.4 while live=0.5 | **CONFIRMED** (2000Z) | 06_current_state.json:81 "@0.4"; cse_schema.py:42 SCHEMA_VERSION="0.5". Real declarative drift (= the OWNS 0.4->0.5 bump re-signed @b6e7055ef; 06 never regenerated). -> WS-2 de-stale. |
+| b | ontology | 06 reports cse_schema @0.4 while live=0.5 | **CONFIRMED-then-FIXED** (2000Z->2155Z) | fire-1 CONFIRMED drift; NOW FIXED by WS-2 part-a @4e5a78abc -- system_parity.py ont-cse-version-current PASS ("stale 0.4 absent"). Baseline MOVED (assumption closed). CHANGED-verdict, surfaced to ~A/MSTR. |
 | c | ontology | surface_map.json omits RULE_BANK.yaml/variance_dimensions.yaml | **CONFIRMED** (2000Z) | surface_map.json:78-79 watches canon-patterns + AB_MATERIALIZE_SPEC only. = WS-3. SAME abstraction_loop as the drift-gate I verified @183xZ -> a 2nd facet of my C1 (under-inclusive denominator). WS-3 BAR: seeded RULE_BANK.yaml change must FIRE the gate (+ variance_dimensions + cse_emit_graphhead — all 3, one fix). |
 | e | infra | infra SDK never cloud-applied (acme/verify-report.json tier=local) | **CONFIRMED** (fire-2 2012Z) | LOCATED at infra/system/sdk/tenants/acme/verify-report.json:2 = `"tier":"local"` (brief's path citation was imprecise; finding HOLDS). fire-1 could-not-verify was a path-resolution issue. |
 | a | eng+loops | comp-system --check = SYSTEM STALE (ledger 80->82, tools 59->61) | **CONFIRMED** (fire-2 2012Z) | live `comp-system --check` = "SYSTEM STALE: 5 managed-region spans drifted -- 00_synthesis/03_comp_tools/README ledger_union 80->82; 03 tools_index 59->61". Exact match. -> WS-2 de-stale. |
@@ -41,6 +41,13 @@ is debt" prose-synonym — the frozen-not-live hole one layer in.)
 
 ## Next-fire pickup
 - fire-5: infra sub-claims (intraday-IAM describe-grant would-AccessDeny; producer-plane 3/6 scheduler-divergence; declared-but-unwired toggle vars) — the last un-exercised S3 domain. Then §6 workstream premises. /prd-delta DEFERRED until WS work progresses (WS-1 just GO'd @d60d4584a; running it now = uninformative ~0%; run when >=2 WS have TO-activity).
+
+## WS-gate verdicts (LD-0318 PRD-S7 per-WS CVO gate) + standing-role updates (2155Z)
+- **WS-7** (rail-description + count-reconcile) CLEAR: (a) OVERSTATED-self-caught by ~Z, corrected @f6ff89fa0 -> re-exercised, matches the live hook (aws/.tf=DENY, broad-grep=STAGED-NUDGE); (b) @82d447392 incorporated my ~61-vs-~12 flag; (c) 4 front-ends PASS; (d) scoping PASS. The fix for "names-rail-without-enforcement" itself overstated enforcement -> the SYSPARITY meta-defect, caught by exercising the gate.
+- **WS-1** (parity metric) SOUND: denominator=declared scope, exclusions NAMED not scored (VL#6); axis=mechanical COVERAGE (not accuracy -- honestly defers accuracy to the CVO gate); ct-rail metric-GREEN while CVO-RED (WS-7 a) = the metric+CVO division proven live. FINDING: metric reads WORKING TREE not committed HEAD -> in the shared worktree it read ~C's uncommitted 03 edit; vintage must be declared/pinned. Routed ~A.
+- **WS-4 Part B** (SDK vocabulary-bound) PASS: SDK ontology_ref CITES the rule-bank artifact (not hand-copy) -- the canonical artifact I byte-verified in item-1. Part A (/system citations) pending -> full AC-4 verify then.
+- **LD-0319** (PERMANENT load-time parity control, Andrew-direct): mechanism VALIDATED both controls (positive=reads true 100/75/80/50 not 100%-clean; negative=isolated in-memory seed FLIPS PASS->FAIL, LIVE). 3 homes landed: prompt.md @b8fa22d0c + XXX.md 1b-F + ajb.ps1 @150df9d23. Load-TRIGGER = could-not-verify-until-cold-load (rides next session load). Working-tree-vintage finding routed ~A.
+- **ONTOCLARITY (SYSPARITY Part 2)** now in-regime (PRD @b9b132933, SEMANTIC axis): a fog class resolves only when the ambiguity is GONE (not reworded / not "a word appears") -- my word-grep-mis-verifies finding DROVE this explicit binding. 10 fog-spots = the Part-2 assumption list; verify as ~C's WS-A..D land.
 
 ## Burndown status (fire-4)
 Verified: b, c, a, d, e, ct-i, ct-ii, 4a, eng-1, eng-2 (10 items) + 4b/4c structural theses grounded on sub-findings. Remaining: S3-infra sub-claims (intraday-IAM / producer-plane / toggles), §6 WS premises, /prd-delta (deferred). Domains: comp-tools DONE (ct-i/ct-ii + count), ontology DONE (b/c/d), eng DONE (a/eng-1/eng-2), infra PARTIAL (e done; IAM/producer/toggles remain).
