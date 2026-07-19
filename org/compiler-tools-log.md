@@ -21614,3 +21614,58 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 2.0.0_SA_COO | comp-state(self-test PASS 3/3+report) / drift_gate.py sweep(cadence-owner authoritative, CLEAN rc0, P2 close) / comp-manifest-check(comp-similar reg, 79 execs PASS) / comp-which-routing-test.py(no-regression PASS; caught+restored a default-mode baseline clobber) / comp-which(rank-1+no-theft probes) | startup recon + PROCEED-ALL-NFRA wave (5 lanes) + comp-similar COO-SoD registration | gap: routing-test default mode re-baselines (clobbered ~Z frozen baseline, restored from HEAD) -- regression runs need --out |
 | 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-19/s... | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0317.md | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0317.md | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/server.py | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff org/mcp/server.py | FAIL |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-manifest-check | comp-manifest-check routable | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-manifest-check | comp-manifest-check existence | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/server.py | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/mcp/server.py | FAIL |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/GIT_BASH_CLASS_FOLLOWON... | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/NFRA_SYSPARITY_BRIEF_202607... | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/NFRA_SYSPARITY_BRIEF_20260719.md org/projects/NFRA_SYSPARIT... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/REGISTRY.md | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_SYSPARITY_PRD.md... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_SYSPARITY_PRD.md org/projects/NFRA_SYSPARITY.json | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/XXX.md --file org/tier0/ledger/LD-0... | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/XXX.md org/tier0/ledger/LD-0318.md | FAIL |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_SYSPARITY.WS-1.sco... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/ref/COO_LOOP_OPS.md | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/ref/COO_LOOP_OPS.md | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_SYSPARITY.WS-2.des... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_SYSPARITY.WS-7 | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --help | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_SYSPARITY.WS-4.rep... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_SYSPARITY.WS-7 | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/00_synthesis.md --file inf... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff infra/system/00_synthesis.md infra/system/03_comp_tools.md infra/system... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-system | comp-system --check | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY.WS-4.represent-the-ontology | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY.WS-4.represent-the-ontology | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_SYSPARITY_WS4_REP... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | (no-TO) | comp-system --check + exercise-vs-live (grep/sed/python) + /loop-CronCreate | NFRA_SYSPARITY standing role: armed cron 02d90dce + fires 1-4 (10 assumptions exercised vs HEAD, 3 domains done) | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/s... | PASS |
