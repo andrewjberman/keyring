@@ -21103,3 +21103,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 2.0.0_SA_COO | AC4-v2 | comp-surface-check+risk-reflex | safe-commit embedded on cse_schema.py v2 land @c90390409 | PASS (surface OK / reflex CLEAN) |
 | 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-19/s... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/abstraction_loop/PLAYB... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/abstraction_loop/PLAYBOOK.md infra/system/sdk/abstract... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/summary_corp... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/debtscan/summary_corpus.py | PASS |
+2026-07-18 | 3.0.0_SA_CVO | grep/Read (extract_pipeline.py FIRM_BUCKET/build_firm_gold_dag/build_mdpf_dag), ls (data/cot/scripts/gold mtime) | root-cause grounding: refined 0.7.0 hypothesis -- cot IS in FIRM_BUCKET w/ working current branch (caller-gap not registry-exclusion); mdpf not a firm (own build_mdpf_dag); fix mis-scope caught before build
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-18/c... | PASS |

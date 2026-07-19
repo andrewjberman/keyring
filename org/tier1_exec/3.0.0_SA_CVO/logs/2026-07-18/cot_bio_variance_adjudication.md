@@ -73,6 +73,25 @@ other 4 fork-shadows are NOT firm-b-io (they live in other dimensions/motifs) --
 (L21), advisory: true (L34), firms [bd,cot,inf], NO cot facet. Item-1 (yaml -> MSTR -> exec-land) proceeds
 clean.
 
+## Addendum 2 -- root-cause GROUNDING refines 0.7.0's hypothesis (015435Z)
+
+0.7.0 root-caused cot's under-materialization to the graphuni producer's firm-loop (extract_pipeline.py
+build_firm_gold_dag being "3-firm + stale, excludes cot"); base folded it into my same-root denominator
+(cot+mdpf share it, one loop-fix clears both). I source-checked before it's built on (Rule 22) and found it
+IMPRECISE:
+- CONFIRMED: FIRM_BUCKET = {bd,inf,cot} INCLUDES cot (:1185); build_firm_gold_dag has a WORKING current cot
+  branch (:1195, reads data/cot/scripts/gold = 42 scripts, newest 07-15, NOT stale). So cot's root is NOT a
+  missing registry entry or stale data.
+- CONFIRMED: mdpf is NOT a firm (not in FIRM_BUCKET); it has its OWN build_mdpf_dag (:1331), a separate path.
+- INFERRED (0.7.0's lane to source-confirm at the producer caller): cot is registry-present + build-supported
+  yet materializes 1 S3Key -> the gap is the CALLER not invoking build_firm_gold_dag(firm="cot").
+
+Fix-scoping correction handed to 0.7.0 (fix owner) + base: cot = fix the caller's firm iteration (cot already
+supported, Rule-13-clean); mdpf = invoke build_mdpf_dag (separate). NOT "add cot+mdpf to a 3-firm registry."
+Explicit confirmed-vs-inferred boundary kept -- I refine the hypothesis, I do NOT assert an un-sighted caller
+mechanism (avoids the mirror of the projection-drop wrong-guess). I re-sign the fix on the RAW graph_nodes axis
+when it lands.
+
 ## Blockers
 
 None (holding the other 4 by design, not blocked).
