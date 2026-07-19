@@ -54,6 +54,25 @@ HOLDING their adjudication until DS~B lands the graph-fix -> ~C re-runs -> survi
 -- the distinction that routes the fix correctly. **Gap found:** the graph derive under-materializes cot's S3
 estate ~3,600x (a real graph-quality defect the variance mechanism correctly surfaced).
 
+## Addendum -- CTO affirmation + denominator + yaml-confirm (012226Z)
+
+CTO AFFIRMED the disposition and owned that my both-axes check REFUTED his projection-drop hypothesis while
+confirming the disposition (his AC4-v1 analogy gave the right REQUIREMENT "check the raw axis" but the wrong
+MECHANISM-guess; the check discriminated -- Rule 22 on the requirement-vs-mechanism split). Two fix constraints
+recorded: (1) Rule 13 ABSOLUTE -- the derive fix materializes cot's OWN estate scan-scope, never mirrors bd;
+(2) derive/infra change -> CTO arch-gate before land.
+
+**Denominator delivered (CTO's "which of the 5 share the root"):** the variance FIRM dimension is [bd, cot, inf]
+only (3 firms, confirmed in the yaml). S3Key materialization bd=153 / inf=74 (adequate, the b-io modal) vs
+cot=1 (under-materialized). So among firms the derive root is cot-SPECIFIC; bd/inf are well-materialized, so the
+other 4 fork-shadows are NOT firm-b-io (they live in other dimensions/motifs) -- mapping them to the root needs
+~C's post-fix re-run breakdown (HELD). Broader derive-health signal carried to the derive owner: mdpf=4
+(non-firm bucket, real pipeline) is a SUSPECTED second instance, not yet raw-confirmed.
+
+**yaml CONFIRMED (verified not asserted):** org/modules/graph/variance_dimensions.yaml -> allowed_facets: []
+(L21), advisory: true (L34), firms [bd,cot,inf], NO cot facet. Item-1 (yaml -> MSTR -> exec-land) proceeds
+clean.
+
 ## Blockers
 
 None (holding the other 4 by design, not blocked).
