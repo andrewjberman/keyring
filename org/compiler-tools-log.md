@@ -21144,3 +21144,14 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-18 | 3.0.0_SA_CVO | grep/Read/python (extract_pipeline chokepoints, _held_path_hit, SOVEREIGN_HELD_MARKERS) | grounded cot-fix vs bd-sovereign-hold coupling: markers=black_diamond/schwab (NOT data/cot) -> cot NOT held -> cot fix DECOUPLED from CTO bd-hold ruling; bd-materialized-despite-hold puzzle flagged to CTO/~B
 | 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-18/c... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-cot' RETURN ... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn = 'arn:aws:s3:::opal-data-cot' RETURN ... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE (a.arn = 'arn:a... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' AND n.node_type = 'S3_BUCKET' AN... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp | (no-TO) | comp-describe | comp-describe arn:aws:s3:::opal-data-cot | PASS |
+2026-07-18 0.8.0_AE_CloudComp~C -- NFRA_ONTOLOGY variance arc: comp-describe (render-verify @87be394d3 + v2 re-verify @136999d97, bd/cot/inf/demo -- served-path EXERCISE, cot flipped "(debt)"->"(candidate -- advisory)"), comp-kuzu (CloudNode/Edge schema + firm-sibling grounding + cot under-materialization 1-vs-3600 S3Key), 11 safe-commits. Note: comp-describe firm-variance path slow post-rebuild (cold-cache, benign, exit 0).
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
