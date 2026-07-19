@@ -21700,3 +21700,23 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_SYSPARITY.WS-7 | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/03_comp_tools.md --file in... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_SYSPARITY.WS-7 | comp-pulse | comp-pulse diff infra/system/03_comp_tools.md infra/system/README.md infra/system/sdk/g... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/task_orders/NFRA_SYSPARITY.WS-8.reso... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_SYSPARITY.WS-2 (shared) | comp-system | comp-system --self-test | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_SYSPARITY.WS-2 (shared) | comp-system | comp-system --gate | FAIL |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_SYSPARITY.WS-2 (shared) | comp-system | comp-system --check | FAIL |
+| 2026-07-19 | 0.0.0_AB_MSTR | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/XXX.md --file org/tier0/ledger/LD-0... | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/XXX.md org/tier0/ledger/LD-0319.md | FAIL |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/README.md --file infra/sys... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff infra/system/README.md infra/system/scope_contract.json infra/system/sy... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_SYSPARITY.WS-5.sdk... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md --file docs/architecture/NFRA... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff CLAUDE.md docs/architecture/NFRA_SYSTEM_PRD.md | FAIL |
+| 2026-07-19 | 0.0.0_AB_MSTR | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/NFRA_ONTOCLARITY_BRIEF_2026... | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff docs/briefs/NFRA_ONTOCLARITY_BRIEF_20260719.md org/tier0/ledger/LD-0320.md | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-system | comp-system --gate | FAIL |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_SYSPARITY.WS-2 (shared) | comp-aws | comp-aws --help | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.WS-1 | comp-system --check + system_parity.py (built) | phase-1 comp-system --check STALE->CURRENT (premise moved, ~D WS-2 part-a); built+exercised system_parity.py (per-domain parity, denominator printed, exclusions named, VL#6-clean, reuses comp-system) | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
