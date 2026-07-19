@@ -1,0 +1,21 @@
+# audit-archive-invoker -- coverage MANIFEST (canonical list of audit logs to archive + verify).
+# One workspace-relative path per line; '#' begins a comment. A live audit-log-shaped file NOT listed
+# here reads as a COVERAGE-GAP finding (print-the-denominator) -- a new audit log is never silently
+# dropped from durability, the failure class this whole instrument exists to close. Adding a line is a
+# deliberate act that EXPANDS coverage (CTO-gated). Removing a live log's line without decommissioning
+# the log SEVERS its durability -- don't.
+# Owner: 0.7.0_AE_CloudOps. Gate: 1.0.0_SA_CTO. Established from the S2 (2026-07-16T175907Z) snapshot's
+# 13 covered logs. Do NOT list S1/S2 copies -- these are the LIVE paths.
+org/git-author-override-audit.log
+org/halt-gate-override-audit.log
+org/mass-deletion-audit.log
+org/safe-deploy-bypass-audit.log
+org/surface-check-ack-audit.log
+org/ws-charter-hard-block-audit.log
+org/mcp/agent-spawn-audit.log
+org/mcp/comp-detect-gate-override.log
+org/mcp/comp-which-rail.log
+org/mcp/log-open-ok-override.log
+org/mcp/orphan-audit.log
+org/mcp/sovereign-registry-override-audit.log
+org/tier0/audit/ledger-hook-audit.log
