@@ -1,0 +1,28 @@
+{
+  "project_code": "NFRA_SYSPARITY",
+  "macro_code": "NFRA",
+  "name": "System/SDK <-> reality parity -- establish + close how faithfully infra/system + sdk represent Opal's live engineering, ontology, comp-tools, and infrastructure, and convert parity-maintenance from care into a control",
+  "description": "Andrew-direct 2026-07-19 (VERBATIM): 'is /system, and the underlying /sdk folder, completely representative of how the engineering, ontology, comp tools, infrastructure, etc actually work in reality? ... do a comprehensive analysis to that end first to establish how close these folders represent the reality of the system so as to attempt to reach parity. write a brief on that and issue to CTO for an NFRA_SYSPARITY project.' MSTR ran a 4-domain grounded analysis (4 independent analysts + MSTR live-verification of the load-bearing findings). FINDING: the architecture representation is high-fidelity and self-aware, but parity is held by CARE (hand-passes + on-demand sweeps that have LAPSED), not a CONTROL -- the CHECK-LIVE-NOT-FROZEN doctrine (LD-0314) on the system's own self-description. The gap is UNEVEN: comp-tools ~85% / infrastructure ~80% (fresh but never cloud-exercised, Rule 22a) / engineering+loops ~70-75% (06_current_state 250 commits stale, comp-system --check = SYSTEM STALE) / ontology ~40% (absent from the 8 core docs; SDK v0.1 stub; 06 reports cse_schema 0.4 while live is 0.5; the drift-gate is BLIND to RULE_BANK.yaml -- the LD-0314 self-referential hole confirmed at its live instance). SYSPARITY = the baseline audit + the make-parity-a-CONTROL project (gate the 06 refresh, complete the drift-gate denominator, represent the ontology, exercise the SDK at cloud tier or rule local-only sufficient, SLA the incorporation debt). Distinct from NFRA_NESTEDABSTRACT (forward incorporation) -- SYSPARITY measures + closes the ACCUMULATED gap and checks whether the maintenance controls are even sufficient. Part 2 = NFRA_ONTOCLARITY (a separate ontology semantic-clarity audit; 10 fog-spots seeded).",
+  "prds": [
+    {
+      "path": "docs/briefs/NFRA_SYSPARITY_BRIEF_20260719.md",
+      "label": "NFRA_SYSPARITY brief (MSTR, 2026-07-19): 4-domain grounded parity analysis + 3 structural findings + scope ruling + recommended WS-1..8 + the CVO verification regime. Issued to CTO for the PRD.",
+      "date": "2026-07-19"
+    }
+  ],
+  "status": "active",
+  "phase": "CHARTERED 2026-07-19 (Andrew-direct, LD-0318). Brief issued to 1.0.0_SA_CTO for the PRD + arch-gate. Grounded 4-domain parity baseline established (comp-tools ~85% / infra ~80% / engineering+loops ~70-75% / ontology ~40%; composite ~70% within declared scope). Recommended workstreams (CTO PRD refines): WS-1 scope contract (first) / WS-2 de-stale + GATE 06 / WS-3 complete the drift-gate denominator / WS-4 represent the ontology / WS-5 exercise the SDK at cloud tier / WS-6 incorporation-debt SLA / WS-7 describe the rail + small honest lags / WS-8 resource-manifest cross-walk. STANDING VERIFICATION REGIME (Andrew-direct, LD-0318): 3.0.0_SA_CVO spot-checks EVERY assumption by domain AS the work is done, via /molecule + /verify + /prd-delta, on an ongoing 30-min /loop -- a workstream is not done until its domain's assumptions are CVO-verified. AWAITING: CTO PRD + the MSTR scope-ruling recommendation confirmation (hold pipeline-estate boundary / rule ONTOLOGY in-scope / make exclusions explicit).",
+  "blocking": "PRD pending 1.0.0_SA_CTO (owner). Scope ruling (S5 of the brief) pending CTO/Andrew confirmation -- rule the ONTOLOGY in-scope is the load-bearing call. NFRA_ONTOCLARITY (Part 2) chartered-as-named, sequenced AFTER WS-1 (its clarified definitions feed WS-4). Not a build blocker -- the baseline analysis is complete; this awaits the CTO PRD to decompose into TOs.",
+  "owner": "1.0.0_SA_CTO",
+  "owner_note": "Andrew-direct 'issue to CTO for an NFRA_SYSPARITY project' -- CTO owns the PRD + arch-gate (esp. WS-2/WS-3, the load-bearing control work) + the scope-ruling adjudication with Andrew. MSTR holds the charter (LD-0318) + brief + governance. COO decomposes to TOs on the PRD. CVO runs the standing per-domain verification loop (LD-0318 regime).",
+  "coo_lane": "2.0.0_SA_COO",
+  "cvo_lane": "3.0.0_SA_CVO",
+  "created": "2026-07-19",
+  "pods": ["1.0", "0.8", "2.0", "3.0"],
+  "sovereign": "Andrew (direct, the system/sdk parity mandate + the CVO verification-regime mandate)",
+  "depends_on": ["NFRA_SYSTEM", "NFRA_GENESIS", "NFRA_NESTEDABSTRACT", "NFRA_ONTOLOGY"],
+  "depends_on_note": "MEASURES the parity of NFRA_SYSTEM's tree (infra/system/) + NFRA_GENESIS's SDK (infra/system/sdk/) against live reality. Sets the incorporation SLA for NFRA_NESTEDABSTRACT (does NOT duplicate its forward incorporation). Rules the NFRA_ONTOLOGY representation IN-scope (the ~40% gap to close). NON-goal: re-representing the client-data pipeline estate or the taxonomy plane (declared out-of-scope, own homes) -- SYSPARITY confirms + makes that boundary explicit, never widens it.",
+  "sibling_part2": "NFRA_ONTOCLARITY (named LD-0318; ontology semantic-clarity audit: no fog in layering/nesting/definitions/processes, then correctly logged in system+sdk; 10 fog-spots seeded in the brief; charter as own project when WS-1 lands).",
+  "thread_counter": 0,
+  "threads": []
+}
