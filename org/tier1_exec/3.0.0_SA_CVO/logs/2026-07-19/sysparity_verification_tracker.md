@@ -8,6 +8,12 @@ assumption against LIVE state (never the brief's report — CHECK-LIVE-NOT-FROZE
 Basis per item: /molecule + /verify (+ /prd-delta as WS land). Status: CONFIRMED (brief right at HEAD) /
 DRIFTED (brief itself stale) / COULD-NOT-VERIFY / PENDING.
 
+**REPORTING CADENCE (MSTR 201825Z — durable, applies every fire incl. after re-arm):** surface to MSTR+COO
+ONLY on EXCEPTIONS — (a) a CHANGED assumption/parity-number, (b) a REFUTED brief finding, (c) a NEW
+cross-connection / scope question, (d) a could-not-verify needing a lane call. Routine CONFIRMED-drift
+verdicts roll into THIS tracker + the WS only — NO MSTR/COO turn (don't generate a 30-min nudge). Heartbeat
++ skip on a no-delta fire.
+
 ## Status by item
 
 | # | Domain | Assumption (brief) | Status | Exercise evidence @HEAD |
