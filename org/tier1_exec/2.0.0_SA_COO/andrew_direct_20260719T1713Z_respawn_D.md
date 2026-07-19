@@ -31,4 +31,10 @@
 
 ## Discharge condition
 
-This drive DISCHARGES when ~D is (a) LIVE on the broker AND (b) its PH2-C2 build has resumed (first substantive commit or a clear blocker surfaced to COO). Until then COO owns it; if the COO session ends first, the successor picks this up from this file. **Status: SPAWN GO ISSUED, awaiting ~D registration.**
+This drive DISCHARGES when ~D is (a) LIVE on the broker AND (b) its PH2-C2 build has resumed (first substantive commit or a clear blocker surfaced to COO). Until then COO owns it; if the COO session ends first, the successor picks this up from this file.
+
+**Status update 172221Z: ~D LIVE (PID 25024, broker-confirmed; MSTR spawn clean -- 0 identity collision, concurrency 0/16; independent broker read by COO = 2 signals). Condition (a) MET.** ~D came up, armed watcher (Monitor bh9gvom39/own), grounding its exact PH2-C2 state.
+
+**Awaiting condition (b) -- and note the real forward gate:** per ~D's own logs, PH2-C2 `SERVED_LINEAGE` class is DELIVERED @4c57b963a; the other 3 classes (DEPLOY code-prefix / AUTH comp-routes / PIPELINE pipescript) sit at a HARD EXTERNAL GATE = **CTO arch-gate role-key blessing (@a0ff6f769 mapping) + per-class source-wiring**. The normal relay (base 0.8.0_AE) is DARK post-crash, so COO bridges: when ~D surfaces its grounded state, drive the CTO arch-gate for the 3 role-keys so ~D isn't immediately re-blocked. CTO already primed (gate-ready, its msg 171737Z). CVO exercises on build-land.
+
+**Scope reminder for the successor:** ~D holds 14 pending TOs (COMPSIMILAR PH1/PH2-C2, COMPLEARN AMD-P3b/c/d, PASSCRAFT TO-1/2/3, TOOLGRAPH TO-1/2, KUZUSPLIT P0-P1, GRAPHFEED W1, OPAL_ASSETS P0-A, CONSOLIDATION P3-census). Andrew's word reactivated ~D for the PH2-C2 priority; the rest stay on their existing gates/sequencing -- do NOT read the reactivation as a GO on the whole queue.
