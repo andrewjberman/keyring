@@ -186,6 +186,20 @@ tools:
     rebuild_trigger: "Never rebuilds (Rule 20 QUERY-default). 0 matches -> hints comp-kuzu-inc to refresh a behind graph (broken retrieval != absent resource)."
     project: "NFRA_COMPSIMILAR"
 
+  comp-similar:
+    command: 'comp-similar <arn-or-name> [<arn-or-name>] | supersede [--heat-json F | --live-heat] | cluster [--type T] [--json]'
+    segment_scope: aws-cloud
+    when: |
+      - "do two resources do the same JOB / find a functional duplicate / what overlaps with X" -> BM25 SUMMARY similarity (what a resource DOES) -- the sibling of comp-dups (NAME/body -- what it IS): different corpus, different question.
+      - "is anything SUPERSEDED / a decommission candidate / an old resource left running next to its replacement" -> --supersede: summary-twin x heat-DIVERGENT (comp-heat data-cold AND comp-debris invoke-cold, CONFIDENCE-graded) x not-a-designed-parallel x not-held.
+      - "map functional overlap across the estate" -> cluster (same-JOB overlap census).
+    cost: "corpus = 1 comp-kuzu read (~s, ~1.8k nodes); BM25 cheap (df-cut). supersede heat: --heat-json snapshot ~ms (PREFERRED); --live-heat MINUTES (comp-debris live AWS, partial for S3)."
+    output: "pairwise score + HYPOTHESIS (never a bare 'duplicate'); neighbor list; supersede = ranked cold-CANDIDATE -> hot-REPLACEMENT + confidence (HIGH both-cold / MEDIUM one-cold) + coverage denominator; or --json. Advisory / read-only / hold-aware; NO delete verb (feeds OPAL_LCLRPO, deletion stays per-batch Andrew-word)."
+    freshness: "Live comp-kuzu derive-at-scan corpus (shares its provenance/HEAD-oracle). No projected property, no table (CTO ruling 1). Heat = current comp-debris/comp-heat vintage OR an explicit --heat-json snapshot."
+    rebuild_trigger: "Never rebuilds (Rule 20 QUERY-default). A thin/UNKNOWN summary -> UNKNOWN-band, never a twin claim (C3); enriched by PH3 authored summaries."
+    controls: "PRD 5 controls-not-care: C1 no-verdict-without-heat-divergence, C2 name-excluded-corpus (no comp-dups collapse), C3 blind-row + coverage denominator, C4 dogfood, C5 hold-aware. self-test PASS 7/7."
+    project: "NFRA_COMPSIMILAR"
+
   comp-trace:
     command: "comp-trace <query> [--direction up|down|both] [--depth N] [--json]"
     segment_scope: cross-segment
