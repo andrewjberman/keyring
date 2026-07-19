@@ -518,6 +518,48 @@ if [ -n "$IN_SCOPE" ]; then
   fi
 fi
 
+# WS-2 comp-system 06_current_state staleness gate (NFRA_SYSPARITY, CTO arch-gate 20260719T213935Z).
+# A commit that touches a comp-system _SOURCE must not leave 06 stale. FAIL-CLOSED on GENUINE drift
+# (source-fingerprint / managed-region), STALENESS-CONDITIONED (comp-system --gate --changed evaluates
+# drift ONLY on a _SOURCE touch -> never wall-clock / false-Monday), alert-suspension-clean (commit-time,
+# no new CI cadence). Escape valve: an AUDITED `system-current-override: <reason>` -m trailer (over-rate
+# is the monitored P2.5 auto-regen signal). FAIL-SAFE: ONLY a clean rc2 (genuine drift) blocks; a tool
+# error (rc1) or any other rc -> WARN + proceed, so a broken gate NEVER wedges the fabric's commit path.
+# Keyed on PATHSPEC (the FULL declared changeset -- incl. *.yaml/*.json sources, which IN_SCOPE's .py/.sh
+# gate-scope would miss). The cheap grep pre-check keeps NON-source commits from spawning comp-system.
+if [ ${#PATHSPEC[@]} -gt 0 ] && printf '%s\n' "${PATHSPEC[@]}" | grep -qE '\.tools/comp-|org/modules/graph/|0\.4\.0_DS_ClientPlatform/deliverables/' && command -v comp-system >/dev/null 2>&1; then
+  # set-e-safe rc capture (a command-substitution assignment of a nonzero-exit cmd would trip `set -e`).
+  CS_OUT="$(comp-system --gate --changed "${PATHSPEC[@]}" 2>&1)" && CS_RC=0 || CS_RC=$?
+  if [ "$CS_RC" = "2" ]; then
+    CS_MSG=""; _csk=0
+    while [ $_csk -lt ${#COMMIT_ARGS[@]} ]; do
+      if [ "${COMMIT_ARGS[$_csk]}" = "-m" ] && [ $((_csk + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
+        CS_MSG="${CS_MSG}"$'\n'"${COMMIT_ARGS[$((_csk + 1))]}"
+      fi
+      _csk=$((_csk + 1))
+    done
+    CS_OVR="$(printf '%s' "$CS_MSG" | sed -n 's/^[[:space:]]*system-current-override:[[:space:]]*//p' | head -1)"
+    if [ -n "$CS_OVR" ]; then
+      mkdir -p "$(dirname "$AUDIT_LOG")"
+      echo "${ISO_TS} SYSTEM-CURRENT-OVERRIDE  ${AGENT}  reason=${CS_OVR}" >> "$AUDIT_LOG"
+      echo "  [comp-system-gate] OVERRIDE (audited -> ${AUDIT_LOG}): 06 stale, overridden -- reason=${CS_OVR}" >&2
+      printf '%s\n' "$CS_OUT" | sed 's/^/  [comp-system-gate] /' >&2
+    else
+      for _csf in "${PATHSPEC[@]}"; do git reset -q HEAD -- "$_csf" 2>/dev/null || true; done
+      echo "ERROR: BLOCKED -- comp-system 06_current_state is STALE and this commit touches a _SOURCE." >&2
+      printf '%s\n' "$CS_OUT" | sed 's/^/  [comp-system-gate] /' >&2
+      echo "  FIX: run 'comp-system' (regenerate 06), stage infra/system/06_current_state.{md,json} + the" >&2
+      echo "       refreshed sibling docs, then re-commit. OR add a one-line AUDITED override to your -m:" >&2
+      echo "       'system-current-override: <reason>' (over-rate is monitored -> escalates to P2.5 auto-regen)." >&2
+      exit 1
+    fi
+  elif [ "$CS_RC" = "1" ]; then
+    echo "  [comp-system-gate] WARN (fail-safe, NOT blocking): --gate tool error rc1 -- a broken gate must not wedge commits: ${CS_OUT}" >&2
+  elif printf '%s' "$CS_OUT" | grep -q "AGE-WARN"; then
+    printf '%s\n' "$CS_OUT" | sed 's/^/  [comp-system-gate] /' >&2
+  fi
+fi
+
 # Proceed with the actual scoped commit (plain invocation so the EXIT trap fires).
 #
 # AMENDMENT-1 belt: `commit --only` re-takes the WORKTREE state of the pathspec at
