@@ -189,9 +189,11 @@ fi
 # (Andrew 2026-06-22): native Grep/Glob NEVER deny. OVERRIDE = a trailing `# rail-checked: <why>` on
 # the Bash command -> allow + audit (no deny, no nudge). FAIL-SAFE: deny only on the enumerated tiers;
 # any doubt falls through to advisory -- never a spurious wall. /freeform already stood the whole rail
-# down above (exits before here). RAMP NOTE: broad repo-file-grep (grep -r / rg over repo source) is
-# STAGED as nudge -- it is the friction-sensitive tier (PRD §6 "native/broad LAST"), enables only after
-# its dedicated FP-test pass; today it routes to the comp-which advisory nudge, not a deny.
+# down above (exits before here). RAMP NOTE (CORRECTED 2026-07-19): the ESTATE-scoped subset of broad
+# repo-file-grep IS ARMED + DENIES -- Gate-1 (marker-gated at :207-221 on org/mcp/comprail-gate1.enforce,
+# COO-flipped 06-26). NON-estate broad-grep + compound-shape commands stay advisory nudge. This note
+# previously read "STAGED as nudge ... not a deny" for ALL broad-grep -- STALE SINCE 06-26; it misled a
+# CTO law edit + a CVO verify (2026-07-19). THE MARKER FILE is the arming state, NOT this comment.
 # GOVERNING PRINCIPLE (Andrew-direct 2026-06-23): comp-tools mandatory IFF the target has an
 # ASSOCIATED GRAPH. DENY fires ONLY on graph-backed classes (aws/infra here; the ramp adds more
 # graph-backed tiers). The unclassified comp_which catch-all = the NO-GRAPH bucket (new project /
