@@ -287,8 +287,9 @@ CLOUDNODE_PREFIX_TO_ENTITY: dict = {
     "tool:": Entity.TOOL, "tier:": Entity.TIER, "scope:": Entity.GRAPHSCOPE,
 }
 
-# CloudEdge edge_type -> Relationship. TOTAL over the LIVE distinct edge_type inventory (comp-kuzu
-# MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type, 2026-07-07: 52 types). The algebra
+# CloudEdge edge_type -> Relationship. TOTAL over the LIVE distinct edge_type inventory -- the RAW
+# graph_edges axis (producer's source, cse_emit_graphhead:152; AC4 v2 2026-07-19: 55 types), NOT the
+# comp-kuzu PROJECTED graph which drops raw-only edges (IN_SUBNET/SENDS_TO -> wildcard nodes). The algebra
 # INTENTIONALLY compresses many concrete edges into fewer governed relationships (C0->C1
 # compression); this is a defensible many-to-one reconcile, not an invent. CTO AC4 condition:
 # every LIVE edge_type maps -> gap-fail-closed (a new live edge_type is a coverage-gap CSE).
@@ -312,6 +313,7 @@ CLOUDEDGE_TO_RELATIONSHIP: dict = {
     "READS_URL": Relationship.FETCHES, "WRITES_S3": Relationship.WRITES, "LOGS_TO": Relationship.WRITES,
     "PROP_PASSES": Relationship.FLOWS_TO, "ROUTES_TO": Relationship.FLOWS_TO,
     "DEAD_LETTERS_TO": Relationship.FLOWS_TO, "EMITS_TO": Relationship.FLOWS_TO,
+    "SENDS_TO": Relationship.FLOWS_TO,  # AC4 v2: SQS message send (DEAD_LETTERS_TO precedent -- both are queue sends; raw-only edge the projection drops)
     # produce / consume / project
     "PRODUCES": Relationship.PRODUCES, "PUBLISHES_TO": Relationship.PRODUCES,
     "INSTANTIATES": Relationship.PRODUCES, "PROJECTS_TO": Relationship.PRODUCES,
@@ -324,6 +326,7 @@ CLOUDEDGE_TO_RELATIONSHIP: dict = {
     "USES_OAI": Relationship.REQUIRES, "USES_SG": Relationship.REQUIRES,
     "USES_LAYER": Relationship.REQUIRES,  # AC4 2026-07-18: a function REQUIRES its layer (the USES_* dependency family)
     "IN_VPC": Relationship.DEPENDS_ON,
+    "IN_SUBNET": Relationship.DEPENDS_ON,  # AC4 v2: network-location dependency (IN_VPC analogue; subnet is a wildcard node -> raw-only edge the projection drops)
     # implements / imports (code)
     "IMPLEMENTS": Relationship.IMPLEMENTS, "IMPORTS": Relationship.IMPORTS,
     "DEPENDS_ON": Relationship.DEPENDS_ON,
@@ -355,17 +358,18 @@ LIVE_NODE_TYPES_20260718 = frozenset({   # AC4 refresh 2026-07-18 (was _20260707
     "STATE_MACHINE", "ServedURL", "TypeDecl", "VPC_ENDPOINT",
 })
 LIVE_NODE_TYPES_20260707 = LIVE_NODE_TYPES_20260718   # backward-compat alias (AC4 Part-3; references resolve to the refreshed live set)
-LIVE_EDGE_TYPES_20260718 = frozenset({   # AC4 refresh 2026-07-18 (was _20260707; +USES_LAYER live). Live-pulled @HEAD.
+LIVE_EDGE_TYPES_20260719 = frozenset({   # AC4 v2 raw-axis re-baseline 2026-07-19: the RAW graph_edges axis (55 = projected 53 + IN_SUBNET + SENDS_TO). FALLBACK baseline for the offline (no-graph) self-test ONLY -- the AUTHORITATIVE coverage check is the LIVE RAW graph_edges read (_pull_live_types edge pull); a frozen snapshot re-drifts, the live-raw read does not.
     "ALIAS_TO", "ASSUMES", "CALLS", "CAN_ASSUME", "CLUSTERS", "CONTAINS", "CONTAINS_DRILLDOWN",
     "DEAD_LETTERS_TO", "DECLARES", "EMITS_TO", "ENCRYPTS_WITH", "FETCHES", "FLOWS_TO", "GRANTS",
     "HAS_FIELD", "HAS_KEY", "HAS_POLICY", "HAS_PROFILE", "HAS_PROP", "HAS_PROPS_TYPE", "HAS_ROUTE",
-    "HAS_TYPE", "INSTANTIATES", "INVOKES", "IN_VPC", "IS_ENDPOINT", "LOGS_TO", "MONITORS", "NOTIFIES",
-    "ORIGIN", "OWNED_BY", "PROJECTS_TO", "PROP_PASSES", "PUBLISHES_TO", "READS", "READS_FIELD",
+    "HAS_TYPE", "INSTANTIATES", "INVOKES", "IN_SUBNET", "IN_VPC", "IS_ENDPOINT", "LOGS_TO", "MONITORS",
+    "NOTIFIES", "ORIGIN", "OWNED_BY", "PROJECTS_TO", "PROP_PASSES", "PUBLISHES_TO", "READS", "READS_FIELD",
     "READS_S3", "READS_SECRET", "READS_URL", "REFERENCES_TYPE", "RENDERS", "ROUTES_TO", "RUNS",
-    "SERVED_FROM", "SHARES_SOURCE", "SUBSCRIBES", "TRIGGERS", "USES_LAYER", "USES_OAC", "USES_OAI",
-    "USES_SG", "WRITES", "WRITES_S3",
+    "SENDS_TO", "SERVED_FROM", "SHARES_SOURCE", "SUBSCRIBES", "TRIGGERS", "USES_LAYER", "USES_OAC",
+    "USES_OAI", "USES_SG", "WRITES", "WRITES_S3",
 })
-LIVE_EDGE_TYPES_20260707 = LIVE_EDGE_TYPES_20260718   # backward-compat alias (AC4 Part-3)
+LIVE_EDGE_TYPES_20260718 = LIVE_EDGE_TYPES_20260719   # AC4 v1 name -> raw-55 (was projected-53, the wrong axis; AC4 v2 corrects to raw)
+LIVE_EDGE_TYPES_20260707 = LIVE_EDGE_TYPES_20260719   # backward-compat alias
 
 
 def map_cloudnode(nid: str, node_type: str = "") -> Entity:
@@ -629,6 +633,15 @@ def _self_test(live_nodes=None, live_edges=None) -> bool:
         results.append(cond)
         print(f"  [{'PASS' if cond else 'FAIL'}] {name}" + (f"  -> {detail}" if (detail and not cond) else ""))
 
+    def _raises(exc, fn):   # AC4 v2 4b: True iff fn() raises exc (drives the fail-loud FAILURE path)
+        try:
+            fn()
+        except exc:
+            return True
+        except Exception:
+            return False
+        return False
+
     print("=== NFRA_CSE.P1 self-test (fail-closed validator + AC3/AC4/AC5) ===")
     ok, e = validate(_mk_cse())
     check("1  valid CSE accepted", ok, str(e))
@@ -695,6 +708,17 @@ def _self_test(live_nodes=None, live_edges=None) -> bool:
           CLOUDEDGE_TO_RELATIONSHIP.get("USES_LAYER") is Relationship.REQUIRES)
     check("AC4: live coverage GREEN with meta excluded + new mappings + refreshed snapshot",
           assert_live_coverage()[0] is True)
+    # AC4 v2 -- the RAW-axis METHOD correction (lane-2 caught projected-53 vs raw-55) + the 2 raw-only edges
+    check("AC4v2: IN_SUBNET (raw-only, network-location) -> DEPENDS_ON (IN_VPC analogue)",
+          CLOUDEDGE_TO_RELATIONSHIP.get("IN_SUBNET") is Relationship.DEPENDS_ON)
+    check("AC4v2: SENDS_TO (raw-only, SQS send) -> FLOWS_TO (DEAD_LETTERS_TO precedent)",
+          CLOUDEDGE_TO_RELATIONSHIP.get("SENDS_TO") is Relationship.FLOWS_TO)
+    check("AC4v2: coverage GREEN vs the RAW 55-edge axis (not the projected 53)",
+          assert_live_coverage(None, LIVE_EDGE_TYPES_20260719)[0] is True)
+    check("AC4v2 fail-loud: helper-unavailable RAISES LivePullError (NOT a projected fallback)",
+          _raises(LivePullError, lambda: _raw_edge_types_or_raise(lambda: (_ for _ in ()).throw(OSError("no catalog")))))
+    check("AC4v2 fail-loud: 0-rows RAISES LivePullError (NOT a silent empty pass)",
+          _raises(LivePullError, lambda: _raw_edge_types_or_raise(lambda: set())))
     # CTO guidance: mid-band typed = inference smell (non-blocking, just report)
     smell = inference_smell(_mk_cse(conf=0.5))
     print(f"  [INFO] inference-smell tracker: typed+mid-band(0.5) flagged = {smell} (LAW-1 honesty signal)")
@@ -710,11 +734,30 @@ class LivePullError(Exception):
     invariant applied to the validator's own live-check (else a future live-drift goes uncaught)."""
 
 
+def _raw_edge_types_or_raise(pull_fn):
+    """AC4 v2 (raw-axis METHOD, load-bearing): the --live EDGE inventory reads the RAW graph_edges
+    axis (the producer's source, cse_emit_graphhead:152), NEVER comp-kuzu's PROJECTED graph -- the
+    projection DROPS edges to non-materialized nodes (IN_SUBNET -> subnet(wild)), under-counting the
+    producer (53 projected vs 55 raw), so a projected check can never see a raw-only edge_type.
+    FAIL-LOUD: any unavailability (import/catalog error) or 0-rows -> LivePullError, NEVER a silent
+    degrade to the projected axis (that would re-bless the wrong axis -- the exact bug this corrects).
+    pull_fn is injectable so the FAILURE path is exercisable without a live catalog (CTO landing-cond
+    #2: the control is EXERCISED, not asserted)."""
+    try:
+        vals = pull_fn()
+    except Exception as ex:
+        raise LivePullError(f"raw graph_edges read unavailable: {ex} -- refusing comp-kuzu-projected fallback")
+    if not vals:
+        raise LivePullError("raw graph_edges returned 0 edge_types -- refusing a silent projected fallback")
+    return set(vals)
+
+
 def _pull_live_types():
-    """Pull the live distinct node_type/edge_type via comp-kuzu --json (AC4 --live mode). Uses the
-    structured --json output + a JSON parse (NOT a fragile stdout heuristic). FAILS LOUD on any
-    error (LivePullError) rather than silently returning the snapshot -- so `--live` is honest: it
-    verifies against the LIVE graph or it errors, it never quietly degrades to the embedded set."""
+    """Pull the live distinct node_type (comp-kuzu) + edge_type (RAW graph_edges axis, AC4 v2) for
+    --live mode. NODES via comp-kuzu --json (structured JSON parse). EDGES via the RAW graph_edges
+    producer axis (NOT the comp-kuzu projection, which drops raw-only edges -- AC4 v2 method fix).
+    FAILS LOUD on any error (LivePullError) rather than silently returning the snapshot or the wrong
+    axis -- `--live` verifies against the LIVE graph or it errors, never a quiet degrade."""
     import json
     import subprocess
 
@@ -764,7 +807,16 @@ def _pull_live_types():
         return vals
 
     n = _q("MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t ORDER BY t")
-    e = _q("MATCH ()-[x:CloudEdge]->() RETURN DISTINCT x.edge_type AS t ORDER BY t")
+    # AC4 v2 raw-axis METHOD (load-bearing): the EDGE inventory reads the RAW graph_edges axis (the
+    # producer's source), NOT comp-kuzu's PROJECTED graph. The raw read lives in the globgrph lane
+    # (cse_emit_graphhead.distinct_raw_edge_types, reusing the producer's own _scan); lazy-imported so
+    # the algebra module keeps NO load-time iceberg/catalog dep (a direct import is circular). Raw or
+    # LivePullError, never a projected fallback. NODE pull STAYS comp-kuzu (nodes aren't dropped by the
+    # projection, so the node axis is consistent; this is an EDGE-axis correction only).
+    def _raw_edges():
+        from cse_emit_graphhead import distinct_raw_edge_types  # lazy: breaks the load-time cycle
+        return distinct_raw_edge_types()
+    e = _raw_edge_types_or_raise(_raw_edges)
     return n, e
 
 
