@@ -21443,3 +21443,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 0.8.0_AE_CloudComp~C | NFRA_ONTOLOGY | comp-grep/comp-kuzu/comp-describe | _position_key firm-alias fix: locate + ground alias census + exercise 3-way re-verdict (build 46->50/fork 5->4, describe both paths) | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/AUDIT_ARCHIVE_INVOKER_G... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPASSURANCE.TO-1 | comp-which-routing-test / comp-blast / comp-manifest-check / commit-gate | FINALIZE WIP @a2e31bc3c: re-baseline harness at HEAD 4aeed452 vs frozen n=562 cohort (coverage numbers identical, vintage refreshed) + conditional-provenance harness fix; comp-blast comp-which NOT-FOUND-in-trace but comp-pydeps models it (21 consumers, PRD Q3 partial) | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/comp_similar.py | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/debtscan/comp_similar.py | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPASSURANCE.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which-routing-test.py --fil... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPASSURANCE.TO-1 | comp-pulse | comp-pulse diff .tools/comp-which-routing-test.py org/compiler-tools-log.md org/tier2_s... | FAIL |

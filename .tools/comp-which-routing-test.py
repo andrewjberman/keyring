@@ -1325,21 +1325,38 @@ def main():
     print("    permitted to fail the run. (v2 of this check did exactly that.)")
     clean = poll["pass"]
 
+    # PROVENANCE, CONDITIONAL ON THE ACTUAL CAPTURE STATE. A note baked to describe ONE
+    # historical capture becomes FALSE on the next re-baseline: working_tree_differs would
+    # read CLEAN while the frozen prose still says "captured mid-edit". The lesson that
+    # earned this field -- the 2026-07-18 baseline was captured minutes before a lane began
+    # editing the binary, "sound by luck" until verified -- is kept in BOTH branches as
+    # HISTORY, never asserted as THIS run's condition. A PROVENANCE RECORD THAT CAPTURES
+    # *WHAT* BUT NOT *WHEN* (OR MIS-STATES THE WHEN) IS NOT PROVENANCE.
+    if bool(wt and blob and wt != blob):
+        prov = (
+            "WORKING TREE DIFFERS from the measured vintage: this run measured the PINNED "
+            "blob %s, NOT the dirty tree %s -- another lane is mid-edit and the working "
+            "tree is a VERB. (History: the ORIGINAL TO-1 baseline, 2026-07-18, was captured "
+            "minutes before a lane began editing; 'sound by luck', then by verification -- "
+            "which is why this field exists.) A PROVENANCE RECORD THAT CAPTURES *WHAT* BUT "
+            "NOT *WHEN* IS NOT PROVENANCE -- the blob AND the capture time are stamped above."
+            % (blob, wt))
+    else:
+        prov = (
+            "WORKING TREE IS CLEAN and equal to the measured vintage %s: no lane was "
+            "mid-edit, so this measurement is sound BY CONSTRUCTION, not by luck. (History: "
+            "the ORIGINAL TO-1 baseline, 2026-07-18, was NOT so lucky -- captured minutes "
+            "before a lane began editing the binary, which is why this field exists.) A "
+            "PROVENANCE RECORD THAT CAPTURES *WHAT* BUT NOT *WHEN* IS NOT PROVENANCE -- the "
+            "blob AND the capture time are stamped above." % blob)
+
     baseline = {
         "to": "NFRA_COMPASSURANCE.TO-1",
         "author": "0.8.0_AE_CloudComp~Z",
         "measured_at": _utc(),
         "subject": {"vintage": vintage, "blob": blob, "working_tree_blob": wt,
                     "working_tree_differs": bool(wt and blob and wt != blob)},
-        "provenance_note": (
-            "The mirror that made this baseline possible was captured minutes before "
-            "another lane began editing the binary. In the author's own words: 'That was "
-            "not foresight -- it was timing, and I am not going to dress it up as "
-            "foresight.' Ten minutes later the mirror would have captured a half-landed "
-            "TO-3 and labelled it 'pre-change' in perfect good faith, WITH A BYTE-EXACT "
-            "BLOB HASH TO PROVE IT. The hash would have been TRUE and the label FALSE. "
-            "A PROVENANCE RECORD THAT CAPTURES *WHAT* BUT NOT *WHEN* IS NOT PROVENANCE. "
-            "This baseline is sound by luck, and is now sound by verification."),
+        "provenance_note": prov,
         "denominator": d,
         "cohorts": {"R_raw": r_raw, "R_strict": r_str, "C": c_row, "G": g_row},
         "headline": {
