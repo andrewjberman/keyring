@@ -54,6 +54,7 @@ binds future behaviour, not a coincidence.
 - **Print the denominator** of every scan you reason from (Rule 22, "put the control on the RETRIEVAL").
 - **An abstraction of a live system needs a live-cadence back to its source**, or it silently ossifies.
 - **A frozen reference is not a control** — the live-cadence check against it is.
+- **A control's OWN denominator is live state too** — the allowlist / surface-map / threshold-set / coverage-list a control reads FROM must get the same live-cadence, or the control silently narrows what it can see and reads that narrowing as coverage. Self-referential instance (2026-07-19, LD-0314 addendum): the NESTEDABSTRACT drift-gate — built to catch frozen-abstraction-drift — mapped 1 of ~35 live mechanism files in its own hand-picked `surface_map.json`, i.e. the frozen-drift gate was itself frozen-drifted. Fix: classify-all-and-print-exclusions (never a silent allowlist), a *recurring* surface-completeness re-audit, prefer a live-derived denominator. This is Rule 22b one level up: the denominator is state, not scaffolding.
 
 ## The sibling boundary (do not over-apply)
 
