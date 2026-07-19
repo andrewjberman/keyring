@@ -144,5 +144,20 @@ if __name__ == "__main__":
         rc, rep = run_invoker(ws, NOW_LATE)
         check("no DEATH on silent-but-idle", ("DEATH", "INVOKER-SILENT-WITH-CHURN") not in verdicts(rep), str(verdicts(rep)))
 
+    # --- commit-path control: the exact bug CTO's exec run caught (python -> WSL /bin/bash). ---
+    # The dry-run matrix above NEVER runs the real commit, so it passed 10/10 while the live commit was
+    # dead. This asserts the invoker resolves an ACTUAL runnable Git Bash, not the System32 WSL stub.
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("inv", str(INVOKER))
+    inv = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(inv)
+    gb = inv.git_bash()
+    scenario(9, "commit-path bash resolves to Git Bash (not the WSL stub) and actually executes")
+    check("git_bash() found a real bash file", bool(gb) and Path(gb).is_file(), str(gb))
+    check("resolved bash is NOT the System32 WSL stub", bool(gb) and "system32" not in gb.lower(), str(gb))
+    rb = subprocess.run([gb, "-c", "echo ok"], capture_output=True, text=True) if gb else None
+    check("resolved bash executes a command", bool(rb) and rb.returncode == 0 and "ok" in rb.stdout,
+          (rb.stderr if rb else "no bash resolved"))
+
     print(f"\n==== {PASS} passed, {FAIL} failed ====")
     sys.exit(1 if FAIL else 0)

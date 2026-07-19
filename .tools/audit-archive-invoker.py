@@ -54,6 +54,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -236,18 +237,43 @@ def self_test() -> tuple[bool, list[str]]:
     return ok, log
 
 
-# ---------------- findings ----------------
-def emit(entries: list[dict], now: datetime, dry: bool) -> None:
+# ---------------- findings (append-only + IDEMPOTENT) ----------------
+def _finding_sig(e: dict) -> str:
+    """Normalized signature: volatile numbers (ages, line/col, byte counts) -> '#' so a re-run of the
+    same unresolved condition does NOT duplicate the entry (CTO-required 2026-07-19)."""
+    raw = f"{e['clause']}|{e['verdict']}|{e.get('log', '')}|{e.get('detail', '')}"
+    return re.sub(r"\d+", "#", raw)
+
+
+def emit(entries: list[dict], now: datetime, dry: bool) -> bool:
+    """Append findings whose normalized signature is not already present. Returns True if anything wrote."""
     if not entries or dry:
-        return
-    lines = []
+        return False
+    existing = FINDINGS.read_text(encoding="utf-8") if FINDINGS.is_file() else ""
+    seen = set(re.findall(r"<!-- sig: (.*?) -->", existing))
+    blocks = []
     for e in entries:
-        lines.append(f"\n## {fmt_ts(now)} -- {e['clause']} -- {e['verdict']}")
-        for k, v in e.items():
-            if k not in ("clause", "verdict"):
-                lines.append(f"- {k}: {v}")
+        sig = _finding_sig(e)
+        if sig in seen:
+            continue
+        seen.add(sig)
+        block = [f"\n## {fmt_ts(now)} -- {e['clause']} -- {e['verdict']}", f"<!-- sig: {sig} -->"]
+        block += [f"- {k}: {v}" for k, v in e.items() if k not in ("clause", "verdict")]
+        blocks.append("\n".join(block))
+    if not blocks:
+        return False
     with FINDINGS.open("a", encoding="utf-8") as fh:
-        fh.write("\n".join(lines) + "\n")
+        fh.write("\n".join(blocks) + "\n")
+    return True
+
+
+def persist_findings(report: dict, now: datetime, dry: bool) -> None:
+    """Write findings (idempotent) and, on an exec run, durably commit FINDINGS.md."""
+    if emit(report["findings"], now, dry) and not dry:
+        serial = running_serial()
+        if governance_permitted(serial):
+            safe_commit(serial, ["org/audit/archive/FINDINGS.md"],
+                        f"findings({fmt_ts(now)}): audit-archive-invoker durable findings")
 
 
 # ---------------- Option B: running identity + tamper-lane permission ----------------
@@ -344,9 +370,31 @@ def take_snapshot(now: datetime, paths: list[str], dry: bool) -> tuple[str, str]
             pass
 
 
+def git_bash() -> str | None:
+    """The EXPLICIT Git-for-Windows bash. NEVER bare 'bash'/'/bin/bash': a Windows (python) subprocess
+    Windows-resolves those to the System32 WSL stub (execvpe(/bin/bash) failed) -- the bug CTO's exec run
+    caught 2026-07-19. Passing the absolute path launches Git Bash directly, bypassing PATH resolution."""
+    for c in (r"C:\Program Files\Git\usr\bin\bash.exe",
+              r"C:\Program Files\Git\bin\bash.exe",
+              r"C:\Program Files (x86)\Git\usr\bin\bash.exe"):
+        if Path(c).is_file():
+            return c
+    git = shutil.which("git")            # derive from the git install (e.g. <root>\mingw64\bin\git.exe)
+    if git:
+        for anc in Path(git).resolve().parents:
+            for rel in ("usr/bin/bash.exe", "bin/bash.exe"):
+                b = anc / rel
+                if b.is_file():
+                    return str(b)
+    return None
+
+
 def safe_commit(author_serial: str, pathspec: list[str], msg: str) -> tuple[int, str]:
+    bash = git_bash()
+    if not bash:
+        return (127, "no Git Bash found (bare 'bash' would Windows-resolve to the WSL stub) -- cannot run safe-commit.sh")
     author = f"{author_serial} <{author_serial}@opal.agent>"
-    cmd = ["bash", str(WS / ".tools" / "safe-commit.sh"), "--author", author, "-m", msg, "--"] + pathspec
+    cmd = [bash, str(WS / ".tools" / "safe-commit.sh"), "--author", author, "-m", msg, "--"] + pathspec
     r = subprocess.run(cmd, cwd=str(WS), capture_output=True, text=True)
     return r.returncode, (r.stdout or "") + (r.stderr or "")
 
@@ -378,13 +426,13 @@ def run(now: datetime, dry: bool) -> tuple[int, dict]:
     if not ok:
         report["findings"].append({"clause": "SELF-TEST", "verdict": "INSTRUMENT-BROKEN",
                                    "detail": "; ".join(s for s in stlog if "BROKEN" in s)})
-        emit(report["findings"], now, dry)
+        persist_findings(report, now, dry)
         return 2, report
 
     paths = manifest_paths()
     if not paths:
         report["findings"].append({"clause": "MANIFEST", "verdict": "MISSING", "detail": f"{MANIFEST} absent or empty"})
-        emit(report["findings"], now, dry)
+        persist_findings(report, now, dry)
         return 1, report
 
     # coverage-gap (print-the-denominator): missing-live entries + audit-log-shaped files not covered.
@@ -458,7 +506,7 @@ def run(now: datetime, dry: bool) -> tuple[int, dict]:
 
     if not dry:
         write_heartbeat(now, live_nl_map, snapshot_outcome)
-    emit(report["findings"], now, dry)
+    persist_findings(report, now, dry)
     return (1 if report["findings"] else 0), report
 
 
