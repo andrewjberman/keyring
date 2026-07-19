@@ -21046,3 +21046,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-18 | 3.0.0_SA_CVO | python pyiceberg StaticTable (raw 41060 rows/55 distinct), python (v2 patch 5/5 + self-test 31/31 + live_v2_exercise both paths w/ real helper), Grep/Read | AC4 v2 raw-axis re-sign CLEAR: --live raw ok=TRUE, helper==independent raw-55 (diff 0), fail-loud LivePullError both paths (AST-proven raw-or-raise); self-instrument false-fired on docstring/message text -> AST return-analysis
 | 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-18/a... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_VARIANCE... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3Key' AND (n.node_id CONTAINS 'opal-d... | PASS |
+| 2026-07-18 | 0.4.0_DS_ClientPlatform~B | NFRA_ONTOLOGY.AB-MAT-S1 | comp-kuzu | comp-kuzu MATCH (k:CloudNode) WHERE k.node_type='S3Key' RETURN CASE WHEN k.node_id CONT... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-18 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_VARIANCE... | PASS |
+2026-07-18 | 3.0.0_SA_CVO | aws s3 ls (cot raw estate), python pyiceberg StaticTable (graph_nodes cot S3Key per-bucket), comp-kuzu (projected) | cot b-io variance ADJUDICATION: GRAPH COVERAGE GAP not debt/facet; sharpened to a DERIVE gap (raw graph_nodes cot=1 == projected 1, not a projection-drop); bd=153/inf=74/cot=1 materialization; fix=derive S3-scan
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-18 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-18/c... | PASS |
