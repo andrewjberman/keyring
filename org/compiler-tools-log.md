@@ -21809,3 +21809,26 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 | comp-system --check / --gate | WS-2 close: 06 CURRENT + gate live (CVO LD-0318 CLEAR) | WS-2 COMPLETE (triple-cleared CTO+COO+CVO) |
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_SYSPARITY.WS-2 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_SYSPARITY.WS-2 (shared) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPREG.grounding (shared) | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPREG.grounding (shared) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_COMPREG.grounding (shared) | comp-system | comp-system | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-A.definitions-root-two-layer-fix | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-A.definitions-root-two-layer-fix | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/COMPSIMILAR_PH2_MOTIF_... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_COMPREG.grounding (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_COMPREG.grounding (shared) | comp-pulse | comp-pulse diff infra/system/06_current_state.json infra/system/06_current_state.md org... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_COMPREG.grounding (shared) | comp-system | comp-system --gate --changed org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml org/modules... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_COMPREG.grounding (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/abstraction_loop/RETRO... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_COMPREG.grounding (shared) | comp-pulse | comp-pulse diff infra/system/sdk/abstraction_loop/RETROACTIVE_DISPOSITIONS.jsonl infra/... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPREG.grounding (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPREG.grounding (shared) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-A.definitions-root-two-layer-fix | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-A.definitions-root-two-layer-fix | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_ONTOCLARITY.WS-A.d... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_COMPREG.grounding (shared) | comp-iam | comp-iam roles | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_COMPREG.grounding (shared) | comp-iam | comp-iam roles | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_COMPREG.grounding (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/01_provision/modules/g... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_COMPREG.grounding (shared) | comp-pulse | comp-pulse diff infra/system/sdk/01_provision/modules/globgrph/fedobs.tf infra/system/s... | FAIL |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPREG.routing-sod-grounding | comp-manifest-check / manifest+coverage-map+comp-which read | routing/SoD axis survey (consult-input to ~D): 61 tools_index / 98 entries / 73 RULES / 82 coverage-map; routing pipeline + grantee-cannot-self-register SoD + 6 grounded drift modes (rank-1-theft gate-hole headlined) | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPREG.routing-sod-grounding | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPREG.routing-sod-grounding | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/deliverab... | PASS |
