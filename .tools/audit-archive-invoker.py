@@ -35,6 +35,13 @@ WHAT (every run, cheap):
    fail, and the whole instrument FAIL-CLOSED. Growth is never "silently no": a per-log read error
    returns ERROR (a fail-closed integrity finding), never a bogus zero-growth. <<
 
+>> COMMIT AUTHORIZATION -- Option B (CTO-ruled 2026-07-19): org/audit/archive/** is the GOVERNANCE_AUDIT
+   tamper-evidence lane, writable ONLY by MSTR + execs; that restriction IS the control. So the invoker
+   commits the snapshot as the RUNNING session's serial (LD-0290 sessions/<sid>.serial): an EXEC startup's
+   commit lands; a NON-EXEC startup DEFERS the commit gracefully ("deferred (lane)", not a failure) while
+   STILL running detection (findings to stdout + the gitignored heartbeat). Detection is universal; only the
+   tamper-lane WRITE is exec-gated. Corpse-resistance rides frequent exec sessions. NO owned-paths change. <<
+
 Findings -> org/audit/archive/FINDINGS.md (append-only) + exit code. NO SES/SNS/CloudWatch (Andrew
 07-17 alert-suspension; CTO-confirmed 2026-07-19: a local verifiability instrument, not an alert
 system). Owner: 0.7.0_AE_CloudOps. Gate: 1.0.0_SA_CTO.
@@ -46,6 +53,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -53,8 +61,9 @@ import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
-# .tools/audit-archive-invoker.py -> workspace root is two parents up (portable across shells).
-WS = Path(__file__).resolve().parent.parent
+# workspace root: two parents up (portable across shells). AUDIT_INVOKER_WS overrides it for tests.
+WS = (Path(os.environ["AUDIT_INVOKER_WS"]).resolve()
+      if os.environ.get("AUDIT_INVOKER_WS") else Path(__file__).resolve().parent.parent)
 ARCHIVE = WS / "org" / "audit" / "archive"
 MANIFEST = ARCHIVE / "MANIFEST.txt"
 BASELINE_PTR = ARCHIVE / ".baseline"
@@ -241,13 +250,61 @@ def emit(entries: list[dict], now: datetime, dry: bool) -> None:
         fh.write("\n".join(lines) + "\n")
 
 
-# ---------------- snapshot (concurrent-double-snapshot guarded) ----------------
+# ---------------- Option B: running identity + tamper-lane permission ----------------
+def running_serial() -> str | None:
+    """The RUNNING session's serial via the LD-0290 file. This -- not a hardcode -- is the commit author."""
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID")
+    if sid:
+        p = WS / "org" / "mcp" / "sessions" / f"{sid}.serial"
+        if p.is_file():
+            s = p.read_text(encoding="utf-8").strip()
+            if s:
+                return s
+    return None
+
+
+def governance_permitted(serial: str | None) -> bool | None:
+    """Best-effort: is serial's BASE in GOVERNANCE_AUDIT permitted_agents? None = couldn't determine
+    (then we ATTEMPT the commit and let the owned-paths gate be the source of truth)."""
+    if not serial:
+        return None
+    base = serial.split("~")[0]
+    op = WS / ".owned-paths.yaml"
+    if not op.is_file():
+        return None
+    try:
+        in_block = in_perm = False
+        permitted: list[str] = []
+        for ln in op.read_text(encoding="utf-8").splitlines():
+            s = ln.strip()
+            if s.startswith("GOVERNANCE_AUDIT:"):
+                in_block = True
+                continue
+            if in_block and s.startswith("permitted_agents:"):
+                in_perm = True
+                continue
+            if in_perm:
+                if s.startswith("- "):
+                    permitted.append(s[2:].strip())
+                else:
+                    break
+        return (base in permitted) if permitted else None
+    except OSError:
+        return None
+
+
+# ---------------- snapshot (concurrent-double-snapshot guarded; exec-gated commit) ----------------
 def take_snapshot(now: datetime, paths: list[str], dry: bool) -> tuple[str, str]:
+    serial = running_serial()
+    if governance_permitted(serial) is False:                         # non-exec: defer, no snapshot I/O
+        return ("deferred", f"lane: {serial} not GOVERNANCE_AUDIT-permitted -- an exec startup will archive")
     snaps = snapshots()
     if snaps and age_hours(snaps[-1][0], now) < SNAPSHOT_INTERVAL_H:   # guard 1: pre-commit age re-check
         return ("skip", f"newest {snaps[-1][1].name} is < {SNAPSHOT_INTERVAL_H}h old")
     if dry:
-        return ("dry", f"would mint {fmt_ts(now)} covering {len(paths)} logs")
+        return ("dry", f"would mint {fmt_ts(now)} covering {len(paths)} logs as author={serial or 'UNKNOWN'}")
+    if not serial:
+        return ("deferred", "no running serial (LD-0290 file) -- cannot attribute a tamper-lane commit")
     try:                                                              # guard 2: atomic mkdir lock
         LOCKDIR.mkdir()
     except FileExistsError:
@@ -262,21 +319,24 @@ def take_snapshot(now: datetime, paths: list[str], dry: bool) -> tuple[str, str]
             LOCKDIR.mkdir()
         except OSError:
             return ("skip", "lock contended")
+    ts = fmt_ts(now)
+    dest = ARCHIVE / ts
     try:
-        ts = fmt_ts(now)
-        dest = ARCHIVE / ts
         if dest.exists():                                             # guard 3: unique-second collision
             return ("skip", f"{ts} already exists (concurrent)")
         dest.mkdir(parents=True)
         copied = [rel for rel in paths if (WS / rel).is_file()
                   and (shutil.copy2(WS / rel, dest / flatten(rel)) or True)]
-        rc, out = safe_commit([f"org/audit/archive/{ts}"],
+        rc, out = safe_commit(serial, [f"org/audit/archive/{ts}"],
                               f"snapshot({ts}): audit-archive-invoker automated snapshot ({len(copied)} logs)")
-        if rc != 0:
-            return ("commit-fail", f"snapshot files written but safe-commit rc={rc}: {out[-400:]}")
-        BASELINE_PTR.write_text(ts + "\n", encoding="utf-8")
-        safe_commit(["org/audit/archive/.baseline"], f"baseline({ts}): advance clean baseline pointer")
-        return ("minted", f"{ts} minted + baseline advanced ({len(copied)} logs)")
+        if rc == 0:
+            BASELINE_PTR.write_text(ts + "\n", encoding="utf-8")
+            safe_commit(serial, ["org/audit/archive/.baseline"], f"baseline({ts}): advance clean baseline pointer")
+            return ("minted", f"{ts} minted + baseline advanced ({len(copied)} logs) by {serial}")
+        shutil.rmtree(dest, ignore_errors=True)                       # roll back the created dir
+        if "not in permitted_agents" in out or "owned-paths lane violation" in out:
+            return ("deferred", f"lane: commit by {serial} denied by owned-paths gate -- an exec will archive")
+        return ("commit-fail", f"safe-commit rc={rc} (non-lane): {out[-300:]}")
     finally:
         try:
             LOCKDIR.rmdir()
@@ -284,10 +344,9 @@ def take_snapshot(now: datetime, paths: list[str], dry: bool) -> tuple[str, str]
             pass
 
 
-def safe_commit(pathspec: list[str], msg: str) -> tuple[int, str]:
-    cmd = ["bash", str(WS / ".tools" / "safe-commit.sh"),
-           "--author", "0.7.0_AE_CloudOps~B <0.7.0_AE_CloudOps~B@opal.agent>",
-           "-m", msg, "--"] + pathspec
+def safe_commit(author_serial: str, pathspec: list[str], msg: str) -> tuple[int, str]:
+    author = f"{author_serial} <{author_serial}@opal.agent>"
+    cmd = ["bash", str(WS / ".tools" / "safe-commit.sh"), "--author", author, "-m", msg, "--"] + pathspec
     r = subprocess.run(cmd, cwd=str(WS), capture_output=True, text=True)
     return r.returncode, (r.stdout or "") + (r.stderr or "")
 
