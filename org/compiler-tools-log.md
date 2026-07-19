@@ -21470,3 +21470,30 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPASSURANCE.TO-4 | comp-manifest-check / comp-which(source) / rules-scorer | catalog-count reconcile: 78 exec / 60 routable / 65 tools / 97 entries / 73 RULES / 82 coverage-map all reconciled by the registration invariant; comp-which prints per-query ranked count (no fixed of-63); cohort-C 13.8pct curated-gap residual; CLAUDE.md 62/49->78/60 routed to CTO | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPASSURANCE.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPASSURANCE.TO-1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/deliverab... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check check --file .tools/comp-similar | VERDICT |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/abstraction_loop/.drif... | PASS |
+| 2026-07-19 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/abstraction_loop/.drift_gate_checkpoint | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/AUDIT_ARCHIVE_INVOKER_G... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/variance_dimensions.yaml | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/variance_dimensions.yaml | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.node_type... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.arn <> '' AND... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file org/audit/archive/.ba... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .gitignore org/audit/archive/.baseline org/audit/archive/FINDINGS.md or... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/abstraction_loop/surfa... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/abstraction_loop/surface_map.json | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.node_type... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.arn <> '' AND... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.node_type... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.arn <> '' AND... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type = 'EVENT_RULE' AND n.name CONTAINS 'ses... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_NESTEDABSTRACT.P2 | drift_gate.py (built) | --self-test (32/32 surfaces fire; block/clear/dangling/no-over-fire green) + sweep/check live block on real git objects (d4a38e902->rc1, c90390409->rc0); denominator cross-checked vs raw git | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
