@@ -652,6 +652,13 @@ def self_test() -> int:
         _gate_verdict(True, "age 30h exceeds TTL 24h (live-grounded values may have moved)", [])[0] == 0)
     chk("13 gate: CURRENT -> gate open (rc 0)",
         _gate_verdict(False, "sources unchanged, age 0h < TTL 24h", [])[0] == 0)
+    # 14-15. --changed staleness-conditioning: a _SOURCE touch triggers the check; a non-source
+    #        changeset is n/a (the commit-gate leg fires ONLY at the genuine drift moment).
+    chk("14 gate --changed: a comp-system _SOURCE path IS a trigger surface",
+        _file_touches_sources(["org/modules/graph/canon-patterns.yaml", "docs/x.md"]) is True
+        and _file_touches_sources([".tools/comp-similar"]) is True)
+    chk("15 gate --changed: a non-source changeset is NOT a trigger surface (no over-fire)",
+        _file_touches_sources(["docs/note.md", "org/tier2_senior/x/logs/y.md"]) is False)
 
     n = sum(1 for x in ok if x)
     print("--- self-test: %d/%d passed (grounded-or-UNKNOWN, no fabrication, shape-locked) ---" % (n, len(ok)))
@@ -765,6 +772,24 @@ def check_stale() -> int:
 # Mirrors the NFRA_NESTEDABSTRACT drift-gate shape (fail-closed / genuine-drift-only / exercised /
 # on-demand). REUSES _staleness() -- ONE predicate, not a forked copy (the module's own discipline).
 # --------------------------------------------------------------------------------------------------
+def _file_touches_sources(files) -> bool:
+    """Does any repo-relative changed path match a comp-system _SOURCE (dir + basename glob)?
+    This is the STALENESS-CONDITIONING trigger for the commit-gate leg: --gate --changed <files>
+    only runs the drift check when a commit actually touches a 06-source (the genuine drift moment),
+    so it never false-fires on unrelated commits or wall-clock idle. Content-based (a real file in
+    the changeset), NOT the mtime fingerprint -- so the trigger itself is mtime-noise-immune."""
+    import fnmatch
+    rels = [(os.path.relpath(d, WS).replace(os.sep, "/"), g) for d, g in _SOURCES]
+    for f in files or []:
+        fn = str(f).replace(os.sep, "/")
+        if fn.startswith("./"):          # strip a leading './' ONLY (lstrip('./') would eat '.tools')
+            fn = fn[2:]
+        for d, g in rels:
+            if fn.startswith(d.rstrip("/") + "/") and fnmatch.fnmatch(os.path.basename(fn), g):
+                return True
+    return False
+
+
 def _gate_verdict(stale: bool, reason: str, region_changes: list) -> tuple:
     """PURE gate decision (offline-testable, both directions). Distinguishes GENUINE DRIFT from the
     wall-clock age>=TTL case:
@@ -790,7 +815,7 @@ def _gate_verdict(stale: bool, reason: str, region_changes: list) -> tuple:
     return 0, "SYSTEM CURRENT (no genuine drift)"
 
 
-def gate() -> int:
+def gate(changed=None) -> int:
     """The --gate ENFORCEMENT PROBE (fail-closed, staleness-conditioned). Live wrapper over
     _gate_verdict: reads the committed 06 header + the live source-fingerprint + managed-region
     metrics, then applies the PURE verdict. Distinct from --check (which reports ANY staleness incl.
@@ -801,9 +826,15 @@ def gate() -> int:
     Exit: 0 = gate OPEN (current, or age-only WARN) | 2 = FAIL-CLOSED genuine drift | 1 = tool error.
     Escape valve (mirrors the never-rules / drift-gate audited override): a legitimate deferral is a
     one-line AUDITED marker at the enforcement point, not gate removal -- teach-at-violation-time.
-    NOTE: this is the inert ENGINE; the enforcement WIRING (a commit-gate leg on a comp-system
-    _SOURCES touch) is CTO-arch-gated (WS-2 part b), mirroring the drift-gate's enforcement-to-CTO."""
+    --changed <files> (the commit-gate leg's staleness-conditioning): when given, the gate only
+    evaluates drift if a changed path touches a comp-system _SOURCE -- otherwise rc 0 (not a
+    trigger-surface commit). This is what makes the commit-gate leg fire EXACTLY at the genuine
+    drift moment (a source-touching commit), never on unrelated commits (CTO WS-2 ruling)."""
     try:
+        if changed is not None and not _file_touches_sources(changed):
+            print("SYSTEM gate: no comp-system _SOURCE in the changeset -- not a trigger-surface "
+                  "commit (gate n/a, open).")
+            return 0
         if not os.path.exists(OUT_JSON):
             print("SYSTEM DRIFT (fail-closed): 06 not emitted -- run comp-system.")
             return 2
@@ -835,7 +866,10 @@ def main() -> int:
     if "--check" in args:
         return check_stale()
     if "--gate" in args:
-        return gate()
+        changed = None
+        if "--changed" in args:
+            changed = args[args.index("--changed") + 1:]
+        return gate(changed=changed)
     model = compile_model()
     if "--json" in args:
         print(json.dumps(model, indent=2))
