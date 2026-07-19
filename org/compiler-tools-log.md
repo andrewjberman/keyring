@@ -21455,3 +21455,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPSIMILAR.PH2 | comp-debris / comp-heat | ground heat sources for --supersede divergence | comp-debris live >2min (slow); comp-heat repo-scoped -- open heat-plumbing item |
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~D | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/summary_corp... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/debtscan/summary_corpus.py org/modules/graph/variance... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | (no-TO) | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-19 | 1.0.0_SA_CTO | (no-TO) | comp-similar | comp-similar --self-test | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/abstraction_loop/PLAYB... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/abstraction_loop/PLAYBOOK.md infra/system/sdk/abstract... | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/summary_corp... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/debtscan/summary_corpus.py org/tier2_senior/0.8.0_AE_... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPASSURANCE.TO-1 | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/audit-archive-invoker.py --file ... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff .tools/audit-archive-invoker.py .tools/tests/test_audit_archive_invoker.py | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPASSURANCE.TO-4 | comp-manifest-check / comp-which(source) / rules-scorer | catalog-count reconcile: 78 exec / 60 routable / 65 tools / 97 entries / 73 RULES / 82 coverage-map all reconciled by the registration invariant; comp-which prints per-query ranked count (no fixed of-63); cohort-C 13.8pct curated-gap residual; CLAUDE.md 62/49->78/60 routed to CTO | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPASSURANCE.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPASSURANCE.TO-1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/deliverab... | PASS |
