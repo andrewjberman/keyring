@@ -21854,3 +21854,35 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.WS-3 | drift_gate (retroactive + marker-scan built) | retroactive-n-a mechanism (self-test retro checks PASS, 3 n-a DRIFT->CLEAN) + --derive-surface/--transition-lint (40-to-seed/0-orphan); NA-0006/0007 dispositions | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/abstraction_loop/LIVE_... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-pulse | comp-pulse diff infra/system/sdk/abstraction_loop/LIVE_DERIVED_SURFACE_DESIGN.md | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-iam | comp-iam roles | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-19 | 1.0.0_SA_CTO | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-pulse | comp-pulse diff CLAUDE.md | FAIL |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPREG.routing-sod-grounding | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPREG.routing-sod-grounding | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/COMPRAIL_GATE1_FP_MEAS... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/CONTROLS_OVER_CARE.md --f... | PASS |
+| 2026-07-19 | 0.0.0_AB_MSTR | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-pulse | comp-pulse diff docs/doctrine/CONTROLS_OVER_CARE.md org/tier0/ledger/LD-0321.md | FAIL |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-19 | 0.7.0_AE_CloudOps~B | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/IAM_FIDELITY_SWEEP_2026... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_NESTEDABSTRACT.forward-leg-scope (shared) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPREG.routing-sod-grounding | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh --file in... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~Z | NFRA_COMPREG.routing-sod-grounding | comp-pulse | comp-pulse diff .tools/hooks/comp-tool-hud.sh infra/system/03_comp_tools.md | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/_canonical.py --file... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff infra/aws/globgrph/_canonical.py infra/aws/globgrph/_provenance.py infr... | FAIL |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~D | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/COMPROUTE_GATEHOLES_VE... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/00_synthesis.md --file inf... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff infra/system/00_synthesis.md infra/system/01_substrate.md infra/system/... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-19 | 3.0.0_SA_CVO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/abstraction_loop/ABSTR... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff infra/system/sdk/abstraction_loop/ABSTRACTION_LEDGER.jsonl infra/system... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.WS-6 | incorporation_sla.py (built) | --self-test 6/6 PASS (silent-pending/within-sla/deferred/deferral-review/incorporated/live); live 6-deferred/0-silent after dispositioning the 6 NA rows | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-19 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
