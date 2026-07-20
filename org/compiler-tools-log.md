@@ -21923,3 +21923,58 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-20T0244Z 0.0.0_AB_MSTR session-close addendum: comp-state --self-test x1 (PASS 3/3, final wrapped-state exec-sum). Wind-down-completion + record-correction window, no new build.
 | 2026-07-19 | 0.0.0_AB_MSTR | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-19 | 0.0.0_AB_MSTR | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier0_exec/0.0.0_AB_MSTR/logs/2026-07-19/... | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_ONTOCLARITY.json | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/projects/NFRA_ONTOCLARITY.json | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/projects/REGISTRY.md | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-B.layering-nesting-crosswalk-and-lint | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-ontolint --file .tools/comp... | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff .tools/comp-ontolint .tools/comp-which org/modules/graph/comp-coverage-... | FAIL |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-system | comp-system --gate --changed org/modules/graph/comp_ontolint.py .tools/comp-ontolint .t... | FAIL |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-system | comp-system | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-ontolint --file .tools/comp... | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff .tools/comp-ontolint .tools/comp-which infra/system/00_synthesis.md inf... | FAIL |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-system | comp-system --gate --changed org/modules/graph/comp_ontolint.py .tools/comp-ontolint .t... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-ontolint | comp-ontolint self-test | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-ontolint | comp-ontolint check | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-C.process-deterministic-tie-breakers | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-C.process-deterministic-tie-breakers | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOCLARITY_WSC_G... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | NFRA_COMPROUTE.gate-holes (shared) | comp-ontolint | comp-ontolint check | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | NFRA_COMPROUTE.gate-holes (shared) | comp-ontolint | comp-ontolint self-test | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_ONTOCLARITY.WS-D.l... | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-C.process-deterministic-tie-breakers | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-ontolint | comp-ontolint self-test | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-ontolint | comp-ontolint role-resolve Transformer Guard | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-ontolint | comp-ontolint role-resolve Store | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-ontolint | comp-ontolint role-resolve | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-ontolint | comp-ontolint role-resolve Gateway Custodian | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-ontolint | comp-ontolint check | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/NFRA_ONTOLOGY_RULE_BA... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-system | comp-system --gate --changed org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml | FAIL |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-system | comp-system | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff infra/system/06_current_state.json infra/system/06_current_state.md org... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-system | comp-system --gate --changed org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml infra/syste... | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-C.process-deterministic-tie-breakers | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-ontolint --file infra/syste... | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-C.process-deterministic-tie-breakers | comp-pulse | comp-pulse diff .tools/comp-ontolint infra/system/01_substrate.md org/modules/graph/com... | FAIL |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-C.process-deterministic-tie-breakers | comp-system | comp-system --gate --changed org/modules/graph/comp_ontolint.py org/modules/graph/comp-... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | NFRA_COMPROUTE.gate-holes (shared) | comp-ontolint | comp-ontolint check | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-19/sysparity_verification_trac... | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-D.log-clarified-defs-in-system-sdk | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-D.log-clarified-defs-in-system-sdk | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOCLARITY_WSD_G... | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-D.log-clarified-defs-in-system-sdk | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-D.log-clarified-defs-in-system-sdk | comp-manifest-check | comp-manifest-check check | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-D.log-clarified-defs-in-system-sdk | comp-manifest-check | comp-manifest-check check | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-D.log-clarified-defs-in-system-sdk | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/01_substrate.md --file org... | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-D.log-clarified-defs-in-system-sdk | comp-pulse | comp-pulse diff infra/system/01_substrate.md org/modules/graph/comp_ontolint.py org/tie... | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-D.log-clarified-defs-in-system-sdk | comp-system | comp-system --gate --changed org/modules/graph/comp_ontolint.py infra/system/01_substra... | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-D.log-clarified-defs-in-system-sdk | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-D.log-clarified-defs-in-system-sdk | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_ONTOCLARITY.WS-D.l... | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-D | comp-ontolint / system_parity / comp-manifest-check | comp-ontolint self-test (loads role_priority from bank) + seed-guard FAIL-branch exercise; system_parity ontology domain; comp-manifest-check check | PASS (self-test 14-role total-order + a-d; parity 100% 4/4; manifest exit 0) |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-D.log-clarified-defs-in-system-sdk | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-20 | 0.8.0_AE_CloudComp~C | NFRA_ONTOCLARITY.WS-D.log-clarified-defs-in-system-sdk | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
