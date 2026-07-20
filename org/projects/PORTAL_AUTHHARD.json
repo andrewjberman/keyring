@@ -1,0 +1,27 @@
+{
+  "project_code": "PORTAL_AUTHHARD",
+  "macro_code": "PORTAL",
+  "name": "Portal Authentication & Authorization + Abuse-Resistance Hardening",
+  "description": "Andrew-direct 2026-07-20: harden the opalinvest.dev portal auth stack against the realistic attack paths in Andrew's 'Authentication and Authorization Hardening Proposal' (brute-force / credential stuffing / compromised account / cross-tenant access / scraping / serverless cost amplification / infra compromise). MSTR grounded the live stack at source and authored docs/briefs/PORTAL_AUTH_HARDENING_BRIEF_20260720.md. VERDICT: the foundational model is sound and in several dimensions EXCEEDS the proposal's 'as understood' -- the trust boundary is closed at the edge (auth-validator-edge verifies the RS256 JWT and injects server-derived X-Firm-Id/X-User-Role, overwriting client headers) plus advisor-id (004a) + ownership-map account/relationship (004c) + tier-role (ROLGAT) scoping + an explicit cross-firm secret Deny + a FIRMSEP alarm suite. The real GAPS are concentrated on the abuse-resistance + account-lifecycle axis, not tenant-isolation: G1 no login throttle (only a coarse WAF 2000/5min/IP), G2 no MFA for any portal user incl admins, G3 no session revocation and refresh() never re-checks status (a disabled user keeps minting tokens for the 7-day refresh window), G4 the FIRMSEP alarms fire into an SNS topic with NO subscriber (pages nobody) + zero auth-abuse alarms, G5 a shared authorizer role + secret:opal/* wildcards, G6 no per-user/cost extraction controls, G7 password min-8-not-12, G8 [CONFIRM] direct-to-origin bypass of the edge scoping gates. DynamoDB-not-SQL, so the proposal's SQL-injection/row-level-security items transform to DynamoDB key-condition + IAM LeadingKeys defense-in-depth. Eight workstreams WS-1..8 in the brief S4.",
+  "prds": [
+    {
+      "path": "docs/briefs/PORTAL_AUTH_HARDENING_BRIEF_20260720.md",
+      "label": "Portal Auth Hardening brief (MSTR, 2026-07-20): source-grounded companion to Andrew's proposal -- confirms/credits what is already strong, isolates the real grounded gaps with file:line evidence, maps every proposal recommendation to done/gap/N-A/confirm, and lays out WS-1..8 with exercise-based acceptance. CTO~B authors the PRD from this.",
+      "date": "2026-07-20"
+    }
+  ],
+  "status": "active",
+  "phase": "CHARTERED 2026-07-20 (Andrew-direct, LD-0323). MSTR grounded brief authored (docs/briefs/PORTAL_AUTH_HARDENING_BRIEF_20260720.md) -- portal auth stack read at source, verdict + 8 workstreams. NEXT: 1.0.0_SA_CTO~B (dedicated lead lane, spawned this session) PRDs the brief (WS-1..8), decomposes to TOs, and ISSUES them to 0.7.0_AE_CloudOps~B (executor lane, spawned alongside). WS priority (grounded re-weight -- tenant isolation already strong, so it drops; account-lifecycle + abuse rise): WS-1 login abuse controls / WS-2 session lifecycle + revocation / WS-3 MFA for privileged roles / WS-4 wire the alarms + auth-abuse alarms / WS-5 authenticated extraction + cost controls / WS-6 least-privilege role split + secret de-wildcarding / WS-7 origin lockdown + the pentest suite / WS-8 password policy. Each WS acceptance = EXERCISE (the test that fails if the claim is false), not a config read (Rule 22a).",
+  "blocking": "None (chartered, provisioning). NEXT = CTO~B authors the PRD from the MSTR brief + dispatches WS TOs to 0.7.0_AE_CloudOps~B. G8 (origin-reachability) + the confirm-items in brief S5 need an EXERCISE, not a source read. No live change lands before CTO~B PRD + CTO arch-gate on the IAM/WAF/session touches.",
+  "owner": "1.0.0_SA_CTO~B",
+  "owner_note": "Andrew-direct: CTO~B is 'tasked with this work explicitly, they can also run the TOs and issue them to 0.7.0_AE_CloudOps~B'. CTO~B owns the PRD + TO decomposition + dispatch + arch-gate. 0.7.0_AE_CloudOps~B executes. MSTR holds the charter (LD-0323) + the grounded brief + governance. The base 1.0.0_SA_CTO is a separate LIVE session (Andrew ontology-design) -- not this lane.",
+  "coo_lane": "2.0.0_SA_COO",
+  "cvo_lane": "3.0.0_SA_CVO",
+  "created": "2026-07-20",
+  "pods": ["1.0", "0.7", "0.0.0"],
+  "sovereign": "Andrew (direct, the portal auth/authz hardening mandate + the CTO~B/AE~B/CTO~A provisioning)",
+  "depends_on": [],
+  "depends_on_note": "Scoped to the opalinvest.dev PORTAL auth stack (auth-handler / portal-authorizer / auth-validator-edge / portal_data_proxy / terraform/portal-auth). NOT the agent fabric, the m365/MCP gateway, or the ETL pipelines (adjacent auth surfaces, out of scope). Two data planes: firm-agnostic (portal_data_proxy, no firm-scoping needed) vs firm-scoped (edge-gated).",
+  "thread_counter": 0,
+  "threads": []
+}
