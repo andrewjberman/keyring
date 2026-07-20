@@ -15,9 +15,11 @@
       "date": "2026-06-15"
     }
   ],
-  "status": "active",
-  "phase": "Phase 1: PRD authored + SCHEMA RATIFIED (§3) + §9 POLICY RESOLVED (Andrew-direct 2026-06-16, PRD v0.2) -- BOTH gates cleared, COO decomposition FULLY UNBLOCKED. §9 rulings: enforcement=ADVISORY-FIRST RAMP (Q2 warns, CTO ramp-flip to hard-block on low-FP evidence); ratified_by=TIERED (Andrew-only for SEV1; CTO+COO for SEV2 and below); scope ceiling=SEV1+SEV2 critical-surfaces set for v1 (not every artifact); value_check=CVO-owned. PRD §7 TO candidates ready: TO-1 CTO schema-ratify (DONE PRD §3); TO-2 AE (globgrph lane) stand up the graph_contracts Iceberg table on Nessie main + Q1/Q2 diff queries (comp-aws diff extension) + wire Q2 into comp-surface-check in ADVISORY mode (the long pole); TO-3 CVO author SEV1 rows first (model_portfolios.benchmark/headline, advisor_intelligence/NNA) then SEV2 (peers, aum) + the period_defs value-check; TO-4 DS wire pipescript --contract / --flipped.",
-  "blocking": "VALUE-CHECK GATE PASSED 2026-07-17 (CVO independent re-review CONCUR all 4 limbs @38bb33d79): BMKAUD-WS-2 benchmark reproduces 250/250 violations-0 DISCRIMINATING at this as-of, vacuity-gate @409d9a85a PASS (250 cells not 0), no empty-hash-in-a-real-slot (the 2 SEV1 rows unloaded, so no real slot to be empty), headline convergence clean, advisor inf clean + reconciliation all_pass, bd frozen-known-cause, cot absent. The 2 SEV1 rows (headline + advisor_intelligence) are now ANDREW-SIGNED @f5cee1a8a. 3/5 rows LOADED (graph_contracts last-write 06-16); the 2 SEV1 ROW-LOADS + all-5-live are HELD per Andrew-direct ('i dont want to deploy this until MDPF is totally done') -- an EXTERNAL deploy-hold, NOT a stall: verification is COMPLETE, nothing to load onto the hardened image until MDPF finishes. POST-MDPF FOLLOW-ON (carried, COO): 0.7.0 loads the 2 signed SEV1 rows -> all-5-live -> COO closes. 3 Andrew-facing open items in CVO record (benchmark re-sign, cot scope, bd load-day freshness). DO NOT record 'all 5 live' until the load fires.",
+  "status": "on-hold",
+  "suspended": "2026-07-20",
+  "suspend_directive": "Andrew-direct, sovereign, 2026-07-20 ~14:35 ET (MSTR session chat), VERBATIM: \"Pause GCONTR we are not addressing htat, it should be rendered as indefinite/suspended i do not want to fucking hear about it again\". Scope recorded as-stated (SURFACE-not-adjudicate). GCONTR is SUSPENDED INDEFINITE: no work, no closeout, no re-surfacing to Andrew. Supersedes the same-day MSTR routing ruling (GCONTR-stays-MAIN, MDPF-gated) -- that ruling is MOOT.",
+  "phase": "SUSPENDED INDEFINITE (Andrew-direct 2026-07-20 ~14:35 ET) -- see suspend_directive. All GCONTR work STOPS; the two signed SEV1 row-loads + all-5-live + closeout are CANCELLED-as-suspended (not pending, not MDPF-gated anymore). Do NOT drive, do NOT surface. --- PRE-SUSPENSION HISTORY (for record only): Phase 1 PRD authored + SCHEMA RATIFIED (§3) + §9 POLICY RESOLVED (Andrew-direct 2026-06-16, PRD v0.2); value-check PASSED 2026-07-17 (CVO independent re-review CONCUR all 4 limbs @38bb33d79); 2 SEV1 rows Andrew-signed @f5cee1a8a; 3/5 rows loaded; the load was externally held to MDPF-done before this suspension.",
+  "blocking": "SUSPENDED per Andrew-direct 2026-07-20 -- INDEFINITE. Not blocked-by-dependency; deliberately stood down by the sovereign. Do not work it, do not raise it. Any GCONTR item in any agent's queue (COO closeout TO, CVO value-check TO-3) is DROPPED-as-suspended.",
   "created": "2026-06-15",
   "pods": [
     "1.0",
@@ -29,5 +31,5 @@
   "thread_counter": 0,
   "threads": [],
   "last_drive_touch": "2026-07-17T23:30Z",
-  "gcontr_progress": "value_check_PASSED_2SEV1_signed_load_HELD_to_MDPF"
+  "gcontr_progress": "SUSPENDED_INDEFINITE_andrew_direct_20260720"
 }
