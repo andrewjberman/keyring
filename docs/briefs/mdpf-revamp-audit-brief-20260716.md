@@ -130,3 +130,31 @@ New-territory rule holds: pure adds, no existing key touched.
 comp-cache (page query census) · pipescript (YANG thread) · comp-which (routing) · rail-checked raw aws
 (DDB TF, emitter, served listings + shape reads — operational GETs). Denominators: 6 json/mdpf keys + 2
 portfolios keys listed; 7 artifacts shape-read; 5 feeder families vintage-checked via source_vintage_last.
+
+---
+
+## 7. Open calls RESOLVED (Andrew-direct 2026-07-20, confirmed to base CTO in-session)
+
+All four §6 open calls are ruled; relayed via CTO~A handoff (`d8c568c32`) and verified out-of-band with
+Andrew directly before recording:
+
+1. **Bucketing axis** → `portal/{channel}/{client}/` **CHANNEL-FIRST** (as §4 rec).
+2. **YANG-family scope** → **PHASE-2** (as §5 rec).
+3. **49F basis selection** → **SCHWAB-RPS** (the 0824 full figure, account 08242234 — the Model Portfolios
+   master). **NEVER 0833** (Advisor Intelligence, not this page), **NEVER 0824+0833 sum**, **NEVER**
+   substitute blended-preferred; the artifact carries an explicit `basis: schwab-rps` label.
+4. **DDB as the single management surface** → **CONFIRMED** (registry-inversion per §3).
+
+**49F decomposition mechanism (Andrew-direct):** decompose the **0824 full figure** into the five named
+model portfolios **UST / ST / INT / LTC / LTA**, keyed via SmartX model identifiers (annotate where the
+SmartX display names differ from the five). **non-model AUA = 0824 full − Σ(5 models).** Global = 49F +
+Inflection aggregated (the existing cross-partner aggregate — NOT a basis sum). SINGLE-BASIS decomposition.
+
+**Authoring-gate groundings (Andrew-direct, base CTO executing before gold authorship):**
+- (a) Map the `opal-data-assets/smartx/` model identifiers → the five named models UST/ST/INT/LTC/LTA.
+- (b) Reconcile the served aggregate's `by_model{7}` against account-distribution's `by_model{5}` — resolve
+  7→5 onto Andrew's five.
+- (c) **Full data-sufficiency assessment**: confirm `opal-data-assets` silver + the gold DDB
+  (`opal-assets-daily-aua`) carry everything needed for **ALL** MDPF page functions under the **Portfolio
+  Analytics** main header and the **AUA/AUM tab** — a per-function coverage/gap table, grounded on live
+  S3/DDB state, feeding the gold `dim_*` projection spec.
