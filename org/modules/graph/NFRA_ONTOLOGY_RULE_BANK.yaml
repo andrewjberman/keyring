@@ -130,6 +130,7 @@ c3_naming_ladder:
   3_resource_domain:    "shared firm/domain token -> the domain (opal-data-bd -> bd)"
   4_governed_catalog:   "where 1-3 underdetermine -> a blessed read-from-file name for the component signature"
   5_never_invented:     "no inheritable name + no catalog entry -> unnamed placeholder, counted (honest-degrade)"
+  implementation_status: "HONESTY (NFRA_ONTOCLARITY naming review 2026-07-20): rungs 1-3 above are the ASPIRATIONAL target, currently UNWIRED. LIVE reality -- C3 names = anchor-type category (object-data/compute-orchestration/pipeline, via the ratified overlapping-domain-cover model); C2 names = the matching detector's shape-label (AStore/AGrant/BStruct/...). The one capability-signal implementation (NFRA_MOTIF_P2 _name_system's PanelCluster rung) is DEAD/unused AND portal-bound -- it cannot name non-portal (AWS/code) systems. Wiring target = rungs 2-3 (pipeline_thread / resource_domain, from naming conventions); the deterministic ceiling for non-portal systems is STRUCTURAL, with capability supplied by the ORTHOGONAL llm label (NFRA_ONTOLOGY_LLM_CLASSIFICATION), one-way + deterministic-name-wins. Full review + code-vs-content plan: infra/system/ontology/."
   emergence: "NFRA_SYSTEM C2->C3 union-find (>=2 connected motifs); ontology CONSUMES it, does not re-implement"
 
 # --- TYPE axis + scope-outs (distinct from OPAL_TAXONOMY -- what a node is CALLED) ------------------
