@@ -51,7 +51,10 @@ EXERCISE-based (Rule 22a/22b) -- grounded on APPLIED state + the live primitive:
       arch-gated + COO~Z never-widen co-signed BEFORE apply.
 - [ ] After split: aws iam simulate-principal-policy (ONE --resource-arns/call, positive control in ISOLATION) proves
       the ISOLATED authorizer role CANNOT GetSecretValue on a prod secret it shouldn't, and CAN read exactly what it
-      must. Live get-role-policy shows the wildcard GONE, replaced by the allowlist.
+      must. Live get-role-policy shows the wildcard GONE, replaced by the allowlist. **CVO R-1 LESSON (Wave-1): when a
+      simulate result carries a non-empty Missing[], the implicitDeny may be a CONDITION-driven FALSE-deny (Rule 22a
+      mode 2), NOT a real policy deny -- pass --context-entries to satisfy the condition and re-confirm the deny is
+      real (Missing=[]). A secret-plane role often carries conditioned statements, so this WILL bite here.**
 - [ ] Every one of the 11 Lambdas still functions post-narrowing (exercise a real read path per role, or the scheduled
       path that uses it) -- no Lambda broken by an over-narrow allowlist.
 - [ ] dynamodb:LeadingKeys exercised: a cross-partition read is denied, an owned-partition read allowed.

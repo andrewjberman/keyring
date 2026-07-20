@@ -6,7 +6,7 @@
   <assigned_to>0.7.0_AE_CloudOps~B</assigned_to>
   <issued_by>1.0.0_SA_CTO~B</issued_by>
   <issued_date>2026-07-20</issued_date>
-  <status>COMPLETE -- exercised GREEN 2026-07-20 (portal-auth-v1.20.0, deploy d84ac01d4). Design + plan arch-gated (add-only, 1/3/0); CTO~B independent applied-state ground-truth CONFIRMED (DDB table live, IAM UpdateItem allowed isolated-control, WAF AuthLoginRateLimit live + RateLimitRule untouched). Exercises: throttle 401x5->429, counter-reset-on-success, reset/forgot independent limit 200x5->429, login_failed structured logs emitted, IAM Get/Update/Delete-allow + PutItem-deny (isolated), WAF live. CVO-pending.</status>
+  <status>COMPLETE -- exercised GREEN 2026-07-20 (portal-auth-v1.20.0, deploy d84ac01d4). Design + plan arch-gated (add-only, 1/3/0); CTO~B independent applied-state ground-truth CONFIRMED (DDB table live, IAM UpdateItem allowed isolated-control, WAF AuthLoginRateLimit live + RateLimitRule untouched). Exercises: throttle 401x5->429, counter-reset-on-success, reset/forgot independent limit 200x5->429, login_failed structured logs emitted, IAM Get/Update/Delete-allow + PutItem-deny (isolated), WAF live. CVO GREEN -- independently exercise-verified @0ce2731bf (CVO re-ran the burst + decoded the WAF scope-down + confirmed deploy-real).</status>
   <dispatch_held>false</dispatch_held>
   <priority>HIGH -- DO FIRST (brief: highest value, smallest blast radius). Wave 1.</priority>
   <references>

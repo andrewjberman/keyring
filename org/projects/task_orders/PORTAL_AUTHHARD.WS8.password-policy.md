@@ -6,7 +6,7 @@
   <assigned_to>0.7.0_AE_CloudOps~B</assigned_to>
   <issued_by>1.0.0_SA_CTO~B</issued_by>
   <issued_date>2026-07-20</issued_date>
-  <status>COMPLETE (mechanism) -- exercised GREEN 2026-07-20 (portal-auth-v1.20.0). EXERCISED: <12 rejected at set-time; breached 'password1234' (>=12) rejected (breached gate independent of length); passphrase-with-spaces accepted (200); existing sub-12 user (11-char direct-bcrypt-write) STILL logs in -> 200 (no lockout, boundary held). CVO-pending. COVERAGE RESIDUAL (label the basis): the breached list shipped is a curated top-N HEAD, not the full top-10k -- the full list needs a one-time SecLists/Pwned import (off-Opal egress -> Andrew word) OR a local file drop; swap breached-passwords.ts only. Tracked follow-up, not blocking the mechanism.</status>
+  <status>COMPLETE (mechanism) -- exercised GREEN 2026-07-20 (portal-auth-v1.20.0). EXERCISED: <12 rejected at set-time; breached 'password1234' (>=12) rejected (breached gate independent of length); passphrase-with-spaces accepted (200); existing sub-12 user (11-char direct-bcrypt-write) STILL logs in -> 200 (no lockout, boundary held). CVO GREEN @0ce2731bf (MIN_LENGTH=12 + breached set-time-only confirmed on deployed source). COVERAGE RESIDUAL (label the basis): the breached list shipped is a curated top-N HEAD, not the full top-10k -- the full list needs a one-time SecLists/Pwned import (off-Opal egress -> Andrew word) OR a local file drop; swap breached-passwords.ts only. Tracked follow-up, not blocking the mechanism.</status>
   <dispatch_held>false</dispatch_held>
   <priority>LOW-MEDIUM -- Wave 1 (bundled, low effort, same Lambda).</priority>
   <references>
