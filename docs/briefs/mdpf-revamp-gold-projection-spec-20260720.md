@@ -49,6 +49,8 @@ Grounded this session. **The SmartX display names are NOT what the served keys /
 
 ## 3. THE 49F BASIS MECHANISM (Andrew-direct; grounded)
 
+> **§9 (CVO v1.1 review) BINDS where it conflicts with this section** — F2 pins the basis source (roster, not the conflated DDB identity) + names the $4.1M delta; F3 disambiguates the two non-model residuals. Read §9 before authoring.
+
 **Basis = SCHWAB-RPS (the 0824 platform-model figure), NEVER blended-preferred, NEVER 0824+0833, NEVER substitute. Artifact carries `basis: schwab-rps`.**
 
 Grounded numbers (2026-07-18 DDB / live roster, 49F open):
@@ -66,6 +68,8 @@ Grounded numbers (2026-07-18 DDB / live roster, 49F open):
 ---
 
 ## 4. PER-ARTIFACT PROJECTION SPECS (A1–A7)
+
+> **§9 (CVO v1.1) BINDS:** the output field list is the audit-brief inventory IN FULL (F4 — §4's inline shapes are illustrative + omit `partner_custody_total[]`/`cohort_provenance[]`); crosswalk keys by `model_id` only, no `model_name` fallback (F5); A4 non_model preserves the served v0_9 methodology, not a recompute (F3).
 
 Each `dim_*` projection reads monolith silver + writes the served-shape artifact. **Parity target: the exact served shape** (audit brief §1 field inventories) — verified by `comp-transform schema-check` on the consuming component + a pinned shape diff.
 
@@ -111,4 +115,26 @@ Each `dim_*` projection reads monolith silver + writes the served-shape artifact
 - **Gold `dim_*` authoring** — DE/DS lane (`data/*/scripts/gold/`), CTO code-review + first-artifact signoff.
 - **`portal/` bucketing + DDB write wiring** — DT/AE lane.
 - **Verification** — CVO on the never-sum/never-substitute law + parity streak (grounds on the SERVED artifact, not the producer self-report).
-- **Gate:** dispatch rides the smartx-silver-current signal (the WS-A7 P0).
+- **Gate:** dispatch rides the smartx-silver-current signal (the WS-A7 P0) **+ the min-day floor confirmed at first-conversion (F1)**.
+
+---
+
+## 9. CVO independent review (3.0.0_SA_CVO, 2026-07-20) — v1.1 corrections (BIND where they conflict with §3/§4)
+
+Architecture AFFIRMED sound (the inversion; DDB-is-registry-not-timeseries; never-substitute via distinct value_class/basis; the two-quantity model-vs-custody split; custody correctly NOT the model basis). Findings folded:
+
+**F1 (427-date history) — RESOLVED, not a backfill blocker.** The spine's 427-date history is **INTRA-PARTITION**: the vendor `model_aum` payload is a FULL HISTORY series (`silver.parse_model_aum` explodes `performance[]` to one row per `day`; measured ~424–1220 days/model on 07-15, ≥ the 427-date served window back to 2024-11-01). So the gold A5/A6 reads the `day` column of the **latest** `fact_model_aum_daily` partition — NOT an accumulation of run_date partitions. No historical run_date backfill is needed; the 07-16..20 backfill partitions each carry the full series. GATE: first-conversion verifies `min(day) ≤ 2024-11-01` per funded model (CVO folds this into the smartx first-conversion verify). A model whose series legitimately starts later than the served floor is a NAMED note, not a redesign. §8 gate = silver-current **+ min-day floor confirmed**.
+
+**F2 (basis number pin) — BINDING.** The served-model-basis SOURCE is `fact_model_allocation_roster` (silver; advisor="49 Financial Group", status=open), Σ value by model = the 5-core. §3's claim that "roster Σ = DDB 5×model_value = $1,397.2M as one identity" is CORRECTED: same-date roster = **$1,401.3M** vs DDB `platform_model_aua` = **$1,397.2M** — a ~$4.1M / 0.29% gap. The DDB/legacy $1,397.2M is the CURRENT SERVED value (legacy `wsb_49f_smartx_model_aua` feeder). The parity-streak target is the ROSTER-derived value; the ~$4.1M is a **NAMED delta the gold author must ground + explain before the streak passes** (candidate cause: the legacy feeder's model-tier enumeration gap — 11 of ≥14 models, audit L52; or status/timing). Post-revamp the DDB `platform_model_aua` cohort is WRITTEN from the roster-derived value → ties by construction. ("Enumerate what a number is OF before why it differs.")
+
+**F3 (non-model = TWO distinct quantities) — BINDING.** The spec conflated two non-model residuals (~10× apart). CORRECTED:
+- **A4 `non_model_assets`** = the ENTERPRISE/custody-basis residual (enterprise_total − model_aum ≈ $244M): **preserve the served v0_9 methodology VERBATIM for parity** — do NOT impose a new computation.
+- **A5/A6 spine `non_model_aua[]`** = the spine's OWN served methodology: preserve the served value for parity.
+- Andrew's "non-model = 0824 full − Σ(5)" describes the CONCEPTUAL decomposition; it is NOT a licence to recompute A4/A5 to a new number — the PARITY TARGET is each served artifact's existing methodology. "RPS full" is deliberately NOT pinned to a figure here: the gold author GROUNDS the served A4 + A5 non_model values at authoring and REPRODUCES them; a divergence is a named delta, never a silent recompute. `non_model_aua[]` and `partner_custody_total[]` are DISTINCT served arrays — never substitute one for the other (the FE `globalDeepTailNonModel` path + A4 must not cross).
+
+**F4–F8 (authoring requirements, BINDING):**
+- **F4** — the A5/A6 output field list is the audit-brief inventory (L21-22) IN FULL, including `partner_custody_total[]` + `cohort_provenance[]` that §4's abbreviated shape omitted. §4's inline shapes are illustrative; the audit-brief inventory binds parity.
+- **F5** — the crosswalk keys by `model_id` ONLY for all 7 models; NO `model_name` fallback path (it reintroduces the LTC="Opal Conservative Growth" string-match hazard). An unrecognized `model_id` RAISES, never string-matches.
+- **F6** — confirm A3/A7 emit `generated_at` (the `spineIsStale` input); if it's file-meta not a payload field, the projection must surface it.
+- **F7** — confirm the inflection silver / A5 `by_model` emits a "blend" cohort with value+count (`rollBlendsIntoArchetype`'s input) — inflection leg only.
+- **F8** — SMA-fold shape law: the portal timeseries (A5/A6) folds SMA into non_model (no `sma_aua[]`); the platinum daily (audit L25) keeps `sma_aua` DISTINCT. A projection targeting the platinum-daily shape must NOT fold SMA — do not cross the shapes.
