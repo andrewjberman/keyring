@@ -180,30 +180,51 @@ def _self_test() -> int:
     ok &= empty_ok
 
     # --- WS-C spot-8: the role-resolve DETERMINISTIC tie-breaker, to CTO's enforcement gate-bar (a)-(d) @055731Z ---
-    PRIO = ["Custodian", "Observer", "Gateway", "Guard", "Router", "Registry", "Trigger", "Container",
-            "Transformer", "Producer", "Consumer", "Source", "Store", "Sink"]
-    # (a) POSITIVE: guards+transforms -> Guard (Guard beats Transformer per the ratified order).
-    a = resolve_role(["Transformer", "Guard"], PRIO) == "Guard"
-    # (b) LOAD-BEARING MUTANT (CTO: the test that PROVES the control -- the SAME node must resolve DIFFERENTLY
-    #     under a mutated priority; a test that passes with OR without role_priority is an instrument that cannot
-    #     fail). REVERSED order -> Transformer now outranks Guard -> different answer. REMOVED -> cannot arbitrate.
-    b_rev = resolve_role(["Transformer", "Guard"], list(reversed(PRIO))) == "Transformer"
+    # role_priority is LOADED from the canonical rule-bank (NFRA_ONTOCLARITY WS-D -- folds CVO's WS-C rec + MSTR's
+    # AC-3a every-enforcing-copy): the hardcoded ordering FIXTURE that used to live here is ELIMINATED, so the ONE
+    # place an ordering-copy existed outside RULE_BANK is gone. The bar now exercises the LIVE order, and a future
+    # reorder cannot leave a stale self-test asserting a dead sequence -- zero copies, not a copy kept in sync.
     try:
-        resolve_role(["Transformer", "Guard"], [])   # REMOVED priority
-        b_removed = False                             # a resolver that answered anyway is NOT depending on role_priority
-    except ValueError:
-        b_removed = True
-    b = b_rev and b_removed
-    # (c) TOTALITY: the lint FIRES on an omission + on a duplicate rank; PASSES on the complete unique order.
-    _roles = {r: {} for r in PRIO}
-    c = (not any("(3)" in v for v in lint({"roles": _roles, "role_priority": PRIO}))
-         and any("OMITS" in v for v in lint({"roles": _roles, "role_priority": PRIO[:-1]}))
-         and any("DUPLICATE" in v for v in lint({"roles": _roles, "role_priority": PRIO[:-1] + ["Guard"]})))
-    # (d) DEGENERATE: 0 matches -> None (not error); exactly 1 -> that role (priority arbitrates 2+ ONLY).
-    d = resolve_role([], PRIO) is None and resolve_role(["Store"], PRIO) == "Store"
-    wsc = a and b and c and d
-    print("  WS-C role-resolve (a-positive=%s, b-LOAD-BEARING-mutant[rev->Transformer=%s, removed->raises=%s], "
-          "c-totality=%s, d-degenerate=%s): %s" % (a, b_rev, b_removed, c, d, "PASS" if wsc else "FAIL"))
+        _bank = _load(_DEFAULT_RULE_BANK)
+    except (OSError, ValueError, ImportError) as e:
+        print("  WS-C role-resolve: CANNOT LOAD canonical rule-bank to seed the bar (%s) -- FAIL" % e)
+        return 1
+    PRIO = role_priority(_bank)
+    _declared = set(_bank.get("roles") or {}) if isinstance(_bank.get("roles"), dict) else set()
+    # The bar must seed on a LIVE total order over the declared roles -- if the bank itself is broken here, surface
+    # it (never run the WS-C bar on a lie; the `check` subcommand owns the full live-bank verdict, this is the seed).
+    prio_total = bool(PRIO) and len(PRIO) == len(_declared) and set(PRIO) == _declared
+    print("  WS-C seed: role_priority LOADED from canonical bank (%d roles; total-order-over-declared=%s)" % (len(PRIO), prio_total))
+    ok &= prio_total
+    if not prio_total:
+        print("  WS-C role-resolve: SKIPPED -- live role_priority is not a total order over the declared roles (invalid seed): FAIL")
+        wsc = False
+    else:
+        # (a) POSITIVE (a pairwise SEMANTIC invariant of the ratified order, NOT an ordering copy): guards+transforms
+        #     -> Guard, the more-specific safety Role outranks Transformer (WS-C's own worked example). Coupled to the
+        #     one pair the fog names, so a live inversion of THAT pair deliberately FIRES here.
+        a = resolve_role(["Transformer", "Guard"], PRIO) == "Guard"
+        # (b) LOAD-BEARING MUTANT (CTO: the test that PROVES the control -- the SAME node must resolve DIFFERENTLY
+        #     under a mutated priority; a test that passes with OR without role_priority is an instrument that cannot
+        #     fail). REVERSED order -> Transformer now outranks Guard -> different answer. REMOVED -> cannot arbitrate.
+        b_rev = resolve_role(["Transformer", "Guard"], list(reversed(PRIO))) == "Transformer"
+        try:
+            resolve_role(["Transformer", "Guard"], [])   # REMOVED priority
+            b_removed = False                             # a resolver that answered anyway is NOT depending on role_priority
+        except ValueError:
+            b_removed = True
+        b = b_rev and b_removed
+        # (c) TOTALITY: the lint FIRES on an omission + on a duplicate rank; PASSES on the complete unique order. The
+        #     duplicate is seeded with PRIO[0] (guaranteed already present in PRIO[:-1]) -- decoupled from any position.
+        _roles = {r: {} for r in PRIO}
+        c = (not any("(3)" in v for v in lint({"roles": _roles, "role_priority": PRIO}))
+             and any("OMITS" in v for v in lint({"roles": _roles, "role_priority": PRIO[:-1]}))
+             and any("DUPLICATE" in v for v in lint({"roles": _roles, "role_priority": PRIO[:-1] + [PRIO[0]]})))
+        # (d) DEGENERATE: 0 matches -> None (not error); exactly 1 -> that role (priority arbitrates 2+ ONLY).
+        d = resolve_role([], PRIO) is None and resolve_role(["Store"], PRIO) == "Store"
+        wsc = a and b and c and d
+        print("  WS-C role-resolve (a-positive=%s, b-LOAD-BEARING-mutant[rev->Transformer=%s, removed->raises=%s], "
+              "c-totality=%s, d-degenerate=%s): %s" % (a, b_rev, b_removed, c, d, "PASS" if wsc else "FAIL"))
     ok &= wsc
 
     print("=== comp-ontolint self-test: %s ===" % ("PASS" if ok else "FAIL"))
