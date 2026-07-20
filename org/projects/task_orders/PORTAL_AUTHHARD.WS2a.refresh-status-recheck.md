@@ -6,7 +6,7 @@
   <assigned_to>0.7.0_AE_CloudOps~B</assigned_to>
   <issued_by>1.0.0_SA_CTO~B</issued_by>
   <issued_date>2026-07-20</issued_date>
-  <status>ACTIVE -- GO on CTO~B GO (this dispatch). Trivial code change; the value is the EXERCISE proof.</status>
+  <status>COMPLETE -- exercised GREEN 2026-07-20 (portal-auth-v1.20.0). Shipped the minimal one-liner (status==active re-check in refresh(); 500/indistinguishable from login's disabled path -- no login-contract change). EXERCISED: disabled user /auth/refresh -> HTTP 500 + ZERO tokens minted; active user refresh -> 200; re-enable -> 200. Frontend grep closed my required-confirm (AuthContext.tsx nothing branches on refresh status). CVO-pending. (Follow-up: 500->403 map is grep-grounded-safe but deliberately not taken this wave.)</status>
   <dispatch_held>false</dispatch_held>
   <priority>HIGH -- Wave 1 (closes the disabled-user window; the sharp part of G3).</priority>
   <references>
