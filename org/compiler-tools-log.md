@@ -22117,3 +22117,68 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-20 | 3.0.0_SA_CVO~Z | comp-iam (roles/stats/role/service/gaps-filtered) + system_parity.py x8 + rail-checked raw aws (lambda/dynamodb/wafv2/iam simulate) | PASS | comp-iam DESIRED+APPLIED design brief + LD-0318/0319 parity + PORTAL_AUTHHARD Wave-1 APPLIED verify; gap: comp-iam census stale (June-3, no vintage) routed to CTO
 | 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-20/s... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/lambda/opal-assets... | FAIL |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/content_relate_pr... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/content_relate_prototype.py | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-revamp-audit-brief-202... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/mdpf-revamp-audit-brief-20260716.md docs/briefs/mdpf-revamp... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/content_negcontrol_harness.py | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/CONTENT_MODULE_DE... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/CONTENT_MODULE_DESIGN.md | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service opal-assets-silver-smartx | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service smartx-assets-daily-pull | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | pipescript | pipescript smartx | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/lambda/opal-assets... | FAIL |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CONTENT_PROTOTYPE_VERDICT_CVO_... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0325.md | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0325.md | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/XXX.md | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/XXX.md | FAIL |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/XXX.md --file org/tier0/ledger/LD-0... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/XXX.md org/tier0/ledger/LD-0325.md | FAIL |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions opal-assets-bd49f-reporting-pull,opal-ass... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/opal-ass... | FAIL |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/prompt.md | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/prompt.md | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GCONTR.json --file or... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_GCONTR.json org/projects/REGISTRY.md org/tier0/ledger... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/build_content_eval_corpus.py | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/.spot-check... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/.spot-check-checkpoint org/tier1_exec/3.0.0... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-revamp-gold-projection... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/mdpf-revamp-gold-projection-spec-20260720.md | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/opal-assets/opal-assets-silver-smartx/smartx_conversio... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions opal-assets-silver-smartx --settle-retry-... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/opal-ass... | FAIL |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/04_federated.md --file inf... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff infra/system/04_federated.md infra/system/ontology/CONTENT_MODULE_DESIG... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-preswap-baseline-20260... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/mdpf-preswap-baseline-20260720.md | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/task_orders/OPAL_TAXSMA_PT... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-similar | comp-similar | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift --help | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript deployed opal-portfolio-excel-generator | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/MDPF_REVAMP_D... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-similar | comp-similar supersede --top 40 | FAIL |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/MDPF_REVAMP_R... | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-which/comp-grep | MDPF re-point + FE fetch-path grounding (behavior-18 catch-all; mdpf/+portfolios/ served keys) | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
