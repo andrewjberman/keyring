@@ -645,7 +645,7 @@ inf_pipeline:
 
 tools_continued:
   comp-ontolint:
-    command: "comp-ontolint {check | self-test}"
+    command: "comp-ontolint {check | self-test | role-resolve <Role>...}"
     segment_scope: cross-segment
     when: |
       - "Is the ontology's Relation-vs-Role DUAL-AXIS exception consistent?" (the relation-vs-role invariant)

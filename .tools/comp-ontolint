@@ -6,7 +6,8 @@
 #
 # Subcommands:
 #   comp-ontolint check [--rule-bank PATH]   # lint the live rule-bank (0 clean / 1 violation / 2 error)
-#   comp-ontolint self-test                  # seeded-mutant control: a spurious Role on a base relation FIRES
+#   comp-ontolint self-test                  # seeded-mutant control (WS-B fires-on-mutant + WS-C role-resolve a-d)
+#   comp-ontolint role-resolve <Role>...     # WS-C spot-8: deterministic polymorphic-Role tie-breaker (role_priority)
 #
 # Rule-16 clean: uses only cd / dirname / pwd / python (all present in Git Bash 3.6.7).
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
