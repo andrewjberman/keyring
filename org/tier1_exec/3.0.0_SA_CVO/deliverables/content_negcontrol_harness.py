@@ -112,6 +112,11 @@ def make_blinded_sheet(clusters: list[dict], decoys: list[dict], baseline: list[
 
 
 # --- null-anchored threshold (review #2) -----------------------------------------------------------
+# SUPERSEDED 2026-07-20: the engine (content_relate_prototype.pooled_null @f8ed1cefa) now OWNS the
+# statistical null -- a token-shuffle decoy corpus, pooled M=25, family-wise Bonferroni that scales with
+# n_pairs. That is strictly better than this quantile-of-background sketch, so the harness CONSUMES the
+# engine's null_threshold and this function is reference-only. The human-blinded layer (below) is the
+# harness's live contribution: a pair can beat the statistical null and still read incoherent to a human.
 def _quantile(sorted_vals: list[float], q: float) -> float:
     if not sorted_vals:
         return float("nan")
@@ -121,7 +126,8 @@ def _quantile(sorted_vals: list[float], q: float) -> float:
 
 def threshold_from_null(pairs: list[dict], cluster_member_ids: set[str],
                         axes: tuple = ("bm25_only", "bm25_heat", "bm25_potion")) -> dict:
-    """Promotion threshold = high quantile of the NULL = ABSOLUTE per-axis score of NON-cluster
+    """REFERENCE-ONLY (superseded by the engine's pooled_null; see section note). Promotion threshold =
+    high quantile of the NULL = ABSOLUTE per-axis score of NON-cluster
     (background) pairs, PER AXIS. NOT RRF: RRF fuses RANKS -> corpus-invariant -> decoy-RRF == real-RRF,
     so it cannot gate (CTO~Z finding 2026-07-20, confirmed: score = 1/(k+rank) discards magnitude). RRF
     ranks gated pairs; it never gates them. The null is the FULL background (pooled) -- supply a random
@@ -164,6 +170,67 @@ def score(sheet: list[dict], key: dict, ratings: dict[str, int]) -> dict:
             "checks": checks, "real_median": real_med, "decoy_median": decoy_med,
             "baseline_median": base_med, "decoy_fp_rate": decoy_fp, "pct_real_above_decoy_median": rank_sep,
             "n_real": len(reals), "n_decoy": len(decoys), "n_baseline": len(base)}
+
+
+# --- adapter: consume the engine's run() output (content_relate_prototype @f8ed1cefa) --------------
+def sheet_from_run(run_output: dict, corpus: dict, filetypes: dict, folders: dict,
+                   axis: str, rng: random.Random) -> tuple:
+    """The human-layer ON TOP of the engine's statistical gate. Takes run() output for ONE axis + the
+    corpus; reals = that axis's gated cross_filetype_clusters; decoys/baseline built from the corpus.
+    Returns (blinded_sheet, provenance_key, meta)."""
+    per = run_output.get("per_axis", {}).get(axis, {})
+    reals = [{"cluster_id": "%s_r%02d" % (axis, i), "members": list(c["members"])}
+             for i, c in enumerate(per.get("cross_filetype_clusters", []))]
+    items = [{"item_id": k, "filetype": filetypes.get(k, "?"),
+              "folder_path": (folders or {}).get(k, "?"), "text_sha": ""} for k in corpus]
+    decoys = build_decoys(items, reals, rng)
+    baseline = build_folder_baseline(items, reals, rng)
+    sheet, key = make_blinded_sheet(reals, decoys, baseline, items, rng)
+    return sheet, key, {"axis": axis, "n_real": len(reals), "n_decoy": len(decoys),
+                        "n_baseline": len(baseline),
+                        "null_threshold": per.get("null_threshold"),
+                        "recovery": run_output.get("recovery", {})}
+
+
+def _find_engine() -> str | None:
+    import os
+    d = os.path.dirname(os.path.abspath(__file__))
+    for _ in range(8):
+        cand = os.path.join(d, "infra", "system", "ontology", "content_relate_prototype.py")
+        if os.path.exists(cand):
+            return cand
+        d = os.path.dirname(d)
+    return None
+
+
+def _wiring_test() -> bool:
+    """End-to-end plumbing: real engine run() -> my sheet_from_run. Proves the harness consumes the
+    engine's actual contract (not a mock). SKIPs (non-fatal) if the engine file isn't found."""
+    import importlib.util
+    ep = _find_engine()
+    if not ep:
+        print("SKIP wiring: engine content_relate_prototype.py not found (harness plumbing untested here)")
+        return True
+    spec = importlib.util.spec_from_file_location("content_relate_prototype", ep)
+    eng = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(eng)
+    corpus, filetypes, _planted = eng._planted_corpus()
+    r = eng.run(corpus, filetypes)
+    rng = random.Random(7)
+    ok = True
+    for axis in ("bm25", "semantic"):
+        if axis not in r.get("per_axis", {}):
+            continue
+        sheet, key, meta = sheet_from_run(r, corpus, filetypes, {}, axis, rng)
+        arms = {v["arm"] for v in key.values()}
+        if meta["n_real"] > 0 and (not sheet or "real" not in arms):
+            print("FAIL wiring axis=%s: reals present but no blinded sheet/real arm" % axis)
+            ok = False
+        else:
+            print("OK wiring axis=%s: reals=%d decoys=%d baseline=%d sheet=%d null_thr=%s"
+                  % (axis, meta["n_real"], meta["n_decoy"], meta["n_baseline"], len(sheet),
+                     meta["null_threshold"]))
+    return ok
 
 
 # --- offline self-test: the harness must PASS signal and FAIL noise ---------------------------------
@@ -225,6 +292,8 @@ def self_test() -> int:
     else:
         print("OK: absolute null p99=%.2f < real 0.90 -- gate discriminates (RRF, being rank-based, could not)"
               % thr["bm25_only"]["p99"])
+    # end-to-end wiring against the real engine
+    ok = _wiring_test() and ok
     print("\n" + ("OK: all self-test cases pass" if ok else "ERROR: self-test FAILED"))
     return 0 if ok else 1
 
