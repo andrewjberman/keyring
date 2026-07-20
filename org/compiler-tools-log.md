@@ -22214,3 +22214,69 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-20 | 0.4.0_DS_ClientPlatform | MDPF_REVAMP | (native+boto3) | grounding via Explore agent + boto3 silver/served data-plane reads (off-rail per Rule 21); no rich comp-tool fits parquet-schema/served-JSON-shape reads. comp-surface-check + comp-pulse auto-logged via safe-commit (5 commits, all PASS) | PASS |
 | 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions opal-assets-mdpf-portal-publisher --settl... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/opal-ass... | FAIL |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_account... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_account_distribution.py | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_account... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_account_distribution.py data/mdpf/scrip... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/portfolio_excel_genera... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/portfolio_excel_generator/lambda_function.py org/criti... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/portfolio_excel_genera... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/portfolio_excel_generator/lambda_function.py org/criti... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json org/tier0/ledger/LD-0328.md | FAIL |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260720T2145Z_pm-vident-filter-50... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260720T2145Z_pm-vident-filter-50... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/PortfolioManagement/ta... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_named... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/mdpf_parity_c... | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/mdpf_parity_c... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0328.md --file portal | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0328.md portal | FAIL |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_named... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | FAIL |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_named... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | FAIL |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/mdpf_parity_c... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-20/ld0318_drift_verdict_06stal... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_named... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | FAIL |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_named... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | FAIL |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/mdpf_parity_c... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_named... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | FAIL |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-20 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/mdpf_parity_c... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system --check | FAIL |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_named... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | MDPF_REVAMP | (native+boto3) | serve-real phase groundings (FLAG-1/2 provenance, custody-basis, inflection ties) via boto3 silver/served data-plane reads (off-rail Rule 21); safe-commit surface-check+risk-reflex + commit-gate on 10 commits all PASS; 3 audited comp-system overrides (ledger deliverables) | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-20 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
