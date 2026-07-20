@@ -43,7 +43,17 @@ roles:
   Observer:    { derive: "watches a node side-channel via MONITORS; OUT of the flow (13th, CTO GRANTED)" }
   Custodian:   { derive: "the OWNER -- subject of owns (= object of concrete OWNED_BY); e.g. MS_USER owns MS_FILE (14th)" }
 
-# polymorphic types resolve ONE role per instance from edges (not a fixed binding)
+# polymorphic types resolve ONE role per instance from edges (not a fixed binding); when a node's edges match
+# 2+ role derive-rules, role_priority below is the DETERMINISTIC tie-breaker (NFRA_ONTOCLARITY WS-C spot-8, CTO
+# @055731Z -- was the "no priority ordering" fog). It is a TOTAL order over all 14 roles (comp-ontolint asserts
+# totality: no omission re-opens a tie, no duplicate rank re-opens the fog). GENERATIVE PRINCIPLE (so it is
+# non-arbitrary + a future 15th role self-places): the most flow-ORTHOGONAL / rarest / most consequential-to-miss
+# matched role wins the flow-role fallback -- T1 orthogonal (Custodian, Observer) > T2 control-boundary
+# (Gateway > Guard > Router > Registry > Trigger, ordered by misclassification-consequence) > T3 Container >
+# T4 payload-backbone (Transformer > Producer > Consumer > Source > Store > Sink). So a node that GUARDS and
+# TRANSFORMS resolves to Guard, not Transformer. Priority arbitrates 2+ matches ONLY: 1 match = that role
+# (priority NOT consulted); 0 matches = no role (a base/non-role type, never an error).
+role_priority: [Custodian, Observer, Gateway, Guard, Router, Registry, Trigger, Container, Transformer, Producer, Consumer, Source, Store, Sink]
 contextual_types: [LAMBDA, Service, Component, ReactComponent, Hook, "Person", "Organization", MS_USER, SERVICE_PRINCIPAL, STATE_MACHINE]
 
 # --- AXIS: RELATION (C1, CSE re-layered) -- 10, owner-ratified --------------------------------------
