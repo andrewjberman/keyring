@@ -10,6 +10,15 @@ CTO~Z builds the relatedness engine; CVO~Z (this doc) owns the acceptance that c
 > BEFORE the engine's first real output exists, and only by an explicit committed edit citing why. It may NOT
 > be adjusted after seeing results -- that is the Goodhart failure this whole harness is built to prevent.
 
+## CHANGELOG (pre-result edits only -- each must cite why + confirm no real output yet)
+
+- **C-01 (2026-07-20, still PRE any real engine output):** the threshold NULL is on **absolute per-axis
+  scores, pooled**, NOT on RRF. WHY: CTO~Z, building the engine, found (and I independently confirmed) that
+  RRF fuses ranks (`1/(k+rank)`) and so is corpus-invariant -- a random-pair RRF null cannot discriminate.
+  This is a CORRECTNESS fix to the null MECHANISM (s.4), surfaced before any real result; it makes the gate
+  *able* to discriminate (a strengthening). The human-coherence ACCEPTANCE BAR (s.3) is UNCHANGED and stays
+  locked -- only the separately-computed statistical threshold null moved.
+
 ## 1. Interface schema (CVO<-CTO, to agree before both sides build)
 
 **What the harness NEEDS from the engine (CTO~Z emits):**
@@ -75,13 +84,20 @@ never sees; the rater sees only a shuffled list of clusters + a coherence questi
 
 ## 4. The threshold (#2, anti-Goodhart) -- anchored to THIS run's null, not hand-picked
 
-The promotion threshold is NOT a tuned constant. It is the **(1-alpha) quantile of the NULL** = the RRF-score
-distribution of RANDOM (non-cluster) corpus pairs (from `pairs`, s.1). PRE-REGISTERED: **alpha = 0.01 -> the
-99th percentile of random-pair RRF** is the promotion cutoff. Report SENSITIVITY at the 95th / 99th / 99.5th
-percentiles; the "high-signal" verdict must survive the band, not sit on one knob. This ties the threshold to
-"more related than chance produces" -- a semantic property, like code's `recurrence>=2` -- so it cannot be
-tuned to flatter the sample. **The decoy null feeds BOTH the acceptance (s.3) and the threshold (here) -- one
-negative control, two uses.**
+The promotion threshold is NOT a tuned constant. It is the **(1-alpha) quantile of the NULL** = the
+**ABSOLUTE per-axis score** distribution of RANDOM (non-cluster) corpus pairs (from `pairs`, s.1), computed
+**per ablation** (bm25_only / bm25_heat / bm25_potion). PRE-REGISTERED: **alpha = 0.01 -> the 99th percentile**
+of the random-pair absolute-score distribution is the promotion cutoff. Report SENSITIVITY at 95th / 99th /
+99.5th; the verdict must survive the band, not sit on one knob. This ties the threshold to "more related than
+chance produces" -- a semantic property, like code's `recurrence>=2` -- so it cannot be tuned to flatter the
+sample. **The random-pair null feeds BOTH the acceptance (s.3) and the threshold (here) -- one negative
+control, two uses.**
+
+> **NOT RRF (correction, see CHANGELOG C-01).** The gate is on ABSOLUTE per-axis scores, never RRF. RRF fuses
+> RANKS (`score = 1/(k+rank)`), which is magnitude-discarding and corpus-invariant -- a random decoy's top
+> pair gets the same RRF as a real cluster's top pair, so an RRF null CANNOT discriminate. RRF is retained
+> only to RANK gated pairs, never to GATE them. The null is POOLED (the full background, or >=25 seeded
+> permutation draws) -- a single small draw's 99th pct is too noisy to gate on.
 
 Output verdict schema:
 ```

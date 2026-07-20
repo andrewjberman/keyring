@@ -119,15 +119,24 @@ def _quantile(sorted_vals: list[float], q: float) -> float:
     return sorted_vals[idx]
 
 
-def threshold_from_null(pairs: list[dict], cluster_member_ids: set[str], score_key: str = "rrf") -> dict:
-    """Promotion threshold = p99 of the NULL = RRF of NON-cluster (random background) pairs. Reports
-    sensitivity at p95/p99/p995 so the verdict cannot ride one knob."""
-    null_scores = sorted(p[score_key] for p in pairs
-                         if not (p["a"] in cluster_member_ids and p["b"] in cluster_member_ids))
-    return {"null_n": len(null_scores),
-            "p95": _quantile(null_scores, 0.95),
-            "p99": _quantile(null_scores, 1 - THRESHOLD_ALPHA),
-            "p995": _quantile(null_scores, 0.995)}
+def threshold_from_null(pairs: list[dict], cluster_member_ids: set[str],
+                        axes: tuple = ("bm25_only", "bm25_heat", "bm25_potion")) -> dict:
+    """Promotion threshold = high quantile of the NULL = ABSOLUTE per-axis score of NON-cluster
+    (background) pairs, PER AXIS. NOT RRF: RRF fuses RANKS -> corpus-invariant -> decoy-RRF == real-RRF,
+    so it cannot gate (CTO~Z finding 2026-07-20, confirmed: score = 1/(k+rank) discards magnitude). RRF
+    ranks gated pairs; it never gates them. The null is the FULL background (pooled) -- supply a random
+    pair sample / >=25 seeded permutation draws upstream; a single small draw is too noisy to gate on
+    (CTO~Z finding 2). Sensitivity at p95/p99/p995 so the verdict cannot ride one knob."""
+    out = {}
+    for axis in axes:
+        vals = sorted(p["ablation"][axis] for p in pairs
+                      if p.get("ablation", {}).get(axis) is not None
+                      and not (p["a"] in cluster_member_ids and p["b"] in cluster_member_ids))
+        if not vals:
+            continue
+        out[axis] = {"null_n": len(vals), "p95": _quantile(vals, 0.95),
+                     "p99": _quantile(vals, 1 - THRESHOLD_ALPHA), "p995": _quantile(vals, 0.995)}
+    return out
 
 
 # --- scoring the ratings against the LOCKED bar ----------------------------------------------------
@@ -205,6 +214,17 @@ def self_test() -> int:
         ok = False
     else:
         print("OK: decoy matched filetype span (%s)" % dc[0]["filetypes"])
+    # threshold: an ABSOLUTE-score null must sit BELOW a real similar pair (RRF could NOT do this).
+    tpairs = ([{"a": "i000", "b": "i001", "ablation": {"bm25_only": 0.90}}]
+              + [{"a": "n%d" % i, "b": "n%d" % (i + 1), "ablation": {"bm25_only": 0.10}}
+                 for i in range(200)])
+    thr = threshold_from_null(tpairs, {"i000", "i001"})
+    if not thr.get("bm25_only") or thr["bm25_only"]["p99"] >= 0.90:
+        print("FAIL self-test: absolute-score null did not sit below the real pair (gate cannot discriminate)")
+        ok = False
+    else:
+        print("OK: absolute null p99=%.2f < real 0.90 -- gate discriminates (RRF, being rank-based, could not)"
+              % thr["bm25_only"]["p99"])
     print("\n" + ("OK: all self-test cases pass" if ok else "ERROR: self-test FAILED"))
     return 0 if ok else 1
 
