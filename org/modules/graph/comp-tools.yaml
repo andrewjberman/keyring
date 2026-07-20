@@ -644,6 +644,16 @@ inf_pipeline:
     guard_b_aua_bounds: "[$150M, $300M] — recalibrated 2026-05-07 (was [$50M, $400M]); baseline $203.2M"
 
 tools_continued:
+  comp-ontolint:
+    command: "comp-ontolint {check | self-test}"
+    segment_scope: cross-segment
+    when: |
+      - "Is the ontology's Relation-vs-Role DUAL-AXIS exception consistent?" (the relation-vs-role invariant)
+      - Machine-lint the rule-bank: routes-to->Router / resolves-through->Registry / projects->Gateway are dual-axis; every other relation is single-axis (a Relation, no Role)
+      - Replaces the prose "load-bearing subtlety" (Rule-20: prose re-drifts; a lint blocks) -- NFRA_ONTOCLARITY WS-B fog-7
+    cost: "~seconds (reads the canonical org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml; pure, no AWS/graph)"
+    output: "the machine-read DUAL-AXIS exception list + PASS/FAIL (FIRES on a Relation-vs-Role violation); self-test seeds mutants (base-relation-given-role, composite-undeclared-role) + a random-input control"
+
   comp-lambdamap:
     command: "comp-lambdamap check"
     segment_scope: cross-segment

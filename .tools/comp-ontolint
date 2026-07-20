@@ -1,0 +1,16 @@
+#!/bin/bash
+# comp-ontolint -- lint the NFRA_ONTOLOGY Relation-vs-Role composite exception (NFRA_ONTOCLARITY WS-B fog-7).
+# Enforces the machine invariant: base relations are SINGLE-AXIS (no role); only the 3 relation_composites
+# (routes-to->Router / resolves-through->Registry / projects->Gateway) are DUAL-AXIS -- read from the canonical
+# RULE_BANK.yaml (meta.canonical_source), so the exception can no longer silently drift (Rule-20 definitional).
+#
+# Subcommands:
+#   comp-ontolint check [--rule-bank PATH]   # lint the live rule-bank (0 clean / 1 violation / 2 error)
+#   comp-ontolint self-test                  # seeded-mutant control: a spurious Role on a base relation FIRES
+#
+# Rule-16 clean: uses only cd / dirname / pwd / python (all present in Git Bash 3.6.7).
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_ontolint.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-ontolint" "$*" $_exit 2>/dev/null
+exit $_exit

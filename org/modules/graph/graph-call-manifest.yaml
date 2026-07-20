@@ -1290,6 +1290,20 @@ entries:
     anti_pattern: "reasoning about a comp-tool edit's blast radius from the coverage map's DECLARED overlap groups alone (the real import graph ripples wider -- the grain_sentinel cluster hit 6 tools declared nowhere)"
     status: canonical
 
+  # NFRA_ONTOCLARITY WS-B fog-7 -- the ontology Relation-vs-Role dual-axis exception lint (routing row = COO SoD co-land).
+  - id: ontology.relation_role.dual_axis_lint
+    use_case: "Is the ontology Relation-vs-Role DUAL-AXIS composite exception consistent? Which relations yield a Role (dual-axis) vs a Relation only (single-axis)?"
+    canonical_call: "comp-ontolint {check | self-test}"
+    tool: comp-ontolint
+    mode: query
+    layer: ontology
+    cost: "~seconds (reads the canonical rule-bank; pure, no AWS/graph)"
+    freshness: "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml (meta.canonical_source, NFRA_ONTOCLARITY WS-A)"
+    rebuild_trigger: "n/a"
+    anti_pattern: "reading the prose Relation-vs-Role 'load-bearing subtlety' by hand -- prose re-drifts, this lints it as a machine invariant (WS-B fog-7)"
+    status: canonical
+    notes: "comp-which routing (distinctive narrow vocab, CTO theft-check spec 052647Z): relation-vs-role / dual-axis / composite-exception / single-axis / ontology-lint -> comp-ontolint. NOT bare validate/invariant/check (those are comp-validate's curated rank-1). Distinct from comp-manifest-check (comp-TOOL registration gate) -- this is the ONTOLOGY-vocab invariant."
+
 # ===========================================================================
 # tools_index — per-tool instructional reference (AC1 'instructional for each
 # comp tool'). One block per comp-* tool: what it does, its subcommands, and
@@ -1307,6 +1321,7 @@ entries:
 #   python org/modules/graph/comp_coverage_view.py            # emit the ledger projection
 #   python org/modules/graph/comp_coverage_view.py --verify   # CI guard: exit 2 on drift
 tools_index:
+  comp-ontolint: { does: "Lint the NFRA_ONTOLOGY Relation-vs-Role DUAL-AXIS composite exception (routes-to->Router / resolves-through->Registry / projects->Gateway are dual-axis; every other relation is single-axis, a Relation with no Role) from the canonical rule-bank -- machine-enforced, replaces the prose 'load-bearing subtlety' (NFRA_ONTOCLARITY WS-B fog-7)", subcommands: ["check", "self-test"], entries: [ontology.relation_role.dual_axis_lint] }
   comp-genesis:  { does: "NFRA_GENESIS provisioner -- SPIN UP a NEW company: bootstrap its graph + ontology-binding + closed learning loop (versioned Nessie/Iceberg -> Kuzu -> Trino + the C0-C3 ladder) from a single company.yaml, on the proven Opal stack (parameterized; Opal is the reference instance). Two bespoke-per-company pieces (recognizer keystone + binding adapter); everything else reused. verify --local closes the loop at zero cloud spend. NOT a query over Opal's OWN estate (that is comp-system). Thin shim -> infra/system/sdk/genesis", subcommands: ["new <c>", "validate <c>", "project <c>", "up [--dry-run] <c>", "verify --local <c>", "loop --tick --local <c>", "status <c>", "selftest", "down <c>"], entries: [meta.genesis.provision_new_company] }
   comp-kuzu:     { does: "Cypher query the loaded Kuzu graph (cloud + cross-layer); the FAST default read-path", subcommands: ["<cypher>", "--db-path", "--json", "--limit"], entries: [cloud.lookup.nodes_by_type, cloud.reachability.transitive, cloud.blast.what_breaks, xlayer.fullstack.firm_component_to_bucket] }
   comp-aws:      { does: "Live-AWS + Terraform-state cloud-graph compiler (the WRITE-PATH + cert)", subcommands: [derive, score, snapshot, metrics, diff, contract-diff, dual-managed, classes, iceberg-commit], entries: [cloud.derive.refresh, cloud.derive.class, cloud.score.cert, cloud.score.reconcile, cloud.classes.list, cloud.metrics.summary, cloud.diff.snapshot, cloud.contract_diff, cloud.dual_managed.conflict, cloud.snapshot.archive, cloud.iceberg.persist] }

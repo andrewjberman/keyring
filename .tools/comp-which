@@ -882,6 +882,21 @@ RULES = [
      ["pipescript <name>", "pipescript --list", "pipescript --resource <key>"],
      "what's in a named pipeline/thread -- every resource + producers->served->frontend + owning tool "
      "+ debt/reachability flags, whole estate, no silent Unknown (pipescript --list for names)"),
+
+    # NFRA_ONTOCLARITY WS-B fog-7: the ontology Relation-vs-Role DUAL-AXIS composite-exception lint.
+    # DISTINCTIVE NARROW vocab (CTO pre-land theft-check spec 052647Z): relation-vs-role / dual-axis /
+    # composite-exception / single-axis / ontology-lint -- NOT bare validate/invariant/check/artifact
+    # (those overlap-steal comp-validate's curated rank-1). Covers CTO's positive-control queries.
+    (["relation-vs-role", "relation vs role", "dual-axis", "dual axis", "dual-axis relation",
+      "dual-axis relations", "single-axis", "composite exception", "relation-role exception",
+      "relation-vs-role exception", "ontology-lint", "ontology relation-vs-role",
+      "routes-to role", "resolves-through role", "projects role", "router registry gateway relation"],
+     "ontology Relation-vs-Role dual-axis exception lint (comp-ontolint)",
+     ["comp-ontolint check", "comp-ontolint self-test"],
+     "the NFRA_ONTOLOGY Relation-vs-Role DUAL-AXIS composite exception (routes-to->Router / "
+     "resolves-through->Registry / projects->Gateway are dual-axis; every other relation is single-axis) -- "
+     "machine-linted from the canonical rule-bank, replacing the prose (WS-B fog-7). Narrow ONTOLOGY-vocab "
+     "invariant -- not artifact/output validation (comp-validate) and not comp-tool registration (comp-manifest-check)."),
 ]
 
 # Function-relationship intents that ARE a rich-tool job (route, do NOT run-the-primitive):
