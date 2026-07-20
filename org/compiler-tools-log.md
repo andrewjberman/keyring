@@ -22103,3 +22103,14 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-20 | 0.7.0_AE_CloudOps~B | PORTAL_AUTHHARD.WS1 | comp-tagauthz / comp-pulse / comp-iam | safe-apply comp-tagauthz PASS + safe-commit comp-pulse risk-reflex PASS (flagged iam.tf) + comp-iam service opalinvest-auth-handler | PARTIAL |
 | 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json org/critical_paths/change_ma... | FAIL |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/task_orders/PORTAL_AUTHHAR... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-pulse | comp-pulse diff org/projects/task_orders/PORTAL_AUTHHARD.WS3.mfa-privileged-native-totp... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/PORTAL_AUTHHARD_WAVE1_CVO_VERI... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/PORTAL_AUTHHARD_PRD.m... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/PORTAL_AUTHHARD_PRD.md org/projects/PORTAL_AUTHHARD.j... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~B | PORTAL_AUTHHARD.WS1 | aws (rail-checked) | Wave-1 independent applied-state ground-truth: dynamodb describe-table + iam simulate-principal-policy (one-arn isolated) + wafv2 get-web-acl -- Rule 22a live-primitive for new resources (comp-iam fails GREEN on new ARN; no comp-tool covers WAF web-ACL rules) | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-20/s... | PASS |
