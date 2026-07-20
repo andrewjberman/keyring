@@ -21999,3 +21999,107 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-20 | 0.0.0_AB_MSTR | NFRA_ONTOCLARITY re-open /govern drive + terminal stand-down (0513-0720Z) | git-grounding / source-verify (Read+grep) | terminal ground-verify of 4/4 (status=complete @31519edba + 4 CVO exercised verifies + AC-3a single-source at 01_substrate.md:35-36) -- governance/verify window, comp-* controls verified not re-run | PASS -- 4/4 ground-confirmed, fabric stood down 9/9 |
 | 2026-07-20 | 0.0.0_AB_MSTR | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-20 | 0.0.0_AB_MSTR | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier0_exec/0.0.0_AB_MSTR/logs/2026-07-20/... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/00_synthesis.md --file inf... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff infra/system/00_synthesis.md infra/system/01_substrate.md infra/system/... | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/audit/archive/2026-07-20T131730Z/or... | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/audit/archive/2026-07-20T131730Z/org_git-author-override-audit.log ... | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/audit/archive/.baseline | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | NFRA_COMPROUTE.gate-holes (shared) | comp-pulse | comp-pulse diff org/audit/archive/.baseline | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0053.md | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/reviews/RV-0053.md | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/ESTATE_AXIS_AND_S... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/ESTATE_AXIS_AND_SEAM_GRAIN_DESIGN.md infra/system... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-iam | comp-iam --help | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-iam | comp-iam roles | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-iam | comp-iam stats | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-iam | comp-iam role astn-wsjft-orchestrator-role | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-iam | comp-iam service astn-wsjft-orchestrator | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-iam | comp-iam gaps-filtered astn-wsjft-orchestrator | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_SYSPARITY.json --file... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_SYSPARITY.json org/projects/REGISTRY.md org/tier0/rev... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_SYSPARITY.json --file... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_SYSPARITY.json org/projects/REGISTRY.md org/tier0/led... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/DIRECTIVES.md | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier0/DIRECTIVES.md | FAIL |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_SYSPARITY.json --file... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_SYSPARITY.json org/projects/REGISTRY.md org/tier0/led... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/COMP_IAM_APPLIED_PLANE_DESIGN_... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/ESTATE_AXIS_AND_S... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/ESTATE_AXIS_AND_SEAM_GRAIN_DESIGN.md | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/ESTATE_AXIS_AND_S... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/ESTATE_AXIS_AND_SEAM_GRAIN_DESIGN.md | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTPPLADVFIX.json --f... | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/ADVI_COTPPLADVFIX.json org/tier1_exec/2.0.0_SA_COO/task_or... | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTPPLADVFIX.json --f... | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/ADVI_COTPPLADVFIX.json org/tier1_exec/2.0.0_SA_COO/task_or... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/C2C3_NAMING_AND_D... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/C2C3_NAMING_AND_DOMAINS.md infra/system/ontology/... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml infra/syste... | FAIL |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/system/06_current_state.json infra/system/06_current_state.md inf... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml infra/syste... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/PORTAL_AUTH_HARDENING_BRIEF... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/PORTAL_AUTH_HARDENING_BRIEF_20260720.md org/projects/PORTAL... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/C2C3_NAMING_AND_D... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/C2C3_NAMING_AND_DOMAINS.md infra/system/ontology/... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/PORTAL_AUTHHARD_PRD.m... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/PORTAL_AUTHHARD_PRD.md org/projects/PORTAL_AUTHHARD.j... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/PORTAL_AUTHHARD_PRD.md | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/PORTAL_AUTHHARD_PRD.md | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/CONTENT_MODULE_DE... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/CONTENT_MODULE_DESIGN.md infra/system/ontology/RE... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/COMP_LEARNS.json | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~A | (no-TO) | comp-pulse | comp-pulse diff org/projects/COMP_LEARNS.json | FAIL |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/PORTAL_AUTHHARD_PRD.m... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/PORTAL_AUTHHARD_PRD.md org/projects/PORTAL_AUTHHARD.json | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/CONTENT_MODULE_DE... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/CONTENT_MODULE_DESIGN.md | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTPPLADVFIX.json --f... | PASS |
+| 2026-07-20 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/ADVI_COTPPLADVFIX.json org/projects/REGISTRY.md org/tier1_... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CONTENT_MODULE_DESIGN_REVIEW_C... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/CONTENT_MODULE_DE... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/CONTENT_MODULE_DESIGN.md | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/handoffs/20... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~A | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/handoffs/2026-07-20_1600Z.md | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/ajb.ps1 | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~A | (no-TO) | comp-pulse | comp-pulse diff .tools/ajb.ps1 | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/opalinvest_dev/lambda/auth-ha... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff infra/aws/opalinvest_dev/lambda/auth-handler/src/auth.ts infra/aws/opal... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/portal-a... | FAIL |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript deployed portfolio_excel_generator | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam service opalinvest-auth-handler | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CONTENT_PROTOTYPE_NEGCONTROL_P... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions opalinvest-auth-handler --settle-retry-se... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/portal-a... | FAIL |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/content_negcontrol_harness.py | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260720T1629Z_portal-authhard-wav... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-20 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CONTENT_PROTOTYPE_NEGCONTROL_P... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/PORTAL_AUTHHARD_WAVE1_E... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache --help | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache key mdpf | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache map | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/CONTENT_MODULE_DE... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/CONTENT_MODULE_DESIGN.md | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/portfolio_excel_genera... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/portfolio_excel_generator/lambda_function.py | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/portfolio_excel_genera... | PASS |
+| 2026-07-20 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/portfolio_excel_generator/lambda_function.py org/tier0... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260720T1644Z_portal-authhard-wav... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/CONTENT_MODULE_DE... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/CONTENT_MODULE_DESIGN.md | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/PORTAL_AUTHHARD.json --fil... | PASS |
+| 2026-07-20 | 1.0.0_SA_CTO~B | (no-TO) | comp-pulse | comp-pulse diff org/projects/PORTAL_AUTHHARD.json org/projects/task_orders/PORTAL_AUTHH... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | PORTAL_AUTHHARD.WS1 | comp-tagauthz / comp-pulse / comp-iam | safe-apply comp-tagauthz PASS + safe-commit comp-pulse risk-reflex PASS (flagged iam.tf) + comp-iam service opalinvest-auth-handler | PARTIAL |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-20 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
