@@ -334,6 +334,13 @@ function ajb {
         }
         $claudeArgs += @('--', $firstMessage)
 
+        # COLOR FIX (MSTR test 2026-07-20, pending CTO~A formalize): WT 1.24 (auto-updated 07-17)
+        # stopped handing the color-capable-terminal signal (WT_SESSION) to raw-commandline new-tabs,
+        # so Claude Code auto-detects no-color and renders monochrome in spawned windows. Force color
+        # on so claude always emits ANSI regardless of terminal auto-detection. Harmless on interactive
+        # launches (already color-capable). '3' = truecolor (WT supports it).
+        $env:FORCE_COLOR = '3'
+
         & claude @claudeArgs
     } finally {
         Pop-Location
