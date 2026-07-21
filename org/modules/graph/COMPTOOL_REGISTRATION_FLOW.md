@@ -46,6 +46,28 @@ registration is invisible ("a tool nobody can find is indistinguishable from a t
 or `comp-manifest-check completeness --only <routable|placement|self-routes|existence>`. On a commit it runs
 automatically inside `safe-commit`. **The gate is the check -- do not hand-assert "registered".**
 
+**Relationship to comp-which -- router vs gate, do NOT conflate the two.** `comp-which` is the RUNTIME router:
+at QUERY time it surfaces the top-N high-confidence tools for a plain-English question -- it is what an agent
+USES. `comp-manifest-check` routes nothing; it is the COMMIT-time gate that guarantees the router's candidate
+POOL is complete and honest, so a tool can never be half-registered -- **built-but-unfindable** (invisible to
+comp-which), **registered-but-broken** (comp-which routes to a call that fails), or **homed-but-dropped** (the
+routable filter removes it before scoring). They are coupled by PURPOSE, not by code path: **one surfaces, the
+other polices.** This is exactly why "a comp-tool is MADE when its registration lands," not when its script
+first runs -- the gate is the proof the surfacing pool has no phantoms or dead links. (It is a *commit-time*
+control, and per the intro it is **substrate-scoped** -- it fires only when the commit touches a file that can
+introduce a defect -- and **fail-closed** -- an unevaluable member reads as FAILED, never passed.)
+
+**Each member guards ONE registration PART -- skip a part, its member blocks.** Read the table forward and it
+is member -> substrate; read it BACKWARD and it is the registration checklist, so whichever part you skip is
+the member that stops you: no tracked executable -> `existence`; executable but unregistered -> `registration`;
+registered but zero/two homes -> `placement`; homed but not `routable: true` -> `routable`; registered but
+comp-which cannot surface it for its own use-case -> `self-routes`. You cannot commit a tool that fails any of
+these (barring an audited `override`, whose over-use is monitored). So the canonical flow's parts (section 4)
+and this gate are two sides of ONE coin -- the flow is what you do; the gate is the proof you did all of it.
+*(Worked live 2026-07-21 building comp-clobber: a grain-map-only registration -- calibration, not a real home
+-- was caught by `routable` as `ABSENT-FROM-PROVIDER`; a `meta_tools` home with `routable: true` cleared it,
+and `existence` then held until the executable was `git add -f`'d in the atomic bundle.)*
+
 ---
 
 ## 2. Decide the DISPOSITION first (three outcomes)
