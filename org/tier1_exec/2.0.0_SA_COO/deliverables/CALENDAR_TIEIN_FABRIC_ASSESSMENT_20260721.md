@@ -25,6 +25,18 @@ targets, not ffill convergence — existing producer ffill is now PERMISSIVE (ma
 `bdate_range` holiday-blindness finding STANDS (that is an AXIS-correctness defect, exactly what canonical-
 axis adoption fixes). CTO owns how this binds the UNIVERSAL_TRADING_CALENDAR PRD framing.
 
+**CTO PRD-premise binding — CONFIRMED 2026-07-21 ~15:34Z (this doc + the confirmation = the premise of record):**
+- TARGET = ONE canonical trading-day AXIS + FRONTIER + `is_trading_day` + roll-forward PRIMITIVES, consumed
+  universally (Lambda Layer + EC2 S3-pull + drift-guard). NOT a producer emit-shape (ffill vs
+  trading-days-only) change.
+- Producer emit-shape PERMISSIVE (Andrew): trading-days-only is CORRECT; an ffill producer MAY stay; no
+  removal or convergence mandate on emit behavior.
+- MIGRATION PRIORITY (PRD WS order, CTO): (1) AXIS-CORRECTNESS defects — inf `bdate_range` holiday-blindness
+  is the SHARPEST (holiday counted as a trading day; the inverse of the 01-09 catch); canonical-axis adoption
+  fixes it. (2) DRIFT CONSOLIDATION — the 4 vendored + 1 stale copies converge onto the shared module +
+  drift-guard. (3) emit-shape convergence = OUT of scope. All behind the MDPF_REVAMP P0; COO decomposes into
+  TOs when the PRD lands.
+
 ## Method + coverage denominator (Verification Law #10)
 
 Read-only comp-grep/comp-glob over LIVE producers (`data/*/scripts/{gold,silver}`, `black_diamond/archive/`
