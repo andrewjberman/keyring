@@ -22793,3 +22793,28 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/tf_E1_F_stdin.txt | PASS |
 | 2026-07-21 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/OPAL_PRISTINE_archetype_cleanl... | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tf_P0_nodrift_m.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/tf_P0_nodrift_m.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tf_A1_F_hash.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/tf_A1_F_hash.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tf_A1b_F_plain.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/tf_A1b_F_plain.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tf_A2_F_notrailer.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/tf_A2_F_notrailer.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tf_A3_fileeq_hash.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/tf_A3_fileeq_hash.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tf_A4_longfile_hash.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/tf_A4_longfile_hash.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tf_B1_m_trailer.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/tf_B1_m_trailer.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tf_B2_m_notrailer.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/tf_B2_m_notrailer.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tf_E1_F_stdin.txt | PASS |
+| 2026-07-21 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/tf_E1_F_stdin.txt | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/tax-pt3/SKILL.md --file ... | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/tax-pt3/SKILL.md tools/tax_sma/pt3_stage.py | FAIL |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | MDPF_REVAMP | safe-commit / comp-system-gate / aws list-objects-v2 | 4 commits surface-check+risk-reflex PASS; comp-system OVERRIDE (ledger, audited); ListObjectsV2 coherent-9 ETag verify | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
