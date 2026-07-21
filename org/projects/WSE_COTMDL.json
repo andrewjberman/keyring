@@ -1,0 +1,16 @@
+{
+  "project_code": "WSE_COTMDL",
+  "macro_code": "MDPF",
+  "name": "WS-E Cottonwood Model-Portfolio Fold-In (production) -- supersedes MDPF_COTMDL",
+  "description": "Fold Cottonwood's model portfolios into the MDPF page on the opal-data-assets estate pattern (Andrew-direct 2026-07-21). Models live in the BD Rebalancer (60 models, 17 strict-Opal in scope, 296 accounts across 14 assigned Opal models); join account->model by strategyName; count-vs-dollar mechanism = +1 count per underlying primary model, dollars split by blend children[].relativeAllocation. Taxonomy: blackdiamond/cottonwood/{bronze|silver|gold|meta}, mirror the opal-assets-bd49f producer. Supersedes MDPF_COTMDL (whose on-hold premise -- silver strategy field unpopulated -- was a false negative). Grounded on the WS-E discovery deliverable. PRD docs/architecture/WSE_COTTONWOOD_MDPF_FOLDIN_PRD.md.",
+  "prds": [{"path": "docs/architecture/WSE_COTTONWOOD_MDPF_FOLDIN_PRD.md", "label": "WS-E Cottonwood MDPF Fold-In PRD v0.1 (CTO)", "date": "2026-07-21"}],
+  "status": "active",
+  "phase": "DECOMPOSED 2026-07-21 (COO): 5 workstreams (WS-1 bronze producer / WS-2 silver / WS-3 gold / WS-4 MDPF DDB fold-in / WS-5 IAM+infra). Sequenced as an OPAL_CONSOLIDATION workstream, PARALLEL to the MDPF-revamp cutover (cutover keeps shared-attention precedence). GATE: WS-1 recurring pull is HELD on a STANDING egress word from Andrew (per-use grants were discovery-scoped) -- surfaced to Andrew. WS-5 infra (scoped role + EventBridge, no daily-run) can scaffold; WS-2/3/4 stage behind WS-1 bronze; WS-4 also gated on the CTO DDB-contract (PRD sec 8).",
+  "blocking": "WS-1 recurring producer HELD on Andrew STANDING egress word (surfaced). Otherwise sequenced parallel to cutover (cutover precedence).",
+  "created": "2026-07-21",
+  "pods": ["0.6", "0.4", "0.7", "0.2"],
+  "supersedes": "MDPF_COTMDL",
+  "depends_on": ["OPAL_CONSOLIDATION"],
+  "thread_counter": 0,
+  "threads": []
+}
