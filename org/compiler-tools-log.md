@@ -22490,3 +22490,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-21 | 0.4.0_DS_ClientPlatform | MDPF_REVAMP N=3 cycle-1 + TO-5 + push-now account_count wire: DT compare()@e17a28141 run 3-firm 0-unexplained (caught source_vintage_last VALUE-exemption gap -> flagged DT), safe-commit x6 PASS, commit-gate PASS (caught unused latest/const), comp-system OVERRIDE x6 (audited, data-neutral/docs). boto3 data-plane (Rule21) + trading-day shim (NEVER#1 status) + DDB opal-assets-daily-aua grounding.
 | 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-routes | comp-routes trace public-data-router | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-revamp-s5-rollover-com... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/mdpf-revamp-s5-rollover-compare-20260721.md | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/COT_MODEL_PORTFOLIO_D... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-revamp-s5-rollover-com... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/mdpf-revamp-s5-rollover-compare-20260721.md | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/mdpf_parity_c... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/COT_MODEL_PORTFOLIO_D... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | py_compile+self-test / aws s3api / harness --all | mdpf_parity_check BUG-1 value-side fix @80bf482d5: self-test PASS (dual regression), staged ETags confirmed match DS re-stage, --all aggregate_aua 3/3 NAMED_DELTA_PASS 0-unexplained | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
