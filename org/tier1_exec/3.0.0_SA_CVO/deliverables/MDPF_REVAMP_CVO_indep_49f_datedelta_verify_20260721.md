@@ -89,12 +89,41 @@ Verified `s3://opal-data-assets/portal/model-portfolios/{firm}/account_distribut
 
 **A3/A7 independently parity-clean.** At full-stage the staged refreshes to current and the 49F ~0.4% drift closes.
 
-## Still pending (my stage-time verify, per §8) — only A5/A6 spine + A4 455-series remain
-Both hard-gated on DS staging (b) inflection+global + CTO's full-anchor-set broadcast (3-pass gate:
-CTO S3 re-verify + my independent S3 re-derivation + DT's date-joined harness):
-- **A5/A6 spine** (49F+inflection+global): re-anchored criteria 1-4 (last-common-date tie @07-17, frontier
-  [-1] at source, dynamic len, internal identities date-joined) + `basis:schwab-rps` never-sum/never-substitute
-  (distinct value_class custody vs model).
-- **A4 non_model_assets** on its OWN 455-date axis (never crossed with the 429/428 spine axis): the 2-term
-  `enterprise_total − model` must reproduce the served v0_9 455-series; a 2-term-vs-3-term SMA-drop history
-  divergence = EXPECTED named delta (latest ties $247.69M); a NON-SMA-drop divergence = UNEXPLAINED → holds.
+## 3-PASS GATE (spine STAGED 15:55Z) — INDEPENDENT VERDICT (pass 3 of 3)
+Staged `s3://opal-data-assets/gold/mdpf_revamp/{firm}/aggregate_aua_timeseries.json` — ETags confirmed
+match CTO's (49F `6e072745` / infl `a9778de4` / global `7d574a2d`, Rule 22a identity). Own from-scratch
+re-derivation (`scratchpad/cvo_indep_spine_verify.py`).
+
+**SPINE = PASS, all 3 firms:**
+- Date-join clean all 3: staged 427 / served 429 / common 407 / staged-only 20 (all fresh trading) /
+  served-only 22 (all non-trading holiday-fills). 0 unexplained. (Staged axis = canonical
+  `trading_days_between` = 427 — the correct NYSE axis per NEVER#1; my earlier silver-distinct 428 had one
+  non-canonical day the staged rightly drops.)
+- Internal identities 0-mismatch @all 407 common: 49F/inflection `model==Σcore` AND `non_model==custody−model`
+  to the cent. Global `model==Σ(9 core)` shows 48 diffs but **max $0.02** (count>$0.05 = 0) = sum-of-9-rounded-cohorts
+  float artifact, not a defect → PASS.
+- 49F @07-17: custody **D-2 = +$20,344,172.42 EXACT**; model F2 −0.0932% (in band); basis `schwab-rps`; 0 Nones.
+- inflection @07-17: model+custody tie served EXACT (no D-2); 6 Nones all at feed-gaps; 0 unexpected.
+- global @07-17: model F2 −0.0849% (in band); 6 Nones at feed-gaps.
+- **CTO composition CONFIRMED to the cent:** global & 49F non_model staged−served @07-17 = +$21,647,872.00
+  = D-2 $20,344,172.42 + F2 $1,303,699.58. Zero unexplained residual.
+- Frontier 07-20 structural + sane (past served) → fresh-tail named delta.
+
+**A4 (`gold/mdpf_revamp/global/non_model_assets.json`, 433 vs served 455):**
+- 2-term CORRECT: `non_model == enterprise_total − model` @all 427 common, 0 mismatch. Served A4 is ALSO
+  2-term → methodologies match. Date-join clean (427 common + 6 staged-only fresh trading + 28 served-only
+  = 27 holiday-fills + 05-21 feed-gap correctly omitted). 0 unexplained.
+- **INTENT FLAG (open at CTO):** staged A4 does NOT tie served $247.69M — staged non_model @07-17 =
+  $268,061,032.32 vs served $246,413,160.32 = +$21,647,872.00 = **D-2 + F2 (NOT SMA-drop; both 2-term)**.
+  Cause: staged A4 enterprise_total = $1,803,111,389.71 = served + D-2 (the full-envelope custody CTO
+  verified exact on the spine). Fully explained (same accepted D-2 named delta + F2), but contradicts the
+  written "latest ties $247.69M" criterion → asked CTO for the one-line intent ruling (named-delta PASS vs
+  reproduce-served-basis). Spine unaffected either way.
+
+## Still pending
+- **A4 intent ruling (CTO):** does A4 carry D-2 (full-envelope enterprise_total, matching the verified
+  spine) = named-delta PASS, or must A4 reproduce the served $247.69M basis? Delta is fully explained
+  either way; ruling determines A4 sign-off. Spine PASS is unaffected.
+- **Cycle 1 of N=3 recorded** (this pass). N≥2 further consecutive scheduled cycles must also tie (every
+  named delta ruled) before the never-widen co-sign re-point.
+- **49F account_distribution ~0.4% vintage drift** re-confirm to ~0 at a same-vintage full-stage refresh.
