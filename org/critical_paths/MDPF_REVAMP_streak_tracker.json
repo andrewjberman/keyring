@@ -1,0 +1,37 @@
+{
+  "record": "MDPF_REVAMP parity-streak tracker -- the DURABLE source-of-truth for the N=3 cutover gate",
+  "why_durable": "The streak spans scheduled nightlies (days). Crons + session Monitors die with their session, and an in-session 'cycle N' summary is the last-surviving-copy trap. This committed file is the ONLY carrier that survives session ends. The cutover co-sign trigger reads THIS file, never an agent's in-session count.",
+  "owner": "1.0.0_SA_CTO (creates + records); 2.0.0_SA_COO tracks the cutover trigger off this file",
+  "definition": {
+    "streak_target": 3,
+    "unit": "consecutive clean SCHEDULED cycles (per OPAL_CONSOLIDATION_PRD.md:181 -- 'N consecutive scheduled cycles')",
+    "scheduled_only": "A HAND-STAGED run does NOT count (NEVER rule: validate on the scheduled nightly's artifacts, not ad-hoc). The count advances ONLY on a scheduled-cycle artifact set that all THREE independent passes recorded CLEAN.",
+    "reset_rule": "An UNEXPLAINED delta in any pass RESETS the streak to 0/3 (PRD:184). A named delta (in DS's ledger) does NOT reset.",
+    "no_silent_pass": "A scheduled cycle with NO recorded 3-pass verification is NOT counted -- it is a GAP to fill, never a silent pass. Missing verification != clean.",
+    "passes_required_per_cycle": ["cto_s3_reverify", "dt_datejoined_parity", "cvo_independent_rederivation"],
+    "cutover_gate": "streak == 3 clean scheduled cycles AND the never-widen co-sign package (CTO+COO+Andrew) -> then S5 cutover (arm publisher, gold->portal). Publisher stays OFF until this fires."
+  },
+  "current_streak": 0,
+  "scheduled_cycles": [],
+  "pre_proof": {
+    "note": "HAND-STAGED code-correctness pre-proof, 2026-07-21 -- NOT a streak cycle. Recorded as build-correctness evidence (it is why we are confident wiring the producer to the schedule).",
+    "artifacts": {
+      "49financial": "gold/mdpf_revamp/49financial/aggregate_aua_timeseries.json ETag 6e072745ad79f431fc9d9003485e333b",
+      "inflection": "gold/mdpf_revamp/inflection/aggregate_aua_timeseries.json ETag a9778de44b393940788db56707b52c11",
+      "global": "gold/mdpf_revamp/global/aggregate_aua_timeseries.json ETag 7d574a2d1662b92daf9b4baea7e53209",
+      "A4_non_model_assets": "gold/mdpf_revamp/global/non_model_assets.json ETag d4802341934a7e68203f6f83d1b80102"
+    },
+    "verdicts": {
+      "cto_s3_reverify": "PASS all 3 firms (D-2 +$20,344,172.42 to the penny; identities 0-mismatch all-i; date-join 407/22/20; A4 derivation-identity post-cutover perfect)",
+      "dt_datejoined_parity": "PASS all 3 firms, 0 unexplained (@e17a28141, final ledger 6026af46a)",
+      "cvo_independent_rederivation": "PASS all 3 firms + A4 named-delta (independent from-scratch, ETags match, signed)"
+    },
+    "counts_toward_streak": false
+  },
+  "trigger_convention": {
+    "1_completion_marker": "The S4 scheduled producer emits gold/mdpf_revamp/meta/cycle-complete.json LAST (after all 3 firms) -- a durable landing signal (survives sessions; gates 'all 3 staged', avoids a partial-stage read). [Speccing to AE via COO.]",
+    "2_cto_first": "On a scheduled landing, CTO runs the per-cycle S3 re-verify FIRST (confirms all 3 complete), then signals DT + CVO.",
+    "3_dt_cvo_verify": "DT runs date-joined parity; CVO re-derives from scratch. Each records its verdict here.",
+    "4_advance_or_reset": "3-pass-clean -> current_streak += 1 + append the cycle. Any unexplained delta -> current_streak = 0 + record the reset."
+  }
+}
