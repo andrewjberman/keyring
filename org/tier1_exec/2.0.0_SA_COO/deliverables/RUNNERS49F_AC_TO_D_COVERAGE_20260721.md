@@ -44,3 +44,29 @@ To have A+C serve a re-pointed Group D end-to-end, the remaining port/re-source 
 4. **tax (C_05), mix-timeseries (C_06), positions (A_03)** -- remaining composition/tax/timeseries feeds.
 
 Grounded: `data/assets/scripts/gold/runners_49f/` (7 scripts) vs `data/black_diamond/scripts/gold/{A,B,C,D}_*.py`; hard/soft classified from the D scripts' own load-or-fallback branches (line-cited above).
+
+---
+
+## 5. CORRECTION -- Andrew reframe: it is FIELDS, not scripts (the refactor's whole point)
+The v1 had 21 scripts because it accreted patches/cruft; the v2 goal is to serve the FIELDS Group D consumes, efficiently, from the canonical silver -- NOT to re-port the sprawl. Re-run at the FIELD level, the "gaps" above mostly dissolve -- the fields already exist in the silver or the A+C spine:
+
+**The advisor-ROLE decomposition (the biggest apparent gap) is ALREADY INGESTED + RESIDENT -- this is exactly what OPAL_ASSETS_49METATABLES was designed for (Andrew-confirmed).**
+- Table: **`opal-data-assets/blackdiamond/49f/silver/dim_advisor_fee_role/`** (SCD2, per-row provenance), producer `data/assets/scripts/silver/bd49f_dim_conversion.py`.
+- Ingest source: `blackdiamond/49f/bronze/allocation_390224/{date}/data.xlsx` (the D1a "Allocation_Template 390224" BD REST pull -- roles+splits+fee block).
+- Emits the FULL decomposition: **architect / implementor / consultant / local_ops / additional_advisor** + splits + fee -- the exact fields all 8 D publishers read.
+- **LIVE:** bronze + silver both landing on trading days through `date=2026-07-20` (T-1; 07-18/19 = weekend). Grain-guarded (role/split constant-within-account, GrainConflict refuses).
+- **Already wired:** `a00_runner.py:15,45` joins `dim_advisor_fee_role` as join-dim-2.
+
+**Field-level coverage (corrected):**
+| D field group | v2 source | Status |
+|---|---|---|
+| advisor roles (architect/consultant/implementor/local_ops/additional_advisor) + splits + fee | silver `dim_advisor_fee_role` (49METATABLES, LIVE), joined by a00 | INGESTED -- last mile = EMIT in the gold dim contract D reads |
+| account_id / relationship_id / advisor | a00 / a01 | present |
+| account/client performance, total_aua | c01 / c02 | present |
+| AUA decomposition: market_growth / income / fees | c00 | present |
+| NNA: daily_inflow / daily_outflow / nna_txn | c03 | present |
+| holdings/composition: market_value / cusip / quantity | silver `fact_position` (`data/canonical/schwab/silver/build_fact_position.py`) | present in silver; ticker/asset_name via a cusip->security bridge; is_open derivable -> composition buildable from silver, no B_00 cruft |
+| synthetic_correction / churn / aua_residual_sum | not in c00 | small field-add OR D-derivable from market_growth+flows -- confirm |
+| xref bridge | silver `dim_account_xref` (LIVE, date=2026-07-14+) | present |
+
+**Corrected verdict:** at the FIELD level the estate already provides nearly everything Group D needs -- the role/fee decomposition is live-ingested (`dim_advisor_fee_role`) and joined by a00, holdings fields are in silver `fact_position`, and the performance/NNA/dim fields are in A+C. The refactor premise HOLDS: D can be rebuilt efficiently from the canonical silver + the A+C spine **without** porting v1's ~14 extra scripts. The real remaining work is **last-mile field-emit in the gold dim/cohort contracts** (surface the role columns a00 already joins; add a cusip->ticker bridge for composition) + confirm synthetic_correction/churn -- NOT a script-porting effort. My section-2 "unported scripts = gaps" framing is SUPERSEDED by this.
