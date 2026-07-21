@@ -22386,3 +22386,20 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | commit-gate | commit-gate.sh mdpf_parity_check.py (BUG-1/BUG-2 fixes) | PASS -- N=3 harness bugfixes |
 | 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_REVAMP_CVO_indep_49f_date... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_STNDRD.json --file or... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_STNDRD.json org/tier1_exec/2.0.0_SA_COO/deliverables/... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_REVAMP_CVO_indep_49f_date... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_cutov... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GCONTR.json --file or... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_GCONTR.json org/tier1_exec/2.0.0_SA_COO/task_orders/N... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | aws lambda (rail-checked) | list-functions/get-function-configuration/list-versions -> opal-assets-mdpf-portal-publisher ARN+CodeSha 1c91mLF..+env STAGING_ROOT=gold/mdpf_revamp | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | aws s3api list-objects-v2 | staged-gold ETag baseline gold/mdpf_revamp/ (4 wire artifacts) for cutover confirmation | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast lib/trading_calendar | FAIL |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast is_trading_day | FAIL |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
