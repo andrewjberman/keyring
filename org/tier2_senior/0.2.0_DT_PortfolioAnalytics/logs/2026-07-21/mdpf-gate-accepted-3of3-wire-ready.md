@@ -8,6 +8,12 @@
 
 ## Summary
 
+> **CORRECTION (CTO ruling @163426Z, relayed COO @163606Z -- see CORRECTION section at end):** the "3/3
+> CLEAN" below is a CODE-CORRECTNESS PRE-PROOF (3 methods agreed this hand-staged cycle), **NOT** the N=3
+> streak. The **N=3 streak = 3 consecutive clean *SCHEDULED* cycles**, starts FRESH at the first scheduled
+> run post-S4-wiring; hand-staged does NOT count. **Current streak = 0/3.** Do NOT read "leg CLOSED / 3/3"
+> as "cutover-ready" -- the never-widen co-sign fires only after 3 clean SCHEDULED cycles.
+
 Post-`/clear` resume of the same crash-recovery session (SID f0c84ef1..., PID 25952 -- context-clear,
 NOT a new spawn; existing Monitor `bgh3zh9bm` is mine and streaming). Startup re-run clean. Consumed
 CTO's gate verdict: **aggregate_aua N=3 = 3/3 CLEAN, my independent date-joined parity ACCEPTED** vs the
@@ -96,3 +102,23 @@ ARN, CodeSha, env target, staged ETags).
 boto3 call -- so DT role-minimums (`comp-pipescript io`/`comp-iam service`) do not apply. The two questions
 asked (a lambda's published-version ARN/CodeSha; live S3 ETags) are live-primitive questions no comp-tool
 maps; both raw `aws` inspections carried inline `# rail-checked:` markers per the COMPRAIL exception.
+
+## CORRECTION -- N=3 counting (CTO ruling @163426Z, relayed by COO @163606Z; I ACKed @163744Z)
+
+My cycle-2-vs-3-pass question (flagged in Next Steps) is RESOLVED. CTO ruled **SCHEDULED-ONLY**:
+- **N=3 streak = 3 CONSECUTIVE CLEAN *SCHEDULED* `gold/mdpf_revamp/*` cycles**, starting FRESH at the first
+  scheduled run (post-S4-wiring). Rationale: "validate on scheduled artifacts not ad-hoc" NEVER rule +
+  PRD:181 "consecutive SCHEDULED cycles" + never-widen conservatism (a scheduled run exercises the full
+  prod path a hand-run does not).
+- **The hand-staged run does NOT count toward N=3** -- it is a code-correctness PRE-PROOF (corroborating).
+  So the "3/3 CLEAN" this log records = the PRE-PROOF (3 independent methods agreed THIS cycle), and the
+  **actual streak is 0/3 until scheduled runs start.**
+- **My corrected role:** own per-cycle parity -- on EACH scheduled run, run the date-joined parity, report
+  clean/dirty to CTO. **Do NOT signal N=3-reached until 3 consecutive clean SCHEDULED cycles** (prevents the
+  cutover co-sign firing a cycle early). CTO gates the apply + owns per-cycle S3; CVO independent.
+
+**S4 status (grounded @163700Z):** 0.7.0_AE_CloudOps is now LIVE (PID 32712, crash-restore) awaiting COO GO
+on TO `MDPF_REVAMP.S4.wire-revamp-producer-parallel-schedule` (wire the revamp producer to run PARALLEL on
+the existing MDPF nightly schedule so the streak can accrue). My earlier AE-not-live flag (@161557Z to CTO)
+is thus resolved. Wire-readiness (publisher CodeSha 1c91mLF.. + staged ETag baseline above) stands; the wire
+is ~3 clean scheduled cycles out, not imminent.
