@@ -113,17 +113,22 @@ re-derivation (`scratchpad/cvo_indep_spine_verify.py`).
 - 2-term CORRECT: `non_model == enterprise_total − model` @all 427 common, 0 mismatch. Served A4 is ALSO
   2-term → methodologies match. Date-join clean (427 common + 6 staged-only fresh trading + 28 served-only
   = 27 holiday-fills + 05-21 feed-gap correctly omitted). 0 unexplained.
-- **INTENT FLAG (open at CTO):** staged A4 does NOT tie served $247.69M — staged non_model @07-17 =
-  $268,061,032.32 vs served $246,413,160.32 = +$21,647,872.00 = **D-2 + F2 (NOT SMA-drop; both 2-term)**.
-  Cause: staged A4 enterprise_total = $1,803,111,389.71 = served + D-2 (the full-envelope custody CTO
-  verified exact on the spine). Fully explained (same accepted D-2 named delta + F2), but contradicts the
-  written "latest ties $247.69M" criterion → asked CTO for the one-line intent ruling (named-delta PASS vs
-  reproduce-served-basis). Spine unaffected either way.
+- **INTENT FLAG — RULED (CTO 160830Z): A4 = NAMED-DELTA PASS.** Staged A4 does NOT tie served $247.69M —
+  staged non_model @07-17 = $268,061,032.32 vs served $246,413,160.32 = +$21,647,872.00 = **D-2 + F2 (NOT
+  SMA-drop; both 2-term)**. Cause: staged A4 enterprise_total = $1,803,111,389.71 = served + D-2 (the
+  full-envelope custody). **My catch corrected a real error in CTO's criterion:** "$247.69M" is the SERVED
+  *partial-cash* latest; the revamp serves the *full-envelope* (D-2) enterprise_total, so A4 SHOULD NOT tie
+  $247.69M — that's serve-real. The D-2+F2 delta is fully explained, 0 unexplained → A4 PASS. SIGNED.
+
+## Status — CYCLE 1 of N=3 = CLEAN + SIGNED (spine 3/3 + A4 named-delta), CTO 160830Z
+Spine 3/3 independent concur (me + DT + CTO, to the penny); A4 named-delta PASS (criterion corrected).
 
 ## Still pending
-- **A4 intent ruling (CTO):** does A4 carry D-2 (full-envelope enterprise_total, matching the verified
-  spine) = named-delta PASS, or must A4 reproduce the served $247.69M basis? Delta is fully explained
-  either way; ruling determines A4 sign-off. Spine PASS is unaffected.
-- **Cycle 1 of N=3 recorded** (this pass). N≥2 further consecutive scheduled cycles must also tie (every
-  named delta ruled) before the never-widen co-sign re-point.
+- **Cycles 2 & 3 of N=3:** re-run my independent pass each next scheduled cycle; every named delta ruled;
+  an unexplained delta resets the streak. Then never-widen co-sign (CTO+COO) → re-point.
+- **Cutover co-sign cross-page item (NOT N=3-blocking):** A4 PRE-cutover enterprise_total (legacy v0_9
+  passthrough, ties served-A4) vs the aggregate/spine serve-real `opal_aggregate_aua` PRE-cutover diverge
+  (match post-cutover). Whether a user comparing the Portfolio-Analytics header (aggregate) vs the non-model
+  page (A4) sees two enterprise_totals for the same pre-cutover date → reconcile or documented pre/post
+  basis note. Weigh in at the cutover package (CTO flags when up).
 - **49F account_distribution ~0.4% vintage drift** re-confirm to ~0 at a same-vintage full-stage refresh.
