@@ -39,6 +39,27 @@ condition-2 seam-continuity); (3) COO RE-PINS this co-sign to the EXACT ETags se
 serve an ETag no completed control covers. **Full re-confirm = DE-align + render-check + 3-pass-on-actual-
 serving-bytes + ETag-pin.**
 
+## ETAG-PIN RESOLVED + RE-PINNED 2026-07-21 ~18:51Z
+
+Chain-of-custody hard gate DISCHARGED. The full 3-pass now covers the EXACT serving ETags
+(933318c2/f3fd7af2/53b732b2): CTO S3 re-verify (6-array anchors match to the cent: 49F model
+$1,397,277,094.44 / custody $1,665,338,126.76; inflection model $137,773,262.95 / custody $202,375,944.55;
+global model $1,535,050,357.39 — all == prior verified) + DT aggregate 3/3 (@80bf482d5) + CVO from-scratch
+byte-diff (data byte-identical). The 18:21Z re-stage was account_count-only among the data arrays,
+streak-neutral, INDEPENDENTLY confirmed. **Condition-2 DISCHARGED:** account_count ties served EXACT (49F 7/7,
+infl 7/7, global 9/9, 0 non-tie @07-17) — seam-continuity EXERCISED on the actual bytes.
+
+**CO-SIGN RE-PINNED to 933318c2/f3fd7af2/53b732b2.** Data + byte dimension SOLID. Full delta vs the original
+signed bytes = account_count wire (item-4, verified) + generated_at (benign) + source_vintage_last
+skeleton->'current' (benign metadata, TO-5-deferred field; CTO intent-confirm PENDING — non-blocking, not a
+defect). PIN DISCIPLINE: serve ONLY these covered ETags; any re-stage before the repoint -> fresh 3-pass +
+re-pin.
+
+**PUBLISH GO STILL HELD on (not the data/byte dimension):** condition-1 rollback tested-armed (AE) +
+condition-5 DE FE-alignment + /frontend-dev render-check + post-cutover cycle-1 verify-before-serve (adopted)
++ CTO GO on the CF/L@E/OAC repoint + the TO-5 vintage-block intent-confirm. Condition-3 (TO-2) = my ongoing
+post-cutover track.
+
 ## Verdict (as-of 180626Z, now HELD per above): CO-SIGN GRANTED — conditional on tested-rollback-before-publish
 
 All 5 cutover items independently verified NAMED + CORRECT serve-real, none a defect:
