@@ -1,6 +1,6 @@
 ---
 name: exec-sum
-description: Executive-summary snapshot of the multi-agent fabric, loop-friendly. Runs the two grounding instruments -- /stimulus-scan (per-agent telemetry + broker + git = who is doing what) and /comp-state (BM25 record-drift linter, self-test-gated) -- then renders a TWO-PART product, CARD FIRST: (1) a NON-TECHNICAL exec card at the very top in plain English -- what the fabric is actually doing right now and WHY it matters, a 10-second read with no serials/commits/jargon, a health line, and the one thing waiting on the human; (2) BELOW it, a house-style /draw two-plane ASCII diagram of agent roles + real activity + how that work feeds back into the card's narrative. Read-FIRST: it reports, it does not drive -- at most it surfaces genuine idle-capacity/blockers to the drive-coordinator (COO), never lane-dispatches. Designed for `/loop [interval] /exec-sum` as a recurring exec dashboard that flags what changed each fire; bare `/exec-sum` is a one-shot. Any agent may run it; the whole-fabric vantage (MSTR / COO / CTO) is primary. Sits above /overview (prose status) and /fabric-check (agent-axis) by leading with a business-legible card and grounding it in a diagram.
+description: Executive-summary snapshot of the multi-agent fabric, loop-friendly. Runs the two grounding instruments -- /stimulus-scan (per-agent telemetry + broker + git = who is doing what) and /comp-state (BM25 record-drift linter, self-test-gated) -- then renders a TWO-PART product, CARD FIRST: (1) a NON-TECHNICAL exec card at the very top in plain English -- what the fabric is actually doing right now and WHY it matters, a 10-second read with no serials/commits/jargon, a health line, and the one thing waiting on the human; (2) BELOW it, a house-style /draw two-plane ASCII diagram of agent roles + real activity + how that work feeds back into the card's narrative. Read-FIRST: it reports, it does not drive -- at most it surfaces genuine idle-capacity/blockers to the drive-coordinator (COO), never lane-dispatches. Designed for `/loop [interval] /exec-sum` as a recurring exec dashboard that flags what changed each fire; bare `/exec-sum` is a one-shot. A `--macro <CODE>` mode (also triggered by a bare macro or macro_project code, e.g. `/exec-sum OPAL` or `OPAL_ASSETS`) reskins the same card+draw as a PROGRAM CLOSE-OUT view: what remains to close the INTENT of every open project under a macro, each project's state + owner (and whether staffed right now) + the one gate/decision that closes it, grouped into thematic clusters. Any agent may run it; the whole-fabric vantage (MSTR / COO / CTO) is primary. Sits above /overview (prose status) and /fabric-check (agent-axis) by leading with a business-legible card and grounding it in a diagram.
 ---
 
 # /exec-sum — executive-summary fabric snapshot (card-first, loopable)
@@ -23,6 +23,7 @@ that backs the card with real names, roles, and activity.
 | `/exec-sum` | One-shot. Run the sweep now, render card + draw. |
 | `/loop [interval] /exec-sum` | Recurring exec dashboard. Each fire re-runs the sweep and **leads with a WHAT-CHANGED delta** before the current-state card. (`/loop [30m] /exec-sum` is the typical cadence.) |
 | `/exec-sum --project <CODE>` | Scope the comp-state + draw to one project/macro (e.g. `NFRA`, `OPAL_ASSETS`). The card still reads whole-fabric health. |
+| `/exec-sum --macro <CODE>` | **Macro / macro-project CLOSE-OUT view.** `<CODE>` = a macro (`OPAL`) -> every `OPAL_*` project, or a macro_project (`OPAL_ASSETS`) -> that one. Re-scopes BOTH the card and the draw to *what remains to close the intent* of the macro's open projects: per-project state, owner + whether staffed now, and the one gate/decision that closes each, grouped into thematic clusters. A bare `<MACRO>` / `<MACRO_PROJECT>` code routes here too. Distinct from `--project` (which keeps a whole-fabric card). Full spec: "Macro / macro-project close-out mode" below. |
 
 ## Step 0 — Scope + posture
 
@@ -33,6 +34,11 @@ that backs the card with real names, roles, and activity.
   drive-coordinator (COO)** in one message — never a lane-dispatch (that would violate the
   create -> coordinate -> gate -> verify separation the card itself describes). A scan where every
   agent is ACTIVE or legitimately gated is a clean **zero-surface** run.
+- **Two card scopes.** Default (and `--project`) = a **whole-fabric health** card. `--macro <CODE>`,
+  or a **bare macro / macro_project code** (`/exec-sum OPAL`, `/exec-sum OPAL_ASSETS`), = a
+  **program CLOSE-OUT** card scoped to one macro's intent. When the argument is a macro-shaped code,
+  route to the "Macro / macro-project close-out mode" section below (it reuses Steps 1-2 grounding,
+  adds Step M1, and renders with the Step M3 variants in place of 3a/3b). Same read-first posture.
 
 ## Step 1 — Gather the two instruments (ground the card, never recollect it)
 
@@ -144,6 +150,87 @@ reading this fire cold).
 Fixed-interval `/loop` handles the recurrence (the cron re-fires the prompt); /exec-sum itself arms
 nothing. In dynamic `/loop` mode, pick a fallback heartbeat of 1200-1800s.
 
+## Macro / macro-project close-out mode (`--macro <CODE>`)
+
+`/exec-sum --macro OPAL` (or a bare macro / macro_project code, with or without the flag) reskins the
+product as a **program close-out view**: not *"what is the whole fabric doing"* but *"what must be
+completed to close the INTENT of every open project under this macro — which project is in what
+state, who holds it (and is it staffed right now), and what one gate or human decision closes it."*
+Same READ-FIRST posture and grounding discipline; the CARD and the DRAW are re-scoped to the macro.
+It reuses Step 1 (activity) + Step 1b (comp-state, `--project <MACRO>` scoped) unchanged, adds **Step
+M1**, and renders with the **Step M3** variants instead of 3a/3b.
+
+**Scope resolution (mirror /overview's Step-0a classifier):**
+- Bare `<MACRO>` (`OPAL`, `NFRA`, `ADVI`) or `--macro <MACRO>` -> enumerate EVERY project yourself:
+  `ls org/projects/<MACRO>_*.json`. Miss none — list from the filesystem, never from memory.
+- A `<MACRO_PROJECT>` code (`OPAL_ASSETS`) -> that one project's close-out (its phases/TOs are the
+  "projects"). A macro with an underscore-suffix family (`OPAL_TAXSMA`, `_PT2`, `_REGISTRY`) — include
+  the whole family.
+- Distinct from `--project <CODE>`: that scopes the *draw* but keeps a whole-fabric-health card;
+  `--macro` makes the *card itself* the macro's close-out narrative.
+- Honor any live DO-NOT-DISTURB / sovereign-suspension state on a project — report its state, never
+  re-open or re-close it (this is a read lens, cf. Step 0 read-first).
+
+### Step M1 — per-project grounding (in addition to Steps 1a/1b)
+Build a grounded per-project table. **Never trust the registry's own say-so for "done"** (Rule 22) —
+cross-check status against phase text + commits + open TOs:
+```bash
+for f in org/projects/<MACRO>_*.json; do
+  code=$(basename "$f" .json)
+  status=$(python -c "import json,sys;print(json.load(open(sys.argv[1],encoding='utf-8')).get('status','?'))" "$f")
+  owner=$(python -c "import json,sys;print(json.load(open(sys.argv[1],encoding='utf-8')).get('owner','?'))" "$f")   # owner-less lean schema is not a defect
+  lc=$(git log -1 --format='%cd' --date=short -- "$f")
+  echo "$code | $status | owner=$owner | last=$lc"
+done
+python .tools/to-check.py --all 2>&1 | grep -E "^Project: <MACRO>"    # open-TO count per project
+```
+For each project derive FOUR fields:
+1. **STATE** — active / shipped-with-residual / superseded-into-X / dormant / suspended. Ground on
+   status + phase + commits together, not the label alone (a "complete" with a live phase, or an
+   "active" with month-stale commits + a done phase, is drift worth naming).
+2. **OWNER + staffed-now?** — map the owner serial to the LIVE-agent read from Step 1a:
+   `WORKING-NOW` (owner live + recent commits on this thread) / `owner-live-elsewhere` (live but on a
+   different thread) / `UNSTAFFED` (no live owner). This is Andrew's "who is working on them."
+3. **THE ONE CLOSING GATE** — the single residual that closes the project: a human decision, a
+   real-world event (first real use / acceptance sign-off), a dependency (behind another project's
+   gate), or a remaining build workstream. If none remains -> it is closeable NOW (say so).
+4. **CLUSTER** — group the projects into 3-6 thematic clusters (typical: the live P0 spine ·
+   superseded/folded predecessors · shipped-tools tail waiting on a real-world event · active build
+   queue · polish/dormant). The clusters ARE the macro's intent decomposed; they become the draw's boxes.
+
+### Step M3 — render (replaces 3a/3b for this mode)
+
+**The CARD** — scoped to the MACRO's intent, still 10-seconds and jargon-free (no serials/hashes):
+- 2-4 sentences: **what is this program trying to achieve**, and **what is the one thing the live
+  team is actually driving right now** versus what is queued or waiting-on-a-person.
+- `HEALTH:` on track / blocked / **concentrated** / mixed + why (e.g. "concentrated — nearly all
+  capacity on one thread; the rest gated/queued, not blocked").
+- `WAITING ON YOU:` the human decisions that gate close — the co-signs / confirmations only the human
+  can give, distilled to the shortlist.
+
+**The DRAW** — the per-project close-out map (still two planes, /draw house style):
+1. **Work plane = the clusters.** One labeled box per cluster; inside, one line per project:
+   `PROJECT [owner / staffed?] STATE -> the ONE gate`. Draw the **live-spine cluster first** with its
+   real critical path as a gate chain (gate 1 -> gate 2 -> the human co-sign), show **superseded
+   predecessors folding into** their successor, and mark each shipped-tail box with the single event
+   that closes it. Pin real commits/versions where they ground a claim.
+2. **Governance plane** = create -> coordinate -> gate -> verify -> **DECIDE(human)**, ending in a
+   concrete one-line ANSWER: *the macro's live critical path + "everything else is gated on a human
+   event or queued behind it — nothing engineering-blocked"* (or the true state if not).
+
+**Analogy table:** the same create -> coordinate -> gate -> verify roles **plus a DECIDE row for the
+human**, each naming what it owns in *this macro's* close-out this window.
+
+**Close with the HOLISTIC CLOSE-OUT STORY:** the ordered moves (1 -> 2 -> 3 ...) that close the whole
+macro's intent — the sequence a reader can act on ("finish the streak + co-sign -> the shipped tail
+closes on its human events -> the build queue drains"), plus the one-line trust statement
+(git+telemetry-grounded, comp-state self-test passed, every card claim traceable to a box above).
+
+**Discipline for this mode:** it is still READ-FIRST — it maps close-out, it does not close anything.
+If M1 surfaces a genuinely-closeable project (no gate left) or a real registry drift, that is a
+one-line **surface to the coordinator (COO) / owner**, exactly as Step 2 — never an edit from this
+skill. A close is the owner's grounded state change, not a status lens's.
+
 ## Discipline / risk notes
 
 - **The card is non-technical or it is broken.** The #1 failure mode is a "summary" that is just the
@@ -169,5 +256,7 @@ nothing. In dynamic `/loop` mode, pick a fallback heartbeat of 1200-1800s.
 - `/comp-state` — the BM25 registry/TO/PRD drift linter (Step 1b; self-test-gated).
 - `/draw` — the house-style two-plane ASCII diagram (Step 3b).
 - `/overview` (prose status) and `/fabric-check` (agent + project axis) — sibling status lenses;
-  exec-sum is the card-first, business-legible one.
+  exec-sum is the card-first, business-legible one. The `--macro` close-out mode mirrors /overview's
+  Step-0a classifier (macro code -> all projects under it) but renders the card+draw close-out
+  product instead of prose.
 - `/loop` — the recurrence wrapper (`/loop [interval] /exec-sum`).
