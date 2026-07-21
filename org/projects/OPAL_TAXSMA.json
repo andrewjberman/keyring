@@ -6,7 +6,8 @@
   "name": "Tax SMA Rebalancing Automation",
   "description": "Automate Tax SMA rebalancing for Yang Liu / OCIO-PM ops (renamed from ADVI_TAXSMA; macro PFMG = PortfolioManagement). Discovery-gated (S0 grounds 3 load-bearing unknowns before any build leg, Rule-22). HARD GUARDRAIL every leg: the system GENERATES the trade file, a HUMAN reviews + executes -- never auto-execute/auto-upload to Schwab, no Schwab/Factset creds in code. CTO PRD docs/architecture/ADVI_TAXSMA_PRD.md.",
   "status": "active",
-  "owner": "0.4.0_DS_ClientPlatform",
+  "owner": "0.5.0_AE_OpalETL~A",
+  "owner_note": "Executing/driving owner 0.5.0_AE_OpalETL~A (Andrew-direct 2026-07-21 'completely finalize the needs as they pertain to the Tax project now'; sovereign-delegate since 2026-07-14). Originally registered under 0.4.0_DS_ClientPlatform (COO 2026-06-26). DS retains the Rule-13 lane for data/assets/scripts/silver|gold/*.py.",
   "renamed_from": "PFMG_TAXSMA (2026-07-14; earlier ADVI_TAXSMA -> PFMG_TAXSMA 2026-06-26)",
   "pods": [
     "0.4",
@@ -15,7 +16,7 @@
     "0.3.1"
   ],
   "created": "2026-06-26",
-  "current_phase": "GUARDRAILS LIVE (Andrew-direct #8 executed end-to-end 2026-07-15): Content Contract v1.0 (corpus 35/35) -> validator DEPLOYED a89bb53e6 (sequenced behind DT BBGTML flip, SSM-verified) -> EXERCISED both rails (todays PRELIM+FINAL PASS w/ sha256 tie to saves; 07-10 stub FLAG-STUB w/ C4/C5 passing = discriminates on the right axis) -> shared-cloud locations LIVE (TAX/Short Sale/Intake Logs + Flagged Files w/ operator README; Graph auto-creates on colon-path). /tax-pt1 v2 = validate-before-save flow w/ pinned trading-calendar recipe (expected_last_trading_day(D-1) -- D itself is included by the fn, caught live). Gateway drive-read bug (httpx redirects) found+fixed en route. OPEN: daily-schedule architecture decision w/ Andrew; Yang word on 07-01 swap + backfill ack; /tax-pt3 (upload_text_to_site seeds the write path).",
+  "current_phase": "GUARDRAILS LIVE (Andrew-direct #8 executed end-to-end 2026-07-15): Content Contract v1.0 (corpus 35/35) -> validator DEPLOYED a89bb53e6 (sequenced behind DT BBGTML flip, SSM-verified) -> EXERCISED both rails (todays PRELIM+FINAL PASS w/ sha256 tie to saves; 07-10 stub FLAG-STUB w/ C4/C5 passing = discriminates on the right axis) -> shared-cloud locations LIVE (TAX/Short Sale/Intake Logs + Flagged Files w/ operator README; Graph auto-creates on colon-path). /tax-pt1 v2 = validate-before-save flow w/ pinned trading-calendar recipe (expected_last_trading_day(D-1) -- D itself is included by the fn, caught live). Gateway drive-read bug (httpx redirects) found+fixed en route. OPEN: daily-schedule architecture decision w/ Andrew; Yang word on 07-01 swap + backfill ack; /tax-pt3 (upload_text_to_site seeds the write path). 2026-07-21 (Andrew-direct FINALIZE): step-2-manual premise RETRACTED (see phase); /tax-pt2 built (agent-run 0833-derived + PT2 BD pipeline one-account-proven); /tax-pt3 = the one unbuilt runner in the chain (wraps convert_cost_basis.py verbatim, buildable now, live-validates on next fresh Tax-Lot date); 0.5.0~A driving the family finalize (pt3 + PT2 multi-acct/trigger/IAM + REGISTRY).",
   "prds": [
     {
       "path": "docs/architecture/ADVI_TAXSMA_PRD.md",
@@ -34,6 +35,11 @@
     "NFRA_MSGRAPH"
   ],
   "history": [
+    {
+      "date": "2026-07-21T23:0xZ",
+      "agent": "0.5.0_AE_OpalETL~A",
+      "event": "ANDREW-DIRECT FINALIZE (verbatim intent: 'completely finalize the needs as they pertain to the Tax project now'): 0.5.0~A back online to drive the OPAL_TAXSMA family end-to-end. RETRACTION (CTO fold-order 07-16, 454c816ec-style dated-not-silent): the 07-14 'step-2 cost basis MANUAL / not-derivable-in-estate' ruling is FALSIFIED -- S0.1's membership test covered opal-data-schwab/0824 ONLY; all 3 live Tax SMA accts (Chiles 0027265115, Bump 0035940058, Macy 0091939812) are verified IN the 0833 master (fact_acc 1/1/1, positive-controlled, DT 07-16). FEED TRAP persisted: Tax SMA unrealized lots ride fact_ult NOT fact_uln (0 ULN rows / 2251 ULT lots) -- silent-wrong-table for any ULN-keyed reader; /tax-pt2 carries a zero-lots FAIL-LOUD gate. Ground-truth re-verified live: PT2 bronze->silver->gold proven one-account (Chiles 07-17); /tax-pt3 the one unbuilt runner. Owner -> 0.5.0_AE_OpalETL~A (was DS-registered, Andrew 07-21)."
+    },
     {
       "date": "2026-07-15T18:4xZ",
       "agent": "0.5.0_AE_OpalETL~A",
@@ -90,6 +96,6 @@
       "event": "PROJECT REGISTERED (as ADVI_TAXSMA) + /allocation FIRED (CTO decomp handoff 183439Z, PRD 90e4d889c). Andrew-sovereign (Yang Liu 'Tax SMA Automation'). DISCOVERY-GATED S0-first. S0 decomposed+dispatched parallel: S0.1->CVO (Schwab-lot lever), S0.2->0.4.0_DS (converter-scripts review, role-fit split from CTO's AE-suggestion; DS freed by ADVI_COTMVP D1 stand-down), S0.3->0.8.0_AE (FIS email rule, M365 fit, freed by MSGRAPH re-scope hold). Build legs HELD until S0->RAVC CTO. Hard guardrail (trade-file generated-not-executed, no creds) every leg."
     }
   ],
-  "phase": "P1 EXECUTING (0.5.0_AE_OpalETL~A sovereign delegate, Andrew-direct 07-14; fabric-quiet). S0 fully closed. #7-#8 WINDOW CLOSED 2026-07-15 (e8dea4f6b): UIUX_DESIGN built; /tax-pt1 FIRST LIVE RUN executed + 27-file backfill + guardrails (content contract + validator deployed a89bb53e6 (469b07c79) + quarantine + shared-cloud logging; 2 SSM-verified gateway deploys, DT-deconflicted; verify SOUND). Cadence RULED (099b1162c, Andrew verbatim 'Yes B now, we will do A later.'): operator-cadence daily /tax-pt1 LIVE (~7 ET primary, FLAG -> ~9 ET re-run per corpus correction tail); scheduled-autonomous DEFERRED. Scope corrections carried: Pathfinder = SMA not Tax-SMA (981797593). Step-2 cost basis MANUAL by ruling; step-5 DESCOPED; Alyssa operates via skills.md.",
-  "blocking": "None blocking. Pending timing-not-blocks: /tax-pt3 conversion runner on a fresh Tax Lot date. Parked non-blocking: Yang 07-01 swap word, backfill ack."
+  "phase": "P1 EXECUTING (0.5.0_AE_OpalETL~A sovereign delegate, Andrew-direct 07-14; fabric-quiet). S0 fully closed. #7-#8 WINDOW CLOSED 2026-07-15 (e8dea4f6b): UIUX_DESIGN built; /tax-pt1 FIRST LIVE RUN executed + 27-file backfill + guardrails (content contract + validator deployed a89bb53e6 (469b07c79) + quarantine + shared-cloud logging; 2 SSM-verified gateway deploys, DT-deconflicted; verify SOUND). Cadence RULED (099b1162c, Andrew verbatim 'Yes B now, we will do A later.'): operator-cadence daily /tax-pt1 LIVE (~7 ET primary, FLAG -> ~9 ET re-run per corpus correction tail); scheduled-autonomous DEFERRED. Scope corrections carried: Pathfinder = SMA not Tax-SMA (981797593). Step-2 cost basis RETRACTED-MANUAL 2026-07-16 (was 'manual by ruling / not-derivable-in-estate'; FALSIFIED -- S0.1's membership test covered opal-data-schwab/0824 ONLY; all 3 live Tax SMA accts verified IN the 0833 master s3://opal-data-assets/schwab/08335338/, and /tax-pt2 agent-run BUILT @77a523510 + PT2 BD pipeline bronze->silver->gold proven one-account Chiles 07-17). step-5 DESCOPED (converter convert_optimization.py landed; runner deferred). Alyssa operates via skills.md.",
+  "blocking": "None blocking. Timing-not-blocks: /tax-pt3 live-validation on a fresh Tax Lot date (runner buildable now). Parked non-blocking: Yang 07-01 swap word, backfill ack."
 }

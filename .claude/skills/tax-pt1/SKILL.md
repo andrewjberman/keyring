@@ -6,9 +6,13 @@ description: OPAL_TAXSMA part-1 daily runner (Andrew naming ruling 2026-07-14, "
 # /tax-pt1 — Short Sale file intake (OPAL_TAXSMA part 1)
 
 **Scope rulings (Andrew-direct 2026-07-14, ADDENDUM 2 of the ~A ANDREW_DIRECT TO):** this intake
-is the project's principal automation; step-5 trade-file conversion is DESCOPED for now; step-2
-cost-basis stays MANUAL (no Schwab ask; the 3 accounts are not derivable in-estate — ULN/ACC
-negative on the record). Future parts land as /tax-pt2, /tax-pt3, ...
+is the project's principal automation; step-5 trade-file conversion is DESCOPED for now.
+**[RETRACTED 2026-07-16] the original clause "step-2 cost-basis stays MANUAL / not derivable in-estate
+(ULN/ACC negative on the record)" is FALSIFIED** -- S0.1 tested `opal-data-schwab`/0824 ONLY; all 3
+Tax SMA accounts ARE in the 0833 master (`schwab/08335338/`, fact_acc 1/1/1, DT 07-16), so step-2 IS
+derivable and is BUILT as `/tax-pt2` (agent-run @77a523510). The "ULN negative" read the WRONG table:
+Tax SMA lots ride `fact_ult`, not `fact_uln` (0 ULN rows). Future parts land as /tax-pt2 (built),
+/tax-pt3 (converter runner), ...
 
 **Design of record:** `docs/briefs/PFMG_TAXSMA_S0.1_S0.3_close_20260714.md` (the ratified S0.3 rule)
 + `docs/briefs/ANDREW_BRIEF_20260714_taxsma_and_ticket_system.md` Part 1.
