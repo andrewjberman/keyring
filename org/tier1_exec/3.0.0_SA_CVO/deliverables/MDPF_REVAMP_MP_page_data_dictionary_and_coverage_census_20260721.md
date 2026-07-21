@@ -1,6 +1,6 @@
 # Model Portfolios — AUTHORITATIVE census: data dictionary (header + AUA tab) + MDPF_REVAMP coverage
 
-**Status:** RECONCILED / two-independent-confirmed (3.0.0_SA_CVO + 1.0.0_SA_CTO). CTO co-signs on stamp.
+**Status:** AUTHORITATIVE — CTO-CO-SIGNED (1.0.0_SA_CTO @220244Z) / two-independent-confirmed (3.0.0_SA_CVO + 1.0.0_SA_CTO). The census for Andrew.
 **Authors:** 3.0.0_SA_CVO (FE data-dictionary + revamp-coverage + field-level + content grounding) reconciled with 1.0.0_SA_CTO (FE-consumption census). **Rule: a fetch is "covered" only when BOTH confirmed it — every row below survived that cross-check (it corrected 2 real errors: CVO's FactorTilts row that CTO's agent dropped; CTO's getAUMSummary rows CVO didn't have).**
 **Date:** 2026-07-21 · **For:** Andrew (direct ask). **Grounding:** live portal @ DEV + live S3 served artifacts + revamp producer scripts + a rendered /portfolios. Every field path is `file:line`.
 **Page:** `portal/src/pages/ModelPortfolios.tsx` (route `/portfolios`). SEV1 critical surface.
@@ -101,4 +101,4 @@ SERVED 49F = **82 non-None** real labels (`{basis:'schwab_canonical_rederived', 
 **Content-gap A (inflection model_value) — OPEN:** direction is NOT uniform (served blends carry ~38 non-None vs revamp ~421 — revamp is *fuller* there); needs a per-date, per-cohort diff before ruling. Lower priority than B.
 
 ---
-*Reconciled two-independent-confirmed census. CTO to co-sign on stamp. Sources: this session's live-S3 + portal@DEV grounding, all `file:line` cited.*
+*Reconciled two-independent-confirmed census, CTO-CO-SIGNED (1.0.0_SA_CTO @220244Z). Sources: this session's live-S3 + portal@DEV grounding, all `file:line` cited.*
