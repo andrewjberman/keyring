@@ -108,3 +108,27 @@ For the record (measured on the 407 common dates): revamp differs from legacy-se
 - **[DE+AE]** pair on the `/frontend-dev` render-check against the revamp artifacts (Global + 49F + Inflection views), with the §6 value-shift criterion.
 - **[CTO]** ratify the SMA §4 disposition (FE-neutral either way; blends must be retained) + the Option-2 §5 serving-target map.
 - Date-depth: revamp is a trading-day calendar (fewer rows) and more recent (as_of 07-20 vs 07-18). FE-neutral (FE keys off `dates[]` + `as_of_last`), noted for the render-check x-axis sanity.
+
+---
+
+## 8. Render-check verdict (route-injection vs revamp content, pre-serving)
+
+Ran the `/frontend-dev` headless harness (ModelPortfolios `/portfolios`) with Playwright route-injection fulfilling all 7 mdpf URLs with the live revamp artifacts (+ real `aum-metrics.json`/`aum-timeseries.json` from portal-v2 to clear the loading gate). This proves the revamp content renders BEFORE any serving change, independent of the Option-A mechanism. Screenshots in the session scratchpad (`render_global.png`, `render_49f.png`, `render_inflection.png`).
+
+| View | Verdict | Evidence |
+|---|---|---|
+| **Global (All)** | **PASS** | Donut Total AUA $1.81B, quarterly cards, bell curve (7,729 holdings), Daily AUA trend full-depth to **2026-07-20 (revamp `as_of_last`)** — no blank/crash; 5 core models + Non-Model AUA (SMA correctly filtered); all dark panels, **no silver-canvas color-law violation**; as-of stamps read "July 20th, 2026" confirming revamp drove the render. |
+| **49 Financial** | **PASS** | Firm-select drove `perFirmMdpfData` (revamp #2/#4); Total AUM $1.68B, bell curve 7,016, Daily AUM trend smooth full-depth to 2026-07-20; SMA filtered; color-law clean. |
+| **Inflection** | **RENDERS — one data caveat (NOT FE, NOT color-law)** | Donut $202M, bell curve 713, Orion sourcing, 2026-07-20 vintage all clean. BUT the **Daily AUM chart shows a picket-fence** (sparse spikes + gaps) in the post-onset region. |
+
+**The Inflection picket-fence — grounded, and it is a DATA characteristic, not an FE defect:**
+- The FE renders Global + 49F smoothly with **identical code**; the FE's uniform `?? 0` null-handling faithfully drops the stack to zero on any null date.
+- **Served** inflection (what the FE renders TODAY): model onset 2026-05-18, **zero post-onset nulls** → smooth.
+- **Revamp** inflection: onset 2026-05-15 (earlier), but **6 post-onset None gaps** (2026-05-21, 06-01, 07-01, 07-13/14/15) + 16 interspersed zeros in the last 60 trading days → the picket-fence. The pre-05-15 all-Non-Model region is the known/named model-onset asymmetry (expected).
+- **So the cutover would visibly degrade the Inflection daily chart** (smooth today → gappy on revamp), driven entirely by post-onset gaps in the revamp inflection `by_model.model_value`.
+
+**SURFACE (DS/CTO ruling, not mine):** is the revamp-inflection post-onset model_value gappiness (likely the in-flight Eclipse/DS finalization) EXPECTED/acceptable-for-cutover, or a data gap DS closes before the push? Two dispositions:
+1. **Data fix (preferred if gaps are unintended):** DS fills the post-onset inflection model_value gaps → chart renders smooth, no FE change. (In-lane with "data-side is being finalized.")
+2. **FE null-carry-forward (only if the gaps are EXPECTED-but-should-render-smooth):** a small, in-scope FE-alignment change to carry-forward the last non-null per series instead of `?? 0`-dropping. I can make this if CTO/Andrew rules the gaps are real-and-permanent. NOT defaulting to it — a carry-forward would MASK a real data gap, so it's only correct if the gap is deliberate.
+
+**GATE STATUS:** Global + 49F **PASS** the pre-serving render-check. **Inflection HELD** on the DS/CTO data-gap ruling above (the FE + color-law are clean; the hold is purely the inflection data). No FE code change is required for any view to consume the revamp schema (§0-§7 stand); the Inflection item is a data-finalization question surfaced by the visual gate.
