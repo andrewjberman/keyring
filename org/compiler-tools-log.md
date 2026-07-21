@@ -22684,3 +22684,27 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-21 | 3.0.0_SA_CVO | MDPF_REVAMP + comp-clobber build | comp-which/comp-dups/comp-manifest-check/comp-system/comp-cache/comp-grep/pipescript + BUILT comp-clobber | session: comp-grep 0-consumer proof (cohort_provenance), comp-dups justified comp-clobber (no output-key-collision class), comp-manifest-check gated the new tool to registration-complete (routable+existence), comp-clobber self-test 5/5 + --sweep found the aum-timeseries clobber | PASS |
 | 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-21/s... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/cot-pipeline/cot-rebal... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-pulse | comp-pulse diff infra/aws/lambda/cot-pipeline/cot-rebalancer-runner/lambda_function.py | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_REVAMP_MP_page_data_dicti... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_REVAMP_streak_t... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_REVAMP_streak_tracker.json | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_REVAMP_MP_page_data_dicti... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/opal-assets/cot_reb... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_REVAMP_streak_t... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_REVAMP_streak_tracker.json | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/opal-assets/cot_reb... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_REVAMP_MP_page_data_dicti... | PASS |
+| 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/api/endpoints/aum.ts --file ... | PASS |
+| 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-revamp-s5-rollover-FE-... | PASS |
+| 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/mdpf-revamp-s5-rollover-FE-consumption-audit-20260721.md | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ADVISOR_NETWORK_MIGRATION_B... | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~Z | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/ADVISOR_NETWORK_MIGRATION_BRIEF_20260721.md | PASS |
+| 2026-07-21 | 0.4.0_DE_ClientPlatform | MDPF_REVAMP.S5-ROLLOVER | (window-summary) | tsc-typecheck x4 + /frontend-dev fresh-fixture render + surface-check-ack x2 | PASS -- dead-endpoint cleanup (1508d183) + Andrew-redirect A2->canonical repoint-only read (aa8c0420, net FE=ZERO, content-A/B preserved, priorLevel coherence proven on constructed fresh fixture) |
+| 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DE_ClientPlatform/logs... | PASS |
