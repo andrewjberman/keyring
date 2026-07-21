@@ -73,6 +73,51 @@ logic in bd/cot is AD-HOC per-producer `ffill`/carry-forward, not converged onto
 - **GAP-B WITHDRAWN:** the MDPF aggregate is ALREADY calendar-tied (`canonical_trading_axis`) — CTO/~A
   re-grounded 2026-07-21.
 
+## WS-3 Consumer Census — full runtime enumeration (for UNIVERSAL_TRADING_CALENDAR, PRD-seed @30bef2f85)
+
+Andrew elevated the disposition (~14:59Z, direct to CTO): the calendar must be UNIVERSAL — every cloud
+runtime imports it (Lambda Layer + EC2 S3-pull + drift-guard), not just gold-runners. CTO: "your assessment
+IS WS-3 (consumer enumeration)." Extending the producer scan to all runtimes:
+
+Method: whole-estate comp-grep for `trading_calendar` imports/vendors (23 files) + candidate patterns
+(`business_day`, `bdate_range`, `weekday()`, `holiday`, `is_weekend`); vendored 3rd-party `dateutil` in
+`layers/pyiceberg-nessie-deps` EXCLUDED; comp-tools/tests separated from runtime.
+
+### A. Current consumers (already import/vendor the calendar)
+| Consumer | Runtime | How | Drift note |
+|---|---|---|---|
+| `lib/served_vintage.py` | shared lib | imports canonical | shared-module nucleus already exists |
+| `assets/49F a00_dim_account` | gold producer | vendored `trading_calendar as tc` | vendored |
+| `mdpf dim_mdpf_aggregate_aua_timeseries` / `dim_mdpf_non_model_assets` | gold producers | `canonical_trading_axis` / ffill named-delta | base tied |
+| `bd D_03.composition_artifacts` | gold producer | planned (fast-follow comment) | not-yet |
+| `bd-served-vintage-alarm` (lambda_function + served_vintage) | Lambda | **VENDORED copy** | copy #1 |
+| `opal-assets-absence-check` | Lambda | **VENDORED copy** | copy #2 |
+| `schwab-bronze-freshness` | Lambda | **VENDORED copy** | copy #3 |
+| `m365-mcp-gateway` (ssavail_contract, tools) | **EC2** | imports | EC2 consumer (SSAvail tax dates) |
+| `mdpf/_trading_day_calendar.py` | gold producer | **DIVERGENT STALE copy** | copy #4 = GAP-A / F-1 |
+
+=> FOUR vendored copies + one stale divergent copy = the drift surface the universal shared module +
+drift-guard eliminate. (This is the mechanistic case FOR Andrew's elevation.)
+
+### B. Candidate consumers — ad-hoc business/trading-day logic NOT on the canonical lib (migration targets; HYPOTHESES, per-consumer source-verify at migration time)
+| Candidate | Runtime | Pattern | Why a candidate |
+|---|---|---|---|
+| `smartx_ingestion_pipeline/forward_fill_missing_dates.py` | Lambda | business_day forward-fill | roll-forward OFF-lib — directly in Andrew's roll-forward scope |
+| `opal-assets/opal-assets-bd49f-daily-pull` | Lambda | business_day | producer-lambda business-day logic off-lib |
+| inf silver: `_orion_api_silver_lib`, `convert_performance_to_silver`, `convert_transactions_to_silver` | silver | pandas `bdate_range` (Mon-Fri) | HOLIDAY-BLIND: `bdate_range` counts NYSE holidays as business days — verify usage (hypothesis, NOT a confirmed defect) |
+| `inf silver/_orion_vendor_asof` | silver | `weekday()` as-of | off-lib as-of |
+| `cot/cot_bronze_ingest` | bronze | business_day | off-lib |
+| `infra/aws/compdiff/freeze_monitor` | monitor | business_day + weekday | off-lib — **MONITOR: classify vs the 07-17 suspend-new-alerts boundary at PRD time (migrate-existing vs new-twin)** |
+
+### C. Excluded / non-runtime
+3rd-party `dateutil` (layers) = vendored dep, not ours. comp-tools/tests (comp_freshness, comp_debris,
+comp_pydeps, dup_scan, passcraft, registry-check, freshness_manifest_gen) consume the calendar for
+tooling/analysis — migrate opportunistically, not runtime-critical.
+
+Coverage denominator: whole-estate `trading_calendar` grep (23 files) + 5 candidate-pattern greps. Section-B
+entries are grep-identified HYPOTHESES — each needs a per-consumer source read at migration time to confirm
+it genuinely needs frontier/roll-forward semantics vs. a benign local date op.
+
 ## Bottom line
 
 No live "spike to zero on non-trading days" defect exists anywhere assessed. Raw-is-trading-days-only is
