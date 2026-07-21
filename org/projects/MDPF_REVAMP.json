@@ -46,6 +46,11 @@
       "date": "2026-07-20T~16:3xZ",
       "agent": "1.0.0_SA_CTO",
       "event": "RULINGS RESOLVED (Andrew-direct, confirmed to base CTO in-session; relayed via CTO~A handoff d8c568c32, verified out-of-band with Andrew): all 4 open calls CLOSED (bucketing channel/client; YANG phase-2; 49F basis = SCHWAB-RPS 0824 full acct 08242234 -- never 0833/never-sum/never-blended, basis:schwab-rps label; DDB = single mgmt/registry surface). 49F mechanism: 0824 full -> 5 models UST/ST/INT/LTC/LTA via SmartX model ids; non-model = full - SUM(5); Global = 49F+Inflection agg. Broadcast COO~Z + CVO~Z. Andrew tasked base CTO with the authoring-gate groundings NOW: SmartX model-id mapping + FULL data-sufficiency assessment (opal-data-assets silver + the DDB table) for the MDPF Portfolio Analytics header + AUA/AUM tab, before gold authorship begins."
+    },
+    {
+      "date": "2026-07-21T~13:44Z",
+      "agent": "1.0.0_SA_CTO",
+      "event": "ANDREW-DIRECT RULING (verbatim, to 0.4.0_DS_ClientPlatform~A in Andrew live session 2026-07-21, surfaced by ~A, adjudicated+recorded by base CTO same turn): \"lets not deal with the SMAs at this point for this. just say non_model is enterprise_total - model\". SCOPE = A4 dim_mdpf_non_model_assets ONLY (\"for this\"). RESOLUTION: A4 non_model_aum = enterprise_total - model_aum (2-term; SMAs fold into non_model residual, NOT separately subtracted). Supersedes the latent F3 tension (v0_9 feeder 3-term custody-model-sma) in favor of the 2-term = matches CTO spec sec.4 A4 row EXACTLY -> confirms spec, drops only v0_9 feeder form. F3 intent honored: 2-term reproduces served A4 NUMBER to the dollar (1782163983 - 1534471754 = 247692229 = 13.90%, 455 dates). HISTORY: build 2-term over 455 dates from real monolith enterprise+model; any divergence from served v0_9 3-term history = NAMED delta (ledger). GUARD: A4-scoped -- A5 spine non_model 12.17M is the DISTINCT baseline trap-2 number, NOT touched; whether SMA-drop extends to A5 (the 4.48M A5-vs-A4 gap) is a SEPARATE Andrew clarification, base DS to surface not assume."
     }
   ]
 }
