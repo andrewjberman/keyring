@@ -22378,3 +22378,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-21 | 0.4.0_DS_ClientPlatform | MDPF_REVAMP (b) inflection+global serve-real history staged: safe-commit x6 PASS, commit-gate PASS (caught unused import), comp-system OVERRIDE x4 (audited, build-alongside+ledger), DT compare()@e2bb91b4e run 3-firm 0-unexplained (caught 2 DT-harness bugs). Grounding via boto3 data-plane (Rule21 carve-out) + canonical trading_calendar parity-neutral guard (caught 2025-01-09 non-trading-day in aum_daily).
 | 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_named... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | FAIL |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/deliverables/mdpf_parity_c... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | commit-gate | commit-gate.sh mdpf_parity_check.py (BUG-1/BUG-2 fixes) | PASS -- N=3 harness bugfixes |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
