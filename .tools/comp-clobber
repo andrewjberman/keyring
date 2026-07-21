@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+"""comp-clobber -- thin PATH wrapper for the output-key COLLISION scanner.
+
+Routes to the canonical engine org/modules/graph/clobber_scan.py. comp-which-routable
+("are there multiple producers writing the same S3 key / DynamoDB table -- an output-key
+clobber / two-writers-one-sink race"). ADVISORY / read-only -- NEVER removes anything.
+
+Distinct from comp-dups: comp-dups finds DUPLICATE CODE BODIES / TF labels; comp-clobber
+finds DIFFERENT producers writing ONE destination (the clobber class comp-dups is blind to).
+
+  comp-clobber                       static scan: sinks written by 2+ producers (ranked)
+  comp-clobber --json                emit JSON
+  comp-clobber --min-writers N       only sinks with >= N writers (default 2)
+  comp-clobber --live BUCKET KEY     LIVE version-history etag-lineage confirm for one key
+  comp-clobber self-test             falsifiable (must find the aum-timeseries multi-writer)
+"""
+import os
+import runpy
+import sys
+
+_HERE = os.path.dirname(os.path.abspath(__file__))          # .tools/
+_WS = os.path.dirname(_HERE)                                 # repo root
+_ENGINE = os.path.join(_WS, "org", "modules", "graph", "clobber_scan.py")
+
+if not os.path.isfile(_ENGINE):
+    sys.stderr.write(f"comp-clobber: engine missing: {_ENGINE}\n")
+    sys.exit(2)
+
+sys.argv[0] = "comp-clobber"
+runpy.run_path(_ENGINE, run_name="__main__")

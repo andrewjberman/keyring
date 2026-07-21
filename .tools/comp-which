@@ -245,6 +245,20 @@ RULES = [
      "duplicate / dead-twin resources (debtscan dups dimension)",
      ["comp-dups", "comp-dups --class CROSS_FIRM|IAM_POLICY_SPLIT|SERVICE_SPLIT|ENV_TWIN", "comp-dups --nightly"],
      "find duplicate / dead-twin resources across the estate -- double-managed TF, unused legacy tables, triplicated code (advisory; NEVER removes)"),
+    # comp-clobber = output-key COLLISION scanner (3.0.0_SA_CVO 2026-07-21; born from the aum-timeseries
+    # freeze). Distinctive two-writers-one-sink / clobber vocab so a "who else writes this key / is this
+    # artifact being overwritten by a stale producer" query routes here, NOT to comp-dups (code bodies).
+    (["clobber", "clobbered", "clobbering", "multiple writers", "multiple producers", "two writers",
+      "two producers", "second writer", "who else writes", "who writes this key", "same key",
+      "same s3 key", "same output key", "output key collision", "output-key collision", "one sink",
+      "overwrite", "overwriting", "overwritten", "stale producer", "frozen producer", "clobber race",
+      "writers racing", "racing the same key", "who writes the same", "two things writing"],
+     "output-key collision -- 2+ producers writing one S3 key/DDB table (comp-clobber)",
+     ["comp-clobber", "comp-clobber --sweep <bucket> <prefix>", "comp-clobber --live <bucket> <key>"],
+     "are 2+ DISTINCT producers writing the SAME S3 key / DynamoDB table -- a two-writers-one-sink CLOBBER "
+     "where a stale/deprecated producer overwrites a fresh one. STATIC code candidate-finder + a LIVE "
+     "version-history etag-lineage ORACLE (--sweep across a prefix). DISTINCT from comp-dups (duplicate CODE "
+     "bodies / TF labels -- same code twice); this is DIFFERENT producers -> ONE destination. Advisory/read-only"),
     (["cache", "collision", "query key", "react query"],
      "cache collisions",
      ["comp-cache collisions"],
