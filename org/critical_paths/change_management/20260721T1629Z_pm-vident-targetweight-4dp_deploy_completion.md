@@ -15,12 +15,12 @@
 - Frontend/backend parity (node): `handleExportCsv` core produces byte-identical output to the backend (cash 0.4186, same sample rows 0.0314/0.0272/0.0162/0.0467/0.0141). ALL PASS.
 
 ## Legs
-1. [ ] Code committed (CLOUD) + source-map committed
-2. [ ] Artifacts built+uploaded (build-and-upload, content-sha256 read-back verified) x3
-3. [ ] safe-apply portfolio-management -> 0-diff; live CodeSha256 == artifact sha
-4. [ ] safe-apply trade-pipeline (workflow-handler + dashboard-api) -> 0-diff; live CodeSha256 == artifact sha
-5. [ ] record-terraform-deploy + tags (portfolio-management, trade-pipeline) + push --follow-tags
-6. [ ] Portal /prod-deploy -> tag + CI SUCCESS + workspace submodule pointer updated
-7. [ ] Behavioral verification (served: export produces 4dp, column sums to 1) + notify Yang/Andrew/DS
+1. [x] Code committed `c8a87691a` (CLOUD, Andrew-authorized lane override) + source-map `bb4aaf3a1`
+2. [x] Artifacts built+uploaded+read-back-verified x3: opal-portfolio-excel-generator `cub1v/Dlut...`, trade-workflow-handler `QRhdxXf4...`, trade-dashboard-api `TJ/P4Nf...`
+3. [x] safe-apply portfolio-management -> Apply complete 0/1/0; 0-diff; live CodeSha256==`cub1v/Dlut...` (Active/Successful)
+4. [x] safe-apply trade-pipeline -> Apply complete 0/2/0; 0-diff; live CodeSha256 both match (workflow-handler `QRhdxXf4...`, dashboard-api `TJ/P4Nf...`)
+5. [x] record-terraform-deploy + tags portfolio-management-v2.4.1 + trade-pipeline-v1.20.1 + push --follow-tags (`eba42d8b7`)
+6. [x] Portal /prod-deploy -> PROD `99fed48f` (tag portal-v2.1.140, peel-verified) pushed; parity gate empty (only TradeTab.tsx); CI run 29850995452 **conclusion: success**; main tree back on DEV `2c802d13` (Rule 19 held); workspace submodule pointer bumped
+7. [x] Behavioral verification: DEPLOYED-code == TESTED-code -- backend live CodeSha256 == artifact sha on all 3 lambdas; portal CI success + tag peels to PROD head. TESTED-code EXERCISED: behavior test (real generators) CSV+Excel emit <=4dp & column sums to exactly 1.0000; node parity byte-identical frontend<->backend. (Prod lambda NOT invoked -- has DynamoDB/autosave side effects; sha-match + local-exercise is the side-effect-free sound proof.) Notified Yang/Andrew/COO.
 
-## Status: OPEN
+## Status: CLOSED 2026-07-21 (7/7 legs; backend 3 lambdas + portal all deployed+verified)
