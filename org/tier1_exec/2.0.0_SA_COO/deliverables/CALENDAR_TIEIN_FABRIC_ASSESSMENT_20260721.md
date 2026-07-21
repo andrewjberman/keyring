@@ -16,6 +16,15 @@ INSIDE OPAL_CONSOLIDATION (no new PRD); MDPF stays P0; convergence dispatches wa
 Governance boundary (MSTR): PRODUCER calendar-convergence = correctness/consolidation, CLEAR of the 07-17
 suspend-new-alerts order; any NEW freshness/absence-twin ALARM off this = the suspended class → DEFER.
 
+**Andrew refinement (2026-07-21 ~15:2xZ, via ~A, VERBATIM):** "It's not necessary to ffill every day, if it
+currently is only trading days that is fine." => The standardization TARGET is the canonical trading-day
+AXIS + frontier definition consumed universally, NOT a producer ffill-to-calendar-days mandate; roll-forward
+is a SERVING-LAYER (FE-on-render) concern. This RATIFIES the assessment headline (trading-days-only is safe,
+no zero-spike) and re-reads F-2 (bd/cot ffill) + the smartx forward-fill candidate as AXIS/FRONTIER adoption
+targets, not ffill convergence — existing producer ffill is now PERMISSIVE (may stay), not mandated. The
+`bdate_range` holiday-blindness finding STANDS (that is an AXIS-correctness defect, exactly what canonical-
+axis adoption fixes). CTO owns how this binds the UNIVERSAL_TRADING_CALENDAR PRD framing.
+
 ## Method + coverage denominator (Verification Law #10)
 
 Read-only comp-grep/comp-glob over LIVE producers (`data/*/scripts/{gold,silver}`, `black_diamond/archive/`
