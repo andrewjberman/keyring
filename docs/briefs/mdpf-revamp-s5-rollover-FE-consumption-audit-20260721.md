@@ -173,3 +173,17 @@ Beyond §0's "ZERO baseline FE changes," CTO scoped two FE work-items (A2 + cont
 **LOCKED dispositions (CTO):** SPLIT/HOLD = **HOLD-ALL** (no per-firm split; all keys flip together after the full gate); A1 aum-metrics = **DS-builds** (repoint-only, FE unaffected); content A/B = honest-None + drop-null-rows (done).
 
 **Remaining FE step (the flip gate, external-gated):** (1) FULL-SET render-check — all 6 cells on DS's (a) COHERENT set (frontier count = roster count), so the Count view extends to 07-20 with only middle whole-day gaps dropped — CTO's visual-confirm gate; (2) the live 404-catch — all FE URLs resolve to revamp content as JSON against AE's real Option-A serving-target. Both gated on DS's data + AE's mechanism (in flight).
+
+---
+
+## 11. A2 SUPERSEDED — Andrew redirect: canonical repoint-only read (portal `aa8c0420`)
+
+**Andrew redirected A2 (CTO 221221Z):** aum-timeseries becomes a **CANONICAL FRESH artifact** — DS produces it off the aggregate, served from `opal-data-assets` via the **same** `/api/general/portfolios/aum-timeseries.json` URL (routing, not FE). So the §10 A2 FE-derive (`2f603319`) **reverses to a repoint-only canonical read** — **net FE change vs pre-A2 = ZERO**.
+
+**Surgical revert-preserve (`aa8c0420`, 3 files):** a plain `git revert` of `2f603319` would conflict with content-A/B (which stacks on it), so I reversed the A2-derive sites while preserving content-A/B. RESTORED: the `getAUMTimeSeries`/`getModelTimeSeries` endpoints (undoing cleanup `1508d183`), the `useQuery(['aum-timeseries'])` fetch + import, `isLoading` on rawTimeSeriesData, the `dataAsOf` fallback, the useMemo rawTimeSeriesData fallback branch, and the Q-end priorLevels source (`agg = rawTimeSeriesData.aggregate`). PRESERVED: **all content-A/B null-handling** (drop-whole-day-null-rows, metric-aware monthly, etc.) — and the **restored fallback also passes null** (not `?? 0`) so the whole-day-gap drop stays uniform (the canonical aum-timeseries, off the aggregate, carries the same honest-None gaps).
+
+**The vintage-bug fix STAYS FIXED** — not via the FE re-source (reverted) but via the **fresh artifact**: rawTimeSeriesData now reads the canonical fresh aum-timeseries, so priorLevels are fresh + coherent with the trend. Global VALUE trend stays globalMdpfData-PRIMARY (true pre-A2 too); rawTimeSeriesData = fallback + priorLevels source. Both canonical (aggregate + fresh aum-timeseries) → zero legacy-clobber.
+
+**Verified** with a **constructed fresh aum-timeseries fixture** (built off the revamp aggregate = `Σ non-sma model_value`, simulating DS's canonical producer, since the real artifact doesn't exist yet): Global Value priorLevel **coherent (Q2'26 $1.77B, matching the trend bar, identical to the A2 derive)** + fresh to 07-20; Global Count + Inflection Value content-A/B gaps intact + pre-onset preserved. Typecheck clean. **The definitive coherence + freshness check re-runs at the flip gate on DS's LIVE canonical set** (CTO's visual gate).
+
+**Portal DEV lineage:** `2f603319` (A2 derive) → `5b1e44dc` (content-A/B) → `1508d183` (cleanup) → `aa8c0420` (revert A2 + cleanup, preserve content-A/B). **NET = pre-A2 FE + content-A/B** — the A2 derive is undone; content-A/B stands.
