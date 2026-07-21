@@ -46,3 +46,13 @@
 - **→ MSTR (0.0.0_AB_MSTR):** assign the dedicated Cottonwood-model investigation agent Andrew named; this brief is its starting map (toolchain exists → step-1 is a sweep + field analysis, not a build-from-zero).
 - **→ base COO (2.0.0_SA_COO):** coordination; the egress-word confirmation + cloud-side-vs-local method call route back to Andrew.
 - **Andrew confirms:** (i) per-use egress word for the cot sweep, (ii) cloud-side vs local token, (iii) go on WS-E authoring + agent assignment.
+
+## RESOLUTION — Andrew decisions 2026-07-21 (all 3 open calls closed)
+**Andrew verbatim (this session):** *"What do you mean a per-use word?, also just take the token from the cloud because we want to run this locally, cant have you ssm controlling a cloud resource to do it, i feel like its going to be too slow, we need to be exploring dynamically. GO on 3. hold on NFRA for now."*
+
+1. **VENDOR-EGRESS WORD — GRANTED (Andrew-direct, per-use, SCOPED).** Scope: the **cot** Black Diamond endpoint sweep, **read-only** dynamic exploration to locate where Cottonwood marks their models (model definitions + account->model assignment + model holdings value/count). Bounded to cot (blackdiamond/cot/session, opal-data-cot). NOT a standing grant; NOT extensible to other firms/uses without a fresh word.
+2. **METHOD — LOCAL (Andrew-direct).** Take the cot `bd_identity` from the cloud secret and run the sweep/curls LOCALLY. Explicitly NOT the cloud-side/SSM path (Andrew: too slow, "we need to be exploring dynamically"). My earlier cloud-side refinement is OVERRIDDEN by Andrew's speed/dynamism call. Operational hygiene carried: the pulled `bd_identity` is a live rotating BD session cookie -> treat as a secret (never commit/log; re-pull on 401). This LOCAL run is the DISCOVERY/EXPLORATION phase; the eventual production model-portfolio fold-in into `opal-assets-daily-aua` runs cloud-side in the normal pipeline under CTO gate.
+3. **GO on 3 — GRANTED.** CTO authors WS-E "Cottonwood model-portfolio discovery + DDB fold-in"; MSTR spawns the dedicated investigation agent. Exploration can start on spawn (warm map + tool exists) in PARALLEL with WS-E authoring — do not gate dynamic exploration on the PRD being fully written.
+4. **NFRA — HOLD (Andrew-direct).** The two owner-independent NFRA cleanups (to-check COMPLETE_WORDS fix + 3 orphan TO-prefixes) are PARKED until Andrew re-engages NFRA. No action.
+
+**Routed same-turn:** MSTR (egress GRANTED + local + spawn-GO), CTO (WS-E GO, design for the LOCAL discovery path), base COO (coordination + NFRA hold).
