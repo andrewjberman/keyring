@@ -60,6 +60,30 @@ condition-5 DE FE-alignment + /frontend-dev render-check + post-cutover cycle-1 
 + CTO GO on the CF/L@E/OAC repoint + the TO-5 vintage-block intent-confirm. Condition-3 (TO-2) = my ongoing
 post-cutover track.
 
+## SCOPE 7 -> 9 KEYS + CENSUS-GATE 2026-07-21 ~19:25Z (Andrew-direct expansion)
+
+Andrew caught an UNDER-SCOPE (CTO 192509Z, source-confirmed): leaving aum-metrics.json + aum-timeseries.json
+on legacy portal-v2 (my item-1's accepted interim) yields a MIXED-BASIS Global enterprise Total
+(ModelPortfolios.tsx:745 = legacy-model aum-timeseries + revamp non_model) — concretely WRONG (+$20M D-2
+basis), not just stale. So:
+- **CUTOVER IS NOW 9 KEYS** (aggregate x3 + account_distribution x3 + non_model + aum-metrics + aum-timeseries).
+  My co-sign coverage + the 3-pass extend to all 9.
+- **ITEM-1 RESOLVED-BY-INCLUSION:** TO-2 (aum-metrics/aum-timeseries off the revamp aggregate) is PULLED
+  FORWARD into this cutover — supersedes my item-1 "interim dual-read accepted" (strictly better; the residual
+  I tracked as condition-3 is now fixed BEFORE the flip). Producers: DS builds the 2 new gold shapes
+  (field-identical to AUMMetricsResponse + AUMTimeSeriesResponse); AE extends the S4 runner + 9-key route.
+- **FLIP NOW HELD ON A COMPREHENSIVE CENSUS** (Andrew-direct "confer with CVO... get to the bottom of what the
+  REVAMP still does not cover... be comprehensive"): CVO + CTO jointly produce ONE cross-verified census (every
+  FE fetch -> serving source -> revamp-covered? -> disposition), independent + reconciled. No flip until closed.
+  Render-check already surfaced more than the 2 aum gaps -> content items A (inflection model_value post-onset
+  None gaps, DS/Eclipse) + B (account_count MIDDLE Dec31/Jun30 gaps, all firms — DS GROUNDS real-vs-fill per
+  Rule 22 BEFORE ruling). Both routed to DS, feed the census.
+
+**Revised pre-push gate:** comprehensive census CLOSED (CVO+CTO) + 9/9 3-pass (incl. the 2 new producers,
+field-identity verified) + content A/B resolved + render-check clean + AE router-revert TESTED-armed + my
+re-co-sign on the FINAL 9-key coherent ETags. "Nearly there" is RESET — real producer + census work first.
+CTO single tracker-writer records the 9-key scope + census-gate.
+
 ## Verdict (as-of 180626Z, now HELD per above): CO-SIGN GRANTED — conditional on tested-rollback-before-publish
 
 All 5 cutover items independently verified NAMED + CORRECT serve-real, none a defect:
