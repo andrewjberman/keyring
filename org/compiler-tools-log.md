@@ -22626,3 +22626,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-21T2110Z | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1 dry build | comp-iam service (mirror role, prefix UNRESOLVABLE=expected) + commit-gate PASS + 11 unit tests green | comp-pipescript io has no bronze-producer mode (gold-only) -- grounded pattern by source read
 | 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-clobber --file .tools/comp-... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-clobber .tools/comp-which infra/system/00_synthesis.md infr... | FAIL |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-clobber org/modules/graph/clobber_scan.py org/... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | py_compile+self-test / harness --all | scope-align @597712d8f (remove aum_timeseries A2): self-test PASS, --all confirms 8-key picture intact (aggregate 3/3 + A4 + coherence green) | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check completeness | VERDICT |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
