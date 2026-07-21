@@ -6,7 +6,27 @@ NOT waiting for the scheduled streak. Andrew VERBATIM: push it, "be ready to rol
 **Package reviewed:** org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_cutover_cosign_package_20260721.md (@2e9a118f8)
 **This record:** my MCP co-sign 180626Z + CTO acceptance 180814Z, captured durably (record-survives-session).
 
-## Verdict: CO-SIGN GRANTED — conditional on tested-rollback-before-publish
+## STATUS UPDATE 2026-07-21 ~18:12Z — CO-SIGN HELD / RE-OPENED (do not read the GRANTED below as live)
+
+PUSH HELD on a MATERIAL finding (CTO 181202Z; AE serving-path grounding). Two changes:
+- **Mechanism corrected:** the FE reads `opal-data-portal-v2` via the public-data-router, NOT
+  opal-data-assets. Cutover = a router origin-REPOINT (mechanism A), not the publisher copy this record
+  originally co-signed. A is BETTER for condition-1 (router revert-to-legacy leaves the legacy artifact
+  untouched = cleanest tested-rollback).
+- **Potential DEFECT outside this co-sign:** the FE's AUM-Daily source appears to be `platinum/mdpf/`
+  (443K/541d); the 3-way parity was against `json/mdpf/` (429d). The revamp global is 165K/427d — a 62% /
+  ~114-day gap. If that is MISSING REAL HISTORY (not re-encoding) it is a TRUNCATED CHART = a DEFECT, and
+  this co-sign attested "none a defect" — so it does NOT authorize publishing that artifact.
+
+Added pre-push conditions (CTO 4+5, on top of my 1-3): (4) LIVE-trace which artifact the FE reads + why the
+gap (Verification-Law-6 axis check: ground the artifact AS THE FE READS IT); (5) /frontend-dev render-check
+proving full-depth clean render off the revamp before live. **RE-CONFIRM REQUIRED:** COO GO on publish is
+withheld until 4+5 clear clean AND I re-confirm this co-sign against mechanism A + the actual FE-read
+artifact. Missing real history -> FIX first, re-co-sign against the fixed artifact. The GRANTED verdict below
+applies to the 5 verified items only; it is NOT a live authorization to publish while the artifact question
+is open.
+
+## Verdict (as-of 180626Z, now HELD per above): CO-SIGN GRANTED — conditional on tested-rollback-before-publish
 
 All 5 cutover items independently verified NAMED + CORRECT serve-real, none a defect:
 
