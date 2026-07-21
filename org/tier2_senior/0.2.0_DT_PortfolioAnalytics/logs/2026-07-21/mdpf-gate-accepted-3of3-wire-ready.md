@@ -122,3 +122,26 @@ on TO `MDPF_REVAMP.S4.wire-revamp-producer-parallel-schedule` (wire the revamp p
 the existing MDPF nightly schedule so the streak can accrue). My earlier AE-not-live flag (@161557Z to CTO)
 is thus resolved. Wire-readiness (publisher CodeSha 1c91mLF.. + staged ETag baseline above) stands; the wire
 is ~3 clean scheduled cycles out, not imminent.
+
+## PER-CYCLE PROTOCOL -- LOCKED (CTO rulings @163426Z / @164314Z / @164610Z; tracker @015c77fd6)
+
+The full drill for each SCHEDULED cycle, so a successor session can execute it without re-reading the thread:
+
+- **Source-of-truth for the streak** = `org/critical_paths/MDPF_REVAMP_streak_tracker.json` (@015c77fd6).
+  **CTO is the SOLE WRITER.** I do NOT edit it -- I REPORT my verdict to CTO, he records all 3 rows +
+  advances/resets. (Avoids a 3-agent concurrent-write race on one JSON.) COO reads it for the cutover trigger.
+- **Trigger (option 1, CTO-first):** the S4 scheduled producer emits `gold/mdpf_revamp/meta/cycle-complete.json`
+  LAST (durable landing marker, survives a nightly with no live agent -- the ~13:47Z run). On a landing CTO
+  runs his per-cycle S3 re-verify FIRST, then SIGNALS me + CVO. **I wait for CTO's signal** -- I never read a
+  half-written/partial stage, and I never trigger an ad-hoc run (NEVER rule).
+- **My per-cycle action:** run `mdpf_parity_check.py` date-joined parity (`--all --ledger <DS cycle ledger>`)
+  on the marker-gated complete stage; classify every delta named-vs-unexplained via `_axis_deltas`
+  (named = in DS ledger `_date_axis`/field ranges; unexplained = not). **REPORT** to CTO in the tracker field
+  shape: artifact ETags + clean/dirty + the named/unexplained breakdown.
+- **Advance/reset:** 3-pass-clean (CTO S3 + my parity + CVO re-derivation all CLEAN on the SAME scheduled
+  artifact set) -> streak += 1. **Any UNEXPLAINED delta in ANY pass -> streak RESETS to 0/3.** A NAMED delta
+  does NOT reset. A scheduled cycle with no recorded 3-pass verification is a GAP, NOT a clean pass.
+- **Signal N=3-reached ONLY at streak==3** consecutive clean scheduled cycles -> then the never-widen co-sign
+  package (CTO+COO+Andrew) -> S5 cutover (arm publisher, gold->portal). Publisher stays OFF until then.
+- All clarification threads with CTO are CLOSED (counting, trigger, ownership). Only two things gate me now:
+  CTO's per-cycle signal, and the scheduled cycles themselves accruing.
