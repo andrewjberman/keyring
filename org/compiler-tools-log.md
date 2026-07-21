@@ -22584,3 +22584,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-21T2030Z | 0.6.2_AE_PartnerETL | WS-E assignment endpoint | safe-commit surface-check PASS x3 + risk-reflex CLEAN | doc-only commits; no comp-tool covers vendor BD Rebalancer (off-graph, read-only data-plane discovery)
 | 2026-07-21 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-21 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_named... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | FAIL |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_REVAMP_streak_t... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_REVAMP_streak_tracker.json | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | py_compile+self-test / aws s3api / harness --all | A4 axis-handler @2c6ffad13 + Item-2 coherence @b75b459b3: self-test PASS (A4-axis + coherence regressions); real-staged verify A4 NAMED_DELTA_PASS 0-unexplained (post 3 ledger iters) + COHERENCE_PASS 3/3 | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
