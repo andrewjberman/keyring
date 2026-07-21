@@ -22652,3 +22652,30 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-21 | 0.4.0_DE_ClientPlatform | MDPF_REVAMP.S5-ROLLOVER | (window-summary) | comp-which + comp-glob + tsc-typecheck x4 + /frontend-dev route-injection render x10 + surface-check-ack x2 | PASS -- FE audit (ZERO-FE-change), A2 aum-timeseries FE-derive (2f603319), content-A/B drop-null-rows (5b1e44dc), all 6 render cells verified |
 | 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DE_ClientPlatform/logs... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/WSE_COTMDL.WS2.sil... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/opal-assets/bd_reba... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/opal-assets/bd_rebalancer_pull.tf org/tier2_senior/... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-pulse | comp-pulse diff infra/aws/lambda/opal-assets/opal-assets-bd-rebalancer-daily-pull/lambd... | PASS |
+| 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/api/endpoints/aum.ts --file ... | VERDICT |
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/COT_BD_EGRESS_STANDIN... | PASS |
+| 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-revamp-s5-rollover-FE-... | PASS |
+| 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/mdpf-revamp-s5-rollover-FE-consumption-audit-20260721.md | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/ta... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/task_orders/WSE_COTMDL.WS1.bronze-... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/WSE_COTTONWOOD_MDPF_F... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/WSE_COTTONWOOD_MDPF_FOLDIN_PRD.md | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/WSE_COTMDL.json | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/WSE_COTMDL.json | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/WSE_WS1_CANONICAL_REW... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/COMPTOOL_REGISTRATION... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/COMPTOOL_REGISTRATION_FLOW.md | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/COMPTOOL_REGISTRATION_FLOW.md | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/cot-pipeline/cot-rebal... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-pulse | comp-pulse diff infra/aws/lambda/cot-pipeline/cot-rebalancer-runner/lambda_function.py ... | PASS |
+2026-07-21T2153Z | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1 canonical rebuild | commit-gate PASS + 15 tests green + grep(read-only-session confirm) | canonical stdlib-urllib runner drops the requests-layer/py3.11 hazard
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
