@@ -22403,3 +22403,50 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast is_trading_day | FAIL |
 | 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/REGISTRY_HYGIENE_NFRA_SWEEP_20... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/UNIVERSAL_TRADING_CAL... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/UNIVERSAL_TRADING_CALENDAR.md | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/portfolio_excel_genera... | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/portfolio_excel_generator/lambda_function.py infra/aws... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/task_orders/MDPF_REVAMP.S4.wire-reva... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_REVAMP_CVO_indep_49f_date... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-blast | comp-blast mdpf-daily-runner | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/logs/2026-07-21/mdpf-gate-... | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/portfolio_excel_genera... | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/portfolio_excel_generator/lambda_function.py infra/aws... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_REVAMP_streak_t... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_REVAMP_streak_tracker.json | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_REVAMP_streak_t... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_REVAMP_streak_tracker.json | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/logs/2026-07-21/mdpf-gate-... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service mdpf-daily-runner | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions opal-portfolio-excel-generator --settle-r... | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/portfoli... | FAIL |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions trade-dashboard-api,trade-parquet-batch-e... | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/trade-pi... | FAIL |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_REVAMP_streak_t... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_REVAMP_streak_tracker.json | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/task_orders/MDPF_REVAMP.S4.wire-reva... | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/PortfolioManagement/ta... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/exec-sum/SKILL.md | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/exec-sum/SKILL.md | FAIL |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | pipescript | pipescript advi-cot | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | session-close log | no new tool runs this window (final RAVC close only); prior window's aws lambda/s3api rail-checked runs logged above | N/A |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
