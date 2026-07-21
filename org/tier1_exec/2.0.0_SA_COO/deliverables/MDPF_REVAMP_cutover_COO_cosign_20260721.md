@@ -26,6 +26,19 @@ artifact. Missing real history -> FIX first, re-co-sign against the fixed artifa
 applies to the 5 verified items only; it is NOT a live authorization to publish while the artifact question
 is open.
 
+## ETAG-PIN 2026-07-21 ~18:43Z (CVO catch) — co-sign covers the SERVING ETags ONLY
+
+CVO grounded (head-object) that the gold/mdpf_revamp/ spine RE-STAGED at 18:21Z with NEW ETags (49F
+6e072745->933318c2, infl a9778de4->f3fd7af2, global 7d574a2d->53b732b2, +86..+899B) — AFTER the 3-pass +
+this co-sign. This co-sign is PINNED to the PACKAGE ETags (6e072745-era) and does NOT cover the re-staged
+bytes. Grounded likely-cause (git 82c4d1ec6): the item-4 account_count-WIRE landing (account_count WIRED,
+"other 6 data arrays + model_value byte-IDENTICAL", counts tie) — an EXPECTED co-signed change, but a commit
+message is a self-report, not the served bytes. HARD GATE folded into the re-confirm: (1) DS states the
+re-stage delta = item-4 only; (2) CTO re-runs the 3-pass on the ACTUAL serving bytes (also discharges
+condition-2 seam-continuity); (3) COO RE-PINS this co-sign to the EXACT ETags serving at serve-time. Never
+serve an ETag no completed control covers. **Full re-confirm = DE-align + render-check + 3-pass-on-actual-
+serving-bytes + ETag-pin.**
+
 ## Verdict (as-of 180626Z, now HELD per above): CO-SIGN GRANTED — conditional on tested-rollback-before-publish
 
 All 5 cutover items independently verified NAMED + CORRECT serve-real, none a defect:
