@@ -76,9 +76,25 @@ construction, not a numeric fluke → the never-substitute distinction is real. 
 (served A4 headline == $247.69M, not $312.17M) is armed; the served A4 non_model_assets artifact is NOT
 under `.../mdpf/` (aggregate-aua + account-dist only) — I'll LOCATE its real source at stage time.
 
-## Still pending (my stage-time verify, per §8)
-The spine (`aggregate-aua-timeseries`) is NOT staged yet — only `account_distribution.json` for the 3
-firms is on `s3://opal-data-assets/portal/model-portfolios/` (07-20). At stage time I run my independent
-S3 pass in parallel with CTO's: `basis:schwab-rps` never-sum/never-substitute (distinct value_class:
-custody vs model), the internal identities (`non_model[i]==custody[i]-model[i]`, `model[i]==Σ core by_model[i]`),
-date-joined, and the F1 min-day floor (`min(day) ≤ 2024-11-01` per funded model) — two independent passes.
+## A3/A7 account_distribution — INDEPENDENTLY PARITY-CLEAN (the one full artifact already staged)
+Verified `s3://opal-data-assets/portal/model-portfolios/{firm}/account_distribution.json` vs served
+`.../mdpf/{firm}/account-distribution.json`. Both firms clean:
+- **Structural:** staged shape == served (`total{...}` + `by_model`), PLUS the correct `basis: schwab-rps`
+  label served lacks, sourced from MONOLITH silver (49F `fact_allocation_valuation`; inflection eclipse
+  `fact_portfolios_full`) — the inversion working. 49F by_model = 5 core (SMAs correctly excluded per 7→5);
+  inflection = 5 core + 2 blends. No MISSING cohort.
+- **Value (vintage-aware):** 49F staged(07-20) vs served(07-21) — total_aum −0.41%, account_count −0.18%,
+  median +0.18%, per-model counts off 0-8 → exactly one trading day of drift, not a defect. Inflection
+  staged(07-19) vs served(07-18) — **byte-identical** (0.00% everywhere).
+
+**A3/A7 independently parity-clean.** At full-stage the staged refreshes to current and the 49F ~0.4% drift closes.
+
+## Still pending (my stage-time verify, per §8) — only A5/A6 spine + A4 455-series remain
+Both hard-gated on DS staging (b) inflection+global + CTO's full-anchor-set broadcast (3-pass gate:
+CTO S3 re-verify + my independent S3 re-derivation + DT's date-joined harness):
+- **A5/A6 spine** (49F+inflection+global): re-anchored criteria 1-4 (last-common-date tie @07-17, frontier
+  [-1] at source, dynamic len, internal identities date-joined) + `basis:schwab-rps` never-sum/never-substitute
+  (distinct value_class custody vs model).
+- **A4 non_model_assets** on its OWN 455-date axis (never crossed with the 429/428 spine axis): the 2-term
+  `enterprise_total − model` must reproduce the served v0_9 455-series; a 2-term-vs-3-term SMA-drop history
+  divergence = EXPECTED named delta (latest ties $247.69M); a NON-SMA-drop divergence = UNEXPLAINED → holds.
