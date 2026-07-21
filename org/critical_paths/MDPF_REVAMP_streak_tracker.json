@@ -17,13 +17,14 @@
     "mode": "PUSH-NOW (Andrew-authorized 2026-07-21 ~17:5xZ: push on the verified cycle-1 data, condition 'be ready to roll it back immediately if it doesnt work'). The N=3 scheduled streak is OVERRIDDEN by sovereign call, NOT completed -- current_streak stays 0/3 for the record; scheduled cycles still accrue post-cutover as continued verification.",
     "co_sign": "CTO (3-way parity to the penny, done) + COO (@bfadb4f39, 3 conditions) COMPLETE; Andrew sovereign GO + saw the 3 visible changes (items 1/3/5).",
     "mechanism": "A = ORIGIN-REPOINT: publisher copies gold/mdpf_revamp -> opal-data-assets/portal/*, then repoint the public-data-router origin from opal-data-portal-v2 to opal-data-assets. ROLLBACK = repoint router BACK (legacy opal-data-portal-v2 UNTOUCHED + Stage-5 shadow) = instant. AE version-restore is secondary. Router-repoint EXECUTION lane TBC (AE/CloudOps vs portal/DT); CTO gates the decision.",
-    "HELD_ON_MATERIAL_FLAG": "AE 181155Z: the FE 'AUM Daily Analysis' source appears to be opal-data-portal-v2/platinum/mdpf/aggregate_aua_timeseries.json (443K/~541d) -- 62% bigger + deeper than revamp global (165K/427d). Our 3-way parity was vs json/mdpf/ (429d) = POSSIBLE WRONG-ARTIFACT / missing history. DO NOT PUSH.",
+    "material_flag_RESOLVED": "AE 181155Z flag GROUNDED + Andrew-ruled: NOT missing history (day-depth 427~429 matches, revamp more recent). The 62% gap is SCHEMA -- the revamp is MODELS-ONLY BY DESIGN, correctly sheds the legacy nested-aggregate/partners/etf_decomposition. Andrew-direct 2026-07-21: 'our structure is correct on the data side... focused solely on models; if we want ETFs we can expand the schema later.' DATA IS CORRECT; the 5-item co-sign (data) STANDS. The FE-read artifact is opal-data-portal-v2/json/mdpf/aggregate-aua-timeseries.json (== platinum/, byte-identical, one content) -- NOT a wrong-artifact.",
+    "HELD_ON": "FRONTEND-ALIGNMENT ROLL-OVER (TO MDPF_REVAMP.S5-ROLLOVER, 0.4.0_DE_ClientPlatform spawned+re-briefed FE-alignment). The FE reads the LEGACY shape (nested-aggregate/partners/etf off opal-data-portal-v2); it must align to consume the revamp MODEL-FOCUSED FLAT schema (opal_aggregate_aua/model_aua/non_model_aua/by_model off opal-data-assets). NO producer/data changes. DO NOT PUSH until the FE is aligned.",
     "pre_push_conditions": [
-      "(a) DS count-wire re-verified: account_count ties served EXACT + seam-continuity EXERCISED (COO cond 2); other 6 arrays byte-identical",
-      "(b) AE rollback TESTED-armed BEFORE publish (COO cond 1) -- router-revert for mech A",
-      "(4) ground WHICH artifact the FE AUM-Daily reads (platinum/ 541 vs json/mdpf/ 429) + WHY the 62% size gap (missing history/fields vs encoding)",
-      "(5) /frontend-dev RENDER CHECK: the chart renders clean (full depth, no break) reading the revamp -- BEFORE live",
-      "IF revamp missing real history/fields -> FIX before any push (do not serve a truncated/broken chart)"
+      "FE-ALIGNMENT complete (DE: FE-consumption audit + the FE changes to read the revamp schema; surface any legacy-only load-bearing field to CTO)",
+      "/frontend-dev RENDER CHECK: AUM-Daily + account-dist + non-model render FULL-DEPTH clean off the revamp artifacts -- BEFORE live",
+      "(a) DS count-wire re-verified independently by CTO at final gate (account_count ties served EXACT + seam EXERCISED; other 6 arrays byte-identical) -- DS done @82c4d1ec6, CTO re-verifies at cutover",
+      "(b) AE mechanism-A rollback (router revert-to-legacy, legacy UNTOUCHED) TESTED-armed BEFORE publish (COO cond 1)",
+      "COO RE-CO-SIGN against the aligned FE + render-check + mechanism A (@bfadb4f39 HELD/re-opened)"
     ]
   },
   "scheduled_cycles": [],
