@@ -22505,3 +22505,20 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | py_compile+self-test / aws s3api / harness --all | mdpf_parity_check BUG-1 value-side fix @80bf482d5: self-test PASS (dual regression), staged ETags confirmed match DS re-stage, --all aggregate_aua 3/3 NAMED_DELTA_PASS 0-unexplained | PASS |
 | 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_REVAMP_cutover_COO_cosign... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/COT_MODEL_PORTFOLIO_D... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/COT_MODEL_PORTFOLIO_D... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_REVAMP_cutover_COO_cosign... | PASS |
+| 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-revamp-s5-rollover-FE-... | PASS |
+| 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/mdpf-revamp-s5-rollover-FE-consumption-audit-20260721.md | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_A4_no... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL~A | WS-E | safe-commit (surface-check + risk-reflex) | 4 doc commits, each surface-check OK + comp-pulse REFLEX CLEAN (1 file vs 1239 danger nodes) | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL~A | WS-E | (why-none) | vendor-API discovery (BD Rebalancer) is off the estate graph; ran native Read/Glob/Grep + boto3 data-plane reads + GET-only bundle fetches (off-rail-legal) | N/A |
+| 2026-07-21 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
