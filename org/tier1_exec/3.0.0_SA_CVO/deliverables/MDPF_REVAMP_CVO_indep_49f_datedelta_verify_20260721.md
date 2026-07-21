@@ -120,12 +120,20 @@ re-derivation (`scratchpad/cvo_indep_spine_verify.py`).
   *partial-cash* latest; the revamp serves the *full-envelope* (D-2) enterprise_total, so A4 SHOULD NOT tie
   $247.69M — that's serve-real. The D-2+F2 delta is fully explained, 0 unexplained → A4 PASS. SIGNED.
 
-## Status — CYCLE 1 of N=3 = CLEAN + SIGNED (spine 3/3 + A4 named-delta), CTO 160830Z
+## Status — CODE-CORRECTNESS PRE-PROOF = CLEAN + SIGNED (spine 3/3 + A4 named-delta), CTO 160830Z + streak-count corrected 163431Z
 Spine 3/3 independent concur (me + DT + CTO, to the penny); A4 named-delta PASS (criterion corrected).
+**COUNTS ZERO TOWARD N=3 (CTO 163431Z, COO-caught):** this pass was on a HAND-STAGED (ad-hoc) artifact, so
+per the NEVER rule ("validate on the SCHEDULED nightly's artifacts, never ad-hoc") + the S4 streak rationale
+it is a **code-correctness pre-proof** — it proves the BUILD is correct — NOT a parity-streak cycle. The
+N=3 streak = **3 consecutive clean SCHEDULED cycles, starting FRESH at the first scheduled run** post-S4-wiring
+(AE S4 TO `@6141a0c93`). *(Self-note: the ad-hoc-vs-scheduled distinction is my own lane's NEVER rule — I
+should have flagged it before labeling this "cycle 1 of N=3.")*
 
 ## Still pending
-- **Cycles 2 & 3 of N=3:** re-run my independent pass each next scheduled cycle; every named delta ruled;
-  an unexplained delta resets the streak. Then never-widen co-sign (CTO+COO) → re-point.
+- **Scheduled cycles 1, 2, 3 of N=3:** re-run my independent from-scratch pass on each SCHEDULED cycle's
+  artifacts (harness `scratchpad/cvo_indep_spine_verify.py` ready); every named delta ruled; an unexplained
+  delta resets the streak. Streak completes after the 3rd clean scheduled cycle → never-widen co-sign
+  (CTO+COO) → cutover.
 - **Cutover co-sign cross-page item (NOT N=3-blocking):** A4 PRE-cutover enterprise_total (legacy v0_9
   passthrough, ties served-A4) vs the aggregate/spine serve-real `opal_aggregate_aua` PRE-cutover diverge
   (match post-cutover). Whether a user comparing the Portfolio-Analytics header (aggregate) vs the non-model
