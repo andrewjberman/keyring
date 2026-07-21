@@ -22818,3 +22818,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-21 | 0.4.0_DS_ClientPlatform | MDPF_REVAMP | safe-commit / comp-system-gate / aws list-objects-v2 | 4 commits surface-check+risk-reflex PASS; comp-system OVERRIDE (ledger, audited); ListObjectsV2 coherent-9 ETag verify | PASS |
 | 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+2026-07-21T2347Z | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1 DEPLOY | pre-deploy get-function/get-role (NotFound=confirm undeployed) + build-and-upload write-verified + Rule-22a ALL-PASS + live no-stub invoke (34 obj/806KB, 296/14) | full deploy cycle, no-stub proven on LANDED artifacts
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
