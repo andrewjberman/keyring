@@ -22450,3 +22450,40 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | session-close log | no new tool runs this window (final RAVC close only); prior window's aws lambda/s3api rail-checked runs logged above | N/A |
 | 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-21 | 0.3.0_DT_TradingOperations | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260721T1629Z_pm-vident-targetwei... | FAIL |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/OPAL_RUNNER_REFACTOR_ABC_SCOPI... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/mdpf-daily-runner/mdpf-da... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh infra/aws/terraf... | FAIL |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/OPAL_RUNNER_REFACTOR_ABC_SCOPI... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed dim_mdpf_account_distribution.py | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed dim_mdpf_non_model_assets.py | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260721T1704Z_mdpf-revamp-produce... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-routes | comp-routes trace aggregate_aua_timeseries | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_REVAMP_cutover_COO_cosign... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_REVAMP_streak_t... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_REVAMP_streak_tracker.json | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py org/tier2_s... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.p... | FAIL |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_REVAMP_cutover_COO_cosign... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_named... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | FAIL |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-revamp-s5-rollover-com... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/mdpf-revamp-s5-rollover-compare-20260721.md | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_REVAMP_streak_t... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_REVAMP_streak_tracker.json org/tier2_senior/0.4... | PASS |
+
+- 2026-07-21 0.4.0_DS_ClientPlatform~A -- A4 stage-time verify+stage: aws s3api list-objects-v2 (rail-checked, 13b listing verify) PASS on staged A4 (ETag d4802341/82101B); A4-vs-served date-join validated (identity $0.00, pre-cutover exact, enterprise/model tie aggregate to the cent). VALIDATE/DEPLOY, no code change.
+| 2026-07-21 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
