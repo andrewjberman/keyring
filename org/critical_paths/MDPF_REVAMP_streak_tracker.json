@@ -5,6 +5,7 @@
   "definition": {
     "streak_target": 3,
     "unit": "consecutive clean SCHEDULED cycles (per OPAL_CONSOLIDATION_PRD.md:181 -- 'N consecutive scheduled cycles')",
+    "deliverable_scope": "Each SCHEDULED cycle produces + verifies the FULL revamp deliverable = 7 keys: aggregate_aua_timeseries {49financial,inflection,global} + account_distribution {49financial,inflection,global} + non_model_assets (A4, global). account_distribution is ANDREW-MANDATED in-scope (2026-07-21, via 0.7.0_AE: 'account distributions per firm and globally as part of the REVAMP process, cloud-based, structured off the relevant assets in opal-data-assets'). aum_metrics + aum_timeseries = TO-2 (later wave; live-served by legacy until TO-2 replaces them off the aggregate; NOT in the streak).",
     "scheduled_only": "A HAND-STAGED run does NOT count (NEVER rule: validate on the scheduled nightly's artifacts, not ad-hoc). The count advances ONLY on a scheduled-cycle artifact set that all THREE independent passes recorded CLEAN.",
     "reset_rule": "An UNEXPLAINED delta in any pass RESETS the streak to 0/3 (PRD:184). A named delta (in DS's ledger) does NOT reset.",
     "no_silent_pass": "A scheduled cycle with NO recorded 3-pass verification is NOT counted -- it is a GAP to fill, never a silent pass. Missing verification != clean.",
