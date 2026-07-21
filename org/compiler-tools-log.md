@@ -22711,3 +22711,7 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-21 | 0.7.0_AE_CloudOps | MDPF_S5/WSE_COTMDL.WS5 | comp-routes/comp-blast | comp-routes behaviors/origins (CF cutover surface, true 75 quota); comp-routes trace FAIL (MSYS mangle) -> behaviors; comp-blast public-data-router (leaf, additive-safe); b1 OAC signing test = raw aws cloudfront (no comp-tool for CF origin-signing exercise, off-rail) | MIXED |
 | 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+
+- 2026-07-21 0.4.0_DS_ClientPlatform~A -- A4 DT co-verify convergence: aws s3api list-objects-v2 (rail-checked 13b) verified frozen-precutover + A4-staged keys; comp-surface-check+risk-reflex clean on 4c3abd7dd. COORDINATE/VALIDATE window (harness+ledger convergence + Python date-join self-verify 0-uncovered), no new pipeline code.
+| 2026-07-21 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
