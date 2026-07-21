@@ -157,3 +157,19 @@ Extended the render-check to the trend's **Count** toggle (which the Value pass 
 - **Count mode**: Global+49F (and Inflection) need DS's coherent-roster account_count wiring before the Count view is clean and #3 holds.
 
 **Disposition (DS/CTO, not mine — surface only):** DS's in-flight coherent-roster account_count wiring resolves item B for all firms; **re-run this render-check (Count mode) after it lands** to confirm the picket-fence clears and #3 holds at TODAY. If any account_count None is deemed permanent-by-design, the fallback is a small in-scope FE null-carry-forward for the Count trend series (I will NOT default to it — it would MASK a real honest-None; only correct if CTO rules the None permanent). **No schema/FE-consumption change is implied — §0-§7 stand; items A and B are content-finalization questions the visual gate surfaced.**
+
+---
+
+## 10. IMPLEMENTATION OUTCOME (committed) — A2 + content-A/B + cleanup
+
+Beyond §0's "ZERO baseline FE changes," CTO scoped two FE work-items (A2 + content-A/B render). All landed on portal DEV (DT-gated for promote), typecheck clean, render-verified.
+
+**A2 — aum-timeseries FE-derive (portal `2f603319`, CTO-ACCEPTED).** Removed the last frozen-@05-29 SmartX dependency (`rawTimeSeriesData`): the Global trend VALUE + counts now derive entirely from `globalMdpfData`. Sites: dropped the `useQuery(['aum-timeseries'])` fetch, the fallback branch, the `isLoading` gate, the `dataAsOf` fallback; re-sourced the Q-end priorLevels (`getTrendAumForDate`) from `timeSeriesData.aggregate`. **Bonus bug-fix:** the priorLevel cards read the frozen artifact while the trend bars read fresh data — a latent vintage mismatch. Now both share the `globalMdpfData` basis (Q2'26 corrected frozen $1.66B → fresh $1.77B, matching the bar). Axis → trading-day (~427/429). Verified: Global fresh to 07-20, priorLevel==trend coherence, per-firm unaffected.
+
+**content-A/B — honest-None gap render (portal `5b1e44dc`, CTO-APPROVED, 2 conditions met).** CTO ruled connectNulls, but **Recharts connectNulls does NOT bridge a STACKED area** — it produces stack-collapse spike artifacts (surfaced per CTO's "surface rather than ship worse"). Switched to **dropping whole-day-all-null rows** from the render (gaps are grounded PURE whole-day nulls — every core model AND non_model null on the same dates), yielding a continuous stacked area with ZERO fabricated points; **source data stays honest-None** (render-only). Predicate = keep-if-ANY-plotted-non-null (drop only whole-day, never any-null). + metric-aware monthly last-non-null. Guards verified: pre-onset NOT fabricated (Non-Model keeps those rows → flat-grey, no false ramp); no synthesized data. **All 6 cells (Value+Count × Global/49F/Inflection) render CLEAN.**
+
+**Cleanup (portal `1508d183`).** Removed `getAUMTimeSeries` + `getModelTimeSeries` (0 consumers after A2) from `aum.ts` + `portal-proxy.ts` (−107 lines); the frozen aum-timeseries fetch is fully gone from the FE.
+
+**LOCKED dispositions (CTO):** SPLIT/HOLD = **HOLD-ALL** (no per-firm split; all keys flip together after the full gate); A1 aum-metrics = **DS-builds** (repoint-only, FE unaffected); content A/B = honest-None + drop-null-rows (done).
+
+**Remaining FE step (the flip gate, external-gated):** (1) FULL-SET render-check — all 6 cells on DS's (a) COHERENT set (frontier count = roster count), so the Count view extends to 07-20 with only middle whole-day gaps dropped — CTO's visual-confirm gate; (2) the live 404-catch — all FE URLs resolve to revamp content as JSON against AE's real Option-A serving-target. Both gated on DS's data + AE's mechanism (in flight).
