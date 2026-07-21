@@ -13,6 +13,19 @@
     "cutover_gate": "streak == 3 clean scheduled cycles AND the never-widen co-sign package (CTO+COO+Andrew) -> then S5 cutover (arm publisher, gold->portal). Publisher stays OFF until this fires."
   },
   "current_streak": 0,
+  "cutover_status": {
+    "mode": "PUSH-NOW (Andrew-authorized 2026-07-21 ~17:5xZ: push on the verified cycle-1 data, condition 'be ready to roll it back immediately if it doesnt work'). The N=3 scheduled streak is OVERRIDDEN by sovereign call, NOT completed -- current_streak stays 0/3 for the record; scheduled cycles still accrue post-cutover as continued verification.",
+    "co_sign": "CTO (3-way parity to the penny, done) + COO (@bfadb4f39, 3 conditions) COMPLETE; Andrew sovereign GO + saw the 3 visible changes (items 1/3/5).",
+    "mechanism": "A = ORIGIN-REPOINT: publisher copies gold/mdpf_revamp -> opal-data-assets/portal/*, then repoint the public-data-router origin from opal-data-portal-v2 to opal-data-assets. ROLLBACK = repoint router BACK (legacy opal-data-portal-v2 UNTOUCHED + Stage-5 shadow) = instant. AE version-restore is secondary. Router-repoint EXECUTION lane TBC (AE/CloudOps vs portal/DT); CTO gates the decision.",
+    "HELD_ON_MATERIAL_FLAG": "AE 181155Z: the FE 'AUM Daily Analysis' source appears to be opal-data-portal-v2/platinum/mdpf/aggregate_aua_timeseries.json (443K/~541d) -- 62% bigger + deeper than revamp global (165K/427d). Our 3-way parity was vs json/mdpf/ (429d) = POSSIBLE WRONG-ARTIFACT / missing history. DO NOT PUSH.",
+    "pre_push_conditions": [
+      "(a) DS count-wire re-verified: account_count ties served EXACT + seam-continuity EXERCISED (COO cond 2); other 6 arrays byte-identical",
+      "(b) AE rollback TESTED-armed BEFORE publish (COO cond 1) -- router-revert for mech A",
+      "(4) ground WHICH artifact the FE AUM-Daily reads (platinum/ 541 vs json/mdpf/ 429) + WHY the 62% size gap (missing history/fields vs encoding)",
+      "(5) /frontend-dev RENDER CHECK: the chart renders clean (full depth, no break) reading the revamp -- BEFORE live",
+      "IF revamp missing real history/fields -> FIX before any push (do not serve a truncated/broken chart)"
+    ]
+  },
   "scheduled_cycles": [],
   "pre_proof": {
     "note": "HAND-STAGED code-correctness pre-proof, 2026-07-21 -- NOT a streak cycle. Recorded as build-correctness evidence (it is why we are confident wiring the producer to the schedule).",
