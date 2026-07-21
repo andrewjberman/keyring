@@ -131,4 +131,29 @@ Ran the `/frontend-dev` headless harness (ModelPortfolios `/portfolios`) with Pl
 1. **Data fix (preferred if gaps are unintended):** DS fills the post-onset inflection model_value gaps → chart renders smooth, no FE change. (In-lane with "data-side is being finalized.")
 2. **FE null-carry-forward (only if the gaps are EXPECTED-but-should-render-smooth):** a small, in-scope FE-alignment change to carry-forward the last non-null per series instead of `?? 0`-dropping. I can make this if CTO/Andrew rules the gaps are real-and-permanent. NOT defaulting to it — a carry-forward would MASK a real data gap, so it's only correct if the gap is deliberate.
 
-**GATE STATUS:** Global + 49F **PASS** the pre-serving render-check. **Inflection HELD** on the DS/CTO data-gap ruling above (the FE + color-law are clean; the hold is purely the inflection data). No FE code change is required for any view to consume the revamp schema (§0-§7 stand); the Inflection item is a data-finalization question surfaced by the visual gate.
+**GATE STATUS (Value mode):** Global + 49F **PASS**. **Inflection HELD** on the DS/CTO data-gap ruling above (the FE + color-law are clean; the hold is purely the inflection data). No FE code change is required for any view to consume the revamp schema (§0-§7 stand); the Inflection item is a data-finalization question surfaced by the visual gate.
+
+---
+
+## 9. Render-check verdict — COUNT mode (the Value/Count toggle) — a SECOND, all-firms data finding
+
+Extended the render-check to the trend's **Count** toggle (which the Value pass didn't exercise). Count mode reads the revamp `by_model.account_count` arrays. Screenshots: `render_global_count.png`, `render_49f_count.png`.
+
+**Finding: a second picket-fence, and this one hits Global + 49F (not just Inflection).** In Count mode, the daily "ACCOUNT TREND ANALYSIS" chart spikes/drops from ~2026-01 onward, and the monthly Period-End bars have gaps (Dec 31, Jun 30, Jul 20). Grounded:
+- **Served** global `by_model.account_count`: **0 Nones** → the live Count view is smooth today.
+- **Revamp** global `by_model.account_count`: **20 Nones**, including **2026-07-20 (TODAY / `as_of_last`) = None** (also 2025-12-24/30/31, 2026-05-01, 06-01/08/26/29/30, 07-01/09/10/13/14/15, ...). 49F shows the same pattern.
+- Root: the **S4 honest-None account_count design** ("honest-None at published-only, NO gap-fill", commit 82c4d1ec6, CTO-ruled 180646Z). The revamp deliberately leaves account_count None where un-derivable; the FE's uniform `?? 0` renders each None as a drop-to-zero → picket-fence. Revamp-introduced (served was complete/0-None).
+
+**This is exactly the account_count that CTO's check-item #3 targets, and it currently FAILS at TODAY:** the trend per-model account_count at 2026-07-20 is **None**, while the bell-curve "Total Holdings" (from the complete `account_distribution.json` TODAY snapshot) reads 7,729 / 7,016. So trend-count ≠ bell-curve-count at TODAY — **the #3 coherence cannot hold until DS's "coherent-by-construction off one shared roster" account_count wiring lands** (CTO noted this wiring is in-flight; the artifact I pulled is pre-wiring).
+
+**Two DISTINCT DS data items are now separated by the render-check:**
+| # | Item | Scope | Mode it shows in | Owner/status |
+|---|---|---|---|---|
+| A | `by_model.model_value` post-onset gaps | **Inflection only** | Value | DS Eclipse finalization (in-flight) |
+| B | `by_model.account_count` honest-None gaps | **ALL firms** | Count | DS coherent-roster wiring (in-flight, CTO-noted) — the #3 source |
+
+**Impact on AE's proposed per-firm split (Global+49F now / Inflection later):** the split cleanly handles item A (Inflection). It does **NOT** clean item B — under the split, Global+49F would cut over with the Count-mode account_count picket-fence + None-at-TODAY still present, until DS's roster wiring lands. So:
+- **Value mode**: Global+49F are cut-over-ready now.
+- **Count mode**: Global+49F (and Inflection) need DS's coherent-roster account_count wiring before the Count view is clean and #3 holds.
+
+**Disposition (DS/CTO, not mine — surface only):** DS's in-flight coherent-roster account_count wiring resolves item B for all firms; **re-run this render-check (Count mode) after it lands** to confirm the picket-fence clears and #3 holds at TODAY. If any account_count None is deemed permanent-by-design, the fallback is a small in-scope FE null-carry-forward for the Count trend series (I will NOT default to it — it would MASK a real honest-None; only correct if CTO rules the None permanent). **No schema/FE-consumption change is implied — §0-§7 stand; items A and B are content-finalization questions the visual gate surfaced.**
