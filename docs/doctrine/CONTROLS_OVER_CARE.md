@@ -343,6 +343,33 @@ right — and "internally consistent" is exactly what a corrupted pipeline looks
 
 ---
 
+## III-c. Count-shaped instruments and silent absence (2026-07-22, five exercised instances in one night)
+
+**AN INSTRUMENT THAT ANSWERS WITH A COUNT CANNOT DISTINGUISH "NOTHING IS THERE" FROM "I LOOKED IN
+THE WRONG PLACE." PREFER ONE THAT THROWS, OR THAT STATES ITS DENOMINATOR.**
+**Scope: SILENT ABSENCE ONLY.**
+
+The five that earned it, one night, all the same shape (ask for a count, get zero, and zero is
+byte-identical between empty and misaimed): an unpaginated `list-rules` census recorded as a PRD
+absence-finding; the aws-shim `--delimiter /` mangle returning `CommonPrefixes=[]` at rc=0; a
+`grep -c '^+[^+]'` blank-line undercount; a `_complete/` sentinel read as absent pre-dating the
+sentinel's own existence; two `s3 ls | grep -c` false zeros of the auditor's own making, caught
+only by positive-controlling the parent prefix.
+
+The scope line is load-bearing, and its narrowness is the asset:
+- **FALSE PRESENCE is a different failure with a different control** (a resolver returning a
+  commented-out call site had honest input and an honest denominator — resolution-time liveness
+  is the control there, not this rule).
+- **An unmeasured claim in a record is not an instrument failure at all** — no tool ran.
+- A doctrine claiming one strength above what it does is itself the docstring-overstates-the-
+  safeguard defect, INSIDE the doctrine written against that class.
+- **Gateable as written:** name the count-shaped call; require a positive control or a printed
+  denominator beside any absence-verdict it produces.
+
+The DS line, verbatim, because it is the whole point: *the parquet footer read caught what every
+path-based scan missed because it COULD NOT FAIL QUIETLY, not because DS was more careful. Care
+is not a control; instrument choice can be.*
+
 ## IV. Guards
 
 **A NULL THAT MEANS TWO THINGS IS A LIE ABOUT ONE OF THEM.**
