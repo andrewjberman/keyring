@@ -35,7 +35,7 @@ import sys
 _GRAPH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _GRAPH not in sys.path:
     sys.path.insert(0, _GRAPH)
-from sovereign_held import is_held_path, is_held_bucket  # noqa: E402
+from sovereign_held import is_prod_write_forbidden  # noqa: E402
 
 
 # The probe corpus. Kept SMALL + representative (per-tool, per-class) -- this is a RECURRING probe, not
@@ -405,21 +405,22 @@ def assert_sovereign_safe(probe_list: list | None = None) -> None:
     """SOVEREIGN-SAFE BY CONSTRUCTION (CTO 2026-07-12): NO probe may target a held bd/schwab path or bucket
     -- not in its `run` argv, not in its discrimination fixture scratch target. A held target would make the
     recurring probe read opal-data-bd on a re-run. This fails the corpus LOAD (never a silent bd read), and
-    is the same canonical sovereign_held predicate the whole estate uses. Vigilance-independent."""
+    is the canonical PROD-TARGET predicate (sovereign_held.is_prod_write_forbidden), which is
+    IN FORCE and did NOT move with the 2026-07-14 governance retraction. Vigilance-independent."""
     offenders = []
     for p in (probe_list if probe_list is not None else TOOL_PROBES):
         for tok in list(p.get("run", [])):
             s = str(tok)
-            if is_held_path(s) or is_held_bucket(s):
+            if is_prod_write_forbidden(s):
                 offenders.append("%s run: %s" % (p.get("probe_id"), s))
         su = _scratch_uri(p)
-        if su and (is_held_path(su) or is_held_bucket(su)):
+        if su and is_prod_write_forbidden(su):
             offenders.append("%s scratch: %s" % (p.get("probe_id"), su))
         # iam-discrimination fixtures carry ARNs (role + resources), not a scratch uri -- assert none is bd.
         fx = p.get("fixture") or {}
         for fld in ("role_arn", "held_resource", "notheld_resource"):
             s = str(fx.get(fld, ""))
-            if s and (is_held_path(s) or is_held_bucket(s)):
+            if s and is_prod_write_forbidden(s):
                 offenders.append("%s %s: %s" % (p.get("probe_id"), fld, s))
     if offenders:
         raise ValueError("SOVEREIGN VIOLATION -- probe corpus targets a held bd/schwab path (re-point to "

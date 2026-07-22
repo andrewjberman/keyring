@@ -27,14 +27,16 @@ from pathlib import Path, PurePosixPath
 
 import yaml
 
-# NFRA_TOOLPASS C7: SOVEREIGN_HELD_MARKERS is derived from sovereign_held (the canonical leaf) instead of
-# a local literal tuple. Dual import (relative in package context, else add own dir + bare) -- comp-constants
-# runs standalone (python comp_constants_cli.py, incl. the subprocess-based fixtures) and as a package.
+# NFRA_TOOLPASS C7: derived from sovereign_held (the canonical leaf) instead of a local literal tuple.
+# Post-split (2026-07-22) this imports the RETRACTED_* sets -- the RE-ARM values, not an active hold --
+# because the live governance tuples are now correctly EMPTY and would make the re-arm set empty too.
+# Dual import (relative in package context, else add own dir + bare) -- comp-constants runs standalone
+# (python comp_constants_cli.py, incl. the subprocess-based fixtures) and as a package.
 try:
-    from .sovereign_held import HELD_PATH_MARKERS as _HELD_PATHS, HELD_BUCKET_PREFIXES as _HELD_BUCKETS
+    from .sovereign_held import RETRACTED_20260709_PATHS as _HELD_PATHS, RETRACTED_20260709_BUCKETS as _HELD_BUCKETS
 except ImportError:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from sovereign_held import HELD_PATH_MARKERS as _HELD_PATHS, HELD_BUCKET_PREFIXES as _HELD_BUCKETS
+    from sovereign_held import RETRACTED_20260709_PATHS as _HELD_PATHS, RETRACTED_20260709_BUCKETS as _HELD_BUCKETS
 
 
 WORKSPACE_ROOT = Path(__file__).resolve().parents[3]

@@ -70,7 +70,15 @@ def _canonical_markers() -> set:
     for node in ast.walk(tree):
         if isinstance(node, ast.Assign):
             names = [t.id for t in node.targets if isinstance(t, ast.Name)]
-            if any(n in ("HELD_PATH_MARKERS", "HELD_BUCKET_PREFIXES") for n in names):
+            # POST-SPLIT (2026-07-22): the leaf now carries TWO predicates. The GOVERNANCE tuples
+            # (SOVEREIGN_HELD_*/HELD_*) are correctly EMPTY after the 2026-07-14 retraction and are
+            # now ALIASES, not literals -- reading only those made this meta-test blind (it said so,
+            # correctly, rather than passing vacuously). Track the tuples that still CARRY values:
+            # the RETRACTED_* re-arm set and the PROD_WRITE_FORBIDDEN_* control. A local copy of
+            # EITHER is drift, which is exactly the split CTO asked this test to assert.
+            if any(n in ("HELD_PATH_MARKERS", "HELD_BUCKET_PREFIXES",
+                         "RETRACTED_20260709_PATHS", "RETRACTED_20260709_BUCKETS",
+                         "PROD_WRITE_FORBIDDEN_PATHS", "PROD_WRITE_FORBIDDEN_BUCKETS") for n in names):
                 if isinstance(node.value, (ast.Tuple, ast.List)):
                     for e in node.value.elts:
                         if isinstance(e, ast.Constant) and isinstance(e.value, str):

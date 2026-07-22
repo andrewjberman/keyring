@@ -37,7 +37,14 @@ import sys
 _HERE = os.path.dirname(os.path.abspath(__file__))            # org/modules/graph
 _WS = os.path.dirname(os.path.dirname(os.path.dirname(_HERE)))  # graph->modules->org->repo root
 
-_HELD = ("data/black_diamond/", "data/canonical/schwab/silver/")
+# LIFTED 2026-07-22. This was a LOCAL copy of the 2026-07-09 sovereign hold, written 2026-07-21 --
+# SEVEN DAYS AFTER Andrew retracted it ("49 is back on the menu now, take the sovereign block off
+# completely"). A retraction propagates to every enforcing copy AND to every copy not yet written.
+# It is a pure governance copy (skip bd from the clobber scan), with no second purpose, so it lifts
+# cleanly. Now delegates to the canonical leaf so it can never drift again; a future hold re-arms
+# there once, not here. Was: ("data/black_diamond/", "data/canonical/schwab/silver/")
+sys.path.insert(0, _HERE)
+from sovereign_held import SOVEREIGN_HELD_PATHS as _HELD  # noqa: E402
 _SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", "venv", "portal"}
 _SCAN_EXT = (".py", ".sh", ".tf", ".json")
 

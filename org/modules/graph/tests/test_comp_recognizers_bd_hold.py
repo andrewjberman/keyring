@@ -35,11 +35,12 @@ rg = _load("comp_recognizers_config_ut", "comp_recognizers_config.py")
 
 
 def test_is_held_both_modules():
-    for mod in (rc, rg):
-        assert mod._is_held("data/black_diamond/scripts/gold/gold_dispatch.sh") is True
-        assert mod._is_held("data/canonical/schwab/silver/x.yaml") is True
-        assert mod._is_held("data/inf/scripts/gold/x.sh") is False
-        assert mod._is_held("data/cot/scripts/gold/x.sh") is False
+    with _armed():
+        for mod in (rc, rg):
+            assert mod._is_held("data/black_diamond/scripts/gold/gold_dispatch.sh") is True
+            assert mod._is_held("data/canonical/schwab/silver/x.yaml") is True
+            assert mod._is_held("data/inf/scripts/gold/x.sh") is False
+            assert mod._is_held("data/cot/scripts/gold/x.sh") is False
 
 
 def test_include_held_flag_both_modules():
@@ -57,39 +58,85 @@ def _spy_open(*a, **k):
 
 
 def test_code_edges_for_held_not_read_by_default():
-    os.environ.pop("COMP_RECOGNIZERS_INCLUDE_HELD", None)
-    saved = getattr(rc, "open", None)
-    with mock.patch.object(rc.os.path, "exists", return_value=True):
-        rc.open = _spy_open
-        try:
-            edges, cov = rc._edges_for(object(), "data/black_diamond/scripts/gold/gold_dispatch.sh", "")
-            assert edges == [] and cov is None, f"held path must yield ([], None) without reading: {edges}"
-        finally:
-            if saved is None:
-                delattr(rc, "open")
-            else:
-                rc.open = saved
+    with _armed():
+        os.environ.pop("COMP_RECOGNIZERS_INCLUDE_HELD", None)
+        saved = getattr(rc, "open", None)
+        with mock.patch.object(rc.os.path, "exists", return_value=True):
+            rc.open = _spy_open
+            try:
+                edges, cov = rc._edges_for(object(), "data/black_diamond/scripts/gold/gold_dispatch.sh", "")
+                assert edges == [] and cov is None, f"held path must yield ([], None) without reading: {edges}"
+            finally:
+                if saved is None:
+                    delattr(rc, "open")
+                else:
+                    rc.open = saved
 
 
 def test_config_build_trees_held_not_read_by_default():
-    os.environ.pop("COMP_RECOGNIZERS_INCLUDE_HELD", None)
-    saved = getattr(rg, "open", None)
-    with mock.patch.object(rg.os.path, "exists", return_value=True):
-        rg.open = _spy_open
-        try:
-            fe = rg.ConfigYamlFrontEnd()
-            trees = list(fe.build_trees(["data/black_diamond/scripts/gold/gold_freshness_config.yaml"]))
-            assert trees == [], f"held config must be skipped (no tree) without reading: {trees}"
-        finally:
-            if saved is None:
-                delattr(rg, "open")
-            else:
-                rg.open = saved
+    with _armed():
+        os.environ.pop("COMP_RECOGNIZERS_INCLUDE_HELD", None)
+        saved = getattr(rg, "open", None)
+        with mock.patch.object(rg.os.path, "exists", return_value=True):
+            rg.open = _spy_open
+            try:
+                fe = rg.ConfigYamlFrontEnd()
+                trees = list(fe.build_trees(["data/black_diamond/scripts/gold/gold_freshness_config.yaml"]))
+                assert trees == [], f"held config must be skipped (no tree) without reading: {trees}"
+            finally:
+                if saved is None:
+                    delattr(rg, "open")
+                else:
+                    rg.open = saved
 
 
-if __name__ == "__main__":
-    test_is_held_both_modules()
-    test_include_held_flag_both_modules()
-    test_code_edges_for_held_not_read_by_default()
-    test_config_build_trees_held_not_read_by_default()
-    print("=== comp_recognizers code+config bd-hold: ALL PASS (held source never read by default) ===")
+    if __name__ == "__main__":
+        test_is_held_both_modules()
+        test_include_held_flag_both_modules()
+        test_code_edges_for_held_not_read_by_default()
+        test_config_build_trees_held_not_read_by_default()
+        print("=== comp_recognizers code+config bd-hold: ALL PASS (held source never read by default) ===")
+
+
+# ---------------------------------------------------------------------------
+# RETRACTION-AWARE MECHANISM TESTING (2026-07-22). The 2026-07-09 sovereign hold was RETRACTED by
+# Andrew on 2026-07-14, so the governance tuples are EMPTY and every "a held path is skipped"
+# assertion below would fail. Those assertions were a RATCHET against their own retraction: the code
+# lift empties the tuple -> tests go red -> the red reads as "the lift broke something" -> and the
+# cheapest repair is to PUT THE HOLD BACK. Not deleted: they run under a DECLARED hold via _armed(),
+# testing the MECHANISM without asserting a live prohibition, which doubles as the re-arm proof.
+#
+# Armed via the PREDICATE'S OWN module globals, never a separately-imported copy of the leaf: the
+# consumer did `from sovereign_held import ...`, binding the FUNCTION, which resolves the tuple from
+# the module it was DEFINED in at call time. Patching a second instance changes nothing the code
+# under test can see -- an armed-hold test would then silently exercise an UNARMED hold and pass for
+# the wrong reason.
+# ---------------------------------------------------------------------------
+import contextlib as _contextlib  # noqa: E402
+
+_SH = rc._is_held.__globals__
+
+
+@_contextlib.contextmanager
+def _armed():
+    old_p, old_b = _SH["SOVEREIGN_HELD_PATHS"], _SH["SOVEREIGN_HELD_BUCKETS"]
+    _SH["SOVEREIGN_HELD_PATHS"] = _SH["RETRACTED_20260709_PATHS"]
+    _SH["SOVEREIGN_HELD_BUCKETS"] = _SH["RETRACTED_20260709_BUCKETS"]
+    try:
+        yield
+    finally:
+        _SH["SOVEREIGN_HELD_PATHS"], _SH["SOVEREIGN_HELD_BUCKETS"] = old_p, old_b
+
+
+def test_governance_hold_is_RETRACTED_by_default():
+    """The control this suite never had: assert the hold is OFF and that this is CORRECT."""
+    assert _SH["SOVEREIGN_HELD_PATHS"] == () and _SH["SOVEREIGN_HELD_BUCKETS"] == ()
+
+
+def test_prod_target_control_did_NOT_retract():
+    """The other half of the split: the probe/prod-write control is still ARMED, not retracted."""
+    f = _SH["is_prod_write_forbidden"]
+    assert f("opal-data-bd") is True
+    assert f("data/black_diamond/scripts/x.py") is True
+    assert f("opal-data-bdx") is False   # boundary still discriminates
+    assert f("opal-data-inf") is False

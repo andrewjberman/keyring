@@ -26,52 +26,55 @@ _spec.loader.exec_module(sh)
 
 
 def test_is_held_path_boundary():
-    assert sh.is_held_path("data/black_diamond/scripts/gold/x.py") is True
-    assert sh.is_held_path("data/canonical/schwab/silver/build_dim.py") is True
-    assert sh.is_held_path("schwab/silver/rps.py") is True
-    assert sh.is_held_path(r"C:\repo\data\black_diamond\scripts\gold\x.py") is True   # backslash + absolute
-    # NOT held:
-    assert sh.is_held_path("data/inf/scripts/gold/x.py") is False
-    assert sh.is_held_path("data/cot/scripts/gold/x.py") is False
-    assert sh.is_held_path("") is False
-    assert sh.is_held_path(None) is False
+    with _armed():
+        assert sh.is_held_path("data/black_diamond/scripts/gold/x.py") is True
+        assert sh.is_held_path("data/canonical/schwab/silver/build_dim.py") is True
+        assert sh.is_held_path("schwab/silver/rps.py") is True
+        assert sh.is_held_path(r"C:\repo\data\black_diamond\scripts\gold\x.py") is True   # backslash + absolute
+        # NOT held:
+        assert sh.is_held_path("data/inf/scripts/gold/x.py") is False
+        assert sh.is_held_path("data/cot/scripts/gold/x.py") is False
+        assert sh.is_held_path("") is False
+        assert sh.is_held_path(None) is False
 
 
 def test_is_held_bucket_family_boundary():
-    assert sh.is_held_bucket("opal-data-bd") is True             # exact
-    assert sh.is_held_bucket("opal-data-bd-raw") is True         # <p>-*
-    assert sh.is_held_bucket("opal-data-bd/platinum/x.json") is True   # <p>/*
-    assert sh.is_held_bucket("s3://opal-data-bd/gold/x.parquet") is True   # s3:// scheme stripped
-    assert sh.is_held_bucket("opal-data-schwab") is True
-    # case-insensitive + whitespace-tolerant (matches freeze_monitor._bucket_is_held; a true no-op for its
-    # migration; conservative -- lowercasing only ADDS held-matches):
-    assert sh.is_held_bucket("OPAL-DATA-BD") is True
-    assert sh.is_held_bucket("Opal-Data-BD/key") is True
-    assert sh.is_held_bucket("  opal-data-bd  ") is True
-    assert sh.is_held_bucket("S3://OPAL-DATA-SCHWAB/x") is True
-    # NOT held -- the load-bearing boundary (preserved under .lower()):
-    assert sh.is_held_bucket("opal-data-bdx") is False           # distinct bucket, NOT a prefix-family match
-    assert sh.is_held_bucket("OPAL-DATA-BDX") is False           # ditto, case-insensitively
-    assert sh.is_held_bucket("opal-data-inf") is False
-    assert sh.is_held_bucket("opal-data-cot") is False
-    assert sh.is_held_bucket("") is False
-    assert sh.is_held_bucket(None) is False
+    with _armed():
+        assert sh.is_held_bucket("opal-data-bd") is True             # exact
+        assert sh.is_held_bucket("opal-data-bd-raw") is True         # <p>-*
+        assert sh.is_held_bucket("opal-data-bd/platinum/x.json") is True   # <p>/*
+        assert sh.is_held_bucket("s3://opal-data-bd/gold/x.parquet") is True   # s3:// scheme stripped
+        assert sh.is_held_bucket("opal-data-schwab") is True
+        # case-insensitive + whitespace-tolerant (matches freeze_monitor._bucket_is_held; a true no-op for its
+        # migration; conservative -- lowercasing only ADDS held-matches):
+        assert sh.is_held_bucket("OPAL-DATA-BD") is True
+        assert sh.is_held_bucket("Opal-Data-BD/key") is True
+        assert sh.is_held_bucket("  opal-data-bd  ") is True
+        assert sh.is_held_bucket("S3://OPAL-DATA-SCHWAB/x") is True
+        # NOT held -- the load-bearing boundary (preserved under .lower()):
+        assert sh.is_held_bucket("opal-data-bdx") is False           # distinct bucket, NOT a prefix-family match
+        assert sh.is_held_bucket("OPAL-DATA-BDX") is False           # ditto, case-insensitively
+        assert sh.is_held_bucket("opal-data-inf") is False
+        assert sh.is_held_bucket("opal-data-cot") is False
+        assert sh.is_held_bucket("") is False
+        assert sh.is_held_bucket(None) is False
 
 
 def test_is_held_bucket_arn_form():
-    """REGRESSION for the ARN coverage gap (CTO 2026-07-12): is_held_bucket stripped s3:// + bare-name but
-    NOT arn:aws:s3:::, so a bd/schwab S3 RESOURCE ARN (what extract_iam / comp-iam / any IAM caller passes)
-    read as NOT-held -- a sovereign-safety hole. An S3 ARN is arn:aws:s3:::<bucket>[/key] (no region/account)."""
-    # bd/schwab ARN -> HELD, both the bare-bucket ARN and the bucket/key ARN:
-    assert sh.is_held_bucket("arn:aws:s3:::opal-data-bd") is True                        # bare-bucket ARN
-    assert sh.is_held_bucket("arn:aws:s3:::opal-data-bd/gold/x.parquet") is True         # bucket/key ARN
-    assert sh.is_held_bucket("arn:aws:s3:::opal-data-bd-raw/x") is True                  # <p>-* under ARN
-    assert sh.is_held_bucket("arn:aws:s3:::opal-data-schwab/silver/x") is True
-    assert sh.is_held_bucket("ARN:AWS:S3:::OPAL-DATA-BD/key") is True                    # case-insensitive ARN
-    # NOT held -- the load-bearing boundary MUST survive the ARN strip (opal-data-bdx is a distinct bucket):
-    assert sh.is_held_bucket("arn:aws:s3:::opal-data-bdx/key") is False
-    assert sh.is_held_bucket("arn:aws:s3:::opal-data-inf/orion/k") is False              # in-scope inf
-    assert sh.is_held_bucket("arn:aws:s3:::opal-data-cot/silver/x") is False             # in-scope cot
+    with _armed():
+        """REGRESSION for the ARN coverage gap (CTO 2026-07-12): is_held_bucket stripped s3:// + bare-name but
+        NOT arn:aws:s3:::, so a bd/schwab S3 RESOURCE ARN (what extract_iam / comp-iam / any IAM caller passes)
+        read as NOT-held -- a sovereign-safety hole. An S3 ARN is arn:aws:s3:::<bucket>[/key] (no region/account)."""
+        # bd/schwab ARN -> HELD, both the bare-bucket ARN and the bucket/key ARN:
+        assert sh.is_held_bucket("arn:aws:s3:::opal-data-bd") is True                        # bare-bucket ARN
+        assert sh.is_held_bucket("arn:aws:s3:::opal-data-bd/gold/x.parquet") is True         # bucket/key ARN
+        assert sh.is_held_bucket("arn:aws:s3:::opal-data-bd-raw/x") is True                  # <p>-* under ARN
+        assert sh.is_held_bucket("arn:aws:s3:::opal-data-schwab/silver/x") is True
+        assert sh.is_held_bucket("ARN:AWS:S3:::OPAL-DATA-BD/key") is True                    # case-insensitive ARN
+        # NOT held -- the load-bearing boundary MUST survive the ARN strip (opal-data-bdx is a distinct bucket):
+        assert sh.is_held_bucket("arn:aws:s3:::opal-data-bdx/key") is False
+        assert sh.is_held_bucket("arn:aws:s3:::opal-data-inf/orion/k") is False              # in-scope inf
+        assert sh.is_held_bucket("arn:aws:s3:::opal-data-cot/silver/x") is False             # in-scope cot
 
 
 def test_every_held_prefix_caught_in_all_input_forms():
@@ -135,3 +138,48 @@ if __name__ == "__main__":
     test_include_held_three_arm_precedence()
     test_module_imports_are_stdlib_only()
     print("=== _sovereign_held: predicates + include_held precedence + stdlib-only invariant: ALL PASS ===")
+
+
+# ---------------------------------------------------------------------------
+# RETRACTION-AWARE MECHANISM TESTING (2026-07-22).
+#
+# The 2026-07-09 sovereign hold was RETRACTED by Andrew on 2026-07-14, so the live governance tuples
+# are now EMPTY and every "a held path is excluded" assertion below would fail. Those assertions were
+# a RATCHET: the code lift empties the tuple -> the tests go red -> the red reads as "the lift broke
+# something" -> and the cheapest repair is to PUT THE HOLD BACK. A test asserting a prohibition
+# enforces it on whoever tries to REMOVE it.
+#
+# So the assertions are not deleted -- they are run under a DECLARED hold via _armed(), which tests
+# the MECHANISM without asserting any live prohibition, and doubles as the re-arm proof. Paired with
+# an explicit retracted-by-default control, so "the hold is OFF and that is correct" is finally an
+# expressible, tested state -- the thing whose absence let the retraction go unnoticed for 8 days.
+# ---------------------------------------------------------------------------
+import contextlib as _contextlib  # noqa: E402
+
+
+@_contextlib.contextmanager
+def _armed(_mod=None):
+    """Temporarily DECLARE the (retracted) hold so the guard machinery can be exercised."""
+    m = _mod if _mod is not None else sh
+    old_p, old_b = m.SOVEREIGN_HELD_PATHS, m.SOVEREIGN_HELD_BUCKETS
+    m.SOVEREIGN_HELD_PATHS = m.RETRACTED_20260709_PATHS
+    m.SOVEREIGN_HELD_BUCKETS = m.RETRACTED_20260709_BUCKETS
+    try:
+        yield
+    finally:
+        m.SOVEREIGN_HELD_PATHS, m.SOVEREIGN_HELD_BUCKETS = old_p, old_b
+
+
+def test_governance_hold_is_RETRACTED_by_default():
+    """The control the suite never had: assert the hold is OFF and that this is CORRECT."""
+    assert sh.SOVEREIGN_HELD_PATHS == () and sh.SOVEREIGN_HELD_BUCKETS == ()
+    assert sh.is_held_path("data/black_diamond/scripts/x.py") is False
+    assert sh.is_held_bucket("opal-data-bd") is False
+
+
+def test_prod_target_control_did_NOT_retract():
+    """The other half of the split: the probe/prod-write control is still ARMED."""
+    assert sh.is_prod_write_forbidden("opal-data-bd") is True
+    assert sh.is_prod_write_forbidden("data/black_diamond/scripts/x.py") is True
+    assert sh.is_prod_write_forbidden("opal-data-bdx") is False   # boundary still discriminates
+    assert sh.is_prod_write_forbidden("opal-data-inf") is False

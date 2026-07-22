@@ -54,7 +54,7 @@ import tool_corpus     # noqa: E402
 _GRAPH = os.path.dirname(_HERE)                       # compproof -> graph (home of sovereign_held)
 if _GRAPH not in sys.path:
     sys.path.insert(0, _GRAPH)
-from sovereign_held import is_held_path, is_held_bucket  # noqa: E402 -- scratch-target sovereign guard
+from sovereign_held import is_prod_write_forbidden  # noqa: E402 -- probe write/target safety guard
 
 _WS = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(_HERE))))  # compproof->graph->modules->org->ws
 sys.path.insert(0, os.path.join(_WS, ".tools"))
@@ -285,8 +285,8 @@ def _iso_days_ago(days: int, *, now_ts: float | None = None) -> str:
 
 def _assert_scratch_in_scope(s3_uri: str) -> None:
     """The scratch write-target MUST be in-scope (never bd/schwab) -- by construction, not vigilance."""
-    if is_held_path(s3_uri) or is_held_bucket(s3_uri):
-        raise ValueError("SOVEREIGN: scratch target is a held bd/schwab path: %s" % s3_uri)
+    if is_prod_write_forbidden(s3_uri):
+        raise ValueError("PROD-TARGET: scratch target is a production bd/schwab path: %s" % s3_uri)
 
 
 def _aws_bin() -> str:
@@ -555,13 +555,13 @@ def _run_iam_discrimination_probe(probe: dict, *, now_ts=None,
                     "effective_evidence": {"case": "negative", "oracle_run": "VOID: %s" % reason}})
         return row
 
-    # SOVEREIGN: no ARN may be bd/schwab (in-scope: inf held, cot not-held). is_held_bucket strips s3://
-    # but NOT arn:aws:s3:::, so normalize an S3 ARN to bucket/key form before the check (else a bd ARN slips).
+    # PROD-TARGET: no fixture ARN may name a production bd/schwab resource -- a recurring probe would
+    # otherwise simulate against production on every re-run. is_prod_write_forbidden normalizes the
+    # arn:aws:s3::: form itself and checks BOTH the path and bucket sets, so no manual split is needed.
     for fld in ("role_arn", "held_resource", "notheld_resource"):
         s = str(fx.get(fld, ""))
-        bucketish = s.split(":::", 1)[1] if ":::" in s else s   # arn:aws:s3:::BUCKET/KEY -> BUCKET/KEY
-        if is_held_path(s) or is_held_bucket(bucketish) or is_held_path(bucketish):
-            return _void("SOVEREIGN: %s is a held bd/schwab arn: %s" % (fld, s))
+        if is_prod_write_forbidden(s):
+            return _void("PROD-TARGET: %s is a production bd/schwab arn: %s" % (fld, s))
 
     verdict = verdict_fn or _default_iam_verdict
     oracle = oracle_fn or _default_iam_oracle
@@ -810,7 +810,13 @@ def _run_surfacecheck_discrimination_probe(probe: dict, *, now_ts=None, runner=N
 # graph); (4) BEHIND/UNKNOWN vintage + miss -> VOID. SOVEREIGN: queries are in-scope inf/cot/mdpf BY
 # DESIGN + a runtime held-marker guard (comp-kuzu is a whole-estate tool). ORACLE grounded from source
 # (inf-pipeline/ec2.tf), independent of comp-kuzu's own output.
-_KUZU_HELD_MARKERS = ("opal-data-bd", "opal-data-schwab", "black_diamond", "schwab", "49f", "49financial")
+# PROBE-SCOPE discipline -- a THIRD purpose, deliberately not folded into either sovereign_held
+# predicate. These comp-kuzu probes are designed to exercise inf/cot/mdpf; this refuses a query that
+# wandered out of that designed scope, so a VOID means "the probe tested the wrong thing", never "bd
+# is forbidden". It is NOT a copy of the 2026-07-09 governance hold (retracted 2026-07-14) and NOT a
+# production-write guard -- a kuzu query reads the local graph DB and touches no S3. Kept ARMED:
+# behaviour is unchanged by the retraction. (Classification grounded 2026-07-22; CTO flagged.)
+_KUZU_OUT_OF_SCOPE_MARKERS = ("opal-data-bd", "opal-data-schwab", "black_diamond", "schwab", "49f", "49financial")
 
 
 def _default_kuzu_runner(query: str, timeout_s: int):
@@ -853,8 +859,8 @@ def _run_kuzu_discrimination_probe(probe: dict, *, now_ts=None, runner=None) -> 
     # held bd/schwab/49F target. The queries are in-scope inf by construction; this is the belt.
     for q in (fx["confirm_query"], fx["target_query"]):
         ql = str(q).lower()
-        if any(m in ql for m in _KUZU_HELD_MARKERS) or is_held_path(q) or is_held_bucket(q):
-            return _void("SOVEREIGN: a comp-kuzu query references a held bd/schwab/49F target -- refused (inf/cot/mdpf only)")
+        if any(m in ql for m in _KUZU_OUT_OF_SCOPE_MARKERS):
+            return _void("PROBE-SCOPE: a comp-kuzu query left the designed inf/cot/mdpf scope -- voided")
 
     # (A) CONFIRM the specific edge IS ingested (a broad presence query) -- so a target miss below is a
     # comp-kuzu query-reach failure, NOT a GLOBGRPH ingestion gap.
@@ -938,7 +944,7 @@ def _run_blast_discrimination_probe(probe: dict, *, now_ts=None, runner=None) ->
 
     # SOVEREIGN (in-scope inf by design + backstop): refuse a query targeting a held node.
     ql = str(fx["query"]).lower()
-    if any(m in ql for m in _KUZU_HELD_MARKERS) or is_held_path(fx["query"]) or is_held_bucket(fx["query"]):
+    if any(m in ql for m in _KUZU_OUT_OF_SCOPE_MARKERS):
         return _void("SOVEREIGN: comp-blast query targets a held bd/schwab/49F node -- refused (inf only)")
     try:
         out, rc = run(fx["query"], to)
@@ -1000,8 +1006,8 @@ def _run_graphreach_discrimination_probe(probe: dict, *, now_ts=None, runner=Non
         return row
 
     argstr = " ".join(str(a) for a in fx["cli_args"]).lower()
-    if any(m in argstr for m in _KUZU_HELD_MARKERS):
-        return _void("SOVEREIGN: %s query targets a held bd/schwab/49F node -- refused (inf only)" % probe["tool"])
+    if any(m in argstr for m in _KUZU_OUT_OF_SCOPE_MARKERS):
+        return _void("PROBE-SCOPE: %s query left the designed inf-only scope -- voided" % probe["tool"])
     try:
         out, rc = run(list(fx["cli_args"]), to)
     except Exception as e:  # noqa: BLE001
