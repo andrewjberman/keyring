@@ -87,7 +87,8 @@ lanes:
       - 1.1.0_SA_CTO
       - 2.1.0_SA_COO
       - 3.1.0_SA_CVO
-    description: "Any exec agent — base or project-scoped CTO/COO/CVO. 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; same gap as BASE_EXEC + ANY_EXEC_OR_AE."
+      - 4.0.0_SA_CRO
+    description: "Any exec agent — base or project-scoped CTO/COO/CVO/CRO. 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; same gap as BASE_EXEC + ANY_EXEC_OR_AE. 4.0.0_SA_CRO added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee — SoD): new Tier-1 Chief Research Officer per Andrew-direct 2026-07-22, enabling cross-exec task_order authoring. NOTE: ANY_EXEC_OR_AE membership was DELIBERATELY WITHHELD pending Andrew's ruling on whether the CRO registers research projects in org/projects/ directly or routes through CTO/COO — the CRO itself declined to lobby for it. LD-0331."
 
   ANY_CTO:
     permitted_agents:
@@ -375,6 +376,13 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
     description: "Workspace-wide CVO home (org/tier1_exec/3.0.0_SA_CVO/**) -- CVO writes + commits its own continuous-validation-loop cycle logs (VALIDATION_LOOP.md, Andrew directive 2026-05-22 MCP-loop model). CTO + COO retain write access to author gate-review reports into the CVO inbox. Replaces the BASE_EXEC mapping, which was correct only under the old Codex no-commit model where CTO committed CVO responses on its behalf. Added 2026-05-22 by COO."
+
+  CRO_WORKSPACE:
+    permitted_agents:
+      - 4.0.0_SA_CRO
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+    description: "Workspace-wide CRO home (org/tier1_exec/4.0.0_SA_CRO/**) -- Chief Research Officer, Tier-1 exec established Andrew-direct 2026-07-22 ('Let's make you an exec agent. make your serial 4.0.0_SA_CRO (chief research officer), that way you can work freely as an exec'). Mandate: competitive recon + external research + translation into buildable specs; owns the append-only RECON_REGISTER.md. CTO + COO retain write access to author gate-review reports into the CRO home, mirroring CVO_WORKSPACE. Added 2026-07-22 by 0.0.0_AB_MSTR as GRANTOR -- the CRO is the GRANTEE and did not commit its own grant (Andrew SoD ruling, carried on this file's own ANY_EXEC_OR_AE lane). Exact CVO_WORKSPACE precedent: a new exec's home must be enumerated or safe-commit returns UNDEFINED. LD-0331."
 
   ANY:
     permitted_agents: "*"
@@ -828,6 +836,10 @@ paths:
   "org/tier1_exec/3.1.0_SA_CVO/**":
     lane: COMP_LEARNS
     note: "COMP_LEARNS CVO home — responses, reviews"
+
+  "org/tier1_exec/4.0.0_SA_CRO/**":
+    lane: CRO_WORKSPACE
+    note: "Workspace-wide CRO home — charter, prompt, logs, task_orders, deliverables, briefs, threads, handoffs, scripts, and the append-only RECON_REGISTER.md. New Tier-1 exec (Chief Research Officer) established Andrew-direct 2026-07-22; before this rule safe-commit returned 'UNDEFINED (no matching path rule; agent=4.0.0_SA_CRO)' and blocked the entire home. THE REGISTRY IS ENUMERATION-BASED, NOT TIER-BASED — there is no org/tier1_exec/*/** wildcard, so a title is not a grant and every exec home is listed individually. Added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee — SoD). LD-0331."
 
   # -----------------------------------------------------------------------
   # org/tier2_senior — agent home folders by serial prefix
