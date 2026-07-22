@@ -23321,3 +23321,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants / comp-grep / comp-which / commit-gate | comp-constants check (--lane bd|inf|cot|multifirm, --file, bare) restored from an 8-day rc=3 refusal + file->lane fix; comp-grep sweep 11,031 files scanned (the Item-2 denominator); comp-which --json direct-run REFUTED "the router is down"; commit-gate caught 2 ruff errors in my own patches | PASS (2 GAPS FILED: comp-constants has no exempt/deliberate/ratified field so a ratified divergence is re-reported forever; `git log --since=<absolute datetime>` compares LOCAL time on a UTC-4 host and silently returned 0 commits for a window containing 4 -- mechanism behind CTO's a2b1746d0 symptom, workaround = relative windows) |
 | 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-iam | comp-iam --help | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-iam | comp-iam role mdpf-daily-runner-ec2-role | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/PHASE0_INFRA_TWO_FIRM_E... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_CONSOLIDATED_PL... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_CONSOLIDATED_PLAN_20260722.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0332.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0332.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0332.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0332.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript --resource json/mdpf/49financial/aggregate-aua-timeseries.json | FAIL |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/MDPF_PHASE0_TWO_F... | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/PHASE0_INFRA_TWO_FIRM_E... | PASS |
+
+| 2026-07-22 | 1.0.0_SA_CTO | aggregate-aua-timeseries construction + dependency chain (Andrew-direct) | comp-which (routed, near-tie comp-pipescript-io vs pipescript --resource) + pipescript --resource (NO THREAD REFERENCES IT -- a real answer: the named-thread graph does not reach an artifact six consumers depend on) + comp-grep aggregate-aua-timeseries (the consumer census; surfaced C3/C4 SmartX scripts outside the MDPF tree entirely) + sed/grep pinning every claim to file:line at HEAD | PASS -- full chain grounded, nothing from recall. GAP FOUND: the json/ FE-mirror dual-write at build_aggregate_aua_timeseries.py:651-661 is GRACEFUL-DEGRADE -- a failed served-mirror write is a WARN, not a non-zero exit, so the build can succeed with the primary current while the SERVED copy silently stays stale. Ungated. Same silent-staleness family as the 49F count import, one layer up. |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-22/m... | PASS |
