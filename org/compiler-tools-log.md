@@ -23780,3 +23780,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_direct_20260722T2050Z_cutover_carrie... | PASS |
 | 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DE_ClientPlatform/logs... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22T210xZ | 0.4.0_DS_ClientPlatform | 3F-S2 | comp-freshness artifact x6 (PASS; 6/6 flat-hours cadence-config GAP recorded), comp-pipescript io x3 (INSTRUMENT GAP: silver converters unregistered), comp-glob, comp-to | census 6/6 tables 0-unexplained; Rule-17 list EMPTY |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/task_orders/MDPF_3FIRMS.3F-S3.cotton... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S2.silver-completeness-census-and-rule17-audit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S2.silver-completeness-census-and-rule17-audit | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/deli... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S2.silver-completeness-census-and-rule17-audit | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
+| 2026-07-22 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-22 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-07-22/session_3fb2_smartx_i... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S2.silver-completeness-census-and-rule17-audit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S2.silver-completeness-census-and-rule17-audit | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/deli... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S2.silver-completeness-census-and-rule17-audit | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
