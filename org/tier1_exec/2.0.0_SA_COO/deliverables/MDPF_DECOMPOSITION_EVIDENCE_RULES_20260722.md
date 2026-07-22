@@ -275,7 +275,54 @@ Andrew asked DE to land the Cottonwood FE fix set as a workstream spec:
 
 **D11a — D6 FORKS THE WORKSTREAM. DO NOT CUT SET B BEFORE ANDREW'S MERGE-VS-ADD RULING.**
 
-> ### ⚠ D6 PARTIALLY RULED ~1720Z — **SET B STAYS FROZEN. ONE MODEL DOES NOT CLEAR THE FORK.**
+> ### ✅ D6 FULLY RESOLVED ~1725Z — **SET B IS STRUCK, NOT DEFERRED. D11b IS DISCHARGED, NOT SATISFIED.**
+> **ANDREW-DIRECT RULING 3, VERBATIM (relayed `0.4.0_DE`, recorded @ae9f7f03b):**
+> > *"We are not tracking Opal - Income at this time. That is not relevant to the work here, it would
+> > be a 'non-model' asset at this time."*
+>
+> **The fork was framed merge-vs-add. THE ANSWER WAS NEITHER, and the third option removes the most
+> work:** Conservative Growth **MERGES** (already in `STACK_SERIES`, **no FE change**) · Opal - Income
+> **IS NOT A MODEL** — never enters `by_model`.
+> **⇒ NO NON-CANONICAL MODEL KEY WILL EVER EXIST. B1 and B2 are NOT REQUIRED, and neither is the
+> `GLOBAL_MODEL_KEYS` producer twin. D11b's one-scheduling-unit constraint is DISCHARGED — there is no
+> twin left to schedule.**
+> **FE WORKSTREAM IS NOW: SET A (3 small items) + C1 (preventive). Materially smaller than the slot I
+> was holding.**
+>
+> > ### ⚠ AND THIS IS THE ARGUMENT FOR C1, NOT AGAINST IT — the line to carry into the TO:
+> > **The render-confirmed blank-charts defect is REAL and now CANNOT FIRE — purely because a ruling
+> > happened to go this way. NOTHING STRUCTURAL PREVENTS IT.** The only thing standing between **FIRM
+> > FOUR** and a silent blank-chart defect on a partner-facing page **is that Andrew ruled Cottonwood's
+> > models onto canonical keys.** **C1 — making `STACK_SERIES`, `MODEL_KEY` and `getModelColor`
+> > exhaustive-by-type — CONVERTS THAT FROM LUCK INTO A BUILD FAILURE.** *(D10: still the only
+> > CLASS-scoped item in the workstream, and the ruling made it the ONLY one that matters.)*
+>
+> **CONSTRAINT — THE EXCLUSION MUST BE ENUMERATED, NOT SILENT.** The crosswalk RAISES on both
+> Cottonwood keys (correct fail-closed). Mapping Conservative Growth retires one raise. **The Income
+> raise must be retired BY AN ENUMERATED EXCLUSION, NEVER BY LOOSENING THE RAISE.** The estate already
+> has the pattern: `mdpf_revamp_model_crosswalk.py:167-170` `KNOWN_EXCLUDED_ECLIPSE_IDS` — a named
+> register of reviewed, deliberately-excluded models **with a reason string.** Income belongs in a
+> Cottonwood analog **carrying this ruling as its reason.**
+> **Loosen the raise instead and the next unknown Cottonwood model is SILENTLY DROPPED rather than
+> caught — same shape as CTO's 20-date rule: ENUMERATED LIST, NEVER A PREDICATE.**
+>
+> **⚠ DECLARED CO-SIGN TERM — WHERE INCOME'S DOLLARS GO. STATE IT; DO NOT DISCOVER IT AT VERIFY.**
+> For 49F and Inflection, `non_model_aua` is a **RESIDUAL** (`custody_total − model_aua`).
+> **COTTONWOOD HAS NO CUSTODY TOTAL** — `build_cottonwood_mdpf_slice.py:243` emits
+> `partner_custody_total = [None]*n`, because the BD Rebalancer carries **model assignment only**. So
+> non-model **cannot be computed as a residual for Cottonwood.**
+> **With Income excluded from `by_model` AND no residual to fall into, ITS DOLLARS MAY APPEAR NOWHERE
+> IN THE ARTIFACT AT ALL.** That may be exactly right — *"not tracking at this time"* reads as
+> **don't build for it** — **but it is a limb that must be declared with its falsifier, not found.**
+>
+> **MAGNITUDE — PROVENANCE LABELLED, NOT ASSERTED.** `0.4.0_DE` states plainly he **does not have
+> Income's dollar figure and is not quoting one**, and warns that the **$99.72M in his render fixture
+> was INVENTED TEST DATA** that a later reader could mistake for a measurement. **My session handoff
+> record carries `Opal - Income = SMA → NON-MODEL, $1,242,005.29 / 2 accts / 0.10%` (Andrew ~1421Z) —
+> a HANDOFF CLAIM, not my measurement and not DE's. It must be re-grounded before it enters any
+> artifact or co-sign limb.** *(It does corroborate that the 1725Z ruling restates a 1421Z one.)*
+
+> ### ⚠ SUPERSEDED — D6 PARTIAL RULING ~1720Z (kept for the reasoning trail)
 > **ANDREW-DIRECT VERBATIM (relayed by `0.4.0_DE`, recorded @3b311c044):**
 > > **RULING 1 (D6, PARTIAL):** *"Opal Conservative Growth is Long Term Conservative, also known as
 > > Opal Long Term, also known as LTC. That is how that needs to be mapped."*
