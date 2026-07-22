@@ -23198,3 +23198,91 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-22/s... | PASS |
 | 2026-07-22 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/mirror_conve... | PASS |
 | 2026-07-22 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/silver/mirror_conversion.py data/assets/scripts/sil... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants | comp-constants check --file infra/aws/lambda/inf-client-detail/lambda_function.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants | comp-constants check --file infra/aws/lambda/inf-client-detail/lambda_function.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants | comp-constants check --file data/assets/scripts/gold/build_cottonwood_mdpf_slice.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants | comp-constants check | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file comp-constants.config.yaml --file org/m... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff comp-constants.config.yaml org/modules/graph/comp_constants_cli.py org/... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_constants_cli.py org/modules/graph/... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | FAIL |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/build_cottonwo... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/gold/build_cottonwood_mdpf_slice.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants | comp-constants check --lane cot | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants | comp-constants check --file data/assets/scripts/gold/build_cottonwood_mdpf_slice.py | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/opal-assets/opal-assets-silver-blackdiamond/BUILD_MANI... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_constants_cli.py... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp_constants_cli.py org/modules/graph/tests/test_co... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_constants_cli.py org/modules/graph/... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/opal-assets/opal-assets-silver-blackdiamond/stream_par... | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml --file org/ORG_CHART.... | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml org/ORG_CHART.md org/tier0/ledger/LD-0331.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_REVAMP_streak_t... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_REVAMP_streak_tracker.json | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/research/bd_dashboard_teardown/BD_... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff docs/research/bd_dashboard_teardown/BD_DASHBOARD_HAR_TEARDOWN_20260721.... | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml --file org/tier0/ledg... | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml org/tier0/ledger/LD-0331.md | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json org/critical_paths/change_ma... | FAIL |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0331.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0331.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_antipattern.py | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file org/modules/graph/tests/_p4_probe_exem... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean2.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_control.py | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_comp_syste... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/tests/test_comp_system_metrics.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/tests/test_comp_system_metrics.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check routable | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking org/tier2_senior/0.4.0_DS_ClientPlatform/promp... | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/INSTRUMENTS_AND_AXES.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/doctrine/INSTRUMENTS_AND_AXES.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/build-and-upload.sh... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/build-and-upload.sh infra/aws/lambda/ci/import-clos... | FAIL |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/ORG_CHART.md | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/ORG_CHART.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0331.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0331.md | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/lambda/opal-assets... | FAIL |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/README.md | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/README.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/INSTRUMENTS_AND_AXES.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/doctrine/INSTRUMENTS_AND_AXES.md | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260722T1447Z_eclipse-inert-disar... | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/ORG_CHART.md | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/ORG_CHART.md | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/ORG_CHART.md --file org/tier1_exec/... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/ORG_CHART.md org/tier1_exec/4.0.0_SA_CRO/README.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml --file org/tier0/ledg... | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml org/tier0/ledger/LD-0331.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/ORG_CHART.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/ORG_CHART.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_CONSOLIDATED_PL... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_CONSOLIDATED_PLAN_20260722.md | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/handoffs/2026-07-22_1425Z.md | PASS |
+- 2026-07-22 `4.0.0_SA_CRO` (CRO establishment, 0930-1515Z): commit-gate FAIL->PASS on 2 rescued .py (5 then 29 ruff errors; fixed, never overridden -- a style nit is not an override case) - safe-commit x5 PASS, and its `:607 git commit --only -- PATHSPEC` source-read corrected a live belief about index-sweep risk - comp-surface-check x4 PASS (advisory, read not assumed) - comp-pulse risk-reflex x4 CLEAN with denominators printed. GAP SURFACED: comp-pulse danger map self-reports ~199.8h STALE, so a CLEAN reflex is weaker evidence than the word implies (surfaced, not fixed; not my lane). SECOND GAP, self-inflicted and caught by the gate: my first attempt at this very line used `-m` with backticks in the compound command and the LD-0276 never-rules gate BLOCKED it -- correct catch, complied with -F rather than overriding. Comp-rail: governance/doc session, no code/infra investigation, so comp-which/comp-grep were not the right instruments -- native Read/Grep on known paths plus git-show reads of the record; zero raw-aws inspection, zero infra/*.tf grep. Non-comp instrument note: `ps -ef` returned DOES-NOT-EXIST for every PID including my own -- positive control failed, instrument broken not finding; replaced with Get-CimInstance Win32_Process.
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/4.0.0_SA_CRO/logs/2026-07-22/c... | PASS |
