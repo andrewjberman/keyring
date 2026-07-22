@@ -126,6 +126,41 @@ The author described a reachability failure *and committed it in the same senten
 
 **Prose that must be read is the weakest carrier, and the default path is the one where nobody reads it.**
 
+## 7a. A WRONG READING THAT LANDS ON A REAL MECHANISM IS MORE PERSUASIVE THAN ONE THAT DOES NOT
+
+Same day, a second alarm: every object in a feed appeared to carry an `02:00:4xZ` mtime, against a
+producer scheduled `cron(0 6)`. It read as a second, unexpected writer.
+
+**It was `aws s3 ls` printing LOCAL time (Eastern/DST, UTC-4) with no timezone marker.** Resolved on
+two independent instruments — `ListObjectsV2` returning ISO8601 `2026-07-22T06:00:45.000Z`, and
+CloudWatch showing a single stream with last event `06:00:49Z`.
+
+> **What made it dangerous was the coincidence: a real scheduler, `cron(0 2)`, genuinely exists on
+> that estate.** So a rendering artifact arrived **pre-corroborated by a real mechanism.**
+
+**Nonsense gets checked. Coincidence gets believed.** A wrong reading that lands on something real
+recruits the estate's own truths as supporting evidence — it is the *plausible* misreading, not the
+absurd one, that survives review.
+
+**Operationally:** `aws s3 ls` is used fabric-wide for exactly this kind of freshness check and
+**prints no timezone**. Prefer `list-objects-v2` (ISO8601 UTC) for any claim about *when*. Neither
+agent erred here — one refused to infer from mtimes alone, the other resolved it on two instruments.
+**Gate candidate:** lint a timestamp claim sourced from bare `aws s3 ls`.
+
+## 7b. A PROOF THAT MEASURES THE ALREADY-GREEN LEG PASSES FOR THE WRONG REASON
+
+A scheduled overnight run was priced as a "free unattended end-to-end proof" of a pipeline. The leg it
+actually exercises — bronze ingest — **had already been proven unattended earlier that day**. Nothing
+downstream self-fires. So the run would have re-proven the only green leg and stayed **silent on the
+two that were not**, while being reported as end-to-end.
+
+> **It passes for the wrong reason — and a green obtained for the wrong reason is the expensive kind.**
+
+Before banking a scheduled or incidental event as evidence, state **which legs it exercises and which
+it cannot**. "End-to-end" is a claim about a path, and a path is only as proven as its least-exercised
+segment. *(This ruling was wrong twice in one session before it was corrected — the second time by the
+agent who owned the leg in question.)*
+
 ## 8. PROCESS PRINCIPLES THAT PAID OUT THE SAME DAY
 
 - **AN EXIT CODE IS NOT A REASON.** A mutant test "failed" with exit 1 and was nearly banked as proof
