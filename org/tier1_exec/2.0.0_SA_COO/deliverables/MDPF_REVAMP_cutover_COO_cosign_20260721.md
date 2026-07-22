@@ -265,3 +265,127 @@ Publish fires only when BOTH: (a) DS count-wire re-verified (counts tie served e
 confirmed. Post-cutover: the scheduled-cycle detection (durable marker + CTO per-cycle S3 re-verify) becomes
 CONTINUED verification (shadow + ongoing checks + rollback trigger), not the pre-cutover streak gate.
 COO-tracked follow-up: TO-2 to closure.
+
+---
+
+# 2026-07-22 SESSION 2 -- ANDREW RE-SCOPE, PIN RE-VERIFY, ITEM-1 ENUMERATION, CUSTODY DISCHARGE+RE-ARM
+
+## A. ANDREW-DIRECT 2026-07-22 ~1205Z (relayed via 0.0.0_AB_MSTR, who holds the primary record)
+
+VERBATIM (Andrew -> MSTR session, ~1205Z UTC / ~0805 ET):
+
+> "Yes I think we must have crashed sometime this morning, or the device updated/restarted. I want you to
+> assess current position, and inform CTO and COO who I have also spawned. The thing I need them to figure
+> out, is the finalization of MDPF_REVAMP. The remaining items that need to be completed are figuring out
+> why Inflection's model numbers are jumping around july 6 july 7 with some other odd spikes in the daily
+> trend timeseries. THe other item is the integration of the Cottonwood data into MDPF on the Portal via
+> the Select Partner dropdown and aggregating it into the GLobal view."
+
+**HE DID NOT GIVE THE 3RD LIMB.** He re-scoped instead of signing. MDPF_REVAMP finalization = TWO NAMED
+ITEMS. **Whether the held exact-9 flip sits INSIDE or OUTSIDE that gate is UNSTATED -- surfaced to Andrew
+via CTO, deliberately NOT inferred by COO, CTO, or MSTR.**
+
+## B. PIN RE-VERIFIED 2026-07-22 ~1205Z -- 9/9 UNCHANGED, CO-SIGN VALID
+
+My own `list-objects-v2` on `opal-data-assets/gold/mdpf_revamp/` (APPLIED truth, not a manifest):
+aggregate `aa5c5b85`/`cec5a0d6`/`c27e1f37` - non_model `8a195549` - A1 `529b7c21` - A2 `f2c03476` -
+account_dist `865919f2`/`afb964c4`/`b946d836`. **All 9 unchanged from the 0645Z fire-time set.**
+COVERAGE DENOMINATOR: 10 objects live under the prefix; 9 = the pinned set (9/9 covered); the 10th is
+`global/non_model_assets_precutover_frozen.json` (`da2260f6`), a reference artifact NOT in the publish map.
+Newest write across the prefix = 05:23:12Z, BEFORE the 0645Z fire. No re-stage. **CTO independently
+verified the same 9 with the same 10-object denominator and the same 10th-object exclusion -- two limbs.**
+Both overnight deploy ledgers CLOSED (mdpf-exact9 040519Z as rolled-back; portal-2x 0515Z 8/8). NEVER#5 satisfied.
+
+## C. CUSTODY RULING (mine, binding on my own limb) -- MADE, then DISCHARGED for item 1, RE-ARMED for item 2
+
+**RULING:** my 0645Z limb is pinned to the coherent-9. **If any investigation changes ANY of the 9, the COO
+limb VOIDS and re-fires fresh on a new pin with a fresh 3-pass. It does not carry forward.** Same rule I
+used to void the 0159Z co-sign at 034410Z; it binds me identically or it was never a rule.
+
+- **DISCHARGED vs ITEM 1** (CTO grounded item 1 with NO change to any of the 9; MSTR concurred). Limb stands.
+- **RE-ARMED vs ITEM 2 -- STRUCTURAL, NOT A RISK (MSTR's catch, which I had not made).** Item 2 is
+  *"aggregating it into the Global view."* Adding Cottonwood to Global **necessarily rewrites
+  `global/aggregate_aua_timeseries.json` = `c27e1f37`, the anchor of the pinned 9.** The 2-of-3 co-sign is
+  not "at risk from" item 2 -- it is **structurally doomed by it.**
+- **THE ITEM-1 DISCHARGE IS NOT A GENERAL RELEASE.** Recording that explicitly so no post-Cottonwood flip can
+  cite a co-sign that Cottonwood itself invalidated -- that is the stale-record-with-authority shape.
+
+## D. ITEM-1 ENUMERATION -- COO INDEPENDENT LIMB (read-only on the frozen-9)
+
+Method: own pull of all three pinned aggregate artifacts; day-over-day pct on `model_aua` and
+`non_model_aua`, honest-None-skipping, plus composition signature (dModel / dNonModel / dTotal) and
+`by_model` band drivers. Script + raw output in session scratchpad.
+
+**D.1 -- CONVERGENCE WITH CTO (two independent limbs, agreeing).** `136,859,722` appears in BOTH artifacts,
+dated **07-06 in legacy** and **07-10 in revamp** -- same value, different date. Legacy posts a real 07-10
+move onto 07-06 => jump-and-revert = Andrew's "jumping around july 6 july 7." **The revamp already fixes it.**
+Confirms CVO @88851665d ON THE VALUES rather than on say-so. Andrew is necessarily on LEGACY (CTO grounded:
+live CF EVTSA9VEHNZVH = 24 behaviors / no assets origin / revamp FE 6287847c on DEV, never promoted).
+
+**D.2 -- 06-03: MEASURED RECLASS, NOT FUNDING; and the mechanism RECURS.**
+
+    06-02 -> 06-03: dModel +16,961,432 / dNonModel -16,894,373 / dTotal   +67,059
+    07-09 -> 07-10: dModel +11,765,853 / dNonModel  -9,831,133 / dTotal +1,934,720
+
+`by_model` at BOTH: **all seven bands rise simultaneously**, summing exactly to the model delta (06-03:
+intermediate +6,648,251 / ltc +4,501,249 / blend_int_ltc +4,032,709 / blend_st_int +939,853 / st +686,661 /
+lta +152,685 / ust +24). A funding event moves the TOTAL; these swap. A single-model onboarding lifts ONE
+band. **=> batch account reclassification, and CVO's "ONE-TIME" does not survive -- 06-03 is the same class
+five weeks earlier.**
+
+**GROUNDING LABEL (Rule 22): the SIGNATURE is MEASURED. "It is a modelId reclassification" is INFERRED --
+artifact-level, no producer source read. It cannot authorize a fix or a cert.**
+
+**D.3 -- I CONCEDED 06-03 TO CTO ON NEW EMPIRICAL EVIDENCE.** CTO produced `accounts +44` at 06-03 against a
+flat ~$200-206M `partner_custody_total` -- evidence I did not have. Per my own standing discipline
+(reversal requires NEW empirical evidence, never a re-read) I updated: **a real 44-account mix shift, the
+chart is honest, it must not be "fixed."** Recorded as a concession, not a hedge.
+
+**RESIDUAL I STILL HOLD (narrow):** `accounts +44` comes from the SAME producer on the SAME axis as the
+dollars, so a mis-assigned batch moves BOTH fields to the same wrong date and the artifact stays perfectly
+self-consistent -- **which is exactly what legacy did.** It establishes THE EVENT, not THE DATE. Closing it
+needs a source OUTSIDE the producer axis (eclipse/silver as-of, or modelId assignment timestamps). Routed to DS.
+
+**D.4 -- SURFACE NEITHER CTO PASS COVERED (both were inflection-only + model-only).** non_model, >=5% DoD:
+
+| artifact | model hits | non_model hits | total hits |
+|---|---|---|---|
+| INFLECTION | 2 | **4** | **0** |
+| GLOBAL | 3 | **15** | **0** |
+| 49FINANCIAL | 2 | **15** | **0** |
+
+Every firm TOTAL is smooth -- all motion is compositional. **The trend chart is STACKED, so 15 non_model
+moves in the Global view are VISIBLE to Andrew and none are explained.** Largest untouched population of
+his "other odd spikes." Mostly offsetting-reclass class; some genuine NET-MOVEs (2025-09-30->10-01 +$49.5M;
+2026-07-10->07-16 +$19.6M).
+
+**D.5 -- HONEST-NONE INVENTORY:** `2026-05-21, 06-01, 07-01, 07-13, 07-14, 07-15` (6, matching DE's "6 gaps
+bridged"). **49F has ZERO -- every gap is inflection-origin and propagates to global.** 05-21 is co-signed
+item 3. **07-13/14/15 is a THREE-CONSECUTIVE-TRADING-DAY hole (Mon/Tue/Wed) immediately after the 07-10
+event, inside Andrew's window, covered by NO co-signed item and explained by nobody.**
+
+## E. POSITION CARRIED TO CTO FOR ANDREW
+
+- Item 1 headline **ANSWERED** (legacy date-mislabel + 3 further legacy defects CTO found; revamp fixes them).
+- **Flip proceeds on the EXISTING pin** -- COO recommendation stands; nothing found indicates a wrong number
+  served, and the revamp beats legacy on every dimension either exec measured.
+- **DO NOT say "Item 1 CLOSED" / "no unfixed defect."** Three threads remain open (D.3 date-independence,
+  D.4 fifteen unexplained Global non_model moves, D.5 the 3-trading-day hole). MSTR concurs and is holding
+  item 1 open for 3-limb convergence (COO + CTO + CVO). **An overclaim in our own favor is the one error
+  this gate cannot absorb.**
+- **SEQUENCING (Andrew's, unstated, surfaced not inferred) NOW CARRIES A PRICE (MSTR):** item 2 inside the
+  gate = **ONE flip later**; item 2 outside = **TWO flips, TWO never-widen co-signs, TWO user-visible
+  windows.** My "item 2 does not gate the flip" rec must be argued with that price attached.
+- **Item 2 is NOT new scope** -- `MDPF_COTMDL.json` is complete/COMPLETE-AS-SUPERSEDED (07-21) by
+  **WSE_COTMDL WS-2/3/4/5**, which COO already carries, with a grounded design (Rebalancer
+  `accountRebalStrategyID` === `model.id`; 60 Cottonwood models / 17 Opal in-scope). Andrew has now placed
+  it INSIDE finalization, so it is no longer "staged behind the cutover." Flagged to CTO so the stale
+  staging order does not reach Andrew.
+
+## F. STAFFING (COO position, MSTR executing)
+
+Item workers UP (MSTR provisioned, COO concurs): `0.4.0_DS_ClientPlatform` (producer side of item 1),
+`3.0.0_SA_CVO` (whether its own verdict generalizes), `0.4.0_DE_ClientPlatform` (item 2 portal surface).
+Flip-custody set HELD at COO request, CTO concurring and accepting the lead-time deliberately:
+`0.7.0_AE_CloudOps`, `0.2.0_DT_PortfolioAnalytics`, `0.6.2_AE_PartnerETL~A` -- ~40s to spawn, CTO calls it
+the moment Andrew's limb lands, **AE + DT first (critical path).**
