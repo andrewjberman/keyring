@@ -191,3 +191,48 @@ injected date goes RED, tested both non-adjacent AND adjacent to a listed date (
 is the likely defect); (3) **removing** one date from the list makes that date go RED — without (3), a no-op
 exemption and a working one are indistinguishable; (4) source read confirming an enumerated literal, not a
 predicate — the binding condition a test cannot prove.
+
+---
+
+# ADDENDUM 2 — enumerated exemption EXERCISED (CTO binding condition, DISCHARGED)
+
+Subject: `GLOBAL_CROSS_AXIS_EXEMPT_DATES` + gate `@77d297819`. Run by me as **separate invocations**, against
+the real staged global (`08f9720e`). DS asked to be broken rather than trusted; this is that attempt.
+
+**Integrity asserted before any mutant:** gate resolved by name; exemption extracted by **AST of the CONSTANT
+itself** and confirmed `frozenset`, `len == 20`. **CTO's binding condition — enumerated literal, never a
+predicate — is satisfied at source**, and the prohibition is carried inline at `:969-976`.
+
+| # | Control | Result |
+|---|---|---|
+| 1 | full 20-date list, run alone | **GREEN** — as required |
+| 2 | 21st offending date, NON-adjacent (`2026-03-11`) | **RED**, naming exactly that date |
+| 3 | 21st offending date ADJACENT to listed `07-15` (= `2026-07-16`) | **RED** — no off-by-one in membership |
+| 4 | **remove `2026-07-10`** from the list | **RED on exactly `2026-07-10`** |
+| 4b | **remove `2026-06-01`** from the list | **RED on exactly `2026-06-01`** |
+| 5 | *(my addition)* EMPTY list | **RED on all 20** — absorption is real, not a no-op |
+| 6 | *(my addition)* BLOATED list (20 + `2099-01-01`) | **GREEN** + stale-list WARN (`:1085-1088`) |
+
+**Controls 4/4b are the decisive pair: they prove the list is CONSULTED.** Without them a working exemption
+and a no-op one are indistinguishable — the gate would read GREEN either way. **Control 5 is the converse**
+and closes the remaining hole: with no list at all the gate fires on all 20, so the GREEN in control 1 is
+earned by the exemption rather than by the check being inert.
+
+**VERDICT: the exemption PASSES independent exercise. CTO's binding condition is DISCHARGED.** Detection is
+preserved at full strength for any 21st date; the known bound is declared, enumerated, and self-reporting
+when stale.
+
+**Standing residual, unchanged:** the list exists only because 49F's count axis reads the legacy artifact.
+**Retire it when the decouple lands** — it is a declared bound, not a fix.
+
+## Corrections accepted FROM me, this session (recorded because they cut against my own limbs)
+
+- My **boundary hypothesis** on COO's month/quarter cluster: **refuted 7 of 8** by COO's index-adjacency test
+  on the clean axis. Correct on the 8th only.
+- DS's **05-27 mechanism correction** was accepted by DS and traced by them to a worse failure than a
+  mis-measurement: *their own earlier sweep had already printed the correct evidence* and the narration
+  diverged from it hours later. Nothing in their output would have flagged it; independent re-measurement was
+  the only detector.
+- 49F **`-10` at 07-17**: DS grounded it as **NOT** a mis-stamp and **NOT** a duplicated roster — matches no
+  roster date, distributed across 4 of 7 bands. **Mechanism UNDETERMINED and explicitly not guessed.** It
+  must be recorded as *a known defect of undetermined mechanism*, not folded into the duplicated-roster class.
