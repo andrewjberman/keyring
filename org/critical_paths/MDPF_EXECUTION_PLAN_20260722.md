@@ -67,11 +67,35 @@ survive incomplete inputs; this precedes S1.**
 | Cottonwood | `fact_holdings` | through 07-20 |
 | Cottonwood | `fact_model_assignment` | **only 07-21, 07-22** — Rebalancer is live-state with NO history; **not an ingest failure and not recoverable by re-pull** |
 
-> **THE DISPOSITION-CHANGING FINDING: ECLIPSE AND ORION ARE INDEPENDENT VENDORS MISSING THE IDENTICAL THREE
-> DAYS.** Two simultaneous 3-day outages at two unrelated providers on exactly the same dates is not the
-> likely explanation — **the common factor is almost certainly OUR INGEST, which makes the data probably
-> RECOVERABLE.** *(CTO had previously told Andrew this was a vendor gap needing re-delivery. That reading is
-> superseded.)* **07-01 is ECLIPSE-ONLY — a DIFFERENT shape. Two findings are likely, not one.**
+> # ⛔⛔ NEVER RE-PULL ECLIPSE. THE PULLER FABRICATES. ⛔⛔
+> **SOURCE-CONFIRMED (`0.6.2` found it, COO independently verified at vintage `b0cad1965`, CTO adopting):**
+> `data/inf/scripts/bronze/pull_eclipse_portfolios.py` — **`--date` IS A FILENAME, NOT A QUERY.**
+> `:228 eclipse_get(path, jwt, timeout)` — **NO DATE PARAMETER EXISTS AT ALL.** `:270` silently defaults to
+> **TODAY**. Every use of `date_iso` (`:272, :296, :306, :316, :331, :347, :361, :369` — the complete
+> enumeration, not a sample) is an **S3 key, a log line, or metadata. NOT ONE REACHES A REQUEST.**
+> **Positive control: grep for any vendor-side date param (`asOf|as_of|effectiveDate|startDate|endDate`) →
+> ZERO HITS.** All four consumed endpoints are current-state only; across the vendor's 493-path API, date
+> params exist **only on `/auditlog/*`**.
+> > **SO `--date 2026-07-13` RUN TODAY FETCHES TODAY'S LIVE STATE AND WRITES IT INTO `bronze/eclipse/2026-07-13/`.
+> > Exit 0. Sentinel written. Mirror carries it. Silver converts it. A FABRICATED HISTORICAL PARTITION OF
+> > CLIENT DATA, INDISTINGUISHABLE FROM A REAL BACKFILL.**
+> **⚠ AND CTO'S OWN GUARDRAIL WOULD NOT HAVE CAUGHT IT.** I wrote *"verify ABSENT, never overwrite."* **The
+> partition IS absent. The write IS additive. The result is still fabricated.**
+> > **ABSENCE IS THE WRONG CONTROL WHEN THE PAYLOAD IS WRONG.**
+> **ECLIPSE 06-01, 07-01, 07-13, 07-14, 07-15 ARE PERMANENTLY UNRECOVERABLE. They can be RECORDED, never
+> FILLED. This needs a DISPOSITION, not a backfill.** *(An earlier version of this step said "re-pull two
+> feeds." **That wording, read by a competent guardrail-respecting agent, licenses writing fake client
+> data.** It is corrected here for exactly that reason.)*
+
+**THE MECHANISM, GROUNDED (supersedes the "two vendors, same days" inference):** **the ORION RAW producer died
+after 2026-07-10 while the PARQUET producer kept running** — `opal-data-inf/bronze/assets/2026-07-{11..15}`
+exist as **`.parquet` ONLY, no `.jsonl.gz`**; the mirror's own docstring
+(`opal-assets-ingest-mirror/lambda_function.py:19-31`) states the condition. **Not two vendor outages — one
+dead producer.** Layer of origin is **at/above bronze ingest, NOT conversion**: silver mirrors bronze with
+**zero divergence in both directions**, so the mirror and converter are exonerated.
+**ORION IS RE-PULLABLE and is running** (point-in-time **EXERCISED not doc-trusted**: 4 dates → 4 distinct
+MVs; a date-ignoring endpoint would return identical payloads). **`orion fact_positions` is ALSO missing
+07-01** — absent from CTO's brief and DS's sweep, same endpoint, **recoverable, awaiting Andrew.**
 **ORDER: ground the mechanism BEFORE pulling** (Rule 22 — ingest scheduler history, logs, DLQ, the bronze
 beneath both silvers). **Guardrails:** bronze **additive-only, never overwrite** (17a); **verify ABSENT, not
 present-but-empty** *(an empty artifact was proven today to read as CLEAN, rc=0, on a real gate)*;
