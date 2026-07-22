@@ -108,3 +108,21 @@ by him, directly. Everything else stands as it was.
   omitting `--context-entries` manufactures false denies byte-identical to real ones. **Any wrapper
   must fan out ONE `--resource-arns` per invocation and run positive controls as SEPARATE calls.**
   This is an API-shape decision at build time; once a list signature exists every caller inherits it.
+
+---
+
+## AMENDMENT 2 — Andrew-direct, 2026-07-22 (~15:4xZ)
+
+> "Yes, hand off the CVO verify"
+
+**SCOPED release of the no-Tier-1-contact instruction — NOT a blanket lift.** Read narrowly and
+deliberately: this authorizes contacting `3.0.0_SA_CVO` to discharge the verify-on-land handoff his
+brief §9 reserved. It does NOT resume general Tier-1 traffic, and I am not treating it as re-opening
+CTO/COO channels. A sovereign permission is scoped to what he permitted; widening it because it would
+be convenient is the same over-read this file already warns about.
+
+**Handoff design decision — I am giving CVO the METHOD, not my artifact.** His §9 commits him to
+verifying "against a fresh census". If I hand him the census I generated, he is verifying my artifact
+with my tool, and the independence that makes his verify worth having is gone. He regenerates his own
+(`comp-iam refresh-census`, seconds) and the two populations become a cross-check rather than a
+tautology. **A verifier handed the builder's evidence is checking arithmetic, not truth.**
