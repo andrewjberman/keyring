@@ -1,7 +1,7 @@
 {
  "_README": "NFRA_NERVES L3b -- the LEXICAL UNLOCK. Danger zones (holds/risks/doctrine) entity-linked from the corpus onto the nodes they protect or indict. Every claim carries its doc + LINE (a claim without a citation is not a claim). A mention is EVIDENCE, not proof -- confidence is stated. Regenerate: nerves_lexical build.",
  "stats": {
-  "docs_scanned": 1632,
+  "docs_scanned": 1635,
   "docs_with_no_addressable_ref": 497,
   "refs_dropped_as_too_ambiguous": 469,
   "top_ambiguous_refs": [
@@ -14,13 +14,13 @@
    "prompt.md",
    "platinum/advisors/{key}/book.json"
   ],
-  "nodes_with_claims": 1465,
+  "nodes_with_claims": 1484,
   "by_severity": {
-   "HOLD": 773,
-   "RISK": 92,
-   "DOCTRINE": 600
+   "HOLD": 777,
+   "RISK": 106,
+   "DOCTRINE": 601
   },
-  "total_claims": 6489
+  "total_claims": 6524
  },
  "edges": [
   {
@@ -5190,6 +5190,72 @@
    ]
   },
   {
+   "node": "file:docs/doctrine/CONTROLS_OVER_CARE.md",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD",
+    "RISK",
+    "DOCTRINE"
+   ],
+   "n_claims": 13,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "CLAUDE.md",
+     "line": 48,
+     "ref": "docs/doctrine/CONTROLS_OVER_CARE.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "**The binding principles (controls - grounding - instruments that lie - guards - scope - shared worktree - pricing a hold): `docs/doctrine/CONTROLS_OVER_CARE.md`. The incidents tha"
+    },
+    {
+     "kind": "HOLD",
+     "doc": "CLAUDE.md",
+     "line": 122,
+     "ref": "docs/doctrine/CONTROLS_OVER_CARE.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "**Never cut a MECHANISM to save space** \u2014 a bare prohibition loses to the agent's own instruments. **But the incident that taught it is not the rule.** *(Rule 22a was once 11,016 w"
+    },
+    {
+     "kind": "RISK",
+     "doc": "docs/references/INCIDENTS_2026-07-13.md",
+     "line": 4,
+     "ref": "docs/doctrine/CONTROLS_OVER_CARE.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "stood on 2026-07-13, before the doctrine was extracted to `docs/doctrine/CONTROLS_OVER_CARE.md` and the rule"
+    },
+    {
+     "kind": "RISK",
+     "doc": "docs/references/INCIDENTS_2026-07-13.md",
+     "line": 11,
+     "ref": "docs/doctrine/CONTROLS_OVER_CARE.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "- **The binding principles** distilled from this: `docs/doctrine/CONTROLS_OVER_CARE.md`"
+    },
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 147,
+     "ref": "docs/doctrine/CONTROLS_OVER_CARE.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "`docs/doctrine/INSTRUMENTS_AND_AXES.md` (7a-7f, this arc) \u00b7 `docs/doctrine/CONTROLS_OVER_CARE.md` \u00b7"
+    },
+    {
+     "kind": "RISK",
+     "doc": "docs/references/README.md",
+     "line": 33,
+     "ref": "CONTROLS_OVER_CARE.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "\u2192 Doctrine produced: [`CONTROLS_OVER_CARE.md`](../doctrine/CONTROLS_OVER_CARE.md)"
+    }
+   ]
+  },
+  {
    "node": "file:infra/aws/terraform/bd-pipeline/lambdas.tf",
    "severity": "HOLD",
    "kinds": [
@@ -6288,72 +6354,6 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "| L2 | activation | safe-ec2-deploy.sh m365-mcp-gateway (Rule 7/12: tarball->S3->SSM-pull->restart m365-mcp-gateway.service) | SSM deploy Success + service restarted | safe-ec2-dep"
-    }
-   ]
-  },
-  {
-   "node": "file:docs/doctrine/CONTROLS_OVER_CARE.md",
-   "severity": "HOLD",
-   "kinds": [
-    "HOLD",
-    "RISK",
-    "DOCTRINE"
-   ],
-   "n_claims": 11,
-   "claims": [
-    {
-     "kind": "HOLD",
-     "doc": "CLAUDE.md",
-     "line": 48,
-     "ref": "docs/doctrine/CONTROLS_OVER_CARE.md",
-     "confidence": "STRONG",
-     "ambiguous": false,
-     "quote": "**The binding principles (controls - grounding - instruments that lie - guards - scope - shared worktree - pricing a hold): `docs/doctrine/CONTROLS_OVER_CARE.md`. The incidents tha"
-    },
-    {
-     "kind": "HOLD",
-     "doc": "CLAUDE.md",
-     "line": 122,
-     "ref": "docs/doctrine/CONTROLS_OVER_CARE.md",
-     "confidence": "STRONG",
-     "ambiguous": false,
-     "quote": "**Never cut a MECHANISM to save space** \u2014 a bare prohibition loses to the agent's own instruments. **But the incident that taught it is not the rule.** *(Rule 22a was once 11,016 w"
-    },
-    {
-     "kind": "RISK",
-     "doc": "docs/references/INCIDENTS_2026-07-13.md",
-     "line": 4,
-     "ref": "docs/doctrine/CONTROLS_OVER_CARE.md",
-     "confidence": "STRONG",
-     "ambiguous": false,
-     "quote": "stood on 2026-07-13, before the doctrine was extracted to `docs/doctrine/CONTROLS_OVER_CARE.md` and the rule"
-    },
-    {
-     "kind": "RISK",
-     "doc": "docs/references/INCIDENTS_2026-07-13.md",
-     "line": 11,
-     "ref": "docs/doctrine/CONTROLS_OVER_CARE.md",
-     "confidence": "STRONG",
-     "ambiguous": false,
-     "quote": "- **The binding principles** distilled from this: `docs/doctrine/CONTROLS_OVER_CARE.md`"
-    },
-    {
-     "kind": "RISK",
-     "doc": "docs/references/README.md",
-     "line": 33,
-     "ref": "CONTROLS_OVER_CARE.md",
-     "confidence": "STRONG",
-     "ambiguous": false,
-     "quote": "\u2192 Doctrine produced: [`CONTROLS_OVER_CARE.md`](../doctrine/CONTROLS_OVER_CARE.md)"
-    },
-    {
-     "kind": "DOCTRINE",
-     "doc": "CLAUDE.md",
-     "line": 42,
-     "ref": "docs/doctrine/CONTROLS_OVER_CARE.md",
-     "confidence": "STRONG",
-     "ambiguous": false,
-     "quote": "22. **Ground the MECHANISM, not just the symptom \u2014 a causal claim is a HYPOTHESIS until source/graph-confirmed, and a hypothesis CANNOT authorize a fix, ruling, dispatch, or cert.*"
     }
    ]
   },
@@ -11002,6 +11002,72 @@
      "confidence": "EXACT",
      "ambiguous": false,
      "quote": "- a **9-class subset cert** (`comp-aws` Wave-4) read as the 13-class coverage ceiling -> CVO"
+    }
+   ]
+  },
+  {
+   "node": "tool:comp-constants",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD",
+    "RISK",
+    "DOCTRINE"
+   ],
+   "n_claims": 7,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "memory/feedback_suspend_new_alert_systems_during_consolidation.md",
+     "line": 66,
+     "ref": "comp-constants",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "the fabric does not have.** Same class as the retracted bd/49F hold that kept enforcing in `comp-constants`"
+    },
+    {
+     "kind": "HOLD",
+     "doc": "org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md",
+     "line": 1679,
+     "ref": "comp-constants",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "I wrote: *\"the `comp-constants` gate is the hero of that story.\"* **It is not, and he asked me to strike it:**"
+    },
+    {
+     "kind": "RISK",
+     "doc": "docs/doctrine/TRIGGER_LAYER.md",
+     "line": 24,
+     "ref": "comp-constants",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "`comp-constants` note named the exact firm-set defect that later cost a quarter \u2014 verbatim, in the"
+    },
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 110,
+     "ref": "comp-constants",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "**7 \u2014 `comp-constants` polyglot + `--complete-over <registry>`.** Two bounded changes to a tool that"
+    },
+    {
+     "kind": "DOCTRINE",
+     "doc": "memory/project_inf_api_txn_weakened_aua_band_open_finding.md",
+     "line": 45,
+     "ref": "comp-constants",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "The `comp-constants` gate blocked a commit on **`inf-api-txn`** (band widened to `50M-400M`) and I filed that"
+    },
+    {
+     "kind": "DOCTRINE",
+     "doc": "org/tier0/ledger/LD-0330.md",
+     "line": 660,
+     "ref": "comp-constants",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "> **CTO lifted `_comprail` and NAMED `comp-constants` as its mirror IN THE SAME COMMENT \u2014 and the mirror was"
     }
    ]
   },
@@ -17609,6 +17675,53 @@
    ]
   },
   {
+   "node": "s3:assets-silver/fact_model_aum_daily",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD",
+    "DOCTRINE"
+   ],
+   "n_claims": 4,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "org/critical_paths/DO_NOT_DECOMMISSION_portal-v2_json_mdpf_49financial_20260722.md",
+     "line": 42,
+     "ref": "fact_model_aum_daily",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "| `fact_model_aum_daily` | 1,224 days of history but **per-MODEL grain, no account column** |"
+    },
+    {
+     "kind": "HOLD",
+     "doc": "org/critical_paths/MDPF_EXECUTION_PLAN_20260722.md",
+     "line": 109,
+     "ref": "fact_model_aum_daily",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "> `fact_model_aum_daily` is partitioned by **RUN_DATE** and carries **FULL HISTORY inside each partition**"
+    },
+    {
+     "kind": "DOCTRINE",
+     "doc": "memory/project_mdpf_inflection_model_zero_until_may15_launch.md",
+     "line": 38,
+     "ref": "fact_model_aum_daily",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "(D1 ruled serve-real, deep `fact_model_aum_daily`). MDPF_REVAMP macro under OPAL_CONSOLIDATION."
+    },
+    {
+     "kind": "DOCTRINE",
+     "doc": "memory/project_mdpf_model_portfolios_49f_2term_0824_minus_5core.md",
+     "line": 35,
+     "ref": "fact_model_aum_daily",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "`CORE_MODEL_KEYS` (asserted ==5, SmartX `fact_model_aum_daily`); custody = `fact_rps_s2.net_mv_plus_cash`"
+    }
+   ]
+  },
+  {
    "node": "eventbridge:opal-inf-jwt-fetch",
    "severity": "HOLD",
    "kinds": [
@@ -17698,53 +17811,6 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "copy with `resolve_accounts_v2_for_snap` **DEFINED:0 / CALLED:0** (CTO~B, grounded on the deployed bytes)."
-    }
-   ]
-  },
-  {
-   "node": "tool:comp-constants",
-   "severity": "HOLD",
-   "kinds": [
-    "HOLD",
-    "DOCTRINE"
-   ],
-   "n_claims": 4,
-   "claims": [
-    {
-     "kind": "HOLD",
-     "doc": "memory/feedback_suspend_new_alert_systems_during_consolidation.md",
-     "line": 66,
-     "ref": "comp-constants",
-     "confidence": "EXACT",
-     "ambiguous": false,
-     "quote": "the fabric does not have.** Same class as the retracted bd/49F hold that kept enforcing in `comp-constants`"
-    },
-    {
-     "kind": "HOLD",
-     "doc": "org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md",
-     "line": 1679,
-     "ref": "comp-constants",
-     "confidence": "EXACT",
-     "ambiguous": false,
-     "quote": "I wrote: *\"the `comp-constants` gate is the hero of that story.\"* **It is not, and he asked me to strike it:**"
-    },
-    {
-     "kind": "DOCTRINE",
-     "doc": "memory/project_inf_api_txn_weakened_aua_band_open_finding.md",
-     "line": 45,
-     "ref": "comp-constants",
-     "confidence": "EXACT",
-     "ambiguous": false,
-     "quote": "The `comp-constants` gate blocked a commit on **`inf-api-txn`** (band widened to `50M-400M`) and I filed that"
-    },
-    {
-     "kind": "DOCTRINE",
-     "doc": "org/tier0/ledger/LD-0330.md",
-     "line": 660,
-     "ref": "comp-constants",
-     "confidence": "EXACT",
-     "ambiguous": false,
-     "quote": "> **CTO lifted `_comprail` and NAMED `comp-constants` as its mirror IN THE SAME COMMENT \u2014 and the mirror was"
     }
    ]
   },
@@ -19930,6 +19996,54 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "**Git Bash MSYS `ps -ef` does NOT enumerate detached native-Windows processes.** Anything spawned via Python `subprocess.Popen(..., creationflags=DETACHED_PROCESS|CREATE_NEW_PROCES"
+    }
+   ]
+  },
+  {
+   "node": "tool:comp-coverage-check",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD",
+    "RISK",
+    "DOCTRINE"
+   ],
+   "n_claims": 4,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "org/tier0/ledger/LD-0230.md",
+     "line": 126,
+     "ref": "comp-coverage-check",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "4. **One-home + non-redundancy hold at EVERY scale** (the COMPUNIFY `comp-coverage-check` gate, extended"
+    },
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 126,
+     "ref": "comp-coverage-check",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "**More detectors.** The estate has 89 comp-tools, `comp-coverage-check` enforcing non-redundancy,"
+    },
+    {
+     "kind": "DOCTRINE",
+     "doc": "memory/feedback_never_fires_and_always_fires_are_the_same_defect.md",
+     "line": 30,
+     "ref": "comp-coverage-check",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- **Vacuous green:** `comp-coverage-check` made six universal-quantifier claims with **no N behind any of them**,"
+    },
+    {
+     "kind": "DOCTRINE",
+     "doc": "memory/feedback_verify_gate_green_before_committing_gated_files.md",
+     "line": 11,
+     "ref": "comp-coverage-check",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "checked by `comp-coverage-check` via the safe-commit B6 advisory block), VERIFY the gate is GREEN"
     }
    ]
   },
@@ -22228,44 +22342,6 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "- `org/projects/SCTY.json` -- status active, `macro:true`, **prds-ARRAY** (correct hygiene)."
-    }
-   ]
-  },
-  {
-   "node": "tool:comp-coverage-check",
-   "severity": "HOLD",
-   "kinds": [
-    "HOLD",
-    "DOCTRINE"
-   ],
-   "n_claims": 3,
-   "claims": [
-    {
-     "kind": "HOLD",
-     "doc": "org/tier0/ledger/LD-0230.md",
-     "line": 126,
-     "ref": "comp-coverage-check",
-     "confidence": "EXACT",
-     "ambiguous": false,
-     "quote": "4. **One-home + non-redundancy hold at EVERY scale** (the COMPUNIFY `comp-coverage-check` gate, extended"
-    },
-    {
-     "kind": "DOCTRINE",
-     "doc": "memory/feedback_never_fires_and_always_fires_are_the_same_defect.md",
-     "line": 30,
-     "ref": "comp-coverage-check",
-     "confidence": "EXACT",
-     "ambiguous": false,
-     "quote": "- **Vacuous green:** `comp-coverage-check` made six universal-quantifier claims with **no N behind any of them**,"
-    },
-    {
-     "kind": "DOCTRINE",
-     "doc": "memory/feedback_verify_gate_green_before_committing_gated_files.md",
-     "line": 11,
-     "ref": "comp-coverage-check",
-     "confidence": "EXACT",
-     "ambiguous": false,
-     "quote": "checked by `comp-coverage-check` via the safe-commit B6 advisory block), VERIFY the gate is GREEN"
     }
    ]
   },
@@ -25277,35 +25353,6 @@
    ]
   },
   {
-   "node": "endpoint:exportAndSubmit",
-   "severity": "HOLD",
-   "kinds": [
-    "HOLD",
-    "DOCTRINE"
-   ],
-   "n_claims": 2,
-   "claims": [
-    {
-     "kind": "HOLD",
-     "doc": "memory/reference_ephemeral_worktree_deletion_proof_and_tsc_b_force_cache.md",
-     "line": 12,
-     "ref": "portfolio.ts",
-     "confidence": "WEAK",
-     "ambiguous": true,
-     "quote": "**1. Isolate the safety-proof in an ephemeral git worktree off `origin/<branch>`** \u2014 do NOT test the deletion in the shared main tree when another agent may have UNCOMMITTED edits "
-    },
-    {
-     "kind": "DOCTRINE",
-     "doc": "org/tier0/ledger/LD-0327.md",
-     "line": 40,
-     "ref": "exportAndSubmit",
-     "confidence": "STRONG",
-     "ambiguous": false,
-     "quote": "- The PM page exposes **two** Vident-CSV surfaces: **\"Submit\"** (ExportModal -> `exportAndSubmit` ->"
-    }
-   ]
-  },
-  {
    "node": "tool:blind_run",
    "severity": "HOLD",
    "kinds": [
@@ -25823,6 +25870,35 @@
    ]
   },
   {
+   "node": "endpoint:getPlatinumClientSummary",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD",
+    "DOCTRINE"
+   ],
+   "n_claims": 2,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "memory/reference_cot_firm_book_data_shape_divergence.md",
+     "line": 18,
+     "ref": "advisor-intelligence.ts",
+     "confidence": "WEAK",
+     "ambiguous": true,
+     "quote": "**DS shipped (0ba4f4e8e, 2026-06-26):** `_build_clients_tab_envelope()` in D_04.client_portal_summary.py emits `clients_tab:{headline,tax}` inline in COT dashboard.json (byte-ident"
+    },
+    {
+     "kind": "DOCTRINE",
+     "doc": "memory/project_cot_single_synthesized_advisor_49f_clone_gold_crash_class.md",
+     "line": 40,
+     "ref": "getPlatinumClientSummary",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "lambda** (`getPlatinumClientSummary`, unexercised for cot) \u2014 NOT a DS emit; data (220"
+    }
+   ]
+  },
+  {
    "node": "lambda:deck-generation",
    "severity": "HOLD",
    "kinds": [
@@ -26172,6 +26248,25 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "- **A commit message is an EXECUTION VECTOR \u2014 author EVERY non-trivial message via `git commit -F <file>` (heredoc \u2192 file); `-m` is DEPRECATED for any body with special characters."
+    }
+   ]
+  },
+  {
+   "node": "s3:assets-silver/fact_model_allocation_roster",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "org/critical_paths/DO_NOT_DECOMMISSION_portal-v2_json_mdpf_49financial_20260722.md",
+     "line": 43,
+     "ref": "fact_model_allocation_roster",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "| `fact_model_allocation_roster` | account grain (`allocation_id`) but **only 8 `date=` partitions** (07-14..07-21) \u2014 a point-in-time roster, not a history |"
     }
    ]
   },
@@ -26704,6 +26799,44 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "`(\"49financial\",\"inflection\",\"cottonwood\")`), `partner-firms/cottonwood.tf` since 2026-04-29, a 16-file"
+    }
+   ]
+  },
+  {
+   "node": "s3:assets-silver/fact_holdings",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "org/critical_paths/MDPF_EXECUTION_PLAN_20260722.md",
+     "line": 68,
+     "ref": "fact_holdings",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "| Cottonwood | `fact_holdings` | through 07-20 |"
+    }
+   ]
+  },
+  {
+   "node": "s3:assets-silver/fact_model_assignment",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "org/critical_paths/MDPF_EXECUTION_PLAN_20260722.md",
+     "line": 69,
+     "ref": "fact_model_assignment",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "| Cottonwood | `fact_model_assignment` | **only 07-21, 07-22** \u2014 Rebalancer is live-state with NO history; **not an ingest failure and not recoverable by re-pull** |"
     }
    ]
   },
@@ -30280,7 +30413,7 @@
    ]
   },
   {
-   "node": "endpoint:calculateYieldCurveSlope",
+   "node": "endpoint:getLatestYields",
    "severity": "HOLD",
    "kinds": [
     "HOLD"
@@ -30413,83 +30546,26 @@
    ]
   },
   {
+   "node": "endpoint:getFirmMixViews",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "memory/reference_cot_firm_book_data_shape_divergence.md",
+     "line": 18,
+     "ref": "advisor-intelligence.ts",
+     "confidence": "WEAK",
+     "ambiguous": true,
+     "quote": "**DS shipped (0ba4f4e8e, 2026-06-26):** `_build_clients_tab_envelope()` in D_04.client_portal_summary.py emits `clients_tab:{headline,tax}` inline in COT dashboard.json (byte-ident"
+    }
+   ]
+  },
+  {
    "node": "endpoint:getPlatinumInflecTimeseriesChart",
-   "severity": "HOLD",
-   "kinds": [
-    "HOLD"
-   ],
-   "n_claims": 1,
-   "claims": [
-    {
-     "kind": "HOLD",
-     "doc": "memory/reference_cot_firm_book_data_shape_divergence.md",
-     "line": 18,
-     "ref": "advisor-intelligence.ts",
-     "confidence": "WEAK",
-     "ambiguous": true,
-     "quote": "**DS shipped (0ba4f4e8e, 2026-06-26):** `_build_clients_tab_envelope()` in D_04.client_portal_summary.py emits `clients_tab:{headline,tax}` inline in COT dashboard.json (byte-ident"
-    }
-   ]
-  },
-  {
-   "node": "endpoint:getPlatinumPartnerAnalytics",
-   "severity": "HOLD",
-   "kinds": [
-    "HOLD"
-   ],
-   "n_claims": 1,
-   "claims": [
-    {
-     "kind": "HOLD",
-     "doc": "memory/reference_cot_firm_book_data_shape_divergence.md",
-     "line": 18,
-     "ref": "advisor-intelligence.ts",
-     "confidence": "WEAK",
-     "ambiguous": true,
-     "quote": "**DS shipped (0ba4f4e8e, 2026-06-26):** `_build_clients_tab_envelope()` in D_04.client_portal_summary.py emits `clients_tab:{headline,tax}` inline in COT dashboard.json (byte-ident"
-    }
-   ]
-  },
-  {
-   "node": "endpoint:getPlatinumFirmMixSummary",
-   "severity": "HOLD",
-   "kinds": [
-    "HOLD"
-   ],
-   "n_claims": 1,
-   "claims": [
-    {
-     "kind": "HOLD",
-     "doc": "memory/reference_cot_firm_book_data_shape_divergence.md",
-     "line": 18,
-     "ref": "advisor-intelligence.ts",
-     "confidence": "WEAK",
-     "ambiguous": true,
-     "quote": "**DS shipped (0ba4f4e8e, 2026-06-26):** `_build_clients_tab_envelope()` in D_04.client_portal_summary.py emits `clients_tab:{headline,tax}` inline in COT dashboard.json (byte-ident"
-    }
-   ]
-  },
-  {
-   "node": "endpoint:getPlatinumAccountTimeseriesStatic",
-   "severity": "HOLD",
-   "kinds": [
-    "HOLD"
-   ],
-   "n_claims": 1,
-   "claims": [
-    {
-     "kind": "HOLD",
-     "doc": "memory/reference_cot_firm_book_data_shape_divergence.md",
-     "line": 18,
-     "ref": "advisor-intelligence.ts",
-     "confidence": "WEAK",
-     "ambiguous": true,
-     "quote": "**DS shipped (0ba4f4e8e, 2026-06-26):** `_build_clients_tab_envelope()` in D_04.client_portal_summary.py emits `clients_tab:{headline,tax}` inline in COT dashboard.json (byte-ident"
-    }
-   ]
-  },
-  {
-   "node": "endpoint:getInflectionActivityScan",
    "severity": "HOLD",
    "kinds": [
     "HOLD"
@@ -30527,6 +30603,44 @@
    ]
   },
   {
+   "node": "endpoint:getPlatinumAdvisorNnaClients",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "memory/reference_cot_firm_book_data_shape_divergence.md",
+     "line": 18,
+     "ref": "advisor-intelligence.ts",
+     "confidence": "WEAK",
+     "ambiguous": true,
+     "quote": "**DS shipped (0ba4f4e8e, 2026-06-26):** `_build_clients_tab_envelope()` in D_04.client_portal_summary.py emits `clients_tab:{headline,tax}` inline in COT dashboard.json (byte-ident"
+    }
+   ]
+  },
+  {
+   "node": "endpoint:getInflectionCashDrag",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "memory/reference_cot_firm_book_data_shape_divergence.md",
+     "line": 18,
+     "ref": "advisor-intelligence.ts",
+     "confidence": "WEAK",
+     "ambiguous": true,
+     "quote": "**DS shipped (0ba4f4e8e, 2026-06-26):** `_build_clients_tab_envelope()` in D_04.client_portal_summary.py emits `clients_tab:{headline,tax}` inline in COT dashboard.json (byte-ident"
+    }
+   ]
+  },
+  {
    "node": "s3:silver/eclipse/{*}/_meta/silver_complete.json",
    "severity": "HOLD",
    "kinds": [
@@ -30546,7 +30660,7 @@
    ]
   },
   {
-   "node": "endpoint:getExportHistory",
+   "node": "endpoint:updateAutoSave",
    "severity": "HOLD",
    "kinds": [
     "HOLD"
@@ -30565,7 +30679,7 @@
    ]
   },
   {
-   "node": "endpoint:loadVersion",
+   "node": "endpoint:uploadPickleFile",
    "severity": "HOLD",
    "kinds": [
     "HOLD"
@@ -30584,7 +30698,7 @@
    ]
   },
   {
-   "node": "endpoint:listFunds",
+   "node": "endpoint:listVersions",
    "severity": "HOLD",
    "kinds": [
     "HOLD"
@@ -30603,7 +30717,7 @@
    ]
   },
   {
-   "node": "endpoint:saveOptimizationAutoSave",
+   "node": "endpoint:exportToVidentTemplate",
    "severity": "HOLD",
    "kinds": [
     "HOLD"
@@ -30622,7 +30736,26 @@
    ]
   },
   {
-   "node": "endpoint:uploadPickleFileWithFund",
+   "node": "endpoint:getExportDownloadUrl",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "memory/reference_ephemeral_worktree_deletion_proof_and_tsc_b_force_cache.md",
+     "line": 12,
+     "ref": "portfolio.ts",
+     "confidence": "WEAK",
+     "ambiguous": true,
+     "quote": "**1. Isolate the safety-proof in an ephemeral git worktree off `origin/<branch>`** \u2014 do NOT test the deletion in the shared main tree when another agent may have UNCOMMITTED edits "
+    }
+   ]
+  },
+  {
+   "node": "endpoint:transformToEditableTrade",
    "severity": "HOLD",
    "kinds": [
     "HOLD"
@@ -32320,7 +32453,7 @@
    ]
   },
   {
-   "node": "endpoint:getModelColor",
+   "node": "endpoint:getMdpfAggregateAUATimeSeries",
    "severity": "RISK",
    "kinds": [
     "RISK"
@@ -32429,6 +32562,44 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "- `python .tools/comp-which-routing-test.py` -> PASS, 28/28 routable tools self-route end-to-end +"
+    }
+   ]
+  },
+  {
+   "node": "tool:comp-firmsep-sweep",
+   "severity": "RISK",
+   "kinds": [
+    "RISK",
+    "DOCTRINE"
+   ],
+   "n_claims": 3,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 84,
+     "ref": "comp-firmsep-sweep",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "is well guarded (IAM deny, commit gate, `comp-firmsep-sweep`)."
+    },
+    {
+     "kind": "DOCTRINE",
+     "doc": "memory/feedback_firm_sep_detect_must_live_simulate_not_tf_lint.md",
+     "line": 15,
+     "ref": "comp-firmsep-sweep",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "Each granted cross-firm access; each was invisible to every lint / plan / drift-check over our own TF; each was found ONLY by a live simulate (`comp-firmsep-sweep` / `comp-denytest"
+    },
+    {
+     "kind": "DOCTRINE",
+     "doc": "memory/feedback_tf_coverage_and_grant_reach_are_orthogonal.md",
+     "line": 38,
+     "ref": "comp-firmsep-sweep",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- The control that bounds *reach* is a **standing live-simulate DETECT** (`comp-firmsep-sweep` /"
     }
    ]
   },
@@ -32585,6 +32756,93 @@
    ]
   },
   {
+   "node": "file:docs/references/MDPF_POSTMORTEM_20260722.md",
+   "severity": "RISK",
+   "kinds": [
+    "RISK",
+    "DOCTRINE"
+   ],
+   "n_claims": 2,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "org/tier0/ledger/LD-0335.md",
+     "line": 50,
+     "ref": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "Commit the postmortem to `docs/references/MDPF_POSTMORTEM_20260722.md` (per CLAUDE.md's WHERE-THINGS-GO"
+    },
+    {
+     "kind": "DOCTRINE",
+     "doc": "docs/doctrine/TRIGGER_LAYER.md",
+     "line": 6,
+     "ref": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "`docs/references/MDPF_POSTMORTEM_20260722.md`."
+    }
+   ]
+  },
+  {
+   "node": "file:docs/architecture/NFRA_PSTMRT_PRD.md",
+   "severity": "RISK",
+   "kinds": [
+    "RISK",
+    "DOCTRINE"
+   ],
+   "n_claims": 2,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/doctrine/TRIGGER_LAYER.md",
+     "line": 5,
+     "ref": "docs/architecture/NFRA_PSTMRT_PRD.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "`docs/architecture/NFRA_PSTMRT_PRD.md` \u00a74. **The incident record:**"
+    },
+    {
+     "kind": "DOCTRINE",
+     "doc": "docs/doctrine/TRIGGER_LAYER.md",
+     "line": 63,
+     "ref": "NFRA_PSTMRT_PRD.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "`NFRA_PSTMRT_PRD.md` \u00a74 (the comp-findings gate that enforces clause 2)."
+    }
+   ]
+  },
+  {
+   "node": "file:docs/doctrine/INSTRUMENTS_AND_AXES.md",
+   "severity": "RISK",
+   "kinds": [
+    "RISK",
+    "DOCTRINE"
+   ],
+   "n_claims": 2,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 147,
+     "ref": "docs/doctrine/INSTRUMENTS_AND_AXES.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "`docs/doctrine/INSTRUMENTS_AND_AXES.md` (7a-7f, this arc) \u00b7 `docs/doctrine/CONTROLS_OVER_CARE.md` \u00b7"
+    },
+    {
+     "kind": "DOCTRINE",
+     "doc": "docs/doctrine/TRIGGER_LAYER.md",
+     "line": 62,
+     "ref": "INSTRUMENTS_AND_AXES.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "a finding is not a control either, until it can fail) \u00b7 `INSTRUMENTS_AND_AXES.md` 7a-7f \u00b7"
+    }
+   ]
+  },
+  {
    "node": "s3:gold/views/account_team.parquet",
    "severity": "RISK",
    "kinds": [
@@ -32610,6 +32868,62 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "safe because C_07 crashes on cot (`account_is_open` absent) so `account_team.parquet` +"
+    }
+   ]
+  },
+  {
+   "node": "file:docs/architecture/MDPF_3FIRMS_PRD.md",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 2,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 26,
+     "ref": "docs/architecture/MDPF_3FIRMS_PRD.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "Source: `docs/architecture/MDPF_3FIRMS_PRD.md` \u00a72.5 (RF-1..RF-15)."
+    },
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 148,
+     "ref": "docs/architecture/MDPF_3FIRMS_PRD.md",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "`docs/architecture/MDPF_3FIRMS_PRD.md` \u00a72.5 (RF ledger) \u00b7 handover @`7cc6376e5`."
+    }
+   ]
+  },
+  {
+   "node": "file:data/cot/scripts/bronze/dump_enriched_templates.py",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 2,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 67,
+     "ref": "dump_enriched_templates.py",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "**The same shape in the vendor work.** RF-14 records that `dump_enriched_templates.py` **exists, is"
+    },
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 116,
+     "ref": "dump_enriched_templates.py",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "vendor's full surface against our selection*. `dump_enriched_templates.py` was ~80% of this tool,"
     }
    ]
   },
@@ -33241,6 +33555,158 @@
      "confidence": "EXACT",
      "ambiguous": false,
      "quote": "*Enumeration grounded 2026-07-17: config layer via `freshness_manifest_gen.py` (54 served rows) + the 5"
+    }
+   ]
+  },
+  {
+   "node": "file:org/modules/graph/comp-constants-seed-multifirm.yaml",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 44,
+     "ref": "comp-constants-seed-multifirm.yaml",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "2026-05-08   comp-constants-seed-multifirm.yaml authored. Its OWN notes say:"
+    }
+   ]
+  },
+  {
+   "node": "file:.tools/commit_gate_runner.py",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 54,
+     "ref": "tools/commit_gate_runner.py",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "(`.tools/commit_gate_runner.py`, every `.py` edit, all agents, CLAUDE.md Rule 14). It ran thousands of"
+    }
+   ]
+  },
+  {
+   "node": "file:infra/aws/lambda-edge/_shared/firm-config.mjs",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 60,
+     "ref": "infra/aws/lambda-edge/_shared/firm-config.mjs",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "(`infra/aws/lambda-edge/_shared/firm-config.mjs`, `portal/src/lib/firmAccess.ts`). The extractor is"
+    }
+   ]
+  },
+  {
+   "node": "file:portal/src/lib/firmAccess.ts",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 60,
+     "ref": "portal/src/lib/firmAccess.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "(`infra/aws/lambda-edge/_shared/firm-config.mjs`, `portal/src/lib/firmAccess.ts`). The extractor is"
+    }
+   ]
+  },
+  {
+   "node": "file:org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 78,
+     "ref": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml",
+     "confidence": "WEAK",
+     "ambiguous": false,
+     "quote": "`org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml` **does** model firm \u2014 as a **variance dimension**:"
+    }
+   ]
+  },
+  {
+   "node": "file:org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY_RULE_BANK.yaml",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 78,
+     "ref": "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml",
+     "confidence": "WEAK",
+     "ambiguous": false,
+     "quote": "`org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml` **does** model firm \u2014 as a **variance dimension**:"
+    }
+   ]
+  },
+  {
+   "node": "tool:comp-honesty",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 127,
+     "ref": "comp-honesty",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "`comp-honesty` as a gate, and a self-grounding maturity compiler that refuses to fabricate. **The"
+    }
+   ]
+  },
+  {
+   "node": "file:.tools/mdpf-preflip-check",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 141,
+     "ref": "tools/mdpf-preflip-check",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "enumeration-completeness gates**: `.tools/mdpf-preflip-check` identity-1 (@`8ec253b34`, exercised"
     }
    ]
   },
@@ -38020,6 +38486,34 @@
    ]
   },
   {
+   "node": "file:comp-constants.config.yaml",
+   "severity": "DOCTRINE",
+   "kinds": [
+    "DOCTRINE"
+   ],
+   "n_claims": 2,
+   "claims": [
+    {
+     "kind": "DOCTRINE",
+     "doc": "docs/doctrine/TRIGGER_LAYER.md",
+     "line": 31,
+     "ref": "comp-constants.config.yaml",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "`comp-constants.config.yaml` header). Expressiveness \u2014 structured severity, ownership, auditable"
+    },
+    {
+     "kind": "DOCTRINE",
+     "doc": "org/tier0/ledger/LD-0127.md",
+     "line": 78,
+     "ref": "comp-constants.config.yaml",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "- `comp-constants.config.yaml` (ws-lane bd/inf/multifirm config; comp- prefix is naming-only)"
+    }
+   ]
+  },
+  {
    "node": "file:infra/prompts/devops_technician.md",
    "severity": "DOCTRINE",
    "kinds": [
@@ -39304,34 +39798,6 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "- `getPlatinumAdvisorSummary` and `getPlatinumAdvisorDrilldownSummary` hit the same URL \u2014 one rule covers both, not two"
-    }
-   ]
-  },
-  {
-   "node": "tool:comp-firmsep-sweep",
-   "severity": "DOCTRINE",
-   "kinds": [
-    "DOCTRINE"
-   ],
-   "n_claims": 2,
-   "claims": [
-    {
-     "kind": "DOCTRINE",
-     "doc": "memory/feedback_firm_sep_detect_must_live_simulate_not_tf_lint.md",
-     "line": 15,
-     "ref": "comp-firmsep-sweep",
-     "confidence": "EXACT",
-     "ambiguous": false,
-     "quote": "Each granted cross-firm access; each was invisible to every lint / plan / drift-check over our own TF; each was found ONLY by a live simulate (`comp-firmsep-sweep` / `comp-denytest"
-    },
-    {
-     "kind": "DOCTRINE",
-     "doc": "memory/feedback_tf_coverage_and_grant_reach_are_orthogonal.md",
-     "line": 38,
-     "ref": "comp-firmsep-sweep",
-     "confidence": "EXACT",
-     "ambiguous": false,
-     "quote": "- The control that bounds *reach* is a **standing live-simulate DETECT** (`comp-firmsep-sweep` /"
     }
    ]
   },
@@ -41466,25 +41932,6 @@
    ]
   },
   {
-   "node": "file:comp-constants.config.yaml",
-   "severity": "DOCTRINE",
-   "kinds": [
-    "DOCTRINE"
-   ],
-   "n_claims": 1,
-   "claims": [
-    {
-     "kind": "DOCTRINE",
-     "doc": "org/tier0/ledger/LD-0127.md",
-     "line": 78,
-     "ref": "comp-constants.config.yaml",
-     "confidence": "STRONG",
-     "ambiguous": false,
-     "quote": "- `comp-constants.config.yaml` (ws-lane bd/inf/multifirm config; comp- prefix is naming-only)"
-    }
-   ]
-  },
-  {
    "node": "file:org/tier0/ledger/LD-0128.md",
    "severity": "DOCTRINE",
    "kinds": [
@@ -43613,6 +44060,25 @@
    ]
   },
   {
+   "node": "endpoint:exportAndSubmit",
+   "severity": "DOCTRINE",
+   "kinds": [
+    "DOCTRINE"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "DOCTRINE",
+     "doc": "org/tier0/ledger/LD-0327.md",
+     "line": 40,
+     "ref": "exportAndSubmit",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "- The PM page exposes **two** Vident-CSV surfaces: **\"Submit\"** (ExportModal -> `exportAndSubmit` ->"
+    }
+   ]
+  },
+  {
    "node": "file:docs/references/INCIDENTS_2026-07-21.md",
    "severity": "DOCTRINE",
    "kinds": [
@@ -43647,6 +44113,25 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "- `org/projects/MDPF_COTMDL.json` = **status `complete`, completed 2026-07-21, COMPLETE-AS-SUPERSEDED**"
+    }
+   ]
+  },
+  {
+   "node": "s3:assets-silver/fact_model_roster",
+   "severity": "DOCTRINE",
+   "kinds": [
+    "DOCTRINE"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "DOCTRINE",
+     "doc": "org/tier0/ledger/LD-0330.md",
+     "line": 501,
+     "ref": "fact_model_roster",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "ETags; hand-run silver `fact_model_roster` shares one ETag across both days. **AE refused to call it stale"
     }
    ]
   },
@@ -46216,25 +46701,6 @@
    ]
   },
   {
-   "node": "endpoint:getPlatinumClientSummary",
-   "severity": "DOCTRINE",
-   "kinds": [
-    "DOCTRINE"
-   ],
-   "n_claims": 1,
-   "claims": [
-    {
-     "kind": "DOCTRINE",
-     "doc": "memory/project_cot_single_synthesized_advisor_49f_clone_gold_crash_class.md",
-     "line": 40,
-     "ref": "getPlatinumClientSummary",
-     "confidence": "STRONG",
-     "ambiguous": false,
-     "quote": "lambda** (`getPlatinumClientSummary`, unexercised for cot) \u2014 NOT a DS emit; data (220"
-    }
-   ]
-  },
-  {
    "node": "gold:D_02.advisor_client_detail:build_fee_bps_pit",
    "severity": "DOCTRINE",
    "kinds": [
@@ -46706,6 +47172,25 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "The MDPF_ASSETS project (Opal Aggregate AUA) has a canonical cohort taxonomy, defined in `docs/architecture/MDPF_ASSETS.md` \u00a73.0 (PRD v0.3, Andrew-directed). It is the **mandatory "
+    }
+   ]
+  },
+  {
+   "node": "s3:assets-silver/fact_portfolios_full",
+   "severity": "DOCTRINE",
+   "kinds": [
+    "DOCTRINE"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "DOCTRINE",
+     "doc": "memory/project_mdpf_inflection_model_zero_until_may15_launch.md",
+     "line": 19,
+     "ref": "fact_portfolios_full",
+     "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "**Why:** the real measured inflection MODEL source (eclipse `fact_portfolios_full`) is only ~53"
     }
    ]
   },
