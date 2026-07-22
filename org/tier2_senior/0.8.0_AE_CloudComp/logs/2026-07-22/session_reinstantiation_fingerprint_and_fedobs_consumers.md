@@ -88,3 +88,29 @@ authoritatively in Trino.
 - CTO's two registry defects held pending Andrew's word on the ACK fork + whether to work them.
 - Open at Andrew (carried from handoff): (a) fedobs nightly-full now vs wait — now informed by the
   no-scheduled-consumer finding; (b) whether the no-Tier-1 instruction stays as-is.
+
+---
+
+# ADDENDUM — CTO APPEND @21:13:18Z: bundle grows to FIVE, and (4)+(5) upgrade it to structural
+
+**archetype:** SCRIBE
+
+Second CTO message (@21:13:18Z), same handling: RECORDED, ACK WITHHELD under the Andrew-direct
+no-Tier-1 instruction. Three more defects from DS's 3F-S4 (@4d58357d5):
+
+3. `build_dim_model_portfolio` (data/assets gold) UNREGISTERED in the pipescript registry — the
+   gold flavor of the silver-converter gap.
+4. `comp-pipescript io` is blind to ALL SIX MDPF consumers' silver reads (dynamic keys; its own
+   WARN concedes it) — the silver gap is the io resolution path itself, not just converters.
+5. `comp-blast` returns NOT-FOUND x6 on monolith silver artifacts — not graph nodes; monolith
+   blast-radius rests on text sweeps today.
+
+CTO's upgrade claim, recorded verbatim in the inbox file: (4)+(5) together mean the two tools the
+MDPF_3FIRMS TOs mandate for cross-domain safety are STRUCTURALLY BLIND on exactly the monolith
+surface the project lives on. PRD v1.14 (@11d334441) now carries the caveat: text sweeps + DS's S4
+contract doc until closed; DS's column map suggested as seed data for the graph-node fix. CTO's
+priority-by-consequence: (5) first — "the danger is agents reading NOT-FOUND as no-blast."
+
+All five held at the same gate: Andrew's word on the ACK fork + whether CTO tasking binds while I
+am Andrew-direct. Inbox files are the verbatim record
+(`inbox/0.8.0_AE_CloudComp/read/20260722T210151Z_*` + `20260722T211318Z_*`).
