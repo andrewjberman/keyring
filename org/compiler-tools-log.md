@@ -23885,3 +23885,90 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | 3F-S5 | window 2115-2125Z: empirical parquet (fact_model_definition), comp-grep consumer sweep w/ denominator, s3api head-object x8 ETag baseline, comp-to; comp-blast deliberately NOT used for coverage (blind on monolith silver, S4-(c)) | design routed + all 4 CTO rulings banked @16dc63e33 |
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S5 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S5 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file data/serve... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-pulse | comp-pulse diff .tools/comp-freshness data/served_freshness_config.yaml | FAIL |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-system | comp-system --gate --changed .tools/comp-freshness data/served_freshness_config.yaml | FAIL |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-system | comp-system | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file data/serve... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-pulse | comp-pulse diff .tools/comp-freshness data/served_freshness_config.yaml infra/system/06... | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff CLAUDE.md | FAIL |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-system | comp-system --gate --changed .tools/comp-freshness data/served_freshness_config.yaml in... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_B4_eclips... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/sovereign_held.py --... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/aws/compdiff/sovereign_held.py infra/aws/compdiff/tests/test_free... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/sovereign_held.py infra/aws/compdiff/sov... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/sovereign_held.py --... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/aws/compdiff/sovereign_held.py infra/aws/compdiff/tests/test_free... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/sovereign_held.py infra/aws/compdiff/sov... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff CLAUDE.md | FAIL |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-surface-check | comp-surface-check check --mode advisory --file data/served_freshness_config.yaml | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-pulse | comp-pulse diff data/served_freshness_config.yaml | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/nerves-risk-edges.jso... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/nerves-risk-edges.json org/tier2_senior/0.8.0_AE_Clou... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.8.0_AE_CloudComp/deliverables/COMP_TOOL... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/sovereign_held.py --... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff infra/aws/compdiff/sovereign_held.py infra/aws/compdiff/tests/test_free... | FAIL |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/sovereign_held.py infra/aws/compdiff/sov... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/COMP_TOOL_GAP_CENSUS_2... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/nerves-risk-edges.json | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/nerves-risk-edges.json | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/nerves-risk-edges.json | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/mdpf-preflip-check --file infra/... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-pulse | comp-pulse diff .tools/mdpf-preflip-check infra/aws/lambda/opal-assets/opal-assets-mdpf... | FAIL |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-22/3f_s4_schema_p... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/COMP_TOOL_GAP_CENSUS_2... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-pulse | comp-pulse diff infra/aws/ec2/EC2_MANIFEST.json | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast opal-assets-silver-blackdiamond | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast classify_key | FAIL |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-07-22/3fs3_stop_first_then... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_model_assignment | FAIL |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/mirror_conve... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff data/assets/scripts/silver/mirror_conversion.py data/assets/scripts/sil... | FAIL |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_S1_conver... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_B6_livene... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_antipattern.py | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file org/modules/graph/tests/_p4_probe_exem... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean2.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_control.py | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check routable | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking org/tier2_senior/0.4.0_DS_ClientPlatform/promp... | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/COTT... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/COTTONWOOD_MEMBERSHIP_DETERMINISM_20... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_model_assignment | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_rps_s2 | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_assets | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_holdings | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_portfolios_full | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_model_aum_daily | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_model_allocation_roster | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_allocation_valuation | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_model_roster | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_model_blend | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast opal-assets-silver-blackdiamond | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_zzz_definitely_not_a_table | FAIL |
+2026-07-22 20:26-22:05Z 0.6.2_AE_PartnerETL~A MDPF_3FIRMS wave: comp-to(B7) | comp-freshness self-test PASS 3/3 + chain inf/cot (basis gap recorded, NEVER#1 held) | comp-pipescript io (known gap, source read) + deployed sweep (17M/3S/6MISS mdpf) | comp-which -> comp-trigger (eclipse mechanism, denom 141+10) | comp-grep/glob x8 on-rails | 3 rail-checked s3api vintage reads audited. Gap found: no comp-tool for cross-bucket object-vintage ordering; comp-trigger earned its keep.
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_zzz_definitely_not_a_table | FAIL |
+2026-07-22 ~2145Z 0.7.0_AE_CloudOps: session rollup -- deploy_ledger x9, safe-apply -target x1 (CTO-bounded), tf plan x2 + validate, get-role-policy x3, simulate x7 isolated, comp-freshness self-test x3 + all x3 (pk-frontier patch landed), comp-iam gaps, comp-system regen, comp-grep/glob/which, commit-gate x4, s3api cadence measurement x6 legs, ec2+ssm AC-4 exercise (authorized) -- 3F-S3 complete + 3-item GO complete (session_close_2030-2145Z.md)
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
