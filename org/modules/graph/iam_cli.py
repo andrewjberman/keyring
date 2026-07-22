@@ -763,6 +763,69 @@ def cmd_live(args):
     re-deriving: that reconciler is certed, joins on ARN identity, and carries the TF ADDRESS as
     provenance, which is why it resolves `${each.key}` fleets that a name-join cannot.
     """
+    # D5: the materialized graph is PRIMARY. It carries BOTH write cadences (02:00Z full derive +
+    # event-driven incremental) and stamps each row with its own observation time, so vintage keys on
+    # snapshot_ts -- the clock the DATA lives on -- instead of a file mtime. The .fedobs_tmp derive
+    # JSON is untracked LOCAL SCRATCH from a hand-run, never a pipeline product; it stays only as an
+    # explicit fallback and says so when used.
+    rows = comp_iam_live.kuzu_iam_rows()
+    if rows and not getattr(args, "from_derive", False):
+        print("LIVE PROVENANCE: materialized graph (kuzu_nessie_db) -- population and vintage read "
+              "from the ROWS")
+        for ln in comp_iam_live.cohort_lines(rows):
+            print(ln)
+        if getattr(args, "pipe", False):
+            for ln in comp_iam_live.pipe_lines(comp_iam_live.pipe_liveness()):
+                print(ln)
+        else:
+            print("  incremental pipe: NOT CHECKED (--pipe) -- the 'plus mutations since' half of the "
+                  "freshness claim is UNVERIFIED")
+        census = None
+        if getattr(args, "census", None):
+            try:
+                census = json.loads(Path(args.census).read_text(encoding="utf-8"))
+            except Exception as e:  # noqa: BLE001
+                print(f"  census cross-check UNAVAILABLE (unreadable {args.census}: {e})")
+        if census:
+            names = {str(r.get("name")) for r in rows}
+            cn = {str(r.get("role_name")) for r in (census.get("roles") or [])}
+            missing = sorted(cn - names)
+            print(f"  population cross-check: graph {len(names)} vs census {len(cn)}")
+            if missing:
+                print(f"  !! {len(missing)} role(s) live but ABSENT from the graph -- invisible below")
+                for n in missing[:8]:
+                    print(f"       {n}")
+                if len(missing) > 8:
+                    print(f"       ... and {len(missing) - 8} more")
+        else:
+            print("  population cross-check: UNAVAILABLE (no --census) -- the graph population is "
+                  "TAKEN ON TRUST")
+        print()
+        svc = [r for r in rows if comp_iam_live.service_linked(r)]
+        undecl = [r for r in rows if str(r.get("drift_class")) == "LIVE-no-DECLARED"]
+        real = [r for r in undecl if not comp_iam_live.service_linked(r)]
+        print(f"LIVE-PRIMARY IAM  (population = {len(rows)} live roles, from the graph)")
+        print(f"  DECLARED (live AND governed by IaC) : "
+              f"{sum(1 for r in rows if str(r.get('drift_class')) == 'DECLARED')}")
+        print(f"  LIVE-no-DECLARED                    : {len(undecl)}")
+        print(f"    AWS service-linked (expected)     : {len(svc)}")
+        print(f"    GOVERNABLE and UNDECLARED         : {len(real)}")
+        print()
+        if real:
+            print(f"UNGOVERNED-BY-IaC ({len(real)}) -- live, governable, no Terraform declaration:")
+            for r in sorted(real, key=lambda x: str(x.get("name"))):
+                print(f"    !! {r.get('name')}")
+            print()
+        print("NOTE: drift_class is comp-aws derive's verdict, joined on ARN IDENTITY with the TF")
+        print("      ADDRESS as provenance -- not a name match. That is why ${each.key} fleets")
+        print("      resolve here and do not on the Terraform-primary surfaces.")
+        print("NOTE: DETECTOR, not an oracle. No Deny/boundary/condition/SCP evaluation.")
+        print("      For an allow/deny verdict use `comp-iam simulate` (Rule 22a).")
+        return 1 if real else 0
+
+    if not rows:
+        print("NOTE: materialized graph unreadable -- falling back to the LOCAL derive artifact.")
+        print("      That file is untracked scratch from a hand-run, NOT a pipeline product.")
     iam, path, observed = comp_iam_live.load_iam_derive(
         Path(args.derive_dir) if getattr(args, "derive_dir", None) else None)
     if iam is None:
@@ -1117,6 +1180,10 @@ def main():
     p_live.add_argument('--census', help='fresh census for the population staleness cross-check')
     p_live.add_argument('--derive-ttl-hours', type=float, default=None,
                         help='max derive-snapshot age (default 24)')
+    p_live.add_argument('--pipe', action='store_true',
+                        help='check incremental-pipe liveness (CloudWatch/SQS, read-only)')
+    p_live.add_argument('--from-derive', action='store_true',
+                        help='force the legacy local derive-JSON path instead of the graph')
     p_live.add_argument('--allow-stale-derive', action='store_true',
                         help='AUDITED override: report from a stale live snapshot')
 

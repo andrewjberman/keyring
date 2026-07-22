@@ -136,3 +136,223 @@ def service_linked(node: dict) -> bool:
     segment -- not a name-prefix heuristic. They are live and undeclared BY DESIGN; counting them as
     ungoverned findings is how a real signal gets buried under expected noise."""
     return "/aws-service-role/" in str(node.get("arn") or "")
+
+
+# ---------------------------------------------------------------------------
+# D1/D5 (Andrew design GO 2026-07-22): COHORT VINTAGE, read from the ROWS.
+#
+# The graph's write path is a UNION of two cadences:
+#   A  ECS derive-runner, cron(0 2 * * ? *)  -- full re-derive, one snapshot_ts for every node
+#   B  Lambda incremental-updater, CloudTrail-mutating -> SQS -> ESM (120s debounce) -- changed nodes
+#
+# So FRESHNESS IS A PROPERTY OF THE ROW, NOT THE TABLE. A node stamped 02:00Z is not stale; it is
+# CURRENT, because had it changed, path B would have re-observed it within ~2 minutes. The honest
+# claim is "current as of the last full derive, PLUS every CloudTrail-observed mutation since."
+#
+# The existing provenance header reads `last_write_iso` off the branch-head marker -- the TABLE's
+# write time. Measured 2026-07-22: 14,708 full-derive nodes at 02:00:31Z (17.1h) and TWO incremental
+# nodes at 14:37Z, and the header reported "graph_nodes: last-write 4.5h ago (< 6h cadence)" -- a PASS
+# rendered against a clock the data does not live on. Against the cohort it names: 17.1h > 6h = FAIL.
+#
+# A LAST-WRITE TIMESTAMP IS A PROPERTY OF THE CONTAINER, NOT THE CONTENTS. One row written now makes a
+# corpus of any age report as current -- and it is monotonic the wrong way: a finer-grained incremental
+# updater makes the staleness signal WORSE, because smaller writes keep refreshing a clock most of the
+# data is not on.
+# ---------------------------------------------------------------------------
+
+KUZU_DB = WORKSPACE / "infra" / "aws" / "globgrph" / "kuzu_nessie_db"
+
+
+def kuzu_iam_rows(db_path=None):
+    """Read IAM_ROLE nodes straight from the materialized graph. Returns [] if kuzu is unavailable.
+
+    Read-only, local, no AWS. Returns [] rather than raising so the caller degrades to the derive
+    artifact and SAYS SO, instead of erroring out of a plane that has a working fallback."""
+    try:
+        import kuzu
+    except ImportError:
+        return []
+    p = Path(db_path) if db_path else KUZU_DB
+    if not p.exists():
+        return []
+    try:
+        conn = kuzu.Connection(kuzu.Database(str(p), read_only=True))
+        res = conn.execute(
+            "MATCH (n:CloudNode) WHERE n.node_type = 'IAM_ROLE' "
+            "RETURN n.name, n.arn, n.drift_class, n.source, n.snapshot_ts")
+        out = []
+        while res.has_next():
+            name, arn, dc, src, ts = res.get_next()
+            out.append({"id": name, "name": name, "arn": arn,
+                        "drift_class": dc, "source": src, "snapshot_ts": ts})
+        return out
+    except Exception:
+        return []
+
+
+def cohort_vintage(rows, now=None):
+    """Per-SOURCE observation vintage -- the number the header should carry.
+
+    Returns {source: {n, newest_iso, oldest_iso, newest_age_h, oldest_age_h}}. Reporting per cohort
+    is the whole fix: a single table-write figure cannot express a corpus written by two producers on
+    two cadences, and collapsing them lets the smaller, fresher cohort speak for the larger, older one.
+    """
+    now = now or datetime.now(timezone.utc)
+    by = {}
+    for r in rows:
+        ts = r.get("snapshot_ts")
+        if ts is None:
+            by.setdefault(r.get("source") or "UNSTAMPED", {"n": 0, "ts": []})["n"] += 1
+            continue
+        b = by.setdefault(r.get("source") or "UNSTAMPED", {"n": 0, "ts": []})
+        b["n"] += 1
+        b["ts"].append(int(ts))
+    out = {}
+    for src, b in by.items():
+        if not b["ts"]:
+            out[src] = {"n": b["n"], "newest_iso": None, "oldest_iso": None,
+                        "newest_age_h": None, "oldest_age_h": None}
+            continue
+        newest, oldest = max(b["ts"]), min(b["ts"])
+        def _iso(ms):
+            return datetime.fromtimestamp(ms / 1000, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        def _age(ms):
+            return (now - datetime.fromtimestamp(ms / 1000, tz=timezone.utc)).total_seconds() / 3600
+        out[src] = {"n": b["n"], "newest_iso": _iso(newest), "oldest_iso": _iso(oldest),
+                    "newest_age_h": _age(newest), "oldest_age_h": _age(oldest)}
+    return out
+
+
+# Cadence per PRODUCER, not per table -- each cohort is judged against the schedule that writes it.
+# full-derive: cron(0 2 * * ? *) => a 24h SLA. incremental: event-driven, so it HAS NO CADENCE and
+# must never be judged against one; its health is a property of the PIPE (invocations / DLQ), which
+# node rows cannot express. See D3.
+COHORT_CADENCE_HOURS = {"full-derive": 24.0}
+
+
+def cohort_lines(rows, now=None):
+    """The D1 header block: per-cohort vintage, each judged against its own producer's cadence."""
+    cv = cohort_vintage(rows, now=now)
+    if not cv:
+        return ["  cohort vintage: UNAVAILABLE (no rows read from the materialized graph)"]
+    lines = ["  cohort vintage (observation time carried by the ROWS, not the table write):"]
+    for src in sorted(cv, key=lambda s: -cv[s]["n"]):
+        c = cv[src]
+        if c["newest_iso"] is None:
+            lines.append(f"    {src}: {c['n']} node(s), NO snapshot_ts -- vintage UNMEASURED")
+            continue
+        cad = COHORT_CADENCE_HOURS.get(src)
+        if cad is None:
+            verdict = "no cadence -- event-driven; health is a PIPE property, see `comp-iam live --pipe`"
+        else:
+            verdict = (f"[STALE > {cad:.0f}h cadence]" if c["oldest_age_h"] > cad
+                       else f"(< {cad:.0f}h cadence)")
+        span = ("" if c["newest_iso"] == c["oldest_iso"]
+                else f", oldest {c['oldest_age_h']:.1f}h")
+        lines.append(f"    {src}: {c['n']} node(s), newest {c['newest_iso']} "
+                     f"(age {c['newest_age_h']:.1f}h{span}) {verdict}")
+    full = cv.get("full-derive")
+    if full and full["newest_iso"]:
+        lines.append(f"  => EFFECTIVE: current as of {full['newest_iso']} (last full derive) PLUS every "
+                     f"CloudTrail-observed mutation since -- IF the incremental pipe is alive.")
+    return lines
+
+
+# ---------------------------------------------------------------------------
+# D3: path-B liveness read FROM THE PIPE, never from node counts.
+#
+# The incremental cohort's SIZE cannot distinguish a quiescent estate from a dead pipe -- and
+# measurement 2026-07-22 proved the hypothesis space was itself too small: the pipe is ALIVE
+# (2,492 SQS sends, 114 invocations, 0 errors, 0 DLQ, depth 0) and writes almost nothing
+# (`BATCH_END processed_arns=0 nodes_written=0`). Neither quiescent nor dead: ALIVE-AND-YIELDING-
+# NOTHING, a third state. Node counts express none of the three.
+#
+# So liveness is asserted on signals that exist even when nothing changed: invocations, errors,
+# DLQ depth, and SQS sends. All read-only.
+# ---------------------------------------------------------------------------
+
+LAMBDA_NAME = "opal-globgrph-incremental-updater"
+QUEUE_NAME = "opal-globgrph-incremental-events"
+DLQ_NAME = "opal-globgrph-incremental-events-dlq"
+
+
+def _aws(args):
+    import shutil
+    import subprocess
+    exe = shutil.which("aws") or shutil.which("aws.cmd")
+    if not exe:
+        return None
+    p = subprocess.run([exe] + args, capture_output=True, text=True)
+    return p.stdout.strip() if p.returncode == 0 else None
+
+
+def pipe_liveness(hours=24):
+    """Return the incremental pipe's health from CloudWatch/SQS, or None per-limb when unreadable.
+
+    A limb that cannot be read returns None and is REPORTED as UNREADABLE -- never as 0. A zero and
+    an unmeasured limb are the same shape downstream and only one of them means 'nothing happened'."""
+    import datetime
+    now = datetime.datetime.now(datetime.timezone.utc)
+    fmt = "%Y-%m-%dT%H:%M:%SZ"
+    start, end = (now - datetime.timedelta(hours=hours)).strftime(fmt), now.strftime(fmt)
+
+    def metric(ns, name, dim_name, dim_val):
+        out = _aws(["cloudwatch", "get-metric-statistics", "--namespace", ns, "--metric-name", name,
+                    "--dimensions", f"Name={dim_name},Value={dim_val}", "--start-time", start,
+                    "--end-time", end, "--period", str(hours * 3600), "--statistics", "Sum",
+                    "--query", "Datapoints[0].Sum", "--output", "text"])
+        if out is None or out == "":
+            return None
+        if out == "None":
+            return 0.0
+        try:
+            return float(out)
+        except ValueError:
+            return None
+
+    def depth(q):
+        out = _aws(["sqs", "get-queue-url", "--queue-name", q, "--query", "QueueUrl", "--output", "text"])
+        if not out or out == "None":
+            return None
+        d = _aws(["sqs", "get-queue-attributes", "--queue-url", out, "--attribute-names",
+                  "ApproximateNumberOfMessages", "--query",
+                  "Attributes.ApproximateNumberOfMessages", "--output", "text"])
+        try:
+            return int(d)
+        except (TypeError, ValueError):
+            return None
+
+    return {
+        "window_hours": hours,
+        "invocations": metric("AWS/Lambda", "Invocations", "FunctionName", LAMBDA_NAME),
+        "errors": metric("AWS/Lambda", "Errors", "FunctionName", LAMBDA_NAME),
+        "sqs_sent": metric("AWS/SQS", "NumberOfMessagesSent", "QueueName", QUEUE_NAME),
+        "queue_depth": depth(QUEUE_NAME),
+        "dlq_depth": depth(DLQ_NAME),
+    }
+
+
+def pipe_lines(pl):
+    """Render the pipe verdict. UNREADABLE limbs stay UNREADABLE; they never round to healthy."""
+    if pl is None:
+        return ["  incremental pipe: UNREADABLE (no AWS access) -- liveness UNKNOWN, not OK"]
+    def fmt(v):
+        return "UNREADABLE" if v is None else (f"{v:.0f}" if isinstance(v, float) else str(v))
+    lines = [f"  incremental pipe ({pl['window_hours']}h): invocations={fmt(pl['invocations'])} "
+             f"errors={fmt(pl['errors'])} sqs_sent={fmt(pl['sqs_sent'])} "
+             f"queue_depth={fmt(pl['queue_depth'])} dlq_depth={fmt(pl['dlq_depth'])}"]
+    inv, err, dlq = pl["invocations"], pl["errors"], pl["dlq_depth"]
+    if inv is None:
+        lines.append("    verdict: UNKNOWN -- the pipe was not measurable; do NOT read this as healthy")
+    elif inv == 0:
+        lines.append("    verdict: NO INVOCATIONS -- quiescent estate OR dead pipe, INDISTINGUISHABLE "
+                     "from this signal alone")
+    elif err and err > 0:
+        lines.append(f"    verdict: DEGRADED -- {err:.0f} error(s) in window")
+    elif dlq:
+        lines.append(f"    verdict: DEGRADED -- DLQ depth {dlq} (events arriving and FAILING, which "
+                     "looks exactly like quiescence from the node side)")
+    else:
+        lines.append("    verdict: ALIVE (invoked, no errors, DLQ empty). NOTE: alive does NOT imply "
+                     "it is WRITING -- yield is a separate question the node cohort answers.")
+    return lines
