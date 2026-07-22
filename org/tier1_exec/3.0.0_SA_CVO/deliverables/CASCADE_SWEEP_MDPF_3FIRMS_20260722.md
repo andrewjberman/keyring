@@ -133,4 +133,52 @@ audit, reproduced by the auditor inside the audit.**
 §2.3/§2.4 excluded per CTO. **Nothing behavioral was exercised** -- record-vs-state only, as scoped;
 `comp-trigger`'s fired-evidence is CloudWatch metric read, not a path I triggered. No PRD text touched.
 
+---
+
+# PART C -- WIDENED SCOPE (CTO 210204Z): shape-vs-role on the Cottonwood tables
+
+## >> C1 -- MY OWN D5 NEEDS A CORRECTION, AND IT IS THE MOST INSTRUCTIVE FINDING IN THIS SWEEP. <<
+I reported §2.2's Cottonwood depth row **CONFIRMED**. That confirmation was **true about the claim as
+written and blind to the claim being about the wrong table.** I verified *"does `fact_holdings_s2` have
+the stated depth"* -- it does -- and never asked *"is `fact_holdings_s2` the thing whose depth matters."*
+**A record-vs-state sweep validates the ROW; it does not validate the ROW'S SUBJECT.** DS caught this
+with a parquet footer read; my scan could not have, because it was pointed at the axis the document
+chose. *(This is the same shape as VERIFICATION LAW #6 -- enumerate what a number is OF before
+explaining it -- and I walked into it while auditing a document for exactly this class.)*
+
+## C2 -- shape read, decisive, one parquet footer each (`date=2026-07-20`)
+| table | rows | cols | leading columns | role |
+|---|---|---|---|---|
+| `blackdiamond/cottonwood/silver/fact_holdings` | **16,762** | **24** | `Market Value`, `Units`, `Unaccrued Market Value`, `Accrual`, `Relationship ID`, `PortfolioID`, `AccountID`, `Account Number` | **the real AUA source** |
+| `blackdiamond/cottonwood/silver/fact_holdings_s2` | **5** | **7** | `c1`, `c2`, `_source_file`, `_source_as_of`, `_source`, `_feed`, `_schema_version` | **metadata sheet -- unnamed columns, not a fact table** |
+
+**DS's §1.2 correction (`@58d24b18e`) is CONFIRMED exactly, independently, to the row and column.**
+
+## C3 -- the depth row is RIGHT, for a reason unrelated to the naming defect
+`fact_holdings` and `fact_holdings_s2` have **identical partition coverage: 33 partitions,
+2026-06-09 -> 2026-07-20.** So §2.2's Cottonwood depth number **survives its own mis-naming.**
+**Do not read that as the row being sound** -- it is the second "the coincidence that saved it is not a
+design property" instance I have recorded today. **Correct number, wrong subject, and nothing in the
+document distinguishes those two states.**
+
+## C4 -- the `_s{N}` trap: CONFIRMED EMPIRICALLY, cross-vendor
+| table | rows | cols | what `_s2` means here |
+|---|---|---|---|
+| `schwab/08242234/silver/fact_rps_s2` | **7,086** | **39** (`custdian_id`, `mstracct_number`, `business_date`, ...) | a **REAL balances table** |
+| `blackdiamond/cottonwood/silver/fact_holdings_s2` | **5** | **7** | a **metadata sheet** |
+
+**Same suffix, opposite meaning, in the same bucket.** The PRD's pinned warning is correct and is now
+measured rather than asserted: **`_s{N}` carries NO schema contract, and a builder who reads it as one
+has no way to discover the error except a footer read.**
+
+## C5 -- CTO's instrument-family question, applied to my own rows
+| my row | instrument | silent-absence failure mode? |
+|---|---|---|
+| D1-D4 trigger rows | `comp-trigger` | **NO** -- prints its own denominator, covers both namespaces, and reports "metric absence != event absence" unprompted. Best-behaved instrument I used. |
+| D5 depth rows | `aws s3 ls` + `grep -c 'date='` | **YES** -- a wrong prefix returns `0`, byte-identical to an empty table. **It failed on me twice** (§ "my own false absence"). Only a positive control on the parent prefix distinguishes them. |
+| D6 / gold hunt | `list-objects-v2` + `--max-items` | **YES** -- a truncating cap yields a false zero with no signal. |
+| C2/C4 shape reads | parquet footer via pandas | **NO** -- a missing file raises; it cannot silently read as "small table". **This is why DS's method caught what every path-based scan missed.** |
+**The pattern: every instrument that failed silently on me was one that answers a question with a
+COUNT. The ones that could not fail silently either print a denominator or throw.**
+
 -- `3.0.0_SA_CVO`
