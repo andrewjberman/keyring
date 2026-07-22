@@ -317,8 +317,13 @@ def main() -> int:
                           "A mention is EVIDENCE, not proof -- confidence is stated. Regenerate: "
                           "nerves_lexical build.",
                "stats": stats, "edges": edges}
-        with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
+        # Atomic publish: a bare dump onto OUT lets a reader (or the comp-pulse auto-refresh,
+        # which serializes only COMMIT-PATH rebuilds) see torn JSON mid-write. tmp + os.replace
+        # makes the swap atomic on the same filesystem.
+        tmp = OUT + ".tmp"
+        with open(tmp, "w", encoding="utf-8", newline="\n") as fh:
             json.dump(doc, fh, indent=1)
+        os.replace(tmp, OUT)
         print("nerves-lexical: %d nodes carry claims -> %s"
               % (len(edges), os.path.relpath(OUT, _WS)))
     if args.json:
