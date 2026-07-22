@@ -23848,3 +23848,26 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
 | 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-22/c... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_B6_livene... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S4.cross-firm-silver-schema-parity | comp-blast | comp-blast dim_mdpf_account_distribution | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md --... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md docs/doctrine/CONTROLS_OVER_CARE.md | FAIL |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S4.cross-firm-silver-schema-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S4.cross-firm-silver-schema-parity | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-22/3f_s4_schema_p... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-07-22/session_reinstantia... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/COTT... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/COTTONWOOD_ASSIGNMENT_LOOKBACK_OPTIO... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/MDPF_3FIRMS.3F-S5.... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_B1_49f_sc... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-trigger | comp-trigger eclipse | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-trigger | comp-trigger inf-bronze | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_B7_inflec... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | 3F-S5 | empirical parquet x4 rebalancer family + 2 reference families (vintages stated), comp-grep consumer sweep (denominator: repo .py space, 7 hits, 1 gold reader), s3api head-object x8 (ETag baseline) | S5 design routed to CTO gate; comp-blast NOT used for coverage (blind, S4-(c)) |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S5 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S5 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/deli... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S5 | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
