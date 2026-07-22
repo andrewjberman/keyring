@@ -43,7 +43,9 @@ Today's chain is `c00_account_gains -> c01_account_performance`. It is an **AUA-
 | row_quality flags | valuation_complete, recon_within_tol, has_flow, negative_bmv (excluded not inverted), return_capped (winsorized) |
 
 ### 3b. `dim_return_method` -- the methodology contract ("performance_dim")
-One canonical, ratified row pinning: return_method=`daily-TWR-geometric`; flow_timing=`modified-dietz-dayweight`; income_basis=`cash-when-received`; coupon_source=`IN x asset_class=fixed_income`; gross_def=`pre-advisory-fee`; net_def=`post-all-fees`; fee_advisory_source=`accrued-from-schedule`; annualization=`trading-day (252)`; winsor_cap=`<declared>`; cash_inclusion=`total-account`. A method change = an attributable ratified edit (never-widen at the performance layer).
+One canonical, ratified row pinning: return_method=`daily-TWR-geometric`; flow_timing=`modified-dietz-dayweight`; income_basis=`cash-when-received`; coupon_source=`IN x asset_class=DEBT`; gross_def=`pre-advisory-fee`; net_def=`post-all-fees` (`NetOfFees`); fee_advisory_source=`accrued-from-schedule`; annualization=`Account365`; accrual=`Accrued`; benchmark=`ClassSpecific`; winsor_cap=`<declared>`; cash_inclusion=`total-account`. A method change = an attributable ratified edit (never-widen at the performance layer).
+
+**METHOD ANCHORS ON BD FOR DEFENSIBILITY (Andrew-direct ~0048Z, via ~Z):** *"I like the BD approach because its defensible to refer to."* -> where the method could fork, align to BD's `firm/globalsettings` (`Account365` / `NetOfFees` / `Accrued` / `ClassSpecific`). This SUPERSEDES my earlier `trading-day (252)` proposal -> use **`Account365`** (BD's day-count), applied CONSISTENTLY (the c01 bug was inconsistency, not the 365 basis). The split stays: **METHOD aligns to BD (defensibility); NUMBERS validate on OUR Schwab silver (verify-not-settle).** BD is both the defensible reference AND the parity oracle -- never the source of our figures.
 
 ### 3c. `fact_account_return_windowed` -- geometric link of daily gross+net over MTD/QTD/YTD/1Y/ITD per (account_id, period). Client/firm rollups re-link from the account daily series (never average account returns).
 
