@@ -84,6 +84,27 @@ field-identity verified) + content A/B resolved + render-check clean + AE router
 re-co-sign on the FINAL 9-key coherent ETags. "Nearly there" is RESET — real producer + census work first.
 CTO single tracker-writer records the 9-key scope + census-gate.
 
+## COHERENT-9 RE-PIN — CORRECTED 2026-07-22 ~00:00Z (CTO pin-discipline catch + my live ListObjectsV2 ground)
+
+My earlier staged pin was STALE + INCOMPLETE — the EXACT discipline this record enforces, caught by CTO's live
+S3 re-verify. It cited the PRE-cohort_provenance aggregate ETags (8c0f8e45/2fda9d52/1b53f85b @165b84ac4) + the
+PRE-decouple A4 (d4802341), and listed only 7 keys (omitted A1/A2). CORRECTED by grounding on the LIVE
+ListObjectsV2 ETags (my own read of opal-data-assets/gold/mdpf_revamp/, APPLIED TRUTH — not a manifest
+transcription), which match CTO's S3 re-verify + CVO re-derive @233355Z EXACTLY.
+
+**CO-SIGN PINS to the CURRENT coherent-9 (live-verified ETags):**
+- aggregate: 49f `a2e87f311fd0` / inflection `7ab6e93e3f3a` / global `1b52211f6443`
+- non_model A4 (global/non_model_assets.json): `7ef321124087`
+- aum-metrics A1 (portfolios/aum-metrics.json): `d69ac96ab99a`
+- aum-timeseries A2 (portfolios/aum-timeseries.json): `38e9e8d46678`
+- account_distribution: 49f `865919f2be40` / inflection `afb964c4d67f` / global `b946d8364ca3`
+(`non_model_assets_precutover_frozen.json` da2260f6 = the A4 frozen pre-cutover boundary artifact — supporting,
+NOT one of the 9 served keys.)
+
+The data-neutral re-stage moved the ETags (cohort_provenance 0->populated + A4 decouple) but not the DATA. The
+final re-co-sign confirms the 9/9 3-pass covers THESE exact 9 + render-check clean + AE router-revert tested.
+Lesson re-banked (on myself): ground the pin on the LIVE object, never a message/manifest transcription.
+
 ## Verdict (as-of 180626Z, now HELD per above): CO-SIGN GRANTED — conditional on tested-rollback-before-publish
 
 All 5 cutover items independently verified NAMED + CORRECT serve-real, none a defect:
