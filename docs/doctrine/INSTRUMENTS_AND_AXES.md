@@ -248,6 +248,57 @@ the person doing it.**
 **Generalize past holds:** any test that asserts a *policy* rather than a *behaviour* becomes a vote
 against changing that policy, cast by someone who is no longer in the room.
 
+## 7f. A COMPLETENESS SIGNAL WHOSE DENOMINATOR IS ITS OWN CONFIGURATION
+
+Three independent "everything is present" signals were examined on the eve of adding a third tenant to
+a two-tenant system. **All three report GREEN on a three-tenant cycle in which the third tenant is
+entirely missing:**
+
+| signal | its denominator | result on a 3-subject cycle |
+|---|---|---|
+| a source-coverage audit | **hardcoded subject keys** | third subject **absent** — not even *"did not run"* |
+| a `keys_staged: 7` marker | **a literal** | `7` |
+| a publisher's `all_present` | **`len(PUBLISH_MAP)`** | `9/9 = True` |
+
+> **A GREEN SIGNAL DERIVED FROM A HARDCODED LIST IS NOT EVIDENCE OF COVERAGE. IT IS EVIDENCE THAT THE
+> LIST WAS ITERATED.**
+> **The guard's subject list and the world's subject list are different objects, and nothing compares
+> them. A guard cannot report missing a subject it was never told to look for.**
+
+**Each of the three was written CAREFULLY** — one of them exists *specifically* to prevent silent
+omission, and the publisher has a considered soft-fail for a *mapped* key whose source is absent.
+**That care does not reach an UNMAPPED subject, which never enters the loop.** Care operates inside the
+denominator; the defect is the denominator.
+
+### 7f.1 — THE COUNTERINTUITIVE PART: THE BETTER-WRITTEN PERMISSION REMOVED THE SAFETY NET
+
+| | narrowly-scoped role | wildcard-scoped role |
+|---|---|---|
+| permission style | **enumerated prefixes** (least-privilege, per-resource) | **wildcard prefix** (still least-privilege by intent) |
+| behaviour on a new subject | **BLOCKS** | **PERMITS** |
+| failure mode | **LOUD** — access denied on first run | **SILENT + GREEN** — possibly never found |
+
+**The wildcard grant is the better-written policy on the firm axis — a new subject needs no permission
+change at all. That is precisely what removes the loud failure.** The narrower grant *accidentally*
+functioned as a completeness check the correct one cannot.
+> **TIGHTENING PERMISSIONS DOES NOT CATCH A FORGOTTEN SUBJECT — and an enumerated grant that blocks is
+> a completeness signal you did not design and must not rely on.**
+
+### 7f.2 — THIS DEFEATS THE COVERAGE-FRACTION RULE UNLESS THE DENOMINATOR IS EXTERNAL
+
+The standing control — *state your coverage fraction against the defect-capable population* (§9 Q4) —
+**is satisfied by all three of these signals while they lie**, because each reports its fraction
+**against its own denominator**. `9/9` is a true statement about `PUBLISH_MAP`.
+
+> **STRENGTHENED RULE: a coverage fraction is only evidence if its DENOMINATOR IS DERIVED FROM OUTSIDE
+> THE INSTRUMENT'S OWN CONFIGURATION.** A denominator the instrument defines cannot measure the
+> instrument's blind spot. **Where the subjects are enumerable (tenants, firms, feeds, packages), the
+> denominator is the SUBJECT REGISTRY — and the check is a SET-DIFFERENCE against it, not an iteration
+> of the local list.**
+
+*(Sibling of §7c — a vendored module's blast radius is invisible from its own source — and of the
+absence-has-no-token class: all three are instruments that cannot see past their own declaration.)*
+
 ## 8. PROCESS PRINCIPLES THAT PAID OUT THE SAME DAY
 
 - **A FAILURE SIGNAL IS NOT A REASON.** Two instances, same day, two levels:
