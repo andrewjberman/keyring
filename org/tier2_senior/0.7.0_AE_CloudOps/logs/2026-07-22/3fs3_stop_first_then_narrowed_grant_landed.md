@@ -129,3 +129,31 @@ None. Open items are gates at other agents, evidence-cited:
   CTO gates the apply. On DS evidence: close AC-4 and record AC-6 jointly.
 - **[0.4.0_DS_ClientPlatform]** fire the cottonwood exercised read; open the canonicalization determination.
 - **[2.0.0_SA_COO]** G8 routing on the now-live cottonwood read is yours (correctly declined here).
+
+---
+
+## ADDENDUM 2108Z -- 3F-S3 CLOSED COMPLETE (AC-6 + AC-4 arcs)
+
+**AC-6 (2057Z):** joint determination recorded @517bcb235 -- fact_holdings CANONICAL for Cottonwood AUA;
+fact_holdings_s2 = the BD vendor Timestamps sheet (NOT holdings). 3 independent limbs: DS empirical
+16,762x24 vs 5x7 KV; AE source mechanism mirror_schemas.py TIMESTAMPS_SECTION @61365878d; AE artifact
+sizes 388,478 B vs 4,565 B. Builder correct AS-IS; PRD sect-1.2 COT row = text defect, routed to CTO.
+
+**AC-4 (2101-2107Z):** the exercised runner-role read, through a 4-state authorization sequence:
+- DS staged the read-only diag (ETag c2473364, verified pre-exec). Runner box parked -> lifecycle fork
+  ROUTED to CTO (stop-EC2 = human-confirmation item), not self-cleared.
+- CTO GO 210124Z -> start + SSM adc0f11f Success (caller_arn=assumed-role/mdpf-daily-runner-ec2-role/
+  i-02448edb624a7a7cf, rows=16762 cols=24 ROWS-RETURNED) -> CTO [STOP] 210234Z crossed mid-pass (COO
+  hold correct: exec cannot clear a named human-confirmation item) -> FROZE with instance running,
+  re-stop untouched, state reported -> Andrew conditional clearance ~2103Z (condition-1 idle MET per
+  COO honest evaluation) -> CTO re-issue 210350Z -> re-stop executed, verified stopped (found-state
+  restored pre-scheduled-run). ZERO actions outside a live authorization (CTO 210550Z: accepted,
+  "exemplary execution").
+- DS 4-limb independent validation 210720Z (identity / rows-cols / object ETag+bytes same-minute /
+  script ETag). AC-4 recorded jointly; TO flipped complete @65aaca46d.
+
+**Also:** broker identity guard correctly REFUSED one malformed send of mine (placeholder draft carrying
+from_agent=0.4.0_DS -- fat-finger, nothing delivered; the guard is the 07-14 forgery gate working).
+Compiler tools this addendum: aws ec2 start/wait/stop + ssm send-command/get-command-invocation
+(operational, Rule-12 S3->EC2 path, no inline python), s3api head-object x2 (artifact + script identity),
+list-objects-v2 (AC-6 size limb). Post-close: broker IDLE: available; F-1 NOT touched (undispatched).
