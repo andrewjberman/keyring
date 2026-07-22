@@ -146,7 +146,8 @@ artifact is defective), and the 0159Z 3-limb co-sign is VOID for any re-flip (da
 FRESH co-sign required).
 
 **RE-FLIP RE-CO-SIGN HARD GATE (strengthened; I will NOT re-co-sign without ALL):**
-1. DS Global firm-sum fix, FULL-SERIES (all 421 dates, NOT a spot/window fix) -- gated on Andrew's A/B basis call.
+1. DS Global TOTAL-FIELD (opal_aggregate_aua) COMPOSITION fix, FULL-SERIES (all 421 dates, NOT a spot/window
+   fix) -- gated on Andrew's A/B basis call. NOT a firm-sum fix (firm-sums are CORRECT).
 2. THREE independent, complementary, EXERCISED consistency layers, each covering the FULL 421-date series
    per-date all-firms with a PRINTED coverage denominator (must read 421/421, so zero-coverage can't pass):
    (1) DS producer-validate (refuse-to-emit-inconsistent + SMA coherence, pre-publish);
@@ -158,6 +159,22 @@ FRESH co-sign required).
 STANDING lesson banked: parity is not consistency; a total must be checked against its own components
 (EXERCISED, with a mutant + a printed denominator), not just against a prior vintage. A rigorous instrument on
 the wrong axis survives review -- three did, on an artifact holed 421/421.
+
+**CORRECTION (my OWN grounded re-run of DT's gate @3e557741e vs LIVE S3, 2026-07-22 ~04:07Z -- correcting two
+briefings I'd propagated without grounding):**
+- **(1) The Global inconsistency is PRE-EXISTING, not a revamp regression.** `--consistency --served` (legacy
+  live) is holed **429/429 dates** too (back to 2024-11-01, hole $64M-$204M). Rollback clears the FE
+  picket-fence and HIDES the inconsistency (the legacy FE doesn't display components beside the total); it does
+  NOT fix the data condition. My earlier "rollback clears the Global bug, known-good" was WRONG on the data.
+- **(2) The fix is the TOTAL-FIELD COMPOSITION (opal_aggregate_aua), NOT the firm-sum.** CROSSFIRM_PASS:
+  global.model_aua & global.non_model_aua each == 49f+inflection at every date. Briefing DS to a "firm-sum fix"
+  sends them after a component that never broke.
+- The revamp FIXES a legacy 49f defect (legacy 49f holed 2025-12-26 -$43.16M; staged passes). Also-unowned:
+  staged inflection has 3 PARTIAL_NULL dates (custody populated, both components None) -> joins gate item 2.
+- => the A/B basis call reframes: is the LONG-STANDING exclusion of inflection non_model from opal_aggregate_aua
+  INTENTIONAL (a basis choice) or a defect? That is Andrew's decision, and it is NOT a revamp-introduced bug.
+- METHOD note to self: I propagated both errors by inheriting a framing instead of grounding it -- the SAME
+  transcription failure as the stale pin. Ground the claim on your own run, then state it.
 
 ## Verdict (as-of 180626Z, now HELD per above): CO-SIGN GRANTED — conditional on tested-rollback-before-publish
 
