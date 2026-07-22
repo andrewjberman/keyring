@@ -204,6 +204,28 @@ ROLLBACK-ARMED-BEFORE-PUBLISH + publisher/routing plan + FE-FIRST ordering (the 
 CTO+COO co-sign -> Andrew sovereign limb -> verify-before-serve cycle-1. New re-land ledger (per AE); the
 mdpf-exact9-cutover ledger closes as rolled-back.
 
+## RE-LAND CO-SIGN -- FIRED 2026-07-22 ~06:43Z (COO limb GRANTED; 2 of 3 never-widen limbs signed)
+
+CTO assembled the COMPLETE package + gave the CTO never-widen co-sign. Every condition my co-sign was staged
+on is met; my COO limb FIRES:
+- **PIN re-verified AT FIRE-TIME** (my own ListObjectsV2, all 9 ETags UNCHANGED from the staged set, no
+  re-stage since grounding): aggregate `aa5c5b85`/`cec5a0d6`/`c27e1f37`, non_model `8a195549`, A1 `529b7c21`,
+  A2 `f2c03476`, account_dist `865919f2`/`afb964c4`/`b946d836`. CTO same-set + HeadObject-all-9-live confirmed.
+- **DATA:** I independently ran CVO's mutant-proven Layer-3 gate MYSELF = PASS (B-basis consistent, 421/421);
+  3 battery legs green same-object + CVO adversarial 7/7 on DT. My limb is INDEPENDENT (not CTO's evidence) --
+  the first flip's chain shared a false premise; this one does not.
+- **RENDER:** CTO visual-confirmed BEFORE/AFTER pixels (sha 6287847c: Global continuous, 6 gaps bridged, 2x
+  axis, flat-grey intact, no false-dip); DEV surface-check + CI GREEN + SURFACE_ACK present.
+- **ROLLBACK:** ARMED + exercised BEFORE publish (--target, 409-avoided) -- my held condition MET.
+- **FE-FIRST** + window characterized GRACEFUL (DE) + minimized (publisher pre-populated) + CTO accept-window
+  call made.
+- **Verify-before-serve = HARD post-promote gate** (DE live-render + Andrew hover + CVO cycle-1; rollback
+  armed until CTO disarm).
+
+** COO NEVER-WIDEN CO-SIGN: GRANTED (re-land). ** 2 of 3 limbs signed (CTO + COO). Andrew's sovereign limb =
+the 3rd + the GO (CTO surfaces). The co-sign is NOT "ISSUED" (for DT's promote gate) until all 3 limbs; I
+signal DT PLAINLY only AFTER Andrew's sovereign limb.
+
 ## Verdict (as-of 180626Z, now HELD per above): CO-SIGN GRANTED — conditional on tested-rollback-before-publish
 
 All 5 cutover items independently verified NAMED + CORRECT serve-real, none a defect:
