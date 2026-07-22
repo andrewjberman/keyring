@@ -23835,3 +23835,9 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-grep | comp-grep fedobs_obs_findings (consumer trace, 23163 scanned) + views/tools sweeps | PASS |
 | 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/task_orders/MDPF_3FIRMS.3F-S3.cotton... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | 3F-S4 | empirical parquet x10, comp-pipescript io x6 (5/6 resolve; dynamic-key blind), comp-blast x6 (NOT-FOUND, monolith silver not graph nodes -- gap), comp-grep consumer sweep | contract committed: ZERO unmapped reads, 9 divergences dispositioned |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S4.cross-firm-silver-schema-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S4.cross-firm-silver-schema-parity | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/deli... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S4.cross-firm-silver-schema-parity | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
