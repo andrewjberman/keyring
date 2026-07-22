@@ -157,6 +157,22 @@ def _basis_decision(entry: dict, has_tcal: bool) -> str:
     return "frontier" if has_tcal else "unverifiable"
 
 
+def _pk_basis_route(entry, has_tcal: bool) -> str:
+    """Basis routing for PARTITION-KEY entries, pure + unit-testable (3F item-2, CTO GO 211849Z).
+    Returns 'explicit-flat' | 'frontier' | 'unverifiable' | 'flat'.
+    An EXPLICITLY declared non-frontier basis (BD-source-bound / serving-day) is a RULED semantic
+    (the cot CurrentDay adjudication) and is never overridden here -- those entries keep the
+    flat-hours verdict byte-identical. Everything else flows through _basis_decision, the same
+    fail-closed selector content-mode uses: declared frontier -> frontier; undeclared trading
+    artifact -> frontier-with-loud-note (or the unverifiable refusal without the calendar lib);
+    non-trading -> flat. The pre-patch behavior (unconditional flat-hours) was the docstring's
+    forbidden outcome: a declared trading-day-frontier basis silently ignored on the pk path."""
+    explicit = str(entry.get("freshness_basis") or "").strip()
+    if explicit and explicit != "trading-day-frontier":
+        return "explicit-flat"
+    return _basis_decision(entry, has_tcal)
+
+
 def _frontier_verdict(as_of_date, now, warn_tdb, fail_tdb, severity, tcal):
     """PURE trading-day-frontier verdict -> (status, tdb, expected_iso). Extracted so the mtime and
     content paths cannot drift AND so the Monday mutant is testable offline with a stub calendar.
@@ -794,7 +810,34 @@ def _evaluate_artifact(entry: dict, now: datetime.datetime,
         stamped_age_h = (now - stamped_dt).total_seconds() / 3600.0
         result["partition_as_of"] = max_date.isoformat()
         result["partition_age_h"] = round(stamped_age_h, 1)
-        result["status"] = _status_from_age(stamped_age_h, warn_h, fail_h, severity)
+        # Basis routing (3F item-2): the date-partition key of a trading artifact is a
+        # TRADING-DAY quantity -- verdict it on the frontier, not wall-clock hours, or a
+        # T-2-contract leg (cottonwood) false-alarms every weekend. Explicit non-frontier
+        # bases (BD-source-bound / serving-day) keep the flat verdict unchanged.
+        pk_route = _pk_basis_route(entry, _tcal is not None)
+        if pk_route == "frontier":
+            warn_tdb = entry.get("frontier_warn_trading_days", 2)
+            fail_tdb = entry.get("frontier_fail_trading_days")
+            status, tdb, frontier_iso = _frontier_verdict(
+                max_date, now, warn_tdb, fail_tdb, severity, _tcal)
+            result["status"] = status
+            result["trading_days_behind"] = tdb
+            result["frontier"] = frontier_iso
+            if entry.get("freshness_basis") != "trading-day-frontier":
+                result["basis_defaulted"] = True
+                result["notes"] = (result["notes"] + " | BASIS DEFAULTED to trading-day-frontier "
+                                   "(content is an AUM/holdings/trading quantity; declare "
+                                   "freshness_basis: trading-day-frontier to silence this "
+                                   "note)").strip(" |")
+        elif pk_route == "unverifiable":
+            result["status"] = "UNVERIFIABLE-BASIS"
+            result["notes"] = (result["notes"] + " | UNVERIFIABLE-BASIS: trading-day artifact "
+                               "but lib/trading_calendar.py is unavailable -- refusing a "
+                               "flat-wall-clock verdict (it would false-alarm every Monday). "
+                               "NOT a pass, NOT a fail: the basis could not be evaluated").strip(" |")
+            return result
+        else:
+            result["status"] = _status_from_age(stamped_age_h, warn_h, fail_h, severity)
         if result["status"] in ("FAIL", "WARN") and mtime_status == "PASS":
             result["notes"] = (result["notes"] + f" | MTIME-FRESH-BUT-PARTITION-STALE: mtime "
                                f"{result['age_h']}h PASS but MAX date-key {max_date.isoformat()} "
@@ -1395,6 +1438,51 @@ def _freshness_self_test() -> int:
     # the one outcome that must be UNREACHABLE: flat-hours on a trading artifact.
     ck("basis.trading_never_flat",
        _basis_decision(trade, has_tcal=True) != "flat" and _basis_decision(trade, has_tcal=False) != "flat")
+
+    # ARM 5 -- PARTITION-KEY BASIS ROUTING (3F item-2, CTO GO 211849Z; three bound cases).
+    # (i) a declared-basis pk entry gets the FRONTIER verdict, not flat: Friday partition read on
+    # Monday = tdb 1 = HEALTHY under frontier, while the same 65h age WARNs under flat 48h -- that
+    # differential IS the Monday mutant this patch exists for (NEVER#1, weekend false-alarm).
+    pk_declared = {"freshness_basis": "trading-day-frontier",
+                   "as_of_source": "silver-partition-key", "id": "x"}
+    ck("pk.declared_routes_frontier", _pk_basis_route(pk_declared, has_tcal=True) == "frontier")
+    st5, tdb5, _ = _frontier_verdict(friday, monday, warn_tdb=3, fail_tdb=4, severity="WARN", tcal=cal)
+    flat5 = _status_from_age((monday.replace(tzinfo=_dt.timezone.utc)
+                              - _dt.datetime(2026, 7, 10, tzinfo=_dt.timezone.utc)
+                              ).total_seconds() / 3600.0, 48, 96, "WARN")
+    ck("pk.monday_differential_frontier_pass_flat_warns",
+       st5 == "PASS" and flat5 != "PASS", f"frontier={st5} tdb={tdb5} flat={flat5}")
+    # (ii) the MUTANT: an UNDECLARED trading pk artifact must never silently flat-verdict --
+    # with the calendar it routes frontier (and the branch stamps the loud BASIS-DEFAULTED note);
+    # without the calendar it is the UNVERIFIABLE refusal, never silence.
+    pk_mutant = {"as_of_source": "silver-partition-key", "id": "cot_silver_holdings_mutant"}
+    ck("pk.mutant_undeclared_trading_never_flat",
+       _pk_basis_route(pk_mutant, has_tcal=True) == "frontier"
+       and _pk_basis_route(pk_mutant, has_tcal=False) == "unverifiable")
+    # (iii) REGRESSION SWEEP over EVERY existing entry in all four shipped configs: an entry with
+    # an EXPLICIT non-frontier basis must route 'explicit-flat' (verdict byte-identical pre/post
+    # patch); an entry declaring the frontier basis routes 'frontier'. Denominator printed --
+    # a sweep that scanned nothing must not read as a pass.
+    swept, viol = 0, []
+    try:
+        import yaml as _y
+        for _cfgp in (BD_CONFIG, INF_CONFIG, COT_CONFIG, SERVED_CONFIG):
+            if not _cfgp.exists():
+                continue
+            for _e in (_y.safe_load(_cfgp.read_text()) or []):
+                if not isinstance(_e, dict):
+                    continue
+                swept += 1
+                _explicit = str(_e.get("freshness_basis") or "").strip()
+                _r = _pk_basis_route(_e, has_tcal=True)
+                if _explicit and _explicit != "trading-day-frontier" and _r != "explicit-flat":
+                    viol.append((_e.get("artifact_id"), _explicit, _r))
+                if _explicit == "trading-day-frontier" and _r != "frontier":
+                    viol.append((_e.get("artifact_id"), _explicit, _r))
+        ck("pk.regression_sweep_no_behavior_change",
+           swept > 0 and not viol, f"swept={swept} entries, violations={viol}")
+    except Exception as _ex:  # a sweep that cannot run is a FAIL, not a skip
+        ck("pk.regression_sweep_no_behavior_change", False, f"sweep unrunnable: {_ex}")
 
     ok = all(results)
     print("\n" + ("OK: all fail-closed-basis cases pass" if ok else "ERROR: fail-closed-basis FAILED"))
