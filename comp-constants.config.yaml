@@ -6,6 +6,10 @@
 #
 # Schema:
 #   search_surfaces: {<lane>: [<glob>, ...]}
+#   file_lanes:      {<lane>: [<glob>, ...]}   per-FILE lane for shared trees no surface covers
+#   sovereign_held_markers: [<substring>, ...] OPTIONAL. Declares a sovereign hold; comp-constants
+#                    then REFUSES (exit 3) any full scan whose search_surfaces name a held path.
+#                    ABSENT = no hold (the 2026-07-09 49F/Schwab/bd hold was lifted 2026-07-14).
 #   constants:
 #     - name: ALL_CAPS_NAME
 #       lane: bd|inf|multifirm
@@ -13,6 +17,15 @@
 #       canonical_value: <repr>
 #       sites: [{file, line, value, env_backed?, drift?, language?}, ...]
 #       notes: <str>
+file_lanes:
+  # Per-FILE lane declarations for producers living in SHARED trees that no lane search_surface
+  # covers. data/assets/scripts/gold/ holds producers for several firms, so a directory-level rule
+  # there would silently re-home one firm's producer under another firm's canonical -- these must be
+  # declared per file. Adding a firm's producer here is a FIRM-ONBOARDING step (pre-FIRMSEP.10
+  # sequence), not a data fold. A file listed nowhere is reported UNRESOLVED-LANE, never compared.
+  cot:
+  - data/assets/scripts/gold/build_cottonwood_mdpf_slice.py
+
 search_surfaces:
   bd:
   - data/black_diamond/scripts/**/*.py

@@ -23,7 +23,7 @@ import ast
 import re
 import sys
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 import yaml
 
@@ -195,11 +195,34 @@ def _path_lane(path_norm: str, lane_paths: dict[str, set[Path]]) -> str | None:
     return None
 
 
+def _declared_file_lane(file_path: Path, config: dict) -> str | None:
+    """Resolve a lane for a file that no search_surface glob matched, from the
+    config's `file_lanes:` block ({lane: [glob, ...]}).
+
+    WHY THIS EXISTS: a file in a SHARED tree (e.g. data/assets/scripts/gold/, which
+    holds producers for several firms) has no lane derivable from its directory --
+    a directory rule there would be actively WRONG, silently re-homing one firm's
+    producer under another firm's canonical. Such a file's lane must be DECLARED.
+    Firm onboarding is an explicit registration step, not an inference.
+    """
+    try:
+        rel = str(file_path.relative_to(WORKSPACE_ROOT)).replace("\\", "/")
+    except ValueError:
+        rel = str(file_path).replace("\\", "/")
+    for lane, patterns in (config.get("file_lanes") or {}).items():
+        for pat in patterns or []:
+            if PurePosixPath(rel).match(str(pat).replace("\\", "/")):
+                return lane
+    return None
+
+
 def scan_all(config: dict, only_file: Path | None = None) -> dict[tuple[str, str | None], list[Site]]:
     """Scan all configured search_surfaces; return {(name, lane): [Site, ...]}.
 
-    Lane is determined by which search_surfaces glob the site file matched.
-    If only_file is given, lane is None (caller filters).
+    Lane is determined by which search_surfaces glob the site file matched, falling
+    back to an explicit `file_lanes:` declaration. A file matching neither keys under
+    lane None -- UNRESOLVED, which cmd_check reports rather than comparing (comparing
+    an unresolved file against every lane is what produced the false-drift class).
     """
     lane_paths = _expand_search_surfaces(config)
     file_to_lane: dict[Path, str] = {}
@@ -214,7 +237,9 @@ def scan_all(config: dict, only_file: Path | None = None) -> dict[tuple[str, str
         files = sorted(file_to_lane.keys())
 
     for fp in files:
-        lane = file_to_lane.get(fp)  # may be None for --file outside any surface
+        lane = file_to_lane.get(fp)
+        if lane is None:
+            lane = _declared_file_lane(fp, config)  # shared-tree files declare their lane
         for name, site in extract_constants(fp):
             by_key.setdefault((name, lane), []).append(site)
     return by_key
@@ -300,16 +325,40 @@ def cmd_check(args: argparse.Namespace, config: dict) -> int:
             continue
         if only_lane is not None and lane != only_lane:
             continue
-        # Pull only sites scanned under this constant's lane
+        # Pull only sites scanned under this constant's lane.
+        #
+        # The removed line here was `if only_file is not None: sites += scanned[(name, None)]`.
+        # A --file target outside every search_surface resolved to lane None, and that line fanned
+        # its sites against EVERY lane's canonical for that name -- so with FIRM_ID registered in
+        # bd/inf/cot, any single file necessarily "drifted" from the two firms it is not. It reported
+        # DRIFT: 2 on a CORRECT file and, with >=2 canonicals, could not do otherwise: a genuinely
+        # new firm was unrepresentable. Unresolved sites are now REPORTED (below), never compared.
         sites_for_const = scanned.get((name, lane), [])
-        # If --file specified, only_file's lane-key is None (it bypasses surface filter)
-        if only_file is not None:
-            sites_for_const = scanned.get((name, None), []) + sites_for_const
         for s in sites_for_const:
             checked_sites += 1
             checked_names.add(name)
             if not _values_equivalent(s.value, canonical_value):
                 drifts.append((name, s, canonical_value))
+
+    # UNRESOLVED-LANE census. A file matching no search_surface and no file_lanes declaration has an
+    # undetermined lane, so NO canonical applies to it. That is a COVERAGE gap ("I did not check this"),
+    # NOT a drift finding ("I checked and it is wrong") -- conflating the two in either direction is the
+    # bug this replaced. It is therefore LOUD but NON-BLOCKING: 57 files estate-wide are in this state,
+    # so blocking would wedge the commit gate, while silence would report unchecked as clean.
+    #
+    # WRITTEN TO STDERR ON PURPOSE: commit_gate_runner._comp_constants_check captures stdout and prints
+    # it ONLY when rc != 0, so a stdout advisory would be swallowed at the one place it must be seen.
+    tracked = {c["name"] for c in config.get("constants", []) if c.get("canonical_value") is not None}
+    unresolved = [(n, s) for (n, ln), sites in scanned.items() if ln is None and n in tracked
+                  for s in sites]
+    if unresolved:
+        sys.stderr.write(
+            "UNRESOLVED-LANE: %d tracked constant-site(s) NOT CHECKED -- no search_surface or "
+            "file_lanes declaration resolves a lane for them, so no canonical applies:\n" % len(unresolved))
+        for n, s in sorted(unresolved, key=lambda t: (t[1].file, t[1].line)):
+            sys.stderr.write(f"  {s.file}:{s.line} :: {n} = {s.value}\n")
+        sys.stderr.write(
+            "  -> declare the file's lane under `file_lanes:` in the config to bring it under the gate.\n")
 
     if not drifts:
         if only_file is None:
@@ -318,8 +367,16 @@ def cmd_check(args: argparse.Namespace, config: dict) -> int:
         elif checked_sites:
             # CC1: --file previously printed NOTHING on a clean result, so rc0 was silently
             # ambiguous between "checked, all clean" and "no tracked constant here". Disambiguate.
+            suffix = f"; {len(unresolved)} site(s) UNRESOLVED, not checked" if unresolved else ""
             print(f"OK: no drift -- checked {checked_sites} tracked constant-site(s) "
-                  f"({len(checked_names)} constant(s)) in {args.file}")
+                  f"({len(checked_names)} constant(s)) in {args.file}{suffix}")
+        elif unresolved:
+            # NOT "no tracked constants found" -- they were found, they were just not CHECKABLE.
+            # Saying "nothing to check" here would report an unresolved file as a clean one, which is
+            # the same did-not-look-rendered-as-looked-and-fine collapse this whole change removes.
+            print(f"UNCHECKED: {len(unresolved)} tracked constant-site(s) found in {args.file} but "
+                  f"NOT checked -- lane unresolved (see UNRESOLVED-LANE on stderr). This is a coverage "
+                  f"gap, not a clean result.")
         else:
             print(f"OK: no tracked constants found in {args.file} -- "
                   f"0 of {len(config.get('constants', []))} config constant(s) appear here, nothing to check")
@@ -430,25 +487,56 @@ def cmd_list(args: argparse.Namespace, config: dict) -> int:
 # C7: derived from sovereign_held (path markers + bucket prefixes) -- preserves the historical CONFLATED
 # set (comp_constants matches both path + bucket substrings). Superset of the old 4 (adds the more-specific
 # data/canonical/schwab/silver/, redundant with schwab/silver/) -> behavior-preserving.
-SOVEREIGN_HELD_MARKERS = tuple(_HELD_PATHS) + tuple(_HELD_BUCKETS)
+#
+# LIFTED 2026-07-22 (0.8.0_AE_CloudComp), executing the Andrew-direct retraction of 2026-07-14 ~03:3xZ to
+# COO, verbatim: "Oh that is retarded, 49 is back on the menu now, take the sovereign block off completely,
+# that is no excuse to not verify the work."  The tuple below WAS the 2026-07-09 49F/Schwab/bd sovereign
+# block; it lifts with it. This mirrors .tools/_comprail.py:230 (HELD_PREFIXES = ()), which 1.0.0_SA_CTO
+# lifted on 2026-07-14 -- that file's own comment names "the comp-constants CC2 guard" as its mirror, and
+# the mirror was missed, so this guard kept enforcing a dead prohibition for 8 days. It refused EVERY
+# full-scan mode (bare check, --lane <any>, new, index) for ALL lanes -- bd's 12 and inf's 11 registered
+# constants had no working drift gate, and `index`/`new` were dead. Only `check --file` survived, which is
+# why the commit gate kept working and nobody noticed.
+#
+# THE GUARD MACHINERY STAYS: a future hold is a one-line re-add here (re-point at the retained tuple), and
+# --allow-held-scan / the REFUSE paths keep working unchanged. The INF-chain hold is a SEPARATE mechanism
+# (frozen individual FILES + Door 5/6) and is deliberately not expressible here. Firm separation
+# (NEVER#2 / Rule 13) is a DIFFERENT control, gate- and IAM-enforced, and is untouched by this lift.
+_RETRACTED_20260709_MARKERS = tuple(_HELD_PATHS) + tuple(_HELD_BUCKETS)  # retained for re-arm; NOT enforced
+SOVEREIGN_HELD_MARKERS: tuple[str, ...] = ()
+
+
+def _active_held_markers(config: dict) -> tuple[str, ...]:
+    """The markers this invocation enforces. A config may DECLARE a hold via
+    `sovereign_held_markers:`; otherwise the module default applies (currently ()
+    -- retracted 2026-07-14, see SOVEREIGN_HELD_MARKERS above).
+
+    This is the re-arm surface: it keeps the guard MACHINERY exercisable (and
+    testable) after the 2026-07-09 hold was lifted, so a future hold is a
+    declaration rather than a rebuild. A guard you cannot re-arm is not a fix."""
+    declared = config.get("sovereign_held_markers")
+    if declared:
+        return tuple(str(m) for m in declared)
+    return SOVEREIGN_HELD_MARKERS
 
 
 def _held_surface_hits(config: dict) -> list[tuple[str, str]]:
     """Return [(lane, glob_pattern), ...] for every search_surface glob naming a
     sovereign-held path. Pure STRING check on the config patterns -- it does NOT
     glob or read any file, so calling it never touches a held path."""
+    markers = _active_held_markers(config)
     hits: list[tuple[str, str]] = []
     for lane, patterns in (config.get("search_surfaces") or {}).items():
         for pat in patterns or []:
             norm = str(pat).replace("\\", "/")
-            if any(m in norm for m in SOVEREIGN_HELD_MARKERS):
+            if any(m in norm for m in markers):
                 hits.append((lane, str(pat)))
     return hits
 
 
-def _held_path_hit(path_norm: str) -> str | None:
+def _held_path_hit(path_norm: str, config: dict | None = None) -> str | None:
     """Return the first held marker that path_norm falls under, else None."""
-    for m in SOVEREIGN_HELD_MARKERS:
+    for m in _active_held_markers(config or {}):
         if m in path_norm:
             return m
     return None
@@ -474,7 +562,7 @@ def _sovereign_guard(args: argparse.Namespace, config: dict) -> None:
     if cmd == "check" and only_file:
         # scan is scoped to this one file; refuse only if the file itself is held.
         norm = str(Path(only_file)).replace("\\", "/")
-        m = _held_path_hit(norm)
+        m = _held_path_hit(norm, config)
         if m:
             sys.stderr.write(
                 "REFUSE: SOVEREIGN-HELD -- --file target is under held path '%s'. comp-constants "

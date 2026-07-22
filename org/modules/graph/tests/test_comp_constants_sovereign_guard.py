@@ -26,7 +26,17 @@ import pytest
 _CLI = Path(__file__).resolve().parents[1] / "comp_constants_cli.py"
 _SRC = _CLI.read_text(encoding="utf-8")
 
+# The fixture config DECLARES the hold via `sovereign_held_markers:`. Before the 2026-07-14 retraction
+# these tests leaned on the module's live marker tuple; that coupled the MECHANISM tests to a specific
+# live PROHIBITION, so the suite would have failed the retraction and re-argued a hold Andrew had already
+# lifted. Declaring the markers in the fixture tests the machinery WITHOUT asserting any live hold --
+# and doubles as the re-arm proof: this is exactly how a future hold is declared.
 _HELD_CONFIG = textwrap.dedent("""\
+    sovereign_held_markers:
+    - data/black_diamond/
+    - schwab/silver/
+    - opal-data-bd
+    - opal-data-schwab
     search_surfaces:
       bd:
       - cc2_nonexistent/data/black_diamond/scripts/**/*.py
@@ -54,12 +64,47 @@ def held_cfg(tmp_path) -> Path:
 
 # ---- STATIC: the guard exists and is wired ---------------------------------
 
-def test_markers_cover_the_sovereign_held_paths():
-    # C7 consolidation: the marker literals moved out of this module's SOURCE into the canonical leaf
-    # (sovereign_held); comp_constants now DERIVES SOVEREIGN_HELD_MARKERS from it. Check the RUNTIME tuple.
+def test_live_default_is_RETRACTED_not_enforcing():
+    """The 2026-07-09 49F/Schwab/bd hold was LIFTED COMPLETELY by Andrew on 2026-07-14. This test
+    REPLACED one that asserted those markers were PRESENT -- i.e. a test that would have failed the
+    retraction and re-argued a prohibition the sovereign had already withdrawn. A control must not
+    outlive the rule it enforces, and must never resist its own removal."""
     from org.modules.graph.comp_constants_cli import SOVEREIGN_HELD_MARKERS
+    assert SOVEREIGN_HELD_MARKERS == (), (
+        "the 2026-07-09 hold is RETRACTED; comp-constants must enforce no markers by default")
+
+
+def test_retracted_markers_are_RETAINED_so_the_guard_can_be_re_armed():
+    """A guard you cannot re-arm is not a fix, it is a removal. The lifted set stays in source so a
+    future hold is a one-line re-point, not a rebuild."""
+    from org.modules.graph.comp_constants_cli import _RETRACTED_20260709_MARKERS
     for marker in ("data/black_diamond/", "schwab/silver/", "opal-data-bd", "opal-data-schwab"):
-        assert marker in SOVEREIGN_HELD_MARKERS, f"SOVEREIGN_HELD_MARKERS must include {marker!r}"
+        assert marker in _RETRACTED_20260709_MARKERS, f"re-arm set must retain {marker!r}"
+
+
+def test_guard_MECHANISM_still_fires_when_a_hold_is_declared(held_cfg):
+    """The machinery is intact: declare markers and the guard refuses exactly as before. This is the
+    property the retired assertion was really protecting -- separated from any live prohibition."""
+    rc, _out, err = _run(held_cfg, "check")
+    assert rc == 3 and "SOVEREIGN-HELD" in err, "a DECLARED hold must still REFUSE (exit 3)"
+
+
+def test_no_hold_declared_means_no_refusal(tmp_path):
+    """The negative control the old suite never had: with no declared markers, a config naming a
+    formerly-held surface must NOT refuse. Without this, 'the guard is off' was untested."""
+    cfg = tmp_path / "unheld.yaml"
+    cfg.write_text(textwrap.dedent("""\
+        search_surfaces:
+          bd:
+          - cc2_nonexistent/data/black_diamond/scripts/**/*.py
+        constants:
+        - name: FIXTURE_CONST
+          lane: bd
+          canonical_value: "'x'"
+        """), encoding="utf-8")
+    rc, _out, err = _run(cfg, "check")
+    assert rc != 3, f"no declared hold must not REFUSE; got rc={rc} err={err!r}"
+    assert "SOVEREIGN-HELD" not in err
 
 
 def test_guard_is_called_in_main_before_dispatch():
@@ -120,11 +165,24 @@ def test_allow_held_scan_overrides_with_a_loud_warn(held_cfg):
 # ---- SAFETY: the tests themselves never trigger a real bd scan -------------
 
 def test_fixtures_never_hit_real_bd():
-    """Guard-rail on the guard's OWN tests: the held pattern is the non-existent fixture
-    sentinel, never the repo's real data/black_diamond tree."""
-    assert "cc2_nonexistent/data/black_diamond/" in _HELD_CONFIG
-    for line in _HELD_CONFIG.splitlines():
-        stripped = line.strip()
-        if "data/black_diamond/" in stripped:
-            assert stripped.startswith("- cc2_nonexistent/"), \
-                f"a held fixture pattern must be the non-existent sentinel, got {stripped!r}"
+    """Guard-rail on the guard's OWN tests: no fixture pattern may glob the repo's real
+    data/black_diamond tree.
+
+    SHARPENED 2026-07-22: this asserted on raw config LINES, which cannot tell a glob PATTERN
+    (globbed -> touches the filesystem) from a `sovereign_held_markers:` entry (an inert substring
+    the guard string-matches, never globbed). It fired on the marker declaration added with the
+    retraction. Parsing the YAML and asserting on search_surfaces -- the only key whose values are
+    ever globbed -- is STRICTLY STRONGER than the prefix heuristic it replaces: it now checks EVERY
+    surface pattern, not just lines that happen to mention black_diamond."""
+    import yaml
+    cfg = yaml.safe_load(_HELD_CONFIG)
+    patterns = [p for pats in (cfg.get("search_surfaces") or {}).values() for p in (pats or [])]
+    assert patterns, "fixture must declare search_surfaces or this test asserts nothing"
+    assert any("data/black_diamond/" in p for p in patterns), \
+        "fixture must still exercise a held-looking surface, else the guard test is vacuous"
+    for p in patterns:
+        assert p.startswith("cc2_nonexistent/"), \
+            f"every fixture GLOB pattern must be the non-existent sentinel, got {p!r}"
+    # The markers block is inert by construction: _held_surface_hits() string-matches it against the
+    # patterns above and never globs it. Assert it is not mistaken for a surface.
+    assert "data/black_diamond/" not in patterns
