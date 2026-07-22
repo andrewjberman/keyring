@@ -176,6 +176,34 @@ briefings I'd propagated without grounding):**
 - METHOD note to self: I propagated both errors by inheriting a framing instead of grounding it -- the SAME
   transcription failure as the stale pin. Ground the claim on your own run, then state it.
 
+## RE-LAND STAGED CO-SIGN -- DATA-GATE INDEPENDENTLY VERIFIED ON MY OWN RUNS (2026-07-22 ~05:55Z)
+
+CTO: re-land DATA GATE PASSED (B-basis fixed data, frozen c27e1f37 set, 3 battery legs green + CTO HeadObject
+same-set). Per the lesson (I transcribed a stale pin + rested on an unverified data gate the first time), I
+grounded my OWN limb BEFORE staging -- not CTO's evidence:
+
+**MY OWN GROUNDING:**
+- ListObjectsV2 opal-data-assets/gold/mdpf_revamp/ -> the 6 composition-affected keys CHANGED (fixed, lastmod
+  05:23Z today), the 3 account_dist keys UNCHANGED (correct -- the composition fix did not touch them). New
+  coherent-9 pin:
+    aggregate: 49f `aa5c5b85` / inflection `cec5a0d6` / global `c27e1f37` (== CTO's named frozen set; != the
+      holed `1b52211f`)
+    A4 non_model: `8a195549` | A1 aum-metrics: `529b7c21` | A2 aum-timeseries: `f2c03476`
+    account_dist: 49f `865919f2` / inflection `afb964c4` / global `b946d836` (unchanged, composition-independent)
+- Ran CVO's mutant-proven Layer-3 gate (@f3c202256) MYSELF vs the live c27e1f37 data: **GATE VERDICT = PASS**
+  (B-basis enterprise composition consistent; denominator global_dates=427 checked=421 honest_none_verified=6
+  absence_agreement_checks=1281). Self-test first confirmed instrument integrity (clean-B PASS + fold-in / drop /
+  unverified-None / partial-row RED). MY OWN run, not transcribed.
+- B-basis resolved (Andrew A/B ruling): non_model == 49F-only; inflection cohort-2b EXCLUDED from headline. The
+  total now ties its stated components -> internally consistent. The exclusion is an INTENTIONAL BASIS
+  (Andrew-ruled), NOT the earlier defect (which was total-vs-displayed-component mismatch).
+
+**CO-SIGN STAGED, pinned to the new coherent-9 above.** FIRES when CTO brings the COMPLETE assembled package:
+data-gate evidence (independently verified above) + FE-assembled (DE 2x + content-A/B, DEV-surface-green) +
+ROLLBACK-ARMED-BEFORE-PUBLISH + publisher/routing plan + FE-FIRST ordering (the half-landed lesson). Then
+CTO+COO co-sign -> Andrew sovereign limb -> verify-before-serve cycle-1. New re-land ledger (per AE); the
+mdpf-exact9-cutover ledger closes as rolled-back.
+
 ## Verdict (as-of 180626Z, now HELD per above): CO-SIGN GRANTED — conditional on tested-rollback-before-publish
 
 All 5 cutover items independently verified NAMED + CORRECT serve-real, none a defect:
