@@ -23841,3 +23841,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S4.cross-firm-silver-schema-parity | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S4.cross-firm-silver-schema-parity | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/deli... | PASS |
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S4.cross-firm-silver-schema-parity | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-07-22/3fs3_stop_first_then... | PASS |
+- 2026-07-22 1.0.0_SA_CTO (2005-2110Z): comp-pulse risk-reflex x12 via safe-commit (1 HOLD on .tools/aws, citation read, proceeded); comp-surface-check x12 PASS; AWS_SHIM_DEBUG 3-control + behavioral exercise on the lone-/ fix. No standalone comp-which/grep -- governance/routing window (PRD v1.3->v1.13 amendments + MCP rulings); Rule-20 graph checks ride the implementing B/S-lane TOs.
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-22/c... | PASS |
