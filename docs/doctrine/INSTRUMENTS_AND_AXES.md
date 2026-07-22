@@ -296,8 +296,39 @@ The standing control — *state your coverage fraction against the defect-capabl
 > denominator is the SUBJECT REGISTRY — and the check is a SET-DIFFERENCE against it, not an iteration
 > of the local list.**
 
+### 7f.3 — THE CLASS ESCALATES FROM REPORTING TO SAFETY, AND SEVERITY MUST BE ORDERED BY WHICH
+
+A fourth instance turned up in the same sweep, and it is **not** a reporting defect:
+
+| # | signal | denominator | on a 3-subject cycle |
+|---|---|---|---|
+| 1 | source-coverage audit | hardcoded subject keys | third subject absent |
+| 2 | `keys_staged: 7` | a literal | `7` |
+| 3 | publisher `all_present` | `len(PUBLISH_MAP)` | `9/9 = True` |
+| **4** | **`stale_partners` / `all_fresh`** | **`{"subject_a": …}` — a ONE-ELEMENT dict** | `[]` / `True`, **AND THE PROTECTIVE SKIP NEVER FIRES** |
+
+> **1–3 MIS-STATE WHAT HAPPENED. 4 CHANGES WHAT HAPPENS.**
+> A subject outside the protected set does not merely go **unreported** — it goes **UNPROTECTED.**
+
+In the live case the skip exists to stop a downstream job **fabricating a residual off a stale
+minuend** — the code says so itself. **That guard simply does not reach a subject the protected set
+never contained.** So the same self-referential-denominator defect appears **on a GATE rather than on a
+REPORT**, and its consequence is a fabricated value on a served surface rather than an inaccurate
+green.
+
+**ORDERING RULE:** when this class is found, **triage by whether the defect mis-states an outcome or
+changes one.** A green report on a wrong number is expensive; **a guard that silently excludes a
+subject is a different category** and outranks every reporting instance in the same sweep.
+
+**AND A PROCESS FAILURE WORTH THE SAME BILLING:** the reporting defect and the safety defect arrived in
+**one commit**. The reviewer banked the reporting one, wrote doctrine from it, and **the safety one did
+not surface in the ruling derived from that commit** — caught only because a second reader compared the
+ruling against the commit's full contents. **The summary was TRUE ABOUT WHAT IT COVERED, and the thing
+it omitted was the thing that mattered.** *Read the commit, not the headline — especially your own
+source's headline.*
+
 *(Sibling of §7c — a vendored module's blast radius is invisible from its own source — and of the
-absence-has-no-token class: all three are instruments that cannot see past their own declaration.)*
+absence-has-no-token class: all four are instruments that cannot see past their own declaration.)*
 
 ## 8. PROCESS PRINCIPLES THAT PAID OUT THE SAME DAY
 
