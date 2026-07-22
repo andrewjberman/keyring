@@ -49,6 +49,44 @@ closed by earlier rulings — the durable-carrier discipline paying off.)*
 **Ordering law: DECISIONS → ENUMERATION-TO-EXIT → BUILD → WIRE → EMIT → PIN → CO-SIGN → FLIP.
 Every inversion attempted today cost a re-do.**
 
+### S0 — **JULY SOURCE COMPLETENESS PER CHANNEL** *(Andrew-direct ~1612Z/~1615Z; owner `0.6.2_AE_PartnerETL~A`; UPSTREAM OF EVERYTHING)*
+**Andrew-direct, VERBATIM:** *"we should have complete data every single day of July thus far aside from
+weekends (4 and 5, 11 and 12, 18 and 19) and July 3."* / *"That is step 1, making sure we have complete data
+for July for each channel."* / *"Ok yes, have 0.6.2 do the Inflection repull"*
+**This is a SOVEREIGN CARVE-OUT of the planning hold — directed during it, so latest binds. The plan does not
+survive incomplete inputs; this precedes S1.**
+
+**MEASURED (CTO, 1614Z) against the 15 expected trading days — Jul 1, 2, 6-10, 13-17, 20-22:**
+| channel | source | July |
+|---|---|---|
+| Inflection | `eclipse fact_portfolios_full` | **MISSING 07-01, 07-13, 07-14, 07-15** |
+| Inflection | `orion fact_assets` | **MISSING 07-13, 07-14, 07-15** |
+| 49F | `smartx fact_model_aum_daily` | **COMPLETE 07-01 → 07-21** |
+| 49F | `schwab 0824 fact_rps_s2` | complete except today |
+| Cottonwood | `fact_holdings` | through 07-20 |
+| Cottonwood | `fact_model_assignment` | **only 07-21, 07-22** — Rebalancer is live-state with NO history; **not an ingest failure and not recoverable by re-pull** |
+
+> **THE DISPOSITION-CHANGING FINDING: ECLIPSE AND ORION ARE INDEPENDENT VENDORS MISSING THE IDENTICAL THREE
+> DAYS.** Two simultaneous 3-day outages at two unrelated providers on exactly the same dates is not the
+> likely explanation — **the common factor is almost certainly OUR INGEST, which makes the data probably
+> RECOVERABLE.** *(CTO had previously told Andrew this was a vendor gap needing re-delivery. That reading is
+> superseded.)* **07-01 is ECLIPSE-ONLY — a DIFFERENT shape. Two findings are likely, not one.**
+**ORDER: ground the mechanism BEFORE pulling** (Rule 22 — ingest scheduler history, logs, DLQ, the bronze
+beneath both silvers). **Guardrails:** bronze **additive-only, never overwrite** (17a); **verify ABSENT, not
+present-but-empty** *(an empty artifact was proven today to read as CLEAN, rc=0, on a real gate)*;
+positive-controlled listing (`CommonPrefixes` returned `None` where prefixes existed, this estate, today);
+**no new vendor wire without CTO word**; **NO REBUILD** — a source re-pull does not touch
+`gold/mdpf_revamp/*`, which stays a checkpoint under the held co-sign.
+
+> ### ⚠ INSTRUMENT CAUTION, EARNED — CTO NEARLY REPORTED A FALSE 8-DAY GAP
+> My first pass reported **smartx missing EIGHT July days. That was the instrument, not a gap.**
+> `fact_model_aum_daily` is partitioned by **RUN_DATE** and carries **FULL HISTORY inside each partition**
+> (one partition = 1,225 data days back to 2021, incl. all 14 July trading days through the 21st). **I was
+> counting run-date folders and calling them data dates.**
+> **BEFORE TREATING A MISSING PARTITION AS MISSING DATA, ESTABLISH WHETHER THE TABLE IS DATA-DATE OR
+> RUN-DATE PARTITIONED.** Had it shipped, it would have been a false hole on the exact firm Andrew had just
+> questioned — **a wrong number that lands on a real suspicion is the most persuasive kind.**
+
 ### S1 — FINISH PHASE 0 TO ITS ACTUAL EXIT *(owner DE; gates all build)*
 **Phase 0's exit is NOT met and must not be reported as met.** The population has **THREE** axes
 *(amended 1556Z — it was two; the third was proved by the IAM finding in S1b)*:
@@ -66,7 +104,41 @@ Every inversion attempted today cost a re-do.**
   config maps, `FIRM_CONFIG`-style dicts — **take the list and DIFF it against the real firm population.**
   Cheap: the lists are few and short. **It is the only axis that can close the enumeration.**
 
-**EXIT CRITERION: THREE STATED FRACTIONS, NEVER BLENDED.** Axis A a search denominator; **axis B a READ
+- **D · ENCODING BY ALIAS** *(added 1610Z — CVO falsified A11 and found this)*: **a firm that IS enumerated,
+  under a token from a DIFFERENT NAMESPACE.**
+  > **AXIS C'S INSTRUMENT, AS I SPECIFIED IT, DOES NOT MERELY MISS THIS — IT MISREPORTS IT.**
+  Of the five ARNs in `AssetsRevampSilverRead`, **two name no firm at all**: `smartx/platform` is a
+  **platform**, `schwab/08242234` is a **custodial account number**. Both are 49financial. **So a naive
+  set-difference reports `cottonwood ABSENT` (true) AND `49financial ABSENT` (FALSE) — indistinguishable in
+  the output.** Axes A and B fail **silent**; **axis C fails LOUD AND WRONG**, and a census that flags a firm
+  which is actually wired is one somebody "fixes" by adding a grant that already exists.
+  **This is the estate's declared grammar, not an accident** — `monolith.tf:22-32`, `{source}/{scope}/{layer}`,
+  where **`scope` is heterogeneous BY DESIGN** (account numbers · platform · firm · ticker). *Segment 2 is
+  SCOPE; firm is only sometimes the scope.*
+  **AND THE RESOLVER THIS NEEDS HAS TWO MAPPINGS THAT ARE NOT FUNCTIONS:** `blackdiamond` → firm is
+  **ONE-TO-MANY** (49financial via `bd`, cottonwood via `blackdiamond/cottonwood/**`); and
+  `schwab/{account}` → firm is **MANY-TO-ONE — and collapsing it would destroy a control we deliberately
+  built.** `router_iam.tf:173-177` enumerates the two masters individually *"so no single identity can write
+  both trees and 'do not commingle 0824 and 0833' becomes a property of the ROLE."* **A resolver mapping both
+  0824 and 0833 to `49financial` erases exactly the distinction that control exists to enforce, and collides
+  with Andrew's two standing prohibitions (never SUM, never SUBSTITUTE).**
+
+**~~EXIT CRITERION: THREE STATED FRACTIONS~~ — REPLACED 1610Z. A11 FAILED.**
+**The old second limb ("is the list-of-lists bounded?") was the WRONG QUESTION.** It is answerable and
+probably *yes*, and closure does not depend on it. **Closure depends on: (i) are the NAMESPACES through which
+the estate can name a firm bounded and enumerated, and (ii) is each namespace→firm resolver TOTAL and
+LAW-PRESERVING?** CVO grounded **seven namespaces from three files without looking hard** — firm-id ·
+short-code (`bd`/`inf`/`cot`) · scope · vendor/source · custodian+account · bucket name (`main.tf:56-61`,
+**no `cot_bucket`** — a genuine axis-C instance) · portal `firmId`. **Seven is not established as all of them,
+and THAT is the open question S1's exit now rests on.**
+
+**NEW EXIT CRITERION FOR AXIS C/D (CVO's, adopted):** *C is closed when (1) the firm-naming namespaces are
+enumerated with a STATED METHOD, (2) each list is RESOLVED into a common namespace before differencing, and
+(3) every entry that CANNOT be resolved is reported as **UNRESOLVED** — never silently dropped, never assumed
+firm-agnostic.* **(3) is the load bearer: an unresolvable entry silently dropped is precisely how
+`smartx/platform` becomes "not a firm list" and the census returns clean.**
+
+**EXIT CRITERION: FOUR STATED FRACTIONS + AN UNRESOLVED COUNT, NEVER BLENDED.** Axis A a search denominator; **axis B a READ
 fraction** (currently **10% / 33% / 31%** on the three densest — the 10% being
 `dim_mdpf_aggregate_aua_timeseries.py`, home of `build_global_artifact`); **axis C a set-difference over every
 enumerated-subject list.**
@@ -104,6 +176,12 @@ that exists sits under `blackdiamond/cottonwood/`. **D5's ruling therefore has a
   `build_global_artifact` to the **N-firm fold** (D3); `--firm` choices; `want` sets. **Cottonwood joins the
   existing trading-day axis (R2).** Apply D6: merge CG→LTC, Income→non-model.
 - **S2b · DS** — the **third audit leg** for cottonwood, **report-only** (D2).
+  > **⚠ CVO side-finding (exercised, 1603Z): AN EMPTY ARTIFACT READS AS CLEAN.** `audit_inflection()` against
+  > an artifact with `dates: []` returns **`rc=0`** with *"no disagreement on the audited dates"* — while the
+  > docstring promises `2` on an instrument problem. **The human-readable output IS honest (`0 date(s)
+  > audited`, `0 of 0`); an `rc`-only consumer is blind to exactly that.** **BINDING: the `cycle_complete`
+  > fold in 1e must gate on the COVERAGE NUMBERS, not on `rc` alone — otherwise a cycle that produced NOTHING
+  > is indistinguishable from a cycle that produced something clean. The fix must be IN the fold, not after it.**
 - **S2c · DE** — FE: cottonwood in `ALL_MDPF_PARTNER_FIRMS`; `STACK_SERIES` generalised if the render
   confirms; the `$0`/"rolled forward" fixes already landed (`08c6d8b2`).
 
