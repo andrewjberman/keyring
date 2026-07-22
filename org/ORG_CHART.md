@@ -308,6 +308,18 @@ exec dyad so base execs can stay on the broader Opal portfolio.
 > `NFRA_COMP*` projects exist. **"The program is over" is true of the DYAD'S project only — the grants are
 > scoped to the serials, not to the tree.**
 >
+> **PROVENANCE NOTE (this block's own `git log` is misleading — read this, not the blame).** The
+> `3.1.0_SA_CVO` row and this entire dyad-status block were **authored by `1.0.0_SA_CTO`** on 2026-07-22, but
+> the commit that first added them is **`0da685f2b`, authored `4.0.0_SA_CRO`**, whose subject describes only
+> that agent's *own* authority-cell ruling and does not mention this work at all. **CRO's commit swept CTO's
+> uncommitted working-tree edit** (46 insertions to this file) into an unrelated change under the wrong author
+> line. Not malicious — a shared worktree with no per-agent isolation. **This is the SECOND occurrence of this
+> exact hazard in nine days**; the first is recorded verbatim in `CLAUDE.md`'s own provenance note (a CTO
+> subject-synthesizer probe swept MSTR's uncommitted CLAUDE.md edit under the subject `"test subject"`).
+> **It was caught only because CTO verified that its OWN commit had landed rather than assuming it — the
+> content was correct and on origin, so every content-level check passed.** History is **not** being rewritten
+> (shared branch, NEVER#7 forbids rebase); the correction lives here, in the file, where a reader stands.
+>
 > **THE STANDING FINDING THIS SITS INSIDE:** `.owned-paths.yaml` is **enumeration-based, not tier-based — a
 > title is not a grant**. On 2026-07-22 the CRO found a *live exec the registry had never heard of*, the CVO
 > found a *registry entry the roster had never heard of*, and the roster/registry pair also disagrees with the
