@@ -216,6 +216,38 @@ anyone rebuilding them*. One such package was confirmed armed by this sweep: its
 module, the file was absent, **and its vendored copy of the shared source was stale — which is the
 only reason it had not already broken.**
 
+## 7e. A TEST ASSERTING A PROHIBITION IS A RATCHET AGAINST ITS OWN RETRACTION
+
+A sovereign prohibition was lifted. The lift emptied the enforcing tuple in the code — correctly.
+**Four tests then went red, every one of them asserting the hold was still armed:**
+`assert "data/black_diamond/" in _comprail.HELD_PREFIXES` → `assert '...' in ()`.
+
+> **A test is an ENFORCING COPY WITH TEETH. It does not enforce the prohibition on the estate — it
+> enforces the prohibition on anyone trying to REMOVE it.**
+
+The shape is self-perpetuating: the lift makes the suite red → **the red reads as "the lift broke
+something"** → and the cheapest repair is to **put the prohibition back**. The next agent re-arms a
+retracted rule believing they are fixing a regression. *(The hold in question had been
+half-retracted twice, and both halves left a red test behind.)*
+
+**Compounding failure:** the reds were **invisible for 8 days** because test collection was broken
+over the same window. **A retraction whose own regression signal is unreadable cannot be verified by
+the person doing it.**
+
+**Therefore:**
+1. **A retraction sweep must include TESTS in its denominator.** A sweep scoped to "enforcing copies
+   in source" counts a real number of the wrong population.
+2. **Retire the armed assertions; preserve the mechanism by declaring the state in a FIXTURE** —
+   so the suite still exercises the machinery without asserting the prohibition is on.
+3. **Add the negative control the suite never had.** A suite that can only assert *"the hold is on"*
+   has **no expressible success state for the hold being OFF** — which is why the retraction had
+   nothing to turn green.
+4. **Fix the oracle first.** Sequencing the collection repair ahead of the wave is what made every
+   later step checkable; before it, the conditions gating the wave were unenforceable.
+
+**Generalize past holds:** any test that asserts a *policy* rather than a *behaviour* becomes a vote
+against changing that policy, cast by someone who is no longer in the room.
+
 ## 8. PROCESS PRINCIPLES THAT PAID OUT THE SAME DAY
 
 - **A FAILURE SIGNAL IS NOT A REASON.** Two instances, same day, two levels:
