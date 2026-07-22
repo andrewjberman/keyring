@@ -24057,3 +24057,17 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-22 ~2247Z 0.7.0_AE_CloudOps: COT_ADVI_DIAG -- pipescript advi-cot, comp-grep silver source, events/scheduler/cloudwatch census (denominators), logs+ssm+s3api explicit-Z, openpyxl/pandas direct artifact reads; mechanism source-confirmed end to end (2 text cells -> silver object-sweep -> A_03 abs() FATAL); comp-pipescript deployed cot-prefix gap + comp-which cot-ADVI rule gap recorded (log: cot_advi_norun_diagnosis_mechanism.md)
 | 2026-07-22 | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_B6_livene... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/RECON_REGIS... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/RECON_REGISTER.md org/tier1_exec/4.0.0_SA_C... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff CLAUDE.md | FAIL |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/COT_ADVI_FIX.silve... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_pulse.py --file ... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp_pulse.py org/modules/graph/tests/test_pulse_map_... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_pulse.py org/modules/graph/tests/te... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed cot_silver_merge.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (bundle) | comp-blast/comp-pipescript/comp-routes/comp-pulse/comp-build | 6-of-9 bundle landings: blast battery 11/11, io silver reads, routes trace pin, pulse auto-refresh exercised live | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
