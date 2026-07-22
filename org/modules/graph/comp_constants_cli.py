@@ -542,6 +542,20 @@ def _held_path_hit(path_norm: str, config: dict | None = None) -> str | None:
     return None
 
 
+def _refuse(msg: str) -> "None":
+    """Emit a refusal on BOTH streams, then exit 3. NEVER returns.
+
+    STDOUT IS NOT OPTIONAL HERE. This previously wrote to stderr only, leaving stdout EMPTY -- so
+    `out=$(comp-constants check --lane cot)` and any `2>/dev/null` caller received a clean-empty
+    result from a scan that never ran, and a REFUSAL rendered as a PASS. Same class as the CLAUDE.md
+    `git show <bad-ref> 2>/dev/null` mangle: the failure signal is discarded and the absence reads as
+    success. A refusal must be distinguishable from a clean result on EVERY channel a caller might
+    read -- exit code (3, vs 0 clean / 1 drift), stdout, and stderr. (CTO GO, 2026-07-22.)"""
+    print(msg)                     # stdout: a stdout-only caller must never see empty-means-clean
+    sys.stderr.write(msg + "\n")   # stderr: preserves the existing loud-operator channel
+    sys.exit(3)
+
+
 def _sovereign_guard(args: argparse.Namespace, config: dict) -> None:
     """REFUSE (exit 3) any invocation that would ast-parse a sovereign-held surface,
     UNLESS --allow-held-scan is passed. Makes the bd hold structural, not procedural.
@@ -564,20 +578,20 @@ def _sovereign_guard(args: argparse.Namespace, config: dict) -> None:
         norm = str(Path(only_file)).replace("\\", "/")
         m = _held_path_hit(norm, config)
         if m:
-            sys.stderr.write(
+            _refuse(
                 "REFUSE: SOVEREIGN-HELD -- --file target is under held path '%s'. comp-constants "
-                "will not ast-parse it. Pass --allow-held-scan to override (audited).\n" % m)
-            sys.exit(3)
-        return
+                "will not ast-parse it. Pass --allow-held-scan to override (audited)." % m)
+        return  # non-held --file: scan is scoped to this one file, so the surface check below
+                # must NOT apply. Dropping this return makes every `check --file` refuse whenever
+                # ANY surface is held -- caught by test_check_file_non_held_is_allowed.
     # full-scan modes (bare check / --lane / new / index): scan_all globs+parses ALL surfaces.
     held = _held_surface_hits(config)
     if held:
         surfaces = ", ".join(f"{ln}:{p}" for ln, p in held)
-        sys.stderr.write(
+        _refuse(
             "REFUSE: SOVEREIGN-HELD -- comp-constants '%s' would ast-parse sovereign-held "
             "search_surface(s): %s. Only `check --file <non-held>` is permitted under the hold. "
-            "Pass --allow-held-scan to override (audited).\n" % (cmd, surfaces))
-        sys.exit(3)
+            "Pass --allow-held-scan to override (audited)." % (cmd, surfaces))
 
 
 def main() -> int:

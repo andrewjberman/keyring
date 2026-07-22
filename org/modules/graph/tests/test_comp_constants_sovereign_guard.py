@@ -121,6 +121,40 @@ def test_full_scan_modes_refuse_on_held_config(held_cfg, mode):
     assert "data/black_diamond/" in err, f"{mode} refusal must name the held surface"
 
 
+@pytest.mark.parametrize("mode", [["check"], ["check", "--lane", "inf"], ["new"], ["index"]])
+def test_refusal_is_NON_EMPTY_ON_STDOUT_not_only_stderr(held_cfg, mode):
+    """A REFUSE must be distinguishable from a CLEAN result on EVERY channel a caller might read.
+
+    The guard used to write to stderr ONLY, leaving stdout EMPTY -- so `out=$(comp-constants ...)`
+    or any `2>/dev/null` caller got a clean-empty result from a scan that never ran, and a REFUSAL
+    rendered as a PASS. Same class as the CLAUDE.md `git show <bad-ref> 2>/dev/null` mangle. This is
+    the oracle for that fix: without it, 'the refusal is visible' is an untested claim -- the exact
+    shape (an unobservable state) that let the 2026-07-09 hold survive its own retraction for 8 days."""
+    rc, out, err = _run(held_cfg, *mode)
+    assert rc == 3, f"{mode} must exit 3"
+    assert out.strip(), f"{mode} REFUSE must be NON-EMPTY on stdout; a stdout-only caller saw {out!r}"
+    assert "REFUSE" in out and "SOVEREIGN-HELD" in out, f"stdout refusal must name itself, got {out!r}"
+    assert err.strip(), f"{mode} must still be loud on stderr, got {err!r}"
+
+
+def test_clean_and_refused_are_distinguishable_on_stdout_alone(tmp_path):
+    """The discriminating test: a stdout-only caller must be able to tell a refusal from a pass.
+    Asserted as a DIFFERENCE between two runs, not as a property of one -- an instrument that
+    cannot fail on the clean case is not an instrument."""
+    body = ("search_surfaces:\n  bd:\n  - cc2_nonexistent/data/black_diamond/scripts/**/*.py\n"
+            "constants:\n- name: FIXTURE_CONST\n  lane: bd\n  canonical_value: \"'x'\"\n")
+    held = tmp_path / "h.yaml"
+    held.write_text("sovereign_held_markers:\n- data/black_diamond/\n" + body, encoding="utf-8")
+    unheld = tmp_path / "u.yaml"
+    unheld.write_text(body, encoding="utf-8")
+
+    rc_h, out_h, _ = _run(held, "check")
+    rc_u, out_u, _ = _run(unheld, "check")
+    assert (rc_h, rc_u) == (3, 0), f"expected refuse/clean, got {rc_h}/{rc_u}"
+    assert out_h.strip() != out_u.strip(), "refused and clean must differ on stdout alone"
+    assert "REFUSE" in out_h and "REFUSE" not in out_u
+
+
 def test_lane_flag_is_not_a_scan_scoper(held_cfg):
     """The footgun that tripped the original breach: --lane LOOKS like it scopes to
     inf, but it scopes the COMPARISON -- the scan still globs bd. The guard refuses it."""
