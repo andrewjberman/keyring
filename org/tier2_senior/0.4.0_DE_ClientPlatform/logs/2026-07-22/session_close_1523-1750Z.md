@@ -59,7 +59,7 @@ See commit messages: `0aa0f2200`, `eba3f57c9`, `c95210ec3`, `91e3120a6`, `54f528
 - **Census methodology, for anyone quoting a number from it:** FOUR encoding axes (token / arity / absence / alias), each discovered by a FAILURE not a review, so the list is treated as OPEN. **Only the READ fraction is evidence.**
 
 ## Next Steps
-- **[1.0.0_SA_CTO]** sequence the Phase-1a IAM statements (two additive); confirm A2's `lastNonNull` widening; note S-4's governance lock has **no commit anchor** — do not carry it as landed law.
+- **[1.0.0_SA_CTO]** sequence the Phase-1a IAM statements (two additive); confirm A2's `lastNonNull` widening. **~~note S-4's governance lock has no commit anchor~~ — CORRECTED 1755Z (post-log, `@93dd76ef8`+): that retraction was TOO BROAD. `134926Z` is anchored at HEAD in 13 files / 27 matches. What was wrong is the LOCATION of my citation (tree-only `mdpf-daily-dispatch.sh:484-485` presented as landed law), NOT the EXISTENCE of the approval. The 134926Z approval is real and already carries its own supersession annotation.**
 - **[2.0.0_SA_COO]** decompose Set A + C1 when the gate clears; Set B struck; quote the READ fraction only.
 - **[0.4.0_DS_ClientPlatform]** BD total-AUA proposal @`0ecf2139b`; largest remaining risk is my #5 — 49F's model side is MODEL-level, Cottonwood's must be ACCOUNT-level; the residual identity holds only if both cover the same account universe.
 - **[0.4.0_DE_ClientPlatform]** (self) on hold-lift: Set A + C1 against the §4 render matrix (four selections + discriminating control), **Andrew visual smoke as the close leg** — the leg MDPF_SCOPED reopened without on 2026-05-29.
