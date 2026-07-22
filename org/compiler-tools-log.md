@@ -22916,3 +22916,14 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-22T0051Z | 0.7.0_AE_CloudOps | MDPF_REVAMP.S5 exact-9 diffs | terraform validate/plan (-json additivity: origins 7->8, behaviors 24->33, 0 removed, my9 before catchall) + commit-gate publisher.py PASS + comp-rail ENFORCED (blocked bd49f infra grep -> native Grep + rail-checked markers) + rail-checked ListObjectsV2/get-bucket-policy live grounding | the -json plan is the CF ordered-list ACCEPTANCE instrument, not the human positional-churn plan
 | 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/m365-mcp-gateway/ta... | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/m365-mcp-gateway/taxsma_gateway_iam.tf infra/aws/te... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/research/bd_dashboard_teardown/FAC... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff docs/research/bd_dashboard_teardown/FACT_ACCOUNT_RETURN_BUILD_SPEC_2026... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_REVAMP_cutover_COO_cosign... | PASS |
+| 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-revamp-s5-rollover-FE-... | PASS |
+| 2026-07-21 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/mdpf-revamp-s5-rollover-FE-consumption-audit-20260721.md or... | PASS |
+| 2026-07-22 | 0.5.0_AE_OpalETL~A | OPAL_TAXSMA-finalize | session-summary | COND-1 split refactor: terraform fmt + bash -n clean; comp-surface-check/comp-pulse PASS; no comp-iam (new roles -> Rule-22a live-simulate plan instead) | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
