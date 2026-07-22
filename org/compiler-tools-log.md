@@ -23793,3 +23793,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S2.silver-completeness-census-and-rule17-audit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S2.silver-completeness-census-and-rule17-audit | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/deli... | PASS |
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S2.silver-completeness-census-and-rule17-audit | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/han... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/handoffs/2026-07-22_2050Z.md | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/MDPF_3FIRMS.3F-P1.... | PASS |
+2026-07-22 ~2055Z 0.7.0_AE_CloudOps: deploy_ledger open/close x9, safe-commit x3, safe-apply -target, tf plan -target x2, get-role-policy x2 (pre=RF-10 stop-branch, post=applied truth), simulate-principal-policy x7 isolated, comp-iam gaps (post-iam.tf, 9 pre-existing surfaced), comp-to -- 3F-S3 narrowed dim_model_portfolio grant landed+verified, ledger closed 7/7 (log: 3fs3_stop_first_then_narrowed_grant_landed.md)
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
