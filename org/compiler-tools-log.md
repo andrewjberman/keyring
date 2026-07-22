@@ -23524,3 +23524,61 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 0.6.2_AE_PartnerETL~A | (Andrew-direct GO) | comp-which/comp-assets/comp-grep/comp-glob/pipescript | comp-which "enumerate date partitions find gaps" -> comp-assets; comp-assets --self-test (15/15) + --channel eclipse|orion; comp-grep x6 (producer/mirror/cadence); comp-glob x3 swagger/openapi; pipescript inflection | PARTIAL -- GAP: comp-assets declared-completeness is CHANNEL/DATE-level, reported `complete: True / holes: 0 named` on BOTH channels over real per-feed holes (fact_positions 2277 masked fact_assets 2272); no comp-tool does per-feed date-set differencing (4 rail-checked overrides); pipescript inflection FAIL = unregistered thread |
 | 2026-07-22 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/ANDREW_DIRECT_20260722... | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0333.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0333.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0333.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0333.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0333.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0333.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0333.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0333.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam census-self-test | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam census-self-test | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam reconcile | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam reconcile --census /c/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-Andrew... | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam reconcile --allow-stale-census | VERDICT |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0334.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0334.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam reconcile --census C:\Users\ANDREW~1\AppData\Local\Temp\claude\C--Users-Andrew... | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_iam_census.py --... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp_iam_census.py org/modules/graph/iam_cli.py org/m... | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_iam_census.py org/modules/graph/iam... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam refresh-census --out C:\Users\ANDREW~1\AppData\Local\Temp\claude\C--Users-Andr... | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam refresh-census --out C:\Users\ANDREW~1\AppData\Local\Temp\claude\C--Users-Andr... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check | VERDICT |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check | VERDICT |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript model-portfolios | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam reconcile --census C:\Users\ANDREW~1\AppData\Local\Temp\claude\C--Users-Andrew... | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam census-self-test | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_iam_census.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp_iam_census.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_iam_census.py | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/COTT... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/COTTONWOOD_ASSIGNMENT_LOOKBACK_OPTIO... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/COTT... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/COTTONWOOD_ASSIGNMENT_LOOKBACK_OPTIO... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/COTT... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/COTTONWOOD_ASSIGNMENT_LOOKBACK_OPTIO... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN label(n) AS lbl, count(*) AS n ORDER BY n DESC LIMIT 25 | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.kind AS kind, count(*) AS n ORDER BY n DESC LIMI... | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IS NOT NULL RETURN n.node_type AS t, co... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type = 'IAM_ROLE' RETURN n.name AS name, n.d... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='IAM_ROLE' AND n.drift_class='LIVE-no-D... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='IAM_ROLE' AND n.drift_class='LIVE-no-D... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='IAM_ROLE' AND (n.name CONTAINS 'opal-a... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='IAM_ROLE' RETURN n.source AS source, n... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.drift_class IS NOT NULL RETURN n.source AS source... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/COMP_IAM_LIVE_PRIMARY_... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='IAM_POLICY' RETURN n.name AS name, n.p... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md --... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md org/projects/MDPF_3FIRMS.json org/... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | comp-surface-check check, comp-cache collisions, pipescript model-portfolios, comp-glob/grep x7, comp-which; rail-marked aws x5 (EventBridge census, S3 depth x6 legs, DDB) | MDPF_3FIRMS PRD grounding -- SEV1 surface confirmed; PUBLISH_MAP:37; zero-overlap resolved to D+1 delivery cadence; no smartx/eclipse-named ingest rules (-> 3F-B2/B4) |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-22/m... | PASS |
