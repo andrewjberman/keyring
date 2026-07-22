@@ -203,6 +203,25 @@ decision.** MSTR caught the first one; this is the sweep it implied. **These BIN
 
 ---
 
+## PART 2c — PER-LANE RESUMPTION *(the fabric was reset 1520Z; only CTO + MSTR retain context)*
+
+**READ ORDER FOR A RESET AGENT: (1) PART 0 — the armed hazard. (2) your row below. (3) your handoff if you
+have one, else your 2026-07-22 session log. (4) PART 2b — the rulings that bind you.**
+**Only `0.4.0_DE` and `0.7.0_AE_CloudOps` wrote handoffs. Every other lane's resumption context is THIS TABLE
+— it is the only carrier they have.**
+
+| Lane | Owns / state at reset | HELD | Ready to resume with |
+|---|---|---|---|
+| **`0.4.0_DE_ClientPlatform`** | **PHASE 0 — the two-firm enumeration, which gates everything.** 4 confirmed / 1 checked-clean; infra, publisher, `dim_mdpf_account_distribution`, `dim_mdpf_aum_{metrics,timeseries}`, FE per-firm path **NOT covered**. WS-2/WS-3 done. **WS-4 fold built but WRONG SHAPE** — a standalone script cannot feed an in-memory composition; it re-homes as `build_cottonwood_artifact()` inside the shared producer. FE `$0` fix landed (portal DEV `08c6d8b2`). | the re-home; the fold | handoff `2026-07-22_1425Z.md`; **rulings R2, R3** |
+| **`0.4.0_DS_ClientPlatform`** | **NO HANDOFF — this row is your context.** Item 1 CLOSED. Count-axis cured at source (all dates, not date-scoped). 20-date exemption `@77d297819` + 4 controls. **Per-cycle source audit BUILT `@b8efd3214` but NOT WIRED** — diff prepared for AE, split inflection-FAIL / 49F-report-only, before the completion marker. Producer-validate leg deliberately held for Cottonwood. Also holds 7 pre-existing inf drifts (incl. `INFLECTION_REP_IDS` missing `rep_id=6` ×5 — the founding attribution bug). | mutants; new MDPF work | log `p0_global_headline_basisB...`; **R9, R11** |
+| **`0.6.2_AE_PartnerETL~A`** | **NO HANDOFF — this row is your context.** WS-5 converter half landed `@7aa7e645f` (**not `@228182599`** — a live `VendorDriftError` was fixed in between that would have raised on the first real conversion). Event path + sweep backstop landed together. **THE DISPATCHER BRANCH IS NOT BUILT — it blocks 0.7.0's WS-5 apply.** | the branch | log `wse_ws5_converter...`; **R4 — the branch matches the destination envelope POSITIVELY, never a catch-all `else`. This binds code that does not exist yet.** |
+| **`0.7.0_AE_CloudOps`** | WS-5 closed + exercised on the real `mode=="event"` discriminator; both ledgers closed per-leg; eclipse landmine **disarmed inert**; import-closure gate live; **census delivered — 9 of 192 reachable, 183 explicitly NOT clean, and vendor staleness re-scoped to a SILVER-FAMILY problem (4 of 9, `silver_registry.py` the common axis).** | **WS-5 apply** (on the branch) · **Deliverable 2 APPLY** (narrowed carve-out) · silver-family catch-up | handoff `2026-07-22_1515Z.md`; **R1, R5, R6, R8** |
+| **`3.0.0_SA_CVO`** | **NO HANDOFF — this row is your context.** Item 1 discharged; enumerated exemption independently exercised `@db3daab02` (4 controls incl. remove-a-listed-date). **Idle and explicitly available for the fresh 3-pass when a pin settles.** Authored the root cause: *the legacy date axis is not a trading-day axis.* | verify legs (no pin exists) | logs `session_close_0024-0523Z`, `work_0544Z`; **R9, R10** |
+| **`2.0.0_SA_COO`** | **NO HANDOFF — this row is your context.** **Co-sign custody: 0 of 3, both limbs withdrawn** on a falsified premise. Carries 4 co-sign terms + 2 binding conditions (49F unbounded-by-construction with the "407 is an instrument artifact" clause; the retained legacy runtime dependency; the 1-of-6 historical coverage line; **the coverage-fraction requirement on every limb**). Serialization authority for the fold. | firing any limb | logs `session_1203-1313Z`, `session_1313-1410Z`; **R10, R12** |
+| **`0.2.0_DT_PortfolioAnalytics`** | Consistency gate + honest-None marker consumer built; parity leg green. **Serial was killed 07-20 and re-appeared today — confirm liveness before assigning.** | all | log `consistency-gate-built-and-p0-reframed.md` |
+
+---
+
 ## PART 3 — WHAT SETS THE DATE
 
 **Phase 0 is the only unbounded item.** Phases 1–4 are each hours, not days, and largely parallel.
