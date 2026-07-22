@@ -23974,3 +23974,76 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
 | 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
 | 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-07-22/session_close_2030-2... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast opal-assets-silver-blackdiamond | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_assets.py --f... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/extract_assets.py org/modules/graph/tests/test_extrac... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/extract_assets.py org/modules/graph/test... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast fact_holdings | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast fact_zzz_definitely_not_a_table | FAIL |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-22/3f_s5_design_r... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript io build_dim_model_portfolio | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript io build_dim_model_portfolio | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/POSTMORTEM_PROGRAM_HANDOVER_NF... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_rps_s2 | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_assets | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_holdings | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_portfolios_full | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_model_aum_daily | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_model_allocation_roster | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_allocation_valuation | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_model_roster | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_model_blend | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_model_assignment | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast fact_rps | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript io rebalancer_conversion | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pipescript | comp-pipescript io dim_mdpf_aggregate_aua_timeseries --pipeline mdpf | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_assets.py --f... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/extract_assets.py org/modules/graph/pipeline_cli.py o... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/extract_assets.py org/modules/graph/test... | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/references/MDPF_POSTMORTEM_2026072... | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff docs/references/MDPF_POSTMORTEM_20260722.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/references/MDPF_POSTMORTEM_2026072... | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff docs/references/MDPF_POSTMORTEM_20260722.md org/tier0/ledger/LD-0335.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-constants | comp-constants check --lane multifirm | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io dim_mdpf_aggregate_aua_timeseries | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-routes | comp-routes trace getAccountDistribution | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/task_orders/cottonwood-advi-no-run-d... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/COTT... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/COTTONWOOD_DAILY_MODEL_SNAPSHOT_APPE... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | pipescript | pipescript --list | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | pipescript | pipescript advi-cot | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-22/3f_s5_design_r... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-routes | comp-routes trace getAccountDistribution | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_B6_livene... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_api.py --file... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/extract_api.py org/modules/graph/extract_routes.py or... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/ts_source.py org/modules/graph/extract_r... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/firm_registry.json --file docs/arc... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff data/firm_registry.json docs/architecture/NFRA_PSTMRT_PRD.md docs/doctr... | FAIL |
+| 2026-07-22 | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pipescript | comp-pipescript deployed cot_silver_merge.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_api.py --file... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/extract_api.py org/modules/graph/extract_routes.py or... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/extract_ts_source.py org/modules/graph/e... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/MDPF_3FIRMS.3F-G8b... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | NFRA_PSTMRT | comp-constants | comp-constants check --lane multifirm | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | NFRA_PSTMRT | comp-grep | comp-grep ALL_MDPF_PARTNER_FIRMS + postmortem org/tier0 | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-22/c... | PASS |
