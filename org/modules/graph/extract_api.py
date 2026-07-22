@@ -75,10 +75,14 @@ def extract_api_edges(graph: TraceGraph, workspace_root: Path):
     # --- Phase A: Extract endpoint functions and their URLs ---
     endpoint_registry: dict[str, dict] = {}  # fn_name -> {url, file, ...}
 
+    # Item 2 (@7a2805d4e): comment-stripped source only -- the raw scan minted
+    # ENDPOINT urls from commented-out calls (false-presence). See extract_ts_source.py.
+    from .extract_ts_source import strip_comments
+
     if api_dir.exists():
         for ts_file in sorted(api_dir.glob("*.ts")):
             try:
-                content = ts_file.read_text(encoding="utf-8", errors="replace")
+                content = strip_comments(ts_file.read_text(encoding="utf-8", errors="replace"))
             except Exception:
                 continue
 

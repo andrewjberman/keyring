@@ -631,9 +631,15 @@ def _parse_frontend_endpoints(workspace_root: Path) -> dict[str, EndpointFunctio
     # These are used in template literals: `${PLATINUM_BASE}/firm/dashboard.json`
     file_constants: dict[str, dict[str, str]] = {}  # filename -> {const_name: value}
 
+    # Item 2 (@7a2805d4e): strip comments BEFORE any URL extraction. The raw-text
+    # scan resolved getAccountDistribution to a commented-out /api/private TODO
+    # (dead call preceded the live one; first regex match won) -- the
+    # FALSE-PRESENCE class. Dead code is never presented to the resolver.
+    from .extract_ts_source import strip_comments
+
     for ts_file in sorted(api_dir.glob("*.ts")):
         try:
-            content = ts_file.read_text(encoding="utf-8", errors="replace")
+            content = strip_comments(ts_file.read_text(encoding="utf-8", errors="replace"))
         except Exception:
             continue
         consts: dict[str, str] = {}
@@ -645,7 +651,7 @@ def _parse_frontend_endpoints(workspace_root: Path) -> dict[str, EndpointFunctio
 
     for ts_file in sorted(api_dir.glob("*.ts")):
         try:
-            content = ts_file.read_text(encoding="utf-8", errors="replace")
+            content = strip_comments(ts_file.read_text(encoding="utf-8", errors="replace"))
         except Exception:
             continue
 
