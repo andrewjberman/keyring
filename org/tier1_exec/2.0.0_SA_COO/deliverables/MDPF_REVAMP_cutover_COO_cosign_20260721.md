@@ -132,6 +132,33 @@ The IRREVERSIBLE serve-widen -- the repoint -- remains gated by CTO's portal-aut
 surfaced; this co-sign does NOT skip that gate. Two of three never-widen limbs now signed (CTO declaration +
 COO co-sign); Andrew's limb is at CTO's final-GO surface.
 
+## ROLLBACK + STRENGTHENED RE-FLIP GATE (post-flip P0 data bug; 2026-07-22 ~04:00Z)
+
+The FINAL RE-CO-SIGN above was GRANTED and the flip fired -- then HALF-LANDED (data live + FE-unpromoted
+picket-fence) and Andrew caught a P0 DATA bug: the Global aggregate EXCLUDES Inflection non_model. CVO's
+from-scratch Layer-3 enterprise re-derive (grounded on the co-signed ETag `1b52211f6443`, lastmod
+2026-07-21T23:30:25Z) then found the exclusion is SYSTEMATIC: `opal_aggregate_aua != model_aua + non_model_aua`
+on **421/421 headline dates** (2024-11-01..2026-07-20), miss == inflection non_model exactly, ~$151M-203M/date.
+**The exact artifact I co-signed as "3-pass 3/3 CLEAN" was holed on EVERY date.** The 3-pass passed because it
+checked PARITY-to-baseline, not INTERNAL CONSISTENCY (total==components) -- the axis none of CTO-S3 /
+CVO-re-derive / DT-parity read. CTO rolled back to known-good; this co-sign's GO-TO-APPLY is SPENT/VOID (the
+artifact is defective), and the 0159Z 3-limb co-sign is VOID for any re-flip (data changes -> ETags move ->
+FRESH co-sign required).
+
+**RE-FLIP RE-CO-SIGN HARD GATE (strengthened; I will NOT re-co-sign without ALL):**
+1. DS Global firm-sum fix, FULL-SERIES (all 421 dates, NOT a spot/window fix) -- gated on Andrew's A/B basis call.
+2. THREE independent, complementary, EXERCISED consistency layers, each covering the FULL 421-date series
+   per-date all-firms with a PRINTED coverage denominator (must read 421/421, so zero-coverage can't pass):
+   (1) DS producer-validate (refuse-to-emit-inconsistent + SMA coherence, pre-publish);
+   (2) DT harness-gate (mutant-exercised: seeded hole -> RED; sensitivity-floor reported; absent!=zero);
+   (3) CVO Layer-3 from-scratch re-derive (demonstrated-RED on the seeded Inflection hole).
+3. FE @aa8c0420 promoted FE-FIRST (ordering fixed).
+4. FRESH never-widen co-sign (CTO+COO+Andrew) pinned to the CORRECTED data's NEW ETags + Andrew eyeball.
+
+STANDING lesson banked: parity is not consistency; a total must be checked against its own components
+(EXERCISED, with a mutant + a printed denominator), not just against a prior vintage. A rigorous instrument on
+the wrong axis survives review -- three did, on an artifact holed 421/421.
+
 ## Verdict (as-of 180626Z, now HELD per above): CO-SIGN GRANTED — conditional on tested-rollback-before-publish
 
 All 5 cutover items independently verified NAMED + CORRECT serve-real, none a defect:
