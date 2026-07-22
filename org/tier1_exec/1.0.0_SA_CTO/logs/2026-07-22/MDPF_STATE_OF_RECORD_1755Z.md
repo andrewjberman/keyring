@@ -88,9 +88,24 @@ rewrites `global/aggregate_aua_timeseries.json` again.
 
 **Opal subtotal: 444 accounts / $125,618,015.02.** Decomposition conserves: 296 accounts' own holdings sum
 `$126,381,228.84` vs dim sum `$126,381,228.86` — **$0.02, per-row rounding.**
-- **Model-assignment history is TWO DAYS (07-21, 07-22).** The Rebalancer is a live-state API with no
-  history. **Holdings reach back to 2026-06-08; allocations to 04-22; transactions to 03-09.** *Value history
-  extends further back than assignment history.*
+- **Model-assignment history is TWO DAYS (07-21, 07-22).** The Rebalancer endpoint we consume returns
+  live state. **Holdings reach back to 2026-06-08; allocations to 04-22; transactions to 03-09.** *Value
+  history extends further back than assignment history.*
+- **>> WHY THE HISTORY IS SHORT — Andrew-direct, and it is NOT a platform limitation: <<**
+  > ***"Cottonwood does not have full lookback yet because they are in the process of migrating their data
+  > to Black Diamond, so I would not get too indebted to what they have or don't have yet. Our goal is just
+  > to get whatever we have access to cleanly and explainably."***
+  **COTTONWOOD IS MID-MIGRATION INTO BLACK DIAMOND.** The absent history is **neither a BD platform limit
+  nor a Cottonwood data defect — it is a migration in progress, and more history is expected to arrive on
+  its own.** **Do not treat any current depth as a ceiling and do not build against one.**
+  > ### ⛔ BINDING DESIGN CONSTRAINT
+  > **Whatever we build must be ADDITIVE AND NON-CONFLICTING WITH DATA THAT ARRIVES LATER. No synthesized
+  > rows. No frozen backfill. NO HARDCODED SERIES START. The series must extend backwards ON ITS OWN as the
+  > migration lands more history.**
+  > **Anything that writes a value where real data will later appear is a future contradiction we authored
+  > ourselves** — and it would have to be reconciled against ground truth that is still arriving.
+  **Consequence: the goal is not to reconstruct history. It is to read what is actually there, correctly,
+  and let it grow.**
 - **The MDPF runner CANNOT currently read `blackdiamond/cottonwood/silver/*`** — the grant enumerates five
   ARNs and Cottonwood is not among them. A two-statement additive fix is in flight.
 
@@ -155,7 +170,7 @@ starts 07-21 and the existing series ends 07-20, so **there is zero date overlap
 |---|---|
 | 1 | **Which 49F basis the page carries** — Schwab-RPS (~$1.40B) or 0824 blended-preferred (~$1.62B). |
 | 2 | **Disposition of permanently-absent Inflection dates**, if recovery is confirmed impossible. |
-| 3 | **Whether Cottonwood ships at 1–2 points**, or waits for lookback. |
+| 3 | **Whether Cottonwood ships at its current depth.** *(Reframed: it is not "ship now vs wait for lookback" — the migration will deepen it on its own. The question is whether the current depth is presentable, given the series must be built to extend backwards without rework.)* |
 | 4 | **Whether the 49F count axis ships as-is** — it has one measured defect, no source to fix it, and no assurance instrument. |
 
 ---
