@@ -73,3 +73,38 @@ The brief states: *"comp-iam is CTO-owned tooling. This brief proposes; CTO buil
 on land."* Andrew has directed the build to me. **Sovereign instruction outranks the convention**
 (XXX.md authority hierarchy), and I am surfacing the overlap to CTO rather than assuming he knows.
 CVO's verify-on-land role is unaffected and I want it kept.
+
+---
+
+## AMENDMENT — Andrew-direct, 2026-07-22 (~18:3xZ), in my session
+
+> "You are my agent not theirs. Do not talk to tier 1 agents unless I say so. Please continue with
+> your work."
+
+**Effect, latest-and-most-restrictive:**
+1. **RESUME.** This supersedes the ~1819Z fabric-wide hold *as it applies to me*. The hold's own text
+   routes authorization "Andrew -> CTO -> you"; the sovereign has now addressed me directly, which
+   XXX.md records as the normal case ("Andrew writes DIRECTLY to workers").
+2. **NO TIER-1 CONTACT** (CTO `1.0.0_SA_CTO`, COO `2.0.0_SA_COO`, CVO `3.0.0_SA_CVO`) until he says
+   otherwise. This **overrides the XXX.md broadcast convention** for Andrew-direct instructions --
+   a fabric convention cannot bind against the sovereign who set it. **The DURABLE half of that rule
+   is still discharged** (this file, committed); only the BROADCAST half is suspended. Recording is
+   not messaging.
+3. Watcher stays armed and inbound messages are still READ — reachability is not contact, and a
+   relayed sovereign instruction could arrive that way. I simply do not send to Tier 1.
+
+**Consequences I am NOT drawing:** I am not cancelling anyone else's holds, not telling other agents
+the hold is lifted for them, and not adjudicating whether it still binds them. It was lifted *for me*,
+by him, directly. Everything else stands as it was.
+
+**Open loops left hanging by the no-contact rule, listed so they are not silently dropped:**
+- CVO reserved verify-on-land on this build (his section 9). I cannot hand it over. **The build is
+  therefore builder-verified only, which on a FAILS-GREEN tool is the weakest posture** — flagged
+  here rather than pretended away.
+- CTO holds the predicate-split wave's authorship refusal (`sovereign_held.py` + `clobber_scan.py`,
+  lane=ANY_EXEC). It stays blocked and unstaged at fingerprint `1673ceac9c2bd70f`.
+- CVO's Plane-3 hazard, which I am carrying rather than re-deriving later: a simulate wrapper that
+  accepts a resource **list** silently flips HELD grants to `implicitDeny` (Rule 22a mode 1), and
+  omitting `--context-entries` manufactures false denies byte-identical to real ones. **Any wrapper
+  must fan out ONE `--resource-arns` per invocation and run positive controls as SEPARATE calls.**
+  This is an API-shape decision at build time; once a list signature exists every caller inherits it.

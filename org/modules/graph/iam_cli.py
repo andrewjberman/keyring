@@ -745,7 +745,114 @@ def _simulate_self_test():
     return 0 if ok else 1
 
 
+import comp_iam_census  # noqa: E402 -- APPLIED-plane census generation + vintage honesty
+
+# NOTE: this default is the 2026-06-03 census: 111 roles vs 158 in Terraform, and it carries NO
+# _meta.generated_utc. It is retained so `reconcile` has a path to point at, but the vintage gate
+# below now REFUSES it rather than reconciling against it silently -- which is what it did until
+# 2026-07-22. Regenerate with `comp-iam refresh-census`.
 _DEFAULT_CENSUS = "docs/briefs/cmpaws-iam-axis-census-20260603.json"
+
+
+def _census_self_test():
+    """Offline mutant suite for the vintage gate. Zero AWS, deterministic.
+
+    Mirrors _simulate_self_test's posture: the APPLIED plane's SAFETY property is that it refuses
+    rather than guesses, and a refusal path that is never exercised is exactly the "passing assertion
+    never mutated" trap. Every case here is a MUTANT of the census -- undated, stale, fresh, malformed
+    -- because a gate tested only on the input it was written for has not been tested.
+    """
+    from datetime import datetime, timezone, timedelta
+    C = comp_iam_census
+    now = datetime(2026, 7, 22, 18, 0, 0, tzinfo=timezone.utc)
+    ok = True
+
+    def check(name, got, want):
+        nonlocal ok
+        if got == want:
+            print(f"  PASS  {name}")
+        else:
+            ok = False
+            print(f"  FAIL  {name}: got {got!r}, want {want!r}")
+
+    def stamped(dt):
+        return {"_meta": {"generated_utc": dt.strftime("%Y-%m-%dT%H:%M:%SZ")}, "roles": []}
+
+    # --- the SHIPPED census shape: _meta present, NO generated_utc. The live defect. ---
+    shipped = {"_meta": {"project": "ADHC_CMPAWS", "account": "313476888478"}, "roles": [{}] * 111}
+    check("undated census -> NO_VINTAGE (not FRESH, not STALE)",
+          C.census_freshness(shipped, now=now)[0], C.NO_VINTAGE)
+    check("undated census -> age is None, NOT 0", C.census_age_hours(shipped, now=now), None)
+
+    # --- fresh / stale boundary ---
+    check("1h old -> FRESH", C.census_freshness(stamped(now - timedelta(hours=1)), now=now)[0], C.FRESH)
+    check("exactly TTL -> FRESH (boundary inclusive)",
+          C.census_freshness(stamped(now - timedelta(hours=24)), now=now)[0], C.FRESH)
+    check("TTL+1m -> STALE",
+          C.census_freshness(stamped(now - timedelta(hours=24, minutes=1)), now=now)[0], C.STALE)
+    check("the real 2026-06-03 census age -> STALE",
+          C.census_freshness(stamped(datetime(2026, 6, 3, 14, 47, tzinfo=timezone.utc)), now=now)[0],
+          C.STALE)
+
+    # --- malformed stamp must NOT fall through as fresh ---
+    check("malformed generated_utc -> NO_VINTAGE",
+          C.census_freshness({"_meta": {"generated_utc": "June 3rd"}, "roles": []}, now=now)[0],
+          C.NO_VINTAGE)
+    check("empty generated_utc -> NO_VINTAGE",
+          C.census_freshness({"_meta": {"generated_utc": ""}, "roles": []}, now=now)[0], C.NO_VINTAGE)
+    check("no _meta at all -> NO_VINTAGE",
+          C.census_freshness({"roles": []}, now=now)[0], C.NO_VINTAGE)
+
+    # --- scope/denominator honesty: an unstated scope must READ as unstated ---
+    sc = C.census_scope(shipped)
+    check("scope reports the real role count", sc["role_count"], 111)
+    check("unstated accounts_swept stays None (not defaulted to 1)", sc["accounts_swept"], None)
+    prov = " | ".join(C.provenance_lines(shipped, "cmpaws-iam-axis-census-20260603.json", now=now))
+    check("undated provenance says UNKNOWN, not an age", "vintage UNKNOWN" in prov, True)
+    check("undated provenance says UNMEASURED, not small", "UNMEASURED" in prov, True)
+    check("unstated scope prints UNSTATED", "UNSTATED" in prov, True)
+
+    # --- NEGATIVE CONTROL: a fresh, fully-stated census must NOT trip any warning text ---
+    good = {"_meta": {"generated_utc": (now - timedelta(hours=2)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                      "account": "313476888478", "accounts_swept": 1, "scope": "single-account, all roles"},
+            "roles": [{}] * 158}
+    gprov = " | ".join(C.provenance_lines(good, "fresh.json", now=now))
+    check("fresh census provenance has no UNKNOWN", "UNKNOWN" not in gprov, True)
+    check("fresh census provenance has no UNSTATED", "UNSTATED" not in gprov, True)
+    check("fresh census reads FRESH", "[FRESH]" in gprov, True)
+
+    print()
+    print("OK: all census self-test cases pass" if ok else "ERROR: census self-test FAILED")
+    return 0 if ok else 1
+
+
+def cmd_refresh_census(args):
+    """Generate a vintage-stamped APPLIED census from live AWS (Plane 2 of the CVO design brief).
+
+    PLANE: APPLIED-inventory. This is a DRIFT DETECTOR's input, never an authorization oracle -- it
+    holds raw statements and does not evaluate Deny, boundaries, or SCPs. For an allow/deny verdict
+    use `comp-iam simulate`, which delegates to AWS's own evaluator (Rule 22a).
+    """
+    try:
+        census = comp_iam_census.build_census(account=getattr(args, "account", None))
+    except Exception as e:  # noqa: BLE001 -- degrade honestly, never half-write a census
+        print("APPLIED CENSUS UNAVAILABLE -- not generated.")
+        print(f"  {e}")
+        print("  DESIRED-plane modes are unaffected. No census file was written.")
+        sys.exit(2)
+    out = Path(args.out) if getattr(args, "out", None) else (_WORKSPACE / "docs/briefs" /
+          ("cmpaws-iam-census-%s.json" % census["_meta"]["generated_utc"][:10].replace("-", "")))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(census, indent=2, sort_keys=False), encoding="utf-8")
+    m, sm = census["_meta"], census["summary"]
+    print(f"OK: APPLIED census written -> {out}")
+    print(f"  generated_utc : {m['generated_utc']}   account: {m['account']}")
+    print(f"  api           : {m['api']}")
+    print(f"  roles: {sm['role_count']} | groups: {sm['group_count']} | users: {sm['user_count']}")
+    print(f"  scope         : {m['scope']}")
+    print("  NOTE: attached-managed policies are RECORDED, not resolved -- their statements are")
+    print("        marked UNRESOLVED. A reconcile treats them as uncovered, never as absent.")
+    return 0
 
 
 def cmd_reconcile(args):
@@ -773,6 +880,37 @@ def cmd_reconcile(args):
     except Exception as e:
         print(f"CENSUS PARSE FAILED ({census_path}): {e}")
         sys.exit(2)
+
+    # ---- VINTAGE GATE (fail-closed). CVO brief 5.1 + CTO ruling 2026-07-22. -------------------
+    # An APPLIED verdict is a claim about LIVE grants. Answering it from a census that cannot date
+    # itself, or that is older than the TTL, produces a confident answer about a world that has moved
+    # -- and it errs in the GRANTED direction, which is the dangerous one. So: REFUSE, and degrade to
+    # DESIRED-only, rather than report a stale-but-plausible reconcile.
+    #
+    # The refusal is LOUD ON STDOUT and exits NON-ZERO (3), distinct from 0=clean and 1=drift-found.
+    # A refusal that printed only to stderr, or exited 0, would be indistinguishable from a clean
+    # reconcile to any caller that reads one channel -- the exact defect fixed in comp-constants
+    # earlier today (a REFUSE with empty stdout read as a pass).
+    ttl = float(getattr(args, "census_ttl_hours", None) or comp_iam_census.DEFAULT_TTL_HOURS)
+    verdict, _age = comp_iam_census.census_freshness(census, ttl_hours=ttl)
+    for _ln in comp_iam_census.provenance_lines(census, census_path, ttl_hours=ttl):
+        print(_ln)
+    print()
+    if verdict != comp_iam_census.FRESH and not getattr(args, "allow_stale_census", False):
+        why = ("carries NO vintage (_meta.generated_utc absent) -- its age is UNMEASURED, not small"
+               if verdict == comp_iam_census.NO_VINTAGE else
+               f"is STALE (older than the {ttl:g}h TTL)")
+        print(f"REFUSED: APPLIED reconcile NOT PERFORMED -- the census {why}.")
+        print("  This is a COVERAGE refusal, not a clean result: nothing was compared, so nothing")
+        print("  can be concluded about live-vs-Terraform drift. DESIRED-plane modes are unaffected")
+        print("  (`comp-iam gaps` / `roles` / `role` still answer from Terraform).")
+        print("  Fix: `comp-iam refresh-census --out <path>` then re-run with --census <path>.")
+        print("  Override (AUDITED, and it makes the verdict non-authoritative): --allow-stale-census")
+        sys.exit(3)
+    if getattr(args, "allow_stale_census", False) and verdict != comp_iam_census.FRESH:
+        print(f"WARN: OVERRIDE --allow-stale-census -- reconciling against a {verdict} census. "
+              "This verdict is NOT an APPLIED-plane authority.")
+        print()
 
     live = {}
     for r in (census.get("roles") or []):
@@ -850,6 +988,11 @@ def main():
     p_role.add_argument('name', help='Role name (partial match)')
     sub.add_parser('stats', help='Summary counts')
     p_rec = sub.add_parser('reconcile', help='DESIRED(TF)-vs-LIVE(census) drift reconcile')
+    p_rec.add_argument('--census-ttl-hours', type=float, default=None,
+                       help='max census age for an APPLIED verdict (default 24)')
+    p_rec.add_argument('--allow-stale-census', action='store_true',
+                       help='AUDITED override: reconcile against a stale/undated census (verdict is '
+                            'then NOT an APPLIED authority)')
     p_rec.add_argument('--census', default=None,
                        help='Path to the comp-aws live IAM census JSON (default: docs/briefs/cmpaws-iam-axis-census-*.json)')
 
@@ -878,6 +1021,11 @@ def main():
     p_sim.add_argument('--no-control', action='store_true',
                        help='skip the positive control (a resulting DENY is UNPROVEN, never rc=1)')
     sub.add_parser('simulate-self-test', help='offline mutant suite for the simulate wrapper (no AWS)')
+    p_rc = sub.add_parser('refresh-census',
+                          help='APPLIED: generate a vintage-stamped live-IAM census (Plane 2)')
+    p_rc.add_argument('--out', help='output path (default docs/briefs/cmpaws-iam-census-<date>.json)')
+    p_rc.add_argument('--account', help='account id to stamp (default: derived from role ARNs)')
+    sub.add_parser('census-self-test', help='offline vintage/fail-closed suite (no AWS)')
 
     args = parser.parse_args()
 
@@ -909,6 +1057,10 @@ def main():
         sys.exit(cmd_simulate(args))
     elif args.command == 'simulate-self-test':
         sys.exit(_simulate_self_test())
+    elif args.command == 'refresh-census':
+        sys.exit(cmd_refresh_census(args))
+    elif args.command == 'census-self-test':
+        sys.exit(_census_self_test())
     else:
         parser.print_help()
 
