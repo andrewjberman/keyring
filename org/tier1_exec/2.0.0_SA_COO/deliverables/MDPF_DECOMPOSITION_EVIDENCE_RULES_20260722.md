@@ -1,23 +1,30 @@
 # MDPF Decomposition — Evidence Rules Binding on the COO
 
 **Owner:** `2.0.0_SA_COO` · **Written:** 2026-07-22 ~1633Z · **Status:** BINDING on me at decomposition time
+**CVO-verified:** `/molecule` @2cb4b2e67 (`3.0.0_SA_CVO`, main lane per LD-0325) — **facts accurate,
+3 inference defects found, all corrected below.** Survived 6 of 8 of its own rules on the first pass.
+
+> **RULE IDs ARE `D#` — "DECOMPOSITION". DO NOT CITE THEM AS `R#`.**
+> CVO WATCH-2: CTO's plan carries **R1–R13**, where `R2` already means both *the coverage-denominator
+> rule* and *"Cottonwood joins the trading-day axis."* **A TO citing "R2" is ambiguous.** These were
+> `R1–R10` until 1645Z; renamed to close the collision. **Any citation of "COO R#" predates this file.**
 
 > ## ANDREW-DIRECT — ROUTED TO CVO FOR `/molecule`
 > **VERBATIM, ~2026-07-22 1635Z, at the COO terminal:**
 > > ***"Give this to CVO to /molecule"***
 >
 > **Target of "this":** this file, at `@83800a6cb` (pushed, origin/CLOUD `@399d6f834`).
-> **Routed to `3.0.0_SA_CVO` (main)** — MDPF decomposition evidence is main-fabric verify under
-> LD-0325; `~Z` holds NFRA/SYSPARITY/ontology. CVO may correct the routing.
-> **Sequencing left to CVO and deliberately NOT ranked by the COO** — he is 4 of 12 on the `/verify`
-> that CTO ruled is the gate. *Two Andrew-directed items do not arrive with a priority between them,
-> and inventing one would be overriding a sovereign instruction with a preference.*
+> **Routed to `3.0.0_SA_CVO` (main)** — CVO confirmed the lane is his, not `~Z`'s.
 > **Recorded + broadcast same turn** (CTO @163735Z, MSTR @163757Z) per `org/XXX.md`.
+> **Sequencing was left to CVO and deliberately NOT ranked by the COO. The question then dissolved:
+> CVO was 12 of 12, not 4 of 12 — the `/verify` completed at `399d6f834`, the same commit this file
+> was pushed under.** Nothing slipped; there was never a conflict to rank.
 >
-> **A NOTE THE VERIFIER SHOULD NOT HAVE TO FIND FOR HIMSELF:** several rules below — **R3 above all**
+> **A NOTE THE VERIFIER SHOULD NOT HAVE TO FIND FOR HIMSELF:** several rules below — **D3 above all**
 > — were **written by the agent they constrain, about defects in his own evidence.** That is exactly
 > the provenance a verifier should distrust. **Authorship here is a reason for a harder pass, not an
-> easier one**, and the COO cannot waive CVO's independence on the COO's own document.
+> easier one.** *CVO's DIG-1 below is that pass earning its keep: I was about to strike the only limb
+> pointed at the worst defect in the plan.*
 
 ## Why this file exists
 
@@ -27,38 +34,49 @@ the gate.** The rules below were derived today, in MCP threads, from defects fou
 going to sign. **A bound whose only carrier is a message is a clock with no keeper** — and I am
 between resets. This is the carrier.
 
+> **⚠ CVO WATCH-1, UNRESOLVED AND STATED PLAINLY: this carrier has ONE consumer, who is also its
+> author, and NOTHING READS IT AT DECOMPOSITION TIME.** It correctly stops being a message-bound.
+> **It does not thereby become a gate.** Until something reads it, its enforcement is my own
+> diligence — *which is the thing this whole document argues is not a control.* **Closing this is a
+> decomposition item, not a note.**
+
 ---
 
-## RULE 1 — Quote the READ fraction. Treat token/absence/alias sweeps as LEADS, NOT CLEARANCE.
+## D1 — Quote the READ fraction. Treat token/absence/alias sweeps as LEADS, NOT CLEARANCE.
 
 `0.4.0_DE_ClientPlatform` ran doctrine §7f against his own four census fractions (@64c3ed4b1).
-**Three of four FAIL:**
+**Three of four FAIL** — **and CVO's DIG-3 adds a fourth failure that is mine, not his:**
 
 | axis | denominator derived from | verdict |
 |---|---|---|
-| A firm-token | files containing a token **from a list he chose** | MY CONFIG — **FAILS** |
-| B arity (read) | **lines read / total lines in the file** | THE WORLD — **SOUND** |
-| C absence | the enumerated lists **he decided to diff** | MY CONFIG — **FAILS** |
-| D alias | the alias set **he defines** (bd/inf/cot) | MY CONFIG — **FAILS** |
+| A firm-token | files containing a token **from a list he chose** | HIS CONFIG — **FAILS** |
+| B arity (read) | **lines read / total lines in the file** | THE WORLD — **SOUND, per file** |
+| C absence | the enumerated lists **he decided to diff** | HIS CONFIG — **FAILS** |
+| D alias | the alias set **he defines** (bd/inf/cot) | HIS CONFIG — **FAILS** |
+| **E file-set** | **WHICH FILES get read — an enumerated list somebody chose** | **MY CONFIG — FAILS** |
 
-**Only the READ fraction is evidence**, because a file's length is a fact about the world and not a
-choice. A, C and D each measure *how thoroughly he applied his own chosen list* — a statement about
-METHOD, not about the estate.
+**DIG-3, and it is D1's own objection unapplied to itself:**
+> **"X is 31% read" is evidence about X. "Phase 0 is 10/33/31% read" is evidence about THREE FILES
+> CHOSEN BY THE INSTRUMENT.**
 
-**Consequence, and it is the operative one:**
-- A TO that says *"the firm-token sweep found N sites in area X, so X is enumerated"* is **UNSAFE**.
-- A TO that says *"X is 31% read"* is **honest and actionable**.
+**So the read fraction is sound PER FILE and config-derived ACROSS FILES.** Quote it per file, name
+the file, and **never aggregate it into a Phase-0 completeness number** — aggregation silently
+re-introduces the defect the rule exists to prevent.
+
+**Consequence for TOs:**
+- *"the firm-token sweep found N sites in area X, so X is enumerated"* → **UNSAFE.**
+- *"`<file>` is 31% read"* → **honest and actionable.**
 - **Fewer confident cells, more explicitly-open ones.**
 
-**This reframes the `bd` hole from a mistake into a symptom.** A's denominator was his to define, so
+**This reframes DE's `bd` hole from a mistake into a symptom.** A's denominator was his to define, so
 any token he failed to think of is invisible **to the fraction AND to any review of the fraction**.
 Nobody auditing the number could have caught `bd` — the number never had a slot for it.
 
-## RULE 2 — A coverage fraction is only evidence if its denominator comes from OUTSIDE the instrument's own configuration.
+## D2 — A coverage fraction is only evidence if its denominator comes from OUTSIDE the instrument's own configuration.
 
 Doctrine §7f @f9f6a4c72, from `0.7.0_AE_CloudOps`. Three live signals satisfy the coverage-fraction
 rule **while lying**: `count_axis_source_audit` (hardcoded keys), `keys_staged: 7` (literal),
-`all_present` (`len(PUBLISH_MAP)`). **A signal that measures its own configuration cannot fail.**
+`all_present` (`len(PUBLISH_MAP)` — **CVO confirmed at `publisher:103,106`**).
 
 > R10 was not insufficient because it was wrong. **It was insufficient because the defect could
 > satisfy it honestly.**
@@ -67,19 +85,42 @@ rule **while lying**: `count_axis_source_audit` (hardcoded keys), `keys_staged: 
 `"9/9 where 9 = len(PUBLISH_MAP)"` and `"9/9 where 9 = keys actually staged"` render identically and
 **only the second is evidence.**
 
-## RULE 3 — Every co-sign limb states (a) coverage, (b) its FALSIFIER, (c) whether that falsifier is REACHABLE, (d) what its DENOMINATOR IS DERIVED FROM.
-
-Extended twice on 2026-07-22, both times from defects in **my own** limbs:
-- **49F count axis** — "407 of 407" is an instrument artifact → term revised to UNBOUNDED-BY-CONSTRUCTION.
-- **"every pre-07-21 Global value is byte-identical with Cottonwood absent"** — Cottonwood
-  `fact_model_assignment` holds **2 data days**, so this is **TRUE BY CONSTRUCTION**. It would pass
-  with a broken pipeline, a wrong join, or no Cottonwood data at all.
+## D3 — Every co-sign limb states (a) coverage, (b) its FALSIFIER, (c) whether that falsifier is REACHABLE, (d) what its DENOMINATOR IS DERIVED FROM.
 
 **A limb whose falsifier cannot occur is STRUCK, not passed.** It may still run as a regression
-tripwire, **explicitly labelled NON-PROBATIVE**. The hazard was never the test — it was a green cell
-in a co-sign table beside limbs that can actually fail.
+tripwire, **explicitly labelled NON-PROBATIVE.**
 
-## RULE 4 — Coverage does not compose across agents. Keep limbs unmerged.
+**Example 1 — STRUCK, stands.** 49F count axis: *"407 of 407"* is an instrument artifact →
+UNBOUNDED-BY-CONSTRUCTION.
+
+**Example 2 — ⚠ CVO DIG-1: MY CLASSIFICATION WAS PREMATURE. THE LIMB IS NOT STRUCK. IT IS DEFERRED.**
+I classified *"every pre-07-21 Global value is byte-identical with Cottonwood absent"* as **TRUE BY
+CONSTRUCTION** because Cottonwood holds **2 data days** (CVO independently confirmed: exactly 07-21
+and 07-22, zero pre-07-21). **The NUMBER is right. The INFERENCE carried a hidden assumption** —
+*"cottonwood has no pre-07-21 data"* ⟹ *"cottonwood in the fold has no pre-07-21 effect."*
+**FALSE under the all-or-nothing null rule** (`dim_mdpf_aggregate_aua_timeseries.py:1226-1240`):
+
+| build | pre-07-21 row |
+|---|---|
+| cottonwood **absent from fold** | the number |
+| cottonwood **in fold contributing nulls** (what CTO's R2 mandates) | **`None`** |
+
+**Not byte-identical. The limb FAILS — and what it catches is exactly the pre-07-21 NULL-WIPE from
+CVO's verify §7. Its falsifier is REACHABLE, so D3's own criterion does not apply.**
+**Striking it would have removed the only limb pointed at the worst defect in the plan.**
+
+**HONEST DEPENDENCY, and it cuts both ways (CVO's own caveat, kept):** §7 is a **derived prediction
+about unbuilt code.** If S2a is built with **pre-onboarding-absence = ZERO**, cottonwood contributes
+0 pre-07-21, the row computes identically, and **my classification becomes correct.**
+> **DISPOSITION: DEFERRED until S2a's null-handling is decided. Do NOT strike it, and do NOT
+> reclassify it probative either.** The same limb is genuinely non-probative under one design and
+> genuinely load-bearing under the other.
+
+**The irony is worth keeping because D3 is a good rule:** it exists to strike limbs that *would pass
+with a broken pipeline* — **and I applied it to a limb that would FAIL with the specific breakage the
+plan is about to introduce.**
+
+## D4 — Coverage does not compose across agents. Keep limbs unmerged.
 
 Two agents each correctly reporting their own honest denominator **can still compose a false picture
 of the whole.** Live instance — `publisher/promote`, three cells that must not merge:
@@ -87,157 +128,152 @@ of the whole.** Live instance — `publisher/promote`, three cells that must not
 ```
 publisher / IAM face       CLEAN on firm axis (wildcard, no firm enumerated)   -- a real pass
 publisher / PUBLISH_MAP    TWO-FIRM. Hardcoded 9-entry dict, no Cottonwood.
-                           At cutover: 9/9, all_present=True, COTTONWOOD UNSERVED.  [R13]
-publisher / producer logic NOT COVERED BY ANYONE
+                           At cutover: 9/9, all_present=True, COTTONWOOD UNSERVED.  [CTO R13]
+publisher / producer logic NOT COVERED BY ANYONE  <-- MY CLAIM, UNVERIFIED BY CVO.
+                           An absence claim needs a stated denominator; I have not stated one.
 ```
 **"Publisher: IAM clean" and "publisher: blocked" are both true and either alone is misleading.**
 The composite is the COO's to hold; no lane can catch this from inside its own limb.
 
-## RULE 5 — The axis list is OPEN. Every fraction is PROVISIONAL.
+## D5 — The axis list is OPEN. Every fraction is PROVISIONAL.
 
-Four axes so far: firm-TOKEN · unnamed-ARITY · ABSENCE · ENCODING-BY-ALIAS.
+Four axes: firm-TOKEN · unnamed-ARITY · ABSENCE · ENCODING-BY-ALIAS.
 **Each was discovered BY A FAILURE, NOT BY A REVIEW** — two from `0.7.0` hitting walls, one from
-CVO's A11 FAILING, one found by accident in DynamoDB while verifying something else. **Not one came
-from anyone auditing the taxonomy.**
+CVO's A11 FAILING, one found **by accident** in DynamoDB while verifying something else (CVO confirms
+this himself). **Not one came from anyone auditing the taxonomy.**
 
 > A census cannot state its own completeness. It can state which kinds of encoding its instruments
 > can return, and how many kinds it has been surprised by. That number is four, today, and the
 > honest expectation is that it is not final. — `0.4.0_DE_ClientPlatform`
 
-**Corollary the plan should carry:** discovery is failure-driven, so the axis list grows exactly as
-long as work keeps hitting walls. **During a hold, work stops hitting walls — so axis discovery
-stops too.** The enumeration is the one thing that should still be running.
+**Corollary — CVO: "the sharpest line in the document," endorsed without reservation, and it belongs
+in CTO's plan and not only here:** discovery is failure-driven, so the axis list grows exactly as
+long as work keeps hitting walls. **During a hold, work stops hitting walls — so axis discovery stops
+too.** The enumeration is the one thing that should still be running.
 
-## RULE 6 — A set-difference is sound ONLY if the list and the population share a KEY-SPACE.
+## D6 — A set-difference is sound ONLY if the list and the population share a KEY-SPACE.
 
 Firm-keyed lists (IAM Resource sets, argparse choices, `FIRM_CONFIG`): both sides are firms, diff is
-sound — this is what caught the `AssetsRevampSilverRead` omission. **Date-/partition-keyed lists:
-establish the key-space FIRST.** `fact_model_aum_daily` is **RUN_DATE**-partitioned with full history
-inside each partition (1,225 distinct data days in one partition); counting run-date folders as data
-dates yields a confident, specific, **wrong** absence of eight July days that do not exist.
+sound — this caught the `AssetsRevampSilverRead` omission. **Date-/partition-keyed lists: establish
+the key-space FIRST.** `fact_model_aum_daily` is **RUN_DATE**-partitioned with full history inside
+each partition (**1,225 distinct data days — my claim, UNVERIFIED BY CVO**); counting run-date folders
+as data dates yields a confident, specific, **wrong** absence of eight July days that do not exist.
 
-## RULE 7 — DO NOT PRE-DECOMPOSE AHEAD OF THE VERIFY.
+## D7 — Do not decompose on a STALE verify predicate. ⚠ THIS RULE'S OWN PREDICATE WENT STALE IN MINUTES.
 
-CVO's `/verify` is testing 12 assumptions; **8 are unverified and A11 has already FAILED** (it
-produced the fourth axis). **A decomposition drafted now would bake in the assumptions the verify
-exists to test**, and would inherit exactly the encoding blindness the census keeps discovering.
-**Pre-building it is "firing from the hip" with a planning document wrapped around it.**
+**AS WRITTEN 1633Z:** *"CVO's verify is testing 12 assumptions; 8 are unverified and A11 has already
+FAILED — a decomposition drafted now would bake in the assumptions the verify exists to test."*
+**AS OF `399d6f834`: 12 of 12. ZERO unverified.** The verify completed **at the same commit this file
+was pushed under.**
 
-**What IS preparable:** the **FIRMSEP.11** onboarding frame — structural, assumption-independent.
-This is a content-layer phase Andrew-direct deferred 2026-05-07 (*"cant be implemented yet"*) and
-**never given a task order**; FIRMSEP.10 shipped only the tenancy/routing half. The placeholder TO's
-authoring trigger reads *"COO authors TO file when product timeline materializes"* — **that trigger
-condition came true with nobody watching it.** The slot is mine.
+**No fault on either side — I wrote an accurate number and CVO's next action invalidated it.** CVO
+flagged it as **the strongest available evidence that hazard #4 is real:** *a cascade sourced from a
+message cannot detect its own supersession* — **demonstrated on the document that names it, within
+minutes of it landing.**
 
-## RULE 8 — Decompose against the ONBOARDING sequence, not against remaining WS numbers.
+> **THE RULE THAT SURVIVES: do not decompose against a REMEMBERED verify state. RE-READ THE VERIFY
+> STATUS AT DECOMPOSITION TIME.** (This is D9 applied to myself. The original predicate was a fact
+> with a shelf life; the rule is not.)
+
+**What was preparable then and is preparable now:** the **FIRMSEP.11** onboarding frame — structural,
+assumption-independent. A content-layer phase Andrew-direct deferred 2026-05-07 (*"cant be implemented
+yet"*), **never given a task order**; FIRMSEP.10 shipped only the tenancy/routing half. The placeholder
+TO's authoring trigger reads *"COO authors TO file when product timeline materializes"* — **that
+trigger condition came true with nobody watching it.** The slot is mine.
+
+## D8 — Decompose against the ONBOARDING sequence, not against remaining WS numbers.
 
 **This is a FIRM ONBOARDING, not a data fold.** A plan built on the onboarding checklist answers
 *"firing from the hip"*; a plan built on remaining WS numbers is the same reactive mode with a
 document attached.
 
-**And MDPF is the LAGGARD, not the FRONTIER:** 3-firm canonical tuples already run in production
-siblings (`etfs-canon-fanin:47`, `opal-assets-daily-emitter:696`). Every MDPF two-firm site is
-**known-divergent from a SHIPPED pattern, not undesigned.** That should raise confidence in the
-estimate, not lower it.
+**MDPF is the LAGGARD, not the FRONTIER — and CVO says state this at FULL STRENGTH:** 3-firm canonical
+tuples in `etfs-canon-fanin:47` and `opal-assets-daily-emitter:696` are **DEPLOYED AND EXERCISED**
+(his A3), not merely present. Every MDPF two-firm site is **known-divergent from a SHIPPED, RUNNING
+pattern.** That should raise confidence in the estimate, not lower it.
+
+## D9 — A MESSAGE IS A NOTIFICATION. IT IS NEVER AN AUTHORIZATION.
+
+> **The authorization lives in the DURABLE CARRIER. RE-READ THE CARRIER AT FIRE TIME.**
+> **Nobody has to reach the agents carrying a stale ruling, because nobody fires on a carried ruling.**
+
+`0.0.0_AB_MSTR`, ~1639Z. **The supersession problem is unfixable at the message layer** — a message is
+a snapshot with no back-channel — **so it must not be solved there.** My 25-second-stale relay **was
+not a failure of care; it was a message being used as an authorization.** *Nothing I could have
+checked would have helped, which is exactly the tell that the layer was wrong.*
+
+**Demonstrations, same day, none aware of the others:** I re-verified the ETag pin **at fire time**
+(data) · `0.7.0` **declined THREE authorizations it was holding** — CTO's superseded cascade, my
+25s-stale unpark, Andrew's 1621Z priority (instructions) · CTO **landed 12 rulings into a carrier**
+(the carrier half) · **and D7 above, where my own file went stale in minutes.**
+
+### D9a — R1 FIRE-TIME CHECKLIST (I am the keeper of CTO's R1 trigger)
+
+**R1 fires on ANY flip re-sequencing.** Live owner `0.7.0_AE_CloudOps`; **COO keeps the trigger.**
+**When it fires I RE-READ. I do not fire on what I carry.** Read, in order:
+
+1. `org/critical_paths/MDPF_CONSOLIDATED_PLAN_20260722.md` (R1 row) + `org/tier0/ledger/LD-0330.md`
+   — **count-axis audit wiring lands before the SECOND post-flip cycle, preempting WS-5 if needed.**
+2. **The count-source-audit tripwire is ARMED and NOT YET TRIPPED** (`gold/mdpf_revamp/` has no
+   `cottonwood/` prefix). **The third audit leg MUST land in the SAME change as the staging loops**,
+   or the nightly returns non-zero and the parity streak cannot accrue **even with perfect
+   artifacts.** R1 constrains the back of that window; the tripwire constrains the front.
+3. **⚠ NOT CARRIED BY ITS OWNER** (`0.4.0_DS`, 1638Z): the §7f **apply-gate** bind — *"will not land
+   DS's diff as prepared"*, *"Control 5 is a precondition"*, *"one step, not diff-first-fix-after"*.
+   `0.7.0`'s `@5bcd9bec5` carries **the doctrine, not the bind.** DS placed a backstop STOP atop the
+   diff (`@930d85108`). **A backstop catching a bind is not the bind surviving. Treat as UNCARRIED
+   and re-derive at fire time.**
+
+**Banked from DS's second catch:** a diff header read `CTO: APPROVED AS WRITTEN 134926Z` — **true,
+never retracted, three hours older than the defect.** Marked **SUPERSEDED IN PART, not deleted**
+(*a removed approval reads as never-approved — a different falsehood*).
+> **THE HAZARD IS NOT THE APPROVAL. IT IS THE APPROVAL WITHOUT ITS VINTAGE.**
+Sibling of CLAUDE.md's *a line citation without a vintage is not a citation*, applied to
+authorizations instead of code.
+
+## D10 — An EVENT-SCOPED carrier retires with the event. Only a CLASS-SCOPED carrier survives.
+
+`0.4.0_DS`, ~1642Z, **amending his own fix rather than defending it.** Three carriers guard the
+dispatch defect — his STOP block, `0.7.0`'s ledger entry, and D9a cell (3) above. **ALL THREE ARE
+SCOPED TO LANDING THIS DIFF AND ALL THREE BECOME HISTORICAL THE MOMENT IT LANDS. THE DEFECT CLASS
+DOES NOT.** A future hand adding a **fourth firm** meets the identical trap with **every carrier
+already retired.**
+
+> **THE DURABLE FIX IS THE REGISTRY** — the only one still doing work in six months.
+> **Decomposition consequence: the registry is ONE item, not two.** Splitting it produces two TOs
+> each of which looks complete while the class stays open.
+
+**DS's amendment against his own backstop is the model for stating a control's reach:** his STOP sits
+atop **his diff document**, but the hand lands on `mdpf-daily-dispatch.sh` — **silent for anyone who
+edits the marker block without re-opening his file.** *Same shape as the defect: a fix one hop
+upstream of where the decision is made.*
+> **A control's coverage is where the HAND lands, not where the REASONING was recorded** — and the
+> honest version of a control states the hop it does not cover.
+
+**At decomposition, every proposed control is asked: EVENT-scoped or CLASS-scoped, and how many hops
+from the hand?**
 
 ---
 
 ## Standing hazards to carry into any TO I write
 
-- **`bd` does DOUBLE DUTY** — firm alias for 49financial **AND** a custody-source enum
-  (`DEFAULT_CUSTODY_SOURCE = "bd"`, `CUSTODY_SOURCE = bd|schwab`). An alias sweep must disambiguate
-  **by ROLE, not by token**, or it trades false-negatives for authoritative-looking false-positives.
+- **`bd` does DOUBLE DUTY** — firm alias for 49financial **AND** a custody-source enum. **CVO
+  CONFIRMED** at `mdpf-daily-trigger:76-84,404-411` — a real `bd|schwab` SSM switch. An alias sweep
+  must disambiguate **by ROLE, not by token**, or it trades false-negatives for authoritative-looking
+  false-positives.
 - **`07-13/14/15` mean OPPOSITE things in two committed deliverables** — data ABSENT (eclipse) and
-  data PRESENT (49F legacy-vs-serve-real, where only the legacy artifact omitted them). A grep hits
-  both and cannot tell them apart; the 49F list reads as corroboration of a vendor outage **while
-  proving the reverse.**
+  data PRESENT (49F legacy-vs-serve-real). A grep hits both and cannot tell them apart; the 49F list
+  reads as corroboration of a vendor outage **while proving the reverse.**
 - **Three instruments that fail toward FALSE CLEAN:** `Glob`/`comp-glob` case-sensitivity ·
   `comp-grep -l` silent truncation at `--max` · run-date-vs-data-date partition counting. None
   errors; each returns a confident, well-formatted, wrong negative. *An instrument that fails toward
   FALSE ALARM gets fixed the first time it fires. One that fails toward FALSE CLEAN is only ever
   found by someone who already knew the answer.*
-- **A cascade sourced from a message cannot detect its own supersession.** I relayed a ruling 25
-  seconds stale; nothing existed that could have told me.
+- **A cascade sourced from a message cannot detect its own supersession** — see D9, and see D7 for
+  this file doing it to itself within minutes of landing.
 
----
+## Claims in this file NOT verified by CVO — stated so nobody inherits them as verified
 
-## RULE 9 — A MESSAGE IS A NOTIFICATION. IT IS NEVER AN AUTHORIZATION.
-
-> **The authorization lives in the DURABLE CARRIER. RE-READ THE CARRIER AT FIRE TIME.**
-> **Nobody has to reach the agents carrying a stale ruling, because nobody fires on a carried ruling.**
-
-`0.0.0_AB_MSTR`, 2026-07-22 ~1639Z, answering the open question I had left in the section above.
-**The supersession problem is unfixable at the message layer** — a message is a snapshot with no
-back-channel — **so it must not be solved there.** My 25-second-stale relay **was not a failure of
-care; it was a message being used as an authorization.** *Nothing I could have checked would have
-helped, which is exactly the tell that the layer was wrong.*
-
-**Three independent demonstrations the same day, none aware it was demonstrating the same rule:**
-- I **re-verified the ETag pin AT FIRE TIME** rather than trusting the pin I was handed (data).
-- `0.7.0` **declined THREE authorizations it was holding** — CTO's superseded cascade, my 25s-stale
-  unpark, and Andrew's 1621Z priority — because it re-checked instead of acting on what it held
-  (instructions).
-- CTO **landed 12 rulings into a carrier** so a reset agent inherits from disk, not from a thread
-  (the carrier half).
-
-### R1 — FIRE-TIME CHECKLIST (I am the keeper of this trigger)
-
-**R1 fires on ANY flip re-sequencing.** Live owner `0.7.0_AE_CloudOps`; **COO keeps the trigger.**
-**When it fires I RE-READ, I do not fire on what I carry.** Read, in order:
-
-1. `org/critical_paths/MDPF_CONSOLIDATED_PLAN_20260722.md` (R1 row) and `org/tier0/ledger/LD-0330.md`
-   — the audit-wiring bound: **count-axis audit wiring lands before the SECOND post-flip cycle,
-   preempting WS-5 if needed.**
-2. **The count-source-audit tripwire is ARMED and NOT YET TRIPPED** (`gold/mdpf_revamp/` has no
-   `cottonwood/` prefix). **The third audit leg MUST land in the SAME change as the staging loops**,
-   or the nightly returns non-zero and the parity streak cannot accrue **even with perfect
-   artifacts.** R1 constrains the back of that window; the tripwire constrains the front.
-3. **⚠ NOT YET CARRIED BY ITS OWNER (flagged by `0.4.0_DS`, 1638Z):** the §7f **apply-gate** bind —
-   *"will not land DS's diff as prepared"*, *"Control 5 is a precondition"*, *"one step, not
-   diff-first-fix-after"*. `0.7.0`'s `@5bcd9bec5` carries **the doctrine, not the bind**; those
-   clauses exist **only in a message.** DS placed a backstop **STOP block at the top of the diff
-   itself** (`@930d85108`) — *because that is where the hand lands when a queued diff is applied.*
-   **A backstop catching a bind is not the bind surviving.** Until `0.7.0` lands it in a carrier they
-   own, **I treat this cell as UNCARRIED and re-derive it at fire time.**
-
-**And the second hazard DS caught while placing that backstop, which generalises:** the diff header
-still read **`CTO: APPROVED AS WRITTEN 134926Z`** — **true, never retracted, and three hours older
-than the defect.** Marked **SUPERSEDED IN PART**, not deleted.
-> **THE HAZARD IS NOT THE APPROVAL. IT IS THE APPROVAL WITHOUT ITS VINTAGE.**
-Sibling of the CLAUDE.md rule that *a line citation without a vintage is not a citation.*
-
-**The shape to watch, stated without scoring anyone:** *the insight half feels like the finding, so
-it gets written down; the operational half feels like a decision you will obviously remember.* Three
-agents did this today — DS with an unpersisted handoff, `0.7.0` with the apply gate, me with these
-eight rules until I landed them.
-
----
-
-## RULE 10 — An EVENT-SCOPED carrier retires with the event. Only a CLASS-SCOPED carrier survives.
-
-`0.4.0_DS`, 2026-07-22 ~1642Z, **amending his own fix rather than defending it.** Three carriers
-currently guard the dispatch defect:
-
-| carrier | owner | scope |
-|---|---|---|
-| STOP block atop the diff document | `0.4.0_DS` | **landing this diff** |
-| ledger entry | `0.7.0_AE_CloudOps` | **landing this diff** |
-| R1 fire-time cell (3), above | `2.0.0_SA_COO` | **landing this diff** |
-
-**ALL THREE BECOME HISTORICAL THE MOMENT THE DIFF LANDS. THE DEFECT CLASS DOES NOT.** A future hand
-adding a **fourth firm** meets the identical trap with **every one of these carriers already retired.**
-
-> **THE DURABLE FIX IS THE REGISTRY** — it is the only one still doing work in six months.
-
-**DECOMPOSITION CONSEQUENCE, which is why this is a rule and not a note: the registry is ONE item,
-not two.** Splitting it produces two TOs each of which looks complete while the class stays open.
-
-**And DS's amendment against his own backstop is the model for how to state a control's reach:** his
-STOP sits atop **his diff document**, but the hand ultimately lands on `mdpf-daily-dispatch.sh` — so
-it is **silent for anyone who edits the marker block without re-opening his file.** *Same shape as
-the defect itself: a fix one hop upstream of where the decision is made.* **A control's coverage is
-where the HAND lands, not where the REASONING was recorded** — and the honest version of a control
-states the hop it does not cover.
-
-**When I decompose, every proposed control gets asked: is this scoped to the EVENT or to the CLASS,
-and how many hops is it from the hand?**
+- D4: *"publisher / producer logic NOT COVERED BY ANYONE"* — **an absence claim with no stated
+  denominator. Mine.**
+- D6: *"1,225 distinct data days"* — **mine, unverified.**
