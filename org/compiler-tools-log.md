@@ -24047,3 +24047,13 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 1.0.0_SA_CTO~Z | NFRA_PSTMRT | comp-grep | comp-grep ALL_MDPF_PARTNER_FIRMS + postmortem org/tier0 | PASS |
 | 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-22/c... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-routes | comp-routes trace getAccountDistribution | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-22/3f_s4_schema_p... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-22/3f_s4_schema_p... | PASS |
+2026-07-22 ~2247Z 0.7.0_AE_CloudOps: COT_ADVI_DIAG -- pipescript advi-cot, comp-grep silver source, events/scheduler/cloudwatch census (denominators), logs+ssm+s3api explicit-Z, openpyxl/pandas direct artifact reads; mechanism source-confirmed end to end (2 text cells -> silver object-sweep -> A_03 abs() FATAL); comp-pipescript deployed cot-prefix gap + comp-which cot-ADVI rule gap recorded (log: cot_advi_norun_diagnosis_mechanism.md)
+| 2026-07-22 | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
