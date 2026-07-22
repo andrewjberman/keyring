@@ -192,3 +192,37 @@ def test_F2_live_census_limb_is_gated_and_DISQUALIFIED_not_silently_used(tmp_pat
     assert rc != REFUSED_EXIT, "a bad census must not invalidate the graph-primary report"
     assert "DISQUALIFIED" in out
     assert "no --census" not in out, "must not report 'no --census' when one was supplied"
+
+
+# ---------------------------------------------------------------------------
+# D4 scope-exclusion: the standing falsifier.
+#
+# CVO flagged the D4 rule (service-linked roles reclassified MISS -> EXCLUSION) as the item most
+# deserving adversarial checking, precisely because it SUPPRESSES 12 findings. Adversarial pass run
+# 2026-07-22: 0 service-linked roles are Terraform-declared, 0 path/name disagreements either way.
+#
+# BUT "0 TODAY" IS A DATA-DEPENDENT RESULT, NOT A PROPERTY OF THE RULE. The rule is sound only while
+# nothing we govern lives under /aws-service-role/. The moment someone Terraform-declares a
+# service-linked role, the exclusion starts hiding a gap we OWN -- silently, because suppression is
+# invisible by construction.
+#
+# So the falsifier becomes a standing control instead of a one-off finding. If this ever fails, the
+# D4 exclusion must be narrowed to "service-linked AND NOT TF-declared" -- do not silence the test.
+# ---------------------------------------------------------------------------
+
+def test_D4_scope_exclusion_assumption_still_holds__service_linked_is_never_TF_declared():
+    """The falsifier for the D4 suppression. Data-dependent BY DESIGN -- that is the point."""
+    import sys as _s
+    _s.path.insert(0, str(_WS))
+    try:
+        from org.modules.graph.extract_iam import build_iam_report
+    except ImportError:
+        pytest.skip("extract_iam unavailable")
+    _p, tf_roles, _g = build_iam_report(_WS)
+    offenders = [n for n in tf_roles if "aws-service-role" in str(n).lower()
+                 or str(n).startswith("AWSServiceRoleFor")]
+    assert not offenders, (
+        "A service-linked role is now TERRAFORM-DECLARED: " + str(offenders) + ". "
+        "The D4 scope-exclusion suppresses service-linked roles as 'not IaC-governable'. That "
+        "assumption is now FALSE, and the exclusion is hiding a gap we own. Narrow the rule to "
+        "'service-linked AND NOT TF-declared' -- do NOT silence this test.")
