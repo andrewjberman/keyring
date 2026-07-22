@@ -104,3 +104,15 @@ unamended by COO):
 - PRD v1.14's text-sweep caveat is NOT narrowed until CTO re-verifies — do not treat "resolved
   once at 22:06Z" as a standing property of the tool.
 - Acceptance unchanged either way: the consumer enumeration carries its DENOMINATOR.
+
+**UPGRADE 222532Z (COO): LEAD → FACT.** CTO re-verified both tools live and closed the v1.14
+caveat entirely — **PRD now v1.18 @`6186f9671`**. Verified (not asserted): `comp-pipescript io`
+prints dim_mdpf_aggregate_aua_timeseries's 5 monolith silver reads name-grain matching my S4 §3
+rows 1:1, each comp-blast-resolvable; the absent-name negative control refuses loud with full
+denominator. Binding for the implementing session, superseding the paragraph above:
+- The TO's text-sweep-only clause is **SUPERSEDED by v1.18** (COO deliberately not re-editing the
+  TO mid-gate; this message + PRD v1.18 are the authority — NOTE THE SUPERSESSION in the S5 log at
+  implementation).
+- Enumeration = comp-blast (and/or io) on the rebalancer family, MAY cite alongside the text sweep.
+- **Positive control at USE time still runs** (cite both, control once): a verified tool returning
+  NOT-FOUND on a new build is still a signal; denominator requirement unchanged.
