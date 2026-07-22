@@ -78,3 +78,35 @@ One canonical, ratified row pinning: return_method=`daily-TWR-geometric`; flow_t
 `fact_account_return` **supersedes** the c00-residual + c01-return conflation: c00's clean parts (valuation, flow/income/fee classification) feed it; market_pnl comes from the lot facts (new); c01's window/geometric-link machinery is reused but on gross+net measured returns; c02 client rollup re-links from the account daily series. The advisory-fee half the metatable drops at a00 must be wired through (the `c01:46` break) for net return. Group D reads gross+net + income breakdown from this one canonical layer.
 
 **One-line:** measure market P&L instead of plugging it, classify WD/coupon/withholding correctly, wire the advisory fee through for net, value the whole account incl. cash, and pin the method in a contract -- and the served number becomes a defensible total return, gross and net, instead of an AUA residual.
+
+---
+
+## 8. REAL-DATA GROUNDING (2026-07-21) -- confirms resolved + classification CORRECTED
+Sampled live partitions: dim_position/dim_transaction date=2026-07-20 (6,010 accts, $1.694B AUA); fact_lot_realized/unrealized + dim_asset (07-14). Findings REVISE section 5.
+
+**Confirm #1 CASH -- RESOLVED (captured, one caveat).** Sum(`market_value_settled_unsettled`)=$1.694B includes cash: money-market sweep funds (SWGXX/SNVXX/SNSXX) + blank-cusip cash lines ($21.6M). `accounting_rule_code` tags every row CASH/MARGIN/SHORT. **CAVEAT:** `FC` "BANK SWEEP FR/TO BROKERAGE" rows show cash sweeping to Schwab Bank -- confirm the bank-side balance is in the RPS position file, not a separate feed, else a slice of cash is off-statement.
+
+**Confirm #2 CLASSIFICATION -- the current {DV,IN}/{FE,WH,WD} taxonomy is INCOMPLETE + partly WRONG.** Decoded the real `sb_cd` x `transaction_detail_description`/`transaction_source_code_description`:
+| sb_cd | n | what it REALLY is | correct bucket | current runner |
+|---|---|---|---|---|
+| TR | 630 | trades (buys/sells) | internal-trade | ok (ignored) |
+| **FC** | **549** | BANK SWEEP fr/to brokerage (net-0, internal) + **BANK INTEREST (income)** + cash-in-lieu | split: sweep=internal / **bank-int=INCOME** | **UNHANDLED -> bank interest MISSED** |
+| DV | 75 | cash dividends | income_dividend | ok |
+| FI | 34 | deposits (employer contrib, rollover, MoneyLink) | external_flow_in | ok |
+| TA | 32 | security transfers (account transfer) | flow_in_kind | ok |
+| **RD** | **24** | **REINVESTED DIVIDEND** | **income_dividend** | **MISSED (income={DV,IN})** |
+| FO | 21 | withdrawals (client request, Tfr to bank) | external_flow_out | ok |
+| **JR** | 20 | journal / transfer between Schwab accts | flow (ambiguous) | **UNHANDLED** |
+| FE | 11 | ADR mgmt fee | fee_transaction | ok |
+| **WD** | 6 | **FOREIGN TAX PAID** (NOT a withdrawal) | tax_withholding | mislabeled "withdrawal" but tax-bucket is defensible |
+| **RO** | 5 | redemption/conversion/split (e.g. a CALLED bond) | corporate-action | **UNHANDLED** |
+| **IC** | 4 | conversion / shares-received-in | corporate-action (in-kind) | **UNHANDLED** |
+| IN | 3 | credit/bank interest (incl. a called-bond final coupon) | income_interest/coupon | ok |
+| WH | 3 | fed income tax withheld | tax_withholding | ok |
+**Corrections to section 5:** (a) my "WD -> external_flow" was WRONG -- WD is FOREIGN TAX; **FO** is the real withdrawal. (b) income MUST add **RD** (reinvested dividends) + **bank interest inside FC** -- `{DV,IN}` alone understates income. (c) **classify from the DESCRIPTIONS + asset_class, not the 2-letter sb_cd** -- the codes are lossy (FC and JR each mix internal-sweep with real income/flow). (d) FC bank-sweep (net-0) must be recognized-and-excluded explicitly, not ignored by omission.
+
+**Coupon:** no distinct code -- it is interest (`IN`, and bank-int in `FC`) on `dim_asset.asset_class='DEBT'` (132 debt securities in the sample). `lot_unrealized.accrued_interest` and `yield` are **empty (0 nonzero)** -> coupon is **CASH-BASIS only** (drop the accrual option from section 2).
+
+**Measured market_pnl -- CONFIRMED feasible.** `fact_lot_realized.gain_loss_dollars` (+ `proceeds`, `cost_basis`, `disallowed_loss`, `federal_tax`/`state_tax`/`wh`) and `fact_lot_unrealized.unrealized` (+ `cost_basis`, `current_market`, `adjusted_cost`) give realized + unrealized P&L directly. **market_pnl = Sum(lot_realized.gain_loss_dollars for lots closed) + Delta Sum(lot_unrealized.unrealized)** -- a measured component, no residual plug. (Note: lots are keyed `lot_uid`/`lot_seq`; realized carries `close_event_id` for day attribution.)
+
+**Net effect on the design:** section 3a's income fields become `income_dividend` = DV+RD, `income_interest` = IN(cash) + FC-bank-int, `income_coupon` = IN/FC-int where asset_class=DEBT; add a `corporate_action` handling lane (RO/IC/JR) so a called bond or share conversion is not silently a flow or a growth-plug; `tax_withholding` = WH+WD; `external_flow` = FI(in) + FO(out) + TA(in-kind), NOT WD. Everything else stands.
