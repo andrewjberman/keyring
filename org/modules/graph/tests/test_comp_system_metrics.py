@@ -111,4 +111,22 @@ finally:
     os.rmdir(tmp)
 
 print(f"\n{PASS} passed, {FAIL} failed")
-sys.exit(1 if FAIL else 0)
+
+# GUARDED 2026-07-22 (0.8.0_AE_CloudComp). This is a standalone SCRIPT (see the docstring's
+# `python org/modules/graph/tests/test_comp_system_metrics.py`) that lives in tests/ with a `test_`
+# prefix, so pytest COLLECTS it and executes this module body at import. A bare module-level
+# sys.exit() raises SystemExit during COLLECTION, which pytest reports as INTERNALERROR and which
+# ABORTS THE ENTIRE COLLECTION -- so `pytest org/modules/graph/tests/` ran ZERO tests (not "some
+# tests", zero) from 2026-07-14 until this guard landed, in CI and locally.
+#
+# The whole suite was dark, including test_sovereign_held_no_drift.py -- the anti-drift guard that
+# had CORRECTLY gone red on a re-introduced sovereign-hold literal and whose RED nobody could see.
+# comp-tool-tests.yml's own header warns that "a committed regression test that no gate ever runs"
+# is the trap it exists to close; the gate was running, the suite was not. A green-looking gate over
+# an empty collection is the same failure shape as a guard whose broad paths are dead.
+#
+# If FAIL is non-zero the script still exits 1 when run directly; under pytest it stays inert.
+# FOLLOW-UP (not done here, not mine to redesign): convert these checks into real pytest functions
+# so they are ASSERTED by the suite rather than merely importable by it.
+if __name__ == "__main__":
+    sys.exit(1 if FAIL else 0)
