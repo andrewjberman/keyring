@@ -23286,3 +23286,38 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-22 `4.0.0_SA_CRO` (CRO establishment, 0930-1515Z): commit-gate FAIL->PASS on 2 rescued .py (5 then 29 ruff errors; fixed, never overridden -- a style nit is not an override case) - safe-commit x5 PASS, and its `:607 git commit --only -- PATHSPEC` source-read corrected a live belief about index-sweep risk - comp-surface-check x4 PASS (advisory, read not assumed) - comp-pulse risk-reflex x4 CLEAN with denominators printed. GAP SURFACED: comp-pulse danger map self-reports ~199.8h STALE, so a CLEAN reflex is weaker evidence than the word implies (surfaced, not fixed; not my lane). SECOND GAP, self-inflicted and caught by the gate: my first attempt at this very line used `-m` with backticks in the compound command and the LD-0276 never-rules gate BLOCKED it -- correct catch, complied with -F rather than overriding. Comp-rail: governance/doc session, no code/infra investigation, so comp-which/comp-grep were not the right instruments -- native Read/Grep on known paths plus git-show reads of the record; zero raw-aws inspection, zero infra/*.tf grep. Non-comp instrument note: `ps -ef` returned DOES-NOT-EXIST for every PID including my own -- positive control failed, instrument broken not finding; replaced with Get-CimInstance Win32_Process.
 | 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/4.0.0_SA_CRO/logs/2026-07-22/c... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/ANDREW_DIRECT_HOLD_FO... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/hand... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/handoffs/2026-07-22_1515Z.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants | comp-constants check --file data/assets/scripts/gold/build_cottonwood_mdpf_slice.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants | comp-constants check --lane bd | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/audit/archive/2026-07-22T151750Z/or... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/audit/archive/2026-07-22T151750Z/org_git-author-override-audit.log ... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/audit/archive/.baseline | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/audit/archive/.baseline | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/sovereign_held.py --... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff infra/aws/compdiff/sovereign_held.py infra/aws/compdiff/tests/test_free... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/sovereign_held.py infra/aws/compdiff/sov... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_CONSOLIDATED_PL... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_CONSOLIDATED_PLAN_20260722.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_CONSOLIDATED_PL... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_CONSOLIDATED_PLAN_20260722.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_CONSOLIDATED_PL... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_CONSOLIDATED_PLAN_20260722.md | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/handoffs/2026-07-22_1525Z.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_compwhich_... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/tests/test_compwhich_toolpass_rules.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/tests/test_compwhich_toolpass_rules.py | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/PORTAL_V2_JSON_MDPF_DEN... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/MDPF_CONSOLIDATED_PL... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/MDPF_CONSOLIDATED_PLAN_20260722.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants / comp-grep / comp-which / commit-gate | comp-constants check (--lane bd|inf|cot|multifirm, --file, bare) restored from an 8-day rc=3 refusal + file->lane fix; comp-grep sweep 11,031 files scanned (the Item-2 denominator); comp-which --json direct-run REFUTED "the router is down"; commit-gate caught 2 ruff errors in my own patches | PASS (2 GAPS FILED: comp-constants has no exempt/deliberate/ratified field so a ratified divergence is re-reported forever; `git log --since=<absolute datetime>` compares LOCAL time on a UTC-4 host and silently returned 0 commits for a window containing 4 -- mechanism behind CTO's a2b1746d0 symptom, workaround = relative windows) |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
