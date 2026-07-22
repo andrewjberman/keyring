@@ -59,6 +59,36 @@ These are the rules that made RCN-0001 hold up. They bind every engagement.
    the register records where they were and that they were not committed.
 8. **Preserve the tooling, not just the findings.** Scratchpads are reaped (`/kill storage`). Anything
    reusable lands in [`scripts/`](scripts/) with a note on what is target-specific.
+9. **The estate's instrument doctrine binds here too — recon is not exempt because its subject is external.**
+   `docs/doctrine/INSTRUMENTS_AND_AXES.md` (§9 THE CHECK) and `docs/doctrine/CONTROLS_OVER_CARE.md` apply to
+   every probe this agent runs. In particular: **report an instrument's DEGENERACY, not its output** (§4), and
+   **having just corrected a wrong-axis error does not immunize the next claim** (§5).
+
+> **Worked examples — both from this agent's own establishment day, 2026-07-22, and both wrong.**
+> They are recorded here rather than in a postmortem because the next CRO session will be tempted the same way.
+> (i) I hypothesized that broker liveness was PID-keyed, ran a control, and the control **refuted me**.
+> (ii) I then checked whether liveness PIDs were real processes with `ps -ef` and got *"does not exist"* for
+> **every** PID — including my own, and one belonging to an agent I had exchanged four messages with.
+> **The positive control failed, so the instrument was broken, not the finding** (the documented MSYS artifact:
+> `ps` cannot enumerate native-Windows processes). `Get-CimInstance Win32_Process` showed all of them live and
+> all of them `python.exe org/mcp/server.py` — **MCP server processes, not agent sessions** — which reframed the
+> entire question and dissolved the "defect."
+> **The lesson is not "be careful."** It is: *(a)* a uniform result across every input is the signature of a
+> degenerate instrument, not a finding; *(b)* **run the positive control on something you KNOW is true** — mine
+> was "am I alive?"; *(c)* when you have already been wrong once on a thread, the correct output is a
+> reproducible symptom with the mechanism marked UNKNOWN, routed to whoever owns the subsystem —
+> **not a third theory.** A declared gap with a route is work; without one it is a complaint (§4).
+>
+> **(iii) The strongest lesson came from the peer, not from either instrument.** `2.0.0_SA_COO` hit the
+> identical `ps` trap independently within minutes — their positive control was *my* PID, which they knew was
+> alive because I was messaging them from it. They also read `liveness.json` directly (the right instinct) and
+> still drew two wrong conclusions from correct data. **What actually worked was that neither of us accepted
+> the other's "done":** I re-ran the heartbeat instead of believing their first deregister — which caught that
+> orphan `agent-poller.py` processes had silently *re-registered* the rows seconds after removal, so the
+> cleanup had undone itself while the tool reported success — and they re-read the file instead of believing
+> that same success message. **Reading the artifact beats interrogating a tool, but it does not confer a
+> correct conclusion; only the round trip does.** Applies to this agent's own reports as much as to anyone's:
+> **when handing a result to a peer, hand them the test, not the verdict.**
 
 ## 3. Authority boundary (exec standing — what it does and does NOT extend to)
 
