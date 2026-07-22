@@ -187,3 +187,27 @@ Beyond §0's "ZERO baseline FE changes," CTO scoped two FE work-items (A2 + cont
 **Verified** with a **constructed fresh aum-timeseries fixture** (built off the revamp aggregate = `Σ non-sma model_value`, simulating DS's canonical producer, since the real artifact doesn't exist yet): Global Value priorLevel **coherent (Q2'26 $1.77B, matching the trend bar, identical to the A2 derive)** + fresh to 07-20; Global Count + Inflection Value content-A/B gaps intact + pre-onset preserved. Typecheck clean. **The definitive coherence + freshness check re-runs at the flip gate on DS's LIVE canonical set** (CTO's visual gate).
 
 **Portal DEV lineage:** `2f603319` (A2 derive) → `5b1e44dc` (content-A/B) → `1508d183` (cleanup) → `aa8c0420` (revert A2 + cleanup, preserve content-A/B). **NET = pre-A2 FE + content-A/B** — the A2 derive is undone; content-A/B stands.
+
+## 12. FLIP-GATE RENDER-CHECK — 6/6 CLEAN on the LIVE coherent-9 (the definitive check from §11, CTO-ACCEPTED)
+
+The §11 "definitive check re-runs at the flip gate on DS's LIVE canonical set" is **DONE**. Replaced the constructed fixture with the **REAL staged coherent-9** (`s3://opal-data-assets/gold/mdpf_revamp/`, DS-staged @233355Z), route-injected into ModelPortfolios on portal DEV `@aa8c0420` (dev server :5175, git-clean).
+
+**Vintage grounding (Rule 22a — applied truth on the live primitive):** all 9 artifacts md5-verified byte-exact against CTO's ETags: agg `49f=a2e87f31 / inflection=7ab6e93e / global=1b52211f`; A4 `non_model=7ef32112`; A1 `aum-metrics=d69ac96a`; A2 `aum-timeseries=38e9e8d4`; dist `49f=865919f2 / inflection=afb964c4 / global=b946d836`. (`non_model_assets_precutover_frozen` correctly excluded.)
+
+**6-cell verdict (Value|Count × Global|49F|Inflection) — all CLEAN:**
+- **Global V:** Total AUA **$1.81B** = `opal_aggregate_aua` $1,813,038,832 (exact); trend fresh to 07-20; priorLevel cards coherent w/ trend (Q2'26 $1.73B / Q1'26 $1.48B / Q4'25 $1.38B) — vintage-bug stays fixed on the REAL aum-timeseries (no frozen $1.66B). Donut + A1 cards off `d69ac96a`.
+- **Global C:** fresh to 07-20; frontier ≈ sleeve-level 7,739; no drop-to-zero.
+- **49F V:** Total AUM **$1.68B** = `partner_custody_total` $1,675,868,803; bell 7,026; percentiles = `49f_dist` exact.
+- **49F C:** fresh 07-20; frontier ≈ 7,026 (no blends → sleeve==distinct); no drop-to-zero.
+- **Inflection V:** Total AUM **$202M** = `partner_custody_total` $201,648,128 (source Orion). **PRE-ONSET FLAT-GREY confirmed** — Jul'25→Apr'26 Non-Model-only grey; model bands onset ~May'26, NOT fabricated/bridged. Bell 713; percentiles = `inf_dist` exact.
+- **Inflection C:** pre-onset honest-ZERO (no model accts pre-onset; counts exclude non-model); model onset ~2026-05-18, continuous to 07-20 (~713); no drop-to-zero.
+
+**Frontier-count coherence (CTO #3):** aggregate `by_model account_count` @07-20 **== dist `total.account_count` EXACT, all 3 firms** — global 7560==7560, 49f 7026==7026, inflection 534==534. Rendered "Total Holdings" (7,739 / 7,026 / 713) is the deliberate **sleeve-level** headline (distinct + blend-sleeve re-add 179/0/179, Andrew-direct 2026-06-05, `ModelPortfolios.tsx:893`) and ties to the count-mode trend frontier; histogram + percentiles stay on distinct basis. Coherent.
+
+**No mixed-basis Global Total:** headline is `globalMdpfData`-PRIMARY (`opal_aggregate_aua`); the A2 aum-timeseries (SMA-excluded $1.4995B) drives ONLY priorLevels/fallback, never the headline — the by-design field-identity delta (`model_aua` $1.538B incl SMA vs $1.4995B non-SMA) is coherent.
+
+**CTO independently verified all 6 screenshots → RENDER LEG ACCEPTED (00:55Z);** render+rollback gate DECLARED, COO co-signing. Screenshots: `org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/mdpf_flip_gate_render_20260721/`.
+
+**Cosmetic (non-blocking, pre-existing, post-flip cleanup):** in FIRM view the Portfolio-Analytics period card reads "Total AUA" while header/donut read "AUM" (card label not using `assetLbl`). CTO noted for post-flip cleanup.
+
+**REMAINING (my leg):** the joint **LIVE-URL 404-catch** vs AE's real serving-target (post-apply) — harness built + baseline-validated. Prereq surfaced to AE: `/api/general/*` returns 401 to a stub token, so the render-through happy-path (200 application/json, not 404/CF-HTML) needs a valid dev token; AE edge-delivery proof + my render-through covers both. Runs the moment AE's target lands, before CTO's portal-auth FINAL GO.
