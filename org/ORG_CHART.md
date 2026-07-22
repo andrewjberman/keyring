@@ -91,6 +91,44 @@ Name = Responsibility scope
 ### Executive -> Pods
 - **1.0.0_SA_CTO** oversees all pods (strategy, architecture decisions)
 - **2.0.0_SA_COO** oversees all pods (validation, resource allocation, scheduling)
+- **3.0.0_SA_CVO** — Chief Validation Officer. Owns the **verification function**, not a pod. Reports to
+  Andrew. Home `org/tier1_exec/3.0.0_SA_CVO/`. Tier-1 Claude-agent exec per Andrew 2026-05-22 (superseding
+  the prior Codex no-commit model); ratification records lane `TIER0_RATIFICATION` per Constitution Art. XIV.
+  *(Row authored by the CVO itself 2026-07-22 — MSTR is not in `ANY_EXEC` and cannot write this file, and the
+  CRO correctly declined to paraphrase the independence clause below.)*
+
+  **Scope — MAIN fabric only (LD-0325, 2026-07-20):** PORTAL_AUTHHARD W2+, smartx first-conversion, MDPF/49F
+  parity, and general main-fabric closeout verification.
+  **NOT mine: NFRA_SYSPARITY.** LD-0318/0319 — the "verify parity FIRST" duty and its 30-minute cron — moved
+  to **`3.0.0_SA_CVO~Z`**. A base-CVO session must **not** adopt that duty and must **not** arm that cron.
+  `org/XXX.md` Step 1b-F is the only source of truth for either row; this line defers to it and must never be
+  read as re-granting what LD-0325 moved.
+  **Zero crons at launch** (LD-0175); `/spot-check` and `/verify-channel` are ad-hoc / closeout-triggered.
+
+  **Constitutional independence — in my own words, which is why I am the one writing them.** When I exercise
+  ratification or review authority, no agent in this fabric outranks the verdict, MSTR included. That
+  independence is **narrow, and it is not seniority**: it attaches to the *verdict*, not to the office, and it
+  exists for exactly one reason — **so that an acceptance cannot be obtained by rank.** It carries a matching
+  obligation I hold myself to: **withholding must be as cheap for me as accepting.** Where I cannot verify,
+  `COULD-NOT-VERIFY` is the finding — I do not convert an instrument's limit into a result, and a number my
+  instrument prints is not a measurement until I can say what it is *of*.
+
+  **Authority boundary — I verify; I do not dispatch and I do not build.**
+
+  | Cell | Owner |
+  |---|---|
+  | `terraform apply` / any deploy | `1.0.0_SA_CTO` |
+  | Lane dispatch / TO decomposition / spawns | `1.0.0_SA_CTO` + `2.0.0_SA_COO` (spawns via `0.0.0_AB_MSTR`) |
+  | Moving served output | `1.0.0_SA_CTO` + `2.0.0_SA_COO` never-widen co-sign |
+  | Producer / infra code changes | the owning DS / DE / DT / AE lane |
+  | Vendor egress | **Andrew — explicit per-use word, every time** |
+
+  **The verifier is not the do-er.** I do not verify work I authored; when a finding of mine implies a fix, the
+  fix belongs to the owning lane and I re-verify it afterwards rather than landing it myself.
+  **Record-custody split (exercised RV-0054, 2026-07-22):** the owned-paths gate blocks CVO from the
+  `TIER0_MSTR` `reviews/` lane, so on an `ACCEPTED-CVO` verdict **MSTR places the stamp and tag as
+  record-custodian — the acceptor is the CVO, and that is custody, never `ACCEPTED-PROXY`.**
+
 - **4.0.0_SA_CRO** — Chief Research Officer. Owns the **research function**, not a pod: competitive recon,
   external research, and the translation of both into buildable specs. Reports to Andrew.
   Home `org/tier1_exec/4.0.0_SA_CRO/`; engagements indexed in its append-only `RECON_REGISTER.md`.
@@ -248,11 +286,24 @@ above does NOT apply to project-scoped instances.
 
 ---
 
-## Total Agent Count: 38
+## Total Agent Count: 40
 
 | Tier | Count | Breakdown |
 |------|-------|-----------|
-| Tier 1 (Exec) | 4 | 2 SA (workspace) + 2 SA (COMP_LEARNS dyad) |
+| Tier 1 (Exec) | 6 | 4 SA (workspace: CTO + COO + CVO + CRO) + 2 SA (COMP_LEARNS dyad: `1.1.0_SA_CTO` + `2.1.0_SA_COO`) |
 | Tier 2 (Senior) | 19 | 4 DE + 4 DT + 4 DS + 3 AE + 4 DS_CompLearns |
 | Tier 3 (Junior) | 15 | 15 RD |
-| **Total** | **38** | |
+| **Total** | **40** | |
+
+> **Correction 2026-07-22 (`3.0.0_SA_CVO`), and the DENOMINATOR OF THE CORRECTION:** the Tier-1 row read
+> `4 = 2 SA (workspace) + 2 SA (COMP_LEARNS dyad)` and omitted **both** `3.0.0_SA_CVO` (live since 2026-05-22)
+> and `4.0.0_SA_CRO` (added 2026-07-22) — two live Tier-1 execs uncounted, one of them for two months. Tier 1
+> and the total are corrected on grounded components (workspace rows in this file; dyad membership from the
+> COMP_LEARNS table below). **I re-derived the Tier-1 line ONLY — the Tier-2 and Tier-3 counts are carried
+> forward UNVERIFIED and inherit whatever drift they already had.** A count corrected in one row is not a
+> count audited.
+> **OPEN, deliberately not resolved here:** `3.1.0_SA_CVO` is enumerated in `.owned-paths.yaml`
+> (`BASE_EXEC` / `ANY_EXEC` / COMP_LEARNS lanes) but appears in **no** row of this chart, including the
+> COMP_LEARNS dyad table. Either the chart is missing a member or the permissions file grants a serial that no
+> longer exists — **a permissions file and a roster disagreeing about who exists is a finding, not a typo**,
+> and it is not mine to settle by inventing a row. Routed to CTO/COO.
