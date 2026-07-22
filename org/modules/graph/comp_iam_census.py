@@ -42,6 +42,7 @@ same posture `iam_cli._simulate_self_test` already takes for the decision plane.
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
@@ -165,7 +166,26 @@ def build_census(account: str | None = None, aws_bin: str = "aws") -> dict:
     Lazy subprocess by design: importing this module must not require AWS.
     """
     started = _utcnow()
-    cmd = [aws_bin, "iam", "get-account-authorization-details", "--output", "json"]
+    # RESOLVE THE EXECUTABLE EXPLICITLY. On Windows `aws` is the .tools/aws.cmd shim and a bare
+    # subprocess argv cannot find it -- Python's CreateProcess honours PATHEXT for .exe but will not
+    # run an extensionless bash shim, so `["aws", ...]` raises WinError 2. Lifted from
+    # .tools/comp-tagauthz.py:39-47, whose comment names the hazard exactly: "a silent
+    # FileNotFoundError here would look exactly like an empty result. A failed probe must never be
+    # mistaken for a clean probe."
+    #
+    # MEASURED 2026-07-22: the first cut of this function passed a bare "aws" and died WinError 2.
+    # It failed LOUDLY (the caller degrades to "census NOT generated") -- but the brief said to lift
+    # comp-tagauthz's call, and lifting the CALL without its RESOLVER is how a proven mechanism is
+    # re-broken at a new site. The resolver was the load-bearing half.
+    exe = shutil.which(aws_bin) or shutil.which(aws_bin + ".cmd")
+    if not exe:
+        # DISTINCT from an AWS failure. "I could not find the CLI" and "the CLI said no" are
+        # different causes with the same downstream shape (no census), and collapsing them sends the
+        # reader hunting for a permissions problem that does not exist.
+        raise RuntimeError(
+            "AWS CLI NOT FOUND on PATH (looked for %r and %r). This is a TOOLING/PATH failure, not "
+            "an AWS or permissions failure, and NO census was generated." % (aws_bin, aws_bin + ".cmd"))
+    cmd = [exe, "iam", "get-account-authorization-details", "--output", "json"]
     proc = subprocess.run(cmd, capture_output=True, text=True)
     if proc.returncode != 0:
         raise RuntimeError(
