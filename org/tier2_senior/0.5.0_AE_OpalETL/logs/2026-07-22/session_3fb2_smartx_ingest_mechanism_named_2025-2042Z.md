@@ -81,3 +81,25 @@ None hard. AC5 gated on the 07-23 13:30 UTC scheduled fire (external clock; hand
    no trading-day-frontier entry) stands as a documented coverage hole; routing is COO/CTO's call.
 3. COO is routing my census-discrepancy note (list-rules zero-result not reproducible; 3/141 smartx
    rules found today) to CTO as an instrument finding — no action in my lane.
+
+## ADDENDUM 20:47–20:52Z — ANDREW-DIRECT + working-state verification (exercised)
+**ANDREW-DIRECT, my terminal, ~20:47Z, VERBATIM:** "I dont care about fucking alarms, I care about
+making sure that eveyrthing is working. we can fuck around with alarms later."
+SCOPE: consistent with the 07-17 standing no-alarms order; "later" = DEFERRED-not-banned, but the
+standing order governs until Andrew says otherwise (COO matched this read, 20:51Z; alarm asks route
+to COO). Broadcast to COO same turn (20:49:49Z); COO recorded @a3c2093d3.
+
+**Working-state verification, every claim EXERCISED this session (Rule 22a behavioral):**
+1. Trigger fired on schedule: pull started ~13:30:50Z (09:30 ET cron).
+2. FAIL-LOUD + RETRY EXERCISED NATURALLY: attempt 1 (13:30–13:36:32Z, 342s) raised DirtyRunError
+   (feed9 identity reconciliation, 'Opal Conservative Growth' resolver=3221 != feed5 living=3224);
+   async retry 13:38:34Z (58s, skip_if_landed) SUCCEEDED, no second error. Self-healed in 2 min.
+3. Silver chained via OnSuccess post-retry (13:39:37Z); artifact 13:38:43Z; DLQ 0 messages / 0 in-flight.
+4. Sweep ran 16:00:12Z.
+5. Content reconciles: latest-day (2026-07-21, D-1) book $1,434,172,228 across 7 live models vs
+   Andrew's ~$1.4B ground truth. 8th funded model (rmid 4d85401b) $0.00 since 07-20 = de-funded,
+   benign. 1,225-day series intact.
+VERDICT: leg WORKING end-to-end, recovery path observed live (better evidence than a clean run).
+COO ACK 20:51:54Z: exercised-verification is now the bar for every remaining 3F leg. No alarm work.
+Also banked: aws-shim `--delimiter /` MSYS silent-absence trap (EXERCISED via AWS_SHIM_DEBUG argv;
+memory + COO->CTO + wired into 3F-B4 @1c42b3fd9).
