@@ -15,12 +15,27 @@
 - **ROLLBACK SHA: `99fed48f6de3dd8a47b4fee11953943163c29a49`** — recorded here BEFORE the merge, and carried in the merge-commit message.
 
 ## Legs
-1. [ ] Ephemeral worktree off PROD (`bun install` inside it — the pre-push `tsc` gate fails "tsc: command not found" otherwise). Main portal tree STAYS on `DEV` (Rule 19).
-2. [ ] `--no-ff` merge of `8fd61dbf` into PROD, rollback sha in the message. **Any conflict -> STOP + surface, never force** (CTO explicit).
-3. [ ] Diff verify: merged PROD tree vs the intended content; confirm the ONLY delta vs `99fed48f` is the ModelPortfolios.tsx label fix.
-4. [ ] Push `origin PROD` (NO `MSYS_NO_PATHCONV` — it breaks the VALGATE pre-push hook).
-5. [ ] `deploy.yml` fires (build -> S3 sync -> CloudFront invalidation -> auto-tag). Verify conclusion via `gh run view <id> --json conclusion` (**not** `gh run watch` — hangs on benign warnings).
-6. [ ] Tear down worktree; confirm portal main tree back on `DEV`; end at workspace root.
-7. [ ] Report run conclusion + deployed sha to CTO. **CTO independently re-verifies opalinvest.dev serves the fix**; DE re-runs the duplicate-key gate on the live served build; Andrew hover-confirms. My leg is the deploy, NOT the behavioural confirmation — I do not close on my own render claim.
+1. [x] Ephemeral worktree off PROD at `/c/Users/ANDREW~1/AppData/Local/Temp/claude/prod-promote-2xhotfix`. Local `PROD` re-asserted from `origin/PROD` first (`update-ref`) to avoid dry-run pollution. `bun install` inside it: 420 packages, 99.92s, `node_modules/.bin/tsc` confirmed present BEFORE the push (the gate fails "tsc: command not found" otherwise). Main tree verified on `DEV` throughout.
+2. [x] `--no-ff` merge of `8fd61dbf` -> `885b76c2fdcac13f1975fb527b4295f805842515`. **Clean, zero conflicts.** Rollback sha carried in the merge message. Message authored via `-F` (never `-m` — a commit message is an execution vector).
+3. [x] Diff verify **before** pushing: `git diff --stat 99fed48f HEAD` = 1 file, `src/pages/ModelPortfolios.tsx`, +16/-2 — the label fix and nothing else. Cross-check `git diff 8fd61dbf HEAD -- src/pages/ModelPortfolios.tsx` = EMPTY, i.e. the merged file is byte-identical to the sha CTO verified.
+4. [x] Pushed `origin PROD`: `99fed48f..885b76c2`. VALGATE D-1 PASS (no `api/endpoints/*.ts` touched); pre-push `tsc -b --noEmit` PASS. No `MSYS_NO_PATHCONV` (it breaks the VALGATE hook).
+5. [x] `deploy.yml` run **29893042948** — **conclusion: success** (read via `gh run view --json`, NOT `gh run watch`). All 3 jobs green: Build Production Assets / Deploy to S3 + CloudFront / Tag Deployment. headSha `885b76c2` == pushed sha.
+6. [x] Auto-tag `portal-v2.1.141` — **peel-verified**: `git rev-list -n1 portal-v2.1.141` = `885b76c2…` == `origin/PROD` (annotated tags must be peeled; comparing the tag object would be a false check).
+7. [x] Worktree torn down (deregistered + directory removed — `git worktree remove` hit a Windows MAX_PATH failure deleting `node_modules`, cleaned with a long-path `\\?\` delete). `git worktree list` clean. **Portal main tree confirmed on `DEV` @`aa8c0420` (Rule 19 held end-to-end).** Ended at workspace root.
+8. [x] Reported run conclusion + deployed sha to CTO.
 
-## Status: OPEN — deploy in progress
+## Deployed
+- **PROD `885b76c2fdcac13f1975fb527b4295f805842515`**, tag `portal-v2.1.141`, run `29893042948` success.
+- Previous PROD / **rollback target: `99fed48f6de3dd8a47b4fee11953943163c29a49`** (tag `portal-v2.1.140`).
+
+## NOT closed by me — behavioural confirmation is someone else's leg
+My leg is **the deploy**. I verified the deploy MECHANISM (merge scope, push, CI conclusion, tag peel), not that the page renders correctly. **CI success is not a render check.** Open, and deliberately not mine:
+- **CTO** independently re-verifies opalinvest.dev serves the fix.
+- **DE** re-runs the duplicate-key gate against the LIVE SERVED build (the negative control was on the unmodified base; the positive must be re-run on what production actually serves).
+- **Andrew** hover-confirms the 2026 bars report 2026 values.
+
+## Residual noted, not actioned
+- **Hotfix branch never reached origin.** `refs/heads/hotfix/global-monthly-axis-key` was absent at GO time and I promoted the verified commit object directly. The commit is now permanently reachable from PROD, so nothing is lost — but the branch ref itself is still unpushed. Cosmetic; DE's to push if wanted.
+- **Workspace submodule pointer NOT bumped.** It records `2c802d13` while the portal main tree sits on `DEV` @`aa8c0420`. That drift PRE-DATES this deploy and bumping it would record the stranded MDPF re-land commit in the workspace — unrelated to this hotfix and entangled with a gated change. Left deliberately for whoever lands the MDPF re-land.
+
+## Status: CLOSED 2026-07-22T05:15Z — 8/8 deploy legs complete, verified, nothing stranded
