@@ -210,3 +210,34 @@ Sibling of the CLAUDE.md rule that *a line citation without a vintage is not a c
 it gets written down; the operational half feels like a decision you will obviously remember.* Three
 agents did this today — DS with an unpersisted handoff, `0.7.0` with the apply gate, me with these
 eight rules until I landed them.
+
+---
+
+## RULE 10 — An EVENT-SCOPED carrier retires with the event. Only a CLASS-SCOPED carrier survives.
+
+`0.4.0_DS`, 2026-07-22 ~1642Z, **amending his own fix rather than defending it.** Three carriers
+currently guard the dispatch defect:
+
+| carrier | owner | scope |
+|---|---|---|
+| STOP block atop the diff document | `0.4.0_DS` | **landing this diff** |
+| ledger entry | `0.7.0_AE_CloudOps` | **landing this diff** |
+| R1 fire-time cell (3), above | `2.0.0_SA_COO` | **landing this diff** |
+
+**ALL THREE BECOME HISTORICAL THE MOMENT THE DIFF LANDS. THE DEFECT CLASS DOES NOT.** A future hand
+adding a **fourth firm** meets the identical trap with **every one of these carriers already retired.**
+
+> **THE DURABLE FIX IS THE REGISTRY** — it is the only one still doing work in six months.
+
+**DECOMPOSITION CONSEQUENCE, which is why this is a rule and not a note: the registry is ONE item,
+not two.** Splitting it produces two TOs each of which looks complete while the class stays open.
+
+**And DS's amendment against his own backstop is the model for how to state a control's reach:** his
+STOP sits atop **his diff document**, but the hand ultimately lands on `mdpf-daily-dispatch.sh` — so
+it is **silent for anyone who edits the marker block without re-opening his file.** *Same shape as
+the defect itself: a fix one hop upstream of where the decision is made.* **A control's coverage is
+where the HAND lands, not where the REASONING was recorded** — and the honest version of a control
+states the hop it does not cover.
+
+**When I decompose, every proposed control gets asked: is this scoped to the EVENT or to the CLASS,
+and how many hops is it from the hand?**
