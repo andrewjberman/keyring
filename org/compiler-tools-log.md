@@ -22682,6 +22682,7 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/opal-assets/bd_reba... | PASS |
 | 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/opal-assets/bd_rebalancer_pull.tf infra/aws/terrafo... | PASS |
 | 2026-07-21 | 3.0.0_SA_CVO | MDPF_REVAMP + comp-clobber build | comp-which/comp-dups/comp-manifest-check/comp-system/comp-cache/comp-grep/pipescript + BUILT comp-clobber | session: comp-grep 0-consumer proof (cohort_provenance), comp-dups justified comp-clobber (no output-key-collision class), comp-manifest-check gated the new tool to registration-complete (routable+existence), comp-clobber self-test 5/5 + --sweep found the aum-timeseries clobber | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | coherent-9 verify + cot verify + OPAL_PRISTINE audit | comp-clobber --sweep + comp-dups/drift/similar/debris (debt census) + comp-which + iam simulate + s3 version-history | coherent-9 3/3 CLEAN (version-history byte-diff = data-neutral re-stage); OPAL_PRISTINE debt census (15 TF collisions, yang supersede cluster, detector-debt in drift/similar); cot iam-simulate caught+resolved a Rule-22a trailing-* false-deny | PASS |
 | 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-21/s... | PASS |
 | 2026-07-21 | 0.6.2_AE_PartnerETL | WSE_COTMDL.WS1.bronze-rebalancer-producer | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/cot-pipeline/cot-rebal... | PASS |
@@ -22873,3 +22874,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | mdpf_parity_check --self-test+--all (date-join gate PASS 0-unexpl, coherence 3/3), s3api list (9 ETags==manifest), field-identity A1/A2, safe-commit 93382362c | MDPF flip 3rd-pass leg CLEAN + cohort_provenance shape-exemption fix
 | 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_f... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/research/bd_dashboard_teardown/BD_... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff docs/research/bd_dashboard_teardown/BD_DASHBOARD_HAR_TEARDOWN_20260721.... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/TOTAL_RETURN_PERFORMANCE_DESIG... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-21/s... | PASS |
