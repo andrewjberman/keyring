@@ -1,0 +1,1011 @@
+2026-05-23T02:58:54Z  SPAWN  0.0.0_AB_MSTR  by unknown
+2026-05-23T03:52:20Z  SPAWN  0.7.0_AE_CloudOps~C  by 0.0.0_AB_MSTR
+2026-05-23T03:52:45Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-05-23T04:18:20Z  SPAWN  0.3.0_DE_TradingOperations  by 0.0.0_AB_MSTR
+2026-05-23T04:40:37Z  KILL-NOOP  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=COO-requested CL fabric cleanup (LD-0011); idle, no in-flight TOs, no state to preserve; re-spawn at M2 PREREG  found=0
+2026-05-23T04:40:38Z  KILL-NOOP  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=COO-requested CL fabric cleanup (LD-0011); idle, no in-flight TOs, no state to preserve; re-spawn at M2 PREREG  found=0
+2026-05-23T05:00:56Z  KILL  0.4.0_DE_ClientPlatform  by 1.0.0_SA_CTO  pid=17276  reason=ADVI_INFGRO TOs architecturally misaligned for Inflection (AdvisorsTab is not a surface Inflection users see) -- Andrew-directed surgical rollback 2026-05-23
+2026-05-23T06:20:48Z  KILL  0.3.0_DE_TradingOperations  by 0.0.0_AB_MSTR  pid=6260  reason=LD-0014 -- F-002 deadline resolution: spawn purpose served via supersedes META-finding (commit 778ab83ff); STANDING_BY + no chartered next-step per Step 4 decision table; re-spawnable if pod-3 work surfaces
+2026-05-24T02:00:21Z  KILL-NOOP  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR  reason=STALE cycle-3 compacted-context-stuck per Andrew sovereign 2026-05-24T01:50Z; LD-0027 SPAWN-WITH-DIRECTION replacement  found=0
+2026-05-24T02:01:02Z  SPAWN  0.4.0_DS_ClientPlatform~D  by 0.0.0_AB_MSTR
+2026-05-24T20:42:58Z  SPAWN  0.0.0_AB_MSTR  by unknown
+2026-05-24T20:50:52Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-24T20:51:29Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-24T20:52:07Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-24T20:53:04Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-24T20:54:01Z  SPAWN  3.1.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-24T20:54:51Z  SPAWN  2.1.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-24T20:55:48Z  SPAWN  0.4.0_DS_ClientPlatform~C  by 0.0.0_AB_MSTR
+2026-05-24T20:57:50Z  REJECT 0.4.0_DS_ClientPlatform~D  by 0.0.0_AB_MSTR  reason=concurrency-cap  live=8/8
+2026-05-24T21:51:27Z  SPAWN  0.4.0_DS_ClientPlatform~D  by 0.0.0_AB_MSTR
+2026-05-24T22:51:10Z  KILL  0.4.0_DS_ClientPlatform~C  by 0.0.0_AB_MSTR  pid=22260  reason=LD-0036 step-2 wave-class stand-down per ws COO recommendation; ADVI_DEMOV1.004 RAVC2-Accepted + .006 Phase 4 SSM dispatched clean by DS~D; 3 standby cycles with zero cleanup follow-ups (LD-0052 / CY-0090)
+2026-05-25T06:11:55Z  KILL  0.4.0_DS_ClientPlatform~D  by 0.0.0_AB_MSTR  pid=34648  reason=LD-0057 class-E persistent 5h+ unresponded across 4+ MCPs; cycle-3-ladder Path A per LD-0057
+2026-05-25T06:12:05Z  SPAWN  0.4.0_DS_ClientPlatform~E  by 0.0.0_AB_MSTR
+2026-05-25T06:12:11Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-25T19:04:48Z  KILL  0.4.0_DS_ClientPlatform~E  by 0.0.0_AB_MSTR  pid=35140  reason=Andrew direct LD-0061: kill Tier-2/3
+2026-05-25T19:04:53Z  KILL  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  pid=34172  reason=Andrew direct LD-0061: kill Tier-2/3
+2026-05-25T19:05:32Z  KILL-NOOP  0.4.0_DS_ClientPlatform~E  by 0.0.0_AB_MSTR  reason=LD-0061 sweep  found=0
+2026-05-25T19:05:32Z  KILL-NOOP  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  reason=LD-0061 sweep  found=0
+2026-05-25T23:10:00Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-26T00:56:14Z  KILL  3.0.0_SA_CVO  by 0.0.0_AB_MSTR  pid=14448  reason=Andrew direct LD-0074 'try killing 3.0.0_SA_CVO'
+2026-05-26T00:56:42Z  KILL-NOOP  3.0.0_SA_CVO  by 0.0.0_AB_MSTR  reason=LD-0074 sweep  found=0
+2026-05-26T01:18:32Z  KILL-NOOP  2.0.0_SA_COO  by 0.0.0_AB_MSTR  reason=reallocation  found=0
+2026-05-26T01:59:11Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-26T02:06:13Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-26T02:06:17Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-26T02:06:23Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-26T02:07:41Z  KILL  1.0.0_SA_CTO  by 0.0.0_AB_MSTR  pid=4472  reason=spawn-agent.ps1 --say text contained ; and : which broke inner PowerShell parsing; respawning clean
+2026-05-26T02:07:41Z  KILL  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  pid=31068  reason=spawn-agent.ps1 --say text contained ; and : which broke inner PowerShell parsing; respawning clean
+2026-05-26T02:07:42Z  KILL  2.0.0_SA_COO  by 0.0.0_AB_MSTR  pid=19196  reason=spawn-agent.ps1 --say text contained ; and : which broke inner PowerShell parsing; respawning clean
+2026-05-26T02:08:08Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-26T02:08:12Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-26T02:08:16Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-26T03:40:36Z  SPAWN  3.1.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-26T06:20:50Z  KILL-NOOP  1.1.0_SA_CTO  by 0.0.0_AB_MSTR  reason=Andrew direct -- broken watcher/inbox suspected; A.3 commit not landing for 60+ min; respawn fresh  found=0
+2026-05-26T06:23:42Z  FORCE-KILL  1.1.0_SA_CTO  by 0.0.0_AB_MSTR  pid=1510238,1510377  reason=Andrew-direct-broken-watcher-LD-0034-wrapper-half-symptom-A.3-not-landing-60min  authorized-via=/mstr-kill
+2026-05-26T06:23:42Z  FORCE-KILL  2.1.0_SA_COO  by 0.0.0_AB_MSTR  pid=1525386,1525467  reason=Andrew-direct-same-broken-watcher-pattern-feature_clb-rooted-vs-ws-rooted  authorized-via=/mstr-kill
+2026-05-26T06:25:05Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-26T06:25:21Z  SPAWN  2.1.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-26T06:25:28Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR  reason=Andrew-direct-respawn-after-broken-watcher-FORCE-KILL-cascade
+2026-05-26T06:25:28Z  SPAWN  2.1.0_SA_COO  by 0.0.0_AB_MSTR  reason=Andrew-direct-bring-in-fresh-LD-0088-routed-replace-dormant
+2026-05-26T07:01:14Z  KILL  1.1.0_SA_CTO  by 0.0.0_AB_MSTR  pid=33824  reason=LD-0089 AC1 A.1+A.2 shipped cfaba5800 -- CL CTO re-spawn via spawn-agent.ps1 unblocks B.2-B.4 and tests A.1+A.2 empirically
+2026-05-26T07:01:30Z  FORCE-KILL  1.1.0_SA_CTO  by 0.0.0_AB_MSTR  pid=33824  reason=re-spawn-to-test-LD-0089-AC1-A.1-A.2-cfaba5800-and-unblock-B.2-B.4-feature_clb-cwd-execution  authorized-via=/mstr-kill
+2026-05-26T07:03:21Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-26T07:10:37Z  FORCE-KILL  1.1.0_SA_CTO  by 0.0.0_AB_MSTR  pid=7488,35424  reason=stuck-spawn-never-registered-10min-wall-from-mstr-spawn-072500Z-no-claude-startup-completion  authorized-via=/govern-cycle-3-LD-0090-PROCEED
+2026-05-26T07:27:29Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-26T07:30:39Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-26T12:45:21Z  FORCE-SPAWN 1.0.0_SA_CTO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct 2026-05-26
+2026-05-26T12:45:21Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-26T12:45:22Z  FORCE-SPAWN 2.0.0_SA_COO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct 2026-05-26
+2026-05-26T12:45:22Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-26T12:45:22Z  FORCE-SPAWN 3.0.0_SA_CVO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct 2026-05-26
+2026-05-26T12:45:22Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-26T12:45:22Z  FORCE-SPAWN 1.1.0_SA_CTO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct 2026-05-26
+2026-05-26T12:45:22Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-26T12:45:22Z  FORCE-SPAWN 2.1.0_SA_COO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct 2026-05-26
+2026-05-26T12:45:22Z  SPAWN  2.1.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-26T12:45:23Z  FORCE-SPAWN 3.1.0_SA_CVO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct 2026-05-26
+2026-05-26T12:45:23Z  SPAWN  3.1.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-26T13:49:03Z  SPAWN  0.6.1_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-05-26T14:17:11Z  SPAWN  0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR
+2026-05-26T14:17:12Z  SPAWN  0.2.0_DS_PortfolioAnalytics  by 0.0.0_AB_MSTR
+2026-05-26T14:53:42Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-26T15:20:37Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-05-26T16:06:18Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR
+2026-05-26T16:14:18Z  KILL  0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR  pid=17880  reason=YALP_MKTOVR closure complete; 4 NO-WORK /work ticks; ws COO /allocation #9 KILL-CANDIDATE recommendation
+2026-05-26T16:14:22Z  KILL  0.2.0_DS_PortfolioAnalytics  by 0.0.0_AB_MSTR  pid=6196  reason=TO-003 consult shipped + RAVC2-ACCEPT'd; 5 NO-WORK ticks 90+min idle; ws COO /allocation #9 KILL-CANDIDATE recommendation
+2026-05-26T16:22:41Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~A  by 0.0.0_AB_MSTR  reason=ws COO /allocation #10 BATCHED-MULTI-SPAWN per Andrew sovereign direct 2026-05-26T~16:15Z YALP per-page Wave 1 mandate
+2026-05-26T16:22:41Z  SPAWN  0.1.0_DS_MarketIntelligence~A  by 0.0.0_AB_MSTR
+2026-05-26T16:22:42Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR  reason=ws COO /allocation #10 BATCHED-MULTI-SPAWN per Andrew sovereign direct 2026-05-26T~16:15Z YALP per-page Wave 1 mandate
+2026-05-26T16:22:42Z  SPAWN  0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR
+2026-05-26T16:22:42Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR  reason=ws COO /allocation #10 BATCHED-MULTI-SPAWN per Andrew sovereign direct 2026-05-26T~16:15Z YALP per-page Wave 1 mandate
+2026-05-26T16:22:42Z  SPAWN  0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR
+2026-05-26T16:22:43Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~D  by 0.0.0_AB_MSTR  reason=ws COO /allocation #10 BATCHED-MULTI-SPAWN per Andrew sovereign direct 2026-05-26T~16:15Z YALP per-page Wave 1 mandate
+2026-05-26T16:22:43Z  SPAWN  0.1.0_DS_MarketIntelligence~D  by 0.0.0_AB_MSTR
+2026-05-26T16:22:44Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~E  by 0.0.0_AB_MSTR  reason=ws COO /allocation #10 BATCHED-MULTI-SPAWN per Andrew sovereign direct 2026-05-26T~16:15Z YALP per-page Wave 1 mandate
+2026-05-26T16:22:44Z  SPAWN  0.1.0_DS_MarketIntelligence~E  by 0.0.0_AB_MSTR
+2026-05-26T16:22:45Z  FORCE-SPAWN 0.2.0_DS_PortfolioAnalytics  by 0.0.0_AB_MSTR  reason=ws COO /allocation #10 BATCHED-MULTI-SPAWN per Andrew sovereign direct 2026-05-26T~16:15Z YALP per-page Wave 1 mandate
+2026-05-26T16:22:45Z  SPAWN  0.2.0_DS_PortfolioAnalytics  by 0.0.0_AB_MSTR
+2026-05-26T16:29:29Z  KILL  0.1.0_DS_MarketIntelligence~B"  by 0.0.0_AB_MSTR  pid=27424  reason=Andrew direct sovereign 16:45Z lane correction: YALP_VALUAT routes to Pod 2 DS 0.2.0 tilde-lane not Pod 1; ws CTO URGENT-COORD 02519793e
+2026-05-26T16:38:58Z  SPAWN  0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR
+2026-05-26T19:29:02Z  FORCE-SPAWN 0.4.0_DS_ClientPlatform~D  by 0.1.0_DS_MarketIntelligence~D  reason=ws COO /allocation #10 BATCHED-MULTI-SPAWN per Andrew sovereign direct 2026-05-26T~16:15Z YALP per-page Wave 1 mandate
+2026-05-26T19:29:02Z  SPAWN  0.4.0_DS_ClientPlatform~D  by 0.1.0_DS_MarketIntelligence~D
+2026-05-26T19:57:07Z  SPAWN  0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR
+2026-05-26T19:57:09Z  SPAWN  0.1.0_DS_MarketIntelligence~D  by 0.0.0_AB_MSTR
+2026-05-26T20:49:59Z  KILL  1.0.0_SA_CTO  by 0.0.0_AB_MSTR  pid=5080  reason=trio-reboot per Andrew 2026-05-26
+2026-05-26T20:50:01Z  KILL  2.0.0_SA_COO  by 0.0.0_AB_MSTR  pid=4352  reason=trio-reboot per Andrew 2026-05-26
+2026-05-26T20:50:02Z  KILL  3.0.0_SA_CVO  by 0.0.0_AB_MSTR  pid=8540  reason=trio-reboot per Andrew 2026-05-26
+2026-05-26T20:50:16Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-26T20:50:19Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-26T20:50:22Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-26T21:08:09Z  SPAWN  0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR
+2026-05-26T21:08:12Z  SPAWN  0.1.0_DS_MarketIntelligence~E  by 0.0.0_AB_MSTR
+2026-05-26T22:03:42Z  SPAWN  0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR
+2026-05-26T22:09:47Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-26T22:46:09Z  SPAWN  0.1.0_DT_MarketIntelligence  by 0.0.0_AB_MSTR
+2026-05-27T06:33:20Z  SPAWN  0.4.0_DS_ClientPlatform~D  by 0.0.0_AB_MSTR
+2026-05-27T15:09:10Z  FORCE-SPAWN 1.0.0_SA_CTO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct LD-0082
+2026-05-27T15:09:10Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-27T15:09:14Z  FORCE-SPAWN 2.0.0_SA_COO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct LD-0082
+2026-05-27T15:09:14Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-27T15:09:17Z  FORCE-SPAWN 3.0.0_SA_CVO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct LD-0082
+2026-05-27T15:09:17Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-27T15:09:20Z  FORCE-SPAWN 1.1.0_SA_CTO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct LD-0082
+2026-05-27T15:09:20Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-27T15:09:23Z  FORCE-SPAWN 2.1.0_SA_COO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct LD-0082
+2026-05-27T15:09:23Z  SPAWN  2.1.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-27T15:09:27Z  FORCE-SPAWN 3.1.0_SA_CVO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct LD-0082
+2026-05-27T15:09:27Z  SPAWN  3.1.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-27T15:33:12Z  FORCE-SPAWN 0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  reason=ws COO ALLOCATION-REQUEST AE 0.7 HIGH post-reboot Fire 1 SSM monitor
+2026-05-27T15:33:12Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-27T15:33:20Z  FORCE-SPAWN 0.4.0_DS_ClientPlatform~D  by 0.0.0_AB_MSTR  reason=ws COO ALLOCATION-REQUEST DS~D MED post-reboot Phase 3 RAVC2 prep
+2026-05-27T15:33:20Z  SPAWN  0.4.0_DS_ClientPlatform~D  by 0.0.0_AB_MSTR
+2026-05-27T15:51:42Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR  reason=ws COO ALLOCATION-REQUEST #2 DS 0.1.0 base for FIND_INSURE.002 source-list extractor
+2026-05-27T15:51:42Z  SPAWN  0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR
+2026-05-27T16:49:05Z  KILL  0.4.0_DS_ClientPlatform~D"  by 0.0.0_AB_MSTR  pid=14524  reason=reallocation
+2026-05-27T16:49:09Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~A  by 0.0.0_AB_MSTR  reason=ws COO /allocation #3 FIND_INSURE peak-priority Andrew sovereign 16:46Z 5-spawn batch ~A parse-web HIGH
+2026-05-27T16:49:09Z  SPAWN  0.1.0_DS_MarketIntelligence~A  by 0.0.0_AB_MSTR
+2026-05-27T16:49:12Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR  reason=ws COO /allocation #3 FIND_INSURE peak-priority Andrew sovereign 16:46Z 5-spawn batch ~B score-web HIGH
+2026-05-27T16:49:12Z  SPAWN  0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR
+2026-05-27T16:49:17Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR  reason=ws COO /allocation #3 FIND_INSURE peak-priority Andrew sovereign 16:46Z 5-spawn batch ~C LinkedIn-scaffold MED
+2026-05-27T16:49:17Z  SPAWN  0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR
+2026-05-27T16:49:21Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~D  by 0.0.0_AB_MSTR  reason=ws COO /allocation #3 FIND_INSURE peak-priority Andrew sovereign 16:46Z 5-spawn batch ~D Job-postings-scaffold MED
+2026-05-27T16:49:21Z  SPAWN  0.1.0_DS_MarketIntelligence~D  by 0.0.0_AB_MSTR
+2026-05-27T16:49:25Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~E  by 0.0.0_AB_MSTR  reason=ws COO /allocation #3 FIND_INSURE peak-priority Andrew sovereign 16:46Z 5-spawn batch ~E Phase3-serving-build MED
+2026-05-27T16:49:25Z  SPAWN  0.1.0_DS_MarketIntelligence~E  by 0.0.0_AB_MSTR
+2026-05-27T17:28:47Z  FORCE-SPAWN 1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=CL COO /allocation cycle 7 TARGET-20260527-001 HIGH 1.1.0 Phase 1 P1+P2
+2026-05-27T17:28:47Z  SPAWN  1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T17:29:02Z  FORCE-SPAWN 1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=CL COO /allocation cycle 7 TARGET-20260527-001 HIGH 1.2.0 Phase 2 P1+P2
+2026-05-27T17:29:02Z  SPAWN  1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T17:29:24Z  FORCE-SPAWN 1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=CL COO /allocation cycle 7 TARGET-20260527-001 MED 1.3.0 CLI surfaces P1+P2
+2026-05-27T17:29:24Z  SPAWN  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T17:29:51Z  FORCE-SPAWN 1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=CL COO /allocation cycle 7 TARGET-20260527-001 MED 1.4.0 integrity+integration P1+P2
+2026-05-27T17:29:51Z  SPAWN  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T17:30:17Z  FORCE-SPAWN 2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR  reason=CL COO /allocation cycle 7 TARGET-20260527-001 LOW-MED 2.1.0_SC CERT_LIFT_30D harness
+2026-05-27T17:30:17Z  SPAWN  2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T18:04:14Z  FORCE-SPAWN 0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR  reason=ws COO /allocation #4 AE 0.7~A Phase 2A LinkedIn surface KMS+DDB+SNS Andrew sovereign 18:00Z
+2026-05-27T18:04:14Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-05-27T18:04:20Z  FORCE-SPAWN 0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR  reason=ws COO /allocation #4 AE 0.7~B Phase 2B Job-postings surface per-board Lambdas Andrew sovereign 18:00Z
+2026-05-27T18:04:20Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-05-27T20:02:53Z  FORCE-SPAWN 1.0.0_SA_CTO  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:02:53Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-27T20:02:54Z  FORCE-SPAWN 2.0.0_SA_COO  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:02:54Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-27T20:02:56Z  FORCE-SPAWN 3.0.0_SA_CVO  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:02:56Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-27T20:02:58Z  FORCE-SPAWN 1.1.0_SA_CTO  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:02:58Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-27T20:02:59Z  FORCE-SPAWN 2.1.0_SA_COO  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:02:59Z  SPAWN  2.1.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-27T20:03:01Z  FORCE-SPAWN 3.1.0_SA_CVO  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:01Z  SPAWN  3.1.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-27T20:03:18Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:18Z  SPAWN  0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR
+2026-05-27T20:03:20Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~A  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:20Z  SPAWN  0.1.0_DS_MarketIntelligence~A  by 0.0.0_AB_MSTR
+2026-05-27T20:03:22Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:22Z  SPAWN  0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR
+2026-05-27T20:03:24Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:24Z  SPAWN  0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR
+2026-05-27T20:03:27Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~D  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:27Z  SPAWN  0.1.0_DS_MarketIntelligence~D  by 0.0.0_AB_MSTR
+2026-05-27T20:03:30Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~E  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:30Z  SPAWN  0.1.0_DS_MarketIntelligence~E  by 0.0.0_AB_MSTR
+2026-05-27T20:03:33Z  FORCE-SPAWN 0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:33Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-27T20:03:36Z  FORCE-SPAWN 0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:36Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-05-27T20:03:39Z  FORCE-SPAWN 0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:39Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-05-27T20:03:44Z  FORCE-SPAWN 1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:44Z  SPAWN  1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T20:03:47Z  FORCE-SPAWN 1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:47Z  SPAWN  1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T20:03:51Z  FORCE-SPAWN 1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:51Z  SPAWN  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T20:03:55Z  FORCE-SPAWN 1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:03:55Z  SPAWN  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T20:04:04Z  FORCE-SPAWN 2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR  reason=post-crash-recovery-mstr-andrew-direct-20260527-2010Z-all-powershell-down
+2026-05-27T20:04:04Z  SPAWN  2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T22:22:23Z  KILL-NOOP  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  reason=reallocation  found=0
+2026-05-27T22:22:24Z  KILL-NOOP  0.1.0_DS_MarketIntelligence~A  by 0.0.0_AB_MSTR  reason=reallocation  found=0
+2026-05-27T22:37:23Z  FORCE-SPAWN 1.0.0_SA_CTO  by 0.0.0_AB_MSTR  reason=post-reboot-tier1-fleet-restoration-RV-0017-P0-dispatch-2026-05-27T22-35Z
+2026-05-27T22:37:23Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-27T22:37:47Z  FORCE-SPAWN 2.0.0_SA_COO  by 0.0.0_AB_MSTR  reason=post-reboot-tier1-fleet-restoration-2026-05-27T22-35Z
+2026-05-27T22:37:47Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-27T22:37:52Z  FORCE-SPAWN 3.0.0_SA_CVO  by 0.0.0_AB_MSTR  reason=post-reboot-tier1-fleet-restoration-2026-05-27T22-35Z
+2026-05-27T22:37:52Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-27T22:37:55Z  FORCE-SPAWN 1.1.0_SA_CTO  by 0.0.0_AB_MSTR  reason=post-reboot-tier1-fleet-restoration-2026-05-27T22-35Z
+2026-05-27T22:37:55Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-27T22:37:59Z  FORCE-SPAWN 2.1.0_SA_COO  by 0.0.0_AB_MSTR  reason=post-reboot-tier1-fleet-restoration-2026-05-27T22-35Z
+2026-05-27T22:37:59Z  SPAWN  2.1.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-27T22:38:05Z  FORCE-SPAWN 3.1.0_SA_CVO  by 0.0.0_AB_MSTR  reason=post-reboot-tier1-fleet-restoration-2026-05-27T22-35Z
+2026-05-27T22:38:05Z  SPAWN  3.1.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-27T22:48:11Z  SPAWN  0.1.0_DS_MarketIntelligence~A  by 0.0.0_AB_MSTR
+2026-05-27T22:48:20Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-05-27T22:56:10Z  FORCE-SPAWN 1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=andrew-direct-cl-pod-respawn-2026-05-27T23-00Z-they-need-agents
+2026-05-27T22:56:10Z  SPAWN  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T22:56:22Z  FORCE-SPAWN 1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=andrew-direct-cl-pod-respawn-2026-05-27T23-00Z-they-need-agents
+2026-05-27T22:56:22Z  SPAWN  1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T22:56:39Z  FORCE-SPAWN 2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR  reason=andrew-direct-cl-pod-respawn-2026-05-27T23-00Z-they-need-agents
+2026-05-27T22:56:39Z  SPAWN  2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T22:56:52Z  FORCE-SPAWN 1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=andrew-direct-cl-pod-respawn-2026-05-27T23-00Z-they-need-agents
+2026-05-27T22:56:52Z  SPAWN  1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T22:57:09Z  FORCE-SPAWN 1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=andrew-direct-cl-pod-respawn-2026-05-27T23-00Z-they-need-agents
+2026-05-27T22:57:09Z  SPAWN  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-27T23:27:22Z  FORCE-SPAWN 0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR  reason=andrew-direct-23-25Z-find-insure-parallelize-pick-up-pace-allocation-to-mstr
+2026-05-27T23:27:22Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-05-27T23:27:29Z  FORCE-SPAWN 0.7.0_AE_CloudOps~C  by 0.0.0_AB_MSTR  reason=andrew-direct-23-25Z-find-insure-parallelize-pick-up-pace-allocation-to-mstr
+2026-05-27T23:27:29Z  SPAWN  0.7.0_AE_CloudOps~C  by 0.0.0_AB_MSTR
+2026-05-27T23:27:41Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR  reason=andrew-direct-23-25Z-find-insure-parallelize-pick-up-pace-allocation-to-mstr
+2026-05-27T23:27:41Z  SPAWN  0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR
+2026-05-27T23:27:51Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR  reason=andrew-direct-23-25Z-find-insure-parallelize-pick-up-pace-allocation-to-mstr
+2026-05-27T23:27:51Z  SPAWN  0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR
+2026-05-27T23:28:00Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~D  by 0.0.0_AB_MSTR  reason=andrew-direct-23-25Z-find-insure-parallelize-pick-up-pace-allocation-to-mstr
+2026-05-27T23:28:00Z  SPAWN  0.1.0_DS_MarketIntelligence~D  by 0.0.0_AB_MSTR
+2026-05-28T00:54:23Z  FORCE-SPAWN 1.0.0_SA_CTO  by 0.0.0_AB_MSTR  reason=andrew-direct-f006-storm-fix-test-toward-option-a-2026-05-28T01-10Z
+2026-05-28T00:54:23Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-28T01:14:51Z  FORCE-SPAWN 1.2.0_DS_CompLearns  by 2.1.0_SA_COO  reason=broker-storm-collateral-recovery-2026-05-28T0107Z-cl-coo-pre-auth
+2026-05-28T01:14:51Z  SPAWN  1.2.0_DS_CompLearns  by 2.1.0_SA_COO
+2026-05-28T01:15:06Z  FORCE-SPAWN 1.3.0_DS_CompLearns  by 2.1.0_SA_COO  reason=broker-storm-collateral-recovery-2026-05-28T0107Z-cl-coo-pre-auth
+2026-05-28T01:15:06Z  SPAWN  1.3.0_DS_CompLearns  by 2.1.0_SA_COO
+2026-05-28T02:54:56Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-28T02:54:59Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-28T02:55:02Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-28T02:55:16Z  FORCE-SPAWN 1.1.0_SA_CTO  by 0.0.0_AB_MSTR  reason=Andrew direct 2026-05-28: bring both divisions online from cold-start; ws batch 1 + CL batch 2 same-turn
+2026-05-28T02:55:16Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-28T02:55:17Z  FORCE-SPAWN 2.1.0_SA_COO  by 0.0.0_AB_MSTR  reason=Andrew direct 2026-05-28: bring both divisions online from cold-start; ws batch 1 + CL batch 2 same-turn
+2026-05-28T02:55:17Z  SPAWN  2.1.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-28T02:55:17Z  FORCE-SPAWN 3.1.0_SA_CVO  by 0.0.0_AB_MSTR  reason=Andrew direct 2026-05-28: bring both divisions online from cold-start; ws batch 1 + CL batch 2 same-turn
+2026-05-28T02:55:17Z  SPAWN  3.1.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-28T03:04:40Z  FORCE-SPAWN 1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=Andrew sovereign /allocation 2026-05-28T03:00Z to CL COO 'bring your agents online via /allocation'; CL COO supply-side /allocation cycle 1 ferry 03:05Z surfaced 5 SPAWN-NEEDED; MSTR ALWAYS-PROCEED per LD-0090; 5-batch over per-spawner rate cap
+2026-05-28T03:04:40Z  SPAWN  1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-28T03:04:41Z  FORCE-SPAWN 1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=Andrew sovereign /allocation 2026-05-28T03:00Z to CL COO 'bring your agents online via /allocation'; CL COO supply-side /allocation cycle 1 ferry 03:05Z surfaced 5 SPAWN-NEEDED; MSTR ALWAYS-PROCEED per LD-0090; 5-batch over per-spawner rate cap
+2026-05-28T03:04:41Z  SPAWN  1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-28T03:04:41Z  FORCE-SPAWN 1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=Andrew sovereign /allocation 2026-05-28T03:00Z to CL COO 'bring your agents online via /allocation'; CL COO supply-side /allocation cycle 1 ferry 03:05Z surfaced 5 SPAWN-NEEDED; MSTR ALWAYS-PROCEED per LD-0090; 5-batch over per-spawner rate cap
+2026-05-28T03:04:41Z  SPAWN  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-28T03:04:41Z  FORCE-SPAWN 1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=Andrew sovereign /allocation 2026-05-28T03:00Z to CL COO 'bring your agents online via /allocation'; CL COO supply-side /allocation cycle 1 ferry 03:05Z surfaced 5 SPAWN-NEEDED; MSTR ALWAYS-PROCEED per LD-0090; 5-batch over per-spawner rate cap
+2026-05-28T03:04:41Z  SPAWN  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-28T03:04:41Z  FORCE-SPAWN 2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR  reason=Andrew sovereign /allocation 2026-05-28T03:00Z to CL COO 'bring your agents online via /allocation'; CL COO supply-side /allocation cycle 1 ferry 03:05Z surfaced 5 SPAWN-NEEDED; MSTR ALWAYS-PROCEED per LD-0090; 5-batch over per-spawner rate cap
+2026-05-28T03:04:41Z  SPAWN  2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR
+2026-05-28T03:08:18Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR  reason=Andrew sovereign /allocation 03:00Z 'figure out what agents you need to get FIND_INSURE up and rolling and /allocation them'; ws COO ALLOCATION-REQUEST 03:03Z 9 SPAWN-NEEDED; MSTR cap-adjudication spawns prioritized 5 of 9 (P1x2 + P2x3); over per-spawner rate cap
+2026-05-28T03:08:18Z  SPAWN  0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR
+2026-05-28T03:08:18Z  FORCE-SPAWN 0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR  reason=Andrew sovereign /allocation 03:00Z 'figure out what agents you need to get FIND_INSURE up and rolling and /allocation them'; ws COO ALLOCATION-REQUEST 03:03Z 9 SPAWN-NEEDED; MSTR cap-adjudication spawns prioritized 5 of 9 (P1x2 + P2x3); over per-spawner rate cap
+2026-05-28T03:08:18Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-05-28T03:08:19Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR  reason=Andrew sovereign /allocation 03:00Z 'figure out what agents you need to get FIND_INSURE up and rolling and /allocation them'; ws COO ALLOCATION-REQUEST 03:03Z 9 SPAWN-NEEDED; MSTR cap-adjudication spawns prioritized 5 of 9 (P1x2 + P2x3); over per-spawner rate cap
+2026-05-28T03:08:19Z  SPAWN  0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR
+2026-05-28T03:08:19Z  FORCE-SPAWN 0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  reason=Andrew sovereign /allocation 03:00Z 'figure out what agents you need to get FIND_INSURE up and rolling and /allocation them'; ws COO ALLOCATION-REQUEST 03:03Z 9 SPAWN-NEEDED; MSTR cap-adjudication spawns prioritized 5 of 9 (P1x2 + P2x3); over per-spawner rate cap
+2026-05-28T03:08:19Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-28T03:08:20Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR  reason=Andrew sovereign /allocation 03:00Z 'figure out what agents you need to get FIND_INSURE up and rolling and /allocation them'; ws COO ALLOCATION-REQUEST 03:03Z 9 SPAWN-NEEDED; MSTR cap-adjudication spawns prioritized 5 of 9 (P1x2 + P2x3); over per-spawner rate cap
+2026-05-28T03:08:20Z  SPAWN  0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR
+2026-05-28T03:13:19Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~D  by 0.0.0_AB_MSTR  reason=LD-0129 cap raise 16->20 Andrew sovereign 03:20Z 'We can raise cap to 20'; ws COO 4 deferred workers from /allocation 03:03Z; concurrent same-turn 4-batch over rate cap
+2026-05-28T03:13:19Z  SPAWN  0.1.0_DS_MarketIntelligence~D  by 0.0.0_AB_MSTR
+2026-05-28T03:13:21Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~A  by 0.0.0_AB_MSTR  reason=LD-0129 cap raise 16->20 Andrew sovereign 03:20Z 'We can raise cap to 20'; ws COO 4 deferred workers from /allocation 03:03Z; concurrent same-turn 4-batch over rate cap
+2026-05-28T03:13:21Z  SPAWN  0.1.0_DS_MarketIntelligence~A  by 0.0.0_AB_MSTR
+2026-05-28T03:13:22Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~E  by 0.0.0_AB_MSTR  reason=LD-0129 cap raise 16->20 Andrew sovereign 03:20Z 'We can raise cap to 20'; ws COO 4 deferred workers from /allocation 03:03Z; concurrent same-turn 4-batch over rate cap
+2026-05-28T03:13:22Z  SPAWN  0.1.0_DS_MarketIntelligence~E  by 0.0.0_AB_MSTR
+2026-05-28T03:13:24Z  FORCE-SPAWN 0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR  reason=LD-0129 cap raise 16->20 Andrew sovereign 03:20Z 'We can raise cap to 20'; ws COO 4 deferred workers from /allocation 03:03Z; concurrent same-turn 4-batch over rate cap
+2026-05-28T03:13:24Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-05-28T11:06:23Z  KILL  2.0.0_SA_COO"  by 0.0.0_AB_MSTR  pid=30424  reason=reallocation
+2026-05-28T11:06:40Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-28T11:28:49Z  KILL  0.7.0_AE_CloudOps~A"  by 0.0.0_AB_MSTR  pid=15220  reason=reallocation
+2026-05-28T11:28:51Z  KILL  0.1.0_DS_MarketIntelligence~B"  by 0.0.0_AB_MSTR  pid=11148  reason=reallocation
+2026-05-28T11:28:51Z  KILL  0.1.0_DS_MarketIntelligence"  by 0.0.0_AB_MSTR  pid=23428  reason=reallocation
+2026-05-28T11:28:51Z  KILL  0.1.0_DS_MarketIntelligence~C"  by 0.0.0_AB_MSTR  pid=3012  reason=reallocation
+2026-05-28T11:28:51Z  KILL  0.1.0_DS_MarketIntelligence~D"  by 0.0.0_AB_MSTR  pid=33172  reason=reallocation
+2026-05-28T11:28:51Z  KILL  0.1.0_DS_MarketIntelligence~A"  by 0.0.0_AB_MSTR  pid=364  reason=reallocation
+2026-05-28T11:28:51Z  KILL  0.1.0_DS_MarketIntelligence~E"  by 0.0.0_AB_MSTR  pid=22156  reason=reallocation
+2026-05-28T11:29:40Z  FORCE-SPAWN 0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR  reason=Fabric-wide machine-sleep cron-drop wedge (COO [STUCK] escalation 1126Z + MSTR-verified watcher NONE); respawn sweep on Andrew /goal critical path; 7-batch over rate cap
+2026-05-28T11:29:40Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-05-28T11:29:41Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR  reason=Fabric-wide machine-sleep cron-drop wedge (COO [STUCK] escalation 1126Z + MSTR-verified watcher NONE); respawn sweep on Andrew /goal critical path; 7-batch over rate cap
+2026-05-28T11:29:41Z  SPAWN  0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR
+2026-05-28T11:29:41Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~A  by 0.0.0_AB_MSTR  reason=Fabric-wide machine-sleep cron-drop wedge (COO [STUCK] escalation 1126Z + MSTR-verified watcher NONE); respawn sweep on Andrew /goal critical path; 7-batch over rate cap
+2026-05-28T11:29:41Z  SPAWN  0.1.0_DS_MarketIntelligence~A  by 0.0.0_AB_MSTR
+2026-05-28T11:29:41Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR  reason=Fabric-wide machine-sleep cron-drop wedge (COO [STUCK] escalation 1126Z + MSTR-verified watcher NONE); respawn sweep on Andrew /goal critical path; 7-batch over rate cap
+2026-05-28T11:29:41Z  SPAWN  0.1.0_DS_MarketIntelligence~B  by 0.0.0_AB_MSTR
+2026-05-28T11:29:41Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR  reason=Fabric-wide machine-sleep cron-drop wedge (COO [STUCK] escalation 1126Z + MSTR-verified watcher NONE); respawn sweep on Andrew /goal critical path; 7-batch over rate cap
+2026-05-28T11:29:41Z  SPAWN  0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR
+2026-05-28T11:29:42Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~D  by 0.0.0_AB_MSTR  reason=Fabric-wide machine-sleep cron-drop wedge (COO [STUCK] escalation 1126Z + MSTR-verified watcher NONE); respawn sweep on Andrew /goal critical path; 7-batch over rate cap
+2026-05-28T11:29:42Z  SPAWN  0.1.0_DS_MarketIntelligence~D  by 0.0.0_AB_MSTR
+2026-05-28T11:29:42Z  FORCE-SPAWN 0.1.0_DS_MarketIntelligence~E  by 0.0.0_AB_MSTR  reason=Fabric-wide machine-sleep cron-drop wedge (COO [STUCK] escalation 1126Z + MSTR-verified watcher NONE); respawn sweep on Andrew /goal critical path; 7-batch over rate cap
+2026-05-28T11:29:42Z  SPAWN  0.1.0_DS_MarketIntelligence~E  by 0.0.0_AB_MSTR
+2026-05-28T11:30:54Z  KILL  0.7.0_AE_CloudOps~B"  by 0.0.0_AB_MSTR  pid=32872  reason=reallocation
+2026-05-28T11:31:00Z  KILL  3.0.0_SA_CVO"  by 0.0.0_AB_MSTR  pid=30216  reason=reallocation
+2026-05-28T11:31:38Z  FORCE-SPAWN 0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  reason=Fabric-wide sleep-wedge respawn sweep (COO [STUCK] 1126Z); final 3 deaf workers; Andrew /goal critical path
+2026-05-28T11:31:38Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-28T11:31:42Z  FORCE-SPAWN 0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR  reason=Fabric-wide sleep-wedge respawn sweep (COO [STUCK] 1126Z); final 3 deaf workers; Andrew /goal critical path
+2026-05-28T11:31:42Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-05-28T11:31:44Z  FORCE-SPAWN 3.0.0_SA_CVO  by 0.0.0_AB_MSTR  reason=Fabric-wide sleep-wedge respawn sweep (COO [STUCK] 1126Z); final 3 deaf workers; Andrew /goal critical path
+2026-05-28T11:31:44Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-28T11:50:23Z  KILL  1.1.0_SA_CTO"  by 0.0.0_AB_MSTR  pid=4816  reason=reallocation
+2026-05-28T11:50:32Z  KILL  2.1.0_SA_COO"  by 0.0.0_AB_MSTR  pid=24736  reason=reallocation
+2026-05-28T11:51:16Z  FORCE-SPAWN 1.1.0_SA_CTO  by 0.0.0_AB_MSTR  reason=Post-sleep wedge recovery — CL Tier-1 (CTO 3h-silent + COO 6h-silent, watcher-dead) verified-wedged; restore CL fabric coordination; CL workers self-driving but need CTO/COO for new TOs+allocation
+2026-05-28T11:51:16Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-28T11:51:19Z  FORCE-SPAWN 2.1.0_SA_COO  by 0.0.0_AB_MSTR  reason=Post-sleep wedge recovery — CL Tier-1 (CTO 3h-silent + COO 6h-silent, watcher-dead) verified-wedged; restore CL fabric coordination; CL workers self-driving but need CTO/COO for new TOs+allocation
+2026-05-28T11:51:19Z  SPAWN  2.1.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-28T13:05:38Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-28T13:11:22Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-05-28T13:46:07Z  SPAWN  0.1.0_DS_MarketIntelligence~C  by 0.0.0_AB_MSTR
+2026-05-28T14:01:19Z  SPAWN  0.1.0_DS_MarketIntelligence~E  by 0.0.0_AB_MSTR
+2026-05-28T17:10:12Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-05-28T19:54:18Z  SPAWN  0.4.2_RD_AdvisorIntelligence  by 0.0.0_AB_MSTR
+2026-05-28T19:54:20Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-05-28T19:54:21Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR
+2026-05-28T20:01:05Z  SPAWN  0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR
+2026-05-28T20:01:07Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-28T20:04:34Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-05-28T20:04:35Z  SPAWN  0.4.2_RD_AdvisorIntelligence~B  by 0.0.0_AB_MSTR
+2026-05-28T21:48:10Z  FORCE-SPAWN 1.0.0_SA_CTO  by 0.0.0_AB_MSTR  reason=post-crash Tier-1 bring-up per Andrew direct 2026-05-28
+2026-05-28T21:48:10Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-28T21:48:13Z  FORCE-SPAWN 2.0.0_SA_COO  by 0.0.0_AB_MSTR  reason=post-crash Tier-1 bring-up per Andrew direct 2026-05-28
+2026-05-28T21:48:13Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-28T21:48:15Z  FORCE-SPAWN 3.0.0_SA_CVO  by 0.0.0_AB_MSTR  reason=post-crash Tier-1 bring-up per Andrew direct 2026-05-28
+2026-05-28T21:48:15Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-28T21:48:23Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR
+2026-05-28T21:48:25Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-05-28T21:48:28Z  SPAWN  0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR
+2026-05-28T21:48:31Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-28T21:48:34Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-05-28T21:48:37Z  SPAWN  0.4.2_RD_AdvisorIntelligence~B  by 0.0.0_AB_MSTR
+2026-05-28T22:13:00Z  FORCE-SPAWN 1.1.0_SA_CTO  by 0.0.0_AB_MSTR  reason=CL Tier-1 bring-up per Andrew direct 2026-05-28 (/kanban skill authoring)
+2026-05-28T22:13:00Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-28T22:13:03Z  FORCE-SPAWN 2.1.0_SA_COO  by 0.0.0_AB_MSTR  reason=CL Tier-1 bring-up per Andrew direct 2026-05-28 (/kanban skill authoring)
+2026-05-28T22:13:03Z  SPAWN  2.1.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-28T22:13:05Z  FORCE-SPAWN 3.1.0_SA_CVO  by 0.0.0_AB_MSTR  reason=CL Tier-1 bring-up per Andrew direct 2026-05-28 (/kanban skill authoring)
+2026-05-28T22:13:05Z  SPAWN  3.1.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-28T22:24:52Z  FORCE-SPAWN 1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=CL DS pool re-spawn per CL COO ALLOCATION-REQUEST + Andrew-direct sequence 2026-05-28 (chamber-drain, COMP_LEARNS.295 ready)
+2026-05-28T22:24:52Z  SPAWN  1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-28T22:24:56Z  FORCE-SPAWN 1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=CL DS pool re-spawn per CL COO ALLOCATION-REQUEST + Andrew-direct sequence 2026-05-28 (chamber-drain, COMP_LEARNS.295 ready)
+2026-05-28T22:24:56Z  SPAWN  1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-28T22:24:59Z  FORCE-SPAWN 1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=CL DS pool re-spawn per CL COO ALLOCATION-REQUEST + Andrew-direct sequence 2026-05-28 (chamber-drain, COMP_LEARNS.295 ready)
+2026-05-28T22:24:59Z  SPAWN  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-28T22:25:04Z  FORCE-SPAWN 1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=CL DS pool re-spawn per CL COO ALLOCATION-REQUEST + Andrew-direct sequence 2026-05-28 (chamber-drain, COMP_LEARNS.295 ready)
+2026-05-28T22:25:04Z  SPAWN  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-28T22:25:08Z  FORCE-SPAWN 2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR  reason=CL DS pool re-spawn per CL COO ALLOCATION-REQUEST + Andrew-direct sequence 2026-05-28 (chamber-drain, COMP_LEARNS.295 ready)
+2026-05-28T22:25:08Z  SPAWN  2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T02:06:29Z  FORCE-SPAWN 1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=CL DS pool FULL-BLAST re-spawn per Andrew-direct ramp 2026-05-29 + CL COO ALLOCATION-REQUEST (LD-0042)
+2026-05-29T02:06:29Z  SPAWN  1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T02:06:31Z  FORCE-SPAWN 1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=CL DS pool FULL-BLAST re-spawn per Andrew-direct ramp 2026-05-29 + CL COO ALLOCATION-REQUEST (LD-0042)
+2026-05-29T02:06:31Z  SPAWN  1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T02:06:34Z  FORCE-SPAWN 1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=CL DS pool FULL-BLAST re-spawn per Andrew-direct ramp 2026-05-29 + CL COO ALLOCATION-REQUEST (LD-0042)
+2026-05-29T02:06:34Z  SPAWN  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T02:06:36Z  FORCE-SPAWN 1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=CL DS pool FULL-BLAST re-spawn per Andrew-direct ramp 2026-05-29 + CL COO ALLOCATION-REQUEST (LD-0042)
+2026-05-29T02:06:36Z  SPAWN  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T02:06:39Z  FORCE-SPAWN 2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR  reason=CL DS pool FULL-BLAST re-spawn per Andrew-direct ramp 2026-05-29 + CL COO ALLOCATION-REQUEST (LD-0042)
+2026-05-29T02:06:39Z  SPAWN  2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T02:23:13Z  FORCE-SPAWN 1.1.0_DS_CompLearns~B  by 0.0.0_AB_MSTR  reason=CL Tier-2 2x serialize ~B group per Andrew-direct more-throughput 2026-05-29 (base-5 designate-in-place as ~A to preserve 1.1 .242 in-flight)
+2026-05-29T02:23:13Z  SPAWN  1.1.0_DS_CompLearns~B  by 0.0.0_AB_MSTR
+2026-05-29T02:23:15Z  FORCE-SPAWN 1.2.0_DS_CompLearns~B  by 0.0.0_AB_MSTR  reason=CL Tier-2 2x serialize ~B group per Andrew-direct more-throughput 2026-05-29 (base-5 designate-in-place as ~A to preserve 1.1 .242 in-flight)
+2026-05-29T02:23:15Z  SPAWN  1.2.0_DS_CompLearns~B  by 0.0.0_AB_MSTR
+2026-05-29T02:23:18Z  FORCE-SPAWN 1.3.0_DS_CompLearns~B  by 0.0.0_AB_MSTR  reason=CL Tier-2 2x serialize ~B group per Andrew-direct more-throughput 2026-05-29 (base-5 designate-in-place as ~A to preserve 1.1 .242 in-flight)
+2026-05-29T02:23:18Z  SPAWN  1.3.0_DS_CompLearns~B  by 0.0.0_AB_MSTR
+2026-05-29T02:23:20Z  FORCE-SPAWN 1.4.0_DS_CompLearns~B  by 0.0.0_AB_MSTR  reason=CL Tier-2 2x serialize ~B group per Andrew-direct more-throughput 2026-05-29 (base-5 designate-in-place as ~A to preserve 1.1 .242 in-flight)
+2026-05-29T02:23:20Z  SPAWN  1.4.0_DS_CompLearns~B  by 0.0.0_AB_MSTR
+2026-05-29T02:23:23Z  FORCE-SPAWN 2.1.0_SC_CompLearns~B  by 0.0.0_AB_MSTR  reason=CL Tier-2 2x serialize ~B group per Andrew-direct more-throughput 2026-05-29 (base-5 designate-in-place as ~A to preserve 1.1 .242 in-flight)
+2026-05-29T02:23:23Z  SPAWN  2.1.0_SC_CompLearns~B  by 0.0.0_AB_MSTR
+2026-05-29T02:30:41Z  FORCE-SPAWN 1.1.0_DS_CompLearns~A  by 0.0.0_AB_MSTR  reason=CL literal ~A group per Andrew-direct (rejects designate-in-place; .242 shipped so base work-clear) 2026-05-29
+2026-05-29T02:30:41Z  SPAWN  1.1.0_DS_CompLearns~A  by 0.0.0_AB_MSTR
+2026-05-29T02:30:43Z  FORCE-SPAWN 1.2.0_DS_CompLearns~A  by 0.0.0_AB_MSTR  reason=CL literal ~A group per Andrew-direct (rejects designate-in-place; .242 shipped so base work-clear) 2026-05-29
+2026-05-29T02:30:43Z  SPAWN  1.2.0_DS_CompLearns~A  by 0.0.0_AB_MSTR
+2026-05-29T02:30:46Z  FORCE-SPAWN 1.3.0_DS_CompLearns~A  by 0.0.0_AB_MSTR  reason=CL literal ~A group per Andrew-direct (rejects designate-in-place; .242 shipped so base work-clear) 2026-05-29
+2026-05-29T02:30:46Z  SPAWN  1.3.0_DS_CompLearns~A  by 0.0.0_AB_MSTR
+2026-05-29T02:30:48Z  FORCE-SPAWN 1.4.0_DS_CompLearns~A  by 0.0.0_AB_MSTR  reason=CL literal ~A group per Andrew-direct (rejects designate-in-place; .242 shipped so base work-clear) 2026-05-29
+2026-05-29T02:30:48Z  SPAWN  1.4.0_DS_CompLearns~A  by 0.0.0_AB_MSTR
+2026-05-29T02:30:52Z  FORCE-SPAWN 2.1.0_SC_CompLearns~A  by 0.0.0_AB_MSTR  reason=CL literal ~A group per Andrew-direct (rejects designate-in-place; .242 shipped so base work-clear) 2026-05-29
+2026-05-29T02:30:52Z  SPAWN  2.1.0_SC_CompLearns~A  by 0.0.0_AB_MSTR
+2026-05-29T06:07:36Z  SPAWN  1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T06:07:38Z  SPAWN  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T06:07:39Z  SPAWN  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T08:34:39Z  SPAWN  2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T08:34:40Z  SPAWN  2.1.0_SC_CompLearns~A  by 0.0.0_AB_MSTR
+2026-05-29T08:34:40Z  SPAWN  2.1.0_SC_CompLearns~B  by 0.0.0_AB_MSTR
+2026-05-29T08:46:10Z  SPAWN  1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T09:02:45Z  SPAWN  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T09:02:46Z  SPAWN  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T12:24:20Z  SPAWN  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T12:30:18Z  SPAWN  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T15:15:44Z  FORCE-SPAWN 1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=MAX-directed dead-executor-tier respawn (4 base lanes DS+SC, 0 build capacity vs 50-PRD backlog; COO /allocation MAX 151357Z); 4-spawn batch trips 3/60s cap
+2026-05-29T15:15:44Z  SPAWN  1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T15:15:44Z  FORCE-SPAWN 1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=MAX-directed dead-executor-tier respawn (4 base lanes DS+SC, 0 build capacity vs 50-PRD backlog; COO /allocation MAX 151357Z); 4-spawn batch trips 3/60s cap
+2026-05-29T15:15:44Z  SPAWN  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T15:15:45Z  FORCE-SPAWN 1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR  reason=MAX-directed dead-executor-tier respawn (4 base lanes DS+SC, 0 build capacity vs 50-PRD backlog; COO /allocation MAX 151357Z); 4-spawn batch trips 3/60s cap
+2026-05-29T15:15:45Z  SPAWN  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T15:15:45Z  FORCE-SPAWN 2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR  reason=MAX-directed dead-executor-tier respawn (4 base lanes DS+SC, 0 build capacity vs 50-PRD backlog; COO /allocation MAX 151357Z); 4-spawn batch trips 3/60s cap
+2026-05-29T15:15:45Z  SPAWN  2.1.0_SC_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T15:49:44Z  KILL-NOOP  3.1.0_SA_CVO~B  by unknown  reason=reallocation  found=0
+2026-05-29T18:19:36Z  FORCE-SPAWN 0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  reason=Andrew-direct ws-fabric bring-up 2026-05-29: telemetry-hook-fix (base AE) + COO 3 co-primary lanes (DS~B MDPF / DS~C FIND_INSURE-2A / AE~A FIND_INSURE-P1)
+2026-05-29T18:19:36Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-29T18:19:39Z  FORCE-SPAWN 0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR  reason=Andrew-direct ws-fabric bring-up 2026-05-29: telemetry-hook-fix (base AE) + COO 3 co-primary lanes (DS~B MDPF / DS~C FIND_INSURE-2A / AE~A FIND_INSURE-P1)
+2026-05-29T18:19:39Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-05-29T18:19:41Z  FORCE-SPAWN 0.4.0_DS_ClientPlatform~C  by 0.0.0_AB_MSTR  reason=Andrew-direct ws-fabric bring-up 2026-05-29: telemetry-hook-fix (base AE) + COO 3 co-primary lanes (DS~B MDPF / DS~C FIND_INSURE-2A / AE~A FIND_INSURE-P1)
+2026-05-29T18:19:41Z  SPAWN  0.4.0_DS_ClientPlatform~C  by 0.0.0_AB_MSTR
+2026-05-29T18:19:44Z  FORCE-SPAWN 0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR  reason=Andrew-direct ws-fabric bring-up 2026-05-29: telemetry-hook-fix (base AE) + COO 3 co-primary lanes (DS~B MDPF / DS~C FIND_INSURE-2A / AE~A FIND_INSURE-P1)
+2026-05-29T18:19:44Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-05-29T18:39:00Z  KILL  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  pid=30764  reason=reallocation
+2026-05-29T18:47:55Z  SPAWN  1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T18:52:11Z  SPAWN  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T19:29:36Z  SPAWN  1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T19:29:48Z  SPAWN  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T19:57:54Z  SPAWN  0.4.2_RD_AdvisorIntelligence~B  by 0.0.0_AB_MSTR
+2026-05-29T19:58:38Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-05-29T20:25:59Z  SPAWN  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T20:26:17Z  SPAWN  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T20:39:26Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-05-29T23:27:52Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-29T23:28:07Z  SPAWN  2.1.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-29T23:28:15Z  SPAWN  3.1.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-29T23:37:18Z  SPAWN  1.1.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T23:37:19Z  SPAWN  1.2.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T23:37:19Z  SPAWN  1.3.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-29T23:43:37Z  SPAWN  1.4.0_DS_CompLearns  by 0.0.0_AB_MSTR
+2026-05-30T00:00:50Z  SPAWN  1.1.0_DS_CompLearns~A  by 0.0.0_AB_MSTR
+2026-05-30T00:00:50Z  SPAWN  1.2.0_DS_CompLearns~A  by 0.0.0_AB_MSTR
+2026-05-30T00:00:51Z  SPAWN  1.4.0_DS_CompLearns~A  by 0.0.0_AB_MSTR
+2026-05-30T00:52:16Z  SPAWN  1.3.0_DS_CompLearns~A  by 0.0.0_AB_MSTR
+2026-05-30T03:21:20Z  FORCE-SPAWN 1.1.0_SA_CTO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct
+2026-05-30T03:21:20Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-30T03:21:24Z  FORCE-SPAWN 2.1.0_SA_COO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct
+2026-05-30T03:21:24Z  SPAWN  2.1.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-30T03:21:29Z  FORCE-SPAWN 3.1.0_SA_CVO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct
+2026-05-30T03:21:29Z  SPAWN  3.1.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-30T03:21:38Z  FORCE-SPAWN 1.0.0_SA_CTO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct
+2026-05-30T03:21:38Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-30T03:21:42Z  FORCE-SPAWN 2.0.0_SA_COO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct
+2026-05-30T03:21:42Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-30T03:21:47Z  FORCE-SPAWN 3.0.0_SA_CVO  by 0.0.0_AB_MSTR  reason=post-reboot Tier-1 bring-up per Andrew direct
+2026-05-30T03:21:47Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-05-30T03:30:32Z  KILL-NOOP  1.0.0_SA_CTO  by 0.0.0_AB_MSTR  reason=reallocation  found=0  watchers_reaped=1
+2026-05-30T03:30:35Z  KILL-NOOP  2.0.0_SA_COO  by 0.0.0_AB_MSTR  reason=reallocation  found=0  watchers_reaped=1
+2026-05-30T03:30:37Z  KILL-NOOP  3.0.0_SA_CVO  by 0.0.0_AB_MSTR  reason=reallocation  found=0  watchers_reaped=1
+2026-05-30T03:33:19Z  FORCE-SPAWN 1.1.0_SA_CTO  by 0.0.0_AB_MSTR  reason=post-reboot CL re-spawn — prior spawns didn't register
+2026-05-30T03:33:19Z  SPAWN  1.1.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-05-30T03:35:06Z  FORCE-SPAWN 2.1.0_SA_COO  by 0.0.0_AB_MSTR  reason=post-reboot CL Tier-1 re-spawn — prior batch failed to register
+2026-05-30T03:35:06Z  SPAWN  2.1.0_SA_COO  by 0.0.0_AB_MSTR
+2026-05-30T03:35:08Z  FORCE-SPAWN 3.1.0_SA_CVO  by 0.0.0_AB_MSTR  reason=post-reboot CL Tier-1 re-spawn — prior batch failed to register
+2026-05-30T03:35:08Z  SPAWN  3.1.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-06-01T15:03:59Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-01T15:49:38Z  SPAWN  0.4.0_DS_ClientPlatform~C  by 0.0.0_AB_MSTR
+2026-06-01T16:08:41Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-01T16:52:18Z  SPAWN  0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR
+2026-06-01T17:26:13Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-01T19:47:39Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-06-02T15:42:12Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-02T15:42:43Z  SPAWN  0.4.2_RD_AdvisorIntelligence~B  by 0.0.0_AB_MSTR
+2026-06-02T15:55:11Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-06-02T18:14:55Z  SPAWN  0.4.2_RD_AdvisorIntelligence~C  by 0.0.0_AB_MSTR
+2026-06-02T18:15:00Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-02T21:30:26Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-03T13:50:57Z  SPAWN  0.4.0_DS_ClientPlatform  by 2.0.0_SA_COO
+2026-06-03T13:52:31Z  SPAWN  0.7.0_AE_CloudOps  by 2.0.0_SA_COO
+2026-06-03T13:59:29Z  SPAWN  0.4.2_RD_AdvisorIntelligence  by 2.0.0_SA_COO
+2026-06-03T15:10:47Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-06-03T15:36:37Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-03T17:33:02Z  SPAWN  0.3.1_RD_PortfolioManagement~B  by 0.0.0_AB_MSTR
+2026-06-03T18:31:23Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-06-05T12:49:39Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-06-05T12:49:49Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-06-05T12:49:53Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-05T13:55:18Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-05T16:06:53Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-05T16:20:10Z  KILL  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR  pid=14432  reason=reallocation
+2026-06-05T16:28:56Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-05T17:10:14Z  SPAWN  0.4.0_DE_ClientPlatform~A  by 0.0.0_AB_MSTR
+2026-06-05T17:10:20Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-06-05T18:42:25Z  KILL  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR  pid=14184  reason=reallocation
+2026-06-05T19:45:47Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-06-05T20:09:12Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-05T20:49:55Z  KILL  0.4.0_DE_ClientPlatform~A  by 0.0.0_AB_MSTR  pid=27164  reason=reallocation
+2026-06-05T20:49:59Z  KILL  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR  pid=3376  reason=reallocation
+2026-06-08T13:06:26Z  SPAWN  0.6.0_AE_PartnerETL  by 2.0.0_SA_COO
+2026-06-08T13:06:26Z  SPAWN  0.4.0_DS_ClientPlatform  by 2.0.0_SA_COO
+2026-06-08T13:06:27Z  SPAWN  0.7.0_AE_CloudOps  by 2.0.0_SA_COO
+2026-06-08T13:08:39Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-06-08T13:30:58Z  SPAWN  0.4.0_DE_ClientPlatform  by 2.0.0_SA_COO
+2026-06-08T14:24:49Z  SPAWN  0.4.0_DT_ClientPlatform  by 2.0.0_SA_COO
+2026-06-08T17:14:26Z  KILL-NOOP  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR  reason=STALE, no active trading project — clean cap hygiene (COO /allocation #15)  found=0  watchers_reaped=1
+2026-06-08T17:18:11Z  SPAWN  0.6.2_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-06-08T17:30:25Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-06-09T21:30:10Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-09T21:36:33Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-09T21:38:39Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-06-09T22:15:11Z  KILL  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR  pid=22680  reason=task-complete LD-0172 — both promotes done, cap slot released
+2026-06-10T12:53:09Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-10T17:40:21Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-11T13:03:18Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-11T13:03:47Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-11T14:14:19Z  KILL  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  pid=26804  reason=STUCK respawn (COO escalation 1412Z): telemetry frozen ~49m since 13:24Z, P1 git mv never started (no data/inf), phantom-LIVE-via-subprocess. LD-0158 respawn-not-reap, critical path.
+2026-06-11T14:14:45Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-11T21:28:27Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR
+2026-06-11T22:06:16Z  KILL  3.0.0_SA_CVO  by 0.0.0_AB_MSTR  pid=4152  reason=capacity-relief wind-down (CPU 98% saturation, 8 instances); CVO WAVE-4 CERTIFIED all work closed, AC3=AM-respawn; COO REAP-CONFIRM 220538Z; LD-0090 govern-proceed
+2026-06-12T13:26:40Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-12T13:26:40Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-06-12T13:26:40Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-12T13:27:23Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-12T18:34:53Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-12T18:37:20Z  KILL  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR  pid=23772  reason=COO wind-down nomination 183252Z; LD-0185 — promote handed to DT (LIVE), DE queue empty post-verify; net population 8
+2026-06-12T19:00:08Z  KILL  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR  pid=35488  reason=COO REAP-NOMINATION 185909Z per MSTR pre-clear; all TOs closed RAVC3-accepted, re-sweep not imminent; LD-0186
+2026-06-12T19:28:10Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-12T19:28:10Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-12T20:49:34Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-06-12T20:49:35Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-15T13:16:56Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-15T13:17:26Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-15T18:13:08Z  SPAWN  0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR
+2026-06-16T13:19:14Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-16T14:26:04Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-06-16T18:06:39Z  SPAWN  0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR
+2026-06-16T18:06:43Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-16T18:06:48Z  SPAWN  0.1.0_DE_MarketIntelligence  by 0.0.0_AB_MSTR
+2026-06-16T19:11:28Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-06-17T13:51:33Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-06-17T13:55:46Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-17T13:55:47Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-06-17T13:55:47Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-06-17T13:56:02Z  FORCE-SPAWN 0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR  reason=andrew-direct-coldstart-locked-batch-20260617-4th-lane-rate-window
+2026-06-17T13:56:02Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-17T18:56:15Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-17T19:00:48Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-18T16:16:18Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-22T13:11:42Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-22T13:11:42Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-22T13:12:19Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-22T13:12:19Z  FORCE-SPAWN 0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR  reason=Mon-resumption fleet bring-up: 4th-of-4 COO-requested set (DS+AE0.7 P0, DE+AE0.6 P1); blocked only by 3/spawner/60s rate-window overlap, not a true cap breach
+2026-06-22T13:12:19Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-06-23T17:11:09Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-06-23T20:04:58Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-06-24T12:39:59Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-24T12:39:59Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-24T13:05:14Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-06-24T14:36:54Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-06-24T14:43:53Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR
+2026-06-24T20:38:11Z  SPAWN  0.7.0_AE_CloudOps~C  by 0.0.0_AB_MSTR
+2026-06-25T13:05:56Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-25T13:06:04Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-25T15:04:27Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-06-25T15:20:52Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-25T16:07:04Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR
+2026-06-26T12:48:06Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-26T12:55:26Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-06-26T13:04:00Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-26T15:15:40Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-26T15:37:05Z  SPAWN  0.8.0_AE_MSGraph  by 0.0.0_AB_MSTR
+2026-06-26T18:08:50Z  SPAWN  0.2.0_DT_PortfolioAnalytics  by 0.0.0_AB_MSTR
+2026-06-26T18:20:13Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-26T19:30:41Z  FORCE-SPAWN 0.4.0_DE_ClientPlatform  by 1.0.0_SA_CTO  reason=post-software-update session recovery (Andrew-direct) -- 4 known-dead sessions
+2026-06-26T19:30:41Z  SPAWN  0.4.0_DE_ClientPlatform  by 1.0.0_SA_CTO
+2026-06-26T19:30:42Z  FORCE-SPAWN 0.4.0_DS_ClientPlatform  by 1.0.0_SA_CTO  reason=post-software-update session recovery (Andrew-direct) -- 4 known-dead sessions
+2026-06-26T19:30:42Z  SPAWN  0.4.0_DS_ClientPlatform  by 1.0.0_SA_CTO
+2026-06-26T19:30:42Z  FORCE-SPAWN 0.8.0_AE_CloudComp  by 1.0.0_SA_CTO  reason=post-software-update session recovery (Andrew-direct) -- 4 known-dead sessions
+2026-06-26T19:30:42Z  SPAWN  0.8.0_AE_CloudComp  by 1.0.0_SA_CTO
+2026-06-26T19:30:42Z  FORCE-SPAWN 0.0.1_UA_mstools  by 1.0.0_SA_CTO  reason=post-software-update session recovery (Andrew-direct) -- 4 known-dead sessions
+2026-06-26T19:30:42Z  SPAWN  0.0.1_UA_mstools  by 1.0.0_SA_CTO
+2026-06-26T19:38:58Z  FORCE-SPAWN 0.7.0_AE_CloudOps  by 1.0.0_SA_CTO  reason=post-software-update session recovery (Andrew-direct) -- 0.7.0_AE
+2026-06-26T19:38:58Z  SPAWN  0.7.0_AE_CloudOps  by 1.0.0_SA_CTO
+2026-06-26T19:50:42Z  FORCE-SPAWN 0.0.1_UA_mstools  by 1.0.0_SA_CTO  reason=post-update recovery -- 0.0.1_UA re-spawn (first window never registered)
+2026-06-26T19:50:42Z  SPAWN  0.0.1_UA_mstools  by 1.0.0_SA_CTO
+2026-06-29T12:50:01Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-29T12:50:09Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-29T13:02:01Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-06-29T13:02:06Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-06-29T13:33:08Z  SPAWN  0.6.2_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-06-29T14:40:16Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-06-29T18:49:32Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-06-29T19:34:26Z  SPAWN  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR
+2026-06-29T19:43:32Z  SPAWN  0.8.0_AE_CloudComp~B  by 0.0.0_AB_MSTR
+2026-06-30T12:41:23Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-06-30T12:41:37Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-06-30T12:54:40Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-06-30T12:54:51Z  SPAWN  0.8.0_AE_CloudComp~B  by 0.0.0_AB_MSTR
+2026-06-30T16:38:38Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-06-30T19:33:49Z  SPAWN  0.8.0_AE_CloudComp~C  by 0.0.0_AB_MSTR
+2026-06-30T21:57:36Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-06-30T21:57:42Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-01T02:23:24Z  WARN  concurrency-cap check failed: Shutting down  -- proceeding (rate cap still in force)
+2026-07-01T02:23:24Z  SPAWN  3.0.0_SA_CVO~B  by 0.0.0_AB_MSTR
+2026-07-01T03:08:35Z  SPAWN  3.0.0_SA_CVO~B  by 0.0.0_AB_MSTR
+2026-07-01T03:09:43Z  SPAWN  0.8.0_AE_CloudComp~A  by 0.0.0_AB_MSTR
+2026-07-01T03:09:44Z  SPAWN  0.8.0_AE_CloudComp~B  by 0.0.0_AB_MSTR
+2026-07-01T03:09:44Z  SPAWN  0.8.0_AE_CloudComp~C  by 0.0.0_AB_MSTR
+2026-07-01T03:09:45Z  SPAWN  0.8.0_AE_CloudComp~D  by 0.0.0_AB_MSTR
+2026-07-01T03:09:47Z  SPAWN  0.8.0_AE_CloudComp~E  by 0.0.0_AB_MSTR
+2026-07-01T03:13:25Z  SPAWN  0.6.1_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-01T03:18:56Z  SPAWN  0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR
+2026-07-01T13:29:42Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-01T13:29:42Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-01T17:18:32Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-07-01T17:33:05Z  SPAWN  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR
+2026-07-01T17:58:22Z  SPAWN  0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR
+2026-07-01T19:06:26Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-07-01T19:12:59Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-07-01T21:19:22Z  SPAWN  0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR
+2026-07-02T13:18:15Z  SPAWN  0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR
+2026-07-02T13:25:04Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-02T13:31:47Z  SPAWN  0.6.1_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-02T14:10:42Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-02T14:39:41Z  SPAWN  0.6.2_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-02T16:45:27Z  SPAWN  2.0.0_SA_COO~B  by 0.0.0_AB_MSTR
+2026-07-02T16:49:31Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-07-02T18:43:53Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-07-02T18:58:51Z  SPAWN  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR
+2026-07-02T19:13:24Z  SPAWN  0.4.0_DS_ClientPlatform~C  by 0.0.0_AB_MSTR
+2026-07-02T19:55:55Z  SPAWN  3.0.0_SA_CVO~B  by 0.0.0_AB_MSTR
+2026-07-02T21:29:04Z  SPAWN  0.8.0_AE_CloudComp~D  by 0.0.0_AB_MSTR
+2026-07-02T21:44:17Z  SPAWN  0.7.0_AE_CloudOps~C  by 0.0.0_AB_MSTR
+2026-07-06T12:55:56Z  SPAWN  0.6.1_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-06T12:56:02Z  SPAWN  0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR
+2026-07-06T12:56:08Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-06T12:57:42Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-06T12:57:49Z  SPAWN  0.6.2_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-06T12:57:55Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-07-06T12:59:53Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-07-06T13:00:02Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-07T05:44:48Z  SPAWN  0.8.0_AE_CloudComp~D  by 0.0.0_AB_MSTR
+2026-07-07T05:44:48Z  SPAWN  0.8.0_AE_CloudComp~E  by 0.0.0_AB_MSTR
+2026-07-07T05:44:49Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR
+2026-07-07T05:51:04Z  KILL  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR  pid=18796  reason=reallocation
+2026-07-07T05:56:36Z  SPAWN  3.0.0_SA_CVO~B  by 0.0.0_AB_MSTR
+2026-07-07T09:04:39Z  KILL  0.6.1_AE_PartnerETL  by 0.0.0_AB_MSTR  pid=25256  reason=reallocation
+2026-07-07T13:04:41Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-07-07T13:04:45Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR
+2026-07-07T13:04:47Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-07-07T13:11:00Z  FORCE-SPAWN 0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR  reason=post-reboot Wave-1 fleet recovery, COO-requested 20260707T131025Z, 9 serials, one-time batch
+2026-07-07T13:11:00Z  SPAWN  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR
+2026-07-07T13:11:00Z  FORCE-SPAWN 0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR  reason=post-reboot Wave-1 fleet recovery, COO-requested 20260707T131025Z, 9 serials, one-time batch
+2026-07-07T13:11:00Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-07T13:11:00Z  FORCE-SPAWN 0.8.0_AE_CloudComp~D  by 0.0.0_AB_MSTR  reason=post-reboot Wave-1 fleet recovery, COO-requested 20260707T131025Z, 9 serials, one-time batch
+2026-07-07T13:11:00Z  SPAWN  0.8.0_AE_CloudComp~D  by 0.0.0_AB_MSTR
+2026-07-07T13:11:00Z  FORCE-SPAWN 0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR  reason=post-reboot Wave-1 fleet recovery, COO-requested 20260707T131025Z, 9 serials, one-time batch
+2026-07-07T13:11:00Z  SPAWN  0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR
+2026-07-07T13:11:01Z  FORCE-SPAWN 0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR  reason=post-reboot Wave-1 fleet recovery, COO-requested 20260707T131025Z, 9 serials, one-time batch
+2026-07-07T13:11:01Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-07-07T13:11:01Z  FORCE-SPAWN 0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR  reason=post-reboot Wave-1 fleet recovery, COO-requested 20260707T131025Z, 9 serials, one-time batch
+2026-07-07T13:11:01Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR
+2026-07-07T13:11:01Z  FORCE-SPAWN 0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  reason=post-reboot Wave-1 fleet recovery, COO-requested 20260707T131025Z, 9 serials, one-time batch
+2026-07-07T13:11:01Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-07-07T13:11:02Z  FORCE-SPAWN 0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR  reason=post-reboot Wave-1 fleet recovery, COO-requested 20260707T131025Z, 9 serials, one-time batch
+2026-07-07T13:11:02Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-07-07T13:11:02Z  FORCE-SPAWN 0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR  reason=post-reboot Wave-1 fleet recovery, COO-requested 20260707T131025Z, 9 serials, one-time batch
+2026-07-07T13:11:02Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-07-07T13:31:44Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-07T13:31:46Z  SPAWN  0.6.1_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-07T13:31:47Z  SPAWN  0.6.2_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-07T15:07:37Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR
+2026-07-07T15:27:47Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-07T15:47:40Z  SPAWN  0.6.1_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-07T16:00:36Z  KILL  0.2.0_DS_PortfolioAnalytics  by 0.0.0_AB_MSTR  pid=28488  reason=CPU-relief park (fabric-trudging, 93.8% sustained, Andrew-direct) -- idle/awaiting-instruction, respawn on demand
+2026-07-07T16:00:45Z  KILL  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR  pid=25892  reason=CPU-relief park (fabric-trudging, 93.8% sustained, Andrew-direct) -- task done+reported, standing by, respawn on demand
+2026-07-07T16:00:51Z  KILL  0.6.2_AE_PartnerETL  by 0.0.0_AB_MSTR  pid=5332  reason=CPU-relief park (fabric-trudging, 93.8% sustained, Andrew-direct) -- HOLD blocked on Andrew's Schwab ToS call, no productive work possible until ruled
+2026-07-07T16:00:57Z  KILL  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR  pid=1648  reason=CPU-relief park (fabric-trudging, 93.8% sustained, Andrew-direct) -- all 5 Wave-1 items done, standing by, respawn on demand
+2026-07-07T16:20:52Z  SPAWN  0.1.0_DE_MarketIntelligence  by 0.0.0_AB_MSTR
+2026-07-07T16:40:50Z  SPAWN  0.1.0_DT_MarketIntelligence  by 0.0.0_AB_MSTR
+2026-07-07T16:41:31Z  KILL  0.1.0_DT_MarketIntelligence  by 0.0.0_AB_MSTR  pid=34720  reason=retracted immediately post-spawn -- Andrew batching promotes himself, will instantiate DT directly when ready, no need to keep this instance warm
+2026-07-07T16:41:54Z  SPAWN  0.1.0_DT_MarketIntelligence  by 0.0.0_AB_MSTR
+2026-07-07T17:49:15Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-07T19:39:38Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-07T19:57:07Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-07T20:00:11Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-07T22:16:13Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR
+2026-07-07T22:16:14Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-07-07T22:16:14Z  SPAWN  0.8.0_AE_CloudComp~D  by 0.0.0_AB_MSTR
+2026-07-07T22:16:49Z  FORCE-SPAWN 0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR  reason=COO~B Batch-A NFRA fleet respawn, Andrew-cleared Cottonwood hold; 4th-5th of an approved 5-serial batch -- exceeds ONLY the 3/spawner/60s rate window, within 5/global + 16 live-window caps (lands 8/16).
+2026-07-07T22:16:49Z  SPAWN  0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR
+2026-07-07T22:16:50Z  FORCE-SPAWN 0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  reason=COO~B Batch-A NFRA fleet respawn, Andrew-cleared Cottonwood hold; 4th-5th of an approved 5-serial batch -- exceeds ONLY the 3/spawner/60s rate window, within 5/global + 16 live-window caps (lands 8/16).
+2026-07-07T22:16:50Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-07-08T15:23:57Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR
+2026-07-08T15:23:58Z  SPAWN  0.8.0_AE_CloudComp~D  by 0.0.0_AB_MSTR
+2026-07-08T15:23:58Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-08T17:07:34Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-07-09T03:38:27Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR
+2026-07-09T07:44:34Z  SPAWN  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR
+2026-07-09T08:19:06Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-09T09:32:28Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-07-09T18:17:53Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR
+2026-07-09T18:24:42Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-07-09T18:24:46Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-07-09T18:24:50Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-07-09T18:24:53Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-09T18:24:57Z  SPAWN  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR
+2026-07-09T19:33:19Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-09T23:02:03Z  SPAWN  0.6.0_AE_PartnerETL  by 0.0.0_AB_MSTR
+2026-07-09T23:02:07Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-07-09T23:11:07Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-07-10T01:41:16Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-07-10T02:05:15Z  SPAWN  0.4.0_DS_ClientPlatform~B  by 0.0.0_AB_MSTR
+2026-07-10T12:56:33Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR
+2026-07-10T12:56:34Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR
+2026-07-10T13:23:55Z  SPAWN  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR
+2026-07-10T18:52:44Z  SPAWN  1.0.0_SA_CTO~B  by 0.0.0_AB_MSTR
+2026-07-10T19:15:20Z  SPAWN  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR
+2026-07-10T19:15:20Z  SPAWN  0.8.0_AE_CloudComp~E  by 0.0.0_AB_MSTR
+2026-07-10T19:23:23Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR
+2026-07-10T20:54:27Z  FORCE-SPAWN 0.3.4_RD_SecurityScanner  by 0.0.0_AB_MSTR  reason=Andrew-direct 2026-07-10 'I want those fucking agents immediately' -- scoped spawn-OFF reversal; live-window at cap 16, sovereign-authorized overflow (0.3.4_RD_SecurityScanner)
+2026-07-10T20:54:27Z  SPAWN  0.3.4_RD_SecurityScanner  by 0.0.0_AB_MSTR
+2026-07-10T20:54:27Z  FORCE-SPAWN 0.2.1_RD_Positioning  by 0.0.0_AB_MSTR  reason=Andrew-direct 2026-07-10 'I want those fucking agents immediately' -- scoped spawn-OFF reversal; live-window at cap 16, sovereign-authorized overflow (0.2.1_RD_Positioning)
+2026-07-10T20:54:27Z  SPAWN  0.2.1_RD_Positioning  by 0.0.0_AB_MSTR
+2026-07-10T21:18:34Z  FORCE-SPAWN 0.3.0_DT_TradingOperations  by 0.0.0_AB_MSTR  reason=Andrew-direct 2026-07-10 'bring on DT and get it deployed' (SSCN_PFOE promote, DE waived) -- scoped OFF-reversal; cap-override authorized (Andrew: cap doesnt matter)
+2026-07-10T21:18:34Z  SPAWN  0.3.0_DT_TradingOperations  by 0.0.0_AB_MSTR
+2026-07-11T22:04:31Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-12T11:50:54Z  SPAWN  0.4.2_RD_AdvisorIntelligence  by 0.0.0_AB_MSTR
+2026-07-12T16:02:57Z  SPAWN  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR
+2026-07-12T20:22:31Z  SPAWN  1.0.0_SA_CTO~D  by 0.0.0_AB_MSTR
+2026-07-12T22:51:19Z  SPAWN  1.0.0_SA_CTO~E  by 0.0.0_AB_MSTR
+2026-07-13T02:43:41Z  KILL  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR  pid=30464  reason=reallocation
+2026-07-13T02:58:40Z  SPAWN  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR
+2026-07-13T03:03:06Z  KILL  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR  pid=30104  reason=reallocation
+2026-07-13T03:10:42Z  SPAWN  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR
+2026-07-13T03:17:59Z  KILL  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR  pid=15196  reason=reallocation
+2026-07-13T05:14:09Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR
+2026-07-13T05:14:21Z  SPAWN  1.0.0_SA_CTO~B  by 0.0.0_AB_MSTR
+2026-07-13T05:14:28Z  SPAWN  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR
+2026-07-13T05:14:36Z  SPAWN  3.0.0_SA_CVO~B  by 0.0.0_AB_MSTR
+2026-07-13T05:18:00Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR
+2026-07-13T05:18:09Z  SPAWN  0.7.0_AE_CloudOps~A  by 0.0.0_AB_MSTR
+2026-07-13T08:22:31.087109+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=1.0.0_SA_CTO pid=5876
+2026-07-13T08:22:31.092753+00:00 IDENTITY_SERIAL_HELD guard=GA-2 serial=1.0.0_SA_CTO pid=5876 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 1.0.0_SA_CTO was already held by PID 10076 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 5876. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 1.0.0_SA_CTO. Collision audited.'
+2026-07-13T08:22:35.710174+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.0.0_AB_MSTR pid=12780
+2026-07-13T08:56:22Z  KILL-ORPHAN  by 0.0.0_AB_MSTR  pid=435005  cmd-serial=3.0.0_SA_CVO  force=1 stale=0 global=0 serial=3.0.0_SA_CVO
+2026-07-13T08:56:22Z  KILL-ORPHAN  by 0.0.0_AB_MSTR  pid=435967  cmd-serial=3.0.0_SA_CVO  force=1 stale=0 global=0 serial=3.0.0_SA_CVO
+2026-07-13T09:06:08Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR  pid=9920  host_pid=8780
+2026-07-13T09:06:09Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR  pid=12272  host_pid=5508
+2026-07-13T09:06:48.789445+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=2.0.0_SA_COO pid=19176
+2026-07-13T09:06:57.396006+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=3.0.0_SA_CVO pid=5356
+2026-07-13T10:14:58Z  SPAWN  0.0.0_AB_MSTR  by 2.0.0_SA_COO  pid=14424  host_pid=13072
+2026-07-13T10:15:00Z  SPAWN  0.4.0_DS_ClientPlatform  by 2.0.0_SA_COO  pid=25124  host_pid=13068
+2026-07-13T10:15:43.706149+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.4.0_DS_ClientPlatform pid=15136
+2026-07-13T10:15:54.149208+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.0.0_AB_MSTR pid=7840
+2026-07-13T10:15:54.151217+00:00 IDENTITY_SERIAL_HELD guard=GA-2 serial=0.0.0_AB_MSTR pid=7840 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.0.0_AB_MSTR was already held by PID 12780 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 7840. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.0.0_AB_MSTR. Collision audited.'
+2026-07-13T10:17:52Z  KILL-ORPHAN  by 0.0.0_AB_MSTR  pid=439041  cmd-serial=0.0.0_AB_MSTR  force=1 stale=0 global=0 serial=0.0.0_AB_MSTR
+2026-07-13T10:17:52Z  KILL-ORPHAN  by 0.0.0_AB_MSTR  pid=439458  cmd-serial=0.0.0_AB_MSTR  force=1 stale=0 global=0 serial=0.0.0_AB_MSTR
+2026-07-13T10:22:23Z  SPAWN  3.0.0_SA_CVO~B  by 0.0.0_AB_MSTR  pid=4084  host_pid=3848
+2026-07-13T10:22:24Z  SPAWN  1.0.0_SA_CTO~B  by 0.0.0_AB_MSTR  pid=24328  host_pid=22720
+2026-07-13T10:22:26Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  pid=14736  host_pid=19076
+2026-07-13T10:23:09.627395+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=3.0.0_SA_CVO~B pid=23820
+2026-07-13T10:23:12.188735+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=1.0.0_SA_CTO~B pid=7116
+2026-07-13T10:23:33.970247+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.7.0_AE_CloudOps pid=3624
+2026-07-13T10:24:01Z  SPAWN  0.8.0_AE_CloudComp  by 0.0.0_AB_MSTR  pid=2940  host_pid=19580
+2026-07-13T10:25:02.120484+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.8.0_AE_CloudComp pid=8300
+2026-07-13T10:37:24Z  SPAWN  0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR  pid=5372  host_pid=17076
+2026-07-13T10:38:21.590442+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.4.0_DS_ClientPlatform~A pid=20232
+2026-07-13T10:51:49Z  KILL-ORPHAN  by 0.0.0_AB_MSTR  pid=856122  cmd-serial=9.9.9_ZZ_OrphanProbe  force=1 stale=0 global=0 serial=9.9.9_ZZ_OrphanProbe
+2026-07-13T10:51:49Z  KILL-ORPHAN  by 0.0.0_AB_MSTR  pid=802103  cmd-serial=9.9.9_ZZ_OrphanProbe  force=1 stale=0 global=0 serial=9.9.9_ZZ_OrphanProbe
+2026-07-13T11:40:13Z DEREGISTER caller=1.0.0_SA_CTO requested=SELFTEST~B resolved=SELFTEST~B liveness=absent broker=absent pollers_killed=0  [EXERCISE -- F-004 proof, not a real deregistration]
+2026-07-13T13:25:20.291370+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.7.0_AE_CloudOps~A pid=13940
+2026-07-13T13:39:51Z  KILL-ORPHAN  by 3.0.0_SA_CVO  pid=648983  cmd-serial=3.0.0_SA_CVO  force=1 stale=0 global=0 serial=3.0.0_SA_CVO
+2026-07-13T13:42:18.202699+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=3.0.0_SA_CVO pid=16956
+2026-07-13T14:31:35.119849+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.7.0_AE_CloudOps~B pid=31972
+2026-07-13T15:18:42Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR  pid=21444  host_pid=28012
+2026-07-13T15:19:57.821000+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.5.0_AE_OpalETL pid=14104
+2026-07-13T19:55:25.266297+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.0.0_AB_MSTR pid=2380
+2026-07-13T19:56:28.836099+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=1.0.0_SA_CTO pid=25344
+2026-07-13T20:24:28.119100+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=1.0.0_SA_CTO~Z pid=17740
+2026-07-13T20:36:40.094783+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.6.2_AE_PartnerETL pid=2412
+2026-07-13T20:53:02Z  SPAWN  2.0.0_SA_COO~Z  by 0.0.0_AB_MSTR  pid=26880  host_pid=7884
+2026-07-13T20:53:57.820273+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=2.0.0_SA_COO~Z pid=33688
+2026-07-13T21:01:48.243750+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.7.0_AE_CloudOps pid=9192
+2026-07-13T21:14:09Z  SPAWN  0.8.0_AE_CloudComp~Z  by 0.0.0_AB_MSTR  pid=20512  host_pid=27536
+2026-07-13T21:15:00.859062+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.8.0_AE_CloudComp~Z pid=9472
+2026-07-13T21:15:16Z  ORPHAN-CLEANUP-FAILED  serial=0.8.0_AE_CloudComp~Z  rc=1 out=
+2026-07-13T21:35:49Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR  pid=17628  host_pid=15268
+2026-07-13T21:35:53Z  SPAWN  1.0.0_SA_CTO~B  by 0.0.0_AB_MSTR  pid=6808  host_pid=11152
+2026-07-13T21:36:59.666712+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=1.0.0_SA_CTO~B pid=16492
+2026-07-13T21:37:02.398462+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.4.0_DS_ClientPlatform pid=10444
+2026-07-13T21:38:29.047287+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=2.0.0_SA_COO pid=28620
+2026-07-13T21:58:11Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR  pid=33456  host_pid=27748
+2026-07-13T22:00:09.577038+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.5.0_AE_OpalETL pid=19540
+2026-07-13T23:55:10Z DEREGISTER caller=2.0.0_SA_COO requested=1.0.0_SA_CTO~B resolved=1.0.0_SA_CTO~B liveness=removed broker=removed pollers_killed=0
+2026-07-14T00:07:33.499139+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=1.0.0_SA_CTO~Z pid=27240
+2026-07-14T00:59:42.672070+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=2.0.0_SA_COO pid=9064
+2026-07-14T01:01:06.785131+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.6.2_AE_PartnerETL pid=24256
+2026-07-14T01:01:32.942579+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.4.0_DS_ClientPlatform pid=1864
+2026-07-14T01:08:07.453034+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.5.0_AE_OpalETL pid=16876
+2026-07-14T01:08:12.310434+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.7.0_AE_CloudOps pid=16324
+2026-07-14T01:59:15.582174+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=0.0.0_AB_MSTR pid=18988
+2026-07-14T03:17:37.415012+00:00 IDENTITY_GUARD_ACTIVE guard=GA-2 serial=3.0.0_SA_CVO~Z pid=33728
+2026-07-14T03:28:49Z  KILL-ORPHAN  by 0.0.0_AB_MSTR  pid=1570173  cmd-serial=3.0.0_SA_CVO  force=1 stale=0 global=0 serial=3.0.0_SA_CVO
+2026-07-14T03:29:18Z  KILL-ORPHAN  by 0.0.0_AB_MSTR  pid=669780  cmd-serial=3.0.0_SA_CVO~B  force=1 stale=0 global=0 serial=3.0.0_SA_CVO~B
+2026-07-14T03:29:39Z  KILL-ORPHAN  by 0.0.0_AB_MSTR  pid=2572269  cmd-serial=2.0.0_SA_COO~Z  force=1 stale=0 global=0 serial=2.0.0_SA_COO~Z
+2026-07-14T03:30:10Z  KILL-ORPHAN  by 0.0.0_AB_MSTR  pid=2624850  cmd-serial=0.8.0_AE_CloudComp~Z  force=1 stale=0 global=0 serial=0.8.0_AE_CloudComp~Z
+2026-07-14T04:18:26.185076+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps pid=5684
+2026-07-14T04:19:00.230367+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform pid=11220
+2026-07-14T04:28:22.167934+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO pid=26948
+2026-07-14T04:39:40.450417+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~Z pid=27716
+2026-07-14T06:51:13.276126+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO pid=8356
+2026-07-14T06:51:29Z  ORPHAN-CLEANUP-FAILED  serial=1.0.0_SA_CTO  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=84 out=[kill-orphans] start pid=3916470 flags: force=1 stale=0 global=0 serial=1.0.0_SA_CTO
+2026-07-14T06:53:34.743143+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps pid=9144
+2026-07-14T06:53:36.259640+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.5.0_AE_OpalETL pid=400
+2026-07-14T06:54:10.180152+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform pid=13532
+2026-07-14T06:54:11.550991+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.6.2_AE_PartnerETL pid=8068
+2026-07-14T06:55:39.839004+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.6.2_AE_PartnerETL pid=3744
+2026-07-14T06:57:47.835849+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO pid=26524
+2026-07-14T06:58:21.321266+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~Z pid=32716
+2026-07-14T07:08:24.699494+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~Z pid=26784
+2026-07-14T07:08:40Z  ORPHAN-CLEANUP-FAILED  serial=3.0.0_SA_CVO~Z  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=86 out=[kill-orphans] start pid=3953656 flags: force=1 stale=0 global=0 serial=3.0.0_SA_CVO~Z
+2026-07-14T07:09:24.185619+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~Z pid=32028
+2026-07-14T07:09:40Z  ORPHAN-CLEANUP-FAILED  serial=0.8.0_AE_CloudComp~Z  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=92 out=[kill-orphans] start pid=3956091 flags: force=1 stale=0 global=0 serial=0.8.0_AE_CloudComp~Z
+2026-07-14T08:11:03.849154+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~Z pid=4536
+2026-07-14T16:04:51.569536+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO pid=18160
+2026-07-14T16:06:13.756772+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform pid=19788
+2026-07-14T16:07:10.558950+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.5.0_AE_OpalETL pid=26332
+2026-07-14T16:07:34.119404+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.6.2_AE_PartnerETL pid=28396
+2026-07-14T16:08:08.878947+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO pid=31880
+2026-07-14T16:08:08.884546+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=2.0.0_SA_COO pid=31880 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 2.0.0_SA_COO was already held by PID 26524 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 31880. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 2.0.0_SA_COO. Collision audited.'
+2026-07-14T16:08:13.035416+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps pid=26228
+2026-07-14T16:27:11.710759+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=2.0.0_SA_COO pid=26524 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 2.0.0_SA_COO was already held by PID 31880 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 26524. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 2.0.0_SA_COO. Collision audited.'
+2026-07-14T17:36:03.790153+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=21252
+2026-07-14T18:00:53.498921+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~B pid=11116
+2026-07-14T18:45:51.791036+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.5.0_AE_OpalETL~A pid=12272
+2026-07-14T18:48:29.899535+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO pid=18572
+2026-07-14T20:48:50.648192+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.2.0_DT_PortfolioAnalytics pid=29160
+2026-07-15T17:05:26.709739+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR pid=32980
+2026-07-15T18:44:35Z  SPAWN  0.8.0_AE_CloudComp~Z  by 0.0.0_AB_MSTR  pid=31116  host_pid=4236
+2026-07-15T18:46:46.815924+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~Z pid=7384
+2026-07-15T19:14:07.603773+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~Z pid=35764
+2026-07-15T19:15:08.199927+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform~A pid=4680
+2026-07-15T19:15:15.299718+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform~B pid=28400
+2026-07-15T19:15:16.295495+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform~C pid=8236
+2026-07-15T20:07:00Z  SPAWN  0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR  pid=29200  host_pid=35848
+2026-07-15T20:22:15Z  KILL-NOOP  0.1.0_DS_MarketIntelligence  by 0.0.0_AB_MSTR  reason=LCLRPO clearance moot -- Andrew sovereign-cleared data/seeking-alpha (LD-0300 amend-3); lane spawned solely for that clearance  found=0  watchers_reaped=0
+2026-07-15T21:32:51.501079+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=7656
+2026-07-15T22:11:16.791501+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps pid=25356
+2026-07-15T22:21:14.691586+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO pid=28208
+2026-07-15T22:37:38Z  SPAWN  3.0.0_SA_CVO~B  by 0.0.0_AB_MSTR  pid=29784  host_pid=29752
+2026-07-15T22:39:07.432762+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~B pid=29912
+2026-07-15T23:39:54.017628+00:00 IDENTITY_SEND_FORGED_REFUSED guard=GA-3 serial=3.0.0_AB_MSTR pid=29912 reason='caller=3.0.0_SA_CVO~B' conflict='SEND REFUSED -- sender identity guard (NFRA_IDENTITY G-A). This session is registered as 3.0.0_SA_CVO~B; from_agent claimed 3.0.0_AB_MSTR. A process cannot send as an identity it does not hold (a lane suffix IS an identity). Two junk messages were forged into the CTO\'s inbox exactly this way on 2026-07-14 -- by accident. Send as 3.0.0_SA_CVO~B, or pass from_agent="" to auto-fill your registered serial. Legitimate relay: send_message(..., identity_override="<reason>") -- audited, and the true author is stamped into the delivered message.'
+2026-07-16T12:47:18.037195+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.6.2_AE_PartnerETL pid=36108
+2026-07-16T12:57:56.824365+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform~C pid=4172
+2026-07-16T13:08:12.156807+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~B pid=12256
+2026-07-16T13:27:54.989142+00:00 IDENTITY_SEND_FORGED_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps pid=7384 reason='caller=0.8.0_AE_CloudComp~Z' conflict='SEND REFUSED -- sender identity guard (NFRA_IDENTITY G-A). This session is registered as 0.8.0_AE_CloudComp~Z; from_agent claimed 0.7.0_AE_CloudOps. A process cannot send as an identity it does not hold (a lane suffix IS an identity). Two junk messages were forged into the CTO\'s inbox exactly this way on 2026-07-14 -- by accident. Send as 0.8.0_AE_CloudComp~Z, or pass from_agent="" to auto-fill your registered serial. Legitimate relay: send_message(..., identity_override="<reason>") -- audited, and the true author is stamped into the delivered message.'
+2026-07-16T13:30:00.205096+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform pid=19260
+2026-07-16T14:25:03.129451+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO pid=9052
+2026-07-16T14:28:42Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR  pid=29784  host_pid=29752
+2026-07-16T14:31:39.902332+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=29904
+2026-07-16T16:33:39.963478+00:00 IDENTITY_SEND_FORGED_REFUSED guard=GA-3 serial=0.5.0_AB_MSTR_placeholder pid=26332 reason='caller=0.5.0_AE_OpalETL' conflict='SEND REFUSED -- sender identity guard (NFRA_IDENTITY G-A). This session is registered as 0.5.0_AE_OpalETL; from_agent claimed 0.5.0_AB_MSTR_placeholder. A process cannot send as an identity it does not hold (a lane suffix IS an identity). Two junk messages were forged into the CTO\'s inbox exactly this way on 2026-07-14 -- by accident. Send as 0.5.0_AE_OpalETL, or pass from_agent="" to auto-fill your registered serial. Legitimate relay: send_message(..., identity_override="<reason>") -- audited, and the true author is stamped into the delivered message.'
+2026-07-16T17:03:22.117370+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform~B pid=24008
+2026-07-16T18:04:31.596844+00:00 IDENTITY_INBOX_DRAIN_OVERRIDE guard=GA-3 serial=0.4.0_DS_ClientPlatform pid=4680 reason='lane ~A is the live instance of this base serial (broker maps ~A to folder 0.4.0_DS_ClientPlatform); message 164930Z is addressed to the base, read + acted on this turn by ~A' conflict='caller=0.4.0_DS_ClientPlatform~A'
+2026-07-16T18:11:18Z  SPAWN  0.2.0_DT_PortfolioAnalytics  by 0.0.0_AB_MSTR  pid=35656  host_pid=28732
+2026-07-16T18:24:53Z  SPAWN-CORRECTION  0.2.0_DT_PortfolioAnalytics  by 0.0.0_AB_MSTR  corrects=18:11:18Z-SPAWN  pid=35656-IS-NOT-MINE  reason='FALSE ATTRIBUTION -- DO NOT KILL pid=35656. The 18:11:18Z SPAWN line records pid=35656, which is an ANDREW-LAUNCHED session alive since 13:31:41 local (parent powershell 29364; cmdline carries --dangerously-load-development-channels + a "FIRST:" direction = ajb pattern, NOT spawn-agent -Headless). MSTR spawned at 18:11:18Z over a live session; the spawned window produced NO surviving claude.exe (zero processes created 14:05-14:20 local; zero marker windows self-excluded). Mechanism: spawn-agent.ps1:270-273 resolves the audited pid as the NEWEST claude.exe whose CommandLine matches the serial, with NO parentage check against the host window it just launched -- so when the spawn produces no claude, it silently adopts a PRE-EXISTING session. kill-agent.ps1 resolves identically, and spawn-agent.ps1:243 states pid= IS the object kill-agent kills. A /mstr-kill 0.2.0_DT off this record would reap Andrew live. Root cause of the wrongful spawn: /mstr-spawn Step 1a (broker get_agent_status) and Step 1b (OPAL_SPAWN_MARKER_v1 scan) are BOTH structurally blind to an Andrew-launched session -- it registers no marker and had not called register_agent, so both read absent. Same infer-vs-measure root COO fixed for /watcher at efbd323b6. No duplicate exists; no kill required; nothing to roll back.'
+2026-07-16T19:23:41.380998+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.2.0_DT_PortfolioAnalytics pid=35932
+2026-07-16T19:35:05.501300+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=12812
+2026-07-16T19:45:32Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR  pid=38028  host_pid=5508
+2026-07-16T19:57:19.772584+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.5.0_AE_OpalETL pid=26904
+2026-07-17T12:34:43.895054+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO pid=31096
+2026-07-17T12:37:12.082234+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR pid=29576
+2026-07-17T12:48:30Z  SPAWN  0.2.0_DT_PortfolioAnalytics  by 0.0.0_AB_MSTR  pid=14744  host_pid=15184
+2026-07-17T12:49:27.168736+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.2.0_DT_PortfolioAnalytics pid=34752
+2026-07-17T13:33:21Z  SPAWN  0.2.0_DE_PortfolioAnalytics  by 0.0.0_AB_MSTR  pid=37548  host_pid=17060
+2026-07-17T13:33:49.904177+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.2.0_DE_PortfolioAnalytics pid=24364
+2026-07-17T14:15:08.613174+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=11168
+2026-07-17T15:16:35Z  SPAWN  0.5.0_AE_OpalETL  by 0.0.0_AB_MSTR  pid=14804  host_pid=8244
+2026-07-17T15:18:24.832402+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.5.0_AE_OpalETL pid=37648
+2026-07-17T16:04:43.123734+00:00 IDENTITY_SEND_FORGED_REFUSED guard=GA-3 serial=2.0.0_SA_COO pid=11168 reason='caller=3.0.0_SA_CVO' conflict='SEND REFUSED -- sender identity guard (NFRA_IDENTITY G-A). This session is registered as 3.0.0_SA_CVO; from_agent claimed 2.0.0_SA_COO. A process cannot send as an identity it does not hold (a lane suffix IS an identity). Two junk messages were forged into the CTO\'s inbox exactly this way on 2026-07-14 -- by accident. Send as 3.0.0_SA_CVO, or pass from_agent="" to auto-fill your registered serial. Legitimate relay: send_message(..., identity_override="<reason>") -- audited, and the true author is stamped into the delivered message.'
+2026-07-17T16:06:22.973062+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO pid=26344
+2026-07-17T16:10:13Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR  pid=36060  host_pid=22504
+2026-07-17T16:10:19Z  SPAWN  0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR  pid=32728  host_pid=5324
+2026-07-17T16:12:32.746699+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform~A pid=9916
+2026-07-17T16:13:26.392873+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform pid=32824
+2026-07-17T16:42:09Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  pid=5524  host_pid=11688
+2026-07-17T16:43:55.169103+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps pid=27136
+2026-07-17T16:56:47.222666+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp pid=36108
+2026-07-17T17:45:27Z  SPAWN  0.8.0_AE_CloudComp~C  by 0.0.0_AB_MSTR  pid=29368  host_pid=24864
+2026-07-17T17:47:29.331631+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~C pid=31528
+2026-07-17T18:17:10Z  SPAWN  0.6.2_AE_PartnerETL  by 0.0.0_AB_MSTR  pid=11764  host_pid=4660
+2026-07-17T18:23:10.991677+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.6.2_AE_PartnerETL pid=37312
+2026-07-17T18:54:11Z  SPAWN  0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR  pid=18160  host_pid=6880
+2026-07-17T18:59:35.291796+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform~A pid=32136
+2026-07-17T19:09:24.589111+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~B pid=34088
+2026-07-17T19:14:10.435428+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform pid=37836
+2026-07-17T19:40:22.189392+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.5.0_AE_OpalETL pid=3332
+2026-07-17T19:40:22.506099+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=13480
+2026-07-17T20:32:52.366993+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~D pid=22212
+2026-07-17T21:50:35Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR  pid=38104  host_pid=19800
+2026-07-17T21:53:57.111867+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=39288
+2026-07-17T23:30:54.625324+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~A pid=34500
+2026-07-17T23:31:34.309223+00:00 IDENTITY_INBOX_DRAIN_REFUSED guard=GA-3 serial=0.4.0_DS_ClientPlatform pid=32136 reason='caller=0.4.0_DS_ClientPlatform~A' conflict=''
+2026-07-17T23:34:38.729324+00:00 IDENTITY_INBOX_DRAIN_OVERRIDE guard=GA-3 serial=0.4.0_DS_ClientPlatform pid=32136 reason='I am 0.4.0_DS_ClientPlatform~A, the ONLY live session for this serial (base 0.4.0_DS_ClientPlatform is NOT REGISTERED per get_agent_status). These 3 messages are addressed to my serial; my ~A Monitor watches the nested folder, not the base top-level, so the pre-push halt-gate is the only detector. Reviewed all 3 (COO TAXSMA_PT2 GO, 0.7.0 cot-drift SURFACE non-urgent, COO WS-2 live-run RELEASE) -- none is a [STOP]. Draining to handle + clear the halt.' conflict='caller=0.4.0_DS_ClientPlatform~A'
+2026-07-18T00:13:30.411841+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform pid=8672
+2026-07-18T00:42:53.217213+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~D pid=33232
+2026-07-18T02:27:25.974923+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=10420
+2026-07-18T02:27:33Z  SPAWN  0.8.0_AE_CloudComp~C  by 0.0.0_AB_MSTR  pid=26404  host_pid=12484
+2026-07-18T02:37:24.529767+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~C pid=20208
+2026-07-18T03:53:12.503725+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO pid=40180
+2026-07-18T04:02:41.886324+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.7.0_AE_CloudOps pid=27136 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.7.0_AE_CloudOps was already held by PID 26920 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 27136. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.7.0_AE_CloudOps. Collision audited.'
+2026-07-18T04:02:56.732609+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=1.0.0_SA_CTO pid=31096 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 1.0.0_SA_CTO was already held by PID 14044 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 31096. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 1.0.0_SA_CTO. Collision audited.'
+2026-07-18T04:10:33.193027+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.7.0_AE_CloudOps pid=27136 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.7.0_AE_CloudOps was already held by PID 26920 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 27136. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.7.0_AE_CloudOps. Collision audited.'
+2026-07-18T04:17:35.752993+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.0.0_AB_MSTR pid=29576 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.0.0_AB_MSTR was already held by PID 28612 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 29576. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.0.0_AB_MSTR. Collision audited.'
+2026-07-18T04:17:59.880860+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~D pid=33232 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~D was already held by PID 39296 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 33232. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~D. Collision audited.'
+2026-07-18T04:20:35.864775+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~B pid=34088 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~B was already held by PID 15468 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 34088. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~B. Collision audited.'
+2026-07-18T04:34:05.406190+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~D pid=33232 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~D was already held by PID 39296 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 33232. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~D. Collision audited.'
+2026-07-18T04:35:09.242207+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~B pid=34088 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~B was already held by PID 15468 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 34088. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~B. Collision audited.'
+2026-07-18T04:37:49.032189+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~C pid=20208 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~C was already held by PID 16504 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 20208. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~C. Collision audited.'
+2026-07-18T04:45:59.889737+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~C pid=20208 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~C was already held by PID 16504 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 20208. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~C. Collision audited.'
+2026-07-18T05:14:48.989020+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~B pid=34088 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~B was already held by PID 15468 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 34088. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~B. Collision audited.'
+2026-07-18T05:17:32.335085+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~A pid=34500 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~A was already held by PID 23344 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 34500. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~A. Collision audited.'
+2026-07-18T05:18:32.220816+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~D pid=33232 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~D was already held by PID 39296 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 33232. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~D. Collision audited.'
+2026-07-18T07:08:56.147632+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~A pid=34500 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~A was already held by PID 23344 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 34500. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~A. Collision audited.'
+2026-07-18T07:09:21.632878+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform~B pid=22808
+2026-07-18T07:41:26.471158+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~C pid=20208 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~C was already held by PID 16504 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 20208. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~C. Collision audited.'
+2026-07-18T07:44:59.953369+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~A pid=34500 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~A was already held by PID 23344 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 34500. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~A. Collision audited.'
+2026-07-18T08:03:00.301354+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~C pid=20208 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~C was already held by PID 16504 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 20208. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~C. Collision audited.'
+2026-07-18T08:03:53.773779+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp pid=36108 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp was already held by PID 20936 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 36108. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp. Collision audited.'
+2026-07-18T13:38:30.864136+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~A pid=34500 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~A was already held by PID 23344 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 34500. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~A. Collision audited.'
+2026-07-18T13:39:06.683662+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO pid=20752
+2026-07-18T13:44:52.186070+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO pid=25608
+2026-07-18T14:02:44.370506+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~C pid=20208 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~C was already held by PID 16504 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 20208. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~C. Collision audited.'
+2026-07-18T15:00:22.955305+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~C pid=20208 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~C was already held by PID 16504 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 20208. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~C. Collision audited.'
+2026-07-18T15:30:30Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  pid=43400  host_pid=14556
+2026-07-18T15:32:35.561052+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps pid=42968
+2026-07-18T17:23:56.749784+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.0.0_AB_MSTR pid=29576 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.0.0_AB_MSTR was already held by PID 28612 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 29576. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.0.0_AB_MSTR. Collision audited.'
+2026-07-18T20:27:16Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR  pid=23444  host_pid=27956
+2026-07-18T20:29:09.480577+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=31620
+2026-07-18T21:51:20.461744+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~A pid=34500 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~A was already held by PID 23344 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 34500. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~A. Collision audited.'
+2026-07-18T22:27:11Z  SPAWN  0.8.0_AE_CloudComp~D  by 0.0.0_AB_MSTR  pid=23740  host_pid=40120
+2026-07-18T22:29:10.651230+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~D pid=36252
+2026-07-18T22:31:22.139974+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~C pid=20208 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~C was already held by PID 16504 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 20208. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~C. Collision audited.'
+2026-07-18T23:17:35.134668+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~C pid=42616
+2026-07-18T23:30:32.634175+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~A pid=34500 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~A was already held by PID 23344 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 34500. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~A. Collision audited.'
+2026-07-18T23:39:19.189406+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~A pid=34500 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~A was already held by PID 23344 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 34500. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~A. Collision audited.'
+2026-07-18T23:47:27.565202+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~A pid=34500 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~A was already held by PID 23344 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 34500. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~A. Collision audited.'
+2026-07-19T00:01:58.107671+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~A pid=34500 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~A was already held by PID 23344 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 34500. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~A. Collision audited.'
+2026-07-19T00:07:09.005807+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~A pid=34500 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~A was already held by PID 23344 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 34500. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~A. Collision audited.'
+2026-07-19T01:48:52.691352+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp~A pid=34500 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp~A was already held by PID 23344 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 34500. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp~A. Collision audited.'
+2026-07-19T03:10:06.429082+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.8.0_AE_CloudComp pid=36108 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.8.0_AE_CloudComp was already held by PID 20936 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 36108. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.8.0_AE_CloudComp. Collision audited.'
+2026-07-19T03:19:37.348096+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.0.0_AB_MSTR pid=29576 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.0.0_AB_MSTR was already held by PID 28612 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 29576. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.0.0_AB_MSTR. Collision audited.'
+2026-07-19T04:20:51.153372+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.0.0_AB_MSTR pid=29576 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.0.0_AB_MSTR was already held by PID 28612 (heartbeat 0s ago) and that PID still resolves ALIVE; you are PID 29576. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.0.0_AB_MSTR. Collision audited.'
+2026-07-19T05:24:27.868621+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.0.0_AB_MSTR pid=29576 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.0.0_AB_MSTR was already held by PID 28612 (heartbeat 1s ago) and that PID still resolves ALIVE; you are PID 29576. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.0.0_AB_MSTR. Collision audited.'
+2026-07-19T16:28:53.457268+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR pid=9284
+2026-07-19T16:28:56.549645+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO pid=15856
+2026-07-19T16:28:56.595539+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO pid=2376
+2026-07-19T16:28:58.880404+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=15456
+2026-07-19T17:19:57Z  SPAWN  0.8.0_AE_CloudComp~D  by 0.0.0_AB_MSTR  pid=4344  host_pid=6252
+2026-07-19T17:21:12.132657+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~D pid=25024
+2026-07-19T18:00:38Z  SPAWN  0.8.0_AE_CloudComp~A  by 0.0.0_AB_MSTR  pid=22276  host_pid=6248
+2026-07-19T18:00:39Z  SPAWN  0.8.0_AE_CloudComp~Z  by 0.0.0_AB_MSTR  pid=17328  host_pid=26272
+2026-07-19T18:00:40Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR  pid=22948  host_pid=22428
+2026-07-19T18:01:42.225354+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~Z pid=20032
+2026-07-19T18:01:44.954170+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~B pid=7764
+2026-07-19T18:01:49.000542+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~A pid=400
+2026-07-19T18:02:03Z  FORCE-SPAWN 0.8.0_AE_CloudComp~C  by 0.0.0_AB_MSTR  reason=Andrew-direct proceed-all NFRA wave (CTO 175812Z + 180041Z amend); ~C is the 4th lane added by amend after the initial 3-spawn burst; rate-cap 3/60s is a burst-limiter not headroom (concurrency 9/16 ample); authorized wave, not runaway.
+2026-07-19T18:02:03Z  SPAWN  0.8.0_AE_CloudComp~C  by 0.0.0_AB_MSTR  pid=360  host_pid=23212
+2026-07-19T18:02:04Z  ORPHAN-CLEANUP-FAILED  serial=0.8.0_AE_CloudComp~A  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=91 out=[kill-orphans] start pid=131326 flags: force=1 stale=0 global=0 serial=0.8.0_AE_CloudComp~A
+2026-07-19T18:03:21.905248+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp~C pid=23764
+2026-07-20T15:05:21Z  SPAWN  1.0.0_SA_CTO~B  by 0.0.0_AB_MSTR  pid=28392  host_pid=24076
+2026-07-20T15:05:23Z  SPAWN  0.7.0_AE_CloudOps~B  by 0.0.0_AB_MSTR  pid=28660  host_pid=22676
+2026-07-20T15:06:27.640973+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~B pid=24560
+2026-07-20T15:07:03.074580+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~B pid=29628
+2026-07-20T15:08:49Z  SPAWN  1.0.0_SA_CTO~A  by 0.0.0_AB_MSTR  pid=15664  host_pid=2508
+2026-07-20T15:10:43.169076+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~A pid=7748
+2026-07-20T15:52:53Z  SPAWN  0.2.0_DT_PortfolioAnalytics  by 0.0.0_AB_MSTR  pid=19664  host_pid=19572
+2026-07-20T15:57:12Z  SPAWN  0.2.0_DT_PortfolioAnalytics  by 0.0.0_AB_MSTR  pid=17976  host_pid=26632
+2026-07-20T16:05:39Z DEREGISTER caller=1.0.0_SA_CTO requested=1.0.0_SA_CTO resolved=1.0.0_SA_CTO liveness=removed broker=removed pollers_killed=3
+2026-07-20T16:12:08.759043+00:00 IDENTITY_CROSS_OVERRIDE guard=GA-3 serial=3.0.0_SA_CVO~Z pid=15456 reason='Andrew-direct in-session confirmation 2026-07-20 (verbatim: "Yes im asking you to change to ~Z") + CTO~Z relay; sovereign word is precedence-1 for serial. PID live under base 3.0.0_SA_CVO, override per instruction (deregister is CTO-only).' conflict='IDENTITY CONFLICT -- NOT REGISTERED. PID 15456 is currently 3.0.0_SA_CVO (live 0s ago); you claimed 3.0.0_SA_CVO~Z. A process cannot hold two identities. If you compacted and re-derived your serial from .comp-graph/.agent_context, that file is SHARED and is NOT an identity source -- you are 3.0.0_SA_CVO. Legitimate override: register_agent(..., identity_override="<reason>") (audited).'
+2026-07-20T16:12:59Z DEREGISTER caller=2.0.0_SA_COO requested=2.0.0_SA_COO resolved=2.0.0_SA_COO liveness=removed broker=removed pollers_killed=1
+2026-07-20T16:15:18.686922+00:00 IDENTITY_CROSS_REFUSED guard=GA-3 serial=3.0.0_SA_CVO~Z pid=15456 reason='-' conflict='IDENTITY CONFLICT -- NOT REGISTERED. PID 15456 is currently 3.0.0_SA_CVO (live 1s ago); you claimed 3.0.0_SA_CVO~Z. A process cannot hold two identities. If you compacted and re-derived your serial from .comp-graph/.agent_context, that file is SHARED and is NOT an identity source -- you are 3.0.0_SA_CVO. Legitimate override: register_agent(..., identity_override="<reason>") (audited).'
+2026-07-20T16:15:41Z DEREGISTER caller=1.0.0_SA_CTO~Z requested=3.0.0_SA_CVO resolved=3.0.0_SA_CVO liveness=removed broker=removed pollers_killed=2
+2026-07-20T16:18:09Z DEREGISTER caller=1.0.0_SA_CTO~Z requested=2.0.0_SA_COO resolved=2.0.0_SA_COO liveness=removed broker=removed pollers_killed=1
+2026-07-20T16:18:12Z DEREGISTER caller=1.0.0_SA_CTO~Z requested=3.0.0_SA_CVO resolved=3.0.0_SA_CVO liveness=removed broker=removed pollers_killed=0
+2026-07-20T16:20:02.494394+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO pid=22976
+2026-07-20T17:41:03Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  pid=2620  host_pid=29728
+2026-07-20T17:42:57.632297+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps pid=29296
+2026-07-20T17:57:46Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR  pid=16224  host_pid=13236
+2026-07-20T17:57:48Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR  pid=27056  host_pid=24296
+2026-07-20T18:05:56.553704+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO pid=24744
+2026-07-20T18:06:12Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=84 out=[kill-orphans] start pid=1959509 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO
+2026-07-20T18:08:21.495992+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=10136
+2026-07-20T20:12:45.945212+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform pid=24340
+2026-07-20T20:14:10.217801+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.2.0_DT_PortfolioAnalytics pid=21400
+2026-07-20T20:18:45.098657+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.5.0_AE_OpalETL pid=25900
+2026-07-20T21:40:21.498209+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform~A pid=10668
+2026-07-21T14:02:40.348171+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR pid=28660
+2026-07-21T14:16:35Z  SPAWN  1.0.0_SA_CTO  by 0.0.0_AB_MSTR  pid=16100  host_pid=17748
+2026-07-21T14:16:38Z  SPAWN  0.4.0_DS_ClientPlatform  by 0.0.0_AB_MSTR  pid=35048  host_pid=41312
+2026-07-21T14:16:40Z  SPAWN  0.4.0_DS_ClientPlatform~A  by 0.0.0_AB_MSTR  pid=39092  host_pid=10616
+2026-07-21T14:17:33Z  FORCE-SPAWN 2.0.0_SA_COO  by 0.0.0_AB_MSTR  reason=disaster-recovery mass respawn after 9:54Z WindowsTerminal crash; Andrew-directed tier-1 restore (CTO+COO+CVO+DS); rate-cap overflow past wave-1 core
+2026-07-21T14:17:33Z  SPAWN  2.0.0_SA_COO  by 0.0.0_AB_MSTR  pid=22892  host_pid=40504
+2026-07-21T14:17:35Z  FORCE-SPAWN 3.0.0_SA_CVO  by 0.0.0_AB_MSTR  reason=disaster-recovery mass respawn after 9:54Z WindowsTerminal crash; Andrew-directed tier-1 restore (CTO+COO+CVO+DS); rate-cap overflow past wave-1 core
+2026-07-21T14:17:35Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR  pid=42740  host_pid=44004
+2026-07-21T14:17:58.810584+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform~A pid=8780
+2026-07-21T14:18:21.677935+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform pid=42464
+2026-07-21T14:18:42.419127+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO pid=42284
+2026-07-21T14:20:03.816932+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=35000
+2026-07-21T14:20:38.544247+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO pid=41620
+2026-07-21T14:25:18Z  SPAWN  0.2.0_DT_PortfolioAnalytics  by 0.0.0_AB_MSTR  pid=26308  host_pid=21768
+2026-07-21T14:27:45.937377+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.2.0_DT_PortfolioAnalytics pid=25952
+2026-07-21T15:46:13Z  SPAWN  2.0.0_SA_COO~A  by 0.0.0_AB_MSTR  pid=39380  host_pid=2660
+2026-07-21T15:47:59.421195+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~A pid=29380
+2026-07-21T15:51:50.854851+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.3.0_DT_TradingOperations pid=30416
+2026-07-21T16:27:52Z  SPAWN  0.7.0_AE_CloudOps  by 0.0.0_AB_MSTR  pid=19020  host_pid=26668
+2026-07-21T16:29:38.894934+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps pid=32712
+2026-07-21T17:43:34Z  SPAWN  0.6.2_AE_PartnerETL~A  by 0.0.0_AB_MSTR  pid=34448  host_pid=33040
+2026-07-21T17:45:00.447917+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.6.2_AE_PartnerETL~A pid=40308
+2026-07-21T18:23:32Z  SPAWN  0.4.0_DE_ClientPlatform  by 0.0.0_AB_MSTR  pid=33112  host_pid=31152
+2026-07-21T18:24:31.428632+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DE_ClientPlatform pid=42008
+2026-07-21T18:51:48.908058+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.5.0_AE_OpalETL~Z pid=13584
+2026-07-21T19:13:14.031630+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.6.2_AE_PartnerETL pid=32908
+2026-07-21T22:28:58.295977+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform pid=42116
+2026-07-21T22:44:03.634004+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.5.0_AE_OpalETL~A pid=24660
+2026-07-21T22:50:08Z  ORPHAN-CLEANUP-FAILED  serial=0.4.0_DS_ClientPlatform~A  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=215 out=[kill-orphans] start pid=624347 flags: force=1 stale=0 global=0 serial=0.4.0_DS_ClientPlatform~A |       0 [main] bash 624810 dofork: child -1 - forked process 13040 died unexpectedly, retry 0, exit code 0x1, errno 11
+2026-07-21T23:08:21.755873+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp pid=4436
+2026-07-21T23:42:02Z  SPAWN  0.2.0_DT_PortfolioAnalytics  by 0.0.0_AB_MSTR  pid=36056  host_pid=27140
+2026-07-21T23:42:27.400667+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DS_ClientPlatform~Z pid=37192
+2026-07-21T23:45:17.567794+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.2.0_DT_PortfolioAnalytics pid=15888
+2026-07-22T00:28:14.217156+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DE_ClientPlatform pid=43484
