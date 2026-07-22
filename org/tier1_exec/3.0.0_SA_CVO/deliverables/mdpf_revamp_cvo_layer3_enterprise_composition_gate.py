@@ -69,6 +69,26 @@ def _at(art, key, date):
     return arr[idx]
 
 
+def _bymodel_model_sum(art, date):
+    """Sum of by_model model-cohort values at a date -> (sum_or_None, all_none). all_none=True when
+    EVERY model cohort is None at this date (the model total is absent). A single cohort legitimately
+    None (own launch depth) does not make the total absent -- only ALL-None does. This is the axis the
+    by_model absent-leg-coalesced-to-zero defect lives on, which the value-only E1 identity cannot see."""
+    bm = art.get("by_model") or {}
+    idx = art["_idx"].get(date)
+    if idx is None:
+        return None, True
+    vals = []
+    for _k, v in bm.items():
+        if v.get("cohort_class") != "model":
+            continue
+        series = v.get("model_value") or []
+        vals.append(series[idx] if idx < len(series) else None)
+    present = [x for x in vals if x is not None]
+    all_none = (len(present) == 0)
+    return (sum(present) if present else None), all_none
+
+
 def check(arts, honest_none_dates=frozenset(), tol=TOL):
     """Pure B-basis invariant check. honest_none_dates = dates lineage-verified as source-absent
     (inflection model None AND eclipse partition absent) -> E2/E4 exempt there. Returns (verdict, holds, denom)."""
@@ -131,11 +151,31 @@ def check(arts, honest_none_dates=frozenset(), tol=TOL):
         # E4 cohort-2b carried (never silently DROPPED) -- EXEMPT on honest-None dates (legitimately None)
         if not exempt and inf_nm is None:
             holds.append((date, "E4-2b-dropped", f"{COHORT2B_FIRM} non_model absent on a NON-honest-None date -- cohort-2b dropped"))
+    # E5 by_model ABSENCE-AGREEMENT (independent of E1: catches an absent firm-leg COALESCED-TO-ZERO in
+    # by_model, which reads as a real per-model false-dip. E1's value identity is structurally blind to it
+    # because opal_aggregate/model/non_model can all be individually correct while by_model is wrong.)
+    n_absence = 0
+    for fname, art in arts.items():
+        if not art.get("by_model"):
+            continue
+        for date in art["dates"]:
+            ma = _at(art, "model_aua", date)
+            bm_sum, bm_all_none = _bymodel_model_sum(art, date)
+            n_absence += 1
+            if bm_all_none != (ma is None):     # absence limb -- EXACT, no tolerance
+                holds.append((date, f"E5-absence[{fname}]",
+                              f"by_model model-sum {'None' if bm_all_none else 'present'} but model_aua "
+                              f"{'None' if ma is None else 'present'} -- absence DISAGREEMENT (coalesce-to-zero?)"))
+            elif not bm_all_none and ma is not None and abs(bm_sum - ma) > tol:   # value limb -- rounding tol
+                holds.append((date, f"E5-value[{fname}]",
+                              f"sum(by_model model) {bm_sum:,.2f} != model_aua {ma:,.2f} (d={bm_sum - ma:,.2f})"))
+
     denom = {
         "component_firms": comps,
         "global_dates_total": len(g["dates"]),
         "dates_checked": n_checked,
         "honest_none_verified": n_honest_none,
+        "absence_agreement_checks": n_absence,
     }
     verdict = "PASS" if not holds else "HOLD"
     return verdict, holds, denom
@@ -184,7 +224,8 @@ def _lineage_honest_none(arts):
 def _report(verdict, holds, denom, bucket, present_gap):
     print(f"source={bucket} (B-basis: non_model==49F-only; inflection cohort-2b EXCLUDED from headline)")
     print(f"DENOMINATOR: global_dates={denom['global_dates_total']} checked={denom['dates_checked']} "
-          f"honest_none_verified={denom['honest_none_verified']} (eclipse-absent, lineage-checked)")
+          f"honest_none_verified={denom['honest_none_verified']} (eclipse-absent, lineage-checked) "
+          f"absence_agreement_checks={denom['absence_agreement_checks']}")
     if present_gap:
         print(f"LINEAGE ALERT: {len(present_gap)} None-headline date(s) whose eclipse partition is PRESENT "
               f"(real gap, NOT honest-None -> already RED above): {sorted(present_gap)[:8]}")
@@ -262,16 +303,35 @@ def _selftest():
     v_pr, h_pr, _ = check(build_hn(partial=True), honest_none_dates={hn_date})
     ok_pr = (v_pr == "HOLD" and any(d == hn_date and k == "partial-row" for d, k, _m in h_pr))
 
+    # E5 by_model ABSENCE-AGREEMENT: a by_model model-leg coalesced-to-zero on a gap date -> RED (E1 is blind)
+    gap = "2025-02-04"
+
+    def build_bm(coalesce):
+        dts = ["2025-02-03", gap]
+        bm_d2 = 100.0 if coalesce else None    # coalesce=True: absent leg rendered as a value on the gap date
+        gg = {"dates": list(dts), "model_aua": [300.0, None], "non_model_aua": [50.0, None],
+              "opal_aggregate_aua": [350.0, None],
+              "by_model": {"m1": {"cohort_class": "model", "model_value": [300.0, bm_d2]}}}
+        f49 = {"dates": list(dts), "model_aua": [300.0, None], "non_model_aua": [50.0, None]}
+        inf = {"dates": list(dts), "model_aua": [0.0, None], "non_model_aua": [0.0, None]}
+        return _index({"global": gg, "49financial": f49, "inflection": inf})
+
+    _vc, h_e5c, _ = check(build_bm(coalesce=False), honest_none_dates={gap})
+    ok_e5_clean = not any(str(k).startswith("E5") for _d, k, _m in h_e5c)
+    _vm, h_e5m, _ = check(build_bm(coalesce=True), honest_none_dates={gap})
+    ok_e5_mut = any(d == gap and str(k).startswith("E5-absence") for d, k, _m in h_e5m)
+
     print(f"SELFTEST clean-B -> {v_clean} (expect PASS)                         : {'OK' if ok_clean else 'FAIL'}")
     print(f"SELFTEST FOLD-IN (A artifact, non_model=FULL) -> {v_fold} on E3      : {'OK' if ok_fold else 'FAIL'}")
     print(f"SELFTEST DROP cohort-2b (non-honest-None) -> {v_drop} on E4          : {'OK' if ok_drop else 'FAIL'}")
     print(f"SELFTEST honest-None VERIFIED (all-None, eclipse-absent) -> {v_hn}   : {'OK' if ok_hn else 'FAIL'}")
     print(f"SELFTEST None headline UNVERIFIED (eclipse present) -> {v_gap} (RED, not skipped): {'OK' if ok_gap else 'FAIL'}")
     print(f"SELFTEST PARTIAL ROW (None headline + populated non_model) -> {v_pr} (RED): {'OK' if ok_pr else 'FAIL'}")
-    if not (ok_clean and ok_fold and ok_drop and ok_hn and ok_gap and ok_pr):
+    print(f"SELFTEST E5 by_model absence-agreement: clean no-E5={ok_e5_clean}; coalesce-to-zero -> E5-absence RED={ok_e5_mut}: {'OK' if (ok_e5_clean and ok_e5_mut) else 'FAIL'}")
+    if not (ok_clean and ok_fold and ok_drop and ok_hn and ok_gap and ok_pr and ok_e5_clean and ok_e5_mut):
         print("SELFTEST FAILED -- do NOT trust the gate.")
         return 1
-    print("SELFTEST OK -- GREEN on clean-B + all-None honest-None; RED on fold-in, drop, unverified None, partial row.")
+    print("SELFTEST OK -- GREEN clean-B + all-None honest-None; RED fold-in, drop, unverified None, partial row, by_model coalesce.")
     return 0
 
 
