@@ -76,7 +76,7 @@ CloudFront `EVTSA9VEHNZVH` = **24 behaviors / 7 origins**, no assets origin, cat
 |---|---|---|---|
 | B1 | `revamp_stage()` has **no Cottonwood leg** — DE's producer is a standalone script nothing calls | DE + AE | open |
 | B2 | The per-cycle **source audit is not invoked** by the nightly | DS → AE (diff ready) | open |
-| B3 | `lambda_entry` has **no destination-envelope branch** — blocks the WS-5 apply | 0.6.2 | open |
+| B3 | ~~`lambda_entry` has no destination-envelope branch~~ — **CLOSED `@6d1a15ef2`.** CTO verified: the branch exists **and honours R4** — a POSITIVE match (`isinstance(event.get("requestContext"), dict) and "responsePayload" in event`, `:1033-34`), **not** a catch-all `else`, and it **raises** on a missing `as_of` rather than silently no-op'ing. 0.6.2 built it to the ruling before resetting. | 0.6.2 | **CLOSED** |
 | B4 | `build_global_artifact(49f, inflection)` is a **hardcoded 2-arg call** | DE | open |
 | B5 | **Enumeration** of two-firm assumptions incomplete — **4 confirmed, 1 checked-clean, infra/publisher/remaining producers NOT covered** | DE | **precondition** |
 
@@ -200,6 +200,34 @@ decision.** MSTR caught the first one; this is the sweep it implied. **These BIN
 > SOME HAD NO CARRIER THAT SURVIVES A SESSION.** A decision whose only record is a message is a clock with no
 > keeper. **Standing fix: any ruling that binds work not yet done gets a durable carrier and a named owner in
 > the same turn it is issued.**
+
+---
+
+## ⚠ PART 2b-bis — AN UNSTAGED, **PARTIAL** WAVE IS SITTING IN THE SHARED WORKTREE. DO NOT COMMIT IT.
+
+`0.8.0_AE_CloudComp` was **reset mid-wave.** Its sovereign-predicate work is **unstaged in the working tree**
+(`org/modules/graph/sovereign_held.py`, `clobber_scan.py`, `infra/aws/compdiff/sovereign_held.py`,
+`tests/test_comprail_sovereign_held.py`). It was routed to CTO as *"built, 90/90 green, land it in 60 seconds"*
+— **CTO read it before signing and it is NOT complete against ruling R7.** Verified with a positive control
+(17 hits for the known predicate, **0** for any prod-write predicate under any name):
+
+| R7 step | state |
+|---|---|
+| `SOVEREIGN_HELD_PATHS` / `_BUCKETS` emptied to `()` | **DONE** — retraction honoured |
+| a **named** `PROD_WRITE_FORBIDDEN` predicate | **ABSENT.** The scratch-target control survives only via `tool_probe.py`'s **own local literals** (`:287-289`, `:558-564`, `:819`), not a shared named predicate |
+| vendored mirror byte-identical (sites 1+2, one commit) | **DIFFERS — the byte-identity test would FAIL** |
+| retire the ARMED test assertions (step 5) | **NOT DONE** — `test_comprail_sovereign_held.py:99-100` still asserts `"data/black_diamond/" in _comprail.HELD_PREFIXES`. **The ratchet is still loaded.** |
+
+> **COMMITTING THIS WOULD LAND A HALF-WAVE THAT LOOKS FINISHED** — an emptied hold with a failing
+> byte-identity test and a test suite still voting to re-arm the prohibition. **That is the exact "one wave or
+> none" condition R7 exists to enforce.** A 60-second unblock would have created the state the ruling forbids.
+
+**HANDLING:** leave it unstaged; **do not `--force`, do not widen the `ANY_EXEC` lane on the sovereign leaf to
+fix a commit refusal** (the fix for a 60-second block must not be a permanent widening of the control that
+blocked it). It resumes with whoever picks the wave back up, from this row.
+**SWEEP RISK IS REAL AND NAMED:** an unstaged multi-file change in a shared worktree is exactly what gets
+absorbed into an unrelated commit — that happened to CTO's own edit today (`ORG_CHART`, see its provenance
+note). **This block is the detector: if these files land under an unrelated subject, that is the sweep.**
 
 ---
 
