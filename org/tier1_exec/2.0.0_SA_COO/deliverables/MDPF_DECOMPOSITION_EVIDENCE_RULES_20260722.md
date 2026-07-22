@@ -93,6 +93,18 @@ tripwire, **explicitly labelled NON-PROBATIVE.**
 **Example 1 — STRUCK, stands.** 49F count axis: *"407 of 407"* is an instrument artifact →
 UNBOUNDED-BY-CONSTRUCTION.
 
+**⚠ DECLARED TERM, ADDED ON THE D6 PARTIAL RULING — STATE IT UP FRONT, DO NOT LET IT BE DISCOVERED.**
+**A MERGE MOVES MONEY INTO AN EXISTING CANONICAL SERIES.** With Opal Conservative Growth merging onto
+`opal_long_term_conservative`, **global LTC will carry Cottonwood's ~$30.99M, so the canonical LTC
+line STEPS on fold-in day.** A verifier comparing global LTC to a pre-Cottonwood baseline sees **a
+real discontinuity in a canonical series.**
+> **UNDECLARED, IT IS INDISTINGUISHABLE FROM THE CLASS OF UNEXPLAINED JUMP THIS MORNING'S COUNT-AXIS
+> P0 TRAINED EVERYONE TO CHASE.** Same family as the **~$126.4M day-one step CTO already ruled must be
+> handled by LABELLING, NEVER SMOOTHING.**
+**It is FALSIFIABLE, so by D3 it must be STATED, not discovered** — the co-sign declares it as an
+expected step with its magnitude and its cause, before the limb runs. *(`0.4.0_DE`, and he correctly
+framed it as a co-sign concern rather than a build concern.)*
+
 **Example 2 — ⚠ CVO DIG-1: MY CLASSIFICATION WAS PREMATURE. THE LIMB IS NOT STRUCK. IT IS DEFERRED.**
 I classified *"every pre-07-21 Global value is byte-identical with Cottonwood absent"* as **TRUE BY
 CONSTRUCTION** because Cottonwood holds **2 data days** (CVO independently confirmed: exactly 07-21
@@ -262,6 +274,30 @@ Andrew asked DE to land the Cottonwood FE fix set as a workstream spec:
 **SPEC ONLY — landing it is not a request to begin it.** Constraints that bind my TO-cutting:
 
 **D11a — D6 FORKS THE WORKSTREAM. DO NOT CUT SET B BEFORE ANDREW'S MERGE-VS-ADD RULING.**
+
+> ### ⚠ D6 PARTIALLY RULED ~1720Z — **SET B STAYS FROZEN. ONE MODEL DOES NOT CLEAR THE FORK.**
+> **ANDREW-DIRECT VERBATIM (relayed by `0.4.0_DE`, recorded @3b311c044):**
+> > **RULING 1 (D6, PARTIAL):** *"Opal Conservative Growth is Long Term Conservative, also known as
+> > Opal Long Term, also known as LTC. That is how that needs to be mapped."*
+> > **RULING 2 (day-one naming):** *"Regarding Day 1, no we are using canonical names, we are not
+> > doing this 'Satellite' bullshit unless explicitly asked."*
+>
+> **RULED:** Opal Conservative Growth **MERGES** onto canonical `opal_long_term_conservative`.
+> **NOT RULED, still open at Andrew: "Opal - Income"** — *precisely the model with no counterpart at
+> all.* **He named ONE. The merge is NOT extended by analogy, and the decomposition must not either.**
+> - **Income ALSO merges** ⇒ Set B vanishes entirely.
+> - **Income stays DISTINCT** ⇒ **B1 + B2 MANDATORY**, plus the `GLOBAL_MODEL_KEYS` twin in the same
+>   scheduling unit (D11b). ***ONE non-canonical key is enough to render BOTH trend charts blank.***
+>
+> **WHAT DID CLEAR:** `opal_long_term_conservative` is **already in `STACK_SERIES`**, so Conservative
+> Growth renders with **NO FE CHANGE**. And **RULING 2 REMOVES AN ITEM OUTRIGHT** — canonical names,
+> **no display-name override layer, no advisor-facing naming work.** *(It overruled DE's own
+> recommendation; he recorded that plainly rather than quietly dropping it.)*
+>
+> **OWNERSHIP:** the merge is a **PRODUCER/DS crosswalk change, not FE.** FE inherits it free.
+> **⚠ The crosswalk currently RAISES on BOTH Cottonwood keys — correct fail-closed. Mapping
+> Conservative Growth retires ONE raise; THE INCOME RAISE MUST REMAIN until Andrew rules, and nobody
+> may soften it to unblock a build.**
 - **MERGE** ⇒ the B-items **VANISH** (`STACK_SERIES` already holds canonical keys; charts populate).
 - **ADD** ⇒ **B1 is MANDATORY or EVERY Cottonwood model renders blank** — render-confirmed with a
   discriminating control @c95210ec3.
