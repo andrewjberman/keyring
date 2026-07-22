@@ -1,16 +1,29 @@
 {
-  "project_code": "WSE_COTMDL",
-  "macro_code": "MDPF",
-  "name": "WS-E Cottonwood Model-Portfolio Fold-In (production) -- supersedes MDPF_COTMDL",
-  "description": "Fold Cottonwood's model portfolios into the MDPF page on the opal-data-assets estate pattern (Andrew-direct 2026-07-21). Models live in the BD Rebalancer (60 models, 17 strict-Opal in scope, 296 accounts across 14 assigned Opal models); join account->model by strategyName; count-vs-dollar mechanism = +1 count per underlying primary model, dollars split by blend children[].relativeAllocation. Taxonomy: blackdiamond/cottonwood/{bronze|silver|gold|meta}, mirror the opal-assets-bd49f producer. Supersedes MDPF_COTMDL (whose on-hold premise -- silver strategy field unpopulated -- was a false negative). Grounded on the WS-E discovery deliverable. PRD docs/architecture/WSE_COTTONWOOD_MDPF_FOLDIN_PRD.md.",
-  "prds": [{"path": "docs/architecture/WSE_COTTONWOOD_MDPF_FOLDIN_PRD.md", "label": "WS-E Cottonwood MDPF Fold-In PRD v0.1 (CTO)", "date": "2026-07-21"}],
-  "status": "active",
-  "phase": "DECOMPOSED 2026-07-21 (COO): 5 workstreams (WS-1 bronze / WS-2 silver / WS-3 gold / WS-4 MDPF DDB fold-in / WS-5 IAM+infra). OPAL_CONSOLIDATION workstream, PARALLEL to the MDPF cutover (cutover precedence). STANDING EGRESS GRANTED @64fdd919c (2026-07-21) -- egress gate CLEARED. DESIGN REDIRECT (Andrew-direct same msg): WS-1 reworks from the bd49f-xlsx mirror to the CANONICAL BD-REST format (cookie-riding REST runner on the cot session-refresh chain per BD_API_DESIGN.md + cot_bronze_ingest); build-phase reopened, WS-5 (@ab268cb90 gate-ready) awaits 0.6.2's re-sync to the canonical shape. WS-1 first build @e36fa32a6 (13 tests, format-agnostic fold-in logic reusable). WS-2/3/4 stage behind WS-1 bronze; WS-4 gated on the CTO DDB-contract (PRD sec 8). Deploy blocker now = the canonical rework + WS-5 re-sync + verify pair (NOT egress).",
-  "blocking": "WS-1 reworking to the canonical BD-REST format (Andrew-direct redirect); WS-5 awaits its re-sync. Egress GRANTED (no longer blocking). Parallel to cutover (cutover precedence).",
-  "created": "2026-07-21",
-  "pods": ["0.6", "0.4", "0.7", "0.2"],
-  "supersedes": "MDPF_COTMDL",
-  "depends_on": ["OPAL_CONSOLIDATION"],
-  "thread_counter": 0,
-  "threads": []
+ "project_code": "WSE_COTMDL",
+ "macro_code": "MDPF",
+ "name": "WS-E Cottonwood Model-Portfolio Fold-In (production) -- supersedes MDPF_COTMDL",
+ "description": "Fold Cottonwood's model portfolios into the MDPF page on the opal-data-assets estate pattern (Andrew-direct 2026-07-21). Models live in the BD Rebalancer (60 models, 17 strict-Opal in scope, 296 accounts across 14 assigned Opal models); join account->model by strategyName; count-vs-dollar mechanism = +1 count per underlying primary model, dollars split by blend children[].relativeAllocation. Taxonomy: blackdiamond/cottonwood/{bronze|silver|gold|meta}, mirror the opal-assets-bd49f producer. Supersedes MDPF_COTMDL (whose on-hold premise -- silver strategy field unpopulated -- was a false negative). Grounded on the WS-E discovery deliverable. PRD docs/architecture/WSE_COTTONWOOD_MDPF_FOLDIN_PRD.md.",
+ "prds": [
+  {
+   "path": "docs/architecture/WSE_COTTONWOOD_MDPF_FOLDIN_PRD.md",
+   "label": "WS-E Cottonwood MDPF Fold-In PRD v0.1 (CTO)",
+   "date": "2026-07-21"
+  }
+ ],
+ "status": "active",
+ "phase": "RE-SCOPED BY ANDREW-DIRECT 2026-07-22 ~1205Z: Cottonwood-into-MDPF is now ITEM 2 OF MDPF_REVAMP FINALIZATION -- it is NO LONGER 'parallel to the cutover / cutover precedence'. Andrew: 'the integration of the Cottonwood data into MDPF on the Portal via the Select Partner dropdown and aggregating it into the GLobal view.' | STATE 2026-07-22: WS-1 bronze COMPLETE + LIVE, self-firing unattended (07-22 pull 06:00:42Z, both gates PASS, opal_assigned=296 independently re-derived off raw bronze = 17 Opal models / 296 accounts across the 14 assigned, PRD Sec5 exact). WS-2 silver COMPLETE @bcd5ab971 (4 tables: roster 60 / definition 554 / blend 29 / assignment 911; every gate re-derived on the LANDED bytes; 20 tests + 2 load-bearing mutants proven to bite) -- NOTE: COMPLETE BUT MANUAL, see blocking. WS-3 gold LANE OPENED BY COO 2026-07-22 ~1254Z on DE's live-primitive grounding (assets-bucket notification configs are all bronze/ + suffix-filtered, zero on gold, EventBridge ABSENT; safe_deploy_core PIPELINE_MAP excludes data/assets/** so no auto-deploy; script MUST live in data/assets/scripts/gold/ NEVER data/cot/scripts/gold/ which would auto-serve past a co-sign gate by construction). WS-4 HELD BY COO. WS-5 has a newly NAMED gap. | RULE-17 CALL (COO endorsed, CTO APPROVED): silver carries ALL 60 models / ALL 911 accounts with is_opal as a derived LABEL -- filtering to Opal at silver is a business-row-filter, forbidden; plus a 4th table (fact_model_roster) beyond the PRD's 3 because the roster is the name->id join source AND the Opal denominator. A pre-filtered table can never evidence its own completeness ('you cannot prove 296 of 911 from a table that only kept 296'). PRD amended to the bytes, not the build bent to the PRD. | PRD DEFECT FOUND AT SOURCE (DE): the blend tree hangs off hierarchy.children, NOT a top-level children[] as Sec6 prose implies -- a converter written from the prose reads None on every file and lands ZERO blend rows SILENTLY, because 'no blend' is a legal state. Producer must walk hierarchy.",
+ "blocking": "WS-4 (MDPF Global fold) HELD BY COO -- WRITE COLLISION: DS's count-axis rebuild re-produces gold/mdpf_revamp/global/aggregate_aua_timeseries.json, the same object WS-4 folds Cottonwood into. SERIALIZATION ORDER (COO): (1) DS rebuild + FRESH PIN -> (2) fresh 3-pass + fresh CTO/COO/Andrew limbs + the flip -> (3) THEN the Cottonwood Global fold AS ITS OWN never-widen co-sign (CTO ruling: it does NOT ride the cutover's -- a signature pinned to ETags cannot cover bytes that did not exist when it was signed). A Cottonwood write landing mid-rebuild would corrupt the pin invisibly until a co-sign cited a moved ETag. | WS-5 GAP NAMED 2026-07-22 (DE's positive control, owner 0.7.0_AE_CloudOps, currently HELD by COO = queued not started): there is NO bronze->silver automation for the rebalancer feed AT ALL -- the silver-blackdiamond notification config on blackdiamond/cottonwood/bronze/ is SUFFIX-FILTERED TO .xlsx and the rebalancer bronze is .json. WS-2 silver landed because the converter was run BY HAND. Until WS-5 wires it (new config or extended filter) AND EXERCISES it with a real .json object, COTTONWOOD SILVER DOES NOT SELF-REFRESH -- and a feed that stops converting looks identical to a feed with no new data. | SCOPE GAP (MSTR-flagged, COO landing it): the Select-Partner PORTAL FE change is in NONE of the 5 workstreams -- the 5 are data-side only. ModelPortfolios.tsx:236 has no cottonwood. Any ETA quoted off 'WS-2/3/4/5 remaining' UNDERSTATES the work by a whole FE change. | WS-4 must re-exercise the composition gate AT FOUR FIRMS: total == bands + non_model does NOT generalize 3->4 by assumption, and that identity is the exact class that caused the 2026-07-22 P0. | FIRM SEPARATION (NEVER#2/Rule 13): the Global fold is where the firm-boundary architecture call actually lands -- CTO's call, not DE's or COO's.",
+ "created": "2026-07-21",
+ "pods": [
+  "0.6",
+  "0.4",
+  "0.7",
+  "0.2"
+ ],
+ "supersedes": "MDPF_COTMDL",
+ "depends_on": [
+  "OPAL_CONSOLIDATION"
+ ],
+ "thread_counter": 0,
+ "threads": []
 }
