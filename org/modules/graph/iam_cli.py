@@ -746,12 +746,97 @@ def _simulate_self_test():
 
 
 import comp_iam_census  # noqa: E402 -- APPLIED-plane census generation + vintage honesty
+import comp_iam_live  # noqa: E402 -- LIVE-PRIMARY plane (Andrew flip 2026-07-22) -- APPLIED-plane census generation + vintage honesty
 
 # NOTE: this default is the 2026-06-03 census: 111 roles vs 158 in Terraform, and it carries NO
 # _meta.generated_utc. It is retained so `reconcile` has a path to point at, but the vintage gate
 # below now REFUSES it rather than reconciling against it silently -- which is what it did until
 # 2026-07-22. Regenerate with `comp-iam refresh-census`.
 _DEFAULT_CENSUS = "docs/briefs/cmpaws-iam-axis-census-20260603.json"
+
+
+def cmd_live(args):
+    """LIVE-PRIMARY: the real estate is the population; Terraform is the overlay.
+
+    PLANE: APPLIED-inventory, live-primary. A DRIFT DETECTOR, never an authorization oracle -- for an
+    allow/deny verdict use `comp-iam simulate` (Rule 22a). Consumes comp-aws derive rather than
+    re-deriving: that reconciler is certed, joins on ARN identity, and carries the TF ADDRESS as
+    provenance, which is why it resolves `${each.key}` fleets that a name-join cannot.
+    """
+    iam, path, observed = comp_iam_live.load_iam_derive(
+        Path(args.derive_dir) if getattr(args, "derive_dir", None) else None)
+    if iam is None:
+        print(f"LIVE PLANE UNAVAILABLE -- no readable comp-aws IAM derive at {path}")
+        print("  Generate one with `comp-aws derive --classes iam`. DESIRED-plane modes are unaffected.")
+        print("  This is a COVERAGE refusal: nothing was compared, so nothing is concluded.")
+        return 3
+
+    ttl = float(getattr(args, "derive_ttl_hours", None) or comp_iam_live.DEFAULT_DERIVE_TTL_HOURS)
+    age = comp_iam_live.derive_age_hours(observed)
+    fresh = age is not None and age <= ttl
+    print(f"LIVE PROVENANCE: {path.name} -- observed {observed.strftime('%Y-%m-%dT%H:%M:%SZ')} "
+          f"(age {age:.1f}h, TTL {ttl:g}h) [{'FRESH' if fresh else 'STALE'}]")
+    print(f"  account: {iam.get('_account') or 'UNSTATED'} | source: comp-aws derive (certed "
+          f"live-boto3 + TF reconciler); drift_class is ITS verdict, reported not recomputed")
+
+    # Population cross-check against a freshly-read census, when supplied. This is the ONLY way the
+    # derive's staleness becomes visible: it cannot detect its own under-enumeration.
+    census = None
+    if getattr(args, "census", None):
+        try:
+            census = json.loads(Path(args.census).read_text(encoding="utf-8"))
+        except Exception as e:  # noqa: BLE001
+            print(f"  census cross-check UNAVAILABLE (unreadable {args.census}: {e})")
+    delta = comp_iam_live.population_delta(iam, census)
+    if delta is None:
+        print("  population cross-check: UNAVAILABLE (no --census given) -- the live population is "
+              "TAKEN ON TRUST from a snapshot that cannot date itself against reality")
+    else:
+        missing = delta["in_census_not_in_derive"]
+        print(f"  population cross-check: derive {delta['derive_population']} vs census "
+              f"{delta['census_population']}")
+        if missing:
+            print(f"  !! STALE POPULATION: {len(missing)} role(s) exist live but are ABSENT from the "
+                  f"derive snapshot -- they are INVISIBLE to every verdict below.")
+            for n in missing[:10]:
+                print(f"       {n}")
+            if len(missing) > 10:
+                print(f"       ... and {len(missing) - 10} more")
+    print()
+
+    if not fresh and not getattr(args, "allow_stale_derive", False):
+        print(f"REFUSED: LIVE-plane report NOT PRODUCED -- the derive snapshot is STALE "
+              f"(age {age:.1f}h > {ttl:g}h TTL).")
+        print("  A live-primary tool reading a stale snapshot of 'live' is not live-primary; it")
+        print("  under-enumerates, so MISSING reads as ABSENT -- the same failure direction as the")
+        print("  Terraform-primary keying this flip replaces.")
+        print("  Fix: `comp-aws derive --classes iam`.  Override (AUDITED): --allow-stale-derive")
+        return 3
+
+    buckets = comp_iam_live.classify(iam)
+    live_only = buckets["LIVE-no-DECLARED"]
+    svc = [n for n in live_only if comp_iam_live.service_linked(n)]
+    real = [n for n in live_only if not comp_iam_live.service_linked(n)]
+    counts = iam.get("counts") or {}
+
+    print(f"LIVE-PRIMARY IAM  (population = {len(iam.get('nodes') or [])} live roles)")
+    print(f"  DECLARED (live AND governed by IaC) : {len(buckets['DECLARED'])}")
+    print(f"  LIVE-no-DECLARED                    : {len(live_only)}")
+    print(f"    of which AWS service-linked (expected, /aws-service-role/) : {len(svc)}")
+    print(f"    of which GOVERNABLE and UNDECLARED (the finding)           : {len(real)}")
+    print(f"  derive counts (its own): {json.dumps(counts)}")
+    print()
+    if real:
+        print(f"UNGOVERNED-BY-IaC ({len(real)}) -- live, governable, no Terraform declaration:")
+        for n in sorted(real, key=lambda x: str(x.get("id") or x.get("name"))):
+            print(f"    !! {n.get('id') or n.get('name')}")
+        print()
+    print("NOTE: 'DECLARED' is comp-aws derive's verdict, joined on ARN identity with the TF ADDRESS")
+    print("      as provenance -- NOT a name match. That is why ${each.key} fleets resolve here and")
+    print("      do not in the Terraform-primary surfaces.")
+    print("NOTE: this is a DETECTOR. It does not evaluate Deny, boundaries, conditions or SCPs.")
+    print("      For an allow/deny verdict use `comp-iam simulate` (Rule 22a).")
+    return 1 if real else 0
 
 
 def _census_self_test():
@@ -1026,6 +1111,14 @@ def main():
     p_rc.add_argument('--out', help='output path (default docs/briefs/cmpaws-iam-census-<date>.json)')
     p_rc.add_argument('--account', help='account id to stamp (default: derived from role ARNs)')
     sub.add_parser('census-self-test', help='offline vintage/fail-closed suite (no AWS)')
+    p_live = sub.add_parser('live',
+                            help='LIVE-PRIMARY: real estate is the population, Terraform is overlay')
+    p_live.add_argument('--derive-dir', help='comp-aws derive dir (default .fedobs_tmp/live_aws)')
+    p_live.add_argument('--census', help='fresh census for the population staleness cross-check')
+    p_live.add_argument('--derive-ttl-hours', type=float, default=None,
+                        help='max derive-snapshot age (default 24)')
+    p_live.add_argument('--allow-stale-derive', action='store_true',
+                        help='AUDITED override: report from a stale live snapshot')
 
     args = parser.parse_args()
 
@@ -1061,6 +1154,8 @@ def main():
         sys.exit(cmd_refresh_census(args))
     elif args.command == 'census-self-test':
         sys.exit(_census_self_test())
+    elif args.command == 'live':
+        sys.exit(cmd_live(args))
     else:
         parser.print_help()
 
