@@ -199,3 +199,80 @@ certify the build* — not as a maxim, as a measured outcome twice in one sessio
 | `--consistency` staged + served (re-run) | rc=1 both, byte-identical | no regression from the guard |
 | `commit-gate.sh` / `safe-commit.sh` | PASS | @f64797340; reflex CLEAN, denominator printed |
 | `gh run view --log-failed` (run 29888356628) | FAILURE exit 2 | the SEV1 block; + 4 workflow trigger blocks read |
+
+---
+
+## ADDENDUM 2 (~0428Z-0530Z) — 2x hotfix SHIPPED to PROD + the marker leg of the re-land battery
+
+### A. 2x hotfix promote — DONE, ACCEPTED, ledger CLOSED 8/8
+Andrew GO'd a standalone label-fix ship (separate from the gated MDPF re-land). CTO's manual surface-ack
+verify passed on `8fd61dbf` -> **DEPLOY GO** 050225Z. Executed:
+
+| | |
+|---|---|
+| Deployed | PROD **`885b76c2fdcac13f1975fb527b4295f805842515`** |
+| Tag | `portal-v2.1.141` — **peel-verified** (`rev-list -n1` == PROD head; comparing the tag object would be a false check) |
+| CI | run **29893042948, conclusion=success**, all 3 jobs (read via `--json`, not `gh run watch`) |
+| Rollback | `99fed48f` (portal-v2.1.140) — pinned in the ledger BEFORE the merge |
+| Ledger | `20260722T0503Z_portal-global-monthly-axis-key-2x-hotfix_deploy_completion.md` **CLOSED 8/8** |
+
+**Verification that mattered, before the push:** `git diff --stat 99fed48f HEAD` = 1 file +16/-2, and
+`git diff 8fd61dbf HEAD -- src/pages/ModelPortfolios.tsx` **EMPTY** — the merged file byte-identical to
+the sha CTO read. SURFACE_ACK anchor checked with the CI checker's *own* sed, not eyeballed. Rule 19
+held throughout (main tree never left DEV).
+
+**Branch was NOT on origin at GO time** (`ls-remote` empty) though the commit object was in the shared
+local clone. Promoted the verified sha directly — deploys exactly what CTO read rather than a branch
+that could still be amended. CTO ruled this "the RIGHT call". Submodule pointer deliberately NOT bumped
+(would record the gated re-land commit).
+
+**I did not claim the fix renders.** CI success means the bundle shipped, not that 2026 bars report 2026.
+CTO independently fetched the served chunk and confirmed `dataKey:"fullDate"` + the formatter live —
+**his** verification, recorded as his. Andrew's hover is the render confirm.
+
+### B. Marker leg — and a directive conflict I stopped on rather than built past
+CTO's instruction ("DT does the lineage-verify") conflicted with CVO's ruled architecture B (DT consumes,
+**CVO** does source-lineage; DT must not reach bronze/silver). **Flagged it before building rather than
+picking one** — CTO then ruled to CVO's split and said flagging was the right discipline.
+
+Built the consumer so it is more than a blanket skip **without** source access: the reason string makes a
+**prediction about the null shape**, and the prediction is checked against the artifact's own data.
+`model_partition_absent` + a POPULATED model -> **RED**, because a populated model *is* a measurement.
+11 mutants incl. CTO's seeded case. @`41cbd7220`.
+
+**Also closed a pre-existing hole:** an all-None row used to be skipped as "honest" with no declaration
+required — so *nulling a whole row* was a way to leave the gate. Same shape DS independently found in
+their own gate. A null row must now be DECLARED. Verified a no-op on the frozen set.
+
+### C. Results on DS's FROZEN 9 (all 9 ETags verified live, unchanged across both runs)
+- **CONSISTENCY leg GREEN rc=0** — 49f 427/427; global 421/427 + 6 marker-admitted; inflection 421/427 +
+  6 marker-admitted (was FAIL); CROSSFIRM_PASS regime B incl. the audit carrier.
+- **A2 false-dip confirmed GONE** — 07-13/14/15 aum = None/None/None (honest), series continuous
+  $1,502.93M (07-10) -> $1,502.67M (07-16). The fabricated -$107.2M collapse is absent.
+- **PARITY leg NOT green** — `non_model_aua` UNEXPLAINED on ~every common date (570.6M -> 358.5M): the
+  EXCLUDE/B rebase, intended but **unnamed in the ledger**. A ledger gap, not a data defect; routed to DS.
+
+**Refused to report "full battery green"** on a green exit code. `rc=0` on `--all` reflects only the
+consistency gate by design; the parity verdicts are read from output. Saying "green" would have been
+true of the number and false of the thing.
+
+### D. The vintage moved three times tonight
+`ebe4e111` -> … -> `c27e1f37`. CTO pinned ETags in one message that were already superseded when I ran.
+Started capturing the ETag pin **before and after** each run and asserting it unchanged — a verdict
+whose vintage moved under it is not a verdict. All quoted results carry their pin.
+
+## Compiler Tools (addendum 2)
+| Tool | Result | Note |
+|---|---|---|
+| `--self-test` (marker + regime + shape-extras) | PASS | 11 marker mutants; CTO's seeded populated-model case RED |
+| `--consistency --published-prefix gold/mdpf_revamp` | **rc=0 GREEN** | ETag-pinned to the frozen 9, stable across the run |
+| `--all --ledger <DS>` | parity: global UNEXPLAINED (unnamed rebase) | shape now clean via `_shape_extras`; coherence 3/3 |
+| `gh run view --json` (29893042948) | success | conclusion read as json; `gh run watch` deliberately avoided |
+| `git worktree` + `bun install` + VALGATE/tsc | PASS | ephemeral promote; Rule 19 held |
+| `commit-gate.sh` / `safe-commit.sh` | PASS | 4 commits; reflex CLEAN each time |
+
+**What worked:** stopping on the CTO-vs-CVO contradiction instead of building past it; capturing ETag
+pins around every run once the stage started moving; refusing to let `rc=0` stand in for "battery green".
+**What failed:** a mutant I wrote seeded a $1.00 drift against a $1.00 tolerance and sat exactly on the
+boundary — the gate was right, my test was wrong. Scaled to realistic magnitudes and left the note: **a
+mutant inside the tolerance proves nothing.**
