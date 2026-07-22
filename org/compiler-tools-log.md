@@ -23196,3 +23196,5 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants | comp-constants check --lane multifirm | PASS |
 | 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-22/s... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/silver/mirror_conve... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/silver/mirror_conversion.py data/assets/scripts/sil... | PASS |
