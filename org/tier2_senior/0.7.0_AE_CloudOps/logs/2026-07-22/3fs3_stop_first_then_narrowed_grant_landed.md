@@ -157,3 +157,47 @@ from_agent=0.4.0_DS -- fat-finger, nothing delivered; the guard is the 07-14 for
 Compiler tools this addendum: aws ec2 start/wait/stop + ssm send-command/get-command-invocation
 (operational, Rule-12 S3->EC2 path, no inline python), s3api head-object x2 (artifact + script identity),
 list-objects-v2 (AC-6 size limb). Post-close: broker IDLE: available; F-1 NOT touched (undispatched).
+
+---
+
+## ADDENDUM 2140Z -- THE THREE-ITEM GO (COO 211057Z / CTO 210957Z+211849Z): ALL COMPLETE, COMMIT-ONLY HELD
+
+**(2) FRESHNESS @f81b81758 + @a1d4018a9.** Stop-before-build finding: comp-freshness's pk branch
+(_pk_check, :785) returned flat-hours BEFORE _basis_decision ran -- a declared trading-day-frontier
+basis was silently IGNORED on partition-keyed entries (the tool docstring's forbidden outcome), so
+the six entries as ordered were a GREEN no-op on 5/6 legs. CTO GO'd the minimal patch: _pk_basis_route
+(explicit non-frontier bases byte-identical -- cot ruled semantics untouched) -> _basis_decision ->
+_frontier_verdict. Self-test 15/15 incl Monday differential (frontier=PASS tdb=1 vs flat=WARN), the
+never-silent mutant, 97-entry sweep w/ denominator; LIVE old-vs-new (HEAD copy vs patched, full all,
+57 entries) verdict-IDENTICAL. Six entries live 6/6 PASS -- cottonwood tdb=2 PASS at 69.4h where the
+old code WARNed TONIGHT. RECONCILIATION (COO-flagged, settled with 0.6.2 direct, no CTO routing
+needed): eclipse warn 2->3 (his tdb<=2 was right -- the 00:00-03:30Z pre-delivery window reads tdb=2
+legitimately) and the finding GENERALIZED to schwab (10-hour pre-10:16Z window, same fix). Banked:
+COT's Wed 00:00-03:30Z corner reads tdb=3 on-contract (known corner, not a defect).
+MEASUREMENT TRAP on the record (CTO bound 4): my orion first-read said backfill-only-dead from
+sort_by(LastModified) -- it surfaced the 07-14 backfill of 2023 partitions as newest ACTIVITY; the
+key-sorted listing shows the live daily D+0 T14:16Z producer. Time-order as the count-shape's cousin:
+the instrument answered "most recent write" when the question was "most recent data".
+
+**(1) F-1 @8ec253b34 (desired plane).** Flip set 9->11 (+cottonwood aggregate/account-distribution),
+PUBLISH_MAP 9->11 lockstep, terraform validate Success, behaviors NOT live (DE 3F-P2 applied-truth
+baseline). NEW .tools/mdpf-preflip-check (v1.12 pre-flip identity): identity-1 cross-layer both
+directions w/ denominators; identity-2 registry-cardinality, REGISTRY-PENDING loud until 3F-G2.
+EXERCISED: positive PASS (11==11); negative control vs the REAL pre-fix artifact (HEAD's 9-entry
+map) FAIL rc=1 naming exactly the two cottonwood paths.
+
+**(3) MANIFEST @6dc396545.** cot-exporter registered (Rule-8 record correction): TF (cot-pipeline/
+ec2.tf) and live describe-instances AGREE on every fact (i-0643a5bee8a8feabf, t3.large, cot-exporter-
+profile, stopped-by-design). 14-line diff. First write used ensure_ascii=False and re-encoded other
+entries' escapes -- caught on parse-back, reverted, redone minimal.
+
+**Compiler tools this addendum:** comp-which/comp-grep/comp-glob (routing + flip-set/PUBLISH_MAP
+location), comp-freshness self-test x3 + all x3 (old/new/post-entries), commit-gate x3 (comp-freshness,
+publisher, mdpf-preflip-check), comp-system (gate-ordered 06 regen), terraform validate, s3api
+list-objects-v2 (cadence measurement, 6 legs), describe-instances (manifest facts).
+**MCP:** ~14 this window; significant: stop-before-build finding -> CTO GO (a)(b)(c) w/ 4 bounds;
+eclipse conflict reconciled w/ 0.6.2; items 1/2/3 completion reports accepted (CTO 213427Z, COO
+213005Z + pending on 1/3).
+**Posture:** commit-only bound HELD -- zero applies, zero live mutations, all 6 commits pushed.
+Broker -> IDLE: available. Parked: S5 twin (CTO+G8), S4 sidecar, 3F-S1 (0.6.2 7/8), F-1 apply (full
+3F-F1 gate).
