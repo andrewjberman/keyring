@@ -60,6 +60,14 @@ for a in "$@"; do
             p="${a#*//}"
             args+=("${scheme}$(_convert_if_local "$p")")
             ;;
+        /)
+            # A LONE "/" is an argument VALUE (e.g. `--delimiter /` for S3 key grouping),
+            # never a local path -- no aws call takes the MSYS root as an argument. Without
+            # this branch, [ -e / ] is true and the root converts to C:\Program Files\Git\,
+            # so the CLI groups on a delimiter matching nothing: CommonPrefixes=[] at rc=0,
+            # a silent-absence result (exercised by 0.5.0_AE, 2026-07-22).
+            args+=("/")
+            ;;
         /*)
             args+=("$(_convert_if_local "$a")")
             ;;
