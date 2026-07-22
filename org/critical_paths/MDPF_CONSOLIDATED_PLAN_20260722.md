@@ -67,6 +67,24 @@ CloudFront `EVTSA9VEHNZVH` = **24 behaviors / 7 origins**, no assets origin, cat
 **Ordering principle: the enumeration gates the build; the wiring gates the emit; the emit gates the pin;
 the pin gates the co-sign. Do not invert these — every inversion today cost a re-do.**
 
+### ⛔ STATUS: HELD PENDING ANDREW'S ADVISORY (his ~1408Z directive, CTO scope ruling 1516Z)
+
+**Andrew-direct ~1408Z, VERBATIM:** *"We are going to create a plan on how to efficiently guide the whole
+fabric on the remaining open MDPF items rather than keep firing from the hip... hold for further advisory."*
+
+**CTO RULING — the hold binds FABRIC-WIDE on MDPF-scoped work** (the planning clause names *"the whole
+fabric"*; latest + most-restrictive binds). **HELD:** initiating new MDPF work · taking a pin · publishing ·
+moving any `gold/mdpf_revamp/*` ETag · firing a co-sign limb · the Cottonwood fold · any apply on the MDPF
+serve path. **Finish nothing that would create a half-landed step — there is currently NONE and NEVER#5 is
+NOT engaged.**
+**CARVE-OUTS:** (1) the `portal-v2 json/mdpf/**` **deny PROCEEDS** — Andrew ordered it built at ~1425Z,
+**17 minutes AFTER** the planning directive, so for that item the latest ruling is *build it*; (2) off-path
+**reversible** work continues (comp-constants, collection repair, sovereign-predicate sweep, import-closure
+census) — none touches MDPF data or the serve path; (3) **read-only MDPF ANALYSIS continues, especially
+Phase 0 below — enumerating is not initiating**, and it is the input the advisory needs.
+
+**This plan is the INPUT to that advisory, not a substitute for it.**
+
 ### PHASE 0 — CLOSE THE ENUMERATION *(gates everything; the only real unknown)*
 **Owner DE.** Finish the census of every place "exactly two firms" is encoded — **with a stated denominator
 and an explicit not-covered list.** Must reach: `infra/` dispatch + IAM, the publisher/promote path,
@@ -110,6 +128,36 @@ Fresh **CTO + COO + Andrew** never-widen co-sign on the pinned set, carrying the
 unbounded-by-construction; retained legacy runtime dependency; 20-date Global gap; 1-of-6 historical
 coverage). → **FE-first promote** → AE `-target` apply → **immediate revert-plan hard gate** → verify-before-serve
 → rollback armed until explicit disarm.
+
+---
+
+## PART 2b — STANDING CTO RULINGS THAT HAD **NO DURABLE CARRIER** *(landed here 1520Z)*
+
+**Andrew is resetting context on every fabric worker with clean handoffs and pause orders.** A reset agent
+inherits **only what is on disk**. **Every ruling below was issued today and existed ONLY in an MCP thread —
+they would have died at the reset, silently, and the work would have been rebuilt against a different
+decision.** MSTR caught the first one; this is the sweep it implied. **These BIND the resumed work.**
+
+| # | Ruling | Binds | Owner |
+|---|---|---|---|
+| R1 | **The count-axis audit wiring lands before the SECOND post-flip cycle**, preempting WS-5 if needed. The first cycle may be covered by a hand-run; the second may not. | any flip re-sequencing | `0.7.0_AE_CloudOps` (COO keeps the trigger) |
+| R2 | **Cottonwood JOINS the existing trading-day axis.** Global does NOT become a multi-axis join to accommodate a third firm; Cottonwood carries nulls before 2026-07-21. | the re-home (1a) | DE |
+| R3 | **The two-firm enumeration is a PRECONDITION on further Cottonwood build**, not a parallel nicety. | all Cottonwood build | DE |
+| R4 | **The dispatcher's destination branch matches the envelope POSITIVELY** (`version` + `requestContext` + `responsePayload`) — **NEVER** a catch-all `else`. A catch-all deletes the loud refusal that made this class findable. | the unbuilt `lambda_entry` branch | `0.6.2_AE_PartnerETL~A` |
+| R5 | **Deliverable 2 includes the `PutLifecycleConfiguration` limb.** Routine cleanup arrives as a lifecycle rule far more often than a hand-typed delete; shipping only the easy-to-test half is refused. | the deny | `0.7.0_AE_CloudOps` |
+| R6 | **The import-closure census reports the instrument's REACH.** The unreached functions are **OUT OF REACH, NOT CLEAN.** | the census | `0.7.0_AE_CloudOps` |
+| R7 | **The sovereign predicate is SPLIT, not ripped** — `SOVEREIGN_HELD` (emptied) vs `PROD_WRITE_FORBIDDEN` (preserved); one wave, all five sites; **plan to CTO before landing.** Ripping serves the retraction and destroys a live scratch-target control. | the retraction wave | `0.8.0_AE_CloudComp` |
+| R8 | **The eclipse STALE parity signal stays VISIBLE.** It is TRUE, and it must not be silently "fixed" by a re-vendor nobody scoped. | eclipse | `0.7.0_AE_CloudOps` |
+| R9 | **NONE of today's gate proofs transfer to a three-firm global.** Every gate was mutant-proven against `f(49f, inflection)`; all are re-exercised against `f(a,b,c)`. | Phase 3 | DS + CVO + DT |
+| R10 | **Every evidence limb states its COVERAGE FRACTION** against the defect-capable population — never a percentage, never a bare scan denominator. | Phase 3 | all verify limbs |
+| R11 | **The 20-date Global exemption is a LIST, not a FLAG.** A 21st missing date must go RED; never a predicate that re-derives itself. | the global gate | DS |
+| R12 | **49F is DECLARED, NOT CLEARED** — measured defect (07-17, −10), mechanism UNDETERMINED, **no assurance instrument exists**; monitored prospectively, **no rate quotable from n=2.** | the co-sign text | COO (custody) |
+
+> **THE GENERALISATION, and it is the real answer to *"firing from the hip"*: the rulings issued today were
+> not wrong — several were caught and corrected within minutes, which is the mode working. THE DEFECT IS THAT
+> SOME HAD NO CARRIER THAT SURVIVES A SESSION.** A decision whose only record is a message is a clock with no
+> keeper. **Standing fix: any ruling that binds work not yet done gets a durable carrier and a named owner in
+> the same turn it is issued.**
 
 ---
 
