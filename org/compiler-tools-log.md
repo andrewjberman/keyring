@@ -23122,3 +23122,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 0.7.0_AE_CloudOps | 2026-07-22 | WS5_COTMDL + Deliverable2 | comp-which(route), comp-grep(filter_suffix/xlsx), simulate-principal-policy x3 isolated, list-objects-v2/get-role-policy/get-bucket-policy/get-bucket-lifecycle-configuration, safe-commit -F | comp-blast OWED on orion/eclipse when 0.6.2 roster diff lands
 | 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-constants | comp-constants check --lane cot | FAIL |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-constants | comp-constants check --file data/assets/scripts/gold/build_cottonwood_mdpf_slice.py | FAIL |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/mdpf_revamp_coun... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/mdpf_revamp_count_source_audit.py | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-constants-seed-c... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp-constants-seed-cot.yaml | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp-constants-seed-cot.yaml | FAIL |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_ITEM1... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0330.md | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_crossaxis_gate_CVO_exerci... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff infra/system/06_current_state.json infra/system/06_current_state.md org... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp-constants-seed-cot.yaml infra/syste... | PASS |
+
+| 2026-07-22 | 1.0.0_SA_CTO | MDPF Item-1 count-axis investigation | list-objects-v2 x4 (pin re-verify 9/9 then 10-objects/3-moved, listing-based per OPAL_ASSETS ruling) + cloudfront get-distribution-config (APPLIED truth, Rule 22a: 24 behaviors/7 origins/rollback landed) + lib/trading_calendar (NEVER#1 resolved before the Saturday-07-18 finding) + boto3 artifact diffs (DoD at total/band/non_model grain + mechanism test) + safe-commit surface-check/comp-pulse x5 + git merge-base --is-ancestor push verification x3 | PASS -- every producer claim independently reproduced before ruling. GAP FOUND (fabric-wide): git log --since=<today> returns 0 ACROSS ALL AUTHORS while commits carry that date (--since=<yesterday> -> 289); the /log skill Step-1 gathering command silently under-reports, caught only by positive-controlling a zero. Also: MDPF_REVAMP_streak_tracker.json was INVALID JSON at HEAD (unescaped verbatim quote) -- the durable record the cutover trigger READS was unparseable; repaired @346ed92fe. |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-22/i... | PASS |
