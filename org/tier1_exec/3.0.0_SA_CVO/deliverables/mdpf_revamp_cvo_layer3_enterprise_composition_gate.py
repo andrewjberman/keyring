@@ -1,42 +1,62 @@
 """
 CVO Layer-3 ENTERPRISE-COMPOSITION gate -- from-scratch, independent (MDPF re-flip hard gate).
+B-BASIS + mechanism-bound honest-None (Andrew-direct + CVO fork ruling, both 2026-07-22).
 
-The class this catches (that a PARITY check cannot): a component silently excluded from the
-Global enterprise headline. parity != consistency -- a hole present on BOTH served + published
-sides passes a staged-vs-served parity check clean. This gate re-derives the enterprise total
-from COMPONENTS, by construction, so an excluded firm/cohort surfaces as a per-date mismatch
-regardless of what the producer emits or a parity check says.
+The class this catches (that a PARITY check cannot): the Global enterprise headline and its component
+fields being INTERNALLY INCONSISTENT about whether inflection's non-model (cohort-2b) is in or out.
+parity != consistency -- a defect present on BOTH served + published ties clean.
 
-Incident: the coherent-9 that passed the 3-pass parity (global aggregate ETag 1b52211f) carried
-Global opal_aggregate_aua = model + (49financial non_model ONLY), dropping inflection non_model on
-ALL 421 headline dates (~$151M-$203M/date, ~$153M @2025-04-30). Andrew caught it post-flip -> the
-flip rolled back. My prior gate checked model/non_model/custody but NEVER read opal_aggregate_aua.
+>> ANDREW-DIRECT RULING (2026-07-22, relayed by DS, grounded live by CVO) -- READ BEFORE EDITING <<
+Andrew chose B / EXCLUDE: opal_aggregate_aua DELIBERATELY EXCLUDES inflection non-model (cohort-2b is
+audit-only); non_model_aua is REDEFINED to 49F-only so the internal identity holds; inflection non-model
+is a SEPARATE 2b audit field. The headline VALUE does not change (@2026-07-20 = $1,813,038,832.72 =
+model $1,538,370,912.28 + 49F-only non_model $274,667,920.44). The FULL cross-firm sum ($1,877,516,932.06)
+is NOT the headline. Corroborated: A4 non_model_assets.non_model_aum + the FE band are ALREADY 49F-only.
+   >> DO NOT re-add a `headline == SUM_firms(model + FULL non_model)` clause. That is the A path Andrew
+      did NOT choose; it fails BY DESIGN under B and would gate RED on a correct artifact. (Prior I2/I4
+      encoded A and were RETRACTED at CVO's own catch after the ruling.)
+
+>> FORK RULING (2026-07-22, CVO-verified, CTO-closed): the 3 inflection custody-only dates
+   (2026-05-21/06-01/07-01) are HONEST-None, NOT a regression. CVO listed the source partitions:
+   eclipse/inflection/silver/fact_portfolios_full (MODEL) is genuinely ABSENT on those dates (PRESENT on
+   the bracketing days); orion custody PRESENT. No source measurement exists -> honest-None is correct;
+   the legacy value is an imputation (do NOT restore -- that fabricates). Exemption is MECHANISM-BOUND:
+   exempt a date IFF (inflection model_aua is None AND the eclipse partition for that date is ABSENT).
+   A genuine producer gap (partition PRESENT + components None) still goes RED. This gate OWNS the
+   lineage-verify leg -- it reads the eclipse partitions itself (that IS the CVO job; a parity harness
+   must not, but the verifier must).
 
 INVARIANTS checked per date, over the FULL series (a HOLD blocks publish / signals rollback):
-  I1  enterprise 2-term identity      : global.opal_aggregate_aua == global.model_aua + global.non_model_aua
-  I2  independent component re-derive  : global.opal_aggregate_aua == SUM_component_firms(model_aua + non_model_aua)
-  I3  model rollup                     : global.model_aua       == SUM_component_firms(model_aua)
-  I4  non_model rollup                 : global.non_model_aua   == SUM_component_firms(non_model_aua)
-I2 is the load-bearing catch: it rebuilds the total from the component firm artifacts and trusts NO
-global field except the headline under test, so it fires even if global.non_model were ALSO corrupted.
+  E1  enterprise 2-term identity : global.opal_aggregate_aua == global.model_aua + global.non_model_aua
+  E2  model rollup (both firms)  : global.model_aua == SUM_component_firms(model_aua)  [inflection model IS in]
+  E3  non_model is 49F-only      : global.non_model_aua == 49financial.non_model_aua   [inflection non_model OUT]
+  E4  cohort-2b carried, not lost: inflection.non_model_aua present (non-None) every NON-honest-None date
+E3 pins "never silently FOLD IN"; E4 pins "never silently DROP". E2/E4 are EXEMPT on a lineage-verified
+honest-None date (inflection model None AND eclipse partition absent) -- and ONLY then.
 
 Modes:
   (default)     read STAGED  s3://opal-data-assets/gold/mdpf_revamp/{firm}/aggregate_aua_timeseries.json
+                + lineage-verify honest-None dates against live eclipse partitions.
   --served      read SERVED  s3://opal-data-portal-v2/json/mdpf/{firm}/aggregate-aua-timeseries.json
-  --selftest    in-memory clean+mutant assertions (NO S3): clean -> PASS, seeded-hole -> HOLD.
-                An instrument that cannot fail the known-bad case is not an instrument -- run this first.
+  --selftest    in-memory clean(B) + mutant assertions (NO S3): clean-B -> PASS; fold-in -> HOLD; drop -> HOLD;
+                honest-None exempt -> PASS; honest-None-but-partition-PRESENT -> HOLD (real gap).
 
-Provenance: 3.0.0_SA_CVO, 2026-07-22. Layer 3 of the DS-producer / DT-harness / CVO-rederive defense-in-depth.
+Provenance: 3.0.0_SA_CVO, 2026-07-22 (B-basis + honest-None revision supersedes the A-assumption original).
+Layer 3 of the DS-producer / DT-harness / CVO-rederive defense-in-depth. Held for DS's B re-stage; RED on
+the current pre-fix artifact by design (non_model still on the full basis).
 """
 from __future__ import annotations
 
 import sys
 
-TOL = 1.00              # $ absolute; real holes are $151M+, a fixed artifact reconciles to the cent
+TOL = 1.00
 ROLLUP = "global"
+NONMODEL_FIRM = "49financial"     # under B, headline non_model == this firm's non_model (49F-only)
+COHORT2B_FIRM = "inflection"      # its non_model is the excluded cohort-2b audit component
 FIRMS = ["49financial", "inflection", "global"]
 STAGED_B = "opal-data-assets"
 SERVED_B = "opal-data-portal-v2"
+ECLIPSE_MODEL_PREFIX = "eclipse/inflection/silver/fact_portfolios_full"   # inflection MODEL source partitions
 
 
 def _at(art, key, date):
@@ -49,55 +69,63 @@ def _at(art, key, date):
     return arr[idx]
 
 
-def check(arts, tol=TOL):
-    """Pure invariant check over loaded firm dicts. Returns (verdict, holds, denom)."""
+def check(arts, honest_none_dates=frozenset(), tol=TOL):
+    """Pure B-basis invariant check. honest_none_dates = dates lineage-verified as source-absent
+    (inflection model None AND eclipse partition absent) -> E2/E4 exempt there. Returns (verdict, holds, denom)."""
     comps = [f for f in arts if f != ROLLUP]
     g = arts[ROLLUP]
     holds = []
     n_checked = 0
-    n_skip_headline = 0
-    n_skip_comp = 0
+    n_honest_none = 0
     for date in g["dates"]:
         head = _at(g, "opal_aggregate_aua", date)
         if head is None:
-            n_skip_headline += 1
+            # A None headline is NEVER silently skipped: it must be a lineage-verified honest-None
+            # (custody-only day, eclipse partition absent). Otherwise it is an unexplained None -> RED.
+            if date in honest_none_dates:
+                n_honest_none += 1
+            else:
+                holds.append((date, "headline-None-unverified",
+                              "opal_aggregate None but NOT a lineage-verified honest-None (eclipse PRESENT or unchecked)"))
             continue
+        exempt = date in honest_none_dates
+        if exempt:
+            n_honest_none += 1
         gmod = _at(g, "model_aua", date)
         gnm = _at(g, "non_model_aua", date)
+        f49_nm = _at(arts[NONMODEL_FIRM], "non_model_aua", date) if NONMODEL_FIRM in arts else None
+        inf_nm = _at(arts[COHORT2B_FIRM], "non_model_aua", date) if COHORT2B_FIRM in arts else None
         smod = 0.0
-        snm = 0.0
-        missing = []
+        model_missing = []
         for f in comps:
             m = _at(arts[f], "model_aua", date)
-            nm = _at(arts[f], "non_model_aua", date)
-            if m is None or nm is None:
-                missing.append(f)
+            if m is None:
+                model_missing.append(f)
             else:
                 smod += m
-                snm += nm
-        if missing:
-            n_skip_comp += 1
-            holds.append((date, "component-missing", f"cannot re-derive; missing {missing}"))
-            continue
         n_checked += 1
-        # I1 enterprise 2-term identity
+        # E1 enterprise 2-term identity (global-internal; always checked when fields present)
         if gmod is not None and gnm is not None and abs(head - (gmod + gnm)) > tol:
-            holds.append((date, "I1-2term", f"headline {head:,.2f} != model+non_model {gmod + gnm:,.2f} (d={head - (gmod + gnm):,.2f})"))
-        # I2 independent component re-derive (load-bearing)
-        if abs(head - (smod + snm)) > tol:
-            holds.append((date, "I2-components", f"headline {head:,.2f} != SUM_firms(model+non_model) {smod + snm:,.2f} (d={head - (smod + snm):,.2f})"))
-        # I3 model rollup
-        if gmod is not None and abs(gmod - smod) > tol:
-            holds.append((date, "I3-model-rollup", f"global.model {gmod:,.2f} != SUM_firms.model {smod:,.2f} (d={gmod - smod:,.2f})"))
-        # I4 non_model rollup
-        if gnm is not None and abs(gnm - snm) > tol:
-            holds.append((date, "I4-nonmodel-rollup", f"global.non_model {gnm:,.2f} != SUM_firms.non_model {snm:,.2f} (d={gnm - snm:,.2f})"))
+            holds.append((date, "E1-2term", f"headline {head:,.2f} != model+non_model {gmod + gnm:,.2f} (d={head - (gmod + gnm):,.2f})"))
+        # E2 model rollup -- EXEMPT on a lineage-verified honest-None date (inflection model legitimately absent)
+        if not exempt and gmod is not None:
+            if model_missing:
+                holds.append((date, "E2-model-missing", f"model rollup blocked; {model_missing} model None (NOT a verified honest-None date)"))
+            elif abs(gmod - smod) > tol:
+                holds.append((date, "E2-model-rollup", f"global.model {gmod:,.2f} != SUM_firms.model {smod:,.2f} (d={gmod - smod:,.2f})"))
+        # E3 non_model is 49F-only (catches a silent FOLD-IN); always checked
+        if gnm is not None and f49_nm is not None and abs(gnm - f49_nm) > tol:
+            folded = (inf_nm is not None and abs(gnm - (f49_nm + inf_nm)) <= tol)
+            why = " (== FULL sum -- inflection non_model FOLDED IN; must be EXCLUDED per B)" if folded else ""
+            holds.append((date, "E3-nonmodel-basis", f"global.non_model {gnm:,.2f} != 49F-only {f49_nm:,.2f} (d={gnm - f49_nm:,.2f}){why}"))
+        # E4 cohort-2b carried (never silently DROPPED) -- EXEMPT on honest-None dates (legitimately None)
+        if not exempt and inf_nm is None:
+            holds.append((date, "E4-2b-dropped", f"{COHORT2B_FIRM} non_model absent on a NON-honest-None date -- cohort-2b dropped"))
     denom = {
         "component_firms": comps,
         "global_dates_total": len(g["dates"]),
         "dates_checked": n_checked,
-        "skipped_headline_none": n_skip_headline,
-        "skipped_component_missing": n_skip_comp,
+        "honest_none_verified": n_honest_none,
     }
     verdict = "PASS" if not holds else "HOLD"
     return verdict, holds, denom
@@ -126,16 +154,34 @@ def _load_s3(served):
     return _index(arts), bucket
 
 
-def _report(verdict, holds, denom, bucket):
-    print(f"source={bucket}  component_firms={denom['component_firms']}")
-    print(f"DENOMINATOR: global_dates={denom['global_dates_total']} "
-          f"checked={denom['dates_checked']} "
-          f"skipped(headline_none={denom['skipped_headline_none']}, "
-          f"component_missing={denom['skipped_component_missing']})")
+def _lineage_honest_none(arts):
+    """CVO lineage-verify leg: for every date the global headline (opal_aggregate) is None -- a
+    candidate honest-None -- check the eclipse MODEL partition. Return {source-absent dates}
+    (-> lineage-verified honest-None) and {present dates} (-> a None headline whose source EXISTS =
+    a real producer gap, NOT honest-None -> RED). Reads live S3 -- this IS the verifier's job.
+    Keyed on the headline (the gate-relevant axis), so a None the gate would otherwise skip is verified."""
+    import boto3
+    s3 = boto3.client("s3", region_name="us-east-1")
+    g = arts[ROLLUP]
+    cand = [d for d in g["dates"] if _at(g, "opal_aggregate_aua", d) is None]
+    absent, present = set(), set()
+    for d in cand:
+        r = s3.list_objects_v2(Bucket=STAGED_B, Prefix=f"{ECLIPSE_MODEL_PREFIX}/date={d}/", MaxKeys=1)
+        (absent if r.get("KeyCount", 0) == 0 else present).add(d)
+    return absent, present
+
+
+def _report(verdict, holds, denom, bucket, present_gap):
+    print(f"source={bucket} (B-basis: non_model==49F-only; inflection cohort-2b EXCLUDED from headline)")
+    print(f"DENOMINATOR: global_dates={denom['global_dates_total']} checked={denom['dates_checked']} "
+          f"honest_none_verified={denom['honest_none_verified']} (eclipse-absent, lineage-checked)")
+    if present_gap:
+        print(f"LINEAGE ALERT: {len(present_gap)} None-headline date(s) whose eclipse partition is PRESENT "
+              f"(real gap, NOT honest-None -> already RED above): {sorted(present_gap)[:8]}")
     if denom["dates_checked"] == 0:
         print("ZERO DATES CHECKED -- coverage failure, NOT a pass.")
     by_kind = {}
-    for _d, kind, _msg in holds:
+    for _d, kind, _m in holds:
         by_kind[kind] = by_kind.get(kind, 0) + 1
     if holds:
         print(f"HOLD count={len(holds)}  by_kind={by_kind}")
@@ -144,9 +190,9 @@ def _report(verdict, holds, denom, bucket):
         if len(holds) > 8:
             print(f"    ... +{len(holds) - 8} more")
     print(f"\nGATE VERDICT: {verdict}"
-          + ("  -- enterprise composition consistent; publish OK / no rollback"
+          + ("  -- B-basis enterprise composition consistent; publish OK / no rollback"
              if verdict == "PASS"
-             else "  -- BLOCK publish / rollback signal (enterprise excludes a component)"))
+             else "  -- BLOCK publish / rollback signal (B-basis violated)"))
     return verdict
 
 
@@ -154,42 +200,62 @@ def _selftest():
     dates = ["2025-01-02", "2025-01-03", "2025-01-06"]
 
     def firm(model, nonmodel):
-        a = {"dates": list(dates), "model_aua": list(model), "non_model_aua": list(nonmodel)}
-        return a
+        return {"dates": list(dates), "model_aua": list(model), "non_model_aua": list(nonmodel)}
 
     f49_m = [700.0, 710.0, 720.0]
-    f49_nm = [200.0, 205.0, 210.0]
-    inf_m = [0.0, 0.0, 0.0]
-    inf_nm = [150.0, 151.0, 152.0]
+    f49_nm = [200.0, 205.0, 210.0]     # under B this IS the headline non_model
+    inf_m = [130.0, 131.0, 132.0]
+    inf_nm = [60.0, 61.0, 62.0]        # inflection non_model = excluded cohort-2b (audit only)
 
-    def build(global_headline):
-        gmod = [f49_m[i] + inf_m[i] for i in range(3)]
-        gnm = [f49_nm[i] + inf_nm[i] for i in range(3)]
+    def build(global_nonmodel, inf_model=None, inf_nonmodel=None):
+        im = inf_model if inf_model is not None else inf_m
+        inm = inf_nonmodel if inf_nonmodel is not None else inf_nm
+        gmod = [f49_m[i] + (im[i] or 0.0) for i in range(3)]
+        gnm = list(global_nonmodel)
+        head = [gmod[i] + gnm[i] for i in range(3)]
         arts = {
             "49financial": firm(f49_m, f49_nm),
-            "inflection": firm(inf_m, inf_nm),
-            "global": {"dates": list(dates), "model_aua": gmod, "non_model_aua": gnm,
-                       "opal_aggregate_aua": global_headline},
+            "inflection": firm(im, inm),
+            "global": {"dates": list(dates), "model_aua": gmod, "non_model_aua": gnm, "opal_aggregate_aua": head},
         }
         return _index(arts)
 
-    # CLEAN: headline = model + FULL non_model
-    clean_head = [f49_m[i] + inf_m[i] + f49_nm[i] + inf_nm[i] for i in range(3)]
-    v_clean, h_clean, _ = check(build(clean_head))
-    # MUTANT: headline drops inflection non_model (the exact incident defect)
-    mut_head = [f49_m[i] + inf_m[i] + f49_nm[i] for i in range(3)]
-    v_mut, h_mut, _ = check(build(mut_head))
-
+    full = [f49_nm[i] + inf_nm[i] for i in range(3)]
+    # CLEAN B
+    v_clean, h_clean, _ = check(build(list(f49_nm)))
     ok_clean = (v_clean == "PASS" and not h_clean)
-    mut_dates = {d for d, _k, _m in h_mut}
-    ok_mut = (v_mut == "HOLD" and mut_dates == set(dates))
-    print(f"SELFTEST clean -> {v_clean} (expect PASS, holds={len(h_clean)})  : {'OK' if ok_clean else 'FAIL'}")
-    print(f"SELFTEST mutant(drop inflection non_model) -> {v_mut} on {len(mut_dates)}/3 dates "
-          f"(expect HOLD on 3/3)  : {'OK' if ok_mut else 'FAIL'}")
-    if not (ok_clean and ok_mut):
-        print("SELFTEST FAILED -- the gate does not discriminate; do NOT trust it.")
+    # FOLD-IN (A artifact) -> RED on E3
+    v_fold, h_fold, _ = check(build(full))
+    ok_fold = (v_fold == "HOLD" and {d for d, k, _m in h_fold if k == "E3-nonmodel-basis"} == set(dates))
+    # DROP inflection non_model on a NON-honest-None date -> RED on E4
+    v_drop, h_drop, _ = check(build(list(f49_nm), inf_nonmodel=[None, None, None]))
+    ok_drop = (v_drop == "HOLD" and {d for d, k, _m in h_drop if k == "E4-2b-dropped"} == set(dates))
+    # HONEST-NONE: a custody-only day => global headline None + inflection model/non_model None.
+    hn_date = "2025-01-03"
+
+    def build_hn():
+        a = build(list(f49_nm), inf_model=[130.0, None, 132.0], inf_nonmodel=[60.0, None, 62.0])
+        j = a["global"]["_idx"][hn_date]
+        a["global"]["opal_aggregate_aua"][j] = None    # headline None on the custody-only day
+        a["global"]["model_aua"][j] = None
+        return a
+
+    # verified honest-None (eclipse-absent, date in the set) -> PASS, counted
+    v_hn, h_hn, dn_hn = check(build_hn(), honest_none_dates={hn_date})
+    ok_hn = (v_hn == "PASS" and dn_hn["honest_none_verified"] == 1 and not h_hn)
+    # UNVERIFIED None headline (eclipse PRESENT, NOT in the set) -> RED, never silently skipped
+    v_gap, h_gap, _ = check(build_hn(), honest_none_dates=frozenset())
+    ok_gap = (v_gap == "HOLD" and any(d == hn_date and k == "headline-None-unverified" for d, k, _m in h_gap))
+
+    print(f"SELFTEST clean-B -> {v_clean} (expect PASS)                         : {'OK' if ok_clean else 'FAIL'}")
+    print(f"SELFTEST FOLD-IN (A artifact, non_model=FULL) -> {v_fold} on E3      : {'OK' if ok_fold else 'FAIL'}")
+    print(f"SELFTEST DROP cohort-2b (non-honest-None) -> {v_drop} on E4          : {'OK' if ok_drop else 'FAIL'}")
+    print(f"SELFTEST honest-None VERIFIED (None headline, eclipse-absent) -> {v_hn}   : {'OK' if ok_hn else 'FAIL'}")
+    print(f"SELFTEST None headline UNVERIFIED (eclipse present) -> {v_gap} (RED, not skipped): {'OK' if ok_gap else 'FAIL'}")
+    if not (ok_clean and ok_fold and ok_drop and ok_hn and ok_gap):
+        print("SELFTEST FAILED -- do NOT trust the gate.")
         return 1
-    print("SELFTEST OK -- gate REDs the known-bad case and GREENs the clean case.")
+    print("SELFTEST OK -- GREEN on clean-B + lineage-verified honest-None; RED on fold-in, drop, unverified None headline.")
     return 0
 
 
@@ -198,9 +264,10 @@ def main(argv):
         return _selftest()
     served = "--served" in argv
     arts, bucket = _load_s3(served)
-    verdict, holds, denom = check(arts)
-    _report(verdict, holds, denom, bucket)
-    return 0 if verdict == "PASS" else 2
+    absent, present = (frozenset(), frozenset()) if served else _lineage_honest_none(arts)
+    verdict, holds, denom = check(arts, honest_none_dates=absent)
+    _report(verdict, holds, denom, bucket, present)
+    return 0 if (verdict == "PASS" and not present) else 2
 
 
 if __name__ == "__main__":
