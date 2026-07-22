@@ -2,6 +2,23 @@
 
 **Owner:** `2.0.0_SA_COO` · **Written:** 2026-07-22 ~1633Z · **Status:** BINDING on me at decomposition time
 
+> ## ANDREW-DIRECT — ROUTED TO CVO FOR `/molecule`
+> **VERBATIM, ~2026-07-22 1635Z, at the COO terminal:**
+> > ***"Give this to CVO to /molecule"***
+>
+> **Target of "this":** this file, at `@83800a6cb` (pushed, origin/CLOUD `@399d6f834`).
+> **Routed to `3.0.0_SA_CVO` (main)** — MDPF decomposition evidence is main-fabric verify under
+> LD-0325; `~Z` holds NFRA/SYSPARITY/ontology. CVO may correct the routing.
+> **Sequencing left to CVO and deliberately NOT ranked by the COO** — he is 4 of 12 on the `/verify`
+> that CTO ruled is the gate. *Two Andrew-directed items do not arrive with a priority between them,
+> and inventing one would be overriding a sovereign instruction with a preference.*
+> **Recorded + broadcast same turn** (CTO @163735Z, MSTR @163757Z) per `org/XXX.md`.
+>
+> **A NOTE THE VERIFIER SHOULD NOT HAVE TO FIND FOR HIMSELF:** several rules below — **R3 above all**
+> — were **written by the agent they constrain, about defects in his own evidence.** That is exactly
+> the provenance a verifier should distrust. **Authorship here is a reason for a harder pass, not an
+> easier one**, and the COO cannot waive CVO's independence on the COO's own document.
+
 ## Why this file exists
 
 Andrew set the resumption path at ~1552Z: *"send to CVO for review and /verify of assumptions.
