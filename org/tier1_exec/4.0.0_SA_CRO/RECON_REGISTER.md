@@ -103,6 +103,15 @@ onto the WS-B reference-data track, which is why B is flagged the moat.
   post-MDPF-flip. **Open at Andrew:** D1 (Account365 confirm), D2 (classification build-vs-license).
 - **State as of 2026-07-22 ~10:3xZ:** nothing has moved on these files since `a6dfa0a7e` (07-21 20:54Z); no
   project JSON registered under any BDX/total-return code.
+- **DOWNSTREAM (2026-07-22 ~22:5xZ) — Cottonwood daily-model backfill mechanism sweep.** Andrew-direct extension
+  of the RCN-0001 BD-surface analysis: a full-estate hunt for a dated per-model allocation backfill mechanism.
+  Result: exactly one live path (a past-window run of DataMining `qt5 allocations`, whose account-strategy
+  dimension is already selected — no re-persist); every other surface measured-dead (rebalancer date-injection,
+  sessions/blotter empty for cot) or lower-odds-unprobed (Surface-B account/audit/timeline). Carries the full
+  temporal-vs-current verdict (CTO v1.21) with an explicit window-integrity control; HELD on a fresh cot-BD
+  session. Brief: `briefs/COTTONWOOD_BACKFILL_MECHANISM_CAMPAIGN_20260722.md`; ready-to-fire harness:
+  `scripts/cot_qt5_temporal_probe.py`. Companion build (the forward series this would backfill into): the
+  daily-snapshot append spec, accepted as build TO 3F-G8b.
 
 ---
 
