@@ -50,19 +50,56 @@ closed by earlier rulings — the durable-carrier discipline paying off.)*
 Every inversion attempted today cost a re-do.**
 
 ### S1 — FINISH PHASE 0 TO ITS ACTUAL EXIT *(owner DE; gates all build)*
-**Phase 0's exit is NOT met and must not be reported as met.** The population has two axes:
-- **firm-TOKEN axis** — searchable, measurable. Substantially covered.
-- **unnamed-ARITY axis** — a hardcoded count, a 2-element concat, a two-term sum, a closed series list.
-  **Names no firm → not reliably searchable.** Every confirmed member was found by **READING**.
-**EXIT CRITERION: a stated READ fraction per dense file, not a search denominator.** The three densest are
-currently **10% / 33% / 31%** read — and the 10% is `dim_mdpf_aggregate_aua_timeseries.py`, home of
-`build_global_artifact`. **Report two fractions. Never blend them into one number.**
+**Phase 0's exit is NOT met and must not be reported as met.** The population has **THREE** axes
+*(amended 1556Z — it was two; the third was proved by the IAM finding in S1b)*:
+- **A · firm-TOKEN axis** — searchable, measurable. Substantially covered.
+- **B · unnamed-ARITY axis** — a hardcoded count, a 2-element concat, a two-term sum, a closed series list.
+  **Names no firm → not reliably searchable.** Every confirmed member found by **READING**.
+- **C · ENCODING BY OMISSION** — *a firm simply MISSING from a list that should contain it.*
+  > **AN ABSENCE HAS NO TOKEN. YOU CANNOT GREP FOR WHAT IS NOT THERE.**
+  Axis A cannot see it (`main.tf:56-61` declares `bd_bucket` and `inf_bucket` and no `cot_bucket` — those name
+  **buckets, not firms**). Axis B cannot see it either (**there is no `2` anywhere** — five ARNs covering two
+  firms, so `== 2` / `[0]`/`[1]` / concat-pair searches return nothing). **Both A and B are PATTERN searches,
+  and every pattern search enumerates WHAT IS PRESENT.**
+  **THE INSTRUMENT FOR C IS A SET-DIFFERENCE, NOT A PATTERN MATCH:** wherever the estate **enumerates its
+  subjects** — IAM `Resource` lists, prefix `Condition`s, EventBridge patterns, `argparse choices=[...]`,
+  config maps, `FIRM_CONFIG`-style dicts — **take the list and DIFF it against the real firm population.**
+  Cheap: the lists are few and short. **It is the only axis that can close the enumeration.**
+
+**EXIT CRITERION: THREE STATED FRACTIONS, NEVER BLENDED.** Axis A a search denominator; **axis B a READ
+fraction** (currently **10% / 33% / 31%** on the three densest — the 10% being
+`dim_mdpf_aggregate_aua_timeseries.py`, home of `build_global_artifact`); **axis C a set-difference over every
+enumerated-subject list.**
+> **THE STANDING LESSON, and it generalises past this census: A CENSUS MUST STATE WHICH KIND OF ENCODING ITS
+> INSTRUMENT CAN RETURN — because an instrument that enumerates only what is PRESENT will report an ABSENCE
+> as a CLEAN RESULT.** Same family as the Glob case-sensitivity note in §E: both answer *"nothing found"* when
+> the honest answer is *"I cannot see that kind of thing."*
+**Each axis was invisible to its predecessor's method** — CTO adopted a one-axis view, DE proved a second,
+and the second proved there had to be a third. **If Phase 0 closes on axes A and B alone, class C closes
+UNMEASURED — and its first known instance sits on the runtime path of the very first build step.**
 **Also in S1:** the fixture render (`ui-smoke.mjs --fixtures firmId:cottonwood`) — **GO'd**; it confirms or
 kills five FE findings including `STACK_SERIES` (a closed 7-entry literal against a data-driven legend/donut
 → a model outside the 7 renders a slice and a swatch with **NO BAR**, and the trend silently totals less than
 the donut).
 
-### S2 — BUILD *(parallel; each gated on S1's exit, not on each other)*
+### S1b — **IAM: TWO ADDITIVE STATEMENTS. S2a CANNOT RUN WITHOUT THEM.** *(owner AE; CTO gates the apply)*
+**AMENDED 1556Z — S2a was listed as "parallel, all unblocked". IT IS NOT.**
+`mdpf-pipeline/iam.tf:243-252`, Sid `AssetsRevampSilverRead`, grants `s3:GetObject` on **exactly five ARNs**
+(`smartx/platform/silver`, `schwab/08242234/silver`, `eclipse/inflection/silver`, `orion/inflection/silver`,
+`gold/mdpf_revamp`). **`blackdiamond/cottonwood/silver/*` is NOT among them — while Cottonwood silver EXISTS
+there (12 `fact_*` tables from the WS-5 converter).** `AssetsRevampListScoped` carries the same closed
+prefix-condition list, so **partition discovery (`_latest_date` / `_read_partition`) fails identically.**
+**GROUNDED ON ALL THREE LIMBS (Rule 22a):** `desired` (TF at HEAD) = 5 ARNs · `applied` (live
+`get-role-policy` on `mdpf-daily-runner-ec2-role`) = **the same 5** · `exercised`
+(`simulate-principal-policy`, ONE `--resource-arns`) → Cottonwood **`implicitDeny`** · **control, SEPARATE
+invocation** → inflection **`allowed`**. **The control discriminates, so the deny is real. And desired ==
+applied, so this is NOT DRIFT — IT WAS NEVER BUILT.** There is nothing to reconcile; there is something to add.
+**Two additive statements, no widening beyond one new source tree. Held: IAM under the planning hold.**
+**Bears on D5:** the IAM that exists points at **neither** candidate source for the revamp role, and the silver
+that exists sits under `blackdiamond/cottonwood/`. **D5's ruling therefore has an asymmetric IAM cost attached
+— that is now known before the ruling rather than after.**
+
+### S2 — BUILD *(gated on S1's exit AND on S1b; NOT parallel-unblocked)*
 - **S2a · DE** — re-home cottonwood as `build_cottonwood_artifact()` **inside the shared producer**; extend
   `build_global_artifact` to the **N-firm fold** (D3); `--firm` choices; `want` sets. **Cottonwood joins the
   existing trading-day axis (R2).** Apply D6: merge CG→LTC, Income→non-model.
@@ -115,7 +152,9 @@ changes.**
 | **A6** | `STACK_SERIES` is a closed 7-entry literal while legend/donut are data-driven. | The render. |
 | **A7** | 49F's count axis has **no per-date source anywhere** — the basis for treating it as unfixable. | Any per-date 49F roster history falsifies it and reopens the decouple. |
 | **A8** | The `json/` FE-mirror dual-write is **graceful-degrade** (WARN, not non-zero) — so a build can succeed with a stale served copy. | `build_aggregate_aua_timeseries.py:654-661`. **Ungated today.** |
-| **A9** | Phase 0's unnamed-arity axis is **genuinely unsearchable** — i.e. reading is the only method. | Find a search that reliably finds arity sites. Would collapse S1's cost. |
+| **A9** | Phase 0's unnamed-arity axis (B) is **genuinely unsearchable** — reading is the only method. | Find a search that reliably finds arity sites. Would collapse S1's cost. |
+| **A11** *(new 1556Z)* | **Axis C (encoding-by-omission) is closable by set-difference** over the estate's enumerated-subject lists — and those lists are **few and short enough to enumerate exhaustively.** | Try to enumerate every place the estate lists its firms/subjects. **If that set is itself open-ended, S1 has no exit and the plan needs a different closure criterion.** This is the assumption the whole S1 exit now rests on. |
+| **A12** *(new 1556Z)* | The **two additive IAM statements** in S1b are sufficient for S2a to run green — i.e. `GetObject` + the `List` prefix-condition are the only denials on the Cottonwood read path. | **Exercise after apply, do not infer:** `simulate-principal-policy` on both the object read and the list, separate invocations, with a positive control. A second hidden denial would re-block S2a after an apply. |
 | **A10** | No named thread references `json/mdpf/{firm}/aggregate-aua-timeseries.json` — the estate's thread traversal does not reach a six-consumer artifact. | `pipescript --resource`. Affects what impact analysis can be trusted for. |
 
 **CVO also to check:** that the six D-decisions above are consistent with each other and with R1–R12, and that
