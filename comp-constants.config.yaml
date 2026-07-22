@@ -17,6 +17,33 @@
 #       canonical_value: <repr>
 #       sites: [{file, line, value, env_backed?, drift?, language?}, ...]
 #       notes: <str>
+# ---------------------------------------------------------------------------
+# TOOL BACKLOG (comp-constants). Filed here, at the top of the tool's own config, because a gap
+# recorded only inside one constant's `notes:` string is discoverable solely by whoever reads that
+# constant -- which is how the gap below stayed filed and unfixed.
+# ---------------------------------------------------------------------------
+# BL-1  NO exempt / deliberate / ratified FIELD.  (CTO-instructed 2026-07-22, his framing.)
+#   comp-constants cannot distinguish a RATIFIED divergence from DRIFT. A deliberate, signed-off
+#   difference has nowhere to live but a prose `notes:` string the gate does not read, so the tool
+#   re-reports it forever.
+#   >> THAT IS HOW A REAL GATE BECOMES NOISE PEOPLE SCROLL PAST. << The failure is not a false
+#   positive -- every report is TRUE. It is that a gate which cannot express "known, accepted" trains
+#   its readers to skim, and a skimmed gate is a dead gate that still looks alive.
+#   THE GATE IS NOT WRONG, IT IS INEXPRESSIVE. Fix the instrument, not the sample.
+#   LIVE INSTANCE: the 7 inf-lane drifts surfaced 2026-07-22 when the full-scan modes were restored
+#   (5x INFLECTION_REP_IDS + GUARD_B_AUA_LOWER/UPPER, all dated 2026-04-28..05-11, routed to
+#   0.4.0_DS_ClientPlatform). Some may be ratified; the tool cannot say which, so it cannot stop
+#   re-reporting the ones that are.
+#   SHAPE OF THE FIX (not built): a per-constant / per-site `exempt:` carrying WHO ratified it, WHEN,
+#   and WHY -- so an exemption is auditable and expires loudly, never a silent allowlist. An exemption
+#   the gate honours without recording its authority is just a hole with better manners.
+#
+# BL-2  UNRESOLVED-LANE census is --file-only.  (2026-07-22, stated as a residual, not a plan.)
+#   The lane-resolution fix reports UNRESOLVED on the `check --file` path (every commit), but full
+#   scans glob search_surfaces only and never enumerate out-of-surface files. 57 such files exist
+#   estate-wide; they surface one at a time as they are touched. Acceptable (it fires at the moment
+#   of change) but it means `check` cannot state its own coverage denominator.
+
 file_lanes:
   # Per-FILE lane declarations for producers living in SHARED trees that no lane search_surface
   # covers. data/assets/scripts/gold/ holds producers for several firms, so a directory-level rule
