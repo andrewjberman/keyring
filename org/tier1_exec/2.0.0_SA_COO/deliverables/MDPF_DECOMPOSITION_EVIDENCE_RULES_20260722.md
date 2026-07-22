@@ -157,5 +157,56 @@ estimate, not lower it.
   FALSE ALARM gets fixed the first time it fires. One that fails toward FALSE CLEAN is only ever
   found by someone who already knew the answer.*
 - **A cascade sourced from a message cannot detect its own supersession.** I relayed a ruling 25
-  seconds stale; nothing existed that could have told me. **When a ruling is superseded, who reaches
-  the agents already carrying it?** — open question, mine, for the message-only-bounds sweep.
+  seconds stale; nothing existed that could have told me.
+
+---
+
+## RULE 9 — A MESSAGE IS A NOTIFICATION. IT IS NEVER AN AUTHORIZATION.
+
+> **The authorization lives in the DURABLE CARRIER. RE-READ THE CARRIER AT FIRE TIME.**
+> **Nobody has to reach the agents carrying a stale ruling, because nobody fires on a carried ruling.**
+
+`0.0.0_AB_MSTR`, 2026-07-22 ~1639Z, answering the open question I had left in the section above.
+**The supersession problem is unfixable at the message layer** — a message is a snapshot with no
+back-channel — **so it must not be solved there.** My 25-second-stale relay **was not a failure of
+care; it was a message being used as an authorization.** *Nothing I could have checked would have
+helped, which is exactly the tell that the layer was wrong.*
+
+**Three independent demonstrations the same day, none aware it was demonstrating the same rule:**
+- I **re-verified the ETag pin AT FIRE TIME** rather than trusting the pin I was handed (data).
+- `0.7.0` **declined THREE authorizations it was holding** — CTO's superseded cascade, my 25s-stale
+  unpark, and Andrew's 1621Z priority — because it re-checked instead of acting on what it held
+  (instructions).
+- CTO **landed 12 rulings into a carrier** so a reset agent inherits from disk, not from a thread
+  (the carrier half).
+
+### R1 — FIRE-TIME CHECKLIST (I am the keeper of this trigger)
+
+**R1 fires on ANY flip re-sequencing.** Live owner `0.7.0_AE_CloudOps`; **COO keeps the trigger.**
+**When it fires I RE-READ, I do not fire on what I carry.** Read, in order:
+
+1. `org/critical_paths/MDPF_CONSOLIDATED_PLAN_20260722.md` (R1 row) and `org/tier0/ledger/LD-0330.md`
+   — the audit-wiring bound: **count-axis audit wiring lands before the SECOND post-flip cycle,
+   preempting WS-5 if needed.**
+2. **The count-source-audit tripwire is ARMED and NOT YET TRIPPED** (`gold/mdpf_revamp/` has no
+   `cottonwood/` prefix). **The third audit leg MUST land in the SAME change as the staging loops**,
+   or the nightly returns non-zero and the parity streak cannot accrue **even with perfect
+   artifacts.** R1 constrains the back of that window; the tripwire constrains the front.
+3. **⚠ NOT YET CARRIED BY ITS OWNER (flagged by `0.4.0_DS`, 1638Z):** the §7f **apply-gate** bind —
+   *"will not land DS's diff as prepared"*, *"Control 5 is a precondition"*, *"one step, not
+   diff-first-fix-after"*. `0.7.0`'s `@5bcd9bec5` carries **the doctrine, not the bind**; those
+   clauses exist **only in a message.** DS placed a backstop **STOP block at the top of the diff
+   itself** (`@930d85108`) — *because that is where the hand lands when a queued diff is applied.*
+   **A backstop catching a bind is not the bind surviving.** Until `0.7.0` lands it in a carrier they
+   own, **I treat this cell as UNCARRIED and re-derive it at fire time.**
+
+**And the second hazard DS caught while placing that backstop, which generalises:** the diff header
+still read **`CTO: APPROVED AS WRITTEN 134926Z`** — **true, never retracted, and three hours older
+than the defect.** Marked **SUPERSEDED IN PART**, not deleted.
+> **THE HAZARD IS NOT THE APPROVAL. IT IS THE APPROVAL WITHOUT ITS VINTAGE.**
+Sibling of the CLAUDE.md rule that *a line citation without a vintage is not a citation.*
+
+**The shape to watch, stated without scoring anyone:** *the insight half feels like the finding, so
+it gets written down; the operational half feels like a decision you will obviously remember.* Three
+agents did this today — DS with an unpersisted handoff, `0.7.0` with the apply gate, me with these
+eight rules until I landed them.
