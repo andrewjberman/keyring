@@ -509,3 +509,106 @@ actually lands, and it is **CTO's**; **the composition gate does NOT generalize 
 
 **THE GATE WORKED.** A never-widen co-sign held a defect off the served surface, on the exact dates the
 sovereign asked about, caught by us before him. That is the whole case for the gate, demonstrated on itself.
+
+---
+
+# H. ANDREW-DIRECT 2026-07-22 ~1259Z — **ONE FLIP, COTTONWOOD INSIDE THE GATE**
+
+**AMENDS SECTION G.5.** G's sequence ("fresh pin -> fresh 3-pass -> fresh limbs" on the rebuilt 2-object
+set) is **SUPERSEDED**. Leaving G.5 unamended would be a stale record with authority — the exact hazard
+this file has been guarding all session.
+
+## H.1 — THE RULING
+
+VERBATIM (Andrew -> CTO terminal, 2026-07-22 ~1259Z UTC / ~0859 ET):
+
+> **"Let's push everything with Cottonwood"**
+
+**ITEM 2 IS INSIDE THE GATE. ONE FLIP, ONE CO-SIGN, ONE WINDOW.**
+The joint CTO+COO **two-flips recommendation is OVERRULED** — and it was made **with our reasoning and
+MSTR's cost framing in front of him**, so it is *decided, not un-considered*. **No re-litigating, from me
+least of all.** My own rec (flip now, Cottonwood behind) is withdrawn.
+
+## H.2 — THE CUSTODY CONSEQUENCE: **NO BINDING PIN UNTIL THE END**
+
+DS staged the rebuilt objects at 12:54Z. **I verified them on my own ListObjectsV2 — not transcribed:**
+
+| key | ETag | size | state |
+|---|---|---|---|
+| `inflection/aggregate_aua_timeseries.json` | `5e7b684dbc141eeffb6de9ffabc9e893` | 145,039 | **REBUILT** |
+| `global/aggregate_aua_timeseries.json` | `08f9720ef2056fd07a457a77c158b567` | 175,195 | **REBUILT** |
+| `49financial/aggregate_aua_timeseries.json` | `aa5c5b85066109c9bdb557e51b0d8ffd` | 178,414 | unchanged |
+| `portfolios/aum-timeseries.json` (A2) | `f2c034760b44c4bd7338be0fd6c75c58` | 277,699 | **unchanged — STILL DEFECTIVE** |
+| A1, A4, account_dist x3, precutover_frozen | unchanged | | |
+
+DS's diff vs frozen: 49F **0 differences**; inflection **2,747** and global **802**, **all in `account_count`
+— no value moved anywhere.** 07-06: inflection 540 -> 474, global 7620 -> 7554.
+
+> **THESE ARE A CHECKPOINT, NOT A PIN. I DO NOT SPEND A LIMB ON AN INTERMEDIATE.**
+> Cottonwood-into-Global **rewrites `global/aggregate_aua_timeseries.json` again**, so any pin taken today
+> is **void by construction before it is ever served.** The binding pin is taken **ONCE, at the end, on the
+> complete Cottonwood-inclusive set.** The COO limb fires **once**, on that set.
+
+This also **retires the "you are buying a second co-sign either way" framing** — under one flip there is
+exactly one, and it comes last.
+
+## H.3 — SERIALIZATION **INVERTS**; MY WS-4 HOLD IS **LIFTED**
+
+**OLD (mine, G.6):** DS rebuild -> pin -> flip -> *then* Cottonwood fold.
+**NEW:** DS's fix lands -> **Cottonwood folds ON TOP** -> **then the whole set is pinned once and co-signed
+once.** WS-4 is **IN** the single pinned set, not behind it.
+**WS-4 HOLD LIFTED 2026-07-22 ~1301Z** and re-issued to DE, who was holding on my authority.
+CTO likewise corrected his own DE ruling: the Global fold is **not a second co-sign — it is THE co-sign.**
+
+## H.4 — THE CLASS GREW: **A THIRD PATH, AND IT IS A PATTERN**
+
+DS found A2 `portfolios/aum-timeseries.json` carries the same defect via a **third code path**
+(`build_legacy_compat_emit.py:598`, `ac = legacy_pt.get("account_count")`): count 7291 -> **7353** (07-06)
+-> 7302, a **+51 excursion that reverts**, reconciling to inflection's share of the foreign-day roster
+(+52 predicted vs +51 measured). **Not written** — DS reported scope growth before writing, per the rule.
+
+> **CTO RULING: this is a PATTERN, not a bug — *everywhere the revamp was built to TIE TO SERVED, it
+> inherited served's broken date axis. Three paths, three inheritances.*** A2 is fixed in this wave, plus a
+> **full sweep of the tie-to-served class** rather than fixing three and hoping. **Andrew's one-flip ruling
+> is what buys the room to do that properly** — an unintended benefit of being overruled.
+
+**COO CONDITION ON THAT SWEEP: it must print its DENOMINATOR.** Three paths are *known*; the population is
+**not yet bounded**. My own `comp-grep` over `data/mdpf` shows `opal-data-portal-v2` referenced across the
+backfill tree and in at least one further live gold producer
+(`build_mdpf_etf_ownership_timeseries.py`, reading `platinum/mdpf/...`). **Whether those are in-class is
+exactly what the sweep must answer.** *"Three found" is not "three exist."*
+
+## H.5 — GLOBAL WAS NOT AUTOMATIC (DS, and it belongs in the custody record)
+
+CTO and DS both assumed global would recompose from the corrected inflection leg. **It did not** — the first
+rebuild left global **byte-identical**, because global had its **own** served import. Caught only by diffing
+the rebuild against the frozen artifact.
+
+> **Why it hid is the sharpest instrument lesson of the day: because the legacy global count WAS
+> 49F + inflection, the identity `global == 49F + inflection` held EXACTLY 7/7 *while the entire sum sat on
+> the wrong day.* A coherence check PASSED and still shipped a foreign-day roster.**
+> **IDENTITY-HOLDS IS NOT DAY-CORRECT.** A cross-sectional invariant cannot detect a whole-series date shift.
+
+DS also caught a **false pass in his own mutant test** (first run exited 1 on a `ModuleNotFoundError`, not on
+the gate) and re-ran it properly before recording — *an exit code is not a reason*, the same class as
+`grep -c` counting zero matches in an error message.
+
+## H.6 — THE GATE I REQUIRED IS BUILT AND MUTANT-PROVEN
+
+DS's cross-axis coherence clause is **fail-closed**: reverting to the old import makes the build **RAISE and
+refuse to emit**, naming `2026-07-06: 474 -> 540 -> 474 (+66, reverts EXACTLY)`. **It would have caught THIS
+defect** — which was my requirement (*the old Layer-3 gate could not have failed on this class*).
+**Clause (vi) is deliberately THRESHOLD-FREE, because a percentage floor is precisely what hid the defect on
+global** (+66 on 7544 = 0.87%, under DS's own 5% floor).
+
+## H.7 — CRITICAL PATH MOVED OFF DS AND ONTO DE
+
+The flip now waits on **WS-4 fold -> Select-Partner FE -> the 4-firm composition gate**, plus A2 + the
+tie-to-served sweep. Status: **WS-1 LIVE; WS-2 COMPLETE @bcd5ab971; WS-3 COMPLETE @449ef54aa** (9 dim rows,
+447 counts over 296 accounts, 0 orphans, 16 tests + 3 mutants proven to bite).
+**Date risk, named not buried:** (a) the tie-to-served sweep's **denominator is unknown** — scope unbounded
+until it prints; (b) the **4-firm composition identity is untested** and is the P0 class; (c) **WS-5's
+`.xlsx`-vs-`.json` trigger gap** means Cottonwood silver+gold **do not self-refresh** — *we cannot flip a
+nightly-fed surface whose feed is manual*, so AE must come up before the flip regardless.
+**COO position: give Andrew the sequence and the three risk items, and a date once the sweep denominator
+lands. He bought this knowingly; he can price an honest unknown.**
