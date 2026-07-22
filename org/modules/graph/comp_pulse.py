@@ -128,6 +128,80 @@ class Source:
 
 
 # ---------------------------------------------------------------------------
+# danger-map auto-refresh (bundle item 6, census G1 @e7952ccba)
+# ---------------------------------------------------------------------------
+# The map sat 207h stale while this tool printed `!! STALE` on EVERY commit
+# fabric-wide for 8 days -- honestly, and nothing acted (COO's exhibit: ~13
+# commits, two sessions, the tool knows, says so, and it changes nothing).
+# An honest flag nobody owns is halfway to no flag (CTO, 213649Z); the repair
+# is removing the ACTOR-DEPENDENCE: refresh-on-stale-read at the shared
+# consumer, so the first reflex after TTL breach heals the map for everyone.
+# THE FIX IS THE TRIGGER, NOT THE REPORTING (COO, 220729Z) -- the STALE tag
+# and the honest-degradation paths are unchanged.
+_REFRESH_LOCK = RISK + ".refresh.lock"
+_REFRESH_TIMEOUT_S = 120   # a hung build must never hang every commit
+_LOCK_FRESH_S = 300        # a lock younger than this = another refresh runs NOW
+
+
+def _ensure_fresh_danger_map() -> str | None:
+    """Rebuild the danger map iff stale/absent. Returns a one-line note for the
+    report (None = map was fresh, nothing happened). NEVER raises, NEVER blocks
+    the commit path: every failure mode degrades to the pre-existing honest
+    stale/absent behavior, with the failure SAID."""
+    try:
+        probe = Source(RISK, "danger map (nerves_lexical)")
+        if probe.exists and not probe.stale:
+            return None
+        was = ("%.1fh stale" % probe.age_h) if probe.age_h is not None else "ABSENT"
+        # Single-refresher lock: nerves_lexical's writer is not atomic (flagged
+        # to its owner ~Z), so concurrent commit-path rebuilds must not race it.
+        now = dt.datetime.now().timestamp()
+        try:
+            fd = os.open(_REFRESH_LOCK, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            os.write(fd, str(os.getpid()).encode())
+            os.close(fd)
+        except FileExistsError:
+            try:
+                lock_age = now - os.path.getmtime(_REFRESH_LOCK)
+            except OSError:
+                lock_age = 0.0
+            if lock_age < _LOCK_FRESH_S:
+                return ("AUTO-REFRESH SKIPPED: another refresh holds the lock "
+                        "(%.0fs old); proceeding on the %s map, STALE tag stands"
+                        % (lock_age, was))
+            # stale lock from a dead refresher -- take it over
+            try:
+                os.remove(_REFRESH_LOCK)
+                fd = os.open(_REFRESH_LOCK, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+                os.write(fd, str(os.getpid()).encode())
+                os.close(fd)
+            except OSError:
+                return ("AUTO-REFRESH SKIPPED: could not take the stale lock; "
+                        "proceeding on the %s map, STALE tag stands" % was)
+        try:
+            r = subprocess.run(
+                [sys.executable, os.path.join(_HERE, "nerves_lexical.py"), "build"],
+                capture_output=True, text=True, timeout=_REFRESH_TIMEOUT_S,
+                cwd=os.path.dirname(os.path.dirname(os.path.dirname(_HERE))),
+            )
+            if r.returncode == 0:
+                return ("AUTO-REFRESHED: danger map was %s -> rebuilt now "
+                        "(trigger-on-stale-read; census G1)" % was)
+            tail = (r.stderr or r.stdout or "").strip().splitlines()
+            return ("AUTO-REFRESH FAILED rc=%d (%s); proceeding on the %s map, "
+                    "STALE tag stands" % (r.returncode,
+                                          tail[-1][:120] if tail else "no output", was))
+        finally:
+            try:
+                os.remove(_REFRESH_LOCK)
+            except OSError:
+                pass
+    except Exception as e:  # noqa: BLE001 -- advisory path; a refresh bug must not block commits
+        return ("AUTO-REFRESH ERROR %s: %s; proceeding on the existing map, "
+                "honest vintage stands" % (type(e).__name__, str(e)[:120]))
+
+
+# ---------------------------------------------------------------------------
 # signals
 # ---------------------------------------------------------------------------
 _RAIL_RX = re.compile(r"^(\S+)\s+(\S+)\s+(.*)$")
@@ -313,6 +387,7 @@ def danger_x_traffic(risk_src: Source, attention: Counter, top: int, newest=None
 # ---------------------------------------------------------------------------
 def compile_pulse(days: int = 7, top: int = 8, invocation: str = "") -> dict:
     edges_src = Source(EDGES, "co-change edges (nerves_accrete)")
+    refresh_note = _ensure_fresh_danger_map()   # item 6: heal-on-read, then load
     risk_src = Source(RISK, "danger map (nerves_lexical)")
 
     att, phantom, newest, rail_stats = rail_signals(days)
@@ -336,7 +411,8 @@ def compile_pulse(days: int = 7, top: int = 8, invocation: str = "") -> dict:
             "cochange": {"available": edges_src.exists, "vintage": edges_src.vintage,
                          "stale": edges_src.stale},
             "danger": {"available": risk_src.exists, "vintage": risk_src.vintage,
-                       "stale": risk_src.stale},
+                       "stale": risk_src.stale,
+                       "auto_refresh": refresh_note},
         },
         "hot": [{"ref": r, "attention": round(w, 2),
                  "newest_age_d": round(newest[r], 1) if r in newest else None}
@@ -597,12 +673,16 @@ def main() -> int:
 
     if args.cmd == "diff":
         paths = args.paths or _staged_files()
+        refresh_note = _ensure_fresh_danger_map()   # item 6: heal-on-read
         risk_src = Source(RISK, "danger map (nerves_lexical)")
         hits, denom = risk_reflex(risk_src, paths)
         if args.json:
             print(json.dumps({"invocation": invocation, "hits": hits, "denominators": denom,
-                              "map_vintage": risk_src.vintage}, indent=1, default=str))
+                              "map_vintage": risk_src.vintage,
+                              "auto_refresh": refresh_note}, indent=1, default=str))
         else:
+            if refresh_note:
+                print("  [risk-reflex] " + refresh_note)
             print(render_reflex(hits, denom, risk_src, invocation))
         # exit contract: 0 clean / 1 the reflex FIRED / 2 the map is absent (CANNOT clear --
         # distinct from clean, because 'could not check' must never read as 'checked clean').
