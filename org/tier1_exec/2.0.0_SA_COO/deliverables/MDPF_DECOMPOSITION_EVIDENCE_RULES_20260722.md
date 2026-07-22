@@ -255,6 +255,47 @@ from the hand?**
 
 ---
 
+## ⛔ PROHIBITION — NEVER RUN `pull_eclipse_portfolios.py` WITH `--date`
+
+**SOURCE-CONFIRMED by the COO at `b0cad1965`** (found by `0.6.2_AE_PartnerETL~A`, verified
+independently rather than relayed). **The reserved word is used deliberately.**
+
+```
+data/inf/scripts/bronze/pull_eclipse_portfolios.py @ b0cad1965
+  :228  def eclipse_get(path, eclipse_jwt, timeout=60)   <- NO DATE PARAMETER EXISTS AT ALL
+  :270  date_iso = args.date or <now UTC>                <- silently defaults to TODAY
+  COMPLETE enumeration of every date_iso use (not a sample):
+    :272 log · :296/:306/:316/:331 S3 keys · :347 metadata · :361 sentinel · :369 log
+    >> NOT ONE REACHES A REQUEST <<
+  POSITIVE CONTROL: asOf|as_of|effectiveDate|startDate|endDate|params.*date -> ZERO HITS
+```
+
+**`--date` IS AN OUTPUT FILENAME, NOT A QUERY.** `--date 2026-07-13` run today fetches **today's
+live Eclipse state** and writes it into `bronze/eclipse/2026-07-13/` — **exit 0, `pull_complete.json`
+sentinel written, mirror carries it to the monolith, silver converts it.** **A fabricated historical
+partition that passes every absence check in the estate.**
+
+> **⚠ THIS IS AIMED AT A CAREFUL AGENT, NOT A CARELESS ONE. "Verify ABSENT, never overwrite" PASSES:
+> the partition genuinely IS absent, the write genuinely IS additive, 17a is respected, nothing is
+> overwritten. A competent, guardrail-respecting run produces the corruption AND REPORTS SUCCESS.**
+>
+> **ABSENCE IS THE WRONG CONTROL WHEN THE FAILURE IS CONTENT, NOT COLLISION.** — `0.6.2`
+
+**ECLIPSE `2026-06-01`, `07-01`, `07-13`, `07-14`, `07-15` ARE PERMANENTLY UNRECOVERABLE —
+RECORDABLE, NEVER FILLABLE.** All four consumed endpoints are current-state; across the vendor's
+493-path OpenAPI surface, date parameters exist **only on `/auditlog/*`**. **The plan needs a
+RECORD-AND-MOVE-ON path for eclipse, not a fill path** — CTO's July matrix reads as a gap awaiting a
+re-pull, which for eclipse is false and will keep sending people at it.
+**ORION IS THE OPPOSITE CASE and IS recoverable** — the RAW producer died after 07-10 while the
+PARQUET producer kept running; cause is **ours**, mirror and converter exonerated.
+
+**⚠ EVERY CARRIER FOR THIS PROHIBITION IS CURRENTLY EVENT-SCOPED AND WILL RETIRE (D10):** this file,
+`0.6.2`'s report, CTO's plan text, the broadcast. **The only CLASS-scoped fix is making `--date`
+REFUSE rather than mislabel** — a puller whose date argument cannot reach the vendor should **error**,
+not silently relabel today's data. **That is a bronze-script change (DS's lane, Rule 13), routed to
+CTO, not started under the hold.** Until it exists, **a fourth firm's puller written by copying this
+one inherits the defect.**
+
 ## Standing hazards to carry into any TO I write
 
 - **`bd` does DOUBLE DUTY** — firm alias for 49financial **AND** a custody-source enum. **CVO
