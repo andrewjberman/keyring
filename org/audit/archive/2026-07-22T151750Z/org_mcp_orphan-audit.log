@@ -1,0 +1,114 @@
+2026-05-27T23:52:21Z  bash=0
+0  git=0
+0  orphans=21
+ORPHAN  pid=SPAWN-WITH-DIRECTION  ppid=2026-05-27T~23:35Z(dead)  cmd=MSTR-DIRECT SPAWN-WITH-DIRECTION 2026-05-27T~23:35Z + Andrew 23:25Z parallelize.
+ORPHAN  pid=Phase  ppid=2B(dead)  cmd=FIND_INSURE Phase 2B Stage Bbeta scope.
+ORPHAN  pid=read:  ppid=PRD(dead)  cmd=Substrate read: PRD v0.7 + CVO Mode B 810211e17 + scaffold brief v0.0 (mine prior
+ORPHAN  pid=+  ppid=endpoint(dead)  cmd=session) + endpoint manifest v0.0 (DS~D) + job_board_parser_base.py (DS~D).
+ORPHAN  pid=to  ppid=ws(dead)  cmd=[BLOCKED-ASK] to ws COO 20260527T234051Z surfacing architectural fork on per-board
+ORPHAN  pid=vs  ppid=Bbeta-now(dead)  cmd=gate vs Bbeta-now mandate; 4 options ranked with default (b) CHASSIS-PRE-STAGE per
+ORPHAN  pid=ALWAYS-PROCEED.  ppid=Per(dead)  cmd=LD-0090 ALWAYS-PROCEED. Per LD-0116: no direct worker->MSTR MCP.
+ORPHAN  pid=0.7.0_AE_CloudOps~B  ppid=2026-05-27T~23:42Z(dead)  cmd=— 0.7.0_AE_CloudOps~B 2026-05-27T~23:42Z -- org/tier2_senior/0.7.0_AE_CloudOps/l2026-05-28T00:06:25Z  bash=0  git=0  orphans=1
+ORPHAN  pid=78778  ppid=78590(dead)  cmd=2.1.0_SA_COO2026-05-28T00:00:03Z  bash=0  git=0  orphans=0
+2026-05-27T23:58:05Z  bash=0  git=0  orphans=0
+2026-07-14T03:24:49Z  WATCHER-SELF-EXIT  serial=0.0.0_AB_MSTR~ZZTESTPX  parent=3473244 gone -- exiting instead of orphaning
+2026-07-14T06:49:38Z  WATCHER-SELF-EXIT  serial=1.0.0_SA_CTO  parent=3605115 gone -- exiting instead of orphaning
+2026-07-14T06:49:47Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps  parent=3759982 gone -- exiting instead of orphaning
+2026-07-14T09:07:39Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps~Z  parent=4115831 gone -- exiting instead of orphaning
+2026-07-14T11:09:14Z  WATCHER-SELF-EXIT  serial=3.0.0_SA_CVO~Z  parent=3955656 gone -- exiting instead of orphaning
+2026-07-14T11:13:42Z  WATCHER-SELF-EXIT  serial=0.8.0_AE_CloudComp~Z  parent=36395 gone -- exiting instead of orphaning
+2026-07-14T11:16:11Z  WATCHER-SELF-EXIT  serial=1.0.0_SA_CTO~Z  parent=3936706 gone -- exiting instead of orphaning
+2026-07-14T11:43:35Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform  parent=3926195 gone -- exiting instead of orphaning
+2026-07-14T11:43:57Z  WATCHER-SELF-EXIT  serial=0.5.0_AE_OpalETL  parent=193398 gone -- exiting instead of orphaning
+2026-07-14T11:47:43Z  WATCHER-SELF-EXIT  serial=1.0.0_SA_CTO  parent=3918103 gone -- exiting instead of orphaning
+2026-07-14T16:03:01Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps  parent=39331 gone -- exiting instead of orphaning
+2026-07-14T16:03:13Z  WATCHER-SELF-EXIT  serial=0.6.2_AE_PartnerETL  parent=47731 gone -- exiting instead of orphaning
+2026-07-14T16:30:56Z  WATCHER-SELF-EXIT  serial=2.0.0_SA_COO  parent=346970 gone -- exiting instead of orphaning
+2026-07-14T18:42:40Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps~A  parent=470701 gone -- exiting instead of orphaning
+2026-07-14T18:43:05Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps~B  parent=510761 gone -- exiting instead of orphaning
+2026-07-14T18:45:06Z  WATCHER-SELF-EXIT  serial=2.0.0_SA_COO  parent=350000 gone -- exiting instead of orphaning
+2026-07-15T19:15:24Z  WATCHER-SELF-EXIT  serial=0.2.0_DT_PortfolioAnalytics  parent=677830 gone -- exiting instead of orphaning
+2026-07-15T19:45:21Z  WATCHER-SELF-EXIT  serial=0.5.0_AE_OpalETL~A  parent=572655 gone -- exiting instead of orphaning
+2026-07-15T20:10:35Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform  parent=1197660 gone -- exiting instead of orphaning
+2026-07-15T20:38:27Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps  parent=349790 gone -- exiting instead of orphaning
+2026-07-15T20:53:27Z  WATCHER-SELF-EXIT  serial=0.6.2_AE_PartnerETL  parent=936634 gone -- exiting instead of orphaning
+2026-07-15T22:17:31Z  WATCHER-SELF-EXIT  serial=2.0.0_SA_COO  parent=577240 gone -- exiting instead of orphaning
+2026-07-15T22:24:53Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps~Z  parent=1294033 gone -- exiting instead of orphaning
+2026-07-15T22:25:12Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform~C  parent=1296461 gone -- exiting instead of orphaning
+2026-07-15T22:33:15Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps~A  parent=1518001 gone -- exiting instead of orphaning
+2026-07-16T13:42:39Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform~C  parent=2119988 gone -- exiting instead of orphaning
+2026-07-16T14:16:47Z  WATCHER-SELF-EXIT  serial=2.0.0_SA_COO  parent=1599910 gone -- exiting instead of orphaning
+2026-07-16T15:01:39Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform  parent=2176036 gone -- exiting instead of orphaning
+2026-07-16T16:29:28Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform~B  parent=2100919 gone -- exiting instead of orphaning
+2026-07-16T16:40:41Z  WATCHER-SELF-EXIT  serial=3.0.0_SA_CVO~B  parent=1629367 gone -- exiting instead of orphaning
+2026-07-16T16:55:29Z  WATCHER-SELF-EXIT  serial=0.5.0_AE_OpalETL  parent=1207278 gone -- exiting instead of orphaning
+2026-07-16T17:37:25Z  WATCHER-SELF-EXIT  serial=0.8.0_AE_CloudComp~Z  parent=1250591 gone -- exiting instead of orphaning
+2026-07-16T19:10:58Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform~A  parent=2505216 gone -- exiting instead of orphaning
+2026-07-16T19:13:58Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform~B  parent=2513186 gone -- exiting instead of orphaning
+2026-07-16T19:31:13Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps  parent=2098643 gone -- exiting instead of orphaning
+2026-07-16T19:31:16Z  WATCHER-SELF-EXIT  serial=0.6.2_AE_PartnerETL  parent=2095896 gone -- exiting instead of orphaning
+2026-07-16T19:42:43Z  WATCHER-SELF-EXIT  serial=3.0.0_SA_CVO  parent=2275424 gone -- exiting instead of orphaning
+2026-07-16T21:25:03Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps~B  parent=2138868 gone -- exiting instead of orphaning
+2026-07-16T21:29:58Z  WATCHER-SELF-EXIT  serial=1.0.0_SA_CTO  parent=341832 gone -- exiting instead of orphaning
+2026-07-16T21:30:41Z  WATCHER-SELF-EXIT  serial=0.0.0_AB_MSTR  parent=2516461 gone -- exiting instead of orphaning
+2026-07-16T21:30:46Z  WATCHER-SELF-EXIT  serial=0.5.0_AE_OpalETL  parent=2744418 gone -- exiting instead of orphaning
+2026-07-16T21:37:47Z  WATCHER-SELF-EXIT  serial=2.0.0_SA_COO  parent=2263709 gone -- exiting instead of orphaning
+2026-07-17T12:32:16Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps~A  parent=2720715 gone -- exiting instead of orphaning
+2026-07-17T17:09:25Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform  parent=2971916 gone -- exiting instead of orphaning
+2026-07-17T17:09:39Z  WATCHER-SELF-EXIT  serial=3.0.0_SA_CVO  parent=2893027 gone -- exiting instead of orphaning
+2026-07-17T17:09:56Z  WATCHER-SELF-EXIT  serial=0.2.0_DE_PortfolioAnalytics  parent=2859596 gone -- exiting instead of orphaning
+2026-07-17T18:30:52Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform~A  parent=2970724 gone -- exiting instead of orphaning
+2026-07-17T19:16:17Z  WATCHER-SELF-EXIT  serial=0.5.0_AE_OpalETL  parent=2938496 gone -- exiting instead of orphaning
+2026-07-17T19:58:41Z  WATCHER-SELF-EXIT  serial=0.8.0_AE_CloudComp~C  parent=3120054 gone -- exiting instead of orphaning
+2026-07-17T20:02:38Z  WATCHER-SELF-EXIT  serial=3.0.0_SA_CVO  parent=3284534 gone -- exiting instead of orphaning
+2026-07-17T20:43:34Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform  parent=3244943 gone -- exiting instead of orphaning
+2026-07-17T23:39:24Z  WATCHER-SELF-EXIT  serial=0.8.0_AE_CloudComp  parent=3047217 gone -- exiting instead of orphaning
+2026-07-17T23:39:31Z  WATCHER-SELF-EXIT  serial=0.8.0_AE_CloudComp~Z  parent=3062677 gone -- exiting instead of orphaning
+2026-07-17T23:48:00Z  WATCHER-SELF-EXIT  serial=0.8.0_AE_CloudComp~D  parent=3350029 gone -- exiting instead of orphaning
+2026-07-18T00:02:13Z  WATCHER-SELF-EXIT  serial=0.2.0_DT_PortfolioAnalytics  parent=2822156 gone -- exiting instead of orphaning
+2026-07-18T00:21:40Z  WATCHER-SELF-EXIT  serial=3.0.0_SA_CVO  parent=3490481 gone -- exiting instead of orphaning
+2026-07-18T00:58:58Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform~A  parent=3231348 gone -- exiting instead of orphaning
+2026-07-18T03:13:59Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform  parent=3693020 gone -- exiting instead of orphaning
+2026-07-18T03:24:29Z  WATCHER-SELF-EXIT  serial=0.5.0_AE_OpalETL  parent=3279567 gone -- exiting instead of orphaning
+2026-07-18T03:33:26Z  WATCHER-SELF-EXIT  serial=3.0.0_SA_CVO  parent=3849652 gone -- exiting instead of orphaning
+2026-07-18T03:48:16Z  WATCHER-SELF-EXIT  serial=2.0.0_SA_COO  parent=3499235 gone -- exiting instead of orphaning
+2026-07-18T03:54:50Z  WATCHER-SELF-EXIT  serial=0.6.2_AE_PartnerETL  parent=3170725 gone -- exiting instead of orphaning
+2026-07-18T04:08:47Z  WATCHER-SELF-EXIT  serial=1.0.0_SA_CTO  parent=2806166 gone -- exiting instead of orphaning
+2026-07-18T04:11:43Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps  parent=3028325 gone -- exiting instead of orphaning
+2026-07-18T04:15:03Z  WATCHER-SELF-EXIT  serial=2.0.0_SA_COO  parent=3932108 gone -- exiting instead of orphaning
+2026-07-18T05:19:34Z  WATCHER-SELF-EXIT  serial=0.8.0_AE_CloudComp~D  parent=3725558 gone -- exiting instead of orphaning
+2026-07-18T23:13:56Z  WATCHER-SELF-EXIT  serial=0.8.0_AE_CloudComp~C  parent=3855295 gone -- exiting instead of orphaning
+2026-07-20T12:29:33Z  WATCHER-SELF-EXIT  serial=0.8.0_AE_CloudComp~A  parent=133261 gone -- exiting instead of orphaning
+2026-07-20T12:29:39Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps~B  parent=131879 gone -- exiting instead of orphaning
+2026-07-20T12:29:40Z  WATCHER-SELF-EXIT  serial=0.8.0_AE_CloudComp~C  parent=142976 gone -- exiting instead of orphaning
+2026-07-20T12:29:45Z  WATCHER-SELF-EXIT  serial=0.8.0_AE_CloudComp~Z  parent=131950 gone -- exiting instead of orphaning
+2026-07-20T12:29:45Z  WATCHER-SELF-EXIT  serial=0.8.0_AE_CloudComp~D  parent=81459 gone -- exiting instead of orphaning
+2026-07-20T16:11:51Z  WATCHER-SELF-EXIT  serial=2.0.0_SA_COO  parent=1572072 gone -- exiting instead of orphaning
+2026-07-20T16:13:54Z  WATCHER-SELF-EXIT  serial=3.0.0_SA_CVO  parent=1575025 gone -- exiting instead of orphaning
+2026-07-20T16:15:22Z  WATCHER-SELF-EXIT  serial=1.0.0_SA_CTO~A  parent=1704764 gone -- exiting instead of orphaning
+2026-07-20T17:02:00Z  WATCHER-SELF-EXIT  serial=0.7.0_AE_CloudOps~B  parent=1696246 gone -- exiting instead of orphaning
+2026-07-20T17:42:02Z  WATCHER-SELF-EXIT  serial=1.0.0_SA_CTO~B  parent=1695988 gone -- exiting instead of orphaning
+2026-07-20T17:54:25Z  WATCHER-SELF-EXIT  serial=2.0.0_SA_COO~Z  parent=1791266 gone -- exiting instead of orphaning
+2026-07-20T19:14:31Z  WATCHER-SELF-EXIT  serial=2.0.0_SA_COO  parent=1959750 gone -- exiting instead of orphaning
+2026-07-20T19:14:31Z  WATCHER-SELF-EXIT  serial=3.0.0_SA_CVO  parent=1961813 gone -- exiting instead of orphaning
+2026-07-21T13:54:35Z  WATCHER-SELF-EXIT  serial=3.0.0_SA_CVO~Z  parent=1792485 gone -- exiting instead of orphaning
+2026-07-21T13:54:37Z  WATCHER-SELF-EXIT  serial=1.0.0_SA_CTO~Z  parent=2305408 gone -- exiting instead of orphaning
+2026-07-21T13:54:40Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform~A  parent=2196943 gone -- exiting instead of orphaning
+2026-07-21T18:20:06Z  WATCHER-SELF-EXIT  serial=0.3.0_DT_TradingOperations  parent=118316 gone -- exiting instead of orphaning
+2026-07-21T19:04:26Z  WATCHER-SELF-EXIT  serial=0.6.2_AE_PartnerETL~A  parent=262274 gone -- exiting instead of orphaning
+2026-07-21T22:27:34Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform  parent=13140 gone -- exiting instead of orphaning
+2026-07-21T22:29:47Z  WATCHER-SELF-EXIT  serial=0.5.0_AE_OpalETL~Z  parent=372052 gone -- exiting instead of orphaning
+2026-07-21T22:33:39Z  WATCHER-SELF-EXIT  serial=0.2.0_DT_PortfolioAnalytics  parent=32620 gone -- exiting instead of orphaning
+2026-07-21T22:37:02Z  WATCHER-SELF-EXIT  serial=0.4.0_DE_ClientPlatform  parent=317513 gone -- exiting instead of orphaning
+2026-07-21T23:24:02Z  WATCHER-SELF-EXIT  serial=0.0.0_AB_MSTR  parent=1453 gone -- exiting instead of orphaning
+2026-07-21T23:24:08Z  WATCHER-SELF-EXIT  serial=0.0.0_AB_MSTR  parent=641636 gone -- exiting instead of orphaning
+2026-07-22T00:31:41Z  WATCHER-SELF-EXIT  serial=0.6.2_AE_PartnerETL  parent=403198 gone -- exiting instead of orphaning
+2026-07-22T00:37:48Z  WATCHER-SELF-EXIT  serial=3.0.0_SA_CVO  parent=17199 gone -- exiting instead of orphaning
+2026-07-22T00:59:58Z  WATCHER-SELF-EXIT  serial=0.2.0_DT_PortfolioAnalytics  parent=729485 gone -- exiting instead of orphaning
+2026-07-22T01:09:40Z  WATCHER-SELF-EXIT  serial=0.5.0_AE_OpalETL~A  parent=614001 gone -- exiting instead of orphaning
+2026-07-22T01:25:26Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform~A  parent=637042 gone -- exiting instead of orphaning
+2026-07-22T14:10:12Z  WATCHER-SELF-EXIT  serial=0.4.0_DS_ClientPlatform~Z  parent=329295 gone -- exiting instead of orphaning
+2026-07-22T14:23:08Z  WATCHER-SELF-EXIT  serial=0.9.0_FR_ExtResearch  parent=488117 gone -- exiting instead of orphaning
+2026-07-22T15:15:14Z  WATCHER-SELF-EXIT  serial=2.0.0_SA_COO  parent=12371 gone -- exiting instead of orphaning
+2026-07-22T15:15:52Z  WATCHER-SELF-EXIT  serial=3.0.0_SA_CVO  parent=43304 gone -- exiting instead of orphaning
+2026-07-22T15:17:32Z  WATCHER-SELF-EXIT  serial=0.4.0_DE_ClientPlatform  parent=46952 gone -- exiting instead of orphaning
