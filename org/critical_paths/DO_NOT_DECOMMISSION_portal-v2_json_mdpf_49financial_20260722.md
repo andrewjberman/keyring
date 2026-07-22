@@ -86,10 +86,40 @@ This debt is **declared, not cleared**, and is a named TERM of the MDPF re-land 
 intent at signing time.** The co-sign deliverable that carries the clause is not read by the person doing a
 decommission; a path-keyed file in the critical-paths ledger is.
 
+## THIS DOCUMENT IS THE WEAKEST OF THREE CONTROLS — SAY SO PLAINLY
+
+**This file is PROSE THAT MUST BE READ, and it only fires for someone already suspicious enough to search
+the path.** *"They will grep the prefix first"* is an assumption about a person, and assumptions about
+people are the class we keep being wrong about. Our own law: **gates teach at violation time; prose taxes
+every session forever.** The control ladder, in descending strength (CTO ruling, 2026-07-22):
+
+| # | control | fires against | status |
+|---|---|---|---|
+| 1 | **S3 bucket-policy DENY** on `DeleteObject` / lifecycle-expiry for the prefix | **ANY actor at the moment of the act — console included, no repo, no reading** | **ROUTING — `1.0.0_SA_CTO` owns; build on `0.7.0_AE_CloudOps`** |
+| 2 | commit-time gate on TF touching `opal-data-portal-v2` lifecycle/expiry/removal | the repo path; **misses the console** | proposed |
+| 3 | **this document + `critical-surfaces.yaml` row** | someone who already thinks to look | **LANDED (this file)** / yaml row proposed |
+
+Precedent for (1): the `.parquet`-under-`bronze/` bucket-policy deny (Rule 17a) — behavior-grade, exercised,
+and the proven shape for exactly this problem.
+
+**STANDING-ORDER COLLISION, FLAGGED NOT ADJUDICATED:** Andrew's 2026-07-17 direct order **suspends new alert
+systems during consolidation**. **A bucket-policy DENY is a PREVENTIVE control, not an alert — it pages
+nobody** — so CTO reads it as outside that suspension, and I concur. **But it is adjacent enough that it is
+being put to Andrew explicitly rather than assumed**, because *"adjacent, so I assumed it was covered"* is
+how a standing order gets quietly widened or quietly ignored. If Andrew holds it, controls (2) and (3)
+carry alone — and this file's weakness above becomes the whole exposure.
+
 ## OPEN ITEMS
 
-- [ ] **OWNER for the decouple work item** — unassigned as of 2026-07-22. Debt with no owner is debt nobody retires.
-- [ ] **Build a per-date 49F account-count history** (the actual blocker; see table above).
+- [x] **OWNER NAMED (COO routing call, 2026-07-22):** decouple work item -> **`0.4.0_DS_ClientPlatform`**
+      (owns the producer, proved the source gap). Bucket-policy deny + TF gate -> **`0.7.0_AE_CloudOps`**,
+      routed by `1.0.0_SA_CTO`. **Sequenced BEHIND the current count-axis rebuild — named and queued, not
+      started.** *Debt with no owner is debt nobody retires.*
+- [ ] **BUILD a per-date 49F account-count history** — the actual blocker. **CLASS THIS CORRECTLY: this is a
+      scoped DATA WORKSTREAM with a real dependency, NOT a cleanup task or a wiring change.** No source
+      exists (see table above). **Whoever picks this up and sizes it as an afternoon will abandon it.**
+- [ ] Bucket-policy DENY landed + **exercised** (behavior-grade: a denied delete that names the policy, plus
+      an isolated positive control proving the test can fail).
 - [ ] **Register in `org/modules/graph/critical-surfaces.yaml`** so a tooling gate — not only this document —
       fires on the prefix. **Proposed by COO; registry change is CTO's to land.**
 - [ ] Close this hold only when 49F count derives from the same source snapshot as its values, verified by
