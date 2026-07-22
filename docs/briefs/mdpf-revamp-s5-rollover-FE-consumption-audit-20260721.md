@@ -230,6 +230,21 @@ AE landed the coherent-9 on `opal-data-assets` (ListObjectsV2-verified) and stoo
 
 **POST-FLIP OUTCOME (2026-07-22):** flip fired on Andrew's sovereign GO (~0159Z), then **rolled back** (router → legacy) after Andrew found the Global trend wrong. Token blocker: portal auth is **custom-JWT (0 Cognito pools)** — the "test token" never existed, so checkpoint-2 became JWT-gated and Andrew's own authenticated view carried the gate. Live-path routing was corroborated **three independently** (my FE-fetch-path run + AE's curl + CTO's): all 9 `/api/general/*` → **401 `application/json`**, zero 404, zero `text/html` — seam CLOSED (tokenless is **origin-blind**: 401 returns at the auth edge *before* the origin, so it cannot attest assets-origin serving).
 
+## 13a. FE-CONTRACT GUARDRAIL — **per-firm `non_model_aua` is DISPLAY-LOAD-BEARING** (a per-firm basis rebase is NOT a safe repoint)
+
+Banked at CTO's direction (DS source-traced, I re-verified at source 2026-07-22). **This corrects an over-broad claim of mine:** I told DS/CTO the FE needs "zero change" under Andrew's EXCLUDE-consistently rebase. That is TRUE for the rebase actually performed (**global-only**), but it is NOT true as a general statement about `non_model_aua`, because the FE has **raw** reads of the *per-firm* field that no band-derivation absorbs:
+
+| line | read | scope |
+|---|---|---|
+| `:863` | `isPerFirm = effectiveFirmId !== 'global' && !!perFirmMdpfData` | the gate |
+| `:872` | `currentAUM: lastNonNull(perFirmMdpfData!.non_model_aua)` | **RAW** — the per-firm Non-Model card |
+| `:935` | `map[d] = perFirmMdpfData.non_model_aua?.[i] ?? null` | **RAW** — the per-firm per-date band map |
+| `:882` | `currentAUM: nonModelData.latest.non_model_aum` | GLOBAL path reads **A4 `non_model_assets`**, not the aggregate field |
+
+**Why global was safe:** no raw read of *global* `non_model_aua` reaches the render — Global's band is DERIVED (`oaa − model_aua`, `:950-960`) or comes from A4, so a global basis change is absorbed by construction. **Why per-firm would NOT be:** `:872` and `:935` render the per-firm field DIRECTLY, so extending basis-B one level down to the per-firm artifacts would **silently change a rendered number** with nothing to absorb it.
+
+> **RULE: a per-firm `non_model_aua` basis change is an FE-VISIBLE change requiring a full 6-cell render-check — NOT a data-only repoint.** Do not let a future "same rebase, one level down" be mistaken for a safe swap. (Non-blocking for the current re-land, which is global-only.)
+
 ## 14. P0 — the Global "2×" is an FE axis-binding defect (NOT data, NOT MDPF). Fix + standing gate.
 
 Andrew: Global Period-End month-end totals ~2× wrong; 49F + Inflection correct. DS source-confirmed a real data bug (`opal_aggregate_aua` two-basis inconsistency) **and ruled it out as the 2× cause** (3.5–15.5% gap cannot make 2×). It was mine — and it **predates MDPF** (present in deployed `2c802d13`).
