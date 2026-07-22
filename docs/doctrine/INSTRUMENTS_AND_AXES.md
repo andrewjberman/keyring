@@ -161,11 +161,40 @@ it cannot**. "End-to-end" is a claim about a path, and a path is only as proven 
 segment. *(This ruling was wrong twice in one session before it was corrected — the second time by the
 agent who owned the leg in question.)*
 
+## 7c. A SHARED VENDORED MODULE'S BLAST RADIUS IS INVISIBLE FROM ITS OWN SOURCE
+
+A one-line top-level `import` was added to a converter module. That module is vendored **flat into four
+Lambda packages**. The import would have raised `Runtime.ImportModuleError` in **all four** — for a feed
+only one of them converts — forcing a re-vendor and redeploy of three unrelated pipelines to ship a
+single-feed feature. (The identical vendor-closure failure is already in the estate's CHANGELOG.)
+
+> **Nothing in the source file says "four Lambdas embed me." Only the BUILD_MANIFESTs do. An import
+> added there is a MULTI-PACKAGE DEPLOY DECISION WEARING THE COSTUME OF A ONE-LINE CHANGE.**
+
+Fixed by making the import **lazy inside the one function that needs it** — blast radius 4 → 1, and the
+other three packages become *structurally* unable to break because they never call it. **Prefer a
+structural bound over a careful one.**
+
+**Gate candidate:** lint any new top-level import in a module listed in 2+ BUILD_MANIFEST
+`vendored_modules[]`.
+
+**Generalize:** before editing any shared/vendored file, ask **who embeds this**, and answer it from the
+manifests — not from the file, which cannot tell you.
+
 ## 8. PROCESS PRINCIPLES THAT PAID OUT THE SAME DAY
 
-- **AN EXIT CODE IS NOT A REASON.** A mutant test "failed" with exit 1 and was nearly banked as proof
-  the gate worked. It had failed on a `ModuleNotFoundError`. **Check WHICH failure**, especially when
-  the failure is the one you wanted.
+- **A FAILURE SIGNAL IS NOT A REASON.** Two instances, same day, two levels:
+  - **An exit code is not a reason.** A mutant test "failed" with exit 1 and was nearly banked as proof
+    the gate worked. It had failed on a `ModuleNotFoundError`.
+  - **`assertRaises` cannot tell you WHICH gate raised.** An author wrote 11 gate tests, all green, then
+    neutralised each gate **in the source** and re-ran. One gate was disabled **entirely** — and both of
+    its tests **stayed green**. They had always passed for the wrong reason: the mutations happened to
+    trip *other* gates. **Two tests naming that gate in their titles were testing something else, and a
+    green suite said so confidently.**
+  **Check WHICH failure — especially when the failure is the one you wanted.** A test asserting only
+  *"something refused"* is satisfied by any refusal, so it measures the SUITE, not the gate it names.
+  Assert the discriminating outcome; then mutate each gate individually and confirm **only** its own
+  tests go red.
 - **A CONDITION STATED BEFORE THE WORK IS A SPEC; SPRUNG AT THE GATE IT IS A HOLD.** Sign-off terms
   get published in advance.
 - **A RETRACTION THAT SHRINKS A SCARE IS WORTH AS MUCH AS ONE THAT GROWS IT — AND IS MUCH RARER.**
