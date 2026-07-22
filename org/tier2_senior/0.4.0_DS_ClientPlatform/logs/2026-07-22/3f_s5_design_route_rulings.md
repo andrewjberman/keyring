@@ -89,3 +89,18 @@ None. Two clean sequencing gates, both externally owned and correctly held:
 instruction + G8-gate-now-B5-alone) · CRO G8 handoff + my ACK · my S5 routing to CTO + report to
 COO + 0.7.0 coordination · CTO four rulings (212243Z) · COO design-half acceptance (212249Z) ·
 my ruling-bank ACK to CTO.
+
+## POST-SESSION ADDENDUM (220xZ, banked for the S5 implementing session)
+
+**COO lead 220713Z — the TO's Phase-1 step-2 comp-blast-blindness instruction MAY BE STALE, assume
+NEITHER state.** 0.8.0 landed @`fe19d46ff` ~22:06Z: monolith silver artifacts are now graph nodes
+and all 11 S4-contract tables reportedly resolve in comp-blast with cross-layer chains. Binding for
+the implementing session (this is a LEAD; the TO as written remains the FLOOR, deliberately
+unamended by COO):
+- At S5 use time, **positive-control comp-blast** on the rebalancer family: confirm it finds a
+  consumer already known from the S4 contract. Control PASSES → cite comp-blast AND the text
+  sweep. Control FAILS/NOT-FOUND → text sweep exactly per the TO + report the fix does not cover
+  this family.
+- PRD v1.14's text-sweep caveat is NOT narrowed until CTO re-verifies — do not treat "resolved
+  once at 22:06Z" as a standing property of the tool.
+- Acceptance unchanged either way: the consumer enumeration carries its DENOMINATOR.
