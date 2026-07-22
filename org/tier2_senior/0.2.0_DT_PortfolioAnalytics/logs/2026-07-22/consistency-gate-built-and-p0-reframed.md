@@ -150,3 +150,52 @@ being pointed at the wrong component.
 RETRIEVAL trap in CLAUDE.md Git section. Caught it by re-running unpiped before reporting anything.
 **Gap found:** the 3-pass had no consistency axis at all -- three independent instruments, one shared
 blind spot. Three methods do not help when all three compare the same two sides. Now closed, mutant-locked.
+
+---
+
+## ADDENDUM (~0416Z-0428Z) — CTO surface-check ruling + CVO found a false PASS in my gate
+
+**CTO ruling 041852Z** on the Surface-Check blocker, all three items:
+- (a) The SEV1 touch is **deliberate + justified** (the revamp IS model-portfolios work) — but
+  **justification != ack**. The re-land DEV commit MUST carry a `SURFACE_ACK:` line. **Hard-gate: DEV
+  surface-check GREEN (ack in the pushed range) BEFORE any promote.** Do NOT promote `aa8c0420` as-is.
+- (b) The PROD-path gap is **real**. Interim: I manually verify GREEN on the **exact promoted sha**,
+  CTO confirms. Durable: a portal-CI TO post-re-land. Named in the runbook so it survives.
+- Rule 20 staleness **confirmed, CTO's to correct** (LD-0273 Stage-1 HALF-2 landed; stale for the
+  portal DEV-push path, still true for workspace safe-commit + the PROD path). I flagged, did not edit.
+
+**CVO verdict: ACCEPTED-CVO (Layer 2), 2 items.** Item 1 was mine and is **CLOSED @f64797340**:
+
+> **My gate shipped with a false PASS, and an adversary found it — not me.** A NaN in any of
+> total/model/non_model made `diff` NaN, and `abs(nan) > tol` is **False** in Python, so the gate
+> returned CLEAN *and counted the date as checked-clean*. `json.loads` parses a bare NaN by default.
+> A false PASS on the exact axis the gate exists for, violating its own uncheckable-is-not-a-pass rule.
+
+Positive-controlled the mechanism **before** fixing it. Fix = `_is_finite_num()` → `NON_FINITE`
+verdict before the diff test, not inflating `n_checked`, extended to the **cross-firm** roll-up too
+(CVO flagged only the per-firm gate; `sum()` with a NaN has the identical false-clean). 15-combination
+mutant. self-test PASS; live results byte-identical, no verdict moved.
+
+- **Q4 settled AGAINST my own offer:** legacy served 2026-05-21 HAS the decomposition (model $93.08M +
+  non_model $105.63M, ties custody $198.72M) — the revamp **dropped** it. A regression, not an honest
+  custody-only day. **The NAMED exemption I offered would have hidden it.** Not exempting.
+- **Residuals now documented in-file:** per-firm compensating errors pass by design; a compensating
+  error identical at firm AND global evades both checks (per-firm + cross-firm green == CVO's Layer-3
+  **transitively**, not independently); coherence is not correctness.
+
+**Durable record committed:** `deliverables/MDPF_REVAMP_FE_RELAND_RUNBOOK_20260722.md` @f64797340 —
+6-item hard-gate battery, the VOID-0159Z warning, the 4-commit forward-merge fact, the measured
+PROD-path gap + evidence, standing facts. Written because an unowned follow-up dies with a session.
+
+**Lesson banked:** I flagged the parity-vs-consistency gap in my own instrument and was right; I then
+built the replacement instrument and was wrong about it in a way I could not see. *The builder cannot
+certify the build* — not as a maxim, as a measured outcome twice in one session, in both directions.
+
+## Compiler Tools (addendum)
+| Tool | Result | Note |
+|---|---|---|
+| `--self-test` (post-NaN-fix) | PASS | MUTANT-3c: 15 non-finite combinations + crossfirm both sides |
+| positive control on the NaN mechanism | CONFIRMED | `abs(nan) > 1.00` -> False; proved the bug before fixing |
+| `--consistency` staged + served (re-run) | rc=1 both, byte-identical | no regression from the guard |
+| `commit-gate.sh` / `safe-commit.sh` | PASS | @f64797340; reflex CLEAN, denominator printed |
+| `gh run view --log-failed` (run 29888356628) | FAILURE exit 2 | the SEV1 block; + 4 workflow trigger blocks read |
