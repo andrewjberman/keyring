@@ -144,10 +144,16 @@ Name = Responsibility scope
   | Moving served output | `1.0.0_SA_CTO` + `2.0.0_SA_COO` never-widen co-sign |
   | **Vendor egress (any competitor/vendor API call)** | **Andrew — explicit per-use word, every time** |
 
-  **OPEN at Andrew, not granted, must not be assumed either way:** (a) whether the CRO registers research
-  projects in `org/projects/` directly or routes through CTO/COO — this is why `ANY_EXEC_OR_AE` membership was
-  **deliberately WITHHELD** (the CRO declined to lobby for it); (b) CRO standing in cross-exec co-sign chains.
-  Granted lanes today: `CRO_WORKSPACE` (own home) + `ANY_EXEC` (cross-exec task-order authoring).
+  **Both formerly-open cells RULED by Andrew 2026-07-22** (kept legible as *answered*, not deleted):
+  (a) research-project registration — *"You can register projects yes."* → **granted in principle**;
+  (b) standing in cross-exec co-sign chains — *"Not needed."* → **CLOSED, NOT GRANTED; do not re-open.**
+
+  **A ruling is not a grant.** `org/projects/**` is `ANY_EXEC` (the CRO is a member), but longest-match wins
+  and the paths that *constitute* registration — `org/projects/REGISTRY.md` and `org/projects/*.json` — are
+  `ANY_EXEC_OR_AE`. `ANY_EXEC_OR_AE` membership was requested from `0.0.0_AB_MSTR` as grantor on Andrew's
+  ruling; **the CRO does not write its own grant even when the ruling goes its way.** Until it lands, project
+  registration is ruled but not exercisable.
+  Granted lanes: `CRO_WORKSPACE` (own home) + `ANY_EXEC` (cross-exec task-order authoring).
 
 ### Pods -> Leaf
 | Pod | DE (PM) | DT (Deploy) | DS (Data) | RD Leaf Agents |
@@ -271,10 +277,42 @@ exec dyad so base execs can stay on the broader Opal portfolio.
 |-------|------|-------|
 | `1.1.0_SA_CTO` | Systems Architect — CTO | COMP_LEARNS PRDs + harness design + ratchet calibration + mutation-engine framework |
 | `2.1.0_SA_COO` | Systems Architect — COO | COMP_LEARNS TO decomposition + dispatch + operator/validator loop + closure discipline |
+| `3.1.0_SA_CVO` | Systems Architect — CVO | COMP_LEARNS validation / ratification lane (row added 2026-07-22, CTO — see dyad-status note) |
 | `1.1.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 1 | `comp/` tree only |
 | `1.2.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 2 | `comp/` tree only |
 | `1.3.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 3 | `comp/` tree only |
 | `1.4.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 4 | `comp/` tree only |
+
+> **DYAD STATUS — MEASURED 2026-07-22, NOT DORMANCY (CVO measurement, CTO settlement).** The `3.1.0_SA_CVO`
+> row above closes a real gap: the serial was enumerated in `.owned-paths.yaml` on `BASE_EXEC`, `ANY_EXEC` and
+> the COMP_LEARNS/TO-authoring lanes while appearing in **no** row of this chart. It was settled as a
+> **documentation gap, not a grant to a phantom** — grounded with a control: `3.1.0_SA_CVO` (liveness 0 /
+> spawn-audit 20 / no home dir) has the **identical signature** to the already-listed `1.1.0_SA_CTO`
+> (liveness 0 / spawn-audit 31 / no home dir).
+>
+> **But the authority question is separate from the roster question, and it measured in the DRIFT direction:**
+> `org/projects/COMP_LEARNS.json` reads **`status: DEPRECATED`**, the REGISTRY row reads **v1 COMPLETE
+> 2026-04-24** (operator exit at 33/33 TOs, `f22f85d5`), and **all three exec dyad serials stopped inside a
+> 2.7-hour window on 2026-05-29/30 — 54 days ago** (`1.1.0` 05-29 23:40, `2.1.0` 05-29 21:34, `3.1.0` 05-30
+> 00:15). **That is a program-wide stop, not three independent dormancies.** So three standing `BASE_EXEC` +
+> `ANY_EXEC` grants — the highest-privilege lanes in the permissions file — are held by principals serving a
+> **deprecated, complete** program. *"Dyads spawn on demand and need standing grants" is a live hypothesis for
+> a PAUSED program; it is not one for a deprecated one.*
+>
+> **DISPOSITION: routed to `0.0.0_AB_MSTR` as grantor (separation of duties — the grantee never writes the
+> grant, and CTO does not revoke a peer-lane grant unilaterally). DOCUMENT-AND-DECIDE, not revoke-on-sight.
+> Adding this row makes the grants VISIBLE; it does not make them ACCOUNTABLE.**
+>
+> **DO NOT OVER-READ (CVO caveat, kept verbatim in substance):** COMP_LEARNS *the project* is deprecated, but
+> the `comp/` tree and the ratchet runtime **continue independently** per `comp/OPERATING.md`, and ~20 live
+> `NFRA_COMP*` projects exist. **"The program is over" is true of the DYAD'S project only — the grants are
+> scoped to the serials, not to the tree.**
+>
+> **THE STANDING FINDING THIS SITS INSIDE:** `.owned-paths.yaml` is **enumeration-based, not tier-based — a
+> title is not a grant**. On 2026-07-22 the CRO found a *live exec the registry had never heard of*, the CVO
+> found a *registry entry the roster had never heard of*, and the roster/registry pair also disagrees with the
+> **project record** about whether the principals' program still exists. **Three records of "who exists and
+> why," with no gate between any of them.**
 
 **Authority boundary:** base execs (`1.0.0_SA_CTO` / `2.0.0_SA_COO`) retain workspace-wide
 authority over shared infra, registry rows (`org/projects/REGISTRY.md`), and cross-project

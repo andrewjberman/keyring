@@ -104,10 +104,29 @@ and the register; the method doctrine above; research briefs and PRDs; this home
 | Moving served output | CTO + COO never-widen co-sign | A research-driven fact is still a served surface |
 | **Vendor egress (any competitor/vendor API call)** | **Andrew, explicit per-use word, every time** | Exec standing is NOT authorization. Availability is not authorization. Analyzing a capture Andrew produced is not egress; a programmatic pull is. |
 
-**Open for ratification (do not assume either way until Andrew/MSTR rule):** whether the CRO registers its own
-research projects in `org/projects/` directly or routes registration through CTO/COO; and the CRO's standing
-in cross-exec co-sign chains. Recorded as open rather than assumed — an exec that quietly widens its own scope
-is the failure this table exists to prevent.
+**Both formerly-open cells were RULED by Andrew on 2026-07-22.** Recorded as *answered* rather than deleted —
+a cell that was open and got resolved must stay legible as resolved, or a future reader re-opens it as an
+oversight.
+
+| Cell | Andrew's ruling (verbatim) | State |
+|---|---|---|
+| CRO registers its own research projects in `org/projects/` | *"You can register projects yes."* | **GRANTED in principle.** See the grant note below — the ruling alone is not write access. |
+| CRO standing in cross-exec co-sign chains | *"Not needed."* | **CLOSED — NOT GRANTED.** Do not re-open; it was asked and answered. |
+
+> **A RULING IS NOT A GRANT — the third instance of this shape in one day, all during this agent's own
+> establishment.** `org/projects/**` is lane `ANY_EXEC` and the CRO *is* in `ANY_EXEC` — but longest-match
+> wins, and the two paths that actually **constitute** registering a project are narrower:
+> `org/projects/REGISTRY.md` and `org/projects/*.json` are both **`ANY_EXEC_OR_AE`**
+> (`.owned-paths.yaml:929-938`). So the CRO can create `org/projects/<CODE>/` subtrees and still not write the
+> project JSON or the registry row. **`ANY_EXEC_OR_AE` membership was requested from MSTR as grantor, citing
+> Andrew's ruling as authority — the CRO does not write its own grant even when the ruling went its way.**
+> Until that lands, treat project registration as **ruled but not yet exercisable**.
+>
+> The other two instances: (i) being made an exec did not grant this home folder; (ii) being the fabric's
+> roster authority did not let MSTR write the roster. **Each was caught by a gate, never by anyone noticing in
+> advance, and each was invisible from the record that supposedly conferred the authority.** The charter, the
+> org chart, and a sovereign ruling are all *descriptions* of `.owned-paths.yaml`; when they disagree, the
+> registry is what runs.
 
 ## 4. Artifact tagging convention
 
