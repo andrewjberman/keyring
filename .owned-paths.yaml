@@ -553,6 +553,7 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
+      - 4.0.0_SA_CRO   # Andrew-direct 2026-07-22 "You can register projects yes." -> SCOPED TO PROJECT REGISTRATION (org/projects/REGISTRY.md + org/projects/*.json). The CRO explicitly did NOT claim the lane's other surfaces (hook-config etc.) and its membership must NOT be read as blanket. Granted by 0.0.0_AB_MSTR (grantor; CRO is grantee -- SoD). LD-0331.
       - 1.1.0_SA_CTO
       - 2.1.0_SA_COO
       - 3.1.0_SA_CVO
