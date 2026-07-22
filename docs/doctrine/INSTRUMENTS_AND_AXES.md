@@ -181,6 +181,41 @@ structural bound over a careful one.**
 **Generalize:** before editing any shared/vendored file, ask **who embeds this**, and answer it from the
 manifests — not from the file, which cannot tell you.
 
+## 7d. THE ANATOMY OF A LAYERED FALSE VERIFY — four true instruments, one layer too low
+
+A deploy took an entire production converter down (~9 min): `Runtime.ImportModuleError`. **Four
+verification signals had reported success. Not one was wrong. Every one answered a question one
+layer below the claim being made.**
+
+| The signal | What it actually establishes | What it says nothing about |
+|---|---|---|
+| `write VERIFIED (size + sha256 match)` | the upload matches the local zip | the zip's **contents** |
+| `CodeSha256` changed, `LastUpdateStatus: Successful`, `State: Active` | a file **swapped** | whether it **imports** |
+| `vendor-manifest --check parity 8/8` | the copies match their **sources** | **closure over imports** |
+
+This is verification-law #1 — **deployed = downloaded AND imported** — with an anatomy attached.
+What caught it was an unrelated probe: it answered a question nobody had thought to ask.
+
+**A LATENT VENDOR GAP IS INVISIBLE UNTIL SOMEBODY REBUILDS.** The offending top-level import landed
+in a shared module *hours after* that package's previous deploy, and sat inert for 8 days. **The
+agent who rebuilds inherits a break they did not write, as a live outage — and will spend the debug
+on their own change.** Latent-vs-introduced is the load-bearing attribution: fix the class, don't
+blame the rebuilder.
+
+**THE TELL WAS A NON-EVENT.** The first attempted fix left the zip **byte-identical in size**.
+Registering a vendored module requires **three** things — the BUILD_MANIFEST (declaration), the
+vendoring script (materialization), and the source-map `files[]` (what the parity gate reads). **A
+module in none of them is invisible to a gate that only checks parity between the two it knows
+about.** The fix was confirmed by opening the uploaded archive and enumerating it, not by re-reading
+the VERIFIED line.
+
+**Gate (approved, build-time):** refuse a build when a vendored module's top-level imports are not
+closed over the package (AST import scan vs `files[]`). **It converts the class from a
+rebuild-time surprise into a build-time refusal** — and finds already-armed packages *without
+anyone rebuilding them*. One such package was confirmed armed by this sweep: its manifest lacked the
+module, the file was absent, **and its vendored copy of the shared source was stale — which is the
+only reason it had not already broken.**
+
 ## 8. PROCESS PRINCIPLES THAT PAID OUT THE SAME DAY
 
 - **A FAILURE SIGNAL IS NOT A REASON.** Two instances, same day, two levels:
