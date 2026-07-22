@@ -93,3 +93,30 @@ remaining gate legs are 0.6.2's B5 (tonight's 03:30Z landing) + B6-liveness. Cir
 - Phase-1 io/blast run (io dynamic-key-blind, blast no-extracted-edges lower bound — both recorded);
   producer family mapped (`dim_mdpf_account_distribution.py` = revamp copy of the served smartx
   producer; build adds a `_units_cottonwood()` leg + the aum-metrics artifact).
+
+## G8b PREP STATE (banked ~2245Z — staged TO @d8570d2f3, same B5 gate)
+
+**3F-G8b = Cottonwood appended daily model-snapshot series.** Andrew-direct via CRO (~2210Z, spec
+@26f218a75), CTO-ruled 222856Z, COO GO(staged) 224026Z. **APPENDER, NOT BACKFILL** — consumes G8's
+OUTPUT with zero re-derivation (io must show: reads G8 output only, never rebalancer/fact_holdings/
+crosswalk).
+
+- **Sequencing (COO, hard):** G8 CORE first → S5 provenance → G8b. G8b NEVER delays G8; on any
+  contention G8 wins.
+- **Four CTO bindings:** (1) G8-core-first; (2) gold → NO fact_ prefix — spec's own
+  `fact_model_portfolio_daily` name SUPERSEDED, DS finalizes; working candidate
+  `dim_model_portfolio_daily`, comp-blast collision check at build; (3) FORWARD-APPEND ONLY,
+  Phase-3 proves both sides (day-2 adds row, day-1 byte-identical ETag); (4) CRO source-keying
+  carried so a future CTO-gated backfill is non-conflicting — appender never writes a past date;
+  if keying ever appears to require one: STOP + escalate (ruling 10).
+- **Spec digest (@26f218a75):** grain (model_id, snapshot_date); snapshot_date=assignment_date
+  partition key; source ∈ {daily-snapshot, datamining-backfill}; feed_live + basis from 0.6.2's B6
+  ~05:01Z heartbeat (unchanged snapshot still appends, dead-feed day labelled); row_appended_at;
+  __FIRM__/companion rows (firm_total_aua, model_aua_total, non_model_aua, counts) so G3 identity
+  needs no side-join; §4 five FAIL-LOUD per-append checks (penny identity, 17/17 roster
+  cross-validation, bridge exact, trading-day continuity via lib/trading_calendar.py, vintage lag
+  flag); idempotent within a date (re-run overwrites own partition only); NO hardcoded series
+  start; §3b query surface = one consolidated parquet + MDPF JSON slice regenerated per append
+  (serve wiring stays a CTO/COO call); producer under data/assets/scripts/ (deploy-map hazard).
+- **Requested from CRO 224306Z (TO Phase-1 step 1):** confirm §3a is the complete source-keying
+  design + the proof notebook. Awaiting reply; do-not-re-derive stands.
