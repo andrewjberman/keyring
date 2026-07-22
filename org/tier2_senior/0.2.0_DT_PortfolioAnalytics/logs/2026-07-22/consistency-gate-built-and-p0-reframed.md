@@ -276,3 +276,79 @@ pins around every run once the stage started moving; refusing to let `rc=0` stan
 **What failed:** a mutant I wrote seeded a $1.00 drift against a $1.00 tolerance and sat exactly on the
 boundary — the gate was right, my test was wrong. Scaled to realistic magnitudes and left the note: **a
 mutant inside the tolerance proves nothing.**
+
+---
+
+## ADDENDUM 3 (~0533Z-0542Z) — parity leg GREEN; the derived-vs-fitted test; gate criteria sharpened 4x
+
+### A. I gave CTO a wrong spec and he routed it to DS — caught it before DS built to it
+I proposed the parity fix as "one ledger entry, magnitude == `inflection.non_model_aua`", inferred from
+**one sampled date**. Swept all 406 common dates: it holds on **0 of them**. The mechanism I missed is
+that served-vs-published non_model already carried the pre-existing D1 firm-sum residual, so the
+EXCLUDE/B exclusion **composes** with that residual and equals neither term.
+The real shape: not a new entry at all — the ledger already named the field with **8 per-quarter
+`non_model_history_windows` + `non_model_latest`**, all nine calibrated pre-EXCLUDE, and **not one
+covered** the rebased values (the latest entry had an outright sign flip: measured −13.81% vs a
+[4.0, 11.0] band). Corrected to DS and CTO with the measured table.
+
+### B. The thing that mattered more than the numbers
+I sent DS the measured ranges **and told them not to paste them**: *a band fitted to the observed data
+can only ever pass.* Asked them to justify each window mechanistically and to treat any window that is
+**not** explicable as a FINDING rather than a band to widen — and deliberately did not set the numbers
+myself, because I can only see the observable sum while DS has the decomposition, and **the author of a
+band should not be the party whose gate it silences.**
+
+### C. DS's re-base @82e1f9d04 — claim TESTED, not trusted
+DS claimed the bands were derived from mechanism, not fitted. That is precisely a claim not to accept on
+the author's word, so I built the discriminator: **a fitted band hugs the observation (≈0 margin on some
+side); a derived band has two-sided margin and could therefore have failed.**
+
+| window | measured | derived band | lo margin | hi margin |
+|---|---|---|---|---|
+| 2024-10→2025-01 | [−43.92, −37.16] | [−45.03, −35.40] | 1.11 | 1.76 |
+| 2025-01→2025-04 | [−54.05, −36.30] | [−56.86, −33.56] | 2.81 | 2.74 |
+| 2025-04→2025-07 | [−47.16, −38.09] | [−49.77, −33.33] | 2.61 | 4.76 |
+| 2025-07→2025-10 | [−48.39, −41.88] | [−52.05, −36.64] | 3.66 | 5.24 |
+| 2025-10→2026-01 | [−46.46, −31.60] | [−53.15, −25.39] | 6.69 | 6.21 |
+| 2026-01→2026-04 | [−45.45, −37.67] | [−51.43, −31.63] | 5.98 | 6.04 |
+| 2026-04→2026-07 | [−46.40, −24.74] | [−62.70, −20.71] | 16.30 | 4.03 |
+| 2026-07→2027-01 | [−18.94, −11.27] | [−20.49, −4.44] | 1.55 | 6.83 |
+
+**Fitted-signature count: 0/8.** Zero unexplainable windows. DS also demoted their standalone broad-band
+entry to a note so it could not mask per-window precision.
+
+### D. Final result — both legs, one object, pinned
+All 9 ETags captured before AND after both runs, unchanged, and identical to the set my earlier legs
+cited (`49f aa5c5b85 · inf cec5a0d6 · global c27e1f37 · A4 8a195549 · A2 f2c03476 · A1 529b7c21 ·
+dist 865919f2/afb964c4/b946d836`).
+- **CONSISTENCY rc=0** — 49f 427/427, global 421/427 (+6 marker-admitted), inflection 421/427
+  (+6 marker-admitted), CROSSFIRM_PASS regime B.
+- **PARITY** — all three aggregates **NAMED_DELTA_PASS** (global was UNEXPLAINED before the re-base),
+  A4 NAMED_DELTA_PASS, coherence 3/3. account_dist 49f/global UNEXPLAINED = pre-existing UNGATED drift.
+
+### E. Four gate-sharpenings adopted by CTO tonight
+1. `rc=0` (consistency-only) must not read as "full battery green".
+2. A band re-derived against the data it blesses can only ratify it → parity is corroborating, not
+   correctness.
+3. Coherence ≠ correctness — and my consistency + crossfirm are **~1.5 signals, not 2**, because a
+   compensating error identical at firm and global level evades both (they equal CVO's component
+   re-derive *transitively*).
+4. **Cross-vintage leg expiry** — a multi-leg gate assembled across a moving vintage risks "four greens
+   each true of a different object". Adopted as a hard precondition: every leg cites its ETags, CTO
+   HeadObjects the 9 and confirms all legs cite the same live set before gating.
+CTO is banking the general form into `docs/doctrine/` (CONTROLS_OVER_CARE family): *an instrument
+calibrated against the data it is meant to judge can only ratify it.*
+
+## Compiler Tools (addendum 3)
+| Tool | Result | Note |
+|---|---|---|
+| 406-date sweep of the non_model delta | 0/406 == inflection.non_model | falsified MY OWN proposed spec before DS built to it |
+| per-quarter band-coverage sweep | 9/9 pre-EXCLUDE bands missed | showed it was a 9-band re-base, not a new entry |
+| derived-vs-fitted margin test | 0/8 fitted-signature | tested DS's claim rather than accepting it |
+| `--consistency` / `--all --ledger` (ETag-pinned) | rc=0 / all aggregates NAMED_DELTA_PASS | 9 ETags captured pre+post, unchanged |
+
+**What worked:** correcting my own spec the moment I swept it, rather than letting a wrong entry land in
+a gate we were about to trust; and building a discriminator for "derived vs fitted" instead of accepting
+the author's characterisation of their own bands.
+**What failed:** proposing that spec off one sampled date in the first place. The sweep took under a
+minute and I did it *after* asserting rather than before — the cost landed on CTO, who relayed it.
