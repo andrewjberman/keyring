@@ -73,10 +73,23 @@ remaining gate legs are 0.6.2's B5 (tonight's 03:30Z landing) + B6-liveness. Cir
   excluded_unfunded_count}, by_model{...same block per model}}; aum-metrics = {period, last_updated,
   dates{q0..q3}, total{aum, model_aum, non_model_aum, account_count, q0..q3{change,growth,
   priorLevel}}, by_model[...]}.
-- ⚠ **DESIGN QUESTION FOR BUILD (raise at CTO design gate): aum-metrics carries q0–q3 quarterly
-  deltas — Cottonwood has ~2 days of facts, so priorLevel/growth are uncomputable.** Schema-identical
-  (acceptance #1) vs no-fabrication (§8.1) requires a deliberate honest-absent treatment, ONE null
-  semantics (DE's G1 dual-null finding is the cautionary case: NULL-filled vs 0.0-filled coexisting).
+- ~~⚠ DESIGN QUESTION FOR BUILD~~ **RESOLVED — CTO RULING 213636Z (pre-raised 213524Z, banked
+  pre-B5): OPTION 1, per-entity `series_start`, three bindings.** Mechanism grounded first:
+  `dim_mdpf_aum_metrics.py:126-132 @ 19d3a606d` already emits an honest all-None triple when
+  prior=None (get_value_at_date :116-123 forward-fills only real values), so a ~2-day Cottonwood
+  series yields all-None at every q0–q3 — mechanically fine but byte-identical across
+  feed-gap vs series-too-short (DE's dual-null G1 class). Ruling bindings:
+  (1) **series_start DERIVED at build time from the facts** (first fact date per entity), NEVER a
+  hardcoded constant — ruling-9 self-extending: back-delivered history moves the field with zero
+  code change. Consumer semantics: `quarter_end < series_start` ⇒ STRUCTURALLY ABSENT;
+  `quarter_end >= series_start` with None ⇒ feed-gap class, worth a look.
+  (2) It is the **S5 PREDATES-CONTRACT shape at the artifact level** — contract-fact boundaries
+  publish constants, data-fact boundaries derive per run; never freeze as a constant what the data
+  can tell you.
+  (3) **FEEDS G1, does not settle it** — if G1's general null-composition rule lands on a different
+  shape, G1 WINS and this migrates; the build must carry a note so the two never read as competing
+  standards. (Options 2/3 rejected: 2 ratifies a cheaply-resolvable ambiguity; 3 fails Andrew's
+  ruling-11 lightweight standard.) Ruling verbatim: inbox read/ 20260722T213636Z.
 - Phase-1 io/blast run (io dynamic-key-blind, blast no-extracted-edges lower bound — both recorded);
   producer family mapped (`dim_mdpf_account_distribution.py` = revamp copy of the served smartx
   producer; build adds a `_units_cottonwood()` leg + the aum-metrics artifact).
