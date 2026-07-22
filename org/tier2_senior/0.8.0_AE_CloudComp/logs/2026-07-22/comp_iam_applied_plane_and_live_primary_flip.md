@@ -90,13 +90,13 @@ obligations. Result: **NO ATTRIBUTABLE GAPS — zero incremental misses**; all 1
 | `comp-kuzu` | node/kind/source/snapshot_ts cross-tabs | PASS | the instrument that **falsified my grep** and supplied the four-clock evidence |
 | `comp-grep` | sovereign/comp-iam caller sweeps | PARTIAL | correct on literals; **structurally blind to interpolated identifiers** — the root of error #1 |
 | `commit-gate` | every commit | PASS | caught 2 ruff violations in my own patches (E401 x2) |
-| `comp-aws` | `derive --classes iam` | FAIL | `unrecognized arguments`; correct invocation NOT determined |
+| `comp-aws` | `derive --class iam` | RESOLVED | I ran `--classes` (plural) -- wrong flag, not a broken tool. See the CORRECTION section. |
 
 **What worked:** comp-kuzu's structured `snapshot_ts`/`source` fields made the four-clock finding
 measurable rather than arguable. comp-iam's own new provenance header caught its own generator's
 first bug (fail-closed degraded honestly instead of writing an empty census).
-**What failed:** `comp-aws derive --classes iam` is rejected — the derive artifact could not be
-refreshed, so the accept-side control was proven on a touched copy instead, stated as such.
+**What failed:** `comp-aws derive --classes iam` was rejected, so the accept-side control was proven
+on a touched copy instead. SUPERSEDED -- the flag is `--class`; see the CORRECTION section.
 **Gap found:** `comp-grep` cannot match a constructed identifier, and its clean 0 is indistinguishable
 from absence without a positive control — the same class Andrew recorded this morning for git-ref
 search. My retraction of the "28 roles" claim is a live instance.
@@ -243,7 +243,7 @@ firing now.
 
 **What worked:** the mutant discipline — deleting the `FUTURE` branch failed 4 of 9 tests, so the new
 locks are load-bearing rather than decorative.
-**What failed:** nothing new. `comp-aws derive --classes iam` remains rejected (unresolved).
+**What failed:** nothing new. (`comp-aws derive` since RESOLVED -- see the CORRECTION section.)
 **Gap found:** none new this window; the three from the main log stand.
 
 ## Current State (supersedes the section above where they differ)
@@ -259,9 +259,71 @@ locks are load-bearing rather than decorative.
 ## Next Steps
 
 - **[Andrew]** nothing outstanding on comp-iam; the two items CVO could not reach are closed.
-- **[0.8.0_AE_CloudComp]** unchanged and still open from the main log: the correct `comp-aws derive`
-  invocation (`--classes iam` rejected); and whether zero `source=incremental` IAM rows is correct or
+- **[0.8.0_AE_CloudComp]** ~~the correct `comp-aws derive` invocation~~ RESOLVED (`--class`, see the
+  CORRECTION section). Still open: whether zero `source=incremental` IAM rows is correct or
   a derivation gap — the D4 oracle now reports NO ATTRIBUTABLE GAPS, consistent with "no IAM role
   mutated", but settling it still needs one known IAM mutation to correlate.
 - **[unowned]** the live `MARKER_CAS_DISABLED` warning is a real production hazard in the globgrph
   writer path, now with a corrected (5x higher) frequency. Not mine to fix; recorded twice.
+
+---
+
+# CORRECTION — the `comp-aws derive` invocation is RESOLVED (supersedes 4 records in this log)
+
+**archetype:** DIAGNOSE
+
+Andrew asked whether I had suggested a fix for the failing `comp-aws derive` invocation. **I had not.**
+I flagged it four times across this log, two commit messages and the compiler-tools log — every time as
+*"the correct invocation was NOT determined"* — and never spent the one command it took to determine it.
+He was half-right to remember it: the flag was real and repeated; the suggestion never existed.
+
+**THE FIX IS `--class`, SINGULAR.** I was passing `--classes iam`. `comp-aws derive --help` states the
+argument plainly:
+
+```
+usage: comp-aws derive [-h] [--class CLS] [--out OUT] [--resource RESOURCE]
+```
+
+Exercised, read-only, output to scratchpad so no shared surface moved:
+
+```
+comp-aws derive --class iam --out <path>
+counts: {"live": 193, "tf_declared": 172, "live_declared": 174, "live_no_declared": 19,
+         "declared_no_live": 0, "untyped": 0}     nodes: 193
+```
+
+## What this changes, and what it does not
+
+- The Jul-14 artifact read `live 183 / tf_declared 162 / live_declared 164 / live_no_declared 19`.
+  A fresh derive reads `193 / 172 / 174 / 19` — the population grew by 10 and the drift count is
+  UNCHANGED at 19. So the eight-day-old snapshot was under-enumerating but not mis-classifying.
+- The fresh derive's 193 matches kuzu's 193 exactly, which is the expected agreement (both exclude the
+  12 AWS service-linked roles that the live census's 205 includes). Two independent reads agreeing on
+  the governable population is a real cross-check, not a coincidence.
+- **`comp-iam live`'s conclusions are unaffected.** It reads the graph, not this artifact, and the
+  derive-JSON path is a declared fallback.
+
+## The part worth keeping
+
+**A one-command answer sat behind a `--help` I never ran, and I recorded "not determined" four times
+instead.** Repetition made it look investigated. Writing an unknown down carefully — with its
+denominator, in the right sections, in the commit body — is not the same as resolving it, and the
+care in the recording is exactly what made it feel handled.
+
+Nothing about it was hard. It was undetermined because I never looked.
+
+Also worth noting, because it is good instrument behaviour: the tool printed an unprompted
+**NOT PUBLISHED** notice explaining that a local derive does not refresh comp-kuzu's canonical
+Nessie-sourced surface, naming the two commands that would, and warning that bare `comp-aws snapshot`
+does NOT refresh it either. That is a tool refusing to let a local run be mistaken for a published one
+— the same class of honesty this session has been building into comp-iam.
+
+## Records superseded by this correction
+
+- the Compiler Tools table above (`comp-aws | derive --classes iam | FAIL`) — flag was wrong, not the tool
+- "What failed" in the main body, and the addendum's repeat of it
+- the addendum's Next Steps item — now closed
+- `org/compiler-tools-log.md` — corrected in the same commit
+
+Commit messages `c6434108d`, `4a09baa49` and `996fcad53` carry the stale claim and are immutable;
+this correction is the propagating record.
