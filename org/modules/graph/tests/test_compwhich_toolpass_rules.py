@@ -24,9 +24,33 @@ _WS = Path(__file__).resolve().parents[4]
 _CW = str(_WS / ".tools" / "comp-which")
 
 
+def _run_which(q):
+    """Invoke comp-which and REPORT WHAT ACTUALLY HAPPENED before parsing.
+
+    This used to be `subprocess.run(...).stdout` fed straight to json.loads. When comp-which FAILS,
+    stdout is EMPTY and the real error is on stderr -- so the discarded failure signal surfaced as
+    `JSONDecodeError: Expecting value: line 1 column 1 (char 0)`, which names the parser and hides
+    the cause. That is how 18 CI reds said "invalid JSON" while the tool was demonstrably fine
+    locally (rc=0, valid JSON): the harness could not distinguish "printed non-JSON" from "printed
+    nothing because it crashed", and only the second was ever happening.
+
+    Same class as the comp-constants stderr/empty-stdout residual fixed the same day: a failure that
+    produces empty output reads downstream as a parse problem rather than a failure. Check the exit
+    code, and put stderr in the message.
+    """
+    p = subprocess.run([sys.executable, _CW, "--json", "--route-only", q],
+                       capture_output=True, text=True, timeout=60)
+    assert p.returncode == 0, (
+        f"comp-which exited {p.returncode} for {q!r} -- this is a TOOL/ENV failure, not a JSON "
+        f"contract failure.\nSTDERR:\n{p.stderr}\nSTDOUT:\n{p.stdout}")
+    assert p.stdout.strip(), (
+        f"comp-which exited 0 but printed NOTHING for {q!r} -- empty stdout is not valid JSON and "
+        f"must not be reported as a parse error.\nSTDERR:\n{p.stderr}")
+    return p
+
+
 def _route(q):
-    out = subprocess.run([sys.executable, _CW, "--json", "--route-only", q],
-                         capture_output=True, text=True, timeout=60).stdout
+    out = _run_which(q).stdout
     o = json.loads(out)  # --json MUST always be valid JSON (CD1) -- a parse error fails the test
     tools = [r["tool"] for r in o.get("routed", [])]
     if o.get("kind") == "fallback" and o.get("fallback"):
@@ -95,14 +119,14 @@ def test_no_regression(q, canon):
 # ---- --json contract (CD1) ----
 
 def test_json_contract():
-    out = subprocess.run([sys.executable, _CW, "--json", "--route-only", "cross-layer graph question"],
-                         capture_output=True, text=True, timeout=60).stdout
+    # Routed through _run_which for the same reason as _route: a crashed tool yields EMPTY stdout,
+    # and parsing that reports a JSON-contract violation for what is actually a tool/env failure.
+    out = _run_which("cross-layer graph question").stdout
     o = json.loads(out)
     assert set(("query", "kind", "routed")) <= set(o)
     assert o["routed"] and "tool" in o["routed"][0] and "call" in o["routed"][0]
     # fallback carries a fallback call string
-    fb = subprocess.run([sys.executable, _CW, "--json", "--route-only", "grep the repo for X"],
-                        capture_output=True, text=True, timeout=60).stdout
+    fb = _run_which("grep the repo for X").stdout
     ofb = json.loads(fb)
     assert ofb["kind"] == "fallback" and ofb.get("fallback", "").startswith("comp-grep")
 
