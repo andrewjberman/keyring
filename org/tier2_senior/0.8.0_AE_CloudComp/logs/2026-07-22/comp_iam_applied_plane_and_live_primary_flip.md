@@ -135,3 +135,133 @@ search. My retraction of the "28 roles" claim is a live instance.
   drift at `_provenance.py:405` ("runs hourly" vs SQS event-driven); and the live
   `MARKER_CAS_DISABLED` warning in the updater log, which is the exact hazard `_provenance.py:402-409`
   documents, firing now.
+
+---
+
+# ADDENDUM — CVO verify-on-land: 4 P1s closed, both not-reached items closed
+
+**archetype:** VALIDATE
+**secondary_archetypes:** IMPLEMENT
+
+Window ~15:40Z -> ~20:10Z, continuing this log. Andrew released the CVO handoff explicitly
+("Yes, hand off the CVO verify") — a **SCOPED** release of his no-Tier-1-contact instruction, read
+narrowly: it authorised the CVO loop, not a general channel re-open.
+
+## Commits (3, pushed)
+
+| Commit | What |
+|---|---|
+| `2901f1fc9` | handoff record + the scoped-release amendment |
+| `72fda2aa5` | all 4 CVO P1s fixed, mutant-locked |
+| `996fcad53` | both CVO not-reached items closed |
+
+## Handoff design decision
+
+**I gave CVO the METHOD and withheld my artifact.** His §9 commits him to verifying "against a fresh
+census"; had I sent mine, he would have been checking my artifact with my tool. He regenerated his own
+and landed at 205 — same as mine — so the population is **REPRODUCED, not accepted**.
+*A verifier handed the builder's evidence is checking arithmetic, not truth.*
+
+## CVO verdict (@da7478839): BROKEN@MECHANICAL + BROKEN@DECLARATIVE, SEMANTIC PASS. 4 P1, 0 P0.
+
+**F1 — the headline, and I had logged it as a curiosity.** A future-dated census read `FRESH`;
+pushing the date *forward* made it read *fresher*, so any stale census became authoritative via a
+one-field edit. His framing is why it is P1, and it is now in the source verbatim:
+
+> **A CONTROL WHOSE BYPASS IS CHEAPER THAN ITS OVERRIDE CHANNELS BEHAVIOUR TOWARD THE BYPASS.**
+
+`--allow-stale-census` is audited and stamps the verdict non-authoritative; editing `generated_utc`
+is silent. The gate refused a census that *cannot* date itself and accepted one whose date is
+*impossible* — the same epistemic state, opposite verdicts. My verdict set had no cell for
+"impossible". FIX: a `FUTURE` verdict past a 0.25h clock-skew tolerance (minutes of skew are real,
+hours are not — a blanket future-refusal trades a false-accept for a false-refuse).
+
+**F2** — `live --census` applied no vintage gate at all; two census-overlay surfaces, one gated. Fixed
+by DISQUALIFYING THE LIMB rather than refusing the report: the graph is `live`'s primary source and
+stays trustworthy. **CVO falsified his own harm hypothesis here** — he expected suppression, found
+none, because the 111-role census happens to contain the 12 roles in question. *"The coincidence that
+saved it is not a design property."* The real defect was the denominator: a stale run printed
+"graph 193 vs census 111", reading as the graph OVER-enumerating by 82 when against a live 205 it
+UNDER-enumerates by 12.
+
+**F3 (DECLARATIVE)** — my docstring claimed future-dating was "flagged by the caller's provenance
+line". It was not: `[FRESH]`, no marker, while the undated case got a loud `!!`. The marker existed
+and was simply not applied. *Visible-to-a-careful-reader is not a flag and not a control*, and a
+record describing a safeguard one strength above the code is worse than no record.
+
+**F4 (DECLARATIVE)** — `live` carried the detector disclaimer; `reconcile` did not, while saying
+"granted live" and evaluating no Deny/boundary/condition/SCP. **I back-fitted the guard to the surface
+I had just built and left it off the older, more-quoted one** — so the surface people actually use
+kept the defect.
+
+## Two defects I introduced INSIDE the fix and caught pre-commit
+
+The F1 refusal initially reported a FUTURE census as *"is STALE (older than the 24h TTL)"*, and the F2
+disqualified path then printed *"UNAVAILABLE (no --census)"* when one WAS supplied and rejected.
+**Committing the misreporting defect inside the fix for the misreporting defect would have been its
+own finding.** Disclosed to CVO rather than left as a quiet save; he verified both actually correct in
+the landed code.
+
+## CVO's upward correction — I was UNDERclaiming
+
+I said the Plane-3 hazard was "absent because unbuilt". He verified `cmd_simulate` untouched (every
+hunk a pure insertion, none inside `:537-745`) **and corrected me upward**: the pre-existing
+`cmd_simulate` already enforces `ResourceArns=[arn]` one-per-call (`:597`), separate positive-control
+invocations (`:620,656`), and a self-test asserting `len(ResourceArns)==1` (`:698`). The Rule-22a
+guard EXISTS and is TEST-ENFORCED. A wrong statement about the estate in the safe direction is still
+wrong.
+
+## Both not-reached items — closed on evidence (996fcad53)
+
+CVO left the D4 scope-exclusion and the `_provenance.py:405` contradiction explicitly NOT-REACHED
+("never clean") and was blocked from scheduling under Andrew's hold. Both mine; both closed.
+
+**D4 suppression — adversarially checked, then made self-falsifying.** T1 (the falsifier:
+service-linked roles Terraform declares) = 0; T2/T3 (path-vs-name disagreement, either direction) = 0.
+The rule is sound. **But "0 today" is a data-dependent result, not a property of the rule** — it holds
+only while nothing we govern lives under `/aws-service-role/`. So the falsifier is now a STANDING
+CONTROL whose failure text says *narrow the rule, do not silence the test*. And I confirmed the
+control is **discriminating rather than decorative** by injecting `AWSServiceRoleForECS` into a TF set
+and checking the predicate fires — a falsifier that cannot detect its own condition is the
+instrument-that-cannot-fail class.
+
+**`_provenance.py:405` "runs hourly" — RESOLVED, and wrong in the direction that matters.** No
+`schedule_expression` exists for the incremental updater anywhere; the SQS ESM is its only trigger.
+Measured 114 invocations/24h = ~4.75/hour, ~5x the documented rate. That clause supports the
+docstring's own erasure hazard, so the hazard fires ~5x more often than the record claims — and **a
+frequency error that understates a hazard is the direction that gets it deprioritised.** The live
+updater log carries `MARKER_CAS_DISABLED -- table_metadata is REPLACED, not merged`: that hazard,
+firing now.
+
+## Compiler Tools (addendum window)
+
+| Tool | Call | Result | Note |
+|---|---|---|---|
+| `comp-iam` | `reconcile` / `live --census` / `census-self-test` against FUTURE + undated + stale + fresh mutant censuses | PASS + correct REFUSALs | the F1/F2 exercise; accept side still computes (graph 193 vs census 205) |
+| `commit-gate` | every commit | PASS | blocked once on a real E401 in my own patch |
+| `pytest` | `test_iam_census_vintage.py` | 10/10 | +4 regression locks, +1 standing falsifier |
+
+**What worked:** the mutant discipline — deleting the `FUTURE` branch failed 4 of 9 tests, so the new
+locks are load-bearing rather than decorative.
+**What failed:** nothing new. `comp-aws derive --classes iam` remains rejected (unresolved).
+**Gap found:** none new this window; the three from the main log stand.
+
+## Current State (supersedes the section above where they differ)
+
+- All 4 CVO P1s FIXED and mutant-locked; RAVC CLOSED by CVO @e8dd46725, re-verified against **his**
+  mutant files with the F1 boundary probed directly (+15min FRESH, +16min FUTURE).
+- CVO recorded the F2 fix as **BROADER than his finding** — I gated the whole verdict class
+  (`NO_VINTAGE`/`STALE`/`FUTURE` each disqualify and each say which), not just the two cases reported.
+- Suite 10/10. Working tree clean of my work. 13 commits this session.
+- **No longer builder-verified only** — independently verified by CVO, twice, against artifacts I did
+  not produce.
+
+## Next Steps
+
+- **[Andrew]** nothing outstanding on comp-iam; the two items CVO could not reach are closed.
+- **[0.8.0_AE_CloudComp]** unchanged and still open from the main log: the correct `comp-aws derive`
+  invocation (`--classes iam` rejected); and whether zero `source=incremental` IAM rows is correct or
+  a derivation gap — the D4 oracle now reports NO ATTRIBUTABLE GAPS, consistent with "no IAM role
+  mutated", but settling it still needs one known IAM mutation to correlate.
+- **[unowned]** the live `MARKER_CAS_DISABLED` warning is a real production hazard in the globgrph
+  writer path, now with a corrected (5x higher) frequency. Not mine to fix; recorded twice.
