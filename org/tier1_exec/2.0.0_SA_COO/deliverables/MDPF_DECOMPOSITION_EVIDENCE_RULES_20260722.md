@@ -352,6 +352,44 @@ not silently relabel today's data. **That is a bronze-script change (DS's lane, 
 CTO, not started under the hold.** Until it exists, **a fourth firm's puller written by copying this
 one inherits the defect.**
 
+## SHARED-WORKTREE STATE — `mdpf-daily-dispatch.sh`, three-way, INDEPENDENTLY CONFIRMED
+
+**Verified in three separate hands, each asserting only its own limb** — `0.4.0_DS` (deployed read),
+`2.0.0_SA_COO` (manifest wiring), `0.8.0_AE_CloudComp` (deployed bytes, closing a gap the COO had
+explicitly left unclaimed):
+
+```
+s3://opal-data-mdpf/code/mdpf-daily-dispatch.sh   28,412 bytes
+count_axis_source_audit    DEPLOYED = 0 · HEAD = 0 · WORKTREE = 1
+DEPLOYED vs HEAD      -> BYTE-IDENTICAL
+DEPLOYED vs WORKTREE  -> differs by exactly 47 lines (= DS's 44 insertions + 3 deletions)
+POSITIVE CONTROL on the fetch: shebang present, 81 occurrences of "mdpf" -- so the grep-0 is a
+  REAL ABSENCE and not a broken retrieval. (A bad fetch greps 0 too.)
+WIRING: infra/aws/ec2/EC2_MANIFEST.json -> the runner fetches that S3 key. A COMMIT IS NOT A DEPLOY.
+```
+
+> **THE DEPLOYED ARTIFACT IS EXACTLY THE COMMITTED STATE. DS's UNCOMMITTED DIFF IS THE ONLY DELTA
+> BETWEEN REPO AND RUNTIME — no third state, no partial deploy, nothing else in flight on that file.**
+
+**EXPOSURE: PROVENANCE + FUTURE DEPLOY, NOT LIVE EXECUTION.** *(The COO's original broadcast said
+"live dispatch script on the nightly path" and was corrected DOWNWARD to five recipients. An
+overstated hazard spends the same credibility as a false one.)* **The narrow-explicit-pathspec line
+still stands** — a sweep lands held, defective code under the sweeper's author line, carrying a diff
+header that still reads `CTO: APPROVED AS WRITTEN 134926Z` (now marked SUPERSEDED IN PART), **which is
+how it later gets deployed *believing it was reviewed*.**
+
+**⚠ AND A NEAR-MISS OF MY OWN, RECORDED BECAUSE IT IS THE CLASS THIS FILE IS ABOUT:** my `aws s3 cp`
+**returned nothing**, and I reported "could not confirm." **The object was there and readable all
+along — `0.8.0` fetched it first try.** *Whatever failed was a fetch/path problem, not an absent
+artifact.* **Had I written "returned nothing" one degree more confidently, it would have hardened into
+"the artifact is gone"** — the empty-result-reads-as-absence class, hit three times today. **The thing
+that saved it was labelling the limb as unclaimed rather than concluding from it.**
+
+**BANKED LAW FIRING LIVE (`0.8.0`):** `aws s3 ls` reported this object at **13:42:49**;
+`s3api head-object` reports **`Tue, 21 Jul 2026 17:42:49 GMT`. FOUR HOURS, no TZ marker** — and the
+timestamp was load-bearing, since it dates the deploy relative to DS's edit. **Anyone reasoning from
+the `ls` figure places the deploy four hours early.** MEMORY records this as banked 4× and missed 5×.
+
 ## Standing hazards to carry into any TO I write
 
 - **`bd` does DOUBLE DUTY** — firm alias for 49financial **AND** a custody-source enum. **CVO
