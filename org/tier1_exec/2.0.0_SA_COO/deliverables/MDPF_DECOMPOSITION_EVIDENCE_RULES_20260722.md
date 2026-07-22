@@ -255,6 +255,62 @@ from the hand?**
 
 ---
 
+## D11 — BINDING DECOMPOSITION CONSTRAINTS (FE workstream, `0.4.0_DE` spec @3bbdddbd1)
+
+Andrew asked DE to land the Cottonwood FE fix set as a workstream spec:
+`org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/WSE_COTMDL_FE_WORKSTREAM_SPEC_20260722.md`.
+**SPEC ONLY — landing it is not a request to begin it.** Constraints that bind my TO-cutting:
+
+**D11a — D6 FORKS THE WORKSTREAM. DO NOT CUT SET B BEFORE ANDREW'S MERGE-VS-ADD RULING.**
+- **MERGE** ⇒ the B-items **VANISH** (`STACK_SERIES` already holds canonical keys; charts populate).
+- **ADD** ⇒ **B1 is MANDATORY or EVERY Cottonwood model renders blank** — render-confirmed with a
+  discriminating control @c95210ec3.
+**A TO drafted now bakes in the assumption the ruling exists to settle.** This is D7 one level down.
+**Set A (3) and C1 are D6-independent and can be cut whenever the gate clears.**
+
+**D11b — SEQUENCING TRAP: B1 HAS A TWIN AT THE OTHER END OF THE PIPELINE. SEQUENCE THEM TOGETHER.**
+The producer-side **`GLOBAL_MODEL_KEYS`** omission (census 4a-3) and FE's **`STACK_SERIES`** are the
+**same defect at opposite ends** — closed lists that silently omit a third firm's models.
+> **FIXING ONE END WITHOUT THE OTHER STILL YIELDS AN INVISIBLE COTTONWOOD.**
+**They sit in DIFFERENT LANES, so they would naturally be scheduled apart.** This is the
+cross-lane-composite failure (D4) as a *scheduling* hazard rather than a *reporting* one.
+
+**D11c — THREE SILENT PER-FIRM ENUMERATIONS, NONE NAMING COTTONWOOD. PARTIAL COMPLETION IS INVISIBLE.**
+`PUBLISH_MAP` · the exact-key **bucket policy** · the **exact-9 CF behaviours**.
+> **UPDATE TWO OF THREE AND YOU GET A PARTIAL SERVE THAT NO SINGLE INSTRUMENT SEES.**
+**These are FE's preconditions and are NOT owned by FE** (spec §3) — decomposition must not strand
+the workstream behind them, and must not let them be closed independently.
+
+**D11d — ACCEPTANCE IS A RENDER, NOT A DIFF.** Every defect in the spec was found **by reading a PNG**;
+**none was visible to `tsc`, and four census limbs missed them.** Required per item: **all four
+selections · a DISCRIMINATING CONTROL** (*a render that cannot fail is not evidence* — D3 applied to
+FE) **· `tsc` + Surface-Check · ANDREW VISUAL SMOKE AS THE CLOSE LEG.**
+**Precedent, not theory: MDPF_SCOPED required exactly that as its S5 leg and REOPENED 2026-05-29
+without it** — *"data layer passed but the portal did NOT work for firm-scoped views."*
+
+**D11e — TWO SIZING DISTORTIONS IF THE ITEM COUNT IS TAKEN AT FACE VALUE.**
+1. **B1's cost is the RE-VERIFICATION, not the diff** — it changes rendering for **all four
+   selections**, so the work is a **four-cell render matrix**. Size it there.
+2. **A2 is a DECISION, not a cleanup.** CTO's *"narrow sibling, migrate only what must"* ruling was
+   applied **deliberately** when the firm-total sites were migrated and these two were not.
+   **Widening it needs CTO's acknowledgement IN THE TO**, or an implementer reads a deliberate scope
+   line as an oversight and "finishes" it. *(Sibling of `0.8.0`'s unflagged rename: an undocumented
+   deviation and an omission are indistinguishable to the next reader.)*
+
+**D11f — SET C IS THE ONLY ITEM THAT PAYS FORWARD TO FIRM FOUR.** It makes the three silent per-firm
+contracts **exhaustive-by-type**, as `MDPF_SOURCE_ATTRIBUTION` already is — **converting a
+render-discovered defect class into a BUILD FAILURE.** By D10 it is the only **CLASS-scoped** item in
+the workstream; everything else is EVENT-scoped and retires when Cottonwood ships.
+
+**OUT OF SCOPE, cited so nobody re-opens it:** Benchmark/Peers are **firm-blind by Andrew's standing
+ruling 2026-05-07** (`ADVI_FIRMSEP.md:133` — portfolios/peers/latest are permanent house view; only
+`model_portfolios` was transitional), independently corroborated by `comp-cluster`. **The only
+genuinely open thing there is the ATTRIBUTION SEAM, and it is a product call at Andrew.**
+**`demo`'s missing MDPF registry entry is real and live TODAY but is a DIFFERENT TENANT** — fix
+separately, **do not smuggle it into Cottonwood.**
+**Also live TODAY and not Cottonwood-specific:** A3's AUA/AUM label contradiction affects **49F and
+Inflection right now.**
+
 ## ⛔ PROHIBITION — NEVER RUN `pull_eclipse_portfolios.py` WITH `--date`
 
 **SOURCE-CONFIRMED by the COO at `b0cad1965`** (found by `0.6.2_AE_PartnerETL~A`, verified
