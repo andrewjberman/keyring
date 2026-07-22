@@ -80,8 +80,18 @@ def check(arts, honest_none_dates=frozenset(), tol=TOL):
     for date in g["dates"]:
         head = _at(g, "opal_aggregate_aua", date)
         if head is None:
+            # ALL-OR-NOTHING: a None-headline row must be FULLY None (model, non_model, and the
+            # inflection_non_model_aua audit carrier). A partial row (headline None beside a populated
+            # field) is the defect DS self-caught -- a populated non_model reads as real while the total
+            # is a gap. My gate must catch it independently, not skip it.
+            partial = [nm for nm, v in (("model_aua", _at(g, "model_aua", date)),
+                                        ("non_model_aua", _at(g, "non_model_aua", date)),
+                                        ("inflection_non_model_aua", _at(g, "inflection_non_model_aua", date)))
+                       if v is not None]
+            if partial:
+                holds.append((date, "partial-row", f"headline None but {partial} populated -- must be all-or-nothing"))
             # A None headline is NEVER silently skipped: it must be a lineage-verified honest-None
-            # (custody-only day, eclipse partition absent). Otherwise it is an unexplained None -> RED.
+            # (custody-only / feed-absent day, eclipse partition absent). Otherwise an unexplained None -> RED.
             if date in honest_none_dates:
                 n_honest_none += 1
             else:
@@ -230,32 +240,38 @@ def _selftest():
     # DROP inflection non_model on a NON-honest-None date -> RED on E4
     v_drop, h_drop, _ = check(build(list(f49_nm), inf_nonmodel=[None, None, None]))
     ok_drop = (v_drop == "HOLD" and {d for d, k, _m in h_drop if k == "E4-2b-dropped"} == set(dates))
-    # HONEST-NONE: a custody-only day => global headline None + inflection model/non_model None.
+    # HONEST-NONE: a custody-only / feed-absent day => global row FULLY None (all-or-nothing).
     hn_date = "2025-01-03"
 
-    def build_hn():
+    def build_hn(partial=False):
         a = build(list(f49_nm), inf_model=[130.0, None, 132.0], inf_nonmodel=[60.0, None, 62.0])
         j = a["global"]["_idx"][hn_date]
-        a["global"]["opal_aggregate_aua"][j] = None    # headline None on the custody-only day
+        a["global"]["opal_aggregate_aua"][j] = None
         a["global"]["model_aua"][j] = None
-        return a
+        if not partial:
+            a["global"]["non_model_aua"][j] = None      # clean all-None honest-None row
+        return a                                          # partial=True leaves non_model populated (the defect)
 
-    # verified honest-None (eclipse-absent, date in the set) -> PASS, counted
+    # clean all-None + lineage-verified -> PASS, counted
     v_hn, h_hn, dn_hn = check(build_hn(), honest_none_dates={hn_date})
     ok_hn = (v_hn == "PASS" and dn_hn["honest_none_verified"] == 1 and not h_hn)
     # UNVERIFIED None headline (eclipse PRESENT, NOT in the set) -> RED, never silently skipped
     v_gap, h_gap, _ = check(build_hn(), honest_none_dates=frozenset())
     ok_gap = (v_gap == "HOLD" and any(d == hn_date and k == "headline-None-unverified" for d, k, _m in h_gap))
+    # PARTIAL ROW (headline None beside a populated non_model) -> RED even on a verified honest-None date
+    v_pr, h_pr, _ = check(build_hn(partial=True), honest_none_dates={hn_date})
+    ok_pr = (v_pr == "HOLD" and any(d == hn_date and k == "partial-row" for d, k, _m in h_pr))
 
     print(f"SELFTEST clean-B -> {v_clean} (expect PASS)                         : {'OK' if ok_clean else 'FAIL'}")
     print(f"SELFTEST FOLD-IN (A artifact, non_model=FULL) -> {v_fold} on E3      : {'OK' if ok_fold else 'FAIL'}")
     print(f"SELFTEST DROP cohort-2b (non-honest-None) -> {v_drop} on E4          : {'OK' if ok_drop else 'FAIL'}")
-    print(f"SELFTEST honest-None VERIFIED (None headline, eclipse-absent) -> {v_hn}   : {'OK' if ok_hn else 'FAIL'}")
+    print(f"SELFTEST honest-None VERIFIED (all-None, eclipse-absent) -> {v_hn}   : {'OK' if ok_hn else 'FAIL'}")
     print(f"SELFTEST None headline UNVERIFIED (eclipse present) -> {v_gap} (RED, not skipped): {'OK' if ok_gap else 'FAIL'}")
-    if not (ok_clean and ok_fold and ok_drop and ok_hn and ok_gap):
+    print(f"SELFTEST PARTIAL ROW (None headline + populated non_model) -> {v_pr} (RED): {'OK' if ok_pr else 'FAIL'}")
+    if not (ok_clean and ok_fold and ok_drop and ok_hn and ok_gap and ok_pr):
         print("SELFTEST FAILED -- do NOT trust the gate.")
         return 1
-    print("SELFTEST OK -- GREEN on clean-B + lineage-verified honest-None; RED on fold-in, drop, unverified None headline.")
+    print("SELFTEST OK -- GREEN on clean-B + all-None honest-None; RED on fold-in, drop, unverified None, partial row.")
     return 0
 
 
