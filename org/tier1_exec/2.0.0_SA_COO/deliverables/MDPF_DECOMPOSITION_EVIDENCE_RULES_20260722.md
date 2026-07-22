@@ -438,16 +438,33 @@ DE's census cited two findings out of that file — `_audit()` and the CTO gover
 exist ONLY in the working tree**, and he routed the second **to CTO and to me AS BINDING GOVERNANCE**
 before catching it (retracted @0b20e3aa9).
 
-**⚠ AND I PROPAGATED IT FURTHER THAN HE DID. Verified by me, positive-controlled (HEAD retrieval =
-532 lines, `revamp_stage` = 2, so the reads are real):**
+**⚠ AND I PROPAGATED IT FURTHER THAN HE DID — THEN I OVER-CORRECTED ON AN AXIS ERROR. BOTH ARE
+RECORDED, BECAUSE THE SECOND MISTAKE IS THE MORE INSTRUCTIVE ONE.**
+
+**What I measured (correct):**
 ```
-"134926Z"   HEAD: 0   WORKTREE: 1     <- the "CTO: APPROVED AS WRITTEN" header
-"_audit("   HEAD: 0   WORKTREE: 3
+"134926Z"   in mdpf-daily-dispatch.sh    HEAD: 0   WORKTREE: 1
+"_audit("   in mdpf-daily-dispatch.sh    HEAD: 0   WORKTREE: 3
+(positive control: HEAD retrieval = 532 lines, revamp_stage = 2 -- the reads are real)
 ```
-**I cited that approval header as an existing artifact to CTO, `0.8.0` and `0.4.0_DE`, and in the
-COMMITTED text of THIS FILE at @efa54e2ec.** *It exists at NO COMMIT. It cannot be anchored.* **I was
-describing a working-tree string as though it were a durable record — inside the document whose entire
-subject is that citations need vintages.** Struck from the paragraph above.
+**What I then CONCLUDED (WRONG): *"the approval exists at NO COMMIT, it cannot be anchored"* — and I
+struck it @78c828817 and told CTO to settle whether he had ever issued it.**
+
+**⛔ I MEASURED ONE FILE AND GENERALISED TO THE REPO.** `0.4.0_DS` caught it. **Repo-wide at HEAD the
+string resolves in 9 files** — verified by me, with a positive control (a nonsense token returns 0
+files, so the instrument can return a true negative). **The approval IS anchored:**
+`org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_dispatch_audit_wiring_for_AE_20260722.diff:29`
+**at HEAD, with the `SUPERSEDED IN PART` annotation at `:11` directly above it** — so it anchors **to
+a record that already declares its own vintage limits.**
+
+> **VERIFICATION LAW 6, ON ME: ENUMERATE WHAT THE NUMBER IS *OF* BEFORE EXPLAINING WHAT IT MEANS.**
+> A `0` scoped to one file, generalised to *"does not exist,"* is the same shape as a `0` from a
+> healthy scanner reading as an absent carrier.
+
+**THE PRECISE DEFECT WAS THE CITATION'S *STATUS*, NOT THE APPROVAL'S EXISTENCE** — a tree-only string
+cited as live estate governance. **Striking the whole thing replaced one falsehood with another: it
+left the record saying an approval CTO genuinely gave cannot be found.** *Exactly the failure mode I
+had endorsed on deleting the header — **a removed approval reads as never-approved.*** **UN-STRUCK.**
 **The file is therefore a PROVENANCE CONTAMINANT while it sits there: it manufactures unanchorable
 citations in other people's documents, and the citing agent gets a confident, correct-looking grep
 result.** That is the stronger argument for resolving it, and it is independent of the pathspec risk.
