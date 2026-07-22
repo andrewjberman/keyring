@@ -23691,3 +23691,92 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
 | 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.5.0_AE_OpalETL | (no-TO) | comp-trigger | comp-trigger smartx | PASS |
+| 2026-07-22 | 0.5.0_AE_OpalETL | (no-TO) | comp-trigger | comp-trigger model_aum | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pipescript | comp-pipescript io dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/MDPF_3FIRMS.3F-P1.... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/mdpf/cottonwood/aggregate-aua-timeseries.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace api/general/mdpf/cottonwood/aggregate-aua-timeseries.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace getMdpfAggregateAUATimeSeriesByFirm | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform fields ModelPortfolios | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-platinum | comp-platinum page model-portfolios | FAIL |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-platinum | comp-platinum page ModelPortfolios | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace getAUMMetrics | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace ModelPortfolios | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/portfolios/aum-metrics.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/portfolios/aum-timeseries.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/portfolios/account-distribution.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/portfolios/non_model_assets.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/mdpf/global/aggregate-aua-timeseries.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/mdpf/49financial/aggregate-aua-timeseries.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/mdpf/inflection/aggregate-aua-timeseries.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/mdpf/cottonwood/aggregate-aua-timeseries.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/mdpf/49financial/account-distribution.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/mdpf/inflection/account-distribution.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/mdpf/cottonwood/account-distribution.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/benchmarks/model_portfolio_benchmarks.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/benchmarks/etf_returns.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/peers/peer_performance.json | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-blast | comp-blast aum-timeseries.json | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-blast | comp-blast aum-metrics.json | PASS |
+| 2026-07-22 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-07-22 | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-07-22/session_3fb2_smartx_i... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | pipescript | pipescript model-portfolios | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | pipescript | pipescript --resource aum-timeseries | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/mdpf-pipeline/iam.t... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-pulse | comp-pulse diff infra/aws/terraform/mdpf-pipeline/iam.tf org/critical_paths/.open_deplo... | FAIL |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | pipescript | pipescript --resource mdpf | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | pipescript | pipescript --resource smartx | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/andrew_dire... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_direct_20260722T2041Z_display_floor_... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S2.silver-completeness-census-and-rule17-audit | comp-pipescript | comp-pipescript io schwab_conversion | FAIL |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S2.silver-completeness-census-and-rule17-audit | comp-pipescript | comp-pipescript io mirror_conversion | FAIL |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_3FIRMS.3F-S2.silver-completeness-census-and-rule17-audit | comp-pipescript | comp-pipescript io rebalancer_conversion | FAIL |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/ta... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/task_orders/MDPF_3FIRMS.3F-B4.inf-... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_B7_inflec... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-trigger | comp-trigger smartx | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-trigger | comp-trigger eclipse | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-trigger | comp-trigger inflection | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-trigger | comp-trigger canonical-schwab-si2-08242234-daily-pull | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-trigger | comp-trigger opal-assets-silver-schwab-sweep-daily | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/aws | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .tools/aws | FAIL |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-trigger | comp-trigger inf-api-assets-v2-daily | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-trigger | comp-trigger opal-assets-ingest-mirror-inf-daily | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/FEDOBS_EMIT_PRODUCER_P... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-iam | comp-iam gaps | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/MDPF_3F_P1_CONSUM... | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-trigger | comp-trigger cot-bd-session-daily | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-trigger | comp-trigger opal-assets-silver-blackdiamond-sweep-daily | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-trigger | comp-trigger cot-rebalancer-runner-daily | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-trigger | comp-trigger opal-assets-silver-orion-sweep-daily | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/lo... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/logs/2026-07-22/b7_inflection_july... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace /api/general/mdpf/global/aggregate-aua-timeseries.json | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/.unind... | PASS |
+| 2026-07-22 | 0.7.0_AE_CloudOps | MDPF_3FIRMS.3F-S3 | comp-pulse | comp-pulse diff org/critical_paths/.open_deploys/.unindexed_red_state.json org/critical... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/lo... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/logs/2026-07-22/b7_inflection_july... | PASS |
+2026-07-22 0.4.0_DE_ClientPlatform MDPF_3FIRMS.3F-P1+P2: comp-routes behaviors+trace PASS (14/14, MSYS2_ARG_CONV_EXCL fix); pipescript producer-grounding PASS; comp-platinum/comp-routes URL col reads commented-out /api/private TODO as live URL (FAIL, flagged); comp-transform fields 7-of-40 PARTIAL; gap: no tool maps FE URL -> S3 key under public-data-router rewrite
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/andrew_dire... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_direct_20260722T2050Z_cutover_carrie... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DE_ClientPlatform/logs... | PASS |
