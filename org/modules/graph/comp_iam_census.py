@@ -212,6 +212,10 @@ def build_census(account: str | None = None, aws_bin: str = "aws") -> dict:
             "role_name": r.get("RoleName"),
             "arn": r.get("Arn"),
             "role_id": r.get("RoleId"),
+            # D4: CreateDate is what lets a missing node be ATTRIBUTED to the producer that should
+            # have caught it. Without a creation time, "absent from the graph" is a fact with no
+            # owner -- and a finding with no owner is a finding nobody acts on.
+            "create_date": r.get("CreateDate"),
             "trust_policy": r.get("AssumeRolePolicyDocument"),
             "tags": r.get("Tags") or [],
             "permissions_boundary": r.get("PermissionsBoundary"),

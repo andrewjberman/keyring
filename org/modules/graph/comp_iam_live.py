@@ -356,3 +356,106 @@ def pipe_lines(pl):
         lines.append("    verdict: ALIVE (invoked, no errors, DLQ empty). NOTE: alive does NOT imply "
                      "it is WRITING -- yield is a separate question the node cohort answers.")
     return lines
+
+
+# ---------------------------------------------------------------------------
+# D4: the RECONCILIATION ORACLE -- attribute every gap to the producer that should have caught it.
+#
+# The graph has two producers with different obligations:
+#   A  full derive, 02:00Z  -- must contain everything that existed AT 02:00Z
+#   B  incremental, ~2 min  -- must contain everything created SINCE 02:00Z
+#
+# So a role that is live but absent from the graph is not one finding, it is TWO DIFFERENT findings,
+# and CreateDate separates them:
+#
+#   created AFTER  the last full derive  -> B should have caught it   => INCREMENTAL MISS
+#   created BEFORE the last full derive  -> A should have caught it   => FULL-DERIVE MISS
+#
+# This is the self-check the design called for, and it is computable locally from data both sides
+# already have. Without it "12 roles missing" is a number with no owner; with it, each row names the
+# producer whose obligation was not met -- or names neither, which is itself informative (a role
+# created before the derive AND excluded by both is a SCOPE decision, not a miss).
+# ---------------------------------------------------------------------------
+
+def reconcile_oracle(rows, census, now=None):
+    """Attribute each live-but-absent-from-graph role to the producer that should have ingested it.
+
+    Returns {full_derive_ts_iso, incremental_miss[], full_derive_miss[], undatable[]} or None when the
+    inputs cannot support the attribution. Returning None rather than an empty result matters: an
+    oracle that cannot run must not look like an oracle that ran and found nothing."""
+    if not census or not rows:
+        return None
+    cv = cohort_vintage(rows, now=now)
+    fd = cv.get("full-derive") or {}
+    fd_iso = fd.get("newest_iso")
+    if not fd_iso:
+        return None
+    fd_dt = datetime.strptime(fd_iso, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+
+    in_graph = {str(r.get("name")) for r in rows}
+    inc, full, undatable = [], [], []
+    for r in (census.get("roles") or []):
+        name = str(r.get("role_name"))
+        if name in in_graph:
+            continue
+        cd = r.get("create_date")
+        if not cd:
+            undatable.append({"name": name, "why": "census carries no create_date"})
+            continue
+        try:
+            cdt = datetime.strptime(str(cd).replace("+00:00", "Z"), "%Y-%m-%dT%H:%M:%SZ")
+            cdt = cdt.replace(tzinfo=timezone.utc)
+        except ValueError:
+            undatable.append({"name": name, "why": f"unparseable create_date {cd!r}"})
+            continue
+        rec = {"name": name, "created": cdt.strftime("%Y-%m-%dT%H:%M:%SZ"),
+               "service_linked": service_linked(r if r.get("arn") else {"arn": r.get("arn")})
+               or "/aws-service-role/" in str(r.get("arn") or "")}
+        (inc if cdt > fd_dt else full).append(rec)
+
+    # A gap that pre-dates the derive AND is an AWS service-linked role is not a MISS, it is a SCOPE
+    # EXCLUSION: AWS creates and owns those, they are consistently absent across every run, and they
+    # are not governable by our IaC. Reporting 12 expected exclusions as misses every run is how a
+    # real signal gets buried -- the same crying-wolf failure the service-linked split fixed upstream.
+    # The distinction is evidence-based, not cosmetic: MISS means an obligation was not met;
+    # EXCLUSION means no obligation existed.
+    scope_excluded = [r for r in full if r["service_linked"]]
+    genuine_full_miss = [r for r in full if not r["service_linked"]]
+    return {"full_derive_ts_iso": fd_iso, "incremental_miss": inc,
+            "full_derive_miss": genuine_full_miss, "scope_excluded": scope_excluded,
+            "undatable": undatable}
+
+
+def oracle_lines(o):
+    if o is None:
+        return ["  reconciliation oracle: UNAVAILABLE (needs a census WITH create_date + a "
+                "full-derive cohort) -- NOT a clean result"]
+    lines = [f"  reconciliation oracle (vs last full derive {o['full_derive_ts_iso']}):"]
+    inc, full, und = o["incremental_miss"], o["full_derive_miss"], o["undatable"]
+    exc = o.get("scope_excluded") or []
+    if not inc and not full and not und:
+        detail = (f" ({len(exc)} AWS service-linked role(s) excluded by scope -- not a miss; "
+                  f"AWS owns them and they are not IaC-governable)" if exc else "")
+        lines.append(f"    NO ATTRIBUTABLE GAPS -- both producers met their obligation{detail}")
+        return lines
+    if inc:
+        lines.append(f"    INCREMENTAL MISS ({len(inc)}) -- created AFTER the last full derive, so "
+                     f"the ~2-min CloudTrail path should have ingested them and did not:")
+        for r in inc[:10]:
+            lines.append(f"       !! {r['name']}  created {r['created']}")
+        if len(inc) > 10:
+            lines.append(f"       ... and {len(inc) - 10} more")
+    if full:
+        lines.append(f"    FULL-DERIVE MISS ({len(full)}) -- existed BEFORE the last full derive, so "
+                     f"the 02:00Z re-derive should have contained them and did not:")
+        for r in full[:10]:
+            lines.append(f"       !! {r['name']}  created {r['created']}")
+        if len(full) > 10:
+            lines.append(f"       ... and {len(full) - 10} more")
+    if exc:
+        lines.append(f"    scope-excluded ({len(exc)}): AWS service-linked, absent by design, "
+                     f"NOT counted as a miss")
+    if und:
+        lines.append(f"    UNATTRIBUTABLE ({len(und)}) -- gap is real but the producer cannot be "
+                     f"named: {und[0]['why']}")
+    return lines
