@@ -195,6 +195,18 @@ manifests — not from the file, which cannot tell you.
   *"something refused"* is satisfied by any refusal, so it measures the SUITE, not the gate it names.
   Assert the discriminating outcome; then mutate each gate individually and confirm **only** its own
   tests go red.
+- **AND A PASS SIGNAL IS NOT A REASON EITHER — STATE THE SCOPE A GREEN COVERS, BECAUSE AN UNSTATED
+  SCOPE READS AS "EVERYTHING".** Same day, the sign flipped: an author landed 30 mutation-verified
+  green tests on a converter. **Every test called the converter DIRECTLY.** Production reaches it
+  through `on_success -> lambda_entry -> run_event -> adapter -> manifest_body`. **Nothing crossed
+  that seam** — and the defect was not in any gate, it was in the JOIN: the adapter emitted a result
+  whose column census was left at its defaults, tripping a parity assertion **on the first real
+  conversion, after the data had already landed.**
+  > **They tested both ends of a seam and not the seam, then reported a green that was TRUE AND
+  > INSUFFICIENT.**
+  A mutation-verified suite proves each gate *has teeth*. It says nothing about whether the gates are
+  **reachable in the shape production calls them.** *Unit-green plus unit-green does not equal
+  seam-green.* Exercise the wired path, and when reporting a pass, **name what it covered.**
 - **A CONDITION STATED BEFORE THE WORK IS A SPEC; SPRUNG AT THE GATE IT IS A HOLD.** Sign-off terms
   get published in advance.
 - **A RETRACTION THAT SHRINKS A SCARE IS WORTH AS MUCH AS ONE THAT GROWS IT — AND IS MUCH RARER.**
