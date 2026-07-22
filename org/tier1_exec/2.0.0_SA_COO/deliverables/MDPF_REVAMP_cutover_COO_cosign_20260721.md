@@ -389,3 +389,123 @@ Item workers UP (MSTR provisioned, COO concurs): `0.4.0_DS_ClientPlatform` (prod
 Flip-custody set HELD at COO request, CTO concurring and accepting the lead-time deliberately:
 `0.7.0_AE_CloudOps`, `0.2.0_DT_PortfolioAnalytics`, `0.6.2_AE_PartnerETL~A` -- ~40s to spawn, CTO calls it
 the moment Andrew's limb lands, **AE + DT first (critical path).**
+
+---
+
+# G. COO NEVER-WIDEN LIMB **WITHDRAWN** 2026-07-22 ~1234Z -- RE-LAND IS 0 OF 3
+
+**SUPERSEDES SECTIONS C, D AND E ABOVE WHERE THEY READ AS A CLEARANCE.** The item-1 discharge in section C
+is **REVOKED** -- the premise it rested on (CTO: "no defect in the frozen-9") is falsified.
+
+## G.1 -- THE DEFECT, INSIDE THE CO-SIGNED FROZEN-9
+
+Found by `0.4.0_DS_ClientPlatform` at source (122838Z), independently reproduced by `1.0.0_SA_CTO` on his own
+instruments with a **separately-run positive control** (123328Z).
+
+`data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py` imports `account_count` **from the LEGACY
+SERVED artifact by date-join** (`:476-500`, wired `:812`) and **discards the correct count it already
+computes at `:427`.** Legacy's date axis is the one CTO proved broken. **Therefore one artifact reads its two
+axes from two different days:** the VALUE axis comes straight from eclipse (`_source_as_of` == partition,
+54/54) and is correct; the **COUNT axis inherits legacy's mis-stamps.**
+
+Frozen-9 `inflection/aggregate_aua_timeseries.json` (`cec5a0d6`), COUNT axis:
+
+    07-02  474  ->  07-06  540  ->  07-07  474  ->  07-08  475      = +66 then revert
+
+while VALUE at 07-06 is correctly `122,866,034`. True 07-06 count = 474; 540 is eclipse's **07-10** roster.
+CTO's positive control, run SEPARATELY: revamp count == legacy count at 07-02/07-07/07-08 (474/474/475), so
+the test is not vacuous.
+
+> **ANDREW'S SENTENCE -- "Inflection's model numbers jumping around july 6 july 7" -- IS REPRODUCED BY THE
+> ARTIFACT TWO EXECS HAD ALREADY CO-SIGNED, on the count view, on his exact dates.**
+
+DS sweep denominator: **38 of 427** revamp dates have an eclipse partition (eclipse starts at the 05-15
+launch) -- 26 agree, 7 honest-None, **5 disagree**: 4 genuine misalignments (05-27, 05-28, 06-24, **07-06**)
++ 07-20, which is the **declared** account_dist FUNDED-frontier basis, not a defect.
+**UNMEASURED AND EXPLICITLY NOT CLEAN: 49F + global use the same import path (`:628`).** Structurally
+present, not swept. *Unmeasured is not clean.*
+
+## G.2 -- WHY MY LIMB WITHDREW: FALSIFIED PREMISE, **NOT** ETAG MOVEMENT
+
+**No ETag moved.** DS wrote nothing; the pin is byte-intact; my 1205Z 9/9 verification is still true.
+**I did not auto-void on movement -- I WITHDREW on falsified premise, which is a custodial act, not a
+mechanical one.** My limb was granted citing:
+
+> *"DATA: I independently ran CVO's mutant-proven Layer-3 gate MYSELF = PASS."*
+
+**That gate runs the VALUE axis. My evidence never covered the axis carrying the defect.**
+
+> **A CO-SIGN IS WORTH EXACTLY THE AXIS ITS EVIDENCE RAN ON.**
+> **AN INSTRUMENT THAT PASSES ON A DEFECTIVE ARTIFACT HAS TOLD YOU ABOUT THE INSTRUMENT, NOT THE ARTIFACT.**
+
+CTO reversed his own "pin intact" ruling on the same grounds within ~40 seconds, independently. **Both limbs
+withdrawn. Re-land = 0 of 3. Nothing is servable and nothing should be.**
+
+## G.3 -- THREE DENOMINATOR FAILURES IN A ROW; THE PATTERN IS THE FINDING
+
+| pass | ran | denominator | blind to |
+|---|---|---|---|
+| CTO | `model_aua`, inflection only | 429/37 legacy, 427/33 revamp | non_model; other firms; COUNT |
+| COO (mine) | `non_model` + `model`, 3 firms | 427 dates, 420-426 transitions/firm | **COUNT** |
+| DS | COUNT axis vs eclipse source | 38 of 427 eclipse-covered | (found it) |
+
+**Each pass printed its denominator honestly. Each denominator was of a NARROWER POPULATION than Andrew's
+words described.** Three rigorous instruments, three correct denominators, one defect outside all three.
+It was found only because each limb pushed the next one wider -- DS states my Q3 push (below 5%, below the
+firm total) is what sent him to the count axis. **A rigorous instrument on the wrong axis survives review.**
+
+## G.4 -- WHAT SURVIVES, AND WHAT I SUPERSEDED OF MY OWN
+
+**SURVIVES (value axis, legacy vs revamp, same field/threshold/firms):** legacy **90** large non_model steps
+vs revamp **34** -- GLOBAL 29->15, 49F 55->15, INFLECTION 6->4. Denominators: legacy 429 dates/428
+transitions per firm; revamp 427/420-426. **The revamp IS materially better on the value axis.**
+Methodological caveat retained: the date-keyed set-diff (BOTH 7 / REVAMP-ONLY 27 / LEGACY-ONLY 83) is **NOT
+quotable as event counts** -- the two artifacts sit on different date axes, so one event keys twice
+(inflection `05-14->05-15 -46.18%` revamp == `05-15->05-18 -47.94%` legacy). **The COUNT comparison is
+axis-independent; the set-diff is not.**
+
+**SUPERSEDED -- MY OWN 123050Z CLEARANCE TO MSTR.** I used 90-vs-34 to clear CTO's Andrew-carry on the
+premise *"the flip removes what Andrew is looking at."* **On the COUNT axis that premise is FALSE.**
+Whichever view he is on, he sees a Jul6/7 jump -- in different modes. Corrected 20 minutes later, before it
+reached Andrew as a clean bill.
+
+## G.5 -- SEQUENCE (CTO gates, COO holds custody -- agreed between us)
+
+1. DS sweeps the **49F + global residual FIRST** (same import path `:628`; unmeasured is not clean).
+2. Fix the count-axis import (the correct count already exists at `:427`).
+3. Rebuild **re-produces inflection + global** -> **FRESH PIN**.
+4. **FRESH 3-PASS COVERING BOTH AXES.** The old Layer-3 gate passed on this artifact -- it may NOT be the
+   sole data evidence, and the re-verify needs a clause that would have caught THIS.
+5. Fresh CTO + COO limbs -> Andrew's sovereign limb.
+- Binding (CTO): print the 38-of-427 eclipse-coverage denominator so nobody reads the sweep as covering 427;
+  keep the 07-20 FUNDED-frontier seam **DECLARED, not "fixed."**
+- **AE / DT / PartnerETL~A stay HELD** -- there is no GO, and now a rebuild in front of it.
+
+## G.6 -- COO SERIALIZATION ORDER (write-collision on `global/aggregate_aua_timeseries.json`)
+
+**TWO WRITERS, ONE OBJECT, BOTH IN FLIGHT:** DS's rebuild re-produces `gold/mdpf_revamp/global/
+aggregate_aua_timeseries.json`; WSE_COTMDL **WS-4** folds Cottonwood into that same object.
+
+**ORDERED: (1) DS rebuild + fresh pin -> (2) fresh 3-pass + fresh limbs + flip -> (3) Cottonwood Global fold
+as its own co-signed change. WS-4 HELD BY COO until (2) completes.** A Cottonwood write landing mid-rebuild
+would corrupt the pin DS is establishing, invisibly, until a co-sign cited an ETag that had moved underneath it.
+**WS-2 / WS-3 / per-firm `json/mdpf/cottonwood/` + the `ModelPortfolios.tsx:236` dropdown PROCEED NOW** --
+new territory, zero collision. DE endorsed and building.
+Carried into WS-3/WS-4: **cot gold push AUTO-DEPLOYS** (bypasses a co-sign gate by construction);
+**FIRM SEPARATION (NEVER#2 / Rule 13)** -- the Global fold is where the firm-boundary architecture call
+actually lands, and it is **CTO's**; **the composition gate does NOT generalize 3->4 firms by assumption** --
+`total == bands + non_model` must be re-exercised at four (the class that caused the 07-22 P0).
+
+## G.7 -- CUSTODY STATE OF RECORD
+
+| | state |
+|---|---|
+| COO never-widen limb | **WITHDRAWN** (falsified premise) |
+| CTO never-widen limb | **WITHDRAWN** (self-reversed, same grounds) |
+| Re-land co-sign | **0 of 3** |
+| Item-1 discharge (section C) | **REVOKED** |
+| Item-2 re-arm (section C) | **STANDS** -- Cottonwood-into-Global structurally rewrites `c27e1f37` |
+| Pin `9/9` byte-state | still intact; **intactness is now irrelevant** -- the bytes are known-defective |
+
+**THE GATE WORKED.** A never-widen co-sign held a defect off the served surface, on the exact dates the
+sovereign asked about, caught by us before him. That is the whole case for the gate, demonstrated on itself.
