@@ -229,6 +229,11 @@ class TraceGraph:
         visited = set()
         result = []
         queue = [(node_id, 0)]
+        # `emitted` closes the same-frontier fan-in hole: a node reachable via N
+        # paths was appended N times (and N-counted by blast's "affects >= N")
+        # because `visited` marks on POP, not on append. Surfaced 2026-07-22 by the
+        # assets-silver pass (3 tables -> one gold consumer rendered 3 rows).
+        emitted = {node_id}
         while queue:
             current, depth = queue.pop(0)
             if current in visited or depth > max_depth:
@@ -236,7 +241,8 @@ class TraceGraph:
             visited.add(current)
             for edge in self._forward.get(current, []):
                 target_node = self.nodes.get(edge.target)
-                if target_node and edge.target not in visited:
+                if target_node and edge.target not in emitted:
+                    emitted.add(edge.target)
                     result.append((target_node, edge, depth + 1))
                     queue.append((edge.target, depth + 1))
         return result
@@ -248,6 +254,7 @@ class TraceGraph:
         visited = set()
         result = []
         queue = [(node_id, 0)]
+        emitted = {node_id}  # same fan-in dedup as downstream() -- see note there
         while queue:
             current, depth = queue.pop(0)
             if current in visited or depth > max_depth:
@@ -255,7 +262,8 @@ class TraceGraph:
             visited.add(current)
             for edge in self._reverse.get(current, []):
                 source_node = self.nodes.get(edge.source)
-                if source_node and edge.source not in visited:
+                if source_node and edge.source not in emitted:
+                    emitted.add(edge.source)
                     result.append((source_node, edge, depth + 1))
                     queue.append((edge.source, depth + 1))
         return result
@@ -448,7 +456,8 @@ def _inject_full_pipeline_into_graph(g: "TraceGraph", workspace_root: Path) -> N
       - s3:gold/canonical/holdings, etc., named-prefix nodes baked-in for both pipelines
     """
     from .extract_pipeline import (build_pipeline_dag, build_inf_gold_dag,
-                                   build_mdpf_dag, inject_pipeline_edges)
+                                   build_mdpf_dag, build_silver_dag,
+                                   inject_pipeline_edges)
 
     # BD gold (idempotent if already populated by extract_s3_edges; injects platinum
     # write nodes that extract_s3_edges' regex misses).
@@ -470,6 +479,18 @@ def _inject_full_pipeline_into_graph(g: "TraceGraph", workspace_root: Path) -> N
     # bucket-qualified extractor leg (TOOL-02 follow-on) lands.
     mdpf_dag = build_mdpf_dag(workspace_root)
     inject_pipeline_edges(mdpf_dag, workspace_root, _graph=g)
+
+    # Assets monolith (bundle item 5, census G2 class-widening @e7952ccba): the
+    # data/assets gold tree gets script nodes via the silver-DAG walker (no dispatch
+    # catalog, filename-stem IDs), then NAME-grain silver table nodes + producer/
+    # consumer edges derive LIVE from source string literals -- monolith reads are
+    # dynamic-key, so the hardcoded-path extractors above structurally cannot see
+    # them, and comp-blast NOT-FOUNDed the entire monolith silver surface.
+    from .extract_assets import inject_assets_silver_artifacts
+    assets_gold_dag = build_silver_dag(workspace_root, "assets-gold",
+                                       "data/assets/scripts/gold")
+    inject_pipeline_edges(assets_gold_dag, workspace_root, _graph=g)
+    inject_assets_silver_artifacts(g, workspace_root)
 
 
 # ---------------------------------------------------------------------------
