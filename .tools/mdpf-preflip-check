@@ -1,0 +1,132 @@
+#!/usr/bin/env python
+"""mdpf-preflip-check -- 3F-F1 pre-flip identity (PRD v1.12, from DE finding F-1).
+
+THE CLASS THIS BLOCKS: the declared CloudFront flip set (local.mdpf_assets_behavior_paths)
+was measured missing Cottonwood entirely -- a flip executed as declared would have silently
+split Cottonwood onto the legacy origin, breaking the LD-0330 one-flip ruling AT EXECUTION
+with every other check green. A hardcoded enumeration cannot notice its own missing member;
+only an identity against an independent enumeration can.
+
+TWO IDENTITIES, both must hold before any S5 flip apply:
+  1. CROSS-LAYER (live now): the CF flip set and the publisher PUBLISH_MAP must be the SAME
+     serving contract -- every published key has its exact-path behavior and vice versa
+     (path = "/api/general/" + served key minus its "json/" prefix).
+  2. REGISTRY CARDINALITY (binds when 3F-G2 lands): every enabled firm in the firm registry
+     (PRD section 3.3) carries BOTH its per-firm mdpf paths in the flip set. Until the
+     registry exists this limb reports REGISTRY-PENDING loudly -- pending is NOT a pass;
+     the interim firm set is derived from PUBLISH_MAP's mdpf/{firm}/ segments.
+
+Exit 0 = identities hold (registry limb may be PENDING, stated). Exit 1 = any mismatch.
+Denominators are always printed -- a check that scanned nothing must not read as a pass.
+
+Usage:
+  mdpf-preflip-check [--registry PATH]   # PATH = the 3F-G2 firm-registry JSON when it lands
+"""
+from __future__ import annotations
+
+import argparse
+import ast
+import json
+import re
+import sys
+from pathlib import Path
+
+WORKSPACE = Path(__file__).resolve().parent.parent
+CF_TF = WORKSPACE / "infra/aws/terraform/portal-auth/cloudfront-distribution.tf"
+PUBLISHER = WORKSPACE / ("infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/"
+                         "lambda_function.py")
+# Candidate registry locations (3F-G2 decides placement; probe both, first hit wins).
+REGISTRY_CANDIDATES = [
+    WORKSPACE / "data/mdpf_firm_registry.json",
+    WORKSPACE / "infra/aws/lambda/opal-assets/firm_registry.json",
+]
+PER_FIRM_NAMES = ("aggregate-aua-timeseries.json", "account-distribution.json")
+
+
+def _fail(msg: str) -> None:
+    print(f"ERROR: {msg}")
+    sys.exit(1)
+
+
+def parse_flip_set() -> list[str]:
+    text = CF_TF.read_text(encoding="utf-8", errors="replace")
+    m = re.search(r"mdpf_assets_behavior_paths\s*=\s*\[(.*?)\]", text, re.DOTALL)
+    if not m:
+        _fail(f"mdpf_assets_behavior_paths not found in {CF_TF}")
+    paths = re.findall(r'"(/api/general/[^"]+)"', m.group(1))
+    if not paths:
+        _fail("mdpf_assets_behavior_paths parsed EMPTY -- retrieval defect, not an empty set")
+    return paths
+
+
+def parse_publish_map() -> dict:
+    tree = ast.parse(PUBLISHER.read_text(encoding="utf-8", errors="replace"))
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Assign):
+            for t in node.targets:
+                if isinstance(t, ast.Name) and t.id == "PUBLISH_MAP":
+                    return ast.literal_eval(node.value)
+    _fail(f"PUBLISH_MAP not found in {PUBLISHER}")
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(prog="mdpf-preflip-check")
+    ap.add_argument("--registry", help="3F-G2 firm-registry JSON (overrides the probe)")
+    args = ap.parse_args()
+
+    flip = parse_flip_set()
+    pmap = parse_publish_map()
+    print(f"denominators: flip-set={len(flip)} paths | publish-map={len(pmap)} entries")
+
+    ok = True
+
+    # Identity 1 -- cross-layer, both directions.
+    expected_paths = {"/api/general/" + v[len("json/"):] if v.startswith("json/") else v
+                      for v in pmap.values()}
+    missing_cf = sorted(expected_paths - set(flip))
+    orphan_cf = sorted(set(flip) - expected_paths)
+    if missing_cf:
+        ok = False
+        print(f"FAIL identity-1: {len(missing_cf)} published key(s) with NO CF behavior "
+              f"(the F-1 silent-split class): {missing_cf}")
+    if orphan_cf:
+        ok = False
+        print(f"FAIL identity-1: {len(orphan_cf)} CF path(s) with NO publisher entry "
+              f"(a behavior serving nothing): {orphan_cf}")
+    if not missing_cf and not orphan_cf:
+        print(f"PASS identity-1: flip set == publish map, both directions ({len(flip)} paths)")
+
+    # Identity 2 -- registry cardinality (or the loud interim).
+    reg_path = Path(args.registry) if args.registry else next(
+        (p for p in REGISTRY_CANDIDATES if p.exists()), None)
+    if reg_path is None:
+        firms = sorted({p.split("/")[4] for p in flip
+                        if p.startswith("/api/general/mdpf/")})
+        print(f"REGISTRY-PENDING (not a pass): no 3F-G2 firm registry found "
+              f"(probed {[str(p) for p in REGISTRY_CANDIDATES]}); interim firm set from "
+              f"publish-map/flip mdpf segments = {firms}. Re-run with --registry once G2 lands.")
+    else:
+        reg = json.loads(reg_path.read_text(encoding="utf-8"))
+        entries = reg.get("firms", reg) if isinstance(reg, dict) else reg
+        enabled = []
+        for e in entries:
+            if isinstance(e, dict) and e.get("enabled", True) and e.get("firm_id") != "global":
+                enabled.append(e["firm_id"])
+        print(f"registry: {reg_path} -- {len(enabled)} enabled firm(s): {sorted(enabled)}")
+        for firm in enabled:
+            for name in PER_FIRM_NAMES:
+                want = f"/api/general/mdpf/{firm}/{name}"
+                if want not in flip:
+                    ok = False
+                    print(f"FAIL identity-2: registry firm '{firm}' missing CF path {want}")
+        if ok:
+            print(f"PASS identity-2: all {len(enabled)} registry firms fully covered "
+                  f"({len(PER_FIRM_NAMES)} paths each)")
+
+    print("VERDICT: " + ("PASS -- flip set is identity-clean" if ok
+                         else "FAIL -- DO NOT APPLY THE FLIP"))
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
