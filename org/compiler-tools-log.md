@@ -22882,3 +22882,13 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/TOTAL_RETURN_PERFORMANCE_DESIG... | PASS |
 | 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-21/s... | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/opal-assets/opal-asset... | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/taxsma_re... | PASS |
+
+## 2026-07-22 ~0028Z 1.0.0_SA_CTO (MDPF flip-gate 3-pass + A2 reversal + cot deploy + OPAL_PRISTINE)
+- CTO independent S3 re-verify (python/boto3 on gold/mdpf_revamp/ coherent-9): CLEAN -- aggregate/coherence identities 3 firms + A1/A2 field-identity + A2 freshness + A4 identity + cohort_provenance lineage; my check's dict-vs-list bug self-caught+resolved. The CTO leg of the 3-pass (3/3 with CVO+DT).
+- get_live_agents/get_org_summary/query_project: grounded DT dead->respawned + TAXSMA owner (0.5.0~A) + the 270-project census for OPAL_PRISTINE.
+- aws s3 ls/cp/s3api: applied-truth pulls for the re-verify + the pin-ground (caught COO's stale pin).
+- safe-commit surface-check + comp-pulse: 7 commits PASS/CLEAN (doc/tracker/PRD).
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-22/f... | PASS |
