@@ -1,0 +1,29 @@
+{
+  "project_code": "MDPF_3FIRMS",
+  "macro_code": "MDPF",
+  "code": "MDPF_3FIRMS",
+  "title": "Three Firms + Global: model / non-model representation across 49 Financial, Inflection, Cottonwood -- bronze->silver->gold->platinum, fee-basis Global, one flip",
+  "name": "MDPF 3 Firms",
+  "description": "Andrew-direct (CTO terminal, 2026-07-22 ~18:5xZ, first authorized act of the LD-0333 restart): supersedes MDPF_REVAMP, rolling forward every incomplete item (PRD s2.5 ledger, RF-1..RF-15). Goal: accurately represent model portfolio + non-model holdings for 49 Financial (AUA = schwab/08242234 fact_rps_s2, models = smartx fact_model_aum_daily), Inflection (AUA = orion fact_assets, models = eclipse fact_portfolios_full), Cottonwood (AUA = blackdiamond/cottonwood fact_holdings_s2, models = BD Rebalancer -> dim_model_portfolio), and Global. THE FEE-BASIS LAW: the Global aum-metrics radial includes only what Opal charges fees on = full(49F) + model(INF) + model(COT), basis-labelled fee_charged_v1. Sequencing (Andrew-explicit): WS-B bronze (scheduled ingestion + vendor-depth-evidenced backfill, never conflating endpoint shape with available data) -> WS-S silver (event+sweep parquet conversions, canonical _s2 shapes, Cottonwood grant) may pipeline per leg; WS-G gold (null-composition decision first per CVO STOP-BEFORE-BUILD, firm registry as the one N-firm enumeration, fee-basis artifacts, DDB review) opens only when ALL legs B+S verified; WS-P platinum (consumption-contract audit incl. the server-vs-client question, FE 3-firm parity) audits parallel-safe, builds gated on G; WS-F = THE ONE FLIP with Cottonwood inside the gate, single binding pin at the end. PRD: docs/architecture/MDPF_3FIRMS_PRD.md.",
+  "status": "active",
+  "owner": "1.0.0_SA_CTO",
+  "pods": ["0.4", "0.5", "0.6", "0.7", "1.0", "2.0", "3.0"],
+  "created": "2026-07-22",
+  "current_phase": "Phase 0: PRD v1.0 authored + committed 2026-07-22 (grounded end-to-end in-session: 6-leg schedule/depth census, DDB contract, publisher PUBLISH_MAP, FE scoping mechanics, the Cottonwood zero-overlap resolved to its D+1-delivery mechanism). COO decomposition PENDING Andrew's cascade GO (fabric under the LD-0333 single-path hold; PRD creation was the authorized act, dispatch awaits his word). Open decisions D-1..D-5 at Andrew, none blocking WS-B/WS-S. Sibling dispositions recommended (WSE_COTMDL + MDPF_BASISSWITCH fold in; MDPF_VARFLAG independent), executed at decomposition on Andrew's nod.",
+  "blocking": "Andrew cascade GO for COO decomposition (LD-0333: no one acts without his explicit command to CTO filtering down).",
+  "prds": [
+    {
+      "path": "docs/architecture/MDPF_3FIRMS_PRD.md",
+      "label": "CTO PRD v1.0: fee-basis law + 6-leg grounded channel census + roll-forward ledger RF-1..15 + firm-registry architecture + WS-B/S/G/P/F TO candidates with compiler mandates",
+      "date": "2026-07-22"
+    }
+  ],
+  "related": ["MDPF_REVAMP", "WSE_COTMDL", "MDPF_BASISSWITCH", "MDPF_VARFLAG", "OPAL_CONSOLIDATION", "OPAL_ASSETS"],
+  "history": [
+    {
+      "date": "2026-07-22T~19:0xZ",
+      "agent": "1.0.0_SA_CTO",
+      "event": "OPENED on Andrew-direct advisory (verbatim in PRD s0) as the first authorized act of the LD-0333 fabric restart. PRD v1.0 authored fully grounded same-session; MDPF_REVAMP flipped complete-as-superseded in the same commit (its missing REGISTRY row noted as RF-15 and closed here). Key groundings: all 6 channel legs have live ENABLED schedules except smartx (mechanism unnamed -- 3F-B2) and eclipse puller (rule not visible -- 3F-B4); Cottonwood holdings-vs-assignment zero-date-overlap resolved to the D+1 ~03:30Z delivery cadence (first overlap 07-21 lands on schedule tonight); DDB 588 rows with the in-row dual-purpose staleness contract; publisher PUBLISH_MAP 9-entry hardcode confirmed at lambda_function.py:37."
+    }
+  ]
+}
