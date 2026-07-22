@@ -23582,3 +23582,40 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 1.0.0_SA_CTO | comp-surface-check check, comp-cache collisions, pipescript model-portfolios, comp-glob/grep x7, comp-which; rail-marked aws x5 (EventBridge census, S3 depth x6 legs, DDB) | MDPF_3FIRMS PRD grounding -- SEV1 surface confirmed; PUBLISH_MAP:37; zero-overlap resolved to D+1 delivery cadence; no smartx/eclipse-named ingest rules (-> 3F-B2/B4) |
 | 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-22/m... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam live --census C:\Users\ANDREW~1\AppData\Local\Temp\claude\C--Users-AndrewBerma... | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam live --census C:\Users\ANDREW~1\AppData\Local\Temp\claude\C--Users-AndrewBerma... | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws derive --classes iam | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws derive --classes iam | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam live --derive-dir C:\Users\ANDREW~1\AppData\Local\Temp\claude\C--Users-AndrewB... | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='IAM_ROLE' RETURN count(*) AS n | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.source AS source, count(*) AS n, max(n.snapshot_... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_iam_live.py --fi... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp_iam_live.py org/modules/graph/iam_cli.py org/tie... | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_iam_live.py org/modules/graph/iam_c... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/COTT... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/COTTONWOOD_MODEL_AUM_TIMESERIES_SOUR... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/GRAPH_FRESHNESS_WORKFL... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/COTT... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/COTTONWOOD_MODEL_AUM_TIMESERIES_SOUR... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_3FIRMS_PRD.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam live --pipe --census C:\Users\ANDREW~1\AppData\Local\Temp\claude\C--Users-Andr... | VERDICT |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam census-self-test | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_iam_live.py --fi... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp_iam_live.py org/modules/graph/iam_cli.py | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_iam_live.py --fi... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp_iam_live.py org/modules/graph/iam_cli.py | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_iam_live.py org/modules/graph/iam_c... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam refresh-census --out C:\Users\ANDREW~1\AppData\Local\Temp\claude\C--Users-Andr... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/COTT... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/COTTONWOOD_MODEL_AUM_BACKFILL_ENRICH... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam census-self-test | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/_provenance.py --fil... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff infra/aws/globgrph/_provenance.py org/modules/graph/comp_iam_census.py ... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed infra/aws/globgrph/_provenance.py org/modules/graph/comp_i... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam / comp-kuzu / comp-grep / comp-aws / commit-gate | BUILT comp-iam's APPLIED plane (refresh-census + fail-closed vintage gate + live-primary `live` with --pipe liveness and the D4 reconciliation oracle); comp-kuzu cross-tabs supplied the four-clock freshness finding and FALSIFIED my own comp-grep result | PASS (3 GAPS: comp-grep is structurally blind to INTERPOLATED identifiers -- a literal scan cannot match `name = "opal-assets-silver-${each.key}-role"`, and its clean 0 read as absence, forcing me to retract a "28 roles have no Terraform" claim (kuzu was right); `comp-aws derive --classes iam` REJECTS its own documented flag (unrecognized arguments) so the derive artifact could not be refreshed; the shared provenance header reported a PASS off a 2-node table write while 14,708 nodes sat 17h old -- fixed additively in _provenance.py) |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
