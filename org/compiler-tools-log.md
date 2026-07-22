@@ -22892,3 +22892,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - safe-commit surface-check + comp-pulse: 7 commits PASS/CLEAN (doc/tracker/PRD).
 | 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-21 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-22/f... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-21 | 2.0.0_SA_COO~A | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/TOTAL_RETURN_PERFORMANCE_DESIG... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/audit/archive/2026-07-22T003427Z/or... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/audit/archive/2026-07-22T003427Z/org_git-author-override-audit.log ... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/audit/archive/.baseline | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/audit/archive/.baseline | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/m365-mcp-gateway/ta... | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/m365-mcp-gateway/taxsma_gateway_iam.tf infra/aws/te... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/FACT_ACCOUNT_RETURN_B... | PASS |
+| 2026-07-21 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/FACT_ACCOUNT_RETURN_BUILD_SPEC_20260721.md | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-21 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/mdpf_revamp_cvo_indep_spine_ga... | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~A | OPAL_TAXSMA-finalize | session-summary | 9 commits (surface-check + comp-pulse CLEAN on all); risk-reflex HOLDs = 53d-stale superseded node, read+discharged; no comp-which/comp-iam -- greenfield module build + operational aws + Rule-22a live-simulate PLAN for the NEW IAM roles (comp-iam insufficient for new (action,resource)) | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-21 | 0.5.0_AE_OpalETL~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
