@@ -58,3 +58,25 @@ G-lane).
 3F-G8 on its narrowed gate (3F-B5 + 3F-B6-liveness + 3F-S3): **S3 leg goes COMPLETE with AC-4** —
 remaining gate legs are 0.6.2's B5 (tonight's 03:30Z landing) + B6-liveness. Circulate contract to
 0.6.2~A/0.7.0 (done in-window); G8 prep (read CRO join spec + dim slices) can start now.
+
+## G8 PREP STATE (banked ~21:12Z — build session picks up here)
+
+- **CRO handoff RECEIVED COMPLETE** (211136Z, inbox read/): join = `externalId == account_id`,
+  string equality, both z09 (NO int coercion); Opal filter = strategyName contains "opal" → 296/14;
+  edges (Income falls through rollup → non-model; sleeves visible `is_opal=false`; closed accounts
+  = zero-value shells, denominator filters value>0); identities (i) strategy-sum == LIVE dim sum,
+  (ii) model+non_model == firm total, (iii) bridge 296/296 LOUD. ⚠ **CRO's dollars are a CROSS-DATE
+  fixture (assignment 07-22 × holdings 07-20)** — identities reproduce, dollars do not. ACKed 211217Z.
+- **49F/INF reference schemas captured** (gold/mdpf_revamp staged artifacts): distribution =
+  {firm_id, firm_name, generated_at, period, source, basis, total{count/aum/mean/median/percentiles
+  p10-p90/min/max/std_dev/histogram{bins,counts,bin_labels}/active_accounts_count/
+  excluded_unfunded_count}, by_model{...same block per model}}; aum-metrics = {period, last_updated,
+  dates{q0..q3}, total{aum, model_aum, non_model_aum, account_count, q0..q3{change,growth,
+  priorLevel}}, by_model[...]}.
+- ⚠ **DESIGN QUESTION FOR BUILD (raise at CTO design gate): aum-metrics carries q0–q3 quarterly
+  deltas — Cottonwood has ~2 days of facts, so priorLevel/growth are uncomputable.** Schema-identical
+  (acceptance #1) vs no-fabrication (§8.1) requires a deliberate honest-absent treatment, ONE null
+  semantics (DE's G1 dual-null finding is the cautionary case: NULL-filled vs 0.0-filled coexisting).
+- Phase-1 io/blast run (io dynamic-key-blind, blast no-extracted-edges lower bound — both recorded);
+  producer family mapped (`dim_mdpf_account_distribution.py` = revamp copy of the served smartx
+  producer; build adds a `_units_cottonwood()` leg + the aum-metrics artifact).
