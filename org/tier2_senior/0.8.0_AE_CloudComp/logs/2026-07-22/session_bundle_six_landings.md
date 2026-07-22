@@ -64,5 +64,13 @@ ambiguous state once — resolved by reading git state, commit had landed (b6e4a
   exercising preflip; extract_ts_source.py is the polyglot seed; acceptance targets
   firm-config.mjs + firmAccess.ts), then 9 (TRIGGER_LAYER verdict shape), 8 (landed-catalog mode
   default, live pulls per-use word, mode declared), 06-coregen re-fire (report also to CVO~Z), G3.
-- Standing at CTO (not urgent): whether the danger map stays a tracked artifact (my comp-iam
-  census precedent argues TTL artifacts do not belong in git).
+- ~~Standing at CTO: whether the danger map stays tracked~~ **RULED @230603Z: UNTRACK**
+  (census precedent + auto-modified-tracked-file-is-sweep-bait); gitignore landed @2d8609a9e;
+  **EXECUTION DEFERRED** after CTO exercised THREE failure modes live in the shared index
+  (wrapper re-adds cached removals; `git commit -- <path>` overrides a staged deletion with
+  worktree state; a no-pathspec commit would sweep ~20 files of other agents' staged work — the
+  owned-paths gate fired and blocked it). **NEW BUNDLE-TAIL ITEM (mine, CTO-routed): safe-commit
+  `--untrack <path>` index-only-removal mode** (rm --cached + commit-tree plumbing touching
+  nothing else) OR a coordinated clean-index moment; the removal commit cites CTO 230603Z.
+  Bundle tail is now: 7 (build, design pinned @d5ed44e2e) → 9 → 8 → coregen re-fire → G3 →
+  --untrack capability.
