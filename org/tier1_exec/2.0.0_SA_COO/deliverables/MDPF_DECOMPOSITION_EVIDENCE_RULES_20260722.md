@@ -374,9 +374,47 @@ WIRING: infra/aws/ec2/EC2_MANIFEST.json -> the runner fetches that S3 key. A COM
 **EXPOSURE: PROVENANCE + FUTURE DEPLOY, NOT LIVE EXECUTION.** *(The COO's original broadcast said
 "live dispatch script on the nightly path" and was corrected DOWNWARD to five recipients. An
 overstated hazard spends the same credibility as a false one.)* **The narrow-explicit-pathspec line
-still stands** — a sweep lands held, defective code under the sweeper's author line, carrying a diff
-header that still reads `CTO: APPROVED AS WRITTEN 134926Z` (now marked SUPERSEDED IN PART), **which is
-how it later gets deployed *believing it was reviewed*.**
+still stands** — a sweep lands held, defective code under the sweeper's author line, **which is how it
+later gets deployed *believing it was reviewed*.**
+
+### ⚠ SUPERSEDED BY ANDREW ~1712Z — "DO NEITHER" IS DEAD
+
+**ANDREW-DIRECT, VERBATIM, ~2026-07-22 1712Z (to `0.4.0_DE`, relayed):**
+> ***"get that dirty dispatch file committed or reverted, it's a hazard."***
+
+**My broadcast said: *"DO NOT commit it. DO NOT revert it. It stays exactly where it is."* THAT
+INSTRUCTION IS SUPERSEDED AND I HAVE UN-SAID IT TO EVERY RECIPIENT.** It was correct on the facts I
+had — **and both facts have since changed:** the tree is **no longer the only copy** (`0.4.0_DS`
+preserved an applyable patch @bfcc9e7c7 with round-trip proven; `0.4.0_DE` independently captured 71
+lines, sha256 `6145935bd383c4fb`), **so revert is no longer destructive.** **Owner is `0.4.0_DS`**
+(their wiring, their Control 5; `infra/aws/**` is AE-owned). **The choice is theirs; I am not ruling.**
+
+### ⚠ AND THE SECOND EXPOSURE I MISSED ENTIRELY — `0.4.0_DE`, from his own failure
+
+I framed the hazard as *"a broad pathspec sweeps it under someone's author line."* **There is a
+SECOND, INDEPENDENT exposure and it had ALREADY FIRED:**
+
+> **AN UNCOMMITTED TREE IS READABLE, GREPPABLE AND QUOTABLE BY EVERY AGENT, AND IT ANSWERS
+> CONFIDENTLY AS THOUGH IT WERE THE RECORD.**
+
+**It does not require anyone to make a mistake with a pathspec. It only requires them to READ.**
+DE's census cited two findings out of that file — `_audit()` and the CTO governance lock — **both
+exist ONLY in the working tree**, and he routed the second **to CTO and to me AS BINDING GOVERNANCE**
+before catching it (retracted @0b20e3aa9).
+
+**⚠ AND I PROPAGATED IT FURTHER THAN HE DID. Verified by me, positive-controlled (HEAD retrieval =
+532 lines, `revamp_stage` = 2, so the reads are real):**
+```
+"134926Z"   HEAD: 0   WORKTREE: 1     <- the "CTO: APPROVED AS WRITTEN" header
+"_audit("   HEAD: 0   WORKTREE: 3
+```
+**I cited that approval header as an existing artifact to CTO, `0.8.0` and `0.4.0_DE`, and in the
+COMMITTED text of THIS FILE at @efa54e2ec.** *It exists at NO COMMIT. It cannot be anchored.* **I was
+describing a working-tree string as though it were a durable record — inside the document whose entire
+subject is that citations need vintages.** Struck from the paragraph above.
+**The file is therefore a PROVENANCE CONTAMINANT while it sits there: it manufactures unanchorable
+citations in other people's documents, and the citing agent gets a confident, correct-looking grep
+result.** That is the stronger argument for resolving it, and it is independent of the pathspec risk.
 
 **⚠ AND A NEAR-MISS OF MY OWN, RECORDED BECAUSE IT IS THE CLASS THIS FILE IS ABOUT:** my `aws s3 cp`
 **returned nothing**, and I reported "could not confirm." **The object was there and readable all
