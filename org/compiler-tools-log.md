@@ -23007,3 +23007,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | MDPF_REVAMP.P0 | comp-grep / DT-parity-harness / safe-commit / comp-system-gate / trading_calendar | legacy raw-consumer trace (17 hits/403 files); DT --consistency x4 vintages GREEN; 7 commits surface-check+reflex PASS; 3 audited system-overrides; canonical-vs-shim 628-day sweep 0 divergences | PASS |
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+2026-07-22T05:44Z | 3.0.0_SA_CVO | python-gates/aws-s3-parquet/ruff | Convergence pass on frozen c27e1f37 (Layer-3 +E5 by_model absence-agreement PASS, A2 dip gone) + Andrew Jul6/7 inflection variance (eclipse modelId reclassification, legacy date-mislabel). PASS.
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-22/w... | PASS |
