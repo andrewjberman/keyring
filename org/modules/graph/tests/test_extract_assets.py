@@ -121,12 +121,26 @@ def test_extractor_positive_control(tmp_path):
     probe.write_text(
         '# comment mentions fact_comment_only\n'
         'fact_identifier_only = 1\n'
-        'TABLE = "fact_real_literal"\n'
-        'PATH = "blackdiamond/cottonwood/silver/fact_path_literal/"\n',
+        'd = {"fact_dict_key_prose": None}\n'          # bare whole-string: REJECT
+        'x = "docstring prose mentions fact_prose_only here"\n'
+        'A = silver_table(s3, "fact_call_arg", d)\n'   # form B
+        'PATH = "blackdiamond/cottonwood/silver/fact_path_literal/"\n'  # form A
+        'F = f_prefix + "/fact_fstring_frag"\n'        # form A (leading slash)
+        'DOC = "outputs -> fact_arrow_decl (same scope)"\n'             # form D
+        'ENUM = "ruled names (fact_enum_a, fact_enum_b, fact_enum_c...)"\n'  # form C
+        'PREFIX = "fact_concat_fragment_" + "suffix"\n',
         encoding="utf-8",
     )
     names = _fact_names_in_strings(probe)
-    assert names == {"fact_real_literal", "fact_path_literal"}, names
+    # Accepted: one per usage form. Rejected: prose mention, bare dict key,
+    # comment, identifier, and the trailing-underscore concatenation fragment
+    # (dropped WHOLE, not backtracked into a shorter phantom -- live instance:
+    # "fact_model_"). Bare whole-string rejection is the FALSE-PRESENCE lock:
+    # the first cut minted a node from a docstring that said a table was NEVER
+    # DECLARED (etf_schemas.py:17).
+    assert names == {"fact_call_arg", "fact_path_literal", "fact_fstring_frag",
+                     "fact_arrow_decl", "fact_enum_a", "fact_enum_b",
+                     "fact_enum_c"}, names
 
 
 def test_downstream_fanin_emits_each_node_once():

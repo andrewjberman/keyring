@@ -64,12 +64,64 @@ _CONSUMER_DIRS = (
 _SILVER_NODE_PREFIX = "s3:assets-silver/"
 
 
+def _accept_from_string(s: str) -> set:
+    """Tokens accepted from ONE string constant, by USAGE FORM -- not bare mention.
+
+    The first cut accepted any fact_* token in any string and minted phantoms of
+    the FALSE-PRESENCE class (worse than absence): a dict key ("fact_writer"), a
+    docstring prose mention (fact_table), and -- the sharpest instance -- tables a
+    docstring explicitly said were NEVER DECLARED (etf_schemas.py:17 fact_quotes/
+    fact_funds: a negative mention minted a positive node). Accepted forms, each
+    pinned to a live consumer/producer spelling in the estate:
+
+      A PATH   .../fact_x or silver/fact_x or fact_x/...   (mdpf f-string reads,
+               full-path literals, key grammars)
+      C ENUM   "fact_a, fact_b, fact_c" -- a comma list that is ONLY fact names
+               (silver_registry docstring enumeration of constructed names)
+      D ARROW  "-> fact_x" / "-> silver/fact_x" (converter-header pipeline
+               notation declaring outputs)
+
+    Form B (exact-string arg to a silver_table(...) call) needs the CALL node and
+    lives in _fact_names_in_strings' Call walk, not here.
+    """
+    out: set = set()
+    toks = [t for t in _FACT_TOKEN.findall(s)
+            if not t.endswith("_") and t not in _NOT_TABLES]
+    if not toks:
+        return out
+    # C ENUM: a comma list that is ONLY fact names -- the whole string, or a
+    # parenthesized group inside it ("... RULED (fact_acc, fact_rps, fact_trn...)"
+    # in silver_registry's docstring: the only textual trace CONSTRUCTED names
+    # leave, which is precisely the class raw search loses).
+    candidates = [s] + [m.group(1) for m in re.finditer(r"\(([^)]*)\)", s)]
+    for cand in candidates:
+        parts = [p.strip().rstrip(".") for p in cand.split(",")]
+        if len(parts) >= 2 and all(_FACT_TOKEN.fullmatch(p) for p in parts):
+            out |= {p for p in parts
+                    if not p.endswith("_") and p not in _NOT_TABLES}
+    for tok in set(toks):
+        for m in re.finditer(re.escape(tok), s):
+            before = s[:m.start()]
+            after = s[m.end():m.end() + 1]
+            if before.endswith("/") or after == "/":            # A PATH
+                out.add(tok)
+                break
+            if re.search(r"->\s*(silver/)?$", before):           # D ARROW
+                out.add(tok)
+                break
+    return out
+
+
 def _fact_names_in_strings(py_file: Path) -> set:
-    """Every fact_* token found inside STRING CONSTANTS of a python file.
+    """Every fact_* SILVER TABLE NAME evidenced in a python file's strings.
 
     AST-based: comments and bare identifiers (variables named fact_...) are
-    excluded by construction; docstrings are string constants and are included
-    deliberately (converter headers declare their outputs there).
+    excluded by construction, and string constants are accepted only in the
+    usage forms _accept_from_string documents (+ form B here: the exact-token
+    argument of a silver_table(...) call, the assets-gold consumer spelling).
+    A trailing underscore is a CONCATENATION FRAGMENT ('"fact_model_" + kind'),
+    excluded whole -- found live when build_dim_model_portfolio's prefix
+    literal minted a phantom s3:assets-silver/fact_model_ node.
     Unparseable file -> empty set (a broken file is the commit gate's problem;
     this pass must never take the graph build down with it).
     """
@@ -80,9 +132,19 @@ def _fact_names_in_strings(py_file: Path) -> set:
     names: set = set()
     for node in ast.walk(tree):
         if isinstance(node, ast.Constant) and isinstance(node.value, str):
-            for tok in _FACT_TOKEN.findall(node.value):
-                if tok not in _NOT_TABLES:
-                    names.add(tok)
+            names |= _accept_from_string(node.value)
+        elif isinstance(node, ast.Call):                         # B CALL-ARG
+            fn = node.func
+            fn_name = fn.attr if isinstance(fn, ast.Attribute) else \
+                getattr(fn, "id", "")
+            if fn_name == "silver_table":
+                for arg in list(node.args) + [k.value for k in node.keywords]:
+                    if (isinstance(arg, ast.Constant)
+                            and isinstance(arg.value, str)
+                            and _FACT_TOKEN.fullmatch(arg.value)
+                            and not arg.value.endswith("_")
+                            and arg.value not in _NOT_TABLES):
+                        names.add(arg.value)
     return names
 
 

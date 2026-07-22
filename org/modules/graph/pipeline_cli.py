@@ -210,6 +210,14 @@ def _build_dag(pipeline: str = "bd-gold"):
         return build_silver_dag(_WORKSPACE, "inf-bronze", "data/inf/scripts/bronze")
     if pipeline == "cot-bronze":
         return build_silver_dag(_WORKSPACE, "cot-bronze", "data/cot/scripts/bronze")
+    # Bundle items (1)+(3) (CTO 20260722T210151Z/211318Z): the assets monolith trees.
+    # Before this, build_dim_model_portfolio and the silver converter family were
+    # UNREGISTERED -- io/feeds/consumers dead-ended on the exact scripts the
+    # MDPF_3FIRMS TOs mandate io on (the D2X false-clean class, assets flavor).
+    if pipeline == "assets-gold":
+        return build_silver_dag(_WORKSPACE, "assets-gold", "data/assets/scripts/gold")
+    if pipeline == "assets-silver":
+        return build_silver_dag(_WORKSPACE, "assets-silver", "data/assets/scripts/silver")
     if pipeline == "all":
         return build_multi_pipeline_dag(_WORKSPACE)
     # FALSE-CLEAN GUARD (TOOL-02): an unknown key must NEVER silently become
@@ -456,6 +464,12 @@ def _auto_resolve_script_id(raw_id, pipeline_hint=None):
             inf_m = _build_dag("inf-manual-api")
             if lower in inf_m.scripts:
                 candidates.append(("inf-manual-api", inf_m, lower))
+        # Assets monolith trees (bundle items 1+3): snake_case names, no pipeline
+        # hint namespace of their own -- checked unconditionally.
+        for _apl in ("assets-gold", "assets-silver"):
+            _adag = _build_dag(_apl)
+            if lower in _adag.scripts:
+                candidates.append((_apl, _adag, lower))
 
         if len(candidates) == 1:
             _, dag, cid = candidates[0]
@@ -531,6 +545,8 @@ def _auto_resolve_script_id(raw_id, pipeline_hint=None):
             _index_dag(_build_dag("bd-silver"))
         if not bd_only:
             _index_dag(_build_dag("inf-silver"))
+        _index_dag(_build_dag("assets-gold"))
+        _index_dag(_build_dag("assets-silver"))
     except Exception:
         pass
 
@@ -1334,6 +1350,27 @@ def cmd_io(args):
             print(f"    {display_const}: {key}{prefix_tag}{func_tag}{hc_tag}{writer_str}")
     else:
         print("  READS: (none detected)")
+
+    # Bundle item 4 (CTO 20260722T211318Z): monolith silver reads are DYNAMIC-KEY
+    # (silver_table(s3, "fact_x", date)), structurally invisible to the path
+    # extractor above -- io on all six MDPF consumers showed only hardcoded gold
+    # paths while every silver read was missing. Same literal derivation as the
+    # comp-blast extract_assets pass, so the names printed here ARE graph nodes
+    # (s3:assets-silver/<name>) and comp-blast resolves each one.
+    try:
+        from extract_assets import _fact_names_in_strings as _fact_names
+    except ImportError:
+        from .extract_assets import _fact_names_in_strings as _fact_names
+    _spath = Path(sio.file_path) if sio.file_path else None
+    if _spath is not None and not _spath.is_absolute():
+        _spath = _WORKSPACE / _spath
+    _fnames = _fact_names(_spath) if _spath and _spath.exists() else set()
+    if _fnames:
+        print()
+        print(f"  MONOLITH SILVER READS ({len(_fnames)}) -- name-grain, literal-derived"
+              " (dynamic keys; the path extractor above cannot see these):")
+        for _fn in sorted(_fnames):
+            print(f"    {_fn} -> s3:assets-silver/{_fn}  (graph node; comp-blast resolves)")
 
     # GAP 3: surface rolling-window candidates with a warning
     if sio.rolling_window_candidates:
