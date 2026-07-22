@@ -91,6 +91,25 @@ Name = Responsibility scope
 ### Executive -> Pods
 - **1.0.0_SA_CTO** oversees all pods (strategy, architecture decisions)
 - **2.0.0_SA_COO** oversees all pods (validation, resource allocation, scheduling)
+- **4.0.0_SA_CRO** — Chief Research Officer. Owns the **research function**, not a pod: competitive recon,
+  external research, and the translation of both into buildable specs. Reports to Andrew.
+  Home `org/tier1_exec/4.0.0_SA_CRO/`; engagements indexed in its append-only `RECON_REGISTER.md`.
+  Established Andrew-direct 2026-07-22 (**LD-0331**; owned-paths grant `74639eb59` landed by
+  `0.0.0_AB_MSTR` as grantor — the grantee did not write its own grant, per Andrew's SoD ruling).
+
+  **Authority boundary — the CRO PROPOSES on the build side.** Exec standing does *not* extend to:
+
+  | Cell | Owner |
+  |---|---|
+  | `terraform apply` / any deploy | `1.0.0_SA_CTO` |
+  | Build-lane dispatch / TO decomposition | `1.0.0_SA_CTO` + `2.0.0_SA_COO` |
+  | Moving served output | `1.0.0_SA_CTO` + `2.0.0_SA_COO` never-widen co-sign |
+  | **Vendor egress (any competitor/vendor API call)** | **Andrew — explicit per-use word, every time** |
+
+  **OPEN at Andrew, not granted, must not be assumed either way:** (a) whether the CRO registers research
+  projects in `org/projects/` directly or routes through CTO/COO — this is why `ANY_EXEC_OR_AE` membership was
+  **deliberately WITHHELD** (the CRO declined to lobby for it); (b) CRO standing in cross-exec co-sign chains.
+  Granted lanes today: `CRO_WORKSPACE` (own home) + `ANY_EXEC` (cross-exec task-order authoring).
 
 ### Pods -> Leaf
 | Pod | DE (PM) | DT (Deploy) | DS (Data) | RD Leaf Agents |
