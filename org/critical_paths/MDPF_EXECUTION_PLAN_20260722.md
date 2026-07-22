@@ -213,6 +213,26 @@ that exists sits under `blackdiamond/cottonwood/`. **D5's ruling therefore has a
 
 ### S3 — WIRE *(owner AE; the step that was never in anyone's scope)*
 Add the **cottonwood leg** to `revamp_stage()` **and** DS's audit wiring, **in the same change.**
+
+> ### DISPOSITION OF THE AUDIT WIRING — RULED 1725Z (Andrew: *"Ok proceed with your rec"*)
+> The 44-line audit wiring was **REVERTED** out of `mdpf-daily-dispatch.sh` per Andrew ~1712Z
+> (*"get that dirty dispatch file committed or reverted, it's a hazard"*). **Tree clean; HEAD back to 532
+> lines; the strings that existed ONLY in the tree — `134926Z` and `_audit(` — are absent at HEAD.**
+> **RE-APPLY HERE, AS PART OF THIS STEP — NOT as a standalone commit.**
+> - **SOURCE OF TRUTH: DS's preserved patch `@bfcc9e7c7`** — *"the working tree was the ONLY copy … durable
+>   patch so the tree is no longer load-bearing"* — round-trip proven, with DE's independent checksum capture
+>   as a second copy. **DO NOT reconstruct it from memory or from a message.**
+> - **OWNER: AE lane.** `infra/aws/ec2/` is AE-owned; DS authored and is correctly owned-paths-blocked.
+> - **SHAPE STANDS (R15 is its durable carrier — the 134926Z CTO approval is REAL and now anchored):**
+>   **inflection FAILS the stage · 49financial REPORT-ONLY · placed AFTER 6c and BEFORE the completion
+>   marker**, so the marker is never written on an inflection regression.
+> - **BINDING — FOLD IN CVO's COVERAGE-GATING FIX IN THE SAME CHANGE:** the `cycle_complete` fold must gate
+>   on the **COVERAGE NUMBERS, not on `rc`**. An empty artifact returns **`rc=0` with a clean verdict line**,
+>   so a cycle that produced **NOTHING** is otherwise indistinguishable from a clean one. **The fix must be
+>   IN the fold, not after it.** *(The wiring was held for a known defect; that defect is exactly what this
+>   fix closes — which is why it re-lands WITH the fix rather than before it.)*
+> - **STOP-CONDITION UNCHANGED (R1): lands before the SECOND post-flip scheduled cycle, preempting WS-5 if
+>   needed.**
 > **⚠ FORCED ORDERING, MEASURED (DE): `gold/mdpf_revamp/` has NO `cottonwood/` prefix, and the
 > count-source-audit tripwire is ARMED (`rc=1` on any unaudited prefix, BEFORE the `--firm` branches). So the
 > THIRD AUDIT LEG MUST LAND IN THE SAME CHANGE AS THE STAGING LOOPS. Stage first and the nightly returns
