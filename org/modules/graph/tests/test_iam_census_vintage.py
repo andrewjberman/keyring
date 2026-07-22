@@ -135,3 +135,60 @@ def test_the_SHIPPED_census_is_the_thing_being_guarded_against():
         "the 2026-06-03 census now HAS a generated_utc -- good, but this fixture no longer "
         "demonstrates the undated case; re-point it at a synthetic undated census")
     assert C.census_freshness(d)[0] == C.NO_VINTAGE
+
+
+# ---------------------------------------------------------------------------
+# CVO verify @da7478839 -- F1/F2/F3 regression locks.
+# ---------------------------------------------------------------------------
+
+@pytest.mark.skipif(not _REAL_CENSUS.exists(), reason="committed census fixture absent")
+def test_F1_future_dated_census_is_REFUSED_not_treated_as_fresh(tmp_path):
+    """A future-dated census must REFUSE, not read as very fresh.
+
+    Before the fix, `FRESH if age <= ttl` meant pushing the date FORWARD made a census read FRESHER,
+    so any stale census became authoritative via a one-field edit -- while the sanctioned override
+    (--allow-stale-census) is audited and stamps the verdict non-authoritative.
+    A CONTROL WHOSE BYPASS IS CHEAPER THAN ITS OVERRIDE CHANNELS BEHAVIOUR TOWARD THE BYPASS.
+    """
+    fut = _census_with_vintage(
+        tmp_path, (datetime.now(timezone.utc) + timedelta(hours=48)).strftime(_ISO_Z), "future.json")
+    rc, out, _ = _run("reconcile", "--census", str(fut))
+    assert rc == REFUSED_EXIT, f"future-dated census must REFUSE; got {rc} :: {out}"
+    assert "FUTURE" in out and "IMPOSSIBLE" in out
+    # the refusal must name the ACTUAL reason -- calling it STALE is the record-one-notch-off defect
+    assert "dated in the FUTURE" in out, "the refusal must not misreport a FUTURE census as STALE"
+
+
+def test_F1_clock_skew_tolerated_but_impossible_is_not():
+    """The boundary: minutes of skew are real, hours are not. Without this the fix would refuse
+    healthy runs on a slightly-fast clock -- trading a false-accept for a false-refuse."""
+    now = datetime(2026, 7, 22, 20, 0, 0, tzinfo=timezone.utc)
+    def cen(dt):
+        return {"_meta": {"generated_utc": dt.strftime(_ISO_Z)}, "roles": []}
+    assert C.census_freshness(cen(now + timedelta(minutes=5)), now=now)[0] == C.FRESH
+    assert C.census_freshness(cen(now + timedelta(hours=48)), now=now)[0] == C.FUTURE
+
+
+def test_F3_future_census_provenance_carries_a_LOUD_marker():
+    """The docstring claimed future-dating was 'flagged by the provenance line'. It was not -- it
+    printed [FRESH] with no marker. VISIBLE-TO-A-CAREFUL-READER IS NOT A FLAG."""
+    now = datetime(2026, 7, 22, 20, 0, 0, tzinfo=timezone.utc)
+    cen = {"_meta": {"generated_utc": (now + timedelta(hours=48)).strftime(_ISO_Z)}, "roles": []}
+    prov = " | ".join(C.provenance_lines(cen, "f.json", now=now))
+    assert "!!" in prov and "IMPOSSIBLE" in prov
+    assert "[FRESH]" not in prov
+
+
+@pytest.mark.skipif(not _REAL_CENSUS.exists(), reason="committed census fixture absent")
+def test_F2_live_census_limb_is_gated_and_DISQUALIFIED_not_silently_used(tmp_path):
+    """`live --census` applied no vintage gate at all -- two census-overlay surfaces, one gated.
+
+    The limb is DISQUALIFIED rather than the whole report REFUSED: the graph is `live`'s primary
+    source and remains trustworthy, so a bad census must invalidate the cross-check only. And the
+    follow-on line must not then claim no census was supplied -- one was; it was unusable."""
+    fut = _census_with_vintage(
+        tmp_path, (datetime.now(timezone.utc) + timedelta(hours=48)).strftime(_ISO_Z), "f2.json")
+    rc, out, _ = _run("live", "--census", str(fut))
+    assert rc != REFUSED_EXIT, "a bad census must not invalidate the graph-primary report"
+    assert "DISQUALIFIED" in out
+    assert "no --census" not in out, "must not report 'no --census' when one was supplied"

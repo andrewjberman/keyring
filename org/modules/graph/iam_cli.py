@@ -786,6 +786,26 @@ def cmd_live(args):
                 census = json.loads(Path(args.census).read_text(encoding="utf-8"))
             except Exception as e:  # noqa: BLE001
                 print(f"  census cross-check UNAVAILABLE (unreadable {args.census}: {e})")
+            # F2 (CVO verify @da7478839, P1): this path json.loads'd the census and applied NO vintage
+            # gate -- census_freshness was called only in cmd_reconcile. TWO census-overlay surfaces,
+            # ONE gated. Measured by CVO: `live --census` accepted both the undated 06-03 census and a
+            # future-dated one, exit 1, with no provenance line at all.
+            # He also FALSIFIED his own harm hypothesis: no findings were suppressed on today's data,
+            # because the 111-role census happens to contain the 12 roles in question. THE COINCIDENCE
+            # THAT SAVED IT IS NOT A DESIGN PROPERTY. What IS wrong is the denominator -- a stale run
+            # printed "graph 193 vs census 111", reading as the graph OVER-enumerating by 82 when
+            # against a live 205 it UNDER-enumerates by 12. Gate it, and disclose rather than refuse:
+            # the cross-check is an ADVISORY limb of a report whose primary source is the graph, so a
+            # bad census must disqualify the limb, not the whole report.
+            if census is not None:
+                _cv, _cage = comp_iam_census.census_freshness(census)
+                if _cv != comp_iam_census.FRESH:
+                    for _ln in comp_iam_census.provenance_lines(census, args.census):
+                        print("  " + _ln)
+                    print(f"  !! census cross-check DISQUALIFIED -- census is {_cv}. The population "
+                          f"delta below is NOT computed; a delta against an untrustworthy census is "
+                          f"a number about the census, not about the graph.")
+                    census = None
         if census:
             names = {str(r.get("name")) for r in rows}
             cn = {str(r.get("role_name")) for r in (census.get("roles") or [])}
@@ -797,6 +817,9 @@ def cmd_live(args):
                     print(f"       {n}")
                 if len(missing) > 8:
                     print(f"       ... and {len(missing) - 8} more")
+        elif getattr(args, "census", None):
+            print("  population cross-check: UNAVAILABLE (census DISQUALIFIED above) -- the graph "
+                  "population is TAKEN ON TRUST. A census was supplied; it was not usable.")
         else:
             print("  population cross-check: UNAVAILABLE (no --census) -- the graph population is "
                   "TAKEN ON TRUST")
@@ -1045,9 +1068,13 @@ def cmd_reconcile(args):
         print(_ln)
     print()
     if verdict != comp_iam_census.FRESH and not getattr(args, "allow_stale_census", False):
-        why = ("carries NO vintage (_meta.generated_utc absent) -- its age is UNMEASURED, not small"
-               if verdict == comp_iam_census.NO_VINTAGE else
-               f"is STALE (older than the {ttl:g}h TTL)")
+        if verdict == comp_iam_census.NO_VINTAGE:
+            why = "carries NO vintage (_meta.generated_utc absent) -- its age is UNMEASURED, not small"
+        elif verdict == comp_iam_census.FUTURE:
+            why = ("is dated in the FUTURE -- an IMPOSSIBLE vintage. It is not fresh; it is "
+                   "untrustworthy, and pushing a date forward must never buy authority")
+        else:
+            why = f"is STALE (older than the {ttl:g}h TTL)"
         print(f"REFUSED: APPLIED reconcile NOT PERFORMED -- the census {why}.")
         print("  This is a COVERAGE refusal, not a clean result: nothing was compared, so nothing")
         print("  can be concluded about live-vs-Terraform drift. DESIRED-plane modes are unaffected")
@@ -1085,6 +1112,17 @@ def cmd_reconcile(args):
             overperm_findings.append((name, live[name]["overperm"]))
 
     src_meta = (census.get("_meta") or {})
+    # F4 (CVO verify @da7478839, P1 DECLARATIVE): this surface says "granted live", "over-perm" and
+    # "live-only action" while evaluating NO Deny, boundary, condition or SCP -- so an Allow sitting
+    # behind an explicit Deny reports as GRANTED. That is the brief's detector/oracle collapse, on
+    # the older and more-quoted surface. `live` carried the disclaimer and reconcile did not: the
+    # guard was back-fitted to the new surface only, which is how the surface people actually quote
+    # keeps the defect.
+    print("NOTE: DETECTOR, not an authorization oracle. This compares census STATEMENTS to Terraform")
+    print("      and evaluates NO Deny, permissions boundary, condition or SCP -- so 'granted live'")
+    print("      is a claim about a statement, NOT an authorization fact. An Allow behind an explicit")
+    print("      Deny reports here as granted. For an allow/deny verdict use `comp-iam simulate`")
+    print("      (Rule 22a).")
     print(f"IAM DESIRED-vs-LIVE RECONCILE  (census: {census_path.name})")
     print(f"  live roles (census): {len(live)} | TF-parsed roles: {len(tf_roles)} | matched: {len(matched)}")
     if src_meta.get("scp_included") is False or "scp" in str(src_meta).lower():

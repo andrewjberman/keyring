@@ -60,6 +60,21 @@ FRESH = "FRESH"
 STALE = "STALE"
 NO_VINTAGE = "NO_VINTAGE"
 
+# F1 (CVO verify @da7478839, P1): a census dated in the FUTURE is its own state, not a fresh one.
+# Before this, `FRESH if age <= ttl` made a future date read FRESHER the further forward it was
+# pushed -- so ANY stale census became authoritative via a one-field edit. The gate refused a census
+# that CANNOT date itself and accepted one whose date is IMPOSSIBLE: the same epistemic state
+# (no trustworthy vintage), opposite verdicts.
+#
+# The asymmetry that makes it P1 rather than cosmetic: --allow-stale-census is AUDITED and stamps the
+# verdict "NOT an APPLIED-plane authority"; editing the date is SILENT and stamps nothing.
+# A CONTROL WHOSE BYPASS IS CHEAPER THAN ITS OVERRIDE CHANNELS BEHAVIOUR TOWARD THE BYPASS.
+FUTURE = "FUTURE"
+
+# Clock skew between the reader and whatever wrote the census is real and small; a genuinely
+# impossible date is not. Tolerate minutes, refuse hours.
+CLOCK_SKEW_TOLERANCE_HOURS = 0.25
+
 _ISO_Z = "%Y-%m-%dT%H:%M:%SZ"
 
 
@@ -100,12 +115,18 @@ def census_age_hours(census: dict, now=None):
 def census_freshness(census: dict, ttl_hours: float = DEFAULT_TTL_HOURS, now=None):
     """Return (verdict, age_hours_or_None). Verdict is FRESH | STALE | NO_VINTAGE.
 
-    A future-dated census is treated as FRESH by age arithmetic but is flagged by the caller's
-    provenance line (negative age prints and is visible) rather than silently accepted as very fresh.
+    F3 (CVO verify, P1 DECLARATIVE): this docstring previously claimed a future-dated census was
+    "flagged by the caller's provenance line ... rather than silently accepted". It was not -- it
+    printed [FRESH] with no marker while the undated case got a loud "!!", and exit 1 was
+    byte-identical to a clean reconcile. VISIBLE-TO-A-CAREFUL-READER IS NOT A FLAG AND NOT A CONTROL,
+    and a record that describes a safeguard one strength above the code is worse than no record.
+    Now it is a real verdict (FUTURE) with a real refusal and a real marker.
     """
     age = census_age_hours(census, now=now)
     if age is None:
         return NO_VINTAGE, None
+    if age < -CLOCK_SKEW_TOLERANCE_HOURS:
+        return FUTURE, age
     return (FRESH if age <= ttl_hours else STALE), age
 
 
@@ -141,6 +162,13 @@ def provenance_lines(census: dict, census_path, ttl_hours: float = DEFAULT_TTL_H
     if verdict == NO_VINTAGE:
         lines.append(f"CENSUS PROVENANCE: {name} -- vintage UNKNOWN (no _meta.generated_utc)")
         lines.append("  !! This census cannot date itself. Its age is not large; it is UNMEASURED.")
+    elif verdict == FUTURE:
+        lines.append(f"CENSUS PROVENANCE: {name} -- generated "
+                     f"{parse_generated_utc(census).strftime(_ISO_Z)} [FUTURE]")
+        lines.append(f"  !! IMPOSSIBLE VINTAGE: dated {abs(age):.1f}h in the FUTURE. A census cannot "
+                     f"be observed later than now.")
+        lines.append("  !! Treat as UNTRUSTWORTHY, not as very fresh -- clock skew or a hand-edited "
+                     "date. Pushing the date forward must never buy authority.")
     else:
         lines.append(f"CENSUS PROVENANCE: {name} -- generated {parse_generated_utc(census).strftime(_ISO_Z)} "
                      f"(age {age:.1f}h, TTL {ttl_hours:g}h) [{verdict}]")
