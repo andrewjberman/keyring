@@ -105,6 +105,33 @@ The data-neutral re-stage moved the ETags (cohort_provenance 0->populated + A4 d
 final re-co-sign confirms the 9/9 3-pass covers THESE exact 9 + render-check clean + AE router-revert tested.
 Lesson re-banked (on myself): ground the pin on the LIVE object, never a message/manifest transcription.
 
+## FINAL RE-CO-SIGN -- GRANTED 2026-07-22 ~00:56Z (all held conditions met; CTO gate DECLARED @005544Z)
+
+COO limb of the never-widen CTO+COO co-sign: **GRANTED.** Every condition I held this co-sign on is now
+satisfied against LIVE / independently-verified truth -- not a self-report:
+
+1. **SCOPE** -- exactly the coherent-9, NO widening beyond it. Legacy opal-data-portal-v2 untouched
+   (byte-identical revert available). account_dist replace-lane drift UNGATED (CTO ruling 1).
+2. **PIN** -- the live-verified coherent-9 (my OWN ListObjectsV2 @ opal-data-assets/gold/mdpf_revamp/,
+   char-for-char == CTO S3 re-verify + CVO re-derive + DT + DE md5):
+   aggregate 49f `a2e87f311fd0` / inflection `7ab6e93e3f3a` / global `1b52211f6443`; A4 `7ef321124087`;
+   A1 aum-metrics `d69ac96ab99a`; A2 aum-timeseries `38e9e8d46678`; account_dist `865919f2be40` /
+   `afb964c4d67f` / `b946d8364ca3`.
+3. **VERIFICATION** -- 3-pass 3/3 CLEAN: CTO S3 re-verify + CVO from-scratch re-derive + DT date-joined
+   parity @93382362c (NAMED_DELTA_PASS / 0 unexplained).
+4. **RENDER** -- CTO INDEPENDENTLY verified all 6 cells (read the durable screenshots himself, not DE's
+   claim): no picket-fence, no frontier drop-to-zero, no mixed-basis Global Total (headline=aggregate-primary
+   $1.81B, aum-timeseries priorLevels-only); Inflection pre-onset HONEST; totals tie exact ($1.81B / $1.68B /
+   $202M); frontier-count coherence EXACT (7560 / 7026 / 534). Vintage == the coherent-9.
+5. **ROLLBACK** -- LOCKED, ARMED + EXERCISED BEFORE PUBLISH (my explicit held condition): router-revert +
+   negative control (a legacy /api/general/* key NOT in the 9 stays portal-v2 before/during/after). The
+   condition I held the co-sign on is met.
+
+**This co-sign authorizes GO-TO-APPLY** (the AE scope-isolated apply of the Option-C exact-9 CF behaviors).
+The IRREVERSIBLE serve-widen -- the repoint -- remains gated by CTO's portal-auth FINAL GO with Andrew
+surfaced; this co-sign does NOT skip that gate. Two of three never-widen limbs now signed (CTO declaration +
+COO co-sign); Andrew's limb is at CTO's final-GO surface.
+
 ## Verdict (as-of 180626Z, now HELD per above): CO-SIGN GRANTED — conditional on tested-rollback-before-publish
 
 All 5 cutover items independently verified NAMED + CORRECT serve-real, none a defect:
