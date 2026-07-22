@@ -112,3 +112,82 @@ scoped (count taken from the same snapshot as the value, for all dates; verified
 **Grounding:** gate exercised by direct invocation, import integrity asserted before use, positive controls
 run as separate invocations from targets, negative controls chosen by me from my own sweep and not by the
 gate's author. Call-site enumeration by source read at `f5c094434`. Read-only; no producer change by me.
+
+---
+
+# ADDENDUM (same session) — verified against the STAGED rebuild, and a stop-work result
+
+## F. DS's fix INDEPENDENTLY VERIFIED on the staged artifacts (`5e7b684d` / `08f9720e`)
+
+- **07-06 firm-total count 540 -> 474.** The excursion is gone; the 540 now sits on **07-10**, where the
+  reclassification actually happened. Count axis and value axis now agree about which day it is.
+- **Presence matrix perfect:** 421 dates carry BOTH, zero value-only, zero count-only.
+- **REGRESSION CONTROL — the result that licenses believing the GREEN:** the OLD pinned artifact
+  (`cec5a0d6`) goes **RED, 2737 presence disagreements across 391 dates.** *It is not a gate that only
+  passes.*
+
+## G. THE GLOBAL RED — and what the 20 dates turned out to be
+
+Running the gate on staged global at `same_source=True`: **RED, 94 per-band disagreements across 20 dates.**
+Those 20 dates are:
+
+    2025-12-24, 12-30, 12-31, 2026-01-02, 02-02, 03-02, 04-01, 05-01, 06-01, 06-08,
+    06-26, 06-29, 06-30, 07-01, 07-09, 07-10, 07-13, 07-14, 07-15, 07-20
+
+> **That is EXACTLY, item for item, the 20 real trading days the legacy axis omits** — the same 20 from the
+> Item-1 root cause. Global carries VALUES there and NO COUNTS, because the 49F leg reads the legacy artifact
+> and **the legacy artifact has no row for those days at all.**
+> **The count-axis defect and the calendar-axis defect are the SAME defect surfacing in two places.**
+
+Consequence, accepted by CTO: **the 49F decouple is a PREREQUISITE for global's cross-axis coverage**, not a
+post-cutover tidiness item. CTO ruled `same_source=True` with the 20 dates as an **enumerated exemption LIST,
+never a predicate** — a predicate would silently re-admit the class the moment legacy loses another day.
+
+**Coverage fractions (defect-capable population):** inflection NEW clause (v) **421/427** (was 31); global NEW
+clause (v) **30/427** — *global is the least-covered artifact and it is the one feeding the Global view.*
+Clause (vi)'s real reach on fixed inflection is **30 positions, not 411** — the pre-launch all-zero stretch
+inflates the naive count and must not enter the co-sign text.
+
+## H. STOP-WORK RESULT — neither shape nor grain moves 1-of-38
+
+DS's v2 widened clause (vi) from exact-revert to a parameter-free round-trip test, and hypothesised the
+remaining gap was **grain** (05-27 invisible at firm-total because two bands offset). **I built the per-band
+clause (vi) that hypothesis implies and ran it:**
+
+| grain | hits on real legacy data |
+|---|---|
+| firm-total (current) | `07-06 (474,540,474)` |
+| **per-band** | 07-06 across **5 bands** — **same single date, zero new dates** |
+
+**And DS's mechanism for 05-27 is wrong in a way that makes the limit worse.** Measured:
+
+    2026-05-26   161/127/55/21/10/23/5   total 402
+    2026-05-27   161/127/55/21/10/23/5   total 402   <-- BYTE-IDENTICAL to 05-26
+    2026-05-28   162/126/55/21/10/23/5   total 402
+
+The offsetting move is the 05-27 -> 05-28 *transition*. The defect **at** 05-27 is that it carries 05-26's
+roster unchanged — **staleness, not an excursion.** Nothing moves at all, at any grain.
+
+> **A DUPLICATED ROSTER IS INDISTINGUISHABLE FROM A GENUINELY UNCHANGED ROSTER WITHIN THE COUNT SERIES.**
+> Copying yesterday's roster onto today, and the roster simply not changing today, produce identical bytes.
+> No shape and no grain separates them.
+
+**Therefore: v1->v2 closed SHAPE, per-band would close GRAIN, and NEITHER moves real-data coverage off 1 of
+38.** Further widening of clause (vi) is wasted effort. The three jobs are distinct and only one is a gate:
+
+| instrument | job |
+|---|---|
+| clause (v) + same-source derivation | **CLOSES** the class (the actual cure) |
+| clause (vi) | a shape **BACKSTOP** — 1 of 38; describe it as such |
+| eclipse per-model cross-reference | the **AUDIT** — the only thing that sees staleness |
+
+This is DS's own 49F sentence generalized and now proven: *"a frozen count reads exactly like a stable
+roster."* It is not a 49F quirk — **it is the fundamental limit of any artifact-internal count check.**
+
+## I. OUTSTANDING — exemption-list exercise (mine, on CTO's binding condition)
+
+When DS lands the enumerated exemption I will run, as **separate invocations**: (1) the 20 PASS; (2) a 21st
+injected date goes RED, tested both non-adjacent AND adjacent to a listed date (off-by-one in list membership
+is the likely defect); (3) **removing** one date from the list makes that date go RED — without (3), a no-op
+exemption and a working one are indistinguishable; (4) source read confirming an enumerated literal, not a
+predicate — the binding condition a test cannot prove.
