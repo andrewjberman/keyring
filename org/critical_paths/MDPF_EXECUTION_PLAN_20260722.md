@@ -240,6 +240,48 @@ nothing in the sequence inverts the ordering law.
 
 ---
 
+## D-bis. ⚠ A CUTOVER COUPLING NOBODY HAD FLAGGED — `opal-assets-daily-aua`
+
+*Surfaced by an Andrew question to CVO (~1612Z) about `opal-assets-daily-aua`; CVO measured the table, CTO
+then grounded the emitter's read path. **This is a POST-CUTOVER DIVERGENCE RISK on the exact field this
+morning's P0 was about.***
+
+**WHAT IT IS (CVO, measured):** a **DynamoDB table, not a bucket** — `run_date` HASH + `cohort_id` RANGE,
+**588 items, 21 run_dates 2026-06-12 → 2026-07-18**. **NOT ETF-exclusive:** 252 of 588 rows are **MDPF cohort
+space** (`49f_{7 models}`, `49f_schwab_custody`, `49f_smartx_platform`, `inflection_models`); 336 are
+ETF-related. The emitter's own header calls `etf_ownership_held` **"the 6th class"** — **ETFs were ADDED to a
+pre-existing daily-AUM table; they are not its purpose.**
+
+**WHAT THE EMITTER ACTUALLY READS (CTO, source-grounded at
+`infra/aws/lambda/opal-assets/opal-assets-daily-emitter/lambda_function.py`):**
+`PLATINUM_BUCKET = opal-data-portal-v2` (`:52`) · `AGGREGATE_PREFIX = platinum/mdpf/aggregate_aua/` (`:53`) ·
+`carried = agg.get("opal_aggregate_aua")` (`:1028`) · `"source_field": "mdpf aggregate.opal_aggregate_aua
+(CARRIED VERBATIM)"` (`:1041`).
+**It references `opal-data-assets` ZERO times — the name implies canonical-assets membership the DATAFLOW
+DOES NOT HAVE.**
+
+> ### THE RISK, PLAINLY
+> **This table CARRIES VERBATIM the `opal_aggregate_aua` value from the LEGACY served platinum partitions.
+> That is the EXACT field this morning's P0 was about, and the exact field DS rebased to basis B.**
+> **Post-cutover the portal serves the REVAMP's `opal_aggregate_aua`, while the legacy producer keeps running
+> as an untouched shadow and keeps feeding this table the LEGACY value. Two systems of record on one field,
+> diverging silently — and the DDB one is what downstream consumers read.**
+> Its own header certifies the carried value *"with residual $0.0000 on 427 of 427"* — **post-cutover that
+> certification is against a superseded basis.**
+
+**CTO READ (architectural, not a measurement — no measurement answers it):** the DDB shape is **correct** for
+`run_date`+`cohort_id` access; **the INPUT is what is wrong.** A daily-AUM table derived from the **SERVED**
+layer is **the layer grammar running backwards**. **So Andrew's instinct is directionally right and the fix is
+NOT "move the ETF data into the bucket" — it is RE-POINT THE INPUTS AT CANONICAL GOLD.** Whether the table is
+a **serving projection** (legitimate) or a **system of record** (an architectural gap — no bronze/silver/gold
+lineage exists for those cohort rows) is the deciding scope call. **OPAL_CONSOLIDATION scope; NOT started
+under the hold; recorded here so it is not a clock with no keeper.**
+
+**Supports DE's "MDPF is the laggard" finding:** `FOLD_PARTNERS = ("49financial","inflection","cottonwood")`
+at `:696` — **this emitter is already 3-firm, with `# Cottonwood folds ONE-WAY (PRD 3e)`.**
+
+---
+
 ## E. NOT COVERED — stated, not implied
 
 `infra/` dispatch + IAM, the publisher/promote path, `dim_mdpf_account_distribution.py`,
