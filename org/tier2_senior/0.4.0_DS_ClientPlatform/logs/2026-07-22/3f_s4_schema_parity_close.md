@@ -118,5 +118,16 @@ crosswalk).
   flag); idempotent within a date (re-run overwrites own partition only); NO hardcoded series
   start; §3b query surface = one consolidated parquet + MDPF JSON slice regenerated per append
   (serve wiring stays a CTO/COO call); producer under data/assets/scripts/ (deploy-map hazard).
-- **Requested from CRO 224306Z (TO Phase-1 step 1):** confirm §3a is the complete source-keying
-  design + the proof notebook. Awaiting reply; do-not-re-derive stands.
+- **CRO ANSWERED 224654Z (TO Phase-1 step 1 SATISFIED):** (a) §3a CONFIRMED the complete keying
+  design, no fuller scheme exists; ruling-10-safe — the forward path contains NO past-date write,
+  so the stop-and-escalate trip never fires on the daily path; __FIRM__ row set vs sibling firm
+  table = my call at build (comp-blast the name). (b) ⚠ **NO PROOF NOTEBOOK EXISTS** — COO's
+  "proof notebook" was shorthand; the proof computations live in TWO committed briefs:
+  COTTONWOOD_MEMBERSHIP_DETERMINISM_20260722.md @4e754ee62 (identities, 296/296, 17/17) +
+  COTTONWOOD_MODEL_AUM_BACKFILL_ENRICHED_20260722.md B2 (rollup + penny-tie; $125.14M model total
+  vs $126.4M strategy-level, delta $1.24M = the **Opal-Income fall-through, a NAMED residual**).
+  Phase-3 builds to these, not a notebook. Per-append checks = spec §4's five and NONE beyond;
+  concrete additions to my proof: day-2 adds exactly ONE partition; **Opal-Income handled
+  EXPLICITLY as the ~$1.24M no-composition residual — never vanished, never double-counted.**
+  Name `dim_model_portfolio_daily` ACKed by CRO. Runnable-reproduction offer DECLINED — the
+  appender's own §4 fail-loud checks are the runnable reproduction on the run date.
