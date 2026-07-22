@@ -119,9 +119,37 @@ rewrites `global/aggregate_aua_timeseries.json` again.
 | `cottonwood fact_model_assignment` | all but 07-21, 07-22 |
 | `smartx fact_model_aum_daily` | **none** — run-date partitioned, full history inside each partition |
 
-**Orion raw bronze for 07-11..07-15 is present and a corrected backfill is in flight.** *(A backfill must pin
-the household roster per-date; using the current roster produces correct prices on the wrong book.)*
-**Eclipse recoverability is under active investigation and is NOT settled in this document.**
+### 2.6 Orion backfill — **SOURCE REPAIRED, NOT YET PROPAGATED** *(verified independently 1810Z)*
+`s3://opal-data-inf/bronze/assets/` — raw `.jsonl.gz` present for all five gap dates, **as-of rosters**:
+
+| date | bytes | roster | rows | MV |
+|---|---|---|---|---|
+| 07-11 | 2,176,938 | 318 | 34,935 | $202,843,646 |
+| 07-12 | 2,175,913 | 318 | 34,935 | $202,843,646 |
+| 07-13 | 2,172,954 | 318 | 34,935 | $201,601,607 |
+| 07-14 | 2,176,843 | 319 | 34,942 | $202,375,855 |
+| 07-15 | 2,180,491 | 319 | 34,942 | $202,880,787 |
+
+*(Positive control 07-16 = 2,166,565 bytes present; negative control 07-99 = 0.)*
+**FAITHFULNESS PROVEN, not asserted:** 07-15 vs the SAME-DAY 07-16 capture — **client sets byte-identical**
+(319 = 319, empty both ways), **309 of 319 clients identical row counts**, and the entire +103 row delta
+localises to **10 named clients**. That is real position movement between two trading days, **not a
+methodology difference. The backfill is methodologically equivalent to a same-day capture.**
+**17a intact** — raw `.jsonl.gz` only; pre-existing `.parquet` untouched and never used as a source.
+**Never-overwrite intact.** **A backfill must pin the household roster PER-DATE — using the current roster
+yields correct prices on the wrong book.**
+
+> **⚠ NOT PROPAGATED. DO NOT READ A SILVER LISTING AS THE VERDICT.** Monolith bronze and silver for 07-13 are
+> both **ABSENT** (control: silver 07-16 present). The mirror is **POLLING**, and today's pass ran before
+> these landings. **Propagation is the next scheduled pass. Orion SOURCE is repaired; the SERVED artifact is
+> not.** Nothing is to be hand-fired — validate on the scheduled artifacts.
+
+### 2.7 Eclipse — census exists; recoverability NOT settled here
+A full sweep of **848/848 portfolios, zero failures** (span 05-01..07-22) quantifies what each gap date would
+carry — **portfolios changed: 06-01 → 0 · 07-01 → 2 · 07-13 → 14 · 07-14 → 1 · 07-15 → 7.**
+**Eclipse recoverability is under active investigation and is deliberately NOT concluded in this document.**
+**Standing prohibition regardless of outcome: the eclipse puller's `--date` is a FILENAME, not a query — it
+fetches CURRENT state and files it under the requested date. It must not be used for backfill.**
 
 ---
 
