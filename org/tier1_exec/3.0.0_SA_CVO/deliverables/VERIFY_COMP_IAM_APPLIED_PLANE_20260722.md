@@ -155,4 +155,49 @@ missing the not-an-oracle guard. **None is P0: no current output is wrong.**
   (argparse demands positional args). `_simulate_self_test` exists at `:685`; I did not locate its
   entry point. **UNVERIFIED, stated rather than assumed.** Out of scope: untouched by this build.
 
+---
+
+# CLOSURE AMENDMENT -- all 4 P1s RE-VERIFIED FIXED @72fda2aa5 (CVO, 2026-07-22 ~2005Z)
+
+Builder reported all four fixed 8 minutes after the verify. **I did not accept the self-report.** I
+re-ran **my own original mutant census files** -- the same bytes that produced the findings -- against
+the new code, plus a direct probe of the decision function.
+
+| finding | before | after (my re-run, same inputs) | verdict |
+|---|---|---|---|
+| **F1** future reads FRESH | exit **1**, `[FRESH]` | exit **3**, `[FUTURE]`, `!! IMPOSSIBLE VINTAGE: dated 47.7h in the FUTURE` | **FIXED** |
+| **F2** `live` ungated | cross-check computed off any census | limb **DISQUALIFIED**, report survives (exit 1) | **FIXED** |
+| **F3** docstring claims absent flag | `[FRESH]`, no marker | loud `!!` marker + refusal reason names FUTURE, not "STALE" | **FIXED** |
+| **F4** no detector NOTE on reconcile | absent | `NOTE: DETECTOR, not an authorization oracle ... (Rule 22a)` | **FIXED** |
+
+**Skew-tolerance boundary probed directly** (`census_freshness`, synthetic clock, no CLI): `+14min ->
+FRESH`, `+15min -> FRESH`, `+16min -> FUTURE`. The claimed 0.25h tolerance is exactly what is
+implemented; no off-by-one. Their choice of a tolerance over a blanket future-refusal is right --
+minutes of skew are real, hours are not, and a blanket rule trades my false-accept for a false-refuse.
+
+**F2's fix is BROADER than my finding.** I reported the ungated door via the FUTURE and undated cases.
+They gated the whole class: `NO_VINTAGE` **and** `STALE` **and** `FUTURE` each disqualify the limb, each
+naming which. **And the accept side still computes** -- fresh census -> `graph 193 vs census 205`,
+`!! 12 role(s) live but ABSENT`. So the fix did not buy refusal by breaking the feature.
+
+**Design call I endorse:** `live` **disqualifies the limb rather than refusing the report** -- the graph
+is `live`'s primary source and stays trustworthy; only the cross-check is invalidated. Refusing the
+whole report would have been the over-correction.
+
+**No regression:** `m3_novintage -> 3`, `m4_old -> 3`, fresh `-> 1`. Suites run by me: pytest **9/9**
+(was 5), census self-test pass, simulate self-test pass.
+
+**My UNVERIFIED residual is closed:** the simulate self-test entry point is `comp-iam simulate-self-test`
+(its own subcommand, not a flag) -- run by me, all cases pass.
+
+**Two message-accuracy defects they introduced inside the fixes and caught pre-commit** (a FUTURE census
+reported as "STALE"; the disqualified path printing "no --census" when one was supplied) -- **both
+verified actually correct in the landed code.** They are F3's own class, and committing a misreporting
+defect inside the fix for a misreporting defect would have been its own finding.
+
+## STATUS: RAVC CLOSED. Verdict upgraded **BROKEN@MECHANICAL + BROKEN@DECLARATIVE -> SOUND** on all
+four routed findings. **STILL OPEN, unchanged and not closed by this:** the D4 scope-exclusion (12
+suppressed findings) and the `_provenance.py:405` "hourly" vs event-driven contradiction -- carried as
+NOT-REACHED by me, never as clean.
+
 -- `3.0.0_SA_CVO`
