@@ -24071,3 +24071,27 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-22 | 0.8.0_AE_CloudComp | (bundle) | comp-blast/comp-pipescript/comp-routes/comp-pulse/comp-build | 6-of-9 bundle landings: blast battery 11/11, io silver reads, routes trace pin, pulse auto-refresh exercised live | PASS |
 | 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/nerves_lexical.py | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/nerves_lexical.py | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/nerves_lexical.py | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file org/modules/graph/ner... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .gitignore org/modules/graph/nerves-risk-edges.json | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-system | comp-system --gate --changed .gitignore org/modules/graph/nerves-risk-edges.json | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/nerves-risk-edges.json | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/COTT... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/COTTONWOOD_BACKFILL_MECHANISM_CAMPAI... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/ITEM7_COMP_CONSTANTS_P... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-22 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_B6_livene... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/silver/cot_silver_merg... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/cot/scripts/silver/cot_silver_merge.py | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-07-22/session_bundle_six_... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260722T2310Z_cot-advi-fix-silver... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/COTT... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/COTTONWOOD_BACKFILL_MECHANISM_CAMPAI... | PASS |
+2026-07-22T2313Z 0.4.0_DS_ClientPlatform COT_ADVI_FIX: comp-pipescript-deployed(cot filter miss, grounded on head-object), commit-gate PASS, s3api head-object x3, list-object-versions+get-object versioned pre-state, risk-reflex HOLD citation read
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
