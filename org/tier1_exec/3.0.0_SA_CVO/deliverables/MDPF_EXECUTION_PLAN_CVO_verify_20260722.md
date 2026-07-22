@@ -10,17 +10,25 @@ byte-identical to `d1454d183`. **All citations below are at vintage `@d1454d183`
 
 ## 0. COVERAGE FRACTION OF THIS REVIEW *(R10 applied to my own work)*
 
-**THIS IS A PARTIAL VERDICT. 4 of 12 assumptions are discharged.**
+**COMPLETE ON SECTION D — 12 of 12 addressed.** *(§0 superseded 1633Z; the earlier 4-of-12 partial is
+retained in the message record at 160312Z.)*
 
-| | |
+| Verdict | Assumptions |
 |---|---|
-| **Discharged** | **A2** (exercised) · **A3** (exercised) · **A11** (source-grounded) · **A12** (deferred *by construction*) |
-| **NOT YET EXAMINED** | **A1, A4, A5, A6, A7, A8, A9, A10** — 8 of 12 |
-| **Also not yet done** | D1–D4 ruling review · D-vs-R1–R12 consistency · ordering-law inversion check |
+| **CONFIRMED** | **A1, A2, A3, A6, A7, A8, A10** (7) |
+| **FAILS AS STATED** | **A11** (§3) |
+| **BASIS CONTRADICTED AT SOURCE** | **A5** (§8) |
+| **HOLDS ARITHMETICALLY, BUT SEE THE CONFLICT** | **A4** (§7) |
+| **NOT VERIFIABLE BY MY METHOD** | **A9** (§9) — and *"I did not find a search"* is **not** evidence that none exists |
+| **DEFERRED BY CONSTRUCTION** | **A12** (§4) — exercise-after-apply; the apply is held |
 
-I took the three CTO prioritised (the two exercise-not-read, plus A11 first) and am reporting before
-the remainder because **A11 gates S1 and S1 gates all build.** A verdict that arrives complete but late
-is worth less than the load-bearing half arriving now. **Do not read this as a plan-wide clearance.**
+**STILL NOT DONE, stated:** the D2/D4 ruling review and the full D-vs-R1–R12 consistency sweep.
+**D1 and D3 are reviewed as rulings** (§6, §7). **The ordering-law inversion check found no inversion
+in C's stated sequence** (§10). **Do not read this as a plan-wide clearance.**
+
+> **THE HEADLINE IS §7: D3 + R2 + the all-or-nothing null rule are ARITHMETICALLY INCOMPATIBLE, and the
+> failure renders as HONEST NULLS with the composition gate still PASSING.** Sent as a
+> STOP-BEFORE-BUILD on S2a at 163215Z.
 
 ---
 
@@ -230,5 +238,143 @@ a set-difference instrument and watch it emit the false positive, **because no s
 yet to run.** §3c is a **DERIVED PREDICTION** about what the specified instrument would do — falsifiable
 the moment DE builds it. If his implementation already carries a resolver, my prediction is wrong and
 A11 survives in a narrower form.
+
+---
+
+## 6. A1 — **CONFIRMED** — and it QUALIFIES D1
+
+`infra/aws/lambda/mdpf-pipeline/mdpf-daily-trigger/lambda_function.py:520-541`:
+`partners = {"49financial": bd}` with the inline comment *"inflection is the spine/DRIVER, not a
+skippable partner"*; `"spine_fresh": bool(inf["fresh"])` — a single bool from `inf` alone; the DEFER at
+`:541` keys on it. **Two roles exist: ONE hardcoded spine and an extensible partner dict. A second
+driver is not expressible without restructuring. A1 holds, and D1's basis is sound.**
+
+### 6a. >> BUT D1's STATED BENEFIT IS NOT FULLY DELIVERED <<
+D1's rationale is that making cottonwood a driver *"would let Cottonwood halt the entire nightly."*
+**The skippable-partner path has its OWN whole-run DEFER** (`:562-589`): a stale partner must have a
+readable roll-forward block, and `_roll_source_exists()` (`:338`) returns **DEFER on all three
+outcomes** — `ROLL_SOURCE_ABSENT` (incl. an **empty `as_of`**, returned before any S3 call),
+`ROLL_SOURCE_UNREADABLE` (403), `ROLL_SOURCE_TRANSIENT`.
+
+> **The SKIPPABLE role does not remove cottonwood's ability to halt the nightly — it MOVES the halt
+> from the spine-defer branch to the roll-source-defer branch.** That is a genuine improvement (the
+> halt now requires stale **AND** no roll source, rather than merely stale) — **but "cannot halt the
+> nightly" is not what the code delivers, and D1's rationale should say the narrower thing.**
+
+**Sharpest residual risk:** `_partner_asof(cottonwood)` returning `''` on a stale night → immediate
+`ROLL_SOURCE_ABSENT` → **whole run defers.** And note the coupling to S1b: `ROLL_SOURCE_UNREADABLE` is
+a **403** — *"a CONFIG fault that will NOT clear on its own"* — and S1b just established this role's
+grants do not cover `blackdiamond/cottonwood/*`. **A grant gap on the roll-source path would be a
+PERMANENT nightly DEFER.**
+
+---
+
+## 7. A4 — arithmetically fine — **BUT D3 + R2 + THE NULL RULE ARE INCOMPATIBLE** *(the headline)*
+
+**A4 as stated holds:** `global == 49F + inflection` is a sum; the N-firm generalisation reduces to the
+2-firm form at N=2. **No basis change. That is not where the problem is.**
+
+**PREMISE 1 (source, `dim_mdpf_aggregate_aua_timeseries.py:1226-1240`):**
+```
+:1227   None if None in (m49, nm49, minf) else round(m49 + nm49 + minf, 2)
+:1238   if opal_aggregate[i] is None:  non_model[i] = None   # ALL-OR-NOTHING
+```
+**Any None term ⇒ the whole global row is None.** Correct for two firms that both existed for the whole
+series.
+
+**PREMISE 2 (S3, `blackdiamond/cottonwood/silver/`, 558 keys / 14 tables): cottonwood's four
+`fact_model_*` tables have ZERO pre-2026-07-21 dates.**
+
+**DERIVATION.** D3 refuses excluding cottonwood; R2 says cottonwood carries **nulls** before 07-21.
+A cottonwood term in that tuple is `None` for the entire historical series ⇒
+
+> ### EVERY PRE-2026-07-21 GLOBAL ROW BECOMES `None`.
+
+**AND IT WILL NOT LOOK LIKE A FAILURE.** It renders as **honest nulls** — the pattern this estate has
+trained everyone to read as correct conservative behaviour. **The composition gate still PASSES:** an
+identity over all-None terms is vacuously satisfied. The file already records the precedent at `:1274`
+/ `:1302` — *the composition identity held EXACTLY 7/7 while the whole sum sat on the wrong day.*
+**An identity between terms cannot see a common-mode error, and this is one.**
+
+**THE FIX IS NOT EXCLUSION** — D3 refuses it and D3 is right; **this finding must not become the
+argument for the move D3 exists to prevent.** What the fold needs is a distinction the 2-firm identity
+never required:
+> **"did not exist yet" (contributes ZERO, row stays computable) vs "feed is broken today" (None, row
+> genuinely uncomputable).**
+Both are `None` today **because the case never arose** — both firms spanned the whole series.
+**Onboarding mid-series is the first time they come apart, and a pre-onboarding absence is a KNOWN
+ZERO, not an unknown.**
+
+**LABELLED:** a **DERIVED prediction** about code not yet written (the N-firm fold is S2a, unbuilt).
+Both premises are measured; the inference is not exercised. Falsifiable the moment S2a exists.
+
+---
+
+## 8. A5 — **BASIS CONTRADICTED AT SOURCE**
+
+A5: *"cottonwood contributes nothing before 2026-07-21."* **At the source, false — 91 of 93 distinct
+cottonwood data dates are pre-07-21, earliest 2026-03-09.**
+
+| family | earliest | pre-07-21 dates |
+|---|---|---|
+| `fact_model_{assignment,blend,definition,roster}` | **2026-07-21** | **0** |
+| `fact_allocations`/`_s2`, `fact_unrealized`/`_s2` | 2026-04-22 | 77 |
+| `fact_transactions`/`_s2` | 2026-03-09 | 43 |
+| `fact_realized`/`_s2` | 2026-05-22 | 41 |
+| `fact_holdings`/`_s2` | 2026-06-09 | 33 |
+
+The true narrower statement is **"cottonwood's MODEL tables begin 2026-07-21."** A5's conclusion may
+survive — **but only if the Global fold reads exclusively `fact_model_*`.**
+
+> **A5 IS A TESTABLE GATE AND THE TEST IS: WHICH TABLE FAMILIES FEED THE GLOBAL FOLD?** Answerable at
+> S2a build time; **not** answerable by asserting the firm is new.
+> **§7 and §8 pull in OPPOSITE directions** — the null rule wipes history to `None`; the non-model
+> tables would inject real pre-07-21 value. **Both stay live until the fold's input set is pinned.**
+
+**I could not turn A5 into a control as requested** — it needs a cottonwood-absent build, unavailable
+read-only. **Reported as STILL-AN-ARGUMENT rather than dressing a reasoning pass as a gate.**
+
+---
+
+## 9. THE REMAINING SIX, briefly
+
+- **A6 — CONFIRMED, with a count correction.** `portal/src/pages/ModelPortfolios.tsx:142-151` is a
+  closed literal, **8 entries** (7 model series + `non_model`), not 7. Substance holds; number does not.
+  *Note a further alias namespace:* the FE keys are `ust/st/int/lt/ult`, the producer's are
+  `opal_ultra_short_term/...` — **a translation layer, i.e. another axis-D surface.**
+- **A7 — CONFIRMED by a falsification test that came back empty.** `fact_model_allocation_roster`:
+  **9 partitions, earliest 2026-07-14, latest 2026-07-22, ZERO before 2026-07-14.** *Coverage limit: I
+  tested the roster the audit itself uses; I did not sweep the estate for any other per-date 49F source.*
+- **A8 — CONFIRMED.** `build_aggregate_aua_timeseries.py:648-663`: the `json/` dual-write is
+  `try/except` → `WARN:` → *"Continuing."* It cannot fail the build. A run succeeds with a stale served
+  mirror. Ungated.
+- **A9 — NOT VERIFIABLE BY MY METHOD.** I did not find a reliable search for the arity axis. **That is
+  not evidence none exists** — confirming *"unsearchable"* by failing to search well is the
+  absence-for-mechanism substitution. **Honest status: UNFALSIFIED, not confirmed.**
+- **A10 — CONFIRMED.** `pipescript --resource` → *"no thread references
+  `json/mdpf/inflection/aggregate-aua-timeseries.json`."* No named thread for a six-consumer artifact.
+- **A12 — DEFERRED BY CONSTRUCTION.** Exercise-after-apply; the apply is held. **I will not substitute
+  a config read for an exercise** (the DESIRED-only applied-claim Rule 22a names).
+
+---
+
+## 10. ORDERING LAW + R13 / STRENGTHENED-R10
+
+**No inversion found** in C's stated sequence (DECISIONS → ENUMERATION-TO-EXIT → BUILD → WIRE → EMIT →
+PIN → CO-SIGN → FLIP). **S3's forced ordering is exercise-confirmed (§1) and S4's no-hand-staging rule
+is what keeps EMIT from preceding PIN.** §7, if unaddressed, is not an ordering inversion — it is a
+correctness defect that the ordering would faithfully carry through to a co-signed flip.
+
+**R13 vs the audit — the cleanest teaching case for COO's strengthened R10 I found today:**
+
+| instrument | denominator source | verdict |
+|---|---|---|
+| `opal-assets-mdpf-portal-publisher:103,106` — `len(PUBLISH_MAP)` | **its own hardcoded dict** | **FAILS.** Reports `9/9, all_present=True` *by construction* while Cottonwood is never served. |
+| `mdpf_revamp_count_source_audit.unaudited_firms()` | **a live S3 listing**, minus the hardcoded set | **PASSES.** A firm that exists but is not configured is **detected**, not defined away. |
+
+**Two instruments, same product, opposite verdicts — and the whole difference is where the denominator
+comes from.**
+
+---
 
 -- `3.0.0_SA_CVO`, 2026-07-22
