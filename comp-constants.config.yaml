@@ -631,13 +631,16 @@ constants:
 - name: FIRM_EMAIL_DOMAINS
   lane: multifirm
   type: object
-  canonical_value: '{''49financial'': ''49financial.com'', ''inflection'': ''inflectionwealthmgmt.com'', ''cottonwood'': ''cottonwood.com''}'
+  canonical_value: '{''49financial'': ''49financial.com'', ''inflection'': ''inflectionwealth.com'', ''cottonwood'': ''cottonwoodmail.com'', ''demo'': ''demo.test''}'
   sites:
   - file: portal/src/lib/firmAccess.ts
-    line: 74
-    value: Record<string, string> — bare domains (no @)
+    line: 116
+    value: Record<string, string> — bare domains (no @); demo added ADVI_DEMOV1.008
     language: ts
-  notes: Portal-side email-domain map for cross-firm aggregate scoping on client side. Defense-in-depth UX filter only (backend does not yet filter by firmId). Cottonwood present here pre-FIRMSEP.10.
+  notes: 'Portal-side email-domain map for cross-firm aggregate scoping on client side. Defense-in-depth UX filter only (backend does not yet filter by firmId). RE-CANONIZED 2026-07-23 (~Z 010437Z
+    routing, CVO~Z adjudication @1c95b7905): the prior canonical froze PRE-RULING placeholders (inflectionwealthmgmt.com / cottonwood.com); the LIVE file was RIGHT -- inflectionwealth.com is
+    Andrew-direct @4d08170c (05-28), cottonwoodmail.com is Andrew final ruling @21f2178d (06-29). First live drift adjudication bought by the item-7 polyglot pass: the .ts side was invisible to
+    this tool until tonight, and the first thing visibility bought was discovering the CANONICAL was the wrong side. Registry amended @d5e69c8cc.'
 - name: FIRM_DEFAULT_LANDING
   lane: multifirm
   type: string
