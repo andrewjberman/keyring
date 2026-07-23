@@ -27,6 +27,25 @@ done
 
 D1_BLOCKED=0
 
+# --- 3F-BF2 provenance-read guard (every push, every branch) ---
+# The direct-read-failing test (CTO ruling 20260723T042253Z: wire at BOTH layers --
+# this hook beside VALGATE + the deploy CI backstop). A value array read without its
+# point_class outside src/lib/pairedProvenanceRead.ts BLOCKS the push here, at the
+# moment the violation could enter shared history. Guard: scripts/provenance-read-guard.mjs
+# (mutant-proven). An unwired fail-on-violation guard manufactures assurance -- law #4.
+if [ -f "scripts/provenance-read-guard.mjs" ]; then
+  if command -v node >/dev/null 2>&1; then
+    node scripts/provenance-read-guard.mjs
+    if [ $? -ne 0 ]; then
+      echo "ERROR: provenance-read guard BLOCKED this push (unlabeled read of a"
+      echo "ERROR: provenance-bearing value array -- read via pairedProvenanceRead.ts)"
+      exit 1
+    fi
+  else
+    echo "WARN: node not found -- provenance-read guard skipped (CI backstop still runs)"
+  fi
+fi
+
 while read -r local_ref local_sha remote_ref remote_sha; do
 
   # --- VALGATE D-1: adapter-threading gate (every push) ---
