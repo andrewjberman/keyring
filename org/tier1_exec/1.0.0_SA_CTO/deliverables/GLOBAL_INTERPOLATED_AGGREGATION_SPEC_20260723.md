@@ -72,8 +72,8 @@ aggregation for the timeseries.
 ## 2. Aggregation semantics for the Global aum-timeseries
 
 - **Per-date, per-firm provenance vector** rides every Global point:
-  `provenance: {49financial: "measured", inflection: "measured", cottonwood: "interpolated"}`.
-  Legal values: `measured` | `interpolated` | `absent`. (Carrier: the per-date
+  `provenance: {49financial: "measured", inflection: "measured", cottonwood: "interpolated_estimate"}`.
+  Legal values: `measured` | `interpolated_estimate` | `absent` (v0.3: incumbent enum per R-1). (Carrier: the per-date
   `cohort_provenance` channel that EXISTS AND IS EMPTY today — 429/429 None, DE P1 measured —
   gets its first real population; no new channel invented.)
 - **Taint propagation, one rule:** a Global aggregate point is `interpolated`-class iff ANY
@@ -115,12 +115,17 @@ aggregation for the timeseries.
 ## 4. Schema (the tandem-verification surface for CVO + CRO)
 
 Per-date Global timeseries entry (additive to current shape, v1-frozen-additive discipline):
+**⚠ v0.3: THIS BLOCK IS A RULING RECORD, NOT THE BUILD SURFACE. THE CANONICAL SCHEMA IS CRO'S
+PINNED DELTA (his single re-emission against @76c786b5e) — build from THAT block only.** The
+shape below is updated to the R-1 ruled vocabulary for record-coherence; if it and CRO's delta
+ever disagree, CRO's delta wins and the disagreement is a review item (R-5 delta process):
 ```
 { date, model_aua, non_model_aua, total,
-  by_firm: { <firm>: { model_aua, non_model_aua,
-                       provenance: measured|interpolated|absent,
-                       interp?: { method_version, confidence, window_id } } },
-  point_class: measured|interpolated   // derived: any-component-interpolated
+  partners: { <firm>: { cohorts: { <cohort>: { model_aua, non_model_aua,
+                          provenance: measured|interpolated_estimate|absent,
+                          backfill_method?: <method-id+version>,
+                          confidence?: <per-pair washout-keyed>, window_id?: ... } } } },
+  point_class: measured|interpolated_estimate   // derived: any-cohort-interpolated_estimate
 }
 ```
 - `meta.interpolation`: { affected_period: [start,end], method: <CRO spec id + version>,
