@@ -1328,6 +1328,19 @@ entries:
     status: canonical
     notes: "comp-which routing (distinctive narrow vocab, CTO theft-check spec 052647Z): relation-vs-role / dual-axis / composite-exception / single-axis / ontology-lint -> comp-ontolint. NOT bare validate/invariant/check (those are comp-validate's curated rank-1). Distinct from comp-manifest-check (comp-TOOL registration gate) -- this is the ONTOLOGY-vocab invariant."
 
+  # NFRA_MSBEFF.R2 -- value-origin / canonical-source lineage (the layer-grammar QUERY + PSTMRT item-9 GATE, one traversal).
+  - id: lineage.dataflow.canonical_source
+    use_case: "Does this value come from the CANONICAL source, or from a served/legacy artifact? Which producers read a SERVED artifact as a value source (the layer grammar running backwards)?"
+    canonical_call: "comp-dataflow origin <script.py> ; comp-dataflow gate <path ...>"
+    tool: comp-dataflow
+    mode: query
+    layer: pipeline
+    cost: "~seconds (AST parse of producer .py; no AWS)"
+    freshness: "parsed producer .py at working-tree HEAD (SOURCE plane)"
+    rebuild_trigger: "n/a -- reads source at HEAD"
+    anti_pattern: "assuming a served number has a canonical per-date source because the artifact is fresh -- freshness is downstream of flow (RF-7: platinum-sourced 49F counts, no canonical source, nothing detected it)"
+    status: canonical
+
 # ===========================================================================
 # tools_index — per-tool instructional reference (AC1 'instructional for each
 # comp tool'). One block per comp-* tool: what it does, its subcommands, and
@@ -1349,6 +1362,7 @@ tools_index:
   comp-genesis:  { does: "NFRA_GENESIS provisioner -- SPIN UP a NEW company: bootstrap its graph + ontology-binding + closed learning loop (versioned Nessie/Iceberg -> Kuzu -> Trino + the C0-C3 ladder) from a single company.yaml, on the proven Opal stack (parameterized; Opal is the reference instance). Two bespoke-per-company pieces (recognizer keystone + binding adapter); everything else reused. verify --local closes the loop at zero cloud spend. NOT a query over Opal's OWN estate (that is comp-system). Thin shim -> infra/system/sdk/genesis", subcommands: ["new <c>", "validate <c>", "project <c>", "up [--dry-run] <c>", "verify --local <c>", "loop --tick --local <c>", "status <c>", "selftest", "down <c>"], entries: [meta.genesis.provision_new_company] }
   comp-kuzu:     { does: "Cypher query the loaded Kuzu graph (cloud + cross-layer); the FAST default read-path", subcommands: ["<cypher>", "--db-path", "--json", "--limit"], entries: [cloud.lookup.nodes_by_type, cloud.reachability.transitive, cloud.blast.what_breaks, xlayer.fullstack.firm_component_to_bucket] }
   comp-keys:     { does: "What S3 keys / partition-dates / per-firm existence EXIST under a prefix -- INVENTORY (what exists), distinct from comp-freshness (is-it-fresh). Live s3api, explicit-Z, denominator-always. NFRA_MSBEFF.R5", subcommands: [prefix, partitions, exists], entries: [pipeline.keys.enumerate] }
+  comp-dataflow: { does: "Value-ORIGIN trace + canonical-source assertion: does a served/consumed value come from the CANONICAL source, or from a served/legacy artifact? Flags a producer reading a SERVED (platinum/served/portal-json) artifact as a value source -- the layer grammar BACKWARDS (RF-7 / PSTMRT item-9). SOURCE plane, AST layer-classification, denominator-always. NFRA_MSBEFF.R2", subcommands: [origin, gate], entries: [lineage.dataflow.canonical_source] }
   comp-aws:      { does: "Live-AWS + Terraform-state cloud-graph compiler (the WRITE-PATH + cert)", subcommands: [derive, score, snapshot, metrics, diff, contract-diff, dual-managed, classes, iceberg-commit], entries: [cloud.derive.refresh, cloud.derive.class, cloud.score.cert, cloud.score.reconcile, cloud.classes.list, cloud.metrics.summary, cloud.diff.snapshot, cloud.contract_diff, cloud.dual_managed.conflict, cloud.snapshot.archive, cloud.iceberg.persist] }
   comp-trace:    { does: "Bidirectional dependency walk from any repo node (cached)", subcommands: ["<node>", "--direction", "--depth", "--json"], entries: [trace.walk.dependency_chain] }
   comp-blast:    { does: "Downstream blast radius + upstream callers (cached)", subcommands: ["<node|file>", "--function", "--check-consumers"], entries: [trace.blast.what_breaks] }

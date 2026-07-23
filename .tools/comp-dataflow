@@ -1,0 +1,17 @@
+#!/bin/bash
+# comp-dataflow -- VALUE-ORIGIN TRACE + canonical-source assertion (NFRA_MSBEFF.R2).
+# "Does this value come from the CANONICAL source, or from a served/legacy artifact?" -- a
+# DEPENDENCY / LINEAGE question, never a data-value question. Flags a producer that reads a SERVED
+# artifact as a value source (the layer grammar running BACKWARDS; RF-7 / PSTMRT item-9 class).
+# Carries the R1R3 output contract; SOURCE plane (parsed producer .py at working-tree HEAD).
+#
+#   comp-dataflow origin <script.py>     value-origin trace of one producer (served reads flagged)
+#   comp-dataflow gate <path ...>        layer-grammar gate (item-9) over a producer tree/files
+#   comp-dataflow --self-test            grounded classifier self-test
+#
+# Rule-16 clean: uses only cd / dirname / pwd / python (all present in Git Bash 3.6.7).
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_dataflow.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-dataflow" "$*" $_exit 2>/dev/null
+exit $_exit

@@ -231,6 +231,19 @@ contracts:
       "2": {class: verdict, meaning: "could-not-evaluate"}
     exit_source: "comp_trigger.py (2=could-not-evaluate) + NFRA_TOOLCHECK P1 @2026-07-23"
 
+  comp-dataflow:
+    coverage: "AST-resolved S3 READ targets of a producer .py (get_object/list/pandas-read Key/Prefix/path), classified by LAYER; resolves module-const AND function-local key vars inside f-strings"
+    blind_spots:
+      - "a fully-dynamic key whose path prefix does not resolve to a module/local constant renders UNRESOLVED and is COUNTED in the denominator, never dropped (the dynamically-keyed-write blind spot, corpus-named)"
+      - "a value re-imported through a NON-S3 hop (http fetch / DB read / a vendored committed copy) is not an S3 read and is invisible to an S3-key layer trace"
+      - "a cross-module constant import (a prefix imported from another module) resolves ONLY if the constant is module-level in the scanned file; scope-limited by construction"
+    plane: mixed
+    vintage: "parsed producer .py at working-tree HEAD (SOURCE); classifies against the static layer grammar, never a live S3 read"
+    exit_codes:
+      "1": {class: verdict, meaning: "served-origin read found -- a producer reads a served/platinum/portal-json artifact as a value source (a real estate finding: the layer grammar backwards, RF-7 class)"}
+      "3": {class: refuse,  meaning: "input did not resolve to a producer .py / nothing swept -- nothing traced, nothing concluded (input-resolution refusal, NOT a clean 'no served reads')"}
+    exit_source: "org/modules/graph/comp_dataflow.py (cmd_origin/cmd_gate: rc1 = served findings present, rc3 = REFUSE unresolved input) @2026-07-23"
+
   # ===== SIMPLE tools (a nonzero IS a tool/input failure -- no verdict-exit contract) =====
 
   comp-keys:
