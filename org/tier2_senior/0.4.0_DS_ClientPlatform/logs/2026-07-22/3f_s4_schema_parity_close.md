@@ -93,6 +93,12 @@ remaining gate legs are 0.6.2's B5 (tonight's 03:30Z landing) + B6-liveness. Cir
 - Phase-1 io/blast run (io dynamic-key-blind, blast no-extracted-edges lower bound — both recorded);
   producer family mapped (`dim_mdpf_account_distribution.py` = revamp copy of the served smartx
   producer; build adds a `_units_cottonwood()` leg + the aum-metrics artifact).
+- **DOWNSTREAM CONSUMER STAGED ON MY GREEN (DE 005239Z, COO GO 005139Z): 3F-P3a portal page**
+  builds against the staged pair (expected `json/mdpf/cottonwood/{account-distribution,
+  aum-metrics}.json`). **AT STAGING I MUST MCP DE:** exact keys + explicit G8-green + final shape
+  deltas — DE does not start without it. Shape notes pre-sent 005319Z (all-None q0–q3 rendered as
+  absence not 0; NEW series_start field + migrate-tolerant read; Income→non-model, sleeves
+  is_opal=false, value>0 filter; model-name list rides in the staging message).
 
 ## G8b PREP STATE (banked ~2245Z — staged TO @d8570d2f3, same B5 gate)
 
