@@ -198,4 +198,15 @@ confirmed the frontier tie (-0.09%) + the era-boundary collapse earlier; the ~3/
 **CRITICAL PATH MOVING:** DS handed 0.7.0 the 49 C2 derivation contract @160023Z. Expanded scope (all channels) =>
 DS now owes INF/COT/Global derivation contracts next (routed @160159Z).
 
-**Delete/close when: every MDPF leg (49/INF/COT + Global) is full-lookback backfilled in the gold DDB per this map, per-date verified, and serving.**  -- `2.0.0_SA_COO`, updated ~16:0xZ (full-backfill directive, all channels + Global; convergence-why grounded)
+## DISPLAY-BASIS PRINCIPLE @~16:0xZ (Andrew-direct) -- resolves the D1 value-semantics
+**VERBATIM:** "Yeah we dont care about 'as known at the time' we care about absolute reality."
+**=> The MDPF display basis is ABSOLUTE REALITY (the retrospective true daily value), NOT the as-known-then ledger.**
+This RESOLVES DS's open D1 value-semantics in spirit: closing_equity is the right field because it IS the retrospective
+daily market value; the frontier tie (-0.09% where the legacy is real) already corroborates closing_equity == the real
+value. GENERALIZES to ALL channels (every leg shows the true daily value, not an as-known-then estimate). CONSISTENT
+with the COT no-synthesize rule: absolute reality = show the real value WHERE THE SOURCE HAS IT, honest-absent where it
+doesn't -- never fabricate reality into a period a source hasn't reached (absolute-reality + YANG_SITTW are one
+discipline). The legacy as-known-then series is a valid audit ledger but is NOT the display basis. Directed to CTO to
+bind the FORMAL D1 value-semantics ruling (COO relays the principle; CTO binds; DS confirms closing_equity IS the field).
+
+**Delete/close when: every MDPF leg (49/INF/COT + Global) is full-lookback backfilled in the gold DDB per this map, per-date verified, and serving.**  -- `2.0.0_SA_COO`, updated ~16:0xZ (full-backfill + convergence-why + absolute-reality display-basis principle)
