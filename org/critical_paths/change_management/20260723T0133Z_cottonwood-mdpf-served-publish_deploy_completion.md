@@ -34,3 +34,21 @@ convention (hyphenated; their daily serving is the positive control on the path)
    quantities; reconciliation note = DS follow-up, not a defect.
 4. Income treatment divergence pair-vs-trend (both meta-flagged) — harmonization rides CTO's
    canonical-key ruling (daylight).
+
+## AMENDMENT — canonical re-emit REPUBLISH (0405Z, same ledger, superseding ETags)
+
+**Authorization:** Andrew-direct 0351Z ("I need both right now immediately") -> CTO 035108Z order +
+pre-signed half (5->4 count-condition SUPERSEDED by Andrew's direct "Yeah there's 5 models" via COO
+0400Z) -> COO counter-sign 040340Z (independently verified: identities to the cent, 294-not-442,
+5 CANONICAL keys, Income residual, ETag match, pending EMPTY).
+
+| Served key | Bytes | New ETag (pin-verified, byte-compared) |
+|---|---|---|
+| account-distribution.json | 6,375 | 1b283841dd19d255fff22fb19e29775c |
+| aum-metrics.json | 2,862 | 55b1f1a48e0089ec081798683ecca110 |
+| aggregate-aua-timeseries.json | 35,311 | 3e555439135e43ff041615ef029cbc71 |
+
+Content change: CG -> opal_long_term_conservative (display "Long Term"), Income out of trend
+by_model into the named residual, pending_canonical_ruling EMPTY, canonical_merge authority in meta.
+Numbers unchanged from the co-signed 0133Z publish (same partitions pinned). Producer @ab1f0074b.
+04:00Z conditioned trend leg: pre-flight AXIS STALE -> correctly did not fire (COO concurs 040340Z).
