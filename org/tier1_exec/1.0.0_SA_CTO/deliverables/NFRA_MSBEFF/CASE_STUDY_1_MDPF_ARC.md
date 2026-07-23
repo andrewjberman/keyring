@@ -48,6 +48,17 @@ doc-of-record staleness family LD-0334) — consistent with this week's three sa
 *answering from the wrong vintage and not saying so*. comp-kuzu's provenance header is the good
 pattern (praised in the NL corpus); most tools have no equivalent.
 
+**CS1-4 (RAIL OVERRIDES = the demand signal for missing tools):** 597 DENYs (rising: 175 June →
+421 July) split infra_grep 259 / aws_freshness 178 / aws_iam_inspect 85 / comp_which 38 /
+deploy_verify 17 / route 15 / dynamodb 4. The 187 override reasons read as LEGITIMATE work the
+comp surface doesn't cover: served-key EXISTENCE enumeration ("which artifacts exist per firm"),
+earliest-partition/backfill-ceiling discovery, TF mechanism reads, and Rule-22a isolated positive
+controls. Per CLAUDE.md's own rule (*a repeat override for one intent = a coverage gap → build the
+tool*), the two repeat-intents are: (1) a **key/partition enumeration primitive** (most
+aws_freshness overrides are not freshness questions at all), and (2) a **TF mechanism-read shape**
+that comp-aws/comp-iam don't serve (259 infra_grep denials). These are Phase-3 build candidates
+with measured demand attached.
+
 ## Inputs consumed
 RF ledger (MDPF_3FIRMS_PRD §2.5 @ v1.17) · MDPF_POSTMORTEM_20260722 @`c75862249` ·
 comp-tool-runs.jsonl joins (this doc's numbers) · rail log (17,409 lines / 597 DENY / 187
