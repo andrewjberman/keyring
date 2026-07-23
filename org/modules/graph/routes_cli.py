@@ -110,6 +110,11 @@ def cmd_trace(args):
         if not matched_routes:
             # Try CloudFront behavior match
             behavior = rt.match_behavior(query)
+            if args.json:
+                # A --json flag that falls through to prose is its own honesty defect: the consumer's
+                # parser breaks, or it does not break and they string-match their way to a wrong class.
+                print(json.dumps(_url_trace_payload(rt, query, behavior), indent=2))
+                return
             if behavior:
                 origin = rt.origins.get(behavior.origin_id)
                 bucket = origin.bucket_name if origin else ""
@@ -187,6 +192,109 @@ def cmd_trace(args):
     else:
         for r in matched_routes:
             _print_route(r)
+
+
+# ---------------------------------------------------------------------------
+# Machine-readable URL trace (`trace --json <url>`)
+# ---------------------------------------------------------------------------
+
+# The outcome CLASS is a first-class field, never something a consumer recovers by string-matching
+# "UNRESOLVED" or "!!" out of prose. A textual distinction gets inferred wrong eventually, and that
+# failure is silent; an enum makes it structural.
+OUTCOME_RESOLVED = "RESOLVED"                      # a rewrite rule matched -> a real S3 key
+OUTCOME_UNRESOLVED_NO_RULE = "UNRESOLVED_NO_RULE"  # behavior matched, no rule covers the prefix
+OUTCOME_CATCHALL_DEFAULT = "CATCHALL_DEFAULT"      # fell through to the default slot: NOT a resolution
+OUTCOME_NO_MATCH = "NO_MATCH"                      # no behavior matched at all, not even the default
+
+
+def _contract_field(field, default):
+    """Pull a declared field from comp-routes' output contract, so the JSON payload carries the SAME
+    coverage statement the human header does. Read at run time rather than hardcoded: a corrected
+    blind spot reaches every consumer without a second edit here."""
+    if _oc is None:
+        return default
+    try:
+        c = _oc.contract_for("comp-routes", "trace")
+        if isinstance(c, dict) and c.get(field) is not None:
+            return c[field]
+    except Exception:  # pragma: no cover - a header must never break the answer
+        pass
+    return default
+
+
+def _url_trace_payload(rt, url, behavior):
+    """The machine-readable answer for a URL trace. `behavior` is None when nothing matched.
+
+    PRECEDENCE, stated here because it is a real decision and not an implementation detail:
+    CATCHALL_DEFAULT outranks RESOLVED. If no specific behavior claimed the path, we do not know it is
+    served at all, so that caveat beats a key we could nominally compute -- which means s3_key MAY be
+    non-null while outcome is CATCHALL_DEFAULT. Consumers key on `outcome` and treat anything that is
+    not RESOLVED as not-a-resolution. `catchall` is emitted separately so the two axes never have to be
+    recovered from one field.
+    """
+    payload = {
+        "query": url,
+        "outcome": OUTCOME_NO_MATCH,
+        "catchall": False,
+        "behavior": None,
+        "origin": None,
+        "auth": None,
+        "router": None,
+        "edge_functions": [],
+        "rewrite_rule": None,
+        "s3_bucket": None,
+        "s3_key": None,
+        "s3_uri": None,
+        "plane": _contract_field("plane", "desired"),
+        "vintage": _contract_field("vintage", "UNKNOWN"),
+        "blind_spots": _contract_field("blind_spots", []),
+    }
+    if behavior is None:
+        payload["disclosure"] = (
+            "No CloudFront behavior matched this path -- not even the default. Nothing was resolved "
+            "and nothing is asserted about whether the path is served."
+        )
+        return payload
+
+    origin = rt.origins.get(behavior.origin_id)
+    bucket = origin.bucket_name if origin else ""
+    rule = rt.match_rewrite_rule(url)
+    key = rt.resolve_s3_key(url) if rule is not None else ""
+
+    payload.update({
+        "catchall": behavior.order == 0,
+        "behavior": behavior.path_pattern,
+        "origin": behavior.origin_id,
+        "auth": behavior.has_auth,
+        "router": behavior.has_router,
+        "edge_functions": [{"event_type": ef.event_type, "function_name": ef.function_name}
+                           for ef in behavior.edge_functions],
+        "rewrite_rule": f"{rule.url_prefix} -> {rule.s3_prefix}" if rule else None,
+        "s3_bucket": bucket or None,
+        "s3_key": key or None,
+        "s3_uri": f"s3://{bucket}/{key}" if (bucket and key) else None,
+    })
+
+    if behavior.order == 0:
+        payload["outcome"] = OUTCOME_CATCHALL_DEFAULT
+        payload["disclosure"] = (
+            "Matched the catch-all default behavior -- NO specific CloudFront behavior claimed this "
+            "path. This is a DEFAULT, not a resolution: the same answer is returned for ANY unmodelled "
+            "path, so it is not evidence that the path exists, is served, or lives at this origin."
+        )
+    elif rule is not None:
+        payload["outcome"] = OUTCOME_RESOLVED
+        payload["disclosure"] = (
+            "Resolved through the modelled static rewrite table (DESIRED plane -- parsed Terraform + "
+            "committed router source, never a live CloudFront read)."
+        )
+    else:
+        payload["outcome"] = OUTCOME_UNRESOLVED_NO_RULE
+        payload["disclosure"] = (
+            "A CloudFront behavior matched, but no rewrite rule covers this prefix, so no S3 key was "
+            "derived. This is missing COVERAGE, NOT a proof that no key exists."
+        )
+    return payload
 
 
 def _print_rewrite_resolution(rt, url, bucket):

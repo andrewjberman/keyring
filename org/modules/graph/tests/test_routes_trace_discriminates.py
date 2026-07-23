@@ -284,6 +284,110 @@ def test_non_s3_domain_yields_no_bucket():
     assert _s3_bucket_from_domain("") == ""
 
 
+# ---------------------------------------------------------------------------
+# LAYER 6 -- `trace --json <url>`: the outcome CLASS as a first-class enum.
+# Before this, the behavior branch returned before the JSON emitter, so --json silently produced
+# PROSE for every URL query -- a flag promising machine-readable output and returning human text.
+# Requested by 0.8.0_AE_CloudComp~B (TOOLBHVR.ROUTE) so a router cannot collapse the three outcomes.
+# Mutant target: the `if args.json` arm in cmd_trace / the outcome branches in _url_trace_payload.
+# ---------------------------------------------------------------------------
+
+def _trace_json(url: str, rt: RoutingTable | None = None) -> dict:
+    import json as _json
+    return _json.loads(_trace_raw_json(url, rt))
+
+
+def _trace_raw_json(url: str, rt: RoutingTable | None = None) -> str:
+    class _Args:
+        json = True
+
+    args = _Args()
+    args.query = url
+    orig = routes_cli._build_rt
+    routes_cli._build_rt = lambda rt=(rt or _rt()): rt
+    try:
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            routes_cli.cmd_trace(args)
+        return buf.getvalue()
+    finally:
+        routes_cli._build_rt = orig
+
+
+def test_json_flag_emits_json_not_prose():
+    """DIRECTION 1, and the defect this layer fixes: --json on a URL must PARSE. MUTANT (remove the
+    `if args.json` arm from the behavior branch, restoring the fall-through to prose) -> json.loads
+    raises -> REDDENS. A flag that silently ignores itself is the honesty class, not a UX nit."""
+    for url in (MDPF_URL, "/zzz/nothing.json"):
+        raw = _trace_raw_json(url)
+        assert raw.lstrip().startswith("{"), f"--json returned prose for {url}: {raw[:60]!r}"
+        assert isinstance(_trace_json(url), dict)
+
+
+def test_outcome_enum_discriminates_all_four_classes():
+    """The enum is the whole point: a consumer must not have to recover the class by string-matching
+    "UNRESOLVED" or "!!" out of prose. MUTANT (collapse any two branches in _url_trace_payload, e.g.
+    return RESOLVED whenever a behavior matched) -> REDDENS, because two classes become equal."""
+    no_default = _rt()
+    no_default.behaviors = [b for b in no_default.behaviors if b.order != 0]
+
+    assert _trace_json(MDPF_URL)["outcome"] == "RESOLVED"
+    assert _trace_json("/api/general/")["outcome"] == "RESOLVED"
+    assert _trace_json("/zzz/nothing.json")["outcome"] == "CATCHALL_DEFAULT"
+    assert _trace_json("/zzz/nothing.json", rt=no_default)["outcome"] == "NO_MATCH"
+
+    outcomes = {
+        _trace_json(MDPF_URL)["outcome"],
+        _trace_json("/zzz/nothing.json")["outcome"],
+        _trace_json("/zzz/nothing.json", rt=no_default)["outcome"],
+    }
+    assert len(outcomes) == 3, f"outcome classes collapsed: {outcomes}"
+
+
+def test_unresolved_no_rule_is_its_own_class_not_folded_into_catchall():
+    """A SPECIFIC behavior matched but no rewrite rule covers the prefix -- missing coverage, which is
+    NOT the same as a catch-all fall-through. MUTANT (fold UNRESOLVED_NO_RULE into CATCHALL_DEFAULT,
+    or into RESOLVED with a null key) -> REDDENS."""
+    rt = _rt()
+    rt.behaviors.append(CloudFrontBehavior(path_pattern="/v1/*", origin_id="S3-data-json", order=21))
+    payload = _trace_json("/v1/anything", rt=rt)
+    assert payload["outcome"] == "UNRESOLVED_NO_RULE"
+    assert payload["catchall"] is False
+    assert payload["s3_key"] is None
+    assert "NOT a proof that no key exists" in payload["disclosure"]
+
+
+def test_catchall_outranks_resolved_and_catchall_is_its_own_axis():
+    """THE PRECEDENCE RULE, bound so it cannot drift silently. A catch-all match and a rewrite match are
+    independent axes. If no specific behavior claimed the path we do not know it is served at all, so
+    CATCHALL_DEFAULT outranks RESOLVED even when a key is derivable -- the conservative direction.
+    MUTANT (check `rule is not None` before `behavior.order == 0`) returns RESOLVED -> REDDENS, and a
+    consumer would read a real resolution out of a path nothing claimed."""
+    rt = _rt()
+    # Make the DEFAULT slot the thing that matches a URL a rewrite rule also covers.
+    rt.behaviors = [CloudFrontBehavior(path_pattern="/*", origin_id="S3-data-json", order=0)]
+    payload = _trace_json(MDPF_URL, rt=rt)
+    assert payload["outcome"] == "CATCHALL_DEFAULT", "catch-all must outrank a derivable key"
+    assert payload["catchall"] is True
+    # The key is still reported -- the caveat rides on `outcome`, and `catchall` stays a separate axis
+    # so neither has to be recovered from the other.
+    assert payload["s3_key"] == MDPF_KEY
+
+
+def test_json_payload_carries_plane_and_blind_spots_from_the_contract():
+    """`plane`/`vintage`/`blind_spots` are read from comp-routes' output contract at run time, not
+    hardcoded here -- so a corrected blind spot reaches every consumer without a second edit, and a
+    rail cannot drift from the declaration. MUTANT (hardcode the strings) survives this test but is
+    caught by the contract being the single source; MUTANT (drop the fields) -> REDDENS."""
+    payload = _trace_json(MDPF_URL)
+    assert payload["plane"] == "desired"
+    assert isinstance(payload["blind_spots"], list) and payload["blind_spots"], "blind spots must ride along"
+    assert any("TRANSCRIBED" in b for b in payload["blind_spots"]), (
+        "the transcribed-not-parsed blind spot must reach machine consumers, not just human readers"
+    )
+    assert payload["vintage"] and payload["vintage"] != "UNKNOWN"
+
+
 def test_real_config_the_mdpf_origin_now_carries_its_bucket():
     """The real committed CloudFront config, not a fixture: the OAC-fronted MDPF origin resolves its
     bucket. This is the assertion that would have caught the original defect on the live estate."""
