@@ -80,6 +80,28 @@ all-zero output + the CLAUDE.md rule); the ruff gate blocked the terse script (f
 found:** none in the tools -- the census itself IS the gap-finding instrument, and the frontend/records
 coverage boundaries are its output.
 
+## Post-delivery addendum (same session, ~19:15Z -> ~20:02Z)
+
+- **CVO~Z verify: SOUND / PASS at vintage** (@374db63d6). Both my hedges adjudicated RIGHT (Router-possibly-
+  unreachable = correct epistemic level; R-0 records-plane-as-boundary correctly scoped). CVO~Z called the
+  tick-29 triangulation a real phase-2 win -- now THREE surfaces converge on the 11-type boundary (my
+  programmatic parse, ~C's rails closing it, CVO~Z's committed-vintage re-derive).
+- **One actionable verify rec -- IMPLEMENTED @a8fe1daa1:** the re-run was vintage-fragile (read the working
+  tree). Added `--rule-bank-ref` pinning the INTENT surface via `git show <ref>:rulebank`, default the build
+  vintage @f38a386a6; doc note added. **Validated in real time:** worktree mode already reads 0 unmapped
+  because ~C's ONTOLOGY2 P1 c1_frontend_adapter (rule bank v1.2) is in the SHARED working tree binding my
+  exact 11 types. SHARPER than the rec: ~C's v1.2 is UNRATIFIED (exec-locked rule bank, package at CTO~Z for
+  co-canonize), so the pin isolates the census from BOTH future ratified closure AND unratified shared-tree
+  churn from a peer lane. The catch was load-bearing within the hour.
+- **~C coordination loop CLOSED:** ~C reconstructed the same 11+9 set independently (matched), resolved
+  CTO~Z's fork **11/11 additive / 0 new-vocab** (the frontend mass dissolves as consumes/derives-from at
+  FIELD grain -- exactly the D1 rail's purpose), folded my Direction-2 read verbatim, no reshape needed.
+  Full arc: my census -> ~C rails -> CTO~Z co-canonize -> CVO~Z verify, ONE uncovered set throughout.
+- **Shared-checkout lesson banked:** ~C and I share the same working tree (same base serial, different
+  lanes). A "live" working-tree read is contaminated by a peer's in-flight uncommitted edits -- pin to a
+  committed ref for any reproducible measurement. Same class as the aws-shim/vintage discipline.
+
 ## Blockers
 
-None. TO complete + accepted. Event-driven standing by for the next TOOLARCH leg or a ~C coordination reply.
+None. TO complete + accepted + verified SOUND. Event-driven standing by for the next TOOLARCH leg
+(P2 pattern inventory unblocks once CTO~Z co-canonizes ~C's ONTOLOGY2 rails -> the type_tuple vocab lands).
