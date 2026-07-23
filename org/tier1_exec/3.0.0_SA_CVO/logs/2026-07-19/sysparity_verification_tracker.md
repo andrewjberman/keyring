@@ -175,3 +175,25 @@ Verified: b, c, a, d, e, ct-i, ct-ii, 4a, eng-1, eng-2 (10 items) + 4b/4c struct
 - /prd-delta: PRD @8f0b596f4 landed -> delta WS completeness each fire.
 
 — 3.0.0_SA_CVO
+
+## tick-30 (2026-07-23 ~1713Z, respawned CVO~Z session): binds_up sibling check -- CONFIRMED CLEAN
+CTO~Z-approved @133508Z ("next ontology rotation") -- the COMPLEMENT of tick-29's mapping-surface census.
+Question: does every edge type in a binds_up array resolve to a declared relation, is each bound to exactly
+ONE (a clean function), and is the non-relation-axis routing complete? Exercised on the LIVE bank
+(NFRA_ONTOLOGY_RULE_BANK.yaml @HEAD ab4f6d9bf), machine-checked:
+- **13 relation-axis names** (10 base relations + 3 composites projects/routes-to/resolves-through).
+- **43 distinct concrete edge types** across binds_up arrays + composite concrete/also -- **0 bound to 2+
+  relations.** The binds_up->relation mapping is a clean FUNCTION (no ambiguity). CONFIRMED.
+- **8 non_relation_edges, each binds EXACTLY ONE valid surface**: 3 -> a relation (ENCRYPTS_WITH->depends-on,
+  IS_ENDPOINT->projects, INSTANTIATES->contains), 5 -> an axis (MONITORS->ROLE, SHARES_SOURCE->VARIANCE,
+  DECLARES/REFERENCES_TYPE/HAS_TYPE->TYPE). All targets declared. Non-relation routing COMPLETE.
+- Verdict: **CONFIRMED -- binds_up coverage is total + consistent; no drift, no defect.**
+
+**METHOD SELF-INSTANCE of the tick-29 class (banked here, not surfaced):** my FIRST predicate counted a
+non_relation_edge as malformed if it lacked `binds_up:`, and flagged 5 "MISSING." Reading the block header
+("edges that are NOT relations -- INPUTS TO OTHER AXES") dissolved it: those 5 carry an `axis:` binding
+instead. A census that didn't know the second surface (`axis:` alongside `binds_up:`) -- the EXACT
+"three-mapping-surfaces / one mechanical read can't answer it" hazard tick-29 named, reproduced by me one
+tick later. Corrected predicate (bind EXACTLY ONE of {relation, axis}) -> all 8 OK. The standing
+methodological note holds; this is a fresh datum for it. Cadence: CONFIRMED-clean -> tracker + CTO~Z only,
+NO MSTR nudge (MSTR 201825Z exceptions-only rule). Sibling check CLOSED.
