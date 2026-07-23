@@ -9,7 +9,15 @@
 # D0-D7 ruling (@d16e269bf). ASCII-only. Extend only by EXPLICIT PROMOTION with a printed denominator (LAW-2).
 
 meta:
-  version: "1.1"   # 1.1 = NEXT-3 variance fold: the VARIANCE section brought current with the WIRED+LANDED
+  version: "1.2"   # 1.2 = NFRA_ONTOLOGY2 P1 DYNAMIC-RAIL fold (ADDITIVE; LAW-2 promotion w/ printed denominators):
+                   # +dynamic_rails (D1 value/grain, D2 path/flow, D3 contract/obligation) between the ratified rungs;
+                   # +completeness axis (PSTMRT P2, alongside variance); +type_tuple (rail,grain,plane,scope) -- the
+                   # enforced typing vocab base 0.8.0's registration invariant validates tool declarations against.
+                   # Ratified C0-C3 + 14 roles + 10 relations + variance BYTE-IDENTICAL; summary_corpus.py zero-diff.
+                   # Evidence: comp-kuzu @2026-07-23T14:52Z (Nessie HEAD current, 20398 nodes/40796 edges). Author
+                   # 0.8.0_AE~C; design NFRA_ONTOLOGY2_PRD.md s.2 + NFRA_PSTMRT_PRD.md s.3; constitution
+                   # docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md. Gate: CTO~Z arch-gate -> CVO~Z verify.
+                   # 1.1 = NEXT-3 variance fold: the VARIANCE section brought current with the WIRED+LANDED
                    # mechanism (grouping_key (node_type,position_key), modal-ref, membership-SET narrowing,
                    # []+advisory candidate regime, empty-modal/no-majority) -- contract @1f258ee21 + catalog v2 @136999d97 (co-land LD-0315)
   ratified: "LD-0311 @086238604"
@@ -68,20 +76,20 @@ contextual_types: [LAMBDA, Service, Component, ReactComponent, Hook, "Person", "
 # --- AXIS: RELATION (C1, CSE re-layered) -- 10, owner-ratified --------------------------------------
 # each abstract relation lists the concrete graph/CSE edge_types that BIND UP to it (the adapter).
 relations:
-  produces:      { binds_up: [WRITES, WRITES_S3, EMITS_TO, PUBLISHES_TO] }
-  consumes:      { binds_up: [READS, READS_S3, READS_FIELD, READS_SECRET, READS_URL, FETCHES] }
-  derives-from:  { binds_up: [FLOWS_TO], carries: EdgeKind(passthrough|rename|recompute_guarded), note: "D5: EdgeKind stays on flows_to" }
-  depends-on:    { binds_up: [DEPENDS_ON, REQUIRES, IMPORTS, USES_LAYER], note: "D1: requires is concrete" }
+  produces:      { binds_up: [WRITES, WRITES_S3, EMITS_TO, PUBLISHES_TO, NOTIFIES, LOGS_TO, DEAD_LETTERS_TO, SUBSCRIBES], note: "+ONTOLOGY2 P1 c1_frontend_adapter (additive, grounded): NOTIFIES (CW_ALARM->SNS_TOPIC, publish-to-topic like PUBLISHES_TO); LOGS_TO (LAMBDA->LOG_GROUP store); DEAD_LETTERS_TO (->SQS_QUEUE store); SUBSCRIBES (SNS_TOPIC->SQS/LAMBDA fanout delivery; SNS->LAMBDA leg is trigger-flavored -- see c1_frontend_adapter)" }
+  consumes:      { binds_up: [READS, READS_S3, READS_FIELD, READS_SECRET, READS_URL, FETCHES, RENDERS], note: "+ONTOLOGY2 P1 c1_frontend_adapter (additive, grounded): RENDERS (JSXRender->Field, a render consumes field data to display; grain=field -- the 2447-edge FRONTEND mass, 62.6% of the unmapped set)" }
+  derives-from:  { binds_up: [FLOWS_TO, PROP_PASSES], carries: EdgeKind(passthrough|rename|recompute_guarded), note: "D5: EdgeKind stays on flows_to. +ONTOLOGY2 P1 c1_frontend_adapter (additive, grounded): PROP_PASSES (JSXElement->Field/Prop, a prop value flows parent->child at field grain -- 1382 edges; EdgeKind not yet emitted on PROP_PASSES -> forward)" }
+  depends-on:    { binds_up: [DEPENDS_ON, REQUIRES, IMPORTS, USES_LAYER, USES_SG, IN_VPC, ALIAS_TO], note: "D1: requires is concrete. +ONTOLOGY2 P1 c1_frontend_adapter (additive, grounded): USES_SG (->SECURITY_GROUP, network dep); IN_VPC (LAMBDA->SECURITY_GROUP, network placement); ALIAS_TO (ROUTE53_RECORD->LOAD_BALANCER, a name-resolution dep -- resolution-flavored, resolves-through-adjacent, kept on depends-on base)" }
   contains:      { binds_up: [CONTAINS, CONTAINS_DRILLDOWN, HAS_FIELD, HAS_PROP, HAS_KEY, HAS_ROUTE, HAS_PROPS_TYPE, CLUSTERS, HAS_PROFILE] }
   triggers:      { binds_up: [TRIGGERS, CALLS, RUNS, INVOKES], note: "a data-returning CALL also emits consumes" }
-  guards:        { binds_up: [HAS_POLICY, ASSUMES, CAN_ASSUME, AUTHENTICATES, AUTHORIZES, ALLOWED], note: "D3: the GATING archetype, parent of the auth family" }
+  guards:        { binds_up: [HAS_POLICY, ASSUMES, CAN_ASSUME, AUTHENTICATES, AUTHORIZES, ALLOWED, GRANTS], note: "D3: the GATING archetype, parent of the auth family. +ONTOLOGY2 P1 c1_frontend_adapter (additive, grounded): GRANTS (IAM_POLICY->SERVICE_PRINCIPAL/IAM_USER, a permission grant -- the auth family)" }
   governs:       { binds_up: [GOVERNS], note: "D3: narrow policy/authority -- SPLIT from guards" }
   denies:        { binds_up: [DENIED], note: "explicit prohibition (guard-family outcome, kept named)" }
   owns:          { binds_up: [OWNED_BY], sense: custody, note: "D6: a governed CSE OWNS primitive -- 0.4->0.5 bump LANDED (CVO 22/22 + live-parity mutant PASS; COO wave-GO @221142Z). OWNED_BY(custody, ->Person/Org actor)->OWNS (RE-POINTED FROM GOVERNS); OWNED_BY(fine->coarse containment, ->Container)->contains-inverse (no new primitive)" }
 
 # concrete relations carried by a Role + a base relation (NOT standalone primitives) -- D4/D7
 relation_composites:
-  projects:         { concrete: SERVED_FROM, binds_up: derives-from, role: Gateway, also: [PROJECTS_TO, ORIGIN, USES_OAI] }
+  projects:         { concrete: SERVED_FROM, binds_up: derives-from, role: Gateway, also: [PROJECTS_TO, ORIGIN, USES_OAI, USES_OAC] }   # +ONTOLOGY2 P1 c1_frontend_adapter: USES_OAC (CLOUDFRONT_DISTRIBUTION->S3_BUCKET origin access -- the OAC successor to USES_OAI, same boundary/origin-access semantic)
   routes-to:        { concrete: ROUTES_TO, binds_up: derives-from, role: Router }
   resolves-through: { concrete: REFERENCES, binds_up: depends-on, role: Registry }
 
@@ -163,3 +171,195 @@ node_bindings:
   Consumer: [DataFetch, Hook, ReactQueryKey]
   contextual: [LAMBDA, Service, Component, ReactComponent, "Person", "Organization", MS_USER, SERVICE_PRINCIPAL, STATE_MACHINE]
   scope_out: [TypeDecl, Type, Symbol, Concept]
+
+# ==================================================================================================
+# DYNAMIC RAILS -- NFRA_ONTOLOGY2 P1 (additive between the ratified C0-C3 rungs). Author 0.8.0_AE~C.
+# Design: NFRA_ONTOLOGY2_PRD.md s.2. Constitution: docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md
+# (INTENT flows DOWN = obligation from above; DENOMINATOR flows UP = population from below; an assertion
+# at layer N is sound iff the population reaching it from below COVERS the obligation reaching it from
+# above; the rails give that soundness condition its GRAIN for DYNAMIC questions). ADDITIVE-ONLY: C0-C3,
+# the 14 roles, the 10 relations, variance + completeness are RATIFIED + UNTOUCHED. Each rail carries:
+# (1) its vocabulary; (2) graph_evidence that POPULATES it with printed DENOMINATORS (comp-kuzu
+# @2026-07-23T14:52Z, built 3.8h, Nessie HEAD current, 20398 nodes / 40796 edges); (3) an honest
+# coverage_boundary (what it cannot yet see -- R1 discipline turned on the ontology itself); (4) the
+# derivations it licenses. A rail element not populable from live graph evidence is marked `forward: true`
+# -- declared-but-unpopulated, the tick-25 stated-intent pattern, LOUD, never silent.
+#
+# STARTING COVERAGE BOUNDARY (CVO~Z tick-29, reconstructed from the live edge census, NOT a clean slate):
+# 11 UNMAPPED live edge types carry flow/grain but have NO ratified relation binding {RENDERS 2447,
+# PROP_PASSES 1382, NOTIFIES 40, GRANTS 17, LOGS_TO 13, DEAD_LETTERS_TO 5, SUBSCRIBES 3, USES_SG 2,
+# USES_OAC 1, ALIAS_TO 1, IN_VPC 1}; 9 ratified relation tokens have ZERO live instances {DEPENDS_ON,
+# REQUIRES, IMPORTS, AUTHENTICATES, AUTHORIZES, ALLOWED, GOVERNS, DENIED, REFERENCES}. Binding an
+# UNMAPPED edge to a relation, or retiring a ZERO-LIVE token, is a change to RATIFIED vocab -> OUT OF
+# SCOPE here, routes to the ratification chain via ~Z. The rails READ these edges' grain/flow where
+# present; they do NOT re-map them.
+# ==================================================================================================
+
+dynamic_rails:
+
+  D1_value_grain:
+    sits_between: [C0, C1]
+    names: "the VALUE that travels an edge and the GRAIN at which it is resolved."
+    seed: "derives-from already carries EdgeKind(passthrough|rename|recompute_guarded) on FLOWS_TO -- the ratified embryonic value semantic. D1 EXTENDS it with an explicit grain axis; it invents no new primitive."
+    grain_axis:
+      ordered: [artifact, partition, row, field]   # coarse -> fine; a COARSER answer to a FINER question is the #1 MSBEFF layer-mismatch
+      artifact:  "a whole object/table/topic as a unit (S3_BUCKET, DYNAMODB_TABLE, SNS_TOPIC, SQS_QUEUE, LOG_GROUP)."
+      partition: "a dated/keyed slice of an artifact (an S3 object key under a firm/date prefix; a table partition). node_type S3Key."
+      row:       { forward: true, note: "a record within a partition (a DDB item, a parquet row). NOT materialized as a graph node today -- declared, unpopulated." }
+      field:     "a column/attribute of a record (node_types Field, Prop)."
+    edge_grain_binding:   # which LIVE edge types carry which grain, denominators printed (comp-kuzu 2026-07-23)
+      field:
+        FLOWS_TO:    "srcField -> dstField in props; 884/961 FLOWS_TO carry a non-null dstField (field grain)."
+        READS_FIELD: "2110 live -- a consume at field grain."
+        HAS_FIELD:   "4269 live -- structural field membership (the C0/C1 boundary)."
+        PROP_PASSES: "1382 live -- portal prop flow at field grain (UNMAPPED as a relation; grain readable, binding is a tick-29 gap -> ratification chain)."
+      artifact:
+        WRITES:    "562 live -- produce at artifact grain."
+        READS:     "712 live -- consume at artifact grain."
+        WRITES_S3: "275 live -- produce an S3 object."
+        READS_S3:  "323 live -- consume an S3 object."
+      partition:
+        S3Key: "232 S3Key nodes -- the live partition-grain atom (an object key). The partition SCHEME (the prefix grammar that says what the key MEANS) is forward; only the instance key is present."
+    grain_node_denominators:   # the grain-bearing atoms (comp-kuzu 2026-07-23)
+      field:     { Field: 4969, Prop: 359 }
+      partition: { S3Key: 232 }
+      artifact:  { S3_BUCKET: 39, DYNAMODB_TABLE: 37 }
+    edgekind_semantic:   # the ratified value semantic, EXTENDED (not replaced) by D1
+      passthrough:       "value crosses unchanged (identity); rename=false. LIVE: 337/961."
+      rename:            "same value, new name/field; rename=true. LIVE: 142/961 (== the rename-flag count -- cross-checks)."
+      recompute_guarded: "value re-derived under a guard/condition (props.condition carries the guard). LIVE: 482/961."
+      live_form_note: "the graph SERIALIZES props.kind as 'recompute/guarded' (slash); the ratified token is 'recompute_guarded' (underscore). SAME semantic, a producer serialization form -- RECORDED, not 'fixed' (a graph-producer concern, not an ontology change; additive-only)."
+    derivations_licensed:
+      - "provenance / canonical-origin = D1 grain + D2 path walked BACKWARD (comp-dataflow, MSBEFF R2, becomes a QUERY over D1+D2, not a bespoke tool)."
+      - "blast = D2 forward-walk AT A DECLARED GRAIN (comp-blast's script-vs-function-name confusion is a GRAIN error; D1 makes it expressible)."
+    coverage_boundary:
+      - "row grain is FORWARD -- DDB items + parquet rows are not graph nodes."
+      - "partition SCHEME is FORWARD -- only the instance S3Key is present, not the prefix grammar that types it."
+      - "PROP_PASSES (1382) + RENDERS (2447) carry field-grain flow but are UNMAPPED relations -- grain readable, relation binding is a ratified-vocab change (ratification chain), not bound here."
+      - "77/961 FLOWS_TO carry no dstField -- coarser-than-field flow; grain read as artifact."
+
+  D2_path_flow:
+    sits_between: [C1, C2]
+    names: "a composed DIRECTED TYPED PATH: the ordered hops a value takes, each hop's EdgeKind (D1), the transform at each, and the CADENCE the path is contracted to run at. A motif is a shape; a path is a shape WITH direction, transform, and time."
+    seed: "C2 motifs are already 'typed multi-hop paths @ recurrence' (lineage.grain) -- the TOPOLOGY exists. D2 adds DIRECTION + TRANSFORM + TIME to it; it does not re-implement motif membership."
+    path_is:
+      hops:             "an ordered list of edges, each a (produces | consumes | derives-from) at a D1 grain."
+      direction:        "NATIVE -- CloudEdge is directed (a -> b). A path is the transitive closure over produces/consumes/FLOWS_TO."
+      transform_at_hop: "the hop's EdgeKind (D1.edgekind_semantic): passthrough | rename | recompute_guarded."
+      cadence:          { forward_where_undeclared: true, note: "the contracted run-frequency. NOT a native edge/node property (see D3.graph_evidence -- FLOWS_TO props carry NO cadence key). SOURCED FROM D3 (a contract); forward where no contract is declared." }
+    graph_evidence:
+      flow_edges:    { FLOWS_TO: 961, WRITES: 562, READS: 712, WRITES_S3: 275, READS_S3: 323, EMITS_TO: 144, FETCHES: 109, PUBLISHES_TO: 36 }
+      control_edges: { RUNS: 248, TRIGGERS: 145, INVOKES: 41 }   # the cadence SKELETON (who fires whom); the promised TIME is a D3 obligation
+      cadence_nodes: { EVENT_RULE: 141, EVENT_SOURCE: 95, SCHEDULE: 10, STATE_MACHINE: 1 }
+      motif_topology: "NFRA_ONTOLOGY_CANONICAL_MOTIF_CATALOG.md @ef94dafda (~20 families / 4 planes) -- the un-timed shapes D2 times."
+    derivations_licensed:
+      - "freshness = D2 path + D3 cadence + upstream vintages + trading calendar (NEVER a wall-clock mtime -- CLAUDE.md NEVER#1). Freshness DERIVES FROM FLOW or it lies."
+      - "staleness-vs-frozen = vintage advancing along the path vs the value not changing (the corpus 'FROZEN-BUT-FRESH' question, today unanswerable)."
+      - "provenance = D2 walked BACKWARD at a D1 grain."
+    coverage_boundary:
+      - "CADENCE is not a graph primitive -- D3-sourced, forward where undeclared (BY DESIGN: freshness is downstream of flow+contract, not an artifact property)."
+      - "upstream VINTAGE (when a value last actually moved) is not a graph edge property -- it is a RUN-TIME live probe of the artifact (s3api LastModified with explicit Z, or a marker), never the static graph. A D2 path types WHERE to look; the vintage read stays live."
+      - "cross-plane hops (aws -> portal via FETCHES/PROJECTS_TO) often carry no typed transform (EdgeKind lives on FLOWS_TO) -- forward for cross-plane transform semantics."
+
+  D3_contract_obligation:
+    sits_between: [C2, C3]
+    names: "the OBLIGATION a motif/system carries: delivery cadence, completeness-over-a-scope, canonical-source, layer-grammar. The INTENT half of INTENT_DENOMINATOR_SYNCHRONIZATION -- sourced from ABOVE (a governed contract), NEVER from the artifact being checked."
+    seed: "PSTMRT's completeness axis + TRIGGER_LAYER doctrine are proto-D3 obligations; the MDPF delivery-cadence contract (T-1 by 02:00Z) is a WRITTEN D3 instance. D3 names the obligation TYPE so the intent-source is explicit."
+    obligation_types:
+      delivery_cadence:  "the path must deliver by a contracted time. Intent-source: the pipeline cadence contract (PRD / SCHEDULE). Violation = staleness (a D2/D3 gap), NEVER a wall-clock age."
+      completeness:      "the assertion must cover a whole declared POPULATION. Intent-source: a governed registry (data/firm_registry.json). Realized by the `completeness` axis (PSTMRT P2 fold-in, below). Violation = Incomplete(missing=[...])."
+      canonical_source:  "a value must originate from THE ONE blessed writer (one writer per quantity). Intent-source: the canonical-source ruling. Violation = shadow-recompute / wrong-writer."
+      layer_grammar:     "a layer does ONLY its job (bronze raw / silver dedup+dtype / gold business-logic -- CLAUDE.md 17/17a). Intent-source: the layer-grammar law. Violation = a layer doing a later layer's job early (irreversible)."
+    intent_denominator_binding:
+      intent_from_above:      "a D3 obligation is sourced from a governance level ABOVE the artifact (registry / contract / law) -- NEVER the artifact's own config (the denominator-is-its-own-configuration defect, INTENT_DENOMINATOR_SYNCHRONIZATION s.2)."
+      denominator_from_below: "enumerated AT RUN TIME via a D2 path at a D1 grain -- the real instances, never a frozen or curated list, never the same artifact that supplied the intent."
+      gap_is_the_finding:     "INTENT \\ DENOMINATOR, printed every run. A zero gap is a claim to be SHOWN, never assumed; an instrument that cannot compute the gap renders UNKNOWN, loudly."
+    graph_evidence:
+      freshness_downstream_of_flow_PROOF: "FLOWS_TO props keys are EXACTLY {condition, dstField, kind, rename, resolution, srcField, via} -- there is NO cadence, NO vintage, NO partition key on any flow edge (comp-kuzu 2026-07-23, all 961 FLOWS_TO). Therefore cadence + freshness CANNOT be edge properties; they are D3-contract-sourced or forward BY CONSTRUCTION. This is the mechanical proof of Andrew's thesis 'data freshness is a downstream function of flow rather than a separate aspect' (NFRA_ONTOLOGY2_PRD s.0)."
+      declared_contracts:  "data/firm_registry.json (5 firms enabled + global pseudo); the MDPF cadence PRD; the R1R3 output contracts (comp-output-contracts.yaml, base 0.8.0). D3 is contract-sourced, read-from-file, by construction."
+      graph_side_skeleton: "TRIGGERS 145 / RUNS 248 / SCHEDULE 10 give the cadence SKELETON; the promised TIME (the obligation) is NOT in the graph -- forward / contract-sourced."
+    derivations_licensed:
+      - "freshness = this cadence obligation + D2 path + upstream vintages + trading calendar."
+      - "completeness verdict = this completeness obligation (population from the registry) vs the D1/D2-enumerated present structures (see the `completeness` axis)."
+    coverage_boundary:
+      - "MOST obligations are NOT in the graph -- they are declared contracts. D3 is the rail most reliant on read-from-file intent-sources; an undeclared obligation is a FORWARD element, marked LOUD."
+      - "the ABSENCE of a declared contract is NOT the absence of an obligation -- it is an UNDECLARED obligation (a gap), rendered UNKNOWN, never Complete."
+
+# --- AXIS: COMPLETENESS (cross-instance operator, orthogonal to VARIANCE) -- NFRA_PSTMRT P2 fold -----
+# Separation (variance) says NEVER-MERGE; completeness says NEVER-MISSING -- orthogonal axes of the SAME
+# dimension. Where variance FLAGS divergence, completeness FLAGS omission. A D3-class OBLIGATION
+# (complete-over-a-scope); dynamic_rails.D3.obligation_types.completeness references it. Design:
+# NFRA_PSTMRT_PRD.md s.3. Placed alongside `variance` per that PRD ("the rule bank gains a COMPLETENESS
+# axis section alongside VARIANCE").
+completeness:
+  axis_of: firm                       # the first governed dimension; the operator generalizes to any enumerable population
+  population: read-from-file          # the INTENT source, from ABOVE -- NEVER the artifact being checked (kills the s.2 tautology)
+  registry: data/firm_registry.json   # the ONE firm enumeration (NFRA_PSTMRT P1). population = firms[] where enabled, filtered by the asserted scope
+  semantics: mechanical               # NOT advisory-candidate (contrast variance.advisory): the reference is a GOVERNED REGISTRY, not an inferred modal. An Incomplete is a FILED finding with an owner (per TRIGGER_LAYER), not a diary entry
+  verdicts:
+    Complete:         "DENOMINATOR (present firm-keyed structures) covers INTENT (registry population @ scope); gap=0, SHOWN not assumed."
+    Incomplete:       "missing=[...] -- INTENT \\ DENOMINATOR nonempty: a registry firm has no structure. The omission hazard (onboarding firm #N invisible; the MDPF class). FILED per TRIGGER_LAYER (owner + severity)."
+    Unregistered:     "extra=[...] -- DENOMINATOR \\ INTENT nonempty: a firm-keyed structure whose firm is absent from the registry (the silent-extra half)."
+    Undeclared-keyed: "a firm-keyed structure that declares NO population binding -- cannot be checked; renders UNKNOWN, LOUD, never silently Complete."
+  polarity: "FLAGS omission (Incomplete) + extra (Unregistered); CLEARS Complete. ORTHOGONAL to variance polarity (which flags divergence): the two axes co-exist on the same dimension (separation AND completeness)."
+  scope_binding: "population is SCOPED: firm_registry firms[] filtered by the asserted scope (scopes.pipeline for a pipeline-completeness assertion; scopes.mdpf for MDPF). The `global` pseudo is NEVER required (an aggregate channel, not a firm; separation rules never apply to it)."
+  change_law: "a change touching a firm-keyed structure MUST re-assert cardinality against the registry (INTENT_DENOMINATOR_SYNCHRONIZATION s.5: re-derive BOTH directions or it is drift). This is the PSTMRT commit-time completeness gate."
+  registry_binding_parity: "the P1 gate asserts variance_dimensions.yaml dimensions.firm.values[] == registry enabled pipeline-scope tree_tokens, and firm_names/firm_aliases parity vs (registry aliases UNION {firm_id}) -- the catalog's alias lists include the canonical id, the registry factors it out; normalize on (aliases UNION firm_id) or it false-flags day one (CVO~Z s.7-i1 @1b650071d)."
+  seed: "PSTMRT completeness axis + TRIGGER_LAYER; the catalog's own `values: [bd, cot, inf]` was itself a hardcoded firm enumeration (the class inside the instrument) -- this axis binds it to the ONE registry instead."
+
+# --- THE TYPING TUPLE (rail, grain, plane, scope) -- NFRA_ONTOLOGY2 P4 vocabulary -------------------
+# The SINGLE canonical vocabulary a tool declaration and an agent question are BOTH typed in. base 0.8.0's
+# registration invariant (comp-output-contracts.yaml + comp_output_contract.py) validates every comp-tool's
+# coverage declaration AGAINST these enums -- an out-of-vocab value is a LOUD gate fail (stage-2 value-
+# validation, activated at THIS section's canonization -- CTO~Z two-stage ruling 184541Z). Consumers READ
+# the enums from type_tuple.<field>.enum at meta.canonical_source -- one authority, never a re-stated copy.
+# Extensible ONLY by explicit promotion with a printed denominator (LAW-2). comp-which (P4) becomes a TYPE
+# MATCH with an HONEST EMPTY: no tool covers (rail,grain,plane,scope) -> say so, never the nearest-scoring tool.
+type_tuple:
+  rail:
+    enum: [C0, C1, C2, C3, D1, D2, D3]
+    means: "the ontology layer/rail the assertion ANSWERS at. C0-C3 = STRUCTURE (what exists / how wired); D1-D3 = DYNAMICS (D1 value/grain, D2 path/flow, D3 contract/obligation). An assertion that cannot name its rail is answering an unknown question (INTENT_DENOMINATOR_SYNCHRONIZATION s.7.1)."
+  grain:
+    enum: [artifact, partition, row, field]   # coarse -> fine
+    forward: [row]                            # row not in the live graph -- declared, unpopulated
+    means: "the resolution of the value (dynamic_rails.D1.grain_axis). A COARSER answer to a FINER question is the #1 MSBEFF layer-mismatch."
+  plane:
+    enum: [source, projection, desired, applied, live, mixed, graph-cache]
+    means: "WHERE the value is observed -- the intent-vs-config axis (INTENT_DENOMINATOR_SYNCHRONIZATION s.6). source=code AST; projection/graph-cache=a vintage'd graph read (a projection, not live); desired=declared config INTENT (TF/registry); applied=the config as landed; live=the runtime plane observed now; mixed=spans planes."
+    adopted_from: "base 0.8.0 comp-output-contracts.yaml @546f8c0e7 (enum taken VERBATIM -> one plane vocabulary, zero reconcile). Origin: comp-kuzu provenance header (a projection is a vintage) + comp-iam DESIRED/APPLIED (CLAUDE.md 22a)."
+  scope:
+    enum: [estate, tree, firm, pipeline, motif, partition-window, single-artifact]
+    means: "the DENOMINATOR boundary the assertion is complete-OVER (INTENT_DENOMINATOR_SYNCHRONIZATION s.1). 'complete over FIRM' != 'complete over ESTATE'. An assertion must NAME its scope or its coverage claim is unfalsifiable. tree = a firm's whole resource tree (bd/cot/inf); partition-window = a dated slice for a freshness assertion."
+  usage: "a tool DECLARES the tuple it answers at (base's contract); a question is typed in the same tuple; a mismatch (a question at D2/field/applied routed to a tool declaring D1/artifact/desired) is MACHINE-DETECTABLE, not a silent wrong answer -- the single most common failure in the 718-finding MSBEFF corpus."
+  enforcement: "base 0.8.0 registration invariant, two-stage (CTO~Z ruling 184541Z): stage-1 presence-only ships now; stage-2 value-validation against these enums activates on canonization. Out-of-vocab plane/grain/scope -> LOUD gate fail, never a silent parallel term."
+
+# --- C1 FRONTEND ADAPTER -- the tick-29 UNMAPPED-EDGE fork resolution (CTO~Z DESIGN FORK 191540Z) ----
+# ~D's archetype census (@f38a386a6) is the demand signal: 11 LIVE edge types (3912 edges) carry
+# flow/grain but had NO ratified relation binding, of which RENDERS 2447 + PROP_PASSES 1382 = 97.9% are
+# FRONTEND flow the cloud/pipeline-sourced 10-relation axis had no verb for -- the measured root of
+# MSBEFF's frontend coverage failures. THE FORK (per edge): does it binds_up to an EXISTING relation
+# (ADDITIVE ADAPTER -- the 10 relation NAMES + semantics stay byte-identical, ~C's scope) or need a NEW
+# relation (RATIFIED vocab -> CTO~Z ratification chain)? DETERMINATION (grounded per edge, comp-kuzu
+# 2026-07-23, src->dst printed): ALL 11 MAP ADDITIVELY. ZERO need new ratified vocab. The frontend gap
+# DISSOLVES into the additive rail+adapter work -- exactly because the frontend edges are consumes/
+# derives-from AT FIELD GRAIN, which is precisely what D1 adds. The binds_up entries above are extended
+# accordingly (authority-of-record); the LIVE classifier consumes canon-patterns.yaml, so propagating
+# these mappings to that adapter is a FLAGGED downstream wiring step (P2+), NOT done here (touching
+# canon-patterns.yaml would break the summary_corpus.py zero-diff acceptance).
+c1_frontend_adapter:
+  denominator: "11 unmapped live edge types / 3912 edges (comp-kuzu @2026-07-23T14:52Z, HEAD current)."
+  verdict: "11/11 bind to an existing relation additively; 0/11 require a new ratified relation."
+  determinations:
+    RENDERS:         { n: 2447, grounded: "JSXRender -> Field", binds_up: consumes,     grain: field,    verdict: additive, note: "a render consumes field data to display it. NOTE: JSXRender is currently role=Sink (inbound-consumes); the outbound RENDERS edge to its Field source is the read it consumes -- the RELATION binding (consumes) holds; the role-vs-edge-direction nuance is recorded, not a blocker." }
+    PROP_PASSES:     { n: 1382, grounded: "JSXElement -> Field(965)/Prop(417)", binds_up: derives-from, grain: field, verdict: additive, note: "a prop value flows parent->child at field grain -- the D1/D2 value-flow semantic. EdgeKind not yet emitted on PROP_PASSES -> forward (a producer step, not an ontology gap)." }
+    NOTIFIES:        { n: 40, grounded: "CW_ALARM -> SNS_TOPIC", binds_up: produces,   verdict: additive, note: "an alarm publishes a notification to a topic -- same shape as PUBLISHES_TO/EMITS_TO." }
+    GRANTS:          { n: 17, grounded: "IAM_POLICY -> SERVICE_PRINCIPAL(16)/IAM_USER(1)", binds_up: guards, verdict: additive, note: "a permission grant -- the auth/guard family." }
+    LOGS_TO:         { n: 13, grounded: "LAMBDA -> LOG_GROUP", binds_up: produces,     verdict: additive, note: "writes log data to a LOG_GROUP store." }
+    DEAD_LETTERS_TO: { n: 5,  grounded: "EVENT_RULE->SQS_QUEUE(4)/SQS_QUEUE->SQS_QUEUE(1)", binds_up: produces, verdict: additive, note: "emits failed messages to a DLQ store. (routes-to was considered; DLQ is a failure sink, not predicate-routing -> produces.)" }
+    SUBSCRIBES:      { n: 3,  grounded: "SNS_TOPIC->SQS_QUEUE(2)/SNS_TOPIC->LAMBDA(1)", binds_up: produces, verdict: additive, note: "topic fanout DELIVERY to a subscriber. The SNS->LAMBDA leg is trigger-flavored (an invocation); bound to produces (delivery) with the trigger nuance recorded -- a candidate future split if invocation-vs-delivery must be distinguished." }
+    USES_SG:         { n: 2,  grounded: "VPC_ENDPOINT/LOAD_BALANCER -> SECURITY_GROUP", binds_up: depends-on, verdict: additive, note: "a network security dependency -- same as ENCRYPTS_WITH->depends-on." }
+    USES_OAC:        { n: 1,  grounded: "CLOUDFRONT_DISTRIBUTION -> S3_BUCKET", binds_up: projects, verdict: additive, note: "origin-access-control, the OAC successor to USES_OAI (already under projects.also) -- same boundary/origin-access semantic." }
+    ALIAS_TO:        { n: 1,  grounded: "ROUTE53_RECORD -> LOAD_BALANCER", binds_up: depends-on, verdict: additive, note: "a DNS name-resolution to a target. resolution-flavored (resolves-through-adjacent, role Registry); kept on the depends-on base additively -- a resolves-through composite promotion is a candidate if DNS resolution warrants the Registry role." }
+    IN_VPC:          { n: 1,  grounded: "LAMBDA -> SECURITY_GROUP", binds_up: depends-on, verdict: additive, note: "network placement dependency (the lambda's VPC attachment via its SG)." }
+  zero_live_direction2: "the 9 ZERO-LIVE ratified tokens {DEPENDS_ON, REQUIRES, IMPORTS, AUTHENTICATES, AUTHORIZES, ALLOWED, GOVERNS, DENIED, REFERENCES} are a SEPARATE fork (not this adapter): per ~D's census, the auth family (ALLOWED/AUTHENTICATES/AUTHORIZES/DENIED/GOVERNS) is likely a PLANE-VISIBILITY gap (CSE/trace plane -- fix = a stated-intent plane annotation, not content), while DEPENDS_ON/REQUIRES/IMPORTS = the code-import dependency plane genuinely ABSENT from the graph (forward). Neither is retired here (retiring ratified vocab -> ratification chain)."
+  routed_to_gate: "this determination table is part of the P1 arch-gate package to CTO~Z (per DESIGN FORK 191540Z). No ratified-vocab candidate raised -- all additive."

@@ -53,6 +53,14 @@ dimensions:
     canonical: modal                  # ref = the MODAL membership-SET among PRESENT firms (NOT a fixed firm --
                                       # a fixed ref inverts on a ref-firm divergence, hiding that firm's drift).
                                       # @f904033ea §3: "designated OR the modal structure" -> default modal.
+    registry_binding: data/firm_registry.json   # NFRA_PSTMRT P2 (rule-bank completeness axis): values[]/firm_names/
+                                      # firm_aliases are the CONSUMER of the ONE firm enumeration (the registry), not an
+                                      # independent list. The P1 gate asserts values[] == registry enabled pipeline-scope
+                                      # tree_tokens, and firm_names/firm_aliases parity vs (registry aliases UNION {firm_id})
+                                      # -- the catalog's alias lists include the canonical id, the registry factors it out
+                                      # (normalize on the union or it false-flags day one; CVO~Z s.7-i1 @1b650071d). ADDITIVE
+                                      # annotation -- summary_corpus.py reads ONLY values/firm_aliases/allowed_facets under
+                                      # firm, never this key -> zero blast (verified summary_corpus.py:505-529).
 
 # advisory: firm verdicts are strictly advisory while allowed_facets=[] (see above). A consumer renders the
 #   verdict as a CANDIDATE clause; it is NEVER a filed finding and NEVER auto-acts (canon-patterns binding:
