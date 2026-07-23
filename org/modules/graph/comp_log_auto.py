@@ -201,14 +201,31 @@ VERDICT_EXIT_TOOLS = frozenset({
     "comp-freshness", "comp-iam", "comp-trigger",
     # comp-iam simulate: 1 DENIED-control-proven, 2 conditioned/suspect/unproven (22a). comp-trigger:
     # 2 could-not-evaluate. Both carry contracted nonzero verdicts, not failures.
+    # INTERIM +3 BRIDGE (gate-approved: main CTO 153359Z via MSTR, ~Z-routed 153440Z). Three
+    # source-confirmed contracts whose miscounted rows (358+59) were polluting live MSBEFF
+    # measurement. BRIDGE ONLY: "a frozen set plus three is still a frozen set" -- the DERIVATION
+    # of this whole set from comp-tools.yaml exit contracts is the gated follow-on, directly
+    # behind this in the bundle tail (conditions (a) registration-invariant join, (b) LOUD
+    # UNKNOWN-CONTRACT class, (c) supersession history + telemetry re-baseline).
+    "comp-pulse",      # rc1 = reflex HITS (comp_pulse.py:691 exit contract), rc2 = map absent
+    "comp-system",     # rc2 = STALE (comp_system.py documented 0/2/1 contract)
+    "comp-constants",  # rc1 = drift found; rc3 = REFUSE (rendered distinctly below)
 })
+
+# Documented REFUSE exits: an honest could-not-check (sovereign guard, registry fail-closed) is a
+# DIFFERENT state from a verdict-about-the-estate -- rendering it VERDICT would launder refusals
+# into findings. Cheap per the gate's "consider ... if cheap"; the derivation generalizes this.
+_REFUSE_EXITS = frozenset({("comp-constants", 3)})
 
 
 def _classify_result(tool: str, exit_code: int) -> str:
-    """PASS on exit 0; a contracted non-zero VERDICT (tri-state / gate-fired) for a VERDICT_EXIT_TOOL;
-    else FAIL. This is the single-point fix for the exit-code miscount (was: nonzero -> FAIL for all)."""
+    """PASS on exit 0; a documented REFUSE exit renders REFUSE; a contracted non-zero VERDICT
+    (tri-state / gate-fired) for a VERDICT_EXIT_TOOL; else FAIL. Single-point fix for the
+    exit-code miscount (was: nonzero -> FAIL for all)."""
     if exit_code == 0:
         return "PASS"
+    if (tool, exit_code) in _REFUSE_EXITS:
+        return "REFUSE"
     if tool in VERDICT_EXIT_TOOLS:
         return "VERDICT"
     return "FAIL"

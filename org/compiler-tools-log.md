@@ -24587,3 +24587,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-23 | 1.0.0_SA_CTO~Z | NFRA_MSBEFF | msbeff_log_audit+phase1 | full-log audit passes (P0+P1) + rc-contract correction | PASS |
 | 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-23/c... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_MSBEFF_PRD.md | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_MSBEFF_PRD.md | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse interim-probe-rc1 | VERDICT (SYNTHETIC TEST FIXTURE) |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system interim-probe-rc2 | VERDICT (SYNTHETIC TEST FIXTURE) |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-constants | comp-constants interim-probe-rc3 | REFUSE (SYNTHETIC TEST FIXTURE) |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-chainrun | comp-chainrun negative-control-rc1 | FAIL (SYNTHETIC TEST FIXTURE) |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/mo... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/modules/graph/comp_log_auto.py | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_log_auto.py org/compiler-tools-log.md | PASS |
