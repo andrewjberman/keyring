@@ -1,4 +1,40 @@
-# GLOBAL INTERPOLATED-BACKFILL AGGREGATION SPEC (CTO, v0.2 — CVO tandem findings ruled)
+# GLOBAL INTERPOLATED-BACKFILL AGGREGATION SPEC (CTO, v0.4 — backtest third-class rulings)
+
+## v0.4 RULINGS (pinned delta over v0.3, per CVO backtest tandem review @f2036230e)
+
+**R-7 (F1, the crux — THE SUM-EXCLUSION IS STRUCTURAL): `backtest_projection` values NEVER enter
+any actual-AUM sum, at Global or firm-total grain, enforced BY THE AGGREGATOR, not by label.**
+The category distinction on the record: interpolated_estimate is estimated-ACTUAL AUM and is
+summable (that is why it could be signed into the Global sum); a backtest is NOT AUM AT ALL —
+no per-cohort label survives summation into a dollar total. Therefore:
+- The backtest is a **PER-FIRM DISPLAY BAND ONLY** (the cottonwood view). At Global it does not
+  render and does not contribute — a pre-creation date's Global point = the sum of the OTHER
+  firms' measured/interpolated values with cottonwood **absent-for-sum** (exactly the existing
+  structurally-absent-not-a-gap behavior; Global history unchanged). A Global hypothetical
+  overlay, if ever wanted, is a separate Andrew product decision — not built by default.
+- **THE THREE-CLASS point_class LATTICE, defined:** least-certain-PRESENT wins among classes
+  that legally enter the sum: measured < interpolated_estimate. `backtest_projection` is NOT in
+  the sum lattice at all (it cannot taint what it cannot enter); it exists only as the per-firm
+  band's own class. A backtest-classed value reaching any summation path is a HARD FAIL (mutant
+  e: a planted backtest point in the aggregator input must abort the Global build, loudly).
+- A measured-AUM consumer filter therefore needs no backtest branch — exclusion upstream makes
+  the downstream filter unreachable-by-construction for this class (defense in depth retained:
+  the filter still rejects the enum if it ever appears).
+
+**R-8 (F3): the constant vintage label does not stretch over degrading depth silently** — the
+per-firm band carries an in-band per-point `lookback_days`, and the design sets a MAX-LOOKBACK
+bound (CRO proposes the number with justification in his delta; Andrew may override at the
+product review). One label covering a 2-month and a 5-year extrapolation identically is the
+overstated-safeguard class; the depth indicator is the honest gradient.
+
+**R-9 (F2/F4 status): both are ANDREW'S open words, already on his desk** — visual (anchored
+w/ strong style vs rebased growth-of-$1; CRO leans anchored, CVO weighs rebased as the
+STRUCTURAL guard — axis beats style for a thing that must never read as dollars) and the price
+source (public-close pull vs ycharts vs holdings-only; ALL external paths require his word;
+deep history is HARD-BLOCKED until he rules). The spec proceeds per-firm on holdings-derived
+overlap meanwhile; nothing deep builds before his word.
+
+---
 
 ## v0.2 RULINGS (delta over v0.1, per CVO tandem review @273bbe9c0 — supersedes conflicting v0.1 text)
 
