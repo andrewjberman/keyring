@@ -107,8 +107,25 @@ own and flagged a coupling for the sibling TO: re-pointing the 9 tools CHANGES t
 output-contract plane/vintage, which the stage-2 gate validates -> the reroute TO needs an
 output-contract-update leg (base owns it).
 
+## Sibling-TO scope DRAFTED @1edf2aa2b (CTO~Z 210055Z: "YES -- draft it", off their plate)
+
+CTO~Z ruled the wrapper siting **FINAL** (no engine edit, no lane grant -- *"a lane grant to get a control
+into an engine that the wrapper already covers would be manufacturing authority for no gain"*), and asked
+me to draft the graph.json sibling-TO scope. Delivered:
+`deliverables/NFRA_TOOLARCH_CANON_SIBLING_TO_DRAFT_graph-json-reroute.md`.
+
+**The design call in it:** the scope deliberately does **NOT presuppose the reroute.** The coverage-parity
+precheck is BLOCKING and *deciding*, with three legitimate outcomes -- parity-holds -> re-point;
+fails-but-closable -> extend kuzu first; **fails-structurally -> DO NOT re-point, DECLARE both projections
+instead.** Rationale: *a declared second projection is not the defect; an undeclared one is* -- and writing
+a TO that assumes the re-point is correct would commit the same error one layer up, canonicalizing into a
+coverage regression. Flagged to CTO~Z as a real fork that is theirs to overrule. Risk grounded from my own
+P1 census (kuzu = resource/estate graph vs trace_graph = source-level; R-0 + 0/8 frontend+M365 C2 families
+=> "kuzu is canonical" does not entail "kuzu covers the structure tools' questions"). Base's
+output-contract coupling folded in as leg C verbatim.
+
 ## Blockers
 
-None blocking me. (c)+(d) of the exhibit sequence are GATED on the canonical/stitch refresh (base-routed,
-not my hand-edit); rulings 2+3 are CTO~Z-authored sibling TOs. Event-driven standing by; offered to draft
-the sibling-TO scope from the audit if CTO~Z wants it off their plate.
+None blocking me. Exhibit (c)+(d) GATED on the canonical/stitch refresh (base-routed, not my hand-edit);
+sibling TO awaits CTO~Z gate+dispatch; comp-routes CF capability TO is CTO~Z-authored. Event-driven
+standing by.
