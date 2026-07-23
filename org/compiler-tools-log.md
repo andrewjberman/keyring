@@ -25123,3 +25123,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS t, count(*) AS n ORDE... | PASS |
 | 2026-07-23Z | 1.0.0_SA_CTO | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23Z | 1.0.0_SA_CTO | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-23/t... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_output_contract.... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-pulse | comp-pulse diff org/modules/graph/comp_output_contract.py org/modules/graph/tests/test_... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-system | comp-system --gate --changed org/modules/graph/comp_output_contract.py org/modules/grap... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/NFRA_ONTOLOGY_RULE_BA... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml org/modules/graph/varian... | VERDICT |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-system | comp-system --gate --changed org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml org/modules... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-system | comp-system | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff infra/system/06_current_state.json infra/system/06_current_state.md | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/git-hooks/closeout-comp-state-po... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff .tools/git-hooks/closeout-comp-state-post-commit.sh .tools/git-hooks/de... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/MDPF_COT_CO... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/MDPF_COT_CONVENTION_PARITY_decomposition.md | PASS |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260723T1943Z_mdpf-global-view-ac... | VERDICT |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu MATCH (s)-[e]->(d) WHERE e.edge_type IN ['RENDERS','PROP_PASSES','NOTIFIES','... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON.tools-source-from-kuzu-canonical-not-floating-json | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='S3Key' AND (n.name CONTAINS 'ag... | PASS |
+
+- 2026-07-23 0.8.0_AE_CloudComp~C (NFRA_ONTOLOGY2.P1): comp-kuzu (edge dist + per-edge src->dst + FLOWS_TO props -> grounded 11-edge fork 11/11-additive + rail denominators); comp-ontolint check+self-test PASS pre/post (ratified vocab intact through binds_up extension); summary_corpus.py self-test/build/edit-off-on isolation = ZERO-DIFF acceptance; comp-system regen cleared _SOURCE drift gate. Rails canonized @5d1161d70.
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON.tools-source-from-kuzu-canonical-not-floating-json | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='S3Key' AND n.name CONTAINS 'mdp... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
