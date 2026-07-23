@@ -24181,3 +24181,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-23 ~0145Z 0.4.0_DE_ClientPlatform: 3F-P3a — comp-transform schema-check+ternary-audit (DEGRADED on ModelPortfolios, types-resolution WARN / TabType-only; gap surfaced), comp-surface-check check (SEV1 read + acked), comp-grep x2 (denominators 13/23213 + 0/47, grounded the unwired-producer escalation), comp-pipescript deployed (assets-tree blind spot surfaced), comp-glob x2
 | 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DE_ClientPlatform/logs... | PASS |
+| 2026-07-22 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-07-22 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff portal | FAIL |
+| 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-23 | 0.2.0_DT_PortfolioAnalytics | (none) | Cottonwood MDPF FE promote: pure portal git promote per /prod-deploy -- no estate search; verifications on live primitives (git refs, gh run view --json, peeled tag) | n/a |
+| 2026-07-22 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/cr... | PASS |
+| 2026-07-22 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/critical_paths/change_management/20260723... | PASS |
