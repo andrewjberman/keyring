@@ -126,11 +126,22 @@ band publish cites an incomplete COO co-sign; the band serves only on DE render 
   (convergent). **CRO EPSILON RULING @112655Z: both 0.10 and 0.50 are WRONG-AXIS** (0.50 = the confidence
   CEILING of a legit weak-real match -> over-suppresses, my concern-b confirmed; 0.10 under-suppresses).
   **Correct = MEASURED, not chosen: the VALLEY in the match-score distribution of KNOWN-REAL post-06-15
-  members (ground-truth-calibrated, bimodal); suppress-to-absent below it.** R-5 delta = CVO blesses the
-  honesty INVARIANT (absolute match-quality below the known-real-member floor -> `absent`, YANG_SITTW at
-  account grain) + DS MEASURES the valley + optional structural complement (don't force a today-non-model
-  account into a degenerate pre-06-15 set). **SERVE HELD until DS measures + CVO blesses -> re-emit -> co-sign
-  reconvenes (my value limb re-verifies no cliff).**
+  members (ground-truth-calibrated, bimodal); suppress-to-absent below it.**
+  **CVO R-5 BLESSED `@efa8a50bf` (byte-grounded):** custody is CONTINUOUS across the cliff (~$116->120M) —
+  the assets didn't move, only the model/non-model CLASSIFICATION flipped; 06-15 confidently splits the same
+  assets $6M model + $114M non-model = POSITIVE EVIDENCE the early $114M is ~20x wrong, NOT mere uncertainty
+  (0.01 conf is the "which-model" axis; this is a "in-a-model-at-all" membership error a label can't cover).
+  **>> PRODUCER-SIDE suppression is REQUIRED, not a choice (my "pick the mechanism" framing was WRONG):**
+  `interpolated_estimate` is SUMMABLE into the Global sum, so a render-floor alone leaves the fabrication in
+  the bytes + the Global model-AUM sum INHERITS it. Producer-side per-account suppression (model->absent in
+  emitted bytes) = PRIMARY; CTO render-floor = defense-in-depth. **Pin mutants a/b/c (CRO) + d (CVO): after
+  suppression the Global model-AUM SUM on a suppressed date carries NO fabricated value** (d proves the fix
+  is producer-side, not render-only). Honesty invariant: absolute match-quality below the known-real-member
+  floor -> `absent` (YANG_SITTW at account grain). **SERVE HELD until DS measures the valley + implements
+  producer-side suppression -> re-emits -> CVO verifies (cliff gone / early model=absent where suppressed /
+  genuine ~$0-6M ramp RETAINED / Global sum clean / a real weak match survives) + my value limb re-verifies.**
+  Meta: the confidence cap is now an anomaly DETECTOR — 2 serve defects surfaced (stale-artifact, value-cliff)
+  because the low confidence made them catchable. This is downstream of CVO's own candidate-restriction delta.
   Counter-sign discipline compounding: stale-confidence -> stale-artifact -> value-shape, 3 catches / 3 limbs.
 - **Pins (bind EXACT commits per R-5):** CRO schema `@708661904` (canonical build schema, delta-wins),
   CTO agg spec `@be91775dd` (§4 is ruling-record-not-build-surface), CVO R-5 `@ec5ec79f3`.
