@@ -149,3 +149,27 @@ at the artifacts → serve. Backtest projection = separate dispatch (CRO design)
   count gaps from different source dates would share one stamp. Fine for the trailing
   frontier-lag case that exists today (single-source by construction); if a MID-series SMA count
   gap ever appears, the stamp-granularity question re-opens as its own delta, never silently.
+
+## GLOBAL SERVE ARC -- state at the Andrew-definition gate (135xZ)
+
+**Band SERVED** (1202Z, ETag 3c3879c0, ledger amendment 2 @ea804ef26). **Global trio STAGED** with
+all five CTO pre-sign conditions verified on bytes; COO fee-basis cell triply-grounded (their
+phantom None-NB retracted -- read-key error, values present). **Serve then HARD-HELD on two gates
+that both closed into ANDREW'S DEFINITION WORD:**
+1. **Cottonwood basis (Andrew 134545Z)**: two-source overlay properly referenced -- landed
+   @189336618 (basis string + structured meta.cottonwood_basis in pair/spine/radial + the standing
+   COTTONWOOD_BASIS_METHODOLOGY record, grounded file:line). Carrier sweep denominator 10:
+   5 under-stated artifacts enumerated; re-emits held to ride ONE churn with (2).
+2. **49F leg ($43.8M) -- MECHANISM NAMED, ZERO RESIDUAL, ACCEPTED (COO 135503Z)**:
+   $43,837,915.18 = $20,344,172.42 DEFINITION (full-envelope fact_rps_s2 vs legacy
+   schwab_canonical partial-cash -- the D-2 named delta @6eb54c186; the $1.64B reference IS that
+   legacy baseline, $1,644,993,954.34 @07-17 common) + $23,493,742.76 GENUINE GROWTH
+   (07-17->07-21 day-by-day in the series) + $0 defect (D-3: model ties served; non_model
+   identity-enforced). **The finding flipped the decision from which-NUMBER to which-DEFINITION**;
+   options routed to Andrew (converged rec: he defines the business-logic subsection incl. the
+   $33.76M cash-leg treatment; I build to it on real sources).
+**Wave plan (CTO 134712Z)**: A = per-firm 49F+INF keys (P1-renderer + DE positional-shape evidence
+gate); B = Global trend + radial + distribution + corrected cottonwood artifacts (basis delta-sign
++ renders + counter-signs). NEXT AT ME: Andrew's definition -> build the 49F subsection leg ->
+re-emit everything in one churn (incl. the 5 basis carriers + NB-1) -> renders -> co-signs ->
+publish per wave.
