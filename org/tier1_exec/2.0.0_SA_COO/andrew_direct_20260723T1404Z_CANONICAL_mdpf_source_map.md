@@ -209,4 +209,15 @@ doesn't -- never fabricate reality into a period a source hasn't reached (absolu
 discipline). The legacy as-known-then series is a valid audit ledger but is NOT the display basis. Directed to CTO to
 bind the FORMAL D1 value-semantics ruling (COO relays the principle; CTO binds; DS confirms closing_equity IS the field).
 
-**Delete/close when: every MDPF leg (49/INF/COT + Global) is full-lookback backfilled in the gold DDB per this map, per-date verified, and serving.**  -- `2.0.0_SA_COO`, updated ~16:0xZ (full-backfill + convergence-why + absolute-reality display-basis principle)
+## SOURCE DEPTHS CONFIRMED @161643Z (DS, Andrew's ask) + COO BYTE-VERIFIED @~16:17Z
+Per-leg real coverage (COO independently spot-verified the starred ones against live S3 listings):
+- 49F custody 2024-05-24+ (541, gaps=0) / 49F model to inception **2021-09-02** (prior grounding).
+- **INF total (orion)** s3://opal-data-assets/orion/inflection/silver/fact_assets/: **2020-04-28..2026-07-23, n=2,278, ZERO gaps** [*COO-verified: earliest 2020-04-28, count 2278*] -- deepest channel.
+- **INF model (eclipse)** fact_portfolios_full: **launched 2026-05-15** (STRUCTURAL start, no Opal models before), first nonzero 2026-05-18; trading-axis 46 -> 40 covered + 6 NAMED gaps (05-21,06-01,07-01,07-13,07-14,07-15).
+- COT total (blackdiamond fact_holdings): 2026-06-09+, n=35, trading-complete (BD DataMining ~T+1; unpriced=honest-absent never $0).
+- **COT model (rebalance fact_model_*)**: **2026-07-21+, n=3** [*COO-verified: exactly 07-21/22/23*] -- migration-in-progress; interpolated band (labeled) behind it, self-extending under 0.7.0 run-time enumeration.
+**INF-MODEL LEGACY-ESTIMATE CHECK (COO, proactive): CLEAN.** Served inflection.model_aua == $0.0 at 2024-11-01 / 2025-06-02 / 2026-05-14 / 2026-05-15; earliest nonzero **2026-05-18**. So NO SmartX-style as-known-then estimate hides in INF's deep history -- pre-launch is a true structural zero, and the pre-series control's "49custody+INFmodel" had INFmodel=0 (Global[2024-11-01]=49custody alone $795,389,602.69).
+**GLOBAL COMPOSITION IMPLICATION (COO read):** Global = 49-full + INF-model + COT-model, and the two MODEL programs are recent -> going back: all-three at frontier -> 49+INF from 2026-05-18 -> **49's full book ALONE through deep 2024-2025**. Not missing data -- when each firm's model program began. legs_present label makes every row say which firms it contains.
+**ALIGNMENT (CTO @161803Z, awareness):** Andrew stated a broader end-state to CTO directly = server-side JSON generation off the gold DDB for the FULL /portfolios surface (radial+bell+AUA-trend+period-end, all 4 splits). CTO bound+routed (DE enumerate read-surface -> DS generation contracts -> generator ownership later); the 4-channel backfill is the FOUNDATION, proceeds unchanged; COO per-date counter-sign extends to the generated artifacts. No COO action; serve hold unchanged.
+
+**Delete/close when: every MDPF leg (49/INF/COT + Global) is full-lookback backfilled in the gold DDB per this map, per-date verified, and serving.**  -- `2.0.0_SA_COO`, updated ~16:17Z (INF/COT depths confirmed+verified; INF clean; CTO server-side-gen program noted)
