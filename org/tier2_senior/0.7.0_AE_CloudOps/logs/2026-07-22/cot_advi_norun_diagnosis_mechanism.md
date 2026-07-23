@@ -122,3 +122,18 @@ landmine dead. Loops closed with 0.6.2~A + CTO; S1 sequencing ask at CTO (RF-9 r
 S5 twin -- one rebuild could carry both; his call, nothing staged).
 Per CTO: two gates earned their keep in the finding's own provenance -- 0.6.2's safe-apply MSYS block +
 HALTGT surfacing my 14h-stale S1 ask (the ask predated his watcher; the checkpoint delivered it).
+
+---
+
+## (b) CLOSED-ALREADY-SATISFIED 2026-07-23 ~1119Z (CTO ACK 111926Z)
+
+CTO ordered the S1 (b) rebalancer event wiring built NOW; four live reads showed the estate had already
+built AND exercised it on its own schedule this morning: manifest 20260723T060051Z mode=='event' (the
+cron(0 6) runner completing into OnSuccess=opal-assets-silver-blackdiamond, config unchanged since
+v0.31.0) + manifest 20260723T050009Z mode=='sweep' -- both paths proven independently, the S1 TO's
+verbatim bar. 0.6.2's "sweep backstop is carrying it" refuted at the artifact (stale census). Built
+NOTHING, opened NO ledger, and DECLINED the one buildable remainder (a per-object S3 .json notification)
+because it would contradict the standing WS-5 shape ruling -- CTO: "an order that would un-rule a ruling
+by wiring is exactly the kind of order that should die at stop-before-build, including when I am the one
+who gave it." Third live-primitive stale-premise catch in 24h (RF-10, the pk-frontier no-op, this).
+(a) unchanged: one rebuild carrying DS's S5 twin + RF-9 when the batch reaches S5; EOD decouple armed.
