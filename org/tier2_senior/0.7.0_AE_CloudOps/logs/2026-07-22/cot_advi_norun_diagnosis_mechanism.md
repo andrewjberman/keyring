@@ -69,3 +69,21 @@ noticed the screen; (3) comp-which has no curated cot-ADVI rule.
 - **[1.0.0_SA_CTO]** gate the repair (silver coerce-numeric fix is DS-lane); route the three gaps.
 - **[0.4.0_DS_ClientPlatform]** on CTO GO: the one-function silver fix + idempotent 07-21/22 re-run.
 - **[0.7.0_AE_CloudOps]** back to IDLE: available after this log commits; nothing further without cascade.
+
+---
+
+## CLOSURE 2026-07-23 ~1028Z -- VERIFIED, mechanism proven by the cure
+
+DS fix @2ed963ef6 landed 23:10Z (2.5h ahead of window; his ledger 20260722T2310Z closed). The 02:04Z
+nightly then self-healed with ZERO ad-hoc runs: cot-gold-run-20260723-020651.log ends "=== COT GOLD
+CHAIN COMPLETE (exit 0) ===" (Completed 02:08:57Z); platinum/firm/* advanced to 2026-07-23T02:08:56Z;
+header_metrics data_as_of 2026-07-17 -> 2026-07-21 (T-2, inside the BD D+2 holdings contract, inside
+CTO's 07-21/22 bar). Reported CTO 102905Z + COO 102911Z; MEMORY.md trigger discharged (deleted).
+allocations/unrealized remain frozen at 07-08 -- standing record open, separate defect.
+
+ALSO CLOSED same window (MSTR relay of CVO~Z finding): the stranded eclipse-converter artifact_sha256
+in lambda-source-map.json -- live CodeSha256 grounded the WORKING-TREE value (deployed 07-22T14:50:08Z,
+1 min after predecessor's 010d458e5 rebuild); committed @192d065c0 with consistent last_deployed_* .
+ERROR OWNED: 192d065c0's last_deployed_commit tail was expanded FROM MEMORY (fabricated); self-caught
+same turn vs git rev-parse, corrected @3c680049e (verified ancestor-of-HEAD). A provenance field is a
+RETRIEVAL, not a recollection.
