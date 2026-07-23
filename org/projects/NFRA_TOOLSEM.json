@@ -1,0 +1,25 @@
+{
+  "project_code": "NFRA_TOOLSEM",
+  "macro_code": "NFRA",
+  "name": "TOOLSEM -- SEMANTIC layer of NFRA_TOOLSTACK: the bridge from user query to the denominator it requires",
+  "description": "Andrew-direct charter 2026-07-23 (verbatim in PRD s.0 + NFRA_TOOLSTACK_PROGRAM s.0): the SEMANTIC layer -- resolve a natural-language query to the (rail, grain, plane, scope) denominator the honest answer must cover, then select the tool whose materialized coverage space contains it, or state honestly that none does. Replaces comp-which keyword-similarity/argmax-as-confidence (12,380 July invocations, the estate most-used surface, MSBEFF Phase 4) with a TYPE MATCH: no tool covers -> honest empty + stated fallback, never a silent best-guess. Also the estate live 'what tool is missing' sensor. Absorbs MSBEFF R7; shares R8 with TOOLBHVR.",
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_TOOLSEM_PRD.md",
+      "label": "Charter (P0); SEMANTIC layer",
+      "date": "2026-07-23"
+    }
+  ],
+  "status": "active",
+  "phase": "[Layer: SEMANTIC of NFRA_TOOLSTACK] Phase 0 CHARTERED 2026-07-23. Job: query -> required-denominator resolution -> type-matched routing w/ honest empty. Cannot be built before the rails (ONTOLOGY2) type the query AND tools (TOOLARCH + MSBEFF R1/R3) declare coverage in that type system -- a semantic router over untyped surfaces is comp-which again. Validation corpus: 718 MSBEFF findings + 187 rail-override intents. Sequenced after ONTOLOGY2 P1 + TOOLARCH first typed tools.",
+  "blocking": "None (sequenced: after ONTOLOGY2 P1 + typed tools)",
+  "created": "2026-07-23",
+  "pods": [
+    "1.0~Z",
+    "3.0~Z",
+    "0.8"
+  ],
+  "pipeline": "estate-wide (tool framework / semantic layer)",
+  "thread_counter": 0,
+  "threads": []
+}

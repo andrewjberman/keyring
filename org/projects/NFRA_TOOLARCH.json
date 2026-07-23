@@ -1,0 +1,25 @@
+{
+  "project_code": "NFRA_TOOLARCH",
+  "macro_code": "NFRA",
+  "name": "TOOLARCH -- MECHANICAL layer of NFRA_TOOLSTACK: materialize the physical denominator coverage spaces (archetypes -> patterns -> tools)",
+  "description": "[RENAMED from NFRA_ARCHTOOL 2026-07-23 per Andrew-direct naming + NFRA_TOOLSTACK family symmetry.] Andrew-direct charter 2026-07-23 (verbatim in PRD s.0): use the entire system as dogfood and ask what the archetypes are -- dataflows, properties, interactions -- using the ratified C0-C3 ontology in infra/system/ontology + the rule bank; then establish where the various patterns live; then generalize pattern discovery and tool creation/registration/testing. Includes the stability-grader constraint (Andrew): regex is unstable in general, but where a pattern is STABLE BY LAW a tool-behind-the-tool should grade pattern stability and thereby design stable pattern-based tools. Successor/consumer of NFRA_MSBEFF's evidence. || STACK ROLE (Andrew-direct 2026-07-23): the MECHANICAL layer of the NFRA_TOOLSTACK program -- materializes the physical denominator coverage spaces; sits on the ONTOLOGY2 rail system; feeds TOOLSEM. Constitution: docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md.",
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_TOOLARCH_PRD.md",
+      "label": "Charter + phase plan (P0); MECHANICAL layer",
+      "date": "2026-07-23"
+    }
+  ],
+  "status": "active",
+  "phase": "[Layer: MECHANICAL of NFRA_TOOLSTACK] Phase 0 COMPLETE 2026-07-23: chartered. Substrate fixed (NFRA_ONTOLOGY_RULE_BANK C0-C3 ladder + ROLE/RELATION/TYPE axes + VARIANCE + the PSTMRT-added COMPLETENESS axis; infra/system/ontology/; motif catalog; GENESIS SDK as the proven abstraction precedent). Three questions set: archetype census (dogfood the ladder on ourselves, starting from CVO~Z tick-29's honest uncovered-edge gap) -> pattern inventory (pattern -> archetype -> instantiating tools -> gaps, seeded from 83 tools + 718 MSBEFF findings + 187 rail-override intents) -> generalize discovery/creation/registration/testing. s.3 stability grader: GOVERNANCE/CHURN/POPULATION/VIOLATION/BLAST axes; STABLE-BY-LAW permits a pattern extractor that MUST cite the law it depends on (a change to the law then fails loudly); anything less requires structural extraction. Sequenced BEHIND the MSBEFF R-series builds (which land the coverage/vintage/registration contracts ARCHTOOL synthesis must emit into).",
+  "blocking": "None (sequenced behind MSBEFF R-series at 0.8.0)",
+  "created": "2026-07-23",
+  "pods": [
+    "1.0~Z",
+    "3.0~Z",
+    "0.8"
+  ],
+  "pipeline": "estate-wide (ontology / comp tooling / meta)",
+  "thread_counter": 0,
+  "threads": []
+}

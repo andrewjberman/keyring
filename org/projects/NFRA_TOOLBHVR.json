@@ -1,0 +1,25 @@
+{
+  "project_code": "NFRA_TOOLBHVR",
+  "macro_code": "NFRA",
+  "name": "TOOLBHVR -- BEHAVIORAL layer of NFRA_TOOLSTACK: how intention is streamlined with the harness",
+  "description": "Andrew-direct charter 2026-07-23 (verbatim in PRD s.0 + NFRA_TOOLSTACK_PROGRAM s.0): the BEHAVIORAL / top layer -- make the agent actually traverse query->tool->answer fluidly inside the harness so a light query makes intent + completing context immediately obvious. Owns the streamlining of all four selection paths as ONE system (standing memory / HUD nudge / rail gate / router). MSBEFF Phase 4 correction: adoption is HIGH (agents ask the router 12,380x/mo in their own words, route the head from memory correctly); real defects are (a) conversion unmeasurable -- route and run uncorrelated (R8), (b) tools that should fire never fire -- comp-state 0 runs during a live drift, dump_enriched unrun 4 months (R4). Protects the memorized head (a router hop for a memorized tool is pure latency); optimum is lowest-friction-correct-path per query-layer, NOT universal router use. Absorbs MSBEFF R4/R6; shares R8 with TOOLSEM.",
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_TOOLBHVR_PRD.md",
+      "label": "Charter (P0); BEHAVIORAL layer",
+      "date": "2026-07-23"
+    }
+  ],
+  "status": "active",
+  "phase": "[Layer: BEHAVIORAL of NFRA_TOOLSTACK] Phase 0 CHARTERED 2026-07-23. LAST in the stack -- streamlines a loop the 3 layers below must first make exist. P1 conversion instrument (R8: route id carried into the run + comp-which self-reporting, closing the 295x under-report); P2 trigger binding (R4: closeout->comp-state, deploy->pipescript-deployed, mutant-proven); P3 path tuning (query-layer -> selection-path -> correct-tool-rate map, then cut friction). Not a mandate-tightening exercise.",
+  "blocking": "None (sequenced LAST; seed R-cells R4/R6/R8 already in flight at 0.8.0)",
+  "created": "2026-07-23",
+  "pods": [
+    "1.0~Z",
+    "3.0~Z",
+    "0.8"
+  ],
+  "pipeline": "estate-wide (tool framework / behavioral layer)",
+  "thread_counter": 0,
+  "threads": []
+}
