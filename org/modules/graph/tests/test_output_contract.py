@@ -230,3 +230,66 @@ def test_stage2_gate_member_blocks_out_of_canon(monkeypatch):
 
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__, "-q"]))
+
+
+# ----------------------------------------------------------------------------------------------------
+# SUBCOMMAND-DECLARATION invariant (CTO~Z arch-gate 220731Z, on ~B's LATENCY census + my measurement).
+# tools_index `subcommands:` was populated on 65/65 and gated on NONE -- perfect camouflage. The
+# omissions included derivations CLAUDE.md MANDATES (comp-iam simulate + reconcile, comp-pipescript
+# postdeps, comp-registry sync): THE ROUTER COULD NOT ROUTE TO THE CALLS THE LAW REQUIRES.
+# ----------------------------------------------------------------------------------------------------
+
+def _mc():
+    from org.modules.graph import manifest_check_cli as mc
+    return mc
+
+
+def test_declared_side_grammar_strips_flags_and_usage_forms():
+    """CONSTRAINT 2: the field mixes subcommands with flags and usage forms. 'sync ROW=N' -> 'sync';
+    'who-can-reach <arn>' -> 'who-can-reach'; '--json' and '<cypher>' drop out entirely."""
+    got = _mc()._declared_subcommands(
+        {"subcommands": ["sync ROW=N", "who-can-reach <arn>", "--json", "<cypher>", "gaps"]})
+    assert got == {"sync", "who-can-reach", "gaps"}
+
+
+def test_pinned_wrapper_exposes_one_derivation_not_the_engine_set():
+    """CONSTRAINT 1: comp-blast pins `cli.py blast "$@"` -- it exposes ONE derivation of a shared
+    engine. Without this the 5 pinned wrappers all false-positive against cli.py's full set."""
+    subs, pinned, _why = _mc()._established_subcommands("comp-blast")
+    assert pinned is True and subs == {"blast"}
+
+
+def test_unestablishable_surface_is_unknown_never_fail():
+    """CONSTRAINT 3: a tool whose surface cannot be established renders UNKNOWN, never FAIL --
+    an unexercised hard-fail across 36 tools is how a gate earns a --no-verify habit."""
+    subs, _pinned, why = _mc()._established_subcommands("comp-genesis")
+    assert subs is None and isinstance(why, str) and why
+
+
+def test_reproduces_the_comp_iam_law_mandated_omission():
+    """The governance finding, as a regression guard: comp-iam exposes simulate + reconcile and the
+    registry declared neither. If a backfill lands, this test flips to asserting they ARE declared --
+    which is the point: the guard is that the gap cannot silently reopen."""
+    import yaml
+    mc = _mc()
+    ti = yaml.safe_load(open("org/modules/graph/graph-call-manifest.yaml", encoding="utf-8"))["tools_index"]
+    actual, pinned, _ = mc._established_subcommands("comp-iam")
+    assert actual and not pinned
+    assert {"simulate", "reconcile"} <= actual, "comp-iam must really expose simulate + reconcile"
+    declared = mc._declared_subcommands(ti["comp-iam"])
+    missing = actual - declared
+    # Either they are still undeclared (the finding stands) or the backfill landed (gap closed).
+    assert ("simulate" in missing) == ("simulate" not in declared)
+
+
+def test_member_blocks_only_registrations_this_commit_touches(monkeypatch):
+    """SCOPE: the gate lands AHEAD of the backfill without freezing the fabric -- standing drift is
+    REPORTED, a drifted registration in THIS commit BLOCKS. Both directions on the record."""
+    mc = _mc()
+    touch = ["org/modules/graph/graph-call-manifest.yaml"]
+    monkeypatch.setattr(mc, "_dict_diff_keys", lambda *a, **k: set())
+    assert mc._subcommand_declaration_invariant(touch) == 0          # standing drift -> not blocking
+    monkeypatch.setattr(mc, "_dict_diff_keys", lambda *a, **k: {"comp-iam"})
+    assert mc._subcommand_declaration_invariant(touch) == 1          # drifted + touched -> BLOCK
+    monkeypatch.setattr(mc, "_dict_diff_keys", lambda *a, **k: {"comp-blast"})
+    assert mc._subcommand_declaration_invariant(touch) == 0          # pinned -> no false-positive

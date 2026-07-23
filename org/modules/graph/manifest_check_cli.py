@@ -1077,11 +1077,158 @@ def _retired_alias_invariant(files) -> int:
     return rc
 
 
+_SUBCOMMAND_TOKEN = re.compile(r"^[a-z][a-z0-9-]*$")
+_ADD_PARSER = re.compile(r"add_parser\(\s*['\"]([a-z][a-z0-9-]*)['\"]")
+# A launcher line that runs the engine. Group 1 = engine path, group 2 = the rest of the line, which
+# for a PINNED wrapper carries a hardcoded subcommand literal before "$@" (e.g. `cli.py blast "$@"`).
+_LAUNCHER_RUN = re.compile(r"""python\s+"?\$\{?WORKSPACE\}?/([^"\s]+\.py)"?\s*(.*)$""")
+
+
+def _declared_subcommands(entry: dict) -> set:
+    """CONSTRAINT 2 -- the DECLARED-SIDE GRAMMAR. The tools_index `subcommands:` field mixes real
+    subcommands with FLAGS ('--json') and USAGE FORMS ('<cypher>', 'sync ROW=N', 'who-can-reach <arn>').
+    Without a grammar the gate compares apples to prose. Rule: take the FIRST whitespace token of each
+    entry and keep it only if it is a bare lowercase word -- that promotes 'sync ROW=N' -> 'sync' and
+    'who-can-reach <arn>' -> 'who-can-reach', while dropping '--json' and '<cypher>' entirely."""
+    out = set()
+    for raw in (entry.get("subcommands") or []):
+        head = str(raw).strip().split()[0] if str(raw).strip() else ""
+        if _SUBCOMMAND_TOKEN.match(head):
+            out.add(head)
+    return out
+
+
+def _established_subcommands(tool: str):
+    """The tool's ACTUAL exposed derivation surface, or None when it is NOT ESTABLISHABLE.
+    Returns (subcommands:set|None, pinned:bool, why:str).
+
+    STATIC extraction from the engine source -- never `<tool> --help`. For the auto-refresh family the
+    measurement instrument would itself be a MUTATION (comp-kuzu auto-refreshes canonical on invocation),
+    so a gate that ran tools to learn about them would mutate the estate to check it. Same reason ~B's
+    census extracts statically.
+
+    CONSTRAINT 1 -- PINNED WRAPPERS: a launcher that hardcodes one subcommand of a shared engine
+    (`cli.py blast "$@"`) legitimately exposes exactly ONE derivation. Compare against what the WRAPPER
+    exposes, not the engine's whole set, or all 5 pinned wrappers false-positive."""
+    launcher = _WORKSPACE / ".tools" / tool
+    if not launcher.exists():
+        return None, False, "no launcher on disk"
+    try:
+        text = launcher.read_text(encoding="utf-8", errors="replace")
+    except OSError as e:
+        return None, False, f"launcher unreadable ({type(e).__name__})"
+
+    engine_rel = pinned = None
+    for line in text.splitlines():
+        if "comp_log_auto" in line:
+            continue                                    # the telemetry appender, not the engine
+        m = _LAUNCHER_RUN.search(line)
+        if m:
+            engine_rel = m.group(1)
+            tail = (m.group(2) or "").strip()
+            first = tail.split()[0] if tail.split() else ""
+            if _SUBCOMMAND_TOKEN.match(first):          # a literal before "$@" == PINNED
+                pinned = first
+            break
+    if not engine_rel:
+        return None, False, "engine not resolvable from launcher"
+    if pinned:
+        return {pinned}, True, f"pinned wrapper -> exposes only '{pinned}'"
+
+    engine = _WORKSPACE / engine_rel
+    if not engine.exists():
+        return None, False, f"engine {engine_rel} absent"
+    try:
+        src = engine.read_text(encoding="utf-8", errors="replace")
+    except OSError as e:
+        return None, False, f"engine unreadable ({type(e).__name__})"
+    subs = set(_ADD_PARSER.findall(src))
+    if not subs:
+        return None, False, "no subparsers found (flag-driven or single-derivation)"
+    return subs, False, "static add_parser extraction"
+
+
+def _subcommand_declaration_invariant(files) -> int:
+    """0 = holds / not applicable. 1 = BLOCK.
+
+    DECLARED SUBCOMMANDS vs THE ACTUAL SURFACE (CTO~Z arch-gate 220731Z, on ~B's LATENCY census +
+    my measurement). The tools_index `subcommands:` field was populated on 65/65 tools and enforced on
+    NONE -- perfect camouflage: a field present on every row and gated on none READS complete while it
+    drifts. Measured drift 16 of 24 apples-to-apples tools, and the omissions include derivations
+    CLAUDE.md MANDATES: comp-iam `simulate` (Rule 22a's spine) + `reconcile` (the only APPLIED-plane
+    overlay), comp-pipescript `postdeps`, comp-registry `sync`. THE ROUTER CANNOT ROUTE TO THE CALLS THE
+    LAW REQUIRES -- the registration invariant's own reasoning ("a tool nobody can find is
+    indistinguishable from a tool that was never built") one grain down, at the DERIVATION level.
+
+    CONSTRAINT 3 -- UNKNOWN, NEVER FAIL, where the surface is not ESTABLISHABLE. 36 of 65 tools are
+    flag-driven / engine-unresolved; a gate that fired on what it cannot know would teach --no-verify,
+    and a bypassed gate is worse than none. Those render UNKNOWN in the denominator and never block.
+
+    SCOPE -- BLOCKS ONLY ON A REGISTRATION THIS COMMIT TOUCHES. Pre-existing drift is REPORTED loud but
+    does not block, because a whole-universe block would freeze the fabric on 16 known-drifted tools
+    before the backfill lands. This is the same shape as the output-contract invariant's condition (a):
+    you cannot register/re-register a tool with a wrong subcommand declaration; the standing backlog is
+    cleared by the backfill behind the gate (CTO~Z: gate FIRST, then backfill).
+    DETERMINISTIC; ramp-exempt; fail-closed."""
+    norm = _norm(files)
+    if not (any(f.endswith(s) for s in _REGISTRATION_SUBSTRATE for f in norm)
+            or any("/.tools/" in "/" + f for f in norm)):
+        return 0
+
+    try:
+        raw = load_yaml(_MANIFEST)
+        ti = raw.get("tools_index") or {}
+        MAN = "org/modules/graph/graph-call-manifest.yaml"
+        # the registrations THIS commit touches. None = UNBOUNDED (new file / not a mapping) -> treat
+        # every tool as touched, the fail-closed direction: an unbounded scope must not silently narrow
+        # to zero and let a drifted registration through.
+        changed = _dict_diff_keys(MAN, "tools_index")
+        if changed is None:
+            changed = set(ti)
+    except Exception as e:  # fail-closed
+        print(f"\nBLOCKED: the subcommand-declaration invariant could not be evaluated ({e}).\n"
+              f"  An unevaluable completeness gate does not read as 'passed'.")
+        return 1
+
+    drifted, unknown, checked = {}, [], 0
+    for tool, entry in sorted(ti.items()):
+        if not isinstance(entry, dict):
+            continue
+        actual, pinned, why = _established_subcommands(tool)
+        if actual is None:
+            unknown.append((tool, why))
+            continue
+        checked += 1
+        missing = sorted(actual - _declared_subcommands(entry))
+        if missing and not pinned:
+            drifted[tool] = missing
+
+    blocking = {t: m for t, m in drifted.items() if t in changed}
+    print(f"  [manifest-check] subcommand-declaration: {checked} of {len(ti)} tools_index tool(s) "
+          f"ESTABLISHABLE ({len(unknown)} UNKNOWN -- flag-driven/unresolved, never failed); "
+          f"{len(drifted)} drifted, {len(blocking)} in THIS commit's registrations.")
+    if drifted and not blocking:
+        print(f"  [manifest-check] STANDING DRIFT (reported, not blocking -- backfill pending): "
+              f"{', '.join(f'{t}(+{len(m)})' for t, m in sorted(drifted.items())[:8])}"
+              f"{' ...' if len(drifted) > 8 else ''}")
+    if not blocking:
+        return 0
+
+    print("\nBLOCKED: tools_index registration(s) in THIS commit declare an INCOMPLETE subcommand set "
+          "-- comp-which cannot route an agent to an undeclared derivation:")
+    for tool, missing in sorted(blocking.items()):
+        print(f"  - {tool:<22} UNDECLARED: {', '.join(missing)}")
+    print("  A derivation nobody can find is indistinguishable from one that was never built. FIX: add "
+          "the missing subcommand(s) to this tool's tools_index `subcommands:` list.")
+    return 1
+
+
 def _completeness_invariants(files) -> int:
     """The family. Any member blocking blocks the commit. See the design comment above."""
     for member in (_routable_invariant, _placement_invariant, _selfroute_invariant,
                    _existence_invariant, _registration_invariant, _output_contract_invariant,
-                   _stage2_vocab_invariant, _retired_alias_invariant):
+                   _stage2_vocab_invariant, _retired_alias_invariant,
+                   _subcommand_declaration_invariant):
         if member(files):
             return 1
     return 0
