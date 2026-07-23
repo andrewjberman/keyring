@@ -130,13 +130,31 @@ elif printf '%s' "$query" | grep -qE 'aws s3(api)? (ls|list-objects)[^|]*code/';
   msg="comp-tool on the HUD: raw \`aws s3 ls\` of a code/ prefix = deploy-verify. \`comp-pipescript deployed [<script>|--firm bd|inf|cot|mdpf]\` = MATCH/STALE/MISSING per script WITH bucket-attribution + firm-separation -- catches a stranded/half-landed deploy a raw ls won't frame. Run before any gold/silver run. (advisory -- your command still runs.)"
 elif printf '%s' "$query" | grep -qE 'aws s3(api)? (ls|list-objects)[^|]*(^|/)(gold|platinum|silver|json)/'; then
   class=aws_freshness
-  msg="comp-tool on the HUD: raw \`aws s3 ls\` + timestamp for artifact freshness. \`comp-freshness <artifact>\` = EXISTS/FRESH/SCALED/NOT-FROZEN (the validate-on-served check), not just a listing + mtime eyeball. (advisory -- your command still runs.)"
+  # NFRA_TOOLBHVR.ROUTE (0.8.0_AE_CloudComp~B, 2026-07-23; AC-2 ruled by CTO~Z 211924Z).
+  # THIS ONE COMMAND SHAPE CARRIES TWO INTENTS and the rail CANNOT tell them apart: an
+  # `aws s3 ls` on a served-key prefix is byte-identical whether the agent is asking
+  # "is it FRESH?" or "what SERVES this key / what is the path?". The rail types by COMMAND
+  # SHAPE, never by QUESTION TYPE (its 14 classes contain no path/lineage class), so the
+  # path-intent first-match-wins into THIS freshness class and gets answered with a
+  # freshness tool -- the rail FIRES, the answer does not FIT, and the agent hand-greps
+  # anyway (the COO MDPF served-key incident; 18 of 268 calls in this class are path-shaped,
+  # and 67 `rail-checked` overrides are the measured "did not fit, going anyway" set).
+  # Until TOOLSEM types the QUERY, the honest fix is to SERVE BOTH INTENTS and state plainly
+  # which one has NO COVERAGE -- routing path-intent at an undiscriminating tool would be
+  # strictly worse than the grep (it reads authoritative and cannot fail).
+  msg="comp-tool on the HUD: raw \`aws s3 ls\` on a served/artifact prefix answers TWO different questions -- say which you are asking. (1) IS IT FRESH -> \`comp-freshness <artifact>\` = EXISTS/FRESH/SCALED/NOT-FROZEN (the validate-on-served check), not a listing + mtime eyeball. (2) WHAT SERVES THIS KEY / the URL->S3 path -> NO TOOL RESOLVES THIS TODAY for the static-rewrite class: \`comp-routes trace\` falls through to the catch-all CF behavior and returns the SAME origin for ANY path (undiscriminating, positive-control-proven), pipescript reads a 38-day snapshot, and kuzu has no node for a post-build key. The MAPPED knowledge that DOES exist is \`comp-routes rewrites\` (the rewrite table -- e.g. /api/general/json/ -> json/); resolve the hop from that table + the CF behaviors, and treat a bare ls as evidence of PRESENCE only, never of the serving path. (advisory -- your command still runs.)"
 elif printf '%s' "$query" | grep -qE 'aws dynamodb (describe-table|list-tables)'; then
   class=aws_dynamodb
   msg="comp-tool on the HUD: \`aws dynamodb describe-table/list-tables\`. For the table AS A GRAPH NODE: \`comp-aws\` = its edges/consumers; \`comp-freshness <table> --ddb\` = firm-config drift. (Row DATA-ACCESS -- get-item/scan/query -- is operational/no-graph, off the rail.) (advisory -- your command still runs.)"
 elif [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE '(grep|rg|findstr)([^|;]*)(infra/aws/|\.tf([^A-Za-z0-9]|$))'; then
   class=infra_grep
-  msg="comp-tool on the HUD: grepping infra/.tf. \`comp-aws\` = the resource edges/blast-radius (relationship-aware, not text -- the destructive-op pre-gate basis); \`comp-iam\` = the perms; \`comp-routes\` = the serving path. Repo-scoped + edge-aware vs a blind .tf grep. (advisory -- your command still runs.)"
+  # NFRA_TOOLBHVR.ROUTE 2026-07-23: the old text promised "`comp-routes` = the serving path".
+  # That claim is REFUTED for the URL->S3-key hop (~D positive control: `comp-routes trace`
+  # falls through to the catch-all CF behavior and returns byte-identical output for a path
+  # WITH a known rewrite rule vs one without). comp-routes IS trustworthy as a CONFIG-DERIVED
+  # LISTING (behaviors/origins/rewrites/api-routes) -- so the nudge now promises exactly that
+  # and no more. Promising a resolution the tool cannot make is how a nudge trains bypass.
+  msg="comp-tool on the HUD: grepping infra/.tf. \`comp-aws\` = the resource edges/blast-radius (relationship-aware, not text -- the destructive-op pre-gate basis); \`comp-iam\` = the perms; \`comp-routes behaviors|origins|rewrites|api-routes\` = the CF/edge CONFIG listing (NOT a URL->S3-key resolution -- \`comp-routes trace\` is undiscriminating for the static-rewrite class). Repo-scoped + edge-aware vs a blind .tf grep. (advisory -- your command still runs.)"
 elif printf '%s' "$query" | grep -qE '(^|[^A-Za-z0-9_])(INF_)?[A-DIS]_-?[0-9]{1,2}[a-z]?([^A-Za-z0-9_]|$)'; then
   _id=$(printf '%s' "$query" | grep -oE '(INF_)?[A-DIS]_-?[0-9]{1,2}[a-z]?' | head -1)
   class=script_id
