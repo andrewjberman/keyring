@@ -278,6 +278,23 @@ contracts:
 
   # ===== SIMPLE tools (a nonzero IS a tool/input failure -- no verdict-exit contract) =====
 
+  comp-routes:
+    coverage: "the portal request path as DECLARED in source: CloudFront origins/behaviors/custom-error-responses parsed from cloudfront-distribution.tf, URL->S3 rewrite rules from the Lambda@Edge routers, API GW routes from api-gateway .tf, and frontend endpoint/component bindings from portal/src"
+    blind_spots:
+      - "trace resolves a URL to an S3 key ONLY through the modelled static rewrite table; a key computed INSIDE a Lambda@Edge router or a backend Lambda is invisible, and an uncovered prefix renders UNRESOLVED (missing coverage, NOT a proof that no key exists)"
+      - "a catch-all `/*` match is a DEFAULT, not a resolution -- it matches any path no other behavior claimed, including paths that do not exist; it is disclosed always-on and must never be read as evidence the path is served"
+      - "DESIRED plane only: this is parsed Terraform + committed router source, so it CANNOT tell a declared behavior/rewrite from a deployed one -- a drifted distribution or a pinned stale Lambda@Edge version reads identical here (see `edge-versions` for the pinning axis)"
+      - "the public-data-router and shared-advisor-router rewrite rules are TRANSCRIBED from the routers' if/else chains, not parsed from them -- a router edit that is not mirrored into _parse_rewrite_rules is invisible to every consumer of the table"
+      - "origin_type is derived from the presence of a legacy `s3_origin_config` block, so an OAC-fronted S3 origin is typed api_gateway; bucket_name is domain-derived and correct, but auth-map/stats group by origin_type and are wrong for those origins (named residual, NFRA_TOOLARCH.ROUTES)"
+      - "a client-composed URL (runtime-templated base) is UNRESOLVED, and its auth posture is UNDETERMINED -- never a proven auth:NONE"
+    plane: desired
+    grain: artifact
+    scope: estate
+    vintage: "parsed cloudfront-distribution.tf + infra/aws/lambda-edge/*/index.mjs + api-gateway .tf + portal/src at working-tree HEAD (SOURCE/DESIRED); never a live CloudFront describe-distribution"
+    exit_codes:
+      "1": {class: fail, meaning: "tool/input error -- unparseable Terraform, missing route config, or bad args. A query that resolves to nothing is exit 0 with a loud No-match/UNRESOLVED line, not this."}
+    exit_source: "org/modules/graph/routes_cli.py (argparse errors + uncaught parse failures; no verdict-exit contract -- every no-match/uncovered answer prints loudly and exits 0) @2026-07-23"
+
   comp-keys:
     coverage: "keys / partition dates / per-firm existence under an S3 prefix, from a LIVE s3api listing"
     blind_spots:
@@ -363,7 +380,6 @@ pending_declaration:
   - comp-platinum
   - comp-pydeps
   - comp-registry
-  - comp-routes
   - comp-secrets
   - comp-shell
   - comp-similar

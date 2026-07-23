@@ -26,6 +26,7 @@ Authoritative sources:
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -36,9 +37,60 @@ sys.path.insert(0, str(_WORKSPACE))
 
 from org.modules.graph.extract_routes import build_routing_table, parse_edge_versions, EndpointFunction  # noqa: E402
 
+try:  # header-only dependency: a missing helper must not break the tool, only its header
+    from org.modules.graph import comp_output_contract as _oc  # noqa: E402
+except Exception:  # pragma: no cover - defensive
+    _oc = None
+
 
 def _build_rt():
     return build_routing_table(_WORKSPACE)
+
+
+# ---------------------------------------------------------------------------
+# OUTPUT-CONTRACT header (R1R3) -- coverage + plane/vintage, to stderr so stdout stays parseable
+# ---------------------------------------------------------------------------
+
+def _emit_contract(sub: str) -> None:
+    if _oc is None:
+        print("COVERAGE: UNKNOWN (output-contract helper unavailable); coverage NOT asserted",
+              file=sys.stderr)
+        print("PLANE: desired | VINTAGE: parsed Terraform + Lambda@Edge routers at working-tree HEAD",
+              file=sys.stderr)
+        return
+    print(_oc.coverage_line("comp-routes", sub), file=sys.stderr)
+    print(_oc.plane_header("comp-routes", sub), file=sys.stderr)
+
+
+# ---------------------------------------------------------------------------
+# Git-Bash/MSYS argument repair
+# ---------------------------------------------------------------------------
+
+_MSYS_MANGLED_RE = re.compile(r'^[A-Za-z]:[\\/](?:.*[\\/])?Git[\\/](.*)$')
+
+
+def _normalize_query_path(query: str) -> str:
+    """Undo the MSYS mangling of a leading-slash URL argument.
+
+    Git Bash rewrites a bare `/api/general/...` argument into `C:/Program Files/Git/api/general/...`
+    before the process ever sees it. The mangled string no longer starts with "/", so cmd_trace's URL
+    branch is skipped entirely and the query falls through to the function-name branch, ending at
+    "No match for: C:/Program Files/Git/api/..." -- an ABSENT verdict manufactured by a broken
+    retrieval, not by the routing table. Same class as the `git show <ref>:<path>` mangle.
+
+    MSYS_NO_PATHCONV=1 does NOT fix this at the call site: it leaks into the comp-routes launcher and
+    mangles the SCRIPT path instead. So the repair belongs here, and it is announced (stderr) rather
+    than silent -- a tool that quietly rewrites its own input teaches the caller nothing.
+    """
+    m = _MSYS_MANGLED_RE.match(query)
+    if not m:
+        return query
+    repaired = "/" + m.group(1).replace("\\", "/")
+    print(f"NOTE: argument was MSYS-mangled by Git Bash; read as {repaired!r} (was {query!r}).",
+          file=sys.stderr)
+    print("      Git Bash rewrites a leading-slash argument into a Windows path. Quote it or pass an "
+          "endpoint function name to avoid this.", file=sys.stderr)
+    return repaired
 
 
 # ---------------------------------------------------------------------------
@@ -47,7 +99,7 @@ def _build_rt():
 
 def cmd_trace(args):
     rt = _build_rt()
-    query = args.query
+    query = _normalize_query_path(args.query)
 
     # Determine what was queried: URL, endpoint function, or component
     matched_routes = []
@@ -59,12 +111,17 @@ def cmd_trace(args):
             # Try CloudFront behavior match
             behavior = rt.match_behavior(query)
             if behavior:
+                origin = rt.origins.get(behavior.origin_id)
+                bucket = origin.bucket_name if origin else ""
+                origin_line = behavior.origin_id + (f" (bucket {bucket})" if bucket else "")
                 print(f"URL matches CloudFront behavior: {behavior.path_pattern}")
-                print(f"  Origin: {behavior.origin_id}")
+                print(f"  Origin: {origin_line}")
                 print(f"  Auth: {'yes' if behavior.has_auth else 'no'}")
                 print(f"  Router: {'yes' if behavior.has_router else 'no'}")
                 for ef in behavior.edge_functions:
                     print(f"  Edge: {ef.event_type} -> {ef.function_name}")
+                _print_rewrite_resolution(rt, query, bucket)
+                _print_fallthrough_disclosure(behavior)
                 return
             else:
                 print(f"No route found for URL: {query}")
@@ -130,6 +187,55 @@ def cmd_trace(args):
     else:
         for r in matched_routes:
             _print_route(r)
+
+
+def _print_rewrite_resolution(rt, url, bucket):
+    """LIMB A -- consult the rewrite table this tool ALREADY carries, and name the rule that fired.
+
+    Before this, the behavior branch stopped at the CloudFront layer: it reported the behavior,
+    origin, auth and edge functions, and never emitted an S3 key at all. Two URLs under the SAME
+    behavior returned byte-identical output even when DIFFERENT rewrite rules applied to them --
+    so the tool could not answer the question it was being asked, while looking authoritative on
+    the part it did answer.
+
+    The table is not re-derived here: rt.match_rewrite_rule / rt.resolve_s3_key share one matcher,
+    parsed from the Lambda@Edge routers. Naming the matched rule is what makes the answer
+    discriminating -- the key alone would not show WHY two paths resolve differently.
+    """
+    rule = rt.match_rewrite_rule(url)
+    if rule is None:
+        print("  Rewrite: NONE -- no rewrite rule matches this path prefix")
+        print("  S3 key:  UNRESOLVED -- the modelled rewrite table does not cover this prefix.")
+        print("           This is missing COVERAGE, not a proof that no key exists, and it is the")
+        print("           SAME answer given for every uncovered path -- do not read it as a resolution.")
+        return
+    cond = f"  ({rule.condition})" if rule.condition else ""
+    key = rt.resolve_s3_key(url)
+    print(f"  Rewrite: {rule.url_prefix} -> {rule.s3_prefix}{cond}")
+    print(f"  S3 key:  {key}")
+    if bucket:
+        print(f"  S3 URI:  s3://{bucket}/{key}")
+    else:
+        print("  S3 URI:  UNRESOLVED -- this origin carries no bucket name; the key above is")
+        print("           bucket-relative and is NOT a complete location on its own.")
+
+
+def _print_fallthrough_disclosure(behavior):
+    """LIMB B -- always-on, no suppress flag.
+
+    The catch-all default behavior matches ANY path no other behavior claimed, so it renders the
+    same origin for a real unmatched route and for a path that does not exist. Printed through the
+    identical code path as a specific match, that reads as a resolution. Keyed on behavior.order == 0
+    (the structural default slot), never on the literal "/*" string.
+    """
+    if behavior.order != 0:
+        return
+    print()
+    print(f"  !! MATCHED: catch-all {behavior.path_pattern} -- NO specific CloudFront behavior matched")
+    print("     this path. THIS IS A DEFAULT, NOT A RESOLUTION.")
+    print("     CloudFront serves this same origin for ANY unmodelled path, so this answer does not")
+    print("     discriminate: it is NOT evidence that the path exists, that it is served, or that")
+    print("     this origin holds it. Verify the served edge directly before relying on it.")
 
 
 def _print_route(route, indent=0):
@@ -438,6 +544,8 @@ def main():
         'stats': cmd_stats,
         'edge-versions': cmd_edge_versions,
     }
+    # R1R3: every answer carries its coverage denominator + plane/vintage (stderr keeps stdout parseable).
+    _emit_contract(args.command)
     commands[args.command](args)
 
 

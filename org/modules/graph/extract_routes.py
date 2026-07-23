@@ -179,13 +179,41 @@ class RoutingTable:
                 return r
         return None
 
-    def resolve_s3_key(self, url: str) -> str:
-        """Apply rewrite rules to resolve a URL to an S3 key."""
+    def match_rewrite_rule(self, url: str) -> RewriteRule | None:
+        """THE rewrite-prefix matcher. Rules are ordered most-specific-first (see
+        _parse_rewrite_rules), so the FIRST prefix match wins -- exactly as the Lambda@Edge
+        router's if/else chain evaluates.
+
+        resolve_s3_key() delegates here so there is exactly ONE matcher: a caller that needs to
+        name WHICH rule fired (comp-routes trace) and a caller that needs the resolved key can
+        never disagree about which rule applied. Returns None when no rule covers the prefix --
+        which is missing COVERAGE, not a proof that no key exists.
+        """
         for rule in self.rewrite_rules:
             if url.startswith(rule.url_prefix):
-                suffix = url[len(rule.url_prefix):]
-                return rule.s3_prefix + suffix
-        return ""
+                return rule
+        return None
+
+    def resolve_s3_key(self, url: str) -> str:
+        """Apply rewrite rules to resolve a URL to an S3 key. "" when no rule matches."""
+        rule = self.match_rewrite_rule(url)
+        if rule is None:
+            return ""
+        return rule.s3_prefix + url[len(rule.url_prefix):]
+
+
+_S3_ORIGIN_DOMAIN_RE = re.compile(r'^(.+?)\.s3(?:[.-][a-z0-9-]+)?\.amazonaws\.com$')
+
+
+def _s3_bucket_from_domain(domain: str) -> str:
+    """Bucket name for an S3 origin domain, or "" when the domain is not an S3 endpoint.
+
+    Matches both the regional (`bucket.s3.us-east-1.amazonaws.com`) and legacy global
+    (`bucket.s3.amazonaws.com`) forms, and is INDEPENDENT of whether the origin declares OAI or
+    OAC -- that access mechanism says nothing about whether the origin is a bucket.
+    """
+    m = _S3_ORIGIN_DOMAIN_RE.match(domain.strip().lower())
+    return m.group(1) if m else ""
 
 
 def _cf_pattern_matches(pattern: str, url: str) -> bool:
@@ -261,7 +289,16 @@ def _parse_cloudfront(workspace_root: Path) -> tuple[dict[str, CloudFrontOrigin]
         origin_path_m = re.search(r'origin_path\s*=\s*"([^"]+)"', block)
 
         is_s3 = 's3_origin_config' in block
-        bucket_name = domain.split('.')[0] if is_s3 else ""
+        # The bucket is a property of the DOMAIN, not of which access mechanism the origin declares.
+        # This previously read `domain.split('.')[0] if is_s3`, where is_s3 tests for an
+        # `s3_origin_config` block -- the LEGACY OAI form. An OAC-fronted S3 origin carries no such
+        # block, so S3-opal-data-portal-v2-json (the MDPF origin) and S3-opal-data-assets both came
+        # back with an EMPTY bucket despite *.s3.us-east-1.amazonaws.com domains. A resolved S3 key
+        # without its bucket is under-specified, so comp-routes trace could not name a real location.
+        # NOTE: origin_type is deliberately NOT changed here -- it feeds cmd_stats' s3-vs-apigw split,
+        # cmd_auth_map's grouping and Route.cf_origin_type, and silently moving those numbers is a
+        # separate decision. That misclassification is a named residual (NFRA_TOOLARCH.ROUTES).
+        bucket_name = _s3_bucket_from_domain(domain)
 
         oai_m = re.search(r'origin_access_identity\s*=\s*"([^"]*)"', block)
         oac_m = re.search(r'origin_access_control_id\s*=\s*"([^"]*)"', block)
