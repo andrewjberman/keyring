@@ -266,4 +266,60 @@ change re-enters review as its own delta and this signature does not extend to i
 verify (design-stage boundary):** the estimator METHOD's accuracy (CRO's, out of scope) and the BUILT
 artifacts (there are none yet -- this signs the SHAPE before build, which is the whole point).
 
+---
+
+# R-5 RULING #1 (CVO, ~0433Z) -- DS 3F-BF1 date-restricted candidate set: DELTA, bless-with-conditions
+
+**Durably recorded here because the ruling was message-only (broker 043332Z), and a pin disposition that
+gates a co-signed serve must not live only in a message -- the message-only-carrier lesson (my own
+DIG-2 / LD-0334 today) applied to my own ruling.**
+
+**Call:** COO 042350Z routed DS's addition to the signed `@708661904` -- a **date-restricted fuzzy-match
+candidate set** (`build_cottonwood_interpolated_backfill.py:410-411`, `avail = strategies with
+createdAt <= d`). DS correctly did NOT self-absorb it.
+
+**RULING: DELTA (re-enters review), not a within-intent clarification.** Grounded at source, with a
+positive control that the signed spec is retrievable (so the empty candidate-restriction grep is a true
+absence):
+- The signed `@708661904` specifies the floor as **refuse-below-floor**; it says nothing about
+  restricting the candidate set or substituting. Substitution-to-existed-on-d is **new behavior**.
+- It **changes served content**: `:426-427` -- when the unrestricted best-match strategy did not exist
+  on `d`, the producer does NOT refuse; `fuzzy_assign(basket, avail)` picks the best *existed-on-d*
+  strategy and EMITS. So it emits MORE points and DIFFERENT assignments. **COO's "strictly more
+  conservative -- refuses more, never fewer" is factually wrong at the code level** (COO accepted this).
+- **Material, not marginal:** the band (05-28->07-21) overlaps the model-creation window
+  (05-28->07-17), so early-band dates are heavily substituted.
+- **11/11 mutants green is necessary, not sufficient** (verified by reading
+  `test_interpolated_backfill_mutants.py`): the 11 cover refusal / enum / lock-independence /
+  supersession -- **none distinguishes substitute from absent**, because the signed spec had no
+  substitution to test.
+
+**Why it is a GOOD delta (bless-with-conditions, not reject):** the substitute is provably closer to
+truth (an account could not have been on a strategy that did not exist), and it fixes a latent early-
+band **understatement** the signed refuse-behavior would have (dropping real account value from the firm
+total). Aligned with Andrew's "show the labeled estimate over a gap."
+
+**TWO CONDITIONS close it (DS/CRO own; I verify + sign into the pin):**
+1. **New mutant (DS):** plant an account-date where the unrestricted best-match did not exist on `d` but
+   >=1 substitute did -> assert the emitted point is the existed-on-d substitute, labeled
+   `interpolated_estimate`, floor-passed (not absent, not the non-existent strategy). Permanent, like M2/M8.
+2. **Confidence-regime confirm (DS/CRO):** on the heavily-substituted early band, confidence must
+   HONESTLY DEGRADE (the signed refuse-behavior showed `absent` = honest "don't know"; the delta shows an
+   estimate, so its confidence must carry that uncertainty). I could not settle this from code alone
+   (needs the bronze createdAt set + per-date `avail` counts) -- **stated as a confirm-item, not a pass.**
+
+## CORRECTION to my own ruling (COO 043928Z caught it -- accepted in full)
+My closing footnote said "the qt5 sweep shrinks this delta's blast radius over time (supersession)."
+**That was an UNVERIFIED ASSUMPTION on my part** -- I asserted a supersession effect without grounding
+which LEG supersession touches. Supersession (point_class upgrade) applies to the **value/custody leg
+only**. Per **CRO's 042742Z current-stamped ruling (relayed by COO; I did NOT independently ground the
+underlying qt5 numbers)** -- 0 real historical Opal assignment changes -- the **assignment/model cohort
+this delta governs is PERMANENTLY interpolated** and does not shrink. **Therefore condition 2 is a
+PERMANENT honesty mechanism, not transitional** -- no downstream reader may relax it on a
+"temporary anyway" read. The correction strengthens the ruling; it does not weaken it.
+
+**DISPOSITION: DELTA, review in progress, NOT BLOCKING** (co-sign pending, nothing serves). On
+condition 1 passing + condition 2 adequate, I sign the delta into the pin. **This R-5 signature, when
+given, extends the pin to the delta only -- not to any further change.**
+
 -- `3.0.0_SA_CVO`
