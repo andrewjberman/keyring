@@ -93,3 +93,22 @@ TABLE's channel rows with composition labels ($795,389,602.69 @2024-11-01 refere
 CROSSED-WIRE CLOSED: the "inflection_models stay-as-is" lines (mine + DS's) superseded by the
 expansion, stated to both. GATES NOW: DS's INF+COT contracts + CTO's T-1-settled pick (DS endorsed
 from the data side) -> emitter re-source build (normal cycle) -> walk per channel, own ledger.
+
+---
+
+## THE FOUR-CHANNEL BACKFILL ARC 1600-1756Z -- LANDED AND VERIFIED (Andrew tonight-completion order)
+
+Contracts x4 + D1 + Global amendment -> design + TF committed -> channel_sources.py + integration +
+walk driver built -> CTO gate cleared (tie smoke 5/5, discovery mutant both ways, literal-grep clean,
+would-cron driver) -> APPLY (0/2/0, 22a battery 9/9) -> walks 1620/1620 x2 + 1063 label pass, ZERO
+failed invocations -> FINAL SWEEP: C2-tie 541/541 TO THE CENT, pins 7/7, reference global pin exact,
+model ties to silver, all labels verified. Ledger 20260723T1705Z closed 5/5 @98363cabb.
+FOUR mid-flight findings, each caught by a committed control on first fire, each class-fixed +
+re-proven: L2 KeyError source_field (import-health probe); deep-date UnboundLocalError (the walk
+itself); COO's pre-inception circular-text + MY 132-missing-custody-dates sweep = ONE architecture
+bug (override only fired on served-body rows) fixed @8a330f9d4. THREE live rulings folded mid-walk
+without stopping channel rows: fee-basis Global (COO's semantic catch -- Contract-4 ambiguity),
+unvalued-onboarding guard (the 24,273-rows-all-zero third class), absent-stamped-row bind + labels.
+Supersession event recorded (21 legacy rows + 5-core frontier delta + weekend carries). Serve HELD
+for Andrew; COO independent verify next. The registry now carries the full four-channel D1 truth:
+2020-04-28..2026-07-22, every value tied or labeled, no literal anywhere, discovery both directions.
