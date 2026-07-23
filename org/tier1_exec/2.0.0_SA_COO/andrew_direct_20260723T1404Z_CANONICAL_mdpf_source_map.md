@@ -242,4 +242,22 @@ exactly the walls COO's Tier-B would have hit. FIX: skeleton rows from the cohor
 re-sourced cohort emits on every axis date). FULL RE-WALK running (~6min, idempotent). partial_2_of_3 @2024-11-01
 CONFIRMED as DS's design (known-zero = presence). COO re-verifies Tier-A/B against the RE-WALKED table, not the in-flight one.
 
-**Delete/close when: every MDPF leg (49/INF/COT + Global) is full-lookback backfilled in the gold DDB per this map, per-date verified, and serving.**  -- `2.0.0_SA_COO`, updated ~17:46Z (0824 boundary confirmed; counter-sign class-fix)
+## >>> COUNTER-SIGN STOPPED THE LINE @~18:0xZ -- SERVE-BLOCKING COT-MODEL DEFECT (source-confirmed) <<<
+COO full co-sign against the re-walked table caught it in the SERVED WINDOW, PRE-SERVE: **cottonwood_bd_models @07-22
+= $458,178,642.78 = the TOTAL HOLDINGS ($458,189,558.77), not the model overlay (~$124M).** Global inflated to
+**$2,285,478,797.47 (~$2.29B)** -- the entire +$333.8M jump from ~$1.95B is this ONE leg. MECHANISM (source-confirmed,
+I read the DDB source_field + both parquets): the emitter's `fact_model_assignment JOIN fact_holdings on
+externalId==AccountID` was UNFILTERED -- all 911 rebalancer accounts (incl. an "Implementation Default Account"),
+summing to ~total. COO filter-test proved NO assignment flag discriminates the subset (is_managed/discretionary/
+is_in_rebalance_group/is_sma all uniformly False; can_rebalance=$176M). **CTO RULED THE FIX (@180247Z):** DS states the
+co-signed PAIR's model-overlay predicate at source (it already yields $124.4M -- the definition exists, the emitter
+didn't inherit it); 0.7.0 transplants it VERBATIM (one-derivation law); **$124,376,009.73 is the CONTROL not the
+target** (bend-to-target guard, same class as the afternoon's bend-to-$1.64B). Mutants: Implementation Default excluded
++ an is_managed=False account. Blast radius ~2 dates (COT overlay 07-21+); COT-model + global rows re-derive, 49F/INF
+untouched. **THE SYSTEM WORKED: wrong number lived ~40min in a STAGING table, caught by the bytes-first counter-sign
+before any serve; the served Global will be the ~$1.95B-class number Andrew's arithmetic predicted.** Line resumes at
+COO clean re-verify (COT leg to the cent + full grid). Serve fires on COO counter-sign + DE renders, unchanged.
+**SERVED-WINDOW OTHERWISE CLEAN (pre-COT-catch):** A2 no-circular PASS 4 dates; C2 pin ties to the cent
+(49f_schwab_custody @07-17 = $1,665,338,126.76); 132-missing-dates fix confirmed (seams populated).
+
+**Delete/close when: every MDPF leg (49/INF/COT + Global) is full-lookback backfilled in the gold DDB per this map, per-date verified, and serving.**  -- `2.0.0_SA_COO`, updated ~18:0xZ (COT-model serve-block caught + fix ruled)
