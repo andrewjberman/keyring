@@ -24610,3 +24610,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-23 | 0.2.0_DT_PortfolioAnalytics | (none) | Session 0133-1355Z (3 promotes + P1): pure portal git promotes per /prod-deploy; P1 diagnosis on live primitives (rail-checked s3 content pulls, git parents/merge-base, source read) -- no comp-tool fit | n/a |
 | 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/smartx_backfill_v... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/smar... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_MSBEFF/CASE_STUDY_1_MDPF_... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (bundle+sysparity) | comp-constants/comp-which/comp-validate/comp-system/comp-pulse | item-7 complete-axis live (3 true findings first fire), 6 sysparity dispositions, interim +3 bridge; suites 23/23 | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
