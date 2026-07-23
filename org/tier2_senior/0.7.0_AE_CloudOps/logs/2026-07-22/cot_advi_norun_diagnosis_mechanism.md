@@ -153,3 +153,17 @@ ROUTED TO CTO (not adjudicated): the 16 drift-signals' large counts (187/219 on 
 deployed_commit reference fields (deploy path likely never updates them), not real drift; + the 9
 missing-source_path coverage item. Compiler tools: bash -n, verify-ec2 x4 (repro/differential), jq
 behavior probe (MSTR's, cited), safe-commit.
+
+---
+
+## CRLF CLASS-SWEEP CLOSED 2026-07-23 ~1301-1305Z (CVO~Z sweep via MSTR)
+
+The @9a9e92842 class generalized: CVO~Z swept 18 jq-using scripts, 3 unfixed sites, all landed
+@41468f569. Site 1 sync-ec2-manifest.sh = the same key-iteration shape on a WRITER (would silently
+sync nothing on this host) -- fixed + probed behaviorally WITHOUT running the writer (read-only
+replication of key-extraction + lookup: 12/12 non-empty post-fix vs 0 tainted). Sites 2/3 =
+value-capture strips (hedged/loud-fail classes, stripped at capture). parity-gates.sh already carried
+prior art (7 strips -- the class was met locally before; the sweep made it estate-level).
+MSTR's causal DE-LINK accepted: sync-ec2-manifest writes instance_id/_last_updated, NEVER
+deployed_commit (grep 0) -- the stale deployed_commit reference layer remains the SEPARATE
+CTO-routed batch-tail item, proceeding on its own mechanism-first grounding.
