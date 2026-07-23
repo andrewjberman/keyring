@@ -211,3 +211,18 @@ FEEDS R5 VERIFY: comp-keys/R5 is landed-but-UNSIGNALED (my verify limb; no verif
 signaled, R5 acceptance includes parity-RESTORED -- R5 AC-5 ("registered per the registration invariant") is not
 clean on the PARITY surface while comp-system reads STALE. Surfaced 0.8.0 (owner) + MSTR (exception: changed
 parity-number). Not an empty tick.
+
+## tick-32 CORRECTION (~1846Z): "regen owed" was WRONG -- I raced the commit; parity was ALREADY CURRENT.
+0.8.0 corrected me with grounding; I ground-truthed the reversal both directions (a reversal carries the same
+burden): (a) `git show --stat b78d41fb0` includes ALL 5 system-model files (00_synthesis/03_comp_tools/
+06_current_state.json+.md/README) -- the comp-system regen was FOLDED INTO the same R5 commit. (b) `comp-system
+--check` NOW = SYSTEM CURRENT, 0 drifted. So the regen was NOT owed; it landed with comp-keys.
+WHAT I GOT WRONG: my earlier --check caught a TRANSIENT pre-regen window (the WS-2 gate blocked 0.8.0's first
+R5 attempt on that exact drift; 0.8.0 regenerated + folded into b78d41fb0). I read a mid-integration transient
+as a standing drift. THE MISS, precise: I grounded the CAUSE (comp-keys registered) but not the RESOLUTION-STATE
+-- I git-logged the manifest but did not `git show --stat b78d41fb0` to see the same commit ALSO regenerated the
+system files. Grounding the cause is not grounding the current state. R5's AC-5 clean-registration limb is in
+fact SATISFIED (parity green in-commit), not an owed item. Exception to MSTR RETRACTED; 0.8.0 acked correct.
+LESSON (banked): during active multi-lane integration, comp-system --check can read a producer's in-flight
+commit window as STALE; before surfacing a drift, `git show --stat` the causing commit to check it did not
+already carry the regen. Same "check the RESOLUTION not just the cause" class.
