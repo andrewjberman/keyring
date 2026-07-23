@@ -38,7 +38,12 @@ The served band is yellow-dashed end-to-end BY DESIGN, forever — not transitio
 
 ---
 
-## OPEN — parked behind explicit gates
+## OPEN — behind explicit gates
+
+**TEMPO (Andrew "go" @050247Z, via CTO):** no-hard-clock items accelerate to NOW-when-ready (not "morning")
+— same as the night has run. Items with REAL clocks keep them: the **02:00Z 07-24 07-22 re-land** (item B)
+and the **14:15Z B3 pass** (Inflection propagation, CTO-owned). CTO gates as before. "go" discharges WAITING,
+never CHECKS.
 
 ### A. Interpolated backfill band — serves on NEXT promote
 - **Status:** BUILT + STAGED (DS producer `build_cottonwood_interpolated_backfill.py @65a8fa92f`; DE
@@ -56,12 +61,14 @@ The served band is yellow-dashed end-to-end BY DESIGN, forever — not transitio
   Implemented + pushed: `substitution_washout()` reuses the dim's own decompose, fires exactly when the
   restriction changed the answer; M5 mutants encode CVO's invariant machine-checked (a substituted
   assignment can never emit confidence above its pair washout). Set now 16/16 green.
-- **Remaining gates (all morning):** (1) **CVO blesses the WASHOUT-KEYED cap** (not flat 0.50) + signs the
-  delta into the pin `@ec5ec79f3` — now against LANDED CODE + green mutants, not a proposal; (2) co-sign
-  pair AT THE ARTIFACT (DS BF1 + DE BF2 acceptance render on real provenance — DE armed); (3) **>> ANDREW'S
-  SERVE-CALCULUS WORD <<** on serving a PERMANENTLY yellow-dashed estimate band on his live page (surfaced
-  to him this session; his call, no clock); (4) serve on the next promote. [CRO method-intent + cap:
-  CONFIRMED `@044637Z`, no longer pending.]
+- **Remaining gates — ANDREW SERVE WORD GRANTED `@050247Z` ("go"); now TECHNICAL-ONLY, now-when-ready:**
+  (1) **CVO blesses the WASHOUT-KEYED cap + signs the delta into the pin `@ec5ec79f3`** — against LANDED
+  code + 16/16 green (a real verify-against-code); (2) **co-sign pair AT THE ARTIFACT** — DS BF1 + DE BF2
+  acceptance render on REAL provenance, CTO co-signs, COO counter-verifies (canonical key-set + count-axis
+  + identities + point_class labels + early-band confidence degradation, read-not-transcribed); then serve.
+  **>> "go" discharged Andrew's WAITING, NOT the CHECKS <<** — gates 1-2 still bind; a failed check is
+  fix-before-serve (CVO's ruling). No further Andrew round-trip. [CRO method-intent + cap CONFIRMED
+  `@044637Z`; Andrew serve-calculus DISCHARGED `@050247Z` — both no longer pending.]
 - **Pins (bind EXACT commits per R-5):** CRO schema `@708661904` (canonical build schema, delta-wins),
   CTO agg spec `@be91775dd` (§4 is ruling-record-not-build-surface), CVO R-5 `@ec5ec79f3`.
 
@@ -136,11 +143,12 @@ The served band is yellow-dashed end-to-end BY DESIGN, forever — not transitio
   ride their OWN delta+serve gates, NOT folded into the measured Global serve. Sequencing: DS aggregator ->
   DE render -> co-sign pair at the artifact -> serve.
 
-### J. BACKTEST PROJECTION — HELD for CRO design (do NOT decompose yet)
-- **Andrew-direct** (same relay): second next target. DESIGN tasked to CRO (CRO -> CVO tandem -> COO
-  decomposition). Envelope (PROVISIONAL — CTO's read flagged to Andrew for correction): a THIRD provenance
-  class `backtest_projection` (additive enum), composition-derived hypothetical pre-creation series,
-  composition-vintage stated per date, NEVER blended with actuals classes, its own visual treatment.
+### J. BACKTEST PROJECTION — design at CRO, envelope FIRM (Andrew "go" @050247Z); COO decomposes when CVO-tandem'd design lands
+- **Andrew-direct** (same relay): second next target. DESIGN at CRO (CRO -> CVO tandem -> COO
+  decomposition). Envelope **FIRM (Andrew "go" @050247Z confirmed the read; visual STYLE still his at
+  design review):** a THIRD provenance class `backtest_projection` (additive enum), composition-derived
+  hypothetical pre-creation series, composition-vintage stated per date, NEVER blended with actuals classes,
+  its own visual treatment. Wired to CRO @050618Z; I am the decomposition endpoint.
 - **COO HOLD:** do not decompose until the CRO->CVO design lands (post Andrew-confirm on what "backtest
   projection" means). DE leaves a seam for the third class, builds nothing on it.
 - **DE SEAM (named @050051Z, safe-by-default):** DE's PointClass enum is CLOSED

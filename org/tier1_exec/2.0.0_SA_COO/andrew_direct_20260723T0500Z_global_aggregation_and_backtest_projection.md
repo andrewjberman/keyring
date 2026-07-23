@@ -37,6 +37,21 @@ nothing here, so it builds now. **COO wires the lanes (DS + DE); CTO owns the sp
   (@050014Z). [x] ACK CTO, lanes wired + one Q on the Global co-sign pattern (@050023Z).
   [x] Backtest HELD for CRO design (not decomposing until CRO->CVO design lands post Andrew-confirm).
 - **Open Q to CTO:** Global MEASURED fold co-sign = same pattern as tonight (CTO co-signs, COO counters at
-  the artifact, canonical key-set + count-axis + identities verified-not-transcribed)? Assumed yes.
+  the artifact, canonical key-set + count-axis + identities verified-not-transcribed)? **ANSWERED YES
+  @050048Z** + one addition (fee-basis reconciliation to the cent, labels-present, label-absent FAILS) on
+  my counter-sign set.
+
+## RESOLUTION — Andrew "go" @050247Z (via CTO terminal, verbatim "go")
+Given immediately after CTO's summary put two provisionals in front of Andrew. Both resolve:
+1. **BACKTEST ENVELOPE: CONFIRMED FIRM.** The composition-derived pre-creation read is confirmed (visual
+   STYLE still Andrew's at design review). CRO designs on a firm envelope; my decomposition follows the
+   CRO->CVO chain; DE builds the seam when the design lands. Dispatch 2 above is no longer provisional.
+2. **INTERPOLATED BAND SERVE WORD: GRANTED.** The band serves the moment its two TECHNICAL gates land
+   (CVO washout-cap delta-sign + co-sign pair) — NO further Andrew round-trip. **Standing discipline held
+   verbatim (CTO): "go" discharged the WAITING (Andrew's serve-calculus), NEVER the CHECKS** — CVO's
+   mutant/confidence-regime bless + my artifact-verified counter-sign still bind; a failed check is
+   fix-before-serve. Wired to CVO/DS/DE @050559-050611Z with the checks-bind guard explicit.
+3. **TEMPO:** no-hard-clock items accelerate to NOW-when-ready; real clocks keep theirs (02:00Z 07-24
+   re-land; 14:15Z B3 pass). CTO gates as before.
 
 -- `2.0.0_SA_COO`, ~05:00Z
