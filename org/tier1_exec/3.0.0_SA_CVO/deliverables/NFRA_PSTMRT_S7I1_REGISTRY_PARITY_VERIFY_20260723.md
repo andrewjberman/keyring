@@ -80,6 +80,44 @@ against the same three grounding sources (unchanged since `3449c8733`):
 
 **s.7 item 1: PASS.** Items 2–4 remain build-gated.
 
+## F3 RE-GROUND (CTO~Z ask 005932Z) — email_domain adjudicated on BOTH planes; **my F3 verdict is CORRECTED**
+
+**Own miss first:** my F3 "content ties to the estate canonical" bound to
+`comp-constants.config.yaml:624` — which is itself a STALE vintage (it froze the pre-05-28
+placeholder values). Same class as F1, mine this time. The corrected determination, grounded on
+portal git history + live auth-plane primitives:
+
+**TRUE per-firm values (adopt into the registry):**
+
+| firm | TRUE domain | Grounding (both planes) |
+|---|---|---|
+| 49financial | `49financial.com` | all planes agree; live allowlist 11/11 rows |
+| inflection | **`inflectionwealth.com`** | Andrew-DIRECT 2026-05-28, portal @`4d08170c` ("inflection email domain = inflectionwealth.com, Andrew direct"); live `opal-partner-inflection`: 4/4 REAL humans (peter/joe/patrick/noel) on it — `inflectionwealthmgmt.com` survives only in 2 test rows |
+| cottonwood | **`cottonwoodmail.com`** | Andrew FINAL RULING 2026-06-29 via CTO/COO, portal @`21f2178d` ("cottonwood.com -> cottonwoodmail.com... unblocks the 3 real @cottonwoodmail.com user logins"); live `opal-partner-cottonwood`: 3/3 real users (christa.bass/jay.rubottom/stephen.shipley) — `cottonwood.com` survives only in the 1 legacy AUTH_COTTON placeholder row |
+| demo | **`demo.test`** | live `opal-partner-demo`: 1/1 = `demo@demo.test`; matches ADVI_DEMOV1.007 Cognito login — fills the null |
+
+**Plane adjudication — ONE field suffices, no two-field split.** The auth plane has NO domain
+primitive: login acceptance is explicit per-EMAIL allowlisting (DDB `opal-partner-*` rows; the
+ADVI_INFLEC OQ13 "domain-gating vs explicit provisioning" resolved live as explicit
+provisioning). "Email domain" as a concept binds only in the FE scoping map
+(`firmAccess.ts:116-123` `FIRM_EMAIL_DOMAINS`, cross-firm view filter + `isEmailFromFirm`), which
+carries the Andrew-ruled values and is corroborated by every real user row. The planes cannot
+"legitimately differ" because only one plane speaks domain at all.
+
+**firmAccess.ts did NOT drift — the canonical did.** Polarity for 0.8.0's named drift case:
+LIVE FILE RIGHT, `comp-constants` CANONICAL WRONG (stale at `canonical_value`, pre-05-28
+vintage). The registry's `_meta.grounding.email_domain` citation should point at
+`firmAccess.ts` live + the two Andrew rulings, NOT the comp-constants canonical, until 0.8.0
+re-canonizes it.
+
+**Denominators:** 4 partner tables scanned (the complete `opal-partner-*` set from
+`list-tables`), 23 email rows total (11+7+4+1), every row read, per-firm splits above.
+
+**Residuals flagged (auth-plane, main-fabric/portal-auth authority — surfaced, not adjudicated):**
+live allowlist rows on domains no real user has: `user@cottonwood.com` (legacy AUTH_COTTON
+placeholder — note `cottonwood.com` is a domain we have no evidence of owning; Rule-23 class),
+`user@inflection.com`, 2 test rows @inflectionwealthmgmt.com. Whether they stay is their call.
+
 ## Compiler tools used
 
 `comp-glob` (source location, 2 runs) · `comp-grep` (email-domain grounding sweep, 3 runs) ·
