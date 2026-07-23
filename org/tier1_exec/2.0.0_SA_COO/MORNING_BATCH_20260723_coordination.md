@@ -45,6 +45,16 @@ The served band is yellow-dashed end-to-end BY DESIGN, forever — not transitio
 and the **14:15Z B3 pass** (Inflection propagation, CTO-owned). CTO gates as before. "go" discharges WAITING,
 never CHECKS.
 
+**>> BATCH FIRED @~10:36Z (CTO 103121Z, daylight):** dispatched to owners in the ruled order —
+**WS-1 FIRST** (0.6.2, cookie durable-mint fix, the shelf-life item, CTO gates auth) -> 6d dispatcher
+wiring (DS+0.7.0, trend grows itself tonight) -> never-retry (0.6.2) -> S5 provenance sidecar + createdAt
+passthrough (DS, CTO gates) -> demo custody (DE) -> 07-22 re-land readiness (0.6.2, tonight's 02:00Z).
+**Band BF2 acceptance render PULLED FORWARD** (DE, now-when-ready — was mis-queued as "morning batch").
+Also 0.5.0 AC5 13:30Z + B3 14:15Z keep their clocks. **STALE-HEARTBEAT NOTE:** CTO's "Publish FIRING"
+summary was his own 01:31Z vintage (original page, not the band); my "serve-calculus surfacing" summary was
+04:30Z vintage (discharged by Andrew "go"). Both corrected ~10:31Z — LD-0334 caught symmetrically. **No
+band publish cites an incomplete COO co-sign; the band serves only on DE render + COO identities limb.**
+
 ### A. Interpolated backfill band — serves on NEXT promote
 - **Status:** BUILT + STAGED (DS producer `build_cottonwood_interpolated_backfill.py @65a8fa92f`; DE
   accessor + band portal DEV `7394a58f`). CVO ruled DS's candidate-set date-restriction a **DELTA**
