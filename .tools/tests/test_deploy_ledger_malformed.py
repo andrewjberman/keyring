@@ -95,3 +95,36 @@ def test_reason_names_the_writer_contract(tmp_path):
 
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__, "-q"]))
+
+
+# --- READER LOOSENING: every markdown spelling of a Status line ---------------------------------
+# CTO ruling amendment 213157Z on DT's reproduce-then-kill (212934Z): the flagged files DID carry
+# terminal Status lines; the READER regex could not parse two ordinary hand-authored forms. The
+# instrument was mis-reading, not the record missing -- a fix built to the stated cause would have
+# duplicated Status lines into files that already had one.
+
+@pytest.mark.parametrize("body,expected_terminal", [
+    ("**Status:** CLOSED -- nothing stranded",        True),   # 1. strict canonical (writer-emitted)
+    ("**Status: CLOSED - all legs proven**",          True),   # 2. colon INSIDE the bold span
+    ("## Status: CLOSED",                             True),   # 3. heading form
+    ("- **Status: COMPLETE - verified**",             True),   # bullet + colon-inside
+    ("> **Status:** DONE",                            True),   # blockquote + strict
+    ("# Record\n\nno status line at all",             False),  # genuinely status-less -> None
+])
+def test_status_reader_accepts_every_markdown_spelling(tmp_path, body, expected_terminal):
+    p = tmp_path / "entry.md"
+    p.write_text(body, encoding="utf-8")
+    st = dl._md_status(p)
+    if expected_terminal:
+        assert st, f"reader returned {st!r} for {body!r} -- an unparsed spelling flags a CLOSED deploy"
+        assert dl._is_terminal_status(st), f"{st!r} should be terminal"
+    else:
+        assert st is None, f"a status-less file must read None, got {st!r}"
+
+
+def test_strict_form_not_captured_empty_by_the_inspan_pattern(tmp_path):
+    """ORDER IS LOAD-BEARING: the colon-inside pattern would capture an EMPTY value from the
+    canonical `**Status:** X` form, so strict must be tried FIRST. This is the regression guard."""
+    p = tmp_path / "e.md"
+    p.write_text("**Status:** CLOSED -- nothing stranded", encoding="utf-8")
+    assert dl._md_status(p) == "CLOSED -- nothing stranded"

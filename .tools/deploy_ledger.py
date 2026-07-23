@@ -415,18 +415,44 @@ def _red_alert(state: dict, age_h: float) -> None:
     print(f"RED: alert delivered to COO inbox: {fname}")
 
 
+# THE READER ACCEPTS EVERY MARKDOWN SPELLING OF A STATUS LINE (CTO ruling amendment 213157Z, on DT's
+# reproduce-then-kill grounding 212934Z). The original regex required the bold span to CLOSE immediately
+# after the colon (`**Status:** X`), so two perfectly ordinary hand-authored forms were UNREADABLE and
+# their files flagged as "no terminal Status" -- when every one of them said CLOSED on line 3:
+#     **Status: CLOSED - all legs proven**     <- colon INSIDE the bold span
+#     ## Status: CLOSED                        <- heading form
+# That is the instrument mis-reading, not the record missing: the dispatch premise ("files lacking a
+# terminal Status line") was FALSE, and a fix built to it would have duplicated Status lines into files
+# that already carried one. Loosening the READER retires the whole class with ZERO file edits.
+# ORDER IS LOAD-BEARING: strict first, because the colon-inside pattern would capture an EMPTY value
+# from the canonical `**Status:** X` form (non-greedy `(.*?)` matches nothing before the closing `**`).
+_STATUS_LINE_PATTERNS = (
+    # 1. STRICT canonical -- what _render_entry emits:            **Status:** VALUE
+    re.compile(r"^\s*(?:[-*+>]\s+)?\*\*status:\*\*\s*(.*)$", re.IGNORECASE),
+    # 2. COLON INSIDE THE BOLD SPAN (the hand-author majority):   **Status: VALUE**
+    re.compile(r"^\s*(?:[-*+>]\s+)?\*\*status:\s*(.*?)\*\*", re.IGNORECASE),
+    # 3. HEADING form:                                            ## Status: VALUE
+    re.compile(r"^\s*#{1,6}\s*status:\s*(.*)$", re.IGNORECASE),
+)
+
+
 def _md_status(md_path: Path) -> str | None:
-    """First '**Status:**' value in a change_management ledger -- case-insensitive,
-    and tolerant of a leading markdown bullet / blockquote marker ('- **Status:**',
-    the bulleted hand-authored form). None if the file carries no status line."""
+    """First Status value in a change_management ledger, in ANY of its markdown spellings
+    (canonical `**Status:** X`, colon-inside-span `**Status: X**`, or `## Status: X` heading),
+    case-insensitive and tolerant of a leading bullet / blockquote marker.
+    None ONLY when the file genuinely carries no status line -- never merely because the author
+    closed the bold span in a different place."""
     try:
         text = md_path.read_text(encoding="utf-8", errors="replace")
     except OSError:
         return None
     for line in text.splitlines():
-        m = re.match(r"^\s*(?:[-*+>]\s+)?\*\*status:\*\*\s*(.*)$", line, re.IGNORECASE)
-        if m:
-            return m.group(1).strip()
+        for pat in _STATUS_LINE_PATTERNS:
+            m = pat.match(line)
+            if m:
+                val = m.group(1).strip().rstrip("*").strip()
+                if val:                      # an empty capture is not a status -- keep looking
+                    return val
     return None
 
 
