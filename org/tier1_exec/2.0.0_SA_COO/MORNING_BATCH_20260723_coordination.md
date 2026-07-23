@@ -76,15 +76,20 @@ The served band is yellow-dashed end-to-end BY DESIGN, forever — not transitio
   coordinate the lift). Worst case: 07-22 honestly absent one extra day. Deletion REJECTED (human-confirm
   law + worthless partial + same-key re-land supersedes).
 
-### C. Cottonwood trend fill — CONFIRM OUTCOME (I do not have fresh ground truth)
-- Served trend `aggregate_aua_timeseries.json` was 0/427 all-null (axis ended 07-20, Cottonwood starts
-  07-21, zero overlap — COO direct-read verified earlier tonight).
-- **CONFIRM:** did the ~04:00Z trend re-run (see `PENDING_0400Z_cottonwood_trend_rerun_cosign.md`) fire?
-  It was gated on `axis_last >= 07-21` (the 02:04Z nightly advancing the axis). If it FIRED -> a COO
-  counter-sign is owed AT THE ARTIFACT (identities + non-null count > 0 PRINTED, read-not-transcribed).
-  If axis-STALE -> conservative empty line stands, trend fills via the **6d dispatcher daylight leg
-  (G3w, CTO-gated)**. Related: 0.7.0_AE closure leg (verify cot gold chain complete, platinum/firm/*
-  advanced past 2026-07-20T02:04Z) due after 02:05Z — its outcome determines the axis.
+### C. Cottonwood MEASURED trend — RESOLVED tonight (grounded, no counter-sign owed)
+- Served `aggregate_aua_timeseries.json` GROUNDED by COO direct-read @~04:50Z: **0/427 non-null**, axis
+  `as_of_last = 2026-07-20` (did NOT advance to 07-21), ETag `3e555439135e` byte-identical to the
+  co-signed all-null artifact (head-object LastModified 03:58:35 GMT/UTC). All-null is CORRECT: measured
+  data starts 07-21, axis ends 07-20, zero overlap (meta.covered_dates = []).
+- The ~04:00Z re-run produced NO non-null points (axis still stale at 07-20). **NO COO counter-sign owed**
+  (it was conditioned on non-null count > 0; there are none). Conservative empty line CONFIRMED.
+  `PENDING_0400Z_..._trend_rerun_cosign.md` trigger resolved + deleted per its own close-condition.
+- FORWARD FILL PATH: the measured trend fills when the axis advances to include 07-21+ — via a nightly
+  that advances the axis OR the self-sustaining **6d dispatcher daylight leg (G3w, CTO-gated)**. DISTINCT
+  from item A: the interpolated BAND gives the page its 05-28->07-21 history; this measured series is the
+  going-forward line. Partial grounding of the 0.7.0_AE nightly-outcome: the cottonwood trend axis had NOT
+  advanced past 07-20 as of 04:50Z (0.7.0_AE closure leg — cot gold chain complete / platinum advanced —
+  still the authority on the full nightly outcome, due after 02:05Z).
 
 ### D. S5 createdAt passthrough fold (CTO/DS, non-blocking)
 - bronze `rebalancer_model_detail` carries real per-model createdAt (stable 22/22 = genuine birth date);
