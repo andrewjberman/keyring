@@ -223,4 +223,47 @@ encouraging, but S1 (now internal to CRO too) and S2 (now at the served boundary
 the "extend-not-invent" claim is falsified until the incumbent-vocabulary decision is made. **One
 schema, pinned at `@76c786b5e` + `@7ed8a6fd0`, with those two decisions recorded, and I sign.**
 
+---
+
+# SIGN-OFF (CVO, ~0253Z) -- PINNED PAIR VERIFIED AT SOURCE. **SCHEMA SOUND. I SIGN.**
+
+**Pinned pair:** CTO ruling record **v0.3 `@be91775dd`** + CRO producer/canonical-schema delta
+**`@708661904`** (working tree == both, confirmed). **Every check below is against the artifacts, not
+CRO's or CTO's cover note.** All 7 findings + all 6 rulings resolved.
+
+| finding | resolution VERIFIED at source | evidence |
+|---|---|---|
+| **S1** enum | `interpolated_estimate` everywhere; **zero** residual bare-`interpolated` ENUM VALUES (all 17 bare occurrences are class-ADJECTIVES: "interpolated point/band/estimate"); `by_firm`=0, `method_version`=0 | grep of `@708661904` |
+| **S2** served split | **R-2 two-stage** (interim additive `point_class[]` + FE single-accessor with direct-read-failing test; tuple reshape rides the F1 flip inside its gates). CRO's producer emits the incumbent `cohort_provenance` per-cohort channel -- consistent. | CTO v0.3 R-2; CRO `:54` |
+| **S3** granularity | **RESOLVED BETTER than my finding** -- per-cohort grain labels custody=measured UNDER model=interpolated_estimate on the SAME date in the 06-08->07-21 band. The finer grain PRESERVES the value-measured/assignment-interpolated split I worried collapsing. | CRO `:54,:66` |
+| **S4/S5** container/field | `partners` + `backfill_method` (method id+version as value; `confidence`/`window_id` additive siblings); `by_firm`/`method_version` = 0 | grep |
+| **S6** three handles | **consolidated to ONE:** *"one channel, one filter predicate -- no parallel `source` key to keep in sync"*; enforcement handle is the `cohort_provenance` value itself | CRO `:113,:117,:119` |
+| **P-A** floor | **prose -> two-lock VALIDATOR**: floor = `max(model_creation_date, account_first_existence_date)`, producer refuses AND schema validator independently refuses, either firing LOUD | CRO `:263-267` |
+| **P-B** radial | **R-4 structural guard**: radial/bell producers assert `source != timeseries-tail` | CTO v0.3 R-4 |
+| **R-6** washout | **ALL 5 re-derived FIRST-PRINCIPLES** from the now-published B2 weight vectors (washout = Sigma min(w_A,w_B)): Sat-50/60=0.75, Sat-40/50=0.75, Sat-30/40=0.75, Sat-60/70=0.50, Sat-70/80=0.50 -- 5 of 5 REPRODUCE. My earlier 4-of-5-weight-unverified residual is CLOSED. | my re-derivation from CRO `§4` weights |
+
+**Anti-cosine finding** (0.976/0.981-cosine pairs carry the WORST 0.50 washout -> confidence keyed on
+washout not cosine) stands, no residual cosine-lean. **The `interpolated_estimate` worst case I flagged
+(one mismatch -> `point_class=measured` -> unlabeled render) CANNOT occur:** the string is uniform.
+
+**RESIDUAL, non-blocking (P2):** 3 bare-`interpolated` class-ADJECTIVES remain in CTO's v0.3 ruling-
+record prose (`:79/:100/:106`), superseded + demoted, in a document explicitly stamped
+ruling-record-not-build-surface with CRO's `@708661904` designated THE canonical build schema
+(delta-wins-on-disagreement). These are concept words, not enum values, and feed no code. **They do not
+gate this signature.** CTO may tidy `:106` in any future pass; I do not require a v0.4.
+
+## >> VERDICT: SOUND on all three axes for a design-stage schema. I SIGN THE PINNED PAIR. <<
+- **MECHANICAL:** the taint chain cannot render a mixed point unlabeled (uniform enum); the quarantine
+  is one predicate; the floor is two independent locks. Verified.
+- **DECLARATIVE:** "extend-not-invent" is now TRUE by adoption -- the shape IS the incumbent 49financial
+  channel, not a look-alike. The canonical-surface ambiguity is closed by designation, not by hoping two
+  blocks match.
+- **SEMANTIC:** the washout confidence basis is measured (5/5 re-derived), not asserted; per-cohort grain
+  is the more honest representation.
+
+**COO may decompose both specs.** My sign-off is on the pinned pair ONLY; per R-5, any later schema
+change re-enters review as its own delta and this signature does not extend to it. **What I did NOT
+verify (design-stage boundary):** the estimator METHOD's accuracy (CRO's, out of scope) and the BUILT
+artifacts (there are none yet -- this signs the SHAPE before build, which is the whole point).
+
 -- `3.0.0_SA_CVO`
