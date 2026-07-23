@@ -139,3 +139,33 @@ def test_rearm_simulation_is_discriminating():
     with _rearmed():
         assert sh.is_held_path("data/black_diamond/x.py") is True
     assert sh.is_held_path("data/black_diamond/x.py") is False
+
+
+# ---------------------------------------------------------- fold-in D: tree registry DERIVATION
+# (NFRA_MSBEFF.R1R3 -- the hardcoded three BD/INF/COT config paths retired, derived from the
+# canonical firm-tree registry; cot isolation preserved fail-safe.)
+
+def test_firm_dirs_derived_not_hardcoded_three():
+    # DERIVED from safe_deploy_core.PIPELINE_MAP (or disk fallback) -- must include the real firm trees.
+    dirs = vc._firm_tree_dirs()
+    assert set(dirs) >= {"black_diamond", "inf", "cot"}, f"derivation lost a firm tree: {dirs}"
+
+
+def test_derived_config_paths_match_grammar():
+    for firm in ("black_diamond", "inf", "cot"):
+        p = vc._validate_config_path(firm)
+        assert p.parts[-4:] == (firm, "scripts", "gold", "gold_validate_config.yaml"), p
+
+
+def test_cot_isolation_preserved_not_in_merge_group():
+    # Firm-separation BINDING: cot must never be in the bd+inf merge group (id collision A_01/C_02/D_04).
+    assert "cot" not in vc._MERGE_GROUP_BD_INF
+    # And a new/unknown firm defaults to ISOLATED (merging is opt-in, the safe direction).
+    assert set(vc._MERGE_GROUP_BD_INF) == {"black_diamond", "inf"}
+
+
+def test_merged_map_never_contains_cot_ids():
+    # The live merged bd+inf alias map must not carry cot-isolated ids (isolation intact end-to-end).
+    merged = set(vc._load_raw_validate_configs())
+    cot = set(vc._load_raw_cot_configs())
+    assert merged.isdisjoint(cot), f"cot ids leaked into the bd+inf merge map: {merged & cot}"

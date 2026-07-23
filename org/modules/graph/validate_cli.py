@@ -46,13 +46,59 @@ from org.modules.graph.sovereign_held import is_held_path, include_held  # noqa:
 
 STANDALONE_VALIDATORS_DIR = _WORKSPACE / "data" / "black_diamond" / "scripts" / "validators"
 
-_BD_VALIDATE_CONFIG = _WORKSPACE / "data" / "black_diamond" / "scripts" / "gold" / "gold_validate_config.yaml"
-_INF_VALIDATE_CONFIG = _WORKSPACE / "data" / "inf" / "scripts" / "gold" / "gold_validate_config.yaml"
-# cot (Cottonwood) -- COMPLETELY separate firm pipeline (NFRA_DTAFLP, Andrew sovereign 2026-06-10).
-# cot gold script-ids COLLIDE with bd's (A_01, C_02, D_04 ...), so cot is routed strictly by PATH
-# (data/cot/scripts/...) and loaded in ISOLATION -- NEVER merged into the bd+inf alias map (a merge
-# would let cot D_00/D_04 shadow bd's). Firm separation applies to tooling reads. NFRA_COT_TOOLING.
-_COT_VALIDATE_CONFIG = _WORKSPACE / "data" / "cot" / "scripts" / "gold" / "gold_validate_config.yaml"
+# NFRA_MSBEFF.R1R3 fold-in D (2026-07-23, 0.8.0_AE_CloudComp): the BD/INF/COT config paths were three
+# HARDCODED constants -- the SAME frozen-enumeration class as the retired VERDICT_EXIT_TOOLS set (main CTO
+# 164237Z ruling, DS-flagged 07-23). DERIVED now from the canonical firm-tree registry
+# (safe_deploy_core.PIPELINE_MAP, CLAUDE.md Rule 13) so a new firm pipeline is DISCOVERED, never hand-added
+# in three places.
+#
+# FIRM SEPARATION PRESERVED AND MADE FAIL-SAFE (CTO~Z binding: do NOT collapse cot's isolation). The load
+# semantics that were implicit in the hardcode are now EXPLICIT and default to the SAFE direction: a firm
+# MERGES into the shared bd+inf alias map ONLY if it is in _MERGE_GROUP_BD_INF (order-preserving, bd-first
+# so inf wins an id collision, exactly as the prior tuple did); EVERY other firm loads in ISOLATION (cot
+# today, any future firm tomorrow). Merging is the DANGEROUS direction -- a new firm's ids could shadow
+# bd's, the exact collision cot has (A_01/C_02/D_04) -- so it is opt-in, never default. This strictly
+# improves on the hardcode: adding a firm to PIPELINE_MAP auto-isolates it; sharing an alias map now
+# requires a deliberate, reviewable opt-in. NFRA_DTAFLP (Andrew sovereign 2026-06-10), IAM-enforced.
+_VALIDATE_CONFIG_GRAMMAR = ("data", "{firm}", "scripts", "gold", "gold_validate_config.yaml")
+# Firms whose gold script-ids are namespace-disjoint and MAY share one alias map (bd uses A_01/C_02/...,
+# inf uses INF_* -- disjoint). Order = load order. cot is NEVER here (it collides with bd). A separation
+# CLASS declaration, not a firm enumeration -- the enumeration is derived from PIPELINE_MAP below.
+_MERGE_GROUP_BD_INF = ("black_diamond", "inf")
+
+
+def _validate_config_path(firm_dir: str) -> Path:
+    """data/<firm>/scripts/gold/gold_validate_config.yaml, from the one path grammar."""
+    return _WORKSPACE.joinpath(*(seg.replace("{firm}", firm_dir) for seg in _VALIDATE_CONFIG_GRAMMAR))
+
+
+def _firm_tree_dirs() -> list[str]:
+    """The canonical firm-tree dirs, DERIVED -- never a hardcoded three.
+    Primary: safe_deploy_core.PIPELINE_MAP (Rule 13, the canonical firm->bucket map). Fallback: a disk
+    glob of data/*/scripts/gold/gold_validate_config.yaml (still an enumeration, not a frozen list). If
+    both are empty the callers simply find no configs -- fail-honest, never a silent wrong firm set."""
+    try:
+        import importlib.util as _ilu
+        sdc = _WORKSPACE / ".tools" / "safe_deploy_core.py"
+        spec = _ilu.spec_from_file_location("_sdc_for_validate", str(sdc))
+        if spec and spec.loader:
+            mod = _ilu.module_from_spec(spec)
+            spec.loader.exec_module(mod)  # type: ignore[attr-defined]
+            dirs = list(getattr(mod, "PIPELINE_MAP", {}).keys())
+            if dirs:
+                return dirs
+    except Exception:
+        pass
+    try:
+        return sorted(p.parts[-4] for p in (_WORKSPACE / "data").glob("*/scripts/gold/gold_validate_config.yaml"))
+    except Exception:
+        return []
+
+
+# Derived config paths (names retained for back-compat with the held-check + cot/inf routing below).
+_BD_VALIDATE_CONFIG = _validate_config_path("black_diamond")
+_INF_VALIDATE_CONFIG = _validate_config_path("inf")
+_COT_VALIDATE_CONFIG = _validate_config_path("cot")
 
 # bd config exclusion -- BOUND TO THE CANONICAL PREDICATE (Law-8 fix, CVO~Z tick-26 2026-07-23):
 # the original 07-09 sovereign hold justified a DEFAULT skip of the bd config + validators dir; the
@@ -139,14 +185,19 @@ def _load_raw_validate_configs() -> dict:
     Returns merged {artifact_id: raw_data_dict} from both pipelines.
     """
     result: dict = {}
-    # SOVEREIGN HOLD: the bd config is a held bd-source read -- skip it by default (inf only), NAMED.
-    # Order preserved for the override: bd first so inf wins on artifact-id collision, as before.
+    # DERIVED merge-group iteration (fold-in D): the bd+inf alias map is the _MERGE_GROUP_BD_INF firms
+    # (bd first so inf wins an artifact-id collision, exactly as the prior (_BD, _INF) tuple). SOVEREIGN
+    # HOLD: bd is a held bd-source read -- dropped by default (inf only), NAMED. Each firm's config path is
+    # the module-level DERIVED constant, read from globals() AT CALL TIME so a test/DS monkeypatch of
+    # _BD_/_INF_VALIDATE_CONFIG is honored (the injection contract test_comp_validate_bd_hold depends on) --
+    # the constants are derived from the path grammar at load, retiring the three LITERAL paths.
+    firm_config_global = {"black_diamond": "_BD_VALIDATE_CONFIG", "inf": "_INF_VALIDATE_CONFIG"}
+    firms = list(_MERGE_GROUP_BD_INF)
     if _bd_held_excluded():
         _note_bd_held_skip()
-        config_files = (_INF_VALIDATE_CONFIG,)
-    else:
-        config_files = (_BD_VALIDATE_CONFIG, _INF_VALIDATE_CONFIG)
-    for config_file in config_files:
+        firms = [f for f in firms if f != "black_diamond"]
+    for firm in firms:
+        config_file = globals().get(firm_config_global.get(firm, ""), None) or _validate_config_path(firm)
         if not config_file.exists():
             continue
         try:
