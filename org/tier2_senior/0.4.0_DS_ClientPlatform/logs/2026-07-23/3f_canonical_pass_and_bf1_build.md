@@ -139,3 +139,13 @@ co-signed copies stand).
 
 **Serve path (external gates):** CVO delta-sign → DE renders (band + Global view) → co-sign pairs
 at the artifacts → serve. Backtest projection = separate dispatch (CRO design), not this lane yet.
+
+## FLAG-2 CLOSE-OUT NOTES (053xZ)
+
+- **Condition 5 converted to a CONTROL** @1e3999969: committed runnable
+  tests/test_global_fold_flag2.py (5/5) -- both CTO cases + no-preserve-no-stamp + the fold's two
+  absent-vs-gap laws. COO runs it to complete the counter-sign.
+- **NAMED LIMITATION (COO obs, 053028Z): count_as_of is ENTRY-level** -- multiple interior SMA
+  count gaps from different source dates would share one stamp. Fine for the trailing
+  frontier-lag case that exists today (single-source by construction); if a MID-series SMA count
+  gap ever appears, the stamp-granularity question re-opens as its own delta, never silently.
