@@ -197,3 +197,18 @@ activation-leg; legs closed as stood-down-with-proof); the corrected run (post D
 emitter re-source, my integration half) opens its own ledger.
 **Instrument note:** the 21-invoke first attempt failed wholesale on --cli-binary-format (CLI v2 flag,
 v1 host) -- clean CLI-level failure, nothing invoked; re-ran with the v1 payload form.
+
+---
+
+## RULINGS EXECUTED 2026-07-23 ~1440-1451Z: SNAPSHOTS DURABLE + RF-9 DECOUPLE DEPLOYED
+
+(1) KEEP-ruling conditions: before-snapshots (21 files/588 rows, sha50cd4f87) committed to
+deliverables/aua_before_snapshots_20260723/ @d15c83489; ledger 1427Z amended w/ the upgrade event.
+(2) RF-9-ONLY REBUILD (ledger 20260723T1445Z closed 5/5, tag opal-assets-v0.32.0): vendored-parity
+battery caught the EXPECTED deliberate divergence (rebalancer_* = pre-S5 production vs canonical
+post-S5 @1351c74d9 -- the ruled scope); zip->artifact-bucket w/ content-sha256; targeted plan = pure
+version+hash swap; safe-apply 0/1/0; 0-diff; LIVE-zip triple identity (built==Code.Location zip==
+CodeSha256) w/ BD_TABLE_EXTENSIONS present; import-health probe = handled ValueError @1129, NOT
+ImportModuleError. 0.6.2's RF-9 live ahead of tonight; sweep backstop no longer the carrier.
+Compiler tools: deploy_ledger x14 (2 ledgers), cmp battery x8, terraform plan -target x4 + validate,
+safe-apply x1, s3api head-object x2, lambda get-function/invoke probe, curl live-zip, git tag preflight.
