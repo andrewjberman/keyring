@@ -620,6 +620,12 @@ constants:
     complete_over: portal
     sites:
     - portal/src/lib/firmAccess.ts
+    exemptions:
+    - firm: mockadv
+      by: 1.0.0_SA_CTO~Z
+      date: '2026-07-23'
+      why: 'routing-vs-page-access plane split, intent undetermined (~Z ruling 005921Z: FIRM_CONFIG is edge ROUTING w/ mockadv present, FIRM_ALLOWED_PATHS is page ACCESS w/ deny-by-default at firmAccess.ts:106 -- intent determination owned MAIN FABRIC/portal-auth; deliberate -> their authority + no expiry, gap -> fix)'
+      expires: '2026-08-06'
   notes: Portal-side page access matrix. COTTONWOOD ALREADY PRESENT HERE (pre-populated for Cottonwood onboarding readiness) but cottonwood is NOT yet in FIRM_CONFIG/FIRM_BUCKET_MAP (Lambda@Edge routing
     still unaware). Cottonwood is missing /advisor-intelligence vs 49F/Inflection — may be intentional scope decision or placeholder.
 - name: FIRM_EMAIL_DOMAINS
