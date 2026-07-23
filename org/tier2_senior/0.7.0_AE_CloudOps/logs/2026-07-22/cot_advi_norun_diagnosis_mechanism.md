@@ -212,3 +212,17 @@ CodeSha256) w/ BD_TABLE_EXTENSIONS present; import-health probe = handled ValueE
 ImportModuleError. 0.6.2's RF-9 live ahead of tonight; sweep backstop no longer the carrier.
 Compiler tools: deploy_ledger x14 (2 ledgers), cmp battery x8, terraform plan -target x4 + validate,
 safe-apply x1, s3api head-object x2, lambda get-function/invoke probe, curl live-zip, git tag preflight.
+
+---
+
+## CONTROL SHAPE BANKED 2026-07-23 ~1514Z (CTO 151403Z, for the corrected backfill -- my next leg)
+
+Andrew ruled C2: 49-total = fact_rps_s2.net_mv_plus_cash (silver/schwab/08242234, cash IN).
+Controls for the corrected run, verbatim-banked: (1) C2-TIE per date TO THE CENT (pin 07-17 =
+$1,665,338,126.76; month-end spot-grid + full-span programmatic equality sweep as primary);
+(2) the 21 legacy rows = SUPERSEDED-WITH-MECHANISM, per-row pinned delta (+cash leg, +vintage),
+restoration record = deliverables/aua_before_snapshots_20260723 @d15c83489; (3) denominators vs
+silver partition depth per cohort, honest-absent enumerated; (4) idempotency proof + throttle +
+two-limb boundary carry unchanged. GATE: DS's C2 derivation contract lands -> my emitter 49-custody
+limb re-source integration (one-writer boundary at the limb split) -> deployed normal cycle -> walk
+on corrected bytes, own ledger. Idle-warm on this thread until DS hands the contract.
