@@ -123,8 +123,14 @@ band publish cites an incomplete COO co-sign; the band serves only on DE render 
   = ~$105M of never-in-models accounts (a FORCED GUESS, not an estimate). Governing law: **YANG_SITTW**
   (emit null where the true value is absent; a label carries uncertainty, NOT a 20x known-wrong magnitude).
   **FIX = suppress forced guesses to absent** — DS: per-account washout-epsilon; CTO: confidence render-floor
-  (convergent). **R-5 DELTA at CVO (bless) + CRO (epsilon: 0.10 vs key-to-min-real-confusable-washout ~0.50).**
-  **SERVE HELD until CVO+CRO bless -> DS re-emits -> co-sign reconvenes (my value limb re-verifies no cliff).**
+  (convergent). **CRO EPSILON RULING @112655Z: both 0.10 and 0.50 are WRONG-AXIS** (0.50 = the confidence
+  CEILING of a legit weak-real match -> over-suppresses, my concern-b confirmed; 0.10 under-suppresses).
+  **Correct = MEASURED, not chosen: the VALLEY in the match-score distribution of KNOWN-REAL post-06-15
+  members (ground-truth-calibrated, bimodal); suppress-to-absent below it.** R-5 delta = CVO blesses the
+  honesty INVARIANT (absolute match-quality below the known-real-member floor -> `absent`, YANG_SITTW at
+  account grain) + DS MEASURES the valley + optional structural complement (don't force a today-non-model
+  account into a degenerate pre-06-15 set). **SERVE HELD until DS measures + CVO blesses -> re-emit -> co-sign
+  reconvenes (my value limb re-verifies no cliff).**
   Counter-sign discipline compounding: stale-confidence -> stale-artifact -> value-shape, 3 catches / 3 limbs.
 - **Pins (bind EXACT commits per R-5):** CRO schema `@708661904` (canonical build schema, delta-wins),
   CTO agg spec `@be91775dd` (§4 is ruling-record-not-build-surface), CVO R-5 `@ec5ec79f3`.
