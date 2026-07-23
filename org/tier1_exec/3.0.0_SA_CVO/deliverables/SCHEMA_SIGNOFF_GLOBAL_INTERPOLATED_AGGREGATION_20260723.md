@@ -437,4 +437,48 @@ cliff gone (no ~$108M one-day model drop); early-band model=`absent` where suppr
 ramp RETAINED (not over-suppressed); **the Global model-AUM sum on the suppressed dates no longer carries
 the ~$105M**; a real weak match survives (mutant b). **NOT SERVABLE until I verify the re-emit.**
 
+## RE-EMIT VERIFIED (CVO, ~1146Z) -- 5-point PASSES; value-shape SERVABLE; 2 non-blocking findings. MY LIMB CLEARS.
+Read the re-emit myself (`gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries_interpolated.json`,
+generated 11:33:08Z, my own S3 read):
+
+| my verify point | result | evidence (bytes) |
+|---|---|---|
+| 1 cliff gone | **PASS** | 06-14 model $454K -> 06-15 $2.02M (was $114M -> $6M). No ~$108M drop. |
+| 2 early forced guesses suppressed | **PASS** | early band model $454K (was ~$105-116M) -- forced-guess portion removed AT THE PRODUCER; genuine members retained + labeled. |
+| 3 genuine ramp retained | **PASS** | $454K -> $2M -> $24M -> $122M -> $124.7M lands on served $124.4M. |
+| 4 mutant d -- Global sum clean | **PASS** | cottonwood model_aua in the BYTES is $454K, not $105M -> the Global sum inherits the genuine value. Producer-side confirmed. |
+| 5 mutant b -- weak-but-real survives | **PASS** | $454K early members (conf 0.5-1.0) + the full forward ramp survive. |
+
+Confidence rose (early 0.01-0.05 -> 0.5-1.0) correctly: the low-conf forced guesses were REMOVED, so the
+per-date aggregate reflects only retained genuine matches. Epsilon 0.10 in the measured (0.056,0.170)
+valley -- absolute-match-quality axis (NOT washout), measured not chosen. Consistent with the bless.
+
+### 07-14 jump ($27.8M->$122M, conf 0.50): RULED SERVABLE -- "real membership, current-stamped timing."
+Categorically DIFFERENT from the early-band fabrication, ruled not passed over (COO asked): genuine current
+members (above epsilon), custody CONTINUOUS across 07-13/14 (~$127M), from the real bronze `createdAt`
+07-14, and NO contradicting anchor (unlike the early band's 06-15) -- it lands on served truth $124.4M. A
+timing-SMEAR would fabricate unknowable migration dates; the model-birth STEP uses a REAL date. Servable,
+labeled. CONCUR with COO/DS.
+
+### >> I FOUND AN ADDITIONAL UNFLAGGED STEP: 07-06->07-07 ($6.5M->$24.2M, conf 0.97). << Same class,
+servable -- the band is a STAIRCASE of model-creation steps (07-07 high-conf, 07-14 conf-0.50), not one
+jump, as Cottonwood's models were created 05-28..07-17 with current-stamped membership. A full-band >3x
+scan found only these two real-membership steps + the weekend wobble; no other cliff.
+
+### NON-BLOCKING FINDINGS (recorded; neither gates serve):
+- **NB-1 (DS): the suppression DENOMINATOR is NOT in the artifact.** grep for the count returns empty;
+  COO's "$2.25B / 5,473 acct-dates suppressed" was computed EXTERNALLY. A filter that removed ~$105M/date
+  of model AUM does not report how much it removed in its own bytes. **Recommend `meta` carry
+  `suppressed_acct_dates` + `suppressed_value`** (print-the-denominator, applied to the artifact). The
+  suppression is CORRECT; it is not self-describing.
+- **NB-2 (product disclosure, CTO/COO/Andrew): the staircase steps front-load if migration was gradual,**
+  and the on-chart confidence labels ASSIGNMENT uncertainty, not TIMING -- so the timing approximation is
+  invisible on the chart. Honest + servable (real members, real anchor dates), but a ~$95M one-day step on
+  Andrew's chart carries a timing caveat the confidence does not express. I do NOT force an Andrew
+  round-trip (COO: technical serve); I name it for the product owners.
+
+## VERDICT: MY LIMB CLEARS. Suppression delta verified against the re-emit; value-shape servable
+(fabrication suppressed, staircase = real membership). Serve proceeds on the co-sign pair (DS+DE+COO green,
+CTO gates). NB-1/NB-2 recorded, neither blocking.
+
 -- `3.0.0_SA_CVO`
