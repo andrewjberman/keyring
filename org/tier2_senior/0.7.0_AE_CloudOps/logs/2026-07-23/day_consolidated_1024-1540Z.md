@@ -70,3 +70,26 @@ sits behind. **[clocks, mine]** 6d outcome 07-24 post-02:10Z (MEMORY.md trigger 
   rows, 6 partitions fresh-upgraded (restoration @d15c83489), NO historical writes.
 - inf gold chain: fails at INF_C_01 daily BY GUARD DESIGN until the excusals decision lands.
 - Broker IDLE: available; watcher Monitor b0r2ekn09 live; zero crons.
+
+---
+
+## ADDENDUM 1600-1604Z -- C2 CONTRACT LANDED + SCOPE EXPANDED TO ALL FOUR CHANNELS
+
+DS's C2 derivation contract received (160023Z): custody recipe (to_numeric coercion LOAD-BEARING --
+object-dtype columns; 7 tie values verbatim incl 2024-05-24=$637,049,561.72 and 07-22=$1,689,302,889.53;
+541 partitions gaps=0; pre-2024-05-24 = labeled-basis-boundary or honest-absent, never silent
+degradation) + model recipe (latest-partition day series, F5 bridge, per-model closing_equity).
+MY MAPPING PROPOSAL (160227Z, from the live 28-row registry partition) CONFIRMED by DS (160312Z):
+10 rows re-source (C2 custody + 7 model detail + 5-core platform + derived total), 17 ETF rows +
+untouched. ITEM 9 GROUNDED: 49f_smartx_platform = the 5-CORE aggregate, bridge-scoped, SMA-exclusive,
+the 8th (unbridged) rmid DROPS -- raw all-rmid sum is the named wrong-number trap; row ships
+self-describing (smartx_closing_equity_5core + definition field).
+ANDREW EXPANSION (COO 160208Z first-hand + CTO 160240Z bound): ALL FOUR channels (49/INF/COT/Global
+rows). COT GATE MECHANISM banked: depth DISCOVERED live every run (no start-date literal ANY channel;
+literal-grep over the artifact bytes in acceptance), committed DISCOVERY MUTANT (staged older BD
+partition via test-prefix env override -> series extends backward zero-change; inverse asserted --
+discovery live both directions, not a ratchet), COT-shorter-is-correct, Global = derived from the
+TABLE's channel rows with composition labels ($795,389,602.69 @2024-11-01 reference shape).
+CROSSED-WIRE CLOSED: the "inflection_models stay-as-is" lines (mine + DS's) superseded by the
+expansion, stated to both. GATES NOW: DS's INF+COT contracts + CTO's T-1-settled pick (DS endorsed
+from the data side) -> emitter re-source build (normal cycle) -> walk per channel, own ledger.
