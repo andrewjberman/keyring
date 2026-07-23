@@ -1,6 +1,7 @@
 # Deploy Completion — MDPF Plain-Interpolated Label + W-3b Tooltip-Anchor Promote (portal DEV->PROD v2.1.147)
 
-**Status: CLOSED — completed in-session (NEVER#5). PROD 7ac7bafd, tag v2.1.147 peel-verified.**
+**Status:** CLOSED — completed in-session (NEVER#5). PROD 7ac7bafd, tag v2.1.147 peel-verified.
+**Closed:** 2026-07-23T21:03Z
 **Owner:** 0.2.0_DT_PortfolioAnalytics
 **Authorization:** COO GO 204916Z (all three stated gate conditions MET), aligned with CTO bundle plan
 201700Z/202837Z. Closes Andrew's twice-raised 2x-Total tooltip complaint (W-3a live in v2.1.146,

@@ -1,6 +1,7 @@
 # Deploy Completion — Cottonwood MDPF FE Promote (portal DEV->PROD, legacy-family serve amendment)
 
-**Status: CLOSED — completed in-session**
+**Status:** CLOSED — completed in-session
+**Closed:** 2026-07-23T01:52Z
 **Owner:** 0.2.0_DT_PortfolioAnalytics (Andrew-direct assignment, relayed CTO 013327Z / MSTR 013457Z)
 **Window:** 2026-07-23 01:44Z (GO, CTO 014410Z) -> 01:52Z (landed + verified)
 

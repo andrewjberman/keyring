@@ -1,6 +1,7 @@
 # Deploy Completion — Corrected Cottonwood Interpolated-Band FE Promote (portal DEV->PROD v2.1.143)
 
-**Status: CLOSED — completed in-session**
+**Status:** CLOSED — completed in-session
+**Closed:** 2026-07-23T13:01Z
 **Owner:** 0.2.0_DT_PortfolioAnalytics (COO dispatch 124649Z; CTO NO-STOP 125422Z; co-sign complete per COO — COO value-limb counter green + CVO 5-point cleared)
 **Window:** 2026-07-23 12:47Z (dispatch ack / begin) -> 13:01Z (CI SUCCESS + DE triggered)
 

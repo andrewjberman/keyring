@@ -1,6 +1,8 @@
 # Deploy-completion ledger: portal-global-monthly-axis-key-2x-hotfix
 
 - **Opened:** 2026-07-22T05:03Z by `0.2.0_DT_PortfolioAnalytics` at DEPLOY-START (CLAUDE.md NEVER#5: a begun deploy FINISHES in-session or rolls back + escalates loud).
+- **Status:** CLOSED — 8/8 deploy legs complete, verified, nothing stranded (see the terminal Status heading at the foot of this file; this bulleted marker is the machine-readable form the Layer-2 gate-bypass scan parses).
+- **Closed:** 2026-07-22T05:15Z
 - **Authorization:** Andrew GO ~0455Z (relayed CTO 045718Z) -> CTO **DEPLOY GO** 050225Z after his manual surface-ack verify PASSED on `8fd61dbf`.
 - **Scope:** Portal PROD promote of the standalone Global "2x" label fix. `ModelPortfolios.tsx` monthly Period-End XAxis `dataKey` `period` -> `fullDate` + tick formatted for display. **BINDING-ONLY — bar dataKeys untouched, zero value change.**
 - **Root cause being fixed (DE's, quoted not re-derived):** the monthly `period` label omits the year; the GLOBAL view alone renders the full since-inception window (21 month-end bars) while per-firm views keep a rolling ~13. Global therefore produced **duplicate recharts category keys** ("Mar 31"/"Apr 30" for BOTH 2025 and 2026). Duplicate categories break the bar<->row binding — recharts resolves the tooltip to the FIRST row with that category, so hovering the 2026 bar reported the 2025 row (Apr 30: $963.5M vs $1,608.9M = 1.67x — Andrew's "almost double").

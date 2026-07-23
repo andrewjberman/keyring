@@ -1,6 +1,7 @@
 # Deploy Completion — MDPF Global Interpolated-Suppression Promote (portal DEV->PROD v2.1.146)
 
-**Status: CLOSED — completed in-session (NEVER#5). PROD 41ce41eb, tag v2.1.146 peel-verified.**
+**Status:** CLOSED — completed in-session (NEVER#5). PROD 41ce41eb, tag v2.1.146 peel-verified.
+**Closed:** 2026-07-23T20:40Z
 **Owner:** 0.2.0_DT_PortfolioAnalytics
 **Authorization:** ANDREW-DIRECT (sovereign) at CTO's terminal 201936Z, VERBATIM: "I also still do not
 see the frontend change regarding not showing the 'Interpolated' flags on the Global view." His word IS

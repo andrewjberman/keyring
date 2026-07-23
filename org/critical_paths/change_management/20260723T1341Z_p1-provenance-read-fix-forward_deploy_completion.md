@@ -1,6 +1,7 @@
 # Deploy Completion — P1 Fix-Forward: pairedProvenanceRead pre-contract hardening (portal v2.1.144)
 
-**Status: CLOSED — completed in-session** (condition-3 live-verify residual named below)
+**Status:** CLOSED — completed in-session (condition-3 live-verify residual named below; DE's live verify PASSED @931f6b11c)
+**Closed:** 2026-07-23T13:47Z
 **Owner:** 0.2.0_DT_PortfolioAnalytics (Andrew-direct report -> DT diagnosis -> CTO ratification 133702Z -> DE fix -> DT promote)
 **Window:** 2026-07-23 ~13:32Z (Andrew report) -> 13:47Z (CI SUCCESS + DE verify triggered)
 

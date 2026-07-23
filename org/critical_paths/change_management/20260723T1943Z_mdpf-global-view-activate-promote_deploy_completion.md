@@ -1,6 +1,7 @@
 # Deploy Completion — MDPF Global View Activation Promote (portal DEV->PROD v2.1.145)
 
-**Status: CLOSED — completed in-session (NEVER#5). This deploy (cfb0afb7 -> PROD) is fully landed + verified.**
+**Status:** CLOSED — completed in-session (NEVER#5). This deploy (cfb0afb7 -> PROD) is fully landed + verified.
+**Closed:** 2026-07-23T20:05Z
 **Owner:** 0.2.0_DT_PortfolioAnalytics (COO relay/dispatch 194221Z; served data byte-verified LIVE by COO; CTO fire 184804Z sequencing; DS aggregate published 18:51Z/19:29Z)
 **Window:** 2026-07-23 ~19:43Z (GO ack / begin) -> ~20:05Z (CI SUCCESS + tag peel-verified + data acceptance)
 
