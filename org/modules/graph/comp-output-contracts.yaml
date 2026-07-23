@@ -62,6 +62,8 @@ contracts:
       - "dynamic / FUNC-key consumers are INVISIBLE (the comp-pipescript dynamic-key miss class) -- 'zero downstream' is 'no EXTRACTED edge', NOT provably no consumer"
       - "a target outside the indexed node set (e.g. an unindexed component dir) has no edges to trace at all"
     plane: projection
+    grain: field
+    scope: estate
     vintage: ".comp-graph/graph.json build (comp-build cache; run comp-blast --check for freshness)"
     exit_codes:
       "1": {class: verdict, meaning: "phantom / orphan consumer found (a real finding about the estate)"}
@@ -76,6 +78,8 @@ contracts:
       - "DESIRED plane is STRUCTURALLY BLIND to AWS-managed and unmanaged/console grants (only `comp-iam reconcile` / the live-derive modes overlay APPLIED)"
       - "models (action), NEVER (action, resource) -- a role holding an action on ANY resource reads GRANTED for EVERY resource; a new bucket/table/ARN needs `aws iam simulate-principal-policy --resource-arns <exact key>`"
     plane: desired
+    grain: artifact
+    scope: estate
     vintage: "parsed infra/*.tf at working-tree HEAD (DESIRED); live modes carry their own LIVE PROVENANCE line + TTL"
     by_subcommand:
       reconcile: {plane: mixed,  vintage: "TF DESIRED overlaid on a comp-aws live derive (age/TTL printed)"}
@@ -92,6 +96,8 @@ contracts:
     blind_spots:
       - "vital signs are derived from git history + the graph cache -- a resource with no commits and no extracted edges is invisible to the map"
     plane: projection
+    grain: artifact
+    scope: estate
     vintage: "pulse map (auto-refreshed on staleness; header prints map age vs TTL)"
     exit_codes:
       "1": {class: verdict, meaning: "risk-reflex HITS on the diff (real risk surfaced)"}
@@ -103,6 +109,8 @@ contracts:
     blind_spots:
       - "checks the system-model files against their generator -- a live-estate resource absent from BOTH is not surfaced here (that is comp-aws/comp-freshness territory)"
     plane: desired
+    grain: artifact
+    scope: estate
     vintage: "infra/system/ working-tree state vs its regenerator (0/2/1 documented contract)"
     exit_codes:
       "1": {class: verdict, meaning: "drift found"}
@@ -114,6 +122,8 @@ contracts:
     blind_spots:
       - "compares against the SEEDED constant set (comp-constants-seed-*.yaml) + firm_registry.json -- a value with no seed entry is not checked"
     plane: mixed
+    grain: field
+    scope: firm
     vintage: "seed yamls (committed) vs live-site / config canonical at run time"
     exit_codes:
       "1": {class: verdict, meaning: "drift found (a seeded constant disagrees with canonical)"}
@@ -125,6 +135,8 @@ contracts:
     blind_spots:
       - "a seam not in drift-topology.yaml is UNGUARDED and invisible (comp-drift coverage names the gap); cost-guarded live/network seams need --deep or a scoped <target>"
     plane: mixed
+    grain: artifact
+    scope: estate
     vintage: "orchestrates each seam engine at its own vintage; never silently MATCHes an unreadable seam"
     exit_codes:
       "1": {class: verdict, meaning: "integrity break (a seam failed parity)"}
@@ -136,6 +148,8 @@ contracts:
     blind_spots:
       - "parity is over the mapped Lambda set; a function outside the map is not compared"
     plane: mixed
+    grain: artifact
+    scope: estate
     vintage: "TF/source declared vs live describe (tri-state parity)"
     exit_codes:
       "1": {class: verdict, meaning: "parity break"}
@@ -147,6 +161,8 @@ contracts:
     blind_spots:
       - "compares the two declared sides only; a field on neither side is not surfaced"
     plane: mixed
+    grain: field
+    scope: pipeline
     vintage: "per-side at each side's own vintage (tri-state)"
     exit_codes:
       "1": {class: verdict, meaning: "parity break"}
@@ -158,6 +174,8 @@ contracts:
     blind_spots:
       - "reasons about ONE served key's value+version timelines; upstream cause is not traced here"
     plane: applied
+    grain: field
+    scope: single-artifact
     vintage: "live S3 object + its version history at run time"
     exit_codes:
       "1": {class: verdict, meaning: "frozen / motion finding"}
@@ -169,6 +187,8 @@ contracts:
     blind_spots:
       - "a script_id with NO validate config asserts NOTHING (NO_CONFIG/ZERO_CHECKS is UNVALIDATED, not a pass); WARN-only failures do not block"
     plane: applied
+    grain: field
+    scope: single-artifact
     vintage: "the artifact file supplied at run time vs its gold_validate_config.yaml"
     exit_codes:
       "1": {class: verdict, meaning: "an ERROR-severity check FAILED on the artifact (a real invariant violation)"}
@@ -179,6 +199,8 @@ contracts:
     blind_spots:
       - "scans the CHANGED pathspec for non-canonical graph access; a pre-existing violation in an untouched file is not re-flagged"
     plane: desired
+    grain: artifact
+    scope: estate
     vintage: "working-tree changed files vs graph-call-manifest.yaml at HEAD"
     exit_codes:
       "1": {class: verdict, meaning: "a gate member fired (real violation / incompleteness found)"}
@@ -190,6 +212,8 @@ contracts:
     blind_spots:
       - "ADVISORY ONLY -- it cannot block; and it is structurally blind to portal/ submodule surfaces (safe-commit cannot see them). Silence is NOT a pass (CLAUDE.md Rule 20)"
     plane: desired
+    grain: artifact
+    scope: estate
     vintage: "changed files vs critical-surfaces.yaml at HEAD"
     exit_codes:
       "1": {class: verdict, meaning: "a critical surface finding"}
@@ -201,6 +225,8 @@ contracts:
     blind_spots:
       - "checks the declared honesty rules; a drift class with no rule is not surfaced"
     plane: desired
+    grain: artifact
+    scope: estate
     vintage: "source/record at HEAD"
     exit_codes:
       "1": {class: verdict, meaning: "honesty finding"}
@@ -213,6 +239,8 @@ contracts:
       - "trading-day-frontier basis REQUIRED (a comp-freshness entry without freshness_basis: trading-day-frontier falls back to flat-hours and false-alarms every Monday -- CLAUDE.md NEVER#1)"
       - "an artifact not in the freshness manifest is not checked"
     plane: applied
+    grain: partition
+    scope: pipeline
     vintage: "live S3/DDB LastModified vs the trading-day frontier at run time"
     exit_codes:
       "1": {class: verdict, meaning: "real staleness FAIL (past max_age on the trading-day basis)"}
@@ -225,6 +253,8 @@ contracts:
     blind_spots:
       - "compares the mapped trigger set; a trigger outside the map is not evaluated"
     plane: mixed
+    grain: artifact
+    scope: estate
     vintage: "TF declared vs live describe-rule at run time"
     exit_codes:
       "1": {class: verdict, meaning: "trigger finding"}
@@ -238,6 +268,8 @@ contracts:
       - "a value re-imported through a NON-S3 hop (http fetch / DB read / a vendored committed copy) is not an S3 read and is invisible to an S3-key layer trace"
       - "a cross-module constant import (a prefix imported from another module) resolves ONLY if the constant is module-level in the scanned file; scope-limited by construction"
     plane: mixed
+    grain: field
+    scope: pipeline
     vintage: "parsed producer .py at working-tree HEAD (SOURCE); classifies against the static layer grammar, never a live S3 read"
     exit_codes:
       "1": {class: verdict, meaning: "served-origin read found -- a producer reads a served/platinum/portal-json artifact as a value source (a real estate finding: the layer grammar backwards, RF-7 class)"}
@@ -253,6 +285,8 @@ contracts:
       - "partition dates are DERIVED from key text (YYYY-MM-DD / YYYYMMDD / date=), not --delimiter (which MSYS-mangles); a key that encodes its date differently is not counted; gaps are calendar-weekday, not trading-calendar (resolve NEVER#1 before calling a weekday gap a defect)"
       - "prefix/partitions enumerate ONE bucket; only `exists` is complete-over the declared firm scope (data/firm_registry.json enabled+pipeline)"
     plane: applied
+    grain: partition
+    scope: partition-window
     vintage: "LIVE s3api list-objects-v2 at run time; LastModified is ISO-8601 Z (never `aws s3 ls` local time)"
     exit_codes:
       "1": {class: fail, meaning: "tool/input error -- aws unavailable, bucket unreadable / access-denied, or bad args (a LOUD zero on an empty prefix is exit 0, not this)"}
@@ -264,6 +298,8 @@ contracts:
       - "deployed/io are bd-tree/.py-SCOPED -- inf & cot gold .sh DISPATCH scripts are UNCOVERED (a named audit exhibit)"
       - "dynamically-keyed / FUNC-key reads+writes are INVISIBLE (the dynamic-prefix holdings-read miss class); a 'consumers' answer of zero is 'no extracted edge', NOT provably no consumer"
     plane: projection
+    grain: artifact
+    scope: pipeline
     vintage: ".comp-graph graph build for io/consumers; `deployed` reads LIVE S3 code/ prefixes at run time"
     by_subcommand:
       deployed: {plane: applied, vintage: "live s3 ls of the code/ prefix vs the local script hash (MATCH/STALE/MISSING reported in stdout, exit 0)"}
@@ -278,6 +314,8 @@ contracts:
     blind_spots:
       - "answers ONLY what the graph models; a relationship not extracted into the graph is absent, not zero. Read the provenance header (UNKNOWN VINTAGE = freshness unverifiable; a --db-path scratch DB is a frozen vintage)"
     plane: projection
+    grain: field
+    scope: estate
     vintage: "the materialized Kuzu DB (provenance header printed to stderr every call)"
     exit_codes:
       "1": {class: fail, meaning: "tool/input error -- DB not found, or the Cypher query failed to execute"}

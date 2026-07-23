@@ -926,10 +926,67 @@ def _output_contract_invariant(files) -> int:
     return 1
 
 
+_RULE_BANK_REL = "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml"
+
+
+def _stage2_vocab_invariant(files) -> int:
+    """0 = holds / dormant / not applicable. 1 = BLOCK.
+
+    STAGE-2 of the output contract (NFRA_MSBEFF.R1R3 <-> NFRA_ONTOLOGY2, CTO~Z two-stage ruling 184541Z;
+    ~C canonized the (rail,grain,plane,scope) type_tuple @5d1161d70). STAGE 1 (the output-contract member)
+    enforces PRESENCE of a declaration; THIS enforces that declared VALUES are in the CANONICAL vocabulary --
+    an out-of-vocab rail/grain/plane/scope renders a LOUD gate fail, never a silent parallel term (the
+    denominator-is-its-own-config class, closed at the value layer). The vocabulary is read from the rule
+    bank canonical_source, so it tracks ontology law automatically; DORMANT (pass) if the type_tuple is
+    absent (pre-canonization) so it never false-blocks. Fires when the contract file or the rule bank is
+    touched. DETERMINISTIC; ramp-exempt; fail-closed."""
+    norm = _norm(files)
+    touched = (any(f.endswith(_OUTPUT_CONTRACT_FILE) for f in norm)
+               or any(f.endswith(_RULE_BANK_REL) for f in norm)
+               or any("/.tools/" in "/" + f for f in norm)
+               or any(f.endswith(s) for s in _REGISTRATION_SUBSTRATE for f in norm))
+    if not touched:
+        return 0
+
+    try:
+        import importlib
+        import sys as _sys
+        if str(_WORKSPACE) not in _sys.path:
+            _sys.path.insert(0, str(_WORKSPACE))
+        oc = importlib.import_module("org.modules.graph.comp_output_contract")
+        oc.canon_vocab.cache_clear()
+        vocab = oc.canon_vocab()
+        if not vocab:
+            print("  [manifest-check] stage-2 vocab invariant DORMANT: ONTOLOGY2 type_tuple not present "
+                  "in the rule bank canonical_source -- value-validation inactive (pre-canonization).")
+            return 0
+        violations = oc.validate_all_declarations()
+    except Exception as e:  # fail-closed
+        print(f"\nBLOCKED: the stage-2 vocab invariant could not be evaluated ({e}).\n"
+              f"  An unevaluable value-validation gate does not read as 'passed'.")
+        return 1
+
+    if not violations:
+        print(f"  [manifest-check] stage-2 vocab invariant PASS: {len(oc.declared_tools())} declared "
+              f"tool(s), all rail/grain/plane/scope values in the canon enums "
+              f"({', '.join(sorted(vocab))}).")
+        return 0
+
+    print("\nBLOCKED: output-contract declaration(s) carry OUT-OF-CANON vocabulary "
+          "(ONTOLOGY2 type_tuple @ rule bank canonical_source):")
+    for tool, vs in violations.items():
+        for v in vs:
+            print(f"  - {v}")
+    print("  FIX: use a token from the canon enum, or (if the vocabulary must grow) extend the rule bank\n"
+          "  type_tuple.<field>.enum via LAW-2 explicit-promotion-with-a-printed-denominator (~C's lane).")
+    return 1
+
+
 def _completeness_invariants(files) -> int:
     """The family. Any member blocking blocks the commit. See the design comment above."""
     for member in (_routable_invariant, _placement_invariant, _selfroute_invariant,
-                   _existence_invariant, _registration_invariant, _output_contract_invariant):
+                   _existence_invariant, _registration_invariant, _output_contract_invariant,
+                   _stage2_vocab_invariant):
         if member(files):
             return 1
     return 0

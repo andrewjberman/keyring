@@ -202,5 +202,31 @@ def test_stage2_absent_field_is_not_a_violation():
     assert oc.validate_declaration_vocab("comp-blast") == []
 
 
+def test_stage2_all_tools_have_grain_and_scope_post_reconcile():
+    """After the one-pass reconcile (canon signal @5d1161d70): every declared tool carries grain+scope,
+    and every value is in-canon (violations {})."""
+    oc.canon_vocab.cache_clear()
+    if not oc.canon_vocab():
+        return  # dormant
+    for t in oc.declared_tools():
+        c = oc.contract_for(t)
+        assert "grain" in c and "scope" in c, f"{t} missing grain/scope after reconcile"
+    assert oc.validate_all_declarations() == {}
+
+
+def test_stage2_gate_member_blocks_out_of_canon(monkeypatch):
+    """The comp-manifest-check stage-2 member: PASS on the live surface, BLOCK on an out-of-canon value."""
+    from org.modules.graph import manifest_check_cli as mc
+    from org.modules.graph import comp_output_contract as _oc
+    touch = ["org/modules/graph/comp-output-contracts.yaml"]
+    _oc.canon_vocab.cache_clear()
+    if not _oc.canon_vocab():
+        return  # dormant -> the member passes; nothing to assert about values
+    assert mc._stage2_vocab_invariant(touch) == 0  # live surface is clean
+    monkeypatch.setattr(_oc, "validate_all_declarations",
+                        lambda: {"comp-x": ["comp-x.scope='galaxy' NOT in canon scope enum [...]"]})
+    assert mc._stage2_vocab_invariant(touch) == 1  # out-of-canon -> BLOCK
+
+
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__, "-q"]))
