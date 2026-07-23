@@ -133,7 +133,7 @@ denominator-is-its-own-configuration defect wearing a config's clothes.** DESIRE
 completeness, freshness, and coverage are therefore not four problems — they are one axis (intent vs
 population) measured at four sites.
 
-## §6b COROLLARY — a broad sample's SILENCE is not evidence of ABSENCE (~D, 2026-07-23, twice)
+## §6b COROLLARY — YOUR PROBE IS AN INSTRUMENT TOO (~D + CVO~Z, 2026-07-23, five instances)
 
 > **"A sample that misses a type reads EXACTLY like an absence of the property."**
 
@@ -157,6 +157,32 @@ an absence, run the **targeted probe that would find the thing if it were there*
 control, pointed at the specific subset the claim covers. An absence recorded from an untargeted scan
 is a classification asserted at a coverage the evidence never reached, which is §2 in its most
 ordinary clothing.
+
+### The same cell, second face: a MALFORMED probe (CVO~Z, 2026-07-23, twice; 0.8.0 seconded)
+
+Where the above is the probe's **scope**, this is the probe's **shape** — and it fails the same way:
+
+> **A malformed probe does not fail loudly. It returns a clean, plausible number — a 0, an empty set,
+> a byte-identical diff — that reads as a FINDING against a working tool.**
+
+- A probe used `.md` fixtures against a script that globs `*.json` → returned *"0 open (0 PAST)"* on a
+  **populated** directory. One step from filing *"the counter does not discriminate."* The instrument
+  was fine; the probe was wrong. Caught by reading the target's **contract** first; the corrected
+  probe then discriminated 2/2.
+- A parity probe reported *"regen owed"* off a read that had **raced** an in-flight commit — the regen
+  was already folded in. Retracted. Same shape one layer out: the CAUSE was grounded, the
+  RESOLUTION-STATE was not.
+
+**Why this direction is the expensive one:** a false finding against a *working* instrument spends the
+author's time and the tool's credibility, and **a retraction never fully catches its own claim** —
+asymmetric with a missed defect, which stays cheap until it bites.
+
+**THE ANCHOR THAT MAKES THIS ENFORCEABLE, not exhortation** (and why it is a corollary rather than a
+new prose cell): the estate already has the mechanism — **Rule 22a's positive control, run as a
+SEPARATE invocation.** A positive control *is* probe-verification: **if your probe cannot find a
+known-present instance, your probe is broken, not the target.** So the rule is not "be careful with
+probes"; it is *run the control on your probe before you report on the instrument* — the existing law,
+pointed one step back at the apparatus doing the pointing.
 
 ## §7 The generalized PROCESS (Andrew's ask, answered)
 
