@@ -138,4 +138,25 @@ SERVED artifact, name source+commit; if same producer, disparity=0 by constructi
 the common trading-day range, abs+% deltas per-date + per-model + aggregate model line, VERDICT on any obvious
 disparity w/ grounded mechanism if material. Diagnostic, not a serve step. Result -> COO -> Andrew.
 
-**Delete/close when: every MDPF leg is sourced per this map, backfilled full-lookback, VARIANCE-VALIDATED, verified, and serving.**  -- `2.0.0_SA_COO`, updated ~15:4xZ (sequencing=HOLD + variance analysis ordered)
+## VARIANCE VERDICT CONFIRMED + NEW METHOD **ACCEPTED** @~15:5xZ (Andrew)
+DS delivered @154510Z (overlay committed @720433fb3). COO independently reproduced the load-bearing pieces (NOT transcribed):
+- **Legacy (served) side byte-confirmed** (read opal-data-portal-v2/platinum/mdpf/aggregate_aua_timeseries.json):
+  49financial model line @2025-01-30 = **$458,760,247.71** (DS's max-divergence served value, EXACT); model_aua ==
+  5-core sum to the cent; `meta.backfill_methods` DECLARES the 3 rederived-estimate eras (029_v0_9_rps_calibrated /
+  031_v0_9_2024depth / process_derived_v0_8) -- the legacy display SELF-DECLARES as a multi-era estimate.
+- **FRONTIER TIE reproduced from the SOURCE parquet** (fact_model_aum_daily day=2026-07-17): new sum(closing_equity)
+  = **$1,420,741,829.72** vs served 5-core+SMA **$1,422,045,203.59** = **-$1,303,373.87 (-0.09%)**, matching DS's
+  -$1,303,699.58 within $326. Where the legacy is REAL (05-18+), the new method TIES it -> the new method is NOT
+  mis-parsing/mis-calibrating the source.
+- The +41.5% deep-history divergence ($458.76M served vs $649.13M new @2025-01-30) is the LEGACY ESTIMATE
+  understating; divergence collapses EXACTLY at the legacy's own estimate->real boundary.
+**ANDREW VERBATIM (~15:5xZ):** "No the new method is acceptable, I think it is more likely the old method was inexact,
+I'm having DS analyze why the old and new methods converge, and having them read over the old methodology docs to try
+and understand the historical divergence (as that divergence converged to being very close in more recent periods)."
+**=> NEW METHOD ACCEPTED as the port target (port DIRECTION settled; serve TIMING unchanged = still HELD for full backfill).**
+**FOLLOW-ON (DS, ANDREW-DISPATCHED):** analyze WHY old/new converge + read the old methodology docs to explain the
+historical divergence. Result -> COO -> Andrew. **Honest boundary retained:** deep-history real values rest on the
+vendor series (no 2nd independent real source pre-05-18; DS's 07-14-vs-07-23 0-restatement control = stability evidence);
+closing_equity value-semantics still await Andrew's formal D1 ruling (the frontier tie corroborates the field).
+
+**Delete/close when: every MDPF leg is sourced per this map, backfilled full-lookback, VARIANCE-VALIDATED (done, new method accepted), verified, and serving.**  -- `2.0.0_SA_COO`, updated ~15:5xZ (variance CONFIRMED + new method ACCEPTED)
