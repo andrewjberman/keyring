@@ -24618,3 +24618,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-23Z | 0.8.0_AE_CloudComp | (bundle+sysparity) | comp-constants/comp-which/comp-validate/comp-system/comp-pulse | item-7 complete-axis live (3 true findings first fire), 6 sysparity dispositions, interim +3 bridge; suites 23/23 | PASS |
 | 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-23Z | 0.5.0_AE_OpalETL | MDPF_3FIRMS.3F-B2 | (none -- manual) | record-only window (TO reconcile+close, MCP coord); auto-gates surface-check OK + comp-pulse CLEAN on @3a21e02d8/@80435169b | N/A |
+| 2026-07-23Z | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-23Z | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
