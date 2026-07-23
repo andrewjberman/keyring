@@ -117,6 +117,7 @@ def sval(item, key, default=None):
 def tier_a(rows_by_date: dict[str, list[dict]]) -> dict:
     """STRUCTURAL, FULL COVERAGE. Every check prints its denominator."""
     findings = {
+        "A0_schema_drift": [],  # the instrument-that-cannot-fail guard -- see note below
         "A2_circular": [],
         "A3_labels": [],
         "A4_global_legs": [],
@@ -133,6 +134,9 @@ def tier_a(rows_by_date: dict[str, list[dict]]) -> dict:
         cohort_union.update(ids)
         for r in rows:
             cid = sval(r, "cohort_id")
+            # Resolve the completeness field ONCE up front (the re-sourced walk renamed
+            # coverage_state -> completeness). A0 below fails loudly if NEITHER is present.
+            cov = sval(r, "completeness", sval(r, "coverage_state"))
             # A2 -- circular-read fix
             probe = " ".join(str(sval(r, k, "")) for k in ("source_field", "basis", "as_of_basis"))
             if any(m in probe for m in CIRCULAR_MARKERS):
@@ -145,8 +149,16 @@ def tier_a(rows_by_date: dict[str, list[dict]]) -> dict:
             vs = sval(r, "vintage_state")
             if vs not in ("fresh", "stale", "missing", "rolled_forward", None):
                 findings["A3_labels"].append((d, cid, "vintage_state", vs))
-            if sval(r, "coverage_state") not in ("complete", "incomplete", "absent", None):
-                findings["A3_labels"].append((d, cid, "coverage_state", sval(r, "coverage_state")))
+            # `cov` resolved above (completeness | coverage_state). The re-sourced walk added
+            # `unknown` (a leg with no source partition on this date -- e.g. Cottonwood pre-2026-04)
+            # and `partial_N_of_M` (global rows). Both are LEGITIMATE states, not label defects.
+            # Flagged one as phantom on 2026-07-23 (Cottonwood correctly-absent read as an A3 error);
+            # widened the allowed set rather than report a defect on a correctly-absent leg.
+            cov_ok = cov in ("complete", "incomplete", "absent", "unknown", None) or (
+                isinstance(cov, str) and cov.startswith("partial_")
+            )
+            if not cov_ok:
+                findings["A3_labels"].append((d, cid, "completeness/coverage_state", cov))
             # A7 -- OBSERVATION, not a verdict: a rolled-forward value is a CARRY. Under the D1
             # absolute-reality + no-silent-carry law a carry must be LABELED, never silent. This
             # bucket reports them for a human read; it does NOT assert a defect.
@@ -156,11 +168,28 @@ def tier_a(rows_by_date: dict[str, list[dict]]) -> dict:
             if cid and ("global" in cid or cid.startswith("_total__")):
                 if r.get("legs_present") is None:
                     findings["A4_global_legs"].append((d, cid, "legs_present MISSING"))
+            # --- A0 SCHEMA GUARD -------------------------------------------------------------
+            # `cov` resolved at loop top. A checker that reads a field which NO LONGER EXISTS
+            # returns None for every row and PASSES EVERYTHING -- the instrument-that-cannot-fail
+            # class. FAIL LOUDLY when NEITHER name is present rather than silently green.
+            # Caught 2026-07-23 by reading the walk's bytes, not by trusting this tool.
+            if cov is None:
+                findings["A0_schema_drift"].append(
+                    (d, cid, "NEITHER `completeness` NOR `coverage_state` present -- checker is BLIND here")
+                )
+
             # A6 -- honest-absent must not be rendered as a value
-            cov = sval(r, "coverage_state")
             val = sval(r, "value")
+            absent_like = cov in ("absent", "unknown") or (isinstance(cov, str) and cov.startswith("partial_"))
             if cov == "absent" and val not in (None, "", "0", "0.0"):
-                findings["A6_fabricated"].append((d, cid, f"coverage=absent but value={val}"))
+                findings["A6_fabricated"].append((d, cid, f"completeness=absent but value={val}"))
+            # a partial/unknown leg carrying a value is only legal if the row DECLARES what it contains
+            if absent_like and val not in (None, "") and r.get("legs_present") is None and cid and (
+                "global" in cid or cid.startswith("_total__")
+            ):
+                findings["A6_fabricated"].append(
+                    (d, cid, f"completeness={cov} carries value={val} with NO legs_present declaration")
+                )
 
     return {
         "denominator": {
@@ -183,10 +212,25 @@ def negative_control(rows_by_date: dict[str, list[dict]]) -> str:
         "coverage_state": {"S": "absent"},
         "value": {"N": "123456.78"},  # absent-but-valued == fabricated
     }
-    probe = tier_a({"1999-01-01": [fake]})
+    # a SECOND control row carrying NEITHER schema field -- the A0 blind-checker guard MUST fire on it
+    schema_blind = {
+        "run_date": {"S": "1999-01-02"},
+        "cohort_id": {"S": "_control__noschema"},
+        "value": {"N": "1.00"},
+    }
+    probe = tier_a({"1999-01-01": [fake], "1999-01-02": [schema_blind]})
     f = probe["findings"]
-    ok = bool(f["A2_circular"]) and bool(f["A6_fabricated"]) and bool(f["A4_global_legs"])
-    return "PASS (control row correctly flagged on A2+A4+A6)" if ok else "FAIL -- HARNESS IS BLIND, DO NOT TRUST IT"
+    ok = (
+        bool(f["A2_circular"])
+        and bool(f["A6_fabricated"])
+        and bool(f["A4_global_legs"])
+        and bool(f["A0_schema_drift"])  # proves the tool detects its own blindness
+    )
+    return (
+        "PASS (control flagged on A0+A2+A4+A6 -- incl. schema-blindness self-detection)"
+        if ok
+        else "FAIL -- HARNESS IS BLIND, DO NOT TRUST IT"
+    )
 
 
 def main() -> int:
