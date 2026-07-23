@@ -118,5 +118,35 @@ The served band is yellow-dashed end-to-end BY DESIGN, forever — not transitio
 - qt4 161K -> 77.8K -> 67K around 07-14/15 — OBSERVED, not adjudicated. The silver drift-boundary
   adjudicates schema; the count regime wants DS's read first.
 
+### I. GLOBAL AGGREGATION — ACTIVE (Andrew-direct @050002Z, dispatched now, dependency-scoped)
+- **Andrew-direct** (via CTO terminal, recorded `andrew_direct_20260723T0500Z...`): Global view aggregation
+  is the next target after tonight's Cottonwood page. Dependency-scoped (G8): inputs = signed schema
+  `@be91775dd` + the cottonwood artifacts already serving; builds now.
+- **DS** (dispatched @050005Z): Global aggregator — point_class from partner/cohort provenance (any-cohort),
+  additive, fee-basis 49F+model-INF+model-COT (section-1.3), R-4 current-snapshot guards, Cottonwood folds
+  on serving artifacts. Staged-only, ETag control, zero bronze/silver write.
+- **DE** (dispatched @050014Z): Global view — mixed-provenance overlay windows, radial+bell-curve gaining
+  Cottonwood per fee-basis, honest-absent/labeled inherited; global-mdpf accessor branch inherits derived
+  class (confirm vs real artifact).
+- **Gate (CTO CONFIRMED @050048Z):** MEASURED Global fold serves on tonight's co-sign pattern VERBATIM
+  (CTO co-signs with conditions; COO counters at the ARTIFACT — canonical key-set + count-axis + identities,
+  verified-not-transcribed) PLUS the Global-specific law added to MY counter-sign set: **fee_basis_aum ==
+  full-49F + model-INF + model-COT TO THE CENT on every date, basis labels present, a label-absent artifact
+  FAILS** (3F-G4's acceptance line, live at the co-sign not a later gated TO). Interpolated/backtest bands
+  ride their OWN delta+serve gates, NOT folded into the measured Global serve. Sequencing: DS aggregator ->
+  DE render -> co-sign pair at the artifact -> serve.
+
+### J. BACKTEST PROJECTION — HELD for CRO design (do NOT decompose yet)
+- **Andrew-direct** (same relay): second next target. DESIGN tasked to CRO (CRO -> CVO tandem -> COO
+  decomposition). Envelope (PROVISIONAL — CTO's read flagged to Andrew for correction): a THIRD provenance
+  class `backtest_projection` (additive enum), composition-derived hypothetical pre-creation series,
+  composition-vintage stated per date, NEVER blended with actuals classes, its own visual treatment.
+- **COO HOLD:** do not decompose until the CRO->CVO design lands (post Andrew-confirm on what "backtest
+  projection" means). DE leaves a seam for the third class, builds nothing on it.
+- **DE SEAM (named @050051Z, safe-by-default):** DE's PointClass enum is CLOSED
+  ('measured'|'interpolated_estimate'|'absent'); the accessor renders any UNKNOWN enum as
+  interpolated_estimate + loud warn. So a backtest point renders conservative + labeled (never unlabeled)
+  until the enum + band treatment are extended DELIBERATELY by ruling. Safe by default, extended by ruling.
+
 ---
-**Delete/prune each item as it closes. This file is the carrier, not the work.**  -- `2.0.0_SA_COO`, ~04:50Z
+**Delete/prune each item as it closes. This file is the carrier, not the work.**  -- `2.0.0_SA_COO`, ~05:00Z
