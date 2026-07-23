@@ -24295,3 +24295,67 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-23 1.0.0_SA_CTO (0044-0440Z): comp-pulse+surface-check rode every safe-commit (2 informative HOLDs read); comp-blast + pipescript-io re-verified live (caveat closures v1.16/v1.18); comp-routes trace re-verified. Sovereign-tempo execution window; Rule-20 graph checks rode the implementing lanes' TOs.
 | 2026-07-23 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-23/g... | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/SCHEMA_SIGNOFF_GLOBAL_INTERPOL... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/silver/cot_silver_merg... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/cot/scripts/silver/cot_silver_merge.py | FAIL |
+| 2026-07-23 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-23 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_qt5_tempo... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/tests/test_int... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/gold/tests/test_interpolated_backfill_mutants.py | PASS |
+| 2026-07-23 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-23 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_qt5_tempo... | PASS |
+| 2026-07-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/MORNING_BAT... | PASS |
+| 2026-07-23 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/MORNING_BATCH_20260723_coordination.md | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/build_cottonwo... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/gold/build_cottonwood_interpolated_backfill.py data... | PASS |
+| 2026-07-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/MORNING_BAT... | PASS |
+| 2026-07-23 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/MORNING_BATCH_20260723_coordination.md | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/audit/archive/2026-07-23T045244Z/or... | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/audit/archive/2026-07-23T045244Z/org_git-author-override-audit.log ... | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/audit/archive/.baseline | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/audit/archive/.baseline | PASS |
+| 2026-07-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/MORNING_BAT... | PASS |
+| 2026-07-23 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/MORNING_BATCH_20260723_coordination.md org/... | PASS |
+| 2026-07-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/MORNING_BAT... | PASS |
+| 2026-07-23 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/MORNING_BATCH_20260723_coordination.md org/... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/COTT... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/COTTONWOOD_BACKTEST_PROJECTION_DESIG... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-23/3f_canonical_p... | PASS |
+| 2026-07-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/MORNING_BAT... | PASS |
+| 2026-07-23 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/MORNING_BATCH_20260723_coordination.md org/... | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/SCHEMA_SIGNOFF_GLOBAL_INTERPOL... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_account... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_account_distribution.py data/mdpf/scrip... | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/TANDEM_REVIEW_BACKTEST_PROJECT... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-23 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-23 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/GLOBAL_INTERPOLATED_AGGREGATIO... | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/TANDEM_REVIEW_BACKTEST_PROJECT... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/build_cottonwo... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/gold/build_cottonwood_mdpf_pair.py data/mdpf/script... | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-23/3f_canonical_p... | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/SCHEMA_SIGNOFF_GLOBAL_INTERPOL... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/tests/test_globa... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/tests/test_global_fold_flag2.py | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-23/3f_canonical_p... | PASS |
+| 2026-07-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/MORNING_BAT... | PASS |
+| 2026-07-23 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/MORNING_BATCH_20260723_coordination.md | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-23 | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast law11-utc-stamp-probe | PASS (SYNTHETIC TEST FIXTURE) |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/mo... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/modules/graph/comp_log_auto.py | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_log_auto.py org/compiler-tools-log.md | PASS |

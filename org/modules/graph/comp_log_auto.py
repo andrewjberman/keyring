@@ -26,7 +26,7 @@ from __future__ import annotations
 import os
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
@@ -52,7 +52,7 @@ def _disclose_drop(workspace: Optional[Path], tool: str, reason: str) -> None:
     GRADED + NEVER-RAISES (the 'never disrupt the caller' invariant is preserved): marker file -> stderr ->
     last-resort pass. The bare pass is reachable ONLY after a visible signal (stderr) was attempted, so the
     drop is never fully silent. Record format: ISO-ts|tool|reason (ASCII, one line)."""
-    ts = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+    ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")  # Law-11: explicit Z
     line = f"{ts}|{tool}|{reason}\n"
     if workspace is not None:
         try:
@@ -224,7 +224,12 @@ def _append_log(workspace: Path, tool: str, args: str, exit_code: int,
         _disclose_drop(workspace, tool, "log-file-absent")
         return
 
-    date = datetime.now().strftime("%Y-%m-%d")
+    # UTC, Z-SUFFIXED (Law-11, CVO~Z tick-10 055547Z): the bare local date filed
+    # 0113-0326Z rows under the PRIOR day and false-undercounted a live verify
+    # (today-filter read 15 rows as 4). Z-suffix makes every row SELF-LABELING:
+    # no-Z rows (pre-2026-07-23) are known-LOCAL(UTC-4), Z rows are UTC -- the
+    # axis discontinuity is machine-discriminable instead of silent.
+    date = datetime.now(timezone.utc).strftime("%Y-%m-%dZ")
     result = _classify_result(tool, exit_code)
 
     # Synthetic-fixture marking (NFRA_TOOLCHECK P2, log-signal-honesty): a DELIBERATE test-fixture run --
