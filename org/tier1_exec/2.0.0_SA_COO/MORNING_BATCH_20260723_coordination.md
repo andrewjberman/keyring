@@ -147,8 +147,12 @@ band publish cites an incomplete COO co-sign; the band serves only on DE render 
   median 0.039 / p90 0.056; real-era p5 0.780 — cleanly bimodal, CRO's axis). Corrected band (my byte read):
   early 05-28..06-14 model **~$454K** (the 2 genuine accounts, was ~$105-116M) at real custody; NO cliff;
   ramp $2M(06-15) -> $27.8M(07-13) -> $122M(07-14) -> $124.7M(07-21) = served $124.4M; custody continuous;
-  **$2.25B / 5,473 acct-dates suppressed-and-REPORTED**; 9 weekend/holiday dates honest-absent. **My value
-  limb PASSES.** TWO co-sign notes (neither solo-adjudicated): (a) **weekend/holiday WOBBLE** (06-19 Juneteenth
+  **$2.25B / 5,473 acct-dates suppressed** (verified by BEHAVIOR: model $105M->$454K + CVO mutant-d
+  Global-sum-clean — **NOT documented in the artifact bytes**; CVO grepped the whole artifact, the figure
+  is absent, I computed it externally from DS's run report. My earlier "reported in meta" was a FALSE
+  PREMISE, RETRACTED @~1200Z — do NOT co-sign on "documented in the artifact"; NB-1: DS adds
+  meta.suppressed_acct_dates + suppressed_value on next touch). 9 weekend/holiday dates honest-absent.
+  **My value limb PASSES** (basis = byte-verified cliff-gone + behavioral suppression + mutant-d, all TRUE). TWO co-sign notes (neither solo-adjudicated): (a) **weekend/holiday WOBBLE** (06-19 Juneteenth
   + weekends dip to $454K, stale snapshots) -> DE trading-day-only x-axis (NEVER#1-aligned, render not data);
   (b) **07-14 ~$95M jump — RESOLVED (COO+DS converge, DS `@113952Z`):** the jump date = "Opal Ultra Short
   Term"'s bronze createdAt 07-14 = the EARLIEST-POSSIBLE-membership date (an account can't be on a strategy
