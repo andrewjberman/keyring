@@ -182,53 +182,51 @@ def _is_duplicate(workspace: Path, dedup_key: str, window_secs: int = 30) -> boo
     return False
 
 
-# NFRA_TOOLCHECK.P1/P2 (CTO refinement 2026-07-08, 0.8.0_AE_CloudComp~D): a nonzero exit is NOT a tool
-# FAILURE for a tool whose exit code is a CONTRACTED VERDICT -- a tri-state integrity/parity result, or a
-# gate firing on a real violation. Blanket-mapping nonzero -> "FAIL" (the old line) is what produced the
-# false comp-drift 50% (its exit-2 = UNVERIFIABLE tri-state, working-as-designed, miscounted) and the
-# gate-firing over-count. For these tools a nonzero exit records "VERDICT": result_class() maps an
-# unrecognized label to 0.5-NEUTRAL (not 0.0-fail) AND the raw "| FAIL |" log-mining stops counting it, so
-# both the health USED/EFFECTIVE axis and the fail-% stop miscounting. Regular tools keep PASS/FAIL -- a
-# nonzero IS a failure for a tool with no verdict-exit contract. NOTE (CTO): a genuine crash of a VERDICT
-# tool is indistinguishable from an honest verdict by exit-code alone; "VERDICT" honestly marks the row
-# "not-a-clean-fail" rather than asserting PASS -- it neither hides a crash as success nor libels a working
-# verdict as a failure. Set sourced from the comp-tools.yaml exit-contracts + the NFRA_TOOLCHECK P1 matrix.
-VERDICT_EXIT_TOOLS = frozenset({
-    "comp-drift", "comp-lambdamap", "comp-xray", "comp-parity",          # tri-state (integrity / parity / scope)
-    "comp-validate", "comp-manifest-check", "comp-surface-check", "comp-honesty",  # gate-firing (real violation found)
-    # comp-freshness: exit 1 = real staleness FAIL, exit 2 = UNVERIFIABLE-BASIS (refused, not guessed --
-    # NFRA_INSTDRILL item 5). A tri-state; a nonzero is a contracted verdict, not a tool crash.
-    "comp-freshness", "comp-iam", "comp-trigger",
-    # comp-iam simulate: 1 DENIED-control-proven, 2 conditioned/suspect/unproven (22a). comp-trigger:
-    # 2 could-not-evaluate. Both carry contracted nonzero verdicts, not failures.
-    # INTERIM +3 BRIDGE (gate-approved: main CTO 153359Z via MSTR, ~Z-routed 153440Z). Three
-    # source-confirmed contracts whose miscounted rows (358+59) were polluting live MSBEFF
-    # measurement. BRIDGE ONLY: "a frozen set plus three is still a frozen set" -- the DERIVATION
-    # of this whole set from comp-tools.yaml exit contracts is the gated follow-on, directly
-    # behind this in the bundle tail (conditions (a) registration-invariant join, (b) LOUD
-    # UNKNOWN-CONTRACT class, (c) supersession history + telemetry re-baseline).
-    "comp-pulse",      # rc1 = reflex HITS (comp_pulse.py:691 exit contract), rc2 = map absent
-    "comp-system",     # rc2 = STALE (comp_system.py documented 0/2/1 contract)
-    "comp-constants",  # rc1 = drift found; rc3 = REFUSE (rendered distinctly below)
-})
+# NFRA_MSBEFF.R1R3 / M3 (2026-07-23, 0.8.0_AE_CloudComp): the verdict-set is DERIVED, not frozen.
+#
+# A nonzero exit is NOT a tool FAILURE for a tool whose exit code is a CONTRACTED VERDICT (a tri-state
+# integrity/parity result, a gate firing on a real violation) or a REFUSE (an honest could-not-check).
+# Blanket-mapping nonzero -> "FAIL" (the original line) produced the false comp-drift 50% and the
+# gate-firing over-count; a hand-frozen VERDICT_EXIT_TOOLS set then fixed that but DRIFTED from the source
+# exit contracts silently (the 07-08 freeze + the 07-23 interim +3 were both hand-patches OF that frozen
+# set). The M3 fix RETIRES the frozen set: classify_exit() now DERIVES the class from the enforced-complete
+# output contracts (org/modules/graph/comp-output-contracts.yaml), and comp-manifest-check's output-contract
+# member guarantees no tools_index tool goes undeclared. See comp_output_contract.py + that yaml's header for the
+# full supersession history (condition c) -- do NOT re-freeze a verdict set here or anywhere.
+#
+# UNKNOWN IS NOT A VERDICT (condition b): a tool with no declared contract classifies its nonzero as UNKNOWN
+# (loud, distinct from FAIL), never a defaulted PASS/FAIL. The fail-% miner and health axis must exclude
+# UNKNOWN the same way they exclude VERDICT -- an undeclared tool's contracted nonzero is not a crash.
+#
+# FAIL-HONEST FALLBACK: if the derivation cannot load (yaml/helper unavailable), classification degrades to
+# UNKNOWN for every nonzero rather than silently reverting to the buggy nonzero->FAIL blanket. A dropped
+# derivation is DISCLOSED (never silently swallowed) -- a broken classifier that reads clean is the class
+# this whole project closes.
 
-# Documented REFUSE exits: an honest could-not-check (sovereign guard, registry fail-closed) is a
-# DIFFERENT state from a verdict-about-the-estate -- rendering it VERDICT would launder refusals
-# into findings. Cheap per the gate's "consider ... if cheap"; the derivation generalizes this.
-_REFUSE_EXITS = frozenset({("comp-constants", 3)})
+try:
+    from org.modules.graph import comp_output_contract as _oc
+    _OC_OK = True
+except Exception:  # pragma: no cover -- import-path fallback for direct-script invocation
+    try:
+        import comp_output_contract as _oc  # same-dir import when run as a bare script
+        _OC_OK = True
+    except Exception:
+        _oc = None
+        _OC_OK = False
 
 
 def _classify_result(tool: str, exit_code: int) -> str:
-    """PASS on exit 0; a documented REFUSE exit renders REFUSE; a contracted non-zero VERDICT
-    (tri-state / gate-fired) for a VERDICT_EXIT_TOOL; else FAIL. Single-point fix for the
-    exit-code miscount (was: nonzero -> FAIL for all)."""
+    """PASS on exit 0; else the class DERIVED from the tool's declared output contract
+    (VERDICT / REFUSE / FAIL), or UNKNOWN for an undeclared tool. Fail-honest: if the derivation is
+    unavailable, an undeclared/unresolvable nonzero renders UNKNOWN, never a silent FAIL blanket."""
     if exit_code == 0:
         return "PASS"
-    if (tool, exit_code) in _REFUSE_EXITS:
-        return "REFUSE"
-    if tool in VERDICT_EXIT_TOOLS:
-        return "VERDICT"
-    return "FAIL"
+    if _OC_OK and _oc is not None:
+        try:
+            return _oc.classify_exit(tool, exit_code)
+        except Exception:
+            return _oc.UNKNOWN if hasattr(_oc, "UNKNOWN") else "UNKNOWN"
+    return "UNKNOWN"
 
 
 def _append_log(workspace: Path, tool: str, args: str, exit_code: int,

@@ -1,0 +1,317 @@
+# comp-output-contracts.yaml -- THE OUTPUT CONTRACT (NFRA_MSBEFF.R1R3, 2026-07-23, 0.8.0_AE_CloudComp)
+#
+# ONE declaration surface, consumed by N tools (gate condition c). Every comp-tool answer draws its
+# COVERAGE line (R1: the denominator scanned + what it structurally CANNOT see) and its PLANE/VINTAGE
+# header (R3: DESIRED-vs-APPLIED / source-vs-projection / graph vintage) from here, and the appender's
+# VERDICT/REFUSE classification (M3) is DERIVED from the exit_codes blocks below -- no frozen list.
+#
+# >>> THIS IS NOT A CURATED SUBSET. <<<  comp-tools.yaml carries ~24 of 83 tools BY DESIGN and its own
+# header says "Do NOT count tools from this file" -- and naming it as the derivation source is exactly the
+# defect this TO closes (it was named by three independent agents INSIDE the TO about that defect; ratified
+# correction to tools_index, MSTR 172141Z, main CTO accepted-in-full no re-gate). THIS file is the OPPOSITE:
+# it is ENFORCED-COMPLETE against tools_index by comp-manifest-check's output-contract invariant -- every
+# tools_index tool MUST appear in `contracts:` OR `pending_declaration:` OR the commit BLOCKS (condition a:
+# a tool cannot register/re-register without declaring its coverage+plane+exit semantics). So the denominator
+# here is not curated, it is gate-guaranteed census-grade -- the same enforced-complete pattern the
+# DISK-IMPLIES-REGISTERED member already applies to comp-coverage-map.yaml.
+#
+# UNKNOWN IS NOT A VERDICT (condition b): a tool in `pending_declaration:` (or absent entirely -- caught by
+# the invariant) renders its coverage/plane line as a LOUD "UNKNOWN (no output contract declared)", and its
+# nonzero exits classify as UNKNOWN, never a silent omission and never a defaulted PASS/FAIL. There is no
+# channel for "I don't know," so not-knowing must render AS not-knowing.
+#
+# SUPERSESSION HISTORY (condition c -- so the next reader does NOT re-freeze this):
+#   This exit-code derivation is the FIX-OF-A-FIX-OF-A-FIX. Lineage of the denominator-is-its-own-config class:
+#     1. M2 (CTO~Z): a census read the wrong artifact.
+#     2. CVO~Z: a census read 2 of 3 mapping surfaces.
+#     3. The appender's FROZEN VERDICT_EXIT_TOOLS set (comp_log_auto.py) -- itself the fix for a prior
+#        nonzero->FAIL blanket miscount (358+59 rows). A frozen set is a hand-maintained denominator; it
+#        drifts from the source contracts silently. The 07-08 freeze + the 2026-07-23 INTERIM +3 (@b62b3a894)
+#        were both correct-at-the-time hand-patches OF that frozen set.
+#     4. This TO's OWN first spec named comp-tools.yaml as the derivation source -- a curated subset -- in the
+#        TO whose subject is that exact class. Caught by the TO's phase-1 if_mismatch clause BEFORE code
+#        (0.8.0_AE 171436Z); re-ruled to tools_index (CTO~Z 171543Z); RE-PLANED AGAIN here to an
+#        enforced-complete sidecar so the ratified tools_index vocabulary stays byte-untouched.
+#   The fix is DERIVATION FROM SOURCE CONTRACTS + a completeness gate, NOT a better-maintained frozen list.
+#   Do not re-freeze a verdict set anywhere. If you add a tool, declare it HERE; the gate will make you.
+#
+# GROUNDING: every exit_source is a file:line confirmed at HEAD 2026-07-23. A line citation without a vintage
+# resolves to different code at different vintages (CLAUDE.md Rule 22) -- re-confirm on any material edit.
+
+version: 1
+last_reviewed: 2026-07-23
+owner: 0.8.0_AE_CloudComp
+enforced_complete_against: graph-call-manifest.yaml::tools_index
+enforcing_gate: comp-manifest-check (output-contract completeness member)
+
+# ---------------------------------------------------------------------------------------------------
+# plane vocabulary:   source | projection | desired | applied | live | mixed | graph-cache
+# vintage vocabulary: free text -- name the artifact + how it is dated (or "n/a -- computed live")
+# exit_codes[rc]:     shorthand `pass` | `fail` | {class: verdict|refuse|pass|fail, meaning: "..."}
+#                     rc "0" defaults to pass; a listed nonzero classifies that rc; an UNLISTED nonzero on a
+#                     DECLARED tool -> fail (an unexpected exit for a contract we know IS a failure).
+# ---------------------------------------------------------------------------------------------------
+
+contracts:
+
+  # ===== VERDICT tools (a contracted nonzero is an ESTATE-VERDICT, not a tool crash) =====
+
+  comp-blast:
+    coverage: "extracted graph edges (AST-derived imports + declared I/O) for the resolved node"
+    blind_spots:
+      - "dynamic / FUNC-key consumers are INVISIBLE (the comp-pipescript dynamic-key miss class) -- 'zero downstream' is 'no EXTRACTED edge', NOT provably no consumer"
+      - "a target outside the indexed node set (e.g. an unindexed component dir) has no edges to trace at all"
+    plane: projection
+    vintage: ".comp-graph/graph.json build (comp-build cache; run comp-blast --check for freshness)"
+    exit_codes:
+      "1": {class: verdict, meaning: "phantom / orphan consumer found (a real finding about the estate)"}
+      "2": {class: verdict, meaning: "graph STALE -- freshness probe (--check)"}
+      "3": {class: refuse,  meaning: "NOT-FOUND: query did not resolve to a node -- nothing was traced, so nothing is concluded (input-resolution refusal, NOT a clean 'nothing-downstream')"}
+    exit_source: "org/modules/graph/cli.py:481,608 (phantom rc1), :199,202 (stale rc2), :263,568,790 (NOT-FOUND rc3) @2026-07-23"
+    rebaseline_note: "the 39 historical rc3 rows were mis-classified FAIL by the frozen set (comp-blast was absent from it); they are REFUSE -- a named phantom that did not resolve, not a tool failure."
+
+  comp-iam:
+    coverage: "boto3 call sites (AST) vs IAM grants; DESIRED modes parse Terraform only"
+    blind_spots:
+      - "DESIRED plane is STRUCTURALLY BLIND to AWS-managed and unmanaged/console grants (only `comp-iam reconcile` / the live-derive modes overlay APPLIED)"
+      - "models (action), NEVER (action, resource) -- a role holding an action on ANY resource reads GRANTED for EVERY resource; a new bucket/table/ARN needs `aws iam simulate-principal-policy --resource-arns <exact key>`"
+    plane: desired
+    vintage: "parsed infra/*.tf at working-tree HEAD (DESIRED); live modes carry their own LIVE PROVENANCE line + TTL"
+    by_subcommand:
+      reconcile: {plane: mixed,  vintage: "TF DESIRED overlaid on a comp-aws live derive (age/TTL printed)"}
+      simulate:  {plane: applied, vintage: "live aws iam simulate-principal-policy (Rule 22a: one --resource-arns per call)"}
+    exit_codes:
+      "1": {class: verdict, meaning: "gap / drift / flagged / DENIED-control-proven (Rule 22a simulate)"}
+      "2": {class: verdict, meaning: "conditioned / suspect / could-not-prove-GRANTED (Rule 22a)"}
+      "3": {class: refuse,  meaning: "COVERAGE REFUSAL -- no readable live derive, or the derive snapshot is STALE past TTL: 'nothing was compared, so nothing is concluded'"}
+    exit_source: "org/modules/graph/iam_cli.py:847,925 (verdict rc1), :563-682 (rc2), :858,900 ('COVERAGE refusal' / 'REFUSED: LIVE-plane report NOT PRODUCED' rc3) @2026-07-23"
+    rebaseline_note: "DERIVATION CORRECTION: the frozen set had comp-iam in VERDICT_EXIT_TOOLS, mapping ALL nonzero (incl. rc3) to VERDICT. rc3 is a documented COVERAGE REFUSAL; classing it VERDICT launders a refusal into a finding -- the exact thing the REFUSE class exists to stop. 12 historical rc3 rows re-verdict VERDICT->REFUSE. This is the derivation catching a miscount the hardcode could not."
+
+  comp-pulse:
+    coverage: "the estate's vital-signs map (hot/cold/evolving/danger/phantom-limbs) + the pre-commit risk reflex over the diff"
+    blind_spots:
+      - "vital signs are derived from git history + the graph cache -- a resource with no commits and no extracted edges is invisible to the map"
+    plane: projection
+    vintage: "pulse map (auto-refreshed on staleness; header prints map age vs TTL)"
+    exit_codes:
+      "1": {class: verdict, meaning: "risk-reflex HITS on the diff (real risk surfaced)"}
+      "2": {class: verdict, meaning: "pulse map absent"}
+    exit_source: "org/modules/graph/comp_pulse.py:691 (rc1 reflex hits); rc2 map-absent (documented contract) @2026-07-23"
+
+  comp-system:
+    coverage: "infra/system/ + infra/system/sdk/ representation vs the live estate (the parity surface)"
+    blind_spots:
+      - "checks the system-model files against their generator -- a live-estate resource absent from BOTH is not surfaced here (that is comp-aws/comp-freshness territory)"
+    plane: desired
+    vintage: "infra/system/ working-tree state vs its regenerator (0/2/1 documented contract)"
+    exit_codes:
+      "1": {class: verdict, meaning: "drift found"}
+      "2": {class: verdict, meaning: "STALE (system model behind the estate)"}
+    exit_source: "org/modules/graph/comp_system.py documented 0=current / 2=stale / 1=error contract @2026-07-23"
+
+  comp-constants:
+    coverage: "seeded constant/firm-registry values vs the live/config canonical for the queried firm"
+    blind_spots:
+      - "compares against the SEEDED constant set (comp-constants-seed-*.yaml) + firm_registry.json -- a value with no seed entry is not checked"
+    plane: mixed
+    vintage: "seed yamls (committed) vs live-site / config canonical at run time"
+    exit_codes:
+      "1": {class: verdict, meaning: "drift found (a seeded constant disagrees with canonical)"}
+      "3": {class: refuse,  meaning: "REFUSE -- sovereign-hold / registry fail-closed: an honest could-not-check, NOT a verdict about the estate"}
+    exit_source: "org/modules/graph/comp_constants_cli.py (rc1 drift, rc3 refuse) @2026-07-23; carried from the gate-approved interim @b62b3a894"
+
+  comp-drift:
+    coverage: "the cross-seam propagation topology (local->git->cloud->nessie->kuzu->iceberg->trino->served) per drift-topology.yaml"
+    blind_spots:
+      - "a seam not in drift-topology.yaml is UNGUARDED and invisible (comp-drift coverage names the gap); cost-guarded live/network seams need --deep or a scoped <target>"
+    plane: mixed
+    vintage: "orchestrates each seam engine at its own vintage; never silently MATCHes an unreadable seam"
+    exit_codes:
+      "1": {class: verdict, meaning: "integrity break (a seam failed parity)"}
+      "2": {class: verdict, meaning: "UNVERIFIABLE -- a seam was unreadable / cost-guarded (tri-state, never a false-clean)"}
+    exit_source: "comp-tools.yaml comp-drift exit contract (0 clean / 1 integrity-break / 2 UNVERIFIABLE) @2026-07-23"
+
+  comp-lambdamap:
+    coverage: "declared Lambda->handler->trigger wiring vs live (parity axis)"
+    blind_spots:
+      - "parity is over the mapped Lambda set; a function outside the map is not compared"
+    plane: mixed
+    vintage: "TF/source declared vs live describe (tri-state parity)"
+    exit_codes:
+      "1": {class: verdict, meaning: "parity break"}
+      "2": {class: verdict, meaning: "UNVERIFIABLE / scope"}
+    exit_source: "NFRA_TOOLCHECK P1 tri-state matrix (integrity/parity/scope) @2026-07-23"
+
+  comp-parity:
+    coverage: "the two sides of the declared parity comparison for the queried target"
+    blind_spots:
+      - "compares the two declared sides only; a field on neither side is not surfaced"
+    plane: mixed
+    vintage: "per-side at each side's own vintage (tri-state)"
+    exit_codes:
+      "1": {class: verdict, meaning: "parity break"}
+      "2": {class: verdict, meaning: "UNVERIFIABLE / scope"}
+    exit_source: "NFRA_TOOLCHECK P1 tri-state matrix @2026-07-23"
+
+  comp-xray:
+    coverage: "value-motion / freeze derivation on the queried served S3 key (value axis x freshness axis)"
+    blind_spots:
+      - "reasons about ONE served key's value+version timelines; upstream cause is not traced here"
+    plane: applied
+    vintage: "live S3 object + its version history at run time"
+    exit_codes:
+      "1": {class: verdict, meaning: "frozen / motion finding"}
+      "2": {class: verdict, meaning: "UNVERIFIABLE / scope"}
+    exit_source: "NFRA_TOOLCHECK P1 tri-state matrix (frozen-vs-fresh derivation) @2026-07-23"
+
+  comp-validate:
+    coverage: "the configured ERROR/WARN checks for the given gold script_id vs the supplied --artifact"
+    blind_spots:
+      - "a script_id with NO validate config asserts NOTHING (NO_CONFIG/ZERO_CHECKS is UNVALIDATED, not a pass); WARN-only failures do not block"
+    plane: applied
+    vintage: "the artifact file supplied at run time vs its gold_validate_config.yaml"
+    exit_codes:
+      "1": {class: verdict, meaning: "an ERROR-severity check FAILED on the artifact (a real invariant violation)"}
+    exit_source: "org/modules/graph/validate_cli.py:13-16 docstring (0 all-pass / 1 ERROR-fail) @2026-07-23"
+
+  comp-manifest-check:
+    coverage: "changed files vs the graph-call manifest detection surface + the completeness invariant family"
+    blind_spots:
+      - "scans the CHANGED pathspec for non-canonical graph access; a pre-existing violation in an untouched file is not re-flagged"
+    plane: desired
+    vintage: "working-tree changed files vs graph-call-manifest.yaml at HEAD"
+    exit_codes:
+      "1": {class: verdict, meaning: "a gate member fired (real violation / incompleteness found)"}
+      "2": {class: verdict, meaning: "usage / could-not-evaluate (fail-closed)"}
+    exit_source: "manifest_check_cli.py completeness family (gate-firing) @2026-07-23"
+
+  comp-surface-check:
+    coverage: "the critical-surfaces watch list (critical-surfaces.yaml) touched by the change"
+    blind_spots:
+      - "ADVISORY ONLY -- it cannot block; and it is structurally blind to portal/ submodule surfaces (safe-commit cannot see them). Silence is NOT a pass (CLAUDE.md Rule 20)"
+    plane: desired
+    vintage: "changed files vs critical-surfaces.yaml at HEAD"
+    exit_codes:
+      "1": {class: verdict, meaning: "a critical surface finding"}
+      "2": {class: verdict, meaning: "SEV1 critical finding (still advisory -- prints, does not block)"}
+    exit_source: "NFRA_TOOLCHECK P1 gate-firing matrix; LD-0273 (advisory-cannot-block) @2026-07-23"
+
+  comp-honesty:
+    coverage: "the honesty checks over the queried surface (claim-vs-implementation drift)"
+    blind_spots:
+      - "checks the declared honesty rules; a drift class with no rule is not surfaced"
+    plane: desired
+    vintage: "source/record at HEAD"
+    exit_codes:
+      "1": {class: verdict, meaning: "honesty finding"}
+      "2": {class: verdict, meaning: "UNVERIFIABLE / scope"}
+    exit_source: "NFRA_TOOLCHECK P1 gate-firing matrix @2026-07-23"
+
+  comp-freshness:
+    coverage: "the S3/DDB artifacts declared in the freshness chain manifest for the queried pipeline/script"
+    blind_spots:
+      - "trading-day-frontier basis REQUIRED (a comp-freshness entry without freshness_basis: trading-day-frontier falls back to flat-hours and false-alarms every Monday -- CLAUDE.md NEVER#1)"
+      - "an artifact not in the freshness manifest is not checked"
+    plane: applied
+    vintage: "live S3/DDB LastModified vs the trading-day frontier at run time"
+    exit_codes:
+      "1": {class: verdict, meaning: "real staleness FAIL (past max_age on the trading-day basis)"}
+      "2": {class: verdict, meaning: "UNVERIFIABLE-BASIS -- refused to guess a verdict without a resolvable basis (NFRA_INSTDRILL item 5)"}
+    exit_source: "comp-tools.yaml:570 (0 PASS/WARN / 1 FAIL / 2 config-or-unreachable) @2026-07-23"
+    note: "rc2 UNVERIFIABLE-BASIS is retained as VERDICT (tri-state, ratified) rather than REFUSE: unlike comp-iam rc3 (nothing compared) the artifact WAS engaged; the refusal is to guess a verdict, and the ratified appender has always counted it a tri-state verdict. Flagged for CVO~Z as the one deliberate VERDICT-vs-REFUSE line-call in this sweep."
+
+  comp-trigger:
+    coverage: "the declared EventBridge/schedule trigger wiring for the queried target vs live"
+    blind_spots:
+      - "compares the mapped trigger set; a trigger outside the map is not evaluated"
+    plane: mixed
+    vintage: "TF declared vs live describe-rule at run time"
+    exit_codes:
+      "1": {class: verdict, meaning: "trigger finding"}
+      "2": {class: verdict, meaning: "could-not-evaluate"}
+    exit_source: "comp_trigger.py (2=could-not-evaluate) + NFRA_TOOLCHECK P1 @2026-07-23"
+
+  # ===== SIMPLE tools (a nonzero IS a tool/input failure -- no verdict-exit contract) =====
+
+  comp-pipescript:
+    coverage: "named-thread estate traversal (io/deployed/postdeps/consumers) over the AST-extracted graph"
+    blind_spots:
+      - "deployed/io are bd-tree/.py-SCOPED -- inf & cot gold .sh DISPATCH scripts are UNCOVERED (a named audit exhibit)"
+      - "dynamically-keyed / FUNC-key reads+writes are INVISIBLE (the dynamic-prefix holdings-read miss class); a 'consumers' answer of zero is 'no extracted edge', NOT provably no consumer"
+    plane: projection
+    vintage: ".comp-graph graph build for io/consumers; `deployed` reads LIVE S3 code/ prefixes at run time"
+    by_subcommand:
+      deployed: {plane: applied, vintage: "live s3 ls of the code/ prefix vs the local script hash (MATCH/STALE/MISSING reported in stdout, exit 0)"}
+    exit_codes:
+      "1": {class: fail, meaning: "script name did not resolve / usage error (MATCH/STALE/MISSING status is reported at exit 0, NOT via a nonzero)"}
+      "2": {class: fail, meaning: "usage / argument error"}
+    exit_source: "org/modules/graph/pipeline_cli.py:250,370,418,423 (rc1 not-found/error), :227,1213 (rc2 usage); status path returns 0 at :1735 @2026-07-23"
+    rebaseline_note: "comp-pipescript nonzero rows are genuine bad-script-name/usage errors (FAIL), NOT verdicts -- the STALE/MISSING VERDICT is carried in stdout text at exit 0. Declaring it keeps those rows FAIL rather than flipping them to UNKNOWN."
+
+  comp-kuzu:
+    coverage: "the Cypher query result over the canonical auto-refreshing Kuzu graph DB"
+    blind_spots:
+      - "answers ONLY what the graph models; a relationship not extracted into the graph is absent, not zero. Read the provenance header (UNKNOWN VINTAGE = freshness unverifiable; a --db-path scratch DB is a frozen vintage)"
+    plane: projection
+    vintage: "the materialized Kuzu DB (provenance header printed to stderr every call)"
+    exit_codes:
+      "1": {class: fail, meaning: "tool/input error -- DB not found, or the Cypher query failed to execute"}
+    exit_source: "infra/aws/globgrph/kuzu_cli.py:66 (DB-missing), :90 (query error) -- both genuine errors, not verdicts @2026-07-23"
+
+# ---------------------------------------------------------------------------------------------------
+# pending_declaration: enumerated tools_index tools with NO output contract YET. The completeness gate
+# REQUIRES each to be here (or in contracts:) -- so the undeclared tail is VISIBLE and bounded, never
+# silently absent. Each renders coverage/plane as LOUD UNKNOWN and its nonzero exits as UNKNOWN (condition
+# b), never a defaulted PASS/FAIL. Moving a tool from here to contracts: is pure-add hardening; the gate
+# blocks a NEW tools_index tool that appears in NEITHER list.
+# ---------------------------------------------------------------------------------------------------
+
+pending_declaration:
+  - comp-adapter-audit
+  - comp-assets
+  - comp-aws
+  - comp-axes
+  - comp-build
+  - comp-cache
+  - comp-chainrun
+  - comp-clobber
+  - comp-cluster
+  - comp-coverage
+  - comp-deadgrant
+  - comp-debris
+  - comp-denytest
+  - comp-depth
+  - comp-diff
+  - comp-dispatch
+  - comp-dups
+  - comp-fedobs
+  - comp-firmsep-sweep
+  - comp-genesis
+  - comp-gitdrill
+  - comp-graph
+  - comp-heat
+  - comp-iam-usage
+  - comp-icedrill
+  - comp-incrparity
+  - comp-learns-score
+  - comp-learns-status
+  - comp-ontolint
+  - comp-pii
+  - comp-platinum
+  - comp-pydeps
+  - comp-registry
+  - comp-routes
+  - comp-secrets
+  - comp-shell
+  - comp-similar
+  - comp-symbols
+  - comp-tagauthz
+  - comp-tool-health
+  - comp-toolgraph
+  - comp-tooltip
+  - comp-trace
+  - comp-transform
+  - comp-types
+  - comp-whoread
+  - comp-xref
+  - pipescript

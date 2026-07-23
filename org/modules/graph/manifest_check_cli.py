@@ -859,10 +859,77 @@ def _registration_invariant(files) -> int:
     return 1
 
 
+_OUTPUT_CONTRACT_FILE = "org/modules/graph/comp-output-contracts.yaml"
+
+
+def _output_contract_invariant(files) -> int:
+    """0 = invariant holds / not applicable. 1 = BLOCK.
+
+    THE OUTPUT-CONTRACT REGISTRATION INVARIANT (NFRA_MSBEFF.R1R3 condition a, 2026-07-23). A tool cannot
+    register/re-register in tools_index without declaring its output contract (coverage + plane + exit
+    semantics) -- else the shared output contract (org/modules/graph/comp-output-contracts.yaml) silently
+    UNDER-COVERS a new tool, and the M3 verdict-set derivation reverts to the frozen-list failure mode it
+    retired. This is the INVERSE-mate of DISK-IMPLIES-REGISTERED: that member makes an on-disk tool prove it
+    is routable; this one makes a routable tool prove it declares what it can/cannot see and how its exits
+    classify.
+
+    THE INVARIANT (denominator PRINTED -- a filter whose complement you did not enumerate is untested):
+      every tools_index tool appears in comp-output-contracts.yaml under EITHER `contracts:` (full
+      declaration) OR `pending_declaration:` (explicitly awaiting one -> renders LOUD UNKNOWN at run time,
+      condition b). A tool in NEITHER is an unregistered output contract: BLOCK.
+
+    Migration-safe by construction: the pending list makes the undeclared tail VISIBLE and bounded, so the
+    tail can never grow silently -- a NEW tools_index tool with no contract-or-pending entry fails HERE, at
+    the same commit that registers it. Fires only when the registration substrate OR the contract file OR a
+    `.tools/comp-*` executable is touched (registration-time), so it never taxes unrelated commits.
+    DETERMINISTIC; ramp-exempt; fail-closed.
+    """
+    norm = _norm(files)
+    touched = (any(f.endswith(s) for s in _REGISTRATION_SUBSTRATE for f in norm)
+               or any(f.endswith(_OUTPUT_CONTRACT_FILE) for f in norm)
+               or any("/.tools/" in "/" + f for f in norm))
+    if not touched:
+        return 0
+
+    try:
+        man = load_yaml(_MANIFEST)
+        registered = sorted((man.get("tools_index") or {}).keys())
+        doc = load_yaml(_WORKSPACE / "org" / "modules" / "graph" / "comp-output-contracts.yaml")
+        declared = set((doc.get("contracts") or {}).keys())
+        pending = set(doc.get("pending_declaration") or [])
+    except Exception as e:  # fail-closed
+        print(
+            f"\nBLOCKED: the output-contract invariant could not be evaluated ({e}).\n"
+            f"  An unevaluable completeness gate does not read as 'passed'."
+        )
+        return 1
+
+    covered = declared | pending
+    missing = [t for t in registered if t not in covered]
+
+    if not missing:
+        print(f"  [manifest-check] output-contract invariant PASS: {len(registered)} tools_index tool(s) "
+              f"all declare an output contract (declared {len(declared & set(registered))} + pending "
+              f"{len(pending & set(registered))}); {len(declared - set(registered))} extra declaration(s) "
+              f"for non-tools_index emitters.")
+        return 0
+
+    print(f"\nBLOCKED: tools_index tool(s) with NO output contract "
+          f"(registered {len(registered)}; declared {len(declared)}, pending {len(pending)}):")
+    for t in missing:
+        print(f"  - {t:<22} in NEITHER contracts: NOR pending_declaration: of comp-output-contracts.yaml")
+    print(
+        "  A tool that cannot state its coverage/plane renders UNKNOWN, loudly -- but it must SAY SO in the\n"
+        "  contract file. FIX: add a full `contracts:` block (coverage + blind_spots + plane + vintage +\n"
+        "  exit_codes), or list it under `pending_declaration:` (renders LOUD UNKNOWN until declared)."
+    )
+    return 1
+
+
 def _completeness_invariants(files) -> int:
     """The family. Any member blocking blocks the commit. See the design comment above."""
     for member in (_routable_invariant, _placement_invariant, _selfroute_invariant,
-                   _existence_invariant, _registration_invariant):
+                   _existence_invariant, _registration_invariant, _output_contract_invariant):
         if member(files):
             return 1
     return 0
