@@ -150,10 +150,13 @@ band publish cites an incomplete COO co-sign; the band serves only on DE render 
   **$2.25B / 5,473 acct-dates suppressed-and-REPORTED**; 9 weekend/holiday dates honest-absent. **My value
   limb PASSES.** TWO co-sign notes (neither solo-adjudicated): (a) **weekend/holiday WOBBLE** (06-19 Juneteenth
   + weekends dip to $454K, stale snapshots) -> DE trading-day-only x-axis (NEVER#1-aligned, render not data);
-  (b) **07-14 ~$95M jump** ($27.8M->$122M @0.50) = REAL membership (above epsilon, strategies created 07-14/17,
-  lands on current truth) but current-stamped TIMING (front-loads today's members to model-creation date) —
-  flagged for CVO's conscious accept, not a fabrication. **SERVE on CVO pin-bless (5-point + mutant-d) + the
-  2 notes resolved -> co-sign pair -> serve.** DS half complete; my value limb green.
+  (b) **07-14 ~$95M jump — RESOLVED (COO+DS converge, DS `@113952Z`):** the jump date = "Opal Ultra Short
+  Term"'s bronze createdAt 07-14 = the EARLIEST-POSSIBLE-membership date (an account can't be on a strategy
+  before it existed — same law as the early-band fix, keep-direction). A timing-smear would fabricate the
+  unknowable true migration date (current-stamped), so the labeled STEP is the honest shape ("membership
+  begins no earlier than here" = a true statement); 0.50 conf carries the residual. YANG_SITTW at the top end.
+  CVO confirms in her 5-point. **SERVE on: CVO pin-bless (epsilon+M6+mutant-d, 5-point) + note (a) DE
+  trading-day x-axis -> co-sign pair -> serve.** DS half complete; my value limb green; note (b) closed.
   Counter-sign discipline compounding: stale-confidence -> stale-artifact -> value-shape, 3 catches / 3 limbs.
 - **Pins (bind EXACT commits per R-5):** CRO schema `@708661904` (canonical build schema, delta-wins),
   CTO agg spec `@be91775dd` (§4 is ruling-record-not-build-surface), CVO R-5 `@ec5ec79f3`.
