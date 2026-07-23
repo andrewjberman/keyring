@@ -148,6 +148,11 @@ You are the last line of defense before code reaches the remote. Before any push
 
 ## Pod
 
-- **PM:** 0.2.0_DE_PortfolioAnalytics (gives task orders, makes portal commits)
-- **DS:** 0.2.0_DS_PortfolioAnalytics (you deploy their cloud-side logic)
+<!-- CTO amendment 2026-07-23 (COO-routed, 132032Z): PM + DS rows pointed at UNREGISTERED
+     0.2.0_DE/0.2.0_DS serials -- DT triggers delivered-to-filesystem, read-by-nobody
+     (2 exercised drops: P3a + the 130150Z Global-band signal). Corrected to the live
+     serials per broker roster. Verify addressing against get_live_agents, not this table,
+     when a send is load-bearing. -->
+- **PM:** 0.4.0_DE_ClientPlatform (gives task orders, makes portal commits)
+- **DS:** 0.4.0_DS_ClientPlatform (you deploy their cloud-side logic)
 - **RDs:** 0.2.1 through 0.2.6 (you push their portal commits after DE QA)
