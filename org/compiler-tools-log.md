@@ -24156,3 +24156,28 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-23T0125Z 0.4.0_DS_ClientPlatform 3F-G8 adhoc: comp-pipescript-io PASS (v1.18 monolith-resolve live), comp-surface-check-by-hand SEV1-read (DE tree), comp-validate NO_CONFIG=UNVALIDATED reported, commit-gate x2, identities exercised x2 runs
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff infra/system/06_current_state.json infra/system/06_current_state.md | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/tenants/acme/__init__.... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/tenants/acme/__init__.py infra/system/sdk/tenants/acme... | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/sdk/tenants/acme/__init__.... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff infra/system/sdk/tenants/acme/__init__.py infra/system/sdk/tenants/acme... | FAIL |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260723T0131Z_cottonwood-mdpf-leg... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260723T0133Z_cottonwood-mdpf-ser... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check | VERDICT |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ModelPortfolios --feature cottonwood | FAIL |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check | VERDICT |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-23/3f_g8_adhoc_bu... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file scripts/ui-smoke.mjs --file src/api/end... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff scripts/ui-smoke.mjs src/api/endpoints/aum.ts src/lib/modelPortfolioCol... | FAIL |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/PENDING_040... | PASS |
+| 2026-07-22 | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/PENDING_0400Z_cottonwood_trend_rerun_cosign.md | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/scripts/ui-smoke.mjs --file port... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/mdpf_p3a_golive_r... | PASS |
+- 2026-07-23 ~0145Z 0.4.0_DE_ClientPlatform: 3F-P3a — comp-transform schema-check+ternary-audit (DEGRADED on ModelPortfolios, types-resolution WARN / TabType-only; gap surfaced), comp-surface-check check (SEV1 read + acked), comp-grep x2 (denominators 13/23213 + 0/47, grounded the unwired-producer escalation), comp-pipescript deployed (assets-tree blind spot surfaced), comp-glob x2
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DE_ClientPlatform/logs... | PASS |
