@@ -24482,3 +24482,108 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-23Z | 1.0.0_SA_CTO | (no-TO) | (none) | gate/ruling coordination window 0440-1315Z; artifact verifications ran in owner lanes (DS/COO/CVO/0.6.2/0.7.0), cited in log; pre-/clear runs not re-derivable | SKIPPED |
 | 2026-07-23Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-23/m... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/cloudfront/deploy-api-cdn.sh | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff infra/aws/cloudfront/deploy-api-cdn.sh | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/prompt.md | FAIL |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT n.node_type AS t | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT n.node_type AS t | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/prompt.md | FAIL |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff src/pages/ModelPortfolios.tsx | FAIL |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/mdpf_global_rende... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.2.0_DT_PortfolioAnalytics/prompt.md | FAIL |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/NFRA_ONTOLOGY_RULE_BA... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml | FAIL |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml | FAIL |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff infra/system/06_current_state.json infra/system/06_current_state.md org... | FAIL |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml infra/syste... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file src/lib/pairedProvenanceRead.ts | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff src/lib/pairedProvenanceRead.ts | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/lib/pairedProvenanceRead.ts | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/p1_provenance_har... | PASS |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff portal | FAIL |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260723T1341Z_p1-provenance-read-... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/p1_provenance_har... | PASS |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260723T1341Z_p1-provenance-read-... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/build_cottonwo... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/gold/build_cottonwood_mdpf_pair.py data/mdpf/script... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed data/assets/scripts/gold/build_cottonwood_mdpf_pair.py dat... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-blast | comp-blast mdpf_aggregate_aua | FAIL |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-23/3f_canonical_p... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | pipescript | pipescript --resource 08242234 | FAIL |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/andrew_deci... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_decision_PENDING_20260723T1355Z_49f_... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-aws | comp-aws dynamodb | FAIL |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/andrew_dire... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_direct_20260723T1404Z_CANONICAL_mdpf... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_comp_valid... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/tests/test_comp_validate_bd_hold.py org/modules/graph... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/validate_cli.py org/modules/graph/tests/... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py data/mdpf/s... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MODE... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/andrew_dire... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_direct_20260723T1404Z_CANONICAL_mdpf... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/andrew_dire... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_direct_20260723T1404Z_CANONICAL_mdpf... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-denytest | comp-denytest | FAIL |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-denytest | comp-denytest --principal bd-exporter-role --resource arn:aws:s3:::opal-data-cot/silver... | FAIL |
+| 2026-07-23Z | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-23Z | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_qt5_tempo... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260723T1427Z_daily-aua-full-look... | PASS |
+| 2026-07-23Z | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/task_... | PASS |
+| 2026-07-23Z | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/task_orders/MDPF_3FIRMS.3F-B2.smartx-... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260723T1427Z_daily-aua-full-look... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py data/mdpf/s... | PASS |
+| 2026-07-23Z | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/task_... | PASS |
+| 2026-07-23Z | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.5.0_AE_OpalETL/task_orders/MDPF_3FIRMS.3F-B2.smartx-... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260723T1445Z_rf9-only-silver-bla... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-07-22/cot_advi_norun_diagn... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_MSBEFF_PRD.md --... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_MSBEFF_PRD.md org/projects/NFRA_MSBEFF.json org/... | FAIL |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/lib/nna_coverage_... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/inf/scripts/gold/lib/nna_coverage_excusals.json org/tier2_senior/0... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed data/inf/scripts/gold/lib/nna_coverage_excusals.json org/t... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_MSBEFF_PRD.md --... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_MSBEFF_PRD.md org/projects/NFRA_MSBEFF.json org/... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/andrew_deci... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_decision_PENDING_20260723T1355Z_49f_... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-07-22/cot_advi_norun_diagn... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[r]->() RETURN DISTINCT r.edge_type AS e, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_REVAMP_named... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MODE... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_MSBEFF_PRD.md | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_MSBEFF_PRD.md | PASS |
+| 2026-07-23 | 1.0.0_SA_CTO~Z | NFRA_MSBEFF | msbeff_log_audit+phase1 | full-log audit passes (P0+P1) + rc-contract correction | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-23/c... | PASS |
