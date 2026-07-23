@@ -1,0 +1,17 @@
+{
+  "project_code": "NFRA_MSBEFF",
+  "macro_code": "NFRA",
+  "name": "Opal Efficiency Case Study — Mechanical/Semantic/Behavioral audit of the comp-tool framework",
+  "description": "Andrew-direct charter 2026-07-23 (verbatim in PRD s.0): the comp tools exist to rapidly inject extremely high-signal context fluidly; audit the framework on three layers -- MECHANICAL (tools get their data fast + reliably), SEMANTIC (the right tool is findable for the query), BEHAVIORAL (agents actually reach for the tools) -- using the most convoluted Opal projects/scenarios as the case-study base, to identify where the holistic framework is lacking most. Bar: a light query against standing Opal context should make the intent AND the completing context immediately obvious; process architecture (CLAUDE.md/XXX.md/prompts) is good pretext, the missing layer is true state+dependency understanding, which the tools must solve. Phase 0 = programmatic audit of every compiler-tools-log row (last 3 months).",
+  "prds": [
+    {"path": "docs/architecture/NFRA_MSBEFF_PRD.md", "label": "Charter + Phase-0 findings (audit substrate landed)", "date": "2026-07-23"}
+  ],
+  "status": "active",
+  "phase": "Phase 0 COMPLETE 2026-07-23: .tools/msbeff-log-audit.py landed + first pass over 21,775 rows (denominators printed, both schema eras, nothing dropped). Headline findings: 8.5% FAIL concentrated on workhorses (pipescript 23%, blast 22%) and record-keeping tools (registry/tooltip 44%); 129 referenced tool names vs 83 registered (~46 phantom refs incl. retired tools still cited); comp-which <0.9% of flow; ~55% of volume is auto-invoked (surface-check/pulse) not chosen; 61.6% of rows outside TO context. Next: Phase 1 (FAIL taxonomy + AUTO-vs-CHOSEN classifier), Phase 2 (convoluted-scenario case studies, MDPF arc first), Phase 3 (ranked weakest cells -> expansion items).",
+  "blocking": "None",
+  "created": "2026-07-23",
+  "pods": ["1.0~Z", "3.0~Z", "0.8"],
+  "pipeline": "estate-wide (comp tooling / process architecture)",
+  "thread_counter": 0,
+  "threads": []
+}
