@@ -114,6 +114,18 @@ band publish cites an incomplete COO co-sign; the band serves only on DE render 
   independent reads agreeing: COO + CVO (`@a09c4d816`/CVO bridge) + DS.** CVO side FULLY CLOSED. (3)
   **Remaining band gate: DE's BF2 render on the re-emit + the identities/point_class-labels limb of my
   counter-sign -> serve.** now-when-ready.
+- **PROGRESS @~1120Z — SERVE HELD on a SECOND counter-sign catch (VALUE limb):** DE's BF2 render PASSED all 4
+  confirms (vintage/confidence/permanent-wording/extent, grounded from bytes) + fixed 3 real render defects.
+  BUT DE flagged the value shape, and I grounded it: **model_aua has a ~$108M ONE-DAY CLIFF** — 06-14 $114.4M
+  (conf 0.051) -> 06-15 $6.1M (conf 0.944); early band 05-28..06-14 carries ~$105-116M at conf 0.01-0.05.
+  DS grounded the MECHANISM (Rule 22): the absorbing sleeves (Sleeve-Equity/Core-MM/Tax-Free-Bond) were
+  created **2026-06-15 = the exact cliff** — pre-06-15 every valued account force-matches into {Sat-80,LTC,LTA}
+  = ~$105M of never-in-models accounts (a FORCED GUESS, not an estimate). Governing law: **YANG_SITTW**
+  (emit null where the true value is absent; a label carries uncertainty, NOT a 20x known-wrong magnitude).
+  **FIX = suppress forced guesses to absent** — DS: per-account washout-epsilon; CTO: confidence render-floor
+  (convergent). **R-5 DELTA at CVO (bless) + CRO (epsilon: 0.10 vs key-to-min-real-confusable-washout ~0.50).**
+  **SERVE HELD until CVO+CRO bless -> DS re-emits -> co-sign reconvenes (my value limb re-verifies no cliff).**
+  Counter-sign discipline compounding: stale-confidence -> stale-artifact -> value-shape, 3 catches / 3 limbs.
 - **Pins (bind EXACT commits per R-5):** CRO schema `@708661904` (canonical build schema, delta-wins),
   CTO agg spec `@be91775dd` (§4 is ruling-record-not-build-surface), CVO R-5 `@ec5ec79f3`.
 
