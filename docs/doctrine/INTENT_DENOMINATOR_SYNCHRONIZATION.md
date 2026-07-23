@@ -205,7 +205,12 @@ registration invariant, a review sign-off, and a synthesized tool's self-test (A
 build a tool from **only when its intent source is governed (law, not habit) and its denominator is
 enumerable (bounded, not open)** — the §7 preconditions, graded.
 
-## §8 The five instances that earned this (all 2026-07-23, all caught by controls, not care)
+## §8 The instances that earned this (all 2026-07-23, all caught by controls, not care)
+
+*(This heading read **"The five instances"** while the list held six, and then seven. A hand-maintained
+count beside a growing enumeration is the frozen-denominator defect **committed by the file that
+defines it** — the numbered list is the denominator; a prose digit beside it is a second, unsynchronized
+copy. It is deleted rather than corrected: **the fix for a frozen count is never a fresher count.**)*
 
 1. **M2** — measured the compiler-log projection, not the source jsonl. Denominator was the wrong
    artifact. Caught by: Andrew asking "is this the wrong place?"
@@ -228,6 +233,34 @@ enumerable (bounded, not open)** — the §7 preconditions, graded.
    class.* The count LIMB (how many historical rows) is separately gated on a re-baseline enumeration
    run off the plane that carries a real exit code (`comp-tool-runs.jsonl`, not the rc-less md log — the
    §8.1 wrong-artifact lesson applied to the re-baseline itself).
+
+7. **The subcommand backfill — DECLARED ≠ REACHABLE (SOURCE-CONFIRMED, and the sharpest instance yet,
+   because it occurred *inside this program's own remediation pass*)** — the targeted backfill closed
+   the router's law-mandated coverage gap by writing `comp-iam simulate` / `comp-iam reconcile` /
+   `comp-pipescript postdeps` into `tools_index`. **`comp-which` never reads `tools_index`.**
+   `.tools/comp-which:1006-1010 @e6115fa66` scores over `entries[].{use_case,id,tool}` and displays
+   `entries[].canonical_call`; `tools_index` has **no consumer on the routing path.** So the three
+   CLAUDE.md-mandated calls were declared and **unroutable** — and the Rule 22a query ("can this role
+   write to a brand-new bucket") kept routing to `comp-iam service`, *the DESIRED-only tool that same
+   rule calls **necessary but not sufficient** for a new ARN.* The INTENT was "an agent following
+   CLAUDE.md can REACH the mandated call"; the DENOMINATOR enumerated was "declarations present in
+   `tools_index`." **Two different populations, and the gap between them was the entire finding.**
+   Caught by: the acceptance criterion being set to **router-reachability, not registry-presence**, and
+   the gate-holder running the four behavioral queries rather than reading a registry diff. The lane
+   reported honestly — *"Declaration: closed. Ranking: unverified"* — which is why this is a finding
+   about the work and not about the agent: **the criterion caught it because the criterion was written
+   at the right grain, and the lane declined to claim the half it had not measured.**
+   **AND THE ESTATE HAD ALREADY LEARNED THIS ONE GRAIN UP.** `comp-which:708-711` (2026-07-14): *"these
+   sat on disk for weeks while agents logged 'no comp-tool answers this' — registration without
+   vocabulary is registration in name only."* Same class, at **tool** grain, already fixed, already
+   gated (`.tools/comp-which-routing-test.py`, live in `commit_gate_runner.py`). Then the declaration
+   surface grew a **finer grain** — subcommands — **and the invariant did not follow it down.**
+   >> **A GUARD'S COVERAGE GOES STALE THE MOMENT THE THING IT GUARDS GETS MORE GRANULAR.** The guard
+   kept passing, correctly, over a population that had quietly stopped being the whole population. This
+   is the §5 change-law failure in its most deniable form: nobody edited the guard, nobody edited the
+   law, and the gap opened anyway — **because a new grain is a change to the DENOMINATOR that no diff
+   shows.** A registration invariant must be re-derived against the *current* grain of the surface, not
+   the grain it was written for. <<
 
 **Every one was caught by a control, none by the author being careful — including the ones authored by
 the agents who had, that same day, written the doctrine against them.** That is not a coincidence to
