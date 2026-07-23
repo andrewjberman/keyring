@@ -105,3 +105,20 @@ change, NO TF, NEVER#4 held (the scheduled 02:04Z run IS the exercise); outcome 
 trigger 07-24 post-02:10Z (marker keys_staged=11, slice covered_dates nonempty). Compiler tools:
 deploy_ledger x7, safe-commit x2, git apply --check, bash -n, s3api listing-verify x8, comp-glob/grep
 (dispatcher + import discovery), runner-sim import probe.
+
+---
+
+## DRIFT CLOSE 2026-07-23 ~1110-1114Z -- CotDetectionSnsPublish re-added (declared==applied exactly)
+
+0.6.2~A found (during his WS-1 targeted apply, correctly NOT swept): live cot_exporter_policy carries
+CotDetectionSnsPublish (sns:Publish opal-bd-cot-cookie-alerts) that repo TF lacked -- the next FULL
+apply on cot-pipeline would have silently removed a live grant. GROUNDED before acting: live
+get-role-policy carries the statement verbatim; repo already declares the TOPIC (cot-detection-layer.tf:40)
+AND the on-box publisher env (ssm.tf:137) -- the grant was the single missing limb of a TF-declared path,
+corroborating hand-landed-or-never-repo'd. CTO disposition 111105Z: RE-ADD present-to-match-applied,
+question-of-the-alert PARKED (no-alarms word), removal-if-ever = deliberate reviewed change never a
+side effect. LANDED @20322eb30 commit-only; targeted plan now "No changes." = declared==applied EXACTLY,
+landmine dead. Loops closed with 0.6.2~A + CTO; S1 sequencing ask at CTO (RF-9 rebuild couples to DS's
+S5 twin -- one rebuild could carry both; his call, nothing staged).
+Per CTO: two gates earned their keep in the finding's own provenance -- 0.6.2's safe-apply MSYS block +
+HALTGT surfacing my 14h-stale S1 ask (the ask predated his watcher; the checkpoint delivered it).
