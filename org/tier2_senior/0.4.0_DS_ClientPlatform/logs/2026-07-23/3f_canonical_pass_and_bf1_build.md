@@ -89,3 +89,30 @@ BF1 report 042205Z · CRO floor ambiguity 040720Z → answer 041139Z · DE shape
    at opal-data-cot code/bronze/probe_results/ -- CRO holds the optional value-leg-to-05-15 spec;
    my re-run trigger stays armed for measured VALUE landings only (assignment permanently
    interpolated per the CURRENT-STAMPED verdict).
+
+## GLOBAL AGGREGATOR BUILD DESIGN (banked 050xZ pre-implementation; Andrew-direct wire 050005Z)
+
+Scope = the MEASURED Global fold (interpolated band rides its own gate). Producer =
+`dim_mdpf_aggregate_aua_timeseries.py` `build_global_artifact` (:1172) gains the cottonwood leg,
+read from the ALREADY-SERVING slice artifact (gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries
+.json) -- no re-pull, no new ingest (COO wire binding).
+
+**THE LOAD-BEARING FOLD RULE (structurally-absent vs gap):** cottonwood's series starts 07-21.
+- date < cottonwood first covered date -> STRUCTURALLY ABSENT: global sum proceeds 49F+INF
+  (history unchanged), provenance vector marks cottonwood: absent. Treating this as a GAP would
+  null ~420 dates of global history; treating it as 0 fabricates (the $107.2M false-dip class).
+- date >= first covered but value None -> REAL GAP: poisons the sum per the existing row-level
+  null-coherence law. Discriminator = the slice's covered_dates/first_tracked_date meta.
+**Additions per spec R-2 interim + DE contract (my 050149Z):** ADDITIVE flat point_class[] derived
+any-cohort at Global (my derivation; DE reads never re-derives); cohort_provenance[] gains the
+cottonwood slot; meta.partners_basis = per-firm basis map (49financial: schwab-rps / inflection:
+eclipse+orion / cottonwood: bd-datamining-holdings) + fee_scope labels (sect-1.3: full-49F,
+model-INF, model-COT) -- NEVER one blended basis string (0824/0833 law). by_model: cottonwood's 5
+post-merge keys are ALL canonical (subset of GLOBAL_MODEL_KEYS) -- carrier-vs-gap logic extends
+to the third leg, union count unchanged at 9. non_model: cottonwood slice carries honest-None ->
+rides an audit-style field like inflection's 2b, NEVER the basis-B headline (which stays 49F-only
+per Andrew's ruling). Headline identity UNCHANGED in form; cottonwood enters opal_aggregate only
+on its covered dates.
+**R-4 guards:** radial (dim_mdpf_aum_metrics) + bell-curve (dim_mdpf_account_distribution) each
+gain the structural source != timeseries-tail assertion (current-snapshot inputs only).
+Gates: staged-only, zero bronze/silver, ETag control, co-sign at artifact with DE's Global render.
