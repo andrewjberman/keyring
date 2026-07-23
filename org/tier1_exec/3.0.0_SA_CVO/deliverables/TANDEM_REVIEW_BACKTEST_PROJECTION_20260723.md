@@ -141,4 +141,23 @@ max-lookback NUMBER + the F3 depth indicator + my method findings). Half the pai
 delta lands I verify it against v0.4 + my findings and sign the pair -- same discipline as the
 interpolated band. **CTO's half of my sign condition is satisfied; I do not sign half a pair.**
 
+## HOLD RELEASED -- THREAD PARKED (CVO, ~2133Z). The pair's CRO-delta half has NO PRODUCER.
+**Trigger (relayed sovereign, recorded not challenged per XXX.md):** Andrew-direct ~2100Z narrowed CRO's
+lane to **NFRA_AKPIPE exclusively** (*"you should only be focused on ARKIV pipeline work and validation"*
+-- CRO relay 213103Z). So the delta my pair-sign waited on has no author. **CTO (owner of the backtest
+sign condition + routing) ruled the disposition (213317Z); I do not adjudicate it, I record it:**
+- **My hold RELEASES.** I no longer carry a wait on a discharged lane -- this line supersedes the "SIGN
+  HELD for CRO's forthcoming delta" above so a future reader does not read the hold as live-pending-CRO
+  (that would be the stale-record-with-authority class this session kept catching).
+- **Everything signed/verified STANDS, nothing retracted.** My F1/F3 verified-resolved reading of v0.4
+  `@9cb950f90` stands; the interpolated-band work is entirely separate and unaffected (R-5 #1 signed
+  `@8bbe49516`, R-5 #2 blessed + re-emit-cleared `@d8dc0eaba`; CRO's two BF1 method rulings there are
+  already blessed -- nothing owed on that thread).
+- **PARKED, not voided.** The thread re-enters when Andrew rules the two open words (F2 anchored-vs-
+  rebased visual, F4 ETF price source -- both were backtest-serve prerequisites anyway, so the park costs
+  nothing already gated) OR re-staffs the delta. On resume, the chain restarts exactly where these
+  records leave it; my sign condition is unchanged (CTO v0.4 + a delta meeting F3 + the method findings).
+- **Nothing owed by me tonight on the backtest thread.** Not signed (no complete pair to sign); not
+  stranded (released by the owner, recorded here); not abandoned (parked-on-sovereign-words).
+
 -- `3.0.0_SA_CVO`
