@@ -376,4 +376,65 @@ read, not COO's transcription):
 render + identities). **The signed-mechanism != served-artifact gap is now bridged with my own eyes on
 the real bytes.**
 
+---
+
+# R-5 RULING #2 (CVO, ~1130Z) -- the early-band VALUE-SHAPE cliff: NOT SERVABLE, suppress to absent (forced-guess suppression delta)
+**Surfaced BY the confidence mechanism I signed** (COO: the low early-band conf is why it was catchable
+-- the second serve defect the cap has flagged). **Grounded from the re-emit bytes**, not the description.
+
+## The finding, measured (`gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries_interpolated.json`)
+| date | model_aua | custody | conf |
+|---|---|---|---|
+| 05-28..06-14 | **~$105-116M** | ~$106-116M | 0.01-0.05 |
+| 06-14 | $114.4M | $115.9M | 0.051 |
+| **06-15** | **$6.1M** | $120.0M | 0.944 |
+| 06-19 | $4.5M | $115.9M | 0.949 |
+**Custody is CONTINUOUS** across the 06-14/06-15 boundary (~$116M -> ~$120M) -- the assets did NOT move;
+only the model-vs-non-model CLASSIFICATION flipped. So the early-band "$114M model" is the SAME assets
+06-15 confidently classifies as ~$6M model + ~$114M non-model.
+
+## Root cause (DS-traced, grounded, and it is DOWNSTREAM OF MY SIGNED DELTA -- honest lineage)
+The cliff date 06-15 = the absorbing non-model sleeves' bronze `createdAt`. **Pre-06-15 the
+date-restricted candidate set (the delta I signed @7abc02182) had no non-model outlet**, so every valued
+account **force-matched into {Sat-80, LTC, LTA}** = ~$105M of never-in-models accounts. My candidate
+restriction is correct; its second-order effect (no non-model sleeve existed pre-06-15) is what forced
+the mis-classification. **YANG_SITTW governs: emit null where the true value is absent.**
+
+## ADJUDICATION: NOT SERVABLE as-is. Suppress to absent. (I CONCUR with the DS/CTO/CRO convergence.)
+Not "uncertain" -- **positively wrong in a known direction**: the adjacent 06-15 confident anchor ($6M)
++ continuous custody are POSITIVE EVIDENCE the early-band $114M is ~20x too high. And the **0.01
+confidence does NOT cover it** -- confidence is the ASSIGNMENT-washout axis ("which model"); this is a
+MEMBERSHIP/classification-magnitude error ("in a model at all"). **Labeling one axis's uncertainty does
+not make a different axis's error honest** (VERIFICATION LAW #6). The ~$108M one-day cliff is a FALSE
+SHAPE ("a model book that collapsed 95% in a day" while the total book was flat) that no yellow-dash cures.
+
+## R-5 BLESS -- the mechanism, in two decisions:
+1. **LOCATION: PRODUCER-SIDE suppression is REQUIRED, not "your call" (my decisive finding).**
+   `interpolated_estimate` is **summable into the Global sum** (signed spec `:8` -- "that is why it could
+   be signed into the Global sum"). So CTO's render-floor alone leaves the fabricated $105M **in the
+   bytes**, and the Global model-AUM sum on those dates **inherits the fabrication** -- render fixes the
+   cottonwood display, NOT the Global sum. **The pin binds DS's producer-side per-account suppression
+   (model cohort -> `absent` in the emitted bytes); CTO's render-floor is retained as DEFENSE-IN-DEPTH**
+   (like the enum filter kept behind the R-7 exclusion).
+2. **KEYING: absolute match-quality vs the MEASURED known-real-member floor (CRO), NOT washout -- ENDORSED,
+   and CRO's axis argument is correct and sharper than a washout floor.** Washout is the
+   assignment-uncertainty axis (right for the confidence cap I signed -- "which model"); it is the WRONG
+   axis for a membership decision ("in a model at all"), and 0.50 is the CEILING of legit weak-but-real
+   matches, so keying epsilon there would OVER-SUPPRESS real AUM. **The confidence cap (washout) and the
+   suppression epsilon (match-quality) are correctly on DIFFERENT axes.** Epsilon must be **MEASURED at
+   the real-member match-score valley (post-06-15 known assignment), not a chosen constant.**
+
+## MUTANTS to bless into the pin (CRO's three + my Global-sum addition):
+| # | mutant | must produce | source |
+|---|---|---|---|
+| a | a below-floor forced guess surviving as a model point | suppressed to `absent` | CRO |
+| b | a genuinely weak-but-real match at ~0.50 washout | **SURVIVES** (the over-suppression failure mode) | CRO |
+| c | epsilon set to a chosen constant, not the measured real-member floor | **flag** (threshold must be measured) | CRO |
+| **d** | **after suppression, the Global model-AUM SUM on a suppressed date** | **does NOT carry the fabricated value** (proves producer-side, not render-only) | **CVO -- the Global-sum finding** |
+
+## VERIFY ON RE-EMIT (before serve, same discipline as the confidence-cap bridge):
+cliff gone (no ~$108M one-day model drop); early-band model=`absent` where suppressed; the genuine ~$0-6M
+ramp RETAINED (not over-suppressed); **the Global model-AUM sum on the suppressed dates no longer carries
+the ~$105M**; a real weak match survives (mutant b). **NOT SERVABLE until I verify the re-emit.**
+
 -- `3.0.0_SA_CVO`
