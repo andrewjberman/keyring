@@ -46,16 +46,22 @@ The served band is yellow-dashed end-to-end BY DESIGN, forever — not transitio
   (not within-intent — it SUBSTITUTES+EMITS on the early band), blessed as a GOOD delta, ruling durably
   committed `@ec5ec79f3`.
 - **Pin item 1 (M4 substitution mutant): DONE** — DS wrote both legs, set 13/13 green (`@88d165366` area).
-- **Pin item 2 (confidence regime): MEASURED-passing but HELD under R-5.** Early band 05-28..06-14 emits
-  ~0.50 (the low confidence CVO required), mid 0.92-0.95, late 07-14+ ~0.50. HONEST CAVEAT: the early-band
-  0.50 is EMERGENT (close-margin fallback), not a designed rule. DS proposed an explicit cap
-  (substitution occurred -> confidence = min(current, 0.50)) to make it GUARANTEED — routed to CRO
-  (method-intent) + CVO (pin), change HELD until blessed.
-- **Remaining gates (all morning):** (1) CRO confirms substitution-as-intended-method + the cap; (2) CVO
-  blesses the cap + signs the delta into the pin `@ec5ec79f3`; (3) co-sign pair AT THE ARTIFACT (DS BF1 +
-  DE BF2 acceptance render on real provenance — DE armed); (4) **>> ANDREW'S SERVE-CALCULUS WORD <<** on
-  serving a PERMANENTLY yellow-dashed estimate band on his live page (surfaced to him this session; his
-  call, no clock); (5) serve on the next promote.
+- **Pin item 2 (confidence regime): CAP IMPLEMENTED, washout-keyed `@7abc02182` (16/16 green).** Progression
+  for the record: DS measured the early band already emitting ~0.50 but flagged the honesty as EMERGENT
+  (close-margin fallback), not guaranteed, and proposed a flat `min(current, 0.50)` cap. **CRO's method
+  ruling `@044637Z` superseded flat-0.50 BEFORE CVO blessed:** substitution-as-method CONFIRMED intended,
+  cap REQUIRED, keyed to `washout(U_terminal, R_terminal)` = sum-min over the B2 terminal decompositions —
+  honest BOTH directions (overlapping terminals wash out and may honestly exceed 0.50; distant terminals
+  cap BELOW 0.50, which flat would over-claim; flat 0.50 remains only the named conservative fallback).
+  Implemented + pushed: `substitution_washout()` reuses the dim's own decompose, fires exactly when the
+  restriction changed the answer; M5 mutants encode CVO's invariant machine-checked (a substituted
+  assignment can never emit confidence above its pair washout). Set now 16/16 green.
+- **Remaining gates (all morning):** (1) **CVO blesses the WASHOUT-KEYED cap** (not flat 0.50) + signs the
+  delta into the pin `@ec5ec79f3` — now against LANDED CODE + green mutants, not a proposal; (2) co-sign
+  pair AT THE ARTIFACT (DS BF1 + DE BF2 acceptance render on real provenance — DE armed); (3) **>> ANDREW'S
+  SERVE-CALCULUS WORD <<** on serving a PERMANENTLY yellow-dashed estimate band on his live page (surfaced
+  to him this session; his call, no clock); (4) serve on the next promote. [CRO method-intent + cap:
+  CONFIRMED `@044637Z`, no longer pending.]
 - **Pins (bind EXACT commits per R-5):** CRO schema `@708661904` (canonical build schema, delta-wins),
   CTO agg spec `@be91775dd` (§4 is ruling-record-not-build-surface), CVO R-5 `@ec5ec79f3`.
 
