@@ -21,6 +21,7 @@ directory an engagement's artifacts live in.
 |---|---|---|---|---|---|---|
 | **RCN-0001** | 2026-07-21 | **Black Diamond** (SS&C/Advent) — Cottonwood Capital Advisors tenant | 3 (teardown, roadmap, build spec) | 8 HAR captures + 4 CSV exports | `0.4.0_DS_ClientPlatform~Z` | **DELIVERED** — downstream build HELD at CTO registration |
 | **RCN-0002** | 2026-07-22 | **Orion Advisor Solutions** — Opal-accessible tenant | 2 (teardown, BD×Orion structural comparison) | 2 HARs (1 truncated) + public API docs + Eclipse OpenAPI | `4.0.0_SA_CRO` | **DELIVERED** |
+| **RCN-0003** | 2026-07-23 | **arxiv.org** — CS paper harvest surface (NFRA_AKPIPE) | 1 (teardown + build spec) | 3 HARs (2 md5-identical) + 1 sample paper; HTML bodies [BODY-NOT-CAPTURED] | `4.0.0_SA_CRO` | **DELIVERED** — build HELD at CTO program registration |
 
 ---
 
@@ -217,3 +218,43 @@ page · Eclipse **v2** proven to exist but no spec retrieved · Eclipse `compone
 published rate limits · Orion's transaction-level flow classification `[UNOBSERVED]` (BD's affect vector
 remains our reference taxonomy) · **`[UNOBSERVED]` in the BD column is not absence** — the BD capture simply
 did not exercise risk-stats or after-tax screens, and BD is **not** scored as lacking them.
+
+---
+
+## RCN-0003 — arxiv.org CS-paper harvest surface teardown → NFRA_AKPIPE build spec
+
+| Field | Value |
+|---|---|
+| **Target** | `arxiv.org` / `export.arxiv.org` — Computer Science paper listing, abstract, full-text (html/pdf/src), and search surfaces |
+| **Date** | 2026-07-23 |
+| **Commissioned** | Andrew-direct: register NFRA_AKPIPE — a daily arxiv scraper + contact-ID + ontology-relevance ranking pipeline |
+| **Owner** | `4.0.0_SA_CRO` |
+| **Egress** | **STANDING arxiv-scoped daily-egress grant, cloud-only** (Andrew-direct verbatim, spec §0): the daily pull runs as a Lambda in Opal's cloud writing to S3 — never an agent/CLI. NOT a blanket vendor lift. The inputs analyzed here (HARs + PDF) were operator-supplied — not egress. |
+
+### Evidence basis + denominators
+
+**3 HAR captures → 2 unique.** `arxiv.org.har` == `arxiv.org2.har` (md5 `663682cc51f0b016c6bb34ea7a7ba7be`, 223 entries). `arxiv.org3.har` distinct (md5 `8ed54cf8f7427bbc9adc02c6521f1a31`, 165 entries). **1 sample paper** `2606.07297v1` (SWE-Explore, cs.SE, 20 pp) — the stated high-relevance exemplar + scoring positive control.
+
+**MARKED CAPTURE GAP (doctrine rule 2):** the HARs retained **ZERO HTML response bodies** — only PDF bytes (`bodies_present=1`/HAR, sole mime `application/pdf`; all 12/9 HTML documents empty). So the HARs ground the **surface topology** (endpoints, params, nav path, content-types, sizes) but **NOT** the HTML field-schema of `/abs`, `/list`, `/html`, `/search`. No DOM parse specified off an endpoint name; schema grounding comes from the official OAI-PMH/Atom API instead (the correct harvest backbone regardless).
+
+### Artifacts
+
+| Artifact | Path |
+|---|---|
+| Teardown + build spec (RCN-0003) | `org/tier1_exec/4.0.0_SA_CRO/briefs/NFRA_AKPIPE_BUILD_SPEC_20260723.md` |
+| Project record | `org/projects/NFRA_AKPIPE.json` + REGISTRY row |
+| HAR profiler (arxiv-adapted) + PDF extract | scratchpad `arxiv_har_profile.py`, `arxiv_har_docs.py`, `paper_2606.07297v1.txt` — **ephemeral, reapable by `/kill storage`**; the profiler is a light adaptation of `scripts/profile_har.py` (host filter + arxiv path-normalizer), regenerable from the spec |
+
+### Findings that carried
+
+1. **The harvest backbone is the official API, not the HTML pages.** OAI-PMH (`export.arxiv.org/oai2` `ListRecords` `from/until&set=cs`) is the exhaustive, lossless daily-delta mechanism (resumptionToken paginates; structured authors/dates/categories/abstract/doi). The 2.7 MB `/list/cs/new` HTML page is brittle by comparison; the Atom API is the keyword overlay.
+2. **`/html/{id}` (LaTeX→HTML render) is the cheap clean full-text source**; `/src/{id}` tarball is the richest author/affiliation parse; `/pdf/{id}` is the fallback. HAR 3 proved all three exist.
+3. **This is a content-class problem the estate already designed for.** NFRA_AKPIPE's NLP ranking CONVERGES with `infra/system/ontology/CONTENT_MODULE_DESIGN.md` (RRF over BM25/Potion, materialized substrate, deterministic-pinned, ablate-don't-fuse, decoy-null threshold) — the external/arxiv instance of that module, not a parallel stack. "Four names, one fact": CTO ratifies the convergence at registration.
+4. **Contact-ID is feasible from body** — the sample carries the corresponding-author email inline; names/ids come structured from OAI metadata.
+5. **Recency is submission-date decay, NOT trading-day T-1** — CONTENT_MODULE_DESIGN §9 carries this exact caution; importing the pipeline T-1 basis would false-alarm on old-and-correct preprints.
+
+### Downstream
+
+- **NFRA_AKPIPE registered** (`org/projects/NFRA_AKPIPE.json`, active, phase = spec-landed pre-build). Build/deploy **HELD at CTO program registration + arch-gate**; COO staffs the cloud + content/NLP lanes. CRO proposes owners, dispatches nothing.
+- **Broadcast** to CTO + COO + MSTR 2026-07-23 ~19:16Z (the Andrew-direct decisions verbatim + the standing egress grant).
+- **Dependency exercised:** the `.owned-paths` 4.0.0 project-registration grant (LD-0331, line 556 — org/projects/*.json + REGISTRY, scoped) — first use.
