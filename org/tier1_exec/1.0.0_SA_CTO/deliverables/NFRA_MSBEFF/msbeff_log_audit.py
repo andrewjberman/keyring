@@ -40,7 +40,15 @@ LOG = WS / "org/compiler-tools-log.md"
 TOOLS_DIR = WS / ".tools"
 
 DATE_RE = re.compile(r"^\|?\s*(\d{4}-\d{2}-\d{2})Z?\s*\|")
-RESULT_TOKENS = ("PASS", "FAIL", "PARTIAL", "SKIPPED", "WARN", "N/A", "MIXED", "BLOCKED")
+# VERDICT/REFUSE/UNKNOWN added 2026-07-23 (R1R3 landing): the corrected appender now writes these
+# derived classes into new md rows (comp_output_contract.classify_exit). Without them, a post-fix
+# VERDICT/REFUSE row read as UNSTATED -- the audit tool blind to the very correction it motivated.
+# NOTE: pre-2026-07-23 md rows carry NO exit code, so their FAIL is VERDICT-CONFLATED (PRD s.3c) and
+# NOT retroactively re-verdictable here; the SOUND re-baseline runs off comp-tool-runs.jsonl (real rc,
+# 0.8.0 @da0d5679e: 517 rows re-verdicted, FAIL 542->37). This tool reads the md CORPUS (both eras,
+# incl. pre-jsonl history); for the corrected COUNTS cite the jsonl re-baseline, not this md scan.
+RESULT_TOKENS = ("PASS", "FAIL", "PARTIAL", "SKIPPED", "WARN", "N/A", "MIXED", "BLOCKED",
+                 "VERDICT", "REFUSE", "UNKNOWN")
 # tool-name extraction: canonical comp-* names anywhere in the tool/command cells
 TOOL_RE = re.compile(r"\bcomp-([a-z0-9-]+)\b")
 NON_TOOL_SUFFIXES = {"tools", "tool"}  # 'comp-tools' prose mentions, not a tool
