@@ -166,6 +166,18 @@ band publish cites an incomplete COO co-sign; the band serves only on DE render 
   (COO+DS), DS half complete, DE re-verify passes. CVO's pin-bless (epsilon+M6+mutant-d) + 5-point re-emit
   verify is the LAST gate -> co-sign pair (DS+DE+COO green, CTO gates) -> SERVE.** No Andrew round-trip.
   Counter-sign discipline compounding: stale-confidence -> stale-artifact -> value-shape, 3 catches / 3 limbs.
+- **✅ BAND LIVE + VERIFIED @~1311Z — ARC CLOSED.** CVO 5-point cleared `@d8dc0eaba` (mutant-d: fabrication gone
+  from the BYTES); co-sign complete; DATA served ~12:03; **FE promoted PROD `v2.1.143` (d270acc9=58a38078,
+  CI SUCCESS, parity empty)**; DE live-verify PASSES `@5324ea789` (yellow-dash 'Interpolated (confidence
+  0.50-1.00)', no cliff, trading-day axis, on the REAL deployed bundle). **An estimate can no longer render
+  unlabeled on the page.** ⚠ TRANSIENT EXPOSURE (closed): DATA served 12:03 but the yellow-dash renderer was
+  DEV-only until v2.1.143 (~1259Z) — interpolated values rendered UNLABELED on live PROD for ~56 min (CTO's
+  sequencing miss, owned; permanent serve-gate rule banked: verify the RENDERER is deployed before data ships).
+  RESIDUAL: NB-1 (band suppression denominator) real, rides next band emit `@e216b2b86`. My fee-basis phantom-NB
+  (component values "None") was MY read error (queried `.get('aum')`; key is `value`) — RETRACTED, values present.
+- **⚠ COORD PATTERN — DT->DE trigger dropped TWICE** (P3a + 130150Z Global-none): a real edge fault. Mitigation:
+  COO RELAYS DT's promote signals to DE (worked both times); DT to verify its DE-addressing (`0.4.0_DE_ClientPlatform`)
+  before the Global promote. Don't let the Global live-verify drop a 3rd time.
 - **Pins (bind EXACT commits per R-5):** CRO schema `@708661904` (canonical build schema, delta-wins),
   CTO agg spec `@be91775dd` (§4 is ruling-record-not-build-surface), CVO R-5 `@ec5ec79f3`.
 
