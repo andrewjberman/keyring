@@ -27,3 +27,16 @@
 - 20260723T173409Z LEG L4 closed: WALK COMPLETE 1620/1620 clean, 0 failed, exit 0 (~5min, concurrency 4, ascending from DISCOVERED floor 2020-04-28; chann
 - 20260723T175521Z LEG L5 closed: FINAL SWEEP (re-walked table): C2-TIE FULL-SPAN 541/541 TO THE CENT (zero mismatches); contract pins 7/7 byte-exact; mod
 - 20260723T175521Z CLOSED -- all 5 legs proven
+
+---
+
+## AMENDMENT 20260723T1806Z -- GLOBAL EMIT PREDICATE (CTO ruling 175627Z, post-completion non-blocking)
+
+A global row now requires >=1 MEASURED fee-basis leg (known-zero alone = a statement about a leg,
+not a Global quantity; the $0 partial_1_of_3 class was a fabricated headline anchored on nothing
+measured). Fixed @ad2907b8c (predicate + provenance-aware caller), deployed sha gP0R+vp1, probed
+both shapes (deep date -> absent idiom reason=no_measured_constituents legs=[]; reference pin
+@2024-11-01 byte-unchanged 795389602.69 partial_2_of_3 -- known-zero still counts beside a measured
+leg per ruling item 2). AFFECTED ROWS: the 1,013 trading-day global rows 2020-04-28..2024-05-23
+(the span where only the structural-zero inf_model leg existed), re-emitted 1013/1013 clean to the
+absent-stamped idiom. Landed BEFORE the scheduling config step per sequencing.
