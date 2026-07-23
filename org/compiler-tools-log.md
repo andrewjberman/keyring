@@ -24621,3 +24621,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-23Z | 0.5.0_AE_OpalETL | MDPF_3FIRMS.3F-B2 | (none -- manual) | record-only window (TO reconcile+close, MCP coord); auto-gates surface-check OK + comp-pulse CLEAN on @3a21e02d8/@80435169b | N/A |
 | 2026-07-23Z | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23Z | 0.5.0_AE_OpalETL | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-0... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/andrew_dire... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_direct_20260723T1404Z_CANONICAL_mdpf... | PASS |
+2026-07-23 ~1542Z 0.7.0_AE_CloudOps: day rollup -- deploy_ledger x26 (4 ledgers), safe-apply x1, tf plan -target x6, cmp x8, s3api x20+ explicit-Z, lambda invoke x8 (21-control run + import probe), cloudwatch/logs/ssm fire-history census, runner-sim import probe; 3 stale premises killed by live-primitive-first (log: 2026-07-23/day_consolidated_1024-1540Z.md)
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
