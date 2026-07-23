@@ -62,4 +62,26 @@ the ACTUAL fix is neither — it is re-sourcing 49-total to 08242234 per this ma
   separately [COO rec], or (2) hold serve until emitter revives + table current. DS standing by to repoint +
   re-emit the ONE churn on GO. Serve hard-held until Andrew's word.
 
-**Delete/close when: every MDPF leg is sourced per this map, grounded, verified, and serving.**  -- `2.0.0_SA_COO`, ~14:13Z
+## FULL-LOOKBACK BACKFILL PRECURSOR (Andrew-direct @~14:21Z) — serve now gated behind this
+**Andrew VERBATIM:** "I should have specified when creating the gold DDB table that we put full lookback for
+all relevant source data in there, even if the frontend only serves a partition. That is something we will
+need to do now as a precursor." + earlier: "We definitely have history back to 2024 in 0824."
+**DESIGN:** the gold DDB table (`opal-assets-daily-aua`) holds **FULL LOOKBACK for all relevant source data**;
+the frontend serves the **2024-11-01+ partition** off it. The 21-run_date registry was UNDER-FILLED (emitter
+ran irregularly + stalled), NOT source-limited.
+**DEPTH GROUNDED (DS @142049Z, cited):** 0824 custody raws reach 2024-05-24 (silver `fact_rps_s2`, 541
+partitions, zero gaps) / CRS raw to 2023-01-17 (~2.5yr). 06-12 was the emitter's run-start, not a data floor.
+**THE DERIVATION SPLIT (0.7.0's design):** the DDB canonical is the **BD-priced** custody quantity — the
+backfill must DERIVE that priced series per historical date from the RPS/CRS raws (NOT a row-copy); the
+pricing basis at historical dates is 0.7.0/CTO's design call.
+**DISPATCHED (CTO @142139Z):** backfill = 0.7.0 #1 (above S5+RF-9), under 6 conditions — load-bearing 3:
+emitter's OWN code path run historically (no 2nd writer; if it can't run historically = surfaced design gap +
+small deploy), idempotent upserts, and a **POSITIVE CONTROL: the backfilled series must reproduce COO's
+byte-verified `49f_schwab_custody @07-18 = $1,644,993,954.34` exactly** + a month-end spot-grid. Denominators
+in trading days per cohort in the completion report.
+**SERVE CHAIN (unchanged shape, longer):** full-lookback backfill (0.7.0) -> DS reprocess 49 + Global trends
+off full canonical -> COO per-date re-verify (49[d]==DDB[d], no silent carry) -> co-sign -> DE renders ->
+CTO fires -> DT promotes. DS's 21-point staged build is INTERIM/MOOT. Serve hard-held until the full-lookback
+registry lands. Andrew framing: **correct + complete over fast.**
+
+**Delete/close when: every MDPF leg is sourced per this map, backfilled full-lookback, verified, and serving.**  -- `2.0.0_SA_COO`, ~14:22Z
