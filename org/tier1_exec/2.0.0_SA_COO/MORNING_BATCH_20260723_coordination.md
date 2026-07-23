@@ -70,11 +70,16 @@ band publish cites an incomplete COO co-sign; the band serves only on DE render 
   12 code path) — so no 02:04Z gate to race; tonight's 02:04Z nightly IS the exercise, outcome banked as a
   07-24 post-02:10Z trigger (keys_staged=11 + slice covered_dates nonempty = trend grew itself). The runner
   import chain was EXERCISED (not config-read) and caught 2 gaps: **`dim_mdpf_aum_metrics.py` ABSENT from S3**
-  (would have killed tonight's 6d) staged from HEAD -> **RESIDUAL: DS version-confirm** + an unlisted
-  transitive dep (already on S3). Rule 22a earning its keep.
+  (would have killed tonight's 6d) staged from HEAD + an unlisted transitive dep (already on S3). Rule 22a
+  earning its keep. **RESIDUAL CLOSED** (DS version-confirm 110340Z: md5 `a9dbddd0` == HEAD `@7c8320da4`,
+  explicit-intended, import-safe + R-4 deploy-correct). 6d fully done; 07-24 post-02:10Z outcome trigger armed.
 - **>> REMAINING CLOCK: S5 cutover** constant `2026-07-23` conditioned on the **lambda-twin deploying**
   before the next conversion (slips a day -> constant bumps, no frozen assumption). At CTO's TF apply gate;
-  owner TBD (0.7.0 loosely available if CTO routes it there). Track the twin deploy landing.
+  owner TBD (0.7.0 loosely available). **NO schema re-stage precondition** — a transient "5471afde predates
+  S5, re-stage with the twin" note was RETRACTED (0.7.0 110534Z / DS self-correct 110454Z): the staged
+  `rebalancer_schemas 5471afde` is ALREADY post-S5 (md5-verified vs HEAD AND vs pre-S5 `9d9fce12`; staged
+  from HEAD after the S5 commit), and there is no runner-side skew tonight (converter never runs on that box;
+  the lambda bundle carries its own copies, moves atomically under CTO's TF gate). The twin just deploys clean.
 
 ### A. Interpolated backfill band — serves on NEXT promote
 - **Status:** BUILT + STAGED (DS producer `build_cottonwood_interpolated_backfill.py @65a8fa92f`; DE
