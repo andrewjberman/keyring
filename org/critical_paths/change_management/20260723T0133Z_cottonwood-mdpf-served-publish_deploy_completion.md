@@ -52,3 +52,21 @@ Content change: CG -> opal_long_term_conservative (display "Long Term"), Income 
 by_model into the named residual, pending_canonical_ruling EMPTY, canonical_merge authority in meta.
 Numbers unchanged from the co-signed 0133Z publish (same partitions pinned). Producer @ab1f0074b.
 04:00Z conditioned trend leg: pre-flight AXIS STALE -> correctly did not fire (COO concurs 040340Z).
+
+## AMENDMENT 2 — INTERPOLATED BAND SERVED (1202Z, CTO serve-GO 120047Z)
+
+**Authorization:** Andrew's band serve-word (050247Z via COO) → CVO 5-point cleared incl. mutant-d
+→ COO counter-sign green (value limb byte-verified: early band $454K not $105M, ramp lands on
+served $124.4M) → CTO gate fired 120047Z. Both notes closed (07-14 staircase = conscious-accept,
+three-way converged; weekend wobble = DE trading-day x-axis @58a38078, render-not-data).
+
+| Served key | Bytes | ETag (== staged pin, byte-compared) |
+|---|---|---|
+| json/mdpf/cottonwood/aggregate-aua-timeseries.json | 66,710 | 3c3879c0df26656150d4b0629da393ad |
+
+Content: the measured-epsilon band (ε=0.10, bimodal-valley-measured, M6-pinned) — early band =
+the 2 genuine accounts, onboarding staircase at real bronze createdAt steps, custody continuous,
+$2.25B/5,473 acct-dates suppressed (denominator lands in-bytes on the next emit per NB-1
+@e216b2b86). Supersedes the honest-absent trend served 0405Z. 3 re-emits, 5 byte-reads, 2
+serve-defect catches preceded this publish; 19/19 mutants at @9ffa3ca6e lineage. DE live-render
+verification follows.
