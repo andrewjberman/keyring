@@ -118,6 +118,17 @@ live allowlist rows on domains no real user has: `user@cottonwood.com` (legacy A
 placeholder — note `cottonwood.com` is a domain we have no evidence of owning; Rule-23 class),
 `user@inflection.com`, 2 test rows @inflectionwealthmgmt.com. Whether they stay is their call.
 
+## F3 AMENDMENT RE-VERIFY @`d5e69c8cc` — **CLEAN. s.7-i1 FULLY CLOSED.**
+
+Diff `1c95b7905..HEAD` on the registry: exactly the determination, verbatim —
+inflection `inflectionwealth.com` / cottonwood `cottonwoodmail.com` / demo `demo.test` /
+49financial + mockadv untouched; grounding citation re-pointed at `firmAccess.ts:116-123` + the
+two Andrew ruling commits with the comp-constants re-canonization debt explicitly assigned to
+0.8.0. Remaining diff content is cosmetic JSON reflow only. Registry email_domain now ties
+field-for-field to the live FE map (5/5 including mockadv-null ↔ absent-from-map). Residuals
+routed by CTO~Z: canonical re-canonization → 0.8.0; stale allowlist rows incl.
+`user@cottonwood.com` (Rule-23-adjacent) → main CTO.
+
 ## Compiler tools used
 
 `comp-glob` (source location, 2 runs) · `comp-grep` (email-domain grounding sweep, 3 runs) ·
