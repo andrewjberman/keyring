@@ -54,6 +54,15 @@ roles:
 # TRANSFORMS resolves to Guard, not Transformer. Priority arbitrates 2+ matches ONLY: 1 match = that role
 # (priority NOT consulted); 0 matches = no role (a base/non-role type, never an error).
 role_priority: [Custodian, Observer, Gateway, Guard, Router, Registry, Trigger, Container, Transformer, Producer, Consumer, Source, Store, Sink]
+# INTENT ANNOTATION (CTO~Z ruling 2026-07-23, on CVO~Z tick-25 census: 3/10 zero live instances; provenance
+# 0.8.0 133102Z; intent grounded in NFRA_ONTOLOGY_DESIGN_OF_RECORD.md:137/150-154/172). Three types are
+# FORWARD-DECLARED cross-plane vocabulary, NOT trim candidates -- zero live instances is their EXPECTED state
+# until their plane binds; a census binds on this annotation, never routes the intent question again:
+#   Service        = the CSE abstract entity-kind (live graph carries CONCRETE types; populates if/when a
+#                    service-mesh-class substrate binds -- the "describes any system" charter claim).
+#   Person         = abstract above live MS_USER; populates when the M365/GraphAPI people plane binds (fedobs).
+#   Organization   = abstract above the tenant/firm plane; same binding event as Person.
+# (The quoted "Person"/"Organization" style is an import tell from the CSE source plane -- kept byte-as-ratified.)
 contextual_types: [LAMBDA, Service, Component, ReactComponent, Hook, "Person", "Organization", MS_USER, SERVICE_PRINCIPAL, STATE_MACHINE]
 
 # --- AXIS: RELATION (C1, CSE re-layered) -- 10, owner-ratified --------------------------------------
