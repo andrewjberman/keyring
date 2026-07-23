@@ -69,6 +69,15 @@ never CHECKS.
   **>> "go" discharged Andrew's WAITING, NOT the CHECKS <<** — gates 1-2 still bind; a failed check is
   fix-before-serve (CVO's ruling). No further Andrew round-trip. [CRO method-intent + cap CONFIRMED
   `@044637Z`; Andrew serve-calculus DISCHARGED `@050247Z` — both no longer pending.]
+- **PROGRESS @~0530Z:** (1) CVO SIGNED the washout-cap delta into the pin `@8bbe49516` (verified+exercised
+  against landed code, ran 16/16 himself). (2) **COUNTER-SIGN CAUGHT A STALE ARTIFACT:** the staged
+  interpolated artifact was generated `04:21:30Z` — 27 min BEFORE the cap `@7abc02182` (04:48:47Z UTC) —
+  carrying pre-cap emergent confidence (~0.50 early band). DS RE-EMITTED from the capped producer
+  (`generated_at 05:19:42Z`). The cap BITES on the real blend: 18/46 early-band dates dropped ~0.50 ->
+  0.01-0.054 (distant-terminal washout) — a ~50x over-claim prevented. **Confidence cell TRIPLE-verified,
+  independent reads agreeing: COO + CVO (`@a09c4d816`/CVO bridge) + DS.** CVO side FULLY CLOSED. (3)
+  **Remaining band gate: DE's BF2 render on the re-emit + the identities/point_class-labels limb of my
+  counter-sign -> serve.** now-when-ready.
 - **Pins (bind EXACT commits per R-5):** CRO schema `@708661904` (canonical build schema, delta-wins),
   CTO agg spec `@be91775dd` (§4 is ruling-record-not-build-surface), CVO R-5 `@ec5ec79f3`.
 
@@ -142,6 +151,23 @@ never CHECKS.
   FAILS** (3F-G4's acceptance line, live at the co-sign not a later gated TO). Interpolated/backtest bands
   ride their OWN delta+serve gates, NOT folded into the measured Global serve. Sequencing: DS aggregator ->
   DE render -> co-sign pair at the artifact -> serve.
+- **PROGRESS @~0534Z:** DS BUILD SCOPE COMPLETE (log `@50ada78f8`): fold `@745572fe4` (cottonwood 3rd leg,
+  structurally-absent-vs-gap discriminator, additive cohort_provenance[], per-firm fee_scope map) + R-4
+  guards `@7c8320da4` (radial measured-frontier + bell-curve snapshot-source, +/- exercised) + FLAG-2
+  preserve `@265e04607` + distribution `_units` sidecar `@fa491f9b6` (funded 7863 / $1.672B). Tonight
+  cottonwood's covered set is EMPTY (axis 07-20) so the fold changes ZERO until the axis advances — no false
+  fold. **Global aggregator SERVES nothing until its own co-sign pair** (DE render + my fee-basis
+  counter-verify — cell loaded above).
+  - **FLAG-2 co-sign `@265e04607` — COMPLETE @~0534Z (unblocks the 07-24 02:04Z nightly global rebuild;
+    ~21h clock, no tonight pressure per CTO 053134Z):** CTO half = 051427Z ruling (5 conditions). COO counter:
+    conditions 1-4 VERIFIED in code (enumerated `[opal_growth_sma, opal_div_sma]` beside the exemption list;
+    `count_as_of` in-band set-only-on-preserve; preserve gated to the 2 keys; distribution map untouched ->
+    (iii) rejected) + **condition 5 EXERCISED — I ran DS's committed test `@1e3999969`
+    (test_global_fold_flag2.py) MYSELF: 5/5 exit 0, and read it to confirm real teeth (CASE 2 poison test
+    fails loudly if a non-enumerated value-present/count-None survives).** CTO ruled the committed test
+    REQUIRED (structural-safe-by-non-modification is corroboration, not exercise) — the M4/M5 bar is now the
+    standing bar for every exercised condition. Minor obs (count_as_of entry-level granularity) pinned by
+    test 2 + logged as a named delta if a mid-series SMA gap ever appears.
 
 ### J. BACKTEST PROJECTION — design at CRO, envelope FIRM (Andrew "go" @050247Z); COO decomposes when CVO-tandem'd design lands
 - **Andrew-direct** (same relay): second next target. DESIGN at CRO (CRO -> CVO tandem -> COO
