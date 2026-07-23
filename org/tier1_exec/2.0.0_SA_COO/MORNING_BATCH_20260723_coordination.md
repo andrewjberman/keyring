@@ -65,10 +65,16 @@ band publish cites an incomplete COO co-sign; the band serves only on DE render 
 - **DS:** 6d wiring half = git-apply-clean patch `@3e7a59502` -> 0.7.0 (owned-paths correctly split the AE
   lane) + S5 COMPLETE `@1351c74d9` at CTO's gate (sidecar + createdAt passthrough + force-guard, ONE pass;
   controls RUN: row-count parity 911==911, force-guard 07-21-refused exercised, grounded-negative on roster).
-- **>> TWO CLOCKS I TRACK:** (1) **6d trend-grows-tonight** needs 0.7.0's apply + CTO's TF gate BEFORE
-  **02:04Z** (~15h runway @10:55Z); else it slips a night. (2) **S5 cutover** constant `2026-07-23`
-  conditioned on the lambda-twin deploying before the next conversion (slips a day -> constant bumps, no
-  frozen assumption). Both at CTO's TF apply gate. Surface to CTO/0.7.0 if the 02:04Z clock looks at risk.
+- **6d DISPATCHER — COMPLETE @~11:03Z (0.7.0, ledger 5/5), CLOCK DE-RISKED:** both halves landed (DS block
+  `@4528fa154` + AE PYTHONPATH resolution), marker 7->11, ETag-verified. **NO TF, no schedule change** (Rule
+  12 code path) — so no 02:04Z gate to race; tonight's 02:04Z nightly IS the exercise, outcome banked as a
+  07-24 post-02:10Z trigger (keys_staged=11 + slice covered_dates nonempty = trend grew itself). The runner
+  import chain was EXERCISED (not config-read) and caught 2 gaps: **`dim_mdpf_aum_metrics.py` ABSENT from S3**
+  (would have killed tonight's 6d) staged from HEAD -> **RESIDUAL: DS version-confirm** + an unlisted
+  transitive dep (already on S3). Rule 22a earning its keep.
+- **>> REMAINING CLOCK: S5 cutover** constant `2026-07-23` conditioned on the **lambda-twin deploying**
+  before the next conversion (slips a day -> constant bumps, no frozen assumption). At CTO's TF apply gate;
+  owner TBD (0.7.0 loosely available if CTO routes it there). Track the twin deploy landing.
 
 ### A. Interpolated backfill band — serves on NEXT promote
 - **Status:** BUILT + STAGED (DS producer `build_cottonwood_interpolated_backfill.py @65a8fa92f`; DE
