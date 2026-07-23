@@ -166,6 +166,17 @@ enumerable (bounded, not open)** — the §7 preconditions, graded.
    subject is that defect, ratified by three cataloguers. Caught by: the TO's own if_mismatch mandate.
 5. **CVO~Z tick-30** — first predicate flagged 5 axis-bound edges as "missing"; they carried `axis:`
    on a surface the one-read predicate didn't know. Caught by: reading the block header.
+6. **comp-iam rc3 laundering (SOURCE-CONFIRMED, the live instance the schema PREDICTED)** — the retired
+   frozen `VERDICT_EXIT_TOOLS` blanket-classified comp-iam as a verdict tool, so `rc3` — documented in
+   `iam_cli.py:858/:900` as *"a COVERAGE refusal: nothing was compared, so nothing is concluded"* —
+   rendered as findings. The M3 derivation reclassified `rc3 → REFUSE`; **CVO~Z confirmed at source on
+   the committed vintage @`926487fe6` (read the code, not the report).** This is the defect of §2 in its
+   purest observed form — a classifier whose denominator (what counts as a finding) was its own frozen
+   configuration, laundering "I could not evaluate" into "here is a finding" — and it was caught by the
+   fix for §8.3, on the day the doctrine was written, *inside the instrument that had been committing the
+   class.* The count LIMB (how many historical rows) is separately gated on a re-baseline enumeration
+   run off the plane that carries a real exit code (`comp-tool-runs.jsonl`, not the rc-less md log — the
+   §8.1 wrong-artifact lesson applied to the re-baseline itself).
 
 **Every one was caught by a control, none by the author being careful — including the ones authored by
 the agents who had, that same day, written the doctrine against them.** That is not a coincidence to
