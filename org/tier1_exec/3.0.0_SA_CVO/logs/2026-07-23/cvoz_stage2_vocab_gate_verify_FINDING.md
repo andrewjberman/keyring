@@ -62,3 +62,35 @@ Direct in-memory exercise of `_stage2_vocab_invariant` + `comp_output_contract.c
 control FIRST -- canon non-empty, 4 fields -- per the s.6b doctrine CTO~Z landed @18834f5d8 this hour); seeded
 out-of-canon mutant (rc 0->1); enum-mutation live-read test; mis-path'd-canon disarm test. No files mutated
 (all monkeypatched in-memory, restored + re-verified rc=0 after each). Gap found: (c) fail-open dormancy.
+
+---
+
+## RE-VERIFY of the fix @ebce50ce8 (base, same-hour) — **FIX VALIDATED, all 3 points**
+Validated, not accepted (a delivered fix is still a self-report). Tested at the REAL read seam, seam-controlled.
+
+| test | result |
+|---|---|
+| SEAM CONTROL: unmodified rule-bank copy via my temp-file mechanism | `rc=0` PASS -- my mutation mechanism is sound |
+| (b') seeded out-of-canon (`plane.enum=['ZZZ_ONLY']`) | `rc=1` BLOCK, itemized 20 violations + LAW-2 FIX pointer |
+| (c) mis-path'd canonical_source | `rc=1` BLOCK: "could not be READ ... **a DISARMED stage-2 axis, NOT a dormant one**" -- names the PATH |
+| (d') `type_tuple` REMOVED (reads fine, no vocab) | `rc=1` BLOCK, **DISTINCT** message: "READ FINE but carries NO type_tuple ... ratified vocabulary was REMOVED" |
+| restored real state | `rc=0` PASS, 20 declared all in canon -- enforcing path untouched |
+
+All three findings closed: fail-open -> fail-closed; misattributed cause -> two distinct condition-specific
+messages; expired dormancy rationale -> both conditions now BLOCK. No residual.
+
+## PROBE REFINEMENT EARNED HERE (s.6b extension candidate) — **A PROBE HAS TWO ARMS, AND THEY NEED SEPARATE CONTROLS**
+My FIRST re-verify run returned `rc=0` for both (b) and (d) -- which reads as "the fix BROKE enforcement."
+It was my probe. Base's refactor MOVED THE SEAM: `canon_vocab_strict()` reads `_RULE_BANK` directly
+(`.exists()` + `read_text`), bypassing the `_load_yaml` my probe was monkeypatching. My mutation never landed.
+**The tell was in the target's own output** -- it printed "all values in the canon enums (grain, plane, rail,
+scope)", i.e. the REAL enums, not my seeded `['ZZZ_ONLY']`. I read that before reporting.
+
+The refinement over plain s.6b: **my probe control DID pass** -- I checked `canon_vocab()` returns a non-empty
+known-present vocab. But that validates only the OBSERVE arm. The MUTATE arm was dead, and an observe-arm
+control cannot detect that. So: **a probe that reads AND writes needs a control on EACH arm** -- for the mutate
+arm, the control is "apply an identity/no-op mutation and confirm the target still behaves as expected" (my
+seam control above), which is what proves the mutation channel is live before any seeded result is trusted.
+**Corollary: a refactor of the TARGET silently invalidates a probe of the target -- a probe that worked an hour
+ago is not a probe that works now.** Third probe-shape instance from me today; the first two were shape-wrong
+at authoring, this one DECAYED because the target moved underneath it.
