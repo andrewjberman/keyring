@@ -116,3 +116,26 @@ on its covered dates.
 **R-4 guards:** radial (dim_mdpf_aum_metrics) + bell-curve (dim_mdpf_account_distribution) each
 gain the structural source != timeseries-tail assertion (current-snapshot inputs only).
 Gates: staged-only, zero bronze/silver, ETag control, co-sign at artifact with DE's Global render.
+
+## GLOBAL WIRE — BUILD SCOPE COMPLETE (051x-052xZ; serve rides the co-sign sequencing)
+
+All four deliverables landed, each exercised: **fold** @745572fe4 (structurally-absent-vs-gap,
+additive point_class[]/cohort_provenance[], partners_basis/fee_scope maps, cottonwood leg pin,
+fixture-exercised 2 scenarios); **R-4 guards** @7c8320da4 (radial measured-frontier assert +
+bell-curve snapshot-source assert, both ways); **FLAG-2 frontier preserve** @265e04607 (CTO ruling
+051427Z: enumerated SMA keys + in-band count_as_of + non-enumerated-still-poisons, both ways;
+unblocked the SMA seam I found + routed — live --firm all dry-run PASSES on the fresh 07-21
+frontier: global model $1,548,108,403.71 / aggregate $1,825,641,501.51 / by_model{9}; COO
+counter-sign requested at the artifact); **distribution fold** @fa491f9b6 (units SIDECAR from the
+pair producer — one computation, two grains, no cross-tree import, no blended double-count;
+global dry-run funded 7,863 / $1.672B / cottonwood inside the canonical keys).
+
+**Also this window:** COO's co-sign pre-check caught the staged interpolated artifact PREDATING
+the washout cap → re-emitted from the capped producer (67,146B, 05:19:42Z) — **the cap BITES on
+the real blend: early band ~0.50 → 0.01–0.05 (18/46 dates distant-terminal substitutions),
+preventing a ~50x confidence over-claim from being co-signed.** Staged pair/metrics ETags now
+differ from served pins by generated_at only (values identical — NOT content drift; served
+co-signed copies stand).
+
+**Serve path (external gates):** CVO delta-sign → DE renders (band + Global view) → co-sign pairs
+at the artifacts → serve. Backtest projection = separate dispatch (CRO design), not this lane yet.
