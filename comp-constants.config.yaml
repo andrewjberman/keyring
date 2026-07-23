@@ -590,8 +590,12 @@ constants:
     line: 29
     value: 'Object.freeze({...}) — 3 firms: 49financial, inflection, mockadv'
     language: js
-  notes: 'Canonical SSoT since FIRMSEP.03. Consumers: auth-validator-edge (FIRM_BUCKET_MAP import) + shared-advisor-router (FIRM_BUCKET_MAP import). Cottonwood NOT yet present here (pre-FIRMSEP.10). New
-    firm onboarding = single-line edit. Lambda@Edge bun-build inlines at deploy time.'
+  notes: 'Canonical SSoT since FIRMSEP.03. Consumers: auth-validator-edge (FIRM_BUCKET_MAP import) + shared-advisor-router (FIRM_BUCKET_MAP import). Cottonwood landed at FIRMSEP.10 (the 05-08 gap this
+    note used to record -- kept as the item-7 exhibit). New firm onboarding = single-line edit. Lambda@Edge bun-build inlines at deploy time.'
+  firm_keyed:
+    complete_over: portal
+    sites:
+    - infra/aws/lambda-edge/_shared/firm-config.mjs
 - name: FIRM_BUCKET_MAP
   lane: multifirm
   type: object
@@ -612,6 +616,10 @@ constants:
     line: 20
     value: 'Record<string, ReadonlySet<string>> — 3 firms: 49financial, inflection, cottonwood'
     language: ts
+  firm_keyed:
+    complete_over: portal
+    sites:
+    - portal/src/lib/firmAccess.ts
   notes: Portal-side page access matrix. COTTONWOOD ALREADY PRESENT HERE (pre-populated for Cottonwood onboarding readiness) but cottonwood is NOT yet in FIRM_CONFIG/FIRM_BUCKET_MAP (Lambda@Edge routing
     still unaware). Cottonwood is missing /advisor-intelligence vs 49F/Inflection — may be intentional scope decision or placeholder.
 - name: FIRM_EMAIL_DOMAINS

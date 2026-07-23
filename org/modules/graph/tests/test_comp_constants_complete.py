@@ -195,6 +195,19 @@ def test_js_key_extraction_with_commented_firm_not_present(tmp_path):
     assert "nestedKey" not in keys and "bucket" not in keys
 
 
+def test_js_object_freeze_wrapper_is_transparent(tmp_path):
+    # The LIVE idiom at the acceptance target (firm-config.mjs:29).
+    mjs = tmp_path / "f.mjs"
+    mjs.write_text(
+        "export const FIRM_MAP = Object.freeze({\n"
+        "  '49financial': { bucket: 'opal-data-bd' },\n"
+        "  inflection: { bucket: 'opal-data-inf' },\n"
+        "});\n",
+        encoding="utf-8",
+    )
+    assert members_from_js_site(mjs, "FIRM_MAP") == {"49financial", "inflection"}
+
+
 def test_js_site_missing_const_is_None_not_empty(tmp_path):
     mjs = tmp_path / "x.mjs"
     mjs.write_text("export const OTHER = { a: 1 };\n", encoding="utf-8")

@@ -119,7 +119,10 @@ def members_from_js_site(path: Path, const_name: str):
         src = strip_comments(path.read_text(encoding="utf-8", errors="replace"))
     except OSError:
         return None
-    m = re.search(r"(?:export\s+)?const\s+%s\s*(?::[^=]+)?=\s*\{" % re.escape(const_name), src)
+    # Object.freeze({...}) is the live idiom at the acceptance target
+    # (firm-config.mjs:29) -- the wrapper is transparent to the key set.
+    m = re.search(r"(?:export\s+)?const\s+%s\s*(?::[^=]+)?=\s*(?:Object\.freeze\(\s*)?\{"
+                  % re.escape(const_name), src)
     if not m:
         return None
     # brace-balance from the opening { (comment-stripped, strings may hold braces --
