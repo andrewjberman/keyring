@@ -392,6 +392,41 @@ def cmd_check(args: argparse.Namespace, config: dict) -> int:
     return 1
 
 
+def cmd_complete(args: argparse.Namespace, config: dict) -> int:
+    """Enumeration-completeness axis (bundle item 7, NFRA_PSTMRT). Exit 0 all
+    COMPLETE/EXEMPT, 1 on INCOMPLETE/PHANTOM/EXEMPT-EXPIRED/UNPARSEABLE-SITE,
+    3 REFUSE (registry absent/unparseable -- 'could not check' is never 'clean').
+
+    Drift asks: do the sites AGREE? This asks: is each site's firm set COMPLETE
+    over its declared registry scope? Zero drift with a uniformly-missing firm is
+    exactly the defect class this axis exists for (the 05-08 finding)."""
+    try:
+        from .comp_constants_complete import (RegistryRefusal, check_completeness,
+                                              load_registry)
+    except ImportError:
+        from comp_constants_complete import (RegistryRefusal, check_completeness,
+                                             load_registry)
+    reg_path = Path(getattr(args, "registry", None) or
+                    (WORKSPACE_ROOT / "data" / "firm_registry.json"))
+    try:
+        registry = load_registry(reg_path)
+    except RegistryRefusal as e:
+        print(f"REFUSE: {e}")
+        return 3
+    scanned = scan_all(config)
+    res = check_completeness(config, registry, scanned, WORKSPACE_ROOT)
+    print("comp-constants complete -- the ENUMERATION-COMPLETENESS axis "
+          "(drift is a different question)")
+    print("  DENOMINATOR: " + res["denominator"])
+    if not any(c.get("firm_keyed") for c in config.get("constants", [])):
+        print("  NO firm_keyed declarations in config -- 0 structures under this "
+              "gate. That is a COVERAGE statement, not a pass.")
+    for f in res["findings"]:
+        print("  [%s] %s @ %s -- %s" % (f["verdict"], f["constant"], f["site"],
+                                        f["detail"]))
+    return res["rc"]
+
+
 def cmd_index(args: argparse.Namespace, config: dict) -> int:
     """Re-scan + rewrite sites[] in config; preserve notes/canonical_value/lane.
 
@@ -608,6 +643,14 @@ def main() -> int:
     p_check.add_argument("--lane", choices=["bd", "inf", "cot", "multifirm"],
                          help="filter to one lane (V4.021 Cat 3.4; cot added NFRA_DTAFLP TO-4)")
     p_check.set_defaults(func=cmd_check)
+
+    p_complete = sub.add_parser(
+        "complete",
+        help="enumeration-completeness vs data/firm_registry.json (item 7; "
+             "--complete-over axis)")
+    p_complete.add_argument("--registry",
+                            help="registry path override (default data/firm_registry.json)")
+    p_complete.set_defaults(func=cmd_complete)
 
     p_index = sub.add_parser("index", help="rewrite sites[] in config")
     p_index.set_defaults(func=cmd_index)
