@@ -137,3 +137,19 @@ because it would contradict the standing WS-5 shape ruling -- CTO: "an order tha
 by wiring is exactly the kind of order that should die at stop-before-build, including when I am the one
 who gave it." Third live-primitive stale-premise catch in 24h (RF-10, the pk-frontier no-op, this).
 (a) unchanged: one rebuild carrying DS's S5 twin + RF-9 when the batch reaches S5; EOD decouple armed.
+
+---
+
+## RULE-11 INSTRUMENT UN-BLINDED 2026-07-23 ~1239-1246Z (CVO~Z via MSTR re-grounding)
+
+verify-ec2.sh false-skipped 26/27 services on this host: jq.exe emits CRLF stdout (file clean LF), the
+key loop's $SERVICE carried a trailing \r (not in IFS, survives word-splitting), the inner
+.services["name\r"] lookup missed -> "No source_path" for every populated service. MSTR's re-grounding
+mattered: CVO~Z's stated cause ("populate the manifest") was wrong -- 18/27 were populated; the fix was
+the instrument, not the data. FIXED @9a9e92842 (tr -d '\r' at the iteration source, measured comment).
+DIFFERENTIAL PROOF: pre-fix 26 skips reproduced; post-fix skips == exactly 9 == the genuinely-unpopulated
+complement of MSTR's 18/27. First real read: 27 checked / 2 clean / 16 drift-signals / 9 skipped.
+ROUTED TO CTO (not adjudicated): the 16 drift-signals' large counts (187/219 on bd trees) read as STALE
+deployed_commit reference fields (deploy path likely never updates them), not real drift; + the 9
+missing-source_path coverage item. Compiler tools: bash -n, verify-ec2 x4 (repro/differential), jq
+behavior probe (MSTR's, cited), safe-commit.
