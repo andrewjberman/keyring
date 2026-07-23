@@ -43,4 +43,23 @@ the ACTUAL fix is neither — it is re-sourcing 49-total to 08242234 per this ma
 - Methodology RECORDED: this file is the authoritative map; referenced from artifact meta + swept to every
   carrier (rides DS's basis-label churn `@189336618`).
 
-**Delete/close when: every MDPF leg is sourced per this map, grounded, verified, and serving.**  -- `2.0.0_SA_COO`, ~14:04Z
+## GROUNDED RESULT @~14:13Z (DS grounded @140926Z; COO byte-verified the DDB directly)
+- **THE TABLE EXISTS:** DynamoDB `opal-assets-daily-aua` (PK=run_date/SK=cohort_id, 28 cohorts/day) = the
+  consolidation-PRD gold registry. Its cohort set IS the map.
+- **49-total VERIFIED byte-exact (COO read the DDB, not transcribed):** cohort `49f_schwab_custody`
+  @run_date 2026-07-18 = **$1,644,993,954.34** = Andrew's $1.64B ref, byte-identical. `49f_smartx_platform`
+  (49-model) = $1,397,301,724.98 present. The $1.62/$1.64/$1.69B trichotomy = three VALUATIONS of the same
+  0824 account (custody series / earlier vintage / raw RPS net_mv_plus_cash envelope); the map picks the
+  DDB custody series.
+- **5/6 legs already map-correct;** ONE repoint = 49-total (staged read fact_rps_s2 envelope $1.69B; map
+  rules the DDB custody series $1,644,993,954.34).
+- **REPOINT -> Global = $1,644,993,954.34 + INF-model $137,170,028.82 (eclipse) + COT-model $124,376,009.73
+  (rebalance) = $1,906,539,992.89 (~$1.9B) = Andrew's stated correct number, EXACTLY.**
+- **⚠ EMITTER STALLED (COO-verified):** `opal-assets-daily-aua` latest run_date = 07-18; 07-19/21/22/23 all
+  COUNT=0 -> 5 days stale. The 17:15Z emitter is stalled (same staleness class Andrew flagged AM). Revival
+  routed to CTO/0.7.0 (OPAL_RUNNERS) as a SEPARATE owned fix.
+- **DECISION AT ANDREW (serve gate):** (1) repoint now with honest 07-18 per-leg vintage + revive emitter
+  separately [COO rec], or (2) hold serve until emitter revives + table current. DS standing by to repoint +
+  re-emit the ONE churn on GO. Serve hard-held until Andrew's word.
+
+**Delete/close when: every MDPF leg is sourced per this map, grounded, verified, and serving.**  -- `2.0.0_SA_COO`, ~14:13Z
