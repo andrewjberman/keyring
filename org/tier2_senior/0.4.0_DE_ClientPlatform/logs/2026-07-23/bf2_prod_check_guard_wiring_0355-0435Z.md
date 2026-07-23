@@ -39,3 +39,6 @@
 - ARMED: BF2 acceptance render on DS's real served point_class[] (BF1); qt5 real data may shrink the band.
 - AT CTO: whether to live-exercise the CI limb on a sanctioned ref; demo-credential instrumenting call.
 - Instrument gaps open: comp-transform on this component; comp-validate config for G8 producer (DS).
+
+## AMENDMENT ~0440Z — CI limb exercised live
+Run 29980042961: dispatched on probe ref bf2-ci-limb-probe (plant pushed with local hook bypassed = the backstop scenario), completed FAILURE with exactly the guard step red; branch deleted unmerged, DEV clean. FINDING routed to CTO: ci.yml has NO pull_request trigger (push-to-DEV + dispatch only) — the backstop detects-after-landing, not blocks-before-merge; PR-trigger + branch protection is CTOs call. Guard proven at all three levels (test mutant / hook refused-push / CI red). COO 043935Z: go-live SEALED on the evidence chain (CTO 043712Z); BF2 acceptance render rides the MORNING batch (CVO 2 delta-items + co-sign + Andrew serve word); demo click-through = morning custody chase.
