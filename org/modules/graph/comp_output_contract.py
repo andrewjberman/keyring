@@ -35,6 +35,12 @@ from typing import Optional
 _THIS_DIR = Path(__file__).resolve().parent
 _CONTRACTS = _THIS_DIR / "comp-output-contracts.yaml"
 _MANIFEST = _THIS_DIR / "graph-call-manifest.yaml"
+# ONTOLOGY2 canonical_source (NFRA_ONTOLOGY2 P1, ~C). The stage-2 vocabulary authority; the reader below
+# loads type_tuple.<field>.enum from HERE so canonization AUTO-ACTIVATES validation with no code edit.
+_RULE_BANK = _THIS_DIR / "NFRA_ONTOLOGY_RULE_BANK.yaml"
+# The declared fields validated against the canon vocabulary (stage-2). plane is live today (== ~C's enum
+# verbatim); grain/scope become first-class declared fields in the one-pass reconcile on ~C's canon signal.
+_VOCAB_FIELDS = ("plane", "grain", "scope")
 
 # Result-class vocabulary. UNKNOWN is a first-class outcome, distinct from FAIL (condition b).
 PASS = "PASS"
@@ -191,6 +197,85 @@ def verdict_exit_map() -> tuple:
     refuse_exits = frozenset((t, rc) for t, m in table.items()
                              for rc, cls in m.items() if cls == REFUSE)
     return verdict_tools, refuse_exits
+
+
+# ----------------------------------------------------------------------------------------------------
+# STAGE-2 vocabulary validation (NFRA_ONTOLOGY2 <-> TOOLARCH seam). CTO~Z two-stage ruling (184541Z):
+# STAGE 1 (live) = the registration invariant enforces PRESENCE of a plane/coverage declaration; STAGE 2
+# (this) = declaration VALUES validate against ~C's canonical (rail,grain,plane,scope) vocabulary, out-of-
+# vocab -> LOUD fail. This is the READER ~C green-lit building against the draft (185356Z/200041Z): it loads
+# the enums from the rule bank canonical_source, so ~C's canonization AUTO-ACTIVATES it with NO code edit and
+# NO restated enum copy. It is NOT wired into the blocking completeness gate here -- that wiring + adding
+# grain/scope to every declaration is the ONE-PASS RECONCILE done together on ~C's canonization signal, so
+# the gate never blocks in a half-reconciled state.
+# ----------------------------------------------------------------------------------------------------
+
+@functools.lru_cache(maxsize=1)
+def canon_vocab() -> dict:
+    """The canonical (rail,grain,plane,scope) enums from the ONTOLOGY2 rule bank (type_tuple.<field>.enum).
+    Returns {} if type_tuple is absent (pre-canonization) -> stage-2 stays DORMANT (no false fails). Reading
+    from the canonical_source (not a hardcoded copy) is the whole point: a token shift at ~C's gate is picked
+    up automatically. LAW-2: an enum extension is a rule-bank version bump; the enum is a CLOSED set here."""
+    doc = _load_yaml(_RULE_BANK)
+    tt = doc.get("type_tuple")
+    if not isinstance(tt, dict):
+        return {}
+    out = {}
+    for field in ("rail",) + _VOCAB_FIELDS:
+        enum = (tt.get(field) or {}).get("enum") if isinstance(tt.get(field), dict) else None
+        if isinstance(enum, list):
+            out[field] = list(enum)
+    return out
+
+
+def validate_declaration_vocab(tool: str, subcommand: Optional[str] = None) -> list:
+    """STAGE-2: for the declared fields (plane/grain/scope) that are PRESENT on this tool's contract, verify
+    the value is in the canon enum. Returns a list of violation strings (empty = clean). Two dormancy rules
+    keep it false-positive-free before the one-pass reconcile:
+      - canon vocab absent (pre-canonization)         -> [] (dormant).
+      - a field ABSENT from the declaration           -> NOT a violation (presence is the reconcile's job;
+                                                          stage-2 validates VALUES, stage-1 owns PRESENCE).
+    So today it validates plane values (all == ~C's enum, all pass) and is silent on the not-yet-declared
+    grain/scope -- exactly the safe interim CTO~Z ruled."""
+    vocab = canon_vocab()
+    if not vocab:
+        return []
+    c = contract_for(tool, subcommand)
+    if c is None:
+        return []  # undeclared tools are stage-1's UNKNOWN, not stage-2's problem
+    violations = []
+    for field in _VOCAB_FIELDS:
+        if field not in c:
+            continue  # absent -> reconcile's job, not a value violation
+        val = c.get(field)
+        allowed = vocab.get(field)
+        if allowed is None:
+            continue  # the rule bank does not (yet) carry this field's enum
+        if val not in allowed:
+            violations.append(f"{tool}.{field}={val!r} NOT in canon {field} enum {allowed}")
+    return violations
+
+
+def validate_all_declarations() -> dict:
+    """Sweep every declared tool through stage-2. {tool: [violations]} for tools with >=1 violation; {} when
+    clean or dormant. This is what the stage-2 gate member will consume on the canonization signal."""
+    out = {}
+    for tool in declared_tools():
+        v = validate_declaration_vocab(tool)
+        if v:
+            out[tool] = v
+    return out
+
+
+def stage2_status() -> dict:
+    """One-call status for reports: is stage-2 armed (canon vocab present), and does the current surface pass?"""
+    vocab = canon_vocab()
+    return {
+        "canon_vocab_present": bool(vocab),
+        "fields_loaded": sorted(vocab),
+        "declared_tools_swept": len(declared_tools()),
+        "violations": validate_all_declarations(),
+    }
 
 
 def undeclared_registered() -> tuple:

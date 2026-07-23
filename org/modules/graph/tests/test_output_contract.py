@@ -145,5 +145,62 @@ def test_header_block_goes_to_two_lines():
     assert hb.count("\n") == 1 and hb.startswith("COVERAGE:") and "PLANE:" in hb
 
 
+# ----------------------------------------------------------------------------------------------------
+# STAGE-2 vocabulary validation (ONTOLOGY2 <-> TOOLARCH seam). The READER ~C green-lit building against the
+# draft: loads canon enums from the rule bank canonical_source; NOT wired into the blocking gate yet (that +
+# the grain/scope reconcile fire together on ~C's canonization signal).
+# ----------------------------------------------------------------------------------------------------
+
+def test_stage2_reads_canon_plane_enum_verbatim():
+    """The canon plane enum (~C's type_tuple.plane.enum) is my plane enum verbatim -> plane reconcile is a
+    no-op. If the rule bank has type_tuple yet, prove the read; if not, the reader is dormant (also valid)."""
+    oc.canon_vocab.cache_clear()
+    vocab = oc.canon_vocab()
+    if not vocab:  # pre-canonization -> dormant, nothing to assert about values
+        assert oc.validate_all_declarations() == {}
+        return
+    assert vocab.get("plane") == ["source", "projection", "desired", "applied", "live", "mixed", "graph-cache"]
+
+
+def test_stage2_all_declared_tools_pass_plane_when_armed():
+    """When the canon vocab is present, every declared tool's plane must already be in-vocab (plane no-op)."""
+    oc.canon_vocab.cache_clear()
+    if not oc.canon_vocab():
+        return  # dormant
+    assert oc.validate_all_declarations() == {}, "a declared tool has an out-of-canon plane value"
+
+
+def test_stage2_validator_bites_on_out_of_vocab(monkeypatch):
+    """REQUIRED MUTANT: an out-of-vocab value is a LOUD violation, not silently accepted."""
+    oc.canon_vocab.cache_clear()
+    if not oc.canon_vocab():
+        return  # dormant -- the mutant is only meaningful when armed
+    monkeypatch.setattr(oc, "contract_for",
+                        lambda t, s=None: {"plane": "NONSENSE-PLANE", "coverage": "x"})
+    v = oc.validate_declaration_vocab("comp-anything")
+    assert v and "NOT in canon plane enum" in v[0]
+
+
+def test_stage2_dormant_when_canon_absent(monkeypatch):
+    """No canon vocab (pre-canonization) -> zero violations, never a false fail."""
+    orig = oc._load_yaml
+    monkeypatch.setattr(oc, "_load_yaml",
+                        lambda p: {} if str(p).endswith("RULE_BANK.yaml") else orig(p))
+    oc.canon_vocab.cache_clear()
+    assert oc.validate_declaration_vocab("comp-blast") == []
+    assert oc.validate_all_declarations() == {}
+    oc.canon_vocab.cache_clear()
+
+
+def test_stage2_absent_field_is_not_a_violation():
+    """grain/scope not yet declared -> NOT flagged (stage-2 validates VALUES; stage-1 owns PRESENCE).
+    This is what keeps the interim safe before the one-pass reconcile adds grain/scope."""
+    oc.canon_vocab.cache_clear()
+    if not oc.canon_vocab():
+        return
+    # comp-blast declares plane but not grain/scope -> must be clean (absent != invalid)
+    assert oc.validate_declaration_vocab("comp-blast") == []
+
+
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__, "-q"]))
