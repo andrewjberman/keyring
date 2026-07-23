@@ -25145,3 +25145,54 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON.tools-source-from-kuzu-canonical-not-floating-json | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='S3Key' AND n.name CONTAINS 'mdp... | PASS |
 | 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-23/cvoz_ONTOLOGY2_P1_verify.md | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-output-contracts... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-pulse | comp-pulse diff org/modules/graph/comp-output-contracts.yaml org/modules/graph/manifest... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-system | comp-system --gate --changed org/modules/graph/comp-output-contracts.yaml org/modules/g... | VERDICT |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/build_cottonwo... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff data/assets/scripts/gold/build_cottonwood_interpolated_backfill.py data... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-system | comp-system | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_ONTOLOGY2.json | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/projects/NFRA_ONTOLOGY2.json | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-system | comp-system --check | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-pulse | comp-pulse diff infra/system/06_current_state.json infra/system/06_current_state.md org... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-system | comp-system --gate --changed org/modules/graph/comp-output-contracts.yaml org/modules/g... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON.tools-source-from-kuzu-canonical-not-floating-json | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON.tools-source-from-kuzu-canonical-not-floating-json | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLARCH_CANON_TO... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/drive_log_20260723T2034Z.md | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-manifest-check | comp-manifest-check retired-alias | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON.tools-source-from-kuzu-canonical-not-floating-json | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON.tools-source-from-kuzu-canonical-not-floating-json | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-07-23/session_D_toolarch_... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file data/smartx/scripts/compute_account_dis... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff data/smartx/scripts/compute_account_distribution.py infra/aws/lambda/sm... | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.y... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff org/modules/graph/graph-call-manifest.yaml org/modules/graph/manifest_c... | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-system | comp-system --gate --changed org/modules/graph/graph-call-manifest.yaml org/modules/gra... | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.y... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff org/modules/graph/graph-call-manifest.yaml org/modules/graph/manifest_c... | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-system | comp-system --gate --changed org/modules/graph/graph-call-manifest.yaml org/modules/gra... | VERDICT |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260723T2020Z_mdpf-global-interp-... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.y... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff org/modules/graph/graph-call-manifest.yaml org/modules/graph/manifest_c... | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-system | comp-system --gate --changed org/modules/graph/graph-call-manifest.yaml org/modules/gra... | VERDICT |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/mdpf_final_render... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_MSBEFF_R6_phantom... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/mdpf_final_render... | PASS |
+
+- 2026-07-23 0.8.0_AE_CloudComp~C (ONTOLOGY2 P1 downstream): NO tool runs -- vocabulary-adjudication + coordination window (3 grain/scope tokens ruled: comp-kuzu/comp-parity affirmed, comp-iam grain=artifact held-then-cleared on its 22a resource-blindness blind_spot). Tool evidence for the rails is @f4c6c5110; base stage-2 enforcement mutant+27/27 rides @c716d963e.
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
