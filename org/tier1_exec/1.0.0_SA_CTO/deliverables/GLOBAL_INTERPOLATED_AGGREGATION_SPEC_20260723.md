@@ -1,4 +1,47 @@
-# GLOBAL INTERPOLATED-BACKFILL AGGREGATION SPEC (CTO, v0.1 for CVO review)
+# GLOBAL INTERPOLATED-BACKFILL AGGREGATION SPEC (CTO, v0.2 — CVO tandem findings ruled)
+
+## v0.2 RULINGS (delta over v0.1, per CVO tandem review @273bbe9c0 — supersedes conflicting v0.1 text)
+
+**R-1 (S1/S4/S5 — the extend-vs-invent decision): ADOPT THE INCUMBENT VOCABULARY WHOLESALE.**
+The honesty claim ("we extend Andrew's established channel") is only TRUE this way, and a
+look-alike channel that does not interoperate with the 49financial provenance already served is
+the two-null-semantics defect recreated at the provenance layer. Binding: enum =
+`interpolated_estimate` (never `interpolated` — and it is the more honest string on its face);
+container = `partners` (not by_firm); field = `backfill_method` (CRO's method id+version string
+IS its value; `confidence` and `window_id` enter as ADDITIVE sibling fields per frozen-additive);
+grain = **per-cohort (the incumbent's, which is FINER)** — the firm-level and Global point_class
+derive as any-cohort-`interpolated_estimate`. CRO consolidates his three internal handles (S6)
+onto this ONE channel and fixes the 5 internal enum inconsistencies (S1) in the same delta.
+
+**R-2 (S2 relocated — the served-boundary reshape): TWO-STAGE, RESHAPE RIDES THE FLIP.**
+The incumbent served slice stays parallel-arrays for now (49f/inflection FE reads it TODAY; a
+breaking reshape outside the flip gate is exactly what LD-0330 exists to prevent). INTERIM
+(structural at the code boundary): (a) an ADDITIVE derived `point_class[]` array lands in the
+served slice (non-breaking); (b) the FE data layer gets ONE paired-read accessor returning
+value+provenance tuples, components consume ONLY through it, enforced by a test that fails on
+any direct read of the value arrays. AT THE FLIP (structural at the artifact boundary): the
+revamp-family contract serves inline tuples — the reshape is part of 3F-F1's frozen set, full
+gates, and the flip's pre-existing verification machinery covers it. Owner: DE (accessor+test)
+/ DS (additive array) interim; F1 for the reshape.
+
+**R-3 (P-A): the interpolation floor is `max(model_creation_date, account_existence_date)`, in
+BOTH validators** (producer refusal + schema validator), per-account and per-model.
+
+**R-4 (P-B): radial protection becomes a GUARD:** the radial/bell-curve producers assert
+`source != timeseries-tail` (they read only current-snapshot inputs; a timeseries-derived
+current value is a build error). Structural, not assumed.
+
+**R-5 (process, adopted from CVO): schema changes re-enter review as PINNED DELTAS** — this
+section is the first instance; CRO's next emission does the same. **R-6: CRO publishes the raw
+B2 weight vectors in the spec** so all 5 washout coefficients re-derive from first principles
+(4 of 5 currently table-consistent but weight-unverified).
+
+Mutant set: v0.1 §5 four + CVO's M8 + M2-sharpened (planted point under BOTH enum strings — the
+S1 regression test forever). Decomposition stays HELD until CVO signs the pinned pair.
+
+---
+*v0.1 text below stands except where R-1..R-4 supersede (§2 enum/container/grain, §3.2 ceiling,
+§4 field names).*
 
 **Authority (Andrew-direct, verbatim, CTO terminal 2026-07-23 ~02:2xZ):** "Then while that is
 happening, I need you to spec a plan for how to aggregate that backfill data into the 'Global'
