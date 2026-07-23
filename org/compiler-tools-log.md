@@ -25231,3 +25231,78 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-23 ~2100Z 0.4.0_DS_ClientPlatform: comp-routes behaviors (PASS, isolation-design grounding; found scoped-router precedent + /json-tiered no-auth), ~6 comp-grep/glob (producer/formula grounding, C2+convergence arcs), comp-validate (FAIL-coverage: tree registry hardcoded BD/INF/COT, mdpf/assets invisible -- CTO ruled no-extension, class banked).
 | 2026-07-23Z | 0.4.0_DS_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23Z | 0.4.0_DS_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_TOOLARCH.CANON2.gr... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/deploy_ledger.py --file .tools/t... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-pulse | comp-pulse diff .tools/deploy_ledger.py .tools/tests/test_deploy_ledger_malformed.py | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON.tools-source-from-kuzu-canonical-not-floating-json | comp-routes | comp-routes rewrites | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON.tools-source-from-kuzu-canonical-not-floating-json | comp-routes | comp-routes trace /json/mdpf/global/aggregate-aua-timeseries.json | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/deploy_ledger.py --file .tools/t... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-pulse | comp-pulse diff .tools/deploy_ledger.py .tools/tests/test_deploy_ledger_malformed.py | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON.tools-source-from-kuzu-canonical-not-floating-json | comp-routes | comp-routes rewrites | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON.tools-source-from-kuzu-canonical-not-floating-json | comp-routes | comp-routes rewrites | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file data/smartx/scripts/generate_smartx_tim... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff data/smartx/scripts/generate_smartx_timeseries_and_metrics.py infra/aws... | VERDICT |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file scripts/provenance-read-guard.mjs --fil... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff scripts/provenance-read-guard.mjs src/lib/pairedProvenanceRead.ts src/p... | VERDICT |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode blocking --file portal/scripts/provenance-read-guard.mj... | PASS |
+| 2026-07-23Z | 0.6.2_AE_PartnerETL~A | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/ws1-le... | PASS |
+| 2026-07-23Z | 0.6.2_AE_PartnerETL~A | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/critical_paths/.open_deploys/ws1-lever-a-age-bound-20260723.json or... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260723T2112Z_smartx-aum-metrics-... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLBHVR_ROUTE_ph... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_TOOLARCH.ROUTES.tr... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-system | comp-system --check | VERDICT |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260722T0503Z_portal-global-month... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/drive_log_20260723T2124Z.md | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/mdpf_final_render... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/deploy_ledger.py | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-pulse | comp-pulse diff .tools/deploy_ledger.py | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh --file or... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff .tools/hooks/comp-tool-hud.sh org/tier2_senior/0.8.0_AE_CloudComp/deliv... | VERDICT |
+| 2026-07-23Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/TANDEM_REVIEW_BACKTEST_PROJECT... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLARCH_CANON_TO... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-routes | comp-routes trace /api/general/json/mdpf/global/aggregate-aua-timeseries.json | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-routes | comp-routes trace /zzz/definitely/not/a/real/path/qqq.json | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-routes | comp-routes trace https://opalinvest.dev/api/general/json/mdpf/global/aggregate-aua-tim... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLSEM_PRD.md | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_TOOLSEM_PRD.md | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/drive_log_20260723T2136Z.md | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-routes | comp-routes trace /api/general/json/mdpf/global/aggregate-aua-timeseries.json | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-routes | comp-routes trace /zzz/definitely/not/a/real/path/qqq.json | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/deploy_ledger.py --file .tools/t... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-pulse | comp-pulse diff .tools/deploy_ledger.py .tools/tests/test_deploy_ledger_malformed.py | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLARCH_CANON_QU... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_TOOLARCH.CANON2.gr... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN n.* LIMIT 1 | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.props IS NOT NULL RETURN n.props AS p LIMI... | PASS |
+| 2026-07-23Z | 4.0.0_SA_CRO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/NFRA... | PASS |
+| 2026-07-23Z | 4.0.0_SA_CRO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/NFRA_AKPIPE_BUILD_SPEC_20260723.md o... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.props IS NOT NULL RETURN n.node_type AS t,... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh --file or... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff .tools/hooks/comp-tool-hud.sh org/tier2_senior/0.8.0_AE_CloudComp/deliv... | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='Module' RETURN n.name AS name, ... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='PipelineScript' RETURN n.name A... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='ReactComponent' RETURN n.name A... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='PipelineFunction' RETURN n.name... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='Component' RETURN n.name AS nam... | PASS |
+| 2026-07-23Z | 4.0.0_SA_CRO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/NFRA... | PASS |
+| 2026-07-23Z | 4.0.0_SA_CRO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/NFRA_AKPIPE_BUILD_SPEC_20260723.md o... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/build_cottonwo... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/gold/build_cottonwood_interpolated_backfill.py data... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_TOOLBHVR.ROUTE | comp-tool-hud (subject+instrument); comp-which-rail.log; comp-freshness | replayed COO incident shape + 4 negative controls through the PreToolUse hook; derived 18,014-event rail denominators; grounded comp-freshness backing | PASS | GAP: the rail types by COMMAND SHAPE not QUESTION TYPE -- its 14 classes contain NO path/lineage class, so "what serves this key" first-match-wins into aws_freshness and is answered by a freshness tool (rail fires, answer does not fit, agent hand-greps). 268 freshness-classified / 18 path-shaped / 67 rail-checked overrides. FIXED @c8cdaf3bc+2250b97dd: nudge now serves BOTH intents + honest NO-COVERAGE for URL->S3-key (no tool resolves it -- comp-routes trace undiscriminating per ~D positive control), AND corrected a REFUTED CLAIM the rail itself was teaching ("comp-routes = the serving path"). Message-only, ZERO gate changes; 4 negative controls silent. Bound to ~D cert table @2471d2806 (no parallel copy). |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
