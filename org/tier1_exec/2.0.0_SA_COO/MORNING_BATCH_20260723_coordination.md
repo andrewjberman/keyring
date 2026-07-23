@@ -55,6 +55,21 @@ summary was his own 01:31Z vintage (original page, not the band); my "serve-calc
 04:30Z vintage (discharged by Andrew "go"). Both corrected ~10:31Z — LD-0334 caught symmetrically. **No
 band publish cites an incomplete COO co-sign; the band serves only on DE render + COO identities limb.**
 
+**BATCH DELIVERIES (running, @~10:55Z):**
+- **0.6.2:** never-retry DONE (qt_0722_reland re-mint-once-on-401 through every tokened call, ETag eded477d) +
+  07-22 readiness CONFIRMED (self-gating script + mutual lift protocol with DS, ready for 02:00Z 07-24).
+  **WS-1 ROOT CAUSE found + at CTO's gate:** the "fires-without-writing" is CTO's own 07-06 Lever A
+  (OTP-skip on live-cookie probe, NO age bound, `lambda_function.py:213-227`) skipping the mint every night
+  as ruled — not aging cookies. Plan (age-bound the lever + one interim hand-mint today + visibility rider)
+  at CTO's gate (amends his own ruling). The larger `cot_bronze_ingest` daily-chain retry = CTO's lane (Rule 13).
+- **DS:** 6d wiring half = git-apply-clean patch `@3e7a59502` -> 0.7.0 (owned-paths correctly split the AE
+  lane) + S5 COMPLETE `@1351c74d9` at CTO's gate (sidecar + createdAt passthrough + force-guard, ONE pass;
+  controls RUN: row-count parity 911==911, force-guard 07-21-refused exercised, grounded-negative on roster).
+- **>> TWO CLOCKS I TRACK:** (1) **6d trend-grows-tonight** needs 0.7.0's apply + CTO's TF gate BEFORE
+  **02:04Z** (~15h runway @10:55Z); else it slips a night. (2) **S5 cutover** constant `2026-07-23`
+  conditioned on the lambda-twin deploying before the next conversion (slips a day -> constant bumps, no
+  frozen assumption). Both at CTO's TF apply gate. Surface to CTO/0.7.0 if the 02:04Z clock looks at risk.
+
 ### A. Interpolated backfill band — serves on NEXT promote
 - **Status:** BUILT + STAGED (DS producer `build_cottonwood_interpolated_backfill.py @65a8fa92f`; DE
   accessor + band portal DEV `7394a58f`). CVO ruled DS's candidate-set date-restriction a **DELTA**
