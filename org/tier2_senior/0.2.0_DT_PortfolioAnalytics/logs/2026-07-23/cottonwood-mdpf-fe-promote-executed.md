@@ -57,3 +57,24 @@ None. Mission complete on my leg; DE's render evidence is the residual (theirs).
 ## Next steps
 - [0.2.0_DE_PortfolioAnalytics] through-auth live render on served domain, report evidence.
 - [me] event-driven standby; broker summary kept accurate.
+
+---
+
+# ADDENDUM 13:0xZ — Second promote same day: corrected band FE (v2.1.143)
+
+**archetype:** DEPLOY
+
+COO dispatch 124649Z (co-sign complete, Andrew asking) + CTO NO-STOP 125422Z (live unlabeled-estimate
+exposure since 12:03Z). Executed /prod-deploy again: delta 5 commits all 3F-BF2, head 58a38078;
+tsc clean; merge parents d270acc9 == 5ef8bc63 + 58a38078 exactly; parity EMPTY; provenance guard +
+VALGATE + tsc PASS at push; CI 30009240873 success; tag portal-v2.1.143 peeled-verified; pointer
+CLOUD 525a7296b; worktree pruned; main tree DEV; DE triggered 130150Z for yellow-dash live check.
+
+**CORRECTION on the record:** 525a7296b's message says pointer -> 58a38078 but the gitlink recorded
+0a261c74 (DE's Global-prep commit landed on DEV mid-promote). Pointer VALUE correct (== origin/DEV);
+message wrong; authoritative correction in the deploy-completion ledger
+(20260723T1247Z_cottonwood-band-fe-promote_deploy_completion.md). Verified 0a261c74 NOT in PROD.
+DE's freeze-window DEV push surfaced to COO (zero operational impact, post-PROD-push).
+
+Compiler Tools: none run — same rationale as the main entry (pure portal git promote; verifications
+on live primitives: git refs/parents/merge-base, gh run view --json, peeled tag).
