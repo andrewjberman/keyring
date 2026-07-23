@@ -718,12 +718,21 @@ tools:
     granularity: served-json
     concern: "full-stack component->gold COMPOSITION trace (page/reverse/tab-audit; firm-aware; chains transform+routes+pipescript)"
     touches_resource: []
+  - tool: comp-keys
+    surface: AWS-CLOUD
+    granularity: object
+    concern: "S3 INVENTORY -- WHAT EXISTS under a prefix: arbitrary-prefix key enumeration, per-prefix partition-date enumeration (earliest/latest/gaps), per-firm existence. Live s3api, explicit-Z, denominator-always. Closes the aws_freshness rail-override class (268 entries whose intent was key/partition discovery, not freshness). NFRA_MSBEFF.R5"
+    touches_resource: [existence]
+    distinct_from:
+      - { tool: comp-freshness, shared_resource: s3-listing, my_concern: "WHAT EXISTS (keys/partitions/existence -- inventory)", their_concern: "IS IT FRESH (trading-day staleness verdict)" }
+      - { tool: comp-assets,    shared_resource: s3-listing, my_concern: "arbitrary-prefix key/partition enumeration on ANY bucket", their_concern: "OPAL_ASSETS monolith backfill COMPLETENESS census (declared channels only)" }
   - tool: comp-freshness
     surface: AWS-CLOUD
     granularity: object
     concern: "pipeline-DATA S3/DDB freshness -- is upstream fresh enough to run a gold chain? (the gold-run-readiness gate)"
     touches_resource: [freshness]
     distinct_from:
+      - { tool: comp-keys,  shared_resource: s3-listing, my_concern: "IS IT FRESH (trading-day staleness verdict)", their_concern: "WHAT EXISTS (keys/partitions/existence inventory)" }
       - { tool: comp-heat,  shared_resource: freshness, my_concern: "pipeline-DATA S3/DDB freshness", their_concern: "estate-object write-freshness (repo files)" }
       - { tool: comp-graph, shared_resource: freshness, my_concern: "pipeline-DATA S3/DDB freshness", their_concern: "graph-cache VINTAGE" }
       - { tool: comp-xray,  shared_resource: freshness, my_concern: "pipeline-DATA S3/DDB freshness (wrapper age)", their_concern: "value-MOTION (frozen-but-fresh CONTENT)" }   # pre-existing gap (gate RED at HEAD) fixed in the V2-6 registration pass -- comp-xray already declared this pair from its side

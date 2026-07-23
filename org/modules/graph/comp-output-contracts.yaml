@@ -233,6 +233,18 @@ contracts:
 
   # ===== SIMPLE tools (a nonzero IS a tool/input failure -- no verdict-exit contract) =====
 
+  comp-keys:
+    coverage: "keys / partition dates / per-firm existence under an S3 prefix, from a LIVE s3api listing"
+    blind_spots:
+      - "lists ONLY what s3api returns for the exact prefix given -- a typo'd or wrong prefix reads as a true (loud) zero, not an error; the denominator is always the exact bucket+prefix, never the intended one"
+      - "partition dates are DERIVED from key text (YYYY-MM-DD / YYYYMMDD / date=), not --delimiter (which MSYS-mangles); a key that encodes its date differently is not counted; gaps are calendar-weekday, not trading-calendar (resolve NEVER#1 before calling a weekday gap a defect)"
+      - "prefix/partitions enumerate ONE bucket; only `exists` is complete-over the declared firm scope (data/firm_registry.json enabled+pipeline)"
+    plane: applied
+    vintage: "LIVE s3api list-objects-v2 at run time; LastModified is ISO-8601 Z (never `aws s3 ls` local time)"
+    exit_codes:
+      "1": {class: fail, meaning: "tool/input error -- aws unavailable, bucket unreadable / access-denied, or bad args (a LOUD zero on an empty prefix is exit 0, not this)"}
+    exit_source: "org/modules/graph/comp_keys.py (0 = query ran incl. loud-zero; 1 = _aws err / registry unreadable) @2026-07-23"
+
   comp-pipescript:
     coverage: "named-thread estate traversal (io/deployed/postdeps/consumers) over the AST-extracted graph"
     blind_spots:

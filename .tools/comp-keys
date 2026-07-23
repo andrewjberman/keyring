@@ -1,0 +1,17 @@
+#!/bin/bash
+# comp-keys -- KEY / PARTITION ENUMERATION primitive (NFRA_MSBEFF.R5).
+# Answers WHAT EXISTS in S3 (keys / partitions / per-firm existence), distinct from comp-freshness
+# (IS IT FRESH). Closes the largest measured rail-override demand (268 aws_freshness entries whose
+# intent was key/partition discovery, not freshness). Carries the R1R3 output contract; explicit-Z
+# timestamps (s3api, never `aws s3 ls`); never a zero without its denominator.
+#
+#   comp-keys prefix <bucket|s3://bucket/prefix> [prefix] [--top N|--all] [--max N]
+#   comp-keys partitions <bucket|s3://bucket/prefix> [prefix] [--max N]
+#   comp-keys exists <key-suffix>        # per-firm existence across data/firm_registry.json
+#
+# Rule-16 clean: uses only cd / dirname / pwd / python (all present in Git Bash 3.6.7).
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_keys.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-keys" "$*" $_exit 2>/dev/null
+exit $_exit
