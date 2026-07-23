@@ -155,8 +155,12 @@ band publish cites an incomplete COO co-sign; the band serves only on DE render 
   before it existed — same law as the early-band fix, keep-direction). A timing-smear would fabricate the
   unknowable true migration date (current-stamped), so the labeled STEP is the honest shape ("membership
   begins no earlier than here" = a true statement); 0.50 conf carries the residual. YANG_SITTW at the top end.
-  CVO confirms in her 5-point. **SERVE on: CVO pin-bless (epsilon+M6+mutant-d, 5-point) + note (a) DE
-  trading-day x-axis -> co-sign pair -> serve.** DS half complete; my value limb green; note (b) closed.
+  CVO confirms in her 5-point. **NOTE (a) DONE:** DE applied the trading-day-only x-axis `@portal 58a38078`
+  (render-only, NEVER#1-aligned; saw-tooth gone, May month-end bar shifted Sun 05-31 -> Fri 05-29) + re-verified
+  all 4 confirms on the corrected artifact (confidence label SELF-re-derived to 0.50-1.00, zero code change).
+  **>> BAND GREEN ON EVERY LIMB EXCEPT CVO'S BLESS: my value limb green, note (a) done, note (b) closed
+  (COO+DS), DS half complete, DE re-verify passes. CVO's pin-bless (epsilon+M6+mutant-d) + 5-point re-emit
+  verify is the LAST gate -> co-sign pair (DS+DE+COO green, CTO gates) -> SERVE.** No Andrew round-trip.
   Counter-sign discipline compounding: stale-confidence -> stale-artifact -> value-shape, 3 catches / 3 limbs.
 - **Pins (bind EXACT commits per R-5):** CRO schema `@708661904` (canonical build schema, delta-wins),
   CTO agg spec `@be91775dd` (§4 is ruling-record-not-build-surface), CVO R-5 `@ec5ec79f3`.
