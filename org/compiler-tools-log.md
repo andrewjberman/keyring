@@ -24596,3 +24596,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/mo... | PASS |
 | 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/modules/graph/comp_log_auto.py | PASS |
 | 2026-07-23Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_log_auto.py org/compiler-tools-log.md | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/andrew_dire... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_direct_20260723T1404Z_CANONICAL_mdpf... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-07-22/cot_advi_norun_diagn... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_MSBEFF/nl_corpus_extract.... | PASS |
+2026-07-23 | 4.0.0_SA_CRO | session 2130-1538Z | comp-which (price-source route, PARTIAL near-tie), comp-grep (data/ price ref), safe-commit surface-check+risk-reflex x12 (all PASS/CLEAN), raw aws s3 rail-checked (monolith silver/gold + market buckets + probe exports -- verdict grounding). Grounded the qt5 CURRENT-STAMPED verdict + createdAt-stability + ETF-prices-not-in-estate on live S3.
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/4.0.0_SA_CRO/logs/2026-07-23/s... | PASS |
