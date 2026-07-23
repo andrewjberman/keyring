@@ -64,7 +64,12 @@ head_sha="$(git -C "$WS" rev-parse --short HEAD 2>/dev/null)"
 # carrier (b) -- NOT the terminal print (a detached bg print is unreliable anyway), so the
 # finding-file is authoritative and the breadcrumb is only a courtesy pointer.
 # Rule 16: detached subshell `( ... ) &` (no setsid/nohup in Git Bash 3.6.7).
+# helper ships BESIDE this trigger -- resolve via $0, not $WS (robust in worktrees/fixtures)
+_hkdir="$(dirname "$0")"
+_of_status="$(sh "$_hkdir/_open-findings-status.sh" "$WS" 2>/dev/null)"
+[ -n "$_of_status" ] || _of_status="$(sh "$WS/.tools/git-hooks/_open-findings-status.sh" "$WS" 2>/dev/null)"
 printf '\n[closeout-trigger NFRA_MSBEFF.R4-A] closeout detected (%s) -- comp-state drift sweep dispatched (async); finding lands in org/critical_paths/.open_findings/ if drift.\n' "$codes" >&2
+printf '  open findings: %s  <- resolve + delete, or the PAST-DUE count is an expiry nobody honoured\n' "${_of_status:-unavailable}" >&2
 (
     FIND_DIR="$WS/org/critical_paths/.open_findings"
     mkdir -p "$FIND_DIR"

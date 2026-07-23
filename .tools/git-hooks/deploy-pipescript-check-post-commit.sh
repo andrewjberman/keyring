@@ -43,7 +43,12 @@ mkdir -p "$FIND_DIR"
 # ASYNC (CTO~Z ruling 2026-07-23): fast path returns in <100ms with a breadcrumb; the heavy
 # comp-pipescript-deployed sweep (+AWS) runs DETACHED (fire-and-forget) and lands its result
 # OUT-OF-BAND as the owned finding file -- never a per-commit latency tax. Rule 16 detached `&`.
+# helper ships BESIDE this trigger -- resolve via $0, not $WS (robust in worktrees/fixtures)
+_hkdir="$(dirname "$0")"
+_of_status="$(sh "$_hkdir/_open-findings-status.sh" "$WS" 2>/dev/null)"
+[ -n "$_of_status" ] || _of_status="$(sh "$WS/.tools/git-hooks/_open-findings-status.sh" "$WS" 2>/dev/null)"
 printf '\n[deploy-check NFRA_MSBEFF.R4-B] deploy-completion ledger closed (%s script(s) named) -- comp-pipescript deployed sweep dispatched (async); finding in .open_findings/ if STALE.\n' "$(echo "$scripts" | grep -c .)" >&2
+printf '  open findings: %s  <- resolve + delete, or the PAST-DUE count is an expiry nobody honoured\n' "${_of_status:-unavailable}" >&2
 (
 now="$(date -u +%Y%m%dT%H%M%SZ)"
 review_by="$(date -u -d '+1 day' +%Y-%m-%d 2>/dev/null || date -u +%Y-%m-%d)"
