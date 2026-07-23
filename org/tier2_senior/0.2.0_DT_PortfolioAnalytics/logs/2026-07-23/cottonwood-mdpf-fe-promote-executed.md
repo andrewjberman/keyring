@@ -78,3 +78,26 @@ DE's freeze-window DEV push surfaced to COO (zero operational impact, post-PROD-
 
 Compiler Tools: none run — same rationale as the main entry (pure portal git promote; verifications
 on live primitives: git refs/parents/merge-base, gh run view --json, peeled tag).
+
+---
+
+# ADDENDUM 13:4xZ — P1 fix-forward promote (v2.1.144): 49F/Inflection crash
+
+**archetype:** MIXED (DIAGNOSE + DEPLOY)
+
+Andrew-direct at my terminal ~1332Z: Inflection + 49F dropdowns crash (TypeError null.date).
+DIAGNOSIS (mine, source+artifact-grounded): pairedProvenanceRead.ts:100 length-only guard vs
+pre-contract cohort_provenance in the 07-18 artifacts (inflection 429/429 null; 49f 347 null +
+82 date-less old-schema). Cottonwood clean (same-day re-emit) = why v2.1.143 acceptance missed it.
+Dispatched DE (0.4.0 -- corrected addressing, channel-push confirmed) + CTO + COO with fix shape.
+CTO ratified fix-forward 133702Z w/ 4 conditions; DE gated 5bb54ecf 1341Z (mutant-controlled on
+real bytes); promote fired 1341Z -> PROD ffc022ed (portal-v2.1.144) -> CI 30012584835 SUCCESS
+1347Z. Pointer ff1254d9b, gitlink VERIFIED pre-commit (v2.1.143 lesson). ~15 min report-to-live.
+Residual: DE condition-3 three-firm live verify (triggered). Ledger:
+20260723T1341Z_p1-provenance-read-fix-forward_deploy_completion.md.
+Also this window: answered Andrew's Global-$1.78B question grounded (cottonwood absent from served
+platinum aggregate -- not CloudFront; Global re-emit chain is COO's, in flight).
+
+Compiler Tools: none run -- diagnosis grounded on live primitives (served S3 artifact bytes via
+rail-checked aws cp/ls, git show on the introducing commits, source read of the throw site); the
+crash path was FE-local (no estate coupling a comp-tool would add).
