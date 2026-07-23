@@ -142,6 +142,18 @@ band publish cites an incomplete COO co-sign; the band serves only on DE render 
   genuine ~$0-6M ramp RETAINED / Global sum clean / a real weak match survives) + my value limb re-verifies.**
   Meta: the confidence cap is now an anomaly DETECTOR — 2 serve defects surfaced (stale-artifact, value-cliff)
   because the low confidence made them catchable. This is downstream of CVO's own candidate-restriction delta.
+- **RE-EMIT VERIFIED @~1139Z (DS `@9ffa3ca6e`, 19/19 mutants incl. M6 valley-pin) — CLIFF GONE, byte-read:**
+  measured epsilon = 0.10 landed in the bimodal valley `(0.056, 0.170)` (real-member match-scores: forced-era
+  median 0.039 / p90 0.056; real-era p5 0.780 — cleanly bimodal, CRO's axis). Corrected band (my byte read):
+  early 05-28..06-14 model **~$454K** (the 2 genuine accounts, was ~$105-116M) at real custody; NO cliff;
+  ramp $2M(06-15) -> $27.8M(07-13) -> $122M(07-14) -> $124.7M(07-21) = served $124.4M; custody continuous;
+  **$2.25B / 5,473 acct-dates suppressed-and-REPORTED**; 9 weekend/holiday dates honest-absent. **My value
+  limb PASSES.** TWO co-sign notes (neither solo-adjudicated): (a) **weekend/holiday WOBBLE** (06-19 Juneteenth
+  + weekends dip to $454K, stale snapshots) -> DE trading-day-only x-axis (NEVER#1-aligned, render not data);
+  (b) **07-14 ~$95M jump** ($27.8M->$122M @0.50) = REAL membership (above epsilon, strategies created 07-14/17,
+  lands on current truth) but current-stamped TIMING (front-loads today's members to model-creation date) —
+  flagged for CVO's conscious accept, not a fabrication. **SERVE on CVO pin-bless (5-point + mutant-d) + the
+  2 notes resolved -> co-sign pair -> serve.** DS half complete; my value limb green.
   Counter-sign discipline compounding: stale-confidence -> stale-artifact -> value-shape, 3 catches / 3 limbs.
 - **Pins (bind EXACT commits per R-5):** CRO schema `@708661904` (canonical build schema, delta-wins),
   CTO agg spec `@be91775dd` (§4 is ruling-record-not-build-surface), CVO R-5 `@ec5ec79f3`.
