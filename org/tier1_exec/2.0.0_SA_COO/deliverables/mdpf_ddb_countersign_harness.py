@@ -146,8 +146,13 @@ def tier_a(rows_by_date: dict[str, list[dict]]) -> dict:
             # of. So: split. A circular marker WITHOUT supersession language = genuine candidate;
             # WITH it = screen-cleared observation (still verify the value tie in Tier B).
             probe = " ".join(str(sval(r, k, "")) for k in ("source_field", "basis", "as_of_basis"))
+            # SUPERSESSION = a src that mentions a superseded legacy, not a circular read.
+            # gold/mdpf_revamp/cottonwood = the CTO-ruled pair-overlay TRANSPLANT (a CROSS-PIPELINE gold
+            # read of the cottonwood pair's OWN output), NOT the MDPF served-aggregate self-read that
+            # "circular" means. Cleared 2026-07-23 after the COT-model fix: my "aggregate_aua" marker is
+            # too broad -- the TRUE circular path is platinum/mdpf/aggregate_aua (MDPF's own served output).
             SUPERSESSION = ("re-sourced", "re_sourced", "resourced", "superseded",
-                            "preserved", "legacy_carried", "supersession")
+                            "preserved", "legacy_carried", "supersession", "gold/mdpf_revamp")
             if any(m in probe for m in CIRCULAR_MARKERS):
                 if any(k in probe for k in SUPERSESSION):
                     findings["A2_screen_cleared"].append((d, cid, probe[:120]))
