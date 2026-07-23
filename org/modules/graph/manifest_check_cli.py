@@ -954,12 +954,30 @@ def _stage2_vocab_invariant(files) -> int:
         if str(_WORKSPACE) not in _sys.path:
             _sys.path.insert(0, str(_WORKSPACE))
         oc = importlib.import_module("org.modules.graph.comp_output_contract")
-        oc.canon_vocab.cache_clear()
-        vocab = oc.canon_vocab()
+        oc.canon_vocab_strict.cache_clear()
+        # A GATE reads STRICT. The lenient canon_vocab() returns {} on a read failure, which silently
+        # DISARMED this member (CVO~Z 221805Z, test specified by ~C): the empty dict arrived before any
+        # exception, so the fail-closed handler below never fired and a missing/moved rule bank printed a
+        # benign "DORMANT" line and returned PASS. Read failure now PROPAGATES and blocks.
+        try:
+            vocab = oc.canon_vocab_strict()
+        except oc.CanonVocabUnavailable as e:
+            print(f"\nBLOCKED: the ONTOLOGY2 canonical_source could not be READ -- {e}.\n"
+                  f"  This is a DISARMED stage-2 axis, NOT a dormant one: with no vocabulary the gate\n"
+                  f"  validates nothing, so it must FAIL rather than pass silently. FIX the path/file\n"
+                  f"  (or update _RULE_BANK if ONTOLOGY2 moved it); do not bypass.")
+            return 1
         if not vocab:
-            print("  [manifest-check] stage-2 vocab invariant DORMANT: ONTOLOGY2 type_tuple not present "
-                  "in the rule bank canonical_source -- value-validation inactive (pre-canonization).")
-            return 0
+            # THE DORMANCY RATIONALE EXPIRED AT @5d1161d70. Pre-canonization an absent type_tuple was
+            # legitimate; ~C canonized it, so post-canonization a readable rule bank with NO type_tuple
+            # means RATIFIED VOCABULARY WAS REMOVED. The disarmed state is no longer distinguishable
+            # from a legitimate state that still exists -- because that state no longer exists.
+            print("\nBLOCKED: the rule bank READ FINE but carries NO `type_tuple` section.\n"
+                  "  ONTOLOGY2 canonized the (rail,grain,plane,scope) vocabulary @5d1161d70, so its\n"
+                  "  absence means ratified vocabulary was REMOVED -- stage-2 would validate nothing.\n"
+                  "  FIX: restore type_tuple, or route a deliberate vocabulary retirement through ~C\n"
+                  "  (LAW-2 explicit promotion) and amend this member with it.")
+            return 1
         violations = oc.validate_all_declarations()
     except Exception as e:  # fail-closed
         print(f"\nBLOCKED: the stage-2 vocab invariant could not be evaluated ({e}).\n"

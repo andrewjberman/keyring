@@ -154,7 +154,7 @@ def test_header_block_goes_to_two_lines():
 def test_stage2_reads_canon_plane_enum_verbatim():
     """The canon plane enum (~C's type_tuple.plane.enum) is my plane enum verbatim -> plane reconcile is a
     no-op. If the rule bank has type_tuple yet, prove the read; if not, the reader is dormant (also valid)."""
-    oc.canon_vocab.cache_clear()
+    oc.canon_vocab_strict.cache_clear()
     vocab = oc.canon_vocab()
     if not vocab:  # pre-canonization -> dormant, nothing to assert about values
         assert oc.validate_all_declarations() == {}
@@ -164,7 +164,7 @@ def test_stage2_reads_canon_plane_enum_verbatim():
 
 def test_stage2_all_declared_tools_pass_plane_when_armed():
     """When the canon vocab is present, every declared tool's plane must already be in-vocab (plane no-op)."""
-    oc.canon_vocab.cache_clear()
+    oc.canon_vocab_strict.cache_clear()
     if not oc.canon_vocab():
         return  # dormant
     assert oc.validate_all_declarations() == {}, "a declared tool has an out-of-canon plane value"
@@ -172,7 +172,7 @@ def test_stage2_all_declared_tools_pass_plane_when_armed():
 
 def test_stage2_validator_bites_on_out_of_vocab(monkeypatch):
     """REQUIRED MUTANT: an out-of-vocab value is a LOUD violation, not silently accepted."""
-    oc.canon_vocab.cache_clear()
+    oc.canon_vocab_strict.cache_clear()
     if not oc.canon_vocab():
         return  # dormant -- the mutant is only meaningful when armed
     monkeypatch.setattr(oc, "contract_for",
@@ -186,16 +186,16 @@ def test_stage2_dormant_when_canon_absent(monkeypatch):
     orig = oc._load_yaml
     monkeypatch.setattr(oc, "_load_yaml",
                         lambda p: {} if str(p).endswith("RULE_BANK.yaml") else orig(p))
-    oc.canon_vocab.cache_clear()
+    oc.canon_vocab_strict.cache_clear()
     assert oc.validate_declaration_vocab("comp-blast") == []
     assert oc.validate_all_declarations() == {}
-    oc.canon_vocab.cache_clear()
+    oc.canon_vocab_strict.cache_clear()
 
 
 def test_stage2_absent_field_is_not_a_violation():
     """grain/scope not yet declared -> NOT flagged (stage-2 validates VALUES; stage-1 owns PRESENCE).
     This is what keeps the interim safe before the one-pass reconcile adds grain/scope."""
-    oc.canon_vocab.cache_clear()
+    oc.canon_vocab_strict.cache_clear()
     if not oc.canon_vocab():
         return
     # comp-blast declares plane but not grain/scope -> must be clean (absent != invalid)
@@ -205,7 +205,7 @@ def test_stage2_absent_field_is_not_a_violation():
 def test_stage2_all_tools_have_grain_and_scope_post_reconcile():
     """After the one-pass reconcile (canon signal @5d1161d70): every declared tool carries grain+scope,
     and every value is in-canon (violations {})."""
-    oc.canon_vocab.cache_clear()
+    oc.canon_vocab_strict.cache_clear()
     if not oc.canon_vocab():
         return  # dormant
     for t in oc.declared_tools():
@@ -219,7 +219,7 @@ def test_stage2_gate_member_blocks_out_of_canon(monkeypatch):
     from org.modules.graph import manifest_check_cli as mc
     from org.modules.graph import comp_output_contract as _oc
     touch = ["org/modules/graph/comp-output-contracts.yaml"]
-    _oc.canon_vocab.cache_clear()
+    _oc.canon_vocab_strict.cache_clear()
     if not _oc.canon_vocab():
         return  # dormant -> the member passes; nothing to assert about values
     assert mc._stage2_vocab_invariant(touch) == 0  # live surface is clean
@@ -293,3 +293,63 @@ def test_member_blocks_only_registrations_this_commit_touches(monkeypatch):
     assert mc._subcommand_declaration_invariant(touch) == 1          # drifted + touched -> BLOCK
     monkeypatch.setattr(mc, "_dict_diff_keys", lambda *a, **k: {"comp-blast"})
     assert mc._subcommand_declaration_invariant(touch) == 0          # pinned -> no false-positive
+
+
+# ----------------------------------------------------------------------------------------------------
+# THE DISARM PATH (CVO~Z finding 221805Z; test specified by ~C). My own self-tests exercised only the
+# ENFORCING path -- detect + block. The DISARM path was FAIL-OPEN: _load_yaml swallowed the read failure,
+# canon_vocab() returned {} before any exception, the fail-closed handler never fired, and a missing/moved
+# rule bank printed a benign "DORMANT (pre-canonization)" line and returned PASS. The docstring claimed
+# fail-closed while the path was fail-open -- an instrument lying about its own posture.
+# The dormancy rationale ALSO EXPIRED at @5d1161d70: post-canonization an empty vocab can only mean a
+# read failure or removed ratified vocabulary, so neither is legitimate any more.
+# ----------------------------------------------------------------------------------------------------
+
+def test_read_failure_raises_not_swallowed(tmp_path, monkeypatch):
+    """A GATE must be able to SEE the read failure. canon_vocab_strict RAISES; only the lenient
+    wrapper swallows."""
+    monkeypatch.setattr(oc, "_RULE_BANK", tmp_path / "does_not_exist.yaml")
+    oc.canon_vocab_strict.cache_clear()
+    with pytest.raises(oc.CanonVocabUnavailable):
+        oc.canon_vocab_strict()
+    assert oc.canon_vocab() == {}          # lenient wrapper still safe for advisory callers
+    oc.canon_vocab_strict.cache_clear()
+
+
+def test_absent_type_tuple_is_distinct_from_unreadable(tmp_path, monkeypatch):
+    """PROBLEM 2 (misattribution): 'read fine but no type_tuple' must NOT be reported as a read failure.
+    It returns {} WITHOUT raising -- a different condition, reported differently by the gate."""
+    rb = tmp_path / "rb.yaml"
+    rb.write_text("meta:\n  version: 9\nroles: {}\n", encoding="utf-8")
+    monkeypatch.setattr(oc, "_RULE_BANK", rb)
+    oc.canon_vocab_strict.cache_clear()
+    assert oc.canon_vocab_strict() == {}    # no raise
+    oc.canon_vocab_strict.cache_clear()
+
+
+@pytest.mark.parametrize("make,label", [
+    (lambda p: p / "missing.yaml", "canonical_source MISSING"),
+    (lambda p: _write_no_tt(p), "reads fine, NO type_tuple"),
+])
+def test_gate_BLOCKS_on_every_disarm_path(tmp_path, monkeypatch, make, label):
+    """THE REGRESSION GUARD: every way of ending up with no vocabulary must BLOCK (rc=1), never
+    silently pass. This is the assertion whose absence let the gate be fail-open."""
+    from org.modules.graph import manifest_check_cli as mc
+    monkeypatch.setattr(oc, "_RULE_BANK", make(tmp_path))
+    oc.canon_vocab_strict.cache_clear()
+    rc = mc._stage2_vocab_invariant(["org/modules/graph/comp-output-contracts.yaml"])
+    assert rc == 1, f"DISARMED gate returned PASS on: {label}"
+    oc.canon_vocab_strict.cache_clear()
+
+
+def _write_no_tt(p):
+    rb = p / "rb_no_tt.yaml"
+    rb.write_text("meta:\n  version: 9\nroles: {}\n", encoding="utf-8")
+    return rb
+
+
+def test_enforcing_path_still_passes_on_real_state():
+    """The fix must not break what CVO~Z confirmed works: real state -> PASS."""
+    from org.modules.graph import manifest_check_cli as mc
+    oc.canon_vocab_strict.cache_clear()
+    assert mc._stage2_vocab_invariant(["org/modules/graph/comp-output-contracts.yaml"]) == 0

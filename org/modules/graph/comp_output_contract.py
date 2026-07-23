@@ -210,22 +210,58 @@ def verdict_exit_map() -> tuple:
 # the gate never blocks in a half-reconciled state.
 # ----------------------------------------------------------------------------------------------------
 
+class CanonVocabUnavailable(Exception):
+    """The ONTOLOGY2 canonical_source could not be READ or PARSED.
+
+    DISTINCT from 'read fine, but carries no type_tuple'. Collapsing those two was a FAIL-OPEN
+    (CVO~Z finding 221805Z, test specified by ~C): _load_yaml swallowed every read failure and returned
+    {}, so the empty dict reached the gate BEFORE any exception could, the fail-closed handler never
+    fired, and a missing/moved rule bank SILENTLY DISARMED the whole stage-2 axis while printing a benign
+    'DORMANT (pre-canonization)' line and returning PASS. The docstring said fail-closed; the path was
+    fail-open. An instrument that lies about its own posture is the exact class this program closes."""
+
+
 @functools.lru_cache(maxsize=1)
-def canon_vocab() -> dict:
-    """The canonical (rail,grain,plane,scope) enums from the ONTOLOGY2 rule bank (type_tuple.<field>.enum).
-    Returns {} if type_tuple is absent (pre-canonization) -> stage-2 stays DORMANT (no false fails). Reading
-    from the canonical_source (not a hardcoded copy) is the whole point: a token shift at ~C's gate is picked
-    up automatically. LAW-2: an enum extension is a rule-bank version bump; the enum is a CLOSED set here."""
-    doc = _load_yaml(_RULE_BANK)
+def canon_vocab_strict() -> dict:
+    """The canonical (rail,grain,plane,scope) enums from the ONTOLOGY2 rule bank.
+
+    RAISES CanonVocabUnavailable when the canonical_source cannot be read/parsed -- so the caller's
+    fail-closed handler actually fires. Returns {} ONLY for the genuinely different condition: the file
+    parsed fine and carries no `type_tuple` section.
+
+    Reading from the canonical_source (never a hardcoded copy) is the whole point: a token shift at ~C's
+    gate is picked up automatically. LAW-2: an enum extension is a rule-bank version bump; the enum is a
+    CLOSED set here."""
+    if not _RULE_BANK.exists():
+        raise CanonVocabUnavailable(f"canonical_source MISSING at {_RULE_BANK}")
+    try:
+        import yaml
+        doc = yaml.safe_load(_RULE_BANK.read_text(encoding="utf-8"))
+    except Exception as e:  # noqa: BLE001
+        raise CanonVocabUnavailable(
+            f"canonical_source UNREADABLE ({type(e).__name__}: {str(e)[:120]})") from e
+    if not isinstance(doc, dict):
+        raise CanonVocabUnavailable(
+            f"canonical_source did not parse to a mapping (got {type(doc).__name__})")
     tt = doc.get("type_tuple")
     if not isinstance(tt, dict):
-        return {}
+        return {}          # READ FINE, section absent -- a DIFFERENT condition, reported differently
     out = {}
     for field in ("rail",) + _VOCAB_FIELDS:
         enum = (tt.get(field) or {}).get("enum") if isinstance(tt.get(field), dict) else None
         if isinstance(enum, list):
             out[field] = list(enum)
     return out
+
+
+def canon_vocab() -> dict:
+    """LENIENT wrapper: {} on ANY unavailability. For advisory callers (validate_declaration_vocab)
+    that must never raise. A GATE must use canon_vocab_strict() -- swallowing the read failure here is
+    precisely what made the gate fail-open."""
+    try:
+        return canon_vocab_strict()
+    except CanonVocabUnavailable:
+        return {}
 
 
 def validate_declaration_vocab(tool: str, subcommand: Optional[str] = None) -> list:
