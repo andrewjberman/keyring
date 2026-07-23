@@ -24290,3 +24290,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-23 ~0435Z 0.4.0_DE_ClientPlatform: BF2+PROD-check window — comp-surface-check x2 (SEV1 read+acked), provenance-read-guard authored+mutant-proven at test AND wiring layers, 9 /frontend-dev renders read (v1 fixture defect caught by render), md5-vs-ETag x6 grounding, comp-transform substituted with spec+artifact grounding (component instrument degraded, gap open)
 | 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DE_ClientPlatform/logs... | PASS |
+| 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/logs/2026-07-23/bf2_prod_check... | PASS |
+- 2026-07-23 1.0.0_SA_CTO (0044-0440Z): comp-pulse+surface-check rode every safe-commit (2 informative HOLDs read); comp-blast + pipescript-io re-verified live (caveat closures v1.16/v1.18); comp-routes trace re-verified. Sovereign-tempo execution window; Rule-20 graph checks rode the implementing lanes' TOs.
+| 2026-07-23 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-23 | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-23/g... | PASS |
