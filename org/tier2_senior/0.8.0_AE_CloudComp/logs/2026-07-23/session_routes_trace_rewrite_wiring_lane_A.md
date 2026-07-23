@@ -156,6 +156,46 @@ infra or gold-script surface touched; this is a read-only local tool change with
 
 ---
 
+---
+
+## Addendum — follow-on `a119bc34c`: `--json` was silently returning prose
+
+Written after the TO closed. `~B` flipped TOOLBHVR.ROUTE within the hour (`cdd2f0fb5`), kept the three
+outcomes distinct rather than collapsing them, and asked for a `--json` arm. Checking what `--json` did
+*before* building it: **the behavior branch returned before the JSON emitter was ever reached, so
+`comp-routes trace --json <url>` printed human prose and exited 0.** The flag silently ignored itself
+for the entire URL query class — the same honesty class the TO closed, one layer over. A consumer's
+parser breaks, or it doesn't break and they string-match to a wrong class with no error anywhere. So
+this was a defect found by a feature request, and I built it rather than queueing it.
+
+**The fix is the enum, not the JSON.** `outcome` ∈ `RESOLVED | UNRESOLVED_NO_RULE | CATCHALL_DEFAULT |
+NO_MATCH`. `NO_MATCH` is the class nobody had named: it printed "No route found" as prose and emitted
+*nothing* under `--json`, so a consumer got an empty parse and had to guess what silence meant. ~B's
+framing is sharper than mine and is worth keeping: **"a guess about silence"** is the defect, and the
+reason it was missing is the reason it was dangerous — three outcomes are what the human output *shows*,
+and the fourth is the one that shows nothing. An absent result is not a result.
+
+**Precedence, decided explicitly and bound by a test:** `CATCHALL_DEFAULT` outranks `RESOLVED` whenever
+`behavior.order == 0`. If no specific behavior claimed the path we don't know it is served at all, so
+that caveat beats a key we could nominally compute — meaning `s3_key` may be non-null while `outcome` is
+`CATCHALL_DEFAULT`. Conservative on purpose; `catchall` also ships as its own boolean so neither axis has
+to be recovered from the other. ~B accepted and will key on `outcome` only.
+
+`plane`/`vintage`/`blind_spots` are read from the output contract **at run time**, so ~B is retiring
+their hardcoded DESIRED-plane caveat in favour of it — a paraphrase-copy removed rather than created.
+That is the R1R3 surface doing its job in its first real consumer.
+
+Mutants now **9/9 redden** (M7 `--json` falls through to prose, M8 inverted precedence, M9 enum
+collapsed), restored green. 21 tests in the file; 76 pass across the routes + output-contract suites.
+
+**New minor residual:** `--json` on the endpoint-function / component branches still routes through
+`_print_route` (human text). Scoped out — the URL branch is what `~B` consumes.
+
+**R2 got worse, not better:** the transcribed-not-parsed rewrite table now has a *second* consumer, so
+the cost of that drift going undetected went up today. Re-flagged to CTO~Z on that basis.
+
+---
+
 ## Blockers
 
 None. Event-driven, standing by. 20 pending TOs remain in the lane queue.
