@@ -197,3 +197,17 @@ instead. A census that didn't know the second surface (`axis:` alongside `binds_
 tick later. Corrected predicate (bind EXACTLY ONE of {relation, axis}) -> all 8 OK. The standing
 methodological note holds; this is a fresh datum for it. Cadence: CONFIRMED-clean -> tracker + CTO~Z only,
 NO MSTR nudge (MSTR 201825Z exceptions-only rule). Sibling check CLOSED.
+
+## tick-32 (2026-07-23 ~1832Z): parity DRIFT found -- REAL + LEGITIMATE (R5/comp-keys landed), regen OWED not raced
+comp-system --check = SYSTEM STALE: tools_index 63->64, ledger_union 84->85 across 00_synthesis/03_comp_tools/README.
+GROUNDED the cause before surfacing (not a defect): the 64th tool is `comp-keys`, 0.8.0's R5 deliverable
+(KEY/PARTITION ENUMERATION primitive) committed @b78d41fb0 (18:41Z) in graph-call-manifest.yaml -- landed AFTER
+my AC-3 mutant read 63 (~18:24Z). A committed source-advance; the system-model .md just needs a regen.
+DISPOSITION: do NOT regenerate this tick. 4 build tildes (~A R2 / ~B R4R6 / ~C ONTOLOGY2 / ~D TOOLARCH, spawned
+@bfad48b9b) are in-flight on the registration surface base 0.8.0 OWNS; a regen now captures only comp-keys and
+re-stales on the next landing. The WS-2 fail-closed gate is SOURCE-DRIFT-conditioned by design -- STALE-with-a-
+named-cause is CORRECT, not a false alarm. Batch the regen after the lane wave (or per 0.8.0's WS-2 gate).
+FEEDS R5 VERIFY: comp-keys/R5 is landed-but-UNSIGNALED (my verify limb; no verify-ready from 0.8.0 yet). When
+signaled, R5 acceptance includes parity-RESTORED -- R5 AC-5 ("registered per the registration invariant") is not
+clean on the PARITY surface while comp-system reads STALE. Surfaced 0.8.0 (owner) + MSTR (exception: changed
+parity-number). Not an empty tick.
