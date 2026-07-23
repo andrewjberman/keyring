@@ -322,4 +322,37 @@ PERMANENT honesty mechanism, not transitional** -- no downstream reader may rela
 condition 1 passing + condition 2 adequate, I sign the delta into the pin. **This R-5 signature, when
 given, extends the pin to the delta only -- not to any further change.**
 
+## R-5 DELTA SIGNED (CVO, ~0510Z) -- BOTH CONDITIONS MET, VERIFIED + EXERCISED against landed `@7abc02182`
+**Context:** Andrew "go" (050247Z, via COO) made this signature the **lead serve gate** -- the band serves
+on my bless + the co-sign pair. "go" discharged Andrew's WAITING, not my CHECK; verified accordingly, not
+waved through on authority. Landed code `@7abc02182` (working tree == landed, confirmed).
+
+**Grounding (Rule 22a, all three axes):**
+- **desired** -- my two conditions (substitution mutant; washout-keyed confidence degradation).
+- **applied** -- `build_cottonwood_interpolated_backfill.py @7abc02182`, working==landed.
+- **exercised** -- I RAN the suite myself: **16/16 green** (11 original + 5 new; no regression). Not on-report.
+
+| condition | VERIFIED | evidence |
+|---|---|---|
+| **1 -- substitution mutant** | **MET** | `test_m4_substitution_assigns_existed_strategy_not_absent_not_nonexistent:155` -- with a REAL control (`:171-172` unrestricted best IS the not-yet-existing strategy, so the test can fail): asserts the emitted point is the existed-on-d substitute (`:179`), labeled `interpolated_estimate` (`:187-190`), floor-passed (`:182-183`) -- not absent, not the nonexistent strategy. Complement `:194` (empty avail -> `("",0.0)` -> absent, no fabricated future assignment). |
+| **2 -- confidence degrades** | **MET, and better than I specified** | Producer APPLIES the cap (not a phantom test): `:455-458` computes `unrestricted_id` over all targets and `conf = min(conf, substitution_washout(unrestricted, matched, blend))`. `test_m5_invariant_...never_above_washout:237` asserts a distant-terminal substitution caps at washout **0.0** ("cannot read certain regardless of margin"); `:262` allows an overlapping substitution up to its washout 0.75 (honest both directions -- a flat 0.50 would misprice both). It is **washout-keyed**, degrading exactly by terminal-composition distance. |
+
+**No regression:** the two-lock floor still fires AFTER the cap (`:464-467`, `max(strategy_createdAt, afirst)`).
+The producer comment `:453` states the principle correctly: *"Emergent low-confidence is not a guarantee;
+this is."* -- a structural cap, not hope.
+
+## >> SIGNED: the substitution delta is BLESSED INTO THE PIN. <<
+Pin now = CTO v0.3 `@be91775dd` + CRO delta `@708661904` + **DS substitution delta `@7abc02182`**.
+
+**SCOPE OF THIS SIGN, stated so it is not over-read (the "go" pressure makes this boundary matter):**
+- I signed the **MECHANISM** -- substitution to existed-on-d + the washout-keyed confidence cap --
+  structurally verified and exercised.
+- **The co-sign pair verifies the mechanism's OUTPUT on the real served artifact**: that the actual
+  substitution assignments and the actual per-point confidence VALUES on the real early band look sane
+  (the M5 tests use a synthetic blend fixture; the served numbers ride the real B2 decomposition). That is
+  the co-sign's cell, not this signature's -- I sign the mechanism, the co-sign checks the numbers.
+- Per R-5: this extends the pin to `@7abc02182` ONLY. Any further change re-enters review.
+- **Condition 2 is PERMANENT** (the assignment cohort never supersedes -- see the correction above): no
+  future reader may relax the confidence cap on a "temporary anyway" read.
+
 -- `3.0.0_SA_CVO`
