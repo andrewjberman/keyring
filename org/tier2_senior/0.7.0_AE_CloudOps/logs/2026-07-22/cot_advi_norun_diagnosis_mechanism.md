@@ -167,3 +167,33 @@ prior art (7 strips -- the class was met locally before; the sweep made it estat
 MSTR's causal DE-LINK accepted: sync-ec2-manifest writes instance_id/_last_updated, NEVER
 deployed_commit (grep 0) -- the stale deployed_commit reference layer remains the SEPARATE
 CTO-routed batch-tail item, proceeding on its own mechanism-first grounding.
+
+---
+
+## DAILY-AUA ARC 2026-07-23 ~1413-1438Z (Andrew-direct dispatch -> mechanism -> walk-hold)
+
+**DISPATCH:** emitter revival + full-lookback backfill (CTO 142132Z + derivation ruling 142316Z).
+**MECHANISM (checkpoint 1, accepted "exemplary"):** the emitter NEVER stopped -- fires 17:15Z daily,
+0 errors, faithfully re-emitting the frozen 07-18 served partition (Andrew's carried $1.782B = that
+re-emit verbatim). Chain: platinum frozen because mdpf-daily-runner last completed 07-18T15:02Z;
+trigger event-keyed on opal-data-inf Door-6 (last wrote 07-18T14:59:10Z); ROOT = inf gold chain FAILS
+at INF_C_01 daily since 07-19: nna_coverage_guard.py:320 NNACoverageRegression -- roster dropped
+accounts 609/1225/703/560 ($-44,206.28 SERVED NNA, 11-36 partitions each); the guard REFUSES the
+history rewrite and the dispatcher withholds Door-6. A WORKING GUARD, not a dead pipeline (the
+COT_ADVI class one level up). 4 identical fails 07-19..22; kill-switch NOT engaged (release present,
+co-signed). Unblock = the guard's own excusals path -- DS evidence -> CTO/Andrew decision, not mine.
+**BACKFILL PREP (conditions 1-6):** input census 430 partitions to exactly 2024-11-01; emitter has
+native run_date override + --backfill (same code path); idempotency structural (PK/SK keyed upsert).
+**CONTROLS (approved, pre-hold):** all 21 existing dates re-invoked on DEPLOYED bytes -- ALL 24 mdpf
+rows byte-reproduced on all 21 incl the 07-18 pin; 6 partitions' etf_ownership rows upgraded
+rolled_forward->fresh (original runs predated their etfs daily file; re-run reads the true per-date
+file). Before-snapshots preserved. DESIGN FACT surfaced: the emitter reads a SECOND live source
+(opal-data-etfs daily, :692-759) -- not a pure function of the served aggregate; the re-source
+boundary must cut between the 49-custody leg and the etf-ownership leg.
+**WALK HELD (CTO 143507Z via COO circularity finding):** a full-span walk would re-store the legacy
+schwab_canonical estimate Andrew is moving off. ZERO historical writes (table-verified 21/588
+unchanged). Ledger 20260723T1427Z closed truthfully (the tool correctly REFUSED hold-with-open-
+activation-leg; legs closed as stood-down-with-proof); the corrected run (post DS derivation +
+emitter re-source, my integration half) opens its own ledger.
+**Instrument note:** the 21-invoke first attempt failed wholesale on --cli-binary-format (CLI v2 flag,
+v1 host) -- clean CLI-level failure, nothing invoked; re-ran with the v1 payload form.
