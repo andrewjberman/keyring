@@ -87,3 +87,21 @@ in lambda-source-map.json -- live CodeSha256 grounded the WORKING-TREE value (de
 ERROR OWNED: 192d065c0's last_deployed_commit tail was expanded FROM MEMORY (fabricated); self-caught
 same turn vs git rev-parse, corrected @3c680049e (verified ancestor-of-HEAD). A provenance field is a
 RETRIEVAL, not a recollection.
+
+---
+
+## 6d DISPATCHER WIRING 2026-07-23 ~1052-1102Z (morning batch, joint DS+AE) -- LANDED, ledger 5/5
+
+**archetype for this arc:** DEPLOY. DS's revamp_stage 6d block (patch @3e7a59502) landed in
+mdpf-daily-dispatch.sh @4528fa154 + AE PYTHONPATH resolution (the pair's ../../../mdpf repo-relative
+insert cannot mirror on the runner; COT_PYPATH resolves imports from the synced canonical dirs, zero
+module duplication). Six artifacts staged to s3://opal-data-mdpf/code/ ETag==md5 verified per key
+(dispatcher 6f26beac; bdmp/pair/slice; silver/rebalancer_schemas; gold/dim_mdpf_aum_metrics).
+**The import-chain EXERCISE caught 2 gaps a config-read missed:** dim_mdpf_aum_metrics ABSENT from S3
+(pair imports it -- tonight's 6d would have died) + the unlisted transitive dep
+mdpf_revamp_model_crosswalk (verified already on S3). Runner-sim probe: pair resolves bdmp +
+_distribution_stats + calc_metric + quarter_ends clean. Ledger 20260723T1052Z CLOSED 5/5; NO schedule
+change, NO TF, NEVER#4 held (the scheduled 02:04Z run IS the exercise); outcome banked as MEMORY.md
+trigger 07-24 post-02:10Z (marker keys_staged=11, slice covered_dates nonempty). Compiler tools:
+deploy_ledger x7, safe-commit x2, git apply --check, bash -n, s3api listing-verify x8, comp-glob/grep
+(dispatcher + import discovery), runner-sim import probe.
