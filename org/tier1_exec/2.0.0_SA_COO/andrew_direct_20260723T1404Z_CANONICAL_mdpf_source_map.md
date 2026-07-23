@@ -220,4 +220,26 @@ Per-leg real coverage (COO independently spot-verified the starred ones against 
 **GLOBAL COMPOSITION IMPLICATION (COO read):** Global = 49-full + INF-model + COT-model, and the two MODEL programs are recent -> going back: all-three at frontier -> 49+INF from 2026-05-18 -> **49's full book ALONE through deep 2024-2025**. Not missing data -- when each firm's model program began. legs_present label makes every row say which firms it contains.
 **ALIGNMENT (CTO @161803Z, awareness):** Andrew stated a broader end-state to CTO directly = server-side JSON generation off the gold DDB for the FULL /portfolios surface (radial+bell+AUA-trend+period-end, all 4 splits). CTO bound+routed (DE enumerate read-surface -> DS generation contracts -> generator ownership later); the 4-channel backfill is the FOUNDATION, proceeds unchanged; COO per-date counter-sign extends to the generated artifacts. No COO action; serve hold unchanged.
 
-**Delete/close when: every MDPF leg (49/INF/COT + Global) is full-lookback backfilled in the gold DDB per this map, per-date verified, and serving.**  -- `2.0.0_SA_COO`, updated ~16:17Z (INF/COT depths confirmed+verified; INF clean; CTO server-side-gen program noted)
+## 49 SOURCING BOUNDARY -- 0824 vs 0833 CONFIRMED @~17:45Z (Andrew-direct + COO decision-prompt)
+Andrew-direct: "we're moving to do everything for 49 off schwab 0833 and BD will completely not matter for 49
+Financial aside from the METATABLE for advisor/fee info" + "we dont need certified_aua moving forward, that is
+going to be deprecated." COO confirmed the SCOPE via decision-prompt -- **Andrew ruled: MDPF STAYS ON 0824.**
+=> **MDPF (Model Portfolios) 49 leg = Schwab 08242234 (0824), UNCHANGED** (per his earlier 08242234 ruling; the
+live walk continues, no repoint). **0833 (08335338) is the consolidation for the 49 FIRM-AUA / ADVISOR-INTELLIGENCE
+side** (replacing the BD-sourced certified_aua). **BD -> metatable-only for 49 (advisor/fee info); certified_aua
+DEPRECATED.** This is CONSISTENT with the 0824/0833 business-purpose split (each surface on its OWN master), NOT a
+substitution -- so the never-substitute gate is honored. **COO actions taken:** BD-vendor allocations-stall question
+DROPPED (moot); certified_aua freeze + 08-01 cliff escalation WITHDRAWN (deprecating; interim exposure only if the
+0833 migration lands after 08-01 -- flagged once to Andrew, not re-raised). ADVI-49->0833 migration is a SEPARATE
+workstream (not MDPF, not tonight's chain).
+
+## COUNTER-SIGN EARNED ITS KEEP @~17:46Z: COO finding + 0.7.0 sweep = one CLASS fix (@8a330f9d4)
+COO's ultra_short_term circular-residue finding MERGED with 0.7.0's independent sweep finding (same architecture,
+opposite directions): (1) pre-inception model legs now DISCOVERED-INCEPTION structural-zeros (no by_model text on
+ANY path); (2) 0.7.0's sweep caught that the override only emitted where a SERVED body existed -> **132 of 541
+custody dates were value-ABSENT (incl. 3 of 7 contract pins) + the deep model history was missing entirely** --
+exactly the walls COO's Tier-B would have hit. FIX: skeleton rows from the cohort spec on no-body dates (every
+re-sourced cohort emits on every axis date). FULL RE-WALK running (~6min, idempotent). partial_2_of_3 @2024-11-01
+CONFIRMED as DS's design (known-zero = presence). COO re-verifies Tier-A/B against the RE-WALKED table, not the in-flight one.
+
+**Delete/close when: every MDPF leg (49/INF/COT + Global) is full-lookback backfilled in the gold DDB per this map, per-date verified, and serving.**  -- `2.0.0_SA_COO`, updated ~17:46Z (0824 boundary confirmed; counter-sign class-fix)
