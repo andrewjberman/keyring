@@ -25,3 +25,20 @@
 - 20260723T143744Z LEG L3 closed: SUPERSEDED by the 143507Z stand-down -- denominator/honest-absent enumeration carries to the corrected run's ledger (par
 - 20260723T143744Z LEG L4 closed: Table end-state verified (21 run_dates / 588 items, zero historical writes); completion-equivalent report = the stand-do
 - 20260723T143744Z CLOSED -- all 4 legs proven
+
+---
+
+## AMENDMENT 20260723T1442Z -- SIX-PARTITION FRESH-UPGRADE EVENT (CTO ruling 143855Z: KEEP)
+
+The pre-hold control run (all 21 existing dates re-invoked on the DEPLOYED emitter) upgraded the
+etf_ownership rows (4 of 28 rows each) on SIX partitions: 2026-06-25, 07-02, 07-06, 07-07, 07-08,
+07-16. Mechanism: the ORIGINAL runs executed before that date's opal-data-etfs daily file landed and
+honestly ROLLED FORWARD (source_field cites an older file, vintage_state=rolled_forward); the re-run
+reads the date's own since-landed file (source_field -> the date's file, vintage_state=fresh) -- the
+LATE-MATERIALIZED-TRUTH class (the date's own statement arriving late), NOT the roster-rewrite class
+the NNA guard forbids. Direction strictly fresher-over-staler. Representative magnitude: 49f PFDE
+06-25 $123,202,894.89 -> $123,798,940.36. 07-07/07-08 rows keep their honest roll-forward to 07-06
+(files never landed). ALL 24 mdpf-derived rows byte-reproduced on all 21 partitions incl the 07-18
+pin ($1,644,993,954.34 partition untouched).
+RESTORATION OPTION (durable per CTO condition a): complete before-snapshots (21 files, 588 rows) at
+org/tier2_senior/0.7.0_AE_CloudOps/deliverables/aua_before_snapshots_20260723/ -- committed to CLOUD.
