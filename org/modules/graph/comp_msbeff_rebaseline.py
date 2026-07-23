@@ -141,8 +141,26 @@ def refuse_enumeration() -> dict:
                      "tool": tool, "rc": rc, "old_result": old, "new_result": "REFUSE",
                      "rule": key})
     by_rule = Counter(x["rule"] for x in rows)
-    return {"refuse_rows_total": len(rows), "by_rule": dict(by_rule.most_common()),
+    return {"snapshot": _snapshot_vintage(),
+            "refuse_rows_total": len(rows), "by_rule": dict(by_rule.most_common()),
             "binding_rules": rules, "rows": rows}
+
+
+def _snapshot_vintage() -> dict:
+    """SNAPSHOT-level vintage header (CVO~Z rec, adopted): the artifact self-pins to its source vintage
+    instead of relying on per-row ts_epoch. 'A row-count without its vintage is not a count.' The next
+    re-derive is trivial: a differing jsonl_rows / sha means the sink advanced, not a classification miss."""
+    import hashlib
+    raw = _RUNS.read_bytes() if _RUNS.exists() else b""
+    total = sum(1 for ln in raw.decode("utf-8", "replace").splitlines() if ln.strip())
+    return {
+        "source": "org/mcp/comp-tool-runs.jsonl",
+        "jsonl_rows": total,
+        "sha256_first16": hashlib.sha256(raw).hexdigest()[:16],
+        "contract_summary": oc.coverage_summary(),
+        # as_of is the sink's own newest ts_epoch (no wall-clock call -- deterministic, matches the data)
+        "as_of_ts_epoch": max((r.get("ts_epoch") or 0 for r in _rows()), default=None),
+    }
 
 
 def main(argv) -> int:
