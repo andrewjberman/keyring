@@ -25017,3 +25017,104 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF (integration) | comp-system + git-rescue | integration-owner wave + stranded-commit rescue | PASS | comp-system --check ground-truthed CVO~Z parity flag (already-restored); git anchored 3 stranded Tier-1 reals GC-safe; both TOs CVO~Z-closed (R1R3 7/7, R5 6/6) |
 | 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_MSBEFF.R4R6.trigge... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.node_type... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.arn <> '' AND... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS n ORDER BY n ... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS t, count(*) AS n ORDE... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]-(b:CloudNode) WHERE a.node_type='Fie... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]-(b:CloudNode) WHERE a.node_type='Mod... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='C2Motif' RETURN n.name AS name,... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type='C3... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-system | comp-system | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_MSBEFF.R2.comp-dataflow-canonical-source | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-dataflow --file infra/syste... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_MSBEFF.R2.comp-dataflow-canonical-source | comp-pulse | comp-pulse diff .tools/comp-dataflow infra/system/00_synthesis.md infra/system/03_comp_... | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_MSBEFF.R2.comp-dataflow-canonical-source | comp-system | comp-system --gate --changed org/modules/graph/comp_dataflow.py .tools/comp-dataflow or... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/00_synthesis.md --file inf... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff infra/system/00_synthesis.md infra/system/03_comp_tools.md infra/system... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_FIRM_ACCESS_... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-23/cvoz_TOOLARCH_P1_verify.md | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260723T1849Z_mdpf-allfirms-serve... | PASS |
+| 2026-07-23Z | 4.0.0_SA_CRO | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_AKPIPE.json --file or... | PASS |
+| 2026-07-23Z | 4.0.0_SA_CRO | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/projects/NFRA_AKPIPE.json org/projects/REGISTRY.md org/tier1_exec/4... | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/NFRA_ONTOLOGY_RULE_BA... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml org/modules/graph/varian... | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-system | comp-system --gate --changed org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml org/modules... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | pipescript | pipescript --list | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | pipescript | pipescript mdpf | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_MSBEFF.R4R6.trigge... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-routes | comp-routes trace json/mdpf/global/aggregate-aua-timeseries.json | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-routes | comp-routes trace platinum/mdpf/aggregate_aua_timeseries.json | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-cache | comp-cache mdpf-aggregate-timeseries | UNKNOWN |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS n ORDER BY n ... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS t, count(*) AS n ORDE... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-routes | comp-routes trace getMdpfAggregateAUATimeSeriesByFirm | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-cache | comp-cache map | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]-(b:CloudNode) WHERE a.node_type='Fie... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-cache | comp-cache key mdpf-aggregate-timeseries | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]-(b:CloudNode) WHERE a.node_type='Mod... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='RE... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='PR... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='NO... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='GR... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='LO... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='DE... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SU... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='US... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='US... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='AL... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='IN... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='C2Motif' RETURN n.name AS name,... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type='C3... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json --file ... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff infra/aws/ec2/EC2_MANIFEST.json infra/aws/ec2/verify-ec2.sh | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS n ORDER BY n ... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS t, count(*) AS n ORDE... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]-(b:CloudNode) WHERE a.node_type='Fie... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]-(b:CloudNode) WHERE a.node_type='Mod... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='C2Motif' RETURN n.name AS name,... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type='C3... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-cache | comp-cache map | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-system | comp-system --check | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_ONTOLOGY2_P1/ARCH... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_MSBEFF.R2.comp-dataflow-canonical-source | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_MSBEFF.R2.comp-dataflow-canonical-source | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_MSBEFF.R2_comp-da... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLARCH_P1_ARCHE... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_TOOLARCH.CANON.too... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_account... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_account_distribution.py | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.P1.archetype-census | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-07-23/session_D_toolarch_... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS n ORDER BY n ... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS t, count(*) AS n ORDE... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]-(b:CloudNode) WHERE a.node_type='Fie... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]-(b:CloudNode) WHERE a.node_type='Mod... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='RE... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='PR... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='NO... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='GR... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='LO... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='DE... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_MSBEFF.R2.comp-dataflow | comp-dataflow | gate data/mdpf/scripts/ -- 16 served-origin findings/8 files, denom 27f/71reads/30blind, RF-7 pattern; self-test 7/7; manifest-check completeness PASS; coverage-view --verify 65/65 | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SU... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO | (no-TO) | (none) | gate desk 1605-2005Z (tonight-completion: walk/serve/cutover/promote + PRD + program elevation); lane tools cited in log (comp-cache PASS via COO; pipescript-mdpf STALE + comp-routes CF-gap routed to NFRA) | SKIPPED |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='US... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_MSBEFF.R2.comp-dataflow-canonical-source | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_MSBEFF.R2.comp-dataflow-canonical-source | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='US... | PASS |
