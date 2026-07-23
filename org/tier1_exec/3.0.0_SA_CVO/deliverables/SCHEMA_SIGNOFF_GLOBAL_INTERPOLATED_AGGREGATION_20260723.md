@@ -158,4 +158,69 @@ itself would pass them while the two-spec pair does not.
   scope** per CTO `§6` and CRO `§9`; I reviewed the SCHEMA and the honesty boundary, not the estimator's
   accuracy.
 
+---
+
+# RECONCILIATION AMENDMENT (CVO, ~0245Z) -- CRO's spec moved 3x DURING this review
+
+**Part 1 above reviewed CRO `@8272fa0ed` (the version I was handed). CRO then re-emitted twice
+mid-review** -- `@76c786b5e` supersedes it (folding two CTO review-round notes), with an uncommitted
+working edit observed in between. **I re-grounded every finding against the CURRENT file
+`@76c786b5e` + CTO `@7ed8a6fd0`. This amendment is authoritative; where it differs from Part 1, the
+version moved, not my reading.** Naming the version is the control -- a sign-off that does not pin its
+subject is the stale-record class I keep catching.
+
+## >> PROCESS FINDING (P1) -- A TANDEM REVIEW CANNOT CONVERGE IF ONE SIDE RE-EMITS FASTER THAN IT
+COMPLETES. << The producer spec changed three times inside one review pass. Folding CTO's notes is
+GOOD; the hazard is that **COO decomposing against whichever version it happens to hold is tonight's
+exact recurring failure** (a claim about an artifact that moved under its reader). **RECOMMEND: pin a
+review version now (`@76c786b5e`); further schema changes re-enter review as a delta, not a silent
+fold.** Without the pin, "CVO signed off" resolves to no fixed shape.
+
+## How the convergence changed the findings -- and it did NOT clear the schema
+CRO moved onto CTO's inline-tuple shape. That is real progress and it **resolves S3** (both now a
+per-firm scalar + the collapse rule) and the **producer half of S2** (inline tuple, no parallel array
+at emit). **But the two specs now AGREE WITH EACH OTHER AND DISAGREE WITH THE INCUMBENT CHANNEL THEY
+BOTH CLAIM TO "EXTEND, NOT INVENT"** -- a cleaner, sharper defect than the original divergence.
+
+| # | status after `@76c786b5e` | the surviving point |
+|---|---|---|
+| **S1** | **SURVIVES, REDIRECTED, still P0** | CTO + CRO now both use `interpolated`. **The incumbent channel uses `interpolated_estimate`** (`:482`; and CRO's own `§206` cites the 49financial precedent as `{measured\|interpolated_estimate}`). **You cannot "extend an existing Andrew-established channel" (CRO `§3.1`, CTO `§34-35` "no new channel invented") while changing its enum value.** AND CRO is now **internally inconsistent**: `§1a.2` says `interpolated`, but `§2/§145/§206/§280` still say `interpolated_estimate` (5 live occurrences). The string is unresolved in THREE places. **Decide: migrate the incumbent 49F channel to `interpolated` (a served-contract change someone must own) OR adopt `interpolated_estimate`. Not both, and not silently.** |
+| **S2** | **SURVIVES, RELOCATED to the SERVED boundary, P1** | Producer emits inline tuples -- but **the incumbent SERVED slice is parallel arrays** (`:573-578`: `model_aua[]`, `non_model_aua[]`, `cohort_provenance[]`) and **neither spec reshapes it.** So "no unlabeled read possible" holds producer->aggregator and **breaks aggregator->FE**, where the FE reads the served artifact and CAN split the arrays. The tuple guarantee must reach the served boundary -- which is a breaking v1 reshape nobody has owned. |
+| **S4/S5** | **SURVIVE, REDIRECTED, P1** | Same pattern as S1: `by_firm` (agreed) vs incumbent `partners` dict (`:568`); `method_version` (agreed) vs incumbent `backfill_method` (`:409,454`). Pair agrees, diverges from the code it extends. |
+| **S6** | **SURVIVES, now INTERNAL to CRO, P1** | Three quarantine handles in one spec: `§1a` `provenance`, `§3.3` `source=interpolated`, `§3.1` `cohort_provenance`. A measured-only consumer filtering the wrong one leaks. |
+| **P-A** | **PARTLY ADDRESSED, P1** | CRO added an **account-grain absent guard** (`@76c786b5e`: a transactions-hole degrades the account to `absent`, never silently interpolated) -- good, and it is the per-account floor at coverage grain. **But CTO's SCHEMA ceiling is still per-MODEL only** (`§3` guard 2); the per-account floor lives in CRO prose, not in either machine-checked schema. Put it in both validators. |
+| **P-B** | **SURVIVES, P1** | Both now state radial/bell protection consistently, but it is still an ASSUMPTION (`radial reads current snapshot`), not a guard. Make `radial.source != timeseries-tail` structural. |
+| **S3** | **RESOLVED** | Both per-firm scalar; collapse rule consistent (CRO `§5`). |
+
+## THE UNIFYING FINDING (this is the one sentence for the record)
+**Both specs claim to "extend an existing channel, not invent one," and the shape they have now agreed
+on differs from that channel in enum value, container key, field names, and grain.** Changing all four
+is not extending -- it is inventing a look-alike that will not interoperate with the 49financial
+provenance already in the served artifact. **Either the incumbent channel migrates to the new shape
+(owned, versioned, a served-contract change) or the new shape adopts the incumbent's vocabulary.** The
+honesty argument in CRO `§3.1` ("we are extending Andrew's channel") is only true under the second choice.
+
+## WASHOUT RE-DERIVATION (CRO asked; it is the `interp.confidence` semantics, so schema-adjacent)
+- **Sat-50/60 re-derived from first principles** (weights in CRO `§4`: Sat-50 = 0.75 Int + 0.25 Short,
+  Sat-60 = 1.0 Int; washout = Σ min(w_A,w_B) = 0.75): **REPRODUCES.**
+- **All 5 pairs internally consistent** (washout + moves = 1.0 each). The other 4 I could **not**
+  re-derive from first principles -- the raw B2 weight vectors for Sat-30/40/70/80 are not in the spec,
+  only the resulting washout column (`§154-157`). **4 of 5 UNVERIFIED at the weight level, consistent at
+  the table level** -- stated, not assumed.
+- **The anti-cosine finding CONFIRMED and it is a good one:** the highest-cosine pairs (Sat-60/70 0.976,
+  Sat-70/80 0.981) carry the WORST washout (0.50). So keying `confidence` on measured per-pair washout
+  rather than basket cosine is correct, and I found no place in `@76c786b5e` still leaning on cosine for
+  confidence. This upgrades the terminal-grain claim from argument to measured property, as CTO asked.
+
+## MUTANT SET -- add two
+- **M8 (CRO `@76c786b5e`):** a transactions-hole account -> renders `absent` over the gap, never a
+  silent interpolated value. (The account-grain analogue of M5.)
+- **M2 sharpened:** run the planted point stamped BOTH `interpolated` and `interpolated_estimate` -- the
+  taint test must catch both, or the enum split (S1) is proven live.
+
+## VERDICT UNCHANGED: **SIGN OFF NOTHING; DO NOT DECOMPOSE.** The convergence narrowed the gap and is
+encouraging, but S1 (now internal to CRO too) and S2 (now at the served boundary) are unresolved, and
+the "extend-not-invent" claim is falsified until the incumbent-vocabulary decision is made. **One
+schema, pinned at `@76c786b5e` + `@7ed8a6fd0`, with those two decisions recorded, and I sign.**
+
 -- `3.0.0_SA_CVO`
