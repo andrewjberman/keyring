@@ -99,6 +99,12 @@ remaining gate legs are 0.6.2's B5 (tonight's 03:30Z landing) + B6-liveness. Cir
   deltas — DE does not start without it. Shape notes pre-sent 005319Z (all-None q0–q3 rendered as
   absence not 0; NEW series_start field + migrate-tolerant read; Income→non-model, sleeves
   is_opal=false, value>0 filter; model-name list rides in the staging message).
+- **BUILD BINDING (committed to DE 005922Z): the pair's by_model WIRES DE's CANONICAL_KEY +
+  DISPLAY_NAME maps from `data/assets/scripts/gold/build_cottonwood_mdpf_slice.py` @8a7208a70**
+  (import/reuse, never retype) — 4 canonical keys + 2 PENDING_RULING cottonwood_* keys (CTO ruling
+  open; pending flag travels in meta per DE's design) — so pair + WS-4 timeseries share ONE key
+  vocabulary by construction. Trend artifact = DE's own WS-4 producer (NOT G8 scope); its staged
+  output was live-404 at 005xZ — WS-4 nightly wiring question routed back to DE.
 
 ## G8b PREP STATE (banked ~2245Z — staged TO @d8570d2f3, same B5 gate)
 
