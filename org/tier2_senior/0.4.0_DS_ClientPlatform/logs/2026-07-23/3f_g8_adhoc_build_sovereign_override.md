@@ -72,3 +72,17 @@ COO concurrence-check 011143Z + CC record 012312Z · DE: trend caveat 011440Z + 
 - **[me]** comp-validate config for the new producer; S5 + G8b remain sequenced (their gates
   unchanged); B5 still lands ~03:30Z and extends the facts.
 - **[DE]** page build on staged; SEV1 confirm+justify on his portal commit.
+
+## ACTIVE TIME-TRIGGER (banked 014xZ -- survives this session; any live DS/COO/CTO can execute)
+
+**~04:00Z 07-23: conditioned trend re-run (COO wire 014017Z, CTO order, take-as-issued).**
+1. ⛔ PRE-FLIGHT: `axis_last >= 2026-07-21` in gold/mdpf_revamp/global/aggregate_aua_timeseries.json
+   (the 02:04Z nightly must have advanced it). Axis still 07-20 OR the nightly FAILED (ADVI-closure
+   risk live) -> DO NOT RUN; report axis-stale; conservative line stands.
+2. Re-run `build_cottonwood_mdpf_slice.py --upload` (staged).
+3. PRINT: identities (model+non_model==total; count-axis distinct-not-sum) + NON-NULL COUNT.
+   Acceptance = covered_dates >= 1 AND model_aua non-null on 07-21+. Zero non-null = FAILED render.
+4. Staged republish only; **served republish of aggregate-aua-timeseries.json HELD for COO
+   counter-sign AT the re-published artifact** (CTO half PRE-SIGNED on: axis verified, identities
+   green, non-null > 0 printed). If the 0126Z COO session is gone, counter-sign passes to live COO/CTO.
+Authority: the standing Andrew override (same build completing against the advanced axis).
