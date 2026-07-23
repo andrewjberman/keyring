@@ -159,4 +159,43 @@ historical divergence. Result -> COO -> Andrew. **Honest boundary retained:** de
 vendor series (no 2nd independent real source pre-05-18; DS's 07-14-vs-07-23 0-restatement control = stability evidence);
 closing_equity value-semantics still await Andrew's formal D1 ruling (the frontier tie corroborates the field).
 
-**Delete/close when: every MDPF leg is sourced per this map, backfilled full-lookback, VARIANCE-VALIDATED (done, new method accepted), verified, and serving.**  -- `2.0.0_SA_COO`, updated ~15:5xZ (variance CONFIRMED + new method ACCEPTED)
+## FULL-BACKFILL DIRECTIVE -- ALL CHANNELS + GLOBAL @~16:0xZ (Andrew-direct)
+**VERBATIM:** "Ok I think we got the conclusion here correct. Let's make sure that we have full backfill for all
+channels properly in the gold DDB, for 49 Inflection and Cottonwood, as well as Global Aggregate rows."
+**=> EXPANDS the 49-leg backfill dispatch (CTO @142139Z) to ALL FOUR CHANNELS in the gold DDB opal-assets-daily-aua,**
+full lookback, per this source map + the accepted silver-sourced method (custody fact_rps_s2 C2 + model
+fact_model_aum_daily closing_equity; the analog per firm). SCOPE + the load-bearing constraints:
+- **49Financial:** custody fact_rps_s2 C2 to 2024-05-24 (541 partitions) / model fact_model_aum_daily to inception
+  2021-09-02. Validated (variance verdict, new method accepted).
+- **Inflection:** orion (total) + eclipse (model) -- DS to GROUND the real source depth (do not assume a floor).
+- **>> COTTONWOOD -- BINDING CONSTRAINT (Andrew-direct, LD prior):** COT is MID-MIGRATION into Black Diamond, so
+  "full backfill" = whatever the blackdiamond source ACTUALLY holds, honest-absent before it. **NO synthesized rows,
+  NO frozen backfill, NO HARDCODED SERIES START; the series must extend backward ON ITS OWN as the migration lands
+  more history.** Anything that writes a value where real data will later arrive is a self-authored future
+  contradiction. COT depth is NOT a ceiling and NOT a defect -- it is a migration in progress.
+- **Global Aggregate rows:** business-logic sum per date (49-full fee_scope=full + INF-model + COT-model), with
+  HONEST-ABSENT / LABELED constituents where one is missing -- the established pattern (global[2024-11-01] ==
+  49custody+INFmodel == $795,389,602.69, cottonwood=absent). NO silent carry, NO fabrication (YANG_SITTW).
+**SEQUENCING (serve still HELD):** DS per-channel derivation contracts -> 0.7.0 backfill (CTO's 6 conditions +
+C2-tie control, per channel) -> CTO gate -> COO per-date byte-verify ACROSS CHANNELS (positive control per channel;
+49[d]==silver, INF[d]==silver, COT[d]==blackdiamond-as-far-as-it-reaches, Global[d]==sum-of-present-legs) -> co-sign
+-> DE renders -> CTO fires -> DT promotes. Routed to CTO (binds+coordinates) + 0.7.0 (executor, COT constraint
+first-hand) + DS (contracts) @~16:0xZ.
+
+## CONVERGENCE-WHY GROUNDED @160049Z (DS, Andrew-dispatched; delivered to Andrew direct, record copy to COO)
+The two curves never measured the same thing: LEGACY = "what we knew on day D" (monthly-statement roll-forward,
+made append-only/immutable after the 2026-01-21 retroactive-revision fix -- as-known-then values FROZEN by design);
+NEW = "what SmartX retrospectively says D was worth" (daily closing_equity). Gap = information-lag x growth-rate.
+DS's MEASURED decomposition of the pre-2026 ~12.6pt mean shortfall (sourced: SMARTX_BIBLE.md, CANONICAL_DATA_LOGIC.md
+sec3, FIX_RETROACTIVE_AUM_SMOOTHING.md): (1) statement staleness ~3pt (re-align to prior month-end: ratio 0.874->0.904);
+(2) DOMINANT ~10pt = the invisible newly-funded cohort -- legacy was NOT missing accounts (counted MORE than survive
+today, 3,246 vs 2,962 @2025-01-15) but an intramonth-funded account carried $0 until its first month-end CSV; in the
+$437M->$1.4B/20mo hyper-growth window that cohort was ~10% of the book, and the +41% peak (Jan-Feb 2025) sits exactly
+there. Collapses to zero at the frontier BY CONSTRUCTION (append-only points now written at T-1 freshness). IMPLICATION:
+the legacy is a valid as-known-then AUDIT ledger but structurally understates every fast-growth period as a
+market-value history -- confirming Andrew's "old method was inexact" is a LAG, not an error. COO independently
+confirmed the frontier tie (-0.09%) + the era-boundary collapse earlier; the ~3/~10pt split is DS's measured analysis.
+**CRITICAL PATH MOVING:** DS handed 0.7.0 the 49 C2 derivation contract @160023Z. Expanded scope (all channels) =>
+DS now owes INF/COT/Global derivation contracts next (routed @160159Z).
+
+**Delete/close when: every MDPF leg (49/INF/COT + Global) is full-lookback backfilled in the gold DDB per this map, per-date verified, and serving.**  -- `2.0.0_SA_COO`, updated ~16:0xZ (full-backfill directive, all channels + Global; convergence-why grounded)
