@@ -70,3 +70,22 @@ BF1 report 042205Z · CRO floor ambiguity 040720Z → answer 041139Z · DE shape
 - **[DE]** BF2 accessor + guard test against the staged interpolated artifact; live render-verify.
 - **[CTO+COO]** at-artifact co-sign when the interpolated series is ready to serve; 6d dispatcher leg.
 - **[me]** comp-validate configs (pair + interpolator) + the 294/296 reconciliation note — named debt.
+
+## POST-ARC TRIGGERS (banked 043xZ from 0.6.2's recovery circulation 043149Z)
+
+1. **CENSUS RE-RUN (my S2 reconcile-trigger, now live):** recovered qt5/qt4 raw landed for
+   07-09..07-22 (allocations ~1,500 rows/date; unrealized 67K-161K/date) -- silver converts on the
+   normal 02:00Z cycle, so fact_allocations/fact_unrealized completeness denominators CHANGE after
+   tomorrow's conversion. Re-run the affected census legs then.
+2. **qt4 ROW-COUNT REGIME-SHIFT LENS (asked of DS explicitly):** 161.4K (07-09..13) -> 77.8K
+   (07-14) -> ~67K (07-15..21) inside the recovered span. Determine column-shape vs dedup vs real
+   book movement AFTER conversion lands; candidates = the 06-30 template re-persist (208 dims) +
+   a vendor-side change. NOBODY reads the step as book movement before this lens runs.
+3. **07-22 QUARANTINE (no live exposure):** both tables' 07-22 = likely mid-materialization
+   partials (158/412 rows vs ~1,515/~67K neighbors), disposition at CTO. My producers consume
+   NEITHER table (pair: model tables + holdings; interpolator: transactions + holdings + bronze
+   model_detail) -- exposure checked, zero. Do not consume until resolved.
+4. **VALUE-LEG SPEC INPUT:** raw probe exports for six historical windows (05-15..07-14) retained
+   at opal-data-cot code/bronze/probe_results/ -- CRO holds the optional value-leg-to-05-15 spec;
+   my re-run trigger stays armed for measured VALUE landings only (assignment permanently
+   interpolated per the CURRENT-STAMPED verdict).
