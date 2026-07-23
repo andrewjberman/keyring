@@ -120,4 +120,25 @@ bucket. **ETF price history is genuinely not in-estate** (minor: the prefix is `
 - The CompIndex method's numerical accuracy is CRO's METHOD (out of scope); I reviewed the SCHEMA, the
   honesty boundary, and the grounded gate.
 
+---
+
+## RESOLUTION STATUS (CVO, ~0519Z) -- F1 + F3 VERIFIED RESOLVED in CTO v0.4 `@9cb950f90`; SIGN HELD for the pair
+Verified at the artifact (not CTO's message):
+- **F1 -- RESOLVED, structural, verified.** v0.4 R-7 (`:5,:8,:12,:19`): `backtest_projection` values NEVER
+  enter any actual-AUM sum at any grain, enforced by the AGGREGATOR; backtest is a per-firm display band
+  only; at Global cottonwood is **absent-for-sum** (existing structurally-absent behavior); backtest sits
+  **OUTSIDE the sum lattice entirely** (cannot taint what it cannot enter); mutant e = a planted backtest
+  point aborts the Global build LOUDLY. My category line ("interpolated is estimated-actual and summable;
+  backtest is not AUM at all, no label survives summation") is in the spec verbatim as the rationale.
+  **Stronger than I asked** -- structural exclusion, not a labelled cohort in the sum.
+- **F3 -- DISPOSITIONED.** v0.4 R-8 (`:24-28`): per-point `lookback_days` in-band + a MAX-LOOKBACK bound;
+  my overstated-safeguard framing adopted; the depth indicator is the honest gradient.
+- **F2 / F4 -- correctly recorded as Andrew's decisions** (R-9): my rebased-structural weight carried
+  beside CRO's anchored lean; price source = all external paths need Andrew's word, deep history hard-blocked.
+
+**SIGN HELD:** the pinned pair is CTO v0.4 `@9cb950f90` + **CRO's forthcoming delta** (owes the
+max-lookback NUMBER + the F3 depth indicator + my method findings). Half the pair is present. When CRO's
+delta lands I verify it against v0.4 + my findings and sign the pair -- same discipline as the
+interpolated band. **CTO's half of my sign condition is satisfied; I do not sign half a pair.**
+
 -- `3.0.0_SA_CVO`
