@@ -226,3 +226,11 @@ silver partition depth per cohort, honest-absent enumerated; (4) idempotency pro
 two-limb boundary carry unchanged. GATE: DS's C2 derivation contract lands -> my emitter 49-custody
 limb re-source integration (one-writer boundary at the limb split) -> deployed normal cycle -> walk
 on corrected bytes, own ledger. Idle-warm on this thread until DS hands the contract.
+
+## FEASIBILITY FACT BANKED ~1537Z (COO 153706Z, byte-verified): both backfill legs silver-reproducible.
+Model leg: smartx fact_model_aum_daily intra-partition `day` series spans 2021-09-02..present (1,226
+days) -- history rides INSIDE the latest partition, not across run_date partitions (the run_date-axis
+sparsity I measured was the axis-confusion class). Custody leg: C2 fact_rps_s2.net_mv_plus_cash, 541
+partitions, gaps=0, to 2024-05-24. Backwards portal->DDB flow unnecessary. Honest boundary: per-account
+detail 07-14+ only. Design consequence carried: re-sourced emitter = three limbs, three input classes,
+one writer (model=latest-partition day series; custody=per-date C2; etf-ownership untouched).
