@@ -982,11 +982,106 @@ def _stage2_vocab_invariant(files) -> int:
     return 1
 
 
+_ROUTING_SURFACE_HUD = ".tools/hooks/comp-tool-hud.sh"
+
+
+def _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs):
+    """THE RETIRED-ALIAS INVARIANT, pure decision (unit-testable). (rc, lines); rc=1 blocks.
+
+    NFRA_MSBEFF.R6 (2026-07-23). retired_aliases is the THIRD name-authority section (dead names).
+    Two integration guardrails (base 0.8.0, shared-surface owner) + one routing-surface check:
+      A. every retired name is disjoint from tools_index AND excluded -- a name that is both LIVE
+         and RETIRED is a contradiction (the ledger cannot claim a live tool is dead).
+      B. every declared `successor` is null OR a name in the live universe -- a dangling pointer.
+      C. no committed operational ROUTING surface (HUD/prompt/skill) may CITE a declared-retired
+         name -- that routes agents to a dead tool. KEYED ON THE CLOSED retired SET, never an open
+         comp-* prose scan, so it cannot storm on the ~330 design-doc PROPOSAL names or on
+         concept/skill/file tokens (TRIGGER_LAYER: lint the structured field, not mentions).
+
+    live universe = ti | exc | entry_tools | cov. retired = {name: {successor, ...}}.
+    surface_refs = {retired_name: [files]} -- declared-retired names found in committed surfaces.
+    """
+    live = set(ti) | set(exc) | set(entry_tools) | set(cov)
+    contradiction = sorted(n for n in retired if n in ti or n in exc)
+    dangling = sorted(n for n, v in retired.items()
+                      if (v or {}).get("successor") and (v or {}).get("successor") not in live)
+    routed = {n: fs for n, fs in surface_refs.items() if n in retired}
+    if not contradiction and not dangling and not routed:
+        return 0, [f"  [manifest-check] retired-alias invariant PASS: {len(retired)} retired name(s) "
+                   f"declared, all disjoint from live+excluded ({len(live)} live), successors valid, "
+                   f"none cited in committed routing surfaces."]
+    lines = [f"\nBLOCKED: retired-alias invariant (retired {len(retired)}; live universe {len(live)}):"]
+    for n in contradiction:
+        lines.append(f"  - {n:<24} declared RETIRED but is ALSO in tools_index/excluded -- a name is in EXACTLY ONE section")
+    for n in dangling:
+        s = (retired[n] or {}).get("successor")
+        lines.append(f"  - {n:<24} successor '{s}' is not a live name -- dangling retirement pointer")
+    for n, fs in sorted(routed.items()):
+        s = (retired[n] or {}).get("successor") or "(no 1:1 successor -- see its `why`)"
+        lines.append(f"  - {n:<24} RETIRED but CITED in committed routing surface(s) {fs} -- repoint to {s}")
+    lines.append("  FIX: a retired name lives in retired_aliases ONLY (not tools_index/excluded); its successor\n"
+                 "  is a live name or null; and no HUD/prompt/skill may route to it -- repoint or delete the citation.")
+    return 1, lines
+
+
+_RETIRED_SUBSTRATE = (
+    "org/modules/graph/graph-call-manifest.yaml",
+    "org/modules/graph/comp-coverage-map.yaml",
+    _ROUTING_SURFACE_HUD,
+)
+
+
+def _retired_alias_invariant(files) -> int:
+    """0 = holds / not applicable. 1 = BLOCK. Substrate-scoped; deterministic; fail-closed.
+    Fires when the manifest / coverage-map / an operational routing surface is committed."""
+    norm = _norm(files)
+
+    def _is_routing_surface(f):
+        return (f.endswith(_ROUTING_SURFACE_HUD) or f.endswith("/prompt.md")
+                or "/.claude/skills/" in "/" + f)
+
+    touched = (any(f.endswith(s) for s in _RETIRED_SUBSTRATE for f in norm)
+               or any(_is_routing_surface(f) for f in norm))
+    if not touched:
+        return 0
+    try:
+        import re as _re
+        raw = load_yaml(_MANIFEST)
+        ti = set((raw.get("tools_index") or {}).keys())
+        exc = set(raw.get("excluded_not_graph_use_cases") or [])
+        entry_tools = {str(e.get("tool", "")).split()[0] for e in (raw.get("entries") or [])
+                       if isinstance(e, dict)}
+        led = load_yaml(_WORKSPACE / "org" / "modules" / "graph" / "comp-coverage-map.yaml")
+        cov = ({t.get("tool") for t in (led.get("tools") or []) if isinstance(t, dict)}
+               | {t.get("tool") for t in (led.get("meta_tools") or []) if isinstance(t, dict)})
+        retired = raw.get("retired_aliases") or {}
+        # Scan committed routing surfaces for DECLARED-RETIRED names (closed set -> no prose storm).
+        surface_refs = {}
+        for f in norm:
+            if not _is_routing_surface(f):
+                continue
+            p = _WORKSPACE / f
+            if not p.exists():
+                continue
+            txt = p.read_text(encoding="utf-8", errors="replace")
+            for name in retired:
+                if _re.search(r"(?<![A-Za-z0-9_-])" + _re.escape(name) + r"(?![A-Za-z0-9_-])", txt):
+                    surface_refs.setdefault(name, []).append(f)
+    except Exception as e:  # fail-closed
+        print(f"\nBLOCKED: the retired-alias invariant could not be evaluated ({e}).\n"
+              f"  An unevaluable completeness gate does not read as 'passed'.")
+        return 1
+    rc, lines = _retired_alias_decision(ti, exc, entry_tools, cov, retired, surface_refs)
+    for ln in lines:
+        print(ln)
+    return rc
+
+
 def _completeness_invariants(files) -> int:
     """The family. Any member blocking blocks the commit. See the design comment above."""
     for member in (_routable_invariant, _placement_invariant, _selfroute_invariant,
                    _existence_invariant, _registration_invariant, _output_contract_invariant,
-                   _stage2_vocab_invariant):
+                   _stage2_vocab_invariant, _retired_alias_invariant):
         if member(files):
             return 1
     return 0
@@ -1260,6 +1355,13 @@ def main() -> int:
         else _existence_invariant(list(_EXISTENCE_SUBSTRATE) + [".tools/"]) if a.only == "existence"
         else _completeness_invariants(
             list(_ROUTABLE_SUBSTRATE) + [".tools/comp-which", ".tools/"]))))
+
+    p_retired = sub.add_parser(
+        "retired-alias",
+        help="assert retired_aliases coherence (disjoint sections + valid successors) and that no "
+             "committed routing surface cites a declared-retired name (NFRA_MSBEFF.R6)")
+    p_retired.set_defaults(func=lambda _a: _report(
+        "retired-alias", _retired_alias_invariant(list(_RETIRED_SUBSTRATE))))
 
     args = parser.parse_args()
     if not getattr(args, "cmd", None):

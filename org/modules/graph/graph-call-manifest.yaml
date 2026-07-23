@@ -32,6 +32,30 @@
 #                                            primitive, not a graph-query rich tool you route TO
 excluded_not_graph_use_cases: [comp-perf, comp-v5-composite-test, comp-manifest-check, comp-surface-check, comp-to, comp-grep, comp-glob, comp-imgread, comp-coverage-check, comp-routable-check, comp-kit-striplist-gate, comp-tool-health-gate, comp-canon-motif, comp-passcraft, comp-stitch-refresh]  # NFRA_COMPCLOSE 2026-07-14: (a) comp-learns-status REMOVED from this exclusion -- it IS a graph-query use-case (routable, tools_index entries: meta.learns.demand_gap_cost); (b) ADDED the 7 previously-unaccounted disk tools so the registration invariant (every .tools/comp-* is in tools_index OR excluded-here-with-a-reason) is TRUE again: comp-coverage-check/comp-routable-check/comp-kit-striplist-gate/comp-tool-health-gate = enforcement gates (police, not query); comp-canon-motif = debtscan scorer (worklist producer); comp-passcraft = anti-harness recon scaffolding (stops at the verdict door); comp-stitch-refresh = graph PRODUCER (write-path substrate refresh, not a query target)  # comp-manifest-check = D6 manifest-ENFORCEMENT gate; comp-surface-check = D8 critical-surface commit-gate (polices critical-surfaces.yaml at commit, auto in safe-commit) -- both ENFORCEMENT gates, not graph-query use-cases (so excluded here; they're in CLAUDE.md's invoke-table). comp-to = session-context setter (writes the race-free per-session TO_ID for the comp auto-logger); a startup/context primitive like comp-which/comp-grep/comp-glob, not a graph-query use-case. comp-grep/comp-glob = the on-rails search PRIMITIVES comp-which RUNS when no rich tool fits (the never-dead-end targets); search primitives, not graph-query rich tools you route TO -- now formally accounted so the registry is COMPLETE (every .tools/comp-* is in tools_index, in entries as comp-which the router, or here with a reason). comp-grep/comp-glob registry-accounting added 3.0.0_SA_CVO 2026-06-26 comp-tools campaign (LD-0208 coverage reconcile 2026-06-25, CTO). comp-imgread ADDED 0.7.0_AE_CloudOps~A 2026-07-15 (Andrew-direct, the .188-vs-.186 photo-misread incident): native-resolution image-region tiler -- a LOCAL-FILE inspection primitive like comp-grep/comp-glob, not a graph-query use-case
 
+# retired_aliases -- NFRA_MSBEFF.R6 (0.8.0_AE_CloudComp~B, 2026-07-23). The THIRD coordinated
+# name-authority section (with tools_index = live routable tools, excluded_not_graph_use_cases =
+# on-disk-but-not-a-graph-query). A retired_aliases entry is a comp-* NAME THAT IS GONE (no live
+# executable), declared here so (a) the retired-alias invariant keeps the three sections coherent
+# -- a name is in EXACTLY ONE of {tools_index, excluded_not_graph_use_cases, retired_aliases}, and
+# every `successor` is null or a LIVE name -- and (b) no operational ROUTING surface (the HUD, an
+# agent prompt, a skill) may still CITE a declared-retired name (routing agents to a dead tool).
+# The invariant keys on THIS CLOSED SET, never an open prose scan (TRIGGER_LAYER: lint the
+# structured field, not a text-match over mentions), so it does NOT fire on the estate's real
+# phantom mass -- ~330 DESIGN-DOC PROPOSAL names (tools never built: comp-debt, comp-events,
+# comp-ladder, the comp-ms/comp-learns-orchestrator families, the comp-aws sub-tools) + historical
+# compiler-log names. Those are PROPOSALS/HISTORY, not retirements, and do NOT belong here.
+# SEED IS DELIBERATELY MINIMAL (TRIGGER_LAYER: no bulk-converting historical notes into a hundred
+# unowned items). Add an entry only at touch-time, when a REAL tool is genuinely retired.
+retired_aliases:
+  comp-learns-run:
+    successor: null    # the comp-learns subsystem shipped as comp-learns-score + comp-learns-status (both live, tools_index); the monolithic runner name is retired
+    retired: "NFRA_MSBEFF.R6 2026-07-23 -- absent from .tools/ AND tools_index; last invoked in org/compiler-tools-log.md"
+    why: "the comp-learns orchestrator/runner; superseded by the shipped query pieces comp-learns-score / comp-learns-status"
+  comp-coverage-view:
+    successor: null    # coverage is now answered by `comp-manifest-check completeness` (the routable/placement/existence/registration invariant family)
+    retired: "NFRA_MSBEFF.R6 2026-07-23 -- absent from .tools/ AND tools_index; last invoked in org/compiler-tools-log.md"
+    why: "standalone coverage-view tool; superseded by comp-manifest-check completeness"
+
 contract:
   default: QUERY        # comp-kuzu (cloud/cross-layer) or cached comp-trace/comp-blast (trace)
   rebuild_only_when:
