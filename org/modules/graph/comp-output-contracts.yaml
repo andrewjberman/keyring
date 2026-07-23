@@ -216,9 +216,9 @@ contracts:
     vintage: "live S3/DDB LastModified vs the trading-day frontier at run time"
     exit_codes:
       "1": {class: verdict, meaning: "real staleness FAIL (past max_age on the trading-day basis)"}
-      "2": {class: verdict, meaning: "UNVERIFIABLE-BASIS -- refused to guess a verdict without a resolvable basis (NFRA_INSTDRILL item 5)"}
+      "2": {class: refuse,  meaning: "UNVERIFIABLE-BASIS -- a required basis (lib/trading_calendar.py) was absent, so NOTHING was concluded about the estate; refused rather than guessed (NFRA_INSTDRILL item 5)"}
     exit_source: "comp-tools.yaml:570 (0 PASS/WARN / 1 FAIL / 2 config-or-unreachable) @2026-07-23"
-    note: "rc2 UNVERIFIABLE-BASIS is retained as VERDICT (tri-state, ratified) rather than REFUSE: unlike comp-iam rc3 (nothing compared) the artifact WAS engaged; the refusal is to guess a verdict, and the ratified appender has always counted it a tri-state verdict. Flagged for CVO~Z as the one deliberate VERDICT-vs-REFUSE line-call in this sweep."
+    note: "rc2 -> REFUSE per CVO~Z adjudication (adopted by CTO~Z 180509Z), CORRECTING my initial VERDICT call. The classification axis is 'did the tool reach a CONCLUSION ABOUT THE ESTATE', NOT 'did it touch the artifact'. rc2 fires when the trading-day basis is unavailable -> a required basis absent, nothing concluded -- identical in kind to comp-iam rc3. Keeping it VERDICT would re-commit the exact refusal-as-finding laundering the M3 derivation retired. (CVO~Z's per-artifact subtlety -- rc2 is an aggregate exit that can hold 7 PASS + 1 unverifiable -- is real but a tool-internals change, OUT of R1R3's additive scope; logged as a later R-cell.)"
 
   comp-trigger:
     coverage: "the declared EventBridge/schedule trigger wiring for the queried target vs live"

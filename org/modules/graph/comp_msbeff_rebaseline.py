@@ -106,9 +106,51 @@ def rebaseline(write: bool = False) -> dict:
     }
 
 
+def refuse_enumeration() -> dict:
+    """AC-6 deliverable for CVO~Z: the ROW-LEVEL enumeration of every jsonl row that re-verdicts to
+    REFUSE, plus the binding rule (tool, rc) -> class with its source citation. 'Artifact not number':
+    CVO~Z can verify each binding against source and each row against the sink. Off the RIGHT plane --
+    comp-tool-runs.jsonl carries the real rc (no text inference), so no rc mis-binning is possible."""
+    import yaml
+    doc = yaml.safe_load((Path(__file__).resolve().parent / "comp-output-contracts.yaml").read_text(encoding="utf-8"))
+    contracts = doc.get("contracts") or {}
+    rows = []
+    rules = {}
+    for r in _rows():
+        tool = r.get("tool", "?")
+        try:
+            rc = int(r.get("rc", 0))
+        except (TypeError, ValueError):
+            rc = 0
+        if rc == 0:
+            continue
+        old = str(r.get("result", "UNSTATED")).split()[0] if r.get("result") else "UNSTATED"
+        new = oc.classify_exit(tool, rc)
+        if new != "REFUSE":
+            continue
+        key = f"{tool}:rc{rc}"
+        if key not in rules:
+            c = contracts.get(tool, {})
+            spec = (c.get("exit_codes") or {}).get(str(rc), {})
+            rules[key] = {
+                "binding": f"({tool}, rc{rc}) -> REFUSE",
+                "meaning": spec.get("meaning", "") if isinstance(spec, dict) else str(spec),
+                "exit_source": c.get("exit_source", "UNCITED"),
+            }
+        rows.append({"ts_epoch": r.get("ts_epoch"), "session_id": r.get("session_id", ""),
+                     "tool": tool, "rc": rc, "old_result": old, "new_result": "REFUSE",
+                     "rule": key})
+    by_rule = Counter(x["rule"] for x in rows)
+    return {"refuse_rows_total": len(rows), "by_rule": dict(by_rule.most_common()),
+            "binding_rules": rules, "rows": rows}
+
+
 def main(argv) -> int:
     write = "--write" in argv
     as_json = "--json" in argv
+    if "--refuse-enum" in argv:
+        print(json.dumps(refuse_enumeration(), indent=2))
+        return 0
     rep = rebaseline(write=write)
     if as_json:
         print(json.dumps(rep, indent=2))

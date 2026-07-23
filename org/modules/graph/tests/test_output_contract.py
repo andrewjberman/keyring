@@ -50,6 +50,16 @@ def test_comp_iam_rc3_correction_verdict_to_refuse():
     assert cla._classify_result("comp-iam", 1) == "VERDICT"
 
 
+def test_comp_freshness_rc2_is_refuse_not_verdict():
+    """CVO~Z adjudication (adopted CTO~Z 180509Z): the axis is 'concluded about the estate', not
+    'touched the artifact'. rc2 = basis absent = nothing concluded = REFUSE, like comp-iam rc3.
+    rc1 (real staleness) stays VERDICT, so comp-freshness remains a verdict tool."""
+    assert cla._classify_result("comp-freshness", 2) == "REFUSE"
+    assert cla._classify_result("comp-freshness", 1) == "VERDICT"
+    verdict_tools, refuse = oc.verdict_exit_map()
+    assert "comp-freshness" in verdict_tools and ("comp-freshness", 2) in refuse
+
+
 @pytest.mark.parametrize("tool,rc,expected", [
     ("comp-blast", 1, "VERDICT"),
     ("comp-blast", 2, "VERDICT"),
