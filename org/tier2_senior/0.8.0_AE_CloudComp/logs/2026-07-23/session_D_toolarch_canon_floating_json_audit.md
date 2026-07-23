@@ -77,7 +77,38 @@ scanner's line-local json detection + docstring-KUZU false positives (rewrote); 
 assumption (falsified by the live-S3 + kuzu grounding). **Gap found:** the estate has 12 floating-json tools
 in 3 families; the canonical graph is stale on the freshly-cutover mdpf thread.
 
+## Addendum -- CTO~Z ruled all 3, ruling 1 EXECUTED (~20:40Z -> ~21:00Z)
+
+**CTO~Z accepted the audit and ruled all three my way** (204001Z): (1) loud-vintage interim APPROVED
+LAND NOW; (2) graph.json family = separate sibling TO gated on the kuzu-covers-trace_graph coverage-parity
+check; (3) comp-routes CF gap = separate capability TO. Plus the exhibit sequence: (a) loud-vintage ->
+(b) stitch-definition refresh derived-from-source -> (c) reroute -> (d) verify.
+
+**Ruling 1 LANDED @dcf153915, exercised.** `pipescript` now discloses on stderr, above every served-key
+line: `SOURCE: estate-coverage-resolver.json SNAPSHOT -- last_review 2026-06-15 (38d old) -- NOT comp-kuzu
+canonical` + a verify-before-acting warning. Controls: stdout byte-identical (stderr-only), rc preserved,
+age COMPUTED not static (stays honest as it ages), always-on (no suppress flag -- a control that can be
+silently disabled is weaker).
+
+**SITING -- the boundary I checked BEFORE editing (the real lesson of this leg).** CTO~Z said "land
+in-lane"; the obvious site, `org/modules/graph/pipescript_cli.py`, is the **NFRA_PIPESCRIPT_TOOL
+exec-lock** -- DS 0.4.0 family + execs, with the whole 0.8.0_AE family deliberately excluded and the
+NFRA_COMPREG general grant *explicitly preserving* that lock. I read `.owned-paths.yaml` and resolved the
+lane membership BEFORE making the edit, rather than discovering it at the commit gate (as happened earlier
+today with docs/architecture on the P1 census). Sited the control in the WRAPPER `.tools/pipescript`
+(lane ANY) instead: same user-visible effect, engine lock intact, **zero owned-paths override**. An
+approval to "land now" is not an approval to cross a lane -- the two are independent, and the ruling
+authorizes the WHAT, never the WHERE.
+
+**Routed:** stitch/canonical refresh (b) to base with grounded specifics (kuzu has no node for the live
+key; producer is `infra/aws/globgrph/derive_stitch.py`); base to route to the actual producer owner. I take
+(c)+(d) the moment canonical carries the new key. Base separately ACKed the coverage-parity precheck as its
+own and flagged a coupling for the sibling TO: re-pointing the 9 tools CHANGES their declared
+output-contract plane/vintage, which the stage-2 gate validates -> the reroute TO needs an
+output-contract-update leg (base owns it).
+
 ## Blockers
 
-Awaiting CTO~Z gate ruling on the 3 design decisions before the reroute/refresh phase. Canonical refresh is
-graph-derive work (not my hand-edit). Event-driven standing by.
+None blocking me. (c)+(d) of the exhibit sequence are GATED on the canonical/stitch refresh (base-routed,
+not my hand-edit); rulings 2+3 are CTO~Z-authored sibling TOs. Event-driven standing by; offered to draft
+the sibling-TO scope from the audit if CTO~Z wants it off their plate.
