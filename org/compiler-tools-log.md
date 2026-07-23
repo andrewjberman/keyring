@@ -24134,3 +24134,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-23 | 1.0.0_SA_CTO~Z | NFRA_PSTMRT | comp-constants | comp-constants complete (via 0.8.0 live runs, rc=1 true-findings -> rc=0 post-fix) | PASS |
 | 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-23/c... | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_PSTMRT_S7I1_REGISTRY_PARI... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/firm_registry.json | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff data/firm_registry.json | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_PSTMRT_S7I1_REGISTRY_PARI... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file comp-constants.config.yaml | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff comp-constants.config.yaml | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/firm_registry.json | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff data/firm_registry.json | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io dim_mdpf_account_distribution.py | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check | VERDICT |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check | VERDICT |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/assets/scripts/gold/build_cottonwo... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/assets/scripts/gold/build_cottonwood_mdpf_pair.py | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-validate | comp-validate build_cottonwood_mdpf_pair.py --artifact s3://opal-data-assets/gold/mdpf_... | VERDICT |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-validate | comp-validate build_cottonwood_mdpf_pair.py --artifact s3://opal-data-assets/gold/mdpf_... | VERDICT |
+| 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --help | PASS |
+2026-07-23T0125Z 0.4.0_DS_ClientPlatform 3F-G8 adhoc: comp-pipescript-io PASS (v1.18 monolith-resolve live), comp-surface-check-by-hand SEV1-read (DE tree), comp-validate NO_CONFIG=UNVALIDATED reported, commit-gate x2, identities exercised x2 runs
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
