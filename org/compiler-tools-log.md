@@ -25196,3 +25196,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-23 0.8.0_AE_CloudComp~C (ONTOLOGY2 P1 downstream): NO tool runs -- vocabulary-adjudication + coordination window (3 grain/scope tokens ruled: comp-kuzu/comp-parity affirmed, comp-iam grain=artifact held-then-cleared on its 22a resource-blindness blind_spot). Tool evidence for the rails is @f4c6c5110; base stage-2 enforcement mutant+27/27 rides @c716d963e.
 | 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23Z | 0.8.0_AE_CloudComp~C | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-system | comp-system --check | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-system | comp-system --check | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-system | comp-system | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON.tools-source-from-kuzu-canonical-not-floating-json | pipescript | pipescript mdpf | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-23Z | 0.4.0_DS_ClientPlatform | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py data/mdpf/s... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/drive_log_20260723T2051Z.md | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_MSBEFF_PRD.md | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | NFRA_MSBEFF.R4R6 (shared) | comp-pulse | comp-pulse diff docs/architecture/NFRA_MSBEFF_PRD.md | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 stage-2 | comp-manifest-check + comp_output_contract + comp-system | stage-2 vocab gate armed on ~C canon; 4-lane wave integrated | PASS | 19/19 in-canon, mutant-proven BLOCK; reader pre-built against draft then zero-delta reconcile; comp-system regen closed ~B's audited deferral |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-pulse | comp-pulse diff infra/system/06_current_state.json infra/system/06_current_state.md org... | PASS |
