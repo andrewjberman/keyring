@@ -24605,3 +24605,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-23 | 4.0.0_SA_CRO | session 2130-1538Z | comp-which (price-source route, PARTIAL near-tie), comp-grep (data/ price ref), safe-commit surface-check+risk-reflex x12 (all PASS/CLEAN), raw aws s3 rail-checked (monolith silver/gold + market buckets + probe exports -- verdict grounding). Grounded the qt5 CURRENT-STAMPED verdict + createdAt-stability + ETF-prices-not-in-estate on live S3.
 | 2026-07-23Z | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23Z | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/4.0.0_SA_CRO/logs/2026-07-23/s... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/andrew_dire... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/andrew_direct_20260723T1404Z_CANONICAL_mdpf... | PASS |
+| 2026-07-23 | 0.2.0_DT_PortfolioAnalytics | (none) | Session 0133-1355Z (3 promotes + P1): pure portal git promotes per /prod-deploy; P1 diagnosis on live primitives (rail-checked s3 content pulls, git parents/merge-base, source read) -- no comp-tool fit | n/a |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
