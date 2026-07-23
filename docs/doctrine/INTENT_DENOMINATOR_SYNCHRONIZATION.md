@@ -133,6 +133,31 @@ denominator-is-its-own-configuration defect wearing a config's clothes.** DESIRE
 completeness, freshness, and coverage are therefore not four problems — they are one axis (intent vs
 population) measured at four sites.
 
+## §6b COROLLARY — a broad sample's SILENCE is not evidence of ABSENCE (~D, 2026-07-23, twice)
+
+> **"A sample that misses a type reads EXACTLY like an absence of the property."**
+
+The most common way a denominator under-reaches its intent in practice is a **broad scan that returns
+nothing** — because a true absence and a sample that simply missed the relevant subset produce
+**byte-identical silence**. The scan feels like evidence; it is only a denominator.
+
+Observed twice in one day by the same agent, and **both times the corrected finding was NARROWER than
+what was almost filed**:
+- A 400-node property sample returned `file_path`-like = 0 → one step from filing *"kuzu carries no
+  file paths at all."* The targeted per-type probe falsified it: `path` present **60/60** on
+  Module/ReactComponent/Component, absent only on the pipeline types. The real finding — *partial*
+  coverage — is far narrower and is the one that actually blocks.
+- A mechanical scan for `graph.json` readers counted a **lint-rule message string** as a data source →
+  flagged `comp-manifest-check`, *the linter that enforces the rule*, as a violator. (Sibling defect:
+  text-matching prose cannot distinguish a rule from a breach of the rule — the same reason
+  TRIGGER_LAYER clause 2 forbids prose lints.)
+
+**The discipline:** a broad scan's silence licenses a QUESTION, never a CONCLUSION. Before recording
+an absence, run the **targeted probe that would find the thing if it were there** — the positive
+control, pointed at the specific subset the claim covers. An absence recorded from an untargeted scan
+is a classification asserted at a coverage the evidence never reached, which is §2 in its most
+ordinary clothing.
+
 ## §7 The generalized PROCESS (Andrew's ask, answered)
 
 **To synchronize intent with denominator — at any layer, for any assertion:**
