@@ -54,27 +54,34 @@ _INF_VALIDATE_CONFIG = _WORKSPACE / "data" / "inf" / "scripts" / "gold" / "gold_
 # would let cot D_00/D_04 shadow bd's). Firm separation applies to tooling reads. NFRA_COT_TOOLING.
 _COT_VALIDATE_CONFIG = _WORKSPACE / "data" / "cot" / "scripts" / "gold" / "gold_validate_config.yaml"
 
-# SOVEREIGN HOLD (bd/49F/Schwab, 2026-07-09): _BD_VALIDATE_CONFIG + STANDALONE_VALIDATORS_DIR both live
-# under data/black_diamond/ -- reading them is a bd-SOURCE content read, HELD. The tool auto-read the bd
-# config UNCONDITIONALLY (alias map, --list, every non-INF validation), so INF/cot work touched bd source.
-# Default: exclude the bd config + bd validators dir; NAMED (loud skip-note, never a silent scope change).
-# Override COMP_VALIDATE_INCLUDE_HELD=1 re-enables them for the DS bd-validate/deploy cycle (Rule 13 -- a
-# bd gold validation legitimately needs the bd config; THAT path sets the flag). cot + inf are NOT held.
+# bd config exclusion -- BOUND TO THE CANONICAL PREDICATE (Law-8 fix, CVO~Z tick-26 2026-07-23):
+# the original 07-09 sovereign hold justified a DEFAULT skip of the bd config + validators dir; the
+# hold was RETRACTED 07-14 ("verification here is DEMANDED", Andrew verbatim) and the canonical
+# predicate (sovereign_held.SOVEREIGN_HELD_PATHS) correctly emptied -- but THIS default consulted
+# only the env flag, so it kept skipping while its message ASSERTED the retracted hold as live: the
+# retraction reached the predicate but not this surviving copy. Now the exclusion derives from
+# is_held_path(<bd config>): retraction propagates automatically, and a future re-arm re-excludes
+# automatically -- the split-not-rip design doing the propagation instead of a human remembering to.
+# include_held() remains the DS-cycle override FOR A LIVE HOLD ONLY (no hold -> nothing to override).
 _bd_skip_noted = False
 
 
 def _bd_held_excluded() -> bool:
-    """True (default) => skip the bd config + bd standalone validators. COMP_VALIDATE_INCLUDE_HELD=1 (or the
-    canonical COMP_INCLUDE_HELD=1) re-enables -- routed through sovereign_held.include_held (C3)."""
-    return not include_held("COMP_VALIDATE_INCLUDE_HELD")
+    """True => skip the bd config + bd standalone validators. True ONLY while the canonical
+    sovereign_held predicate holds the bd config path AND no include override is set -- never an
+    independent default (the tick-26 Law-8 class)."""
+    return is_held_path(str(_BD_VALIDATE_CONFIG)) and not include_held("COMP_VALIDATE_INCLUDE_HELD")
 
 
 def _note_bd_held_skip() -> None:
-    """Loud, ONE-SHOT skip note to stderr (keeps stdout clean for the RESULT-token protocol parser)."""
+    """Loud, ONE-SHOT skip note to stderr (keeps stdout clean for the RESULT-token protocol parser).
+    Fires only when a LIVE hold excludes the bd config -- the message derives from the predicate
+    state rather than asserting any particular hold."""
     global _bd_skip_noted
     if not _bd_skip_noted:
-        print("  SKIP: bd gold_validate_config.yaml + standalone validators HELD under the sovereign hold "
-              "-- set COMP_VALIDATE_INCLUDE_HELD=1 for the DS bd-validate/deploy cycle (Rule 13).",
+        print("  SKIP: bd gold_validate_config.yaml + standalone validators excluded -- "
+              "sovereign_held.is_held_path currently holds the bd config path. Set "
+              "COMP_VALIDATE_INCLUDE_HELD=1 for the DS bd-validate/deploy cycle (Rule 13).",
               file=sys.stderr)
         _bd_skip_noted = True
 
