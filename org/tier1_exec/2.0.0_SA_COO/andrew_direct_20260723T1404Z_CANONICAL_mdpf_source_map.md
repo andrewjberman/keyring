@@ -121,4 +121,21 @@ vs the prior staged trio (it was already `net_mv_plus_cash`). The "(BD)" tag is 
 (my "BD-priced" was a mislabel, retracted). Fee-basis ties to the cent (49F $1,689,302,889.53 + INF
 $137,997,265.16 + COT $124,376,009.73 = $1,951,676,164.42).
 
-**Delete/close when: every MDPF leg is sourced per this map, backfilled full-lookback, verified, and serving.**  -- `2.0.0_SA_COO`, updated ~15:28Z (SmartX feasibility RESOLVED + C2 supersession)
+## SERVE-SEQUENCING RULED @~15:4xZ (Andrew, via COO decision-prompt) = **HOLD FOR FULL BACKFILL**
+Fork presented (SmartX feasibility resolved, staged trio served-window-complete): (1) serve-now-on-served-window
++ backfill behind w/ a byte-tie conformance proof [CTO+COO rec], vs (2) hold serve until the full-lookback
+backfill lands + plumbing conformant end-to-end. **Andrew chose (2) HOLD** -- consistent with "full lookback as
+a precursor / correct + complete over fast." Serve stays HARD-HELD through the backfill. CTO's serve-now rec +
+the conformance-condition (first DDB-sourced rebuild must byte-tie the served artifact on the served window) is
+recorded @153805Z and carries forward as the backfill's landing proof regardless.
+
+## VARIANCE ANALYSIS ORDERED @~15:4xZ (Andrew-direct) -> DS (@ this turn), CC CTO -- GATES the backfill go
+**VERBATIM:** "What id like to see is have DS do a variance analysis on the newly-produced smartx model backfill
+overlaid with the backfill from smartx legacy method that is currently displaying so we can identify if there is
+any obvious disparity." **TASK:** overlay NEW (silver-sourced fact_model_aum_daily day-series, F1/load_aum_daily
+@9bd23d904) vs LEGACY (the method ACTUALLY serving the live portal model trend -- DS to identify against the
+SERVED artifact, name source+commit; if same producer, disparity=0 by construction = the answer), per-date over
+the common trading-day range, abs+% deltas per-date + per-model + aggregate model line, VERDICT on any obvious
+disparity w/ grounded mechanism if material. Diagnostic, not a serve step. Result -> COO -> Andrew.
+
+**Delete/close when: every MDPF leg is sourced per this map, backfilled full-lookback, VARIANCE-VALIDATED, verified, and serving.**  -- `2.0.0_SA_COO`, updated ~15:4xZ (sequencing=HOLD + variance analysis ordered)
