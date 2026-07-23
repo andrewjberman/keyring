@@ -804,8 +804,15 @@ def cmd_check(args) -> int:
             if args.red:
                 key = str(md.resolve())
                 last = red_state.get(key)
-                if last and (now - datetime.fromisoformat(last)).total_seconds() < DEFAULT_WINDOW_HOURS * 3600:
-                    print(f"  (RED suppressed -- last alert {last}, re-alerts each {DEFAULT_WINDOW_HOURS}h)")
+                # --all: FULL RE-ENUMERATION on demand (CTO extension leg 3). The per-finding
+                # suppression below is what keeps a standing backlog from re-flooding COO every
+                # sweep (signal-dilution: a backlog that re-fires buries the genuinely NEW bypass).
+                # --all deliberately overrides it for a deliberate full census -- an operator asking
+                # "show me EVERYTHING right now" must not be answered from a suppression cache.
+                if (last and not getattr(args, "all", False)
+                        and (now - datetime.fromisoformat(last)).total_seconds() < DEFAULT_WINDOW_HOURS * 3600):
+                    print(f"  (RED suppressed -- last alert {last}, re-alerts each {DEFAULT_WINDOW_HOURS}h; "
+                          f"--all to force full re-enumeration)")
                 else:
                     _red_alert_unindexed(md, reason, age_h)
                     red_state[key] = now.isoformat()
@@ -897,6 +904,9 @@ def main() -> int:
 
     p = sub.add_parser("check", help="report OPEN ledgers; exit 1 if any; --red alerts COO")
     p.add_argument("--red", action="store_true")
+    p.add_argument("--all", action="store_true",
+                   help="force FULL re-enumeration: ignore per-finding RED suppression "
+                        "(a deliberate census must not be answered from a suppression cache)")
     p.add_argument("--window-hours", type=float, default=None)
     p.add_argument("--held-stale-days", type=float, default=DEFAULT_HELD_STALE_DAYS,
                    help="a HELD/SOVEREIGN-GATED ledger older than this escalates to HELD-STALE "
