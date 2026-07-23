@@ -1,7 +1,24 @@
-# 49F definition for the Model Portfolios "Global" view — ANDREW RULED (serve HARD-HELD, build-to-source)
+# 49F definition for the Model Portfolios "Global" view — FULLY RULED (C2), serve held on build+verify
 
-**Status @~13:58Z:** 49F grounding CLOSED (mechanism named, no defect) + **ANDREW RULED THE DEFINITION.**
-Serve hard-held until DS builds to the ruled source + COO re-verifies.
+## >>> FINAL RULING @~15:12Z (Andrew VERBATIM): "We want to keep cash, C2." <<<
+**49-TOTAL = C2 = `fact_rps_s2.net_mv_plus_cash` from `opal-data-assets/silver/schwab/08242234`** — positions
++ the FULL cash leg (settled cash + bank sweep + MMF, ~$33.76M). Current 07-17 = **$1,665,338,126.76**;
+Global ~$1.93B. Source chain = **silver -> gold DDB -> portal** (Andrew premise: portal downstream of data;
+gold DDB populated from opal-data-assets/silver buckets). This KILLS the circular emitter read
+(was: partners[49financial].partner_custody_total from the SERVED mdpf aggregate = legacy schwab_canonical
+positions-ex-cash, 07-15-stale).
+**BUILD SEQUENCE (serve hard-held through it):** DS builds-to-C2 (net_mv_plus_cash from silver) -> 0.7.0
+emitter re-source (raw-silver, not circular) + full-lookback backfill (541 partitions, 2024-05-24+;
+CRS-era/pre-2024-05 = labeled boundary) -> DS reprocess 49+Global trends -> COO per-date byte-verify
+(49[d]==net_mv_plus_cash[d] from silver; C2 ties to the cent) -> co-sign -> renders -> fire -> promote.
+**21 registry rows: SUPERSEDED-with-mechanism** (they're legacy positions-ex-cash + 07-15-stale; pinned
++cash+vintage delta, NOT byte-controls). D-2 "legacy ~40% cash" RETRACTED (date-axis artifact; legacy = ZERO cash).
+**Candidates (DS @145807Z, cited):** C1 positions-ex-cash $1,631.7M (=legacy, continuity) | **C2 chosen** full
+$1,665.3M | C3 positions-account-grain $1,631.6M | C4 ex-options $1,598.1M. Andrew chose cash-IN.
+
+---
+**Status @~13:58Z (superseded by the C2 final ruling above):** 49F grounding CLOSED (no defect) + ANDREW
+RULED THE SOURCE (08242234). Serve hard-held until DS builds to the ruled definition + COO re-verifies.
 
 ## >> ANDREW RULING @~13:58Z (VERBATIM):
 "This is not complicated, the 49 full number should be whatever the aua content of the schwab 08242234
