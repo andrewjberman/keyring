@@ -646,6 +646,35 @@ def _red_alert_unindexed(md: Path, reason: str, age_h: float) -> None:
     print(f"RED: unindexed-ledger alert delivered to COO inbox: {fname}")
 
 
+# A sentinel the Layer-1 scan can reason about MUST carry these. They are exactly the keys the scan
+# dereferences unguarded (opened_at :664, legs :667, slug in the alert paths) -- the writer (cmd_open)
+# always emits them, so a sentinel missing one was NOT writer-produced (it was hand-authored, or a
+# foreign-schema record dropped into the state dir).
+REQUIRED_SENTINEL_KEYS = ("slug", "opened_at", "legs")
+
+
+def _read_sentinel(sp):
+    """Return the parsed sentinel dict, or a STRING describing why it is unusable.
+    Never raises: a sentinel we cannot read is a LOUD verdict for the caller, never a crashed sweep."""
+    try:
+        state = json.loads(sp.read_text(encoding="utf-8"))
+    except Exception as e:  # noqa: BLE001 -- unparseable JSON is a finding, not a traceback
+        return f"UNPARSEABLE JSON ({type(e).__name__}: {str(e)[:80]})"
+    if not isinstance(state, dict):
+        return f"not a JSON object (got {type(state).__name__})"
+    missing = [k for k in REQUIRED_SENTINEL_KEYS if k not in state]
+    if missing:
+        return (f"missing required key(s) {missing} -- has {sorted(state)[:8]}; "
+                f"not a deploy_ledger sentinel (writer emits slug/opened_at/legs/entry_path/window_hours)")
+    if not isinstance(state["legs"], list):
+        return f"'legs' is {type(state['legs']).__name__}, expected list"
+    try:
+        datetime.fromisoformat(state["opened_at"])
+    except Exception:  # noqa: BLE001
+        return f"'opened_at' unparseable ({state.get('opened_at')!r})"
+    return state
+
+
 def cmd_check(args) -> int:
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     now = _now()
@@ -659,8 +688,24 @@ def cmd_check(args) -> int:
     # --- Layer 1: tracked sentinels (the original, sound, in-window scan) ---
     sentinels = [sp for sp in sorted(STATE_DIR.glob("*.json"))
                  if not sp.name.startswith(".")]
+    malformed = []          # schema-violating / unparseable sentinels -> LOUD, never a crash, never silent
+    scanned = 0
     for sp in sentinels:
-        state = json.loads(sp.read_text(encoding="utf-8"))
+        # MALFORMED IS A VERDICT, NOT A CRASH (CTO gate-integrity dispatch 205615Z). A KeyError here
+        # aborted the WHOLE sweep, leaving every sentinel AFTER the bad one unscanned -- so the
+        # no-half-deploys instrument (NEVER#6) failed WITHOUT rendering a verdict, which is strictly
+        # worse than failing loudly: a crashed red-scan cannot assert "0 stranded" but reads like it
+        # never got the chance to. Same law as the R1R3 appender: UNKNOWN IS NOT A VERDICT -- an entry
+        # we cannot parse has UNKNOWN legs, never "proven", and the scan CONTINUES to completion.
+        state = _read_sentinel(sp)
+        if isinstance(state, str):          # _read_sentinel returns the failure REASON as a str
+            malformed.append((sp.name, state))
+            print(f"MALFORMED-ENTRY [LOUD]: {sp.name} -- {state}. NOT SCANNED: this sentinel's legs are "
+                  f"UNKNOWN, not proven. A malformed entry cannot assert 'nothing stranded' (NEVER#6). "
+                  f"FIX: repair via deploy_ledger.py (open/close-leg/close) -- never hand-author a "
+                  f"sentinel; a CLOSED deploy has NO file here (close unlinks it).")
+            continue
+        scanned += 1
         opened = datetime.fromisoformat(state["opened_at"])
         age_h = (now - opened).total_seconds() / 3600.0
         window = args.window_hours or state.get("window_hours", DEFAULT_WINDOW_HOURS)
@@ -774,6 +819,20 @@ def cmd_check(args) -> int:
         print(f"DRIFT SUMMARY: {drift_dangerous} DANGEROUS (WARN; entry terminal over an unproven leg), "
               f"{drift_benign} benign (nudge; entry terminal, all legs proven). "
               "The .md is a RENDERING of the sentinel -- never hand-edit it.")
+
+    # DENOMINATOR OF THE SWEEP, always printed: a verdict about "nothing stranded" is only as good as
+    # the population it actually covered. A malformed entry is EXCLUDED from the scan, so an OK that
+    # does not disclose the exclusion is the misleading-PASS class.
+    print(f"SCAN DENOMINATOR: {scanned} of {len(sentinels)} sentinel(s) scanned"
+          + (f"; {len(malformed)} MALFORMED (unscanned, legs UNKNOWN)" if malformed else ""))
+    if malformed:
+        print("MALFORMED SUMMARY -- these entries were NOT scanned and their legs are UNKNOWN, "
+              "never 'proven':")
+        for name, why in malformed:
+            print(f"  - {name}: {why}")
+        print("  A red-scan that cannot read an entry cannot assert 0-stranded for it. Repair or close "
+              "each via deploy_ledger.py; exit is NON-ZERO until they parse.")
+        exit_flag = True    # UNKNOWN-is-not-a-verdict: unreadable entries fail the check, loudly
 
     if not exit_flag and not bypass:
         if held_count:
