@@ -25306,3 +25306,39 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_TOOLBHVR.ROUTE | comp-tool-hud (subject+instrument); comp-which-rail.log; comp-freshness | replayed COO incident shape + 4 negative controls through the PreToolUse hook; derived 18,014-event rail denominators; grounded comp-freshness backing | PASS | GAP: the rail types by COMMAND SHAPE not QUESTION TYPE -- its 14 classes contain NO path/lineage class, so "what serves this key" first-match-wins into aws_freshness and is answered by a freshness tool (rail fires, answer does not fit, agent hand-greps). 268 freshness-classified / 18 path-shaped / 67 rail-checked overrides. FIXED @c8cdaf3bc+2250b97dd: nudge now serves BOTH intents + honest NO-COVERAGE for URL->S3-key (no tool resolves it -- comp-routes trace undiscriminating per ~D positive control), AND corrected a REFUTED CLAIM the rail itself was teaching ("comp-routes = the serving path"). Message-only, ZERO gate changes; 4 negative controls silent. Bound to ~D cert table @2471d2806 (no parallel copy). |
 | 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_TOOLARCH.ROUTES.tr... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLARCH_CANON2_P... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_TOOLARCH.LATENCY.e... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLARCH_CANON2_P... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-routes | comp-routes trace /api/general/json/mdpf/global/aggregate-aua-timeseries.json | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-keys | comp-keys prefix opal-data-portal-v2 json/mdpf/global/ | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/drive_log_20260723T2152Z.md | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/INTENT_DENOMINATOR_SYNCHR... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type IN ['COMPONENT','GOLD_SCRIPT'] R... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~D | NFRA_TOOLARCH.CANON2 | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLARCH_CANON2_T... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/extract_portal_stitc... | PASS |
+| 2026-07-23Z | 0.7.0_AE_CloudOps | cottonwood-advi-no-run-diagnosis-readonly | comp-pulse | comp-pulse diff infra/aws/globgrph/extract_portal_stitch.py | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-output-contracts... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-pulse | comp-pulse diff org/modules/graph/comp-output-contracts.yaml org/modules/graph/extract_... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-system | comp-system --gate --changed org/modules/graph/routes_cli.py org/modules/graph/extract_... | VERDICT |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-23/cvoz_R4R6_and_TOOLBHVR_ROUT... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-system | comp-system | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-pulse | comp-pulse diff infra/system/06_current_state.json infra/system/06_current_state.md org... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.ROUTES | comp-system | comp-system --gate --changed org/modules/graph/routes_cli.py org/modules/graph/extract_... | PASS |
+| 2026-07-23Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_TOOLARCH.CANON2.gr... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | (CTO gate-integrity + ~Z hub) | deploy_ledger + argparse-introspection + comp_output_contract | red-scan crash/reader fixes + registry subcommand-drift finding | VERDICT | 3 fixes landed (crash, --all, Status-spelling reader); premise-tested first (2 of 3 legs already existed); found tools_index subcommands populated 65/65 gated 0 -- comp-iam omits simulate+reconcile |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
