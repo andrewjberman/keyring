@@ -1072,6 +1072,10 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "Compiler tool registry. AE adds rows when shipping new compiler tools per ADHC_COMPIL_V4 family. Execs revise wider scope."
 
+  "org/modules/graph/comp-output-contracts.yaml":
+    lane: ANY_EXEC_OR_AE
+    note: "NFRA_MSBEFF R1R3 output-contract declaration surface (per-tool coverage + plane/vintage semantics; the enforced-complete registry comp-manifest-check's output-contract member checks against). A new registry-class yaml colocated with its siblings comp-tools.yaml / comp-coverage-map.yaml / graph-call-manifest.yaml (all ANY_EXEC_OR_AE) -- was UNDECLARED, fell to org/modules/** ANY_EXEC (excludes AE), forcing 0.8.0_AE to land bundle-1 via one audited GIT_COMMIT_AUTHOR_OVERRIDE (17:49:25Z). ENUMERATE-over-override per this file's own ruling + the identical same-tool-graph-module-gap precedent (RV-0033 manifest_check, the kuzu engine files). Longest-match over org/modules/** ANY_EXEC. Added 2026-07-23 by 1.0.0_SA_CTO~Z (grantor at the R1R3 dispatch gate; SoD -- grantee is 0.8.0_AE, ~Z is a distinct party, not committing its own grant)."
+
   "org/modules/graph/graph-call-manifest.yaml":
     lane: ANY_EXEC_OR_AE
     note: "NFRA_COMPREG general registration grant (Andrew-direct @04bee845a; canonical flow org/modules/graph/COMPTOOL_REGISTRATION_FLOW.md). Closes the AE-vs-exec boundary so 0.8.0_AE lands its own atomic comp-tool registration bundle (entries: + tools_index: + excluded_not_graph_use_cases). ADDITIVE-ONLY, scoped to the registration surface: it does NOT widen onto any deliberate exec-lock (debtscan/** do-er-gate, comp_system.py, pipescript_cli/manifest_check lanes stay ANY_EXEC/exec-locked -- all more-specific, longest-match). It supersedes ONLY the MANIFEST-registration half of the per-tool bridge globs (kuzu_*.py/debris_*.py); those engine globs REMAIN load-bearing for oddly-named engine .py. 0.8.0_AE base + ~B already in ANY_EXEC_OR_AE (no lane-membership edit). CTO-verified additive-only at source + arch-gated; MSTR-landed @LD-0313 2026-07-18 (SoD: grantee is 0.8.0_AE, lander is MSTR)."
