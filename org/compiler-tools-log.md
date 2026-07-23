@@ -24116,3 +24116,21 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-23 ~0056Z | 3.0.0_SA_CVO~Z | comp-system --check, comp-glob x2, comp-grep x4 | NFRA_PSTMRT s.7-i1 registry-parity verify: located grounding sources on-rails; grounded email_domain to comp-constants canonical; parity check clean run |
 | 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-23/c... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants | comp-constants complete | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file comp-constants.config.yaml --file org/m... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff comp-constants.config.yaml org/modules/graph/comp_constants_complete.py... | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_constants_complete.py org/modules/g... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/firm_registry.json --file docs/arc... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff data/firm_registry.json docs/architecture/NFRA_PSTMRT_PRD.md | FAIL |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants | comp-constants complete | FAIL |
+| 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-22 | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_PSTMRT_S7I1_REGISTRY_PARI... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-22/3f_s4_schema_p... | PASS |
+| 2026-07-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed build_cottonwood_mdpf_slice.py | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-constants | comp-constants complete | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file comp-constants.config.yaml | PASS |
+| 2026-07-22 | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff comp-constants.config.yaml | PASS |
+| 2026-07-23 | 1.0.0_SA_CTO~Z | NFRA_PSTMRT | comp-constants | comp-constants complete (via 0.8.0 live runs, rc=1 true-findings -> rc=0 post-fix) | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-22 | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-23/c... | PASS |
