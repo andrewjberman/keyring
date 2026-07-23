@@ -17,3 +17,24 @@ SERVED (opal-data-portal-v2), all 6/6 byte-identical:
 
 CLOSED: 2026-07-23T18:52Z -- publish complete, report to CTO+COO+DE+DT sent same turn.
 Downstream: DE live-render check -> DT DEV cfb0afb7 -> PROD promote -> COO confirms live to Andrew.
+
+## AMENDMENT (0.7.0_AE_CloudOps, 2026-07-23T19:36Z) -- publisher cutover leg (CTO order 190518Z)
+Pre-invoke grounding per the order: (a) read-surface -- ModelPortfolios.tsx:497 ->
+/api/general/mdpf/global/aggregate-aua-timeseries.json -> CF public-data-router /json/* rewrite;
+the aum.ts:444 "platinum" cite is a STALE 2026-05-18 comment; the DEPLOYED opal-portal-data-proxy
+(sha LpodJICu..., unmodified since 2026-06-10) contains ZERO 'platinum' references and NO
+/aum/aggregate-mdpf route (positive control: 20 PORTAL_DATA_BUCKET hits) -- the HANDOFF_AE route
+diff was never applied. (b) STAGING_ROOT == gold/mdpf_revamp confirmed at source. (c) census
+11/11 staged. .tools/mdpf-preflip-check: PASS, flip-set == PUBLISH_MAP both directions (11).
+FINDING AT INVOKE: the DEPLOYED publisher ran the pre-3F-F1 9-KEY map -- 9/9 all_present=True
+with COTTONWOOD ABSENT (the exact RF-1 false-green its own source comment warns of; deployed
+artifact @2026-07-20 predated 8ec253b34). Redeployed from committed source (zip b64sha
+ZEqfKEq01ryL1168FB9cbI2J0/U92yVfx9c7yznGzkA=, applied via safe-apply -target=module.mdpf_publisher,
+live CodeSha256 ties). Re-invoke: 11/11 all_present TRUE incl both cottonwood keys.
+Byte-verify: 11/11 dst ETag == src ETag on opal-data-assets json/* (same-bucket copy, ETag=MD5).
+CONSUMED-KEY VERIFY (portal-v2): json/mdpf/global/aggregate-aua-timeseries.json AND the root key
+byte-tie gold ETag 8b6de1d5b506f6504426078c30e53edc; opal_aggregate_aua last == $1,951,676,164.42
+@ 2026-07-22. The Andrew platinum-overwrite architecture (gold append + portal platinum overwrite)
+is a follow-on build: grounded, NO live reader consumes platinum/mdpf today (proxy zero-refs;
+FE reads json tier; mdpf-freshness-checker reads platinum as an instrument) -- routed to COO/CTO
+with DE's key map as the denominator before any platinum write claims the unblock.
