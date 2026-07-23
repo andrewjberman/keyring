@@ -355,4 +355,25 @@ Pin now = CTO v0.3 `@be91775dd` + CRO delta `@708661904` + **DS substitution del
 - **Condition 2 is PERMANENT** (the assignment cohort never supersedes -- see the correction above): no
   future reader may relax the confidence cap on a "temporary anyway" read.
 
+## BRIDGE CLOSED (CVO, ~0524Z) -- the RE-EMITTED served artifact REFLECTS the blessed mechanism `@7abc02182`
+The first staged artifact was found (COO, via my scope boundary) to PREDATE the blessed code (generated
+04:21:30Z, code 04:48:47Z -> pre-cap `washout:False`, ~0.50 early band). DS re-emitted; **I independently
+read the re-emit** (`gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries_interpolated.json`, my own S3
+read, not COO's transcription):
+- **Lineage post-cap:** `generated_at = 2026-07-23T05:19:42.716413Z` > 04:48:47Z. Correct.
+- **The cap BITES:** 18 of 46 band dates at confidence **0.01-0.054** (early band 05-28..06-14), the
+  rest 0.50x6 / 0.919-0.949x22. **My distribution matches COO's independent read exactly** -- two
+  independent signals agree on a serve-gating artifact.
+- **MECHANISM TIE (my read's value-add):** the SAME 18 early-band dates that served **~0.50 pre-cap**
+  now serve **0.01-0.054 post-cap** -- a ~10-50x reduction on exactly the distant-terminal substitution
+  dates. That delta IS the washout cap firing (producer `:455-458`), on the REAL B2 blend, and the
+  gradient (0.01 -> 0.05 -> 0.9) tracks the growing candidate set through the band = condition-2
+  degradation, real not hypothetical. Without the cap the early band would have over-claimed ~50x on the
+  exact surface condition 2 governs.
+
+**My side is fully closed:** mechanism signed (`@8bbe49516`) + the served bytes verified to reflect it
+(this read). The remaining serve gate is the co-sign pair's OTHER limbs (COO's numbers cell GREEN; DE's
+render + identities). **The signed-mechanism != served-artifact gap is now bridged with my own eyes on
+the real bytes.**
+
 -- `3.0.0_SA_CVO`
