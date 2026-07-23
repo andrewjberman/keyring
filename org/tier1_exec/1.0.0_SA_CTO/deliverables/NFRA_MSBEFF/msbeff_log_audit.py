@@ -102,9 +102,12 @@ def parse(since: str | None):
                     result = t
                     break
         tools = sorted({t for t in TOOL_RE.findall(rest) if t not in NON_TOOL_SUFFIXES})
+        command = cells[4] if len(cells) > 4 else ""
+        note = " | ".join(cells[6:]) if len(cells) > 6 else ""
         rows.append({
             "date": date, "month": date[:7], "agent": agent, "to": to,
-            "tools": tools, "result": result or "UNSTATED",
+            "tools": tools, "command": command, "note": note,
+            "result": result or "UNSTATED",
             "era": "structured" if structured else "legacy",
             "raw": line[:400],
         })

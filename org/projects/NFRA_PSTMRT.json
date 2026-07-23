@@ -4,15 +4,31 @@
   "name": "MDPF Postmortem Program (firm registry SSoT + enumeration-completeness gate + completeness ontology + trigger-layer doctrine)",
   "description": "Andrew-direct handover (verbatim @7cc6376e5): the MDPF postmortem's structural fixes route to the ~Z NFRA group + 0.8.0_AE. ~Z owns P1 (firm registry as estate SSoT + a commit-time enumeration-completeness gate asserting cardinality against the registry, never agreement between sites), P2 (firm becomes a COMPLETENESS dimension in the ontology, alongside the existing separation/variance modeling), P3 (trigger-layer doctrine + gate: a structural finding lands as a GATE or an OWNED BLOCKING ITEM, never as a note). 0.8.0_AE owns bundle items 7 (comp-constants polyglot + --complete-over), 8 (comp-vendor), 9 (layer-grammar gate). CVO~Z verifies. MDPF 3F-G2b consumer retrofits stay main-fabric and bind to the registry.",
   "prds": [
-    {"path": "docs/architecture/NFRA_PSTMRT_PRD.md", "label": "Program PRD (P1 registry landed + gate design; P2 ontology amendment; P3 doctrine)", "date": "2026-07-22"},
-    {"path": "docs/references/MDPF_POSTMORTEM_20260722.md", "label": "Input reading: MSTR postmortem (durable carrier)", "date": "2026-07-22"},
-    {"path": "docs/doctrine/TRIGGER_LAYER.md", "label": "P3 doctrine (landed)", "date": "2026-07-22"}
+    {
+      "path": "docs/architecture/NFRA_PSTMRT_PRD.md",
+      "label": "Program PRD (P1 registry landed + gate design; P2 ontology amendment; P3 doctrine)",
+      "date": "2026-07-22"
+    },
+    {
+      "path": "docs/references/MDPF_POSTMORTEM_20260722.md",
+      "label": "Input reading: MSTR postmortem (durable carrier)",
+      "date": "2026-07-22"
+    },
+    {
+      "path": "docs/doctrine/TRIGGER_LAYER.md",
+      "label": "P3 doctrine (landed)",
+      "date": "2026-07-22"
+    }
   ],
   "status": "active",
-  "phase": "Phase 1: PRD + registry (data/firm_registry.json, seeded+grounded) + TRIGGER_LAYER doctrine LANDED 2026-07-22. Next: P1 gate build routing (~Z discretion: 0.8.0/main lanes), P2 rule-bank + variance_dimensions amendment (coordinated with 0.8.0_AE~C), P3 comp-findings gate build (0.8.0), CVO~Z verification per s.7 acceptance.",
+  "phase": "Phase 1: PRD + registry (data/firm_registry.json, seeded+grounded) + TRIGGER_LAYER doctrine LANDED 2026-07-22. Next: P1 gate build routing (~Z discretion: 0.8.0/main lanes), P2 rule-bank + variance_dimensions amendment (coordinated with 0.8.0_AE~C), P3 comp-findings gate build (0.8.0), CVO~Z verification per s.7 acceptance. || FAMILY (2026-07-23): NFRA_MSBEFF adopted as this program's measurement-and-remediation leg (main-CTO position via MSTR 150938Z; PSTMRT = doctrine/registry umbrella; CVO~Z verifies once for both).",
   "blocking": "None (off-main-channel lane; builds route at ~Z discretion; G2b binding is main-fabric's)",
   "created": "2026-07-22",
-  "pods": ["1.0~Z", "3.0~Z", "0.8"],
+  "pods": [
+    "1.0~Z",
+    "3.0~Z",
+    "0.8"
+  ],
   "pipeline": "estate-wide (comp tooling / ontology / doctrine)",
   "thread_counter": 0,
   "threads": []
