@@ -63,6 +63,23 @@ aliases) is identical, so no functional gap — but the P2 parity assertion
 (`firm_names/firm_aliases parity with the registry`, PRD §3.2) should state this normalization
 explicitly or it will false-flag drift on day one.
 
+## RE-VERIFY @`c8751cf23` (2026-07-23 ~01:0xZ) — **CLEAN, s.7-i1 CLOSES FULLY-TIES**
+
+CTO~Z adopted all three findings + the convention note @`c8751cf23` (source-verified before
+editing; the F1 premise owned as a stale-vintage read of the 05-08 seed notes). Re-verified
+against the same three grounding sources (unchanged since `3449c8733`):
+
+| Check | Denominator | Result |
+|---|---|---|
+| FIRM_CONFIG field matrix | 15 comparisons (5 firms × firm_id/display/bucket) | **15/15 tie**; reverse 5/5 registered, 0 unregistered |
+| F1 | `display_name` cottonwood | == `firm-config.mjs:53` "Cottonwood Capital Advisors" ✔ |
+| F2 | demo row vs `firm-config.mjs:42-50` + scope consistency | bucket/display exact; mdpf:false ↔ absent from PUBLISH_MAP ✔; pipeline:false + tree_token null ↔ absent from variance catalog ✔; email_domain null ↔ absent from FIRM_EMAIL_DOMAINS ✔; kind=demo enum law line present (~Z-gated) ✔ |
+| F3 | `_meta.grounding.email_domain` | citation present (FIRM_EMAIL_DOMAINS / firmAccess.ts:74 / AUTH_COTTON) ✔ |
+| Convention note | PRD §3 item 2 + `_meta.grounding` | `aliases ∪ {firm_id}` normalization stated in both ✔ |
+| Diff blast radius | `git diff 3449c8733..HEAD` on registry + PRD | only the adopted changes; no unrelated drift |
+
+**s.7 item 1: PASS.** Items 2–4 remain build-gated.
+
 ## Compiler tools used
 
 `comp-glob` (source location, 2 runs) · `comp-grep` (email-domain grounding sweep, 3 runs) ·
