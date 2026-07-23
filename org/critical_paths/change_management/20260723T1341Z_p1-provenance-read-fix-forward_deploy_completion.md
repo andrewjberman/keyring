@@ -33,9 +33,12 @@ three-firm post-verify / standing per-firm-acceptance checklist amendment).
 | Main tree | DEV, workspace root; worktree pruned (FTL residue inert) |
 | Timeline | report ~1332Z -> root-cause+dispatch 1336Z -> ratify 1337Z -> gated fix 1341Z -> push 1344Z -> CI SUCCESS 1347Z (~15 min report-to-live) |
 
-## Residual (named)
-- CTO condition-3: DE's through-auth three-firm live verify on PROD (triggered 134750Z,
-  channel-push confirmed) — 49F + Inflection crash-free with provenance honestly absent,
-  cottonwood yellow-dash unregressed. DE's evidence closes CTO's gate.
+## Residual — DISCHARGED 135046Z
+- CTO condition-3 PASSED (DE 135046Z, evidence @931f6b11c, three-way grounded): (1) BUNDLE —
+  served chunk ModelPortfolios-BVoIZL20.js carries the fix's distinctive warn literal;
+  (2) CRASH-FREE — inflection + 49financial render on the LIVE origin with real served
+  artifacts, ZERO pageerror (exercised negative: pre-fix state emitted the exact TypeError);
+  (3) NON-REGRESSION — cottonwood live band + confidence label + trading-day axis intact.
+  **P1 CLOSED end-to-end: report 1332Z -> live-verified fix 1350Z (~18 min).**
 - Condition-4 standing amendment adopted: per-firm acceptance covers EVERY firm the renderer
   serves, not the firm that motivated the release.
