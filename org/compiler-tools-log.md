@@ -24266,3 +24266,24 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 2026-07-23T0424Z 0.4.0_DS_ClientPlatform canonical-pass+BF1: comp-grep crosswalk grounding (the 31M merge target), mutant set 11/11, commit-gate x3 waves, s3api pin-asserts + untouched-control, rail-checked enumerations x4
 | 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-23 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-23 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_qt5_tempo... | PASS |
+| 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/mdpf_p3a_PROD_ver... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/briefs/COTT... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/briefs/COTTONWOOD_BACKFILL_MECHANISM_CAMPAI... | PASS |
+| 2026-07-23 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-23 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_qt5_tempo... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-07-23/3f_canonical_p... | PASS |
+| 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/ci.yml | PASS |
+| 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff .github/workflows/ci.yml | PASS |
+| 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/.github/workflows/ci.yml | PASS |
+| 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file scripts/ui-smoke.mjs | PASS |
+| 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff scripts/ui-smoke.mjs | PASS |
+| 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/scripts/ui-smoke.mjs | PASS |
+| 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/portal-hooks/pre-push | PASS |
+| 2026-07-23 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff .tools/portal-hooks/pre-push | PASS |
+2026-07-23 03:55-04:35Z 0.6.2_AE_PartnerETL~A qt5 arc: no comp-* (offline SSM-stdout forensics decisive, zero egress on diagnosis); paired probe + recovery sweep all via production cot_bronze_ingest mechanics; instrument lesson: one-shots must carry production's re-mint discipline.
+| 2026-07-23 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-23 | 0.6.2_AE_PartnerETL~A | MDPF_3FIRMS.3F-B7.inf-july-anomaly-validation | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
