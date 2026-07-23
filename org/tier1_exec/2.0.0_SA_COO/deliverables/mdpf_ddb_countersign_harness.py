@@ -117,8 +117,9 @@ def sval(item, key, default=None):
 def tier_a(rows_by_date: dict[str, list[dict]]) -> dict:
     """STRUCTURAL, FULL COVERAGE. Every check prints its denominator."""
     findings = {
-        "A0_schema_drift": [],  # the instrument-that-cannot-fail guard -- see note below
-        "A2_circular": [],
+        "A0_schema_drift": [],   # the instrument-that-cannot-fail guard -- see note below
+        "A2_circular": [],       # genuine circular-read candidates (verify by value tie)
+        "A2_screen_cleared": [], # OBSERVATION: src mentions the superseded legacy, not a circular read
         "A3_labels": [],
         "A4_global_legs": [],
         "A6_fabricated": [],
@@ -137,10 +138,21 @@ def tier_a(rows_by_date: dict[str, list[dict]]) -> dict:
             # Resolve the completeness field ONCE up front (the re-sourced walk renamed
             # coverage_state -> completeness). A0 below fails loudly if NEITHER is present.
             cov = sval(r, "completeness", sval(r, "coverage_state"))
-            # A2 -- circular-read fix
+            # A2 -- circular-read SCREEN (a text screen, NOT a verdict; Tier B value-tie is the proof).
+            # Exercised 2026-07-23 on re-derived rows: a src can MENTION the legacy it SUPERSEDED
+            # (e.g. "sum of re-sourced contributors; legacy carried total preserved in
+            # legacy_carried_total") -- that is a supersession DESCRIPTION, not a circular READ, and
+            # its value ties to silver. Text-matching the mechanism is the exact trap CLAUDE.md warns
+            # of. So: split. A circular marker WITHOUT supersession language = genuine candidate;
+            # WITH it = screen-cleared observation (still verify the value tie in Tier B).
             probe = " ".join(str(sval(r, k, "")) for k in ("source_field", "basis", "as_of_basis"))
+            SUPERSESSION = ("re-sourced", "re_sourced", "resourced", "superseded",
+                            "preserved", "legacy_carried", "supersession")
             if any(m in probe for m in CIRCULAR_MARKERS):
-                findings["A2_circular"].append((d, cid, probe[:120]))
+                if any(k in probe for k in SUPERSESSION):
+                    findings["A2_screen_cleared"].append((d, cid, probe[:120]))
+                else:
+                    findings["A2_circular"].append((d, cid, probe[:120]))
             # A3 -- label sanity.
             # NOTE (COO, exercised 2026-07-23): my first enum omitted `rolled_forward` and produced 7
             # PHANTOM label failures on ETF cohorts. `rolled_forward` is a REAL vintage state, not a
@@ -164,8 +176,11 @@ def tier_a(rows_by_date: dict[str, list[dict]]) -> dict:
             # bucket reports them for a human read; it does NOT assert a defect.
             if vs == "rolled_forward":
                 findings["A7_carry_observed"].append((d, cid, f"value={sval(r, 'value')}"))
-            # A4 -- GLOBAL rows must carry legs_present (LABELED_PARTIAL law)
-            if cid and ("global" in cid or cid.startswith("_total__")):
+            # A4 -- the fee-basis GLOBAL row must carry legs_present (CTO's LABELED_PARTIAL ruling
+            # 171749Z scoped this to _global__aua_total). The other `_total__*` cohorts (etf_fund,
+            # partner_aua) are DIFFERENT aggregates, not the firm-composition Global -- flagging them
+            # for a missing legs_present was an over-broad cid match (false-positive, 2026-07-23).
+            if cid and "global" in cid:
                 if r.get("legs_present") is None:
                     findings["A4_global_legs"].append((d, cid, "legs_present MISSING"))
             # --- A0 SCHEMA GUARD -------------------------------------------------------------
@@ -263,8 +278,9 @@ def main() -> int:
     print("\n[TIER A -- STRUCTURAL, FULL COVERAGE]")
     print(f"  DENOMINATOR: run_dates={a['denominator']['run_dates']} "
           f"rows={a['denominator']['rows_total']} cohorts={a['denominator']['cohort_union']}")
+    OBSERVATION_BUCKETS = ("A7_carry_observed", "A2_screen_cleared")
     for k, v in a["findings"].items():
-        if k.startswith("A7"):  # observation bucket -- never a verdict
+        if k in OBSERVATION_BUCKETS:  # observation, never a verdict
             status = "none" if not v else f"OBSERVED n={len(v)} (read these, not a defect claim)"
         else:
             status = "PASS" if not v else f"FAIL n={len(v)}"
