@@ -84,4 +84,41 @@ off full canonical -> COO per-date re-verify (49[d]==DDB[d], no silent carry) ->
 CTO fires -> DT promotes. DS's 21-point staged build is INTERIM/MOOT. Serve hard-held until the full-lookback
 registry lands. Andrew framing: **correct + complete over fast.**
 
-**Delete/close when: every MDPF leg is sourced per this map, backfilled full-lookback, verified, and serving.**  -- `2.0.0_SA_COO`, ~14:22Z
+## SMARTX MODEL-LEG FEASIBILITY -- RESOLVED **YES** (DS grounded @152655Z/152742Z; COO BYTE-VERIFIED @~15:27Z)
+**Andrew's crux (VERBATIM ~15:2xZ):** "The real question is if we can generate reliable daily model values from
+SmartX going all the way back to whatever the start values we have for SmartX from opal-data-assets/smartx/
+bucket... That is also why... the DDB being representative of the portal data (backwards)... because we were
+concerned about not being able to reproduce that data."
+**VERDICT: YES -- reliable daily per-model values ARE reproducible from `opal-data-assets/smartx/` back to each
+model's SmartX inception. THE BACKWARDS DDB FLOW IS UNNECESSARY; normal silver->gold-DDB->portal works for BOTH legs.**
+- **The "~10 dates" was an AXIS confusion (VERIFICATION-LAW-6):** `smartx/` pull-start is 2026-07-14 (10 run-date
+  partitions), BUT each daily pull re-delivers each model's FULL per-day series; the model history lives in the
+  `day` COLUMN inside each partition, not across run_date partitions.
+- **COO BYTE-VERIFIED (not transcribed):** read `smartx/platform/silver/fact_model_aum_daily/date=2026-07-23/data.parquet`
+  directly -- `day` range **2021-09-02 -> 2026-07-22, 1,226 distinct days, 4,326 rows**. Confirms DS's deepest model
+  (ea6cbb22, 1,226 days from 2021-09-02) to the day. 5-core roster from 2024-08..11 (why the served axis starts 2024-11-01).
+- **STAGED trio's model leg IS silver-sourced (DS @152742Z):** reads `fact_model_aum_daily` latest partition via
+  `dim_mdpf_aggregate_aua_timeseries.py:309 load_aum_daily` @9bd23d904 (the F1 law) -- never the served aggregate,
+  the DDB, or interpolation. So BOTH staged legs are silver-sourced (custody = `fact_rps_s2` C2; model = `fact_model_aum_daily`).
+- **RELIABILITY CONTROL (run, not assumed):** 07-14 pull vs 07-23 pull on 4,270 common (model,day) cells -> 4
+  restated (0.094%), ALL on the 07-14 pull's own T-1 frontier (2026-07-13) settling in the next pull; SETTLED
+  history = ZERO restatements across the 9-day vintage gap.
+- **HONEST BOUNDARIES (named):** (a) per-model AUM (closing_equity) reaches inception; per-ACCOUNT/holdings detail
+  exists only from 07-14 forward (the sweep snapshots); (b) pre-inception days are the model's own start, not a
+  gap; (c) pre-07-14 we hold no banked vintages -> non-restatement before then rests on the vendor series (from
+  07-14 we detect drift daily; the control above IS that instrument, and the frontier-day settle is its signature).
+- **UNBLOCKS:** 0.7.0's emitter re-source + full-lookback backfill -- both legs are silver-reproducible (custody
+  `fact_rps_s2` to 2024-05-24, 541 partitions; model `fact_model_aum_daily` to inception 2021-09-02). Feasibility
+  is no longer an open question; sequencing is.
+
+## C2 RULING SUPERSEDES the 14:13Z "$1.64B repoint" GROUNDED RESULT above
+The 14:13Z conclusion ("repoint 49-total to the DDB `49f_schwab_custody` $1,644,993,954.34 -> Global ~$1.9B") is
+**SUPERSEDED by Andrew's C2 ruling (~15:12Z, "We want to keep cash, C2").** The DDB custody $1.64B is the LEGACY
+positions-EX-cash (07-15-stale) quantity; **C2 = `fact_rps_s2.net_mv_plus_cash` (cash IN) = $1,689,302,889.53
+@07-22 frontier / $1,665,338,126.76 @07-17 pin.** Current Global (C2) = **$1,951,676,164.42 (~$1.95B)** @07-22;
+~$1.93B @07-17 pin. Same account (08242234), cash-in quantity. DS C2 reprocess @9bd23d904 = ZERO per-date churn
+vs the prior staged trio (it was already `net_mv_plus_cash`). The "(BD)" tag is a meaningless display literal
+(my "BD-priced" was a mislabel, retracted). Fee-basis ties to the cent (49F $1,689,302,889.53 + INF
+$137,997,265.16 + COT $124,376,009.73 = $1,951,676,164.42).
+
+**Delete/close when: every MDPF leg is sourced per this map, backfilled full-lookback, verified, and serving.**  -- `2.0.0_SA_COO`, updated ~15:28Z (SmartX feasibility RESOLVED + C2 supersession)
