@@ -133,7 +133,7 @@ denominator-is-its-own-configuration defect wearing a config's clothes.** DESIRE
 completeness, freshness, and coverage are therefore not four problems — they are one axis (intent vs
 population) measured at four sites.
 
-## §6b COROLLARY — YOUR PROBE IS AN INSTRUMENT TOO (~D + CVO~Z, 2026-07-23, five instances)
+## §6b COROLLARY — YOUR PROBE IS AN INSTRUMENT TOO (~D + CVO~Z + ~A, 2026-07-23/24; probe SCOPE, probe SHAPE, and the firing CONDITION)
 
 > **"A sample that misses a type reads EXACTLY like an absence of the property."**
 
@@ -183,6 +183,41 @@ SEPARATE invocation.** A positive control *is* probe-verification: **if your pro
 known-present instance, your probe is broken, not the target.** So the rule is not "be careful with
 probes"; it is *run the control on your probe before you report on the instrument* — the existing law,
 pointed one step back at the apparatus doing the pointing.
+
+### The firing condition — WHEN to run the control, since you cannot run it on every row (~A, 2026-07-24, comp-routes MACHINEFLAG sweep)
+
+The anchor above says *run the positive control on your probe*. The unstated problem: **a control on
+every row is not affordable** — a sweep over 64 flag-sites cannot positive-control all 64, so "always
+control your probe" collapses into "control the probe sometimes," and *sometimes* is where the misses
+live. ~A's incident supplies the cheap, always-available trigger.
+
+> **WHEN YOUR INSTRUMENT REPORTS A DEFECT IN SOMETHING YOU HAVE INDEPENDENT GROUND TRUTH ON, CHECK THE
+> INSTRUMENT FIRST.**
+
+The MACHINEFLAG sweep's exerciser shelled out via `subprocess.run(['bash', launcher, ...])`, which on
+this host Windows-resolves `bash` to the **System32 WSL stub** (the CLAUDE.md-named class — *"a
+python-spawned bash … REPORTED SUCCESS EVERY TIME"*). Every one of the 10 tools it "ran" emitted a
+UTF-16 *"no installed distributions"* error, and the classifier read that error text as PROSE. Result:
+**10 PROSE_FALLBACK findings against 10 tools — several of them peers' work — every one false, and each
+carrying a source-derived denominator (64 sites / 49 files) that would have made the ten accusations
+look rigorous.** The instrument built to find "confident output from a broken retrieval" *was* one, and
+it was aimed OUTWARD.
+
+It was caught because **one of the ten rows was `comp-routes trace --json`, which the author had built
+that session and verified at HEAD an hour earlier.** A finding that contradicts ground truth you already
+hold is either a discovery that overturns what you know — rare — or a broken instrument — common. Treat
+it as the second until proven the first: it is the one row you cannot be fooled on, so it is the cheap
+control you already possess. The held-truth contradiction **costs nothing** (you are not manufacturing a
+positive control; you already hold the answer), and it fired here on row 1 of 10, before a single false
+finding shipped.
+
+**The operational rule this yields:** you need not control every row, but a finding that contradicts
+*any* fact you independently hold **halts the whole census until the instrument is cleared** — because a
+runner that lied about the row you know cold lied about the rows you don't. One trusted row disciplines
+the entire denominator. *(The mechanical residue — a lint for bare `bash`/`/bin/bash` / `subprocess.*bash`
+in Python that does not route through the canonical `git_bash()` resolver — is a gate candidate: the
+CLAUDE.md NEVER already exists in prose and was violated anyway by a careful agent under load, which is
+the standing argument for a gate over a rule.)*
 
 ## §7 The generalized PROCESS (Andrew's ask, answered)
 
