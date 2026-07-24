@@ -1,0 +1,110 @@
+{
+  "lane": "0.8.0_AE_CloudComp~C",
+  "scope": "NFRA_TOOLUNIFY_ESTATE_CENSUS_PLAN_20260724 §2.C — M365/Microsoft surface",
+  "vintage": {
+    "commit": "9da59d7cede73ecb0509e14ac347142dedc31047",
+    "commit_short": "9da59d7ced",
+    "branch": "CLOUD",
+    "report_generated_utc": "2026-07-24T22:14:50Z"
+  },
+  "verdict": {
+    "category": "populated_plane",
+    "not_stub": true,
+    "not_single_heat_table_only": true,
+    "qualifiers": [
+      "deliberately_narrow_scope_by_design",
+      "not_a_declared_globgrph_taxonomy_layer",
+      "heat_analytic_built_but_dormant",
+      "headline_deliverable_S4_never_shipped"
+    ]
+  },
+  "gateway": {
+    "ec2_manifest_entry": "m365-mcp-gateway",
+    "instance_id": "i-07dccb1615503ac99",
+    "deployed_commit": "c390d1c6af3df45ee679cda602ba35a88bac2765",
+    "deployed_at": "2026-07-15T18:49:23Z",
+    "deployed_by": "0.2.0_DT_PortfolioAnalytics",
+    "mcp_tool_count_live_read": 30,
+    "consumption_paths": [
+      {"path": "A", "kind": "graph_ingestion", "endpoints": 4, "endpoint_names": ["ms_sites", "ms_site_children", "ms_onedrive_children", "ms_search"], "content_bearing": false, "graphed": true},
+      {"path": "B", "kind": "interactive_mcp_tool_surface", "tool_count": 30, "content_bearing": true, "graphed": false, "this_session_evidence": "m365 MCP server listed as connecting in this same session"}
+    ],
+    "non_ms_integrations_present_on_same_ec2": ["ycharts", "opal_portal"],
+    "readme_declarative_drift": {
+      "readme_claims": "verified 2026-06-16, AWS deploy NOT STARTED, zero ALBs, no gateway EC2",
+      "actual_state": "live since 2026-06-23 GO-LIVE, redeployed as recently as 2026-07-15",
+      "stale_by_days_approx": 39
+    }
+  },
+  "ms_heat": {
+    "artifacts": [
+      {"name": "ms_heat", "kind": "s3_json_index_non_iceberg", "key_latest": "warehouse/ms_heat/ms_heat_index.json", "last_modified_utc": "2026-07-17T18:09:45Z", "size_bytes": 2626103},
+      {"name": "ms_heat_snap", "kind": "iceberg_table_append_only_sibling", "catalog": "nessie_rest_vpc_internal_unreachable_this_session", "corroborating_proxy": "s3_json_index_same_producer"}
+    ],
+    "producer_script": "org/modules/heatmap/ms_heat_index.py",
+    "producer_wired_into_nightly_derive": false,
+    "producer_scheduled_trigger_found": false,
+    "days_dormant_at_census": 7,
+    "pending_ingest_backlog_objects": 0,
+    "signal_measured": "write_heat: props.last_modified_dt (content/comms never read)",
+    "live_freshness_alarm_found": false,
+    "live_freshness_lambda_found": false,
+    "prior_alarm_name_now_absent": "opal-globgrph-freshness-stale-ms_heat_snap_last_append"
+  },
+  "graph_modeling": {
+    "canonical_db": "kuzu_nessie_db",
+    "provenance_age_hours": 4.0,
+    "built_at_utc": "2026-07-24T18:01:18.199260+00:00",
+    "total_graph_nodes": 20403,
+    "ms_layer_nodes_total": 5669,
+    "ms_layer_pct_of_graph": 27.8,
+    "ms_layer_nodes_by_type": {
+      "MS_FILE": 4618,
+      "MS_FOLDER": 1034,
+      "MS_USER": 15,
+      "MS_SITE": 1,
+      "MS_LIBRARY": 1,
+      "MS_DRIVE_ONEDRIVE": 0,
+      "MS_GROUP": 0
+    },
+    "declared_node_types_count": 7,
+    "populated_node_types_count": 5,
+    "prior_snapshot_2026_07_15_total_ms_nodes": 5520,
+    "growth_9_days": 149,
+    "site_targeting_env_var": "GLOBGRPH_MS_TARGET_SITE_ID",
+    "edges_live": ["CONTAINS", "OWNED_BY (partial)"],
+    "edges_schema_only_zero_live": ["HAS_ACCESS", "SHARED_WITH", "MEMBER_OF"],
+    "edges_gated_on": "S5 (/permissions, never built)"
+  },
+  "globgrph_taxonomy": {
+    "prd": "docs/architecture/NFRA_GLOBGRPH_PRD.md",
+    "prd_version": "v0.4.4",
+    "prd_date": "2026-06-12",
+    "declared_layers": ["L1_portal_frontend", "L2_network_api", "L3_aws_compute", "L4_data_storage", "L5_data_pipeline", "L6_iam_security", "L7_external_boundary"],
+    "ms_is_declared_layer": false,
+    "ms_entry_mechanism": "property value layer='ms' on the shared CloudNode label, same mechanism as every layer, never retrofitted into the PRD layer table"
+  },
+  "rescope_20260626": {
+    "doc": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_MSGRAPH/RESCOPE_estate_wide_heat_analytics_layer.md",
+    "proposed_changes": [
+      {"change": "retarget personal_onedrive_to_shared_site", "landed": true, "evidence": "live MS_FILE count matches predicted /sites/Shared corpus; MS_DRIVE_ONEDRIVE now 0; TARGET_SHAREPOINT_SITE_ID confirms single-site targeting at source"},
+      {"change": "cadence_nightly_to_hourly_poll", "landed": "unconfirmed"},
+      {"change": "generalize_ms_heat_to_estate_wide_heat_index", "landed": false, "evidence": "no heat_index Iceberg table found; 2026-07-17 decommission assessment independently re-derives the same gap 3 weeks later; still ms-specific tables in use today"}
+    ]
+  },
+  "s4_findability_deliverable": {
+    "project": "NFRA_MSGRAPH",
+    "project_status": "active",
+    "project_json": "org/projects/NFRA_MSGRAPH.json",
+    "last_phase_update": "2026-07-15",
+    "s4_shipped": false,
+    "live_check_method": "comp-which \"find documents in the shared sharepoint site by heat or recency\"",
+    "live_check_result": "no curated rule matched; top score 0.47 (comp-cache, unrelated); tool itself flags these as fuzzy guesses not a routing decision",
+    "comp_ms_tool_glob_result": "no files found matching .tools/comp-ms*"
+  },
+  "could_not_determine": [
+    "ms_heat_snap exact Iceberg snapshot count / last commit (Nessie REST catalog is VPC-internal, unreachable this session)",
+    "whether ingestion cadence is actually hourly per the rescope vs still nightly (would need ECS schedule read, borders on base's lane)",
+    "why the FRESHGUARD alarm/Lambda are currently absent from live AWS (open-deploys ledger shows freshguard-leg4/leg5 in flight at session start; causal link not verified)"
+  ]
+}
