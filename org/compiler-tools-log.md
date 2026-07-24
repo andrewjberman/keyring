@@ -25898,3 +25898,42 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-24 | 0.4.0_DS_ClientPlatform | comp-pipescript deployed x3 (cot_silver_merge / cot_bronze_ingest / D_00) all MATCH -- each an S3-prefix ledger proof line; comp-grep x5 (cycle-complete, backfill-holdings-net, account_units, ROLL_SOURCE_UNREADABLE, 514) located ssm.tf:140, build_cottonwood_mdpf_pair.py:489 and the trigger classifier; comp-platinum reverse aua_provenance -> 0/58 case [a] genuine-empty, DISCHARGING CTO Condition 1; commit-gate x3 (caught 2x ruff E702); deploy_ledger 2 entries opened+closed 3/3. PARTIAL: comp-aws returned nothing useful for "what EventBridge rules fire on this bucket" -- could not tell empty from unsupported, fell back to live primitives. GAP: no comp-tool answers "which BUCKETS hold this key name" -- that exact question is what my false portal-v2-vs-assets axis correction got wrong; comp-which routes to `pipescript --resource` which is thread-scoped, not key-name-scoped across buckets. A `comp-where <key>` printing bucket+ETag+size per hit would have prevented it. Highest-value output of the window was the pre-commit RISK-REFLEX citation, which surfaced the bd/cot shared single-source that CTO then ruled on. |
 | 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_00.po... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/black_diamond/scripts/gold/D_00.portal_aggregates.py data/black_di... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_CHANNEL_INDEPEND... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_CHANNEL_INDEPEND... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_CHANNEL_INDEPEND... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-residue | comp-residue check org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml --consumers infra/sys... | UNKNOWN |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform~A/task_orders/MDPF_CHANNEL_IND... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~A | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform~A/task_orders/MDPF_CHANNEL_IND... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/task_orders... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/task_orders/MDPF_CHANNEL_INDEPENDENCE.CI-R4... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-routes | comp-routes trace platinum/mdpf | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/task_orders/MDPF_CHANNEL_INDEPENDENC... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/task_orders/MDPF_CHANNEL_INDEPENDENC... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff CLAUDE.md | VERDICT |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pipescript | comp-pipescript io dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/scope_contract.json --file... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff infra/system/scope_contract.json infra/system/system_parity.py | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/GRAPH_DRIFT_FREEZE_MEAS... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_CHANNEL_INDEPENDENCE_CI-R... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/GRAPH_DRIFT_FREEZE_MEAS... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS total_nodes | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~B | MDPF_CHANNEL_INDEPENDENCE.CI-R7R8 | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/config/partner_roster.json --... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~B | MDPF_CHANNEL_INDEPENDENCE.CI-R7R8 | comp-pulse | comp-pulse diff data/mdpf/config/partner_roster.json infra/aws/lambda/mdpf-pipeline/_sh... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~B | MDPF_CHANNEL_INDEPENDENCE.CI-R7R8 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~B | MDPF_CHANNEL_INDEPENDENCE.CI-R7R8 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
