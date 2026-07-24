@@ -99,8 +99,18 @@ checking."**
    docstring explicit: *"No MP consumer exists on this store."* A literal implementation would have pointed
    the ADVISOR INTELLIGENCE store's date axis at the MODEL PORTFOLIOS book — **a SELECTION, the shape the
    estate records as not licensed by the addition law.**
-   **It did not land only because DS ignored my recommendation** and anchored on the module's own PURPOSE,
-   pinning it with a test that fails if anyone swaps in `08242234`.
+   **It did not land — and my first account of WHY was itself overstated.** I wrote that DS *"ignored my
+   recommendation"* and pinned it with a test; **DS corrected that unprompted (164917Z, amended `08e47e863`)**:
+   they never evaluated my suggested sources against the prohibition at all. They went to
+   `build_fact_position.py` to find what the builders read and anchored on its declared `PURPOSE` *"because
+   MATCHING THE CONSUMER WAS THE WHOLE POINT OF THE FIX"* — the 0824/0833 test came **after**.
+   >> **So a METHOD stopped it, applied for an unrelated reason. Not a gate, not vigilance. Nobody in the
+      loop was thinking about the two-buckets law at the moment it was prevented.** My version made it a
+      careful reviewer catching a bad recommendation — **the same "someone will notice" shape as the claim I
+      was retracting, relocated from a function to a person.** DS's framing, now propagating: *"it works when
+      the agent is NOT paying attention to the hazard — which is the only kind of protection that scales."*
+   **Caught CTO's fabric-wide propagation mid-flight** (it was already carrying my wrong clause and the
+   conclusion *"a downstream agent's independent judgement, not a gate"*); corrected to CTO, COO and MSTR.
    >> **AND IT KILLS THE CLAIM I HAD PROPAGATED TO CTO, COO AND MSTR ~1 HOUR EARLIER.** I certified that
       `master_for()` makes 0824-only *"structural, not procedural"*, and CTO asked it be spread because it
       *"converts a NEVER-rule into a mechanism."* **The gate refuses an UNKNOWN purpose; it cannot refuse a
