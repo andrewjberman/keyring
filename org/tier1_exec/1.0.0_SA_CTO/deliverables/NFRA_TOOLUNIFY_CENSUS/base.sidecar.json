@@ -1,0 +1,265 @@
+{
+  "lane": "base",
+  "agent": "0.8.0_AE_CloudComp",
+  "census_plan": "docs/briefs/NFRA_TOOLUNIFY_ESTATE_CENSUS_PLAN_20260724.md section2.base",
+  "vintage": "measurements taken 2026-07-24 ~2130-2245Z, live/source, denominators stated per-item",
+  "iceberg_tables": [
+    {
+      "table": "graph_nodes",
+      "namespace": "globgrph",
+      "physical_dir": "warehouse/globgrph/graph_nodes_4c6c23bd-fffa-427e-9cd9-7a9deaa3426d/",
+      "s3_key_count": 170530,
+      "format_version": 2,
+      "column_count": 9,
+      "columns": ["node_id:string", "arn:string", "node_type:string", "name:string", "layer:string", "drift_class:string", "source:string", "snapshot_ts:long", "props:string"],
+      "partitioned": false,
+      "metadata_snapshots_listed": 1,
+      "snapshot_semantics_note": "overwrite() commits produce a fresh single-snapshot metadata.json BY DESIGN (A1 ruling, derive_runner.py comment) -- true version history lives in Nessie's commit graph (43 daily audit-baseline tags), not in Iceberg snapshot lineage. metadata_snapshots_listed=1 is expected/correct, not a gap.",
+      "last_write": "2026-07-24T15:04:11Z",
+      "producers": [
+        {"name": "derive_runner.py", "mechanism": "ECS Fargate task, full account-wide overwrite", "trigger": "EventBridge cron(0 2 * * ? *) = 02:00 UTC daily, ENABLED (item2a.tf)", "role": "nightly full overwrite of graph_nodes+graph_edges"},
+        {"name": "incremental_updater Lambda (opal-globgrph-incremental-updater)", "mechanism": "bounded per-resource upsert via pyiceberg append/commit_batch", "trigger": "CloudTrail mutating-mgmt-events (readOnly=false minus log/metric noise) -> EventBridge rule opal-globgrph-cloudtrail-mgmt -> SQS opal-globgrph-incremental-events (2-min debounce, batch_size=100, max_concurrency=2) -> Lambda", "role": "event-driven incremental node upsert; does NOT appear to touch graph_edges (handler code and edges' own last-write timing both point to edges being nightly-only)"}
+      ],
+      "both_producers_coordinate_via": "shared branch-head marker warehouse/_branch_head.main.json (stamp_branch_head_marker / _provenance.py) + retry-with-backoff on Nessie CommitFailedException (HTTP 409) when both writers race the same commit",
+      "failure_watcher": "incremental_updater's commit-failure path (_publish_commit_failure) publishes to SNS topic opal-critical-surface-alerts on exhausted retries. MAJOR FINDING (see notification_chain_finding below): that topic's live SQS subscription has 477 unconsumed messages / 0 Lambda event-source-mappings -- effectively a dead consumer as of this census. derive_runner's own ECS-task-level crash/failure watcher NOT located (disclosed unverified, not asserted absent)."
+    },
+    {
+      "table": "graph_edges",
+      "namespace": "globgrph",
+      "physical_dir": "warehouse/globgrph/graph_edges_6629328d-a582-46d2-80bc-5059de1a77ce/",
+      "s3_key_count": 408,
+      "format_version": 2,
+      "column_count": 6,
+      "columns": ["src_id:string", "dst_id:string", "edge_type:string", "layer:string", "snapshot_ts:long", "props:string"],
+      "partitioned": false,
+      "metadata_snapshots_listed": 1,
+      "last_write": "2026-07-24T02:08:58Z",
+      "producers": [
+        {"name": "derive_runner.py", "mechanism": "ECS Fargate task, full overwrite", "trigger": "EventBridge cron(0 2 * * ? *) 02:00 UTC daily", "role": "sole confirmed producer -- last-write timing (02:08Z, ~8min after the 02:00Z cron) matches ONLY the nightly job, with no later intraday advance the way graph_nodes shows; incremental_updater's own handler code emphasizes graph_nodes specifically"}
+      ],
+      "failure_watcher": "same chain as graph_nodes (shared marker + SNS topic); same dead-consumer caveat applies"
+    },
+    {
+      "table": "graph_contracts",
+      "namespace": "globgrph",
+      "physical_dir": "warehouse/globgrph/graph_contracts_bccbceec-941a-424e-be43-edd7d751a1cf/",
+      "s3_key_count": 21,
+      "format_version": 2,
+      "column_count": 13,
+      "columns": ["contract_id:string", "surface:string", "artifact_keys:list<string>", "canonical_writer:string", "canonical_producer:string", "source_of_truth:string", "period_defs:map<string,string>", "models:list<string>", "forbidden_writers:list<string>", "enforcement:struct{iam_backstop,surface_gate,value_check}", "ratified_by:list<string>", "ratified_at:string", "active:boolean"],
+      "partitioned": false,
+      "last_write": "2026-06-16T18:53:51Z",
+      "verdict": "FROZEN-BY-DESIGN -- mechanism fully proven at source, NOT a defect",
+      "mechanism": "graph_contracts is NOT a continuously-running pipeline output. It is an append-only, human-governance-gated table that 'starts EMPTY' by design (contract_engine.py:29 comment) -- rows are loaded ONLY via an explicit, Andrew-ratified, CVO-authored, AE-deployed manual load process. Exactly ONE load event has ever occurred: NFRA_GCONTR.TO-2b on 2026-06-16 (deploy-completion ledger 20260616T155426Z_nfra-gcontr-to2b-benchmark-row-load_deploy_completion.md, CLOSED COMPLETE 1608Z same day), which loaded the Andrew-ratified benchmark-model-portfolios SEV1 contract row from contracts/graph_contracts.yaml (CVO-authored). That IS the table's last write.",
+      "why_frozen_since": "The owning project NFRA_GCONTR is Andrew-direct SUSPENDED INDEFINITELY as of 2026-07-20 ~14:35 ET (org/projects/NFRA_GCONTR.json, verbatim quoted): \"Pause GCONTR we are not addressing htat, it should be rendered as indefinite/suspended i do not want to fucking hear about it again.\" Pre-suspension history shows 2 SEV1 rows Andrew-signed and '3/5 rows loaded' per the project file, though only the single 06-16 deploy-completion ledger entry was found for this census (provenance of the other counted rows not resolved -- out of this lane's boundary to chase further; a COO/CTO project-history question, not a substrate-mechanism one).",
+      "failure_watcher": "N/A by design -- there is no scheduled producer to watch for non-occurrence. Per Andrew's directive this project is not to be resurfaced; this census records the mechanism as a factual finding only, takes no position on reopening it."
+    },
+    {
+      "table": "resource_summaries",
+      "namespace": "globgrph",
+      "physical_dir": "warehouse/globgrph/resource_summaries_b38ddc35-944f-4dd4-b801-120e96c6d4cd/",
+      "s3_key_count": 71,
+      "format_version": 2,
+      "column_count": 11,
+      "columns": ["arn:string", "node_type:string", "summary:string", "authored_by:string", "authored_at:string", "authored_date:string", "source_inputs:string", "summary_version:long", "marker_head:string", "ingested_at:long", "schema_version:string"],
+      "partitioned": true,
+      "partition_fields": ["node_type", "authored_date"],
+      "last_write": "2026-07-18T21:11:05Z",
+      "producer": {"name": "resource_summaries_store.py", "mechanism": "ECS Fargate task-def (resource_summaries_producer.tf), command 'python /app/resource_summaries_store.py --build-append'; reads graph_nodes+graph_edges DIRECTLY via pyiceberg RestCatalog to compute derived per-resource summaries", "trigger": "NO EventBridge schedule found -- Terraform comments explicitly describe this as a manually-invoked task ('manual run-task: the create + AC-2 seed + the append-only re-fire'); last exercised 2026-07-18, 6 days stale as of this census with no schedule to be 'overdue' against", "derivation_note": "this is itself a table DERIVED FROM the graph_nodes/graph_edges substrate, not an independent input -- relevant to Andrew's 'light tables derived from iceberg' framing (true for this table specifically)"},
+      "failure_watcher": "none identified -- no schedule means no non-occurrence to watch for; ad-hoc/manual cadence by apparent design"
+    },
+    {
+      "table": "code_heat_snap",
+      "namespace": "globgrph",
+      "physical_dir": "warehouse/globgrph/code_heat_snap_8b0bca7a-9078-4b8e-8868-ef04062d9952/",
+      "s3_key_count": 5,
+      "format_version": 2,
+      "column_count": 12,
+      "columns": ["snapshot_date:string", "computed_at:long", "producer_ref:string", "marker_head:string", "repo:string", "path:string", "graph_path:string", "heat_band:string", "heat_score:double", "tracked:boolean", "repo_head_sha:string", "last_commit_ts:long"],
+      "partitioned": true,
+      "partition_fields": ["snapshot_date"],
+      "last_write": "2026-07-16T15:28:06Z",
+      "producer": {"name": "snap_store.py (generic ingest) fed by code_heat_emit.py", "mechanism": "code_heat_emit.py writes the plain warehouse/code_heat/ parquet dump AND stages JSONL batches at warehouse/snap_ingest/pending/code_heat_snap/; snap_store.py drains pending -> Iceberg append -> done/, writes heartbeat at warehouse/snap_ingest/last_append/code_heat_snap.json", "trigger": "per Terraform comment (item2a.tf) code_heat now runs on DEV-BOX CADENCE (manual, reverted from an in-container Fargate flag 2026-07-16 per CTO TO-2 ruling, since code_heat shells git against workspace+portal repos the Fargate container cannot resolve) -- NOT an automated AWS-side schedule"},
+      "failure_watcher": "snap_store.py's own comment names warehouse/snap_ingest/last_append/{surface}.json as 'the key the freshness_alarm registry reads'. infra/aws/globgrph/freshness_alarm/lambda_function.py is a registry-driven (WATCH_TARGETS/PARITY_TARGETS env vars) object-age + parity-drift watcher -- COULD NOT VERIFY whether its live target list actually includes this surface (function name guess for get-function-configuration did not resolve; its owning .tf resource was not located under an obvious name in infra/aws/terraform/globgrph/*.tf in the time available). Disclosed as could-not-verify, not asserted either way.",
+      "staleness_note": "8 days stale as of 2026-07-24 census date; consistent with a manual/dev-box cadence rather than a broken automated one, but not independently confirmed"
+    },
+    {
+      "table": "cse",
+      "namespace": "globgrph",
+      "physical_dir": "warehouse/globgrph/cse_b557721f-8b81-4ec2-9289-fe5f44c3f272/",
+      "s3_key_count": 149,
+      "format_version": 2,
+      "column_count": 24,
+      "columns_summary": "event/provenance schema: source, event_date, event_id, schema_version, verb, subject_etype, subject_ref, marker_head, producer_ref, compiler_id, confidence, actor, run_id, prov_source/locus/recognizer, ingested_at, + 6 embedded-JSON payload columns (producer_json, compiler_json, transformation_json, provenance_json, qualifiers_json, execution_meta_json, head_json)",
+      "partitioned": true,
+      "partition_fields": ["source", "event_date"],
+      "last_write": "2026-07-24T03:30:53Z",
+      "producer": {"name": "cse_store.py / cse_emit_*.py family (cse_emit_agent, cse_emit_deploy, cse_emit_frontend_coevolution, cse_emit_graphhead, cse_emit_promote, cse_producers_nightly.py)", "mechanism": "own dedicated tracking keys warehouse/cse_ingest/{last_append.json,last_run.json} -- a SEPARATE tracking convention from the generic snap_ingest/ family, NOT one of snap_store.py's surfaces", "trigger": "EventBridge cron(30 3 * * ? *) = 03:30 UTC daily (cse_producer.tf), ENABLED. Last write 03:30:53Z is 53 seconds after the scheduled fire -- FRESH, healthy, on-cadence."},
+      "failure_watcher": "not separately confirmed this census pass; cse_ingest/{last_append,last_run}.json look structurally positioned to serve the same freshness-registry role snap_ingest does for the _snap family, but this was not verified against freshness_alarm's live config"
+    },
+    {
+      "table": "cse_test",
+      "namespace": "globgrph",
+      "anomaly": "TWO physically distinct Iceberg table instances both named cse_test exist simultaneously",
+      "instances": [
+        {"physical_dir": "warehouse/globgrph/cse_test_24458e6c-667c-4e85-ba44-33751795e182/", "s3_key_count": 57, "last_write": "2026-07-08T15:51:17Z"},
+        {"physical_dir": "warehouse/globgrph/cse_test_bb57a916-76de-454d-a71e-932dc173620e/", "s3_key_count": 13, "last_write": "2026-07-08T01:37:22Z"}
+      ],
+      "column_count": 24,
+      "columns_note": "identical schema to cse (same 24-column event/provenance shape)",
+      "assessment": "both instances date to 2026-07-08, same day as the cse-seed/ synthetic test fixtures (cvo_probe_overrides.json, cvo_synthetic_null.jsonl, cvo_synthetic_positive.jsonl, cse_test_baseline_v03.jsonl -- all 07-07/07-08). Plausible read: a table drop+recreate during test-harness setup left an orphaned prior physical location whose Nessie ref no longer resolves to it, but this was NOT independently confirmed -- doing so needs a Nessie-native ref/table lookup (VPC-internal REST catalog, unreachable this session per CTO~Z~C's heads-up). COULD-NOT-VERIFY, flagged not resolved.",
+      "producer": "test/seed harness, not a production cadence -- not the same as cse's live 03:30Z schedule",
+      "failure_watcher": "none applicable -- test fixture, not a monitored production table"
+    },
+    {
+      "table": "fedobs_coevolution_snap",
+      "namespace": "globgrph",
+      "physical_dir": "warehouse/globgrph/fedobs_coevolution_snap_499558ba-0181-42ab-a008-93a518692299/",
+      "s3_key_count": 5,
+      "format_version": 2,
+      "column_count": 9,
+      "columns": ["snapshot_date:string", "computed_at:long", "producer_ref:string", "marker_head:string", "subject_a:string", "subject_b:string", "co_sessions:long", "producers_json:string", "sessions_json:string"],
+      "partitioned": true,
+      "partition_fields": ["snapshot_date"],
+      "last_write": "2026-07-17T17:43:21Z",
+      "producer": {"name": "snap_store.py fed by fedobs/fedobs_observe.py + fedobs_emit.py", "trigger": "fedobs_producer.tf EventBridge cron(30 4 * * ? *) = 04:30 UTC daily -- but last write (07-17T17:43Z, mid-afternoon) does NOT line up with a 04:30 UTC fire time, suggesting this run was a manual/ad-hoc trigger rather than the scheduled one, or the scheduled runs have not been landing. NOT independently reconciled against the full EventBridge/CodeBuild run history for this rule (out of time budget this pass)."},
+      "failure_watcher": "same snap_ingest/last_append/{surface}.json + freshness_alarm registry pattern as code_heat_snap; same could-not-verify caveat on live target-list coverage",
+      "staleness_note": "7 days stale as of 2026-07-24"
+    },
+    {
+      "table": "fedobs_coverage_snap",
+      "namespace": "globgrph",
+      "physical_dir": "warehouse/globgrph/fedobs_coverage_snap_a9637eab-f8d2-4421-847c-4a2ca27cdc86/",
+      "s3_key_count": 5,
+      "format_version": 2,
+      "column_count": 8,
+      "columns": ["snapshot_date:string", "computed_at:long", "producer_ref:string", "marker_head:string", "artifact_class:string", "total_cses:long", "untyped_low:long", "untyped_low_rate:double"],
+      "partitioned": true,
+      "partition_fields": ["snapshot_date"],
+      "last_write": "2026-07-16T15:28:07Z",
+      "producer": {"name": "snap_store.py fed by a fedobs coverage-observing script (fedobs_observe.py family)", "trigger": "same fedobs_producer.tf schedule as fedobs_coevolution_snap; same reconciliation gap noted there"},
+      "failure_watcher": "same snap_ingest/freshness_alarm pattern; same could-not-verify caveat",
+      "staleness_note": "8 days stale as of 2026-07-24"
+    },
+    {
+      "table": "ms_heat_snap",
+      "namespace": "globgrph",
+      "physical_dir": "warehouse/globgrph/ms_heat_snap_a1875ebc-9d80-4078-b8e7-19e6455265bd/",
+      "s3_key_count": 9,
+      "format_version": 2,
+      "column_count": 14,
+      "columns": ["snapshot_date:string", "computed_at:long", "producer_ref:string", "marker_head:string", "node_id:string", "path:string", "node_type:string", "age_days:double", "score:double", "band:string", "cluster:string", "size:long", "file_type:string", "owner_upn:string"],
+      "partitioned": true,
+      "partition_fields": ["snapshot_date"],
+      "last_write": "2026-07-17T18:11:09Z",
+      "producer": {"name": "snap_store.py fed by ms_cloud_extract.py (the M365/Microsoft doc-cloud extract fold, NFRA_MSGRAPH S2)", "mechanism": "ms_cloud_extract runs INSIDE the derive_runner.py nightly Fargate task (GLOBGRPH_MS_ENABLED=1 env var, item2a.tf) -- reads via MS_GATEWAY_BASE_URL=https://mcp.opalinvest.dev with a Secrets-Manager-injected bearer token, best-effort (a gateway/MS failure never fails the AWS derive; only a content/comms leak fails it closed)", "trigger": "riding the item2a.tf 02:00 UTC nightly derive_runner -- but last-write 07-17T18:11Z does not match a 02:00Z cadence either, similar ad-hoc-vs-scheduled reconciliation gap as the fedobs_snap tables"},
+      "failure_watcher": "same snap_ingest/freshness_alarm pattern; same could-not-verify caveat. NOTE: this is the surface owned by census lane ~C (M365) -- full characterization of ms_heat / the gateway is their boundary, not mine; this row is base-substrate-level only.",
+      "staleness_note": "7 days stale as of 2026-07-24"
+    }
+  ],
+  "iceberg_table_count_denominator": "11 physical table-directories found under warehouse/globgrph/ (10 distinct table names; cse_test has 2 physical instances). Denominator method: full paginated ListObjectsV2 over warehouse/ prefix (171,309 keys, single AWS-CLI-v2 auto-paginated call, no truncation observed), grouped by third path segment under warehouse/globgrph/, confirmed Iceberg-table status via presence of a metadata/ subdirectory containing *.metadata.json. This is a DIFFERENT (smaller, more precise) set than CTO~Z's first-pass table in the plan's section1, which listed code_heat/tool_activity/fedobs_obs_findings/fedobs_signals/axes_history/cse_ingest/snap_ingest/ms_heat as 'Iceberg obs/ontology layers' -- those are, per direct S3 inspection, PLAIN (non-Iceberg) parquet/JSON/JSONL object stores living as SIBLING top-level warehouse/<name>/ prefixes, not Iceberg tables. See plain_object_stores below.",
+  "plain_object_stores_not_iceberg": [
+    {"prefix": "warehouse/code_heat/", "content": "2 files: repo=ajb_workspace/code_heat.parquet, repo=portal/code_heat.parquet", "role": "point-in-time full parquet dump from code_heat_emit.py, sibling output to the code_heat_snap Iceberg series (same producer, two different output shapes)", "glue_registered": true, "glue_database": "globgrph"},
+    {"prefix": "warehouse/tool_activity/", "content": "5 files partitioned by source= (rail/rolling_log/rolling_log_summary/session_log/telemetry)", "role": "point-in-time parquet dump from tool_activity_emit.py; no _snap Iceberg twin found for this one", "glue_registered": true, "glue_database": "globgrph"},
+    {"prefix": "warehouse/fedobs_obs_findings/", "content": "5 files partitioned by observer= (COMPDRIFT/DEBTSCAN/GRAPHS-D8/LIVE-AWS/PIPESCRIPT)", "role": "plain parquet dump, Glue-registered as table name 'obs_findings' for Athena; distinct from the fedobs_*_snap Iceberg tables", "glue_registered": true, "glue_database": "globgrph"},
+    {"prefix": "warehouse/fedobs_signals/", "content": "3 keys: 2 script copies + observations/fedobs_observations.json", "role": "plain JSON, not Iceberg", "glue_registered": false},
+    {"prefix": "warehouse/axes_history/", "content": "3 JSONL row files under rows/", "role": "plain JSONL append log, not Iceberg", "glue_registered": false},
+    {"prefix": "warehouse/cse_ingest/", "content": "2 files: last_append.json, last_run.json", "role": "cse's OWN tracking/heartbeat convention (parallel to, but distinct from, snap_ingest's pending/done/last_append convention)", "glue_registered": false},
+    {"prefix": "warehouse/cse_ingest_staging/", "content": "2 JSONL files (cse_frontend_coevolution, cse_promote)", "role": "staging inputs feeding the cse Iceberg table", "glue_registered": false},
+    {"prefix": "warehouse/ms_heat/", "content": "ms_heat_index.json + 3 dated snapshot JSONs", "role": "plain JSON tracking, feeds ms_heat_snap Iceberg table via snap_ingest staging", "glue_registered": false},
+    {"prefix": "warehouse/snap_ingest/", "content": "9 keys under done/, last_append/", "role": "THE GENERIC STAGING+HEARTBEAT MECHANISM for snap_store.py -- pending/{surface}/{ts}.jsonl (drained, none currently pending), done/{surface}/{ts}.jsonl (processed markers), last_append/{surface}.json (per-surface heartbeat read by freshness_alarm per snap_store.py's own comment). This is infrastructure, not a data table.", "glue_registered": false}
+  ],
+  "andrew_hypothesis_assessment": {
+    "quote": "Yeah the non-iceberg iceberg tables are probably just light tables and analytics derived from iceberg (Andrew, live chat, 2026-07-24)",
+    "assessment": "PARTIALLY confirmed, refined at the mechanism level (not a single clean lineage, so the plain characterization needed sharpening rather than a flat yes/no)",
+    "true_for": "resource_summaries (a true Iceberg table, but itself computed FROM graph_nodes/graph_edges -- genuinely light+derived-from-Iceberg). The plain code_heat/ and tool_activity/ parquet dumps ARE lighter-weight sibling outputs of the same emit scripts that also feed the heavier _snap Iceberg series -- so 'light table alongside a heavier Iceberg one' is directionally right for that pair.",
+    "not_quite_for": "fedobs_obs_findings, fedobs_signals, axes_history, cse_ingest -- these are independent object stores with NO Iceberg twin found; they are not derived FROM Iceberg content, they are either upstream staging inputs (feed INTO an Iceberg table) or standalone plain stores serving a different purpose (Athena querying, tracking heartbeats). Not 'analytics derived from Iceberg' in the downstream sense.",
+    "supports_andrew_second_point": "the genuinely mixed, inconsistently-conventioned pattern here (some plain stores have an Iceberg twin, some don't; some are Glue-registered, some aren't; naming doesn't disambiguate purpose) is itself the concrete evidence for Andrew's manifest-cleanliness directive below."
+  },
+  "andrew_directive_terraform_clean_manifest": {
+    "quote": "it is a good finding in the sense that we should make sure to manifest our resources cleanly so it is very obvious what is where and what purpose the resource has. All of them should be terraformed appropriately as well. (Andrew, live chat, 2026-07-24)",
+    "terraform_coverage_found": "infra/aws/terraform/globgrph/ contains dedicated .tf files for MOST producers: item2a.tf (derive_runner), item2b.tf (incremental_updater), stitch-produce.tf, cse_producer.tf, fedobs_producer.tf, fedobs_glue.tf, tool_activity.tf, glue_code_heat.tf, resource_summaries_producer.tf, comp_learns_producer.tf, nessie.tf, trino.tf, derive-build.tf, item2c_surface_alarm.tf, item2e_served_write_trail.tf, d4f1_request_alarm.tf, iam.tf, main.tf.",
+    "gaps_observed": "derive-build.tf has no trigger configuration found (no schedule_expression, no GH webhook/filter_group, no matching .github/workflows/*derive* file) -- appears to be manual-invoke-only by construction, which is consistent but should be an explicit, documented choice rather than an absence noticed only by a census. The plain object-store prefixes (fedobs_signals, axes_history, cse_ingest tracking keys, ms_heat plain JSON) have NO corresponding Terraform resource that declares their PURPOSE as distinct from their sibling Iceberg tables -- they exist because a script happens to s3.put_object() there, not because an infrastructure definition says 'this key exists and here is why'. This is exactly the class of resource-purpose ambiguity Andrew is flagging."
+  },
+  "nessie_refs": {
+    "total": 46,
+    "denominator_method": "aws dynamodb scan --table-name opal-globgrph-nessie-_refs (46 items returned, ScannedCount==Count==46, no LastEvaluatedKey -- exhaustive single-page scan, no pagination needed)",
+    "breakdown": {
+      "branches": ["refs/heads/main"],
+      "tags": "43 daily audit-baseline tags, refs/tags/audit-baseline-YYYY-MM-DD, one per derive_runner.py nightly full-derive success (Step 3: 'Nessie tag: audit-baseline-{YYYY-MM-DD} on the main branch HEAD'). Date range 2026-06-10 through 2026-07-24.",
+      "internal_bookkeeping": [":int/repo", ":int/refs"],
+      "gap_observed": "2026-06-13 and 2026-06-14 have no audit-baseline tag (sequence jumps 06-12 -> 06-15) -- a 2-day gap in the daily tag series, not further investigated (early in the pipeline's life, plausibly pre-stabilization; stated as a fact, not a verdict)"
+    },
+    "nessie_rest_catalog_reachability": "COULD NOT VERIFY branch/snapshot-level detail beyond ref names -- the Nessie REST catalog (http://nessie.opal-globgrph.local:19120, ECS-Fargate-hosted, ~Fargate task per comp_aws_cli.py:790) is VPC-internal and unreachable from this local agent session (confirmed via CTO~Z relay of lane ~C's finding). The DynamoDB _refs/_objs tables (opal-globgrph-nessie-_refs: 46 items / opal-globgrph-nessie-_objs: 55,787 items, 74.4MB) are the reachable proxy used for this census; S3 warehouse metadata.json files are the reachable proxy for per-table schema/snapshot detail. This boundary should be read into every 'could not verify' note in this document that touches Nessie-native semantics."
+  },
+  "incremental_updater_lambda": {
+    "function_name": "opal-globgrph-incremental-updater",
+    "runtime": "python3.12, 512MB, 180s timeout, in-VPC (reaches Nessie via Cloud Map private DNS nessie.opal-globgrph.local:19120)",
+    "trigger_chain": "CloudTrail mutating-management events (readOnly=false MINUS CreateLogStream/CreateLogGroup/PutLogEvents/PutMetricData noise; scoped to s3/iam/lambda/ec2/dynamodb/events/sns/sqs/secretsmanager/kms/logs/cloudwatch/cloudfront/states) -> EventBridge rule opal-globgrph-cloudtrail-mgmt -> SQS opal-globgrph-incremental-events (1hr retention, DLQ after 3 receives) -> Lambda ESM (batch_size=100, maximum_batching_window=120s [2-min debounce], maximum_concurrency=2 [deliberately capped after a 2026-06-09/06-10 incident where uncapped concurrency produced a Nessie-commit race -> 298k DLQ pileup])",
+    "reads": "the CloudTrail event's resource ARN(s), maps ARN -> resource class, performs a BOUNDED re-derive (single-resource, not account-wide) for just the affected resource(s); detects delete events for propagation",
+    "writes": "graph_nodes Iceberg table only (per handler code: _ensure_graph_nodes_table, commit_batch targeting nodes) -- did NOT find evidence it also writes graph_edges; stamps the shared branch-head marker after a successful commit",
+    "failure_mode": {
+      "per_record": "individual CloudTrail-event processing failures are caught and logged (RECORD_FAIL) without failing the whole batch (function_response_types=[ReportBatchItemFailures]) -- a single bad event does not poison its siblings",
+      "poison_messages": "SQS redrive policy sends a message to the DLQ (opal-globgrph-incremental-events-dlq, 24hr retention) after 3 failed receives -- bounded blast radius",
+      "commit_conflicts": "Nessie CommitFailedException/CommitStateUnknownException retried with backoff inside commit_batch; on EXHAUSTED retries, _publish_commit_failure() explicitly SNS-publishes to opal-critical-surface-alerts",
+      "verdict": "this Lambda has the BEST-DESIGNED failure-handling of everything examined in this census -- DLQ + per-record isolation + retry/backoff + an explicit alert-on-exhaustion path. See notification_chain_finding for why the alert's practical delivery is nonetheless in question."
+    }
+  },
+  "stitch_graph_json_freeze": {
+    "verdict": "ACTIVE, CURRENTLY-BROKEN automated pipeline -- NOT a quietly-by-design freeze. Confirmed via live CodeBuild build history + CloudWatch logs, not inference.",
+    "s3_object": {"key": "stitch/stitch_graph.json", "last_modified": "2026-07-08T02:27:52Z", "size_bytes": 3171927, "marker_key": "stitch/stitch_marker.json", "marker_last_modified": "2026-07-08T02:27:55Z"},
+    "architecture": "2-leg hybrid (mirrors shared-infra/drift-producer.tf pattern): LEG-1 = GH-Action .github/workflows/stitch-source-push.yml (on push:CLOUD to specific paths, or workflow_dispatch) zips a repo source subset (portal/src + org/modules + infra/aws + .tools + all data/*/scripts/**/*.py) -> uploads s3://opal-313476888478-globgrph/stitch-source/source.zip. LEG-2 = EventBridge rule opal-stitch-produce-nightly (cron(0 3 * * ? *) = 03:00 UTC daily, ENABLED, confirmed live) -> CodeBuild project opal-stitch-produce, buildspec runs 'python3 infra/aws/globgrph/derive_stitch.py --out /tmp/stitch_graph.json' then builds a marker (sha256+git_sha+built_at) then uploads artifact-first/marker-last.",
+    "why_leg1_exists_separately": "portal/ is a bare git gitlink (mode 160000) with NO .gitmodules entry -- not a registered submodule -- so a normal single checkout leaves it empty; LEG-1's second explicit checkout step (pinned SHA, private-repo PAT) exists specifically to work around this.",
+    "codebuild_history_grounded": "aws codebuild list-builds-for-project + batch-get-builds: 20 builds total across the project's entire lifetime (2026-07-07 through 2026-07-24). ALL 20 ARE FAILED. Zero successful builds have EVER occurred. The 3 earliest (07-07, manual triggers per the rootcause log) and all 17 subsequent AUTOMATED NIGHTLY firings (07-08 through 07-24, one per day at 03:00:12Z matching the cron exactly) failed identically: 'Command did not exit successfully python3 infra/aws/globgrph/derive_stitch.py ... exit status 2' (COMMAND_EXECUTION_ERROR).",
+    "why_it_fails": "derive_stitch.py runs grain_sentinel.run_grain_sentinel() (AC-GRAIN.2 magnitude band [0.4x,2.5x] vs a certified baseline) as a hard gate BEFORE writing its output file; on failure it prints 'GRAIN_SENTINEL_FAIL -- refusing to emit grain-violating stitch graph' and returns exit code 2 WITHOUT reaching the write step. This is a deliberate, correctly-functioning refusal-to-publish, not a crash.",
+    "todays_live_grain_sentinel_output_2026-07-24": {
+      "source": "CloudWatch Logs /aws/codebuild/opal-stitch-produce, stream fab8c734-91b9-43bc-bae7-2bfc3e8eddff (build started 2026-07-24T03:00:12Z)",
+      "violations": [
+        {"node_type": "EXTERNAL_ENDPOINT", "count": 0, "baseline": 3, "ratio": "0.00x"},
+        {"node_type": "REACT_QUERY_KEY", "count": 0, "baseline": 32, "ratio": "0.00x"},
+        {"node_type": "PORTAL_COMPONENT", "count": 0, "baseline": 27, "ratio": "0.00x"},
+        {"node_type": "API_ROUTE", "count": 82, "baseline": 263, "ratio": "0.31x"},
+        {"node_type": "SQS_QUEUE", "count": 12, "baseline": 4, "ratio": "3.00x"},
+        {"node_type": "ECS_TASK_DEFINITION", "count": 7, "baseline": 2, "ratio": "3.50x"},
+        {"node_type": "SCHEDULE", "count": 10, "baseline": 3, "ratio": "3.33x"},
+        {"node_type": "IAM_USER", "count": 4, "baseline": 1, "ratio": "4.00x"}
+      ]
+    },
+    "root_cause_layer_1_zero_collapse": "REACT_QUERY_KEY=0, PORTAL_COMPONENT=0, API_ROUTE degraded -- IDENTICAL signature to the original 2026-07-07 root-cause finding (0.7.0_AE_CloudOps~B, session log stitch_produce_resume_l4_grainsentinel_rootcause.md): portal/src zips 0 entries because the checkout step could not resolve the unregistered gitlink. The workflow file ON DISK today already contains the fix (an explicit second checkout of Opal-Capital/portal, pinned SHA, gated on secrets.PORTAL_REPO_PAT) -- but stitch-source/source.zip's own LastModified is 2026-07-07T13:46:19Z, UNCHANGED for 17 days, meaning the fix has never actually produced a fresh source zip.",
+    "leg1_is_actively_failing_not_dormant": "gh run list --workflow stitch-source-push.yml shows the workflow HAS been firing repeatedly (15 runs on 2026-07-24 alone, presumably triggered by this census's own commits to trigger-path files), with conclusion=failure on every single one. Combined with the unchanged source.zip timestamp, the most likely explanation is that the fix's required secrets.PORTAL_REPO_PAT was never actually provisioned as a repository secret, so the new portal-checkout step fails and the job never reaches the zip/upload step. NOT independently confirmed (repo secrets are never readable, even to confirm mere presence, without gh CLI secret-list permission which was not exercised this pass) -- stated as the best-grounded inference, not a source-confirmed fact.",
+    "root_cause_layer_2_magnitude_drift": "SQS_QUEUE (3.00x), ECS_TASK_DEFINITION (3.50x), SCHEDULE (3.33x), IAM_USER (4.00x) are a SEPARATE, additive failure layer -- most plausibly genuine estate growth (more real queues/tasks/schedules/users have been created since grain_baseline.json was last calibrated) outrunning a baseline that has not been refreshed, rather than a data-quality defect. Not independently confirmed either way; both causes must be fixed for the gate to pass even if layer 1 is resolved.",
+    "failure_watcher": "NONE. aws cloudwatch describe-alarms (both a --alarm-name-prefix opal-stitch scoped query and a full 51-alarm account-wide sweep filtered for stitch/globgrph/codebuild) returns ZERO alarms tied to this CodeBuild project. The EventBridge rule's only job is codebuild:StartBuild, which succeeds regardless of the triggered build's eventual outcome -- so a FAILED build status sits in CodeBuild history, unremarked, indefinitely. This IS the 'silent hook' CVO~Z's relayed framing named, now precisely mechanised: not a shell hook exiting 0, but a trigger layer (EventBridge, and separately GH Actions) whose own definition of success (a build/job was started) is structurally blind to whether the SUBSTANTIVE work inside it succeeded.",
+    "cvo_z_framing_confirmed_and_refined": "CVO~Z's relayed characterization (a grain sentinel that correctly tripped + refused to publish, plus a silent notification gap) is CONFIRMED as the correct high-level frame, and refined with exact mechanism + current numbers: the sentinel fires because of TWO distinct, additive causes (an incompletely-fixed 17-day-old portal-checkout defect, plus separate baseline-staleness drift on 4 unrelated node classes), and the silence spans BOTH the CodeBuild/EventBridge layer (zero alarms) AND, newly found this pass, the upstream GH Actions layer (15 failed runs today, apparently unnoticed)."
+  },
+  "notification_chain_finding": {
+    "topic": "arn:aws:sns:us-east-1:313476888478:opal-critical-surface-alerts",
+    "shared_by": "BOTH derive_runner.py's nightly critical-surface scan AND incremental_updater's commit-failure path publish here (item2c_surface_alarm.tf)",
+    "documented_history": "item2c_surface_alarm.tf's own comment records that as of a 2026-06-17 sweep this topic 'shipped with 0 confirmed subscribers, so a REAL SEV1/SEV2 critical-surface removal ... paged NOBODY' -- the documented fix was an email subscription to andrew@opalinvest.com requiring one-time click-confirmation, with an SMS subscription retained as a stopgap (explicitly noted in the same comment as NON-DELIVERING because the account's SNS SMS capability is in sandbox mode).",
+    "live_state_found_this_census": "aws sns list-subscriptions-by-topic returns exactly 2 live subscriptions: (1) SQS opal-critical-surface-alerts-coo, (2) SMS +17862617679. NO email subscription is currently present (neither confirmed nor pending) -- the documented primary fix does not appear to be live.",
+    "sqs_consumer_check": "aws sqs get-queue-attributes on opal-critical-surface-alerts-coo (created 2026-06-25T23:10:12Z) shows ApproximateNumberOfMessages=477, ApproximateNumberOfMessagesNotVisible=0 (nothing even in-flight). aws lambda list-event-source-mappings finds ZERO Lambda ESMs targeting this queue.",
+    "verdict": "477 messages have accumulated, entirely unconsumed, over 29 days, with no Lambda or other confirmed consumer found. Combined with the missing email subscription and the explicitly-non-delivering SMS subscription, THE ENTIRE SHARED CRITICAL-SURFACE-ALERT CHANNEL APPEARS TO BE EFFECTIVELY DEAD IN PRACTICE as of this census, despite being correctly wired at the publish end by both graph_nodes producers. This is a cross-cutting finding beyond just the stitch/graph_contracts freeze questions -- it directly qualifies this census's 'failure_watcher' answer for graph_nodes/graph_edges from 'a named watcher exists' to 'a named watcher is configured to publish, but its practical delivery to a human could not be confirmed and specific evidence (477 unconsumed messages, 0 consumers) suggests it currently is not reaching anyone.'",
+    "not_independently_confirmed": "whether the SQS queue is polled manually/ad-hoc by a COO session (rather than an always-on Lambda) was not ruled out -- only the absence of an automated ESM consumer was confirmed. If a human/agent periodically drains it by hand, the 477-count would still be consistent with infrequent manual checking rather than total dead-letter. Flagged as the honest limit of this finding."
+  },
+  "s3_prefix_roles": {
+    "warehouse/": "the Iceberg + plain-object warehouse root; see iceberg_tables and plain_object_stores_not_iceberg above",
+    "contracts/graph_contracts.yaml": "13,420 bytes, last-modified 2026-06-16T18:40:34Z -- the CVO-authored YAML source document that the one-time TO-2b loader read to populate the graph_contracts Iceberg table",
+    "stitch/": "stitch_graph.json (frozen artifact) + stitch_marker.json (its atomicity marker) -- see stitch_graph_json_freeze",
+    "producers/": "producers/graphuni/*.json (gold_compute.json, stitchers.json, storage_s3keys.json, storage_s3keys_phaseB.json) + producers/ts-semantic/*.json (portal_clusters.json, portal_full.json) -- last-modified 2026-06-17 through 2026-07-01. These read as one-off / spike-phase outputs from the NFRA_GRAPHUNI and NFRA_TSGRAPH research projects, NOT an actively-scheduled pipeline. NOT deeply characterized this pass (outside the Iceberg-substrate focus of this lane; a candidate for follow-up if a future pass needs it).",
+    "served/comp_learns_status.json": "25,786 bytes, last-modified 2026-07-24T04:01:06Z -- 1 minute after comp_learns_producer.tf's scheduled cron(0 4 * * ? *) 04:00 UTC fire, strongly suggesting this IS produced by that schedule (comp_learns_produce.py / comp_learns_status.py). FRESH/healthy as of census time.",
+    "snapshots/": "the nightly full-derive tarball archive from derive_runner.py Step 4 ('Snapshot archive: tarball -> s3://.../snapshots/'), one per day since 2026-06-08 (graph-{YYYYMMDD}[THHMMZ].tar.gz), plus a snapshots/latest.txt pointer consumed by derive_stitch.py's load_aws_layer(). Confirmed NOT exhaustively listed this pass (>15 objects, paginated result not fully drained) -- the date range and naming convention are grounded, the full count is not.",
+    "cse-seed/": "7 small JSONL/JSON files dated 2026-07-07/07-08 (cse_agent, cse_deploy, cse_seed, cse_test_baseline_v03, cvo_probe_overrides, cvo_synthetic_null, cvo_synthetic_positive) -- read as a one-time seed/test-fixture drop used to bootstrap and validate the cse ingest pipeline when it was being stood up; plausibly connected to the cse_test anomaly (two physical table instances, same dates).",
+    "code/snap_store.py": "single file, 22,253 bytes, last-modified 2026-07-17T17:40:16Z -- a staged deployment copy of the snap_store.py script; presumed to be the S3-staged source an ECS task or similar pulls and executes (distinct from the ECR-image pattern derive_runner.py uses). NOT independently confirmed which compute resource consumes this file.",
+    "build-source/derive-runner-source.zip": "301,435 bytes, last-modified 2026-07-19T01:15:10Z -- the source bundle for CodeBuild project globgrph_derive_build (derive-build.tf), which builds the opal-globgrph-derive-runner ECR image. No trigger configuration found for this CodeBuild project (no schedule_expression, no GH webhook) -- manual-invoke-only by construction."
+  },
+  "could_not_verify_summary": [
+    "Nessie REST catalog native branch/commit-graph detail beyond ref names (VPC-internal, unreachable this session)",
+    "whether incremental_updater Lambda ever writes graph_edges (only graph_nodes confirmed from handler code + timing)",
+    "freshness_alarm Lambda's live WATCH_TARGETS/PARITY_TARGETS content (function name unresolved via get-function-configuration; owning .tf resource not located by name search in the time available)",
+    "the cse_test dual-UUID anomaly's root cause (needs Nessie-native ref inspection, unreachable)",
+    "whether fedobs_coevolution_snap / fedobs_coverage_snap / ms_heat_snap's non-04:30Z-aligned last-write timestamps mean their schedules are broken, or those specific writes were manual/ad-hoc (not reconciled against full EventBridge invocation history for those rules)",
+    "whether the opal-critical-surface-alerts-coo SQS queue is drained by an occasional manual/human check rather than being fully dead (only the absence of an automated Lambda consumer was confirmed)",
+    "whether secrets.PORTAL_REPO_PAT is actually absent from the GH repo (repo secrets are never readable even for presence-confirmation without exercising gh CLI secret-list, not done this pass) -- inferred, not source-confirmed, from the unchanged source.zip timestamp + repeated GH Action failures",
+    "full exhaustive listing of snapshots/ (>15 objects; date range and pattern grounded, total count not)",
+    "NFRA_GCONTR's '3/5 rows loaded' claim beyond the single 06-16 deploy-completion ledger entry found (project-history provenance, not a substrate-mechanism question -- out of this lane's boundary)"
+  ]
+}
