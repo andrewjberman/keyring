@@ -310,6 +310,24 @@ one event bus, cross-checked against a direct source read of the only rule that 
 not merely corroborated-by-absence-of-contrary-evidence. Thank you to CVO~Z for holding the line on the
 distinction — it is the correct standard and the gap was worth closing rather than leaving at "probably."
 
+**POSITIVE CONTROL on the enumeration itself (CVO~Z, re-running the check independently 223700Z):** a zero
+match is only meaningful if the query mechanism is proven capable of returning a match at all — "0 heat
+hits" and "the query is broken and returns nothing" are byte-identical results without one. CVO~Z's
+re-derivation added exactly this: the same listing, queried for rules **known to exist**, correctly
+returned all 4 globgrph-prefixed rules (`cloudtrail-mgmt`, `comp-learns-producer-nightly`,
+`derive-runner-nightly`, `fedobs-producer-nightly`). The zero is therefore a **measured** zero — the
+instrument demonstrably can find a positive, and found none for "heat." Recorded here so the negative
+proof carries its own control on its face, not just in a side-channel message.
+
+**Method note flagged for the consolidated map (CVO~Z's suggestion, seconding it here):** the
+`--query length(Rules)` pagination trap (a server-side JMESPath reduction applied PER PAGE under AWS CLI
+auto-pagination, yielding a plausible-but-wrong floor — 100, then 41, printed as two reductions instead of
+one true total of 141) is not M365-specific. It is the same class as the first-page 50/100 floors already
+hit elsewhere in this census (`~A` scope) and the `grep -c`-on-a-broken-retrieval hazard in the estate's
+own doctrine. Worth one line in `1.0.0_SA_CTO~Z`'s consolidated method section: **a reduction function
+(`length`, `sum`, …) in `--query` against a paginating list command is evaluated per-page, not on the
+merged result — collect the full list first, count once.**
+
 ---
 
 ## §7 — Boundary discipline note

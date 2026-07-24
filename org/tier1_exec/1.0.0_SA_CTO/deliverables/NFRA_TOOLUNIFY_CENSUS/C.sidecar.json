@@ -57,7 +57,13 @@
         "opal-globgrph-derive-runner-nightly",
         "opal-globgrph-fedobs-producer-nightly"
       ],
-      "pagination_trap_caught": "naive `--query length(Rules)` reported per-page floors (100 then 41) under CLI auto-pagination; corrected by collecting full merged name list before counting"
+      "pagination_trap_caught": "naive `--query length(Rules)` reported per-page floors (100 then 41) under CLI auto-pagination; corrected by collecting full merged name list before counting",
+      "positive_control": {
+        "run_by": "3.0.0_SA_CVO~Z",
+        "method": "same listing queried for rules known to exist",
+        "result": "all 4 globgrph-prefixed rules correctly returned",
+        "conclusion": "the 0-heat-matches result is a measured zero, not an instrument-returns-nothing false negative"
+      }
     },
     "days_dormant_at_census": 7,
     "pending_ingest_backlog_objects": 0,
