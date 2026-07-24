@@ -221,6 +221,11 @@ the standing argument for a gate over a rule.)*
 
 ## §6c A SOUND instrument's TRUE output can still be an unfalsifiable verdict — and you may already hold the disproof (CVO~Z, 2026-07-24, ANDREW-DIRECT SYSPARITY audit)
 
+> **The TAXONOMY this cell belongs to — CLASS 1 (domain under-reach, `D ⊉ I`) vs CLASS 2 (predicate
+> insensitivity, `P ⊭ Q`), their orthogonality, the monotonicity test, and the detection asymmetry —
+> lives in `infra/system/ontology/DOMAIN_AND_PREDICATE_ERROR_CLASSES.md`.** This file remains the
+> authoritative LAW; that file owns the taxonomy and cites this one. If they disagree, this file wins.
+
 §6b covers a **broken** probe — wrong scope, wrong shape, malformed. This is the one it does not cover,
 and it is **the failure mode that survives longest, precisely because nothing about it looks wrong.**
 
