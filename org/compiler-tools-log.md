@@ -25640,3 +25640,87 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/DESIGN_d00_aua_basis_... | PASS |
 | 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier0/ledger/LD-0336.md org/tier0/reviews... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/deployment/EC2_CODE_DEPLOYMENT_STA... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff docs/deployment/EC2_CODE_DEPLOYMENT_STANDARD.md | VERDICT |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_REVAMP_GLOBAL_CO... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_REVAMP_GLOBAL_COUNT_CLOSEOUT.md org/projects/MDP... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/cot_bronze_inge... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/cot/scripts/bronze/cot_bronze_ingest.py data/cot/scripts/bronze/te... | VERDICT |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/MDPF_P1_CONSUMPTI... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/EVIDENCE_cot_snapshot... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/deployment/EC2_CODE_DEPLOYMENT_STA... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff docs/deployment/EC2_CODE_DEPLOYMENT_STANDARD.md | VERDICT |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/inf-nn... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/.open_deploys/inf-nna-excusals-stage-20260724.json o... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed data/cot/scripts/bronze/cot_bronze_ingest.py | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260724T1358Z_cot-retrynet-snapsh... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/AUDIT_d00b_d01_cert_b... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/INTENT_DENOMINATOR_SYNCHR... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md infra/system/ontolo... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-blast | comp-blast aum.ts | REFUSE |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-platinum | comp-platinum reverse aua_provenance | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_REVAMP_GLOBAL_CO... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-transform | comp-transform schema-check ModelPortfolios | UNKNOWN |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_REVAMP_GLOBAL_COUNT_CLOSEOUT.md | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-cache | comp-cache | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/MDPF_3FIRMS.GC-W45... | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0337.md --file org/... | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0337.md org/tier0/reviews/RV-0055.md | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform~A/task_orders/MDPF_3FIRMS.GC-W... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pipescript | comp-pipescript io dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/MDPF_3FIRMS.GC-W45... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/inf-bronze-runner/ac5-pro... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/inf-bronze-runner/ac5-probe.sh | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/ARCHETYPAL_LEARNI... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/ARCHETYPAL_LEARNING_LOOP.md infra/system/ontology... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/MDPF_3FIRMS.GC-W7.... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/A_VALUE_MUST_CARRY_ITS_CL... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md | PASS |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ModelPortfolios | UNKNOWN |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check FactorTilts | PASS |
+| 2026-07-24Z | 4.0.0_SA_CRO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/scripts/akp... | PASS |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check SelectionTab | UNKNOWN |
+| 2026-07-24Z | 4.0.0_SA_CRO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/scripts/akpipe_harvest.py | PASS |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check HoldingsTab | PASS |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check AccountDistributionChart | UNKNOWN |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check AUMGrowthMetrics | UNKNOWN |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/RV-0055_CVO_independent_accept... | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0055.md | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/reviews/RV-0055.md | PASS |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check | VERDICT |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check | VERDICT |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check selfcheck | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_SENDGUARD_SPEC.md | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_SENDGUARD_SPEC.md | PASS |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/api/endpoints/aum.ts --file ... | VERDICT |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/ref/TASK_ORDER_PROTOCOL.md --file o... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/ref/TASK_ORDER_PROTOCOL.md org/tier2_senior/0.4.0_DE_ClientPlatform... | PASS |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/api/endpoints/aum.ts --file ... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_SENDGUARD_SPEC.md | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_SENDGUARD_SPEC.md | PASS |
+| 2026-07-24Z | 4.0.0_SA_CRO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/4.0.0_SA_CRO/deliverable... | PASS |
+| 2026-07-24Z | 4.0.0_SA_CRO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_AKPIPE_LAMBDA_PACKAGE/REA... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/SHAPE_d_preguard_zero... | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0055.md | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/reviews/RV-0055.md | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/smartx/scripts/generate_smartx_tim... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff data/smartx/scripts/generate_smartx_timeseries_and_metrics.py infra/aws... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md --file org/XXX.md | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff CLAUDE.md org/XXX.md | VERDICT |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pipescript io | comp-pipescript io dim_mdpf_aggregate_aua_timeseries.py | PASS (gap: WRITES none-detected -- served key invisible to path extractor) |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-to | comp-to MDPF_3FIRMS.GC-W1 | OK |
+| 2026-07-24T1440Z | 0.6.2_AE_PartnerETL~A | comp-grep, comp-pipescript deployed, safe-commit x5, _export_has_data_rows census (172 objs), s3api list-object-versions | comp-grep CAUGHT MY OWN cross-axis error (found served_freshness_config.yaml:111 governs the SILVER leg, not bronze -- retracted a wrong correction to 0.7.0 before it propagated into a live config). GAP: comp-pipescript deployed defaults to the bd tree and cannot reach a cot-tree script (0 MATCH on a deployed script); no-arg sweep >120s. Gap re-confirmed: no comp-tool returns an S3 object BODY or VERSION HISTORY -- both load-bearing today. |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
