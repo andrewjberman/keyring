@@ -25844,3 +25844,19 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0338.md | PASS |
 | 2026-07-24Z | 4.0.0_SA_CRO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-24Z | 4.0.0_SA_CRO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/4.0.0_SA_CRO/logs/2026-07-24/a... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/GC-BF0_RC1_CVO_VERIFICATION_20... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/hand... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/handoffs/2026-07-24_1617Z.md | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/SENSOR_CONTRACT_P... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/SENSOR_CONTRACT_PLATFORM_OR_PATTERN.md org/module... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/boundary_report.py org/modules/graph/tes... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-residue | comp-residue check org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml --consumers infra/sys... | UNKNOWN |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/mdpf_gcw45_w4_ren... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~B | MDPF_3FIRMS.GC-BF0.puller-capability-assessment-for-targeted-backfill | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~B | MDPF_3FIRMS.GC-BF0.puller-capability-assessment-for-targeted-backfill | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS.GC-BF0_pu... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W2b | comp-grep | comp-grep account_distribution data/mdpf | PASS (12 matches/5 files; located dim_mdpf_account_distribution.py producer) |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W2b | comp-which | comp-which "which gold script writes gold/mdpf_revamp account_distribution.json" | ROUTED (tied top scores flagged; fell through to comp-grep) |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform~A/de... | PASS |
