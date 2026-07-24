@@ -146,3 +146,64 @@ CloudFront, and under what policy?"* — the question that decided where manifes
 answered it by reading `cloudfront-distribution.tf` plus the bucket-policy statement name by hand.
 `comp-routes trace` correctly declared itself blind here rather than guessing, which is the right
 behaviour, but the coverage gap is real and it is a security-adjacent question.
+
+---
+
+# ADDENDUM 1850Z-1905Z — the re-brief, and a fourth instrument failure of my own
+
+**Landed:** `7f9ece9df` (dedupe) · `efac7d6aa` (lineage) · `1efeffa50` (declare_input + stated
+denominator). Tests 72 -> **99**.
+
+## The governing objective changed mid-session
+Andrew ~1832Z: *"the entire point of all of this is migrating MDPF to the monolith
+opal-data-assets lineage, ENTIRELY... Is there any information that conflicts that or paths which
+are not coming from the monolith lineage?"* CTO's instruction for this lane (PRD `6b69efc57`):
+**record the LINEAGE of each input in provenance.** Done in the same session it arrived, because
+it is a field addition now and a rebuild later.
+
+Lineage is classified **from the bucket and prefix actually READ at run time, never from a name** —
+COO's sharpening is the reason: `mdpf-daily-trigger:535` still computes `all_fresh` under
+*"retained for log continuity"*, **a symbol that outlived its mechanism**, so under a migration
+"grep found the name" is evidence in neither direction.
+
+Hardened beyond the instruction: a key on `opal-data-assets` but **off the grammar** classifies
+`non_monolith` with the reason stated. *"It is in opal-data-assets"* and *"it is monolith lineage"*
+are different claims; collapsing them reports the migration complete early.
+
+## THE FOURTH FAILURE, and it is the same one the PRD exists to prevent
+The rollup, computed over roster-declared channel feeds, reported **`all_monolith: true`**.
+**Correct arithmetic. False impression.** None of the four confirmed non-monolith paths is a roster
+feed — M1 the BD freshness gate (*the path that caused the six-day freeze*), M2 the self-referential
+`opal-data-portal-v2` count import, M3 `opal-data-mdpf` code, M4 the `opal-data-inf` Door-6 trigger.
+**The field I had just built to expose them reported clean while all four were live.**
+
+Fixed two ways: the rollup **states its own denominator in the record**, and `declare_input()` lets a
+publisher pass its real reads into the same classifier. Verified by **positive control** — all four
+classify NON_MONOLITH *and* a real monolith path still classifies MONOLITH in the same run, so the
+classifier is shown to **discriminate** rather than to refuse everything.
+
+**Measured, denominator attached: 8 of 8 ROSTER-DECLARED silver feeds are on the monolith lineage.
+That is not "MDPF is on the monolith", and I asked CTO not to let it be relayed as such.**
+
+## `dedupe`, for the wiring lane
+`process_time.dedupe`. Their reasoning was exact: with a deterministic run_id, a broken stream
+delivering ONE event is byte-identical in the record to healthy convergence across forty. **I kept
+what I can measure apart from what I cannot** — `run_id_basis` is measured here; the counters
+cannot be, because the invocations that converge are exactly the ones that never write. They are
+caller-supplied and default to **null**, and the field states that **null means NOT INSTRUMENTED
+and must never be read as 1.** A plausible fabricated `1` would have made the field worse than absent.
+
+## What my CTO ruling-2 note gained
+COO supplied the argument I did not have: `opal-data-portal-v2` **is M2, a lineage being retired.**
+Colocating the manifest there would have written a new artifact — the §3.2 history, the one thing
+that must survive to show a multi-day freeze — **into a path scheduled for deletion.** The CDN
+reasoning was the weaker half of my own case.
+
+## Running tally of my own instruments that were green while wrong
+1. Mutants killed by the wrong assertion (2 rules reported green, both untested).
+2. A validator that would have **rejected a correct manifest** (lag is max-over-feeds; I recomputed
+   from the frontier pair — green only because every real channel's feeds happened to align).
+3. That fix silently **dropped an invariant** (two previously-dying mutants survived).
+4. A lineage rollup that was **arithmetically right and materially misleading** for want of a
+   denominator.
+**Every one was caught by a control failing. None by care.**
