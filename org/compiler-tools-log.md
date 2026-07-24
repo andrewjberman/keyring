@@ -26100,3 +26100,56 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
 | 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/logs/2026-0... | PASS |
 | 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/logs/2026-07-24/session_close_1515-2140Z_md... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/hand... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/handoffs/2026-07-24_1958Z.md | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/EVENTBRIDGE_RULES_VS_SCHEDULER... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check completeness | VERDICT |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_MONOCLEANUP_PRD.... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_MONOCLEANUP_PRD.md org/projects/MDPF_MONOCLEANUP... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.layer = 'ms' RETURN n.node_type, count(*) AS c OR... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_MONOCLEANUP_PRD.md | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_MONOCLEANUP_PRD.md | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_TOOLUNIFY_CENSUS/B.json o... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_TOOLUNIFY_CENSUS/B.json o... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-07-24/nfra_toolunify_cens... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/OPAL_SCHEDULE_AND_ALERTS_PREEM... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.node_type AS node_type, count(*) AS cnt ORDER BY cnt DESC | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_TOOLUNIFY_CENSUS/C.md org... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.layer='ms' RETURN count(*) AS ms_nodes | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n) WHERE n.node_type = 'ReactComponent' RETURN n.id, n.label, n... | FAIL |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n) WHERE n.node_type = 'Component' RETURN n.id, n.label, n.file... | FAIL |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu --schema | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type = 'ReactComponent' RETURN n.id, ... | FAIL |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type = 'Component' RETURN n.id, n.nam... | FAIL |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type = 'ReactComponent' RETURN n LIMIT 3 | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type = 'Component' RETURN n LIMIT 3 | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-07-24/nfra_toolunify_cens... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_TOOLUNIFY_CENSUS/C.md org... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoz_toolunify_D_heldback_SEAL... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam --help | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam stats | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam live --help | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam live | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-07-24/nfra_toolunify_cens... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type = 'IAM_POLICY' RETURN n.node_id,... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_TOOLUNIFY_CENSUS/C.md org... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type = 'IAM_POLICY' RETURN n.node_id | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type = 'IAM_POLICY' RETURN n.node_id,... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_TOOLUNIFY_CENSUS/A.json o... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | aws-cli (rail-checked) | live paginated headcounts: lambda/events/stepfunctions/sqs/s3api/dynamodb/iam list-* across NFRA_TOOLUNIFY census SS2.A | PASS | full-aggregate parse used throughout after catching the --query length()-per-page trap on Lambda; positive-controlled a 2nd way for SF/SQS/S3/DDB/EB |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
