@@ -331,10 +331,14 @@ marker (audited). Raw search is text-local and connection-blind — it misses co
 > `PASS` / `WAIVED` are safe; `ADVISORY` means read the WARNs. *A script with no validate config produces an
 > output that looks like a pass and asserts nothing.*
 
-> **`comp-surface-check` CANNOT BLOCK — read its output yourself.** It is invoked advisory-only from
-> `safe-commit`, so a commit proceeds even when it prints `CRITICAL ... SEV1`. **Silence from it is not a pass**,
-> and an unblocked commit is not a clearance. Run it by hand when touching model-portfolio / benchmark / ADVI
-> backend surfaces.
+> **`comp-surface-check` BLOCKS ON THE PORTAL SIDE — a `CRITICAL ... SEV1` is a STOP, not a note.** It sees
+> portal changes, returns **`rc=2 BLOCKED`**, and the **portal pre-commit hook REFUSES the commit**; bypass is an
+> audited `SURFACE_ACK` logged to `org/surface-check-ack-audit.log`, with portal CI as the non-bypassable
+> backstop. **Workspace-side, the `safe-commit` invocation is ADVISORY** and cannot block a workspace-only
+> commit — keep the two halves distinct. **Silence from it is not a pass**, and an unblocked *workspace* commit
+> is not a clearance. Run it by hand when touching model-portfolio / benchmark / ADVI backend surfaces.
+> *(CORRECTED 2026-07-24 — this said "CANNOT BLOCK". The LD-0273 blocking fix had landed and the text did not
+> follow, so it told agents a live gate was advisory. Exercised by 0.4.0_DE landing W-5.)*
 
 **Archetype tag.** Every substantive log entry carries a single-line `**archetype:** TAG` header after the
 title — one of `EXPLORE` / `TRACE` / `DIAGNOSE` / `VALIDATE` / `DEPLOY` / `IMPLEMENT` / `COORDINATE` /
