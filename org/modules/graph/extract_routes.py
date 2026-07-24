@@ -288,16 +288,22 @@ def _parse_cloudfront(workspace_root: Path) -> tuple[dict[str, CloudFrontOrigin]
         domain = domain_m.group(1)
         origin_path_m = re.search(r'origin_path\s*=\s*"([^"]+)"', block)
 
-        is_s3 = 's3_origin_config' in block
-        # The bucket is a property of the DOMAIN, not of which access mechanism the origin declares.
-        # This previously read `domain.split('.')[0] if is_s3`, where is_s3 tests for an
-        # `s3_origin_config` block -- the LEGACY OAI form. An OAC-fronted S3 origin carries no such
-        # block, so S3-opal-data-portal-v2-json (the MDPF origin) and S3-opal-data-assets both came
-        # back with an EMPTY bucket despite *.s3.us-east-1.amazonaws.com domains. A resolved S3 key
-        # without its bucket is under-specified, so comp-routes trace could not name a real location.
-        # NOTE: origin_type is deliberately NOT changed here -- it feeds cmd_stats' s3-vs-apigw split,
-        # cmd_auth_map's grouping and Route.cf_origin_type, and silently moving those numbers is a
-        # separate decision. That misclassification is a named residual (NFRA_TOOLARCH.ROUTES).
+        # WHAT AN ORIGIN *IS* COMES FROM ITS DOMAIN, NOT FROM HOW CLOUDFRONT AUTHENTICATES TO IT.
+        # This used to be `'s3_origin_config' in block` -- the LEGACY OAI form. An OAC-fronted S3
+        # origin declares only `origin_access_control_id`, so both OAC origins
+        # (S3-opal-data-portal-v2-json = the MDPF one, and S3-opal-data-assets) were typed
+        # "api_gateway" despite *.s3.us-east-1.amazonaws.com domains.
+        # Source-grounded: infra/aws/terraform/portal-auth/cloudfront-distribution.tf:169-172 @HEAD
+        # 2026-07-23 -- the block carries domain_name + origin_id + origin_access_control_id and no
+        # s3_origin_config.
+        #
+        # THIS WAS A FALSE-SECURE READING, not a cosmetic mistype (NFRA_TOOLARCH.MACHINEFLAG R1, ruled
+        # P1 by 1.0.0_SA_CTO~Z). cmd_auth_map groups by origin_type, so it reported /api/general/* and
+        # /api/general/json-tiered/* -- S3 origins behind an edge JWT validator -- under "EDGE JWT +
+        # API GW AUTHORIZER". An agent asking what protects an origin was told an API Gateway
+        # authorizer guards a path no authorizer guards. The wrongness pointed toward safety, and a
+        # reassuring answer does not get re-checked.
+        is_s3 = bool(_s3_bucket_from_domain(domain)) or 's3_origin_config' in block
         bucket_name = _s3_bucket_from_domain(domain)
 
         oai_m = re.search(r'origin_access_identity\s*=\s*"([^"]*)"', block)

@@ -285,6 +285,132 @@ def test_non_s3_domain_yields_no_bucket():
 
 
 # ---------------------------------------------------------------------------
+# LAYER 5b -- R1: the FALSE-SECURE auth-map reading (NFRA_TOOLARCH.MACHINEFLAG, ruled P1).
+#
+# cmd_auth_map groups by origin_type, and origin_type was derived from the presence of a LEGACY
+# `s3_origin_config` block. An OAC-fronted S3 origin declares only origin_access_control_id, so both
+# OAC origins were typed api_gateway and /api/general/* + /api/general/json-tiered/* were reported
+# under "EDGE JWT + API GW AUTHORIZER" -- an authorizer guarding a path no authorizer guards.
+#
+# The failure direction is what makes it P1: the wrongness pointed toward SAFETY. An agent asking what
+# protects an origin got a reassuring answer, and reassuring answers do not get re-checked.
+#
+# BOTH DIRECTIONS ARE BOUND, per the ruling. The second is the one nobody would think to write and the
+# one that would hide a real exposure: if the fix over-corrects and types everything s3, a genuinely
+# authorizer-protected origin silently loses its authorizer in the map.
+# ---------------------------------------------------------------------------
+
+def _auth_map(rt: RoutingTable) -> str:
+    orig = routes_cli._build_rt
+    routes_cli._build_rt = lambda rt=rt: rt
+    try:
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            routes_cli.cmd_auth_map(None)
+        return buf.getvalue()
+    finally:
+        routes_cli._build_rt = orig
+
+
+def _auth_section(out: str, header: str) -> str:
+    """The lines under one auth-map section header (sections are separated by a blank line)."""
+    after = out.split(header, 1)[1] if header in out else ""
+    return after.split("\n\n", 1)[0]
+
+
+def test_R1_direction_1_an_OAC_s3_origin_is_never_reported_as_authorizer_protected():
+    """DIRECTION 1 -- the reported defect. An OAC-fronted S3 origin behind an edge JWT belongs under
+    EDGE JWT ONLY, never under EDGE JWT + API GW AUTHORIZER. MUTANT (revert is_s3 to the
+    `s3_origin_config`-only test) puts it back in the authorizer section -> REDDENS."""
+    rt = _rt()
+    rt.behaviors = [CloudFrontBehavior(path_pattern="/api/general/*", origin_id="S3-data-json",
+                                       order=18, has_auth=True, has_router=True)]
+    rt.origins["S3-data-json"].origin_type = "s3"   # what the corrected parser now yields
+    out = _auth_map(rt)
+    assert "/api/general/*" in _auth_section(out, "EDGE JWT ONLY (no API GW authorizer):")
+    assert "/api/general/*" not in _auth_section(out, "EDGE JWT + API GW AUTHORIZER:"), (
+        "FALSE-SECURE: an OAC S3 origin must never be reported as guarded by an API GW authorizer"
+    )
+
+
+def test_R1_direction_2_a_real_api_gateway_origin_never_loses_its_authorizer():
+    """DIRECTION 2 -- THE ONE THAT WOULD HIDE A REAL EXPOSURE. A genuine API Gateway origin behind an
+    edge JWT must STILL report the authorizer. MUTANT (over-correct: type every origin s3, e.g.
+    `is_s3 = True`) silently moves it into EDGE JWT ONLY -> REDDENS. Without this direction, a fix for
+    direction 1 could strip a real authorizer from the map and nothing would notice."""
+    rt = _rt()
+    rt.origins["APIGW"] = CloudFrontOrigin(
+        origin_id="APIGW", domain_name="7k3ed8px20.execute-api.us-east-1.amazonaws.com",
+        origin_type="api_gateway",
+    )
+    rt.behaviors = [CloudFrontBehavior(path_pattern="/api/private/*", origin_id="APIGW",
+                                       order=20, has_auth=True)]
+    out = _auth_map(rt)
+    assert "/api/private/*" in _auth_section(out, "EDGE JWT + API GW AUTHORIZER:")
+    assert "/api/private/*" not in _auth_section(out, "EDGE JWT ONLY (no API GW authorizer):"), (
+        "an authorizer-protected origin must never be relabelled as edge-JWT-only"
+    )
+
+
+def test_R1_the_classifier_itself_discriminates_both_ways():
+    """The discriminator at the source, independent of the renderer. An S3 domain is s3 whether it is
+    fronted by OAI or OAC; an execute-api domain is never s3. MUTANT (`is_s3 = True` / `= False`)
+    reddens one line or the other -- no blanket answer survives."""
+    assert _s3_bucket_from_domain("opal-data-portal-v2.s3.us-east-1.amazonaws.com")  # OAC S3 -> s3
+    assert _s3_bucket_from_domain("opal-data-bd.s3.us-east-1.amazonaws.com")         # OAI S3 -> s3
+    assert not _s3_bucket_from_domain("7k3ed8px20.execute-api.us-east-1.amazonaws.com")
+    assert not _s3_bucket_from_domain("f61h681z9g.execute-api.us-east-1.amazonaws.com")
+
+
+def test_R1_real_config_the_PARSER_types_every_origin_by_its_domain():
+    """THE TEST THAT ACTUALLY GUARDS DIRECTION 2 -- and the one I initially failed to write.
+
+    My first direction-2 test built a fixture with origin_type="api_gateway" HARDCODED, so it exercised
+    the RENDERER and never the CLASSIFIER: the mutant `is_s3 = True` sailed through it. A hand-set
+    fixture field measures the author's expectation, not the parser. This runs the REAL parser over the
+    REAL config and asserts the classification itself, in both directions:
+      MUTANT `is_s3 = True`                    -> execute-api origins become "s3"  -> REDDENS (line 2)
+      MUTANT `is_s3 = 's3_origin_config' in b` -> OAC S3 origins become api_gateway -> REDDENS (line 1)
+    """
+    rt = build_routing_table(_WORKSPACE)
+    for oid, o in rt.origins.items():
+        if ".s3." in o.domain_name or o.domain_name.endswith(".s3.amazonaws.com"):
+            assert o.origin_type == "s3", f"{oid} ({o.domain_name}) is an S3 domain typed {o.origin_type!r}"
+            assert o.bucket_name, f"{oid} is an S3 origin with no bucket"
+        elif "execute-api" in o.domain_name:
+            assert o.origin_type == "api_gateway", (
+                f"{oid} ({o.domain_name}) is an API Gateway typed {o.origin_type!r} -- an over-correction "
+                f"that would strip a real authorizer from the auth map"
+            )
+            assert not o.bucket_name, f"{oid} is an API Gateway origin carrying a bucket name"
+
+
+def test_R1_bucket_derivation_is_not_split_on_first_dot():
+    """A dotted bucket name is where the domain-derived bucket and the old `split('.')[0]` expression
+    diverge. Over TODAY's origin set the two agree exactly (verified: 8/8 identical), which makes the
+    old expression an EQUIVALENT mutant rather than a caught one -- so this pins the difference
+    directly instead of relying on a mutant that cannot express it.
+    MUTANT (`domain.split('.')[0]`) returns "my" -> REDDENS."""
+    assert _s3_bucket_from_domain("my.dotted.bucket.s3.us-east-1.amazonaws.com") == "my.dotted.bucket"
+
+
+def test_R1_real_config_no_s3_origin_is_grouped_as_authorizer_protected():
+    """The REAL committed CloudFront config, which is where the false-secure reading actually lived.
+    Every path in the authorizer section must resolve to a non-S3 origin. This is the assertion that
+    fails if anyone reintroduces the OAI-only typing, and it is grain-correct: it checks the PROPERTY
+    (no S3 origin claims an authorizer) rather than pinning today's specific path list."""
+    rt = build_routing_table(_WORKSPACE)
+    out = _auth_map(rt)
+    section = _auth_section(out, "EDGE JWT + API GW AUTHORIZER:")
+    offenders = [oid for oid, o in rt.origins.items()
+                 if o.bucket_name and f"-> {oid}" in section]
+    assert not offenders, (
+        f"FALSE-SECURE: S3 origin(s) {offenders} reported under 'EDGE JWT + API GW AUTHORIZER' "
+        f"in the real config -- an authorizer claimed for a path no authorizer guards"
+    )
+
+
+# ---------------------------------------------------------------------------
 # LAYER 6 -- `trace --json <url>`: the outcome CLASS as a first-class enum.
 # Before this, the behavior branch returned before the JSON emitter, so --json silently produced
 # PROSE for every URL query -- a flag promising machine-readable output and returning human text.
