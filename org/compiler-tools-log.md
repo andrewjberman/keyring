@@ -25392,3 +25392,32 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | (none - with cause) | 4 PROD promotes v2.1.145-148 = pure portal-repo git ops per /prod-deploy (no estate/infra/IAM/gold surface), no comp trigger; verified on live primitives instead (gh run view --json, tag ^{commit} peel vs origin/PROD, merge-base --is-ancestor, explicit-SHA parity diffs, rail-checked byte-reads of served json/mdpf/*); ledger-format task grounded by executing deploy_ledger.py's own parser fns. GAP: comp-which has no "which script implements this lint/emitted phrase" route. | PASS |
 | 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-23Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/mdpf_final_render... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file scripts/ui-smoke.mjs | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff scripts/ui-smoke.mjs | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/scripts/ui-smoke.mjs | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp-learns-backlog.md | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file scripts/ui-smoke.mjs | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff scripts/ui-smoke.mjs | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/scripts/ui-smoke.mjs | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-23Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/mdpf_final_render... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLARCH_LATENCY_... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/INTENT_DENOMINATOR_SYNCHR... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-23Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/drive_log_20260723T2240Z.md | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-23Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_TOOLARCH.MACHINEFL... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes auth-map | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLARCH_LATENCY_... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file org/modules/gr... | PASS |
+| 2026-07-23Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-pulse | comp-pulse diff .tools/comp-which org/modules/graph/graph-call-manifest.yaml | VERDICT |
+- 2026-07-23 ~2150Z 0.4.0_DS_ClientPlatform: comp-grep (A2 producer located in one call); portal code pins scoped for the P1 read-path grounding (DE co-owns render half); no tool gaps this window.
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
