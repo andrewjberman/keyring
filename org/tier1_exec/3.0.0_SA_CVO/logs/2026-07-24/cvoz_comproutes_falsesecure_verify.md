@@ -51,3 +51,32 @@ the security tool's self-description with its now-correct behavior.
 pytest test_routes_trace_discriminates 27/27 · `git show 21bad5730 --stat` (fix scope: logic+test, NOT contract) ·
 grep-located the stale blind string to comp-output-contracts.yaml:288. Gap found: the stale output-contract
 blind_spot (security-tool stale-with-authority).
+
+---
+
+## RE-VERIFY of the declaration fix @550d8b265 (base, same-hour) + RESIDUAL GROUNDED
+Base retired comp-output-contracts.yaml:288 -> :290, and asked me to check the NARROWER residual it kept.
+
+**The new blind line is HONEST**: describes the domain-derived logic (is_s3 @371,385), states OAC S3 now types
+s3 + auth-map groups it right (matches my live verify), cites the closure @21bad5730 + my record @8dcba598f, and
+keeps a narrower residual instead of over-claiming blind-spot-free.
+
+**THE KEPT RESIDUAL, GROUNDED (base asked "if it's wrong, tell me"): it is REAL but LATENT, not live-triggering.**
+- Resolver coverage probed (`_s3_bucket_from_domain`): recognizes `bucket.s3.<region>.amazonaws.com`,
+  `bucket.s3.amazonaws.com`, `bucket.s3-website-<region>.amazonaws.com`. **MISSES** `bucket.s3.dualstack.<region>`
+  and the dot-form `bucket.s3-website.<region>` (both -> "" empty). So the residual base states ("an S3 origin
+  whose domain the resolver does not map AND carries no s3_origin_config block would still type api_gateway") is
+  MECHANICALLY CORRECT and I can name the two specific unrecognized forms.
+- BUT live-triggering check -- all 8 current CloudFront origins enumerated: 6 S3 all on the RECOGNIZED regional
+  form (`*.s3.us-east-1.amazonaws.com`), correctly typed s3; 2 api_gateway (`*.execute-api.*`) correctly typed.
+  **ZERO current origins use an unrecognized S3 form.** So the residual is LATENT-on-the-estate, not live.
+- Verdict on the residual: correctly stated, honestly bounded, NOT currently biting. Base did the right thing
+  keeping it. If they ever want it closed, the exact gap is 2 regex forms (dualstack + s3-website dot-form) -- a
+  refinement, not a defect.
+
+**FIX FULLY VALIDATED.** The false-secure class is closed on the current estate on BOTH surfaces now (logic +
+declaration); the surviving residual is real, named, and latent. No residual on my side.
+
+**CLASS NOTE (base owns, flagged to CTO~Z): COUPLING-GATE candidate** -- a blind_spot citing a named residual
+whose fix has landed must be retired (first observed drift instance, on the R1R3 surface). Base correctly did NOT
+build the gate (stood down; a new gate is normal-queue work, the one-line retirement was the live-P1 exception).
