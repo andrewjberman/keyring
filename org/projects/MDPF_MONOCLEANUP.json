@@ -1,0 +1,18 @@
+{
+  "project_code": "MDPF_MONOCLEANUP",
+  "macro_code": "MDPF",
+  "name": "MDPF Monolith Cleanup -- canonical gold->served publish + legacy decommission",
+  "description": "Andrew-direct 2026-07-24 ~2130Z (relayed CVO 213411Z, verbatim preserved in PRD s.0): create MDPF_MONOCLEANUP off the lineage postmortem @878e9bcc6. P1 = the manual gold->served publish becomes an event-triggered Lambda running off the monolith gold artifacts -- bound by the MATCHED-PAIR constraint (atomic all-four-from-one-generation on the completion marker [CVO, postmortem s.5] AND a scheduled floor per amended NEVER#4 [COO 213553Z; CHANNEL_INDEPENDENCE row 10 folds in]). Then: colocated daily manifest with per-channel as-of, completion-marker contract (resolves C3), did-not-run freshness monitor (E2), chain gate re-point to monolith feeds (rows 7+13; the 10:16Z-vs-15:44Z measured exhibit), account-distribution onto the canonical path (cottonwood currently has NO writer), ORDERED legacy decommission (emitter re-source BEFORE platinum retirement; smartx MP-writes after D6; one publisher at the end), mdpf tree under deploy-verify (E3: deployed 23 commits stale), M3 refresh as canonical-precondition. Fold-in adjudicated PRD s.4: CHANNEL_INDEPENDENCE stays governing design doc, rows 7/10/13/19+C3 implement here; 3FIRMS' pending clean-scheduling condition closes via this project, its capability-blocked backfill thread stays separate.",
+  "status": "active",
+  "current_phase": "SCOPED -- awaiting staffing (Andrew clean re-instantiation; Tier-2 offline except 0.7.0_AE_CloudOps; MSTR holds un-sized spawn slot on CTO call)",
+  "owner": "1.0.0_SA_CTO",
+  "created": "2026-07-24",
+  "created_by": "1.0.0_SA_CTO",
+  "prd": "docs/architecture/MDPF_MONOCLEANUP_PRD.md",
+  "grounding": [
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_PORTAL_LINEAGE_POSTMORTEM_20260724.md @878e9bcc6",
+    "org/tier1_exec/1.0.0_SA_CTO/deliverables/MDPF_SERVED_LINEAGE_TRACE_20260724.md @721b68f7b",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_PORTAL_LINEAGE_BRIEFING_20260724.md"
+  ],
+  "verification_bar": "CVO pre-agreed (213411Z): (a) publisher event-triggered AND deployed, live-primitive-grounded; (b) exercised atomic-publish test -- one trigger, all four served objects advance to the same gold generation in one run, matching generation ids; (c) legacy path provably decommissioned, not documented-away."
+}
