@@ -219,6 +219,46 @@ in Python that does not route through the canonical `git_bash()` resolver — is
 CLAUDE.md NEVER already exists in prose and was violated anyway by a careful agent under load, which is
 the standing argument for a gate over a rule.)*
 
+## §6c A SOUND instrument's TRUE output can still be an unfalsifiable verdict — and you may already hold the disproof (CVO~Z, 2026-07-24, ANDREW-DIRECT SYSPARITY audit)
+
+§6b covers a **broken** probe — wrong scope, wrong shape, malformed. This is the one it does not cover,
+and it is **the failure mode that survives longest, precisely because nothing about it looks wrong.**
+
+`system_parity` reported **100%, correctly**, for ~30 consecutive ticks. The instrument was sound. Its
+output was true. `07_maturity.md:6`'s assertion that the v1 archetype layer *is represented in /system*
+was — and remains — **a true statement.** And the verdict it produced was still unfalsifiable on the
+axis that mattered, because ONTOLOGY2 had landed **additively**: the v1 strings the units grep for were
+never removed, so the check *could not fail* no matter how far `/system` fell behind the rule bank.
+
+>> **THE STING, AND IT IS THE GENERALIZABLE PART: THE VERIFIER HAD ALREADY PROVEN THE PROPERTY THAT
+BLINDED ITS OWN INSTRUMENT — IN WRITING.** CVO~Z's ONTOLOGY2 P1 verify (`@7d713349e`) states it exactly:
+*"every `binds_up` array a SUPERSET (no member removed anywhere); roles identical; role_priority
+identical; variance labels identical."* That **is** the additivity that defeats a presence-check. The
+disproof of its own standing green verdict was sitting in its own prior record for thirty ticks. **Not
+missing data — a missing INFERENCE over data already produced and written down.** <<
+
+**Why this outlives the §6b failures.** A malformed probe eventually returns an *implausible* number —
+a 0 on a populated directory, a byte-identical diff — and implausibility is a trigger. A sound probe
+returning a true-but-incomplete verdict returns a **plausible** number, forever. There is no anomaly to
+notice. It is caught only by an inference nobody is scheduled to make.
+
+**The operational rule, and it is cheap because it runs on evidence you already have:**
+> **WHEN YOU ESTABLISH A STRUCTURAL PROPERTY, ASK WHAT INSTRUMENT THAT PROPERTY BLINDS.**
+> *Additivity* blinds presence-checks. *Supersetness* blinds membership checks. *Idempotence* blinds
+> run-count checks. *Monotonicity* blinds threshold checks. Proving the property and trusting the
+> instrument are the two halves nobody puts together.
+
+And the sharper self-directed form: the question is not *"is there evidence against my standing
+verdict?"* — that invites a search of the world. It is **"have I already PRODUCED evidence against my
+standing verdict and failed to connect it?"** — which is a search of your own outputs, bounded, and
+free. *A verdict you have held for thirty ticks deserves that search precisely because nothing has gone
+wrong.*
+
+**What caught it here was none of the above:** it was **Andrew asking what the number was *of*.** The
+one question the whole doctrine turns on, asked by the one person standing outside the instrument. That
+is not an argument for relying on him — it is the argument for scheduling the inference, because the
+estate cannot depend on an outside observer noticing a plausible number is hollow.
+
 ## §7 The generalized PROCESS (Andrew's ask, answered)
 
 **To synchronize intent with denominator — at any layer, for any assertion:**
