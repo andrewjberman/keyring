@@ -1,0 +1,166 @@
+{
+  "lane": "2.B",
+  "author": "0.8.0_AE_CloudComp~B",
+  "date": "2026-07-24",
+  "vintage": {
+    "workspace_head_full": "9da59d7cede73ecb0509e14ac347142dedc31047",
+    "workspace_head_short": "9da59d7ced",
+    "measured_at_utc": "2026-07-24T22:07:21Z"
+  },
+  "graph_json": {
+    "path": ".comp-graph/graph.json",
+    "builder": "org/modules/graph/trace_graph.py",
+    "built_at_epoch": 1784925049.4177988,
+    "built_at_utc": "2026-07-24T20:30:49Z",
+    "file_mtime_local": "2026-07-24T16:31:40.9915525-04:00",
+    "num_nodes": 2255,
+    "num_edges": 2947,
+    "node_type_counts": {
+      "GOLD_SCRIPT": 1365,
+      "LAMBDA": 333,
+      "S3_ARTIFACT": 321,
+      "ENDPOINT": 138,
+      "EVENTBRIDGE": 63,
+      "COMPONENT": 24,
+      "STATE_MACHINE": 1,
+      "SQS_QUEUE": 5,
+      "SNS_TOPIC": 1,
+      "S3_BUCKET": 4
+    },
+    "node_schema_keys_observed_exhaustive": [
+      "node_type", "function_name", "source_sha", "label", "id", "file_path", "run_order", "metadata"
+    ],
+    "node_schema_denominator": "2255/2255 (exhaustive, not sampled)",
+    "git_derived_fields_present": false,
+    "portal_prefixed_nodes": 162,
+    "is_working_tree_scan": true,
+    "is_committed_snapshot": false,
+    "self_heals_on_drift": true,
+    "self_heal_source": "org/modules/graph/cli.py:_get_graph (lines ~39-64)",
+    "workspace_dirty_files_this_vintage": 207
+  },
+  "source_sha": {
+    "definition": "sha256(raw file bytes).hexdigest()[:12]  (or deterministic aggregate over a directory's tracked source files)",
+    "computed_by": "org/modules/graph/trace_graph.py:_compute_file_sha / _compute_dir_sha / _compute_path_sha",
+    "is_git_blob_hash": false,
+    "git_blob_hash_definition": "sha1('blob ' + len(content) + '\\0' + content)  [or sha256 variant with same header convention]",
+    "confirmed_incompatible_format": "source_sha is 12 hex chars (truncated sha256); git hash-object output observed elsewhere in repo (surface_check_cli.py) is 40 hex chars (sha1) -- visibly different formats",
+    "only_consumer": "check_node_freshness (trace_graph.py:336-373)",
+    "consumer_compares": "index-time local hash vs current-read-time local hash (both working-tree, not committed state)",
+    "enables_local_vs_committed_drift_today": false,
+    "could_be_adapted": true,
+    "adaptation_note": "algorithm is git-independent; comparing source_sha to sha256(git show <ref>:<path>) would work, but nothing in the estate does this"
+  },
+  "git_ingestion_gap": {
+    "cto_z_negative_narrow_claim": "nothing ingests git commits into the cross-layer graph (graph.json / kuzu)",
+    "narrow_claim_verdict": "CONFIRMED",
+    "broad_claim": "nothing in the estate ingests git commit history",
+    "broad_claim_verdict": "REFUTED",
+    "refuting_artifact": {
+      "producer_files": ["org/modules/graph/nerves_traffic.py", "org/modules/graph/nerves_accrete.py"],
+      "persisted_output": "org/modules/graph/nerves-edges.json",
+      "authored_by": "1.0.0_SA_CTO~Z",
+      "authored_date": "2026-07-14",
+      "mechanism": "git log --since=<N>days --name-only -> decayed file-level CO_CHANGE edges",
+      "window_days": 35,
+      "half_life_days": 21.0,
+      "commits_scanned_this_vintage": 6688,
+      "commits_excluded_as_sweeps": 28,
+      "distinct_files_this_vintage": 5281,
+      "edges_at_min_support_3": 270,
+      "repo_scope": "workspace only (_WS-scoped git -C calls); never invoked against portal",
+      "is_merged_into_graph_json": false,
+      "shares_node_id_scheme_with_graph_json": false,
+      "has_commit_node_type": false,
+      "persists_per_commit_metadata": false
+    },
+    "grep_sweep": {
+      "pattern": "git log|git rev-list|rev-list|git show|subprocess.*git|GitPython|import git\\b|COMMIT_NODE|\"COMMIT\"|node_type.*COMMIT",
+      "scope": "org/modules/graph/**/*.py",
+      "files_matched": 26,
+      "graph_build_path_files_matched": 0,
+      "graph_build_path_files_checked": [
+        "trace_graph.py", "extract_s3.py", "extract_api.py", "extract_eventbridge.py",
+        "extract_lambda_routes.py", "extract_sfn.py", "extract_event_invoke.py",
+        "extract_pipeline.py", "extract_assets.py"
+      ]
+    }
+  },
+  "portal": {
+    "is_gitmodules_registered": false,
+    "gitmodules_only_registers": ["tools/analytics_dashboard"],
+    "gitlink_mode_in_parent_tree": "160000",
+    "git_modules_dir_exists_for_any_nested_repo": false,
+    "parent_pinned_sha": "343e7b2afd4b71f6bf5391250d2eab46ff587586",
+    "parent_pinned_commit_date": "2026-07-23T17:37:58-04:00",
+    "parent_pinned_commit_subject": "fix(P1, suspect-b CONFIRMED): the 147 tooltip value-anchor mis-scoped to Global...",
+    "portal_actual_head_sha": "d1ba89b9391d33302eae2d1e2d5df3f11ba7d814",
+    "commits_ahead_of_pinned_pointer": 5,
+    "parent_git_status_for_portal_path": " M portal",
+    "contrast_control": {
+      "tools_analytics_dashboard_gitlink_status": "clean (no drift) at same vintage",
+      "conclusion": "portal drift is a measured current-state fact, not a structural inevitability of gitlinks in this repo"
+    },
+    "current_branch": "DEV",
+    "remote": "https://github.com/Opal-Capital/portal.git",
+    "files_captured_in_graph_json": 162,
+    "extractors_explicitly_targeting_portal": [
+      "extract_routes.py", "extract_ts_source.py", "extract_api.py", "extract_iam.py",
+      "extract_pipeline.py", "extract_transforms.py", "extract_s3.py",
+      "extract_lambda_routes.py", "extract_eventbridge.py"
+    ],
+    "branch_identity_captured_in_graph_json": false,
+    "gitlink_drift_surfaced_by_any_comp_tool": false
+  },
+  "git_magnitude": {
+    "ajb_workspace": {
+      "current_branch": "CLOUD",
+      "head_commit_count": 19882,
+      "all_refs_commit_count": 23957,
+      "delta_off_head_branch": 4075,
+      "first_commit_utc_local": "2025-11-18T10:45:33-05:00",
+      "last_commit_this_vintage": "2026-07-24T17:58:59-04:00",
+      "local_branch_count": 15,
+      "local_branches": [
+        "CLOUD", "CLOUD_test", "COMP", "PROD", "backup-pre-strip-20260714",
+        "comp-learns/_stub", "rescue-stranded-r4a-cto-coo-cvo-20260723",
+        "rescue/stranded-coo-drivelog-1904", "rescue/stranded-cto-mdpf-cot-prd",
+        "rescue/stranded-cvoz-tick33", "scratch-r4-mutant-v2", "scty-mcpguard-deploy-build",
+        "smart-lint-backup-20260223_160750", "worktree-agent-a04df63f",
+        "worktree-agent-a8970f0ad7c4b95af"
+      ],
+      "remote_branches_notable": ["origin/CLOUD", "origin/COMP", "origin/PROD", "origin/main (=origin/HEAD)"]
+    },
+    "portal": {
+      "current_branch": "DEV",
+      "head_commit_count": 2110,
+      "all_refs_commit_count": 2178,
+      "delta_off_head_branch": 68,
+      "first_commit_utc_local": "2025-11-12T16:10:35-05:00",
+      "last_commit_this_vintage": "2026-07-24T11:40:41-04:00",
+      "local_branch_count": 3,
+      "local_branches": ["DEV", "PROD", "hotfix/global-monthly-axis-key"],
+      "remote_branches_notable": [
+        "origin/DEV", "origin/PROD", "origin/main (=origin/HEAD)",
+        "origin/backup-attribution-dense-view", "origin/demo/portal-optimized",
+        "origin/feature/advisor-intelligence", "origin/feature/bullish-bearish-layout",
+        "origin/hotfix/global-monthly-axis-key", "origin/testing"
+      ]
+    },
+    "combined_primary_branches": 21992,
+    "combined_all_refs": 26135
+  },
+  "sizing_open_decisions_not_designed": [
+    "two-repo identity: no shared commit-ID space exists between workspace and portal today",
+    "gitlink boundary stitch: workspace git log sees 'portal' only as an opaque pointer touch; unbuilt bridge to portal's own commit metadata",
+    "ref-scope policy: CLOUD+DEV only (~22K) vs all-refs both repos (~26K, +19% in workspace alone)",
+    "retention policy: nerves' 35-day decay precedent vs full-history durable grounding are different design goals",
+    "incremental wiring: one-time backfill vs ongoing trigger (hook/poll/on-demand) is a separate decision from the backfill itself",
+    "source_sha LOCAL-vs-COMMITTED adaptation is a small separable unit of work, distinct from commit-history ingestion"
+  ],
+  "could_not_verify": [
+    "exact trigger for the ~20:30:49Z graph.json rebuild observed this session (plausibly concurrent census activity; not traced to a specific caller)",
+    "whether any non-org/modules/graph location (e.g. a Lambda, an Iceberg producer) ingests git history -- out of this lane's BOUNDARY",
+    "commit-rate trend shape (only a two-endpoint average was computed, ~80/day over 250 days; not a fitted trend)"
+  ]
+}
