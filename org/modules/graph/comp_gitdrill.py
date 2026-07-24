@@ -53,11 +53,18 @@ def resolve_files(query: str) -> tuple[list[str], str]:
     # a graph node? resolve via the trace graph's file_path.
     try:
         sys.path.insert(0, _WS)
-        from org.modules.graph.trace_graph import TraceGraph  # noqa: PLC0415
         from pathlib import Path  # noqa: PLC0415
         cache = Path(_WS) / ".comp-graph" / "graph.json"
         if cache.exists():
-            g = TraceGraph.load(cache)
+            # NFRA_TOOLARCH.CANON (CVO~Z 2026-07-24): route through cli._get_graph(), which
+            # SHA-drift-checks every indexed source file and REBUILDS on drift. A bare
+            # TraceGraph.load() has NO vintage guard -- it resolves against whatever is on
+            # disk and cannot tell you it is stale. comp-gitdrill was one of two Group A
+            # tools reading .comp-graph/graph.json raw (the other: comp-surface-check scan).
+            # Cache-exists gate PRESERVED: the graph stays optional here, so a cold tree
+            # still falls through to the git-pathspec path rather than paying a full build.
+            from org.modules.graph.cli import _get_graph  # noqa: PLC0415
+            g = _get_graph()
             matches = g.find_node(q)
             files = []
             for n in matches:

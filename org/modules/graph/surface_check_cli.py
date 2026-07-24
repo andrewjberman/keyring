@@ -451,6 +451,22 @@ def cmd_scan(args) -> int:
     import json
     base_p = args.baseline or os.path.join(_WS, ".comp-graph", "baseline.json")
     cur_p = args.current or os.path.join(_WS, ".comp-graph", "graph.json")
+    # NFRA_TOOLARCH.CANON (CVO~Z 2026-07-24): the DEFAULT current-graph read had NO vintage
+    # guard -- a source-drifted .comp-graph/graph.json yielded a scan verdict with no warning,
+    # and the drift this scan exists to detect is exactly what a stale graph hides. Route the
+    # DEFAULT through cli._get_graph(), which SHA-drift-checks and rebuilds+saves the cache.
+    # An EXPLICIT --current is deliberately left alone: the caller named that snapshot on
+    # purpose (baseline comparisons, time-travel), and refreshing it would defeat the point.
+    # base_p is likewise untouched -- a baseline is MEANT to be frozen.
+    if not getattr(args, "current", None) and os.path.exists(cur_p):
+        try:
+            if _WS not in sys.path:
+                sys.path.insert(0, _WS)
+            from org.modules.graph.cli import _get_graph  # noqa: PLC0415
+            _get_graph()
+        except Exception as e:  # noqa: BLE001 -- never crash the nightly; disclose and continue
+            print(f"ADVISORY: comp-surface-check could not refresh the trace graph "
+                  f"({type(e).__name__}: {e}) -- scanning the on-disk graph AS-IS, vintage unverified.")
     try:
         surfaces = load_surfaces()
         base = _load_graph(base_p)
