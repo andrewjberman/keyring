@@ -25860,3 +25860,19 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W2b | comp-which | comp-which "which gold script writes gold/mdpf_revamp account_distribution.json" | ROUTED (tied top scores flagged; fell through to comp-grep) |
 | 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform~A/de... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~B | MDPF_3FIRMS.GC-BF0.puller-capability-assessment-for-targeted-backfill | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/lo... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~B | MDPF_3FIRMS.GC-BF0.puller-capability-assessment-for-targeted-backfill | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/logs/2026-07-24/B_gc_bf0_puller_ca... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/GC-BF0_RC1_CVO_VERIFICATION_20... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform~A/logs/2026-07-24/gc_w2b_serve... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform~A/deliverables/MDPF_3FIRMS_GC-... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~B | MDPF_3FIRMS.GC-BF0.puller-capability-assessment-for-targeted-backfill | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~B | MDPF_3FIRMS.GC-BF0.puller-capability-assessment-for-targeted-backfill | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS.GC-BF0_pu... | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0338.md | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0338.md | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~C | MDPF_3FIRMS.GC-BF1.49f-schwab-silver-rollforward-discrimination-first | comp-pipescript | comp-pipescript postdeps build_canonical_daily.py | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~C | MDPF_3FIRMS.GC-BF1.49f-schwab-silver-rollforward-discrimination-first | comp-pipescript | comp-pipescript io build_gold_holdings.py | FAIL |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~C | MDPF_3FIRMS.GC-BF1.49f-schwab-silver-rollforward-discrimination-first | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/49-schwab-conv/SKILL.md ... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~C | MDPF_3FIRMS.GC-BF1.49f-schwab-silver-rollforward-discrimination-first | comp-pulse | comp-pulse diff .claude/skills/49-schwab-conv/SKILL.md org/compiler-tools-log.md org/cr... | VERDICT |
