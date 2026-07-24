@@ -25733,3 +25733,43 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/DEPLOY_LEDGER_CONVENTIO... | PASS |
 | 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform~A/de... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/AUDIT_d00b_d01_cert_b... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-residue | comp-residue check org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml --consumers infra/sys... | UNKNOWN |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/ARCHETYPAL_LEARNI... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/ARCHETYPAL_LEARNING_LOOP.md infra/system/ontology... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-residue | comp-residue check org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml --consumers infra/sys... | UNKNOWN |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/residue_cli.py --file... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/residue_cli.py org/modules/graph/tests/test_residue_d... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/residue_cli.py org/modules/graph/tests/t... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_REVAMP_GLOBAL_CO... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_REVAMP_GLOBAL_COUNT_CLOSEOUT.md | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_00.po... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/black_diamond/scripts/gold/D_00.portal_aggregates.py data/black_di... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/MDPF_3FIRMS.GC-W7.... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/D_00.portal_aggregates.py | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/D_00.portal_aggregates.py | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform~A/task_orders/MDPF_3FIRMS.GC-W... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260724T1455Z_bd-d00-aua-basis-pr... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-residue | comp-residue check org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml --consumers infra/sys... | UNKNOWN |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-residue | comp-residue check org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml --consumers infra/sys... | UNKNOWN |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_3FIRMS_GC-W1_CVO_VERIFICA... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/MDPF_3FIRMS.GC-W45... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-residue | comp-residue check org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml --consumers infra/sys... | UNKNOWN |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-residue | comp-residue check org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml --consumers org/modul... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_REVAMP_GLOBAL_CO... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_REVAMP_GLOBAL_COUNT_CLOSEOUT.md | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-residue | comp-residue check org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml --consumers /c/Users/... | UNKNOWN |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | auto via safe-commit x3 (RV-0055 acceptance, addendum, GC-W1 verification) | PASS (no critical surface) |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff (risk-reflex, auto) -- denominator 1 file vs 1511 danger nodes | PASS (REFLEX CLEAN) |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | (none-other) | artifact-measurement verification, not estate search: s3api get-object explicit-Z + git show at pinned commit-ishes; no comp-tool models "what do these served bytes say" | N/A (reason stated, not blank) |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/ref/RAVC_PROTOCOL.md | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/ref/RAVC_PROTOCOL.md | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-24/s... | PASS |
