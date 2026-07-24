@@ -242,7 +242,22 @@ copy. It is deleted rather than corrected: **the fix for a frozen count is never
    `entries[].canonical_call`; `tools_index` has **no consumer on the routing path.** So the three
    CLAUDE.md-mandated calls were declared and **unroutable** — and the Rule 22a query ("can this role
    write to a brand-new bucket") kept routing to `comp-iam service`, *the DESIRED-only tool that same
-   rule calls **necessary but not sufficient** for a new ARN.* The INTENT was "an agent following
+   rule calls **necessary but not sufficient** for a new ARN.*
+   **CORRECTION, +5h, AND IT IS THE SAME CLASS COMMITTED BY THIS ENTRY'S OWN AUTHOR — the mechanism
+   above is a PARTIAL READ.** `entries[]` is only the **fuzzy backstop**; it can influence a fallback
+   but **never creates a routing candidate.** `comp-which` *ranks* off a **curated vocabulary table**
+   inside `.tools/comp-which`, and the ranked pool is **68 (tools), not 105 (entries).** So **BOTH**
+   declaration surfaces are unroutable, and the prescribed remedy that followed from the partial read
+   — *"give the three calls `entries[]` rows"* — **was built, behavior-tested, and surfaced nothing.**
+   The author had **already read the docstring naming two layers** (*"1. CURATED high-confidence
+   rules … 2. MANIFEST-FUZZY backstop"*), grounded **one**, and then wrote and reasoned about *"the
+   router."* **A mechanism confirmed on one of two layers is not a confirmed mechanism — it is a
+   denominator that happens to contain a true sentence.** Rule 22's `file:line @ commit-ish` was
+   satisfied *exactly*, and the citation was still not the whole mechanism: **a correct citation
+   bounds what you verified, never what is there.** Caught only because the acceptance had been
+   written as BEHAVIOR — the lane re-ran the four queries, got nothing, and refused to report done.
+   *The instruction caught its own author's error, which is the only kind of control worth having.*
+   The INTENT was "an agent following
    CLAUDE.md can REACH the mandated call"; the DENOMINATOR enumerated was "declarations present in
    `tools_index`." **Two different populations, and the gap between them was the entire finding.**
    Caught by: the acceptance criterion being set to **router-reachability, not registry-presence**, and
