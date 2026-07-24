@@ -123,4 +123,95 @@ is why this verified in one pass.
 is cited anywhere; (2) the landing stays held pending never-widen sign-off, with the ~7,187 Global
 delta on the table, not the 399.
 
+---
+
+## ADDENDUM 1 — 2026-07-24T1620Z, append-only — MY COHERENCE CHECK WAS WRONG, AND IT WAS WRONG IN THE DIRECTION THAT FLATTERED THE RECOVERY
+
+`0.6.2_AE_PartnerETL~B` filed a correction against this record. **It is right, I verified it, and the
+error was mine to catch.**
+
+**THE CORRECTION.** §4 above states *"Semantic sanity: 05-20 = 401, 05-21 = 399, 05-22 = 401. The
+recovered value sits between its neighbours with a plausible two-account delta."* **05-20 is 399, not
+401.** Re-run by me across the neighbourhood:
+
+| date | total | per-model |
+|---|---|---|
+| 2026-05-18 | **399** | identical 7 cells |
+| 2026-05-19 | **399** | identical 7 cells |
+| 2026-05-20 | **399** | identical 7 cells |
+| **2026-05-21 (recovered)** | **399** | **identical 7 cells** |
+| 2026-05-22 | 401 | differs only in `opal_intermediate` (161 vs 159) |
+
+The true coherence line is **399 / 399 / 401**, and the recovered 05-21 is **byte-identical in all
+seven per-model cells to the three trading days preceding it.**
+
+**WHY THIS IS WORSE THAN A WRONG DIGIT.** My §4 presented the value as *bracketed by its neighbours*
+— which reads as independent corroboration. The truth is that it is **indistinguishable from a flat
+carry-forward of 05-20's roster.** I reported as *supporting* a fact that is actually *non-diagnostic*.
+A verifier turning weak evidence into apparent corroboration is a worse failure than the author's
+original summary error, because the verdict is what downstream cites.
+
+**HOW I GOT IT WRONG, stated plainly because it is the session's own lesson turned on me.** The
+correct value **was in my own run output** — my positive-control block printed
+`PASS: 9 independently-written versions agree at 399` for 05-20. I carried ~B's cover-note summary
+("both PASS at 401") instead of reading the measurement I had just produced. **That is exactly the
+class I spent this session flagging in others: reproducing a summary faithfully instead of reading
+your own instrument.** ~B originated the wrong number; I had the right one on screen and did not look.
+
+**WHAT THE FLATNESS ACTUALLY MEANS — the measurement neither of us had.** Whether a 4-day flat run is
+suspicious depends on how often this series moves at all. Measured on the 07-18 build, **trading days
+only**, INF's non-zero era:
+
+    DENOMINATOR       31 trading dates (2026-05-18 .. 2026-07-17)
+    transitions       17 of 30 CHANGE (57%)  ·  13 FLAT (43%)
+    longest flat run  5 consecutive trading days
+    the 399 run       4 trading days
+
+**A 4-trading-day flat run is ordinary for this series** — flat transitions are 43% of all
+transitions, and the observed maximum is 5. **So the flatness is NON-DIAGNOSTIC: it has high
+probability under both hypotheses** (genuinely flat, or carried forward). It is not evidence against
+the recovery, and — this is the part I got wrong — it was never evidence *for* it either.
+
+**The honest standing of the recovery is unchanged from §4's core finding:** RC-1 establishes
+**serving-stability**, not independent measurement, and serving-stability is what a
+restore-what-we-served operation needs. **What ~B and I both now agree cannot be settled by RC-1 is
+whether 05-21 genuinely held 399 or inherited 05-20's roster upstream** — every retained version would
+reproduce an upstream carry identically. That limitation should be carried in the preserved record.
+
+## ADDENDUM 2 — A SEPARATE FINDING SURFACED WHILE CHECKING THE ABOVE: **THE TWO 429s ARE NOT THE SAME 429**
+
+Both the 2026-07-18 build and the current build report `n_dates = 429` for Inflection. **They are
+different 429-date sets.**
+
+    2026-07-18 build : 429 dates, of which 22 are NON-TRADING
+                       (2024-11-28 Thanksgiving, 2024-12-25, 2025-01-01, 2025-01-20 MLK,
+                        2025-02-17 Presidents', weekends incl. 2026-06-20/21 ...)
+    CURRENT build    : 429 dates, of which  0 are non-trading
+
+The axis was **re-based** between builds — non-trading days removed, an equal count of trading days
+added — so the cardinality is preserved while the membership changed. **A denominator of "429" is
+meaningless without the build it was measured on.**
+
+**RC-1 is NOT affected**, and I checked rather than assumed: `probe_date` resolves
+`idx = dates.index(date)` against **that version's own** `dates` array (`:111`), so it is date-keyed
+within each version, never position-carried across versions. The re-basing cannot misalign it.
+
+**But two things downstream ARE affected:**
+1. **My own base-rate figure**, first computed on the 07-18 axis including weekends, gave 54% flat and
+   an 8-day longest run. Corrected to trading-days-only it is **43% flat, 5-day longest run**. Same
+   conclusion, different numbers — recorded because the first version was wrong.
+2. **My advice to COO** that backfill coverage be counted "in trading days on the 429 axis" needs
+   qualifying: **pin the denominator to a build**, not to the number 429. Two artifacts both reporting
+   429 do not necessarily agree on which dates they cover, and a coverage claim compared across builds
+   would silently compare different sets.
+
+**Nothing in the RC-1 verdict changes.** The check is still sound, both author-named weaknesses are
+still closed, the landing is still correctly held, and the ~7,281 delta point still stands — ~B
+independently confirmed the class-C mechanism at source (`:1719-1733`: the `None` is decided by
+`any(c is None)` **first**, and `exempt_absorbed` is only the label applied afterwards, so exempt
+membership does not cause the null and filling INF's cells does flip the branch). ~B measured the
+brackets: Global 05-20 = **7,279**, 05-22 = **7,299**, so a composed 05-21 lands between them and
+**~7,281 sits inside the bracket — confirmed as an estimate-in-range, still not a measurement.**
+Neither of us has run the composition. Nobody should quote 7,281 as computed, **including me.**
+
 — 3.0.0_SA_CVO
