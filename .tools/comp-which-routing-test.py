@@ -285,6 +285,74 @@ def _run_comp_which(q: str) -> str:
     return (r.stdout or "") + (r.stderr or "")
 
 
+# --- WARM IN-PROCESS ROUTE (NFRA_TOOLARCH self-route gate, 0.8.0_AE_CloudComp~B 2026-07-24) ------
+# WHY: the member spawned 68 subprocesses at ~1357ms each. The cost driver is INTERPRETER STARTUP +
+# the import graph, paid 68 times to do 68 vocabulary lookups -- not the check. This pays it ONCE.
+# COST-PER-ITEM ONLY: the denominator does not move by a single tool (CTO~Z standing constraint).
+#
+# WHY A WARM INVOCATION OF comp-which's OWN main() AND NOT A RE-IMPLEMENTATION of _score_rule:
+# verdict-identity becomes TRUE BY CONSTRUCTION rather than something proven across 68 and then
+# re-proven forever -- same code, same ranking, same emitted text. A re-implementation would drift
+# SILENTLY the moment comp-which's ranking changed, and the gate would keep passing while measuring
+# a router nobody runs. (CTO~Z adopted this over their own _score_rule direction, 034628Z.)
+# DECISIVE, and the reason a re-implementation could not have worked here at all: the consumer is NOT
+# only the `-> ` regex -- `self_route_verdict` also does `if tool not in out`, a substring test over
+# the WHOLE stdout+stderr text. Only re-emitting comp-which's real output can reproduce that.
+#
+# NOTHING IS SWITCHED BY THIS ADDITION. `_run_comp_which` remains the live path; this sits beside it
+# until verdict-identity is proven across all 68 (step 2), per the ratified 3-step sequencing -- so
+# the gate never passes through a half-switched state.
+_COMP_WHICH_MOD = None
+
+
+def _load_comp_which():
+    """Load comp-which ONCE under a NON-'__main__' module name so its `if __name__ == '__main__'`
+    entry does not fire on import. Cached across calls -- that cache IS the win."""
+    global _COMP_WHICH_MOD
+    if _COMP_WHICH_MOD is None:
+        import importlib.machinery
+        import importlib.util
+        spec = importlib.util.spec_from_loader(
+            "comp_which_warm",
+            importlib.machinery.SourceFileLoader("comp_which_warm", COMP_WHICH),
+        )
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        _COMP_WHICH_MOD = mod
+    return _COMP_WHICH_MOD
+
+
+def _run_comp_which_warm(q: str) -> str:
+    """Warm equivalent of `_run_comp_which`: same argv shape, same cwd, same combined stdout+stderr.
+
+    Matches the subprocess contract deliberately: subprocess.run used cwd=WS, so we chdir to WS for
+    the call and restore -- comp-which resolves paths relative to cwd, and a cwd difference would be
+    a silent behavioural divergence rather than a loud one.
+    SystemExit is caught because main() is normally invoked via `raise SystemExit(main())`.
+    """
+    import contextlib
+    import importlib.machinery  # noqa: F401  (used via importlib.machinery in _load_comp_which)
+    import io
+    mod = _load_comp_which()
+    buf_out, buf_err = io.StringIO(), io.StringIO()
+    argv_saved, cwd_saved = sys.argv[:], os.getcwd()
+    try:
+        os.chdir(WS)
+        sys.argv = [COMP_WHICH, q]
+        with contextlib.redirect_stdout(buf_out), contextlib.redirect_stderr(buf_err):
+            try:
+                mod.main()
+            except SystemExit:
+                pass
+    finally:
+        sys.argv = argv_saved
+        try:
+            os.chdir(cwd_saved)
+        except OSError:
+            pass
+    return buf_out.getvalue() + buf_err.getvalue()
+
+
 def self_route_query(manifest, tool):
     """The tool's OWN richest sentence -- its manifest use_case if it has one, else its
     tools_index `does`."""
