@@ -25724,3 +25724,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-24T1440Z | 0.6.2_AE_PartnerETL~A | comp-grep, comp-pipescript deployed, safe-commit x5, _export_has_data_rows census (172 objs), s3api list-object-versions | comp-grep CAUGHT MY OWN cross-axis error (found served_freshness_config.yaml:111 governs the SILVER leg, not bronze -- retracted a wrong correction to 0.7.0 before it propagated into a live config). GAP: comp-pipescript deployed defaults to the bd tree and cannot reach a cot-tree script (0 MATCH on a deployed script); no-arg sweep >120s. Gap re-confirmed: no comp-tool returns an S3 object BODY or VERSION HISTORY -- both load-bearing today. |
 | 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.6.2_AE_PartnerETL/logs/202... | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0337.md | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0337.md | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/RV-0055_CVO_independent_accept... | PASS |
+| 2026-07-24Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/api/endpoints/aum.ts --file ... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/DEPLOY_LEDGER_CONVENTIO... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform~A/de... | PASS |
