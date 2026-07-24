@@ -205,6 +205,7 @@ OUTCOME_RESOLVED = "RESOLVED"                      # a rewrite rule matched -> a
 OUTCOME_UNRESOLVED_NO_RULE = "UNRESOLVED_NO_RULE"  # behavior matched, no rule covers the prefix
 OUTCOME_CATCHALL_DEFAULT = "CATCHALL_DEFAULT"      # fell through to the default slot: NOT a resolution
 OUTCOME_NO_MATCH = "NO_MATCH"                      # no behavior matched at all, not even the default
+OUTCOME_REFUSED = "REFUSED"                        # the router BLOCKS this path (e.g. 401); NO S3 key exists
 
 
 def _contract_field(field, default):
@@ -257,9 +258,18 @@ def _url_trace_payload(rt, url, behavior):
         return payload
 
     origin = rt.origins.get(behavior.origin_id)
-    bucket = origin.bucket_name if origin else ""
+    behavior_bucket = origin.bucket_name if origin else ""
     rule = rt.match_rewrite_rule(url)
+    is_refuse = rule is not None and getattr(rule, "kind", "") == "refuse"
+    firm_parametric = rule is not None and getattr(rule, "firm_parametric", False)
     key = rt.resolve_s3_key(url) if rule is not None else ""
+
+    # THE BUCKET IS NOT ALWAYS THE CF ORIGIN'S BUCKET. For a firm-parametric rule the router rebuilds
+    # the origin domain per requesting firm (FIRM_BUCKET_MAP), so no single bucket is correct -- the CF
+    # origin's bucket is merely one firm's. Emitting it as s3://<that-firm>/... names another firm's
+    # bucket with RESOLVED confidence, the exact cross-firm-pointer the firm-sep gates exist to catch
+    # downstream. So the bucket REFUSES here (key is fine; the KEY is firm-independent).
+    bucket = "" if firm_parametric else behavior_bucket
 
     payload.update({
         "catchall": behavior.order == 0,
@@ -269,10 +279,12 @@ def _url_trace_payload(rt, url, behavior):
         "router": behavior.has_router,
         "edge_functions": [{"event_type": ef.event_type, "function_name": ef.function_name}
                            for ef in behavior.edge_functions],
-        "rewrite_rule": f"{rule.url_prefix} -> {rule.s3_prefix}" if rule else None,
+        "rewrite_rule": (f"{rule.url_prefix} -> {rule.s3_prefix}"
+                         if (rule and not is_refuse) else None),
         "s3_bucket": bucket or None,
-        "s3_key": key or None,
-        "s3_uri": f"s3://{bucket}/{key}" if (bucket and key) else None,
+        "s3_bucket_firm_parametric": firm_parametric,
+        "s3_key": (None if is_refuse else (key or None)),
+        "s3_uri": f"s3://{bucket}/{key}" if (bucket and key and not is_refuse) else None,
     })
 
     if behavior.order == 0:
@@ -282,11 +294,25 @@ def _url_trace_payload(rt, url, behavior):
             "path. This is a DEFAULT, not a resolution: the same answer is returned for ANY unmodelled "
             "path, so it is not evidence that the path exists, is served, or lives at this origin."
         )
+    elif is_refuse:
+        # The router BLOCKS this path -- there is no S3 key. This is the state a prefix-only table could
+        # not express, so it used to render as RESOLVED with a concrete key (a PII path the router 401s).
+        payload["outcome"] = OUTCOME_REFUSED
+        payload["refuse_status"] = getattr(rule, "refuse_status", "") or None
+        payload["disclosure"] = (
+            f"The router REFUSES this path (HTTP {getattr(rule, 'refuse_status', '?')}): "
+            f"{getattr(rule, 'refuse_reason', '') or 'blocked at the edge'}. There is NO S3 key -- it is "
+            f"not served S3-direct. Reading a resolution here would be false-secure (the router branch "
+            f"exists specifically to stop S3-direct access to this path)."
+        )
     elif rule is not None:
         payload["outcome"] = OUTCOME_RESOLVED
+        fp_note = (" The BUCKET is firm-parametric (chosen per requesting firm from FIRM_BUCKET_MAP), so "
+                   "no single s3:// URI is correct -- the key is firm-independent, the bucket is refused."
+                   if firm_parametric else "")
         payload["disclosure"] = (
             "Resolved through the modelled static rewrite table (DESIRED plane -- parsed Terraform + "
-            "committed router source, never a live CloudFront read)."
+            "committed router source, never a live CloudFront read)." + fp_note
         )
     else:
         payload["outcome"] = OUTCOME_UNRESOLVED_NO_RULE
@@ -317,11 +343,25 @@ def _print_rewrite_resolution(rt, url, bucket):
         print("           This is missing COVERAGE, not a proof that no key exists, and it is the")
         print("           SAME answer given for every uncovered path -- do not read it as a resolution.")
         return
+    if getattr(rule, "kind", "") == "refuse":
+        # The router BLOCKS this path -- no S3 key. A prefix-only table could not express this, so it
+        # used to render as a RESOLVED key (a PII path the router 401s, read as served S3-direct).
+        print(f"  REFUSED: the router returns HTTP {rule.refuse_status} for this path"
+              + (f" -- {rule.refuse_reason}" if rule.refuse_reason else ""))
+        print("  S3 key:  NONE -- this path is NOT served S3-direct; the router blocks it at the edge.")
+        print("           Reading a resolution here would be FALSE-SECURE: the block is the whole point.")
+        return
     cond = f"  ({rule.condition})" if rule.condition else ""
     key = rt.resolve_s3_key(url)
     print(f"  Rewrite: {rule.url_prefix} -> {rule.s3_prefix}{cond}")
     print(f"  S3 key:  {key}")
-    if bucket:
+    if getattr(rule, "firm_parametric", False):
+        # The origin BUCKET is chosen per requesting firm (FIRM_BUCKET_MAP). No single bucket is
+        # correct; naming one hands out another firm's bucket with false confidence.
+        print("  S3 URI:  REFUSED -- this origin is FIRM-PARAMETRIC: the router picks the bucket per")
+        print("           requesting firm (opal-data-{firm}), so no single s3:// URI is correct. The key")
+        print("           above is firm-independent; ask for the firm map, not a resolved bucket.")
+    elif bucket:
         print(f"  S3 URI:  s3://{bucket}/{key}")
     else:
         print("  S3 URI:  UNRESOLVED -- this origin carries no bucket name; the key above is")

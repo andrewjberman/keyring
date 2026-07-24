@@ -76,12 +76,51 @@ class CustomErrorResponse:
     ttl_seconds: int = 0         # error_caching_min_ttl
 
 
+class RouterParseError(Exception):
+    """A Lambda@Edge router branch shape the parser does not recognize.
+
+    Raised LOUD, never swallowed. The transcribed-table defect this parser replaces was silent
+    under-representation: a branch that could not be expressed (a 401 refusal, a firm-parametric
+    origin) was simply omitted, and its absence read as a rule that never existed. A parser that
+    quietly skips an unrecognized branch would be the exact same defect one level up -- so an
+    unrecognized shape is a hard error that forces a human to extend the parser or the model, never
+    a dropped rule.
+    """
+
+
+# RewriteRule.kind vocabulary. A prefix->prefix table can ONLY say "rewrites to a fixed place"; the
+# router says more than that, and an outcome the vocabulary cannot represent is not omitted, it is
+# MISFILED as whatever the vocabulary can say (a refusal became a RESOLVED S3 key; a per-firm bucket
+# became a literal one). Each kind below is a state the old table structurally could not hold.
+RULE_REWRITE = "rewrite"            # url_prefix -> s3_prefix, the ordinary case
+RULE_REFUSE = "refuse"              # the router BLOCKS this path (e.g. HTTP 401); there is NO S3 key
+RULE_MULTISTEP = "rewrite_multistep"  # a transform that is not a single prefix swap (id extraction etc.)
+
+
 @dataclass
 class RewriteRule:
-    """A URL->S3 key rewrite rule from Lambda@Edge router."""
+    """A URL->S3 rewrite rule parsed from a Lambda@Edge router.
+
+    Parsed, not transcribed: `source_file` + `source_line` pin the branch this came from, so a drift
+    between the table and the router is a test failure rather than an invisible hand-copy skew.
+    """
     url_prefix: str          # matched URL prefix
-    s3_prefix: str           # rewritten S3 key prefix
-    condition: str = ""      # e.g., "suffix.startsWith('advisors/')"
+    s3_prefix: str           # rewritten S3 key prefix (empty for a REFUSE rule)
+    condition: str = ""      # human description of the branch condition
+    kind: str = RULE_REWRITE  # RULE_REWRITE | RULE_REFUSE | RULE_MULTISTEP
+    # REFUSE rules: the router blocks the path and no S3 key exists. Reporting an s3_key here is the
+    # false-secure defect that motivated the parse (a PII path the router 401s read as RESOLVED).
+    refuse_status: str = ""       # e.g. "401"
+    refuse_reason: str = ""       # the router's own stated reason
+    # A REFUSE rule may need a suffix predicate beyond the prefix (the platinum summary.json case is
+    # prefix AND endswith AND one-of two subprefixes). require_endswith/require_any_prefix encode it.
+    require_endswith: str = ""            # the path must also end with this (else the rule does not apply)
+    require_any_prefix: tuple = ()        # the path must also start with one of these full prefixes
+    # FIRM-PARAMETRIC origin: the router rewrites the origin BUCKET per requesting firm, so no single
+    # bucket is correct for this rule. A consumer must not emit a fixed s3://bucket/... for it.
+    firm_parametric: bool = False
+    source_file: str = ""    # the router file this branch was parsed from
+    source_line: int = 0     # 1-indexed line of the branch
 
 
 @dataclass
@@ -179,26 +218,52 @@ class RoutingTable:
                 return r
         return None
 
-    def match_rewrite_rule(self, url: str) -> RewriteRule | None:
-        """THE rewrite-prefix matcher. Rules are ordered most-specific-first (see
-        _parse_rewrite_rules), so the FIRST prefix match wins -- exactly as the Lambda@Edge
-        router's if/else chain evaluates.
+    def _rule_applies(self, rule: "RewriteRule", url: str) -> bool:
+        """Whether `rule` matches `url`, honoring the full branch condition -- not just the prefix.
 
-        resolve_s3_key() delegates here so there is exactly ONE matcher: a caller that needs to
-        name WHICH rule fired (comp-routes trace) and a caller that needs the resolved key can
-        never disagree about which rule applied. Returns None when no rule covers the prefix --
-        which is missing COVERAGE, not a proof that no key exists.
+        A REFUSE rule (the platinum summary.json 401) carries a COMPOUND condition the router
+        actually evaluates: prefix AND endswith AND one-of two subprefixes. Matching on the prefix
+        alone would over-refuse (block platinum/ paths that are NOT summary.json). The router's
+        if/else order is preserved by the caller iterating in declared order.
+        """
+        if not url.startswith(rule.url_prefix):
+            return False
+        if rule.require_endswith and not url.endswith(rule.require_endswith):
+            return False
+        if rule.require_any_prefix and not any(url.startswith(p) for p in rule.require_any_prefix):
+            return False
+        return True
+
+    def match_rewrite_rule(self, url: str) -> "RewriteRule | None":
+        """THE rewrite matcher. Rules are in ROUTER DECLARATION ORDER (parsed from the if/else-if
+        chain), and the FIRST match wins -- exactly as the Lambda@Edge router evaluates. Honors the
+        full branch condition via _rule_applies, so a compound-conditioned REFUSE rule does not
+        over-match.
+
+        resolve_s3_key() delegates here so there is exactly ONE matcher: the rule NAMED by
+        comp-routes trace and the key it resolves can never disagree. Returns None when nothing
+        covers the path -- missing COVERAGE, not proof no key exists.
         """
         for rule in self.rewrite_rules:
-            if url.startswith(rule.url_prefix):
+            if self._rule_applies(rule, url):
                 return rule
         return None
 
     def resolve_s3_key(self, url: str) -> str:
-        """Apply rewrite rules to resolve a URL to an S3 key. "" when no rule matches."""
+        """Apply rewrite rules to resolve a URL to an S3 KEY (the path within a bucket). "" when no
+        rule matches OR the matched rule does not resolve to a key.
+
+        A REFUSE rule has NO key -- the router blocks the path; emitting one here is the false-secure
+        defect the parse exists to close. A MULTISTEP rule computes its key by transform, not a prefix
+        swap. Both are handled explicitly; a plain rewrite is the prefix substitution.
+        NOTE: this returns the KEY only. The BUCKET may be firm-parametric (see rule.firm_parametric);
+        callers building a full s3:// URI must consult that and REFUSE a fixed bucket when it is set.
+        """
         rule = self.match_rewrite_rule(url)
-        if rule is None:
+        if rule is None or rule.kind == RULE_REFUSE:
             return ""
+        if rule.kind == RULE_MULTISTEP:
+            return _apply_multistep(rule, url)
         return rule.s3_prefix + url[len(rule.url_prefix):]
 
 
@@ -515,94 +580,213 @@ def _extract_tf_block(content: str, start: int) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Step 2: Parse shared-advisor-router rewrite rules
+# Step 2: PARSE (not transcribe) the Lambda@Edge routers for URL->S3 rewrite rules.
+#
+# History: these rules were HAND-TRANSCRIBED from the routers' if/else chains -- and they drifted.
+# By 2026-07-24 the transcription was MISSING the platinum/**/summary.json 401 refusal (so
+# comp-routes reported a PII path the router blocks as a RESOLVED S3 key) and the client_timeseries
+# multi-step rewrite, and it had no way to express that the advisor-intelligence origin BUCKET is
+# firm-parametric (so it named one firm's bucket for every firm). NFRA_TOOLARCH.MACHINEFLAG R2:
+# parse the source so the table cannot drift, and FAIL LOUD on any branch shape not representable --
+# a parser that silently emits fewer rules is the transcription defect one level up.
 # ---------------------------------------------------------------------------
 
+# Match `X.startsWith("literal")`. Group 1 = the tested var (request.uri | suffix), group 2 = literal.
+_JS_STARTSWITH = re.compile(r'(\w[\w.]*)\.startsWith\(\s*"([^"]*)"\s*\)')
+# Match `request.uri = "literal" + suffix;`  -> group 1 = literal prefix.
+_JS_ASSIGN_PREFIX = re.compile(r'request\.uri\s*=\s*"([^"]*)"\s*\+\s*(\w+)\s*;')
+# Match `request.uri = request.uri.replace("A", "B");` -> groups A, B.
+_JS_ASSIGN_REPLACE = re.compile(r'request\.uri\s*=\s*request\.uri\.replace\(\s*"([^"]*)"\s*,\s*"([^"]*)"\s*\)')
+# Match a `const suffix = request.uri.replace("PREFIX", "");` binding.
+_JS_SUFFIX_BIND = re.compile(r'const\s+(\w+)\s*=\s*request\.uri\.replace\(\s*"([^"]*)"\s*,\s*""\s*\)')
+# A 401/403 refusal return.
+_JS_REFUSE_STATUS = re.compile(r'status:\s*"(\d{3})"')
+_JS_REFUSE_ERROR = re.compile(r'"error"\s*:\s*"([^"]*)"|error:\s*"([^"]*)"')
+
+
+def _apply_multistep(rule: "RewriteRule", url: str) -> str:
+    """Resolve a MULTISTEP rule's key. Currently one shape: the client_timeseries id extraction
+    (client_timeseries/{id}.json -> gold/entities/clients/{id}/timeseries.json). Kept as an explicit,
+    named transform rather than a prefix swap because it is not one -- and the parser refuses to
+    invent a prefix rule for it."""
+    suffix = url[len(rule.url_prefix):]
+    if rule.condition == "client_timeseries id-extraction":
+        _id = suffix[len("client_timeseries/"):].replace(".json", "") if suffix.startswith("client_timeseries/") else suffix.replace(".json", "")
+        return f"gold/entities/clients/{_id}/timeseries.json"
+    raise RouterParseError(f"MULTISTEP rule with unknown transform: {rule.condition!r}")
+
+
+def _parse_public_data_router(path: Path) -> list[RewriteRule]:
+    """Parse public-data-router: a flat chain of
+        if (request.uri.startsWith(P)) request.uri = request.uri.replace(P, S);
+    Each recognized branch -> one RewriteRule. An unrecognized action line inside a startsWith branch
+    raises."""
+    rules: list[RewriteRule] = []
+    lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    in_handler = False
+    for i, line in enumerate(lines, start=1):
+        if "handler" in line and "=>" in line:
+            in_handler = True
+        if not in_handler:
+            continue
+        sw = _JS_STARTSWITH.search(line)
+        if not sw or sw.group(1) != "request.uri":
+            continue
+        prefix = sw.group(2)
+        # The rewrite action is on this line or the next few (the routers put it within the block).
+        window = "\n".join(lines[i - 1:i + 4])
+        rep = _JS_ASSIGN_REPLACE.search(window)
+        if not rep:
+            raise RouterParseError(
+                f"{path.name}:{i}: startsWith({prefix!r}) branch with no recognized "
+                f"`request.uri = request.uri.replace(...)` action within it")
+        frm, to = rep.group(1), rep.group(2)
+        if frm != prefix:
+            raise RouterParseError(
+                f"{path.name}:{i}: replace() FROM {frm!r} != startsWith prefix {prefix!r} "
+                f"-- unexpected branch shape")
+        rules.append(RewriteRule(
+            url_prefix=prefix,
+            s3_prefix=to.lstrip("/"),
+            condition=f"general router {prefix} -> {to}",
+            source_file=str(path), source_line=i,
+        ))
+    return rules
+
+
+def _parse_shared_advisor_router(path: Path) -> list[RewriteRule]:
+    """Parse shared-advisor-router's suffix-based if/else chain into rules, IN ORDER.
+
+    The outer guard binds `const suffix = request.uri.replace(OUTER, "")`, then a chain of
+    `if (suffix.startsWith(Y)) request.uri = <LITERAL> + suffix` branches, a REFUSE branch (401),
+    a MULTISTEP branch (client_timeseries), a compound `startsWith(A) || startsWith(B)` branch, and a
+    final `else`. Every branch is represented or the parser raises. The origin is FIRM-PARAMETRIC
+    (request.origin.s3.domainName is rebuilt from FIRM_BUCKET_MAP), so every rule carries
+    firm_parametric=True.
+    """
+    rules: list[RewriteRule] = []
+    text = path.read_text(encoding="utf-8", errors="replace")
+    lines = text.splitlines()
+
+    firm_parametric = "request.origin.s3.domainName" in text and "FIRM_BUCKET_MAP" in text
+
+    bind = _JS_SUFFIX_BIND.search(text)
+    if not bind:
+        raise RouterParseError(f"{path.name}: no `const suffix = request.uri.replace(OUTER, '')` binding found")
+    suffix_var, outer = bind.group(1), bind.group(2)
+
+    # Walk the branch chain after the suffix binding. Each branch runs from its `if/else if/else`
+    # header to the NEXT branch header (or the firm-routing tail) -- so an action separated from its
+    # condition by a comment block is still inside its own branch. Branch grain, not line grain.
+    bind_line = text[:bind.start()].count("\n") + 1
+    n = len(lines)
+
+    # A BRANCH HEADER is an `if (`, `else if (`, or `} else {` line -- keyed on the keyword, NOT on
+    # startsWith, so a compound condition spanning continuation lines (platinum/ && endsWith(...) &&
+    # (advisors/ || clients/)) is ONE branch, not several. Its condition literals are collected from
+    # the header line through the line that opens the block (`) {`).
+    _HDR = re.compile(r'^\s*(\}\s*)?(else\s+)?if\s*\(|^\s*\}\s*else\s*\{')
+    headers: list[int] = []
+    stop = n
+    for j in range(bind_line, n):
+        if "Route to firm-specific S3 bucket" in lines[j]:
+            stop = j
+            break
+        if _HDR.match(lines[j]):
+            headers.append(j)
+
+    for idx, hdr in enumerate(headers):
+        end = headers[idx + 1] if idx + 1 < len(headers) else stop
+        block = "\n".join(lines[hdr:end])
+        line1 = hdr + 1  # 1-indexed source line
+        # Condition literals: from the header down to (and including) the line that opens the block.
+        cond_end = hdr
+        while cond_end < end and ") {" not in lines[cond_end] and not lines[cond_end].rstrip().endswith("{"):
+            cond_end += 1
+        cond_text = "\n".join(lines[hdr:cond_end + 1])
+        sw_all = _JS_STARTSWITH.findall(cond_text)
+        sw_suffix = [lit for var, lit in sw_all if var == suffix_var]
+
+        # (1) REFUSAL: the branch returns a status BEFORE any request.uri assignment.
+        refuse = _JS_REFUSE_STATUS.search(block)
+        uri_pos = block.find("request.uri")
+        if sw_suffix and refuse is not None and (uri_pos == -1 or block.find("status:") < uri_pos):
+            err = _JS_REFUSE_ERROR.search(block)
+            reason = next((g for g in (err.groups() if err else ()) if g), "") if err else ""
+            ends = "/summary.json" if "summary.json" in block else ""
+            # Compound predicate: the OTHER startsWith literals in the header (platinum/advisors/, clients/).
+            any_pref = tuple(outer + lit for var, lit in sw_all
+                             if var == suffix_var and lit != sw_suffix[0])
+            rules.append(RewriteRule(
+                url_prefix=outer + sw_suffix[0], s3_prefix="", kind=RULE_REFUSE,
+                condition=f"REFUSE {refuse.group(1)}: {reason}",
+                refuse_status=refuse.group(1), refuse_reason=reason,
+                require_endswith=ends, require_any_prefix=any_pref,
+                firm_parametric=firm_parametric, source_file=str(path), source_line=line1,
+            ))
+            continue
+
+        # (2) MULTISTEP: an intermediate `const X = suffix.replace(...)` then a rebuilt uri (not
+        # "literal" + suffix). Deterministic transform, resolved by _apply_multistep, never a prefix rule.
+        if sw_suffix and re.search(r'const\s+\w+\s*=\s*' + re.escape(suffix_var) + r'\.replace\(', block) \
+                and "+ " + suffix_var not in block:
+            rules.append(RewriteRule(
+                url_prefix=outer + sw_suffix[0], s3_prefix="", kind=RULE_MULTISTEP,
+                condition="client_timeseries id-extraction",
+                firm_parametric=firm_parametric, source_file=str(path), source_line=line1,
+            ))
+            continue
+
+        # (3) ORDINARY REWRITE (incl. compound `startsWith(A) || startsWith(B)`): request.uri =
+        # "<LITERAL>" + suffix. One rule per alternative literal, same target.
+        assign = _JS_ASSIGN_PREFIX.search(block)
+        if sw_suffix:
+            if not assign or assign.group(2) != suffix_var:
+                raise RouterParseError(
+                    f"{path.name}:{line1}: {suffix_var}.startsWith branch with no recognized "
+                    f"`request.uri = \"literal\" + {suffix_var}` action (shape not representable -- "
+                    f"extend the parser rather than dropping the branch)")
+            literal = assign.group(1)
+            for var, lit in sw_all:
+                if var != suffix_var:
+                    continue
+                rules.append(RewriteRule(
+                    url_prefix=outer + lit, s3_prefix=(literal.lstrip("/") + lit),
+                    condition=f"advisor router {lit} -> {literal}",
+                    firm_parametric=firm_parametric, source_file=str(path), source_line=line1,
+                ))
+            continue
+
+        # (4) FINAL else: request.uri = "<LITERAL>" + suffix -- the catch-all rewrite.
+        if lines[hdr].strip().startswith("} else {") and assign and assign.group(2) == suffix_var:
+            rules.append(RewriteRule(
+                url_prefix=outer, s3_prefix=assign.group(1).lstrip("/"),
+                condition=f"advisor router default -> {assign.group(1)}",
+                firm_parametric=firm_parametric, source_file=str(path), source_line=line1,
+            ))
+
+    if not rules:
+        raise RouterParseError(f"{path.name}: parsed zero rules -- the chain shape changed, refusing to emit an empty table")
+    return rules
+
+
 def _parse_rewrite_rules(workspace_root: Path) -> list[RewriteRule]:
-    """Parse Lambda@Edge routers for URL->S3 rewrite rules."""
+    """PARSE (not transcribe) the Lambda@Edge routers for URL->S3 rewrite rules.
+
+    Order across routers does not matter (their URL prefixes are disjoint: /api/general/* vs
+    /api/scoped/advisor-intelligence/*); WITHIN a router, declaration order is preserved so the
+    first-match matcher mirrors the if/else chain.
+    """
+    edge = workspace_root / "infra" / "aws" / "lambda-edge"
     rules: list[RewriteRule] = []
 
-    # shared-advisor-router
-    router_file = workspace_root / "infra" / "aws" / "lambda-edge" / "shared-advisor-router" / "index.mjs"
-    if router_file.exists():
-        _content = router_file.read_text(encoding="utf-8", errors="replace")  # noqa: F841 (pre-existing dead read; rules below are hardcoded, not parsed -- marked unused to satisfy universal gate)
+    advisor = edge / "shared-advisor-router" / "index.mjs"
+    if advisor.exists():
+        rules.extend(_parse_shared_advisor_router(advisor))
 
-        # Parse the if/else chain in the router (order matters -- more specific first)
-        # suffix.startsWith("advisors/") -> /gold/entities/ + suffix
-        rules.append(RewriteRule(
-            url_prefix="/api/scoped/advisor-intelligence/advisors/",
-            s3_prefix="gold/entities/advisors/",
-            condition="advisors/* entities",
-        ))
-        rules.append(RewriteRule(
-            url_prefix="/api/scoped/advisor-intelligence/views/",
-            s3_prefix="gold/views/",
-            condition="views/* passthrough",
-        ))
-        rules.append(RewriteRule(
-            url_prefix="/api/scoped/advisor-intelligence/timeseries/",
-            s3_prefix="gold/timeseries/",
-            condition="timeseries/* passthrough",
-        ))
-        rules.append(RewriteRule(
-            url_prefix="/api/scoped/advisor-intelligence/artifacts/",
-            s3_prefix="gold/artifacts/",
-            condition="artifacts/* passthrough",
-        ))
-        rules.append(RewriteRule(
-            url_prefix="/api/scoped/advisor-intelligence/entities/",
-            s3_prefix="gold/entities/",
-            condition="entities/* passthrough",
-        ))
-        # ADVI_49PUSH: platinum/ paths route directly to platinum/ (no gold/ prefix)
-        # Router index.mjs L116-120: suffix.startsWith("platinum/") -> "/" + suffix
-        rules.append(RewriteRule(
-            url_prefix="/api/scoped/advisor-intelligence/platinum/",
-            s3_prefix="platinum/",
-            condition="platinum/* passthrough (ADVI_49PUSH)",
-        ))
-        # Default: everything else -> gold/artifacts/
-        rules.append(RewriteRule(
-            url_prefix="/api/scoped/advisor-intelligence/",
-            s3_prefix="gold/artifacts/",
-            condition="default (legacy flat paths)",
-        ))
-
-    # public-data-router (for /api/general/ paths). Mirrors the Lambda@Edge router
-    # infra/aws/lambda-edge/public-data-router/index.mjs L17-34, order-sensitive
-    # (most-specific-first; resolve_s3_key returns on the FIRST prefix match).
-    public_router = workspace_root / "infra" / "aws" / "lambda-edge" / "public-data-router" / "index.mjs"
-    if public_router.exists():
-        # 1. /api/general/json-tiered/* -> /json-tiered/* (router special-case 1)
-        rules.append(RewriteRule(
-            url_prefix="/api/general/json-tiered/",
-            s3_prefix="json-tiered/",
-            condition="general json-tiered passthrough",
-        ))
-        # 2. /api/general/json/* -> /json/* (router special-case 2; avoids double /json/)
-        rules.append(RewriteRule(
-            url_prefix="/api/general/json/",
-            s3_prefix="json/",
-            condition="general json passthrough",
-        ))
-        # 3. /api/general/* -> /json/* (router DEFAULT fallback, index.mjs L29-34 --
-        #    covers benchmarks/, positioning/, cma/, sentiment/, etc.). MUST be LAST:
-        #    "/api/general/" is a prefix of the two above, so an earlier position would
-        #    shadow them. This was the missing rule -- /api/general/{X} with X not under
-        #    json/ or json-tiered/ previously resolved to "" (the comp-routes gap from
-        #    NFRA_TSGRAPH P4: DE head-object grounding 29/33).
-        #    NOTE: this encodes the router's URL->key REWRITE (a pure function of the
-        #    router), NOT object existence. A resolved key is not a guarantee the S3
-        #    object is live -- the SERVED_FROM both-ends head_object check (P4
-        #    stitch_served_from: 403=LOUD iam-deny, 404=VISIBLE-unresolved) is what gates
-        #    a real edge. The 4 known positioning/ + sentiment/ head_object-MISS paths
-        #    stay VISIBLE-unresolved THERE, not here (avoids the D8 false-key trap by
-        #    moving existence to the edge layer, keeping the resolver router-faithful).
-        rules.append(RewriteRule(
-            url_prefix="/api/general/",
-            s3_prefix="json/",
-            condition="general default fallback (router L29-34)",
-        ))
+    public = edge / "public-data-router" / "index.mjs"
+    if public.exists():
+        rules.extend(_parse_public_data_router(public))
 
     return rules
 

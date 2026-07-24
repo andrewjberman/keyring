@@ -38,11 +38,15 @@ sys.path.insert(0, str(_WORKSPACE))
 
 from org.modules.graph import routes_cli  # noqa: E402
 from org.modules.graph.extract_routes import (  # noqa: E402
+    RULE_REFUSE,
+    RULE_MULTISTEP,
     CloudFrontBehavior,
     CloudFrontOrigin,
     EdgeFunction,
     RewriteRule,
+    RouterParseError,
     RoutingTable,
+    _parse_rewrite_rules,
     _s3_bucket_from_domain,
     build_routing_table,
 )
@@ -411,6 +415,114 @@ def test_R1_real_config_no_s3_origin_is_grouped_as_authorizer_protected():
 
 
 # ---------------------------------------------------------------------------
+# LAYER 5c -- R2: the rewrite table is PARSED, not transcribed (NFRA_TOOLARCH.MACHINEFLAG).
+#
+# The table was a hand-copy of the routers' if/else chains and it had DRIFTED: missing the
+# platinum/**/summary.json 401 refusal (so a PII path the router blocks read as a RESOLVED S3 key)
+# and the client_timeseries multi-step rewrite. The parser reads the .mjs so it cannot drift, and
+# FAILS LOUD on any branch it cannot represent -- because a parser that silently emits fewer rules is
+# the transcription defect one level up.
+#
+# The doctrine these tests defend (CTO~Z, lifted to TOOLSEM): an outcome the vocabulary cannot
+# represent does not go missing -- it gets MISFILED as whatever the vocabulary can say. A prefix->prefix
+# table can only say "rewrites to a fixed place", so a refusal became a resolution and a firm-parametric
+# bucket became a literal one.
+# ---------------------------------------------------------------------------
+
+def _rules():
+    return _parse_rewrite_rules(_WORKSPACE)
+
+
+def test_R2_the_platinum_summary_401_refusal_is_parsed_as_a_REFUSE_rule():
+    """DRIFT 1, the security-relevant one. The router 401s platinum/{advisors|clients}/**/summary.json
+    (PII, must go through the pseudonymizing Lambda, not S3-direct). The transcribed table had no such
+    rule, so trace reported it RESOLVED with a concrete s3://opal-data-bd/... URI -- false-secure.
+    The parser must produce a REFUSE rule with the compound condition. MUTANT (drop the refusal-branch
+    detection) makes it a plain rewrite again -> REDDENS."""
+    rules = _rules()
+    refuse = [r for r in rules if r.kind == RULE_REFUSE]
+    assert refuse, "the platinum summary.json 401 refusal must be parsed, not dropped"
+    r = refuse[0]
+    assert r.refuse_status == "401"
+    assert r.require_endswith == "/summary.json"
+    assert any("advisors" in p for p in r.require_any_prefix)
+    assert any("clients" in p for p in r.require_any_prefix)
+
+
+def test_R2_a_refused_path_resolves_to_no_key_but_a_sibling_still_resolves():
+    """BOTH directions of the refusal, on the real parsed table. A summary.json path REFUSES (no key);
+    a platinum path that is NOT summary.json still RESOLVES -- the compound condition must not
+    over-refuse. MUTANT (refuse on the platinum/ prefix alone) blocks partner_analytics too -> REDDENS."""
+    rt = build_routing_table(_WORKSPACE)
+    refused = "/api/scoped/advisor-intelligence/platinum/advisors/A1/summary.json"
+    sibling = "/api/scoped/advisor-intelligence/platinum/firm/partner_analytics.json"
+    assert rt.match_rewrite_rule(refused).kind == RULE_REFUSE
+    assert rt.resolve_s3_key(refused) == "", "a refused path must resolve to NO key"
+    assert rt.match_rewrite_rule(sibling).kind != RULE_REFUSE, "a non-summary platinum path must NOT be refused"
+    assert rt.resolve_s3_key(sibling) == "platinum/firm/partner_analytics.json"
+
+
+def test_R2_client_timeseries_multistep_resolves_to_the_router_target_not_the_default():
+    """DRIFT 2. The router rewrites client_timeseries/{id}.json -> gold/entities/clients/{id}/timeseries.json.
+    The transcribed table had no such rule so it fell through to gold/artifacts/client_timeseries/{id}.json
+    -- a confidently wrong key. The parser produces a MULTISTEP rule that computes the real target.
+    MUTANT (drop the multistep branch) falls back to the default -> REDDENS."""
+    rt = build_routing_table(_WORKSPACE)
+    url = "/api/scoped/advisor-intelligence/client_timeseries/C999.json"
+    assert rt.match_rewrite_rule(url).kind == RULE_MULTISTEP
+    assert rt.resolve_s3_key(url) == "gold/entities/clients/C999/timeseries.json"
+
+
+def test_R2_advisor_intelligence_rules_are_firm_parametric():
+    """The advisor-intelligence origin bucket is chosen per requesting firm (FIRM_BUCKET_MAP), so every
+    rule under it must carry firm_parametric=True and the /api/general rules must NOT. MUTANT (drop the
+    firm_parametric flag) lets a consumer emit a fixed cross-firm bucket -> REDDENS."""
+    rules = _rules()
+    adv = [r for r in rules if r.url_prefix.startswith("/api/scoped/advisor-intelligence/")]
+    gen = [r for r in rules if r.url_prefix.startswith("/api/general/")]
+    assert adv and all(r.firm_parametric for r in adv), "advisor-intelligence rules are firm-parametric"
+    assert gen and not any(r.firm_parametric for r in gen), "general rules are single-bucket, not firm-parametric"
+
+
+def test_R2_parser_fails_LOUD_on_an_unrepresentable_branch():
+    """The whole point of parsing over transcribing: an unrecognized branch is a HARD ERROR, never a
+    silently dropped rule. Feed the parser a router whose branch has no recognized action and assert it
+    RAISES. MUTANT (swallow RouterParseError / `continue` past it) -> REDDENS: silence returns."""
+    import tempfile
+    import os
+    # A VALID branch first, so the parser produces >=1 rule and the "parsed zero rules" guard does NOT
+    # fire -- then only the bogus branch's own loud raise can distinguish. Without the valid branch a
+    # mutant that `continue`s past the branch raise still trips the zero-rules guard, and the test would
+    # pass while being blind to exactly the mutant it targets (the M14 finding).
+    bogus = (
+        "export const handler = async (event) => {\n"
+        '  const suffix = request.uri.replace("/api/scoped/advisor-intelligence/", "");\n'
+        '  if (suffix.startsWith("views/")) { request.uri = "/gold/" + suffix; }\n'
+        '  else if (suffix.startsWith("weird/")) { someOtherThing(suffix); }\n'
+        "};\n"
+    )
+    with tempfile.TemporaryDirectory() as d:
+        rp = os.path.join(d, "infra", "aws", "lambda-edge", "shared-advisor-router")
+        os.makedirs(rp)
+        with open(os.path.join(rp, "index.mjs"), "w", encoding="utf-8") as fh:
+            fh.write(bogus)
+        import pytest
+        with pytest.raises(RouterParseError):
+            _parse_rewrite_rules(Path(d))
+
+
+def test_R2_parsed_table_covers_the_known_general_and_advisor_prefixes():
+    """A coverage floor so a future parser regression that emits FEWER rules is caught. The real table
+    must resolve the MDPF general path and the advisor artifacts path, and must carry the refusal +
+    multistep kinds. MUTANT (any branch-detection regression) drops one of these -> REDDENS."""
+    rt = build_routing_table(_WORKSPACE)
+    assert rt.resolve_s3_key("/api/general/json/mdpf/x.json") == "json/mdpf/x.json"
+    assert rt.resolve_s3_key("/api/scoped/advisor-intelligence/artifacts/y.json") == "gold/artifacts/y.json"
+    kinds = {r.kind for r in _rules()}
+    assert RULE_REFUSE in kinds and RULE_MULTISTEP in kinds, "both non-prefix rule kinds must be present"
+
+
+# ---------------------------------------------------------------------------
 # LAYER 6 -- `trace --json <url>`: the outcome CLASS as a first-class enum.
 # Before this, the behavior branch returned before the JSON emitter, so --json silently produced
 # PROSE for every URL query -- a flag promising machine-readable output and returning human text.
@@ -512,6 +624,44 @@ def test_json_payload_carries_plane_and_blind_spots_from_the_contract():
         "the transcribed-not-parsed blind spot must reach machine consumers, not just human readers"
     )
     assert payload["vintage"] and payload["vintage"] != "UNKNOWN"
+
+
+def test_json_refused_outcome_carries_no_key_and_no_uri():
+    """The REFUSED outcome on the real config: a router-blocked PII path must render outcome REFUSED
+    with s3_key null and s3_uri null, NOT a RESOLVED key. This is the exact false-secure rendering the
+    parse closed. MUTANT (treat a refuse rule as a normal rewrite) emits a key -> REDDENS."""
+    payload = _trace_json("/api/scoped/advisor-intelligence/platinum/clients/C1/summary.json",
+                          rt=build_routing_table(_WORKSPACE))
+    assert payload["outcome"] == "REFUSED"
+    assert payload["s3_key"] is None
+    assert payload["s3_uri"] is None
+    assert payload.get("refuse_status") == "401"
+    assert "false-secure" in payload["disclosure"].lower()
+
+
+def test_json_firm_parametric_emits_key_but_refuses_bucket():
+    """A firm-parametric advisor path: RESOLVED with a key, but s3_bucket and s3_uri REFUSED because the
+    bucket is chosen per requesting firm. Naming a fixed bucket here is the cross-firm-pointer defect.
+    MUTANT (emit the CF origin's bucket anyway) sets s3_uri -> REDDENS."""
+    payload = _trace_json("/api/scoped/advisor-intelligence/artifacts/summary.json",
+                          rt=build_routing_table(_WORKSPACE))
+    assert payload["outcome"] == "RESOLVED"
+    assert payload["s3_key"] == "gold/artifacts/summary.json", "the KEY is firm-independent and must resolve"
+    assert payload["s3_bucket"] is None, "a firm-parametric bucket must not be named"
+    assert payload["s3_uri"] is None
+    assert payload["s3_bucket_firm_parametric"] is True
+
+
+def test_json_non_firm_parametric_still_emits_full_uri():
+    """NEGATIVE CONTROL: the MDPF general path is single-bucket, so it must STILL emit a concrete
+    s3_uri. MUTANT (blanket-refuse every bucket) drops the MDPF URI -> REDDENS. Proves the firm-refusal
+    is targeted, not a blanket 'never emit a bucket'."""
+    payload = _trace_json("/api/general/json/mdpf/global/aggregate-aua-timeseries.json",
+                          rt=build_routing_table(_WORKSPACE))
+    assert payload["outcome"] == "RESOLVED"
+    assert payload["s3_bucket"] == "opal-data-portal-v2"
+    assert payload["s3_uri"] == "s3://opal-data-portal-v2/json/mdpf/global/aggregate-aua-timeseries.json"
+    assert payload["s3_bucket_firm_parametric"] is False
 
 
 def test_real_config_the_mdpf_origin_now_carries_its_bucket():
