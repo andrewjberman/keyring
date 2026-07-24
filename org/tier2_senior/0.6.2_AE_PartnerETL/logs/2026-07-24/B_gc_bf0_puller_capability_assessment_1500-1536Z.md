@@ -81,6 +81,54 @@ was holiday-polluted; the revamp correctly replaced it with a trading-day axis. 
 zero-egress repair path that every existing instrument missed. If counts can go missing from a served
 artifact and survive in its own version history, that question will recur.
 
+## CLOSE-OUT AMENDMENT (1536–1618Z) — outcome: ZERO RECOVERED
+
+The assessment was gated and accepted (CTO 154017Z), the 399 was approved for landing (154402Z), and then
+**I stopped it against my own finding** and it did not land.
+
+**The arc, in order:**
+1. CTO's GO named the outcome but not the **mechanism**. His own condition 5 said stop if non-mechanical.
+   It was: a served-output write, DELTA != 0, with no COO never-widen half. I held and asked.
+2. CTO ruled **(b) upstream repair**. While making (b) concrete I found `load_served_account_count` is
+   **49F-only** (`:743`) — **INF never calls it** (`:966`/`:971`). The (b) I had recommended does not exist
+   for INF. My own facts had been wrong and CTO had ruled on them.
+3. In the same read I hit `:966-982`: the legacy INF served artifact is **source-documented as carrying
+   mis-stamped dates**. That is the artifact my 399 came from — and **RC-1 is structurally blind to it**,
+   because concordance across versions measures *propagation*, not truth. I raised a `[STOP]` against my
+   own headline finding minutes before it would have been co-signed into served output.
+4. CTO authorized path (i). Bounding measurement (legacy vs current, a genuinely different axis):
+   **26/28 agree; the entire mis-stamp set is 2 dates, both far from 05-21; all six neighbours exact.**
+   That moved the value from "cannot show it is right" to "quite probably right."
+5. **CTO ruled (iii): ZERO RECOVERED** — on the *mechanism*, not the value. The only remaining path was an
+   in-place served write that the next producer run would **silently revert**. A repair with a hidden expiry
+   is worse than a visible gap.
+
+**Three corrections I made against my own evidence, two of them unprompted:**
+- The legacy artifact has **no `account_count_total` field** — the 399 was *my sum*, presented as a read
+  value. Surfaced by answering COO's question rather than defending it.
+- **05-20 is 399, not 401** (my error, inherited by CVO and CTO). Worse: 05-20's seven per-model cells are
+  **byte-identical** to my 05-21 claim. The corrected coherence line 399/399/401 makes the evidence
+  *weaker* — the value is indistinguishable from the prior day's roster.
+- **"6 independently-written versions" overstates it** (CVO relabel, adopted): RC-1 establishes
+  **serving-stability**, not independence.
+
+**One hypothesis of mine that was wrong, checked before I asserted it:** I suspected 05-21's
+`exempt_absorbed` class *forces* None regardless of INF, which would have made CVO's class-C claim wrong.
+Source-check at `:1719-1733`: the None is decided first by `any(c is None)`; `exempt_absorbed` is only the
+**label** applied after. CVO was right. Measured brackets: Global 05-20 = 7279, 05-21 = None, 05-22 = 7299.
+
+**RC-1 CVO-verified SOUND** @2489bd3a1b — read-only audited at source before running, W-2 and W-3 closed
+(9 distinct ETags; axis grew 426→429, so 399 survived four re-derivations), W-1 accepted as disclosed.
+
+**Push authority changed mid-session** (Andrew-direct ~1600Z, via COO): commits unchanged, **Tier-1 pushes
+only**. My last self-push was ~15:47Z, before the order. `f286bbf4b` is committed and handed to COO.
+
+**The governing lesson, which is this TO's own subject turned inward:** *the unverified remainder is exactly
+the target set* — every date we want to repair is, by construction, outside the test that would validate the
+repair. And *a derived number presented as a read number is the same class as a source-confirmed mechanism
+for an unmeasured gap*: the value can be right while the epistemic claim attached to it is wrong, and only
+the author can catch it.
+
 ## Next Steps
 
 1. **[CTO]** Gate the assessment. Two live decisions: whether to land 05-21 = 399 via RC-1, and whether to
