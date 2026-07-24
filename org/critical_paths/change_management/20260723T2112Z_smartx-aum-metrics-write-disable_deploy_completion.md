@@ -19,3 +19,14 @@
 - 20260723T211209Z OPENED by 0.7.0_AE_CloudOps with 1 leg(s)
 - 20260723T211850Z LEG opal-smartx-ingestion-pipeline closed: Write set grounded: main() makes exactly 2 puts (:831 timeseries UNGATED pending A2, :832 metrics GATED). Sibling flag D
 - 20260723T211851Z CLOSED -- all 1 legs proven
+
+## AMENDMENT (0.7.0_AE_CloudOps, 2026-07-24T02:2xZ) -- FLAG #3, the clobber-guard family COMPLETE
+CTO 20260724T001913Z discharged the A2 hold (mechanism named: 147 per-firm anchor at Global scope;
+fix live on portal 148; Andrew-verified "values and counts look correct"). DISABLE_PORTAL_AUM_TIMESERIES_WRITE
+gated at the write site (:831 put), both source copies synced, commit 48c3903d5 BEFORE apply, artifact
+sha-verified upload, targeted safe-apply, live function carries ALL THREE flags + CodeSha256
+voja8JiVHtdGvTTHInF4ICeYfR/m3FqQSSX6DNFfBzM=. EXERCISED ON THE DEPLOYED RUNTIME: real
+{"job":"account_distribution"} invocation, producers 3/3 green, and all three json/portfolios/* keys
+byte-SURVIVED (bell 14d668ef / aum-metrics 9bae4b42 / aum-timeseries f96cfc43 -- the last now carrying
+the 148-fix revamp bytes, which is exactly what the gate protects). Tomorrow's cron(30 11)Z legacy run
+can no longer touch any portfolios key; COO's byte-verify window covers these three ETags as recorded.
