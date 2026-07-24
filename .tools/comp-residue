@@ -1,0 +1,17 @@
+#!/bin/bash
+# comp-residue -- THE RESIDUE DETECTOR: structural surface of a SOURCE that NO CODE traverses.
+# The deterministic detector for ARCHETYPAL_LEARNING_LOOP shape #1 (a NEW AXIS nobody enumerates).
+#
+# Usage:
+#   comp-residue surface <source.yaml> [--max-depth N]
+#   comp-residue check   <source.yaml> --consumers <files/dirs...>   # the main mode
+#   comp-residue pin     <source.yaml> [--by <serial>]
+#   comp-residue drift   <source.yaml>
+#
+# Exits: 0 PASS (no residue) | 2 VERDICT (residue found) | 3 REFUSE (nothing compared) | 1 FAIL
+# PROSE IS NOT TRAVERSAL: .md mentions land in a separate DOCUMENTED-BUT-NOT-TRAVERSED tier.
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/residue_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-residue" "$*" $_exit 2>/dev/null
+exit $_exit
