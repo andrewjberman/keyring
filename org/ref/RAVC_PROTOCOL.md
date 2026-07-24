@@ -40,6 +40,26 @@ On completion, the recipient sends a `COMPLETE` message including:
 For task orders: flip `<status>` to `complete` AND send the MCP completion
 message. The TO flip alone is not sufficient — the requester must be notified.
 
+#### 3a. AMEND A DELIVERABLE → RE-NOTIFY WITH THE NEW COMMIT-ISH. NON-OPTIONAL.
+
+**If you change a deliverable after reporting it, send a second message naming the new
+commit-ish and what changed.** A verifier who started before your amendment has **no signal
+that the thing under their eyes is superseded** — the file they opened simply looks finished.
+
+**WHY THIS IS A RULE AND NOT A COURTESY (2026-07-24, GC-W1):** the CVO began verifying a
+**247-line** draft; the submitted version at `@b078877020` was **310 lines**, and the added
+`§4A` was *the most decision-critical section in the report*, written after a priority
+re-point. **The verifier caught it only because the author's cover note happened to mention
+claims they had not read.** In their own words: *"that is luck rather than mechanism."*
+
+**The failure mode is silent and it lands on the VERIFIER, not the author** — a validation
+verdict rendered against a superseded draft is indistinguishable, in the record, from one
+rendered against the shipped artifact. Both read PASS.
+
+- **Author:** amended after reporting → re-notify. New commit-ish + one line on what moved.
+- **Verifier:** pin the commit-ish you validated **in your verdict**, so a later reader can
+  tell which bytes were checked.
+
 ### 4. Validate
 The requester MUST validate before closing. Validation means:
 - Open the commit / artifact / file
