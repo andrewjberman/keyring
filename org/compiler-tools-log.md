@@ -25448,3 +25448,108 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-pii | comp-pii routes | PASS |
 | 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_antipattern.py | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean.py | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-manifest-check | comp-manifest-check check --mode blocking --file org/modules/graph/tests/_p4_probe_exem... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean2.py | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_control.py | VERDICT |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/INTENT_DENOMINATOR_SYNCHR... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLARCH_LATENCY_... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-manifest-check | comp-manifest-check routable | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_routes.py --f... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-pulse | comp-pulse diff org/modules/graph/extract_routes.py org/modules/graph/tests/test_routes... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-system | comp-system --gate --changed org/modules/graph/extract_routes.py org/modules/graph/test... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-surface-check | comp-surface-check check --mode blocking portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-surface-check | comp-surface-check check --mode blocking org/tier2_senior/0.4.0_DS_ClientPlatform/promp... | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-surface-check | comp-surface-check check --mode blocking --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLSEM_PRD.md | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_TOOLSEM_PRD.md | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes trace --json /api/scoped/advisor-intelligence/platinum/advisors/A123/summar... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes trace --json /api/scoped/advisor-intelligence/client_timeseries/C999.json | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff .tools/hooks/comp-tool-hud.sh | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes edge-versions | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes trace --json /api/scoped/advisor-intelligence/artifacts/summary.json | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-routes | comp-routes auth-map | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-routes | comp-routes stats | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff .tools/hooks/comp-tool-hud.sh | VERDICT |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-24/cvoz_comproutes_falsesecure... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TOOLSEM_PRD.md | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_TOOLSEM_PRD.md | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes trace --json /api/scoped/advisor-intelligence/platinum/advisors/A123/summar... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes trace --json /api/scoped/advisor-intelligence/platinum/firm/partner_analyti... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes trace --json /api/scoped/advisor-intelligence/client_timeseries/C999.json | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes trace --json /api/scoped/advisor-intelligence/platinum/advisors/A123/summar... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes trace --json /api/scoped/advisor-intelligence/artifacts/summary.json | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes trace --json /api/general/json/mdpf/global/aggregate-aua-timeseries.json | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes trace /api/scoped/advisor-intelligence/platinum/clients/C1/summary.json | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-output-contracts... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-pulse | comp-pulse diff org/modules/graph/comp-output-contracts.yaml | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-system | comp-system --gate --changed org/modules/graph/comp-output-contracts.yaml | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which-routing-test.py | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff .tools/comp-which-routing-test.py | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-system | comp-system --gate --changed .tools/comp-which-routing-test.py | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-system | comp-system | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-pulse | comp-pulse diff infra/system/06_current_state.json infra/system/06_current_state.md org... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp | NFRA_MSBEFF.R1R3 | comp-system | comp-system --gate --changed org/modules/graph/comp-output-contracts.yaml infra/system/... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which-routing-test.py | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff .tools/comp-which-routing-test.py | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-system | comp-system --gate --changed .tools/comp-which-routing-test.py | VERDICT |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/NFRA_TOOLARCH.GATEBOUND... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/FINDING_comp_which_rep... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-routes | comp-routes origins | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~B | NFRA_MSBEFF.R4R6 | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLARCH_LATENCY_... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-24/cvoz_comproutes_falsesecure... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-routes | comp-routes trace --json /api/scoped/advisor-intelligence/artifacts/summary.json | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-routes | comp-routes trace --json /api/scoped/advisor-intelligence/platinum/advisors/A123/summar... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_routes.py --f... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-pulse | comp-pulse diff org/modules/graph/extract_routes.py org/modules/graph/routes_cli.py org... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-system | comp-system --gate --changed org/modules/graph/extract_routes.py org/modules/graph/rout... | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-system | comp-system | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/06_current_state.json --fi... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-pulse | comp-pulse diff infra/system/06_current_state.json infra/system/06_current_state.md org... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-system | comp-system --gate --changed org/modules/graph/extract_routes.py org/modules/graph/rout... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes trace --json /api/scoped/advisor-intelligence/platinum/advisors/A1/summary.... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-routes | comp-routes trace /api/scoped/advisor-intelligence/platinum/summary.json | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-routes | comp-routes trace api/scoped/advisor-intelligence/platinum/advisors/A123/summary.json | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-routes | comp-routes trace api/scoped/advisor-intelligence/platinum/firm/partner_analytics.json | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-routes | comp-routes trace /api/scoped/advisor-intelligence/platinum/advisors/A123/summary.json | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-routes | comp-routes trace /api/scoped/advisor-intelligence/platinum/firm/partner_analytics.json | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-24/cvoz_comproutes_R2R3_refuse... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes trace --json /api/general/json/mdpf/x.json | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/INTENT_DENOMINATOR_SYNCHR... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-lambdamap | comp-lambdamap --json | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-parity | comp-parity --json | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-pulse | comp-pulse --json | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes trace --json /api/general/json/mdpf/x.json | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_A_04.client_dimension.py | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-pipescript | comp-pipescript deployed full | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-parity | comp-parity --json | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-pulse | comp-pulse --json | VERDICT |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-drift | comp-drift full --json | FAIL |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-routes | comp-routes auth-map/trace/edge-versions -- R1 false-secure reproduced+fixed, R2/R3 parse+refuse | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-keys | comp-keys prefix opal-data-portal-v2 json/mdpf/global/ -- applied-plane key grounding | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-toolgraph/comp-symbols/comp-parity/comp-pulse/comp-state | machine-flag exercise pass -- HONORED confirmed by hand on complete invocations | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-manifest-check | completeness -- output-contract + stage-2 invariants after contract edits | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLARCH.MACHINEFLAG | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/deliverab... | PASS |
