@@ -118,6 +118,37 @@ One file per feature. Never overwrite into a monolith.
   <acceptance_criteria>
     <!-- MANDATORY. Specific, machine-checkable. Not "code runs" or "build clean."
 
+    ================================================================================
+    APPLY THESE TWO TESTS TO EVERY CRITERION BEFORE YOU ISSUE THE TO.
+    Binding per docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md @d3681d1d0 (CTO, 2026-07-24).
+    ================================================================================
+
+    (A) THE EASIEST-PASS TEST (corollary 3 — a control satisfiable by breaking what it
+        guards is not a control):
+          "What is the EASIEST way to make this criterion pass?"
+        If that route RE-COMMITS THE DEFECT, the criterion is wrong. Rewrite it, and
+        NAME THE FORBIDDEN SHORTCUT INSIDE THE CRITERION so the assignee cannot take it
+        by accident.
+        Worked example (CTO's own, named as his): an absolute aua_pct gate condition
+        could be satisfied by re-basing the very quantity it guarded.
+        >> PREFER DIFFERENTIAL INVARIANTS TO ABSOLUTE ONES. "sum(rows)/denominator
+           IDENTICAL pre/post (90.03% -> 90.03%)" fails if anything re-bases, and does
+           not require asserting a number that was never true.
+
+    (B) THE MISSING-THIRD-STATE TEST (corollary 1):
+        If the criterion models a TWO-STATE outcome, ask WHERE "WE DO NOT KNOW" GOES.
+          UNKNOWN != COMPLETE · HELD != CERTIFIED · UNREADABLE != UNCLOSED ·
+          INFERRED-PRESENT != MEASURED · UNEXERCISED != PASSED
+        The fix is ADDING THE STATE, never widening the predicate. On 2026-07-24 that
+        single question was the fix in four separate places.
+
+    AND ESCALATE THE ASSERTION LEVEL (2026-07-24, one observable revised three times in
+    one hour, each level invisible from the one above):
+          EXISTENCE ("a version appeared")        -> passes on the WORST outcome
+          CONTENT   ("the block survived")        -> passes on a wrong-axis value
+          CORRECTNESS ("the value == 294 exactly") -> the first one that can FAIL
+    A criterion that cannot fail is not a criterion. Pin the expected VALUE, not the shape.
+
     STANDARD CRITERIA (include for every gold-touching DS TO):
     N.   comp-validate {script} --artifact /tmp/{artifact}.json exits 0
          (all ERROR checks pass; WARN count documented in session log)
