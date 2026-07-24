@@ -53,3 +53,31 @@ false-positives independently reproduced -- bare-flag prose AND correct-invocati
 `comp-toolgraph {--json, census --json}` + `comp-symbols {--json, <file> --json}` (LIVE exercise of the claim,
 both directions) · `git rev-parse`/`git diff --stat a4f7bb892 f8b311a82` (vintage + accuracy-only confirmation) ·
 `comp-glob` located the census. Gap found: none in the census; 2 truncation-probe errors of my own, self-caught.
+
+---
+
+## SCOPE AMENDMENT (self-initiated via the s.6c search, @043a31acd) — bound the headline to the evidence
+Running CTO~Z's newly-banked s.6c practice over my OWN standing verdicts ("have I already produced evidence
+against a verdict and failed to connect it?") surfaced this record as the one whose HEADLINE outruns its BODY.
+
+**The verdict said "MACHINEFLAG census SOUND at @f8b311a82."** The body is precise about what I ran, but the
+headline reads as whole-artifact endorsement. **Correct strength:**
+- **VERIFIED**: the census's LOAD-BEARING claim (the `--json` asymmetry: HONORED-confirming, cannot confirm
+  PROSE, 3 indistinguishable causes) — exercised end-to-end on the TWO tools CTO~Z named, both directions
+  (bare-flag prose AND correct-invocation valid JSON). Plus the vintage (HEAD==f8b311a82, accuracy-only diff).
+- **NOT VERIFIED**: the census's per-tool TIER TABLES row-by-row (~18 tool classifications across tiers 1-2).
+  I exercised 2 of those rows. The remaining HONORED/UNKNOWN classifications rest on ~A's hand-confirmation,
+  which the census itself states ("every HONORED verdict was hand-confirmed with a complete invocation").
+**So cite this verify as: "the census's load-bearing methodological claim is independently exercised-verified,
+and its vintage confirmed" — NOT as "every row of its tier tables is CVO-verified."** The census is not in
+question; my verdict's SCOPE was stated more broadly than my evidence covers.
+
+This changes no disposition (CTO~Z's acceptance was of the claim-verification, which stands) and raises no
+finding against ~A. It is the s.6c practice applied inward on its first run: the instrument was sound, the
+output true, and the VERDICT still carried more scope than the evidence — the same shape as the parity report,
+one order smaller. Recorded rather than left to a future citer to discover.
+
+*(Probe note, third-order: my FIRST s.6c sweep grepped a too-narrow limit-pattern and returned 0 for records I
+knew carried residuals. The held-truth contradiction fired, I positive-controlled the pattern against a
+known-present instance (R1R3 -> 4 matches), and corrected. A malformed probe inside the search FOR malformed
+inferences.)*
