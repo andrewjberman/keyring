@@ -66,3 +66,49 @@ drifted from the logic it described; here the hand-maintained parity DENOMINATOR
 plane. **I must not author the denominator I am measured against** — I verify against it; authoring it is the
 grantee-commits-its-own-grant problem and would destroy the independence the verify rests on. Surfaced to CTO~Z
 (program/ontology owner) + 0.8.0 (contract owner) with the recommendation above; the fix is theirs to land.
+
+---
+
+## AMENDMENT — CTO~Z ruling (131401Z): all 3 claims independently re-verified + ACCEPTED, calibration ratified
+unchanged. **And my DIAGNOSIS was imprecise in a way worth correcting in my own record.**
+
+### I wrote "the denominator is STALE." That is WRONG, and the true mechanism is worse.
+CTO~Z: `07_maturity.md:6` asserts the v1 archetype layer "IS REPRESENTED in /system" -- **and that assertion is
+STILL TRUE.** ONTOLOGY2 landed **ADDITIVELY** (only `binds_up` adapter arrays extended; nothing replaced or
+removed). So the v1 strings the units grep for remain present AND CORRECT.
+>> **THE PARITY CHECK IS NOT READING A STALE LIE. IT IS READING A STILL-TRUE v1 FACT AND CONCLUDING CURRENCY.
+>> A PRESENCE-CHECK CANNOT DETECT AN ADDITIVE EXTENSION -- it can only fail if the base version is REMOVED.** <<
+**Therefore: the SAFEST kind of change -- additive, non-breaking, the kind we deliberately engineer for -- is
+precisely the kind that defeats presence-based parity. The better our change discipline, the blinder this
+instrument gets.** Not a bug in ONTOLOGY2's additivity (that was right); a bug in measuring currency by presence.
+This matters because a stale-FALSE record can be caught by re-reading it; a still-TRUE-but-incomplete one cannot.
+
+### THE PART THAT IS ON ME: I HELD THE MECHANISM AND DID NOT CONNECT IT.
+**I PROVED that additivity myself** at the ONTOLOGY2 P1 verify (@7d713349e): "every binds_up array a SUPERSET (no
+member removed anywhere); roles identical; role_priority identical; variance labels identical." I established the
+exact property that blinds the presence-check -- and then, ticks later, kept reporting the presence-check's green
+verdict without connecting the two. **Not missing data. A missing inference over data I had already produced.**
+That is a distinct failure mode from the probe errors caught earlier this session (those were malformed
+instruments; this was a sound instrument whose implication I did not draw), and it is the one that survived
+longest -- ~30 ticks -- because nothing about it LOOKED wrong.
+
+### CTO~Z's structural ruling (mine to verify when it lands, NOT to author)
+(a) **TWO AXES, PERMANENTLY.** A VERSION PIN catches drift in something already REPRESENTED (currency); it
+    structurally CANNOT catch a thing NEVER represented (coverage) -- **a unit that does not exist cannot fail.**
+(b) **THE COVERAGE CHECK MUST DERIVE ITS UNIT LIST FROM AN ENUMERABLE SOURCE.** *"A hand-maintained denominator
+    IS the frozen-enumeration class."* The program spent this entire arc ruling that enumeration happens at RUN
+    TIME from a real source and never from a hand-list (M3's retired VERDICT_EXIT_TOOLS; R1R3 fold-in D's derived
+    BD/INF/COT registry -- both of which I verified) -- and then measured its own estate against a hand-list.
+(c) **THE DUTY, NAMED AND OWNED: canonization is NOT COMPLETE until the estate's denominator can see it.** A
+    framework is "landed" when it is represented AND a unit exists that would FAIL if it regressed. TRIGGER_LAYER
+    applied to the denominator itself -- binding the NEXT framework, not just this one.
+
+### Disposition
+CTO~Z writes the TO; 0.8.0's lane lands scope_contract (its WS-1 artifact); ontology-plane content is CTO~Z's.
+**I verify the result when it lands** -- which keeps the SoD line intact (CTO~Z explicitly affirmed my refusal to
+author the denominator I am measured against; "do not soften it"). My two-axis tick change is ratified and starts
+at the next tick: report the DENOMINATOR with the verdict, and run the COVERAGE question alongside the CURRENCY one.
+
+### What actually caught this (CTO~Z's closing, and it is the true one)
+Not care, and not thirty ticks of diligence -- **Andrew asking what the number was OF.** The same question the
+whole program turns on, asked by the one person standing outside the instrument.
