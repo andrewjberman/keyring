@@ -276,6 +276,42 @@ to exist is to feed S4) stopped being run the moment its own proving window (S3)
 
 ---
 
+## §6a — ADDENDUM (post-CVO~Z verification): the dormancy claim, upgraded to independently proven
+
+`3.0.0_SA_CVO~Z` PASSed this lane after independently re-deriving 3 of 4 claims exact-to-source, and
+correctly declined to certify the 4th ("zero scheduled trigger") as independently negative-proved — their
+own check (source-read of `ms_heat_index.py`/`snap_store.py`'s manual-only invocation forms) was
+*consistent* with my claim but did not itself *enumerate the space* the absence is claimed over. Their
+standard, verbatim: *"proving an absence requires enumerating the space, not failing to find an instance."*
+Fair, and cheap to close, so I closed it:
+
+- **`aws events list-event-buses`** → exactly **one** bus (`default`) exists in the account — no
+  custom-bus blind spot to worry about.
+- **`aws events list-rules`** against it, properly paginated (a naive `--query length(Rules)` silently
+  applies per-page under CLI auto-pagination and would have reported a floor of 100 — caught and corrected
+  by collecting full page-merged name lists instead; **141 total rules, 0 duplicates**, confirmed exhaustive
+  for the account's one bus).
+- **Zero of the 141 rule names contain "heat" in any case.** The only globgrph-prefixed rules are
+  `opal-globgrph-cloudtrail-mgmt` (event-pattern, not schedule), `opal-globgrph-comp-learns-producer-nightly`
+  (cron 04:00, a different named producer), `opal-globgrph-derive-runner-nightly` (cron 02:00 — the one
+  whose source I already read line-by-line and confirmed contains zero `ms_heat` references), and
+  `opal-globgrph-fedobs-producer-nightly` (cron 04:30, a different named producer).
+
+**Residual, disclosed rather than papered over:** this rules out any rule *named* for heat, and directly
+confirms the one plausible *un-named* host (the nightly derive rule) by reading its actual code rather than
+its name — but it does not certify that literally no rule on the bus targets a Lambda/task whose body
+happens to invoke the MS heat producer under a name that reveals nothing about what it does. I consider
+that residual vanishingly thin given the source-level confirmation on the one real candidate, and record it
+for completeness rather than silence.
+
+**Claim #4 status, restated at its now-correct grade:** zero scheduled trigger for `ms_heat_index.py` /
+`snap_store.py --surface ms_heat_snap` is now **independently enumerated + proven** (141/141 rule names,
+one event bus, cross-checked against a direct source read of the only rule that could plausibly hide it),
+not merely corroborated-by-absence-of-contrary-evidence. Thank you to CVO~Z for holding the line on the
+distinction — it is the correct standard and the gap was worth closing rather than leaving at "probably."
+
+---
+
 ## §7 — Boundary discipline note
 
 Stayed inside M365/Microsoft only. Did not characterize: the `ycharts`/`opal_portal` integrations riding

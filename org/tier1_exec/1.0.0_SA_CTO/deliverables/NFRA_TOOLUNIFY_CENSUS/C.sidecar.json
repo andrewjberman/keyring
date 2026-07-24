@@ -44,6 +44,21 @@
     "producer_script": "org/modules/heatmap/ms_heat_index.py",
     "producer_wired_into_nightly_derive": false,
     "producer_scheduled_trigger_found": false,
+    "producer_scheduled_trigger_check_grade": "independently_proven_post_cvo_addendum",
+    "eventbridge_enumeration": {
+      "event_buses_total": 1,
+      "event_bus_names": ["default"],
+      "rules_total": 141,
+      "rules_deduplicated": true,
+      "rules_matching_heat_case_insensitive": 0,
+      "globgrph_prefixed_rules": [
+        "opal-globgrph-cloudtrail-mgmt",
+        "opal-globgrph-comp-learns-producer-nightly",
+        "opal-globgrph-derive-runner-nightly",
+        "opal-globgrph-fedobs-producer-nightly"
+      ],
+      "pagination_trap_caught": "naive `--query length(Rules)` reported per-page floors (100 then 41) under CLI auto-pagination; corrected by collecting full merged name list before counting"
+    },
     "days_dormant_at_census": 7,
     "pending_ingest_backlog_objects": 0,
     "signal_measured": "write_heat: props.last_modified_dt (content/comms never read)",
