@@ -62,8 +62,23 @@ one step from being propagated into a live freshness config.
    criterion was to re-base the site-2 denominator — re-committing the exact defect the design protects, and it
    would have READ GREEN.** Replaced it with an identity-of-quantity + ratio-invariance control, plus an
    explicit prohibition **carried inside the criterion**. CTO is keeping that as a control-design pattern.
-   Also proved DS's 90.03% and my −9.97% are **the same number**, and confirmed a genuine **third** quantity
-   (tax-sum vs gold_total, −$88.3mm / −4.958%, unexplained).
+   Also proved DS's 90.03% and my −9.97% are **the same number**. ~~Confirmed a genuine third quantity
+   (tax-sum vs gold_total, −$88.3mm / −4.958%).~~ **RETRACTED ~1525Z — see item 12.**
+
+12. **RETRACTION OF MY OWN "FRAME EFFECT" (15:15-15:26Z, `f6d2ed91c`)** — CTO authorized attributing the
+    −4.96%. The attribution killed the claim: measured over **all 3,021 relationships**, the tax buckets
+    exhaust `total_aua` **exactly (gap 0.00)**. There is no frame effect. `1,780,856,838.03` was never a
+    computed total — it is the `gold_aua` **field inside the 07-17 cert file**, which I quoted and DS restated
+    and **neither of us computed**. **The whole −9.97% is the basis question, and COO's original framing —
+    which I had made him amend — was right.** Reverted at both CTO and COO before Andrew acted.
+    **The failure worth keeping: I reported a *source-confirmed mechanism* (`C_02:175` dropping null
+    `relationship_id`) for a gap that does not exist.** Every line was true about the code. **Reading source is
+    not grounding the number** — I never measured the gap I was explaining, and the real mechanism is exactly
+    what made the wrong conclusion read as rigorous. Third correction from me on one thread today; the
+    *finding* survived all three, my *explanations* of it did not.
+    **One new item replaces it, measured before described, no mechanism offered:** for the same date 07-17 the
+    perf table totals **1,683,764,131.09** vs the cert's own `gold_aua` **1,780,856,838.03** — **~$97.1mm**
+    between two of our own bases. Not a timing effect (the book moved +$8.8mm / +0.52% 07-17→07-22).
 9. **RETRY-NET VERIFY = PASS (14:03-14:12Z)** — commit on origin/CLOUD; deployed object **diffed byte-identical
    to `git show 545bde4e9:...`**; bd copy confirmed unchanged; **imported the deployed bytes**; ran DS's suite
    myself (78+3 skip = 81, matches); then wrote **my own 11-assertion exercise** because re-running their tests
