@@ -1,0 +1,122 @@
+{
+  "lane": "0.8.0_AE_CloudComp~A",
+  "mission": "NFRA_TOOLUNIFY census SS2.A -- Deployed-AWS vs graph PARITY",
+  "census_window_utc": {"start": "2026-07-24T21:41:13Z", "end": "2026-07-24T23:35:27Z"},
+  "vintages": {
+    "graph_json_built_at_utc": "2026-07-24T20:30:49.417799Z",
+    "graph_json_stable_across_census": true,
+    "kuzu_built_utc": "2026-07-24T18:01:18.199260+00:00",
+    "kuzu_nessie_head": "current (pin == marker HEAD)",
+    "kuzu_graph_nodes_table_flag": "STALE > 6h cadence (per comp-kuzu provenance header)",
+    "live_aws_pull_window_utc": "2026-07-24T22:29:18Z to 2026-07-24T22:43:10Z"
+  },
+  "resource_class_parity": [
+    {"resource": "Lambda functions", "graph_json": 333, "kuzu": 191, "live": 191, "denominator_note": "live = full-paginated aws lambda list-functions, 0 dupes, confirmed twice (page-sum 50+50+50+41=191 and full-aggregate parse)"},
+    {"resource": "EventBridge rules", "graph_json": 63, "kuzu": 141, "live": 141, "denominator_note": "single page, NextToken absent; independently 3-way confirmed (this lane, ~C lane, kuzu)"},
+    {"resource": "Step Functions state machines", "graph_json": 1, "kuzu": 1, "live": 1, "denominator_note": "full-aggregate parse"},
+    {"resource": "SQS queues", "graph_json": 5, "kuzu": 12, "live": 12, "denominator_note": "full-aggregate parse"},
+    {"resource": "S3 buckets", "graph_json": 4, "kuzu": 39, "live": 39, "denominator_note": "account-wide list-buckets, full-aggregate parse"},
+    {"resource": "DynamoDB tables", "graph_json": null, "kuzu": 37, "live": 37, "denominator_note": "full-aggregate parse; graph.json has no DYNAMODB_TABLE node type at all"},
+    {"resource": "IAM roles", "graph_json": null, "kuzu": 193, "live": 206, "denominator_note": "live = fresh boto3 paginated; kuzu cohort vintage 20.6h old (full-derive), comp-iam live's own header flags incremental-pipe check as NOT-CHECKED/UNVERIFIED; graph.json has no IAM_ROLE node type at all"},
+    {"resource": "IAM policies (customer-managed, Local scope)", "graph_json": null, "kuzu": "see iam_policy_breakdown", "live": 30, "denominator_note": "live confirmed untruncated (IsTruncated=None, Marker=None); 21 of 30 are attached, 9 unattached"},
+    {"resource": "IAM policies (all scope incl AWS-managed)", "graph_json": null, "kuzu": null, "live": 1567, "denominator_note": "raw --no-paginate --query length() gave the page-floor 100 -- exactly the documented CTO~Z first-pass trap; full-paginated total is 1567"},
+    {"resource": "COMPONENT (portal)", "graph_json": 24, "kuzu_Component_file_grain": 199, "kuzu_ReactComponent_symbol_grain": 442, "kuzu_sum_reported_as_641": 641, "live_tsx_files_portal_src": 210, "live_tsx_files_pages_only": 122, "denominator_note": "the '641' is NOT a coherent single population -- see finding F2"}
+  ],
+  "lambda_graphjson_reconciliation": {
+    "graph_json_total": 333,
+    "vendored_dependency_phantom_nodes": 115,
+    "vendored_phantom_by_contaminating_dir": {
+      "infra/aws/lambda/portal_data_proxy/": 66,
+      "infra/aws/lambda/v2_portal/": 41,
+      "infra/aws/lambda/daily_agenda_generator/": 6,
+      "infra/aws/lambda/trade-pipeline/": 2
+    },
+    "alias_duplicate_excess_slots": 30,
+    "alias_duplicate_example": "infra/aws/lambda/bd_transaction_consolidator/lambda_function.py claimed by BOTH lambda:bd_transaction_consolidator and lambda:opal-bd-transaction-consolidator",
+    "residual_after_removing_both_defect_classes": 188,
+    "source_map_registry_count": 192,
+    "kuzu_and_live_count": 191,
+    "registry_vs_live_diff": {
+      "live_only_not_in_registry": ["m365-ms-ingest-liveness", "opal-49f-served-guard", "opal-cot-served-guard", "opal-inf-served-guard"],
+      "registry_only_not_live": ["bd-client-detail", "find-insure-serving-companies", "find-insure-serving-consolidate", "find-insure-serving-employees", "find-insure-serving-scoring"]
+    }
+  },
+  "iam_policy_breakdown_kuzu_442": {
+    "customer_managed_real_arn": 16,
+    "aws_managed_attached_real_arn": 10,
+    "inline_policies_synthetic_pseudo_arn": 416,
+    "synthetic_id_pattern": "arn:aws:iam::313476888478:role/<RoleName>/inline/<PolicyName> -- NOT a real AWS ARN, inline policies have none",
+    "live_customer_managed_total": 30,
+    "live_customer_managed_attached": 21,
+    "live_customer_managed_unattached": 9,
+    "residual_gap_kuzu16_vs_live21attached": 5,
+    "residual_gap_status": "PARTIALLY EXPLAINED, not fully closed -- candidate coverage defect"
+  },
+  "globgrph_7layer_reconciliation": {
+    "prd_source": "docs/architecture/NFRA_GLOBGRPH_PRD.md SS4.4",
+    "prd_declared_total_per_header_text": 40,
+    "actual_table_row_count": 41,
+    "doc_internal_count_mismatch": "header says 40, table has 41 rows -- minor citable finding",
+    "summary": {"exact_name_match": 14, "renamed_variant_match": 9, "no_analog_in_kuzu": 18},
+    "per_class": [
+      {"layer": "L1", "class": "PORTAL_BUNDLE", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L1", "class": "PORTAL_PAGE", "status": "RENAMED", "kuzu_name": "Page", "n": 15},
+      {"layer": "L1", "class": "PORTAL_COMPONENT", "status": "RENAMED", "kuzu_name": "Component,ReactComponent", "n": 641},
+      {"layer": "L1", "class": "PORTAL_HOOK", "status": "RENAMED", "kuzu_name": "Hook", "n": 111},
+      {"layer": "L1", "class": "PORTAL_CONTEXT", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L1", "class": "PORTAL_UTIL", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L1", "class": "PORTAL_STORE", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L1", "class": "PORTAL_TYPE", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L1", "class": "REACT_QUERY_KEY", "status": "RENAMED", "kuzu_name": "ReactQueryKey", "n": 57},
+      {"layer": "L2", "class": "API_ROUTE", "status": "EXACT", "kuzu_name": "API_ROUTE", "n": 82},
+      {"layer": "L2", "class": "CLOUDFRONT_BEHAVIOR", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L2", "class": "AUTH_MIDDLEWARE", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L3", "class": "LAMBDA", "status": "EXACT", "kuzu_name": "LAMBDA", "n": 191},
+      {"layer": "L3", "class": "STATE_MACHINE", "status": "EXACT", "kuzu_name": "STATE_MACHINE", "n": 1},
+      {"layer": "L3", "class": "EC2_INSTANCE", "status": "EXACT", "kuzu_name": "EC2_INSTANCE", "n": 33},
+      {"layer": "L3", "class": "EVENT_RULE", "status": "EXACT", "kuzu_name": "EVENT_RULE", "n": 141},
+      {"layer": "L3", "class": "EVENT_SOURCE", "status": "EXACT", "kuzu_name": "EVENT_SOURCE", "n": 95},
+      {"layer": "L3", "class": "ECS_SERVICE", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L3", "class": "ECS_TASK_DEF", "status": "RENAMED", "kuzu_name": "ECS_TASK_DEFINITION", "n": 7},
+      {"layer": "L3", "class": "EVENTBRIDGE_SCHEDULE", "status": "RENAMED", "kuzu_name": "SCHEDULE", "n": 10},
+      {"layer": "L3", "class": "SQS_QUEUE", "status": "EXACT", "kuzu_name": "SQS_QUEUE", "n": 12},
+      {"layer": "L3", "class": "SNS_TOPIC", "status": "EXACT", "kuzu_name": "SNS_TOPIC", "n": 15},
+      {"layer": "L3", "class": "API_GATEWAY", "status": "RENAMED", "kuzu_name": "API_GW", "n": 5},
+      {"layer": "L4", "class": "S3_BUCKET", "status": "EXACT", "kuzu_name": "S3_BUCKET", "n": 39},
+      {"layer": "L4", "class": "S3_DATA_KEY", "status": "RENAMED", "kuzu_name": "S3Key", "n": 232},
+      {"layer": "L4", "class": "DYNAMODB_TABLE", "status": "EXACT", "kuzu_name": "DYNAMODB_TABLE", "n": 37},
+      {"layer": "L4", "class": "SECRET", "status": "EXACT", "kuzu_name": "SECRET", "n": 81},
+      {"layer": "L4", "class": "SSM_PARAMETER", "status": "MISSING", "kuzu_name": null, "n": 0, "note": "kuzu has SSM_DOCUMENT(24) instead -- a DIFFERENT AWS resource type, not a renamed match"},
+      {"layer": "L5", "class": "PIPELINE", "status": "RENAMED", "kuzu_name": "Pipeline", "n": 3},
+      {"layer": "L5", "class": "BRONZE_SCRIPT", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L5", "class": "SILVER_SCRIPT", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L5", "class": "GOLD_SCRIPT", "status": "MISSING", "kuzu_name": null, "n": 0, "note": "graph.json's SINGLE LARGEST category (1365 nodes, 60pct of its graph) has no exact-name kuzu analog; nearest candidates PipelineFunction(1201)/PipelineScript(133) differ by an order of magnitude from EACH OTHER, not just from graph.json"},
+      {"layer": "L5", "class": "LAMBDA_SCRIPT", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L5", "class": "TRANSFORM", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L5", "class": "BACKFILL_SCRIPT", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L6", "class": "IAM_ROLE", "status": "EXACT", "kuzu_name": "IAM_ROLE", "n": 193},
+      {"layer": "L6", "class": "IAM_POLICY", "status": "EXACT", "kuzu_name": "IAM_POLICY", "n": 442, "note": "exact NAME match but internally conflates 3 different populations -- see iam_policy_breakdown"},
+      {"layer": "L6", "class": "KMS_KEY", "status": "EXACT", "kuzu_name": "KMS_KEY", "n": 10},
+      {"layer": "L7", "class": "EXTERNAL_API", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L7", "class": "EXTERNAL_FEED", "status": "MISSING", "kuzu_name": null, "n": 0},
+      {"layer": "L7", "class": "CLOUDFRONT_ORIGIN", "status": "MISSING", "kuzu_name": null, "n": 0}
+    ],
+    "undeclared_kuzu_types": {
+      "count_of_types": 34,
+      "nodes_under_undeclared_types": 17950,
+      "pct_of_kuzu_total_20403_nodes": 88.0,
+      "composition": {
+        "m365_surface_not_in_prd_at_all": {"types": ["MS_FILE","MS_FOLDER","MS_USER","MS_SITE","MS_LIBRARY"], "counts": [4618,1034,15,1,1], "total": 5669, "note": "corroborates ~C's lane finding: M365 is a real, heavily-populated plane absent from the governing PRD, not a stub"},
+        "ts_semantic_code_analysis_layer": {"types": ["Field","TypeDecl","Module","Prop","JSXElement","JSXRender","PipelineFunction","PipelineScript","DataFetch"], "counts": [4969,807,374,359,2205,1433,1201,133,106], "total": 11587, "note": "likely the plan doc's ts-semantic producer output; a real, large, wholly undeclared plane"},
+        "small_infra_accretions": {"types": ["LOG_GROUP","CW_ALARM","SECURITY_GROUP","INSTANCE_PROFILE","SERVICE_PRINCIPAL","S3_BUCKET_POLICY","VPC_ENDPOINT","ROUTE53_RECORD","LOAD_BALANCER","ECS_CLUSTER","CLOUDFRONT_DISTRIBUTION","CODEBUILD_PROJECT","IAM_USER","LAMBDA_LAYER"], "counts": [233,51,24,19,18,11,3,3,1,1,1,4,4,13], "total": 386},
+        "unclear_purpose": {"types": ["PanelCluster","ServedURL","C2Motif","C3System"], "counts": [91,45,19,4], "total": 159, "note": "not fully characterized in this lane -- flagged unexplained, candidate belongs to a debt-scan/motif-analysis producer per adjacent filenames (org/modules/graph/debtscan/canon_motif) but not source-confirmed"}
+      }
+    },
+    "cert_bar_check": "PRD states 'UNCATEGORIZED = 0 is the cert bar' -- literally TRUE (no node_type value of UNCATEGORIZED/OTHER/UNKNOWN exists in kuzu), but the SPIRIT of a closed vocabulary is not held: 34 specifically-named-but-undeclared types carry 88pct of the graph's nodes. Letter-of-the-law passes; spirit does not."
+  },
+  "could_not_fully_verify": [
+    "Whether the 5 kuzu-vs-live-attached IAM customer-managed-policy gap (16 vs 21) has a single clean mechanism, or is multiple small effects -- flagged as candidate coverage defect, not resolved.",
+    "PanelCluster/ServedURL/C2Motif/C3System kuzu node types -- purpose inferred from adjacent filenames only, not source-confirmed. Out of this lane's boundary to chase further (belongs to whichever producer emits them; likely a base/~D question).",
+    "Whether graph.json's 24 COMPONENT nodes correspond 1:1 to a subset of kuzu's Component(199) file-grain population by path -- not cross-joined; would need a path-level join, deferred as lower-value than the mechanism-level finding already grounded."
+  ]
+}
