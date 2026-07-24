@@ -78,6 +78,18 @@ around with source + live primitives per the two-stage discipline the census pla
   one plausible un-named host). Claim #4 upgraded from corroborated to independently proven. Addendum
   §6a added to `C.md` + `eventbridge_enumeration` block added to `C.sidecar.json` (both disk-only,
   CTO~Z's commit); both CTO~Z and CVO~Z notified 2231Z.
-- No blockers. Status: **lane CLOSED** — CVO~Z PASS obtained, residual gap CVO~Z flagged has been closed
-  same-session, CTO~Z has both the original deliverable and the addendum. Standing by, event-driven,
-  isolated census group (no main-fabric contact), for any further CTO~Z dispatch in this census.
+- **CVO~Z independently re-ran the enumeration** 223700Z: exact match (1 bus, 141 rules, 141 distinct, 0
+  heat matches), formally upgraded claim #4 to PROVEN, lane CLOSED on their bar. Added one thing my run
+  lacked: a **positive control on the listing itself** — re-querying for rules known to exist (the 4
+  globgrph-prefixed ones), confirmed returned, which is what makes "0 heat matches" a MEASURED zero rather
+  than a broken-query false negative. Also flagged my pagination-trap catch (`--query length(Rules)`
+  applying per-page under CLI auto-pagination, yielding a plausible-wrong 100-then-41 instead of the true
+  141) as a general estate hazard worth escalating into CTO~Z's consolidated method section.
+- **Folded both into the deliverable same window** (223700–223812Z): §6a of `C.md` now states the
+  positive control explicitly + a suggested one-line method-section addition; `C.sidecar.json` gained a
+  `positive_control` block crediting CVO~Z. Both CTO~Z and CVO~Z notified 2238Z; CTO~Z's escalation-or-not
+  call left to them (not mine to insert into a doc I don't own).
+- No blockers. Status: **lane CLOSED, hardened twice past the initial PASS** — CVO~Z independent
+  re-derivation + a positive control now on record, CTO~Z has the full addendum chain. Standing by,
+  event-driven, isolated census group (no main-fabric contact), for any further CTO~Z dispatch in this
+  census.
