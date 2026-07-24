@@ -26035,3 +26035,17 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-pipescript io | comp-pipescript io dim_mdpf_aggregate_aua_timeseries.py -- FIRST use per Andrew-direct ~1924Z standing (comp-tools FIRST for data flows/lineage/provenance/dependencies; hand-grep LAST RESORT or VERIFY-ONLY). Returned 5 monolith silver reads + 1 runtime-resolved gold read a path-extractor cannot see. CROSS-CHECKED against my manifest observed 8: the 3 extra are Cottonwood BD silver, which THE SPINE NEVER READS -- so my cottonwood lag is measured on the wrong axis (open finding, routed, not fixed unilaterally). Verify step (grep) then found a read the GRAPH missed (:1552-3 cottonwood slice). NEITHER derivation complete; the disagreement was the value. | PASS |
 | 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --help | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~B | MDPF_CHANNEL_INDEPENDENCE.CI-R7R8 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~B | MDPF_CHANNEL_INDEPENDENCE.CI-R7R8 | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260724T1925Z_mdpf-code-refresh-M... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pipescript | comp-pipescript io | FAIL |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pipescript | comp-pipescript io _trading_day_calendar.py | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pipescript | comp-pipescript io bd-client-detail-api | FAIL |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pipescript | comp-pipescript io build_mdpf_wsc_inflection_feeder.py | PASS |
+| 2026-07-24 | 1.0.0_SA_CTO | comp-which x4, comp-grep x3, pipescript mdpf, comp-dataflow gate/origin, lib/trading_calendar | MDPF Global-count audit + channel-independence program. pipescript surfaced a documented mdpf-freshness-checker that DOES NOT EXIST LIVE (and warned its own 39d vintage). comp-dataflow gate found 2 served-origin reads incl. one I missed, with its blind spot printed (4/8 unresolved-dynamic). THREE GAPS: comp-which MIS-ROUTES mdpf lineage (returned bd/inf/cot-only tool); pipescript --resource has no mdpf thread; comp-pipescript io is BLIND to SERVED_BUCKET reads on every tree and emits a clean manifest rather than declaring it. |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-24/s... | PASS |
