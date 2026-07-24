@@ -234,14 +234,35 @@ spine. I have not touched that file.
   exhausting `total_aua` **EXACTLY (gap 0.00)** on `client_performance.parquet`, and the `gold_aua` field
   inside the cert (`$1,780,856,838.03`) turned out to be **a field nobody had computed**, quoted through
   two honest relays. I had used it as a candidate denominator. Resolved above me; CTO has it.
-- **>> LIVE RISK TO THE D_00 LIMB I DEPLOYED THIS HOUR: CERTIFIED AUA IS BEING COMPLETELY DEPRECATED
-  (Andrew ~1547Z, relayed COO 165526Z).** The entire D_00 fix is built on making the **held certified**
-  basis durable and uncapped. If the cert mechanism retires, the 2026-08-01 cliff may never arrive and
-  the `held_certified` basis may be describing a quantity that no longer exists. The code is harmless
-  either way (it holds a value rather than substituting one), but its PREMISE may have been retired by a
-  sovereign ruling ~50 minutes after CTO gated the design. **Raised to CTO + 0.6.2~A 1736Z. Not
-  self-reverting anything** -- I do not know the deprecation's scope or timeline, and guessing at it is
-  the same error as reconstructing a spec.
+- **>> D_00 @`f204e97cb` IS `MOOT-ON-ARRIVAL` -- RULED (CTO 170155Z on ANDREW-DIRECT ~1701Z).**
+  Andrew VERBATIM: *"I do not give a single fuck about certified AUA, that is a deprecated concept and
+  will not even exist by August."* **The deprecation lands BEFORE 2026-08-01, so the cliff CANNOT
+  ARRIVE** -- the mechanism that produces it will not exist when the date comes. **The 08-01 date comes
+  off every board.** (This SUPERSEDES the `CONDITIONAL` marking CTO issued at 170002Z, which was
+  provisional pending a timeline he did not then hold.)
+  **NOT reverted, NOT live protection.** Left in place because it HOLDS a value rather than substituting
+  one (harmless inert) and because reverting deployed+verified code to satisfy a records question is the
+  worse trade. **Work PRESERVED not deleted:** the mutant reproducing the -$99.1mm substitution on demand
+  is a reusable instrument, and the basis-carrying pattern is correct INDEPENDENTLY of certified AUA --
+  the same carry-the-basis shape is being applied to the MDPF count series. **Retire the CLIFF RATIONALE,
+  keep the pattern.** No fourth `basis` value: certification is not replaced by another certified-like
+  basis; 49F moves to Schwab explicitly.
+  **RECORD FIX APPLIED IN THE CODE ITSELF** -- a MOOT-ON-ARRIVAL banner in `D_00.portal_aggregates.py`
+  above `ServedAUA` and in the test-suite docstring, because the cliff narrative sitting un-annotated in
+  my own source WAS the false record. CTO's instruction, verbatim and now in three places:
+  **"A FIX EVERYONE BELIEVES IS GUARDING SOMETHING IS WORSE THAN NO FIX."**
+  **CERTIFIED-AUA WORK IS CLOSED ACROSS ALL LANES:** the cliff rationale, the shared certified-vs-gold
+  resolver, the ~$97.1mm cert-gold_aua-vs-perf gap (CLOSE AS SUPERSEDED, do not explain it), and the
+  -9.97% divergence (a SYMPTOM of holding the certified basis -- watch, do not fix). 0.6.2~A verifies
+  nothing further against the cliff premise.
+  **Provenance of the catch:** I raised the premise check at 1736Z having deployed at 14:51Z -- the
+  build-verify loop completed ~50 min before the sovereign signal. I did not revert on the relayed
+  one-liner; acting on it without scope or timeline would have been the reconstruct-a-spec error in the
+  opposite direction. CTO: *"Do it again next time without hesitating."*
+  **What the afternoon actually produced** (CTO, so it is not filed as wasted): three of us worked a
+  question whose subject was being retired and none of the work was wrong -- the lasting output is the
+  METHOD. **Our instruments read the system as it IS and are structurally blind to where it is GOING.**
+  That is the one thing none of us could have measured.
 - **Not mine, flagged to me and unfixed:** ~719 monolith bronze partitions carry a broken object-name
   grammar (`CRS{d8}.{FEED}` vs `{master}.CRS{d8}.{FEED}.zip`) -- **a `--force` or full silver rebuild will
   fail on ~120 dates per feed.** Recorded in `test_canonical_daily_date_axis.py`. Bronze immutable (17a);
