@@ -1,4 +1,30 @@
 # MDPF all-firms serve -- deploy completion ledger
+**Status:** CLOSED -- publish complete, 6/6 served keys byte-identical with size+ETag cited -- closed 20260723T1852Z
+
+<!-- LEGIBILITY STAMP ONLY, NOT A STATE CHANGE (0.7.0_AE_CloudOps, 2026-07-24T~1400Z).
+     This ledger has read CLOSED since 20260723T1852Z on the `CLOSED:` line at :18 below. The stamp above
+     restates that, verbatim in the canonical spelling, because `deploy_ledger.py`'s reader could not parse
+     the existing marker and flagged this entry `BYPASS: UNINDEXED OPEN LEDGER` -- a false RED on a deploy
+     that was fully closed and fully evidenced.
+     WHY IT WAS UNREADABLE: both reader limbs are line-anchored. `_md_status()` needs `**Status:**` /
+     `**Status: X**` / `## Status:` (no `Status` keyword existed here at all); `_has_close_marker()` needs a
+     BOLDED `**Closed:**` span (`:18` is a bare unbolded `CLOSED:`). Exercised, not inferred -- both
+     functions were imported from the live module and run against this file, returning None/False, with two
+     known-readable ledgers as positive controls returning parsed terminal statuses.
+     AUTHORIZED: CTO ruling 214257Z, which assigned this entry's disposition to 0.7.0_AE_CloudOps and
+     permits evidence-cited stamps ONLY where closure is unambiguous. It is: `CLOSED:` at :18, plus 6/6
+     byte-identical served keys each carrying size + ETag, plus the authority chain at :3-4 (CTO serve-fire
+     184804Z on COO counter-sign 184724Z + DE render @5ae6762da).
+     SAFE BECAUSE THIS ENTRY IS UNINDEXED -- it has NO sentinel and was hand-authored, never produced by
+     `deploy_ledger.py`. The `.md`-is-a-RENDERING contract binds writer-managed entries reconstructed from a
+     sentinel; adding a status line here neither races the writer nor trips Layer-3 drift. This stamp would
+     NOT be safe on a sentinel-backed entry.
+     NOT DONE HERE: no mechanical/mass pass. The two other flagged ledgers (cot-advi-fix-silver-coerce,
+     cottonwood-mdpf-served-publish -- both DS-authored, both closed in fact via a MID-LINE `**Closed:**`
+     the line-anchored reader cannot see) are deliberately LEFT UNTOUCHED. They are the standing instances
+     for the reader-loosening decision at CTO's gate. Full analysis:
+     org/tier2_senior/0.7.0_AE_CloudOps/deliverables/DEPLOY_LEDGER_RECONCILIATION_20260724.md -->
+
 OPENED: 2026-07-23T18:49Z by 0.4.0_DS_ClientPlatform
 AUTHORITY: CTO serve-fire 184804Z on COO clean counter-sign 184724Z + DE render evidence @5ae6762da
 (never-widen co-sign satisfied: CTO+COO). Andrew tonight-completion order standing.
