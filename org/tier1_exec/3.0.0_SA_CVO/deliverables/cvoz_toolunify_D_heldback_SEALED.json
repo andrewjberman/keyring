@@ -1,0 +1,346 @@
+{
+ "control": "CVO~Z held-back set for NFRA_TOOLUNIFY lane ~D",
+ "denominator": {
+  "tools_with_depth2_only_reads": 17,
+  "wrappers_scanned": 85
+ },
+ "note": "Each entry reads an artifact ONLY at import depth >= 2. A depth-1 method cannot see these BY CONSTRUCTION. ~D was not told about any of them.",
+ "pre_registered": true,
+ "rows": {
+  "comp-aws": {
+   "DEPTH2_ONLY_reads": {
+    ".metadata.json": [
+     "org/modules/graph/contract_engine.py@d1"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/comp_aws_cli.py"
+   ]
+  },
+  "comp-blast": {
+   "DEPTH2_ONLY_reads": {
+    "EC2_MANIFEST.json": [
+     "org/modules/graph/pipeline_cli.py@d3"
+    ],
+    "canonical_prices.parquet": [
+     "org/modules/graph/nerves_resolve.py@d1"
+    ],
+    "estate-coverage-resolver.json": [
+     "org/modules/graph/pipeline_cli.py@d3"
+    ],
+    "lambda-source-map.json": [
+     "org/modules/graph/extract_lambda_routes.py@d2",
+     "org/modules/graph/extract_s3.py@d2",
+     "org/modules/graph/extract_eventbridge.py@d2"
+    ],
+    "summary.json": [
+     "org/modules/graph/extract_routes.py@d4"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/cli.py"
+   ]
+  },
+  "comp-build": {
+   "DEPTH2_ONLY_reads": {
+    "EC2_MANIFEST.json": [
+     "org/modules/graph/pipeline_cli.py@d3"
+    ],
+    "canonical_prices.parquet": [
+     "org/modules/graph/nerves_resolve.py@d1"
+    ],
+    "estate-coverage-resolver.json": [
+     "org/modules/graph/pipeline_cli.py@d3"
+    ],
+    "lambda-source-map.json": [
+     "org/modules/graph/extract_lambda_routes.py@d2",
+     "org/modules/graph/extract_s3.py@d2",
+     "org/modules/graph/extract_eventbridge.py@d2"
+    ],
+    "summary.json": [
+     "org/modules/graph/extract_routes.py@d4"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/cli.py"
+   ]
+  },
+  "comp-diff": {
+   "DEPTH2_ONLY_reads": {
+    "EC2_MANIFEST.json": [
+     "org/modules/graph/pipeline_cli.py@d3"
+    ],
+    "canonical_prices.parquet": [
+     "org/modules/graph/nerves_resolve.py@d1"
+    ],
+    "estate-coverage-resolver.json": [
+     "org/modules/graph/pipeline_cli.py@d3"
+    ],
+    "lambda-source-map.json": [
+     "org/modules/graph/extract_lambda_routes.py@d2",
+     "org/modules/graph/extract_s3.py@d2",
+     "org/modules/graph/extract_eventbridge.py@d2"
+    ],
+    "summary.json": [
+     "org/modules/graph/extract_routes.py@d4"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/cli.py"
+   ]
+  },
+  "comp-gitdrill": {
+   "DEPTH2_ONLY_reads": {
+    "EC2_MANIFEST.json": [
+     "org/modules/graph/pipeline_cli.py@d4"
+    ],
+    "baseline.json": [
+     "org/modules/graph/cli.py@d1",
+     "org/modules/graph/trace_graph.py@d2"
+    ],
+    "canonical_prices.parquet": [
+     "org/modules/graph/nerves_resolve.py@d2"
+    ],
+    "estate-coverage-resolver.json": [
+     "org/modules/graph/pipeline_cli.py@d4"
+    ],
+    "lambda-source-map.json": [
+     "org/modules/graph/extract_lambda_routes.py@d3",
+     "org/modules/graph/extract_s3.py@d3",
+     "org/modules/graph/extract_eventbridge.py@d3"
+    ],
+    "nerves-edges.json": [
+     "org/modules/graph/cli.py@d1"
+    ],
+    "nerves-risk-edges.json": [
+     "org/modules/graph/cli.py@d1"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/comp_gitdrill.py"
+   ]
+  },
+  "comp-iam": {
+   "DEPTH2_ONLY_reads": {
+    "EC2_MANIFEST.json": [
+     "org/modules/graph/extract_iam.py@d1"
+    ],
+    "comp_aws_derive_iam.json": [
+     "org/modules/graph/comp_iam_live.py@d1"
+    ],
+    "lambda-source-map.json": [
+     "org/modules/graph/extract_iam.py@d1"
+    ],
+    "managed_policy_actions_cache.json": [
+     "org/modules/graph/extract_iam.py@d1"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/iam_cli.py"
+   ]
+  },
+  "comp-learns-score": {
+   "DEPTH2_ONLY_reads": {
+    "tool_activity_cache.parquet": [
+     "org/modules/graph/comp_route.py@d1"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/comp_learns_score.py"
+   ]
+  },
+  "comp-manifest-check": {
+   "DEPTH2_ONLY_reads": {
+    "drift-topology.yaml": [
+     "org/modules/graph/comp_coverage_check.py@d1"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/manifest_check_cli.py"
+   ]
+  },
+  "comp-pii": {
+   "DEPTH2_ONLY_reads": {
+    "summary.json": [
+     "org/modules/graph/extract_routes.py@d1"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/pii_cli.py"
+   ]
+  },
+  "comp-pipescript": {
+   "DEPTH2_ONLY_reads": {
+    "baseline.json": [
+     "org/modules/graph/trace_graph.py@d2"
+    ],
+    "graph.json": [
+     "org/modules/graph/extract_pipeline.py@d1"
+    ],
+    "lambda-source-map.json": [
+     "org/modules/graph/extract_lambda_routes.py@d3",
+     "org/modules/graph/extract_s3.py@d3",
+     "org/modules/graph/extract_eventbridge.py@d3"
+    ],
+    "summary.json": [
+     "org/modules/graph/extract_routes.py@d1"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/pipeline_cli.py"
+   ]
+  },
+  "comp-platinum": {
+   "DEPTH2_ONLY_reads": {
+    "EC2_MANIFEST.json": [
+     "org/modules/graph/pipeline_cli.py@d3"
+    ],
+    "baseline.json": [
+     "org/modules/graph/trace_graph.py@d1"
+    ],
+    "estate-coverage-resolver.json": [
+     "org/modules/graph/pipeline_cli.py@d3"
+    ],
+    "graph.json": [
+     "org/modules/graph/extract_pipeline.py@d2"
+    ],
+    "lambda-source-map.json": [
+     "org/modules/graph/extract_lambda_routes.py@d2",
+     "org/modules/graph/extract_s3.py@d2",
+     "org/modules/graph/extract_eventbridge.py@d2"
+    ],
+    "summary.json": [
+     "org/modules/graph/extract_routes.py@d4"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/platinum_cli.py"
+   ]
+  },
+  "comp-routes": {
+   "DEPTH2_ONLY_reads": {
+    "summary.json": [
+     "org/modules/graph/extract_routes.py@d1"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/routes_cli.py"
+   ]
+  },
+  "comp-surface-check": {
+   "DEPTH2_ONLY_reads": {
+    ".metadata.json": [
+     "org/modules/graph/contract_engine.py@d1"
+    ],
+    "EC2_MANIFEST.json": [
+     "org/modules/graph/pipeline_cli.py@d4"
+    ],
+    "canonical_prices.parquet": [
+     "org/modules/graph/nerves_resolve.py@d2"
+    ],
+    "estate-coverage-resolver.json": [
+     "org/modules/graph/pipeline_cli.py@d4"
+    ],
+    "lambda-source-map.json": [
+     "org/modules/graph/extract_lambda_routes.py@d3",
+     "org/modules/graph/extract_s3.py@d3",
+     "org/modules/graph/extract_eventbridge.py@d3"
+    ],
+    "nerves-edges.json": [
+     "org/modules/graph/cli.py@d1"
+    ],
+    "nerves-risk-edges.json": [
+     "org/modules/graph/cli.py@d1"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/surface_check_cli.py"
+   ]
+  },
+  "comp-trace": {
+   "DEPTH2_ONLY_reads": {
+    "EC2_MANIFEST.json": [
+     "org/modules/graph/pipeline_cli.py@d3"
+    ],
+    "canonical_prices.parquet": [
+     "org/modules/graph/nerves_resolve.py@d1"
+    ],
+    "estate-coverage-resolver.json": [
+     "org/modules/graph/pipeline_cli.py@d3"
+    ],
+    "lambda-source-map.json": [
+     "org/modules/graph/extract_lambda_routes.py@d2",
+     "org/modules/graph/extract_s3.py@d2",
+     "org/modules/graph/extract_eventbridge.py@d2"
+    ],
+    "summary.json": [
+     "org/modules/graph/extract_routes.py@d4"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/cli.py"
+   ]
+  },
+  "comp-validate": {
+   "DEPTH2_ONLY_reads": {
+    "comp-constants.config.yaml": [
+     "org/modules/graph/extract_validate.py@d1"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/validate_cli.py"
+   ]
+  },
+  "comp-xref": {
+   "DEPTH2_ONLY_reads": {
+    "EC2_MANIFEST.json": [
+     "org/modules/graph/pipeline_cli.py@d3"
+    ],
+    "canonical_prices.parquet": [
+     "org/modules/graph/nerves_resolve.py@d1"
+    ],
+    "estate-coverage-resolver.json": [
+     "org/modules/graph/pipeline_cli.py@d3"
+    ],
+    "lambda-source-map.json": [
+     "org/modules/graph/extract_lambda_routes.py@d2",
+     "org/modules/graph/extract_s3.py@d2",
+     "org/modules/graph/extract_eventbridge.py@d2"
+    ],
+    "summary.json": [
+     "org/modules/graph/extract_routes.py@d4"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/cli.py"
+   ]
+  },
+  "pipescript": {
+   "DEPTH2_ONLY_reads": {
+    ".metadata.json": [
+     "org/modules/graph/contract_engine.py@d1"
+    ]
+   },
+   "also_writes": [],
+   "depth1_backing": [
+    "org/modules/graph/pipescript_cli.py"
+   ]
+  }
+ }
+}
