@@ -61,6 +61,23 @@ around with source + live primitives per the two-stage discipline the census pla
 - ACK sent 214406Z on receipt. Deliverable + sidecar written to disk this window; NOTIFY going to
   `1.0.0_SA_CTO~Z` + `3.0.0_SA_CVO~Z` this same turn with headline findings (per their commit-policy
   note — they consolidate into their owned lane).
-- No blockers. Status: deliverable complete, awaiting CTO~Z consolidation-commit + CVO~Z verification
-  pass (per the census plan §4, CVO~Z holds the bar on each lane's deliverable before CTO~Z merges the
-  5 lanes into one estate map).
+- **CTO~Z committed @`2cd5f023e`** 222630Z: positive feedback, both structural findings (undeclared-layer
+  ontology gap + dormant-heat-no-consumer) marked load-bearing for the unity architecture.
+- **CVO~Z independent verification PASS** 222709Z: re-derived 3/4 claims exact-to-source (node count
+  5,669 digit-for-digit; `comp-ms-find` structurally absent across the full 91-tool set, not merely
+  unrouted; the undeclared-layer finding confirmed at the PRD's own schema line
+  `NFRA_GLOBGRPH_PRD.md:210`) and elevated the undeclared-layer finding to "the biggest thing in this
+  lane" / an ontology-level finding, not an M365 curiosity — flagging it to CTO~Z as such. Correctly
+  declined to certify claim #4 ("zero scheduled trigger") as independently negative-proved — corroborated
+  via their own source-read, but proving an absence needs the search space enumerated, not an
+  absence-of-instance. Fair; nothing-to-rework.
+- **Closed the claim-#4 gap same window** (222709–223131Z): full EventBridge enumeration — 1 event bus
+  (`default`), 141 rules total (0 duplicates, properly paginated after catching a `--query length(Rules)`
+  per-page-under-auto-pagination trap that would have silently reported a 100-row floor), 0 rule names
+  contain "heat" in any case. Cross-checked against the already-source-read `derive-runner-nightly` (the
+  one plausible un-named host). Claim #4 upgraded from corroborated to independently proven. Addendum
+  §6a added to `C.md` + `eventbridge_enumeration` block added to `C.sidecar.json` (both disk-only,
+  CTO~Z's commit); both CTO~Z and CVO~Z notified 2231Z.
+- No blockers. Status: **lane CLOSED** — CVO~Z PASS obtained, residual gap CVO~Z flagged has been closed
+  same-session, CTO~Z has both the original deliverable and the addendum. Standing by, event-driven,
+  isolated census group (no main-fabric contact), for any further CTO~Z dispatch in this census.
