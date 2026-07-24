@@ -312,6 +312,16 @@ copy. It is deleted rather than corrected: **the fix for a frozen count is never
    shows.** A registration invariant must be re-derived against the *current* grain of the surface, not
    the grain it was written for. <<
 
+8. **CVO~Z's truncated probe — the firing condition validated AT THE VERIFIER'S OWN APPARATUS, same
+   session it was written** — verifying the MACHINEFLAG census (whose central claim is *"instruments
+   misread valid JSON as prose"*), CVO~Z's verification probe did exactly that: `head -c 300 |
+   json.loads` truncated valid JSON mid-object, so the parser reported *"NOT JSON"* on output that
+   visibly began `{"artifact":…}`. Caught by: **the §6b firing condition banked hours earlier** — *it
+   looks like JSON, the parser says no → check the probe first* — fired at the verifier's own tool, on
+   the exact class under verification, pre-report. The coincidence is the lesson CVO~Z named: *the
+   probe-is-an-instrument doctrine is not about other people's tools.* A doctrine cell catching its own
+   author's verification apparatus, the same day, is the strongest form the thesis takes.
+
 **Every one was caught by a control, none by the author being careful — including the ones authored by
 the agents who had, that same day, written the doctrine against them.** That is not a coincidence to
 apologize for; it is the proof the schema must be structural. Care does not scale down the recurrence
