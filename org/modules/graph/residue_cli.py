@@ -301,20 +301,46 @@ def cmd_check(args) -> int:
     print("               a missing axis mentions it, which would launder the gap (measured: doc")
     print("               contamination cut residue 77 -> 44 and hid every true orphan axis).")
     print("               Within code, ANY mention counts -> UNDER-reports residue, never over.")
+    print("  >> THIS IS A FINDER, NOT A CERTIFIER. It can confirm the POSITIVE and cannot confirm")
+    print("     the NEGATIVE: A RESIDUE FINDING IS HIGH-CONFIDENCE; A CLEAN RUN IS NOT PROOF OF")
+    print("     TRAVERSAL. Do not read rc=0 as a certificate.")
     print("  " + "-" * 68)
 
+    orphans, members = classify_residue(unreferenced)
+    covered = len(paths) - len(unreferenced) - len(doc_only)
+
+    # THE PARTITION IS THE PRODUCT. The surface is split by WHAT ACCOUNTS FOR IT, which is a
+    # map of where the mechanical/semantic threshold sits -- not a residue scalar.
+    print("  BOUNDARY MAP -- the %d structural paths partitioned by what accounts for them:" % len(paths))
+    print("    %4d  COVERED-BY-CODE   mechanically accounted             -> Route A territory"
+          % covered)
+    print("    %4d  MEMBERS           rows under a KNOWN axis            -> Route A territory"
+          % len(members))
+    print("    %4d  DOC-ONLY          named in prose, NO code walks it   -> ** THE BOUNDARY **"
+          % len(doc_only))
+    print("    %4d  ORPHAN AXES       nothing downstream knows it exists -> Route C territory"
+          % len(orphans))
+    print("    ---- accounting: %d + %d + %d + %d = %d"
+          % (covered, len(members), len(doc_only), len(orphans), len(paths)))
+    print("")
+
     if doc_only:
-        print("  DOCUMENTED-BUT-NOT-TRAVERSED (%d): prose mentions these; no code does." % len(doc_only))
+        print("  ** THE BOUNDARY CELL (%d) -- INFERENCE THAT NEVER PAID FOR ITSELF **" % len(doc_only))
+        print("  Prose named it; no code walks it. The ARCHETYPAL_LEARNING_LOOP output contract")
+        print("  requires inference to return traversal + predicate + pin + mutant. These are the")
+        print("  items where the NAMING was done and the MACHINERY was not -- a live backlog, and")
+        print("  the most actionable cell in this report.")
+        print("  NOTE: doc-only does NOT affect the exit code. rc=0 means no residue; it does NOT")
+        print("        mean zero backlog. Read this cell even on a green run.")
         for path in doc_only:
-            print("    doc-only     %s" % path)
+            print("    boundary     %s" % path)
         print("")
 
     if not unreferenced:
-        print("PASS: 0 residue -- every one of the %d structural paths is mentioned by at least one" % len(paths))
-        print("      CODE consumer. NOT a proof of traversal (see METHOD).")
+        print("PASS: 0 residue -- every one of the %d structural paths is either code-covered or" % len(paths))
+        print("      named in prose. NOT a proof of traversal (see METHOD).")
         return RC_PASS
 
-    orphans, members = classify_residue(unreferenced)
     print("VERDICT: RESIDUE FOUND -- %d of %d structural paths are referenced by NOTHING."
           % (len(unreferenced), len(paths)))
     print("  SPLIT: %d ORPHAN AXES (high signal) / %d unreferenced MEMBERS (usually by design)"
