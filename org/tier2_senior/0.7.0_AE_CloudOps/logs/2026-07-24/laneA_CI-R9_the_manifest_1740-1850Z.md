@@ -207,3 +207,72 @@ reasoning was the weaker half of my own case.
 4. A lineage rollup that was **arithmetically right and materially misleading** for want of a
    denominator.
 **Every one was caught by a control failing. None by care.**
+
+---
+
+# ADDENDUM 2 · 1905Z-1940Z — CVO's blind read, the accuracy hold, and an OPEN finding against my own instrument
+
+**Landed:** `a42ec98dc` (M5 discriminating-pair control) · `84a219d2e` (the three-symptom fix). Tests **112**.
+All commits pushed by COO.
+
+## AC-1: CVO read it cold and went past the question
+*"Read cold. No context asked for, nothing else consulted before answering."* They produced the three
+dispositions, the normalised divergence, and then the sharper answer: **"it was not a channel, it was one feed
+inside one"** — SmartX legs at today, Schwab RPS behind. Their attribution: *"the per-feed breakdown is what
+made the sharper answer possible."* Verdict: **sufficient for what/where, not for root cause** — a boundary
+they drew themselves, unprompted.
+
+## COO held his own closure, and was right to
+He measured both candidate Schwab prefixes at 07-23 and could not reconcile the 07-14. Two branches: **(A)**
+the per-feed lag is wrong, or **(B)** the run is synthetic. He asked for the artifact, not an opinion.
+**Settled (B)** — `run_class: qa`, a `notes` CONSTRUCTED entry, `provenance[2].observation` naming the pin, and
+the pinned partition physically exists (537,913 B). **(A) refuted: the lag is correct.**
+
+**But the finding moved rather than dissolving, and the moved version is worse:** a skilled reader produced a
+confident, actionable diagnosis of a *live incident* from constructed data. They saw `run_class: qa`. **It did
+not stop them.** The label was present and badly positioned.
+
+**ONE ROOT, THREE SYMPTOMS, MINE:** `apply_exercise_overlay` changed the document without updating the
+document's description of itself. Fixed at the class — `constructed` as a **required structural block**
+rendering **first**; the carried-forward note **derived**, with a rule refusing any note that claims a
+load-bearing list is empty while it is populated; `evidence: presence_only` on `published` entries. **Did not
+rename `published`** — the PRD's word, interface agreed with the base lane; routed as a v1.1 candidate.
+
+## What the blind read could NOT prove, and who owns it
+It proved **legibility and self-consistency**. It structurally could not prove correctness — the reader had
+nothing to check against. **AC-1 stays open for that narrower reason.** Proposed shape (COO taking it to CTO):
+**a record with a KNOWN-WRONG value planted in it, and the reader asked to find it** — the mutant discipline
+applied to the human-facing surface. **CTO owns the plant; I must not design the test my own artifact passes.**
+
+## ⚠ OPEN FINDING, SURFACED NOT SETTLED — the sixth green-while-wrong, against my own field
+Andrew-direct ~1924Z, **STANDING**: *"all of you need to be using comp-tools to establish data flows, lineage,
+provenance, and dependencies. You should be hand grepping as a last resort only or to verify comp-tools
+outputs."* Applied immediately, and it paid inside one command.
+
+`comp-pipescript io` on the spine returns **5 monolith silver reads**; my manifest observes **8**. The three
+extra are Cottonwood's BD silver feeds — **and the spine never reads them** (verified at source: `blackdiamond`
+appears once, a display-name dict at `:79`; the cottonwood leg comes from a pre-built GOLD artifact at
+`:1552-3`).
+
+> **So my manifest reports `cottonwood: CURRENT, lag 0` measured on BD SILVER, while the publisher consumes a
+> pre-built cottonwood GOLD artifact. Those can diverge without limit.** A lag measured on the wrong axis —
+> the same class as the frontier-pair recomputation and the roster-only denominator.
+
+**And NEITHER derivation is complete:** the graph missed the cottonwood slice read; my manifest misses both
+gold reads. **The comp-tool found a runtime-resolved read no path-extractor can see; the verify step found one
+the comp-tool missed.** Andrew's ordering working in both directions. *(COO's caution, received after: treat
+`comp-pipescript io` as a static-vs-observed cross-check, not ground truth — it derives from the same repo.
+Two derivations disagreeing is the signal; agreement is weaker evidence than it looks.)*
+
+**NOT FIXED UNILATERALLY — there is a real design fork spanning `~B`'s roster and my manifest:** does a
+channel's `lag` mean *how fresh is the partner's UPSTREAM* (my reading is then correct, and the manifest
+additionally needs what the publisher CONSUMED), or *how fresh is what we published from* (Cottonwood is
+measured on a feed the publisher never touches, and is wrong today)? **Both are defensible and produce
+different numbers on the same run.** Routed to COO/CTO. `declare_input()` makes the publisher's real reads
+recordable either way; this is about **what the number is OF**.
+
+## Tally: SIX instruments of my own green while wrong today
+mutants killed by the wrong assertion · a validator that would have rejected a correct manifest · that fix
+dropping an invariant · a lineage rollup right-but-misleading for want of a denominator · a note that outlived
+its mechanism · and a channel lag measured on a feed the publisher does not read.
+**Every one found by a control failing. None by care.**

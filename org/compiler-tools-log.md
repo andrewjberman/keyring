@@ -25993,3 +25993,45 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | session-summary 1850-1905Z | CI-R9 addendum (lineage + dedupe + denominator). No new comp-tool classes beyond the 1723-1850Z row: the window was live-S3 observation + module work, where comp-surface-check + comp-pulse fired automatically in safe-commit x3 (all PASS, denominators printed) and commit-gate x3 clean. comp-iam still NOT RUN and still for the same stated reason -- no Lambda, no role. The lineage classifier was positive-controlled by hand against the four confirmed non-monolith buckets AND a monolith control in the same run, because a classifier that flags everything is as broken as one that finds nothing. | PASS |
 | 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/mdpf-daily-runner/mdpf-da... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh | VERDICT |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform~A/deliverables/PROD_exempt_abs... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/mdpf-manifest/tests/te... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-pulse | comp-pulse diff infra/aws/lambda/mdpf-manifest/tests/test_mdpf_manifest.py | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript --resource dim_mdpf_aggregate_aua_timeseries | UNKNOWN |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0_exec/0.0.0_AB_MSTR/deliverabl... | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0_exec/0.0.0_AB_MSTR/deliverables/NFRA_CIRUNNER_HANDOFF.md | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-dataflow | comp-dataflow | FAIL |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0339.md --file org/... | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0339.md org/tier0_exec/0.0.0_AB_MSTR/deliverables/N... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-dataflow | comp-dataflow gate | FAIL |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name =~ '.*cottonwood.*' OR n.name =~ '.*holdings.*' RETURN... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/IMPLEMENTATION_LE... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/IMPLEMENTATION_LEVELS_AND_SEQUENCING.md infra/sys... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-dataflow | comp-dataflow gate data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py data/mdp... | VERDICT |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/mdpf-manifest/emit_man... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-pulse | comp-pulse diff infra/aws/lambda/mdpf-manifest/emit_manifest.py infra/aws/lambda/mdpf-m... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pipescript | comp-pipescript io dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-dataflow | comp-dataflow origin json/mdpf/global/aggregate-aua-timeseries.json | REFUSE |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0339.md --file org/... | PASS |
+| 2026-07-24Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0339.md org/tier0_exec/0.0.0_AB_MSTR/deliverables/N... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pipescript | comp-pipescript io dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/IMPLEMENTATION_LE... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/IMPLEMENTATION_LEVELS_AND_SEQUENCING.md infra/sys... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~C | MDPF_3FIRMS.GC-BF1.49f-schwab-silver-rollforward-discrimination-first | comp-pipescript | comp-pipescript io convert_schwab_rps_to_parquet.py | FAIL |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | pipescript | pipescript --resource platinum/mdpf/aggregate_aua | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-blast | comp-blast load_served_account_count | REFUSE |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~C | MDPF_3FIRMS.GC-BF1.49f-schwab-silver-rollforward-discrimination-first | comp-blast | comp-blast quantity_settled | REFUSE |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~B | MDPF_CHANNEL_INDEPENDENCE.CI-R7R8 | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~B | MDPF_CHANNEL_INDEPENDENCE.CI-R7R8 | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/dim_mdpf_account_distribution.py | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~B | MDPF_CHANNEL_INDEPENDENCE.CI-R7R8 | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/dim_mdpf_aum_metrics.py | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~B | MDPF_CHANNEL_INDEPENDENCE.CI-R7R8 | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/dim_mdpf_non_model_assets.py | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-pipescript io | comp-pipescript io dim_mdpf_aggregate_aua_timeseries.py -- FIRST use per Andrew-direct ~1924Z standing (comp-tools FIRST for data flows/lineage/provenance/dependencies; hand-grep LAST RESORT or VERIFY-ONLY). Returned 5 monolith silver reads + 1 runtime-resolved gold read a path-extractor cannot see. CROSS-CHECKED against my manifest observed 8: the 3 extra are Cottonwood BD silver, which THE SPINE NEVER READS -- so my cottonwood lag is measured on the wrong axis (open finding, routed, not fixed unilaterally). Verify step (grep) then found a read the GRAPH missed (:1552-3 cottonwood slice). NEITHER derivation complete; the disagreement was the value. | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
