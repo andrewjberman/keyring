@@ -26049,3 +26049,52 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-24 | 1.0.0_SA_CTO | comp-which x4, comp-grep x3, pipescript mdpf, comp-dataflow gate/origin, lib/trading_calendar | MDPF Global-count audit + channel-independence program. pipescript surfaced a documented mdpf-freshness-checker that DOES NOT EXIST LIVE (and warned its own 39d vintage). comp-dataflow gate found 2 served-origin reads incl. one I missed, with its blind spot printed (4/8 unresolved-dynamic). THREE GAPS: comp-which MIS-ROUTES mdpf lineage (returned bd/inf/cot-only tool); pipescript --resource has no mdpf thread; comp-pipescript io is BLIND to SERVED_BUCKET reads on every tree and emits a clean manifest rather than declaring it. |
 | 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-24/s... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pipescript | comp-pipescript io mdpf-brand-new-thread-that-does-not-exist | FAIL |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pipescript | comp-pipescript postdeps mdpf-brand-new-thread-that-does-not-exist | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-platinum | comp-platinum ModelPortfolios | UNKNOWN |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-platinum | comp-platinum page ModelPortfolios | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-aws | comp-aws lambda opal-assets-daily-emitter | UNKNOWN |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript --resource opal-assets-daily-aua | UNKNOWN |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoz_NFRA_TOOLARCH_CANON_REGRO... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/system/ontology/GRAPHLEARNS_IMPLE... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff infra/system/ontology/GRAPHLEARNS_IMPLEMENTATION_HANDOFF.md | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check | VERDICT |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC LI... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (w)-[e]->(a) WHERE a.name =~ '.*json/mdpf.*aggregate.*' OR a.name =~ '.... | FAIL |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (w)-[e]->(a) WHERE a.name =~ '.*aggregate-aua-timeseries.*' OR a.name =... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-gitdrill | comp-gitdrill D_00.portal_aggregates.py | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-gitdrill | comp-gitdrill gold:A_00.accounts_dimension | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-gitdrill | comp-gitdrill gold:A_00.accounts_dimension | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-gitdrill | comp-gitdrill gold:A_00.accounts_dimension | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check scan | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_gitdrill.py --fi... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/comp_gitdrill.py org/modules/graph/surface_check_cli.py | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_gitdrill.py org/modules/graph/surfa... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/NFRA_TOOLUNIFY_BRIEF_202607... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/NFRA_TOOLUNIFY_BRIEF_20260724.md | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/MDPF_SERVED_LINEAGE_TRACE_2026... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~C | MDPF_3FIRMS.GC-BF1.49f-schwab-silver-rollforward-discrimination-first | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/mdpf-c... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~C | MDPF_3FIRMS.GC-BF1.49f-schwab-silver-rollforward-discrimination-first | comp-pulse | comp-pulse diff org/critical_paths/.open_deploys/mdpf-ci-c1c2-contracts-20260724.json o... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_PORTAL_LINEAGE_POSTMORTEM... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/NFRA_TOOLUNIFY_ESTATE_CENSU... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/NFRA_TOOLUNIFY_ESTATE_CENSUS_PLAN_20260724.md | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_PORTAL_LINEAGE_BRIEFING_2... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/COT_REBALANCER_STRATEGY... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_MONOCLEANUP_PRD.... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_MONOCLEANUP_PRD.md org/projects/MDPF_MONOCLEANUP... | PASS |
+2026-07-24 0.7.0_AE_CloudOps (1720-1955Z): comp-glob/comp-grep (locate cot rebalancer chain), comp-pipescript io (cot gold script I/O), comp-which+pipescript --resource (row16/17 lineage -- UNDETERMINED, 39d-stale snapshot named its own key as staleness exhibit; comp-kuzu unresponsive). Gap: comp-tools-first unsatisfiable for mdpf lineage while stitch producers frozen 17d -> reported to COO as row-19 substance.
+2026-07-24T2140Z 2.0.0_SA_COO session-close 1515-2140Z: MDPF portal-lineage TRACE -- comp-grep meta-fingerprint pinned producer (dim_mdpf_aggregate_aua_timeseries.py) uniquely; comp-platinum page gave page->key map; HAR+live-S3+source@HEAD load-bearing. GAPS routed to CTO: comp-which mdpf lineage mis-route (wrong answer not silence), pipescript no mdpf thread/39d snapshot, comp-pipescript io SERVED_BUCKET-blind (self-referential reads invisible). rail-checked markers on all raw checks.
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
