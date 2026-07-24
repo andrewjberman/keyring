@@ -25974,3 +25974,13 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-pulse | comp-pulse diff infra/aws/lambda/mdpf-manifest/README.md infra/aws/lambda/mdpf-manifest... | PASS |
 | 2026-07-24Z | 0.7.0_AE_CloudOps~B | MDPF_CHANNEL_INDEPENDENCE.CI-R7R8 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-24Z | 0.7.0_AE_CloudOps~B | MDPF_CHANNEL_INDEPENDENCE.CI-R7R8 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/mdpf-manifest/README.m... | PASS |
+| 2026-07-24Z | 0.7.0_AE_CloudOps~A | MDPF_CHANNEL_INDEPENDENCE.CI-R9 | comp-pulse | comp-pulse diff infra/aws/lambda/mdpf-manifest/README.md infra/aws/lambda/mdpf-manifest... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_CHANNEL_INDEPENDENCE.CI-R5R6R11R12 | commit-gate.sh | .tools/commit-gate.sh data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | CAUGHT DEFECT then PASS (unused ad_stamp_as_of = silent inflection leg) |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_CHANNEL_INDEPENDENCE.CI-R5R6R11R12 | comp-pipescript deployed | comp-pipescript deployed dim_mdpf_aggregate_aua_timeseries.py | NO COVERAGE (sweeps opal-data-bd only; mdpf has no deployed-vs-repo instrument) |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_CHANNEL_INDEPENDENCE.CI-R5R6R11R12 | comp-validate | comp-validate dim_mdpf_aggregate_aua_timeseries.py | NO_CONFIG = UNVALIDATED (BD+INF configs only; never signalled SAFE) |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_CHANNEL_INDEPENDENCE.CI-R5R6R11R12 | deploy_ledger.py | open/close-leg/close ci-r11-frontier-staleness-guard | CLOSED 3/3 (L1 STRUCTURALLY-NOT-APPLICABLE, verified at source) |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform~A | MDPF_3FIRMS.GC-W1 | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform~A/de... | PASS |
