@@ -30,7 +30,7 @@ gold consumer. **trn_nna (TRN Layer B) is the NNA-classified flows the gold C_01
 | Silver S3 dest | `s3://opal-data-bd/schwab/silver/{acc,rps,trn,trn_nna,uln,ult,rld}/date=YYYYMMDD/data.parquet` (ULT WIRED 2026-07-02 — it IS from the lots converter mode-3, NOT B_03; the old "B_03-sourced" note was WRONG and the ult mode was never invoked → silver/ult froze 85d. Now run every time.) |
 | Last-known state | **as of 2026-07-24T16:1xZ (0.6.2_AE_PartnerETL~C, GC-BF1): all 7 silver tables through `20260723`**, 42/42 partitions landed for the six trading days 07-16/17/20/21/22/23. mdpf 49financial gate exercised on the DEPLOYED trigger bytes: `latest_partition=2026-07-23, behind=1, max_lag=2, fresh=True`. Also cleared a large historical backlog: **225 uln + 225 ult + 221 rld** dates built (those tables are now COMPLETE, not merely current — `ult` feeds `B_02.canonical_lots`). **Canonical (step 7.5) ALSO caught up 20260715 -> 20260723 — 54/54 partitions across 9 tables**, via the per-date workaround in Step 7.5 (each run 25/25). (update this line each run) |
 | ⚠ **NO BRIDGE. THE "TRN READS LOCAL" WARNING IS RETIRED** | The prior version of this row said, in capitals, *"TRN's converter reads the LOCAL OneDrive folder, not S3"*. **That was true only until 2026-07-17**, when the A4 L5b re-point moved **every** converter to monolith bronze (`convert_schwab_trn_to_parquet.py:70-76`). The row was dated **2026-07-16 — one day before the change** and was never updated, so on 2026-07-24 it was relayed by CTO (who authored the re-point) and restated by COO three times. **Corrected at CTO's direction, 154535Z.** Doctrine banked from it: **a stale record is most convincing when it is relayed by the author of the change that retired it.** Had the bridge been built, the converters would have succeeded anyway and the bridge would have been *credited* — re-certifying a dead channel with a fresh success. |
-| 🔒 **0824-ONLY IS STRUCTURAL, NOT PROCEDURAL** | `_monolith_bronze.py:29-45` — `master_for()` maps `model_portfolios -> 08242234` and **raises `KeyError` on anything unmapped ("NO default, NO literal")**. These converters **cannot** reach `0833`. The two-buckets law has a real gate on this path; you do not have to enforce it by care. `_unzip_at_read` (:68-82) likewise **REFUSES** a multi-member zip rather than silently picking one. |
+| 🔒 **0824-ONLY IS STRUCTURAL — BUT ONLY AGAINST THE UNKNOWN-PURPOSE FAILURE** | `_monolith_bronze.py:29-45` — `master_for()` maps `model_portfolios -> 08242234` and **raises `KeyError` on anything unmapped ("NO default, NO literal")**, so these bd-tree converters cannot reach `0833` by accident. `_unzip_at_read` (:68-82) likewise **REFUSES** a multi-member zip rather than silently picking one. ⚠ **DO NOT OVER-READ THIS, as I did on 2026-07-24:** the gate refuses an **UNKNOWN** purpose; it **cannot refuse a WRONG-but-known one**. `master_for('advisor_intelligence')` is an equally legal call returning `08335338`. **The neighbouring `data/canonical/schwab/` tree IS 0833** (`build_fact_position.py:35-40`) — so the two masters live one directory apart and the gate will not stop a caller who names the wrong one confidently. Derive the purpose from the module's own declaration; never a literal at the call site. |
 
 **SSE gotcha:** `opal-data-schwab` DENIES `PutObject` without `x-amz-server-side-encryption:
 AES256`. The sync script already passes `ExtraArgs={'ServerSideEncryption':'AES256'}` — if you ever
@@ -164,9 +164,23 @@ silently no-ops downstream if missing; and trn_nna — the gold C_01.canonical_n
 > done
 > ```
 > **Do NOT "fix" this by re-syncing `01_raw`** — the local folder is dead, so the sync cannot repopulate it;
-> that is treating the symptom with an instrument that is itself retired. The real fix is re-pointing
-> `:154-156` at monolith bronze (or at `opal-data-bd/schwab/silver/rps/`), which is a **code change in a
-> DS-owned path — route it, do not do it here.**
+> that is treating the symptom with an instrument that is itself retired.
+> **FIXED by `0.4.0_DS_ClientPlatform` @ `3b0113227`** (date axis re-pointed to monolith bronze `rps`
+> partition directories; 14 tests, 5/5 mutants). Kept here because the *symptom* is what a future runner
+> will see if it ever regresses.
+>
+> ⛔ **AND A CORRECTION TO MY OWN ROUTING NOTE, because it was dangerous:** an earlier version of this block
+> suggested re-pointing at `opal-data-bd/schwab/silver/rps/` or via `master_for('model_portfolios')`.
+> **BOTH ARE 0824. THE CANONICAL STORE IS 0833** (`build_fact_position.py:35-40`,
+> `PURPOSE = "advisor_intelligence"`, and its docstring is explicit: *"No MP consumer exists on this
+> store"*). Either would have been a **0833 -> 0824 SUBSTITUTION** — the standing never-substitute
+> prohibition, not merely a wrong path. DS did not take the suggestion; they anchored on the module's own
+> `PURPOSE` and pinned it with a test that fails if anyone swaps in `08242234`.
+> >> **THE GENERAL LESSON, and it qualifies the 0824-only row above: `master_for()` refuses an UNKNOWN
+>    purpose. It CANNOT refuse a WRONG-but-known one.** `master_for('model_portfolios')` is a legal call
+>    that returns the wrong book for the canonical tree. **The gate stops typos and omissions, not a
+>    confident caller naming the wrong business purpose.** Always derive the purpose from the module's own
+>    declaration — never write a purpose literal at a call site, and never in a recommendation.
 
 After the six silver tables verify, run the DATA_ANALYTICS canonical daily-incremental build as the
 TAIL of this skill (COO Option-A, DS 2026-06-25: zero new infra; fires exactly when fresh Schwab
