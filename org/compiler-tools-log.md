@@ -25421,3 +25421,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-23 ~2150Z 0.4.0_DS_ClientPlatform: comp-grep (A2 producer located in one call); portal code pins scoped for the P1 read-path grounding (DE co-owns render half); no tool gaps this window.
 | 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/MDPF_3FIRMS_qt5_tempo... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/silver/cot_silver_merg... | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/cot/scripts/silver/cot_silver_merge.py | VERDICT |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | (none) | gate desk 2005-0215Z (promotes 146-148 + P1 + scope-coverage law + 0200Z green); lane tool runs cited in log; deploy_ledger instrument itself repaired this window | SKIPPED |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-24/e... | PASS |
