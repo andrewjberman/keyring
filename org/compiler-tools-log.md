@@ -25773,3 +25773,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/ref/RAVC_PROTOCOL.md | PASS |
 | 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-24Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-24/s... | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~B | MDPF_3FIRMS.GC-BF0.puller-capability-assessment-for-targeted-backfill | pipescript | pipescript --list | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~B | MDPF_3FIRMS.GC-BF0.puller-capability-assessment-for-targeted-backfill | pipescript | pipescript smartx | PASS |
+| 2026-07-24Z | 0.6.2_AE_PartnerETL~B | MDPF_3FIRMS.GC-BF0.puller-capability-assessment-for-targeted-backfill | pipescript | pipescript mdpf | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/MDPF_3FIRMS.GC-W45... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/ta... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/task_orders/MDPF_3FIRMS.GC-BF0.pul... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/ta... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.6.2_AE_PartnerETL/task_orders/MDPF_3FIRMS.GC-BF0.pul... | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-residue | comp-residue check org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml --consumers infra/sys... | UNKNOWN |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/residue_cli.py | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/residue_cli.py | PASS |
+| 2026-07-24Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/residue_cli.py | PASS |
+| 2026-07-24Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-aws | comp-aws | UNKNOWN |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-which | comp-which "which producers write json/portfolios/account-distribution.json" | NO-CURATED-RULE -> routed comp-clobber |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-clobber | comp-clobber --live opal-data-portal-v2 json/portfolios/account-distribution.json | PASS (17 versions; daily 11:30:39Z cadence then stop) |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-blast | comp-blast aum.ts | NOT-FOUND (denominator 2251; portal source structurally out of graph -- GAP) |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-transform | comp-transform schema-check ModelPortfolios | WARN (no types.ts resolved; F-8 gap) |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-cache | comp-cache (aum/timeseries filter) | EMPTY |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-grep | comp-grep account_count portal/src | PASS (205 occurrences / 20 files) |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-24Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-24/s... | PASS |
