@@ -29,6 +29,13 @@ import sys
 
 WS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANIFEST = os.path.join(WS, "org", "modules", "graph", "graph-call-manifest.yaml")
+
+# NFRA_TOOLARCH.GATEBOUND Stage B (0.8.0_AE_CloudComp~D, 2026-07-25): the fallback subprocess
+# _run_primitive() shells out to (comp-grep/comp-glob) had NO timeout -- the confirmed source of
+# an 84-minute hang the self-route commit gate inherited via its warm in-process call. 60s matches
+# the existing subprocess-timeout convention already used elsewhere for a comp-which invocation
+# (.tools/comp-which-routing-test.py's _run_comp_which, timeout=60) -- not a new arbitrary number.
+FALLBACK_TIMEOUT_S = 60
 # NFRA_COMPUNIFY S3: the coverage ledger is the SOURCE OF TRUTH the surface-first router reads
 # (CTO ruling #1 -- route from the ledger, never a parallel hand-maintained routing catalog).
 LEDGER = os.path.join(WS, "org", "modules", "graph", "comp-coverage-map.yaml")
@@ -1030,16 +1037,37 @@ def _score_rule(q: str, qtok: set, keywords) -> int:
     return score
 
 
+# NFRA_TOOLARCH.GATEBOUND Stage B memoization (0.8.0_AE_CloudComp~D, 2026-07-25): _manifest_matches
+# is called 2x per query cascade (:1558, :1802) and re-parsed the 133KB MANIFEST from disk every
+# single call -- under the warm in-process path (comp-which-routing-test.py's self_route_verdicts,
+# up to ~69 tools per run) that is up to ~138 re-parses of a file that never changes mid-process.
+# Cache the PARSE, not the per-query result: `data` is query-independent (the overlap-scoring below
+# still runs fresh every call, keyed on qtok -- that part is genuine per-query work, not redundant).
+# _MANIFEST_LOADED distinguishes "not yet attempted" from "attempted, file absent/bad -> None cached"
+# -- without it a missing manifest would re-attempt (and re-fail) the same read every call forever.
+_MANIFEST_DATA = None
+_MANIFEST_LOADED = False
+
+
+def _load_manifest_data():
+    global _MANIFEST_DATA, _MANIFEST_LOADED
+    if not _MANIFEST_LOADED:
+        _MANIFEST_LOADED = True
+        if os.path.exists(MANIFEST):
+            try:
+                import yaml
+                with open(MANIFEST, encoding="utf-8") as f:
+                    _MANIFEST_DATA = yaml.safe_load(f)
+            except Exception:
+                _MANIFEST_DATA = None
+    return _MANIFEST_DATA
+
+
 def _manifest_matches(q: str, qtok: set, top: int = 3):
     """Keyword-overlap backstop over the manifest use_case entries."""
     out = []
-    if not os.path.exists(MANIFEST):
-        return out
-    try:
-        import yaml
-        with open(MANIFEST, encoding="utf-8") as f:
-            data = yaml.safe_load(f)
-    except Exception:
+    data = _load_manifest_data()
+    if data is None:
         return out
     # LD-0208 fix (A): the manifest stores rows under `entries:`, not `use_cases:`.
     # Reading the wrong key iterated [] and matched NOTHING -> the whole fuzzy backstop
@@ -1062,14 +1090,26 @@ def _manifest_matches(q: str, qtok: set, top: int = 3):
 
 
 # --- NFRA_COMPUNIFY S3: surface-first routing, DRIVEN BY THE LEDGER (ruling #1) -------------
+# Memoized (GATEBOUND Stage B, same rationale as _load_manifest_data above): called 3x per query
+# cascade (:1128, :1149, :1830 pre-this-edit), whole-return cacheable since it is query-independent
+# (unlike _manifest_matches, nothing here varies per call). _LEDGER_LOADED distinguishes
+# not-yet-attempted from attempted-and-failed, same reason as the manifest cache.
+_LEDGER_DATA = None
+_LEDGER_LOADED = False
+
+
 def _load_ledger():
     """Read the source-of-truth coverage ledger. None on any failure (router never crashes)."""
-    try:
-        import yaml
-        with open(LEDGER, encoding="utf-8") as f:
-            return yaml.safe_load(f) or {}
-    except Exception:
-        return None
+    global _LEDGER_DATA, _LEDGER_LOADED
+    if not _LEDGER_LOADED:
+        _LEDGER_LOADED = True
+        try:
+            import yaml
+            with open(LEDGER, encoding="utf-8") as f:
+                _LEDGER_DATA = yaml.safe_load(f) or {}
+        except Exception:
+            _LEDGER_DATA = None
+    return _LEDGER_DATA
 
 
 def _surface_index(led):
@@ -1247,8 +1287,20 @@ def _run_primitive(kind: str, term: str) -> int:
         # the child's row carry src=comp-which; a direct invocation carries src=direct.
         env = dict(os.environ)
         env["COMP_WHICH_CHILD"] = "1"
-        rc = subprocess.call([sys.executable, script, term], cwd=WS, env=env)
-        return rc
+        # NFRA_TOOLARCH.GATEBOUND Stage B: this WAS `subprocess.call(...)` with no timeout -- the
+        # confirmed 84-minute hang source. Popen + wait(timeout=) + an explicit kill()+wait() on
+        # TimeoutExpired is used instead of `subprocess.call(..., timeout=...)` deliberately:
+        # subprocess.call's own timeout path does NOT kill the child on expiry (only subprocess.run
+        # does that internally) -- this is Design B, the hang must be REAPED, not merely bounded.
+        proc = subprocess.Popen([sys.executable, script, term], cwd=WS, env=env)
+        try:
+            return proc.wait(timeout=FALLBACK_TIMEOUT_S)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.wait()  # reap -- an un-waited killed child is a zombie, not a closed hang
+            print("comp-which: WARN: %s did not finish inside %ss and was KILLED. Run it "
+                  "yourself with a narrower scope: %s" % (call, FALLBACK_TIMEOUT_S, call))
+            return 1
     except Exception as e:
         # absolute last resort -- still NOT a dead-end: hand the agent the exact on-rail call
         print("comp-which: WARN: could not auto-run (%s). Run it yourself: %s" % (e, call))
