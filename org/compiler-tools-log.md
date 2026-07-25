@@ -26747,3 +26747,14 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | commit-gate | .tools/commit-gate.sh org/modules/graph/tests/test_boundary_report_conformance.py | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | owned-paths-validate | --check-agent 0.8.0_AE_CloudComp~E (target: org/modules/graph/tests/**) | PASS (permitted) |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | owned-paths-validate | --check-agent 0.8.0_AE_CloudComp~E (CONTROL, separate invocation: boundary_report.py) | VIOLATION (expected -- instrument shown to fire) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates --role astn-wsjft-orchestrator-role | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking org/tier2_senior/0.4.0_DS_ClientPlatform/promp... | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates --role astn-wsjft-orchestrator-role | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates-self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/iam_cli.py org/modules/graph/comp_iam_in... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | NFRA_SYSPARITY-register | sysparity_register.py + selftest_register.py (built this session) | python selftest_register.py | PASS 26/26 incl. K1 hard-kill durability + N1 derived-denominator mutant + D1 dangling-pointer |
