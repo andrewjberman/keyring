@@ -40,10 +40,14 @@ added nonexistent-root FAIL guard (rc=1, distinct from REFUSE) is retained as a 
 paths are separately exercised. Same truncation class CVO~Z disclosed this morning; disclosed in the
 deliverable §4, not smoothed.
 
-**Gap found (the sensor's product):** comp-cache has a 5-site residue on a 110-site surface — 1 doc_only
-(`useQueries`, AdvisorBookView.tsx:236, disclosed by the tool's own contract line) + 4 orphan
+**Gap found (the sensor's product):** comp-cache has a 4-site residue on a 109-site surface — 1 doc_only
+(`useQueries`, AdvisorBookView.tsx:236, disclosed by the tool's own contract line) + 3 orphan
 (`useAutoSaveQuery` call sites: key-bearing custom wrapper the tool neither walks nor names — invisible to
-`comp-cache collisions` today).
+`comp-cache collisions` today), plus the wrapper's definition as a labeled, un-counted DEFINITION row.
+*(CORRECTED at verify 0922Z: first emission counted the declaration as a 4th orphan call site —
+declaration-vs-invocation fix applied in enumerate_sites() reusing this sensor's own :124 pattern,
+declaration-only mutant added and green, report re-emitted. CTO~Z + CVO~Z verify messages are the
+provenance.)*
 
 Auto-logged to `org/compiler-tools-log.md` where comp wrappers ran; the engine-import invocations are
 recorded here (they bypass the wrapper's auto-logger by design of the sensor pattern).
