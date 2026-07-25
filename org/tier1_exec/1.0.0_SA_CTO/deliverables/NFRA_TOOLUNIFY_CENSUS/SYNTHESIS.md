@@ -87,14 +87,22 @@ Adopted bar (map §10): WS-4 crosswalk conformance passes + WS-7 register-as-con
   legitimate as REGRESSION detectors, **zero force as CORRECTNESS claims**. COMPONENT coverage is an
   **observed baseline of 22/24 with 2 unexplained misses (open item)**, never "validated 22/24." Same for
   ENDPOINT's 10 genuine gaps.
-- **WS-7: parts 1–2 VERIFIED CLEAN** (refusal exercised; 92/92 provenance column). Part 3's two fixes
-  verified-live-correct but unlandable pending GATEBOUND (the commit *mechanism*), **and** — per CVO~Z's
-  causality correction — the comp-state routing gap that base's own registration edit surfaced closes
-  **inside WS-7's scope** (GATEBOUND unblocks the commit; it does not make comp-state route). Credited as
-  the control WORKING on first exercise: four tools registered, the gate caught the one that doesn't route
-  to itself.
-- **GATEBOUND (Step 3): the exit-bar critical path**, dispatched to `~D` off its checkpointed TO; CVO~Z
-  verifying next on delivery.
+- **WS-7: CLOSED (`1e81fd0c18`), all 3 parts landed — and it closed WITHOUT GATEBOUND**, vindicating
+  CVO~Z's causality correction exactly: the operative blocker was the ROUTING gap, not the commit
+  mechanism. Base fixed it properly — traced `_score_rule` at source when the first vocabulary attempt
+  scored zero (the scorer needs literal substrings of the checker's exact query, not fuzzy phrasing),
+  landed 6 verified-substring keywords, comp-state ranks #1 clean. Two MORE gate members surfaced
+  sequentially as each prior went green (member-4 existence via an honestly-reasoned procedural exclusion;
+  output-contract via the gate's own `pending_declaration` path rather than fabricated contract blocks).
+  Full completeness family PASS; comp-system regen in the same commit window per the binding instruction;
+  ~35 pre-existing dirty peer files excluded by explicit pathspec; comp-coverage-check + comp-routable-check
+  re-run fresh against HEAD post-land. The Part-1 refusal control caught real gaps at every step of its
+  first live workout — the register is now demonstrably a CONTROL.
+- **GATEBOUND (Step 3): no longer the exit-bar critical path** — still real and dispatched at `~D` (the
+  unevaluable-gate/unbounded-hang class it closes is live regardless), but the exit bar no longer waits
+  on it. CVO~Z verifies on delivery.
+- **→ EXIT-BAR STATUS: MET, pending CVO~Z's WS-7-closure verification + base MATCH spot-checks.** WS-4
+  verified clean; WS-7 landed and self-reverified at HEAD.
 
 This synthesis closes the EXERCISE program (the register's failure_mode column is now evidence-based per
 §0-§2). The sweep's L0b seed data (§4) is the designed handoff into COMPLEARNS L0b→L1b per
