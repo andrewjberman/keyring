@@ -254,6 +254,14 @@ _BOTO3_DYNAMODB = {
     # NFRA_COMPIAM Stage 4 (2026-07-25): direct 1:1, no quirk.
     'describe_continuous_backups': ['dynamodb:DescribeContinuousBackups'],
     'list_tables': ['dynamodb:ListTables'],
+    # NFRA_COMPIAM Stage 5 K-line surfaced this (2026-07-25): verified-null, same class as
+    # get_paginator/get_waiter -- Table.batch_writer() itself makes ZERO network calls; it
+    # returns a BatchWriter context manager that buffers items and flushes them via
+    # dynamodb:BatchWriteItem automatically (on 25-item buffer fill and on __exit__). The real
+    # action happens on the RETURNED OBJECT's .put_item()/.delete_item() calls inside the `with`
+    # block (`with table.batch_writer() as bw: bw.put_item(...)`), a third hop this stage does
+    # not trace -- disclosed as a residual, not silently absorbed into this verified-null entry.
+    'batch_writer': [],
 }
 
 # boto3 secretsmanager method -> IAM action(s)
@@ -1439,6 +1447,127 @@ def _resolve_helper_client_calls(content: str, helpers: dict, consts: dict,
     return ops, assign_resolved
 
 
+# ---------------------------------------------------------------------------
+# NFRA_COMPIAM 4th insufficiency, Stage 5 (2026-07-25; CVO~Z's live-measured instance,
+# `opal-data-refresh-api`: `dynamodb = boto3.resource('dynamodb')` -> `table =
+# dynamodb.Table(NAME)` -> `table.put_item/get_item/update_item/delete_item/query(...)` -- 5
+# genuinely-called operations, comp-iam output contained "dynamodb" ZERO times, positive-
+# controlled). The Stage-3 resource-sub-object EXCLUSION correctly stopped `.Table(...)` itself
+# from being misflagged as an unmapped API method -- but that also removed the only textual tell
+# that a resource-style two-hop was happening at all, so calls made ON the returned sub-object
+# (`table.put_item(...)`) stayed completely untraced. This closes that: resolve the sub-object's
+# SERVICE from its PARENT resource variable (client_map, already built) -- NOT from the
+# constructor's own argument (a table/bucket/queue NAME has no bearing on which service it is;
+# that is Stage 2's problem, not this one) -- then fold the sub-object variable into client_map
+# with that service, so the EXISTING per-line method scan + Stage-3 UNMAPPED-METHOD control both
+# apply to it unchanged, no new downstream logic needed.
+# ---------------------------------------------------------------------------
+
+def _resolve_resource_service(expr, client_map: dict):
+    """Resolve an AST expression that SHOULD be a known boto3.resource(...)-bound variable (or a
+    direct boto3.resource('svc')/boto3.client('svc') chain) to (service_or_None, display_str).
+    `client_map` is the CALLER's already-built var->service map (assign-then-use lookup); a direct
+    chained boto3.resource('svc') call is resolved from its own literal argument."""
+    if isinstance(expr, ast.Name) and expr.id in client_map:
+        return client_map[expr.id], expr.id
+    if isinstance(expr, ast.Call) and isinstance(expr.func, ast.Attribute) \
+            and expr.func.attr in ('resource', 'client') \
+            and isinstance(expr.func.value, ast.Name) and expr.func.value.id == 'boto3':
+        if expr.args and isinstance(expr.args[0], ast.Constant) and isinstance(expr.args[0].value, str):
+            service = expr.args[0].value
+            return service, f"boto3.{expr.func.attr}({service!r})"
+    return None, None
+
+
+def _resolve_resource_subobjects(content: str, client_map: dict, file_path: str) -> tuple[list, dict]:
+    """Find sub-object constructor call sites (`<resource>.Table(...)`, `.Bucket(...)`, etc. --
+    `_BOTO3_RESOURCE_SUBOBJECT_ACCESSORS` IS the constructor vocabulary, reused not duplicated)
+    on a KNOWN resource variable, and return (ops, subobject_assign):
+      ops               -- Operation rows for the DIRECT-CHAINED form
+                            (`<resource>.Table(...).put_item(...)` in one expression) --
+                            resolved via the SAME service action-map lookup + UNMAPPED-METHOD
+                            control `_scan_python_for_operations`'s regex path already uses.
+      subobject_assign   -- {var_name: service} for the ASSIGN-THEN-USE form (`table =
+                            dynamodb.Table(NAME)`, methods called on `table` later,
+                            possibly many lines away -- the real fixture's shape) -- the caller
+                            folds this into `client_map` and the EXISTING per-line scan below
+                            handles it with zero new logic.
+    An unresolvable parent (the resource variable is not a known binding, and not a direct
+    boto3.resource('svc') literal) renders an explicit UNRESOLVED-RESOURCE row -- reported, never
+    dropped, matching Stage 2's UNRESOLVED-CLIENT discipline for the analogous case one hop up."""
+    try:
+        tree = ast.parse(content)
+    except (SyntaxError, ValueError):
+        return [], {}
+
+    ops: list = []
+    subobject_assign: dict = {}
+
+    for node in ast.walk(tree):
+        # Shape A: assign-then-use -- Assign(targets=[Name(var)], value=Call(func=Attribute(
+        #          value=<resource_expr>, attr=CONSTRUCTOR)))
+        if isinstance(node, ast.Assign) and isinstance(node.value, ast.Call) \
+                and isinstance(node.value.func, ast.Attribute) \
+                and node.value.func.attr in _BOTO3_RESOURCE_SUBOBJECT_ACCESSORS \
+                and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+            constructor = node.value.func.attr
+            service, _display = _resolve_resource_service(node.value.func.value, client_map)
+            var_name = node.targets[0].id
+            lineno = getattr(node, 'lineno', 0)
+            if service is not None:
+                subobject_assign[var_name] = service
+            else:
+                ops.append(Operation(
+                    iam_actions=['UNRESOLVED-RESOURCE'],
+                    source_pattern=f'UNRESOLVED-RESOURCE({var_name} = <unresolved>.{constructor}(...))',
+                    file_path=file_path, line_number=lineno,
+                ))
+        # Shape B: direct-chained -- Call(func=Attribute(value=Call(func=Attribute(
+        #          value=<resource_expr>, attr=CONSTRUCTOR)), attr=method))
+        elif isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
+            inner = node.func.value
+            if isinstance(inner, ast.Call) and isinstance(inner.func, ast.Attribute) \
+                    and inner.func.attr in _BOTO3_RESOURCE_SUBOBJECT_ACCESSORS:
+                constructor = inner.func.attr
+                method = node.func.attr
+                service, display = _resolve_resource_service(inner.func.value, client_map)
+                lineno = getattr(node, 'lineno', 0)
+                if service is None:
+                    ops.append(Operation(
+                        iam_actions=['UNRESOLVED-RESOURCE'],
+                        source_pattern=f'UNRESOLVED-RESOURCE(<unresolved>.{constructor}(...).{method})',
+                        file_path=file_path, line_number=lineno,
+                    ))
+                    continue
+                if service not in _MODELED_BOTO3_SERVICES:
+                    ops.append(Operation(
+                        iam_actions=[f'{service}:UNMODELED'],
+                        source_pattern=f'{display}.{constructor}(...).{method}  [via resource] '
+                                        f'(boto3 service {service!r} not modeled by comp-iam)',
+                        file_path=file_path, line_number=lineno,
+                    ))
+                    continue
+                action_map = _BOTO3_BY_SERVICE.get(service, {})
+                if method in action_map:
+                    actions = action_map[method]
+                    if actions:
+                        ops.append(Operation(
+                            iam_actions=actions,
+                            source_pattern=f'{display}.{constructor}(...).{method}  [via resource]',
+                            file_path=file_path, line_number=lineno,
+                        ))
+                    # else: deliberately mapped to zero actions -- see the sibling regex block's comment.
+                elif method not in _BOTO3_RESOURCE_SUBOBJECT_ACCESSORS:
+                    ops.append(Operation(
+                        iam_actions=['UNMAPPED-METHOD'],
+                        source_pattern=f'{display}.{constructor}(...).{method}  [via resource] '
+                                        f'(method not in comp-iam\'s {service!r} action map)',
+                        file_path=file_path, line_number=lineno,
+                    ))
+
+    return ops, subobject_assign
+
+
 def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]:
     """Scan a Python file for boto3 client method calls and AWS CLI subprocess invocations."""
     ops = []
@@ -1488,6 +1617,14 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
     ):
         client_map[f'self.{m.group(1)}'] = m.group(2)
         client_map[m.group(1)] = m.group(2)  # also plain name
+
+    # Stage 5 (resource two-hop): client_map is now fully built from every OTHER source (regex
+    # bindings + Stage-2 helper-assign fold) -- resolve sub-object constructor call sites against
+    # it, extend `ops` for the direct-chained form, and fold assign-then-use sub-object vars in
+    # so the per-line scan below treats `table` exactly like any other tracked client variable.
+    _resource_ops, _resource_assign = _resolve_resource_subobjects(content, client_map, file_path)
+    ops.extend(_resource_ops)
+    client_map.update(_resource_assign)
 
     # Scan line by line for method calls on known clients
     for lineno, line in enumerate(lines, 1):
