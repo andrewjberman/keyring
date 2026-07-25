@@ -173,6 +173,13 @@ argued for, shipped before the PRD exists.
   source dirs (freshness/vintage/absence/security-sweep) served elsewhere — another Lambda, a Step Function,
   a CloudWatch alarm, an EC2 job, or a local comp-tool — or genuinely undeployed? Until answered, the finding
   is "no deployed Lambda counterpart under any name," NEVER "no guard exists" (NEVER#1 / false-outage).
+  **→ RESOLVED 2026-07-25 (`~A`, REC1C_A.md §7, pending CVO~Z verification): 6 of the 9 were REAL, DEPLOYED,
+  AND DELIBERATELY TORN DOWN by CTO-approved clean-house passes — each with a matching CTO-GO teardown
+  commit citation, all six self-described git-recoverable. The remaining 3 were NEVER-DEPLOYED (one with an
+  explicit author-stated "NOT deployed" commit message). So the sixth-instance reading softens materially:
+  these are not silently-lost controls — the majority were consciously decommissioned, on the record. The
+  full 24-residual closure (GROUP1 11 renamed-deployed via CVO~Z's earlier addendum + GROUP2 9 + GROUP3 4,
+  incl. `data_refresh` → `opal-data-refresh-api` via live TF citation) leaves 0 unresolved.**
 - ~D rework CLOSED: CVO~Z re-ran the SEALED held-back control (unchanged file) = **41/41** (up from 35/41,
   zero misses, both comp-iam caches in). The whole-output before/after diff also caught a real wrong-
   attribution in the ORIGINAL register (`comp-types`, §5b) and a rework-introduced regression, pre-ship.

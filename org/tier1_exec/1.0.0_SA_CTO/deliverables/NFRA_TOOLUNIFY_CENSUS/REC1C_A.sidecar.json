@@ -1,0 +1,352 @@
+{
+  "author": "0.8.0_AE_CloudComp~A",
+  "dispatch": "1.0.0_SA_CTO~Z 20260725T060155Z NFRA_TOOLUNIFY REC-1c LANE-A",
+  "addendum": "1.0.0_SA_CTO~Z 20260725T060431Z mutation-type labels PROVISIONAL pending L0b (IMPLEMENTATION_LEVELS_AND_SEQUENCING.md S4/L0b)",
+  "mutation_type_vocabulary_provisional": [
+    "EMPTY",
+    "NONEXISTENT",
+    "MALFORMED",
+    "STALE",
+    "UNKNOWN"
+  ],
+  "denominator": {
+    "dispatched": 18,
+    "exercised": 18,
+    "skipped": 0,
+    "terminal_classifiable": 16,
+    "unknown_rows": 3,
+    "unknown_row_ids": [
+      "comp-deadgrant (--account probe)",
+      "comp-deadgrant.py (--account probe)",
+      "comp-drift"
+    ],
+    "tally": {
+      "MATCH": 8,
+      "MISMATCH": 6,
+      "MATCH_but_flagged": 1,
+      "UNKNOWN": 3
+    },
+    "tally_note": "one primary verdict per dispatched tool (18/18); self-test positive controls and the comp-denytest supplementary full-args probe are extra rows in this sidecar, not separately tallied"
+  },
+  "rows": [
+    {
+      "tool": "comp-lambdamap",
+      "subcommand": "check",
+      "declared": "FAIL-OPEN",
+      "confidence": "MED",
+      "mutation_type": "STALE",
+      "command": "bash .tools/comp-lambdamap check",
+      "rc": 1,
+      "observed": "LOUD",
+      "verdict": "MISMATCH-reverse",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-routes",
+      "subcommand": "trace",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "NONEXISTENT",
+      "command": "bash .tools/comp-routes trace DefinitelyNonexistentComponentZzz9999",
+      "rc": 0,
+      "observed": "FAIL-OPEN",
+      "verdict": "MISMATCH",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-iam-usage",
+      "subcommand": "reach-check",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "NONEXISTENT",
+      "command": "bash .tools/comp-iam-usage reach-check arn:aws:iam::313476888478:role/definitely-nonexistent-role-zzz-9999 s3:GetObject arn:aws:s3:::definitely-nonexistent-bucket-zzz-9999/x",
+      "rc": 0,
+      "observed": "FAIL-OPEN-by-design",
+      "verdict": "MISMATCH-at-exit-code-layer",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-deadgrant",
+      "subcommand": "(top-level)",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "n/a (self-test, offline positive control)",
+      "command": "bash .tools/comp-deadgrant --self-test",
+      "rc": 0,
+      "observed": "PASS",
+      "verdict": "MATCH-positive-control",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-deadgrant",
+      "subcommand": "(top-level)",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "NONEXISTENT (--account)",
+      "command": "bash .tools/comp-deadgrant --account 000000000000 --limit 1",
+      "rc": 0,
+      "observed": "INCONCLUSIVE",
+      "verdict": "UNKNOWN",
+      "note": "account-dependent branch (deadgrant.py:490) only reached when axis-A x axis-B candidates exist; --limit 1 found 0 candidates so the mutation never reached the code path it targets. Separately confirmed via source: list_functions (the fleet enumeration) is NOT scoped by --account at all.",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-deadgrant.py",
+      "subcommand": "(top-level)",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "NONEXISTENT (--account)",
+      "command": "python3 .tools/comp-deadgrant.py --account 000000000000 --limit 1",
+      "rc": 0,
+      "observed": "INCONCLUSIVE (byte-identical to wrapper)",
+      "verdict": "UNKNOWN",
+      "note": "confirms wrapper/.py parity; same reason as comp-deadgrant row above",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-denytest",
+      "subcommand": "(top-level)",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "EMPTY (missing --change-type/--from-plan)",
+      "command": "bash .tools/comp-denytest --principal arn:aws:iam::313476888478:role/definitely-nonexistent-role-zzz-9999 --resource arn:aws:s3:::definitely-nonexistent-bucket-zzz-9999 --action s3:GetObject",
+      "rc": 1,
+      "observed": "LOUD",
+      "verdict": "MATCH",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-denytest",
+      "subcommand": "(top-level, supplementary)",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "NONEXISTENT (full args)",
+      "command": "bash .tools/comp-denytest --change-type deny-add --principal arn:aws:iam::313476888478:role/definitely-nonexistent-role-zzz-9999 --resource arn:aws:s3:::definitely-nonexistent-bucket-zzz-9999 --action s3:GetObject",
+      "rc": 1,
+      "observed": "LOUD",
+      "verdict": "MATCH",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-denytest.py",
+      "subcommand": "(top-level)",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "EMPTY",
+      "command": "python3 .tools/comp-denytest.py --principal arn:aws:iam::313476888478:role/definitely-nonexistent-role-zzz-9999 --resource arn:aws:s3:::definitely-nonexistent-bucket-zzz-9999 --action s3:GetObject",
+      "rc": 1,
+      "observed": "LOUD (byte-identical to comp-denytest EMPTY probe)",
+      "verdict": "MATCH",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-tagauthz",
+      "subcommand": "check",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "EMPTY (missing --default-tags-tree)",
+      "command": "bash .tools/comp-tagauthz check --candidate i-0000000000zzz9999",
+      "rc": 1,
+      "observed": "LOUD",
+      "verdict": "MATCH",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-tagauthz.py",
+      "subcommand": "check",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "EMPTY",
+      "command": "python3 .tools/comp-tagauthz.py check --candidate i-0000000000zzz9999",
+      "rc": 1,
+      "observed": "LOUD (byte-identical)",
+      "verdict": "MATCH",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-secrets",
+      "subcommand": "get",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "NONEXISTENT",
+      "command": "python3 .tools/comp-secrets get definitely-nonexistent-secret-zzz-9999 (corrected after a self-caught idiom-mismatch first attempt via bash; see REC1C_A.md S4d)",
+      "rc": 1,
+      "observed": "LOUD",
+      "verdict": "MATCH",
+      "note": "first attempt (bash .tools/comp-secrets get ...) mis-dispatched (idiom-2 tool); logged not discarded, corrected before recording verdict",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-pii",
+      "subcommand": "scan",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "NONEXISTENT",
+      "command": "bash .tools/comp-pii scan DefinitelyNonexistentComponentZzz9999",
+      "rc": 1,
+      "observed": "LOUD",
+      "verdict": "MATCH",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-keys",
+      "subcommand": "exists",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "NONEXISTENT",
+      "command": "bash .tools/comp-keys exists definitely/nonexistent/prefix/zzz9999/",
+      "rc": 0,
+      "observed": "FAIL-OPEN-by-design (self-documented BLIND caveat)",
+      "verdict": "MISMATCH-at-exit-code-layer",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-clobber",
+      "subcommand": "(--live)",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "role_flags": "ADVISORY",
+      "mutation_type": "NONEXISTENT",
+      "command": "python3 .tools/comp-clobber --live definitely-nonexistent-bucket-zzz-9999 some/key/zzz",
+      "rc": 1,
+      "observed": "LOUD-via-unhandled-exception (botocore.errorfactory.NoSuchBucket, uncaught)",
+      "verdict": "MATCH-but-flagged",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-debris",
+      "subcommand": "(top-level)",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "n/a (self-test, offline positive control)",
+      "command": "bash .tools/comp-debris --self-test",
+      "rc": 0,
+      "observed": "PASS (incl. explicit trading-calendar MUTANT check)",
+      "verdict": "MATCH-positive-control",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-debris",
+      "subcommand": "(top-level)",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "MALFORMED (--types)",
+      "command": "bash .tools/comp-debris --types nonexistent_type_zzz_9999",
+      "rc": 0,
+      "observed": "FAIL-OPEN (stderr names the invalid type, but proceeds to print a full 0-resources report and exits 0)",
+      "verdict": "MISMATCH",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-dups",
+      "subcommand": "(top-level)",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "MALFORMED (--class)",
+      "command": "python3 .tools/comp-dups --class NONEXISTENT_CLASS_ZZZ_9999",
+      "rc": 0,
+      "observed": "SILENT-EMPTY as to the mutation (zero acknowledgment anywhere; ran full unfiltered scan)",
+      "verdict": "MISMATCH",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-drift",
+      "subcommand": "(positional target)",
+      "declared": "LOUD",
+      "confidence": "MED",
+      "mutation_type": "NONEXISTENT",
+      "command": "bash .tools/comp-drift definitely_nonexistent_artifact_zzz_9999 (2 attempts, 60s then 150s budget)",
+      "rc": 124,
+      "observed": "TIMEOUT (my own budget, not the tool's exit code); partial: seam-1 comp-heat drift -> CLEAN, seam-2 comp-pipescript deployed -> MATCH, seam-3 globgrph derive marker-oracle did not complete in budget",
+      "verdict": "UNKNOWN",
+      "note": "no upfront target-existence validation observed (source-confirmed via drift_cli.py: raw string passed to each seam adapter's `if target:` branch); two adapters returned substantive non-error verdicts for a nonexistent artifact -- flagged, not adjudicated, per REC1C_A.md S4i",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-firmsep-sweep",
+      "subcommand": "(top-level)",
+      "declared": "LOUD (default)",
+      "confidence": "LOW",
+      "mutation_type": "NONEXISTENT",
+      "command": "bash .tools/comp-firmsep-sweep --secret definitely-nonexistent-secret-zzz-9999",
+      "rc": 1,
+      "observed": "LOUD",
+      "verdict": "MATCH",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    },
+    {
+      "tool": "comp-firmsep-sweep.py",
+      "subcommand": "(top-level)",
+      "declared": "LOUD (default)",
+      "confidence": "LOW",
+      "mutation_type": "NONEXISTENT",
+      "command": "python3 .tools/comp-firmsep-sweep.py --secret definitely-nonexistent-secret-zzz-9999",
+      "rc": 1,
+      "observed": "LOUD (byte-identical)",
+      "verdict": "MATCH",
+      "stdout_excerpt": null,
+      "stderr_excerpt": null
+    }
+  ],
+  "cross_batch_pattern": {
+    "declared_LOUD_observed_FAIL_OPEN_or_worse_this_pass": [
+      "comp-routes trace",
+      "comp-iam-usage reach-check",
+      "comp-keys exists",
+      "comp-debris --types",
+      "comp-dups --class"
+    ],
+    "banked_from_REC1_REC1b": [
+      "comp-freshness (REC-1 S5.1)",
+      "comp-surface-check scan (REC-1b S4b)"
+    ],
+    "cumulative_confirmed_instances": 7
+  },
+  "residual_24_closure": {
+    "source": "A.md ADDENDUM 2 (CVO~Z) pre-split GROUP1(11)/GROUP2(9)/GROUP3(4); this pass closes GROUP2's finer split + GROUP3 fully",
+    "deployed_under_another_name": 12,
+    "decommissioned_leftover": 6,
+    "never_deployed": 6,
+    "decommissioned_leftover_names": [
+      "bd-49f-freshness-probe",
+      "bd-cot-freshness-probe",
+      "bd-served-vintage-alarm",
+      "inf-gold-freshness-guard",
+      "mdpf-freshness-checker",
+      "opal-assets-absence-check"
+    ],
+    "never_deployed_names": [
+      "market_query",
+      "schwab-bronze-freshness",
+      "security-sweep-daily",
+      "bd-49f-etf-ownership-daily-canonical",
+      "mdpf-manifest",
+      "test_seeking_alpha_unauth"
+    ],
+    "newly_resolved_deployed_under_another_name": [
+      "data_refresh -> opal-data-refresh-api (infra/aws/terraform/data-refresh/main.tf:36)"
+    ],
+    "grounding_method": "current infra/aws/terraform/** presence (grep) + full git history literal-string search (git log -S<name> -- infra/aws/terraform), per name; rail-checked marker used (historical TF-string search not answerable by comp-aws/comp-iam)",
+    "remaining_unresolved": 0
+  }
+}
