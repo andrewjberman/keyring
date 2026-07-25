@@ -1644,18 +1644,29 @@ def _resolve_resource_subobjects(content: str, client_map: dict,
     subobject_assign: dict = {}
     deferred_candidates: list = []
 
-    # NFRA_COMPIAM Stage 6 FINAL ROUND (2026-07-25, CVO~Z verify): `Key`/`Attr` are ambiguous --
-    # both a REAL resource sub-object constructor name (KMS's `.Key(key_id)`) AND the boto3
-    # DynamoDB condition-builder class name (`boto3.dynamodb.conditions.Key`/`Attr`), imported as
-    # a MODULE alias (`import boto3.dynamodb.conditions as conditions` -> `conditions.Key(...)`)
-    # rather than the bare-name form (`from ... import Key` -> `Key(...)`, which never reaches
-    # this function at all -- Shape A/B both require a DOTTED constructor, `<expr>.Key(...)`, and
-    # a bare call has no dot). `conditions.Key('pk').eq(...)` builds a local Condition OBJECT --
-    # boto3 source: `Key.eq -> Equals(self, value)` -- no client, no request, zero IAM impact.
-    # Measured false positive: opal-portfolio-export-download:78, `UNRESOLVED-RESOURCE(<unresolved
-    # >.Key(...).eq)` on a KeyConditionExpression builder. Detected via AST import inspection
-    # (grounded, not a hardcoded 'conditions' guess) -- only `import boto3.dynamodb.conditions
-    # [as X]` binds a NAME that could precede `.Key(`/`.Attr(` this way.
+    # NFRA_COMPIAM Stage 6 FINAL ROUND (2026-07-25, CVO~Z verify, then CTO~Z 133140Z partial-fix
+    # finding): `Key`/`Attr` are ambiguous -- both a REAL resource sub-object constructor name
+    # (KMS's `.Key(key_id)`) AND the boto3 DynamoDB condition-builder class name
+    # (`boto3.dynamodb.conditions.Key`/`Attr`). `conditions.Key('pk').eq(...)` builds a local
+    # Condition OBJECT -- boto3 source: `Key.eq -> Equals(self, value)` -- no client, no request,
+    # zero IAM impact. THREE syntactic forms reach the same semantics; the first fix covered only
+    # one, which is exactly the defect it warns about (a fix scoped to the instance that prompted
+    # it, not the class):
+    #   (1) aliased import: `import boto3.dynamodb.conditions as X` -> `X.Key(...)` -- an
+    #       ast.Name matching a scanned import alias.
+    #   (2) FULLY-QUALIFIED, no local import at all: `boto3.dynamodb.conditions.Key(...)` -- the
+    #       measured miss (opal-assets-daily-emitter:903-904). Works at runtime with ZERO import
+    #       statement in the file, because boto3's own DynamoDB resource factory imports the
+    #       conditions submodule as a side effect (sys.modules + parent-package attribute), so
+    #       import-SCANNING structurally cannot catch it -- this form is a stable, well-known AWS
+    #       SDK dotted path recognized STRUCTURALLY (an ast.Attribute chain), not via any import.
+    #   (3) bare name: `from boto3.dynamodb.conditions import Key` -> `Key(...)` -- CHECKED, not
+    #       assumed: structurally cannot reach Shape A/B at all (both require a DOTTED
+    #       constructor, `<expr>.Key(...)`; a bare call's func is an ast.Name, not ast.Attribute,
+    #       so it never matches `isinstance(...func, ast.Attribute)` above). Verified directly
+    #       against a synthetic `from boto3.dynamodb.conditions import Key, Attr` + chained-call
+    #       fixture: zero false-positive rows, `dynamodb:Query` traced correctly. No estate
+    #       instance found either (grepped for this shape; none present).
     _condition_builder_aliases: set = set()
     for _n in ast.walk(tree):
         if isinstance(_n, ast.Import):
@@ -1663,10 +1674,19 @@ def _resolve_resource_subobjects(content: str, client_map: dict,
                 if _alias.name == 'boto3.dynamodb.conditions':
                     _condition_builder_aliases.add(_alias.asname or 'conditions')
 
+    def _is_dotted_boto3_dynamodb_conditions(expr) -> bool:
+        """Form (2): the literal AST shape for `boto3.dynamodb.conditions` (3-level Attribute
+        chain over Name('boto3')) -- recognized structurally, no import needed (see above)."""
+        return (isinstance(expr, ast.Attribute) and expr.attr == 'conditions'
+                and isinstance(expr.value, ast.Attribute) and expr.value.attr == 'dynamodb'
+                and isinstance(expr.value.value, ast.Name) and expr.value.value.id == 'boto3')
+
     def _is_condition_builder(constructor: str, parent_expr) -> bool:
-        return (constructor in ('Key', 'Attr')
-                and isinstance(parent_expr, ast.Name)
-                and parent_expr.id in _condition_builder_aliases)
+        if constructor not in ('Key', 'Attr'):
+            return False
+        if isinstance(parent_expr, ast.Name) and parent_expr.id in _condition_builder_aliases:
+            return True  # form (1): aliased import
+        return _is_dotted_boto3_dynamodb_conditions(parent_expr)  # form (2): fully-qualified
 
     for node in ast.walk(tree):
         # Shape A: assign-then-use -- Assign(targets=[Name(var)], value=Call(func=Attribute(
