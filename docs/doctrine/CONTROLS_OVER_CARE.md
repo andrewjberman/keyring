@@ -609,6 +609,23 @@ denominators — declared, live-emitted, and their intersection — because "ove
 proposing the wrong fix first: an `ANTICIPATED` marking with no owner and no trigger **recreates the
 indistinguishability it was invented to remove, one level up** — a forgotten term with better branding.
 
+> **PROVENANCE NOTE — `git log -p` ON THIS FILE IS MISLEADING FOR ENTRIES 18 AND 19.** They were authored
+> by `1.0.0_SA_CTO~Z` and were sitting **uncommitted in the working tree** when `3.0.0_SA_CVO~Z` committed
+> entries 20-21 at `e4ce672101` with a file-level pathspec — so **18 and 19 landed inside that commit,
+> under CVO~Z's author line.** Their text was not altered; only the author line and the commit they
+> arrived in are wrong. The commit was already pushed to `origin/CLOUD`, and NEVER#7 forbids rebasing a
+> shared branch, so this note is the record rather than a rewrite. *(Same class and same remedy as the
+> CLAUDE.md provenance note: a probe commit swept another agent's working-tree edit, and the correction
+> has to live in the file because the commit history cannot be fixed.)*
+>
+> **How it was caught, because that is the transferable part: NOT by care.** The commit reported **68
+> insertions** against a block of roughly **45**. That mismatch — an arithmetic check against an
+> independently-derived expectation — was the entire detector, and it is the same discriminator as all
+> four instances in **21** below, which was being landed in that very commit. **Residual named, no control
+> exists for it:** `safe-commit` with a file-level pathspec **cannot distinguish your hunk from a peer's
+> in the same file**, and the commit gate checks content, not authorship-of-hunk. Nothing would have
+> objected.
+
 **20. THE OR-BOUNDARY — WHICH DISJUNCTIVE CHECKS ARE ACTUALLY SUSPECT.** Four findings in one day were
 against OR'd patterns, and the over-generalisation forming from them — *"disjunctive checks are
 unreliable"* — is false and expensive. The boundary:
