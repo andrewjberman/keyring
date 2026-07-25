@@ -1,5 +1,6 @@
 {
   "method": "corrected classifier (post-CVO~Z review): label normalized (strip -/_ , lowercase) matched against the union of {live Lambda names, lambda-source-map.json registry keys}. Supersedes the original depth>6-or-underscore-prefix heuristic, which had false positives on legitimately deep v2_portal/yang_pipeline nesting.",
+  "verification_note": "CVO~Z independently re-checked EXHAUSTIVELY (not a sample): 0/106 of the vendor+org-noise+residual buckets are live under their node label. 191/191 live coverage confirmed. Residual-24 further re-triaged below per CVO~Z's Group1/Group2 split plus this lane's follow-up on the remainder.",
   "total_lambda_nodes": 333,
   "matched_live_or_registry": 208,
   "graphjson_label_coverage_of_all_191_live_names": "191/191 -- ZERO live Lambdas absent from graph.json under any name (verified separately)",
@@ -108,6 +109,7 @@
     "vendor_confirmed_phantom": {
       "count": 73,
       "definition": "file_path passes through a pip-vendored 3rd-party package directory (_build_tmp/, package/, or a known PyPI package name as a path component)",
+      "cvoz_exhaustive_check": "0 of 73 live -- confirmed",
       "nodes": [
         {
           "id": "lambda:_api",
@@ -479,6 +481,7 @@
     "org_dir_noise_phantom": {
       "count": 9,
       "definition": "rglob picked up a generic organizational subdirectory (test/src/tools/shared/ci dir) as if it were a Lambda name",
+      "cvoz_exhaustive_check": "0 of 9 live -- confirmed",
       "nodes": [
         {
           "id": "lambda:_shared",
@@ -527,129 +530,183 @@
         }
       ]
     },
-    "residual_unexplained": {
+    "residual_RETRIAGED": {
       "count": 24,
-      "definition": "real-looking Lambda source directory name, but NOT live and NOT in the CI source-map registry -- status genuinely undetermined by this census (could be legacy/decommissioned source never cleaned up, in-development code, or an unresolved naming mismatch). NOT claimed as phantom or as a coverage gap -- flagged as an open candidate-defect per SS3.4.",
+      "cvoz_exhaustive_check": "0 of 24 live under original label -- confirmed",
+      "definition": "re-cut per CVO~Z's recommendation into 3 groups instead of one undifferentiated 'unexplained' bucket",
+      "group_counts": {
+        "GROUP1_renamed_deployed_benign": 11,
+        "GROUP2_no_live_counterpart_ANY_name_THE_FINDING": 9,
+        "GROUP3_genuinely_uncertain_not_forced": 4
+      },
       "nodes": [
         {
           "id": "lambda:bd-49f-etf-ownership-daily-canonical",
           "label": "bd-49f-etf-ownership-daily-canonical",
-          "file_path": "infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily-canonical/lambda_function.py"
+          "file_path": "infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily-canonical/lambda_function.py",
+          "group": "GROUP3_genuinely_uncertain",
+          "note": "partial/ambiguous -- live has bd-49f-etf-ownership-daily (no -canonical variant); could be an undeployed enrichment step or the base pipeline IS the intended target, not determined"
         },
         {
           "id": "lambda:bd-49f-freshness-probe",
           "label": "bd-49f-freshness-probe",
-          "file_path": "infra/aws/lambda/bd-pipeline/bd-49f-freshness-probe/lambda_function.py"
+          "file_path": "infra/aws/lambda/bd-pipeline/bd-49f-freshness-probe/lambda_function.py",
+          "group": "GROUP2_no_live_counterpart_ANY_name",
+          "note": "CVO~Z-confirmed: zero live Lambdas match any substring probe for this concept -- source exists, nothing deployed under any name. THE FINDING."
         },
         {
           "id": "lambda:bd-cot-freshness-probe",
           "label": "bd-cot-freshness-probe",
-          "file_path": "infra/aws/lambda/cot-pipeline/bd-cot-freshness-probe/lambda_function.py"
+          "file_path": "infra/aws/lambda/cot-pipeline/bd-cot-freshness-probe/lambda_function.py",
+          "group": "GROUP2_no_live_counterpart_ANY_name",
+          "note": "CVO~Z-confirmed: zero live Lambdas match any substring probe for this concept -- source exists, nothing deployed under any name. THE FINDING."
         },
         {
           "id": "lambda:bd-served-vintage-alarm",
           "label": "bd-served-vintage-alarm",
-          "file_path": "infra/aws/lambda/bd-pipeline/bd-served-vintage-alarm/trading_calendar.py"
+          "file_path": "infra/aws/lambda/bd-pipeline/bd-served-vintage-alarm/trading_calendar.py",
+          "group": "GROUP2_no_live_counterpart_ANY_name",
+          "note": "CVO~Z-confirmed: zero live Lambdas match any substring probe for this concept -- source exists, nothing deployed under any name. THE FINDING."
         },
         {
           "id": "lambda:data_refresh",
           "label": "data_refresh",
-          "file_path": "infra/aws/lambda/data_refresh/test_auth_context.py"
+          "file_path": "infra/aws/lambda/data_refresh/test_auth_context.py",
+          "group": "GROUP3_genuinely_uncertain",
+          "note": "plausible but unconfirmed -- multiple loose candidates (opal-data-refresh-api, opal-data-refresh-trigger per the URL-route map, yang-refresh-fred-cache); no single confident match"
         },
         {
           "id": "lambda:exec_summary",
           "label": "exec_summary",
-          "file_path": "infra/aws/lambda/exec-summary-generator/exec_summary/trigger_eval.py"
+          "file_path": "infra/aws/lambda/exec-summary-generator/exec_summary/trigger_eval.py",
+          "group": "GROUP1_renamed_deployed",
+          "note": "follow-up high-confidence match (same method as CVO~Z): exec-summary-generator"
         },
         {
           "id": "lambda:finbert",
           "label": "finbert",
-          "file_path": "infra/aws/lambda/finbert/finbert_handler.py"
+          "file_path": "infra/aws/lambda/finbert/finbert_handler.py",
+          "group": "GROUP1_renamed_deployed",
+          "note": "CVO~Z-confirmed deployed as: finbert-batch-processor"
         },
         {
           "id": "lambda:inf-gold-freshness-guard",
           "label": "inf-gold-freshness-guard",
-          "file_path": "infra/aws/lambda/inf-pipeline/inf-gold-freshness-guard/lambda_function.py"
+          "file_path": "infra/aws/lambda/inf-pipeline/inf-gold-freshness-guard/lambda_function.py",
+          "group": "GROUP2_no_live_counterpart_ANY_name",
+          "note": "CVO~Z-confirmed: zero live Lambdas match any substring probe for this concept -- source exists, nothing deployed under any name. THE FINDING."
         },
         {
           "id": "lambda:infrastructure_monitor",
           "label": "infrastructure_monitor",
-          "file_path": "infra/aws/lambda/infrastructure_monitor/openai_cost_tracker.py"
+          "file_path": "infra/aws/lambda/infrastructure_monitor/openai_cost_tracker.py",
+          "group": "GROUP1_renamed_deployed",
+          "note": "follow-up high-confidence match (same method as CVO~Z): opal-infrastructure-monitor"
         },
         {
           "id": "lambda:market_query",
           "label": "market_query",
-          "file_path": "infra/aws/lambda/market_query/lambda_function.py"
+          "file_path": "infra/aws/lambda/market_query/lambda_function.py",
+          "group": "GROUP2_no_live_counterpart_ANY_name",
+          "note": "CVO~Z-confirmed: zero live Lambdas match any substring probe for this concept -- source exists, nothing deployed under any name. THE FINDING."
         },
         {
           "id": "lambda:mdpf-freshness-checker",
           "label": "mdpf-freshness-checker",
-          "file_path": "infra/aws/lambda/mdpf-pipeline/mdpf-freshness-checker/lambda_function.py"
+          "file_path": "infra/aws/lambda/mdpf-pipeline/mdpf-freshness-checker/lambda_function.py",
+          "group": "GROUP2_no_live_counterpart_ANY_name",
+          "note": "CVO~Z-confirmed: zero live Lambdas match any substring probe for this concept -- source exists, nothing deployed under any name. THE FINDING."
         },
         {
           "id": "lambda:mdpf-manifest",
           "label": "mdpf-manifest",
-          "file_path": "infra/aws/lambda/mdpf-manifest/mdpf_manifest.py"
+          "file_path": "infra/aws/lambda/mdpf-manifest/mdpf_manifest.py",
+          "group": "GROUP3_genuinely_uncertain",
+          "note": "no clean match found -- substring hits (mdpf-daily-trigger, yang-generate-manifest) look coincidental, not a rename; closer to Group 2 in spirit but not verified against the same rigor CVO~Z applied"
         },
         {
           "id": "lambda:news_scanner",
           "label": "news_scanner",
-          "file_path": "infra/aws/lambda/news_scanner/lambda_news_trending.py"
+          "file_path": "infra/aws/lambda/news_scanner/lambda_news_trending.py",
+          "group": "GROUP1_renamed_deployed",
+          "note": "CVO~Z-confirmed deployed as: 9 live news-* functions"
         },
         {
           "id": "lambda:opal-assets-absence-check",
           "label": "opal-assets-absence-check",
-          "file_path": "infra/aws/lambda/opal-assets-absence-check/trading_calendar.py"
+          "file_path": "infra/aws/lambda/opal-assets-absence-check/trading_calendar.py",
+          "group": "GROUP2_no_live_counterpart_ANY_name",
+          "note": "CVO~Z-confirmed: zero live Lambdas match any substring probe for this concept -- source exists, nothing deployed under any name. THE FINDING."
         },
         {
           "id": "lambda:portal_data_proxy",
           "label": "portal_data_proxy",
-          "file_path": "infra/aws/lambda/portal_data_proxy/session_tracker.py"
+          "file_path": "infra/aws/lambda/portal_data_proxy/session_tracker.py",
+          "group": "GROUP1_renamed_deployed",
+          "note": "CVO~Z-confirmed deployed as: opal-portal-data-proxy"
         },
         {
           "id": "lambda:portfolio_excel_generator",
           "label": "portfolio_excel_generator",
-          "file_path": "infra/aws/lambda/portfolio_excel_generator/remediate_weight_unit_pmtrdx001.py"
+          "file_path": "infra/aws/lambda/portfolio_excel_generator/remediate_weight_unit_pmtrdx001.py",
+          "group": "GROUP1_renamed_deployed",
+          "note": "follow-up high-confidence match (same method as CVO~Z): opal-portfolio-excel-generator"
         },
         {
           "id": "lambda:portfolio_optimization_loader",
           "label": "portfolio_optimization_loader",
-          "file_path": "infra/aws/lambda/portfolio_optimization_loader/yang_transform.py"
+          "file_path": "infra/aws/lambda/portfolio_optimization_loader/yang_transform.py",
+          "group": "GROUP1_renamed_deployed",
+          "note": "follow-up high-confidence match (same method as CVO~Z): opal-pm-optimization-loader (or opal-pm-optimization-autosave-put)"
         },
         {
           "id": "lambda:schwab-bronze-freshness",
           "label": "schwab-bronze-freshness",
-          "file_path": "infra/aws/lambda/schwab-bronze-freshness/trading_calendar.py"
+          "file_path": "infra/aws/lambda/schwab-bronze-freshness/trading_calendar.py",
+          "group": "GROUP2_no_live_counterpart_ANY_name",
+          "note": "CVO~Z-confirmed: zero live Lambdas match any substring probe for this concept -- source exists, nothing deployed under any name. THE FINDING."
         },
         {
           "id": "lambda:security-sweep-daily",
           "label": "security-sweep-daily",
-          "file_path": "infra/aws/lambda/security-sweep-daily/lambda_function.py"
+          "file_path": "infra/aws/lambda/security-sweep-daily/lambda_function.py",
+          "group": "GROUP2_no_live_counterpart_ANY_name",
+          "note": "CVO~Z-confirmed: zero live Lambdas match any substring probe for this concept -- source exists, nothing deployed under any name. THE FINDING."
         },
         {
           "id": "lambda:smartx_assets_pull",
           "label": "smartx_assets_pull",
-          "file_path": "infra/aws/lambda/smartx_assets_pull/test_smartx_client.py"
+          "file_path": "infra/aws/lambda/smartx_assets_pull/test_smartx_client.py",
+          "group": "GROUP1_renamed_deployed",
+          "note": "CVO~Z-confirmed deployed as: 7 live smartx-* functions"
         },
         {
           "id": "lambda:smartx_ingestion_pipeline",
           "label": "smartx_ingestion_pipeline",
-          "file_path": "infra/aws/lambda/smartx_ingestion_pipeline/precompute_views.py"
+          "file_path": "infra/aws/lambda/smartx_ingestion_pipeline/precompute_views.py",
+          "group": "GROUP1_renamed_deployed",
+          "note": "CVO~Z-confirmed deployed as: 7 live smartx-* functions"
         },
         {
           "id": "lambda:smartx_query",
           "label": "smartx_query",
-          "file_path": "infra/aws/lambda/smartx_query/lambda_function.py"
+          "file_path": "infra/aws/lambda/smartx_query/lambda_function.py",
+          "group": "GROUP1_renamed_deployed",
+          "note": "CVO~Z-confirmed deployed as: 7 live smartx-* functions"
         },
         {
           "id": "lambda:test_seeking_alpha_unauth",
           "label": "test_seeking_alpha_unauth",
-          "file_path": "infra/aws/lambda/test_seeking_alpha_unauth/lambda_function_simple.py"
+          "file_path": "infra/aws/lambda/test_seeking_alpha_unauth/lambda_function_simple.py",
+          "group": "GROUP3_genuinely_uncertain",
+          "note": "different flavor entirely -- filename is literally lambda_function_simple.py in a test-seeking-alpha-unauth dir; reads as a manual test/diagnostic scratch artifact never intended for its own production deployment, not a renamed production Lambda and not a monitoring-guard gap"
         },
         {
           "id": "lambda:trending_image_generator",
           "label": "trending_image_generator",
-          "file_path": "infra/aws/lambda/trending_image_generator/lambda_function.py"
+          "file_path": "infra/aws/lambda/trending_image_generator/lambda_function.py",
+          "group": "GROUP1_renamed_deployed",
+          "note": "follow-up high-confidence match (same method as CVO~Z): opal-trending-image-generator"
         }
       ]
     }

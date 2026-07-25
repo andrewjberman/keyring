@@ -72,8 +72,9 @@ undeployed. That may be a more urgent program than tool consolidation, found BY 
 - Its LAMBDA=333 is the **outlier**, polluted (~A-corrected post-CVO~Z): `extract_s3.py`'s unbounded
   `rglob("*.py")` walks into pip-vendored dep trees (a vendored openai SDK under
   `portal_data_proxy/_build_tmp` — a **Rule-3 violation site**). Corrected breakdown: 208 matched (live/
-  registry) + 82 phantom (73 vendor-confirmed + 9 org-dir-noise) + 19 alias-excess + **24 genuinely-
-  unexplained (open)**. Crucially, graph.json's LAMBDA labels cover **191/191 live Lambdas exactly — zero
+  registry) + 82 phantom (73 vendor-confirmed + 9 org-dir-noise) + 19 alias-excess + **24 residual, now
+  triaged: 11 deployed-under-a-different-name (benign), 9 = the §0.2 sixth-instance undeployed-guard dirs, 4
+  ambiguous/test**. Crucially, graph.json's LAMBDA labels cover **191/191 live Lambdas exactly — zero
   missing**; the earlier "3-short residual" was itself a classifier false-positive that hid ~30 real deep-
   nested Lambdas (rebuilt on a live/registry cross-reference, not a path-shape guess). Full 333-node
   classification in `A_lambda_enumeration.json` for CVO~Z's random sample.

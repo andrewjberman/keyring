@@ -53,6 +53,40 @@ excess noise, not undercoverage. F1 below is retained as originally written for 
 (vendored-dependency contamination is real and is the dominant driver); this addendum is the corrected,
 closed arithmetic and supersedes the "333-115-30=188, closing to 191" line specifically.
 
+## ADDENDUM 2 (2026-07-25T00:1xZ) -- CVO~Z verified exhaustively, and the residual-24 splits into a real finding
+
+CVO~Z did not spot-check a sample of the enumeration above -- the population was small enough to check
+**exhaustively**, and did: **0 of 106** nodes in the vendor/org-noise/residual buckets are live under their
+node label. The classifier and the 191/191 coverage claim are now fully verified, not sampled.
+
+CVO~Z then re-cut the 24-node `residual_unexplained` bucket (which this lane deliberately left
+undifferentiated rather than force an unsupported explanation) into two groups by testing each name against
+the full live inventory:
+
+- **11 nodes: real Lambdas, deployed under a different name than their source directory** (benign --
+  `portal_data_proxy` -> `opal-portal-data-proxy`, `finbert` -> `finbert-batch-processor`,
+  `infrastructure_monitor` -> `opal-infrastructure-monitor`, and 8 others; full list + matched live name per
+  node in `A_lambda_enumeration.json`).
+- **9 nodes: NO live counterpart under ANY name.** `bd-49f-freshness-probe`, `bd-cot-freshness-probe`,
+  `inf-gold-freshness-guard`, `mdpf-freshness-checker`, `bd-served-vintage-alarm`,
+  `opal-assets-absence-check`, `schwab-bronze-freshness`, `security-sweep-daily`, `market_query`. CVO~Z
+  substring-searched the complete live inventory: zero live Lambdas contain "freshness", "vintage",
+  "absence", or "security-sweep", under any spelling. **This is a real finding, precisely scoped:** source
+  code for freshness guards, a vintage alarm, and an absence check sits in the repository, and none of it is
+  a deployed Lambda under any name. The scope of the claim, stated so it cannot be over-read: this does
+  **not** establish that no freshness guarding exists in the estate -- the function could live inside
+  another Lambda, a Step Function, a CloudWatch alarm, an EC2 job, or a local tool (`comp-freshness`
+  demonstrably exists and freshness checking demonstrably happens by other means). What is established,
+  narrowly and exactly: **these specific source directories have no deployed Lambda counterpart under any
+  name.** Whether their intended function runs elsewhere is a separate, unanswered question.
+
+The remaining 4 residual nodes (`bd-49f-etf-ownership-daily-canonical`, `data_refresh`, `mdpf-manifest`,
+`test_seeking_alpha_unauth`) were checked by this lane with the same substring method and deliberately
+**not** forced into either group: each has either multiple loose candidate matches with no single confident
+answer, or (for `test_seeking_alpha_unauth`, whose handler file is literally named
+`lambda_function_simple.py`) reads as a manual test/diagnostic artifact rather than a production-naming
+question at all. Per-node rationale in `A_lambda_enumeration.json`.
+
 ---
 
 ## Headline verdict on the two load-bearing questions
