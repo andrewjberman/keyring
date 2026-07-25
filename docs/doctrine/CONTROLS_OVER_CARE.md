@@ -457,6 +457,31 @@ observation (`LastUsedDate: None`) **conflates never-used with not-used-inside-t
 the EMPTY-vs-ABSENT distinction again, in a new instrument, and the mode most likely to be read as
 "safe to delete." Render UNKNOWN with the window named.
 
+**10. A PREDICATE'S SENSITIVITY CAN BE *BORROWED* FROM A HUMAN DISCIPLINE RATHER THAN INTRINSIC TO THE
+INSTRUMENT — AND A BORROWED SENSITIVITY FAILS SILENTLY THE MOMENT THE DISCIPLINE LAPSES.** Measured by
+the first monotonicity sensor: a `version_pin` check is SENSITIVE to an addition *only if a human bumps
+the source's declared version*; the same addition **without** a bump reads MONOTONE-BLIND — which is
+precisely the Class-2 hole the migration to `version_pin` was performed to close. A `derived_count` check
+over the same change is sensitive unconditionally, because **it counts**. Two remedies that had been
+recommended interchangeably are therefore **not equivalent, and the ranking is now measured: where a
+countable population exists, prefer the counting check; the declared-version check is the fallback for
+things with nothing to count — and wherever it is used, the borrowing must be stated in the instrument's
+own output.** The general test before trusting any guard: *what has to keep happening, by a person, for
+this check to keep working?* If the answer is not "nothing," the guard's real strength is the discipline's
+strength, and the guard will not tell you when that strength ends.
+
+**11. RESOLVING A QUESTION IS NOT THE SAME AS MOVING THE INSTRUMENT — a resolution that lives only in a
+report leaves the contract still saying "assume."** A verifier established live facts that settled an
+open assumption (grant present, zero failures over fourteen days) and recorded it as RESOLVED. But the
+unit's check type returned `ASSUMPTION` **unconditionally** — classified by the sensor as
+`IMMOBILE-BY-CONSTRUCTION`, a predicate **no change to the estate can ever move.** So the finding was
+real and the instrument was untouched: the same gap as fixing prose while leaving the pin. **Pair every
+resolution with the question "which predicate now moves that did not move before?" — and if the answer
+is none, the resolution is an assertion in a document, not a change in what the system can detect.**
+Corollary from the same measurement: keep **DECLARED** (undetectable by design) strictly separate from
+**UNKNOWN** (could not synthesize a test). They are opposite epistemic states, and folding them together
+converts "nothing could ever catch this" into "nobody got around to it," or worse, the reverse.
+
 **Two structural notes the day earned, recorded because they change what a record is FOR:**
 **(a) A prematurely-checked prerequisite does not merely misreport status — it AUTHORIZES downstream
 work.** A build-order item marked DONE on 2 of its 3 clauses would have opened a design phase the
