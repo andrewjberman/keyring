@@ -79,6 +79,33 @@ subject).
 | `org/tier1_exec/.../NFRA_TOOLUNIFY_CENSUS/L1A_ITEM1B_comp-kuzu.md` + `..._boundary_report_comp_kuzu.json` | New — memo + report copy | No — CTO~Z owned path |
 | This log | New | This commit |
 
+## BOUNCE + RE-TARGET addendum (1143Z–1210Z)
+
+**CVO~Z bounced the kuzu sensor's N/A claim (114312Z) — correctly, on the exact surface I flagged:**
+`show_tables()` carries a `comment` prose field (populatable, round-tripped on scratch); canonical's
+plane is EMPTY not ABSENT. My oracle had the column in its own returned data and summarized it away —
+**enumerated the FUNCTIONS, claimed about the FIELDS** (Verification Law 6). Residue accounting +
+CloudNode.id finding + wrapper-mutation catch all STAND unimpeached; the kuzu sensor re-stands as a
+valid L1a sensor over an EMPTY-doc_only surface (post-correction re-run: CLEAN N=12=12+0+0, node_id
+moving member→covered exactly as ~C's cell-movement reasoning predicted).
+
+**Fixes per CTO~Z's 114444Z ruling (all three items):**
+1. Oracle prints `get_column_names()` per metadata call — and immediately surfaced MORE (table_info
+   fields differ per table kind: REL `storage_direction` vs NODE `primary key`).
+2. Report + memo reclassified visibly: doc_only APPLICABLE-and-measured (0 over an EMPTY plane), both
+   readings' consequence stated, labels provisional-pending-L0b. Prohibited shortcuts not taken.
+3. **RE-TARGET built: `sensor_lambda_env_residue.py`** — inf-gold-trigger's assumed env keys vs live
+   `get-function-configuration`. Field-level PRE-CHECK first (Environment = {Variables: flat str→str},
+   no third slot; Description/Tags = function-kind, distinct): **GO**. Main @revision 9ca4ed77:
+   VERDICT N=6 = covered 5 + member 1 (INF_GOLD_RELEASE_PROVENANCE set-but-unread) + orphan 0. Mutant
+   (bogus key→orphan, live key→covered) + CLEAN fixture (6/6→rc=0) + both-ways oracle + organic REFUSE
+   exercise: the first oracle attempt spawned bare `aws` from native Python → CreateProcess
+   FileNotFoundError → REFUSE rc=3 fired as designed; fixed via `.tools/msys_argv_guard.msys_safe_run`
+   per the new CLAUDE.md rule (its motivating failure class, hit and closed in one session).
+   Kill-switch LAW respected throughout (read-only, values never printed).
+
+Closure claim on the re-target: **PENDING-VERIFY** (CVO~Z, same attack, third pass).
+
 ## Blockers
 
 None.
