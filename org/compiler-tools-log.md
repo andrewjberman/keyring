@@ -26411,3 +26411,23 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.BLOCKED-ON-PEER-LANDING | comp-system | bash .tools/comp-system --self-test | PASS | 18/18, 2 re-pinned + 3 new checks for the uncommitted-source guard |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.BLOCKED-ON-PEER-LANDING | comp-system | bash .tools/comp-system --check | PASS | live mutant, real organically-dirty tree, BLOCKED-ON-PEER-LANDING confirmed |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.BLOCKED-ON-PEER-LANDING | comp-system | bash .tools/comp-system --gate | PASS | same, both entry points confirmed, 0 regenerate mentions |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-assets | comp-assets --channel my_own_bogus_channel_4242 --json | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.BLOCKED-ON-PEER-LANDING-V2 | comp-system | bash .tools/comp-system --self-test | PASS | 21/21, 3 new pure-function checks for the metric-scoped narrowing |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.BLOCKED-ON-PEER-LANDING-V2 | comp-system | bash .tools/comp-system --check / --gate | PASS | live, every sample hit the un-narrowable fingerprint path (disclosed), 0 regenerate mentions |
