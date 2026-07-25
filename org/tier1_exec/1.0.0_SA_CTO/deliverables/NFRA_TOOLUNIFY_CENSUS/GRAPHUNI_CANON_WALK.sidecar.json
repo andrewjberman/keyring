@@ -1,0 +1,331 @@
+{
+  "verdict": "SET-IDENTITY REFUTED",
+  "match": "11/28",
+  "glob_nodes_in_fixture": 76,
+  "alias_edges_added": 202,
+  "normalization_2_native_check": {
+    "target_key": "s3:silver/prices/canonical_prices.parquet",
+    "writer_count": 16,
+    "firms": [
+      "bd-or-other"
+    ]
+  },
+  "per_target": {
+    "gold:D_01.partner_analytics:generate_header_metrics": {
+      "old_n": 39,
+      "new_n": 39,
+      "missing_n": 0,
+      "extra_n": 0,
+      "status": "MATCH"
+    },
+    "gold:D_04.client_portal_summary:main": {
+      "old_n": 52,
+      "new_n": 181,
+      "missing_n": 0,
+      "extra_n": 129,
+      "status": "MISMATCH"
+    },
+    "gold:B_01.holdings_lots:build_holdings_lots_snapshot": {
+      "old_n": 148,
+      "new_n": 154,
+      "missing_n": 3,
+      "extra_n": 9,
+      "status": "MISMATCH"
+    },
+    "gold:D_04.client_portal_summary:_now_str": {
+      "old_n": 16,
+      "new_n": 16,
+      "missing_n": 0,
+      "extra_n": 0,
+      "status": "MATCH"
+    },
+    "gold:B_00.canonical_holdings:main": {
+      "old_n": 76,
+      "new_n": 144,
+      "missing_n": 1,
+      "extra_n": 69,
+      "status": "MISMATCH"
+    },
+    "gold:D_02.advisor_client_detail:main": {
+      "old_n": 39,
+      "new_n": 39,
+      "missing_n": 0,
+      "extra_n": 0,
+      "status": "MATCH"
+    },
+    "gold:D_04.client_portal_summary:_write_batch": {
+      "old_n": 15,
+      "new_n": 15,
+      "missing_n": 0,
+      "extra_n": 0,
+      "status": "MATCH"
+    },
+    "gold:A_03.positions_cube:build_full": {
+      "old_n": 141,
+      "new_n": 147,
+      "missing_n": 3,
+      "extra_n": 9,
+      "status": "MISMATCH"
+    },
+    "gold:INF_D_04.client_portal_summary:log": {
+      "old_n": 29,
+      "new_n": 29,
+      "missing_n": 0,
+      "extra_n": 0,
+      "status": "MATCH"
+    },
+    "gold:INF_D_04.client_portal_summary:main": {
+      "old_n": 157,
+      "new_n": 155,
+      "missing_n": 3,
+      "extra_n": 1,
+      "status": "MISMATCH"
+    },
+    "gold:INF_D_00.portal_aggregates:main": {
+      "old_n": 24,
+      "new_n": 24,
+      "missing_n": 0,
+      "extra_n": 0,
+      "status": "MATCH"
+    },
+    "gold:INF_D_02.advisor_client_detail:build_advisor_books": {
+      "old_n": 21,
+      "new_n": 21,
+      "missing_n": 0,
+      "extra_n": 0,
+      "status": "MATCH"
+    },
+    "gold:INF_D_02.advisor_client_detail:build_client_details": {
+      "old_n": 21,
+      "new_n": 21,
+      "missing_n": 0,
+      "extra_n": 0,
+      "status": "MATCH"
+    },
+    "gold:INF_D_02.advisor_client_detail:main": {
+      "old_n": 134,
+      "new_n": 89,
+      "missing_n": 46,
+      "extra_n": 1,
+      "status": "MISMATCH"
+    },
+    "gold:INF_D_04.client_portal_summary:build_partner_analytics": {
+      "old_n": 21,
+      "new_n": 21,
+      "missing_n": 0,
+      "extra_n": 0,
+      "status": "MATCH"
+    },
+    "gold:INF_D_00c.portal_leaderboard:log": {
+      "old_n": 14,
+      "new_n": 14,
+      "missing_n": 0,
+      "extra_n": 0,
+      "status": "MATCH"
+    },
+    "gold:D_04.client_portal_summary": {
+      "old_n": 216,
+      "new_n": 228,
+      "missing_n": 19,
+      "extra_n": 31,
+      "status": "MISMATCH"
+    },
+    "gold:INF_D_04.client_portal_summary": {
+      "old_n": 216,
+      "new_n": 228,
+      "missing_n": 19,
+      "extra_n": 31,
+      "status": "MISMATCH"
+    },
+    "gold:D_00.portal_aggregates": {
+      "old_n": 216,
+      "new_n": 228,
+      "missing_n": 19,
+      "extra_n": 31,
+      "status": "MISMATCH"
+    },
+    "gold:D_02.advisor_client_detail": {
+      "old_n": 216,
+      "new_n": 228,
+      "missing_n": 19,
+      "extra_n": 31,
+      "status": "MISMATCH"
+    },
+    "gold:B_02.canonical_lots": {
+      "old_n": 130,
+      "new_n": 139,
+      "missing_n": 16,
+      "extra_n": 25,
+      "status": "MISMATCH"
+    },
+    "gold:D_01.partner_analytics": {
+      "old_n": 216,
+      "new_n": 228,
+      "missing_n": 19,
+      "extra_n": 31,
+      "status": "MISMATCH"
+    },
+    "s3:gold/dimensions/accounts_dimension_latest.parquet": {
+      "old_n": 145,
+      "new_n": 145,
+      "missing_n": 5,
+      "extra_n": 5,
+      "status": "MISMATCH"
+    },
+    "s3:silver/prices/canonical_prices.parquet": {
+      "old_n": 163,
+      "new_n": 105,
+      "missing_n": 59,
+      "extra_n": 1,
+      "status": "MISMATCH"
+    },
+    "s3:gold/timeseries/client_performance.parquet": {
+      "old_n": 168,
+      "new_n": 150,
+      "missing_n": 36,
+      "extra_n": 18,
+      "status": "MISMATCH"
+    },
+    "s3:gold/views/account_team.parquet": {
+      "old_n": 148,
+      "new_n": 150,
+      "missing_n": 41,
+      "extra_n": 43,
+      "status": "MISMATCH"
+    },
+    "s3:silver/allocations/*.parquet": {
+      "old_n": 31,
+      "new_n": 31,
+      "missing_n": 0,
+      "extra_n": 0,
+      "status": "MATCH"
+    },
+    "s3:gold/timeseries/account_performance.parquet": {
+      "old_n": 159,
+      "new_n": 150,
+      "missing_n": 41,
+      "extra_n": 32,
+      "status": "MISMATCH"
+    }
+  },
+  "sharp_case": {
+    "old_n": 216,
+    "new_n": 228,
+    "missing": [
+      "gold:A_03.positions_cube",
+      "gold:A_03.positions_cube:_gate_write_watermark",
+      "gold:A_03.positions_cube:run_shadow_gate_evidence",
+      "gold:E_15.validate_yf_overrides:main",
+      "gold:INF_B_03.account_gains",
+      "gold:INF_build_canonical_prices",
+      "gold:build_canonical_prices_v2",
+      "gold:build_canonical_prices_v2:load_historical_prices",
+      "gold:gold_dispatch",
+      "gold:orion-gold-dispatch",
+      "lambda:bd-price-update",
+      "lambda:opal-partners-data",
+      "s3:config/ticker_lookup.json",
+      "s3:gold/account_gains/{*}.parquet",
+      "s3:gold/meta/positions_cube_incr_watermark.json",
+      "s3:silver/accounts_dim/latest.parquet",
+      "s3:silver/historical_prices.parquet",
+      "s3:silver/interpolated_prices.parquet",
+      "s3:silver/realized/bd_realized_agg.parquet"
+    ],
+    "extra": [
+      "gold:A_03.positions_cube:_load_allocation_signals",
+      "gold:A_03.positions_cube:_load_open_account_ids",
+      "gold:B_00.canonical_holdings:filter_false_mappings",
+      "gold:B_01.holdings_lots:_resolve_unrealized_key",
+      "gold:B_01.holdings_lots:load_allocations",
+      "gold:C_01c.role_aua_flow_join:_spot_check",
+      "gold:C_01c.role_aua_flow_join:_update_one_date",
+      "gold:C_01c.role_aua_flow_join:canonical_role_aua_key",
+      "gold:C_01c.role_aua_flow_join:main",
+      "gold:C_02.client_performance:main",
+      "gold:C_02.client_performance:write_aua_certification",
+      "gold:C_04.validate_aua:main",
+      "gold:C_04.validate_aua:validate_date",
+      "gold:D_04.client_portal_summary:_client_views_key",
+      "gold:D_04.client_portal_summary:build_c1_recovered_accounts",
+      "gold:D_04.client_portal_summary:build_client_summaries",
+      "gold:D_04.client_portal_summary:build_out_of_scope_accounts",
+      "gold:D_04.client_portal_summary:main",
+      "gold:E_19.write_aua_certification:main",
+      "gold:INF_B_02.canonical_lots",
+      "gold:INF_D_02c.client_directory:_write_json",
+      "gold:INF_D_02c.client_directory:main",
+      "gold:INF_D_03.composition_artifacts:_build_composition",
+      "gold:INF_D_03.composition_artifacts:_build_silver_assets_diagnostic",
+      "gold:INF_D_03.composition_artifacts:main",
+      "gold:diag_sleeve_fix:_read_parquet_from_s3",
+      "s3:gold/artifacts/firm_mix_views_daily.json",
+      "s3:gold/entities/advisors/{*}/mix_daily.json",
+      "s3:gold/lots/lots_{*}.parquet",
+      "s3:silver/api_dims/tax_unrealized/snapshot_date={*}/data.parquet",
+      "s3:silver/unrealized/{*}.parquet"
+    ]
+  },
+  "control_target": {
+    "old_n": 168,
+    "new_n": 150,
+    "missing": [
+      "gold:A_03.positions_cube",
+      "gold:A_03.positions_cube:_gate_write_watermark",
+      "gold:A_03.positions_cube:_load_realized_sell_events",
+      "gold:A_03.positions_cube:run_shadow_gate_evidence",
+      "gold:B_01.holdings_lots:_apply_silver_noncash_cap",
+      "gold:B_01.holdings_lots:_build_authoritative_reopen_lots",
+      "gold:B_01.holdings_lots:_build_rps_context",
+      "gold:B_01.holdings_lots:_build_rps_synthetic_lots",
+      "gold:B_01.holdings_lots:_build_synthetic_lots",
+      "gold:B_01.holdings_lots:_load_fallback_context",
+      "gold:B_01.holdings_lots:_read_parquet_from_s3",
+      "gold:B_01.holdings_lots:load_latest_prices",
+      "gold:E_11.unmatched_asset_analysis:main",
+      "gold:E_12.dump_all_non_yahoo:read_pq",
+      "gold:E_14.audit_existing_mappings:main",
+      "gold:E_15.validate_yf_overrides:main",
+      "gold:INF_build_canonical_prices",
+      "gold:build_canonical_prices_v2",
+      "gold:build_canonical_prices_v2:build_canonical",
+      "gold:build_canonical_prices_v2:load_historical_prices",
+      "gold:build_canonical_prices_v2:main",
+      "gold:gold_dispatch",
+      "gold:orion-gold-dispatch",
+      "lambda:bd-price-update",
+      "lambda:inf-portal-advisor-publisher",
+      "lambda:inf-portal-publisher",
+      "lambda:opal-partners-data",
+      "s3:config/ticker_lookup.json",
+      "s3:gold/dimensions/schwab_bd_account_mapping.parquet",
+      "s3:gold/meta/positions_cube_incr_watermark.json",
+      "s3:gold/timeseries/positions_cube/",
+      "s3:silver/historical_prices.parquet",
+      "s3:silver/interpolated_prices.parquet",
+      "s3:silver/prices/canonical_prices.parquet",
+      "s3:silver/realized/bd_realized_agg.parquet",
+      "s3:silver/unrealized/unrealized_gain_loss.parquet"
+    ],
+    "extra": [
+      "gold:A_03.positions_cube:_load_allocation_signals",
+      "gold:A_03.positions_cube:_load_open_account_ids",
+      "gold:B_00.canonical_holdings:filter_false_mappings",
+      "gold:B_00.canonical_holdings:main",
+      "gold:B_01.holdings_lots:load_allocations",
+      "gold:C_01b.role_aua_backfill:main",
+      "gold:C_02.client_performance:main",
+      "gold:C_02.client_performance:write_aua_certification",
+      "gold:C_04.validate_aua:main",
+      "gold:C_04.validate_aua:validate_date",
+      "gold:D_04.client_portal_summary:build_c1_recovered_accounts",
+      "gold:D_04.client_portal_summary:build_out_of_scope_accounts",
+      "gold:D_04.client_portal_summary:main",
+      "gold:E_19.write_aua_certification:main",
+      "gold:INF_D_02c.client_directory",
+      "gold:INF_D_02c.client_directory:_write_json",
+      "gold:INF_D_02c.client_directory:main",
+      "s3:silver/api_dims/tax_unrealized/snapshot_date={*}/data.parquet"
+    ]
+  }
+}
