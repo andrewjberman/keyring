@@ -358,11 +358,21 @@ def _metric(value, source, vintage) -> dict:
     return {"value": value, "source": source, "vintage": vintage}
 
 
+#: MODULE-LEVEL (not local to compute_metrics()) precisely so _METRIC_SOURCE_FILES (the
+#: uncommitted-source guard's per-metric map, below) can reference the SAME string literal instead
+#: of a hand-maintained duplicate (CVO~Z's latent-hole finding, 2026-07-25: a hand-copied duplicate
+#: can silently go WRONG, and a wrong entry fails OPEN -- the guard confidently checks a clean file
+#: while the real source is dirty, reintroducing the exact laundering hazard one level up). A rename
+#: is now one edit, not two that must be kept in sync by hand.
+_MANIFEST_PATH = "org/modules/graph/graph-call-manifest.yaml"
+_LEDGER_PATH = "org/modules/graph/comp-coverage-map.yaml"
+
+
 def compute_metrics() -> dict:
     """The canonical live scalars. Keyed by a stable slug the managed-region markers reference
     (<!--cs:SLUG-->...<!--/cs-->). Each grounded against its ONE authoritative source or UNKNOWN."""
-    MANIFEST = "org/modules/graph/graph-call-manifest.yaml"
-    LEDGER = "org/modules/graph/comp-coverage-map.yaml"
+    MANIFEST = _MANIFEST_PATH
+    LEDGER = _LEDGER_PATH
 
     tools_index = _yaml_len(MANIFEST, "tools_index")
     tools = _yaml_len(LEDGER, "tools")
@@ -679,6 +689,19 @@ def self_test() -> int:
         (_gate_verdict(False, "sources unchanged, age 0h < TTL 24h",
                        [("06_current_state.md", "graph_marker", "abc123", "def456")],
                        dirty=["org/modules/graph/canon-patterns.yaml"])))
+    # 11e-11f. v3 (CVO~Z's latent-hole finding, 2026-07-25): _METRIC_SOURCE_FILES was a
+    #          hand-maintained duplicate of a fact compute_metrics() already declares -- a WRONG
+    #          entry (not merely a missing one, already covered by 11d) fails OPEN: the guard
+    #          confidently checks a clean file while the real source is dirty, reintroducing the
+    #          exact laundering hazard one level up. Killed by construction (shared _MANIFEST_PATH/
+    #          _LEDGER_PATH constants) AND checked explicitly here, with a mutant proving the check
+    #          has teeth rather than vacuously passing.
+    chk("11e _METRIC_SOURCE_FILES agrees with compute_metrics()'s own path constants (no hand-maintained divergence, real map)",
+        _metric_source_files_mismatches(_METRIC_SOURCE_FILES) == [])
+    chk("11f mutant: a deliberately-WRONG map entry IS caught by the consistency check (proves it has teeth, not a vacuous pass)",
+        _metric_source_files_mismatches({"tools_index_count": [_LEDGER_PATH],   # swapped -- wrong on purpose
+                                          "ledger_union_count": [_LEDGER_PATH]}) == [
+            ("tools_index_count", [_MANIFEST_PATH], [_LEDGER_PATH])])
     chk("12 gate: age>=TTL ALONE -> WARN not block (rc 0) -- staleness-conditioned, no false-Monday",
         _gate_verdict(True, "age 30h exceeds TTL 24h (live-grounded values may have moved)", [], dirty=[])[0] == 0)
     chk("13 gate: CURRENT -> gate open (rc 0)",
@@ -757,15 +780,31 @@ def _dirty_sources():
 #: v2 (CVO~Z's recommendation, 2026-07-25, dispatched by CTO~Z after the v1 union-block deadlocked
 #: ~D behind an unrelated lane's untracked debris it never touched): the metric-name -> its own
 #: repo-relative source-file(s), for the metrics compute_metrics() grounds against a _SOURCES-glob-
-#: matching file (MANIFEST/LEDGER below -- same constants compute_metrics() itself uses, not a
-#: forked duplicate). Metrics grounded against something else entirely (a live kuzu marker, a JSON
-#: snap, a promote manifest) have no repo-file input among _SOURCES and so have no entry here --
-#: see _relevant_dirty()'s unmapped-metric branch for how that absence is handled (fail-closed, not
-#: silently exempted).
+#: matching file. Values are _MANIFEST_PATH/_LEDGER_PATH (defined above compute_metrics(), which
+#: uses the SAME constants) -- not a re-typed duplicate; see the "wrong-entry-fails-open" fix below.
+#: Metrics grounded against something else entirely (a live kuzu marker, a JSON snap, a promote
+#: manifest) have no repo-file input among _SOURCES and so have no entry here -- see
+#: _relevant_dirty()'s unmapped-metric branch for how that absence is handled (fail-closed, not
+#: silently exempted; CVO~Z independently census'd all 7 metrics and confirmed the other 5 are
+#: INAPPLICABLE, not gapped -- their sources are live probes/S3, which cannot carry unlanded git work).
 _METRIC_SOURCE_FILES = {
-    "tools_index_count": ["org/modules/graph/graph-call-manifest.yaml"],
-    "ledger_union_count": ["org/modules/graph/comp-coverage-map.yaml"],
+    "tools_index_count": [_MANIFEST_PATH],
+    "ledger_union_count": [_LEDGER_PATH],
 }
+
+
+def _metric_source_files_mismatches(candidate: dict) -> list:
+    """v3 (CVO~Z's latent-hole finding, 2026-07-25): _METRIC_SOURCE_FILES duplicated a fact
+    compute_metrics() already declares (each metric's grounding file) -- hoisting both to the same
+    _MANIFEST_PATH/_LEDGER_PATH constants (above) kills that duplicate BY CONSTRUCTION, but this
+    function exists as a second, explicit, testable belt: which (metric, expected, got) triples in
+    `candidate` disagree with the module's own constants. Pure/offline; the self-test calls it twice
+    -- once on the REAL _METRIC_SOURCE_FILES (must be empty: proves no divergence today) and once on
+    a deliberately-WRONG synthetic map (must be non-empty: proves the check has teeth, not just a
+    check that always vacuously passes). Returns [] iff every mapped entry matches truth."""
+    truth = {"tools_index_count": [_MANIFEST_PATH], "ledger_union_count": [_LEDGER_PATH]}
+    return [(name, expected, candidate.get(name))
+            for name, expected in truth.items() if candidate.get(name) != expected]
 
 
 def _relevant_dirty(region_changes: list, fingerprint_drift: bool, dirty):

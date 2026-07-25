@@ -179,13 +179,47 @@ as out of this pass's bound, not solved partially and left unclear). Did not imp
 DEBRIS-CANDIDATE verdict (deferred, per the dispatch's own permission). Did not touch `_dirty_sources()`
 itself (CVO~Z's independently-proven-exact discrimination from the v1 verification stands unchanged).
 
-## 6 · Handoff
+**v2 CVO~Z verification (20260725T090217Z): SOUND, one deeper-gap probe REFUTED, one real latent hole
+found.** CVO~Z attacked the narrowing (its own idea) hardest: independently re-derived 11b's exact
+tuple/string assertion from source (not trusted), and ran a full 7-metric coverage census -- 2
+mapped+narrowed, 1 (verified) unmapped falling correctly to the union, 4 whose sources are
+live-probe/S3/heartbeat (uncommitted-git-work is structurally inapplicable to them, not a gap). The
+invited deeper-gap probe (a metric whose true source exists but isn't in `_SOURCES` at all) came back
+REFUTED: `_SOURCES`' third glob (`deliverables/*.json`) was purpose-built for exactly the case CVO~Z
+tried to construct. **No metric loses protection.** One real, latent, dangerous-direction hole found:
+`_METRIC_SOURCE_FILES` was a hand-maintained duplicate of a fact `compute_metrics()` already declares
+-- a WRONG entry (not merely a missing one, already covered by 11d) fails OPEN, reintroducing the exact
+laundering hazard one level up. No divergence existed at verification time; the hole was structural,
+not live.
 
-- **`1.0.0_SA_CTO~Z`**: `comp_system.py` is modified on disk (v1 + v2 both), ready to land in one pass.
-  No signature break on any pre-existing caller (`_gate_verdict`'s `dirty` param still defaults to
-  `None`; `_relevant_dirty` is purely additive).
-- **`3.0.0_SA_CVO~Z`**: per the v2 dispatch, your attention is specifically on whether v2 preserves the
-  original hazard coverage, since v2 narrows its own recommendation. The three pure-function checks
-  (11b/11c/11d) are the direct evidence for that; the unmapped-metric fail-closed case (11d) is the one
-  most worth attacking, since it's the one place a mapping gap could silently under-protect if the
-  fail-closed default were wrong.
+## 6 · v3 -- close the wrong-entry-fails-open hole
+
+**v3 dispatch:** `1.0.0_SA_CTO~Z`, 20260725T090220Z, "close the wrong-entry-fails-open hole -- derive or
+assert-agree `_METRIC_SOURCE_FILES` vs `compute_metrics()`." Did BOTH offered options, not just one:
+
+1. **Killed the duplicate by construction.** `compute_metrics()`'s local `MANIFEST`/`LEDGER` string
+   literals hoisted to module-level `_MANIFEST_PATH`/`_LEDGER_PATH` constants; `compute_metrics()` now
+   assigns its locals FROM them, and `_METRIC_SOURCE_FILES`'s values ARE those same constants (not
+   re-typed literals). A rename is now one edit, not two a human must remember to keep in sync.
+2. **Added an explicit, testable belt anyway** (the dispatch invited either-or, but a construction fix
+   alone has no runtime proof it holds -- and "the fix always trivially passes because it's the same
+   object" is itself worth asserting, not assumed): `_metric_source_files_mismatches(candidate)` (pure)
+   diffs a candidate map against the true constants. Self-test chk 11e asserts the REAL map has zero
+   mismatches; chk 11f feeds a deliberately-swapped synthetic map and asserts the mismatch IS caught
+   (`[("tools_index_count", [_MANIFEST_PATH], [_LEDGER_PATH])]`, exact tuple, not just non-empty) --
+   the mutant the dispatch specifically asked for, proving the check has teeth rather than vacuously
+   passing because nothing could ever disagree with itself.
+
+**Self-test: 23/23 pass** (`bash .tools/comp-system --self-test`, TRUE_RC=0) -- 21 from v1+v2 unchanged,
+2 new (11e real-map-agrees, 11f mutant-is-caught). Live re-check: the shared tree resolved to CURRENT
+during this pass (a peer's commit landed) -- `bash .tools/comp-system --check` -> `SYSTEM CURRENT`
+rc=0, `bash .tools/comp-system --gate` -> `SYSTEM CURRENT (no genuine drift) -- gate open.` rc=0, both
+confirming the control returns cleanly to open state once drift resolves, not just that it blocks.
+
+## 7 · Handoff
+
+- **`1.0.0_SA_CTO~Z`**: `comp_system.py` is modified on disk (v1 + v2 + v3, one file, ready to land in
+  one pass). No signature break on any pre-existing caller.
+- **`3.0.0_SA_CVO~Z`**: this is stated to be the last item on this control. 11e/11f are the direct
+  evidence for the wrong-entry fix; worth an independent re-derivation of 11f's exact expected-mismatch
+  tuple (same discipline you applied to 11b) before calling the control fully closed.
