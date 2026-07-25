@@ -1,0 +1,229 @@
+{
+  "deliverable": "REC1C_C.md",
+  "author": "0.8.0_AE_CloudComp~C",
+  "date_utc": "2026-07-25",
+  "authored_utc": "20260725T0619Z",
+  "dispatch": "1.0.0_SA_CTO~Z 20260725T060457Z DISPATCH NFRA_TOOLUNIFY REC-1c LANE-C",
+  "mutation_vocabulary_note": "Mutation-type labels here are PROVISIONAL, pending the L0b change-type vocabulary (IMPLEMENTATION_LEVELS_AND_SEQUENCING.md s4/L0b) -- this sweep records candidate vocabulary, it does not settle it.",
+  "harness_validation": {
+    "positive_control": {
+      "tool": "comp-manifest-check",
+      "invocation": "bash .tools/comp-manifest-check check --file <scratchpad>/anti_pattern_probe.py --mode blocking",
+      "probe_file_content": "import subprocess\nq = \"MATCH (n:CloudNode) RETURN n.id\"\nsubprocess.run([\"comp-aws\", \"derive\", \"--out\", \"/tmp/g\"])",
+      "rc": 1,
+      "key_output": "BLOCKED: 1 ERROR-class graph-access finding(s). Use the canonical manifest call, or justify the exception.",
+      "expected": "LOUD (register: LOUD, HIGH confidence; REC-1 4a precedent)",
+      "result": "PASS -- known-LOUD reads LOUD"
+    },
+    "mutant": {
+      "tool": "comp-freshness (artifact subcmd)",
+      "invocation": "python3 .tools/comp-freshness artifact s3://opal-data-inf/definitely-nonexistent-prefix-zzz-9999/",
+      "rc": 0,
+      "key_output": "STATUS=WARN | NOTE: Prefix not found in S3: s3://opal-data-inf/definitely-nonexistent-prefix-zzz-9999/",
+      "expected": "non-LOUD (REC-1 s5.1 known declared-LOUD/observed-WARN-rc0 mismatch, CVO~Z-reproduced)",
+      "result": "PASS -- known non-LOUD case reads non-LOUD; harness discriminates. Separate invocation from the positive control per Rule 22a."
+    },
+    "note": "First invocation pattern this session captured rc via a pipeline (`| head; echo RC=$?`) and read head's rc, not the tool's -- caught and corrected before any result was recorded (control-the-retrieval class). All recorded RCs below are from unpiped invocations with output redirected to a file."
+  },
+  "environment_notes": [
+    "This session's Git Bash resolves drives as /cygdrive/c/... (Cygwin-style), NOT /c/... -- same as ~D's and CTO~Z/CVO~Z sessions per REC1_EXERCISE.md s10.",
+    "MSYS path conversion rewrote /nonexistent/... argv paths to C:/Program Files/Git/nonexistent/... before the tools saw them (visible verbatim in comp-honesty/comp-ontolint/comp-parity outputs). The mutation held either way -- the converted path is equally nonexistent -- but an exerciser comparing error-message paths to the argv literal will see the converted form.",
+    "comp-xray first invocation omitted required args (key, --fields) and exited rc=2 on an argparse usage error -- recorded as an exerciser dispatch-mismatch per the REC-1 s6 gotcha, NOT as the tool's failure_mode; re-invoked correctly. See finding F5 (rc=2 collision)."
+  ],
+  "rows": [
+    {
+      "tool": "comp-which",
+      "declared": "FAIL-OPEN", "declared_confidence": "MEDIUM", "role_flags": ["ADVISORY"],
+      "idiom": "python3-shebang (idiom-2)",
+      "mutation_type": "MALFORMED (gibberish natural-language question)",
+      "invocation": "python3 .tools/comp-which \"zzz qqq xyzzy gibberish nonexistent question 9999\"",
+      "rc": 0,
+      "observed": "FAIL-OPEN",
+      "verdict": "MATCH",
+      "key_output": "comp-which -- no rich comp-tool fits this exact search; running the ON-RAILS primitive: $ comp-grep nonexistent",
+      "notes": "Honest degradation: announces the no-match and the fallback explicitly. NOISE: it reduced the 7-token question to a single grep token ('nonexistent') and returned 200+ real text hits (235 output lines) that could read as answers to a garbage question. Separately: invoked with --help it treats the flag itself as a question (rc=1, 'NO CURATED RULE MATCHED' banner) -- no help path."
+    },
+    {
+      "tool": "comp-which-routing-test.py",
+      "declared": "LOUD", "declared_confidence": "MEDIUM", "role_flags": ["PRODUCER-CANDIDATE"],
+      "idiom": "python3-shebang (idiom-2)",
+      "mutation_type": "NONEXISTENT (snapshot path)",
+      "invocation": "python3 .tools/comp-which-routing-test.py --freeze /nonexistent/snapshot_zzz_9999.log --out <scratch>/wrt_out.json",
+      "rc": 1,
+      "observed": "LOUD",
+      "verdict": "MATCH",
+      "key_output": "Traceback ... FileNotFoundError at tally_row_tags (line 606)",
+      "notes": "Raw traceback, not a graceful message (friction). PRODUCER safety: freeze() reads the snapshot (line 624) before any write -- verified pre-invocation via source read; --out scratch passed to protect the committed TO-1 baseline; post-run confirmed wrt_out.json NOT written and git status clean of the baseline artifact."
+    },
+    {
+      "tool": "comp-registry",
+      "declared": "FAIL-OPEN", "declared_confidence": "MEDIUM", "role_flags": ["PRODUCER-CANDIDATE"],
+      "idiom": "bash-wrapper",
+      "mutation_type": "NONEXISTENT (project code)",
+      "invocation": "bash .tools/comp-registry sync --project ZZZZ_NONEXISTENT_9999",
+      "rc": 1,
+      "observed": "LOUD",
+      "verdict": "MISMATCH (louder than declared)",
+      "key_output": "No REGISTRY row OR project JSON found for: ZZZZ_NONEXISTENT_9999",
+      "notes": "Explicit one-line error + rc=1. Read-only default path (no --apply). The register's FAIL-OPEN row (except-swallow count 1 >= loud 0, rule-derived) does not hold for this input class -- the mismatch direction is benign (tool is better than declared) but the register row is still wrong as declared."
+    },
+    {
+      "tool": "comp-routable-check",
+      "declared": "LOUD", "declared_confidence": "MEDIUM", "role_flags": ["GATE-BLOCKING-CANDIDATE"],
+      "idiom": "python3-shebang (idiom-2)",
+      "mutation_type": "UNKNOWN (could not synthesize a safe bad input)",
+      "invocation": "python3 .tools/comp-routable-check   (live estate state)",
+      "rc": 0,
+      "observed": "live-state only: rc=0, 'OK: every registered tool is a live routing target' + advisory WARN listing 4 uncatalogued routables",
+      "verdict": "UNKNOWN",
+      "key_output": "WARN: 4 routable capability(ies) absent from tools_index ... comp-describe, comp-kuzu-full, comp-kuzu-inc, comp-state (advisory -- the catalog is curated; --strict to enforce)",
+      "notes": "Its only input is the live manifest/coverage-map pair, with no path flag to point at a mutated copy; mutating the live manifest is a production write and out of scope. The FAIL (blocking) class was therefore not exercised. WARN class is fail-open by documented design with a --strict escape. LIVE FINDING routed in REC1C_C.md s6: 4 router-reachable tools absent from the catalog agents browse."
+    },
+    {
+      "tool": "comp-ontolint",
+      "declared": "LOUD", "declared_confidence": "MEDIUM", "role_flags": ["PRODUCER-CANDIDATE"],
+      "idiom": "bash-wrapper",
+      "mutation_type": "NONEXISTENT (rule-bank path)",
+      "invocation": "bash .tools/comp-ontolint check --rule-bank /nonexistent/rule_bank_zzz_9999.yaml",
+      "rc": 2,
+      "observed": "LOUD",
+      "verdict": "MATCH",
+      "key_output": "ERROR: comp-ontolint could not read the rule-bank (...): [Errno 2] No such file or directory",
+      "notes": "Graceful explicit error. Its own doc claim ('an unreadable rule-bank is a hard error, never a silent pass -- a control that cannot fail is not a control') is now exercise-confirmed, not just declared."
+    },
+    {
+      "tool": "comp-toolgraph",
+      "declared": "FAIL-OPEN", "declared_confidence": "MEDIUM", "role_flags": ["ADVISORY"],
+      "idiom": "bash-wrapper",
+      "mutation_type": "UNKNOWN (could not synthesize a safe bad input)",
+      "invocation": "bash .tools/comp-toolgraph edges   (live)",
+      "rc": 0,
+      "observed": "live-state only: rc=0, well-formed 98-line edges report",
+      "verdict": "UNKNOWN",
+      "key_output": "C1 -- EDGES ... SHARES_SUBSTRATE (25 edges; logging shim comp_log_auto excluded + disclosed)",
+      "notes": "No external-input channel on any subcommand (census/edges/coupling-diff/denominator/all take no target argument -- confirmed via sub-help); its inputs are the internal register/tool files. Feeding it a bad input would mean mutating those live files -- out of scope. UNKNOWN recorded per the dispatch's first-class-UNKNOWN instruction, not coerced to MATCH."
+    },
+    {
+      "tool": "comp-tool-health",
+      "declared": "LOUD", "declared_confidence": "MEDIUM", "role_flags": ["ADVISORY"],
+      "idiom": "bash-wrapper",
+      "mutation_type": "NONEXISTENT (tool name)",
+      "invocation": "bash .tools/comp-tool-health --tool definitely-nonexistent-tool-zzz-9999 --no-refresh",
+      "rc": 0,
+      "observed": "FAIL-OPEN",
+      "verdict": "MISMATCH",
+      "key_output": "tool 'definitely-nonexistent-tool-zzz-9999' not found in the fused universe (92 tools).",
+      "notes": "Human-readable note, rc=0, nothing a script gating on exit code catches -- the comp-iam-service shape reproduced. Source-grounded: comp_tool_health.py:600 returns the not-found message as an ordinary string (printed like an answer); no nonzero exit on this path. --no-refresh passed so no EFFECTIVE probe write occurred."
+    },
+    {
+      "tool": "comp-tool-health-gate",
+      "declared": "LOUD", "declared_confidence": "MEDIUM (single sys.exit -- weak signal, verify manually)", "role_flags": ["GATE-BLOCKING-CANDIDATE"],
+      "idiom": "bash-wrapper",
+      "mutation_type": "NONEXISTENT (--effective-feed path)",
+      "invocation": "bash .tools/comp-tool-health-gate --effective-feed /nonexistent/feed_zzz_9999.json",
+      "rc": 0,
+      "observed": "FAIL-OPEN by documented design",
+      "verdict": "MISMATCH",
+      "key_output": "EFFECTIVE feed (gate is READ-ONLY, never probes): no feed (EFFECTIVE pending) -- STALE (ceiling 7.0d)  [then the full Phase-A ledger, rc=0]",
+      "notes": "An explicitly-passed nonexistent feed path is silently coerced to 'no feed' and the gate proceeds. Source-grounded: comp_tool_health.py:383-402 load_effective_feed docstring 'a missing/unreadable file returns {} (the query degrades to the 2-live-axis skeleton, never a crash)' + comp_tool_health_gate.py:324-334 (staleness made VISIBLE in the ledger, but rc stays 0; the gate is ADVISORY per its own header). Same never-crash-by-design shape as REC-1b's comp-surface-check scan finding. No --emit passed (no ledger write)."
+    },
+    {
+      "tool": "comp-validate",
+      "declared": "LOUD", "declared_confidence": "MEDIUM", "role_flags": ["GATE-BLOCKING-CANDIDATE", "PRODUCER-CANDIDATE"],
+      "idiom": "bash-wrapper",
+      "mutation_type": "NONEXISTENT (script id + artifact path)",
+      "invocation": "bash .tools/comp-validate ZZ_NONEXISTENT_9999 --artifact /nonexistent/artifact_zzz_9999.json",
+      "rc": 1,
+      "observed": "LOUD",
+      "verdict": "MATCH",
+      "key_output": "Error: 'ZZ_NONEXISTENT_9999' is not a known artifact-id or producer script. Run `comp-validate --list` ... Hint: see COMP_VALIDATE_PROTOCOL.md s4",
+      "notes": "Unknown script-id is a hard rc=1 error BEFORE the NO_CONFIG path is reached -- the known NO_CONFIG/rc-0 hazard (CLAUDE.md compiler table) applies to a KNOWN script with no config stanza, which this input class does not exercise. Graceful, actionable message."
+    },
+    {
+      "tool": "comp-coverage",
+      "declared": "LOUD (default)", "declared_confidence": "LOW -- convention default, not source-verified", "role_flags": ["PRODUCER-CANDIDATE"],
+      "idiom": "bash-wrapper",
+      "mutation_type": "NONEXISTENT (pipeline filter matching nothing)",
+      "invocation": "bash .tools/comp-coverage report --pipeline DEFINITELY_NONEXISTENT_ZZZ_9999",
+      "rc": 0,
+      "observed": "FAIL-OPEN",
+      "verdict": "MISMATCH (first individual verification of this LOW/default row)",
+      "key_output": "Total TOs: 0 / Completed TOs: 0 / Logged in comp-log: 0 / Raw coverage: 0.0%",
+      "notes": "A filter matching NOTHING yields a well-formed all-zeros report, rc=0 -- no 'no such pipeline' signal anywhere. This is the more dangerous fail-open shape: 'Raw coverage: 0.0%' is a PLAUSIBLE WRONG NUMBER (reads as catastrophic real compliance, or as clean-empty, depending on the reader's prior), the MEMORY.md Verification-Law-12 class. Default stdout-only mode confirmed (no --write; no repo churn)."
+    },
+    {
+      "tool": "comp-coverage-check",
+      "declared": "LOUD", "declared_confidence": "MEDIUM", "role_flags": ["GATE-BLOCKING-CANDIDATE"],
+      "idiom": "python3-shebang (idiom-2)",
+      "mutation_type": "LIVE-DRIFT (extension label: real live violation present; no synthetic-input channel)",
+      "invocation": "python3 .tools/comp-coverage-check   (bare, live estate; also reproduced identically on an invocation carrying --help)",
+      "rc": 1,
+      "observed": "LOUD",
+      "verdict": "MATCH",
+      "key_output": "FAIL: inventory_completeness: tool 'comp-residue' is UNPLACED (in neither tools[] nor meta_tools[] -- silently dropped) / FAIL: 1 violation(s) -- the map drifted from the territory.",
+      "notes": "Like REC-1's mutant, the live estate already carries the real condition -- no fabrication needed. TWO live findings routed in REC1C_C.md s6: (1) comp-residue is UNPLACED in the coverage map right now; (2) the tool has no help path -- --help is ignored and the check runs anyway (friction, and the reason the interface-discovery invocation produced a live result)."
+    },
+    {
+      "tool": "comp-parity",
+      "declared": "LOUD (default)", "declared_confidence": "LOW -- convention default, not source-verified", "role_flags": ["PRODUCER-CANDIDATE"],
+      "idiom": "bash-wrapper",
+      "mutation_type": "NONEXISTENT (firm name)",
+      "invocation": "bash .tools/comp-parity definitely_nonexistent_firm_zzz_9999",
+      "rc": 1,
+      "observed": "LOUD",
+      "verdict": "MATCH (second individual verification of a LOW/default row)",
+      "key_output": "Traceback ... FileNotFoundError: 'data/canonical/schwab/parity/definitely_nonexistent_firm_zzz_9999_parity_config.yaml'",
+      "notes": "Raw traceback (friction), but unambiguously nonzero + visible. The firm arg is interpolated into a config path and the open fails loudly."
+    },
+    {
+      "tool": "comp-honesty",
+      "declared": "LOUD", "declared_confidence": "MEDIUM", "role_flags": ["ADVISORY"],
+      "idiom": "python3-shebang (idiom-2)",
+      "mutation_type": "NONEXISTENT (case.json path)",
+      "invocation": "python3 .tools/comp-honesty /nonexistent/case_zzz_9999.json",
+      "rc": 1,
+      "observed": "LOUD",
+      "verdict": "MATCH",
+      "key_output": "Traceback ... FileNotFoundError: 'C:/Program Files/Git/nonexistent/case_zzz_9999.json'",
+      "notes": "Raw traceback (friction). Note the MSYS-converted path in the message (environment_notes)."
+    },
+    {
+      "tool": "comp-kit-striplist-gate",
+      "declared": "LOUD", "declared_confidence": "MEDIUM (single sys.exit -- weak signal, verify manually)", "role_flags": ["GATE-BLOCKING-CANDIDATE"],
+      "idiom": "python3-shebang (idiom-2)",
+      "mutation_type": "NONEXISTENT (kit_root directory)",
+      "invocation": "python3 .tools/comp-kit-striplist-gate /nonexistent/kit_root_zzz_9999",
+      "rc": 2,
+      "observed": "LOUD",
+      "verdict": "MATCH (weak-signal row individually confirmed)",
+      "key_output": "ERROR: not a directory: C:\\Program Files\\Git\\nonexistent\\kit_root_zzz_9999",
+      "notes": "Graceful explicit error, rc=2. The register's own 'verify manually' caveat on this row is now discharged for the nonexistent-input class."
+    },
+    {
+      "tool": "comp-to",
+      "declared": "FAIL-OPEN", "declared_confidence": "HIGH -- full source read", "role_flags": ["CONFIG"],
+      "idiom": "bash (26-line script, no python)",
+      "mutation_type": "EMPTY (required env var CLAUDE_CODE_SESSION_ID unset)",
+      "invocation": "env -u CLAUDE_CODE_SESSION_ID bash .tools/comp-to TEST_TO_PROBE_ZZZ",
+      "rc": 0,
+      "observed": "FAIL-OPEN",
+      "verdict": "MATCH",
+      "key_output": "WARN: comp-to -- CLAUDE_CODE_SESSION_ID unset; cannot write session-keyed .to_id. / Legacy fallback: edit .comp-graph/.agent_context TO_ID= line manually (shared, not race-free).",
+      "notes": "Register note verbatim-confirmed by exercise. Source re-read pre-invocation confirmed the fallback branch writes NOTHING (no file touched) -- safe by construction."
+    },
+    {
+      "tool": "comp-xray",
+      "declared": "LOUD", "declared_confidence": "MEDIUM", "role_flags": ["PRODUCER-CANDIDATE"],
+      "idiom": "bash-wrapper",
+      "mutation_type": "NONEXISTENT (S3 key)",
+      "invocation": "bash .tools/comp-xray s3 opal-data-inf definitely-nonexistent-key-zzz-9999.json --fields anyfield",
+      "rc": 2,
+      "observed": "LOUD",
+      "verdict": "MATCH",
+      "key_output": "(no points -- UNVERIFIABLE: see source)  [exit contract printed in --help: 0 clean, 1 integrity-break, 2 UNVERIFIABLE (could-not-read)]",
+      "notes": "The tool's own documented exit contract is exercise-confirmed: a nonexistent key is rc=2 UNVERIFIABLE, not a silent empty timeline. FINDING F5: argparse usage errors ALSO exit rc=2 (observed on the first, malformed invocation) -- so a script consumer cannot distinguish 'you called me wrong' from 'the artifact is unreadable' by exit code alone. S3 access was read-only (object-versions listing)."
+    }
+  ],
+  "denominator": "16 of 16 batch tools invoked (0 skipped). 14/16 exercised with a synthesized bad input; 2/16 recorded UNKNOWN (comp-routable-check, comp-toolgraph -- no safe bad-input channel; live-state observations recorded instead). Verdicts: 10 MATCH, 4 MISMATCH (comp-registry louder-than-declared; comp-tool-health, comp-tool-health-gate, comp-coverage quieter-than-declared), 2 UNKNOWN.",
+  "producer_safety": "All 7 PRODUCER-CANDIDATE closures (comp-which-routing-test.py, registry_cli.py, comp_ontolint.py, validate_cli.py, coverage_cli.py, comp_parity_cli.py, compdiff/cli.py + shared comp_log_auto.py/comp_output_contract.py) grepped for put_object|upload_file|copy_object|delete_object|.put(|boto3 = ZERO hits, positive-controlled against known put_object carriers (infra/aws/globgrph/_provenance.py et al. -- control found them). Local writes only: comp_log_auto's compiler-tools-log append (by design) and comp-registry --apply / comp-coverage --write / comp-tool-health-gate --emit / comp-which-routing-test default baseline path, none of which were invoked/omitted-protected."
+}
