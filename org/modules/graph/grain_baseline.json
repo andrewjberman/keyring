@@ -5,19 +5,19 @@
     "API_GW": 6,
     "LAMBDA_LAYER": 13,
     "EXTERNAL_ENDPOINT": 0,
-    "REACT_QUERY_KEY": 32,
+    "REACT_QUERY_KEY": 85,
     "LAMBDA": 169,
-    "SQS_QUEUE": 4,
+    "SQS_QUEUE": 12,
     "LOG_GROUP": 195,
     "VPC_ENDPOINT": 3,
     "IAM_POLICY": 271,
     "SERVICE_PRINCIPAL": 15,
     "PORTAL_COMPONENT": 27,
     "EVENT_RULE": 98,
-    "ECS_TASK_DEFINITION": 2,
+    "ECS_TASK_DEFINITION": 7,
     "S3_BUCKET": 30,
     "CW_ALARM": 35,
-    "SCHEDULE": 3,
+    "SCHEDULE": 10,
     "INSTANCE_PROFILE": 10,
     "PORTAL_BUNDLE": 1,
     "S3_DATA_KEY": 272,
@@ -31,7 +31,7 @@
     "SECRET": 61,
     "API_ROUTE": 263,
     "SECURITY_GROUP": 16,
-    "IAM_USER": 1,
+    "IAM_USER": 4,
     "EC2_INSTANCE": 24,
     "KMS_KEY": 8,
     "IAM_ROLE": 119,
@@ -76,6 +76,77 @@
         }
       ],
       "note": "SCOPED to EXTERNAL_ENDPOINT only -- the other 5 classes that tripped in the 07-25 GRAIN-SENTINEL FAIL (REACT_QUERY_KEY, SQS_QUEUE, ECS_TASK_DEFINITION, SCHEDULE, IAM_USER) are NOT touched here. Per CTO~Z's own read they look like legitimate 17-day estate growth against a now-stale band, not extractor bugs -- but each needs its own verified_reason (the established pattern this file uses), which is a separate, larger recalibration decision routed to CTO~Z, not bundled into this single deterministic fix."
+    },
+    {
+      "date": "2026-07-25",
+      "trigger": "AC-GRAIN.2 blocked stitch publication for 17 days because the graph CONVERGED ON REALITY -- a ratio-band sentinel cannot distinguish a graph that BROKE from one that IMPROVED; both are 'a count that moved'. Reference point corrected against verified live truth; the [0.4,2.5]x band was NOT widened (widening to pass is 're-run it to fix it', which is how a guard gets removed).",
+      "classes": [
+        {
+          "class": "SQS_QUEUE",
+          "baseline_was": 4,
+          "recertified_to": 12,
+          "ratio": "3.00x",
+          "verified_reason": "REAL COVERAGE CONVERGENCE -- graph MATCHES live exactly. Live source: `aws sqs list-queues` (us-east-1) 2026-07-25 = 12; graph node_type SQS_QUEUE = 12. MATCHES-LIVE (not merely approaches). The 2026-06-11 baseline of 4 predates the queue expansion; the sentinel was refusing on a graph that had become accurate.",
+          "verified_by": "0.8.0_AE_CloudComp (derived from live) / 1.0.0_SA_CTO~Z (ruling + gate)"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-25",
+      "trigger": "AC-GRAIN.2 blocked stitch publication for 17 days because the graph CONVERGED ON REALITY -- a ratio-band sentinel cannot distinguish a graph that BROKE from one that IMPROVED; both are 'a count that moved'. Reference point corrected against verified live truth; the [0.4,2.5]x band was NOT widened (widening to pass is 're-run it to fix it', which is how a guard gets removed).",
+      "classes": [
+        {
+          "class": "ECS_TASK_DEFINITION",
+          "baseline_was": 2,
+          "recertified_to": 7,
+          "ratio": "3.50x",
+          "verified_reason": "REAL COVERAGE CONVERGENCE -- graph MATCHES live exactly. Live source: `aws ecs list-task-definition-families --status ACTIVE` = 7 AND `aws ecs list-task-definitions --status ACTIVE` = 7, 2026-07-25. BOTH SEMANTICS CHECKED DELIBERATELY: families and revisions can diverge and would give two different defensible counts; here they coincide, so 7 is unambiguous. graph = 7. MATCHES-LIVE.",
+          "verified_by": "0.8.0_AE_CloudComp (derived from live) / 1.0.0_SA_CTO~Z (ruling + gate)"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-25",
+      "trigger": "AC-GRAIN.2 blocked stitch publication for 17 days because the graph CONVERGED ON REALITY -- a ratio-band sentinel cannot distinguish a graph that BROKE from one that IMPROVED; both are 'a count that moved'. Reference point corrected against verified live truth; the [0.4,2.5]x band was NOT widened (widening to pass is 're-run it to fix it', which is how a guard gets removed).",
+      "classes": [
+        {
+          "class": "SCHEDULE",
+          "baseline_was": 3,
+          "recertified_to": 10,
+          "ratio": "3.33x",
+          "verified_reason": "REAL COVERAGE CONVERGENCE -- graph MATCHES live exactly. Live source: `aws scheduler list-schedules` (EventBridge Scheduler) 2026-07-25 = 10; graph = 10. MATCHES-LIVE.",
+          "verified_by": "0.8.0_AE_CloudComp (derived from live) / 1.0.0_SA_CTO~Z (ruling + gate)"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-25",
+      "trigger": "AC-GRAIN.2 blocked stitch publication for 17 days because the graph CONVERGED ON REALITY -- a ratio-band sentinel cannot distinguish a graph that BROKE from one that IMPROVED; both are 'a count that moved'. Reference point corrected against verified live truth; the [0.4,2.5]x band was NOT widened (widening to pass is 're-run it to fix it', which is how a guard gets removed).",
+      "classes": [
+        {
+          "class": "REACT_QUERY_KEY",
+          "baseline_was": 32,
+          "recertified_to": 85,
+          "ratio": "2.66x",
+          "verified_reason": "COVERAGE EXPANSION. POPULATION CERTIFIED = THE STITCH UNIONED STREAM (the sentinel's actual input), 2026-07-25 = 85. THREE DISTINCT POPULATIONS EXIST AND ONLY THIS ONE IS CERTIFIED HERE: (1) stitch unioned stream = 85 <- THIS; (2) canonical comp-kuzu DB, node_type `ReactQueryKey` = 57 -- a different store with a different naming convention; (3) portal source literals, a crude grep floor of ~72 across 173 useQuery sites -- a FLOOR, not a count, since it misses multi-line and dynamically-constructed keys. APPROACHES-LIVE, NOT MATCHES: there is no single authoritative live oracle for this class the way list-queues is for SQS, so 85 is certified as the stream's own count, not as ground truth about the portal.",
+          "verified_by": "0.8.0_AE_CloudComp (derived from live) / 1.0.0_SA_CTO~Z (ruling + gate)"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-25",
+      "trigger": "AC-GRAIN.2 blocked stitch publication for 17 days because the graph CONVERGED ON REALITY -- a ratio-band sentinel cannot distinguish a graph that BROKE from one that IMPROVED; both are 'a count that moved'. Reference point corrected against verified live truth; the [0.4,2.5]x band was NOT widened (widening to pass is 're-run it to fix it', which is how a guard gets removed).",
+      "classes": [
+        {
+          "class": "IAM_USER",
+          "baseline_was": 1,
+          "recertified_to": 4,
+          "ratio": "4.00x",
+          "verified_reason": "PROVISIONAL -- CERTIFIES WHAT THE EXTRACTOR CURRENTLY EMITS, **NOT** A USER COUNT, AND NOT AN UNDER-READ OF LIVE. COMPOSITION OF THE 4, enumerated 2026-07-25: 2 real IAM users (Andrew_Berman, github-actions-portal) + `root` (the ACCOUNT ROOT -- `aws iam get-user --user-name root` returns NoSuchEntity, it is not an IAM user) + `token.actions.githubusercontent.com` (an OIDC PROVIDER, confirmed at arn:aws:iam::313476888478:oidc-provider/..., mistyped as a user). LIVE IAM USERS = 6 via `aws iam list-users`; the graph MISSES 4 of them (Andrew_Berman_1, Opal_Terminal, opal-portal-dashboard, patricia@thewhitelabelcreative.com). OVERLAP IS 2, NOT 4 -- so 4 is NOT 6-minus-2, it is 2 right things plus 2 wrong-KIND things. A cardinality comparison cannot detect a population mismatch. NEITHER MATCHES NOR APPROACHES LIVE. Provisional because it does not obstruct the repair: when the extractor is corrected to emit the true 6, 6/4 = 1.50x, inside [0.4, 2.5], so the sentinel will not trip on the fix. SUPERSEDE THIS ENTRY when extractor defects (a) 4-missing-users and (b) non-user-types-admitted are closed.",
+          "verified_by": "0.8.0_AE_CloudComp (derived from live) / 1.0.0_SA_CTO~Z (ruling + gate)"
+        }
+      ]
     }
-  ]
+  ],
+  "_naming_fragility_note": "DORMANT HAZARD, recorded where the next person changing a node_type will see it: grain_sentinel.check_magnitude (:127) iterates THESE baseline keys and looks up each exact key in the node stream, and :120-121 SKIPS classes absent from the baseline. The keys here are SCREAMING_SNAKE and the stitch stream currently uses SCREAMING_SNAKE, so they agree and nothing fires. But the canonical comp-kuzu DB uses CamelCase for the same concept (`ReactQueryKey` vs `REACT_QUERY_KEY`) -- so if a future change points the sentinel at a differently-named stream, or renames a node_type on either side, the lookup yields 0, the ratio renders 0.00x, and it is BYTE-IDENTICAL TO A REAL COLLAPSE. A hazard that is currently dormant because two conventions happen to agree is still a hazard. Surfaced 2026-07-25 by 0.8.0_AE_CloudComp; ruled not-firing-today by 1.0.0_SA_CTO~Z."
 }
