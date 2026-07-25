@@ -641,6 +641,12 @@ frozen digits were dropped from an unrelated pattern on the strength of it — s
 standing would have licensed edits the evidence never supported. **A correction issued against your own
 findings, published WITH them, is worth more than the findings: most instruments never emit the boundary
 that tells a reader which of their own alarms were real.**
+**FIRST ACQUITTAL, recorded as a property of the boundary and not just an instance:** applied to
+`NOT yet tenant-neutral|Opal-bound|not tenant-parameterized`, this rule **cleared** the check — three
+specific multi-word phrases, no generic limb carrying the predicate — and the real defect was found on a
+different axis entirely. **A rule that has only ever convicted is indistinguishable from a rule that
+always convicts; its first acquittal is what proves it discriminates.** Without the boundary, *"OR'd
+patterns are suspect"* would have taken a scalp on a pattern that is correct.
 
 **21. A RETRIEVAL HAS NO FAILURE CHANNEL, SO IT NEEDS AN EXTERNAL DENOMINATOR.** The estate's standing
 line is *control the retrieval, not the pattern*. **One day produced four instances, in four different
@@ -666,6 +672,43 @@ only judgment stood between a clean inverted list and the record.**
 >> the control contradicted it.** << Four independent agents, one session, one class — including a
 Tier-1: **this is not a lane-level discipline problem, and any single instance would have read as
 carelessness.**
+
+**22. A STALE CAVEAT UNDER-BOUNDS THE THING IT EXISTS TO BOUND — staleness inside a caveat has a
+DIRECTION, and it favours the claim being caveated.** Lead with the corollary, because it is what makes
+this worse than ordinary drift:
+
+> **A reader treats a caveat as the CONSERVATIVE bound, and it has silently stopped being one.**
+
+A stale descriptive claim is merely wrong. **A stale caveat is wrong while wearing the costume of
+caution** — and a reader who *notices* the caveat and *respects* it is more misled than one who ignores
+it. A caveat exists to bound an over-reach; when its measured scope ages, the bounded surface has
+typically GROWN while the caveat still cites the smaller figure, so **the honesty mechanism itself drifts
+optimistic and quietly returns the over-claim it was written to prevent.**
+
+**This composes with 16 rather than duplicating it: 16 classifies WHETHER drift is a defect
+(assertion-about-NOW vs record-of-THEN); this states WHICH WAY it errs once it is one.** A stale caveat
+fails 16, and *then* fails in a direction 16 has nothing to say about.
+
+>> **THE MECHANISM, which is why caveats age WORSE than descriptive claims even though both are subject
+>> to growth: a caveat's number is written ONCE, at the moment of MAXIMUM KNOWLEDGE — the instant someone
+>> was actively thinking about the limit — and then never re-derived, because re-deriving it feels like
+>> RE-LITIGATING A SETTLED DISCLOSURE. The honesty was already performed; going back looks like undoing
+>> it. A descriptive claim invites re-measurement; a caveat REPELS it. That is what makes the drift
+>> self-sealing.** <<
+
+**Measured instance:** a scope caveat bounding a tenant-neutrality claim reads *"the **~61** query CLIs
+are Opal-bound."* Live populations: **84** extensionless CLIs / **69** `tools_index` / **87** ledger union
+— **none is 61**, and no stated rule maps any of them to it (its parenthetical is an illustrative list
+with an ellipsis, not a definition). **So it is not merely stale, it is UNFALSIFIABLE BY CONSTRUCTION: a
+number with no derivation can never be found WRONG, only found UNEXPLAINED.** The un-generalized surface
+it discloses is therefore larger than disclosed and grows with every tool added, while the follow-on work
+it defers is correspondingly under-sized in the record.
+
+**Remedy — and the same ruling landed three times in one day (a PATH probe, a verdict register, this):
+a managed region or an explicit derivation rule, NEVER a hand-corrected literal, which only resets the
+same clock.** Here the remedy required no invention at all: **the sibling document one file over already
+manages the same population family in auto-refreshed regions.** Two docs, same population, one mechanised
+and one hand-copied — the fix was to notice the neighbour had solved it.
 
 **Two structural notes the day earned, recorded because they change what a record is FOR:**
 **(a) A prematurely-checked prerequisite does not merely misreport status — it AUTHORIZES downstream
