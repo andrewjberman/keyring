@@ -370,7 +370,16 @@ The DS line, verbatim, because it is the whole point: *the parquet footer read c
 path-based scan missed because it COULD NOT FAIL QUIETLY, not because DS was more careful. Care
 is not a control; instrument choice can be.*
 
-## III-d. Six that earned it in one day (2026-07-25, NFRA_TOOLUNIFY → COMPLEARNS; ~15 wrong mechanisms caught, none by anyone being careful)
+## III-d. What one day earned (2026-07-25, NFRA_TOOLUNIFY → COMPLEARNS; the wrong mechanisms were caught by controls failing, not by anyone being careful)
+
+> **This header carried a frozen count — "Six that earned it" — while the section held twelve items,
+> because each was appended without re-reading the whole. That is the third instance of one shape in a
+> single day, all by the same author: a rule saying "ONE axis of three" above four listed axes; a spec
+> stating its own status three contradictory ways; and this, inside the section whose first item is
+> about gates that cannot be satisfied.** The count is now gone rather than corrected, per the estate's
+> own lesson: *a number a document hand-maintains WILL drift, so state the property instead.* The rate
+> is the finding — **knowing a failure mode by name does not immunize you against writing it, and
+> writing it down does not immunize you either.**
 
 **1. AN UNSATISFIABLE GATE IS NOT A STRICT GATE — IT IS AN AMBIGUOUS ONE, AND AMBIGUITY RESOLVES
 TOWARD WHOEVER NEEDS TO SHIP.** An emit-flip was gated on "the 14-mutant conformance suite lands"
