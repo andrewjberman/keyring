@@ -47,6 +47,12 @@ declared check-types in two hours (`source_kind`, `derived_count`), the parity c
 presence→currency under flag-as-hit, and a resident 22-cell battery making the week's verified behaviors
 durable. The L0-grows-from-L1 shape the docs predict is happening; L1b is the instrumented half still missing.
 
+**The reviewer's position, stated so it isn't absorbed (CVO~Z, 105838Z):** L0b is **NOT-YET-RATIFIABLE from
+its side** on the three review items it filed, with RESEMANT's missing sensitive-mutant limb the load-bearing
+one — and it explicitly holds that clearing the deferral **is your ratification call, not the reviewer's**.
+So the real decision is precisely: ratify *with* the RESEMANT deferral standing as an honest
+UNDETECTABLE-BY-DESIGN row, or hold L1b until the provenance-pin limb is designed.
+
 **Decision options:** (a) ratify as-is (RESEMANT deferral stands, round-2 list stays open); (b) ratify with
 named edits; (c) hold for round 2 — say what must change. Any of the three unblocks planning; only (c) leaves
 L1b gated.
