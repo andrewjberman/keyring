@@ -395,7 +395,7 @@ _WARM_LOCK = threading.Lock()
 WARM_DEADLINE_S = 20.0
 
 
-def _run_comp_which_warm_bounded(q: str, deadline: float = WARM_DEADLINE_S):
+def _run_comp_which_warm_bounded(q: str, deadline: float = None):
     """(ok, text). ok=False means UNEVALUABLE -- either this call's own worker thread did not
     finish inside `deadline`, or an EARLIER call's worker thread is still holding `_WARM_LOCK`
     (see the module comment above for why that must fail closed rather than race).
@@ -404,7 +404,16 @@ def _run_comp_which_warm_bounded(q: str, deadline: float = WARM_DEADLINE_S):
     that), it keeps running until it finishes or the process exits, and it keeps `_WARM_LOCK`
     held forever if it never finishes. That is CONTINUED-PAST, not KILLED -- state it that way,
     never as "the hang was stopped."
+
+    `deadline=None` (not `=WARM_DEADLINE_S`) DELIBERATELY -- a mutable-looking module global as
+    a DEFAULT ARGUMENT VALUE binds at FUNCTION-DEFINITION time, not call time (CVO~Z, GATEBOUND
+    Stage A verification, 2026-07-25): `WARM_DEADLINE_S = 2.0` after import silently does
+    NOTHING to a caller relying on the default, because the def-time value is already baked into
+    the function object. The knob LOOKS settable and silently isn't -- resolving it inside the
+    body, against the CURRENT module global, is what makes it actually tunable.
     """
+    if deadline is None:
+        deadline = WARM_DEADLINE_S
     got_lock = _WARM_LOCK.acquire(blocking=False)
     if not got_lock:
         return False, None
