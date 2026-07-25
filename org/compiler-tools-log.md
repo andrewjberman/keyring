@@ -26468,3 +26468,9 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types blast ClientDirectoryEntry | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types fields ClientDirectoryEntry | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLPASS.COMPTYPES-INDEX-FAILCLOSED | comp-types | bash .tools/comp-types index <garbage>/<real> | PASS | mutant rc=1 0-new-files; positive control rc=0 correct artifact; closes the tier-4 debris class across all 3 subcommands |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types blast DefinitelyNotARealTypeZzz9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types blast ClientDirectoryEntry | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types blast DefinitelyNotARealTypeZzz9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types index DefinitelyNotARealTypeZzz9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types blast ClientDirectoryEntry | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLPASS.MSYS-ARGV-GUARD | msys_argv_guard | python3 .tools/msys_argv_guard.py | PASS | 12/12 self-test: predicate matrix + mutant + positive control + adversarial (quotes/backticks/$) |
