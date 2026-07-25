@@ -113,9 +113,16 @@ Adopted bar (map §10): WS-4 crosswalk conformance passes + WS-7 register-as-con
   GATEBOUND Stage B (the `:1201` kill + memoization — closes the hang class) and the `WARM_DEADLINE_S`
   default-binding fix (CVO~Z's incidental: the module global reads runtime-settable and silently isn't —
   the reads-stronger-than-it-is class; rides Stage B's comp-which commit). The BLOCKED-ON-PEER-LANDING
-  control closed at v3 (hazard-detection + metric-scoped narrowing + map-integrity, every layer
-  mutant-proven, independently verified, and observed both BLOCKING on live drift and OPENING cleanly
-  when drift resolved).
+  control closed at v4 — **cited as COMPLETE-WITH-NAMED-RESIDUAL, never unconditionally complete** (CVO~Z's
+  chain-closing phrasing, binding): four layers (hazard-detection + metric-scoped narrowing + map-integrity
+  + association-integrity), every layer mutant-proven and independently verified, live-observed both
+  blocking and opening; one narrow documented residual reachable only by a three-fault conjunction, named
+  by its own author pre-verification. The chain-closing judgment itself is a method finding: four
+  escalation rounds each closed something real, and the verifier then ruled a fifth belt would add
+  machinery whose failure probability exceeds the residual it closes — *"a verifier who never says 'enough'
+  is not applying judgment, just applying process."* A residual its author has documented is bounded; an
+  undocumented one is unbounded — the difference between a control with a known edge and one that merely
+  hasn't failed yet.
 
 This synthesis closes the EXERCISE program (the register's failure_mode column is now evidence-based per
 §0-§2). The sweep's L0b seed data (§4) is the designed handoff into COMPLEARNS L0b→L1b per
