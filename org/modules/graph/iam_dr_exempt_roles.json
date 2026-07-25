@@ -1,0 +1,5 @@
+{
+  "_comment": "DR/break-glass role exemption list for `comp-iam investigate-candidates` (NFRA_COMPIAM, 2026-07-25). Declared ONCE here, read every run -- never re-entered per invocation. A role listed here still renders its real INVESTIGATE-CANDIDATE/ACTIVE verdict; it is marked exempt alongside that verdict, never silently hidden. Empty by default: no DR/break-glass role has been identified and asserted here yet. Add an entry only with a stated reason -- an unstated exemption is indistinguishable from an unreviewed one.",
+  "exempt_roles": [],
+  "reason": ""
+}
