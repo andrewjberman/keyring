@@ -227,3 +227,26 @@ coordinate the NFRA/~Z program, **STRICTLY NFRA-SCOPED — explicitly NOT MDPF**
 *"~Z GROUP ... NO COO (COO~Z killed 07-20)"*). This is a deliberate, explicit reversal by Andrew, not an
 inferred one — flagged to MSTR so the scope boundary (NFRA-only, no MDPF bleed) is stated at COO~Z's
 launch, not assumed.
+
+## 10 · Andrew's ruling on the advisory doc's two open items (2026-07-25, same session)
+
+Reviewed `docs/briefs/NFRA_TOOLUNIFY_ADVISORY_NEXT_STEPS_20260725.md` (found uncommitted on disk, not
+authored this session). Presented CTO~Z's recommendation on its two contested items; Andrew's reply,
+verbatim: *"Agreed proceed it."*
+
+**Q6 — RESOLVED, separate (not folded in).** GRAPHLEARNS/COMPLEARNS stays a **separate project, sequenced
+after** TOOLUNIFY closes — NOT adopted as TOOLUNIFY's own WS-8/L3 phase. This confirms, does not reverse,
+Andrew's original separation ruling and his §8 sequencing. The advisory doc's Q6 section is HELD, superseded
+by this entry. **Exit-bar concept adopted from the advisory anyway** (it doesn't depend on the fold-in
+question): TOOLUNIFY is "done enough" to open COMPLEARNS when (1) the crosswalk conformance suite (WS-4)
+passes and (2) the register is enforced as a gate (WS-7), not maintained by care.
+
+**Scope widening — GO on the cheap/bounded pieces, HOLD on the new-commitment pieces:**
+- **GO now:** the hardcoded-path hook fix (un-blinds the census's own measurement instrument — CTO~Z
+  fixing directly) + widened REC-1 (criticality-ranked: exercise `GATE-BLOCKING`/`PRODUCER`-flagged tools
+  exhaustively, sample the rest — dispatched to `0.8.0_AE_CloudComp~D`, same acceptance discipline as v1).
+- **GO, but as its own scoped TO, not bundled into REC-1's lane:** the missing SNS subscription fix
+  (`opal-critical-surface-alerts`, 476 unconsumed messages) — real Terraform/deploy work, heavier discipline
+  than census read-only reporting, needs its own acceptance criteria.
+- **HELD, not started:** WS-4 crosswalk build, PRD-the-frame. REC-1's widened pass may surface more first;
+  revisit after it lands.
