@@ -166,15 +166,20 @@ echo "PATH: $F of $T comp-tools resolve bare." ; [ "$F" -lt "$T" ] && echo "  ->
 > the provisioner's own header instead of restating it. *The count is deliberately `$T`-derived, never a
 > digit.*
 > ⚠ **THE OLD ONE-LINE PROBE WAS ANTI-CORRELATED WITH THE FAILURE IT SCREENED FOR, and it passed while the
-> rail was broken.** It tested `command -v comp-which` — and `comp-which` is one of **only 3 tools** the
-> provisioner forwards (`aws`, `comp-which`, `comp-system`), i.e. **the member MOST likely to be
-> provisioned.** *Measured live 2026-07-25: `~/bin` forwards **3** tools (`aws` + 2 comp-tools);
-> `.tools/comp-*` is **91**, of which exactly **2 resolve bare**. The probe returned a clean pass at
-> **2-of-91** comp-tool coverage, one call before `comp-grep` returned `command not found`.* **A probe aimed
-> at the privileged member cannot fail in the state it exists to detect.**
+> rail was broken.** It tested `command -v comp-which` — **the member MOST likely to be provisioned**, because
+> the provisioner forwards a small named subset and `comp-which` is in it. **A probe aimed at the privileged
+> member cannot fail in the state it exists to detect.**
 >
-> **And the failure lands exactly on Rule 21's rail:** `comp-which` resolves, so the reflex works — then it
-> *routes you to* `comp-grep`/`comp-glob`, **which do not resolve.** The rail fails open at its own
+> **RECORD OF THEN — 2026-07-25 morning, NOT a current claim.** *At that moment `~/bin` forwarded 3 tools and
+> exactly 2 of 91 `.tools/comp-*` resolved bare; the probe returned a clean pass at that coverage, one call
+> before `comp-grep` returned `command not found`.* **Those digits are frozen ON PURPOSE and WILL be wrong —
+> ~D provisioned `comp-grep`/`comp-glob` hours later and the ratio moved the same day. For the CURRENT state,
+> RUN THE PROBE ABOVE; it derives both numbers.** *(This block has now gone stale twice within one day — first
+> its hand-listed tool set, then its counts. Both times the mechanised half was fine and the prose decayed.
+> Dating it is the fix; chasing the digits is not.)*
+>
+> **And the failure landed on Rule 21's rail:** `comp-which` resolved, so the reflex worked — then it *routed
+> to* `comp-grep`/`comp-glob`, **which did not resolve** (since provisioned). The rail failed open at its own
 > designated fallback, having just told you it was healthy.
 >
 > **~D's `provision-path-shims.sh` never overclaimed** — its header scopes itself to the three named tools.
