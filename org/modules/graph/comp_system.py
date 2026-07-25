@@ -502,15 +502,27 @@ _MANAGED_DOCS_DIR = os.path.join(WS, "infra", "system")
 def refresh_managed_regions(metrics: dict, write: bool):
     """Rewrite every <!--cs:NAME--> span in infra/system/*.md to metrics[NAME].value.
 
-    Returns (changes, problems): changes = [(file, name, old, new)] spans whose rendered value
-    moved; problems = [(file, name, why)] spans naming an unknown metric or one that is UNKNOWN
-    (NEVER overwritten -- we do not stamp UNKNOWN over a real number). write=False = report only
-    (the --check path); write=True updates the files in place (the compile path)."""
+    Returns (changes, problems, scanned): changes = [(file, name, old, new)] spans whose rendered
+    value moved; problems = [(file, name, why)] spans naming an unknown metric or one that is
+    UNKNOWN (NEVER overwritten -- we do not stamp UNKNOWN over a real number); scanned =
+    {"regions": N, "files": M} -- N = total well-formed <!--cs:NAME-->...<!--/cs--> spans matched
+    (across every file, drifted or not), M = how many of those files contained >=1 match.
+
+    scanned exists because "0 drifted" alone is a claim with NO STATED DENOMINATOR (CTO~Z dispatch
+    NFRA_TOOLARCH, 2026-07-25, off CVO~Z's finding against _REGION_RE directly): a malformed marker
+    (missing/typo'd closer, wrong-case name) matches ZERO regexes, so it is SILENTLY excluded from
+    `changes` -- comp-system would then report "0 drifted" over a scan that watched nothing, and
+    `check_stale`/eng-currentstate-current's system_current unit would read PASS about nothing.
+    Reporting the count callers can render alongside "0 drifted" turns a wiring gap into a visible
+    count drop instead of silence. write=False = report only (the --check/--gate path); write=True
+    updates the files in place (the compile path)."""
     changes, problems = [], []
+    scanned_regions = 0
+    scanned_files = 0
     try:
         names = sorted(os.listdir(_MANAGED_DOCS_DIR))
     except OSError:
-        return changes, problems
+        return changes, problems, {"regions": scanned_regions, "files": scanned_files}
     for fn in names:
         if not fn.endswith(".md"):
             continue
@@ -521,9 +533,11 @@ def refresh_managed_regions(metrics: dict, write: bool):
         except OSError:
             continue
         file_dirty = False
+        file_region_count = [0]
 
-        def _sub(mobj, _fn=fn, _flag=lambda: None):
+        def _sub(mobj, _fn=fn, _frc=file_region_count):
             nonlocal file_dirty
+            _frc[0] += 1
             open_tag, name, old, close_tag = mobj.group(1), mobj.group(2), mobj.group(3), mobj.group(4)
             met = metrics.get(name)
             if met is None:
@@ -539,10 +553,13 @@ def refresh_managed_regions(metrics: dict, write: bool):
             return open_tag + new + close_tag
 
         new_text = _REGION_RE.sub(_sub, text)
+        scanned_regions += file_region_count[0]
+        if file_region_count[0]:
+            scanned_files += 1
         if write and file_dirty:
             with open(path, "w", encoding="utf-8") as fh:
                 fh.write(new_text)
-    return changes, problems
+    return changes, problems, {"regions": scanned_regions, "files": scanned_files}
 
 
 # ---------------------------------------------------------------------------
@@ -665,7 +682,7 @@ def _write(model: dict) -> list:
     with open(OUT_JSON, "w", encoding="utf-8") as fh:
         json.dump(model, fh, indent=2)
     # Carry the live scalars OUT to every marked span in the sibling docs (03/00/README/...).
-    changes, problems = refresh_managed_regions(model.get("metrics", {}), write=True)
+    changes, problems, _scanned = refresh_managed_regions(model.get("metrics", {}), write=True)
     return changes + [("PROBLEM", p[0], p[1], p[2]) for p in problems]
 
 
@@ -721,7 +738,7 @@ def self_test() -> int:
         bool(mets) and shape_ok and live_ok)
     # 9. the refresher is SAFE: report-only run touches no file, and it NEVER stamps UNKNOWN over a
     #    real number (an unknown metric is reported as a problem, the existing value is preserved).
-    ch, _pb = refresh_managed_regions(mets, write=False)
+    ch, _pb, _scanned = refresh_managed_regions(mets, write=False)
     unknown_overwrite = any(mets.get(name, {}).get("value") == UNKNOWN for _fn, name, _o, _n in ch)
     chk("9  managed-region refresher: report-only, and never overwrites a real number with UNKNOWN",
         not unknown_overwrite)
@@ -885,6 +902,55 @@ def self_test() -> int:
         all(os.path.basename(_METRIC_SOURCE_FILES[n][0]) in mets.get(n, {}).get("source", "")
             for n in _new_metric_names)
         and all("comp-fedobs" not in mets.get(n, {}).get("source", "") for n in _new_metric_names))
+
+    # 21-22. NFRA_TOOLARCH managed-region DENOMINATOR (CTO~Z dispatch, 2026-07-25, off CVO~Z's
+    # finding against _REGION_RE directly): "0 drifted" alone has no stated denominator, so a
+    # malformed marker (missing/typo'd closer, wrong-case name) matches nothing and is SILENTLY
+    # excluded -- comp-system would report "0 drifted" over a scan that watched nothing.
+    import shutil as _shutil
+    import tempfile as _tempfile
+    _scratch = _tempfile.mkdtemp(prefix="cs_region_selftest_")
+    _real_dir = _MANAGED_DOCS_DIR
+    try:
+        for _fn in os.listdir(_real_dir):
+            if _fn.endswith(".md"):
+                _shutil.copyfile(os.path.join(_real_dir, _fn), os.path.join(_scratch, _fn))
+        globals()["_MANAGED_DOCS_DIR"] = _scratch
+        _c0, _p0, _scan_clean = refresh_managed_regions(mets, write=False)
+        # malform exactly ONE region (drop its closer) in whichever file has >=1 real match.
+        _target = None
+        for _fn in sorted(os.listdir(_scratch)):
+            if not _fn.endswith(".md"):
+                continue
+            _txt = open(os.path.join(_scratch, _fn), encoding="utf-8").read()
+            _m = _REGION_RE.search(_txt)
+            if _m:
+                _target = (_fn, _txt, _m)
+                break
+        if _target:
+            _fn, _txt, _m = _target
+            _malformed = _txt[:_m.start(4)] + "<!-- NOT A CLOSER -->" + _txt[_m.end(4):]
+            with open(os.path.join(_scratch, _fn), "w", encoding="utf-8") as _fh:
+                _fh.write(_malformed)
+        _c1, _p1, _scan_malformed = refresh_managed_regions(mets, write=False)
+        region_mutant_ok = (_target is not None
+                           and _scan_clean["regions"] - _scan_malformed["regions"] == 1)
+        # zero-region case: an EMPTY scratch dir (no .md files at all) must scan to 0 regions,
+        # never silently mislabeled as a normal "0 drifted" pass (acceptance-c).
+        _empty = _tempfile.mkdtemp(prefix="cs_region_selftest_empty_")
+        globals()["_MANAGED_DOCS_DIR"] = _empty
+        _c2, _p2, _scan_empty = refresh_managed_regions(mets, write=False)
+        zero_region_ok = (_scan_empty == {"regions": 0, "files": 0})
+        _shutil.rmtree(_empty, ignore_errors=True)
+    finally:
+        globals()["_MANAGED_DOCS_DIR"] = _real_dir
+        _shutil.rmtree(_scratch, ignore_errors=True)
+    chk("21 mutant: malforming ONE managed-region marker (scratch copy, never the real files) "
+        "drops the scanned-region count by EXACTLY 1 -- a wiring gap becomes a count drop, not "
+        "silence", region_mutant_ok)
+    chk("22 zero-region case: an empty managed-docs dir scans to {regions:0, files:0}, distinct "
+        "from a real 'compared, 0 drifted' pass (check_stale renders this as CURRENT-BUT-UNWATCHED, "
+        "never as an ordinary clean CURRENT)", zero_region_ok)
 
     n = sum(1 for x in ok if x)
     print("--- self-test: %d/%d passed (grounded-or-UNKNOWN, no fabrication, shape-locked) ---" % (n, len(ok)))
@@ -1110,7 +1176,7 @@ def check_stale() -> int:
         # A managed-region span whose printed number no longer equals the live metric is ALSO stale --
         # this is the "tool counts etc. drifted in the sibling docs" case the fingerprint cannot see
         # (the docs are outputs, not fingerprint sources). Report-only: --check never writes.
-        region_changes, _problems = refresh_managed_regions(compute_metrics(), write=False)
+        region_changes, _problems, region_scan = refresh_managed_regions(compute_metrics(), write=False)
     except Exception as e:  # noqa: BLE001 -- a probe that cannot evaluate is an ERROR, never "fresh"
         print("06 UNVERIFIABLE: --check could not evaluate (%s: %s)" % (type(e).__name__, e))
         return 1
@@ -1149,7 +1215,19 @@ def check_stale() -> int:
               % (len(region_changes), drift))
         return 2
     if not stale:
-        print("SYSTEM CURRENT (06: %s; managed regions: 0 drifted)" % reason)
+        if region_scan["regions"] == 0:
+            # A denominator of ZERO reads as clean by construction, not by verification -- do not
+            # let it print as "SYSTEM CURRENT" (CTO~Z dispatch acceptance-c): a wiring failure that
+            # took EVERY region down at once would look identical to "no regions exist yet" if
+            # worded the same as the normal case. Distinct wording, same rc (a genuinely
+            # region-free /system is not itself an error -- the wording is what must not lie).
+            print("SYSTEM CURRENT BUT NOTHING WAS COMPARED (0 managed-region spans found across %d "
+                  "file(s) in infra/system/ -- this is 'clean' because nothing was watched, not "
+                  "because nothing drifted; check <!--cs:NAME--> marker syntax if regions were "
+                  "expected)" % region_scan["files"])
+        else:
+            print("SYSTEM CURRENT (06: %s; managed regions: %d compared across %d file(s), 0 drifted)"
+                  % (reason, region_scan["regions"], region_scan["files"]))
         return 0
     print("06 STALE: %s -- regenerate (comp-system)." % reason)
     return 2
@@ -1263,7 +1341,7 @@ def gate(changed=None) -> int:
         with open(OUT_JSON, encoding="utf-8") as fh:
             header = json.load(fh).get("header", {})
         stale, reason = _staleness(header)
-        region_changes, _problems = refresh_managed_regions(compute_metrics(), write=False)
+        region_changes, _problems, _region_scan = refresh_managed_regions(compute_metrics(), write=False)
     except Exception as e:  # noqa: BLE001 -- a gate that cannot evaluate is FAIL-CLOSED, never a pass
         print("SYSTEM UNVERIFIABLE (fail-closed): --gate could not evaluate (%s: %s)"
               % (type(e).__name__, e))
