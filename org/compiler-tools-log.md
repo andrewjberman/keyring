@@ -26435,3 +26435,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --check | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.BLOCKED-ON-PEER-LANDING-V3 | comp-system | bash .tools/comp-system --self-test | PASS | 23/23, closed CVO~Z's wrong-entry-fails-open finding (structural hoist + consistency chk + mutant) |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate | VERDICT |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.BLOCKED-ON-PEER-LANDING-V4 | comp-system | bash .tools/comp-system --self-test | PASS | 26/26, closed the association-third-limb residual (basename-in-source coupling) |
