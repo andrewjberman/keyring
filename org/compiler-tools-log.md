@@ -26325,3 +26325,39 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws derive --class LAMBDA --resource arn:aws:lambda:us-east-1:000000000000:functio... | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-adapter-audit | comp-adapter-audit zzzNonexistentAdapterFn9999 --manifest-dir C:/Users/ANDREW~1/AppData... | UNKNOWN |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_TOOLUNIFY.REC-1c | (session) | REC-1c LANE-C 16-tool exercise sweep: 10 MATCH / 4 MISMATCH / 2 UNKNOWN; absent-input FAIL-OPEN pattern now 5 instances; 2 live drifts routed | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-platinum | comp-platinum summary | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-platinum | comp-platinum page zzz_definitely_nonexistent_page_9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-graph | comp-graph status | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-graph | comp-graph zzz_bad_subcommand_9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pydeps | comp-pydeps consumers org/modules/graph/cli.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pydeps | comp-pydeps consumers zzz_definitely_nonexistent_file_9999.py | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-constants | comp-constants list | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-constants | comp-constants check --file zzz_definitely_nonexistent_file_9999.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-dataflow | comp-dataflow --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-dataflow | comp-dataflow origin zzz_definitely_nonexistent_script_9999.py | REFUSE |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-similar | comp-similar --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-describe | comp-describe zzz-nonexistent-resource-9999 | UNKNOWN |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-registry | comp-registry sync --project ZZZZ_NONEXISTENT_MYOWN_9999 | UNKNOWN |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-coverage | comp-coverage report --pipeline DEFINITELY_NONEXISTENT_MYOWN_9999 | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-residue | comp-residue surface data/mdpf/config/partner_roster.json | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-residue | comp-residue surface zzz_definitely_nonexistent_source_9999.yaml | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-lambdamap | comp-lambdamap check | PARTIAL | reverse-direction failure_mode mismatch (declared FAIL-OPEN, observed LOUD) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-routes | comp-routes trace <nonexistent> | PARTIAL | FAIL-OPEN vs declared LOUD |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-iam-usage | comp-iam-usage reach-check <nonexistent> | PARTIAL | FAIL-OPEN-by-design vs declared LOUD, well-labeled JSON |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-deadgrant | comp-deadgrant --self-test | PASS | offline positive control |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-deadgrant | comp-deadgrant --account 000000000000 --limit 1 | SKIPPED | account-branch never reached at this sample size, UNKNOWN not forced |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-deadgrant.py | comp-deadgrant.py --account 000000000000 --limit 1 | SKIPPED | same as wrapper, confirms parity |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-denytest | comp-denytest (missing args, then nonexistent principal) | PASS | LOUD both probes, matches declared |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-denytest.py | comp-denytest.py (missing args) | PASS | byte-identical to wrapper |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-tagauthz | comp-tagauthz check --candidate <bad> | PASS | fail-closed LOUD, matches declared |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-tagauthz.py | comp-tagauthz.py check --candidate <bad> | PASS | byte-identical to wrapper |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-secrets | comp-secrets get <nonexistent> | PASS | matches declared, after self-caught idiom mis-dispatch (bash vs python3) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-pii | comp-pii scan <nonexistent> | PASS | matches declared LOUD |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-keys | comp-keys exists <nonexistent prefix> | PARTIAL | FAIL-OPEN-by-design vs declared LOUD, self-documented BLIND caveat |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-clobber | comp-clobber --live <nonexistent bucket> <key> | FAIL | unhandled botocore.errorfactory.NoSuchBucket traceback, not a designed error path |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-debris | comp-debris --self-test | PASS | offline positive control incl. explicit trading-calendar MUTANT check |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-debris | comp-debris --types <bad> | PARTIAL | names the bad type on stderr but exits 0 with a clean 0-resources report |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-dups | comp-dups --class <bad enum> | FAIL | zero acknowledgment anywhere, silently ran full unfiltered scan |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-drift | comp-drift <nonexistent target> | PARTIAL | 150s timeout-bounded, no upfront target validation observed |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-firmsep-sweep | comp-firmsep-sweep --secret <nonexistent> | PASS | matches declared LOUD |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-firmsep-sweep.py | comp-firmsep-sweep.py --secret <nonexistent> | PASS | byte-identical to wrapper |
