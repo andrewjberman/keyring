@@ -212,3 +212,18 @@ rails).
 **WS-4 (crosswalk build)** was also affirmed clean by the prior-session fork review (correct-but-hold,
 now buildable) but was NOT explicitly named in this ruling — holding it pending an explicit go, since
 Andrew named REC-1 specifically ("start with REC1").
+
+## 9 · Fleet recovery + COO~Z stand-up (2026-07-25, same session, post power-crash)
+
+MSTR restored live by Andrew. **VERBATIM (Andrew, same terminal):** *"I brought on MSTR, they can help,
+ask them to bring on COO~Z as well to help you coordinate, just make sure that when they launch them
+that we are all clear this is purely NFRA work; we're not getting into the MDPF stuff just yet"*
+
+Routed to MSTR: (1) respawn `0.8.0_AE_CloudComp~D` + `3.0.0_SA_CVO~Z` (crashed with the rest of the
+fleet; REC-1 dispatch already queued in their inboxes), (2) spawn `2.0.0_SA_COO~Z` fresh to help
+coordinate the NFRA/~Z program, **STRICTLY NFRA-SCOPED — explicitly NOT MDPF**, per Andrew's own words.
+
+**For the record, not adjudicated:** the `~Z` group was previously NO-COO by design (fabric-shape note:
+*"~Z GROUP ... NO COO (COO~Z killed 07-20)"*). This is a deliberate, explicit reversal by Andrew, not an
+inferred one — flagged to MSTR so the scope boundary (NFRA-only, no MDPF bleed) is stated at COO~Z's
+launch, not assumed.
