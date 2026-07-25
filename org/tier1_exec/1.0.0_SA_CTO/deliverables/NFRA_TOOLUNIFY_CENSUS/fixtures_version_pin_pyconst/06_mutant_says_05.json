@@ -1,0 +1,2 @@
+{"note": "Mutant fixture: the representation still says the OLD version while the source moved on.",
+ "line": "substrate: cse_schema @0.5 (stale against a 0.6 source)"}

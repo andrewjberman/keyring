@@ -1,6 +1,24 @@
 # NFRA_COMPLEARN item-1b — L1a residue sensor over a NON-TEXT shape: comp-kuzu assumed schema vs the LIVE canonical Kuzu binary DB
 
-**author:** `0.8.0_AE_CloudComp~E` · 2026-07-25 · **status:** DELIVERED — **item-1b closure claim: PENDING-VERIFY** (CVO~Z, with the N/A-by-shape-vs-omission attack named in the dispatch)
+**author:** `0.8.0_AE_CloudComp~E` · 2026-07-25 · **status:** **BOUNCED at verify (CVO~Z 114312Z) — corrected 1150Z; the SENSOR and residue accounting STAND, the N/A-by-shape justification was FALSIFIED, item-1b stays OPEN and re-targets per CTO~Z's 114444Z ruling**
+
+> **CORRECTION OF RECORD (visible, per the inline-correction model) — read §1 as RETRACTED.**
+> CVO~Z falsified the by-shape claim with two read-only queries: `show_tables()` carries a **`comment`
+> field** (`['id','name','type','database name','comment']`) and `COMMENT ON TABLE` **round-trips** on
+> kuzu 0.11.3 (scratch DB). The canonical plane is **EMPTY (`''`), not ABSENT** — and EMPTY ≠ ABSENT per
+> the (unratified, provisional) L0b-I draft. **The precise instrument error: `--oracle-check` enumerated
+> the metadata FUNCTIONS while the claim was about their FIELDS** — the comment column sat in the
+> oracle's own returned data, summarized away as "name/type/arity only" (Verification Law 6: a rigorous
+> instrument one axis off survives review). Fixes applied: the oracle now prints `get_column_names()`
+> for every metadata call (and immediately surfaced more: `table_info` fields DIFFER per table kind —
+> REL carries `storage_direction`, NODE carries `primary key`); `doc_only` is now
+> **APPLICABLE-and-measured** (count 0 on canonical — a real zero over an EMPTY plane), both readings'
+> consequence stated in-report (`doc_only_status`). **This sensor therefore stands as a valid L1a sensor
+> over an EMPTY-doc_only surface — real, but NOT the 1b-clearing shape.** Post-correction, post-~C-fix
+> re-run: `N=12 = covered 12 + member 0 + doc_only 0 + orphan 0`, CLEAN — with `node_id` moving
+> member→covered exactly as ~C's cell-movement reasoning predicted. Re-target scout (Lambda env-var
+> plane, field-level pre-check FIRST) proceeds per the ruling; prohibited shortcuts (COMMENT write to
+> canonical; empty-means-absent by calendar) acknowledged and not taken.
 **reports to:** `1.0.0_SA_CTO~Z` + `3.0.0_SA_CVO~Z` ONLY
 **dispatch:** `1.0.0_SA_CTO~Z`, 20260725T111534Z (build-order item 1b — the OPEN half of L2's gate)
 **sensor code (my ownpath, committed by me):**
@@ -88,6 +106,48 @@ Not a platform (the extraction is bespoke to the Cypher-literal shape). Not a ma
 DIRECTION line declares both planes mention-derived and UNDER-reporting (an f-string-built table name is
 invisible to ast extraction); residue can be an undercount, never an overcount. Not exercised on a
 locked canonical DB (deliberately — §4 last row). **Item-1b closure is claimed PENDING-VERIFY only.**
+
+## 8 · RE-TARGET (per CTO~Z ruling 114444Z) — the Lambda env-var plane · **PENDING-VERIFY**
+
+**Pre-check FIRST, field-level (the fixed oracle discipline):** live `get-function-configuration` on
+`inf-gold-trigger` — `Environment` carries exactly ONE field (`Variables`), a flat str→str map, **no
+third slot**: no per-variable prose facility exists. Function-level `Description` (`''`) and `Tags`
+(get-function: `Code`/`Configuration`/`Tags` enumerated) are **FUNCTION-kind surfaces, explicitly
+distinct** — prose about the function is not prose about a variable. **Pre-check GO.** Scout denominator:
+5 literal `os.environ` reads in the subject's own source vs 6 live Variables keys — a real population.
+
+**Sensor:** `sensor_lambda_env_residue.py` (same ownpath dir). Assumed plane = ast-extracted literal
+env reads (non-literal → UNKNOWN, reported); live plane = read-only `get-function-configuration` routed
+via `.tools/msys_argv_guard.msys_safe_run` per the new CLAUDE.md native-parent rule — **whose motivating
+failure this sensor exercised live**: the first oracle attempt spawned bare `aws` from native Python,
+CreateProcess FileNotFoundError → the sensor's designed REFUSE rc=3 (API-unavailable, UNKNOWN-grade)
+fired organically before the guard fix. Values never printed (kill-switch LAW respected; keys only;
+never write, never trigger).
+
+**Main result @revision 9ca4ed77:** VERDICT rc=2 — `N=6 = covered 5 + member 1 + orphan 0`;
+`doc_only {applicable:false, count:null}` with the field-demonstrated reason in-report. The one residue:
+**`env:INF_GOLD_RELEASE_PROVENANCE` — live-set, never read by the source (set-but-unread)**, the inverse
+direction from the dangerous read-of-unset class (orphan=0 — every read key is live-set, kill-switch
+included). Materiality = inference gate's.
+
+**Acceptance:** mutant fixture (bogus key → orphan; known-live key → covered, same run, N=7) · CLEAN
+control fixture reading exactly the 6 live keys → rc=0 · oracle field-level both-ways control
+(nonexistent function errors rc=255) · both denominators every run · REFUSE exercised organically (above).
+
+**CLEARED — CVO~Z 120625Z, third pass, against a WIDER denominator than this memo ran:** CVO~Z
+enumerated the complete offline botocore Lambda service model — 85 operations, 5 carrying
+`Environment/Variables` in output, **zero prose members inside any env-related shape** (21 prose members
+all FUNCTION-kind: `Description` on Function/Alias/Layer/CodeSigningConfig), and structurally
+`Environment.Variables` is `map<string,string>` — no third slot. **Method note for future pre-checks:
+the botocore service model IS the pre-check instrument** (bounds the claim over the API's whole type
+system); live calls become its spot-check. The progression functions→fields→full-model widened the
+denominator at each pass and the claim held at the widest — the first widening being the one that
+falsified the kuzu claim, so the discipline cuts both directions. Kill-switch handling verified
+right-by-construction (zero write-capable verbs in the sensor — the hazard is UNREPRESENTABLE, not
+avoided; key-names-never-values). Accounting reproduced exactly (`N=6=5+1+0` @ revision 9ca4ed77).
+**ITEM 1B: DONE (1a + 1b). L2's remaining gate is L1b via L0b — Andrew's ratification call.** One
+stated dependency, no risk attached: the clearance rests on L0b-I's `EMPTY != ABSENT` as drafted; a
+later ratification collapsing them would mean the bar held here was higher than required, not wrong.
 
 ## 6 · Handoff
 

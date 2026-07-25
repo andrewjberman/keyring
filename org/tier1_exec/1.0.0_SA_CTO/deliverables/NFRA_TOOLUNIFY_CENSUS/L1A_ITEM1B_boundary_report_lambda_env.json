@@ -1,0 +1,38 @@
+{
+  "tool": "inf-gold-trigger (lambda env reader)",
+  "source": "lambda_function.py (assumed plane) vs live get-function-configuration inf-gold-trigger",
+  "address_space": "lambda_env_key",
+  "head": "revision:9ca4ed77-01dd-45d0-95d6-dd379cdf89a2",
+  "surface_total": 6,
+  "cells": {
+    "covered": {
+      "applicable": true,
+      "count": 5,
+      "method": "mention"
+    },
+    "member": {
+      "applicable": true,
+      "count": 1,
+      "method": "traversal"
+    },
+    "doc_only": {
+      "applicable": false,
+      "count": null,
+      "method": null
+    },
+    "orphan": {
+      "applicable": true,
+      "count": 0,
+      "method": "mention"
+    }
+  },
+  "doc_only_na_reason": "N/A BY SHAPE, demonstrated at FIELD level (--oracle-check re-derives every run): Environment carries exactly one field, Variables, a flat str->str map with no third slot -- no per-variable prose facility exists on this surface. Function-level Description and Tags are FUNCTION-kind surfaces, explicitly distinct: prose about the function is not prose about a variable. A schema element here structurally CANNOT be named-in-prose-but-unwalked.",
+  "items": [
+    {
+      "address": "env:INF_GOLD_RELEASE_PROVENANCE",
+      "cell": "member",
+      "method": "traversal",
+      "evidence": "live-set (deploy plane declares it); never read by this source -- set-but-unread"
+    }
+  ]
+}
