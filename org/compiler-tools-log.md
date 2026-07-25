@@ -26498,3 +26498,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-kuzu infra/aws/globgrph/kuzu_cli.py infra/aws/... | VERDICT |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | VERDICT |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-kuzu infra/aws/globgrph/kuzu_cli.py infra/aws/... | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam stats | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam roles | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/extract_iam.py org/modules/graph/iam_cli.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_COMPIAM.SECOND-INSUFFICIENCY | comp-iam | bash .tools/comp-iam service opal-globgrph-incremental-updater | PASS | 2/7 -> 7/7 via AST pass for helper-constructed clients, CVO~Z's exact fixture |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_COMPIAM.SECOND-INSUFFICIENCY | comp-iam | 157-Lambda before/after fleet diff (ad-hoc) | PASS | 0 regressions, 154 unchanged, 3 increased -- superset property holds |
