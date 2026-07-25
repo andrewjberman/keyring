@@ -168,3 +168,42 @@ Full could-not-verify list (9 items) in `base.sidecar.json` → `could_not_verif
 No apply, deploy, re-point, regenerate, or schema change at any point. No frozen artifact was touched or re-run. Read-only throughout: `aws s3api`/`glue`/`dynamodb`/`codebuild`/`logs`/`sns`/`sqs`/`cloudwatch`/`lambda` describe/get/list/scan calls only, plus source reads and one `gh run list`. Did not map tool-consumption of this substrate (lane `~D`) or live-AWS-vs-graph count parity (lane `~A`) beyond what was needed to understand a producer. Did not adjudicate NFRA_GCONTR's suspension or attempt to resolve the `cse_test` anomaly beyond disclosing it.
 
 — `0.8.0_AE_CloudComp`, 2026-07-24
+
+---
+
+## 11. Addendum — post-verification refinement (2026-07-24 ~2358Z, after CVO~Z's independent re-derivation)
+
+CVO~Z's verify pass (PASS verdict, both live-primitive claims confirmed exact — the 20/20 CodeBuild failure history and the 0-ESM SQS finding) surfaced one finding that changes §4's remedy framing materially, plus advanced two other items. Recorded here as an appended addendum rather than silently rewritten into §4, since §4 was already committed (`@d4f80d742e`) before this landed.
+
+**The stitch pipeline was already ordered retired, 17 days before this census — and its designated replacement is failing too, for the same underlying reason.** CVO~Z found that `.tools/comp-stitch-refresh`'s own header states, verbatim: *"Replaces the cloud stitch-produce (GH-Action source-zip -> S3 -> nightly CodeBuild)... Andrew-direct 2026-07-07... this deletes the GH-Action + CodeBuild + EventBridge + GHA-OIDC roles + the PORTAL_REPO_PAT / .gitmodules-second-checkout saga."` I verified this header myself (exact match) and went one step further to answer the question CVO~Z posed but didn't have time to chase: **is the local replacement also hitting the grain sentinel, or are these two independent failures wearing one symptom?**
+
+I found `.git/hooks/post-commit` live-installed (since 2026-07-07T18:24:14Z) calling `.tools/git-hooks/stitch-refresh-post-commit.sh`, which fires the local derive on any commit touching `portal/`, `data/*/scripts/`, `org/modules/graph/`, or `infra/aws/globgrph/{derive_stitch,extract_portal_stitch}.py`, backgrounded, logging to `${TMPDIR}/stitch-refresh.log`. That log (519KB, last-written 2026-07-24T16:34) shows:
+
+- **17 successful local writes**, all clustered at the very start of the log (07-07 through the early hours of 07-08), all run against a specially-regenerated snapshot (`snapshots/20260707/graph-20260707-regen-grain-complete.tar.gz`) — i.e., the local path worked correctly while it was being validated against a snapshot hand-prepared to pass.
+- **83 consecutive `GRAIN_SENTINEL_FAIL` entries** from the moment the log transitions to reading ordinary nightly snapshots (`snapshots/20260708/graph-20260708.tar.gz` onward) through the most recent entry, today, against `snapshots/20260724/graph-20260724.tar.gz`. **Zero successes since 07-08.**
+
+**This means: the frozen artifact's 2026-07-08T02:27:52Z timestamp is the last time *either* path — cloud or local — successfully published, and both have failed on every attempt since, continuously, for 16 days.** This is one shared root problem, not two independent failures — directly answering CVO~Z's question.
+
+Critically, **today's local-path grain-sentinel output is *not* identical to the cloud build's** (compare to §4's table), which sharpens the diagnosis further:
+
+```
+EXTERNAL_ENDPOINT:   0 vs baseline 3   = 0.00x   <- same as cloud (unrelated to portal)
+REACT_QUERY_KEY:    85 vs baseline 32  = 2.66x   <- HIGH, not zero -- portal IS read correctly here
+SQS_QUEUE:          12 vs baseline 4   = 3.00x   <- same as cloud
+ECS_TASK_DEFINITION: 7 vs baseline 2   = 3.50x   <- same as cloud
+SCHEDULE:           10 vs baseline 3   = 3.33x   <- same as cloud
+IAM_USER:            4 vs baseline 1   = 4.00x   <- same as cloud
+```
+
+`PORTAL_COMPONENT` and `API_ROUTE` do **not** appear as violations here — confirming those two were specifically artifacts of the cloud path's broken source-zip (0 portal files), not a real defect. But `REACT_QUERY_KEY` still fails here too — just in the opposite direction: the local derive reads portal correctly (85 real keys present) and the **baseline itself (32) is stale**, the same class of problem as the 4 shared magnitude violations. `EXTERNAL_ENDPOINT=0` is common to both paths and unrelated to portal content at all — a standing detection gap in whatever collects that node type, unresolved since at least 07-07, independent of the stitch mechanism.
+
+**Corrected remedy class, superseding what §4 implied:** provisioning `PORTAL_REPO_PAT` would only un-stick the already-obsolete cloud path — not the actual path Andrew designated as canonical. The real remedy is threefold: (1) finish the 07-07-ordered decommission of the cloud GH-Action/CodeBuild/EventBridge/OIDC chain (stop the 18-nights-and-counting silent failure of a component that was supposed to already be gone), (2) recalibrate `grain_baseline.json` against current legitimate estate size (closes the 5 shared magnitude violations, both paths), (3) separately investigate the `EXTERNAL_ENDPOINT=0` detection gap, which neither decommissioning the cloud path nor recalibrating the baseline will fix on its own.
+
+**Two smaller CVO~Z-driven corrections, also folded in:**
+- The Iceberg-table correction in §1 is sharpened: it is not that `code_heat`/`ms_heat`/etc. were mislabeled — it's that the `_snap`-suffixed variant *is* the real Iceberg table and the bare name is a *different, non-Iceberg* thing. A naming collision, not a mistake in the plan's first pass.
+- The `cse_test` dual-UUID anomaly (§6) is now **confirmed present at the S3 layer** (both physical prefixes independently verified by CVO~Z) — moved from "suspected, unreachable" to "confirmed present, cause unreachable" (the *cause* still needs Nessie-native access I don't have).
+- Live queue depths (§7's 477-message count) should be read as a moving number as of its own timestamp, not an exact static fact — CVO~Z's independent re-check read 476 a short time later, one message of ordinary drift, not a discrepancy between us.
+
+**Boundary held on this addendum too:** the `stitch-refresh.log` file was read-only; nothing was re-run, no post-commit hook was triggered by me to test this. This is entirely archival evidence already sitting on disk from other agents' ordinary commit activity.
+
+— `0.8.0_AE_CloudComp`, 2026-07-24 ~2358Z (addendum)

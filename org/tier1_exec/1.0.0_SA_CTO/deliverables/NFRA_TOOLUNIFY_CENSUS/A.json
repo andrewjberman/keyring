@@ -36,6 +36,14 @@
     "residual_after_removing_both_defect_classes": 188,
     "source_map_registry_count": 192,
     "kuzu_and_live_count": 191,
+    "CORRECTED_post_cvo_z_review": {
+      "reason": "the original depth>6-or-underscore-prefix phantom classifier had false positives on legitimately-deep v2_portal/yang_pipeline directories, which hid ~30 real live Lambdas from the non-phantom set and produced a spurious 3-short residual (188 vs 191) that was written as if it closed exactly. CVO~Z (verification) and CTO~Z (routing) both flagged this. Rebuilt on a cross-reference classifier instead of a path-shape guess.",
+      "new_method": "each LAMBDA node label, normalized (strip -/_, lowercase), checked against the union of {191 live Lambda names, 192 source-map registry keys}",
+      "graphjson_live_name_coverage": "191/191 -- ZERO live Lambdas missing from graph.json under any name (verified directly, not inferred from a count)",
+      "corrected_333_breakdown": {"matched_live_or_registry": 208, "alias_excess": 19, "vendor_confirmed_phantom": 73, "org_dir_noise_phantom": 9, "residual_unexplained": 24, "sum": 333},
+      "full_enumeration": "A_lambda_enumeration.json -- all 333 node IDs classified with id+label+file_path, for random-sample spot-check (not the single hand-picked example this file originally cited)",
+      "supersedes": "the 'residual_after_removing_both_defect_classes: 188' arithmetic above specifically; the vendored-dependency + alias-duplication mechanism itself is unaffected and remains the grounded explanation for graph.json's excess"
+    },
     "registry_vs_live_diff": {
       "live_only_not_in_registry": ["m365-ms-ingest-liveness", "opal-49f-served-guard", "opal-cot-served-guard", "opal-inf-served-guard"],
       "registry_only_not_live": ["bd-client-detail", "find-insure-serving-companies", "find-insure-serving-consolidate", "find-insure-serving-employees", "find-insure-serving-scoring"]
@@ -117,6 +125,7 @@
   "could_not_fully_verify": [
     "Whether the 5 kuzu-vs-live-attached IAM customer-managed-policy gap (16 vs 21) has a single clean mechanism, or is multiple small effects -- flagged as candidate coverage defect, not resolved.",
     "PanelCluster/ServedURL/C2Motif/C3System kuzu node types -- purpose inferred from adjacent filenames only, not source-confirmed. Out of this lane's boundary to chase further (belongs to whichever producer emits them; likely a base/~D question).",
-    "Whether graph.json's 24 COMPONENT nodes correspond 1:1 to a subset of kuzu's Component(199) file-grain population by path -- not cross-joined; would need a path-level join, deferred as lower-value than the mechanism-level finding already grounded."
+    "Whether graph.json's 24 COMPONENT nodes correspond 1:1 to a subset of kuzu's Component(199) file-grain population by path -- not cross-joined; would need a path-level join, deferred as lower-value than the mechanism-level finding already grounded.",
+    "24 LAMBDA nodes in the corrected reconciliation (real-looking source-directory name, not live, not registered) -- status genuinely undetermined; full list in A_lambda_enumeration.json under residual_unexplained. RESOLVED as of the CVO~Z-review correction: the original '3 live Lambdas may be absent from graph.json' concern is CLOSED (191/191 live coverage verified) -- this residual-24 is a different, narrower question (unregistered source-tree names) and does not represent a live-coverage gap."
   ]
 }

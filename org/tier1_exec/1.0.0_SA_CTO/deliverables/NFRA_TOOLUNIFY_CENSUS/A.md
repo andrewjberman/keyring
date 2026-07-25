@@ -1,16 +1,64 @@
 # NFRA_TOOLUNIFY Census -- Lane SS2.A: Deployed-AWS <-> graph PARITY
 
 **author:** `0.8.0_AE_CloudComp~A` · 2026-07-24 · **status:** CENSUS complete, READ-ONLY
-**census window:** 2026-07-24T21:41:13Z (dispatch) - 2026-07-24T23:35:27Z (final graph.json re-check)
-**sidecar:** `A.json` (full tabular data, machine-readable)
+**census window:** 2026-07-24T21:41:13Z (dispatch) - 2026-07-24T23:53Z (post-CVO~Z-review correction closed)
+**sidecar:** `A.json` (full tabular data, machine-readable) + `A_lambda_enumeration.json` (the full 333-node LAMBDA classification, added post-review for spot-checkability)
 **boundary:** live-AWS vs graph COUNT/coverage parity only. Iceberg/Nessie substrate = base's lane. Tool-to-source mapping = ~D's lane. Reporting disagreements, not fixing either graph.
+
+---
+
+## ADDENDUM (2026-07-24T23:53Z) -- LAMBDA reconciliation corrected per CVO~Z review
+
+`3.0.0_SA_CVO~Z` verified this lane PASS but flagged one condition: the original LAMBDA arithmetic
+(`333 - 115 phantoms - 30 dups = 188`, against live/kuzu = 191) left a **residual of 3 unaccounted for**
+and was written as if it closed exactly. CTO~Z routed it back with the same ask, plus: enumerate the full
+115-node phantom list so it can be spot-checked against a *random* sample, not my one hand-picked example
+(*"a hand-picked instance measures the author"*).
+
+**Closing it surfaced a real defect in my own method, not just a presentation gap.** The original
+`depth>6 OR label-starts-with-underscore` phantom classifier had a **false-positive mode**: `v2_portal`'s
+real, legitimately-deep `yang_pipeline` Lambda directories (e.g.
+`infra/aws/lambda/v2_portal/yang_pipeline/cma/yang-generate-cma/lambda_function.py`, 8 path segments)
+were being misclassified as vendored-dependency phantoms purely because they nest as deep as the genuine
+vendor trees do. That silently hid ~30 real, correctly-named live Lambdas from the "non-phantom" set,
+which is what produced the spurious 3-short residual.
+
+**Rebuilt the classifier on a stronger signal** (a cross-reference, not a path-shape guess): every LAMBDA
+node's label, normalized, checked against the union of {all 191 live Lambda names, all 192 CI
+source-map registry keys}. Full detail + all 333 node IDs in `A_lambda_enumeration.json`.
+
+**Result: graph.json's LAMBDA labels cover 191/191 live Lambdas -- ZERO live Lambdas missing under any
+name.** The "3 unaccounted, direction matters" concern is resolved: there is no coverage hole. It was an
+artifact of the first classifier's false positives, not a real gap. The corrected 333-node breakdown:
+
+| Bucket | Count | What it is |
+|---|---|---|
+| Matched (live or registry, by normalized label) | 208 | Recognized names -- includes both live-deployed and registry-only entries |
+| Alias-excess | 19 | Non-canonical label sharing a file_path with an already-matched node -- same physical Lambda, duplicate ID |
+| Vendor-confirmed phantom | 73 | file_path passes through a pip-vendored 3rd-party package (`_build_tmp/`, `package/`, or a known PyPI package name) |
+| Org-dir-noise phantom | 9 | `rglob` picked up a generic organizational subdirectory (`tests/`, `src/`, `tools/`, `_shared/`, `ci/`, ...) as if it were a Lambda name |
+| **Residual, unexplained** | **24** | Real-looking Lambda source-directory name, but neither live nor registered. Status genuinely undetermined -- **not** claimed as phantom or as a coverage gap. Flagged open per SS3.4. |
+| **Sum** | **333** | matches total exactly |
+
+**101 of the 125 non-matched nodes (81%) are now confidently classified** (alias-excess + vendor +
+org-noise), each with full id+file_path enumerated in `A_lambda_enumeration.json` for CVO~Z's random-sample
+spot-check -- not just the one `openai`-under-`_build_tmp` example originally cited. The remaining 24 are
+reported as an **honest open item**, not folded into either "phantom" or "real" without evidence.
+
+**The core mechanism finding survives, and is now more precisely stated than the original**: graph.json's
+LAMBDA inflation is real, source-grounded, and dominated by vendored-dependency contamination + duplicate
+aliasing (92 of 333 nodes, 28%) plus a smaller organizational-noise class (9 nodes) -- and, newly proven
+rather than assumed, **the local plane does not actually miss any live Lambda** -- its problem is 100%
+excess noise, not undercoverage. F1 below is retained as originally written for the narrative mechanism
+(vendored-dependency contamination is real and is the dominant driver); this addendum is the corrected,
+closed arithmetic and supersedes the "333-115-30=188, closing to 191" line specifically.
 
 ---
 
 ## Headline verdict on the two load-bearing questions
 
-1. **LAMBDA 333 (graph.json) vs 191 (kuzu) vs live: LIVE = 191. kuzu is CORRECT. graph.json is the outlier**, and the mechanism is fully source-grounded (not inferred) -- see F1.
-2. **COMPONENT 24 (graph.json) vs 641 (kuzu, as previously reported): "641" is not a real number.** It is the sum of two structurally different kuzu populations (file-grain + symbol-grain) that should never have been added. See F2.
+1. **LAMBDA 333 (graph.json) vs 191 (kuzu) vs live: LIVE = 191. kuzu is CORRECT. graph.json is the outlier**, and the mechanism is fully source-grounded (not inferred) -- see F1, corrected/closed by the ADDENDUM above.
+2. **COMPONENT 24 (graph.json) vs 641 (kuzu, as previously reported): "641" is not a real number.** It is the sum of two structurally different kuzu populations (file-grain + symbol-grain) that should never have been added. See F2. Independently re-derived and CONFIRMED EXACT by CVO~Z.
 
 Both are **grounded mechanism findings**, not "unexplained candidate defects" -- source cited throughout.
 
@@ -54,7 +102,11 @@ special-case is handled; 29 other pairs are not. **Exact count: 30 excess node-I
 2 IDs each = 58, plus one triple, netting 30 excess over the true physical count).
 
 `333 - 115 (vendored phantoms) - 30 (alias duplicates) = 188` -- within one of the CI source-map registry
-(192) and live/kuzu (191). The residual is explained by registry drift, not the extractor:
+(192) and live/kuzu (191). **[CORRECTED per the ADDENDUM above: this specific subtraction understated the
+excess-noise count due to a false-positive in the depth-based classifier, and the "closes to 188~191" framing
+overstated precision -- the rebuilt, cross-reference-based classifier gives a clean, verified 191/191 live
+coverage with no residual. The vendored-dependency mechanism described below remains real and dominant; only
+this arithmetic line is superseded.]** The registry-drift finding below is independent and still holds:
 `infra/aws/lambda/ci/lambda-source-map.json` (192 entries, working tree, uncommitted 2-line diff at read
 time) has **4 live-deployed Lambdas never registered** (`m365-ms-ingest-liveness`,
 `opal-49f-served-guard`, `opal-cot-served-guard`, `opal-inf-served-guard` -- a live Rule-4 CI-drift-detection
@@ -220,7 +272,9 @@ passes; spirit does not.
 ## Acceptance check (against SS2.A's own bar)
 
 *"Every disagreement between live / kuzu / graph.json has a grounded cause or an explicit 'unexplained --
-candidate coverage defect' with its denominator."* -- LAMBDA: grounded (F1). COMPONENT: grounded (F2). IAM
+candidate coverage defect' with its denominator."* -- LAMBDA: grounded (F1) AND closed exactly (ADDENDUM:
+191/191 live coverage verified directly, 309 of 333 nodes classified with cause, 24 flagged open with a
+named denominator). COMPONENT: grounded (F2), independently confirmed exact by CVO~Z. IAM
 roles: grounded (kuzu staleness, cited from the tool's own disclosure). IAM policies: grounded (grain
 conflation) with one honest residual flagged as a candidate defect with its denominator (5 of 30). GLOBGRPH
 7-layer: fully reconciled, 41/41 classes dispositioned, undeclared population quantified and categorized

@@ -1,0 +1,658 @@
+{
+  "method": "corrected classifier (post-CVO~Z review): label normalized (strip -/_ , lowercase) matched against the union of {live Lambda names, lambda-source-map.json registry keys}. Supersedes the original depth>6-or-underscore-prefix heuristic, which had false positives on legitimately deep v2_portal/yang_pipeline nesting.",
+  "total_lambda_nodes": 333,
+  "matched_live_or_registry": 208,
+  "graphjson_label_coverage_of_all_191_live_names": "191/191 -- ZERO live Lambdas absent from graph.json under any name (verified separately)",
+  "breakdown": {
+    "alias_excess": {
+      "count": 19,
+      "definition": "non-canonical label sharing a file_path with an already-matched canonical node -- same physical Lambda, duplicate node ID, not a distinct entity",
+      "nodes": [
+        {
+          "id": "lambda:bd_transaction_consolidator",
+          "label": "bd_transaction_consolidator",
+          "file_path": "infra/aws/lambda/bd_transaction_consolidator/lambda_function.py"
+        },
+        {
+          "id": "lambda:fear-greed-fetcher",
+          "label": "fear-greed-fetcher",
+          "file_path": "infra/aws/lambda/v2_portal/01_market_overview/lambdas/fear-greed-fetcher/lambda_function.py"
+        },
+        {
+          "id": "lambda:incremental_updater",
+          "label": "incremental_updater",
+          "file_path": "infra/aws/lambda/globgrph/incremental_updater/lambda_function.py"
+        },
+        {
+          "id": "lambda:keyword_drilldown_generator",
+          "label": "keyword_drilldown_generator",
+          "file_path": "infra/aws/lambda/keyword_drilldown_generator/lambda_function.py"
+        },
+        {
+          "id": "lambda:market-overview-tiered-generator",
+          "label": "market-overview-tiered-generator",
+          "file_path": "infra/aws/lambda/v2_portal/01_market_overview/lambdas/market-overview-tiered-generator/lambda_function.py"
+        },
+        {
+          "id": "lambda:market-regime-classifier",
+          "label": "market-regime-classifier",
+          "file_path": "infra/aws/lambda/v2_portal/01_market_overview/lambdas/market-regime-classifier/lambda_function.py"
+        },
+        {
+          "id": "lambda:market-rsi-tiered-generator",
+          "label": "market-rsi-tiered-generator",
+          "file_path": "infra/aws/lambda/v2_portal/01_market_overview/lambdas/market-rsi-tiered-generator/lambda_function.py"
+        },
+        {
+          "id": "lambda:portfolio_autosave_get",
+          "label": "portfolio_autosave_get",
+          "file_path": "infra/aws/lambda/portfolio_autosave_get/lambda_function.py"
+        },
+        {
+          "id": "lambda:portfolio_autosave_put",
+          "label": "portfolio_autosave_put",
+          "file_path": "infra/aws/lambda/portfolio_autosave_put/lambda_function.py"
+        },
+        {
+          "id": "lambda:portfolio_export_download",
+          "label": "portfolio_export_download",
+          "file_path": "infra/aws/lambda/portfolio_export_download/lambda_function.py"
+        },
+        {
+          "id": "lambda:portfolio_funds_list",
+          "label": "portfolio_funds_list",
+          "file_path": "infra/aws/lambda/portfolio_funds_list/lambda_function.py"
+        },
+        {
+          "id": "lambda:portfolio_optimization_autosave_put",
+          "label": "portfolio_optimization_autosave_put",
+          "file_path": "infra/aws/lambda/portfolio_optimization_autosave_put/lambda_function.py"
+        },
+        {
+          "id": "lambda:portfolio_pickle_parser",
+          "label": "portfolio_pickle_parser",
+          "file_path": "infra/aws/lambda/portfolio_pickle_parser/lambda_function.py"
+        },
+        {
+          "id": "lambda:portfolio_version_get",
+          "label": "portfolio_version_get",
+          "file_path": "infra/aws/lambda/portfolio_version_get/lambda_function.py"
+        },
+        {
+          "id": "lambda:portfolio_versions_list",
+          "label": "portfolio_versions_list",
+          "file_path": "infra/aws/lambda/portfolio_versions_list/lambda_function.py"
+        },
+        {
+          "id": "lambda:seeking-alpha-dedup-coordinator",
+          "label": "seeking-alpha-dedup-coordinator",
+          "file_path": "infra/aws/lambda/seeking-alpha-dedup-coordinator/lambda_function.py"
+        },
+        {
+          "id": "lambda:ticket_center",
+          "label": "ticket_center",
+          "file_path": "infra/aws/lambda/ticket_center/lambda_function.py"
+        },
+        {
+          "id": "lambda:trending-topics-portal-publisher",
+          "label": "trending-topics-portal-publisher",
+          "file_path": "infra/aws/lambda/v2_portal/01_market_overview/lambdas/trending-topics-portal-publisher/lambda_function.py"
+        },
+        {
+          "id": "lambda:trending_image_selector",
+          "label": "trending_image_selector",
+          "file_path": "infra/aws/lambda/trending_image_selector/lambda_function.py"
+        }
+      ]
+    },
+    "vendor_confirmed_phantom": {
+      "count": 73,
+      "definition": "file_path passes through a pip-vendored 3rd-party package directory (_build_tmp/, package/, or a known PyPI package name as a path component)",
+      "nodes": [
+        {
+          "id": "lambda:_api",
+          "label": "_api",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/cli/_api/_main.py"
+        },
+        {
+          "id": "lambda:_async",
+          "label": "_async",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/httpcore/_async/socks_proxy.py"
+        },
+        {
+          "id": "lambda:_backends",
+          "label": "_backends",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/httpcore/_backends/trio.py"
+        },
+        {
+          "id": "lambda:_build_tmp",
+          "label": "_build_tmp",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/typing_extensions.py"
+        },
+        {
+          "id": "lambda:_core",
+          "label": "_core",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/anyio/_core/_typedattr.py"
+        },
+        {
+          "id": "lambda:_extras",
+          "label": "_extras",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/_extras/_common.py"
+        },
+        {
+          "id": "lambda:_internal",
+          "label": "_internal",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/pydantic/_internal/_validators.py"
+        },
+        {
+          "id": "lambda:_parsing",
+          "label": "_parsing",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/lib/_parsing/_responses.py"
+        },
+        {
+          "id": "lambda:_sync",
+          "label": "_sync",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/httpcore/_sync/socks_proxy.py"
+        },
+        {
+          "id": "lambda:_tests",
+          "label": "_tests",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/sniffio/_tests/test_sniffio.py"
+        },
+        {
+          "id": "lambda:_tools",
+          "label": "_tools",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/cli/_tools/_main.py"
+        },
+        {
+          "id": "lambda:_transports",
+          "label": "_transports",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/httpx/_transports/wsgi.py"
+        },
+        {
+          "id": "lambda:_utils",
+          "label": "_utils",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/_utils/_utils.py"
+        },
+        {
+          "id": "lambda:abc",
+          "label": "abc",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/anyio/abc/_testing.py"
+        },
+        {
+          "id": "lambda:alpha",
+          "label": "alpha",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/fine_tuning/alpha/grader_validate_response.py"
+        },
+        {
+          "id": "lambda:annotated_types",
+          "label": "annotated_types",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/annotated_types/test_cases.py"
+        },
+        {
+          "id": "lambda:anyio",
+          "label": "anyio",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/anyio/to_thread.py"
+        },
+        {
+          "id": "lambda:audio",
+          "label": "audio",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/audio/translation_verbose.py"
+        },
+        {
+          "id": "lambda:beta",
+          "label": "beta",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/beta/thread_update_params.py"
+        },
+        {
+          "id": "lambda:certifi",
+          "label": "certifi",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/certifi/core.py"
+        },
+        {
+          "id": "lambda:charset_normalizer",
+          "label": "charset_normalizer",
+          "file_path": "infra/aws/lambda/daily_agenda_generator/package/charset_normalizer/version.py"
+        },
+        {
+          "id": "lambda:chat",
+          "label": "chat",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/chat/parsed_function_tool_call.py"
+        },
+        {
+          "id": "lambda:chatkit",
+          "label": "chatkit",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/beta/chatkit/thread_list_params.py"
+        },
+        {
+          "id": "lambda:checkpoints",
+          "label": "checkpoints",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/fine_tuning/checkpoints/permission_retrieve_response.py"
+        },
+        {
+          "id": "lambda:cli",
+          "label": "cli",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/cli/_utils.py"
+        },
+        {
+          "id": "lambda:colorama",
+          "label": "colorama",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/colorama/winterm.py"
+        },
+        {
+          "id": "lambda:completions",
+          "label": "completions",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/chat/completions/message_list_params.py"
+        },
+        {
+          "id": "lambda:containers",
+          "label": "containers",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/containers/file_retrieve_response.py"
+        },
+        {
+          "id": "lambda:contrib",
+          "label": "contrib",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/tqdm/contrib/utils_worker.py"
+        },
+        {
+          "id": "lambda:conversations",
+          "label": "conversations",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/conversations/text_content.py"
+        },
+        {
+          "id": "lambda:deprecated",
+          "label": "deprecated",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/pydantic/deprecated/tools.py"
+        },
+        {
+          "id": "lambda:distro",
+          "label": "distro",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/distro/distro.py"
+        },
+        {
+          "id": "lambda:emscripten",
+          "label": "emscripten",
+          "file_path": "infra/aws/lambda/daily_agenda_generator/package/urllib3/contrib/emscripten/response.py"
+        },
+        {
+          "id": "lambda:evals",
+          "label": "evals",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/evals/run_retrieve_response.py"
+        },
+        {
+          "id": "lambda:experimental",
+          "label": "experimental",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/pydantic/experimental/pipeline.py"
+        },
+        {
+          "id": "lambda:files",
+          "label": "files",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/resources/containers/files/files.py"
+        },
+        {
+          "id": "lambda:fine_tuning",
+          "label": "fine_tuning",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/fine_tuning/supervised_method_param.py"
+        },
+        {
+          "id": "lambda:graders",
+          "label": "graders",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/graders/text_similarity_grader_param.py"
+        },
+        {
+          "id": "lambda:h11",
+          "label": "h11",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/h11/_writers.py"
+        },
+        {
+          "id": "lambda:helpers",
+          "label": "helpers",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/helpers/microphone.py"
+        },
+        {
+          "id": "lambda:http2",
+          "label": "http2",
+          "file_path": "infra/aws/lambda/daily_agenda_generator/package/urllib3/http2/probe.py"
+        },
+        {
+          "id": "lambda:httpcore",
+          "label": "httpcore",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/httpcore/_utils.py"
+        },
+        {
+          "id": "lambda:httpx",
+          "label": "httpx",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/httpx/_utils.py"
+        },
+        {
+          "id": "lambda:idna",
+          "label": "idna",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/idna/uts46data.py"
+        },
+        {
+          "id": "lambda:jobs",
+          "label": "jobs",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/fine_tuning/jobs/fine_tuning_job_checkpoint.py"
+        },
+        {
+          "id": "lambda:lib",
+          "label": "lib",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/lib/_validators.py"
+        },
+        {
+          "id": "lambda:openai",
+          "label": "openai",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/_version.py"
+        },
+        {
+          "id": "lambda:package",
+          "label": "package",
+          "file_path": "infra/aws/lambda/daily_agenda_generator/package/lambda_function.py"
+        },
+        {
+          "id": "lambda:plugin",
+          "label": "plugin",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/pydantic/plugin/_schema_validator.py"
+        },
+        {
+          "id": "lambda:pydantic",
+          "label": "pydantic",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/pydantic/_migration.py"
+        },
+        {
+          "id": "lambda:pydantic_core",
+          "label": "pydantic_core",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/pydantic_core/core_schema.py"
+        },
+        {
+          "id": "lambda:realtime",
+          "label": "realtime",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/beta/realtime/transcription_session_update_param.py"
+        },
+        {
+          "id": "lambda:requests",
+          "label": "requests",
+          "file_path": "infra/aws/lambda/daily_agenda_generator/package/requests/_internal_utils.py"
+        },
+        {
+          "id": "lambda:resources",
+          "label": "resources",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/resources/videos.py"
+        },
+        {
+          "id": "lambda:responses",
+          "label": "responses",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/responses/web_search_tool_param.py"
+        },
+        {
+          "id": "lambda:runs",
+          "label": "runs",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/evals/runs/output_item_retrieve_response.py"
+        },
+        {
+          "id": "lambda:shared",
+          "label": "shared",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/shared/response_format_text_python.py"
+        },
+        {
+          "id": "lambda:shared_params",
+          "label": "shared_params",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/shared_params/response_format_text.py"
+        },
+        {
+          "id": "lambda:skills",
+          "label": "skills",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/skills/version_list_params.py"
+        },
+        {
+          "id": "lambda:sniffio",
+          "label": "sniffio",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/sniffio/_version.py"
+        },
+        {
+          "id": "lambda:streaming",
+          "label": "streaming",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/lib/streaming/_deltas.py"
+        },
+        {
+          "id": "lambda:streams",
+          "label": "streams",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/anyio/streams/tls.py"
+        },
+        {
+          "id": "lambda:threads",
+          "label": "threads",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/beta/threads/text_delta_block.py"
+        },
+        {
+          "id": "lambda:tqdm",
+          "label": "tqdm",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/tqdm/_utils.py"
+        },
+        {
+          "id": "lambda:types",
+          "label": "types",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/websocket_connection_options.py"
+        },
+        {
+          "id": "lambda:typing_inspection",
+          "label": "typing_inspection",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/typing_inspection/typing_objects.py"
+        },
+        {
+          "id": "lambda:uploads",
+          "label": "uploads",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/uploads/upload_part.py"
+        },
+        {
+          "id": "lambda:urllib3",
+          "label": "urllib3",
+          "file_path": "infra/aws/lambda/daily_agenda_generator/package/urllib3/_version.py"
+        },
+        {
+          "id": "lambda:util",
+          "label": "util",
+          "file_path": "infra/aws/lambda/daily_agenda_generator/package/urllib3/util/wait.py"
+        },
+        {
+          "id": "lambda:v1",
+          "label": "v1",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/pydantic/v1/_hypothesis_plugin.py"
+        },
+        {
+          "id": "lambda:vector_stores",
+          "label": "vector_stores",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/vector_stores/vector_store_file_deleted.py"
+        },
+        {
+          "id": "lambda:versions",
+          "label": "versions",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/resources/skills/versions/versions.py"
+        },
+        {
+          "id": "lambda:webhooks",
+          "label": "webhooks",
+          "file_path": "infra/aws/lambda/portal_data_proxy/_build_tmp/openai/types/webhooks/unwrap_webhook_event.py"
+        }
+      ]
+    },
+    "org_dir_noise_phantom": {
+      "count": 9,
+      "definition": "rglob picked up a generic organizational subdirectory (test/src/tools/shared/ci dir) as if it were a Lambda name",
+      "nodes": [
+        {
+          "id": "lambda:_shared",
+          "label": "_shared",
+          "file_path": "infra/aws/lambda/v2_portal/_shared/etf_classification.py"
+        },
+        {
+          "id": "lambda:ci",
+          "label": "ci",
+          "file_path": "infra/aws/lambda/inf-pipeline/ci/verify_bronze_key_agreement.py"
+        },
+        {
+          "id": "lambda:portal",
+          "label": "portal",
+          "file_path": "infra/aws/lambda/portal/lambda_calc_returns.py"
+        },
+        {
+          "id": "lambda:python",
+          "label": "python",
+          "file_path": "infra/aws/lambda/shared/python/session_tracker.py"
+        },
+        {
+          "id": "lambda:src",
+          "label": "src",
+          "file_path": "infra/aws/lambda/trade-pipeline/trade-workflow-handler/src/workflow_handler.py"
+        },
+        {
+          "id": "lambda:tests",
+          "label": "tests",
+          "file_path": "infra/aws/lambda/trade-pipeline/trade-workflow-handler/tests/test_group_auth.py"
+        },
+        {
+          "id": "lambda:tools",
+          "label": "tools",
+          "file_path": "infra/aws/lambda/trade-pipeline/tools/trsb_ledger_005_backfill_decided_at.py"
+        },
+        {
+          "id": "lambda:v2_portal",
+          "label": "v2_portal",
+          "file_path": "infra/aws/lambda/v2_portal/test_calendar_date_fixes.py"
+        },
+        {
+          "id": "lambda:yang_pipeline",
+          "label": "yang_pipeline",
+          "file_path": "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py"
+        }
+      ]
+    },
+    "residual_unexplained": {
+      "count": 24,
+      "definition": "real-looking Lambda source directory name, but NOT live and NOT in the CI source-map registry -- status genuinely undetermined by this census (could be legacy/decommissioned source never cleaned up, in-development code, or an unresolved naming mismatch). NOT claimed as phantom or as a coverage gap -- flagged as an open candidate-defect per SS3.4.",
+      "nodes": [
+        {
+          "id": "lambda:bd-49f-etf-ownership-daily-canonical",
+          "label": "bd-49f-etf-ownership-daily-canonical",
+          "file_path": "infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily-canonical/lambda_function.py"
+        },
+        {
+          "id": "lambda:bd-49f-freshness-probe",
+          "label": "bd-49f-freshness-probe",
+          "file_path": "infra/aws/lambda/bd-pipeline/bd-49f-freshness-probe/lambda_function.py"
+        },
+        {
+          "id": "lambda:bd-cot-freshness-probe",
+          "label": "bd-cot-freshness-probe",
+          "file_path": "infra/aws/lambda/cot-pipeline/bd-cot-freshness-probe/lambda_function.py"
+        },
+        {
+          "id": "lambda:bd-served-vintage-alarm",
+          "label": "bd-served-vintage-alarm",
+          "file_path": "infra/aws/lambda/bd-pipeline/bd-served-vintage-alarm/trading_calendar.py"
+        },
+        {
+          "id": "lambda:data_refresh",
+          "label": "data_refresh",
+          "file_path": "infra/aws/lambda/data_refresh/test_auth_context.py"
+        },
+        {
+          "id": "lambda:exec_summary",
+          "label": "exec_summary",
+          "file_path": "infra/aws/lambda/exec-summary-generator/exec_summary/trigger_eval.py"
+        },
+        {
+          "id": "lambda:finbert",
+          "label": "finbert",
+          "file_path": "infra/aws/lambda/finbert/finbert_handler.py"
+        },
+        {
+          "id": "lambda:inf-gold-freshness-guard",
+          "label": "inf-gold-freshness-guard",
+          "file_path": "infra/aws/lambda/inf-pipeline/inf-gold-freshness-guard/lambda_function.py"
+        },
+        {
+          "id": "lambda:infrastructure_monitor",
+          "label": "infrastructure_monitor",
+          "file_path": "infra/aws/lambda/infrastructure_monitor/openai_cost_tracker.py"
+        },
+        {
+          "id": "lambda:market_query",
+          "label": "market_query",
+          "file_path": "infra/aws/lambda/market_query/lambda_function.py"
+        },
+        {
+          "id": "lambda:mdpf-freshness-checker",
+          "label": "mdpf-freshness-checker",
+          "file_path": "infra/aws/lambda/mdpf-pipeline/mdpf-freshness-checker/lambda_function.py"
+        },
+        {
+          "id": "lambda:mdpf-manifest",
+          "label": "mdpf-manifest",
+          "file_path": "infra/aws/lambda/mdpf-manifest/mdpf_manifest.py"
+        },
+        {
+          "id": "lambda:news_scanner",
+          "label": "news_scanner",
+          "file_path": "infra/aws/lambda/news_scanner/lambda_news_trending.py"
+        },
+        {
+          "id": "lambda:opal-assets-absence-check",
+          "label": "opal-assets-absence-check",
+          "file_path": "infra/aws/lambda/opal-assets-absence-check/trading_calendar.py"
+        },
+        {
+          "id": "lambda:portal_data_proxy",
+          "label": "portal_data_proxy",
+          "file_path": "infra/aws/lambda/portal_data_proxy/session_tracker.py"
+        },
+        {
+          "id": "lambda:portfolio_excel_generator",
+          "label": "portfolio_excel_generator",
+          "file_path": "infra/aws/lambda/portfolio_excel_generator/remediate_weight_unit_pmtrdx001.py"
+        },
+        {
+          "id": "lambda:portfolio_optimization_loader",
+          "label": "portfolio_optimization_loader",
+          "file_path": "infra/aws/lambda/portfolio_optimization_loader/yang_transform.py"
+        },
+        {
+          "id": "lambda:schwab-bronze-freshness",
+          "label": "schwab-bronze-freshness",
+          "file_path": "infra/aws/lambda/schwab-bronze-freshness/trading_calendar.py"
+        },
+        {
+          "id": "lambda:security-sweep-daily",
+          "label": "security-sweep-daily",
+          "file_path": "infra/aws/lambda/security-sweep-daily/lambda_function.py"
+        },
+        {
+          "id": "lambda:smartx_assets_pull",
+          "label": "smartx_assets_pull",
+          "file_path": "infra/aws/lambda/smartx_assets_pull/test_smartx_client.py"
+        },
+        {
+          "id": "lambda:smartx_ingestion_pipeline",
+          "label": "smartx_ingestion_pipeline",
+          "file_path": "infra/aws/lambda/smartx_ingestion_pipeline/precompute_views.py"
+        },
+        {
+          "id": "lambda:smartx_query",
+          "label": "smartx_query",
+          "file_path": "infra/aws/lambda/smartx_query/lambda_function.py"
+        },
+        {
+          "id": "lambda:test_seeking_alpha_unauth",
+          "label": "test_seeking_alpha_unauth",
+          "file_path": "infra/aws/lambda/test_seeking_alpha_unauth/lambda_function_simple.py"
+        },
+        {
+          "id": "lambda:trending_image_generator",
+          "label": "trending_image_generator",
+          "file_path": "infra/aws/lambda/trending_image_generator/lambda_function.py"
+        }
+      ]
+    }
+  },
+  "sum_check": 333
+}
