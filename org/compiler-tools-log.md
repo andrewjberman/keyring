@@ -26457,3 +26457,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-cache | comp-cache collisions | PASS |
 | 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-cache | comp-cache key zzz | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY (CTO~Z dispatch) | system_parity | ont-cse-version-current grep_absent->version_pin migration, python_constant mode added: battery 7/7 (mutant FAILs next-bump, live PASSes, 4 fail-closed ASSUMPTIONs), regression clean (eng flip isolated exogenous) | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types blast DefinitelyNotARealTypeZzz9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types blast ClientDirectoryEntry | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types index ClientDirectoryEntry | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLPASS.COMPTYPES-BLAST-FAILCLOSED | comp-types | bash .tools/comp-types blast <garbage> | PASS | mutant: rc=1 CANNOT-ANSWER, 0 new types-index files |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLPASS.COMPTYPES-BLAST-FAILCLOSED | comp-types | bash .tools/comp-types blast <real type> | PASS | positive control: rc=0 PASS, artifact written correctly; caught+fixed a self-introduced MSYS grep capture-group mangling bug before shipping |
