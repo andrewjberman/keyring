@@ -220,7 +220,41 @@ halt_gate_check() {
   # a tilde-lane agent's STOP can land in either. Dedupe when there is no suffix.
   base="${serial%%~*}"
   scan_serials=("$serial")
-  [ "$base" != "$serial" ] && scan_serials+=("$base")
+  # THE THIRD PATH (0.8.0_AE_CloudComp~C, 2026-07-25; ruled + re-derived by 1.0.0_SA_CTO 183004Z).
+  # The comment below said "a tilde-lane agent's STOP can land in either." IT CANNOT. The two dirs
+  # named there are FLAT inbox/<serial~lane>/ and inbox/<base>/. The broker writes NEITHER for a
+  # lane message -- it writes NESTED inbox/<base>/~<lane>/ (LD-0105 suffix-strip + nest; its own
+  # receipts read "delivered to X~D (inbox X/~D)"). Live counts, every tilde lane on the box:
+  # FLAT = 0 *.md (only a read/ subdir); NESTED = 530 (CTO~Z) / 1076 (COO~B) / 495 (CTO~B) / 420 (AE~D).
+  # So the own-serial limb was a STRUCTURAL NO-OP for every tilde lane, leaving base as the only
+  # working scan -- and therefore:
+  #
+  #   >> ADDRESSING A [STOP] MORE PRECISELY MADE IT LESS BINDING. The precise form was
+  #      delivered-but-not-enforcing; the base form enforcing-but-not-delivered. Neither was both. <<
+  #
+  # DISTINCT FROM THE DEFECT AT :98-101 -- and the distinction is the durable part. That one is the
+  # IDENTITY axis (the gate resolving another agent's serial off the shared .agent_context), fixed
+  # 07-13 by the session-keyed serial file. This is the PATH axis: the serial resolves CORRECTLY and
+  # the gate then builds the wrong DIRECTORY. Same symptom, two mechanisms, and the fixed one sat in
+  # front of the live one:
+  #
+  #   >> A REMEDIATED DEFECT STANDING IN FRONT OF AN UNREMEDIATED ONE IS BETTER COVER THAN NO
+  #      COMMENT AT ALL -- the reader's own diligence (reading the comment) is what closes the
+  #      case prematurely. <<
+  #
+  # The FLAT limb is RETAINED deliberately: it is inert today, but removing it is a second
+  # behaviour change riding a fix, and the two would be indistinguishable in the blame if anything
+  # regressed. Strip it later as its own change if wanted. halt_gate_unread_for concatenates
+  # ${INBOX_ROOT}/$1, so "<base>/~<lane>" path-joins correctly and needs no change there; the
+  # recipient-scoping filter below is unaffected (it keys on the To: base, not the directory).
+  #
+  # WARNING TO A FUTURE FIXER: do NOT "fix" this class by pointing a WATCHER at the flat path.
+  # That path is dead -- it would look like a fix, change nothing, and retire the symptom.
+  # Exercise: scratchpad haltgate-lane-exercise.sh (5/5 pre, 6/6 post; cell 4 is the mutant that
+  # makes the negative cell falsifiable, cell 5 proves routine lane mail surfaces rc=1, NOT rc=2).
+  if [ "$base" != "$serial" ]; then
+    scan_serials+=("$base" "${base}/~${serial#*~}")
+  fi
 
   # LD-0131 Layer 1 -- recipient-scoping. A HALTGT must only trip on messages
   # addressed to the RUNNING agent. LD-0099 filesystem-direct ferries to a
