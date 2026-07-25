@@ -2,7 +2,7 @@
 
 # L0b Ratification — one-page decision brief
 
-**The ask:** ratify `infra/system/ontology/L0B_CHANGE_TYPE_VOCABULARY_DRAFT.md` (drop its DRAFT marker), or
+**The ask:** ratify `infra/system/ontology/L0B_CHANGE_TYPE_VOCABULARY.md` (drop its DRAFT marker), or
 name what round 2 must change first. This is the C-class semantic commitment the ontology docs require your
 word on (*"the model is legislated, not discovered"* — ROUTE_LOGIC §8). CVO~Z's adversarial review round 1 is
 complete and applied; nothing emits these labels until you rule.
