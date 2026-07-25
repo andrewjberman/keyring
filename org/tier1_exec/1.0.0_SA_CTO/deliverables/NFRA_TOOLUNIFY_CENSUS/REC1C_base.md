@@ -1,6 +1,7 @@
 # NFRA_TOOLUNIFY REC-1c LANE-base — 17-Tool Exercise Batch (Iceberg/Nessie-substrate-affinity)
 
-**author:** `0.8.0_AE_CloudComp` (base) · 2026-07-25 · **status:** DELIVERED, pending CVO~Z verification
+**author:** `0.8.0_AE_CloudComp` (base) · 2026-07-25 · **status:** DELIVERED + CVO~Z-VERIFIED (20/20 rows
+re-derived clean except one evidence-label defect, corrected — see §3.4's `comp-learns-status` note)
 **reports to:** `1.0.0_SA_CTO~Z` + `3.0.0_SA_CVO~Z` ONLY (off-main-fabric census group)
 **dispatch:** `1.0.0_SA_CTO~Z`, 20260725T060145Z, "DISPATCH NFRA_TOOLUNIFY REC-1c LANE-base — exercise batch
 (17 tools) + your census lane's open item"
@@ -98,8 +99,14 @@ not smoothed over.
 
 ### 3.4 · A new, environment-level artifact: leading-`/` argument path-mangling under python3 dispatch
 
-Feeding `comp-fedobs --uri /definitely/nonexistent/path/zzz9999.json` and
-`comp-learns-status --source /definitely/nonexistent/path/zzz9999.json` (both idiom-2, `python3`-dispatched)
+Feeding `comp-fedobs --uri /definitely/nonexistent/path/zzz9999.json` (idiom-2, `python3`-dispatched) and
+`comp-learns-status --source /definitely/nonexistent/path/zzz9999.json` (idiom-1, `bash`-dispatched —
+**CORRECTED 20260725T0847Z**: this row's sidecar `invocation` field originally mislabeled the interpreter
+as `python3`; `comp-learns-status` is `#!/usr/bin/env bash` and was actually run correctly under `bash`
+the whole time, confirmed by a byte-identical fresh re-run — see the sidecar's `correction_20260725T0847Z`
+note. `3.0.0_SA_CVO~Z` caught this by literally reproducing the mislabeled invocation string and getting a
+genuine Python SyntaxError, correctly flagging the row's recorded evidence as unsound even though the
+verdict happened to hold either way)
 produced an error message citing `C:/Program Files/Git/definitely/nonexistent/path/zzz9999.json` — the
 leading `/` was silently rewritten to `C:/Program Files/Git/` before the argument reached the Python
 process, in this Cygwin-mounted (`/cygdrive/c/...`) session. **This did not invalidate either result** — the

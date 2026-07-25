@@ -143,7 +143,8 @@
     },
     {
       "tool": "comp-learns-status",
-      "invocation": "python3 .tools/comp-learns-status --source /definitely/nonexistent/path/zzz9999.json",
+      "invocation": "bash .tools/comp-learns-status --source /definitely/nonexistent/path/zzz9999.json",
+      "correction_20260725T0847Z": "the 'invocation' field originally read 'python3 .tools/comp-learns-status ...' -- a mislabel, not a re-dispatch. comp-learns-status is #!/usr/bin/env bash (idiom-1), confirmed at source. CVO~Z independently reproduced the recorded 'python3' label literally and got a genuine Python SyntaxError (the tool never running under that dispatch), correctly flagging the row as unsound evidence. Re-verified by this lane: a fresh 'bash .tools/comp-learns-status --source ...' run is BYTE-IDENTICAL to the rc/stdout_verbatim already stored below -- the captured evidence was always from a correct bash dispatch, only the invocation LABEL was wrong. Fixed the label; rc/stdout_verbatim/verdict below are unchanged because they were already correct. Old (wrong) label preserved in this note per the no-silent-rewrite convention.",
       "declared_failure_mode": "LOUD (default)",
       "declared_conf": "LOW",
       "mutation_type": "NONEXISTENT",
