@@ -261,6 +261,54 @@
     "match_via_selftest_only": 3,
     "not_a_fair_test": 2,
     "untestable_safely": 1,
-    "unknown_timeout": 4
+    "unknown_timeout": 4,
+    "note": "superseded for the 4 unknown_timeout rows by rerun_20260725T0652Z below -- see that block"
+  },
+  "rerun_20260725T0652Z": {
+    "dispatch": "1.0.0_SA_CTO~Z 20260725T065150Z DISPATCH serial re-run of the 4 Kuzu-deferred rows",
+    "precondition_check": {
+      "cmd": "ps -ef | grep -iE \"kuzu_cli|canon_motif|comp_cluster|comp-canon-motif|comp-cluster\" | grep -v grep",
+      "result": "empty match, TRUE_RC=1 -- zero concurrent processes, substrate confirmed quiet"
+    },
+    "method": "strictly serial, one tool at a time, in-stdout TRUE_RC capture (per CTO~Z's same-session harness-rc-corruption FYI), same mutation inputs as the original attempt",
+    "rows": [
+      {
+        "tool": "comp-kuzu",
+        "invocation": "bash .tools/comp-kuzu \"MATCH (n:NonexistentNodeType_zzz9999) RETURN n.id LIMIT 5\"",
+        "wall_time_s": 2.74,
+        "true_rc": 1,
+        "stdout_tail_verbatim": "ERROR: query failed: Binder exception: Table NonexistentNodeType_zzz9999 does not exist.",
+        "observed_verdict": "LOUD",
+        "match_verdict": "MISMATCH (reverse polarity) -- declared FAIL-OPEN MED, observed LOUD"
+      },
+      {
+        "tool": "comp-kuzu-inc",
+        "invocation": "bash .tools/comp-kuzu-inc \"MATCH (n:NonexistentNodeType_zzz9999) RETURN n.id LIMIT 5\"",
+        "wall_time_s": 2.77,
+        "true_rc": 1,
+        "stdout_tail_verbatim": "ERROR: query failed: Binder exception: Table NonexistentNodeType_zzz9999 does not exist.",
+        "observed_verdict": "LOUD",
+        "match_verdict": "MISMATCH (reverse polarity) -- declared FAIL-OPEN MED, observed LOUD"
+      },
+      {
+        "tool": "comp-canon-motif",
+        "invocation": "bash .tools/comp-canon-motif (default, no --allow-stale)",
+        "wall_time_s": 2.73,
+        "true_rc": 0,
+        "note": "graph read status=current this run -- the intended STALE mutation did not actually manifest (estate state moved since the original attempt); this run is not a fair test of the declared property",
+        "observed_verdict": "n/a -- not a fair test this run",
+        "match_verdict": "NOT-A-FAIR-TEST-THIS-RUN"
+      },
+      {
+        "tool": "comp-cluster",
+        "invocation": "bash .tools/comp-cluster DefinitelyNonexistentPageZzz9999",
+        "wall_time_s": 2.82,
+        "true_rc": 1,
+        "stdout_tail_verbatim": "ERROR: no Page node 'DefinitelyNonexistentPageZzz9999'. Try: comp-cluster --list",
+        "observed_verdict": "LOUD",
+        "match_verdict": "MISMATCH (reverse polarity) -- declared FAIL-OPEN MED, observed LOUD"
+      }
+    ],
+    "discriminator_reading": "RESOLVED -- sweep contention, not fleet degradation. All 4 completed serially in 2.7-2.8s each (vs. 240s+ timeout x2 previously under live multi-lane load) once substrate was confirmed quiet. Fully explains the original 6 timeouts (this lane's 4 + ~B's 2, per dispatch). No fleet-degradation thread opens."
   }
 }

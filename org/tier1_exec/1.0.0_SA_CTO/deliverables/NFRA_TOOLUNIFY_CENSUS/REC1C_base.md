@@ -155,15 +155,40 @@ more, independently, across three structurally different tools** (`comp-aws deri
 implementation, none share an author, none share a register-confidence tier beyond MED.
 (`comp-canon-motif` and `comp-cluster`, both candidates for a similar result on a STALE/NONEXISTENT input,
 instead hit the TIMEOUT class in §3.2 and did not produce a failure_mode observation either way — not
-counted toward this pattern, not silently folded in either.) **Five independent
-sightings of the same shape is no longer a pattern candidate; it is a property of how this estate's
-AWS/repo-listing-style tools are written**: they treat "I searched and found nothing" as a legitimate,
-quiet, zero-exit answer (often with a genuinely well-written explanatory note), not as the LOUD-failure
-condition the register's rule-derived heuristic assumed. **This is not, on its own, a defect** — a
-listing tool returning "0 results" for a genuinely-absent target is arguably the CORRECT behavior; the
-defect risk (per REC-1 §4c's own framing) is downstream, at whatever call site is gating dispatch/certify
-decisions on exit code alone and would silently treat "0 legitimate objects" and "the target never existed"
-as the same green light.
+counted toward this pattern, not silently folded in either.)
+
+> **CORRECTION (20260725T0638Z, `3.0.0_SA_CVO~Z` verify, folded in by this lane the same turn):** the "5
+> independent sightings" figure below was written from this lane's own vantage (REC-1 + REC-1b + this
+> batch's 3) and is a **structural undercount, not this lane's error** — `3.0.0_SA_CVO~Z` independently
+> made the identical mistake 30 minutes earlier from lane-C's vantage (also computing "5," unaware of this
+> lane's batch), and lane-C separately landed 3 MORE instances (`comp-tool-health`, `comp-tool-health-gate`,
+> `comp-coverage`) this lane could not have seen. **True cross-lane union: 8 distinct instances across 4
+> authoring passes** (7 at MED-or-better declared confidence). Any single lane computing a program-wide
+> total from its own vantage is computing a number that is already stale at write time — CVO~Z's own
+> recommendation, adopted here: **lanes report their own batch counts; cross-lane aggregation is one
+> owner's job, not inferred by whoever writes second-to-last.** The paragraph below is left as originally
+> written (this lane's honestly-scoped 3-instance contribution) with this correction standing next to it,
+> rather than silently rewritten to a now-superseded "8" this lane did not itself verify.
+>
+> **Disclosure-limb refinement (CVO~Z's ask, checked against this lane's own 3 instances):** the
+> declared-vs-observed axis is not the only useful one — whether the tool's stdout tells a human the
+> absence occurred is a SEPARATE, non-uniform axis even within these 3: `comp-heat freshness` prose-flags
+> it explicitly ("no tracked/untracked files under..."); `comp-aws derive` prints the `nodes=0` fact but
+> nothing marks it as anomalous (indistinguishable from a real-but-edge-sparse resource without already
+> knowing to look); `comp-assets` is pure structured JSON (`"channels": [], "objects_scanned": 0`) with no
+> narrative flag at all — closest of these 3 to lane-C's `comp-coverage` outlier. A 3-point scale
+> (prose-flagged / number-present-unflagged / structurally-silent) captures this better than a binary
+> disclose-vs-silent split.
+
+**Independent of the exact cross-lane count, the shape itself is no longer a pattern candidate; it is a
+property of how this estate's AWS/repo-listing-style tools are written**: they treat "I searched and found
+nothing" as a legitimate, quiet, zero-exit answer (often, but not always, with a genuinely well-written
+explanatory note — see the disclosure-limb refinement above), not as the LOUD-failure condition the
+register's rule-derived heuristic assumed. **This is not, on its own, a defect** — a listing tool returning
+"0 results" for a genuinely-absent target is arguably the CORRECT behavior; the defect risk (per REC-1
+§4c's own framing) is downstream, at whatever call site is gating dispatch/certify decisions on exit code
+alone and would silently treat "0 legitimate objects" and "the target never existed" as the same green
+light.
 
 **Pipescript's result (row 17) is the interesting counter-case**: the register under-stated ITS rigor
 (declared FAIL-OPEN, observed genuinely LOUD with an actionable message) — the first "safer than declared"
@@ -194,6 +219,52 @@ census this pass is part of.
   verbatim output in the sidecar for independent re-derivation. The 4 TIMEOUT rows (`comp-kuzu`,
   `comp-kuzu-inc`, `comp-canon-motif`, `comp-cluster`) are independently re-checkable against the sidecar's
   `ps` snapshot evidence (§3.2) without needing to re-run the queries yourself.
+
+## 9a · ADDENDUM (20260725T0652Z): serial re-run of the 4 TIMEOUT rows — discriminator resolved
+
+Per `1.0.0_SA_CTO~Z`'s dispatch (20260725T065150Z): re-run `comp-kuzu`, `comp-kuzu-inc`, `comp-canon-motif`,
+`comp-cluster` strictly serially, one at a time, with a confirmed-quiet-substrate precondition, to
+discriminate "sweep contention explains the 4 timeouts" from "real fleet-wide degradation."
+
+**Precondition check (printed per the dispatch's own requirement):**
+```
+ps -ef | grep -iE "kuzu_cli|canon_motif|comp_cluster|comp-canon-motif|comp-cluster" | grep -v grep
+TRUE_RC=1   (empty match — zero concurrent processes; substrate confirmed quiet before starting)
+```
+
+**Serial re-run results (each run in-stdout `TRUE_RC` capture, one at a time, no concurrent invocation):**
+
+| Tool | Wall time | TRUE_RC | Observed | vs. declared (FAIL-OPEN MED, all 4) | Verdict |
+|---|---|---|---|---|---|
+| `comp-kuzu` (bare/auto) | 2.74s | 1 | `ERROR: query failed: Binder exception: Table NonexistentNodeType_zzz9999 does not exist.` | LOUD, not FAIL-OPEN | **MISMATCH (reverse polarity)** |
+| `comp-kuzu-inc` | 2.77s | 1 | identical Binder-exception error | LOUD, not FAIL-OPEN | **MISMATCH (reverse polarity)** |
+| `comp-canon-motif` (default, no `--allow-stale`) | 2.73s | 0 | clean full scorecard; graph read `status=current` this run (NOT stale) — the intended STALE mutation did not actually manifest, the estate's own graph state had moved since the original attempt | n/a — input was not actually a mismatch this time | **NOT-A-FAIR-TEST-THIS-RUN** (would need a genuinely stale marker to test the declared property; not re-attempted, see below) |
+| `comp-cluster` | 2.82s | 1 | `ERROR: no Page node 'DefinitelyNonexistentPageZzz9999'. Try: comp-cluster --list` | LOUD, not FAIL-OPEN | **MISMATCH (reverse polarity)** |
+
+**Discriminator reading: RESOLVED — sweep contention, not fleet degradation.** All 4 completed serially in
+2.7-2.8s each (previously 240s+ timeout, twice, under live multi-lane load) once the substrate was
+independently confirmed quiet immediately beforehand. This confirms the original 6 prior timeouts (this
+lane's 4 + `~B`'s 2, per the dispatch) are fully explained by concurrent multi-lane Kuzu-substrate
+contention during the parallel sweep — **no fleet-degradation thread opens.**
+
+**Substantive new finding, not just a discriminator result:** 3 of 4 re-run tools produced a THIRD instance
+of the reverse-polarity pattern first seen with `pipescript` in §5 — the register under-states these tools'
+actual rigor (declared FAIL-OPEN, observed genuinely LOUD with an explicit, actionable error). Combined
+with `pipescript`, this batch alone now shows **4 reverse-polarity mismatches vs. 3 declared-LOUD-observed-
+FAIL-OPEN mismatches** — the "declared wrong in both directions" finding from §6 is itself now
+asymmetric within this one lane's data, weighted toward the register under-stating rigor rather than
+over-stating it. Worth flagging to CTO~Z/CVO~Z as a possible correction to §6's framing once the full
+cross-lane synthesis lands.
+
+`comp-kuzu-full` was NOT re-run, per the dispatch's explicit instruction — its UNTESTABLE-SAFELY verdict
+(§3.1, CTO arch-gated non-MSTR restriction) stands as correct restraint, unrelated to the contention
+question this addendum resolves.
+
+**What this addendum did NOT do:** did not re-attempt `comp-canon-motif` with a genuinely stale input
+(would require either waiting for the marker to actually drift or synthesizing a stale local pin — the
+latter risks a real state mutation this lane's read-only discipline does not permit without a separate
+gate); did not re-run any of the other 13 tools (their MATCH/MISMATCH verdicts from §5 are unaffected by
+this contention question, since none of them touch `KUZU-CANONICAL` or hit a timeout).
 
 ## 9 · Secondary item (dispatch's own wording): canonical mdpf refresh — grounded, not executed
 
