@@ -31,6 +31,15 @@ _GRAPH = _WS / "org" / "modules" / "graph"
 _TOOLS = _WS / ".tools"
 _CANONICAL = _GRAPH / "sovereign_held.py"
 
+# CANONICAL HOMES, SCOPED BY SYMBOL (GOVRIP step 1, 2026-07-25; base CTO ruling 192659Z).
+# prod_write_guard.py is the canonical home for the PROD-WRITE SAFETY tuples ONLY. It is NOT
+# exempted as a file: it must never hold RETRACTED_* or SOVEREIGN_HELD_* literals. The two sets are
+# BYTE-IDENTICAL, so a file-level exemption here would be blanket immunity in exactly the module a
+# stray copy would most plausibly land in.
+_AUTHORISED_HOMES = {
+    "prod_write_guard.py": frozenset({"PROD_WRITE_FORBIDDEN_PATHS", "PROD_WRITE_FORBIDDEN_BUCKETS"}),
+}
+
 # Tools migrated to import the shared predicate (C2-C7 + the C0 locals + comp-secrets/pipeline_cli).
 _MIGRATED = [
     _GRAPH / "trace_graph.py",
@@ -93,12 +102,29 @@ def _imports_sovereign_held(src: str) -> bool:
     return "sovereign_held import" in src or "import sovereign_held" in src
 
 
-def _has_local_marker_literal(src: str) -> bool:
-    """True if the source RE-DEFINES a held-marker literal copy (drift). NOT an operational path list."""
+def _has_local_marker_literal(src: str, authorised: frozenset = frozenset()) -> bool:
+    """True if the source RE-DEFINES a held-marker literal copy (drift). NOT an operational path list.
+
+    `authorised` = symbol names this FILE is the canonical home for. Scoped BY SYMBOL, never by file:
+    a file-level exemption would be blanket immunity, because the RETRACTED_* and PROD_WRITE_FORBIDDEN_*
+    tuples are BYTE-IDENTICAL -- so exempting prod_write_guard.py wholesale would let a future
+    RETRACTED_* copy hide in the one module where such a copy is most likely to appear, converting this
+    drift control into a drift BLIND SPOT. Symbol scoping keeps the control live inside its own home.
+    """
     tree = ast.parse(src)
+    # value-nodes of assignments to AUTHORISED symbols -- canonical, not drift.
+    exempt = set()
+    if authorised:
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign) or isinstance(node, ast.AnnAssign):
+                targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+                if any(isinstance(t, ast.Name) and t.id in authorised for t in targets):
+                    exempt.add(id(node.value))
     # (a) any literal collection with >=2 EXACT canonical markers = a marker-set copy.
     for node in ast.walk(tree):
         if isinstance(node, (ast.Tuple, ast.List, ast.Set)):
+            if id(node) in exempt:
+                continue
             exact = [e.value for e in node.elts
                      if isinstance(e, ast.Constant) and isinstance(e.value, str) and e.value in _MARKERS]
             if len(exact) >= 2:
@@ -119,12 +145,39 @@ def test_migrated_tools_import_the_shared_predicate():
 
 
 def test_only_the_canonical_leaf_holds_marker_literals():
+    """Two canonical homes since GOVRIP step 1 (2026-07-25), scoped BY SYMBOL not by file.
+
+    This test was RED at @afa4dcdee: it modelled ONE canonical leaf, and the exec-ordered extraction
+    of the prod-write safety half into prod_write_guard.py created a SECOND legitimate home. The
+    control's PRINCIPLE stands -- no unauthorised local copies -- and matters MORE after a split, so
+    it was FIXED, not retired. (Contrast the re-arm test retired the same day, whose principle Andrew
+    overturned. Principle overturned -> retire; model stale -> fix.)
+    """
     assert _MARKERS, "could not read the canonical markers from sovereign_held -- the meta-test is blind"
     scan = [f for f in sorted(_GRAPH.glob("*.py")) if f != _CANONICAL]
     scan += [_TOOLS / "comp-secrets", _TOOLS / "freshness_manifest_gen.py"]
-    offenders = [f.name for f in scan if _has_local_marker_literal(f.read_text(encoding="utf-8"))]
+    offenders = [f.name for f in scan
+                 if _has_local_marker_literal(f.read_text(encoding="utf-8"),
+                                              _AUTHORISED_HOMES.get(f.name, frozenset()))]
     assert not offenders, \
-        f"local held-marker literal copies re-introduced (fold them into sovereign_held): {offenders}"
+        f"local held-marker literal copies re-introduced (fold them into a canonical home): {offenders}"
+
+
+def test_the_symbol_scoping_is_NOT_a_blanket_file_exemption():
+    """MUTANT: prod_write_guard is authorised for PROD_WRITE_FORBIDDEN_* and NOTHING ELSE.
+
+    The byte-identical tuples are why this matters: a file-level exemption would let a RETRACTED_*
+    copy hide in the very module most likely to carry one. If this ever passes, the exemption has
+    silently widened into immunity.
+    """
+    src = (_GRAPH / "prod_write_guard.py").read_text(encoding="utf-8")
+    auth = _AUTHORISED_HOMES["prod_write_guard.py"]
+    assert not _has_local_marker_literal(src, auth), \
+        "POSITIVE CONTROL: prod_write_guard's own authorised tuples must not read as drift"
+    mutant = src + '\n_SNEAKY_RETRACTED = ("data/black_diamond/", "opal-data-bd")\n'
+    assert _has_local_marker_literal(mutant, auth), \
+        "MUTANT FAILED: an UNAUTHORISED marker copy inside the authorised file was not caught -- " \
+        "the symbol scoping has degraded into a blanket file exemption"
 
 
 def test_drift_check_is_non_vacuous():
