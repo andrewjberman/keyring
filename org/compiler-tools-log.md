@@ -26200,3 +26200,128 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-iam | comp-iam service nonexistent-lambda-zzz-9999 | PASS |
 | 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --file /tmp/cvoz_rec1_verify/my_anti_pattern_probe.py --mode ... | PASS |
 | 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --file /cygdrive/c/Users/ANDREW~1/AppData/Local/Temp/claude/C... | VERDICT |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-gitdrill | comp-gitdrill --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-gitdrill | comp-gitdrill --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-gitdrill | comp-gitdrill definitely_nonexistent_node_zzz_9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check scan --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check selfcheck --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check scan --current /cygdrive/c/Users/AndrewBerman/AppData/Local/Temp/cla... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-surface-check | comp-surface-check scan --current /cygdrive/c/Users/AndrewBerman/AppData/Local/Temp/cla... | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-gitdrill | comp-gitdrill --self-test | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-gitdrill | comp-gitdrill definitely_nonexistent_node_zzz_myown_check | UNKNOWN |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check scan --current /cygdrive/c/Users/ANDREW~1/AppData/Local/Temp/claude/... | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-surface-check | comp-surface-check scan --current /cygdrive/c/Users/ANDREW~1/AppData/Local/Temp/claude/... | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-platinum | comp-platinum --help | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu-full | comp-kuzu-full --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu-inc | comp-kuzu-inc --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-icedrill | comp-icedrill --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-assets | comp-assets --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-genesis | comp-genesis --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-learns-score | comp-learns-score --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-cluster | comp-cluster --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-lambdamap | comp-lambdamap --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-routes | comp-routes --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | pipescript | pipescript --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam-usage | comp-iam-usage --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-deadgrant | comp-deadgrant --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-denytest | comp-denytest --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pii | comp-pii --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-keys | comp-keys --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-debris | comp-debris --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-drift | comp-drift --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-firmsep-sweep | comp-firmsep-sweep --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-denytest | comp-denytest --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws derive --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-lambdamap | comp-lambdamap check --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-routes | comp-routes trace --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-keys | comp-keys prefix --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pii | comp-pii scan --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam-usage | comp-iam-usage reach-check --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam-usage | comp-iam-usage who-can-reach --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-lambdamap | comp-lambdamap sha --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-lambdamap | comp-lambdamap parity --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-lambdamap | comp-lambdamap derive --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-drift | comp-drift --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam-usage | comp-iam-usage role-cold --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-keys | comp-keys exists --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-manifest-check | comp-manifest-check check --file /cygdrive/c/Users/ANDREW~1/AppData/Local/Temp/claude/C... | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-lambdamap | comp-lambdamap check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-routes | comp-routes trace DefinitelyNonexistentComponentZzz9999 | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam-usage | comp-iam-usage reach-check arn:aws:iam::313476888478:role/definitely-nonexistent-role-z... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-registry | comp-registry --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-ontolint | comp-ontolint --help | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-validate | comp-validate --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-coverage | comp-coverage --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-parity | comp-parity --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-xray | comp-xray --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-deadgrant | comp-deadgrant --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-deadgrant | comp-deadgrant --account 000000000000 --limit 1 | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-manifest-check | comp-manifest-check check --file C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-A... | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-denytest | comp-denytest --principal arn:aws:iam::313476888478:role/definitely-nonexistent-role-zz... | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-iam | comp-iam service nonexistent-lambda-zzz-9999 | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-icedrill | comp-icedrill s3://opal-data-inf/definitely-nonexistent-prefix-zzz9999/ | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-assets | comp-assets --channel definitely_nonexistent_zzz9999 --json | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-genesis | comp-genesis validate definitely_nonexistent_tenant_zzz9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-denytest | comp-denytest --change-type deny-add --principal arn:aws:iam::313476888478:role/definit... | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-chainrun | comp-chainrun --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-incrparity | comp-incrparity --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-trigger | comp-trigger --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-transform | comp-transform --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-tooltip | comp-tooltip --help | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-coverage | comp-coverage report -h | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-learns-score | comp-learns-score --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-types | comp-types --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-cache | comp-cache --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-perf | comp-perf --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-pulse | comp-pulse --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-adapter-audit | comp-adapter-audit --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pii | comp-pii scan DefinitelyNonexistentComponentZzz9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-blast | comp-blast A_00.accounts_dimension.py | REFUSE |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-blast | comp-blast zzz_definitely_nonexistent_target_9999 | REFUSE |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-keys | comp-keys exists definitely/nonexistent/prefix/zzz9999/ | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-blast | comp-blast gold:A_00.accounts_dimension | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-pipescript | comp-pipescript deployed nonexistent_script_zzz_9999.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-parity | comp-parity definitely_nonexistent_firm_zzz_9999 | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-ontolint | comp-ontolint check --rule-bank /nonexistent/rule_bank_zzz_9999.yaml | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-pipescript | comp-pipescript chain nonexistent_script_zzz_9999.py | FAIL |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-chainrun | comp-chainrun diff --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-diff | comp-diff --ref HEAD~1 | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-chainrun | comp-chainrun diff /nonexistent/pre_zzz.json /nonexistent/post_zzz.json | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-diff | comp-diff --ref zzz_nonexistent_ref_9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-debris | comp-debris --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-debris | comp-debris --types nonexistent_type_zzz_9999 | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-incrparity | comp-incrparity ZZ_99 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pipescript | comp-pipescript deployed definitely_nonexistent_artifact_zzz_9999 | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-registry | comp-registry sync --project ZZZZ_NONEXISTENT_9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-incrparity | comp-incrparity ZZ_99 --no-s3-report | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-trace | comp-trace gold:A_00.accounts_dimension | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-trace | comp-trace zzz_definitely_nonexistent_target_9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | pipescript | pipescript definitely-nonexistent-thread-zzz9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-trigger | comp-trigger zzz-nonexistent-trigger-9999 | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-validate | comp-validate ZZ_NONEXISTENT_9999 --artifact /nonexistent/artifact_zzz_9999.json | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-coverage | comp-coverage report --pipeline DEFINITELY_NONEXISTENT_ZZZ_9999 | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-xray | comp-xray s3 s3://opal-data-inf/definitely-nonexistent-key-zzz-9999.json | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-transform | comp-transform schema-check ZzzNonexistentComponent9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-tooltip | comp-tooltip zzz-nonexistent-subcommand | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-firmsep-sweep | comp-firmsep-sweep --secret definitely-nonexistent-secret-zzz-9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-types | comp-types blast ZzzNonexistentType9999 | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-xray | comp-xray s3 opal-data-inf definitely-nonexistent-key-zzz-9999.json --fields anyfield | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-xref | comp-xref | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pipescript | comp-pipescript deployed definitely_nonexistent_artifact_zzz_9999 | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-cache | comp-cache key zzz-nonexistent-cache-key-9999 | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-xref | comp-xref --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-xref | comp-xref zzz_definitely_nonexistent_symbol_9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-perf | comp-perf vectorize-audit nonexistent_script_zzz_9999.py | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-pulse | comp-pulse diff /nonexistent/zzz_file_9999.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-aws | comp-aws derive --class LAMBDA --resource arn:aws:lambda:us-east-1:000000000000:functio... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-adapter-audit | comp-adapter-audit zzzNonexistentAdapterFn9999 --manifest-dir C:/Users/ANDREW~1/AppData... | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_TOOLUNIFY.REC-1c | (session) | REC-1c LANE-C 16-tool exercise sweep: 10 MATCH / 4 MISMATCH / 2 UNKNOWN; absent-input FAIL-OPEN pattern now 5 instances; 2 live drifts routed | VERDICT |
