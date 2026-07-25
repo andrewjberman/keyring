@@ -283,10 +283,28 @@ def _iso_days_ago(days: int, *, now_ts: float | None = None) -> str:
     return time.strftime("%Y-%m-%d", time.gmtime(t))
 
 
+# The ONE marker for a prod-target void. Emitted at every site below AND imported by
+# tests/test_tool_probe_discrimination.py -- the tests must NEVER re-type this literal.
+#
+# WHY IT IS A CONSTANT AND NOT A STRING (2026-07-25, CTO). This marker was renamed
+# SOVEREIGN -> PROD-TARGET in the R7 split (sovereign_held.py:127-129). The guard kept working;
+# the three tests asserting `"SOVEREIGN" in void_reason` went red and STAYED red, so the only
+# regression detector on a live, never-retracted prod-write prohibition was dark for an
+# unmeasured window. sovereign_held.py:127-129 already carried a NAME NOTE warning that this
+# exact rename "made a reviewer's positive control return a false ABSENT" -- and it then did it
+# again, to the test suite, three days later.
+#   >> THE NOTE RECORDED THE INCIDENT AND DID NOT BECOME A CONTROL. This constant is that note
+#      promoted to a control: one definition, imported by the assertions, so a future rename
+#      moves the tests WITH it instead of silently un-arming them. <<
+# The tests assert the guard FIRED, which is the semantic; the wording is free to change.
+PROD_TARGET_VOID_MARKER = "PROD-TARGET:"
+
+
 def _assert_scratch_in_scope(s3_uri: str) -> None:
     """The scratch write-target MUST be in-scope (never bd/schwab) -- by construction, not vigilance."""
     if is_prod_write_forbidden(s3_uri):
-        raise ValueError("PROD-TARGET: scratch target is a production bd/schwab path: %s" % s3_uri)
+        raise ValueError("%s scratch target is a production bd/schwab path: %s"
+                         % (PROD_TARGET_VOID_MARKER, s3_uri))
 
 
 def _aws_bin() -> str:
@@ -561,7 +579,8 @@ def _run_iam_discrimination_probe(probe: dict, *, now_ts=None,
     for fld in ("role_arn", "held_resource", "notheld_resource"):
         s = str(fx.get(fld, ""))
         if is_prod_write_forbidden(s):
-            return _void("PROD-TARGET: %s is a production bd/schwab arn: %s" % (fld, s))
+            return _void("%s %s is a production bd/schwab arn: %s"
+                         % (PROD_TARGET_VOID_MARKER, fld, s))
 
     verdict = verdict_fn or _default_iam_verdict
     oracle = oracle_fn or _default_iam_oracle

@@ -7,7 +7,9 @@ Proves, each non-vacuous:
   - CAUGHT: comp-freshness says STALE on the frozen fixture -> effective="yes" (case=negative).
   - LIED (the BITE): comp-freshness says GREEN on a KNOWN-frozen artifact -> effective="no" (the false-GREEN catch).
   - VOID: a staging failure -> effective="unknown", NEVER a silent no; the tool is never run.
-  - SOVEREIGN: a bd scratch target -> the guard blocks the WRITE (unknown+SOVEREIGN), no bd touch.
+  - PROD-TARGET: a bd scratch target -> the guard blocks the WRITE (unknown + the prod-target
+    marker), no bd touch. The marker is IMPORTED from tool_probe, never re-typed here -- see
+    tool_probe.PROD_TARGET_VOID_MARKER for why (a rename left these three assertions dark).
   - ORACLE-INDEPENDENCE: the ground-truth is the probe's own clock (_iso_days_ago), not the tool's claim --
     the tool lying "fresh" (rc 0) still scores effective="no".
   - MUTANT non-vacuity: neuter the negative arm (drop rc 0 from usable_returncodes) -> the false-GREEN catch
@@ -51,6 +53,13 @@ for _p in (os.path.join(_WS, "org", "modules", "graph"),
         sys.path.insert(0, _p)
 
 tp = importlib.import_module("tool_probe")
+
+# SOURCED, NEVER RE-TYPED. These assertions previously hardcoded "SOVEREIGN"; the impl renamed the
+# marker to "PROD-TARGET:" and the three prod-write tests went red and stayed red -- so the only
+# regression detector on a live, never-retracted prohibition was dark. Importing the marker means a
+# future rename moves the assertions with it. The tests assert the guard FIRED (the semantic); the
+# wording is the impl's to change. See tool_probe.PROD_TARGET_VOID_MARKER.
+_PROD_TARGET = tp.PROD_TARGET_VOID_MARKER
 
 _NOW = 1_000_000_000
 _DISC = {
@@ -148,7 +157,7 @@ def test_sovereign_scratch_guard_blocks_a_bd_write():
     bd = dict(_DISC, fixture={"scratch_bucket": "opal-data-bd", "scratch_prefix": "_toolprobe_scratch/",
                               "content_as_of_days_ago": 30})
     row, calls = _run(bd, lambda uri: {"stdout": "PASS"})
-    assert row["effective"] == "unknown" and "SOVEREIGN" in row.get("void_reason", "")
+    assert row["effective"] == "unknown" and _PROD_TARGET in row.get("void_reason", "")
     assert not calls["writer"], "the sovereign guard must block the write BEFORE any bd touch"
 
 
@@ -238,7 +247,7 @@ def test_pk_void_on_checker_crash_never_silent_no():
 def test_pk_sovereign_scratch_guard_blocks_a_bd_write():
     bd = dict(_PK, fixture=dict(_PK["fixture"], scratch_bucket="opal-data-bd"))
     row, calls = _run_pk(bd, {"status": "PASS"})
-    assert row["effective"] == "unknown" and "SOVEREIGN" in row.get("void_reason", "")
+    assert row["effective"] == "unknown" and _PROD_TARGET in row.get("void_reason", "")
     assert not calls["writer"], "the sovereign guard must block the pk write BEFORE any bd touch"
 
 
@@ -352,7 +361,7 @@ def test_iam_void_on_oracle_failure_never_silent():
 def test_iam_sovereign_guard_blocks_a_bd_arn_before_any_call():
     row, calls = _run_iam({_H: "GRANTED", _N: "x"}, {_H: "allowed", _N: "x"},
                           fixture_over={"notheld_resource": "arn:aws:s3:::opal-data-bd/k"})
-    assert row["effective"] == "unknown" and "SOVEREIGN" in row["void_reason"]
+    assert row["effective"] == "unknown" and _PROD_TARGET in row["void_reason"]
     assert not calls["verdict"] and not calls["oracle"], "sovereign guard blocks BEFORE any verdict/oracle call"
 
 
