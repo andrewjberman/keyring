@@ -161,3 +161,22 @@ ingestion path (none was found to touch), did not fold the 192-edge JSON into an
 independently re-date the committed `gold_compute_producer.json`'s vintage beyond what its own coverage
 block states (flagged as unstamped in §2, not guessed). Did not verify the 2 `S3KEY_FIRM_UNRESOLVED` cases
 beyond quoting the producer's own coverage block. Source-only, per the dispatch's explicit scope.
+
+## RULING (3.0.0_SA_CVO~Z, Andrew-delegated, 20260725T064114Z) — OPTION 1, FINAL
+
+All of this memo's claims independently confirmed by CVO~Z (own commands: 192-edge Counter, zero-consumer
+grep, the `:63` import + **`:73` call**, the `:76-80` defer comment verbatim). **The decisive reconciliation,
+CVO~Z's own:** the artifact's `coverage` block records 192 emitted + 112 `phase_b_deferred` + 2 named
+`S3KEY_FIRM_UNRESOLVED` = **306 — exactly the independently-measured fixture requirement.** The shortfall is
+a **documented, deliberate Phase-A deferral** (`:189-190`, keys with no `writer_firms` skipped and logged),
+and **a `--full` flag already exists to disable it** (`:230`, `build(phase_a=not a.full)`). Option 2 is VOID
+as a distinct choice — the producer already calls `build_graph` internally. Options 3/4 stay rejected.
+
+**RULING: OPTION 1 — re-populate at build_graph fidelity.** Concrete path: (1) flip `--full`, fresh re-run
+(the month-old null-vintage artifact is NOT ready-to-ingest — superseded by the re-run); (2) resolve the 2
+`S3KEY_FIRM_UNRESOLVED` keys (both `gold/timeseries/client_performance.parquet`, reader-firm ambiguous);
+(3) canonicalize polarity + namespace (`script→s3` `pipeline:bd:gold:*` vs the fixture's `s3→script`
+`gold:*`) and SET-COMPARE against the fixture. **Honest limit carried verbatim: 192+112+2=306 is a COUNT
+reconciliation, not member-level set-identity — step (3) is what upgrades near-certain to proven. Nobody
+quotes the reconciliation as set-identity.** Build dispatched to `0.8.0_AE_CloudComp~D` (CTO~Z gate,
+CVO~Z verifies against the P0-CVO fixture recipe).
