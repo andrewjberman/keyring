@@ -23,3 +23,17 @@ identically as "peer in flight." A 24-day-old untracked file is debris, not in-f
 staleness-aware refinement (e.g. untracked + older-than-N-days ⇒ named DEBRIS-CANDIDATE verdict rather
 than BLOCKED-ON-PEER-LANDING) is a candidate follow-on — recorded here as input, deliberately not rushed
 into the guard the same day it landed.
+
+## Second quarantine, same session (~0847Z): 5 types-index files
+
+After postmerge-cols cleared, the gate re-fired naming a NEW non-overlapping set: 5 untracked
+`types-index/` files (`BenchmarkHeatmapProps.yaml`, `BenchmarkModelData{,.fields}.yaml`,
+`BenchmarkPeriodReturn{,.fields}.yaml`) — **dated Jun 17 / Jul 1 (24–38 days old), never committed ever**
+(`git log` empty per `~D`'s grounding). This is the SAME debris population Lane-E's census finding
+documented (`comp-types` persists garbage/derived YAMLs into `types-index/`; 20/25 untracked at count
+time). Quarantined to the same scratchpad dir, same reversible-move reasoning; tracked files explicitly
+skipped by `git ls-files` check. **The remaining ~13 untracked types-index files were NOT gate-named this
+run and are left in place** — their disposition belongs to the comp-types debris fix (synthesis §2f), not
+to per-incident quarantines. If the gate names more later, same procedure. **The two back-to-back
+incidents strengthen the DEBRIS-CANDIDATE guard-refinement case: both blocking sets were month-old
+never-committed files, zero were live peer work.**
