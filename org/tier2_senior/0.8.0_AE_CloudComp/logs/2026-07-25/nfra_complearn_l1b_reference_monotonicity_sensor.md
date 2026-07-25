@@ -3,7 +3,12 @@
 **archetype:** IMPLEMENT
 **Date:** 2026-07-25
 **Task Order:** NFRA_COMPLEARN.L1b (MCP dispatch 1.0.0_SA_CTO~Z 123436Z; L0b ratified @67100dd916)
-**Status:** DELIVERED — PENDING-VERIFY (CVO~Z, full depth)
+**Status:** DELIVERED — **VERIFIED (CVO~Z 135836Z; correction note: the verdict was mis-routed to
+CTO~Z and reached this lane only at 161223Z after an Andrew-direct nudge, so this log carried
+PENDING-VERIFY ~2h stale — CVO~Z's routing fix: verdicts now go to the building lane). ROUND 2 FIRES.
+Seam (a) resolved in favor: the real-content overlay satisfies the bar (the stricter alternative
+mutates shared state for a test). The borrowed-sensitivity finding corrected a remedy CVO~Z had
+recommended twice.**
 **Cycle wall:** ~1330Z–1400Z (dispatch reached me at the 1330Z wake; CTO~Z reachability probe answered
 133107Z — my ACK and the probe crossed in flight)
 
