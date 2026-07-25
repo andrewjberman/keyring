@@ -1,0 +1,149 @@
+{
+  "author": "0.8.0_AE_CloudComp~B",
+  "dispatch": "1.0.0_SA_CTO~Z 20260725T060205Z NFRA_TOOLUNIFY REC-1c LANE-B + addendum 20260725T060435Z",
+  "rc_capture_methodology": "in-stdout, immediately after each command, never piped: `<cmd> > file 2>&1; echo \"RC=$?\"`. Per CTO~Z's 20260725T063930Z URGENT-BEFORE-DELIVERY: the harness-level reported exit code is corrupted in this Cygwin shell by a trailing cwd-tracking step that fails on every call; this deliverable never relies on that field. Two exceptions (comp-depth mutant, comp-similar mutant) were launched via `nohup ... &` and their rc is SOURCE-CONFIRMED (exact file:line cited per-row below), not in-stdout captured -- flagged per-row as capture_method=source_confirmed.",
+  "denominator": {
+    "batch_size": 17,
+    "fully_resolved": 17,
+    "untestable_safely": 0,
+    "skipped": 0,
+    "match_count": 11,
+    "mismatch_count": 5,
+    "match_with_caveat_count": 1
+  },
+  "write_safety_precheck": {
+    "grep_patterns": ["put_object|upload_file|boto3\\.client\\(['\"]s3|\\.put\\(", "json\\.dump\\(|write_text\\(|open\\([^)]*['\"]w['\"]|\\.unlink\\("],
+    "zero_s3_writes_confirmed_in": ["cli.py", "platinum_cli.py", "comp_depth_cli.py", "graph_status_cli.py", "comp_pydeps.py", "comp_symbols.py", "comp_constants_cli.py", "comp_dataflow.py", "debtscan/comp_similar.py", "residue_cli.py", "shell_cli.py"],
+    "local_write_subcommands_identified_and_avoided": {
+      "comp-graph": "clear (.unlink() local cache) -- exercised status only",
+      "comp-pydeps": "build ((re)scan+cache write) -- exercised consumers only",
+      "comp-constants": "index/new (writes constants index) -- exercised list/check only",
+      "comp-residue": "pin (writes pin file) -- exercised surface only"
+    },
+    "comp_similar_unlink": "debtscan/comp_similar.py:278, scratch/temp artifact cleanup within its own flow, not a production key",
+    "comp_imgread_writes": "designed OCR-tile output, routed to --out <workspace scratchpad>, never a repo or production path"
+  },
+  "invocations": [
+    {"tool": "comp-blast", "declared_failure_mode": "LOUD", "declared_confidence": "MED", "declared_role_flags": "PRODUCER?",
+     "positive": {"invocation": "bash .tools/comp-blast \"gold:A_00.accounts_dimension\"", "observed_rc": 0, "capture_method": "in_stdout", "note": "real BLAST RADIUS output, GOLD_SCRIPT(53) list"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "bash .tools/comp-blast zzz_definitely_nonexistent_target_9999", "observed_rc": 3, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "NOT-FOUND: no graph node matches 'zzz_definitely_nonexistent_target_9999' -- and here is the universe that verdict is over, so typo and out-of-scope stop looking identical:\n  denominator: 2255 nodes -- GOLD_SCRIPT=1365, LAMBDA=333, S3_ARTIFACT=321, ENDPOINT=138, EVENTBRIDGE=63, COMPONENT=24, SQS_QUEUE=5, S3_BUCKET=4, STATE_MACHINE=1, SNS_TOPIC=1\n  (comp-pydeps has no python file by this name either -- check the spelling.)"},
+     "observed_verdict": "LOUD", "match": true},
+
+    {"tool": "comp-build", "declared_failure_mode": "LOUD", "declared_confidence": "MED", "declared_role_flags": "PRODUCER?",
+     "positive": {"invocation": "bash .tools/comp-build --check", "observed_rc": 0, "capture_method": "in_stdout", "note": "--check: clean (1907 indexed nodes; no SHA drift)"},
+     "mutant": {"mutation_type": "MALFORMED", "invocation": "bash .tools/comp-build --zzz-nonexistent-flag-9999", "observed_rc": 1, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "usage: cli.py [-h] {build,trace,blast,diff,xref} ...\ncli.py: error: unrecognized arguments: --zzz-nonexistent-flag-9999"},
+     "observed_verdict": "LOUD", "match": true},
+
+    {"tool": "comp-diff", "declared_failure_mode": "LOUD", "declared_confidence": "MED", "declared_role_flags": "PRODUCER?",
+     "positive": {"invocation": "bash .tools/comp-diff --ref HEAD~1", "observed_rc": 0, "capture_method": "in_stdout", "note": "real portal/lambda blast-radius diff output"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "bash .tools/comp-diff --ref zzz_nonexistent_ref_9999", "observed_rc": 1, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "git diff failed: fatal: ambiguous argument 'zzz_nonexistent_ref_9999': unknown revision or path not in the working tree.\nUse '--' to separate paths from revisions, like this:\n'git <command> [<revision>...] -- [<file>...]'"},
+     "observed_verdict": "LOUD", "match": true},
+
+    {"tool": "comp-trace", "declared_failure_mode": "LOUD", "declared_confidence": "MED", "declared_role_flags": "PRODUCER?",
+     "positive": {"invocation": "bash .tools/comp-trace \"gold:A_00.accounts_dimension\"", "observed_rc": 0, "capture_method": "in_stdout", "note": "ambiguous multi-match list, 'Use a more specific query or --all', still rc=0 normal"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "bash .tools/comp-trace zzz_definitely_nonexistent_target_9999", "observed_rc": 3, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "NOT-FOUND: no graph node matches 'zzz_definitely_nonexistent_target_9999' -- check the name (typo?) or run comp-build. This is a NOT-FOUND, not a 'nothing-upstream/downstream' clear."},
+     "observed_verdict": "LOUD", "match": true},
+
+    {"tool": "comp-xref", "declared_failure_mode": "LOUD", "declared_confidence": "MED", "declared_role_flags": "PRODUCER?",
+     "positive": {"invocation": "bash .tools/comp-xref --check", "observed_rc": 0, "capture_method": "in_stdout", "note": "--check: clean (1907 indexed nodes; no SHA drift). no-args default mode NOT exercised: forces a full rebuild, timed out >2min on first attempt -- routed to latency finding (see comp-depth/comp-similar entries + REC1C_B.md sec4)"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "bash .tools/comp-xref zzz_definitely_nonexistent_symbol_9999", "observed_rc": 3, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "No matches in graph.\nHints:\n  - Symbol may be a Python module/function not yet indexed\n  - Run 'comp-build' to refresh graph; check stale-cache warnings\n  - For COMP_LEARNS-corpus symbols, comp-xref does not index that tree (out-of-scope)\nXREF LOOKUP: 'zzz_definitely_nonexistent_symbol_9999'\n  (0 node(s), 0 edge(s) matched)"},
+     "observed_verdict": "LOUD", "match": true},
+
+    {"tool": "comp-depth", "declared_failure_mode": "LOUD", "declared_confidence": "MED", "declared_role_flags": "PRODUCER?",
+     "positive": {"invocation": "bash .tools/comp-depth grains \"gold:A_00.accounts_dimension\"", "observed_rc": 0, "capture_method": "in_stdout_after_background",
+                  "note": "first 2 foreground attempts (60s, 4min) timed out with ZERO output; backgrounded, completed after ~9-10min total wall-clock. Root cause source-confirmed: comp_marker_read.load_marker_head_graph() calls _canonical.ensure_fresh(path) (marker-oracle auto-refresh on HEAD-advance) before every read, org/modules/graph/comp_marker_read.py:322-338. Provenance printed: '[marker-head: BEHIND | head=5957908056775835011]' -- DB is currently BEHIND.",
+                  "observed_stdout_stderr_verbatim": "[marker-head: BEHIND | head=5957908056775835011]\ngold:A_00.accounts_dimension\n  node_type: PipelineScript\n  grains:    ['file', 'script']   (the DEPTH scope discriminator, node_type_grain)\n  level:     file   (CONTAINS-ladder position; None = pure resource-stratum)"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "bash .tools/comp-depth grains zzz_definitely_nonexistent_target_9999", "observed_rc": 1, "capture_method": "source_confirmed",
+                "capture_note": "launched via nohup...&, no $? captured after the fact; rc=1 confirmed by reading comp_depth_cli.py:99-101 (cmd_grains: `if n is None: print(...); return 1`), which matches the printed message exactly. ~9-10 min wall-clock from background-launch to completion.",
+                "observed_stdout_stderr_verbatim": "[marker-head: BEHIND | head=5957908056775835011]\nnode not found at the marker head: zzz_definitely_nonexistent_target_9999 (canon: zzz_definitely_nonexistent_target_9999)"},
+     "observed_verdict": "LOUD", "match": true, "separate_finding": "LATENCY -- see REC1C_B.md sec4"},
+
+    {"tool": "comp-platinum", "declared_failure_mode": "LOUD", "declared_confidence": "MED", "declared_role_flags": "PRODUCER?",
+     "positive": {"invocation": "bash .tools/comp-platinum summary", "observed_rc": 0, "capture_method": "in_stdout", "note": "real page/component coverage table"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "bash .tools/comp-platinum page zzz_definitely_nonexistent_page_9999", "observed_rc": 1, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "Component not found: zzz_definitely_nonexistent_page_9999"},
+     "observed_verdict": "LOUD", "match": true},
+
+    {"tool": "comp-graph", "declared_failure_mode": "LOUD", "declared_confidence": "HIGH", "declared_role_flags": "ADVISORY,PRODUCER?(clear-mode-only)",
+     "positive": {"invocation": "bash .tools/comp-graph status", "observed_rc": 0, "capture_method": "in_stdout", "note": "real POPULATION table (contract tools / rebuild+probe / pure producers / query-only). clear subcommand deliberately NOT exercised (local-cache-unlink)"},
+     "mutant": {"mutation_type": "MALFORMED", "invocation": "bash .tools/comp-graph zzz_bad_subcommand_9999", "observed_rc": 2, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "usage: comp-graph [-h] {status,clear} ...\ncomp-graph: error: argument command: invalid choice: 'zzz_bad_subcommand_9999' (choose from status, clear)"},
+     "observed_verdict": "LOUD", "match": true},
+
+    {"tool": "comp-grep", "declared_failure_mode": "LOUD", "declared_confidence": "MED", "declared_role_flags": "ADVISORY",
+     "positive": {"invocation": "python3 .tools/comp-grep \"CLAUDE.md\" CLAUDE.md", "observed_rc": 0, "capture_method": "in_stdout", "note": "5 real matches"},
+     "mutant": {"mutation_type": "NONEXISTENT (0-match pattern)", "invocation": "python3 .tools/comp-grep \"zzz_definitely_nomatch_pattern_9999\"", "observed_rc": 0, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "OK: comp-grep -- 0 match(es) in 0 file(s); scanned 23754 file(s)\n  (on-rails: repo-scoped + .gitignore-aware [incl. nested repos] + logged to org/mcp/comp-which-rail.log)\n  0 matches is a real result here -- the .gitignore-aware working set was searched, not a stale index."},
+     "observed_verdict": "FAIL-OPEN", "match": false, "mismatch_direction": "declared LOUD, observed FAIL-OPEN (under-catch) -- see REC1C_B.md sec5.1"},
+
+    {"tool": "comp-pydeps", "declared_failure_mode": "FAIL-OPEN", "declared_confidence": "MED", "declared_role_flags": "PRODUCER?",
+     "positive": {"invocation": "bash .tools/comp-pydeps consumers org/modules/graph/cli.py", "observed_rc": 0, "capture_method": "in_stdout", "note": "real 4 code consumers + 5 doc mentions"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "bash .tools/comp-pydeps consumers zzz_definitely_nonexistent_file_9999.py", "observed_rc": 3, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "comp-pydeps consumers of 'zzz_definitely_nonexistent_file_9999.py' (resolved: None) -- scanned 323 python files across .tools/ + org/modules + infra/aws/globgrph + lib:\n  NOT DEFINED: no scanned python file named 'zzz_definitely_nonexistent_file_9999.py'. (This graph covers the compiler layer; a data/portal node is the trace graph's -- comp-blast.)"},
+     "observed_verdict": "LOUD", "match": false, "mismatch_direction": "declared FAIL-OPEN, observed LOUD (stricter than declared) -- see REC1C_B.md sec5.2"},
+
+    {"tool": "comp-symbols", "declared_failure_mode": "LOUD (default)", "declared_confidence": "LOW", "declared_role_flags": "ADVISORY",
+     "positive": {"invocation": "bash .tools/comp-symbols org/modules/graph/comp_symbols.py", "observed_rc": 0, "capture_method": "in_stdout", "note": "real IMPORTS(7) index"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "bash .tools/comp-symbols zzz_definitely_nonexistent_file_9999.py", "observed_rc": 1, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "comp-symbols: file not found: zzz_definitely_nonexistent_file_9999.py"},
+     "observed_verdict": "LOUD", "match": true},
+
+    {"tool": "comp-constants", "declared_failure_mode": "FAIL-OPEN", "declared_confidence": "MED", "declared_role_flags": "PRODUCER?",
+     "positive": {"invocation": "bash .tools/comp-constants list", "observed_rc": 0, "capture_method": "in_stdout", "note": "real multifirm constant-site table"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "bash .tools/comp-constants check --file zzz_definitely_nonexistent_file_9999.py", "observed_rc": 0, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "OK: no tracked constants found in zzz_definitely_nonexistent_file_9999.py -- 0 of 34 config constant(s) appear here, nothing to check"},
+     "observed_verdict": "FAIL-OPEN", "match": true, "caveat": "MATCH on failure_mode axis but message never discloses the file does not exist -- indistinguishable from an existing constant-free file; sharpest instance of the total-absence-reads-as-clean theme -- see REC1C_B.md sec5.3"},
+
+    {"tool": "comp-dataflow", "declared_failure_mode": "LOUD (default)", "declared_confidence": "LOW", "declared_role_flags": "PRODUCER?",
+     "positive": {"invocation": "bash .tools/comp-dataflow --self-test", "observed_rc": 0, "capture_method": "in_stdout", "note": "self-test: PASS (7/7)"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "bash .tools/comp-dataflow origin zzz_definitely_nonexistent_script_9999.py", "observed_rc": 3, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "REFUSE: 'zzz_definitely_nonexistent_script_9999.py' did not resolve to a producer .py file -- nothing traced, nothing concluded (input-resolution refusal, NOT a clean 'no served reads')"},
+     "observed_verdict": "LOUD", "match": true},
+
+    {"tool": "comp-similar", "declared_failure_mode": "FAIL-OPEN", "declared_confidence": "MED", "declared_role_flags": "PRODUCER?",
+     "positive": {"invocation": "bash .tools/comp-similar --self-test", "observed_rc": 0, "capture_method": "in_stdout", "note": "5 PRD controls, self-test: PASS (7/7)"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "bash .tools/comp-similar zzz_definitely_nonexistent_resource_9999", "observed_rc": 2, "capture_method": "source_confirmed",
+                "capture_note": "launched via nohup...&, no $? captured after the fact; rc=2 confirmed by reading debtscan/comp_similar.py:438,500-505 (mode=positional query arg, empty-corpus branch, `return 2`), matches the printed message exactly. ~6-10 min wall-clock.",
+                "observed_stdout_stderr_verbatim": "summary_corpus: comp-kuzu invocation failed: Command '[\"C:\\\\Program Files\\\\Git\\\\usr\\\\bin\\\\bash.exe\", \"C:\\\\Users\\\\AndrewBerman\\\\Desktop\\\\ajb_workspace\\\\.tools\\\\comp-kuzu\", \"--json\", \"MATCH (n:CloudNode) WHERE n.arn <> '' RETURN n.arn AS arn, n.node_type AS node_type, n.name AS name, n.layer AS layer, n.drift_class AS drift_class, n.source AS source\"]' timed out after 180 seconds\nsummary_corpus: comp-kuzu invocation failed: Command '[\"C:\\\\Program Files\\\\Git\\\\usr\\\\bin\\\\bash.exe\", \"C:\\\\Users\\\\AndrewBerman\\\\Desktop\\\\ajb_workspace\\\\.tools\\\\comp-kuzu\", \"--json\", \"MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.arn <> '' AND b.arn <> '' RETURN a.arn AS src, e.edge_type AS et, b.arn AS dst, a.node_type AS st, a.name AS sn, b.node_type AS bt, b.name AS bn\"]' timed out after 180 seconds\ncomp-similar: EMPTY corpus (broken retrieval, not an empty estate)"},
+     "observed_verdict": "LOUD", "match": false, "mismatch_direction": "declared FAIL-OPEN, observed LOUD (stricter than declared) -- see REC1C_B.md sec5.2",
+     "separate_finding": "LIVE DEGRADATION -- comp-kuzu (out-of-batch tool) timed out at 180s on 2 consecutive live queries -- see REC1C_B.md sec4"},
+
+    {"tool": "comp-residue", "declared_failure_mode": "FAIL-OPEN", "declared_confidence": "MED", "declared_role_flags": "PRODUCER?",
+     "positive": {"invocation": "bash .tools/comp-residue surface data/mdpf/config/partner_roster.json", "observed_rc": 0, "capture_method": "in_stdout", "note": "real structural surface listing"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "bash .tools/comp-residue surface zzz_definitely_nonexistent_source_9999.yaml", "observed_rc": 3, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "REFUSE: source not found: zzz_definitely_nonexistent_source_9999.yaml\n  NOTHING was compared, so nothing is concluded."},
+     "observed_verdict": "LOUD", "match": false, "mismatch_direction": "declared FAIL-OPEN, observed LOUD (stricter than declared) -- see REC1C_B.md sec5.2"},
+
+    {"tool": "comp-shell", "declared_failure_mode": "FAIL-OPEN", "declared_confidence": "MED", "declared_role_flags": "ADVISORY",
+     "positive": {"invocation": "bash .tools/comp-shell scan org/mcp/inbox-watch.sh", "observed_rc": 0, "capture_method": "in_stdout", "note": "real scan, 2 WARN found (pgrep, guarded)"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "bash .tools/comp-shell scan zzz_definitely_nonexistent_path_9999/", "observed_rc": 0, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "comp-shell: path not found or not .sh: zzz_definitely_nonexistent_path_9999/\ncomp-shell: no .sh files to scan."},
+     "observed_verdict": "FAIL-OPEN", "match": true},
+
+    {"tool": "comp-imgread", "declared_failure_mode": "FAIL-OPEN", "declared_confidence": "MED", "declared_role_flags": "ADVISORY",
+     "positive": {"invocation": "python3 .tools/comp-imgread diag3_fixed.png --out <scratchpad>/imgread_tiles", "observed_rc": 0, "capture_method": "in_stdout", "note": "real 1280x1299 image, tiled to scratch dir, no production write"},
+     "mutant": {"mutation_type": "NONEXISTENT", "invocation": "python3 .tools/comp-imgread zzz_definitely_nonexistent_image_9999.png", "observed_rc": 2, "capture_method": "in_stdout",
+                "observed_stdout_stderr_verbatim": "comp-imgread: ERROR: image not found: zzz_definitely_nonexistent_image_9999.png"},
+     "observed_verdict": "LOUD", "match": false, "mismatch_direction": "declared FAIL-OPEN, observed LOUD (stricter than declared) -- see REC1C_B.md sec5.2"}
+  ],
+  "portal_gitlink_remeasurement": {
+    "pinned_commit": "343e7b2afd4b71f6bf5391250d2eab46ff587586",
+    "portal_head": "d1ba89b9391d33302eae2d1e2d5df3f11ba7d814",
+    "rev_list_count": 5,
+    "is_ancestor": true,
+    "unchanged_from_prior_measurement": true,
+    "commits": [
+      "d1ba89b9 feat(W-4, MDPF_3FIRMS.GC-W45): count provenance VISIBLE at render",
+      "96e8c67d fix(W-5b, MDPF_3FIRMS.GC-W45): the aum SIBLING LIE on the same lines -- 24 nulls of 447",
+      "02fb2956 fix(W-5, MDPF_3FIRMS.GC-W45): account_count is NULLABLE at BOTH layers -- 40 nulls of 447",
+      "8602d0f7 tooling(ui-smoke): --hoverlast aims the frontier",
+      "3e681423 tooling(ui-smoke): --hoverlast -- scroll-into-view + jittered hover"
+    ],
+    "recommendation": "hold -- active MDPF_3FIRMS.GC-W45 work in flight, not idle drift; no commit made, per CTO~Z's explicit no-commit-without-gate instruction and Rule 19 (portal promotes are a DT lane)"
+  }
+}
