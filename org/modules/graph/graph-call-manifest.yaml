@@ -481,6 +481,45 @@ entries:
     anti_pattern: "dispatching a chain on stale upstream"
     status: canonical
 
+  # THE THREE CLAUDE.md-MANDATED CALLS, made ROUTABLE (CTO~Z ruling 223728Z, source-confirmed).
+  # They were DECLARED in tools_index and still UNREACHABLE: comp-which's fuzzy layer scores over
+  # entries[].{use_case,id,tool} and never reads tools_index (.tools/comp-which:1006-1010 @e6115fa66).
+  # A declaration in a surface no consumer reads is not reachability -- so the law mandated calls the
+  # router could not surface. Vocabulary lives in `use_case` because THAT is the scored field;
+  # canonical_call is DISPLAY only.
+  - id: cloud.iam.simulate_exact_resource
+    use_case: "Can this role perform this action on this EXACT resource ARN? Verify a NEW bucket / table / ARN with a positive control -- `comp-iam gaps` models (action) only and is NECESSARY BUT NOT SUFFICIENT here (CLAUDE.md Rule 22a)"
+    canonical_call: "comp-iam simulate <role> <action> <resource_arn>   # ONE arn per call; run the positive control as a SEPARATE invocation"
+    tool: comp-iam
+    mode: live
+    layer: cloud
+    cost: "~seconds (live aws iam simulate-principal-policy)"
+    freshness: "live IAM evaluation at run time (APPLIED)"
+    anti_pattern: "accepting `comp-iam gaps` GRANTED for a new bucket/table/ARN -- it models (action), never (action, resource), so a role holding the action on ANY resource reads GRANTED for EVERY resource"
+    status: canonical
+
+  - id: cloud.iam.applied_plane_reconcile
+    use_case: "Does the LIVE / APPLIED IAM state match what Terraform DECLARES? Overlay the applied plane over the desired plane -- catch AWS-managed, console-made and otherwise unmanaged grants that a Terraform parse cannot see"
+    canonical_call: "comp-iam reconcile [--census <file>] [--census-ttl-hours N]"
+    tool: comp-iam
+    mode: live
+    layer: cloud
+    cost: "~seconds (TF desired overlaid on a comp-aws live derive; age/TTL printed)"
+    freshness: "live derive snapshot, age + TTL disclosed; REFUSES past TTL rather than guessing"
+    anti_pattern: "reading comp-iam's DESIRED-plane default as the applied truth -- reconcile is the ONLY mode that overlays live"
+    status: canonical
+
+  - id: pipeline.pipescript.postdeps_before_adhoc_run
+    use_case: "What post-run steps are REQUIRED before or after an ad-hoc (non-dispatch) gold script run? Which downstream artifacts must be rebuilt so a hand-run does not leave the chain half-updated"
+    canonical_call: "comp-pipescript postdeps [<script>] [--firm bd|inf|cot|mdpf]"
+    tool: comp-pipescript
+    mode: cached
+    layer: pipeline
+    cost: "~instant (graph read)"
+    freshness: ".comp-graph build vintage"
+    anti_pattern: "an ad-hoc gold run with no postdeps check -- the $22M class (CLAUDE.md compiler-tools table makes this call REQUIRED before any ad-hoc run)"
+    status: canonical
+
   - id: pipeline.keys.enumerate
     use_case: "Which keys / partitions exist under this S3 prefix, and across which firms? (what EXISTS, not is-it-fresh)"
     canonical_call: "comp-keys prefix <bucket|s3://bucket/prefix> ; comp-keys partitions <bucket/prefix> ; comp-keys exists <suffix>"

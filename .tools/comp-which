@@ -204,6 +204,31 @@ RULES = [
      "lambda",
      ["comp-iam service <fn>", "comp-aws", "pipescript --resource <fn>"],
      "what a lambda does + its IAM + its named thread"),
+    # THE THREE CLAUDE.md-MANDATED CALLS (CTO~Z ruling 223728Z). They were DECLARED in tools_index and
+    # still UNROUTABLE: the router ranks TOOLS off THIS curated vocabulary, and never reads tools_index.
+    # A declaration in a surface no consumer reads is not reachability. These sit BEFORE the generic IAM
+    # tuple so the specific intent wins over the generic one.
+    (["simulate", "simulate-principal-policy", "exact resource", "exact arn", "specific arn",
+      "brand new bucket", "new bucket", "new table", "new arn", "resource-arns", "positive control",
+      "can this role", "can the role", "write to a brand new"],
+     "IAM (action,resource)-PRECISE verification -- Rule 22a",
+     ["comp-iam simulate <role> <action> <resource_arn>"],
+     "a NEW bucket/table/ARN needs an (action,RESOURCE) verdict: `comp-iam gaps` models (action) ONLY "
+     "and is NECESSARY BUT NOT SUFFICIENT here -- a role holding the action on ANY resource reads "
+     "GRANTED for EVERY resource. ONE --resource-arns per call; positive control as a SEPARATE run"),
+    (["reconcile", "applied plane", "live iam", "iam drift", "match terraform", "matches terraform",
+      "declared vs live", "desired vs applied", "unmanaged grant", "aws-managed", "console-made",
+      "iam state", "live state", "terraform declares", "what terraform declares"],
+     "IAM APPLIED-vs-DESIRED reconcile",
+     ["comp-iam reconcile"],
+     "the ONLY comp-iam mode that overlays the APPLIED plane -- the default modes parse Terraform "
+     "(DESIRED) and are structurally blind to AWS-managed / console-made / unmanaged grants"),
+    (["postdeps", "post-run", "post run", "post-run steps", "after an ad-hoc", "ad-hoc run",
+      "adhoc run", "ad hoc run", "hand-run", "downstream rebuild", "what else must i rebuild"],
+     "required POST-STEPS for an ad-hoc gold run",
+     ["comp-pipescript postdeps [<script>]"],
+     "CLAUDE.md requires this BEFORE any ad-hoc (non-dispatch) gold run -- the $22M class: a hand-run "
+     "that leaves downstream artifacts unrebuilt half-updates the chain"),
     (["iam", "role", "perm", "permission", "policy", "grant", "allow", "deny", "principal"],
      "IAM role/policy",
      ["comp-iam service <lambda>", "comp-iam gaps"],
