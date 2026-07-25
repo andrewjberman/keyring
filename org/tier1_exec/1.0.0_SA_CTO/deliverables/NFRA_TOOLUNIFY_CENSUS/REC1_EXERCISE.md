@@ -270,3 +270,19 @@ is confirmed NOT one of these four sessions, per §10 above).
 actually fails — the OUTER `.git/hooks/post-commit` wrapper (whose own `sh "/c/..."` invocation is what
 throws to the terminal), or the INNER `stitch-refresh-post-commit.sh` (which per its own source shells
 out with further `/c/`-style paths). Left open; not chased further this pass.
+
+**FIX + independent verification (20260725T050633Z):** root cause was `install-stitch-refresh.sh:6` baking
+an install-time `pwd`-derived path into the generated hook. Fixed to resolve via `git rev-parse
+--show-toplevel` at run time (`fbc91c6e28`) — this sidesteps the mount-alias ambiguity entirely rather than
+picking one flavor, since git's own toplevel resolution emits a form every shell on the box can consume
+(CVO~Z independently confirmed: resolves to a native Windows-style path in its shell, distinct from both
+the broken `/c/...` and its own working `/cygdrive/c/...`). **CVO~Z live-exercised via a real commit
+(`dd1e4e6e3`): clean, no error.** Also two of CTO~Z's own commits post-fix (`6ceff6ed06` and the one
+before it) carried no stderr line — third and fourth confirmation.
+
+**Scope precision, not a gap (CVO~Z):** every commit that has exercised the fix so far touched paths
+outside `stitch-refresh-post-commit.sh`'s own trigger filter (`portal/`, `data/*/scripts/`,
+`org/modules/graph/`, a globgrph derive/extract touch) — so the inner script's early-exit fired before
+reaching the backgrounding step in every verification run to date. **The outer-wrapper path-resolution
+failure is confirmed fixed; the fix has not yet been exercised on a commit that actually reaches the
+backgrounded stitch-refresh call.** Worth confirming on the next relevant commit; not assumed.
