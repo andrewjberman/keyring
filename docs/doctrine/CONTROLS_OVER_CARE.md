@@ -499,13 +499,26 @@ any code; the reviewer measured the instrument, killed the proposer's framing ou
 action-grain conclusion from a role-grain observation), and returned a hard scope; the build came back
 **honoring every bar with no scope defects, plus one mode handled better than specified.** Cost: one
 message. **The asymmetry is structural, not luck — a scope defect found after building is a rebuild,
-while a scope defect found in a design read is an edit to a sentence.** Corollaries earned in the same
-pass: **(a)** the strongest disclosure a builder can write is *the limitation of the check someone else
-will run on them* — here a code comment ("a literal grep for the forbidden word cannot distinguish an
-assertion from a mention") anticipated the exact false positive the verifier's own grep then produced,
-seven hits of one word used in two honest senses; **(b)** a verifier that cannot exercise a render path
-must NAME it — "structurally correct but not exercised" is a different verdict from "verified," and the
-gap between them is closed by a synthetic self-test, not by more sampling.
+while a scope defect found in a design read is an edit to a sentence.** Corollary earned in the same
+pass: a verifier that cannot exercise a render path must NAME it — "structurally correct but not
+exercised" is a different verdict from "verified," and the gap between them is closed by a synthetic
+self-test, not by more sampling.
+
+**13. A TEXT MATCH OVER CODE CANNOT DISTINGUISH A MENTION FROM A USE — THE PARSE TREE CAN.** Three
+instances in one day, all on *controls* rather than on ordinary searches, which is what makes it
+doctrine: a builder pre-named it in a code comment (*"a literal grep for the forbidden word cannot
+distinguish an assertion from a mention"*); a verifier's forbidden-vocabulary grep then produced exactly
+that false positive — seven hits of one word used in an unrelated, correct sense; and the same builder's
+own *"this suite makes zero network calls"* proof false-positived on its **own docstring**, which named
+the very functions it was explaining that it does **not** call. **The remedy is structural, not more
+careful pattern-writing: inspect the AST and collect the calls actually made** (that run resolved to
+`classify/check/datetime/set/len` — never the network functions the text match had flagged). The general
+form, and the reason it sits beside the echo-back oracle: **when the question is "does this code DO X,"
+a string search answers a different question — "does this text CONTAIN X" — and the two diverge exactly
+where documentation, negation, and explanation live, which is precisely where careful authors write.**
+Companion discipline from the same delivery: *prove a suite can redden by making it redden* — insert a
+deliberately wrong check, watch it FAIL and exit non-zero, then remove it and re-confirm the clean pass.
+An assertion that a suite *could* fail, never once run wrong, has not been tested.
 
 **Two structural notes the day earned, recorded because they change what a record is FOR:**
 **(a) A prematurely-checked prerequisite does not merely misreport status — it AUTHORIZES downstream
