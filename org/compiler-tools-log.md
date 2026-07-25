@@ -26634,3 +26634,17 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam gaps | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam roles | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_COMPLEARN.L0b (CTO~Z dispatch + correction) | l0b_conformance | L0b conformance suite landed: 13 satisfied + 1 declared-exempt (RESEMANT recorded w/ owner+trigger), member enumeration derived from the doc's own tables, real-source fixtures, negative control reddens rc=1 | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/extract_iam.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/iam_cli.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | static grep, fully-qualified boto3.dynamodb.conditions.Key/Attr population-first sweep | PASS (2 sites found, matches CTO~Z) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | py_compile | extract_iam.py (fully-qualified condition-builder fix) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | before/after diff opal-assets-daily-emitter, discriminating triple | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | fleet exposure re-derivation post-fix, 157 Lambdas | PASS (22/157, 46 rows) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater (regression) | PASS 7/7 |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam stats/gaps/roles (regression) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | py_compile | iam_cli.py (over-perm honesty fix) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam refresh-census (live, 206 roles) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam reconcile --census <fresh> (NOT COMPUTED verified) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam census-self-test | PASS 17/17 |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam simulate-self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | pytest | org/modules/graph/tests/test_iam_census_vintage.py | PASS 10/10 |
