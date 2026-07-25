@@ -29,7 +29,12 @@ SCOPE + HONESTY (rebuilt 2026-07-10, NFRA_TOOLPASS tool-5):
   Read-only. No writes, no manifest. Authoritative source: portal/src (on DEV).
 
   Adjacent hooks NOT in scope (flagged, not folded): useQueries / useInfiniteQuery also carry
-  queryKeys; this tool audits useQuery only, and SAYS SO in the denominator line.
+  queryKeys, and useAutoSaveQuery (a local PortfolioManagement wrapper that constructs
+  portfolioKeys.* keys around an inner useQuery) is un-audited key-bearing surface at its call
+  sites (L1a sensor-2 finding, 2026-07-25 -- disclosure-first disposition; walk-extension is a
+  separate banked follow-on). This tool audits useQuery only, and SAYS SO in the denominator
+  line. The caveat deliberately carries NO call-site count -- counts drift; the sensor
+  (org/tier2_senior/0.8.0_AE_CloudComp/deliverables/l1a_sensor2/) is the counting instrument.
 """
 from __future__ import annotations
 
@@ -287,7 +292,7 @@ def extract(portal_src: Path | None = None):
 def _denominator_line(entries, unparseable, total) -> str:
     return (f"captured {len(entries)} of {total} useQuery call-site(s); "
             f"{len(unparseable)} unparseable "
-            f"(useQueries / useInfiniteQuery are NOT audited by this tool)")
+            f"(useQueries / useInfiniteQuery / useAutoSaveQuery are NOT audited by this tool)")
 
 
 def _print_unparseable(unparseable):
