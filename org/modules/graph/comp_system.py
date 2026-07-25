@@ -354,6 +354,41 @@ def _yaml_len(rel_path: str, key: str):
         return UNKNOWN
 
 
+def _yaml_nested_len(rel_path: str, *keys: str):
+    """Sibling of _yaml_len, for a NESTED mapping/sequence (dotted path via *keys) -- added for
+    NFRA_ONTOLOGY_RULE_BANK.yaml's variance.labels, the one rulebank axis that is not a top-level
+    key (NFRA_TOOLARCH borrowed-sensitivity remedy, 0.8.0_AE_CloudComp~D 2026-07-25). Same
+    defensive-import + UNKNOWN-on-any-failure contract as _yaml_len."""
+    try:
+        import yaml  # noqa: PLC0415
+        with open(os.path.join(WS, rel_path), encoding="utf-8") as fh:
+            node = yaml.safe_load(fh)
+        for k in keys:
+            if not isinstance(node, dict) or k not in node:
+                return UNKNOWN
+            node = node[k]
+        return len(node)
+    except Exception:  # noqa: BLE001
+        return UNKNOWN
+
+
+def _pyconst_enum_len(module_name: str, class_name: str):
+    """len(EnumClass) for a python module's CLOSED enum, or UNKNOWN -- the pyconst analogue of
+    _yaml_len, for cse_schema.py's 4 closed enums (Entity/Relationship/Transformation/Qualifier;
+    NFRA_TOOLARCH borrowed-sensitivity remedy, 2026-07-25: these enums' sizes are exactly what an
+    ADD-without-a-SCHEMA_VERSION-bump grows -- the countable population version_pin's own
+    disclosure names as its blind spot). Imported defensively via importlib (like the existing
+    bare `import cse_schema` a few lines above for SCHEMA_VERSION) so a missing/broken module
+    fails to UNKNOWN, never a crash."""
+    try:
+        import importlib
+        mod = importlib.import_module(module_name)
+        cls = getattr(mod, class_name)
+        return len(cls)
+    except Exception:  # noqa: BLE001
+        return UNKNOWN
+
+
 def _metric(value, source, vintage) -> dict:
     return {"value": value, "source": source, "vintage": vintage}
 
@@ -366,6 +401,8 @@ def _metric(value, source, vintage) -> dict:
 #: is now one edit, not two that must be kept in sync by hand.
 _MANIFEST_PATH = "org/modules/graph/graph-call-manifest.yaml"
 _LEDGER_PATH = "org/modules/graph/comp-coverage-map.yaml"
+_CSE_SCHEMA_PATH = "org/modules/graph/cse_schema.py"
+_RULEBANK_PATH = "org/modules/graph/NFRA_ONTOLOGY_RULE_BANK.yaml"
 
 
 def compute_metrics() -> dict:
@@ -382,6 +419,24 @@ def compute_metrics() -> dict:
     recs = _read_promote_manifest()
     fed = _read_fedobs()
     snap = _read_snap_realized()
+
+    # NFRA_TOOLARCH borrowed-sensitivity remedy (0.8.0_AE_CloudComp~D, 2026-07-25, dispatch
+    # 1.0.0_SA_CTO~Z off ~C's L1b finding): scope_contract.json's ont-cse-version-current and
+    # ont-rulebank-version-current units are `version_pin` checks whose sensitivity is BORROWED
+    # from human SCHEMA_VERSION/meta.version bump discipline -- an enum member or a rulebank axis
+    # entry ADDED WITHOUT a version bump is invisible to them. ~C determined (BORROWED_SENSITIVITY_
+    # REMEDY_C.md) both units have countable SOURCE populations but no machine-readable REPORT-side
+    # count -- these 7 metrics ARE that report side, so a future derived_count contract edit
+    # (~C's) becomes a two-line change instead of needing new infrastructure. NOT cse_measures
+    # (that metric's own source field says "comp-fedobs cse_log_total (served)" -- a DIFFERENT
+    # population; ~C's own near-miss finding, kept here as the cautionary precedent it named).
+    cse_entity = _pyconst_enum_len("cse_schema", "Entity")
+    cse_relationship = _pyconst_enum_len("cse_schema", "Relationship")
+    cse_transformation = _pyconst_enum_len("cse_schema", "Transformation")
+    cse_qualifier = _pyconst_enum_len("cse_schema", "Qualifier")
+    rulebank_roles = _yaml_len(_RULEBANK_PATH, "roles")
+    rulebank_relations = _yaml_len(_RULEBANK_PATH, "relations")
+    rulebank_variance = _yaml_nested_len(_RULEBANK_PATH, "variance", "labels")
 
     return {
         "tools_index_count": _metric(
@@ -404,6 +459,27 @@ def compute_metrics() -> dict:
         "cse_measures": _metric(
             fed.get("cse_log_total", UNKNOWN), "comp-fedobs cse_log_total (served)",
             fed.get("vintage", UNKNOWN)),
+        "cse_entity_count": _metric(
+            cse_entity, "cse_schema.py: len(Entity) (closed enum, S1)",
+            "cse_schema (%s Entity members)" % cse_entity),
+        "cse_relationship_count": _metric(
+            cse_relationship, "cse_schema.py: len(Relationship) (closed enum, S1)",
+            "cse_schema (%s Relationship members)" % cse_relationship),
+        "cse_transformation_count": _metric(
+            cse_transformation, "cse_schema.py: len(Transformation) (closed enum, S1)",
+            "cse_schema (%s Transformation members)" % cse_transformation),
+        "cse_qualifier_count": _metric(
+            cse_qualifier, "cse_schema.py: len(Qualifier) (closed enum, S1)",
+            "cse_schema (%s Qualifier members)" % cse_qualifier),
+        "rulebank_role_count": _metric(
+            rulebank_roles, "NFRA_ONTOLOGY_RULE_BANK.yaml: len(roles) (axis ROLE)",
+            "rulebank (%s roles)" % rulebank_roles),
+        "rulebank_relation_count": _metric(
+            rulebank_relations, "NFRA_ONTOLOGY_RULE_BANK.yaml: len(relations) (axis RELATION)",
+            "rulebank (%s relations)" % rulebank_relations),
+        "rulebank_variance_count": _metric(
+            rulebank_variance, "NFRA_ONTOLOGY_RULE_BANK.yaml: len(variance.labels) (axis VARIANCE)",
+            "rulebank (%s variance verdicts)" % rulebank_variance),
         "graph_marker": _metric(
             _kuzu_marker(), "comp-kuzu provenance header (marker-oracle)", _kuzu_marker()),
     }
@@ -737,6 +813,79 @@ def self_test() -> int:
     chk("15 gate --changed: a non-source changeset is NOT a trigger surface (no over-fire)",
         _file_touches_sources(["docs/note.md", "org/tier2_senior/x/logs/y.md"]) is False)
 
+    # 16-19. NFRA_TOOLARCH borrowed-sensitivity remedy (2026-07-25): the 7 new schema/rulebank
+    # COUNT metrics. Each checked against an INDEPENDENT direct recomputation (not just "is it
+    # present") -- correctness against the real source, not merely non-UNKNOWN.
+    import cse_schema as _cse  # noqa: PLC0415  -- self-test only; compute_metrics() imports lazily via importlib
+    chk("16 cse enum counts: all 4 match a DIRECT independent len(Enum) recompute (not just present)",
+        mets.get("cse_entity_count", {}).get("value") == len(_cse.Entity)
+        and mets.get("cse_relationship_count", {}).get("value") == len(_cse.Relationship)
+        and mets.get("cse_transformation_count", {}).get("value") == len(_cse.Transformation)
+        and mets.get("cse_qualifier_count", {}).get("value") == len(_cse.Qualifier))
+    _rb_direct_ok = True
+    try:
+        import yaml as _yaml_chk  # noqa: PLC0415
+        with open(os.path.join(WS, _RULEBANK_PATH), encoding="utf-8") as _fh:
+            _rb_doc = _yaml_chk.safe_load(_fh)
+        _rb_direct_ok = (
+            mets.get("rulebank_role_count", {}).get("value") == len(_rb_doc["roles"])
+            and mets.get("rulebank_relation_count", {}).get("value") == len(_rb_doc["relations"])
+            and mets.get("rulebank_variance_count", {}).get("value") == len(_rb_doc["variance"]["labels"]))
+    except Exception:  # noqa: BLE001
+        _rb_direct_ok = False
+    chk("17 rulebank axis counts: all 3 match a DIRECT independent yaml-read recompute", _rb_direct_ok)
+    # 18. THE INTRINSIC-SENSITIVITY PROOF (the whole point of this item): an ADD to the source
+    #     population MOVES the corresponding metric. Not asserted -- exercised, against synthetic
+    #     fixtures (mirrors L1b's own cell-26 ADD-without-bump fixture pair), never against the
+    #     real live cse_schema.py/rulebank yaml (mutating production files to prove a point is not
+    #     how this project tests sensitivity claims).
+    import tempfile
+    _tmp_yaml = tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False, encoding="utf-8")
+    try:
+        _tmp_yaml.write("roles:\n  A: {}\n  B: {}\n  C: {}\n")
+        _tmp_yaml.close()
+        _before = _yaml_len(os.path.relpath(_tmp_yaml.name, WS), "roles")
+        with open(_tmp_yaml.name, "a", encoding="utf-8") as _fh:
+            _fh.write("  D: {}\n")  # the ADD -- one more role, no version bump anywhere
+        _after = _yaml_len(os.path.relpath(_tmp_yaml.name, WS), "roles")
+        add_moves_yaml_count = (_before == 3 and _after == 4)
+    finally:
+        os.unlink(_tmp_yaml.name)
+    _tmp_py = tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False, encoding="utf-8",
+                                          dir=_HERE)  # dir=_HERE: sys.path already covers it (line 42)
+    try:
+        _modname = os.path.splitext(os.path.basename(_tmp_py.name))[0]
+        _tmp_py.write("import enum\nclass X(enum.Enum):\n    A = 'a'\n    B = 'b'\n")
+        _tmp_py.close()
+        _before2 = _pyconst_enum_len(_modname, "X")
+        with open(_tmp_py.name, "a", encoding="utf-8") as _fh:
+            _fh.write("    C = 'c'\n")  # the ADD -- one more enum member, no SCHEMA_VERSION bump
+        import importlib
+        importlib.invalidate_caches()
+        sys.modules.pop(_modname, None)  # force re-import; the module cache would otherwise mask the ADD
+        _after2 = _pyconst_enum_len(_modname, "X")
+        add_moves_enum_count = (_before2 == 2 and _after2 == 3)
+    finally:
+        os.unlink(_tmp_py.name)
+        sys.modules.pop(_modname, None)
+    chk("18 INTRINSIC SENSITIVITY: an ADD to a synthetic yaml mapping (3->4 roles) moves _yaml_len "
+        "(3->4), no version bump involved -- the property version_pin's own disclosure names as "
+        "its blind spot", add_moves_yaml_count)
+    chk("19 INTRINSIC SENSITIVITY: an ADD to a synthetic closed enum (2->3 members) moves "
+        "_pyconst_enum_len (2->3), no SCHEMA_VERSION bump involved -- same property, python-const form",
+        add_moves_enum_count)
+    # 20. per-metric source-population honesty: each new metric's own `source` string names the
+    #     REAL file it counts (cse_schema.py or NFRA_ONTOLOGY_RULE_BANK.yaml), never a copy of
+    #     cse_measures'/recognizers_live's source string -- the exact ~C-named near-miss shape
+    #     (a plausible-looking count with an unrelated provenance) checked directly, not assumed.
+    _new_metric_names = ("cse_entity_count", "cse_relationship_count", "cse_transformation_count",
+                         "cse_qualifier_count", "rulebank_role_count", "rulebank_relation_count",
+                         "rulebank_variance_count")
+    chk("20 each new metric's source string names its OWN real file (not fedobs/manifest/ledger)",
+        all(os.path.basename(_METRIC_SOURCE_FILES[n][0]) in mets.get(n, {}).get("source", "")
+            for n in _new_metric_names)
+        and all("comp-fedobs" not in mets.get(n, {}).get("source", "") for n in _new_metric_names))
+
     n = sum(1 for x in ok if x)
     print("--- self-test: %d/%d passed (grounded-or-UNKNOWN, no fabrication, shape-locked) ---" % (n, len(ok)))
     return 0 if n == len(ok) else 1
@@ -807,6 +956,17 @@ def _dirty_sources():
 _METRIC_SOURCE_FILES = {
     "tools_index_count": [_MANIFEST_PATH],
     "ledger_union_count": [_LEDGER_PATH],
+    # NFRA_TOOLARCH borrowed-sensitivity remedy (2026-07-25): without these entries, a drift in
+    # cse_schema.py or NFRA_ONTOLOGY_RULE_BANK.yaml alone would fall back to the conservative
+    # whole-_SOURCES-union BLOCKED-ON-PEER-LANDING (the 11d self-test case) instead of the
+    # metric-scoped one -- reintroducing the exact false-block class ~A's guard-v2 closed today.
+    "cse_entity_count": [_CSE_SCHEMA_PATH],
+    "cse_relationship_count": [_CSE_SCHEMA_PATH],
+    "cse_transformation_count": [_CSE_SCHEMA_PATH],
+    "cse_qualifier_count": [_CSE_SCHEMA_PATH],
+    "rulebank_role_count": [_RULEBANK_PATH],
+    "rulebank_relation_count": [_RULEBANK_PATH],
+    "rulebank_variance_count": [_RULEBANK_PATH],
 }
 
 
