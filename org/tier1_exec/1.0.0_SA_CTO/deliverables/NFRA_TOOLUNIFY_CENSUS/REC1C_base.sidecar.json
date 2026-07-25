@@ -1,0 +1,266 @@
+{
+  "author": "0.8.0_AE_CloudComp (base)",
+  "date": "2026-07-25",
+  "dispatch": "1.0.0_SA_CTO~Z 20260725T060145Z DISPATCH NFRA_TOOLUNIFY REC-1c LANE-base",
+  "addendum": "1.0.0_SA_CTO~Z 20260725T060426Z ADDENDUM mutation-type labels PROVISIONAL pending L0b",
+  "mutation_type_vocab_provisional": ["EMPTY", "NONEXISTENT", "MALFORMED", "STALE", "UNKNOWN"],
+  "rows": [
+    {
+      "tool": "comp-kuzu",
+      "invocation": "bash .tools/comp-kuzu \"MATCH (n:NonexistentNodeType_zzz9999) RETURN n.id LIMIT 5\"",
+      "declared_failure_mode": "FAIL-OPEN",
+      "declared_conf": "MED",
+      "mutation_type": "NONEXISTENT",
+      "attempts": [
+        {"timeout_s": 60, "rc": 124, "note": "no output before kill"},
+        {"timeout_s": 240, "rc": 124, "note": "no output before kill"}
+      ],
+      "corroborating_evidence": "ps -ef during the second wait showed 3 other live kuzu_cli.py processes (PIDs 159518, 163569, 167592) not started by this session, running concurrent Cypher queries against the same local Kuzu DB",
+      "observed_verdict": "UNKNOWN (timeout, not tool-attributable)",
+      "match_verdict": "UNKNOWN"
+    },
+    {
+      "tool": "comp-kuzu-full",
+      "invocation": "bash .tools/comp-kuzu-full --help (only)",
+      "declared_failure_mode": "FAIL-OPEN",
+      "declared_conf": "MED",
+      "mutation_type": "n/a",
+      "attempts": [
+        {"cmd": "--help", "rc": 0, "note": "argparse help, exits before any DB touch"}
+      ],
+      "source_citation": ".tools/comp-kuzu-full header: \"0.0.0_AB_MSTR owns this AT STARTUP -- it absorbs the daily full-derive whole-table delta ONCE... Every OTHER agent uses comp-kuzu-inc, NEVER a full mid-session (the ~482s ambush the split removes)... The full rebuild runs even when the local pin already reads current (force=True)\"",
+      "observed_verdict": "NOT EXERCISED FOR REAL -- CTO arch-gated non-MSTR restriction",
+      "match_verdict": "UNTESTABLE-SAFELY"
+    },
+    {
+      "tool": "comp-kuzu-inc",
+      "invocation": "bash .tools/comp-kuzu-inc \"MATCH (n:NonexistentNodeType_zzz9999) RETURN n.id LIMIT 5\"",
+      "declared_failure_mode": "FAIL-OPEN",
+      "declared_conf": "MED",
+      "mutation_type": "NONEXISTENT",
+      "attempts": [
+        {"timeout_s": 60, "rc": 124},
+        {"timeout_s": 240, "rc": 124}
+      ],
+      "corroborating_evidence": "same live-contention ps snapshot as comp-kuzu row; process PID 168209 (this session's own comp-kuzu-inc invocation) confirmed alive and running, not hung/crashed, at the time of the ps check",
+      "observed_verdict": "UNKNOWN (timeout, not tool-attributable) -- contradicts the wrapper's own documented ~5s incremental claim under this load",
+      "match_verdict": "UNKNOWN"
+    },
+    {
+      "tool": "comp-icedrill",
+      "invocation": "bash .tools/comp-icedrill \"s3://opal-data-inf/definitely-nonexistent-prefix-zzz9999/\"",
+      "declared_failure_mode": "LOUD (default)",
+      "declared_conf": "LOW",
+      "mutation_type": "NONEXISTENT",
+      "rc": 3,
+      "stdout_verbatim": "comp-icedrill -- vintage drill\n  SUBSTRATE: s3-dated-partitions\n  COMPLETENESS: dates PRESENT under the prefix (FULL listing, paginated to exhaustion: 0 keys over 1 page(s)); a missing date is a missing partition; presence is not completeness (use comp-freshness for that)\n  SCAN: 0 key(s)/version(s) over 1 page(s), paginated TO EXHAUSTION\n  scope: s3://opal-data-inf/definitely-nonexistent-prefix-zzz9999/\n  0 vintage(s):\n    (none -- see COMPLETENESS above; an empty result is a FINDING, not a clean)",
+      "observed_verdict": "LOUD",
+      "match_verdict": "MATCH"
+    },
+    {
+      "tool": "comp-aws",
+      "invocation": "bash .tools/comp-aws derive --class LAMBDA --resource arn:aws:lambda:us-east-1:000000000000:function:definitely-nonexistent-zzz9999 --out <scratchpad>/aws_derive_test.json",
+      "declared_failure_mode": "LOUD",
+      "declared_conf": "MED",
+      "mutation_type": "NONEXISTENT",
+      "rc": 0,
+      "stdout_verbatim": "wrote <scratchpad>/aws_derive_test.json\n  lambda       bounded_derive arn=arn:aws:lambda:us-east-1:000000000000:function:definitely-nonexistent-zzz9999 nodes=0\n  NOTE: bounded derive -- 0 edges computed (relationships require a full derive).\n\nNOT PUBLISHED -- <scratchpad>/aws_derive_test.json is a local file; no shared surface changed.",
+      "write_safety_note": "--out pointed at this session's own scratchpad, not any shared/production key; tool's own output confirms 'NOT PUBLISHED... local file; no shared surface changed'",
+      "observed_verdict": "FAIL-OPEN",
+      "match_verdict": "MISMATCH"
+    },
+    {
+      "tool": "comp-assets",
+      "invocation": "bash .tools/comp-assets --channel definitely_nonexistent_zzz9999 --json",
+      "declared_failure_mode": "LOUD",
+      "declared_conf": "MED",
+      "mutation_type": "NONEXISTENT",
+      "rc": 0,
+      "stdout_verbatim": "{\n  \"channels\": [],\n  \"provenance\": {\n    \"bucket\": \"opal-data-assets\",\n    \"instrument\": \"comp-assets (LIVE ListObjectsV2)\",\n    \"objects_scanned\": 0,\n    \"probe_excluded\": 0,\n    \"read_at\": \"2026-07-25T06:11:09Z\"\n  }\n}",
+      "observed_verdict": "FAIL-OPEN",
+      "match_verdict": "MISMATCH"
+    },
+    {
+      "tool": "comp-genesis",
+      "invocation": "bash .tools/comp-genesis validate definitely_nonexistent_tenant_zzz9999",
+      "declared_failure_mode": "LOUD",
+      "declared_conf": "MED",
+      "mutation_type": "NONEXISTENT",
+      "rc": 1,
+      "stdout_verbatim": "ERROR: no manifest for 'definitely_nonexistent_tenant_zzz9999' (looked in tenants/<c>/company.yaml, 00_manifest/examples/)",
+      "observed_verdict": "LOUD",
+      "match_verdict": "MATCH"
+    },
+    {
+      "tool": "comp-heat (score subcommand)",
+      "invocation": "python3 .tools/comp-heat score definitely_nonexistent_item_zzz9999 --age-days 9999",
+      "declared_failure_mode": "LOUD",
+      "declared_conf": "MED",
+      "mutation_type": "NONEXISTENT (not a fair test)",
+      "rc": 0,
+      "stdout_verbatim": "=== comp-heat score: definitely_nonexistent_item_zzz9999 ===\n  age=9999.00d  half_life=30.0d  recency=0.0000  band=COLD",
+      "note": "score is a stateless calculator over caller-supplied id+age-days; id is never looked up against any real registry, so a nonexistent id cannot exercise an absence-handling path",
+      "observed_verdict": "N/A -- not a fair test of the declared property",
+      "match_verdict": "NOT-A-FAIR-TEST"
+    },
+    {
+      "tool": "comp-heat (freshness subcommand)",
+      "invocation": "python3 .tools/comp-heat freshness definitely_nonexistent_subtree_zzz9999/ --json",
+      "declared_failure_mode": "LOUD",
+      "declared_conf": "MED",
+      "mutation_type": "NONEXISTENT",
+      "rc": 0,
+      "stdout_verbatim": "comp-heat freshness: no tracked/untracked files under 'definitely_nonexistent_subtree_zzz9999/' (check the path is repo-root-relative).",
+      "observed_verdict": "FAIL-OPEN",
+      "match_verdict": "MISMATCH"
+    },
+    {
+      "tool": "comp-fedobs",
+      "invocation": "python3 .tools/comp-fedobs --uri /definitely/nonexistent/path/zzz9999.json",
+      "declared_failure_mode": "LOUD",
+      "declared_conf": "MED",
+      "mutation_type": "NONEXISTENT",
+      "first_attempt": {
+        "cmd": "bash .tools/comp-fedobs --uri ...",
+        "note": "idiom-2 dispatch mismatch -- bash tried to parse python source; syntax errors from line 21 onward, unrelated to tool logic. Discarded, not counted as a result, preserved here for disclosure per REC-1 Sec6 precedent."
+      },
+      "rc": 1,
+      "stdout_verbatim": "ERROR: comp-fedobs could not read the served observations (C:/Program Files/Git/definitely/nonexistent/path/zzz9999.json): [Errno 2] No such file or directory: 'C:/Program Files/Git/definitely/nonexistent/path/zzz9999.json'\n  The in-VPC producer (fedobs_observe.py) may not have run yet, or you lack GetObject.",
+      "environment_note": "leading '/' argument was silently rewritten to 'C:/Program Files/Git/' before reaching the python process (Cygwin mount-alias path-mangling, distinct sighting from REC1B Sec10's /c/ vs /cygdrive/c/ finding). Target remained genuinely nonexistent either way; verdict unaffected.",
+      "observed_verdict": "LOUD",
+      "match_verdict": "MATCH"
+    },
+    {
+      "tool": "comp-learns-score",
+      "invocation": "bash .tools/comp-learns-score --self-test",
+      "declared_failure_mode": "LOUD",
+      "declared_conf": "MED",
+      "mutation_type": "n/a (built-in self-test, external bad-input not run to avoid PRODUCER? write-risk on default/--file-candidates path)",
+      "rc": 0,
+      "stdout_verbatim": "=== comp-learns-score --self-test (Goodhart-honesty) ===\n  [PASS] goodhart.severity_matters_at_equal_volume\n  [PASS] goodhart.deny_not_a_candidate\n  [PASS] goodhart.high_usage_low_value_retires\n  [PASS] preventive_gate.tempered_and_flagged\n  [PASS] evidence.every_item_cites_value\n  [PASS] goodhart.no_usage_proxy\n  [PASS] one_signal.shared_outcome_weighting\n  [PASS] flywheel.hedges_surface_confident_routes_dont\n\nOK: all checks pass",
+      "observed_verdict": "MATCH-VIA-SELFTEST (internal LOUD-on-fail harness; external input not independently exercised this pass)",
+      "match_verdict": "MATCH-VIA-SELFTEST"
+    },
+    {
+      "tool": "comp-learns-status",
+      "invocation": "python3 .tools/comp-learns-status --source /definitely/nonexistent/path/zzz9999.json",
+      "declared_failure_mode": "LOUD (default)",
+      "declared_conf": "LOW",
+      "mutation_type": "NONEXISTENT",
+      "rc": 2,
+      "stdout_verbatim": "comp-learns-status: cannot read the served surface C:/Program Files/Git/definitely/nonexistent/path/zzz9999.json: FileNotFoundError: [Errno 2] No such file or directory: 'C:/Program Files/Git/definitely/nonexistent/path/zzz9999.json'\n  (has comp_learns_produce.py run yet? it materializes the served JSON from the live federation.)",
+      "environment_note": "same path-mangle artifact as comp-fedobs row; target remained genuinely nonexistent either way",
+      "observed_verdict": "LOUD",
+      "match_verdict": "MATCH"
+    },
+    {
+      "tool": "comp-canon-motif",
+      "invocation": "bash .tools/comp-canon-motif (default, no --allow-stale)",
+      "declared_failure_mode": "FAIL-OPEN",
+      "declared_conf": "MED",
+      "mutation_type": "STALE",
+      "attempts": [
+        {"timeout_s": 60, "rc": 124},
+        {"timeout_s": 240, "rc": 124}
+      ],
+      "corroborating_evidence": "same live multi-lane Kuzu/graph contention window as comp-kuzu rows (comp-canon-motif reads KUZU-CANONICAL per D.md line 224)",
+      "observed_verdict": "UNKNOWN (timeout, not tool-attributable)",
+      "match_verdict": "UNKNOWN"
+    },
+    {
+      "tool": "comp-cluster",
+      "invocation": "bash .tools/comp-cluster DefinitelyNonexistentPageZzz9999",
+      "declared_failure_mode": "FAIL-OPEN",
+      "declared_conf": "MED",
+      "mutation_type": "NONEXISTENT",
+      "attempts": [
+        {"timeout_s": 60, "rc": 124},
+        {"timeout_s": 240, "rc": 124}
+      ],
+      "corroborating_evidence": "ps -ef confirmed comp_cluster_cli.py process alive and running (PID 168944) during the wait, in the same window as the other 3 KUZU-CANONICAL-touching timeouts",
+      "observed_verdict": "UNKNOWN (timeout, not tool-attributable)",
+      "match_verdict": "UNKNOWN"
+    },
+    {
+      "tool": "comp-passcraft (emit, no args)",
+      "invocation": "bash .tools/comp-passcraft emit",
+      "declared_failure_mode": "LOUD",
+      "declared_conf": "MED",
+      "mutation_type": "EMPTY",
+      "rc": 2,
+      "stdout_verbatim": "usage: comp_passcraft.py emit [-h] --audit AUDIT [--marker-head MARKER_HEAD] [--actor ACTOR] tool\ncomp_passcraft.py emit: error: the following arguments are required: tool, --audit",
+      "observed_verdict": "LOUD",
+      "match_verdict": "MATCH"
+    },
+    {
+      "tool": "comp-passcraft (--self-test)",
+      "invocation": "bash .tools/comp-passcraft --self-test",
+      "declared_failure_mode": "LOUD",
+      "declared_conf": "MED",
+      "mutation_type": "n/a (built-in, synthetic malformed/missing-verdict/off-vocab cases)",
+      "rc": 0,
+      "stdout_excerpt": "[PASS] TO2.AC2_empty_evidence_ref_REJECTED ... [PASS] AC4.anti_harness_missing_verdict_reject_is_NON_VACUOUS ... OK: all checks pass (10/10)",
+      "observed_verdict": "MATCH-VIA-SELFTEST (corroborating)",
+      "match_verdict": "MATCH-VIA-SELFTEST"
+    },
+    {
+      "tool": "comp-system",
+      "invocation": "bash .tools/comp-system --check (health probe); bash .tools/comp-system --self-test (budget-exceeded)",
+      "declared_failure_mode": "LOUD",
+      "declared_conf": "MED",
+      "mutation_type": "n/a -- no caller-supplied target argument on this tool's CLI surface",
+      "first_attempt_note": "python3 .tools/comp-system --self-test mistakenly invoked (comp-system is idiom-1 bash wrapper, not idiom-2); threw a Python SyntaxError on the wrapper's own bash syntax -- the mirror-image of the comp-fedobs/comp-state dispatch mismatch. Corrected to bash.",
+      "attempts": [
+        {"cmd": "--check", "rc": 0, "stdout": "SYSTEM CURRENT (06: sources unchanged, age 2h < TTL 24h; managed regions: 0 drifted)"},
+        {"cmd": "--self-test", "timeout_s": 60, "rc": 124, "note": "did not complete within budget"}
+      ],
+      "observed_verdict": "UNKNOWN -- no natural bad-input surface; --check is a health probe not a mismatch test; --self-test not completed within budget",
+      "match_verdict": "UNKNOWN"
+    },
+    {
+      "tool": "comp-state (--self-test)",
+      "invocation": "python3 .tools/comp-state --self-test",
+      "declared_failure_mode": "LOUD",
+      "declared_conf": "MED",
+      "mutation_type": "n/a (built-in, planted BEHIND/CURRENT/QUIET cases)",
+      "first_attempt_note": "bash .tools/comp-state --self-test mistakenly invoked first (comp-state is idiom-2 python-shebang); bash tried to parse python source, syntax errors from line 16 onward. Corrected to python3.",
+      "rc": 0,
+      "stdout_verbatim": "self-test: planted-behind=BEHIND planted-current=CURRENT planted-quiet=QUIET -> PASS (3/3 -- the instrument discriminates)",
+      "observed_verdict": "MATCH-VIA-SELFTEST",
+      "match_verdict": "MATCH-VIA-SELFTEST"
+    },
+    {
+      "tool": "comp-state (--project)",
+      "invocation": "python3 .tools/comp-state --project definitely_nonexistent_zzz9999",
+      "declared_failure_mode": "LOUD",
+      "declared_conf": "MED",
+      "mutation_type": "NONEXISTENT (not a fair test)",
+      "rc": 0,
+      "stdout_verbatim": "[stage] corpus: 400 commits in 0.1s\n[stage] records: 0 loaded (last-touch map + blame) in 10.5s\n[stage] scoring: 0 records x 400 commits in 0.0s (total 10.7s)\ncomp-state -- registry/TO/PRD state linter (ADVISORY; BM25 over git; read-only)\n  corpus: 400 commits (last 400 commits) | records: 0 (TO 0 / JSON 0 / REGROW 0 / PRD 0)\n  verdicts: BEHIND/POST-CLOSE 0 | CURRENT 0 | QUIET 0\n\n  no drift found in window (run --all for the full census).",
+      "note": "--project is a substring filter over a real 400-commit corpus; 0 matches for a nonexistent substring is a correct empty-set answer, not a masked failure -- distinct from an artifact-wholly-absent test",
+      "observed_verdict": "N/A -- not a fair test of the declared property",
+      "match_verdict": "NOT-A-FAIR-TEST"
+    },
+    {
+      "tool": "pipescript",
+      "invocation": "bash .tools/pipescript definitely-nonexistent-thread-zzz9999",
+      "declared_failure_mode": "FAIL-OPEN",
+      "declared_conf": "MED",
+      "mutation_type": "NONEXISTENT",
+      "rc": 2,
+      "stdout_verbatim": "pipescript: 'definitely-nonexistent-thread-zzz9999' is NOT a known named thread.\n  -> known threads: advi-bd, advi-inf, advi-cot, model-portfolios, news, market-overview, macroeconomics, factor-tilts, valuation, correlation, positioning, cma, attribution, portfolio-management, trade-submission, causality, security-scanner, smartx, mdpf, partners, graph-platform, insurance, portal-infra, ops-internal, data-refresh, canonical-schwab, m365-mcp\n  -> run `pipescript --list` for counts.",
+      "observed_verdict": "LOUD -- stricter than declared",
+      "match_verdict": "MISMATCH (reverse polarity)"
+    }
+  ],
+  "summary_counts": {
+    "total_batch": 17,
+    "fully_exercised_external_input": 9,
+    "match": 5,
+    "mismatch": 4,
+    "match_via_selftest_only": 3,
+    "not_a_fair_test": 2,
+    "untestable_safely": 1,
+    "unknown_timeout": 4
+  }
+}

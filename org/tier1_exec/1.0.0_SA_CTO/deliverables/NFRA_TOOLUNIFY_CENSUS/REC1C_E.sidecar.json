@@ -1,0 +1,326 @@
+{
+  "deliverable": "REC1C_E",
+  "author": "0.8.0_AE_CloudComp~E",
+  "date": "2026-07-25",
+  "dispatch": "1.0.0_SA_CTO~Z 20260725T060511Z DISPATCH NFRA_TOOLUNIFY REC-1c LANE-E (16 tools, pipeline/frontend/misc)",
+  "mutation_label_note": "Mutation-type labels here are PROVISIONAL, pending the L0b change-type vocabulary (IMPLEMENTATION_LEVELS_AND_SEQUENCING.md s4/L0b) -- this sweep records candidate vocabulary, it does not settle it.",
+  "harness_note": "This session's Bash tool appends a spurious wrapper-level exit-1 ('claude-*-cwd: No such file or directory') to EVERY command in this /cygdrive-mount Cygwin shell. All exit codes below are therefore captured IN-STDOUT via '; echo TRUE_RC=$?' (or PIPESTATUS[0] when piped to head) -- the wrapper-reported exit code is NOT the tool's exit code in this environment. The acceptance-gate mutant (a known-FAIL-OPEN tool that must read rc=0) exists precisely to prove this capture discriminates.",
+  "acceptance_gate": [
+    {
+      "role": "positive_control",
+      "tool": "comp-manifest-check",
+      "invocation": ".tools/comp-manifest-check check --file <scratchpad>/anti_pattern_probe.py --mode blocking",
+      "mutation_type": "MALFORMED (synthetic anti-pattern file, same violation classes as selfcheck/REC-1 4a)",
+      "true_rc": 1,
+      "output_excerpt": "MANIFEST-CHECK [ERROR] ...anti_pattern_probe.py:2 (C_adhoc_reimplementation) ... BLOCKED: 1 ERROR-class graph-access finding(s).",
+      "observed": "LOUD",
+      "verdict": "PASS -- known-LOUD reads LOUD through this harness"
+    },
+    {
+      "role": "harness_mutant",
+      "tool": "comp-iam (service subcmd)",
+      "invocation": ".tools/comp-iam service nonexistent-lambda-zzz-9999",
+      "mutation_type": "NONEXISTENT (lambda name; REC-1-exercise-confirmed FAIL-OPEN row)",
+      "true_rc": 0,
+      "output_excerpt": "No service matching 'nonexistent-lambda-zzz-9999' + full Lambda/role listing, rc=0",
+      "observed": "FAIL-OPEN",
+      "verdict": "PASS -- known-FAIL-OPEN reads rc=0 through this harness despite the wrapper exit-1 noise; the RC capture discriminates"
+    }
+  ],
+  "rows": [
+    {
+      "tool": "comp-pipescript",
+      "declared": "LOUD (MED), role_flags PRODUCER?",
+      "idiom": "bash-wrapper -> org/modules/graph/pipeline_cli.py",
+      "write_safety": "pipeline_cli.py write-primitive hits are all scanner regex/sets (:691,:760,:925,:957,:1031 etc.) -- the tool detects writes in scanned scripts, does not perform them. 'inject' subcommand (writes comp-trace graph cache) NOT exercised.",
+      "invocations": [
+        {
+          "subcommand": "io / postdeps",
+          "status": "CITED, not re-run (per dispatch)",
+          "citation": "cvoz_NFRA_TOOLARCH_CANON_REGROUND_20260724.md s6: io <unknown> -> 'Unknown script:' + valid list at rc=0; postdeps <unknown> -> 'No dependencies declared for: <unknown>' at rc=0 (affirmative-sounding negative); io out-of-scope guard -> rc=2 LOUD. Declarative drift: pipeline_cli.py:1219-1221 comment claims the fall-through is LOUD; for postdeps it is not."
+        },
+        {
+          "subcommand": "deployed",
+          "invocation": ".tools/comp-pipescript deployed nonexistent_script_zzz_9999.py",
+          "mutation_type": "NONEXISTENT (script filter)",
+          "true_rc": 0,
+          "output_excerpt": "DEPLOYED STATUS... Summary: 0 MATCH, 0 STALE, 0 MISSING_ON_S3, 0 LOCAL_MISSING, 0 TIMEOUT, 0 AWS_UNREACHABLE, 0 UNCOVERED, 0 AUX-DRIFT / No scripts matched filter: 'nonexistent_script_zzz_9999.py'",
+          "observed": "FAIL-OPEN",
+          "match": "MISMATCH vs declared LOUD. An all-zeros summary + rc=0 on an unmatched filter -- a typo'd script name upstream of a gold run reads as green to any script gating on exit code. Same class as the postdeps s6 finding, on the XXX.md AE-minimum pre-gold-run surface ('comp-pipescript deployed before every gold-run trigger')."
+        },
+        {
+          "subcommand": "chain",
+          "invocation": ".tools/comp-pipescript chain nonexistent_script_zzz_9999.py",
+          "mutation_type": "NONEXISTENT (chain name)",
+          "true_rc": 1,
+          "output_excerpt": "Unknown chain: nonexistent_script_zzz_9999.py for pipeline bd-gold / Valid chains for bd-gold: canonical, dimensions, ...",
+          "observed": "LOUD",
+          "match": "MATCH"
+        }
+      ],
+      "row_verdict": "PER-SUBCOMMAND HETEROGENEOUS: chain LOUD / deployed FAIL-OPEN / io loud-text-rc0 / postdeps affirmative-negative-rc0 (cited). One register row cannot represent this faithfully -- same finding shape as REC-1b's comp-surface-check."
+    },
+    {
+      "tool": "comp-chainrun",
+      "declared": "LOUD (MED), role_flags PRODUCER?",
+      "idiom": "bash-wrapper -> org/modules/graph/chainrun_cli.py",
+      "write_safety": "zero write-primitive hits at source",
+      "invocations": [
+        {
+          "subcommand": "diff",
+          "invocation": ".tools/comp-chainrun diff /nonexistent/pre_zzz.json /nonexistent/post_zzz.json",
+          "mutation_type": "NONEXISTENT (both snapshot files; note MSYS mangled the arg to 'C:/Program Files/Git/nonexistent/...' -- still nonexistent, mutation held)",
+          "true_rc": 1,
+          "output_excerpt": "Traceback (most recent call last): ... FileNotFoundError: [Errno 2] No such file or directory: 'C:/Program Files/Git/nonexistent/pre_zzz.json' (chainrun_cli.py:536 cmd_diff open(args.pre))",
+          "observed": "LOUD (by unhandled crash, not designed error path)",
+          "match": "MATCH at register level; note LOUD-BY-CRASH vs LOUD-BY-DESIGN distinction -- a raw traceback is loud but carries no operator guidance"
+        }
+      ],
+      "row_verdict": "MATCH"
+    },
+    {
+      "tool": "comp-incrparity",
+      "declared": "LOUD (MED), role_flags PRODUCER?",
+      "idiom": "bash-wrapper -> org/modules/graph/incrparity_cli.py",
+      "write_safety": "S3 report write on FAIL exists (help + :162 core.write_parity_report) -- MISSED by the write-primitive grep (write is in incrparity_core, not the cli). Exercised with --no-s3-report; UNVERIFIED path (rc=2) returns before _emit_failure anyway.",
+      "invocations": [
+        {
+          "subcommand": "(agent entry, bare)",
+          "invocation": ".tools/comp-incrparity ZZ_99",
+          "mutation_type": "NONEXISTENT (script id) -- but the input never reaches the parity logic",
+          "true_rc": 3,
+          "output_excerpt": "BLOCKED: comp-incrparity reads the opal-data-bd DATA bucket, HELD under the sovereign hold. Set COMP_INCRPARITY_INCLUDE_HELD=1 ...",
+          "observed": "LOUD (fail-closed rc=3, distinct from verdict codes)",
+          "match": "MATCH -- with a STALE-GUARD finding: the sovereign hold this gate enforces (bd/49F block) was LIFTED COMPLETELY by Andrew 2026-07-14; the enforcing copy here never got the retraction (VERIFICATION LAW 8 shape / feedback-retraction-propagates-to-every-enforcing-copy). Surfaced, not fixed (read-only scope; the fix is CTO~Z's routing call)."
+        },
+        {
+          "subcommand": "(semantic path, designed env override)",
+          "invocation": "COMP_INCRPARITY_INCLUDE_HELD=1 .tools/comp-incrparity ZZ_99 --no-s3-report",
+          "mutation_type": "NONEXISTENT (unregistered script id)",
+          "true_rc": 2,
+          "output_excerpt": "PARITY UNVERIFIED: ZZ_99 (quick) - no dual-run comparison performed (not registered); NOT a pass",
+          "observed": "LOUD (rc=2 UNVERIFIED, explicitly distinguished from pass)",
+          "match": "MATCH -- best-instrumented row in the batch: absence is a distinct exit code with an explicit 'NOT a pass'"
+        }
+      ],
+      "row_verdict": "MATCH (both layers)"
+    },
+    {
+      "tool": "comp-trigger",
+      "declared": "FAIL-OPEN (MED), role_flags PRODUCER?",
+      "idiom": "bash-wrapper -> org/modules/graph/comp_trigger.py",
+      "write_safety": "structural no-write invariant in its own self-test (:260-271, method-call-syntax scan over banned mutating verbs, with a can-fire control)",
+      "invocations": [
+        {
+          "invocation": ".tools/comp-trigger zzz-nonexistent-trigger-9999",
+          "mutation_type": "NONEXISTENT (rule/target-ARN substring)",
+          "true_rc": 0,
+          "output_excerpt": "denominator: 141 events-rules + 10 schedules scanned, region us-east-1 / NO MATCH by name or target-ARN substring. (That is a match-miss, not proof no trigger exists -- an S3-notification/sentinel trigger would not appear here; v1 scans EventBridge rules + Scheduler schedules only.)",
+          "observed": "FAIL-OPEN",
+          "match": "MATCH -- and the honest kind: denominator printed, epistemic caveat explicit. FAIL-OPEN-BY-DESIGN with disclosure, vs the undisclosed variants elsewhere in this batch."
+        }
+      ],
+      "row_verdict": "MATCH"
+    },
+    {
+      "tool": "comp-transform",
+      "declared": "LOUD (MED), role_flags PRODUCER?",
+      "idiom": "bash-wrapper -> org/modules/graph/transform_cli.py",
+      "write_safety": "zero write-primitive hits",
+      "invocations": [
+        {
+          "subcommand": "schema-check",
+          "invocation": ".tools/comp-transform schema-check ZzzNonexistentComponent9999",
+          "mutation_type": "NONEXISTENT (component)",
+          "true_rc": 1,
+          "output_excerpt": "Component not found: ZzzNonexistentComponent9999",
+          "observed": "LOUD",
+          "match": "MATCH"
+        }
+      ],
+      "row_verdict": "MATCH"
+    },
+    {
+      "tool": "comp-tooltip",
+      "declared": "LOUD (MED), role_flags PRODUCER?",
+      "idiom": "bash-wrapper -> org/modules/graph/tooltip_cli.py",
+      "write_safety": "zero write-primitive hits",
+      "invocations": [
+        {
+          "invocation": ".tools/comp-tooltip zzz-nonexistent-subcommand",
+          "mutation_type": "MALFORMED (extension: UNKNOWN-SUBCOMMAND, named per dispatch labeling rule)",
+          "true_rc": 1,
+          "output_excerpt": "(prints full usage text) rc=1",
+          "observed": "LOUD (usage-error class)",
+          "match": "MATCH"
+        }
+      ],
+      "row_verdict": "MATCH"
+    },
+    {
+      "tool": "comp-types",
+      "declared": "LOUD (MED), role_flags PRODUCER?",
+      "idiom": "bash-wrapper -> org/modules/graph/types_cli.py",
+      "write_safety": "zero S3/DDB write-primitive hits; DOES write a LOCAL manifest per invocation (see finding)",
+      "invocations": [
+        {
+          "subcommand": "blast",
+          "invocation": ".tools/comp-types blast ZzzNonexistentType9999",
+          "mutation_type": "NONEXISTENT (TypeScript type name)",
+          "true_rc": 0,
+          "output_excerpt": "Blast radius: 0 file(s) affected if ZzzNonexistentType9999 shape changes / Manifest: org\\modules\\graph\\types-index\\ZzzNonexistentType9999.blast.yaml / PASS: comp-types blast complete",
+          "observed": "FAIL-OPEN (affirmative: explicit 'PASS' verdict on garbage input)",
+          "match": "MISMATCH vs declared LOUD -- the worst shape in this batch: a nonexistent type is indistinguishable from a real type with zero consumers, and the output says PASS. A typo'd type name in a pre-change blast check reads as 'safe to change'. ALSO: silently wrote a manifest file into the repo tree for the garbage type (probe debris removed by this lane; pre-existing untracked manifests from prior sessions left untouched) -- confirmed local-write producer behavior on a query subcommand, relevant to the PRODUCER? candidate flag."
+        }
+      ],
+      "row_verdict": "MISMATCH (affirmative FAIL-OPEN + silent local manifest write)"
+    },
+    {
+      "tool": "comp-cache",
+      "declared": "LOUD default (LOW), role_flags PRODUCER?",
+      "idiom": "bash-wrapper -> org/modules/graph/cache_cli.py",
+      "write_safety": "zero write-primitive hits",
+      "invocations": [
+        {
+          "subcommand": "key",
+          "invocation": ".tools/comp-cache key zzz-nonexistent-cache-key-9999",
+          "mutation_type": "NONEXISTENT (cache-key substring)",
+          "true_rc": 0,
+          "output_excerpt": "CACHE KEYS matching 'zzz-nonexistent-cache-key-9999' (0 hit(s)) -- captured 105 of 105 useQuery call-site(s); 0 unparseable (useQueries / useInfiniteQuery are NOT audited by this tool)",
+          "observed": "FAIL-OPEN (rc=0; denominator + scope caveat printed in text)",
+          "match": "MISMATCH vs declared LOUD-default -- LOW-confidence row, first individual verification; text instrumentation is honest (denominator + non-coverage disclosure) but nothing script-visible."
+        }
+      ],
+      "row_verdict": "MISMATCH (well-disclosed FAIL-OPEN)"
+    },
+    {
+      "tool": "comp-perf",
+      "declared": "LOUD (MED), role_flags PRODUCER?",
+      "idiom": "bash-wrapper -> org/modules/graph/vectorize_audit_cli.py",
+      "write_safety": "zero write-primitive hits",
+      "invocations": [
+        {
+          "subcommand": "vectorize-audit",
+          "invocation": ".tools/comp-perf vectorize-audit nonexistent_script_zzz_9999.py",
+          "mutation_type": "NONEXISTENT (gold script)",
+          "true_rc": 1,
+          "output_excerpt": "ERROR: script 'nonexistent_script_zzz_9999.py' not found under C:\\...\\data\\inf\\scripts\\gold",
+          "observed": "LOUD",
+          "match": "MATCH"
+        }
+      ],
+      "row_verdict": "MATCH"
+    },
+    {
+      "tool": "comp-pulse",
+      "declared": "FAIL-OPEN (MED), role_flags PRODUCER?",
+      "idiom": "bash-wrapper -> org/modules/graph/comp_pulse.py",
+      "write_safety": "zero write-primitive hits",
+      "invocations": [
+        {
+          "subcommand": "diff",
+          "invocation": ".tools/comp-pulse diff /nonexistent/zzz_file_9999.py",
+          "mutation_type": "NONEXISTENT (file path; MSYS-mangled to C:/Program Files/Git/... -- still nonexistent, mutation held)",
+          "true_rc": 0,
+          "output_excerpt": "DENOMINATOR: 1 file(s) checked against 1511 danger node(s) / REFLEX CLEAN -- a MEASURED result (map read, every file checked), not a default.",
+          "observed": "FAIL-OPEN",
+          "match": "MATCH at register level -- with a self-certification nuance: it stamps 'a MEASURED result, not a default' over a file that does not exist. The membership test is technically well-defined for a nonexistent path, but the pre-commit risk reflex scores a path it cannot read as CLEAN and asserts measuredness -- the MEASURED claim does not discriminate nonexistent input (instrument-that-cannot-fail shape, VERIFICATION LAW 5)."
+        }
+      ],
+      "row_verdict": "MATCH (with self-cert nuance)"
+    },
+    {
+      "tool": "comp-describe",
+      "declared": "LOUD (MED), role_flags ADVISORY",
+      "idiom": "bash-wrapper (help short-circuit) -> org/modules/graph/debtscan/summary_corpus.py --describe",
+      "write_safety": "zero write-primitive hits in summary_corpus.py",
+      "invocations": [
+        {
+          "invocation": ".tools/comp-describe zzz-nonexistent-resource-9999",
+          "mutation_type": "NONEXISTENT (resource name)",
+          "true_rc": 1,
+          "output_excerpt": "summary_corpus: comp-kuzu invocation failed: Command '[...comp-kuzu --json MATCH (n:CloudNode)...]' timed out after 180 seconds (x2, both underlying queries) / comp-describe: 'zzz-nonexistent-resource-9999' did NOT resolve to a single resource. 0 matches... If you expected a hit, the local graph may be BEHIND -- comp-kuzu-inc to refresh then retry -- or this ARN is not modeled in the graph. (Broken retrieval != absent resource.)",
+          "observed": "LOUD (rc=1, explicit non-resolution, kuzu failures printed, broken-retrieval-vs-absence caveat explicit)",
+          "match": "MATCH -- with two nuances: (1) LATENCY: ~7.5min wall for a nonexistent name (2x180s comp-kuzu timeouts + overhead); first attempt at a 2m budget produced ZERO output. CONFOUND disclosed: the first attempt's python child survived the 2m wrapper kill (timeout killed the bash wrapper, not the worker -- TaskStop-leaves-the-child shape, reaped by this lane) and overlapped the retry for ~2min, so the retry's kuzu timeouts may be self-inflicted lock contention -- do NOT quote 7.5min as clean single-invocation latency; the unconfounded fact is 'a 2m budget yields zero output'. (2) The '0 matches' verdict line is derived from FAILED retrievals, and the tool DISCLOSES exactly that in its caveat -- loud and honest, but a consumer parsing only the 0-matches line would inherit a broken-retrieval zero."
+        }
+      ],
+      "row_verdict": "MATCH (LOUD, epistemically careful; interactive-latency concern + confound noted)"
+    },
+    {
+      "tool": "comp-axes",
+      "declared": "LOUD (MED), role_flags ADVISORY",
+      "idiom": "idiom-2 (python shebang IS the entry) -- invoked python .tools/comp-axes direct",
+      "write_safety": "REAL put_object at comp-axes:318 (S3 history mirror) -- but only on the snapshot path (directory mode without --no-snapshot, main:516-517). Exercised with --no-snapshot; delta mode reads local history only. The mirror itself is try/except best-effort (WARN on failure) -- a FAIL-OPEN on its own write path, noted not exercised.",
+      "invocations": [
+        {
+          "subcommand": "directory --no-snapshot",
+          "invocation": "python .tools/comp-axes directory --no-snapshot --axes zzz-nonexistent-axis-9999",
+          "mutation_type": "NONEXISTENT (axis name)",
+          "true_rc": 2,
+          "output_excerpt": "ERROR: unknown axes ['zzz-nonexistent-axis-9999']; known: ['debris', 'debt', 'depth', 'fedobs-signals', 'freshness', 'heat', 'learns-gaps', 'pulse']",
+          "observed": "LOUD (guarded, known-list printed)",
+          "match": "MATCH"
+        }
+      ],
+      "row_verdict": "MATCH"
+    },
+    {
+      "tool": "comp-adapter-audit",
+      "declared": "FAIL-OPEN (MED), role_flags PRODUCER?",
+      "idiom": "bash-wrapper -> org/modules/graph/adapter_audit_cli.py",
+      "write_safety": "writes a manifest by default to org/modules/graph/adapter-audit/; tool ships its own --manifest-dir 'for read-only exercise' -- used it, pointed at scratchpad",
+      "invocations": [
+        {
+          "invocation": ".tools/comp-adapter-audit zzzNonexistentAdapterFn9999 --manifest-dir <scratchpad>/adapter-audit",
+          "mutation_type": "NONEXISTENT (adapter function name)",
+          "true_rc": 1,
+          "output_excerpt": "ERROR: adapter function 'zzzNonexistentAdapterFn9999' not found in endpoint files / ERROR: comp-adapter-audit could not locate the adapter",
+          "observed": "LOUD",
+          "match": "MISMATCH vs declared FAIL-OPEN -- in the GOOD direction: the tool is better than the register says. Register row under-sells a guarded tool (the inverse error class of comp-types/comp-cache)."
+        }
+      ],
+      "row_verdict": "MISMATCH (good direction)"
+    },
+    {
+      "tool": "comp-v5-composite-test.sh",
+      "declared": "LOUD (MED), role_flags ADVISORY; D.md rows it honestly as a test harness, not an estate tool",
+      "idiom": "bash (usage: bash .tools/comp-v5-composite-test.sh; no args)",
+      "write_safety": "read-only: runs 8 grep-for-substring scenarios over comp-iam/comp-pipescript/comp-trace/comp-blast",
+      "invocations": [
+        {
+          "invocation": "bash .tools/comp-v5-composite-test.sh",
+          "mutation_type": "MALFORMED (extension: MALFORMED-ENVIRONMENT, named -- the harness invokes bare 'comp-X' names; this session's PATH does not carry .tools, so every sub-tool resolved to command-not-found. No synthesizable per-arg mutation exists: the tool takes no input; its input is the estate + environment.)",
+          "true_rc": 8,
+          "output_excerpt": "=== 5. comp-trace AC-VAL-Y ... FAIL -- substring not found / bash: line 1: comp-trace: command not found ... Result: 0 pass, 8 fail / FAIL: 8 scenario(s) failed",
+          "observed": "LOUD (rc = failing-scenario count; per-scenario FAIL with actual output shown)",
+          "match": "MATCH -- and the informative half: command-not-found inside a scenario is NOT swallowed as a pass; the harness stays loud when its own sub-tools cannot be dispatched. The 8 failures are environment-dispatch failures, not estate regressions -- a PATH-carrying run was NOT performed (out of scope for failure_mode; noted so the 0-pass result is not misread as estate state)."
+        }
+      ],
+      "row_verdict": "MATCH"
+    },
+    {
+      "tool": "comp-whoread",
+      "declared": "LOUD (MED), role_flags ADVISORY",
+      "idiom": "bash-wrapper: exec python .tools/comp-whoread.py (source-confirmed -- the two register rows are ONE tool, matching D.md:43's own dedup note)",
+      "write_safety": "zero write-primitive hits (Athena-surfaced CloudTrail reads)",
+      "invocations": [
+        {
+          "invocation": ".tools/comp-whoread zzz-nonexistent-bucket-9999 --since 2026-07-18",
+          "mutation_type": "NONEXISTENT (bucket)",
+          "true_rc": 1,
+          "output_excerpt": "CANNOT ANSWER for zzz-nonexistent-bucket-9999: ZERO S3 object-level data events in range... An empty who-read here means 'NEVER CAPTURED', not 'never read'. Failing closed (rc=1) rather than reporting a false clean. (management-level events seen: 0; object-level: 0)",
+          "observed": "LOUD (fail-closed, with the never-captured vs never-read distinction explicit)",
+          "match": "MATCH -- exemplary: the tool's own doc promises fail-closed on zero-coverage and the exercised behavior delivers it verbatim."
+        }
+      ],
+      "row_verdict": "MATCH (covers both comp-whoread and comp-whoread.py register rows via the source-confirmed exec dedup)"
+    },
+    {
+      "tool": "comp-whoread.py",
+      "declared": "LOUD (MED), role_flags ADVISORY",
+      "idiom": "python3 shebang; the comp-whoread wrapper execs this file",
+      "invocations": [],
+      "row_verdict": "COVERED-BY-DEDUP: same tool as comp-whoread (wrapper is 'exec python .tools/comp-whoread.py', read at source this session; D.md:43 already rows the pair as one tool). Not separately invoked -- an identical second invocation would add noise, not information."
+    }
+  ]
+}
