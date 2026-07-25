@@ -104,8 +104,18 @@ Adopted bar (map §10): WS-4 crosswalk conformance passes + WS-7 register-as-con
 - **GATEBOUND (Step 3): no longer the exit-bar critical path** — still real and dispatched at `~D` (the
   unevaluable-gate/unbounded-hang class it closes is live regardless), but the exit bar no longer waits
   on it. CVO~Z verifies on delivery.
-- **→ EXIT-BAR STATUS: MET, pending CVO~Z's WS-7-closure verification + base MATCH spot-checks.** WS-4
-  verified clean; WS-7 landed and self-reverified at HEAD.
+- **→ EXIT-BAR STATUS: MET AND FULLY VERIFIED (as-of ~0906Z).** WS-4 verified clean · WS-7 closed +
+  closure-verified (regen in-window confirmed) · every lane batch + REC-1/1b verified · GATEBOUND Stage A
+  landed and verified (CVO~Z built its OWN mutants + a positive control ~D hadn't run — deterministic
+  `sleep(9999)` hang, bounded at 2.01s, UNEVALUABLE as specified, clean exit confirming the honest
+  CONTINUED-PAST-not-KILLED framing; ~D's reporting accurate throughout including its stated limitations).
+  **THE TOOLUNIFY EXERCISE + VALIDATION PROGRAM IS COMPLETE.** In-flight but explicitly NOT exit-bar:
+  GATEBOUND Stage B (the `:1201` kill + memoization — closes the hang class) and the `WARM_DEADLINE_S`
+  default-binding fix (CVO~Z's incidental: the module global reads runtime-settable and silently isn't —
+  the reads-stronger-than-it-is class; rides Stage B's comp-which commit). The BLOCKED-ON-PEER-LANDING
+  control closed at v3 (hazard-detection + metric-scoped narrowing + map-integrity, every layer
+  mutant-proven, independently verified, and observed both BLOCKING on live drift and OPENING cleanly
+  when drift resolved).
 
 This synthesis closes the EXERCISE program (the register's failure_mode column is now evidence-based per
 §0-§2). The sweep's L0b seed data (§4) is the designed handoff into COMPLEARNS L0b→L1b per
