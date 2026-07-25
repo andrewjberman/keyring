@@ -100,6 +100,15 @@ def msys_safe_run(cmd: list, **kwargs) -> subprocess.CompletedProcess:
     see the module docstring's history). `is_msys_risky()` remains available separately for
     lint/sweep use where a call SITE, not a call, needs to be flagged.
 
+    COST (CVO~Z, measured, 2026-07-25): the extra `bash -c` hop adds roughly 2.2x per call versus a
+    direct subprocess.run of the MSYS binary (~29.4ms -> ~63.6ms per invocation on this host, single
+    grep call). Always-route makes this unavoidable BY DESIGN (see above -- selective routing would
+    reopen the classifier-completeness problem this design deliberately avoids). Fine for the
+    per-CLI-invocation call shape this was built for; a caller migrating a HOT LOOP that spawns an
+    MSYS binary hundreds of times (e.g. per-file in a large tree walk) should know this from here,
+    not discover it from wall-clock -- consider batching into fewer, larger invocations rather than
+    avoiding the guard.
+
     `cmd` -- list-form argv ONLY (cmd[0] the binary, the rest its arguments); does not accept a
     pre-built shell string (build the argv list as you normally would for subprocess.run, unquoted --
     this function does the quoting). `**kwargs` forwarded to subprocess.run unchanged
