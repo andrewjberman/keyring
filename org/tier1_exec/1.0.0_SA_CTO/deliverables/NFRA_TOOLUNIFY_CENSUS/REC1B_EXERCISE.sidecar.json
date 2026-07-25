@@ -1,0 +1,93 @@
+{
+  "author": "0.8.0_AE_CloudComp~D",
+  "dispatch": "1.0.0_SA_CTO~Z 20260725T050449Z NFRA_TOOLUNIFY REC-1b",
+  "denominator": {
+    "gate_blocking_confirmed": ["comp-manifest-check"],
+    "gate_blocking_candidate": ["comp-coverage-check", "comp-denytest", "comp-denytest.py", "comp-kit-striplist-gate", "comp-routable-check", "comp-surface-check", "comp-tool-health-gate", "comp-validate"],
+    "producer_confirmed": ["comp-stitch-refresh"],
+    "producer_candidate_count": 56,
+    "advisory_count": 28,
+    "config_only_count": 1,
+    "confirmed_union_dedup": ["comp-manifest-check", "comp-stitch-refresh"],
+    "confirmed_union_exercised": 2,
+    "confirmed_union_total": 2,
+    "confirmed_union_coverage": "2/2, both cited from REC-1, not re-run",
+    "new_tools_this_pass": 3,
+    "new_invocations_this_pass": 5,
+    "cumulative_distinct_tools_rec1_plus_rec1b": 8,
+    "register_total": 92
+  },
+  "through_line_role_flags_crosscheck": [
+    {"instance": "#1 stitch 83d-silent", "tool": "comp-stitch-refresh", "role_flags": "PRODUCER", "status": "confirmed, caught by filter"},
+    {"instance": "#5a raw-cache reader (fixed 68bbf3dd2)", "tool": "comp-gitdrill", "role_flags": "PRODUCER?", "status": "candidate only, filter misses it"},
+    {"instance": "#5b raw-cache reader (fixed 68bbf3dd2)", "tool": "comp-surface-check", "role_flags": "GATE-BLOCKING?,PRODUCER?", "status": "candidate only, filter misses it"},
+    {"instance": "#2 opal-critical-surface-alerts", "tool": null, "role_flags": null, "status": "not a comp-tool row (SNS topic) -- no register representation"},
+    {"instance": "#3 ms_heat", "tool": null, "role_flags": null, "status": "not a comp-tool row (S3/Iceberg analytic) -- no register representation"},
+    {"instance": "#4 mdpf-daily", "tool": null, "role_flags": null, "status": "not a comp-tool row (Lambda trigger) -- no register representation"},
+    {"instance": "#6 nine undeployed guard dirs", "tool": null, "role_flags": null, "status": "not comp-tool rows (Lambda source dirs) -- no register representation"}
+  ],
+  "invocations": [
+    {
+      "id": "4a_comp_gitdrill_selftest",
+      "tool": "comp-gitdrill",
+      "declared_failure_mode": "LOUD",
+      "declared_confidence": "MED",
+      "declared_role_flags": "PRODUCER?",
+      "invocation": "bash .tools/comp-gitdrill --self-test",
+      "observed_rc": 0,
+      "observed_stdout_stderr_verbatim": "[PASS] resolve.path_hit   (['CLAUDE.md'] via path)\n[PASS] history.nonempty   (5 commits)\n[PASS] history.every_line_has_a_vintage   (no citation without a commit-ish + date)\n[PASS] at.blob_parity_with_git   (gitdrill=12463d09cae51b668ef58b88de911677174998e6 git=12463d09cae51b668ef58b88de911677174998e6)\n[PASS] at.diff_head_head_empty   ((no change between HEAD and HEAD))\n[PASS] resolve.miss_is_empty   ([] via unresolved)\nOK: git log/show parity holds; every line carries a vintage\nRC=0",
+      "observed_verdict": "LOUD (all 6 self-test assertions pass, including the vintage-parity property the 2026-07-24 fix targeted)",
+      "match": true
+    },
+    {
+      "id": "4a_comp_gitdrill_mismatch",
+      "tool": "comp-gitdrill",
+      "declared_failure_mode": "LOUD",
+      "invocation": "bash .tools/comp-gitdrill definitely_nonexistent_node_zzz_9999",
+      "input_class": "mismatched (nonexistent node id)",
+      "observed_rc": 3,
+      "observed_stdout_stderr_verbatim": "NOT-RESOLVED: 'definitely_nonexistent_node_zzz_9999' is neither a repo path, a graph node with a file_path, nor a git-tracked basename. (comp-gitdrill drills a PRODUCER file's history; a pure S3 artifact with no source file has no git axis -- try comp-icedrill for its vintages.)\nRC=3",
+      "observed_verdict": "LOUD",
+      "match": true
+    },
+    {
+      "id": "4b_comp_surface_check_scan_missing",
+      "tool": "comp-surface-check scan",
+      "declared_failure_mode": "LOUD",
+      "declared_confidence": "MED",
+      "declared_role_flags": "GATE-BLOCKING?,PRODUCER?",
+      "invocation": "bash .tools/comp-surface-check scan --current <nonexistent path>",
+      "input_class": "empty/missing (--current file does not exist)",
+      "observed_rc": 0,
+      "observed_stdout_stderr_verbatim": "ADVISORY: comp-surface-check scan could not load inputs (FileNotFoundError: [Errno 2] No such file or directory: '<path>') -- skipping (never crash the nightly).\nRC=0",
+      "observed_verdict": "FAIL-OPEN, by explicit design (tool's own output names the design intent: 'never crash the nightly')",
+      "match": false,
+      "note": "Genuine declared-vs-observed mismatch. On a wholly absent current-snapshot input, zero SEV1/SEV2 findings are emitted even if real drift exists -- indistinguishable from a clean run in an unattended nightly log unless something greps specifically for ADVISORY."
+    },
+    {
+      "id": "4b_comp_surface_check_scan_empty",
+      "tool": "comp-surface-check scan",
+      "declared_failure_mode": "LOUD",
+      "invocation": "bash .tools/comp-surface-check scan --current <file containing {}>",
+      "input_class": "empty/degenerate (0-node current snapshot vs 2139-node baseline)",
+      "observed_rc": 0,
+      "observed_stdout_stderr_verbatim": "node delta: +0 / -2139 / ~0\n21 SEV1/SEV2 REMOVED-node lines naming real critical-surface pages (model_portfolios.headline, model_portfolios.aum, advisor_intelligence, ...)\nLayer-2 file-SHA-watch: 13 more SEV1/SEV2 CHANGED lines\nRC=0",
+      "observed_verdict": "Loud in substance (comprehensive, correctly severity-tagged) but rc=0 -- explained by source: cmd_scan is the ADVISORY nightly report; the actual blocking gate (cmd_selfcheck) is a separate code path reading critical-surfaces.yaml directly, not graph.json.",
+      "match": "not-a-mismatch-once-traced-to-source",
+      "note": "Recorded to avoid conflating with the missing-input result above -- same subcommand, same rc=0, but a different and non-surprising reason. Register-granularity finding: one D.md row covers 7 subcommands with different failure semantics."
+    },
+    {
+      "id": "4c_comp_dispatch",
+      "tool": "comp-dispatch",
+      "declared_failure_mode": "LOUD (default)",
+      "declared_confidence": "LOW",
+      "invocation": "bash .tools/comp-dispatch definitely_nonexistent_firm_zzz_9999",
+      "input_class": "mismatched (nonexistent firm alias)",
+      "observed_rc": 1,
+      "observed_stdout_stderr_verbatim": "comp-dispatch: no gold_dispatch.sh for 'definitely_nonexistent_firm_zzz_9999' (known firms: ['bd', 'black_diamond', 'cot', 'cottonwood', 'inf', 'inflection']; or pass a path)\nRC=1",
+      "observed_verdict": "LOUD",
+      "match": true,
+      "note": "First individual verification of one of the 10 LOW-confidence 'LOUD (default)' rows named in D.md S7 finding #5. Holds for this tool."
+    }
+  ]
+}
