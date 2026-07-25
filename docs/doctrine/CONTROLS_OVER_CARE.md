@@ -440,6 +440,23 @@ checks one annotation, finds it needs no grant, and discounts the rest **has bee
 instrument to ignore it.** A warning surface is judged by whether it survives being checked, not by
 its precision rate.
 
+**9. TWO WEAK SIGNALS AT DIFFERENT GRAINS DO NOT COMPOSE INTO A STRONG ONE — AND A DISQUALIFICATION
+RULE CANNOT REPAIR A GRAIN MISMATCH.** A tracer's operation list (CODE grain, and a *floor*) was to be
+joined with AWS's `RoleLastUsed` (ROLE grain, and genuinely immune to every one of the tracer's blind
+spots) to answer *"is this specific grant unused?"* — an ACTION-grain question. **The immunity claim was
+correct and irrelevant: you cannot get an action-grain conclusion out of a code-grain floor joined to a
+role-grain observation.** The proposer's protective instinct — disqualify the verdict for any role whose
+code carries an untraced-grant annotation — guarded the join at the *role* level while the unsound step
+was the *grain change*. Two instruments that each cannot license a deletion **do not jointly license
+one**, and a false warrant assembled this way arrives wearing the platform's authority, which is worse
+than a floor wearing none. **Controls: state the grain of every input and of the conclusion before
+joining anything; and when an instrument can only support a weaker claim, THE NOUN IS THE CONTROL** —
+name the output `INVESTIGATE-CANDIDATE`, never `UNUSED`, because the misreading path requires no
+corner-cutting, only an ordinary reading. Companion mode from the same measurement: an ABSENT
+observation (`LastUsedDate: None`) **conflates never-used with not-used-inside-the-tracking-window** —
+the EMPTY-vs-ABSENT distinction again, in a new instrument, and the mode most likely to be read as
+"safe to delete." Render UNKNOWN with the window named.
+
 **Two structural notes the day earned, recorded because they change what a record is FOR:**
 **(a) A prematurely-checked prerequisite does not merely misreport status — it AUTHORIZES downstream
 work.** A build-order item marked DONE on 2 of its 3 clauses would have opened a design phase the
