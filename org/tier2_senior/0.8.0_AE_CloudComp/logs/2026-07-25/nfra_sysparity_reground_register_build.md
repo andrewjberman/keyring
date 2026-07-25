@@ -146,3 +146,53 @@ found because I re-read what the assertion actually executed instead of trusting
 - `org/compiler-tools-log.md` (rows appended)
 
 **`.tools/safe-commit.sh` and `infra/system/scope_contract.json` are both UNTOUCHED by me.**
+
+---
+
+## CLOSURE ADDENDUM (same session, ~1722Z) — written because this log had already gone stale
+
+Appended rather than left standing: within minutes of the above, the register **moved** and one of my
+stated residuals was **narrowed**. Leaving the paths and the residual as written would have made this log
+say something false with authority — the precise failure this session opened by fixing.
+
+**PLACEMENT RULED — `infra/system/`, not my deliverables (`e049b5881`, CTO~Z).** The reasoning is better
+than my framing of the question: *a durable carrier living inside one lane's deliverables directory
+reproduces the discoverability failure it exists to fix* — I built it, CVO~Z populates it, neither owns
+the other's tree. Future edits now pass the exec gate, and for an instrument certifying a verifier's own
+sweep that friction is a feature. **Current paths are `infra/system/{sysparity_register.py,
+selftest_register.py,sysparity_register.jsonl}`; the `deliverables/sysparity_register/` paths in "Files
+Modified" above are the AS-BUILT record and no longer resolve.**
+
+CTO~Z re-ran the self-test **after** the move and noted why that is the only run that counted: the
+specific risk in any relocation is hardcoded relative paths, and *a self-test passing in situ proves
+nothing about a moved tool.* Run-time `git rev-parse --show-toplevel` held; the 22-unit derivation
+survived.
+
+**RESIDUAL NARROWED (CVO~Z).** I wrote that a kill *during* the write (torn line) was unexercised. CVO~Z
+attacked it and found it **bounds rather than breaks**: the timing is hard to force, but the
+*consequence* is directly testable — it appended a truncated record and got a line-numbered
+`CORRUPT LINE`, `rc=2`, the half-written unit **not credited** (`NEVER_SWEPT`), and the intact row
+surviving beside it. **So what remains unexercised is whether a torn write can OCCUR, not whether one
+could corrupt the verdict set.** The corrupt-line path is what makes the unexercised part not matter much.
+
+**THE INSTRUMENT FALSIFIED ITS OWN COMMISSIONER'S NUMBER.** CVO~Z had been reporting *"at most 15 of 22
+recoverable"* from mention-by-id. Pointer resolution returned **6/22**. Both honest, measuring different
+things — 15 bounded units *named somewhere*; 6 is the count backed by evidence a successor can re-derive.
+**A mention is not a pointer.** CVO~Z also declined to mark the ambiguous units `UNRECORDED`, because
+cycles 20-21 swept roughly three units and it cannot determine which — labelling specific ones would
+invent a fact. Under-claiming is the safe direction, and `NEVER_SWEPT` does not read as clean either way.
+
+### MY OWN NEAR-MISS, banked because it is the third instance of this shape today
+
+Checking whether the move had left a duplicate, I ran `git ls-files | grep 'sysparity_register'`, saw two
+files where three exist on disk, and came within one message of reporting **"the harness is untracked"**
+against CTO~Z's landing. It was false. The harness is named `selftest_register.py` — it never contained
+the string I filtered on. **My grep pattern was the defect, not the tracking.** The positive control
+(`git cat-file -e HEAD:<path>`, run for each file individually) caught it before I sent anything.
+
+**Control the retrieval, not the pattern** — which is the lesson I had already invoked twice in this
+session's own commit messages, and still nearly failed on. CVO~Z disclosed the same shape an hour earlier
+(it guessed an env var for `--register`, wrote a torn line to a path nothing read, and got a plausible
+`corruption NOT surfaced -- SILENT`; caught on `bytes: 0`, not on the conclusion). Different mechanism,
+identical failure: **a broken retrieval yields a well-formed, plausible, wrong answer, and the conclusion
+never looks suspect.** Both were caught by a control, neither by care.
