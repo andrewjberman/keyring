@@ -1,6 +1,6 @@
 # NFRA_TOOLUNIFY REC-1b — Widen by Criticality (GATE-BLOCKING/PRODUCER exhaustive, rest sampled)
 
-**author:** `0.8.0_AE_CloudComp~D` · 2026-07-25 · **status:** DELIVERED, awaiting CVO~Z verification
+**author:** `0.8.0_AE_CloudComp~D` · 2026-07-25 · **status:** DELIVERED + CVO~Z-VERIFIED, closed
 **reports to:** `1.0.0_SA_CTO~Z` + `3.0.0_SA_CVO~Z` ONLY (off-main-fabric census group)
 **dispatch:** `1.0.0_SA_CTO~Z`, 20260725T050449Z, "DISPATCH NFRA_TOOLUNIFY REC-1b — widen by criticality"
 **builds on:** `REC1_EXERCISE.md` (same directory) — v1 sample, positive control + mutant already
@@ -118,9 +118,11 @@ RC=0
 **VERDICT: this IS loud in substance** — comprehensive, correctly severity-tagged, names real pages — but
 `RC=0` regardless. **This is NOT a mismatch once traced to source**: per the 68bbf3dd2 fix commit's own
 correction note, `scan` is the ADVISORY nightly drift report; the actual BLOCKING gate
-(`cmd_selfcheck`) is a **separate code path that does not read `graph.json` at all** — it diffs against
-`critical-surfaces.yaml` directly. `scan`'s job was never to block, so `rc=0` here is correct-by-design, not
-a silent failure. Recorded to avoid over-reading a second "LOUD-declared-but-rc=0" result the same way as
+(**`cmd_check`, `surface_check_cli.py:248`** — CVO~Z's source-trace correction; `cmd_selfcheck` at line 577
+is a self-test/demo harness that internally calls `cmd_check` with synthetic fixtures, not the production
+path, confirmed live via `.tools/safe-commit.sh:455`) is a **separate code path that does not read
+`graph.json` at all** — it reads `critical-surfaces.yaml` directly via `load_surfaces()`. `scan`'s job was
+never to block, so `rc=0` here is correct-by-design, not a silent failure. Recorded to avoid over-reading a second "LOUD-declared-but-rc=0" result the same way as
 §4a's real mismatch — **the two rc=0 results in this section are NOT the same finding**: one is a genuine
 declared-vs-observed gap (missing-input skip), the other is a declared-mode mismatch explained entirely by
 `scan` vs `selfcheck` being different subcommands the register's single row conflates.
@@ -187,3 +189,43 @@ available on request but was not run without one, per this lane's light-cycle di
 - **`3.0.0_SA_CVO~Z`**: exhaustive-confirmed-set claim (§2, 2/2) is mechanically re-derivable from the same
   parse script used to produce §1's table; happy to hand over the parse script itself if useful for your own
   re-run rather than trusting my counts.
+
+## 9 · CVO~Z verification (20260725T051501Z) — CONFIRMED, one precision correction, one methodology finding UPHELD
+
+Denominator + under-catch claim re-derived **from scratch, own parser, against `D.sidecar.json`'s raw `rows`
+dict** (92 entries, matches) — not ~D's script, not ~D's parse. Real field values are
+`PRODUCER-CANDIDATE`/`GATE-BLOCKING-CANDIDATE` (the `?`-suffix in this doc is presentational shorthand, not
+a misrepresentation). **Confirmed-union CONFIRMED: exactly `{comp-manifest-check, comp-stitch-refresh}`,
+count=2.**
+
+**The under-catch claim — independently confirmed, holds, and CVO~Z frames it as no longer hypothetical:**
+queried the 3 through-line-representable rows directly — `comp-stitch-refresh` → `role_flags=['PRODUCER']`
+(confirmed); `comp-gitdrill` → `role_flags=['PRODUCER-CANDIDATE']` (candidate only); `comp-surface-check` →
+`role_flags=['GATE-BLOCKING-CANDIDATE','PRODUCER-CANDIDATE']` (candidate only). Both misses carry
+MEDIUM-confidence, individually-derived `failure_mode=LOUD` rows. **"This means the Q2 criticality-filter
+methodology (confirmed-only role_flags as the widen-by-criticality gate) genuinely needs revisiting before
+further widening... not just ~D's assertion, independently re-derived from the raw register."**
+
+All 4 new exercises re-run independently (own invocations, own inputs) — **all reproduce exactly**:
+`comp-gitdrill --self-test` (6/6, RC=0), `comp-gitdrill` mismatched target (NOT-RESOLVED, RC=3),
+`comp-surface-check scan` on a missing file (FAIL-OPEN advisory, RC=0), `comp-surface-check scan` on an
+empty-object file (21 real SEV1/SEV2 findings, RC=0).
+
+**Precision correction (folded into §4b above):** ~D named `cmd_selfcheck` as the production blocking gate.
+CVO~Z source-traced `surface_check_cli.py` directly — `cmd_selfcheck` (line 577) is a self-test/demo
+harness, not what runs in production; the real gate is `cmd_check` (line 248), confirmed live via
+`.tools/safe-commit.sh:455`. The SUBSTANCE of ~D's finding is unaffected (the real gate is still a separate
+code path reading `critical-surfaces.yaml`, not `graph.json`) — only the named function was wrong.
+
+**VERDICT: REC-1b holds. Both the denominator claim and the under-catch are independently confirmed from
+the raw register, not accepted on report. All 4 new exercises reproduce exactly. CVO~Z's explicit
+recommendation: act on the methodology-revisit — this is now twice independently confirmed, not
+hypothetical.** REC-1b CLOSED.
+
+**METHODOLOGY NOTE FOR ANY FUTURE WIDENING PASS (CTO~Z, carrying CVO~Z's recommendation forward):**
+`role_flags` confirmation status and `failure_mode` confidence are demonstrated to be two different axes —
+a HIGH/MED-confidence `failure_mode=LOUD` row can carry a `?`-suffixed (candidate-only) `role_flags`. A
+future exhaustive-by-criticality pass should NOT filter on confirmed-only `role_flags` alone; it should
+also sweep candidate-flagged tools whose `failure_mode` confidence is HIGH/MED. No further widening is
+currently scoped (WS-4/WS-5 held per Andrew's ruling), so this is banked guidance for whenever that resumes,
+not an action item today.
