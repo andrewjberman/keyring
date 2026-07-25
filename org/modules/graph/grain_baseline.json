@@ -4,7 +4,7 @@
   "per_class": {
     "API_GW": 6,
     "LAMBDA_LAYER": 13,
-    "EXTERNAL_ENDPOINT": 3,
+    "EXTERNAL_ENDPOINT": 0,
     "REACT_QUERY_KEY": 32,
     "LAMBDA": 169,
     "SQS_QUEUE": 4,
@@ -61,6 +61,21 @@
         }
       ],
       "note": "Auditable verified-drift acceptance per COO governance ask 2026-06-11T2152Z \u2014 NOT a band-loosening; bands unchanged at [0.4,2.5]x."
+    },
+    {
+      "date": "2026-07-25",
+      "trigger": "17-day unattended GRAIN-SENTINEL FAIL on stitch_graph.json production (backgrounded + discarded by stitch-refresh-post-commit.sh, silent since 2026-07-08; found via NFRA_TOOLUNIFY REC-1 exercise + CVO~Z reground, escalated by CTO~Z as the top-priority item)",
+      "classes": [
+        {
+          "class": "EXTERNAL_ENDPOINT",
+          "baseline_was": 3,
+          "recertified_to": 0,
+          "ratio": "0.00x -> band check now skipped (grain_sentinel.py check_magnitude: base<=0 -> skip)",
+          "verified_reason": "NOT a broken extractor. EXTERNAL_ENDPOINT (3 email/phone SNS alert destinations) was PERMANENTLY DROPPED from the canonical graph by an Andrew-direct, CTO-arch-gated, CVO-signed decision on 2026-06-26 (commit 9a70418a7b, 'NFRA_GLOBGRPH taxonomy SIMPLIFIED to 3 layers... drop external+pipeline noise' -- alert plumbing + contact-PII, not estate to analyze; org/modules/graph/derive_runner.py DROP_NODE_TYPES + drop_node_types()). This baseline file was certified 2026-06-11, 15 days BEFORE that drop -- every derive since 06-26 has correctly produced count=0, and the stale baseline of 3 has been silently tripping AC-GRAIN.2 on this class ever since, contributing to the stitch producer's 17-day publish failure. Recertifying to 0 makes the sentinel skip this permanently-dropped class going forward (the code's own designed mechanism for a class with base<=0), rather than comparing a real, permanent zero against a pre-taxonomy-change baseline forever.",
+          "verified_by": "0.8.0_AE_CloudComp~D (source-grounded: derive_runner.py:9a70418a7b commit + grain_sentinel.py:128 skip-on-<=0 mechanism); CVO~Z verification pending (reported same turn)"
+        }
+      ],
+      "note": "SCOPED to EXTERNAL_ENDPOINT only -- the other 5 classes that tripped in the 07-25 GRAIN-SENTINEL FAIL (REACT_QUERY_KEY, SQS_QUEUE, ECS_TASK_DEFINITION, SCHEDULE, IAM_USER) are NOT touched here. Per CTO~Z's own read they look like legitimate 17-day estate growth against a now-stale band, not extractor bugs -- but each needs its own verified_reason (the established pattern this file uses), which is a separate, larger recalibration decision routed to CTO~Z, not bundled into this single deterministic fix."
     }
   ]
 }
