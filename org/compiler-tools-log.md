@@ -26517,3 +26517,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam gaps | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/extract_iam.py org/modules/graph/iam_cli.py | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_COMPIAM.STAGE3-UNMAPPED-METHOD | comp-iam | ad-hoc fleet K-census (157 Lambdas) | PASS | UNMAPPED-METHOD control added, self-caught+fixed a resource-accessor noise source (97->46 genuine gaps) |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam service opal-data-refresh-api | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam stats | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam service opal-data-refresh-api | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam roles | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/extract_iam.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_COMPIAM.STAGE4-GAP-CLOSURE | comp-iam | ad-hoc fleet K-census (157 Lambdas) | PASS | 22 real mappings + 3 verified-null, fleet K=0, control confirmed still fires post-cleanup |
