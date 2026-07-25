@@ -48,3 +48,15 @@ place). Same evidence class throughout (the Lane-E-documented comp-types debris 
 close is `~A`'s guard-v2 metric-scoped dirty-check (dispatched)** — under it, debris feeding neither
 drifted metric stops blocking at all, and quarantines stop being needed. Total quarantined this session:
 6 postmerge-cols + 19 types-index = 25 files, all reversible, all recorded.
+
+## Fourth and final pass (~0854Z): comprehensive sweep — the ambient pool is now EMPTY
+
+Third pocket (`vectorize-audit/INF_09.generate_partner_analytics.py.yaml`, Jul-10 vintage, untracked, no
+history) confirmed ~D's ambient-residue read: the union-scoped guard surfaces one pocket per clearing.
+Ruling: ONE comprehensive sweep instead of serial quarantines — every untracked `*.yaml` under
+`org/modules/graph/` with a PRE-TODAY mtime (safe predicate: today's files skipped as possibly-live lane
+work) quarantined to the same dir, subdir structure preserved. Result: exactly 1 more file (the
+vectorize-audit pocket itself was the last), and the post-sweep check reads **ZERO untracked yamls under
+org/modules/graph/** — no further pocket exists to surface. Session total: 26 files quarantined, all
+reversible, all recorded. `~A`'s guard-v2 remains the durable fix for the class; this sweep ends the
+incident series.
