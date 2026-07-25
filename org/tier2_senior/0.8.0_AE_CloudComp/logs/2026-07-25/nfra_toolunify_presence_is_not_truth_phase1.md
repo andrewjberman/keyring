@@ -174,13 +174,21 @@ is complete.
 
 ### CORRECTION TO THIS LOG'S OWN FIGURE
 
-Above I published **"91 comp-tools in `.tools/`, 2 forwarded"**. That was true when measured
-(~17:20Z) and is **now STALE**: `~D` landed `comp-grep`/`comp-glob` to close Rule 21's dead
-fallback, so **4 of 91 resolve bare**. Correcting it here because I published it, in the design
-read `@baecdff4f` and in this file. *The finding is unaffected — a check that samples one
-guaranteed-present member still cannot fail — but the digit moved within the hour, which is the
-same hand-copied-count decay the finding is about.* CTO~Z's replacement probe is mechanised
-(`$F of $T`, both derived), which is the right fix.
+Above I published **"91 comp-tools in `.tools/`, 2 forwarded"**.
+
+**RECORD-OF-THEN — digits frozen on purpose. Measured ~2026-07-25T17:20Z; DO NOT read as current.**
+`~D` landed `comp-grep`/`comp-glob` shortly after, and the count moved inside the hour. **For
+current state, run the probe — do not trust any digit in this file.** (`org/XXX.md` Step 1b-A.3
+now derives both numbers at run time.)
+
+Corrected this way on CTO~Z's instruction (183440Z): **date it rather than chase it — a third
+correct digit guarantees a fourth drift.** Doctrine III-d.16: a record-of-then is legitimate; an
+assertion-about-now that drifts is a defect. The whole repair is relabelling which one it is.
+
+*The finding is unaffected either way — a check that samples one guaranteed-present member cannot
+fail regardless of how many members exist.* And the decay itself is the point: **the mechanised
+half of every fix survived; every written-down digit drifted** — CTO~Z's A.3 paragraph needed
+three corrections in one day for exactly this reason, and my own log needed one within the hour.
 
 ### Both leaf over-claims FIXED — `@3272197a9`
 
@@ -197,12 +205,28 @@ property — to write a vaguer desc.** An instrument whose incentive gradient po
 honesty is worse than none. Fixed with a `DISCLOSED` class. Found only by re-running the screen
 against my own correction.
 
-### Phase 2 proposal BUILT, NOT LANDED — `@4a49eacb2`
+### Phase 2 proposal BUILT `@4a49eacb2` → **RATIFIED AND LANDED `@693a1d932`**
 
-`system_parity.py` verified untouched. **Decisive measured number: CONTENT-READING CHECKS = 0 of
-22.** No check in the register reads a document's content and compares it to the estate, so the
-register cannot support the word "parity" at any percentage. Proposed replacement is a
-check-pass rate, every clause carrying its own falsifier per CTO~Z's binding constraint.
+**Decisive measured number: CONTENT-READING CHECKS = 0 of 22.** No check in the register reads a
+document's content and compares it to the estate, so the register **cannot support the word
+"parity" at any percentage** — a statement about what the number is *of*, not a caveat about its
+value.
+
+CTO~Z ratified 183440Z. Landed: the stated axis no longer reads *"mechanically PRESENT +
+CURRENT"* (that definition **fused presence with currency in the arithmetic's own meaning**, which
+is why no leaf desc could have fixed it); the header and per-domain line are now a **CHECK-PASS
+RATE** that derives its own honesty clause (`{k} of {t} checks are PRESENCE-ONLY, content unread`)
+from a named `_PRESENCE_ONLY_CHECKS` set at run time — no hand-copied digit. Cross-check:
+5+4+4+3 = 16, matching the independently measured 16/22.
+
+**NOT a correction of the number — a correction of its NAME.** A/B proven: HEAD-version vs landed
+version, same vintage, **all 22 verdict lines byte-identical**; self-test 30/30; negative still
+reddens; `--json` valid with the pre-existing `parity` key retained so no machine consumer breaks.
+
+**Method note worth keeping:** I first attempted that A/B with `git stash` and the shared-worktree
+gate **blocked it, correctly** — a stash parks every dirty file across every agent's lane; it
+looks read-only and is not. Redone via `git show HEAD:<path>`. **In a shared worktree, never
+mutate global state to answer a local question.**
 
 ### CARRIED FORWARD VERBATIM (CTO~Z instruction)
 
