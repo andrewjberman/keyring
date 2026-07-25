@@ -26443,3 +26443,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate | VERDICT |
 | 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --self-test | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.BLOCKED-ON-PEER-LANDING-V4 | comp-system | bash .tools/comp-system --self-test | PASS | 26/26, closed the association-third-limb residual (basename-in-source coupling) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_COMPLEARN.L1a-SENSOR-3 | (session) | L1a sensor #3 built (comp-blast, DAG shape, doc_only N/A): controls PASS, R1 clean rc=0, R2 VERDICT rc=2 (7 orphans + 2 dead filter members); 2 frozen-enumeration drifts routed | VERDICT |
