@@ -582,6 +582,74 @@ is cheaper than the post-hoc every time, and the fix is usually one line: make t
 denominator — "N regions compared across M files, 0 drifted" — so a wiring typo appears as a count drop
 instead of as silence.**
 
+**18. A SCALAR IS LEGITIMATE IFF ITS UNIT MEANS THE SAME THING ACROSS EVERYTHING IT SUMS — the test
+that turns "this total looked wrong" into a rule.** An aggregate published `138 covered items` over five
+sensor reports and it was a violation; the same aggregate published `2 of 5 tools have a doc plane` and
+that was correct. **The distinguishing question is not "is it a total?" but "does the unit survive the
+population?"** — `item` silently changes meaning (a *call site* in one report, a *graph edge-type* in
+another, an *env key* in a third), while `tool` is invariant regardless of which address space a tool
+emits. **The prohibition on aggregating across an address space exists because address spaces make the
+UNIT incommensurable, not because counting is bad**; a count over a homogeneous population that merely
+*has* an address-space attribute is fine. Stated this way it is a test the next aggregate can apply,
+rather than a precedent it has to pattern-match against.
+
+**19. A WHITELIST HAS THE DISCRIMINATION OF ITS LOOSEST MEMBER — AND ITS FALSE-ACCEPTS ARE SILENT WHILE
+ITS FALSE-REJECTS ARE LOUD.** A declared-vocabulary validator flagged every *accurate but undeclared*
+term and passed every *declared but wrong* one. Measured instance: two declared terms sat one word away
+from live ones with genuinely different meanings (a node's *identity* vs its *kind*; a *branch* vs a
+*call site*), so an author reaching for the near-miss got a **clean report about the wrong thing**, while
+an author emitting the accurate novel term got flagged. **Being precisely wrong was rewarded; being
+accurately novel was penalised.** Loud errors self-correct — someone sees the flag. Silent ones compound.
+**And the consequence that undercuts the obvious metric: the flag's RATE IS A BIASED ESTIMATOR of
+vocabulary health, because it counts the accurate-novel emissions and structurally cannot count the
+precise-wrong ones.** The instrument that surfaces this class cannot measure the half of it that
+matters. Remedies: disambiguate near-misses *at the term* (state what it is NOT), and **report both
+denominators — declared, live-emitted, and their intersection — because "over-declared" and
+"under-conforming" have opposite remedies and a single ratio picks neither.** Corollary, learned by
+proposing the wrong fix first: an `ANTICIPATED` marking with no owner and no trigger **recreates the
+indistinguishability it was invented to remove, one level up** — a forgotten term with better branding.
+
+**20. THE OR-BOUNDARY — WHICH DISJUNCTIVE CHECKS ARE ACTUALLY SUSPECT.** Four findings in one day were
+against OR'd patterns, and the over-generalisation forming from them — *"disjunctive checks are
+unreliable"* — is false and expensive. The boundary:
+
+> **A disjunction of PROPER NOUNS is a legitimate presence check. A disjunction that mixes proper nouns
+> with GENERIC vocabulary has the sensitivity of the GENERIC TERM.**
+
+`comp-debris|comp-similar|comp-iam-usage` is fine — each limb names one thing that either exists or does
+not. `catalog|tools_index|ledger` is not: the generic limb matches almost any prose, so the check passes
+whatever the specific limbs' real state. **The defect is never the OR; it is a generic limb silently
+carrying the whole predicate.** Recorded because the narrower claim had *already* changed behaviour —
+frozen digits were dropped from an unrelated pattern on the strength of it — so leaving the broad version
+standing would have licensed edits the evidence never supported. **A correction issued against your own
+findings, published WITH them, is worth more than the findings: most instruments never emit the boundary
+that tells a reader which of their own alarms were real.**
+
+**21. A RETRIEVAL HAS NO FAILURE CHANNEL, SO IT NEEDS AN EXTERNAL DENOMINATOR.** The estate's standing
+line is *control the retrieval, not the pattern*. **One day produced four instances, in four different
+hands, by four different mechanisms — and not one produced an error:**
+
+| mechanism | what it produced |
+|---|---|
+| case-mismatched `grep` against an `IGNORECASE` checker | a confident **0** from a pattern that never matched |
+| MSYS rewrote the search pattern before the tool saw it | a confident **0** — *the wrong question asked correctly* |
+| `grep -c … \|\| echo 0` — **`grep -c` exits 1 on zero**, so the fallback appended a SECOND zero and `"0\n0" != "0"` | **the precise INVERSE of the truth for all 15 files**, rendered as a clean list |
+| a 34-failure run piped through `tail -25`, then counted in the artifact | **24 of 34**, grouped by file, presented as the complete distribution — inside a correction, which carries extra credibility |
+
+**One class, not four bugs: the RETRIEVAL was broken and the PATTERN was fine.** Every output was
+well-formed, plausible, and confidently shaped. **In all four the tool's own verdict could not detect it
+— only an external count could:** the producer's own total (34 vs 24), a positive control that MUST be
+non-zero, or an arithmetic check that must close. One of the four was caught by **taste alone** — 15-of-15
+was too tidy to be real — and that is the warning, not the reassurance: **the control did not exist, and
+only judgment stood between a clean inverted list and the record.**
+
+>> **A COUNT YOU CANNOT CROSS-CHECK IS NOT EVIDENCE, HOWEVER CLEAN IT LOOKS. And note where these were
+>> caught: on `bytes: 0`, on a per-file positive control, on a producer's own total — every one on a
+>> CONTROL, not one on the conclusion, because every conclusion read entirely reasonable right up until
+>> the control contradicted it.** << Four independent agents, one session, one class — including a
+Tier-1: **this is not a lane-level discipline problem, and any single instance would have read as
+carelessness.**
+
 **Two structural notes the day earned, recorded because they change what a record is FOR:**
 **(a) A prematurely-checked prerequisite does not merely misreport status — it AUTHORIZES downstream
 work.** A build-order item marked DONE on 2 of its 3 clauses would have opened a design phase the
