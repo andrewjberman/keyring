@@ -20,7 +20,7 @@ All **92 register rows** dispatched and accounted across 7 passes (REC-1: 5 · R
 
 **2c · SCOPE-COERCION is its own axis, not poor disclosure** (C's finding, CVO~Z re-derived, ~A concurring): comp-dups fed an invalid `--class` runs the FULL unfiltered scan and presents it as the answer to the filtered question — FILTER-IGNORED/SCOPE-COERCED. A reader who asked for class X reasonably believes the results are class-X. Distinct register dimension.
 
-**2d · REVERSE-POLARITY (declared-FAIL-OPEN → observed genuinely LOUD).** Instances accumulated across lanes (base: comp-kuzu, comp-kuzu-inc, comp-cluster, pipescript · B: comp-pydeps, comp-residue, comp-imgread · A: comp-lambdamap). **[PENDING: exact union count after E/B verdicts]**. Direction is the good one (register too pessimistic) — but its existence alongside 2a is what makes §0 noise-not-bias.
+**2d · REVERSE-POLARITY (declared-FAIL-OPEN → observed genuinely LOUD).** Instances accumulated across lanes (base: comp-kuzu, comp-kuzu-inc, comp-cluster, pipescript · B: comp-pydeps, comp-residue, comp-imgread, comp-similar · A: comp-lambdamap · E: comp-adapter-audit — all lane-verdicts now CVO~Z-verified). **The B-batch shading, stated plainly (CVO~Z): 4 of B's 5 mismatches are tools behaving BETTER than declared — in that batch the register UNDERSTATES tool quality 4:1.** Program-wide the error stays bidirectional (§0's noise-not-bias holds), but the practical reading changes: **a MED-confidence FAIL-OPEN row's more likely error is the ROW, not the tool** — a reader should distrust the unexercised declaration before distrusting the tool. Also banked (CVO~Z): a **drifting live denominator is a FEATURE, not a discrepancy** (comp-grep scanned 23754 on B's run, 23814 on the verify — the tool counts the real working set each run; only a FROZEN denominator is suspect). After the 5-vs-8 count lesson, that's exactly the shape a naive reader would misflag.
 
 **2e · CALL-SITE AUDIBILITY ≠ tool failure_mode** (REC-1's founding finding): comp-stitch-refresh is exercise-confirmed LOUD at its boundary and was operationally SILENT for 17 days because its only call site backgrounds+discards+exit-0s. A mechanism claim is not a reception claim; candidate register dimension, distinct from failure_mode.
 
@@ -30,9 +30,14 @@ All **92 register rows** dispatched and accounted across 7 passes (REC-1: 5 · R
 ```
 TIER 1 — BEST:  FAIL-CLOSED on zero coverage. rc!=0; refuses to answer rather than answering emptily.
                 comp-whoread (rc=1 "CANNOT ANSWER"; never-captured vs never-read made explicit)
+                comp-residue (rc=3 "NOTHING was compared, so nothing is concluded" — best phrasing in
+                the estate: names the NON-conclusion, not just the failure)
+                comp-pydeps (rc=3 + 323-file denominator + redirect to the right tool)
+                comp-imgread (rc=2, plain explicit error)
 TIER 2 — GOOD:  rc-silent BUT fully disclosed: denominator + scope caveat + match-miss-≠-absence.
                 comp-cache (105/105 + not-audited caveat) · comp-trigger (141+10 scanned + explicit
                 "match-miss, not proof no trigger exists" disclaimer — arguably the best of the tier)
+                comp-grep (rc=0 but prints a 23,814-file denominator + on-rails caveat)
 TIER 3 — BAD:   rc-silent AND undisclosed — a well-formed result with no signal the input was absent.
                 comp-coverage (0.0% with no cause disclosed) · comp-assets (bare JSON)
 TIER 4 — WORST: rc-silent, AFFIRMATIVELY successful, WITH a side-effect.
