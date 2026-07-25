@@ -733,6 +733,30 @@ RULES = [
      "are a resource's TAGS load-bearing for authorization (aws:ResourceTag conditions)? A default_tags "
      "import that 'only changes tags' can silently overwrite the value that GRANTS access -- this measures "
      "AUTHORIZATION, not attribute surface"),
+    # ---- WS-7 register-as-control (NFRA_TOOLUNIFY, 2026-07-25): comp-state was registered
+    # (graph-call-manifest.yaml org.state.registry_drift) and just added to tools_index (this same
+    # pass) but had ZERO curated vocabulary here -- the exact NFRA_COMPCLOSE Phase A class recurring
+    # ("registration without vocabulary is registration in name only"), this time caught by the
+    # self-route completeness invariant the moment the tool entered tools_index's checked population. ----
+    (["registry drift", "registry behind", "registry stale", "governance drift",
+      "governance records drift", "record behind state", "records behind the estate",
+      "record tracks the estate", "stale task order", "stale task-order", "stale to status",
+      "to status stale", "task order status stale", "task-order status behind", "prd status stale",
+      "prd status behind", "is the registry updated", "registry updated", "project json behind",
+      "which records need updating", "comp-state", "bm25 registry linter",
+      "registry to prd state linter",
+      # exact-substring anchors from comp-state's own manifest use_case (org.state.registry_drift) --
+      # the self-route invariant queries comp-which with that literal string, and _score_rule only
+      # credits a multi-word keyword on a literal substring match, not fuzzy overlap
+      "task-order status", "prd status line", "governance records", "records need updating",
+      "record-tracks-the-estate", "the registry / a project json"],
+     "registry/TO/PRD state drift linter (comp-state)",
+     ["comp-state [--project CODE] [--days N] [--all] [--self-test] [--json]"],
+     "is the registry / a project JSON / a task-order status / a PRD Status line BEHIND the estate's "
+     "actual git-commit state? BM25-style drift check over git commits (Andrew-direct 2026-07-14). "
+     "ADVISORY: a BEHIND is a place to LOOK never an auto-edit; CURRENT is absence-of-lexical-evidence "
+     "not a verified record. DISTINCT from comp-drift (propagation-topology parity local->git->cloud, "
+     "a completely different axis that happens to share the word 'drift')."),
     (["who read", "who actually read", "actually read", "did read", "who-did-read",
       "read the bucket", "object-level reads", "read forensics", "principals read",
       "principals actually read", "comp-whoread", "cloudtrail data events", "s3 read history",

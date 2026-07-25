@@ -363,6 +363,7 @@ pending_declaration:
   - comp-debris
   - comp-denytest
   - comp-depth
+  - comp-describe
   - comp-diff
   - comp-dispatch
   - comp-dups
@@ -375,6 +376,8 @@ pending_declaration:
   - comp-iam-usage
   - comp-icedrill
   - comp-incrparity
+  - comp-kuzu-full
+  - comp-kuzu-inc
   - comp-learns-score
   - comp-learns-status
   - comp-ontolint
@@ -385,6 +388,7 @@ pending_declaration:
   - comp-secrets
   - comp-shell
   - comp-similar
+  - comp-state
   - comp-symbols
   - comp-tagauthz
   - comp-tool-health
