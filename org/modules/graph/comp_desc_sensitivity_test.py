@@ -122,6 +122,56 @@ def test_MUTANT_folding_UNKNOWN_into_ALIGNED_hides_a_real_overclaim():
 
 
 # --------------------------------------------------------------------------
+# SETTLED RULE 3b -- A DESC THAT DISCLAIMS ITS OWN LIMIT IS NOT OVER-CLAIMING.
+#
+# THE INSTRUMENT PUNISHED THE FIX IT EXISTS TO PROMPT. The honest desc written for
+# eng-incorporation under CTO~Z's 182057Z ruling -- "...does NOT establish that the
+# incorporation loop's state is REPRESENTED" -- scored OVER-CLAIM, because the classifier
+# cannot tell an ASSERTION from a NEGATED MENTION and "represented" is a TRUTH term.
+# The only way to score clean was to stop NAMING the property, i.e. write a VAGUER desc.
+# An instrument whose incentive gradient points away from honesty is worse than none.
+# --------------------------------------------------------------------------
+def test_disclaimed_desc_is_DISCLOSED_not_OVER_CLAIM():
+    unit = {"id": "d",
+            "desc": ("the ledger FILE EXISTS -- PRESENCE ONLY: an EMPTY file passes, so "
+                     "this does not establish that the state is represented"),
+            "check": {"type": "file_exists", "path": "x"}}
+    assert ds.assess(unit)["verdict"] == "DISCLOSED"
+
+
+def test_the_two_corrected_live_units_now_read_DISCLOSED():
+    """REGRESSION on the actual register: both units corrected under the 182057Z ruling."""
+    rows = {r["id"]: r["verdict"] for r in ds.report()["rows"]}
+    assert rows["eng-incorporation"] == "DISCLOSED"
+    assert rows["ont-sdk-vocabulary-bound"] == "DISCLOSED"
+
+
+def test_MUTANT_removing_the_disclaimer_class_re_punishes_the_honest_desc():
+    """MUTANT: drop CLAIM_DISCLAIMERS and the honest desc reverts to OVER-CLAIM --
+    the exact honesty-punishing gradient this class was added to remove."""
+    unit = {"id": "d",
+            "desc": ("the ledger FILE EXISTS -- PRESENCE ONLY: an EMPTY file passes, so "
+                     "this does not establish that the state is represented"),
+            "check": {"type": "file_exists", "path": "x"}}
+    assert ds.assess(unit)["verdict"] == "DISCLOSED"
+    saved = list(ds.CLAIM_DISCLAIMERS)
+    try:
+        ds.CLAIM_DISCLAIMERS.clear()
+        assert ds.assess(unit)["verdict"] == "OVER-CLAIM"   # honesty punished again
+    finally:
+        ds.CLAIM_DISCLAIMERS.extend(saved)
+    assert ds.assess(unit)["verdict"] == "DISCLOSED"        # restored
+
+
+def test_a_disclaimer_does_not_launder_an_unrelated_truth_claim():
+    """GUARD against the obvious abuse: DISCLOSED must require a real self-limiting
+    clause, not merely the presence of the word 'not' somewhere in the desc."""
+    unit = {"id": "d", "desc": "the state is represented and is not stale",
+            "check": {"type": "file_exists", "path": "x"}}
+    assert ds.assess(unit)["verdict"] == "OVER-CLAIM"
+
+
+# --------------------------------------------------------------------------
 # SETTLED RULE 4 -- UNDER-CLAIM is reported but is NEVER a defect (dispatch item 3:
 # an honest "this file exists" is the MORE accurate instrument).
 # --------------------------------------------------------------------------

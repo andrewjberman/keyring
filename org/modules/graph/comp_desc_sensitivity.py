@@ -129,15 +129,40 @@ _WORD_RE = {w: re.compile(r"\b" + re.escape(w).replace(r"\ ", r"\s+") + r"\b", r
             for w in CLAIM_PRESENCE + CLAIM_TRUTH}
 
 
+# EXPLICIT SENSITIVITY DISCLAIMERS. A desc that states its OWN limit is, by construction,
+# not over-claiming -- even though it must NAME the property it is disclaiming, which is
+# exactly what a term-matcher mistakes for asserting it.
+#
+# WHY THIS EXISTS, and it is the sharpest self-catch of the build: when I wrote the honest
+# desc for eng-incorporation -- "...does NOT establish that the incorporation loop's state
+# is REPRESENTED" -- the screen flagged it OVER-CLAIM, because "represented" is a TRUTH term
+# and the classifier cannot tell an ASSERTION from a NEGATED MENTION. The instrument was
+# PUNISHING THE FIX IT EXISTS TO PROMPT: the only way to score clean was to stop naming the
+# property, i.e. to write a VAGUER desc. An instrument whose incentive gradient points away
+# from honesty is worse than no instrument, and I only found it by running the screen against
+# my own correction instead of assuming it worked.
+CLAIM_DISCLAIMERS = [
+    "does not establish", "presence only", "absence only", "this does not",
+    "cannot fail", "not evidence", "does not mean", "no content is read",
+]
+
+
 def _classify_desc(desc: str) -> Tuple[str, List[str]]:
     """LEXICAL claim classification. Returns (class, matched_terms).
 
     WORD-BOUNDARY matched, not substring -- see the calibration note above for the
     measured false positives that forced this.
 
-    TRUTH wins ties: a desc asserting both existence AND currency makes the stronger
-    claim, and the stronger claim is the one a presence check fails to support.
+    DISCLOSED wins outright: an explicit self-limiting clause means the desc is stating
+    its own sensitivity, not claiming past it.
+
+    TRUTH then wins over PRESENCE: a desc asserting both existence AND currency makes
+    the stronger claim, and the stronger claim is the one a presence check fails to support.
     """
+    low = desc.lower()
+    disclaimers = [d for d in CLAIM_DISCLAIMERS if d in low]
+    if disclaimers:
+        return "DISCLOSED", disclaimers
     truth_hits = [w for w in CLAIM_TRUTH if _WORD_RE[w].search(desc)]
     pres_hits = [w for w in CLAIM_PRESENCE if _WORD_RE[w].search(desc)]
     if truth_hits:
@@ -183,7 +208,9 @@ def assess(unit: Dict[str, Any]) -> Dict[str, Any]:
     sens, sens_note = CHECK_SENSITIVITY.get(ctype, ("UNKNOWN", "unmodelled check type"))
     claim, hits = _classify_desc(desc)
 
-    if sens == "UNKNOWN" or claim == "UNCLASSIFIED":
+    if claim == "DISCLOSED":
+        verdict = "DISCLOSED"
+    elif sens == "UNKNOWN" or claim == "UNCLASSIFIED":
         verdict = "UNKNOWN"
     elif claim == "TRUTH" and sens == PRESENCE:
         verdict = "OVER-CLAIM"
@@ -228,14 +255,14 @@ def render(res: Dict[str, Any]) -> str:
     out.append("  DENOMINATOR: %d unit(s) carrying a check in scope_contract.json" % n)
     out.append("  CHECK SHAPE: %d presence-shaped / %d derived-shaped"
                % (res["presence_shaped"], res["derived_shaped"]))
-    order = ["OVER-CLAIM", "UNDER-CLAIM", "UNKNOWN", "ALIGNED"]
+    order = ["OVER-CLAIM", "UNDER-CLAIM", "UNKNOWN", "DISCLOSED", "ALIGNED"]
     tally = ", ".join("%s=%d" % (k, res["counts"].get(k, 0)) for k in order)
     out.append("  VERDICTS:    %s" % tally)
     out.append("")
     for row in sorted(res["rows"], key=lambda r: (order.index(r["verdict"])
                                                   if r["verdict"] in order else 99,
                                                   r["id"])):
-        if row["verdict"] == "ALIGNED":
+        if row["verdict"] in ("ALIGNED", "DISCLOSED"):
             continue
         out.append("  [%s] %s  (%s -> %s)"
                    % (row["verdict"], row["id"], row["check_type"], row["check_sensitivity"]))
