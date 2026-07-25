@@ -48,7 +48,11 @@ _MIGRATED = [
     _GRAPH / "comp_recognizers_code.py",
     _GRAPH / "comp_recognizers_config.py",
     _GRAPH / "extract_iam.py",
-    _GRAPH / "comp_constants_cli.py",
+    # comp_constants_cli.py REMOVED from _MIGRATED (GOVRIP, base CTO ruling 192330Z): it no longer
+    # imports sovereign_held at all. It derived a RETRACTED_* re-arm set, and Andrew's ~185538Z ruling
+    # forbids the tool-level governance predicate -- so the fix was to STOP DERIVING, not to re-point.
+    # This list means "still imports the shared predicate"; a migrated-OFF module must leave it, or
+    # the test asserts the presence of the very import the ruling removed.
     _GRAPH / "pipeline_cli.py",
     _GRAPH / "incrparity_cli.py",
     _TOOLS / "freshness_manifest_gen.py",

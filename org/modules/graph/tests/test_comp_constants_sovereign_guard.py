@@ -74,12 +74,25 @@ def test_live_default_is_RETRACTED_not_enforcing():
         "the 2026-07-09 hold is RETRACTED; comp-constants must enforce no markers by default")
 
 
-def test_retracted_markers_are_RETAINED_so_the_guard_can_be_re_armed():
-    """A guard you cannot re-arm is not a fix, it is a removal. The lifted set stays in source so a
-    future hold is a one-line re-point, not a rebuild."""
-    from org.modules.graph.comp_constants_cli import _RETRACTED_20260709_MARKERS
-    for marker in ("data/black_diamond/", "schwab/silver/", "opal-data-bd", "opal-data-schwab"):
-        assert marker in _RETRACTED_20260709_MARKERS, f"re-arm set must retain {marker!r}"
+# RETIRED 2026-07-25 -- test_retracted_markers_are_RETAINED_so_the_guard_can_be_re_armed.
+#
+# It asserted that the lifted marker set STAYS IN SOURCE "so a future hold is a one-line re-point".
+# Andrew ruled ~185538Z that no comp-tool may carry a governance predicate at all -- governance is
+# IAM, not a code branch -- which forbids exactly that one-line re-point. The test did not merely
+# happen to break: IT EXISTED TO GUARANTEE THE CAPABILITY THE RULING RETIRES, so a green result from
+# it meant "the prohibited capability is still available".
+#
+# THE ARGUMENT IS IN THIS FILE, SIX LINES ABOVE, AND IT PREDATES THE RULING:
+#   test_live_default_is_RETRACTED_not_enforcing() -- "A control must not outlive the rule it
+#   enforces, and must never resist its own removal."
+# The retired test WAS a control resisting its own removal. Its immediate neighbour forbids that.
+# Nobody had to import a new principle; the file already contained the one that settles it.
+#
+# Retired under base CTO ruling 192330Z, converged on independently by 1.0.0_SA_CTO and
+# 1.0.0_SA_CTO~Z. KEPT deliberately: test_live_default_is_RETRACTED_not_enforcing (the hold is NOT
+# enforced -- the ruling STRENGTHENS that, making it permanent rather than provisional) and
+# test_guard_MECHANISM_still_fires_when_a_hold_is_declared (the machinery, separated from any live
+# prohibition).
 
 
 def test_guard_MECHANISM_still_fires_when_a_hold_is_declared(held_cfg):

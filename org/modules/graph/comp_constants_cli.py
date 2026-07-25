@@ -27,16 +27,17 @@ from pathlib import Path, PurePosixPath
 
 import yaml
 
-# NFRA_TOOLPASS C7: derived from sovereign_held (the canonical leaf) instead of a local literal tuple.
-# Post-split (2026-07-22) this imports the RETRACTED_* sets -- the RE-ARM values, not an active hold --
-# because the live governance tuples are now correctly EMPTY and would make the re-arm set empty too.
-# Dual import (relative in package context, else add own dir + bare) -- comp-constants runs standalone
-# (python comp_constants_cli.py, incl. the subprocess-based fixtures) and as a package.
-try:
-    from .sovereign_held import RETRACTED_20260709_PATHS as _HELD_PATHS, RETRACTED_20260709_BUCKETS as _HELD_BUCKETS
-except ImportError:
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from sovereign_held import RETRACTED_20260709_PATHS as _HELD_PATHS, RETRACTED_20260709_BUCKETS as _HELD_BUCKETS
+# GOVRIP 2026-07-25 (Andrew-direct ~185538Z, base CTO ruling 192330Z): this module no longer derives
+# governance markers AT ALL. It previously imported RETRACTED_20260709_* from sovereign_held to build a
+# re-arm set -- and re-arm is precisely what the ruling forbids, so the fix was to stop deriving rather
+# than to re-point at a surviving tuple. SOVEREIGN_HELD_MARKERS = () below is what is actually enforced.
+#
+# THIS IMPORT WAS ALSO A FABRIC-WIDE BOOTSTRAP HAZARD, which is why it went first:
+#   .tools/commit_gate_runner.py:96 imports this module, and .tools/commit-gate.sh:43 `exec`s that
+#   runner, so python's rc IS the Rule-14 gate's rc and the gate FAILS CLOSED. The removed import was a
+#   relative-vs-absolute retry of THE SAME module, not a missing-module guard -- both arms fail if
+#   sovereign_held is absent. Deleting sovereign_held before this removal would have blocked EVERY .py
+#   commit in the repo, INCLUDING the commit that repaired it. Exercised independently by both CTOs.
 
 
 WORKSPACE_ROOT = Path(__file__).resolve().parents[3]
@@ -539,7 +540,10 @@ def cmd_list(args: argparse.Namespace, config: dict) -> int:
 # --allow-held-scan / the REFUSE paths keep working unchanged. The INF-chain hold is a SEPARATE mechanism
 # (frozen individual FILES + Door 5/6) and is deliberately not expressible here. Firm separation
 # (NEVER#2 / Rule 13) is a DIFFERENT control, gate- and IAM-enforced, and is untouched by this lift.
-_RETRACTED_20260709_MARKERS = tuple(_HELD_PATHS) + tuple(_HELD_BUCKETS)  # retained for re-arm; NOT enforced
+# _RETRACTED_20260709_MARKERS REMOVED (GOVRIP, base CTO ruling 192330Z). It was the re-arm set --
+# constructed here and referenced NOWHERE in this module, read only by the test that asserted its
+# retention. Andrew forbade the tool-level governance predicate, so the re-arm set has no legitimate
+# consumer left. Removing it is behaviourally a no-op; the line below is what was ever enforced.
 SOVEREIGN_HELD_MARKERS: tuple[str, ...] = ()
 
 
