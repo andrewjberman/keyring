@@ -1,0 +1,158 @@
+{
+  "v1_vs_v2_changed_targets": {
+    "gold:D_04.client_portal_summary": {
+      "v1_status": "MISMATCH",
+      "v1_new_n": 4,
+      "v2_status": "MISMATCH",
+      "v2_new_n": 200,
+      "old_n": 216
+    },
+    "gold:INF_D_04.client_portal_summary": {
+      "v1_status": "MISMATCH",
+      "v1_new_n": 5,
+      "v2_status": "MISMATCH",
+      "v2_new_n": 200,
+      "old_n": 216
+    },
+    "gold:D_00.portal_aggregates": {
+      "v1_status": "MISMATCH",
+      "v1_new_n": 6,
+      "v2_status": "MISMATCH",
+      "v2_new_n": 200,
+      "old_n": 216
+    },
+    "gold:D_02.advisor_client_detail": {
+      "v1_status": "MISMATCH",
+      "v1_new_n": 3,
+      "v2_status": "MISMATCH",
+      "v2_new_n": 200,
+      "old_n": 216
+    },
+    "gold:B_02.canonical_lots": {
+      "v1_status": "MISMATCH",
+      "v1_new_n": 4,
+      "v2_status": "MISMATCH",
+      "v2_new_n": 114,
+      "old_n": 130
+    },
+    "gold:D_01.partner_analytics": {
+      "v1_status": "MISMATCH",
+      "v1_new_n": 5,
+      "v2_status": "MISMATCH",
+      "v2_new_n": 200,
+      "old_n": 216
+    }
+  },
+  "v1_match": "11/28",
+  "v2_match": "11/28",
+  "setdiff": {
+    "script_case": {
+      "target": "gold:D_01.partner_analytics",
+      "old_n": 216,
+      "new_n": 200,
+      "missing_n": 19,
+      "extra_n": 3,
+      "missing_members_with_edge_class": {
+        "gold:A_03.positions_cube": [
+          "READS_S3",
+          "TRIGGERS",
+          "WRITES_S3"
+        ],
+        "gold:A_03.positions_cube:_gate_write_watermark": [
+          "CALLS",
+          "WRITES_S3"
+        ],
+        "gold:A_03.positions_cube:run_shadow_gate_evidence": [
+          "CALLS",
+          "WRITES_S3"
+        ],
+        "gold:E_15.validate_yf_overrides:main": [
+          "CALLS",
+          "WRITES_S3"
+        ],
+        "gold:INF_B_03.account_gains": [
+          "READS_S3",
+          "TRIGGERS",
+          "WRITES_S3"
+        ],
+        "gold:INF_build_canonical_prices": [
+          "READS_S3",
+          "TRIGGERS",
+          "WRITES_S3"
+        ],
+        "gold:build_canonical_prices_v2": [
+          "READS_S3",
+          "TRIGGERS",
+          "WRITES_S3"
+        ],
+        "gold:build_canonical_prices_v2:load_historical_prices": [
+          "CALLS",
+          "WRITES_S3"
+        ],
+        "gold:gold_dispatch": [
+          "TRIGGERS"
+        ],
+        "gold:orion-gold-dispatch": [
+          "TRIGGERS"
+        ],
+        "lambda:bd-price-update": [
+          "READS_S3",
+          "WRITES_S3"
+        ],
+        "lambda:opal-partners-data": [
+          "FETCHES",
+          "READS_S3"
+        ],
+        "s3:config/ticker_lookup.json": [
+          "READS_S3"
+        ],
+        "s3:gold/account_gains/{*}.parquet": [
+          "READS_S3",
+          "WRITES_S3"
+        ],
+        "s3:gold/meta/positions_cube_incr_watermark.json": [
+          "READS_S3",
+          "WRITES_S3"
+        ],
+        "s3:silver/accounts_dim/latest.parquet": [
+          "READS_S3"
+        ],
+        "s3:silver/historical_prices.parquet": [
+          "READS_S3",
+          "WRITES_S3"
+        ],
+        "s3:silver/interpolated_prices.parquet": [
+          "READS_S3",
+          "WRITES_S3"
+        ],
+        "s3:silver/realized/bd_realized_agg.parquet": [
+          "READS_S3",
+          "WRITES_S3"
+        ]
+      },
+      "edge_class_distribution": {
+        "READS_S3,TRIGGERS,WRITES_S3": 4,
+        "CALLS,WRITES_S3": 4,
+        "TRIGGERS": 2,
+        "READS_S3,WRITES_S3": 6,
+        "FETCHES,READS_S3": 1,
+        "READS_S3": 2
+      },
+      "extra_members": [
+        "gold:INF_D_02c.client_directory:_write_json",
+        "gold:INF_D_02c.client_directory:main",
+        "s3:silver/api_dims/tax_unrealized/snapshot_date={*}/data.parquet"
+      ]
+    },
+    "function_control": {
+      "target": "gold:D_01.partner_analytics:generate_header_metrics",
+      "old_n": 39,
+      "new_n": 39,
+      "missing_n": 0,
+      "extra_n": 0,
+      "missing_members_with_edge_class": {},
+      "edge_class_distribution": {},
+      "extra_members": []
+    }
+  }
+}
