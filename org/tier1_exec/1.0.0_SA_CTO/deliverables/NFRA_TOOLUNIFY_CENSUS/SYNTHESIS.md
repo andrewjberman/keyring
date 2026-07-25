@@ -56,4 +56,22 @@ grain_baseline EXTERNAL_ENDPOINT recert 3→0 (@0e97e0350f — stale predicate, 
 
 ## 8 · Exit-bar position (TOOLUNIFY → COMPLEARNS)
 
-Adopted bar (map §10): WS-4 crosswalk conformance passes + WS-7 register-as-control enforced. **Neither is started** — this synthesis closes the EXERCISE program (the register's failure_mode column is now evidence-based per §0-§2), not TOOLUNIFY itself. The sweep's L0b seed data (§4) is the designed handoff into COMPLEARNS L0b→L1b per `IMPLEMENTATION_LEVELS_AND_SEQUENCING.md` — deliberately recorded as candidates, not settled vocabulary.
+Adopted bar (map §10): WS-4 crosswalk conformance passes + WS-7 register-as-control enforced. Status as-of ~0822Z:
+- **WS-4: DELIVERED + CVO~Z-VERIFIED CLEAN** (12/12 reproduced incl. all 4 mutants; ENDPOINT over-broadness
+  citation source-confirmed). **Labeling constraint, binding on this document:** the suite's floor
+  assertions (`>= 22` COMPONENT, `>= 10` ENDPOINT) are post-hoc thresholds anchored to observed values —
+  legitimate as REGRESSION detectors, **zero force as CORRECTNESS claims**. COMPONENT coverage is an
+  **observed baseline of 22/24 with 2 unexplained misses (open item)**, never "validated 22/24." Same for
+  ENDPOINT's 10 genuine gaps.
+- **WS-7: parts 1–2 VERIFIED CLEAN** (refusal exercised; 92/92 provenance column). Part 3's two fixes
+  verified-live-correct but unlandable pending GATEBOUND (the commit *mechanism*), **and** — per CVO~Z's
+  causality correction — the comp-state routing gap that base's own registration edit surfaced closes
+  **inside WS-7's scope** (GATEBOUND unblocks the commit; it does not make comp-state route). Credited as
+  the control WORKING on first exercise: four tools registered, the gate caught the one that doesn't route
+  to itself.
+- **GATEBOUND (Step 3): the exit-bar critical path**, dispatched to `~D` off its checkpointed TO; CVO~Z
+  verifying next on delivery.
+
+This synthesis closes the EXERCISE program (the register's failure_mode column is now evidence-based per
+§0-§2). The sweep's L0b seed data (§4) is the designed handoff into COMPLEARNS L0b→L1b per
+`IMPLEMENTATION_LEVELS_AND_SEQUENCING.md` — deliberately recorded as candidates, not settled vocabulary.
