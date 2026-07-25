@@ -103,18 +103,30 @@ def _enumerate_known_types() -> set[str]:
     _find_type_definition() already uses to confirm a SINGLE name exists (and that cmd_fields already
     gates on, ERROR + return 1) -- generalized here to enumerate ALL of them, not new machinery.
 
-    NO CAPTURE GROUPS, NO '=' IN THE PATTERN -- caught by self-testing before shipping, not assumed
-    safe: a grep pattern containing a `(...)` capture group, OR the literal `=` character, is SILENTLY
-    mangled by this box's MSYS-linked grep.exe when spawned from a non-MSYS parent (native Windows
-    Python) -- rc=1 (grep's own "no matches" code), EMPTY stdout, NO stderr, indistinguishable from a
-    genuinely empty result. First exercise of this exact code (against a REAL, known type,
-    'ClientDirectoryEntry', via the live `comp-types blast` wrapper) returned "0 known types" and
-    rejected a real type as unknown -- caught before reporting, not shipped. A third instance of this
-    box's path/argv-mangling class (sibling to the `/c/` vs `/cygdrive/c/` and the `/cygdrive/c/` vs
-    native-Windows-Python `os.path` mismatches found earlier this session), narrower still: capture
-    groups AND a bare `=`, not paths this time. Matches are extracted with `-oh` (only-matching, no
-    filename prefix) + a plain Python `str.split()`/`rstrip()` on the LAST whitespace token instead of
-    a regex capture group.
+    NO GLOB METACHARACTER MAY APPEAR IN A PATTERN THAT ALSO CONTAINS A BACKSLASH -- confirmed
+    mechanism (CVO~Z, independent repro + argv echo-back, 2026-07-25, superseding this lane's own
+    first-pass "avoid capture groups / avoid bare =" guess, which was directionally right but
+    INCOMPLETE and partly WRONG): `subprocess.list2cmdline()` leaves an argv element UNQUOTED on the
+    Windows command line whenever it contains no whitespace; this box's MSYS-linked `grep.exe`
+    (spawned from a non-MSYS parent, e.g. native Windows Python) then re-parses that raw command line
+    itself, and if an unquoted element contains a backslash TOGETHER WITH ANY of five glob
+    metacharacters -- `* ? [ ( {` -- it routes the element through glob expansion, which DE-ESCAPES
+    every backslash (`\\s` -> `s`, `\\w` -> `w`) before grep ever sees the pattern. The de-escaped
+    regex is usually still syntactically valid, so grep runs it and HONESTLY reports "no match" --
+    `rc=1`, empty stdout, NO stderr, indistinguishable from a genuinely empty result. **`=` is NOT a
+    trigger** (this lane's original attribution); a bare `{` mangles even with NO backslash present
+    (an independent, separate trigger). First exercise of this exact code (against a REAL, known
+    type, 'ClientDirectoryEntry', via the live `comp-types blast` wrapper) returned "0 known types"
+    and rejected a real type as unknown -- caught before reporting, not shipped; the confirmed
+    mechanism above is what actually happened. A third instance of this box's path/argv-mangling
+    class (sibling to the `/c/` vs `/cygdrive/c/` and the `/cygdrive/c/`-vs-native-Windows-Python
+    `os.path` mismatches found earlier this session), this time triggered by backslash+glob-metachar
+    co-occurrence in an unquoted argv element, not a path form. Matches are extracted with `-oh`
+    (only-matching, no filename prefix) + a plain Python `str.split()`/`rstrip()` on the LAST
+    whitespace token instead of a regex capture group -- CVO~Z's recommended stronger alternative
+    (POSIX classes, e.g. `[[:space:]]`/`[[:alnum:]_]`, immune by construction since they carry no
+    backslash) was not adopted here since the current patterns are already confirmed safe under the
+    now-complete trigger set and a working fix was not touched without cause.
 
     Read-only; an unreachable portal/src (or a grep failure) returns an EMPTY set, never raises and
     never falls back to permissive -- an empty population fails every lookup closed (see cmd_blast),
@@ -123,10 +135,12 @@ def _enumerate_known_types() -> set[str]:
     if not _PORTAL_SRC.exists():
         return set()
     known: set[str] = set()
-    # No parens, no '=' (see docstring). The `const` pattern also drops '\s*:'/'\s+:' before the
-    # colon (self-tested: also mangled, cause not fully isolated) in favor of the no-space-before-
-    # colon form, which covers the overwhelmingly common `export const Name: Type` style; the rare
-    # `export const Name : Type` (space before colon) is a known, disclosed gap, not a silent one.
+    # No backslash+glob-metachar co-occurrence in any pattern below (see docstring: the confirmed
+    # trigger is `* ? [ ( {` alongside a `\`, not merely parens). The `const` pattern also drops
+    # '\s*:'/'\s+:' before the colon (self-tested as failing too; consistent with, though not fully
+    # re-derived against, the confirmed mechanism -- not chased further) in favor of the
+    # no-space-before-colon form, which covers the overwhelmingly common `export const Name: Type`
+    # style; the rare `export const Name : Type` (space before colon) is a known, disclosed gap.
     patterns = [
         r'export\s+interface\s+\w+',
         r'export\s+type\s+\w+',
