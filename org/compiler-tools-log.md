@@ -26603,3 +26603,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam service news-trending-analysis | PASS |
 | 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam service opal-data-refresh-api | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | Stage 7 Part 1 grounding: cmd_reconcile/build_iam_report/build_census source trace, no code changed | N/A -- read-only grounding pass |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-portfolio-export-download | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam stats | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam roles | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/extract_iam.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | py_compile | extract_iam.py (FINAL round: Key/Attr condition-builder false-positive fix) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-portfolio-export-download (false positive gone, Query preserved) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | before/after diff, exact 2-row false-positive removal confirmed | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | synthetic positive control: real KMS Key() resource constructor unaffected | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | fleet exposure re-derivation post-fix, 157 Lambdas | PASS (22/157, 48 rows, corrected from 50) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | fleet superset diff vs b6745914d (expected 1 intentional reduction, disclosed) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater (FINAL round regression) | PASS 7/7 |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam stats/gaps/roles (FINAL round regression) | PASS |
