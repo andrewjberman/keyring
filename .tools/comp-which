@@ -1289,9 +1289,13 @@ def _run_primitive(kind: str, term: str) -> int:
         env["COMP_WHICH_CHILD"] = "1"
         # NFRA_TOOLARCH.GATEBOUND Stage B: this WAS `subprocess.call(...)` with no timeout -- the
         # confirmed 84-minute hang source. Popen + wait(timeout=) + an explicit kill()+wait() on
-        # TimeoutExpired is used instead of `subprocess.call(..., timeout=...)` deliberately:
-        # subprocess.call's own timeout path does NOT kill the child on expiry (only subprocess.run
-        # does that internally) -- this is Design B, the hang must be REAPED, not merely bounded.
+        # TimeoutExpired is used instead of `subprocess.call(..., timeout=...)` deliberately: CORRECTED
+        # 2026-07-25 (CVO~Z, GATEBOUND Stage B verification, reading CPython's actual subprocess.call
+        # source) -- call()'s own timeout path DOES kill the child on expiry; that is not unique to
+        # run(). The real reason is that `call(timeout=...)` RAISES TimeoutExpired instead of returning
+        # an int, and _run_primitive is typed `-> int` (its value becomes an exit code) -- the explicit
+        # Popen form is what lets a bounded call return an rc gracefully instead of propagating an
+        # exception out of a function callers expect to always return an int.
         proc = subprocess.Popen([sys.executable, script, term], cwd=WS, env=env)
         try:
             return proc.wait(timeout=FALLBACK_TIMEOUT_S)
