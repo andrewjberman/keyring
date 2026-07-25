@@ -243,6 +243,14 @@ def cmd_service(args):
               "DYNAMIC service arg to a helper renders as UNRESOLVED-CLIENT, never silently dropped. "
               "Still a FLOOR, not a census: a cross-file helper or an unmodeled construction shape "
               "is untraced with no signal.")
+        # NFRA_COMPIAM Stage 6 (2026-07-25, CTO~Z dispatch): stated in the tool's own voice, not
+        # only in CLAUDE.md -- the person doing a least-privilege cleanup reads THIS output, not
+        # the law. An under-reporting operation list does not cause AccessDenied; it causes a
+        # grant a live construct still needs to be deleted as "unused" (measured live:
+        # opal-data-refresh-api, 0 dynamodb ops reported vs 6 correctly-scoped grants held).
+        print("  THIS OPERATION LIST IS A FLOOR, NEVER A DELETION WARRANT: a row absent here is "
+              "NOT proof a grant is unused -- it may be DEFERRED/UNTRACED (see below) or simply "
+              "untraced by this tool. Never delete a grant on this list's silence alone.")
         print()
 
         if not profile.operations:

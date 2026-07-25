@@ -321,6 +321,9 @@ _BOTO3_SNS = {
     # Direct 1:1, no quirk (verified against the service model, not guessed).
     'get_sms_sandbox_account_status': ['sns:GetSMSSandboxAccountStatus'],
     'list_subscriptions_by_topic':    ['sns:ListSubscriptionsByTopic'],
+    # NFRA_COMPIAM Stage 6 (2026-07-25): direct 1:1, no quirk -- infrastructure_monitor:1080
+    # calls get_paginator('list_topics') with no direct list_topics call site to fall back on.
+    'list_topics': ['sns:ListTopics'],
 }
 
 # boto3 stepfunctions method -> IAM action(s). NOTE: client('stepfunctions') but
@@ -419,6 +422,9 @@ _BOTO3_IAM = {
     'get_role_policy':             ['iam:GetRolePolicy'],
     'get_role':                    ['iam:GetRole'],
     'get_paginator':               [],
+    # NFRA_COMPIAM Stage 6 (2026-07-25): direct 1:1, no quirk -- get_paginator('list_roles')
+    # is a real, used call site (access-anomaly-scanner:87) that had no direct-method entry.
+    'list_roles':                  ['iam:ListRoles'],
 }
 
 # boto3 logs (CloudWatch Logs) method -> IAM action(s). IAM prefix 'logs:'.
@@ -462,6 +468,10 @@ _BOTO3_CLOUDTRAIL = {
     'describe_trails':  ['cloudtrail:DescribeTrails'],
     'get_trail_status': ['cloudtrail:GetTrailStatus'],
     'get_paginator':    [],
+    # NFRA_COMPIAM Stage 6 (2026-07-25): direct 1:1, no quirk. Added so the Stage-6 deferred-
+    # implication resolver can name get_paginator('lookup_events')'s real action (previously
+    # only stated in the comment above, never in the map itself).
+    'lookup_events':    ['cloudtrail:LookupEvents'],
 }
 
 # boto3 ce (Cost Explorer) method -> IAM action(s). IAM prefix 'ce:'.
@@ -559,6 +569,103 @@ _MODELED_BOTO3_SERVICES = set(_BOTO3_BY_SERVICE)
 _BOTO3_RESOURCE_SUBOBJECT_ACCESSORS = frozenset({
     'Table', 'Bucket', 'Object', 'Queue', 'Topic', 'Instance', 'Role', 'Key',
 })
+
+# ---------------------------------------------------------------------------
+# NFRA_COMPIAM Stage 6 (2026-07-25): DEFERRED/UNTRACED -- one annotation
+# convention covering every site where comp-iam knows an operation-bearing
+# construct exists but cannot resolve its IAM action AT THIS CALL SITE.
+# CTO~Z dispatch 20260725T123702Z, framing from CVO~Z's live measurement: an
+# UNDER-reporting IAM instrument does not cause AccessDenied -- it causes a
+# future engineer doing least-privilege cleanup to delete a grant a live
+# construct still needs (opal-data-refresh-api: comp-iam reported 0 dynamodb
+# ops while a correctly-scoped policy grants 6). SILENCE is the defect; a
+# trace is a bonus. Four sites share this ONE convention, not four patches:
+#   (1) generate_presigned_url -- the real action fires at REDEMPTION time, on
+#       whoever holds the URL, not on the caller generating it. Always
+#       emitted; named when ClientMethod resolves to a literal.
+#   (2) DynamoDB Table.batch_writer() -- fires on the RETURNED BatchWriter's
+#       buffered .put_item()/.delete_item(), flushed via dynamodb:BatchWriteItem
+#       (verified at boto3 source: BatchWriter._flush -> client.batch_write_item).
+#       Always emitted, statically named -- no argument to read.
+#   (3) UNRESOLVED-CLIENT / UNRESOLVED-RESOURCE (existing rows, both hops) --
+#       wording unified at each existing emission site, not re-implemented.
+#   (4) get_paginator/get_waiter -- the paginator/waiter NAME identifies a
+#       real underlying operation. Emitted ONLY when that operation is not
+#       ALREADY independently visible elsewhere in the same file's operation
+#       list -- an annotation beside an already-reported action is noise, so
+#       this one resolves in a post-pass once the full per-file operation
+#       list exists (see the end of _scan_python_for_operations).
+# ---------------------------------------------------------------------------
+
+_DEFERRED_UNTRACED = "DEFERRED/UNTRACED -- grant required, not observable at this call site"
+
+# Waiter name -> underlying client method, individually verified against
+# botocore's ec2 waiters-2.json (NOT the full waiter catalog -- scoped to
+# waiter names actually used in this estate). A waiter name absent from this
+# table still renders a generic, unnamed DEFERRED/UNTRACED row (site 4 below),
+# never silently dropped.
+_EC2_WAITER_UNDERLYING_METHOD = {
+    'instance_running':    'describe_instances',
+    'instance_stopped':    'describe_instances',
+    'instance_terminated': 'describe_instances',
+}
+
+
+def _deferred_implication(service: str, method: str, args_text: str):
+    """Resolve the real IAM implication of one of the 4 verified-null methods this stage
+    covers. Returns None for every other method -- this is NOT a general resolver, only the
+    closed set CTO~Z's dispatch named. Returns (actions_or_None, note, always_emit):
+      actions_or_None -- the real action(s) implied, when nameable; None when the call site
+                          does not statically resolve enough to name one (still reported, per
+                          the open-set discipline every other sentinel in this file follows).
+      note            -- human-readable reason, folded into the Operation's source_pattern.
+      always_emit     -- True for sites 1/2 (always report); False for site 4 (get_paginator/
+                          get_waiter), whose emission is conditional on a post-pass visibility
+                          check the caller performs -- returned here as a CANDIDATE only.
+    """
+    if service == 's3' and method == 'generate_presigned_url':
+        m = re.search(r"""(?:ClientMethod\s*=\s*)?['"](\w+)['"]""", args_text)
+        client_method = m.group(1) if m else None
+        actions = _BOTO3_S3.get(client_method) if client_method else None
+        if actions:
+            return (actions, f'redemption-time action on whoever holds the URL '
+                              f'(ClientMethod={client_method!r})', True)
+        return (None, 'redemption-time action on whoever holds the URL '
+                       '(ClientMethod not statically resolvable)', True)
+    if service == 'dynamodb' and method == 'batch_writer':
+        return (['dynamodb:BatchWriteItem'],
+                "fires on the returned BatchWriter's buffered .put_item()/.delete_item() "
+                '(boto3 source: BatchWriter._flush -> client.batch_write_item)', True)
+    if method in ('get_paginator', 'get_waiter'):
+        m = re.search(r"""['"](\w+)['"]""", args_text)
+        target = m.group(1) if m else None
+        if not target:
+            return (None, f'{method} target not statically resolvable', False)
+        if method == 'get_waiter':
+            if service != 'ec2' or target not in _EC2_WAITER_UNDERLYING_METHOD:
+                return (None, f"waiter {target!r} underlying operation not modeled", False)
+            underlying_method = _EC2_WAITER_UNDERLYING_METHOD[target]
+        else:
+            underlying_method = target
+        action_map = _BOTO3_BY_SERVICE.get(service, {})
+        actions = action_map.get(underlying_method)
+        if actions:
+            return (actions, f'{method}({target!r}) polls {underlying_method}', False)
+        return (None, f'{method}({target!r}) underlying operation not modeled', False)
+    return None
+
+
+def _ast_call_args_text(call_node) -> str:
+    """Args-only textual form of an ast.Call node (`'put_object', Params={...}`), for reuse of
+    the SAME regex-based extraction `_deferred_implication` uses at the two regex-driven scan
+    sites -- keeps one resolver, not a text variant and an AST variant that could drift apart."""
+    try:
+        parts = [ast.unparse(a) for a in call_node.args]
+        parts += [f'{kw.arg}={ast.unparse(kw.value)}' for kw in call_node.keywords]
+        return ', '.join(parts)
+    except Exception:  # noqa: BLE001 -- unparse itself must not crash the scan
+        return ''
+
 
 # AWS CLI patterns in shell/Python subprocess -> IAM action(s)
 _AWS_CLI_S3 = [
@@ -1345,9 +1452,9 @@ def _resolve_const_ast(node, consts: dict):
 
 
 def _resolve_helper_client_calls(content: str, helpers: dict, consts: dict,
-                                  file_path: str) -> tuple[list, dict]:
+                                  file_path: str) -> tuple[list, dict, list]:
     """Find call sites of the helper functions `_find_boto_client_helpers` identified, resolve
-    each one's service argument, and return (ops, assign_resolved):
+    each one's service argument, and return (ops, assign_resolved, deferred_candidates):
       ops             -- Operation rows for the DIRECT-CHAINED call shape (the real fixture's
                           shape: `_boto("dynamodb").describe_table(...)`), resolved ones carrying
                           real iam_actions (same _BOTO3_BY_SERVICE lookup the regex path uses),
@@ -1356,16 +1463,20 @@ def _resolve_helper_client_calls(content: str, helpers: dict, consts: dict,
                           `x.describe_table(...)` later) -- returned separately so the caller folds
                           it into the existing client_map and reuses that per-line method scan
                           rather than duplicating it.
-    Empty `helpers` short-circuits to ([], {}) -- no wasted parse when nothing could match."""
+      deferred_candidates -- NFRA_COMPIAM Stage 6 site-4 candidates (get_paginator/get_waiter
+                          reached via a direct-chained helper call) for the caller's post-pass
+                          visibility check; see _scan_python_for_operations.
+    Empty `helpers` short-circuits to ([], {}, []) -- no wasted parse when nothing could match."""
     if not helpers:
-        return [], {}
+        return [], {}, []
     try:
         tree = ast.parse(content)
     except (SyntaxError, ValueError):
-        return [], {}
+        return [], {}, []
 
     ops: list = []
     assign_resolved: dict = {}
+    deferred_candidates: list = []
 
     def _helper_service_arg(call_node, helper_name):
         info = helpers[helper_name]
@@ -1393,7 +1504,8 @@ def _resolve_helper_client_calls(content: str, helpers: dict, consts: dict,
                 if resolved is None:
                     ops.append(Operation(
                         iam_actions=['UNRESOLVED-CLIENT'],
-                        source_pattern=f'UNRESOLVED-CLIENT({helper_name}({display}).{method})',
+                        source_pattern=f'UNRESOLVED-CLIENT({helper_name}({display}).{method}) '
+                                        f'({_DEFERRED_UNTRACED})',
                         file_path=file_path, line_number=lineno,
                     ))
                     continue
@@ -1407,12 +1519,35 @@ def _resolve_helper_client_calls(content: str, helpers: dict, consts: dict,
                     ))
                     continue
                 action_map = _BOTO3_BY_SERVICE.get(service, {})
-                if method in action_map and action_map[method]:
-                    ops.append(Operation(
-                        iam_actions=action_map[method],
-                        source_pattern=f'{helper_name}({display}).{method}  [via helper]',
-                        file_path=file_path, line_number=lineno,
-                    ))
+                if method in action_map:
+                    actions = action_map[method]
+                    if actions:
+                        ops.append(Operation(
+                            iam_actions=actions,
+                            source_pattern=f'{helper_name}({display}).{method}  [via helper]',
+                            file_path=file_path, line_number=lineno,
+                        ))
+                    else:
+                        # NFRA_COMPIAM Stage 6 (2026-07-25): known-mapped-but-null (get_paginator/
+                        # get_waiter/generate_presigned_url/batch_writer reached via a direct-
+                        # chained helper call) -- previously fell into the UNMAPPED-METHOD branch
+                        # below by mistake (this block's old `if X and Y: ... elif not-Z:` collapsed
+                        # "known-null" and "genuinely-unmapped" into one path). Fixed to the same
+                        # 3-way split the regex sites already use, routed through the Stage-6
+                        # deferred-implication resolver instead.
+                        _pattern = f'{helper_name}({display}).{method}  [via helper]'
+                        _defer = _deferred_implication(service, method, _ast_call_args_text(node))
+                        if _defer:
+                            _actions, _note, _always = _defer
+                            if _always:
+                                ops.append(Operation(
+                                    iam_actions=_actions or ['DEFERRED/UNTRACED'],
+                                    source_pattern=f'{_pattern} ({_DEFERRED_UNTRACED} -- {_note})',
+                                    file_path=file_path, line_number=lineno,
+                                ))
+                            else:
+                                deferred_candidates.append(
+                                    (service, method, _actions, _note, file_path, lineno, _pattern))
                 elif method not in _BOTO3_RESOURCE_SUBOBJECT_ACCESSORS:
                     # NFRA_COMPIAM Stage 3 (CVO~Z finding #3, 2026-07-25): a MODELED service whose
                     # specific METHOD is absent from _BOTO3_BY_SERVICE previously fell through here
@@ -1438,13 +1573,14 @@ def _resolve_helper_client_calls(content: str, helpers: dict, consts: dict,
             if resolved is None:
                 ops.append(Operation(
                     iam_actions=['UNRESOLVED-CLIENT'],
-                    source_pattern=f'UNRESOLVED-CLIENT({var_name} = {helper_name}({display}))',
+                    source_pattern=f'UNRESOLVED-CLIENT({var_name} = {helper_name}({display})) '
+                                    f'({_DEFERRED_UNTRACED})',
                     file_path=file_path, line_number=lineno,
                 ))
             else:
                 assign_resolved[var_name] = resolved
 
-    return ops, assign_resolved
+    return ops, assign_resolved, deferred_candidates
 
 
 # ---------------------------------------------------------------------------
@@ -1479,10 +1615,11 @@ def _resolve_resource_service(expr, client_map: dict):
     return None, None
 
 
-def _resolve_resource_subobjects(content: str, client_map: dict, file_path: str) -> tuple[list, dict]:
+def _resolve_resource_subobjects(content: str, client_map: dict,
+                                  file_path: str) -> tuple[list, dict, list]:
     """Find sub-object constructor call sites (`<resource>.Table(...)`, `.Bucket(...)`, etc. --
     `_BOTO3_RESOURCE_SUBOBJECT_ACCESSORS` IS the constructor vocabulary, reused not duplicated)
-    on a KNOWN resource variable, and return (ops, subobject_assign):
+    on a KNOWN resource variable, and return (ops, subobject_assign, deferred_candidates):
       ops               -- Operation rows for the DIRECT-CHAINED form
                             (`<resource>.Table(...).put_item(...)` in one expression) --
                             resolved via the SAME service action-map lookup + UNMAPPED-METHOD
@@ -1492,16 +1629,20 @@ def _resolve_resource_subobjects(content: str, client_map: dict, file_path: str)
                             possibly many lines away -- the real fixture's shape) -- the caller
                             folds this into `client_map` and the EXISTING per-line scan below
                             handles it with zero new logic.
+      deferred_candidates -- NFRA_COMPIAM Stage 6 site-4 candidates (get_paginator/get_waiter
+                            reached via a direct-chained resource call) for the caller's
+                            post-pass visibility check; see _scan_python_for_operations.
     An unresolvable parent (the resource variable is not a known binding, and not a direct
     boto3.resource('svc') literal) renders an explicit UNRESOLVED-RESOURCE row -- reported, never
     dropped, matching Stage 2's UNRESOLVED-CLIENT discipline for the analogous case one hop up."""
     try:
         tree = ast.parse(content)
     except (SyntaxError, ValueError):
-        return [], {}
+        return [], {}, []
 
     ops: list = []
     subobject_assign: dict = {}
+    deferred_candidates: list = []
 
     for node in ast.walk(tree):
         # Shape A: assign-then-use -- Assign(targets=[Name(var)], value=Call(func=Attribute(
@@ -1519,7 +1660,8 @@ def _resolve_resource_subobjects(content: str, client_map: dict, file_path: str)
             else:
                 ops.append(Operation(
                     iam_actions=['UNRESOLVED-RESOURCE'],
-                    source_pattern=f'UNRESOLVED-RESOURCE({var_name} = <unresolved>.{constructor}(...))',
+                    source_pattern=f'UNRESOLVED-RESOURCE({var_name} = <unresolved>.{constructor}(...)) '
+                                    f'({_DEFERRED_UNTRACED})',
                     file_path=file_path, line_number=lineno,
                 ))
         # Shape B: direct-chained -- Call(func=Attribute(value=Call(func=Attribute(
@@ -1535,7 +1677,8 @@ def _resolve_resource_subobjects(content: str, client_map: dict, file_path: str)
                 if service is None:
                     ops.append(Operation(
                         iam_actions=['UNRESOLVED-RESOURCE'],
-                        source_pattern=f'UNRESOLVED-RESOURCE(<unresolved>.{constructor}(...).{method})',
+                        source_pattern=f'UNRESOLVED-RESOURCE(<unresolved>.{constructor}(...).{method}) '
+                                        f'({_DEFERRED_UNTRACED})',
                         file_path=file_path, line_number=lineno,
                     ))
                     continue
@@ -1556,7 +1699,23 @@ def _resolve_resource_subobjects(content: str, client_map: dict, file_path: str)
                             source_pattern=f'{display}.{constructor}(...).{method}  [via resource]',
                             file_path=file_path, line_number=lineno,
                         ))
-                    # else: deliberately mapped to zero actions -- see the sibling regex block's comment.
+                    else:
+                        # NFRA_COMPIAM Stage 6 (2026-07-25): known-mapped-but-null, e.g. a direct-
+                        # chained `dynamodb.Table(name).batch_writer()` -- routed through the same
+                        # deferred-implication resolver the regex/helper sites use.
+                        _pattern = f'{display}.{constructor}(...).{method}  [via resource]'
+                        _defer = _deferred_implication(service, method, _ast_call_args_text(node))
+                        if _defer:
+                            _actions, _note, _always = _defer
+                            if _always:
+                                ops.append(Operation(
+                                    iam_actions=_actions or ['DEFERRED/UNTRACED'],
+                                    source_pattern=f'{_pattern} ({_DEFERRED_UNTRACED} -- {_note})',
+                                    file_path=file_path, line_number=lineno,
+                                ))
+                            else:
+                                deferred_candidates.append(
+                                    (service, method, _actions, _note, file_path, lineno, _pattern))
                 elif method not in _BOTO3_RESOURCE_SUBOBJECT_ACCESSORS:
                     ops.append(Operation(
                         iam_actions=['UNMAPPED-METHOD'],
@@ -1565,7 +1724,7 @@ def _resolve_resource_subobjects(content: str, client_map: dict, file_path: str)
                         file_path=file_path, line_number=lineno,
                     ))
 
-    return ops, subobject_assign
+    return ops, subobject_assign, deferred_candidates
 
 
 def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]:
@@ -1577,14 +1736,23 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
     # Module-level string constants, for resolving `Bucket=PLATINUM_BUCKET`.
     consts = _build_py_const_map(content)
 
+    # NFRA_COMPIAM Stage 6 (2026-07-25): site-4 (get_paginator/get_waiter) candidates from every
+    # source below, resolved in ONE post-pass once `ops` is complete -- see the end of this
+    # function. A candidate is emitted only when its implied action is not already independently
+    # visible elsewhere in this file's own operation list (an annotation beside an already-
+    # reported action is noise; the acceptance bar this stage must prove clean).
+    deferred_candidates: list = []
+
     # AST pass for helper-constructed boto3 clients (second insufficiency fix, see the block
     # above this function). Runs independently of the regex scan below -- a parse failure here
     # returns empty and the regex pass is unaffected either way. Uses `ops` (declared above,
     # the function's single accumulator) -- not a second list.
     _helpers = _find_boto_client_helpers(content)
     if _helpers:
-        _helper_ops, _helper_assign = _resolve_helper_client_calls(content, _helpers, consts, file_path)
+        _helper_ops, _helper_assign, _helper_deferred = _resolve_helper_client_calls(
+            content, _helpers, consts, file_path)
         ops.extend(_helper_ops)
+        deferred_candidates.extend(_helper_deferred)
     else:
         _helper_assign = {}
 
@@ -1622,9 +1790,11 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
     # bindings + Stage-2 helper-assign fold) -- resolve sub-object constructor call sites against
     # it, extend `ops` for the direct-chained form, and fold assign-then-use sub-object vars in
     # so the per-line scan below treats `table` exactly like any other tracked client variable.
-    _resource_ops, _resource_assign = _resolve_resource_subobjects(content, client_map, file_path)
+    _resource_ops, _resource_assign, _resource_deferred = _resolve_resource_subobjects(
+        content, client_map, file_path)
     ops.extend(_resource_ops)
     client_map.update(_resource_assign)
+    deferred_candidates.extend(_resource_deferred)
 
     # Scan line by line for method calls on known clients
     for lineno, line in enumerate(lines, 1):
@@ -1669,9 +1839,24 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
                             resource_expr=_expr,
                         ))
                     # else: method IS in the map, deliberately mapped to zero actions (no IAM
-                    # impact by design) -- distinct from "not in the map at all"; stays silent,
-                    # matching this branch's existing pre-Stage-3 behavior. Only a TRUE absence
-                    # from action_map is the Stage 3 control gap (below).
+                    # impact by design) -- distinct from "not in the map at all". NFRA_COMPIAM
+                    # Stage 6 (2026-07-25): no longer silent -- routed through the deferred-
+                    # implication resolver (sites 1/2/4). A method with no implication known
+                    # (returns None) stays silent, unchanged from pre-Stage-6 behavior.
+                    else:
+                        _defer = _deferred_implication(service, method, _args_at(lineno, m.end() - 1))
+                        if _defer:
+                            _actions, _note, _always = _defer
+                            _pattern = f'{client_var}.{method}'
+                            if _always:
+                                ops.append(Operation(
+                                    iam_actions=_actions or ['DEFERRED/UNTRACED'],
+                                    source_pattern=f'{_pattern} ({_DEFERRED_UNTRACED} -- {_note})',
+                                    file_path=file_path, line_number=lineno,
+                                ))
+                            else:
+                                deferred_candidates.append(
+                                    (service, method, _actions, _note, file_path, lineno, _pattern))
                 elif method not in _BOTO3_RESOURCE_SUBOBJECT_ACCESSORS:
                     # NFRA_COMPIAM Stage 3 (CVO~Z finding #3, 2026-07-25): a MODELED service whose
                     # specific METHOD is absent from action_map previously fell through with ZERO
@@ -1714,7 +1899,22 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
                         resource_exact=_exact,
                         resource_expr=_expr,
                     ))
-                # else: deliberately mapped to zero actions -- see the sibling block's comment.
+                else:
+                    # NFRA_COMPIAM Stage 6 (2026-07-25) -- see the sibling block's comment; same
+                    # deferred-implication routing, third call-shape site.
+                    _pattern = f"boto3.client('{service}').{method}"
+                    _defer = _deferred_implication(service, method, _args_at(lineno, m.end() - 1))
+                    if _defer:
+                        _actions, _note, _always = _defer
+                        if _always:
+                            ops.append(Operation(
+                                iam_actions=_actions or ['DEFERRED/UNTRACED'],
+                                source_pattern=f'{_pattern} ({_DEFERRED_UNTRACED} -- {_note})',
+                                file_path=file_path, line_number=lineno,
+                            ))
+                        else:
+                            deferred_candidates.append(
+                                (service, method, _actions, _note, file_path, lineno, _pattern))
             else:
                 # NFRA_COMPIAM Stage 3 (CVO~Z finding #3, 2026-07-25) -- same control gap, third site.
                 ops.append(Operation(
@@ -1739,6 +1939,22 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
                     line_number=lineno,
                 ))
                 break  # one match per line is enough
+
+    # NFRA_COMPIAM Stage 6 site-4 post-pass (2026-07-25): `ops` is now the COMPLETE per-file
+    # operation list -- resolve each get_paginator/get_waiter candidate against it. A candidate
+    # whose implied action already appears among the file's OTHER (real, non-deferred) operations
+    # is independently visible already; annotating it too would be noise, so it is dropped here,
+    # not earlier (earlier, `ops` was still incomplete and the check would have been unsound).
+    if deferred_candidates:
+        _visible_actions = {a for op in ops for a in op.iam_actions}
+        for service, method, actions, note, dc_file_path, dc_lineno, dc_pattern in deferred_candidates:
+            if actions and any(a in _visible_actions for a in actions):
+                continue  # already independently visible elsewhere in this file -- no annotation
+            ops.append(Operation(
+                iam_actions=actions or ['DEFERRED/UNTRACED'],
+                source_pattern=f'{dc_pattern} ({_DEFERRED_UNTRACED} -- {note})',
+                file_path=dc_file_path, line_number=dc_lineno,
+            ))
 
     return ops
 
