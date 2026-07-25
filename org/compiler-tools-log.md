@@ -26814,3 +26814,13 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp | grain-baseline-recalibration | comp-kuzu | comp-kuzu "MATCH (n) WHERE n.node_type IN [5 dims] RETURN n.node_type, count(*)" | 4 rows; REACT_QUERY_KEY absent -> found real node_type is ReactQueryKey (57), naming fork surfaced |
 | 2026-07-25Z | 0.8.0_AE_CloudComp | grain-baseline-recalibration | comp-grep | comp-grep "grain_baseline" org/modules/graph | 0 matches -- CORRECT, cross-checked against native grep which agreed (my first positive control was invalid) |
 | 2026-07-25Z | 0.8.0_AE_CloudComp | grain-baseline-recalibration | derive_stitch.py | python infra/aws/globgrph/derive_stitch.py | GRAIN-SENTINEL PASS (0 violations); artifact WRITTEN, mtime 07-07 -> 07-25 (22355 nodes/43633 edges); rc=1 from a SEPARATE defect (8 dangling edges) |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/grain_baseline.json | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system gate | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-arity org/modules/graph/tests/test_failure_cla... | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-arity org/modules/graph/tests/test_failure_cla... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | globgrph-IAM_USER-defects | comp-grep | comp-grep IAM_USER/iam_user/list_users over infra/aws/globgrph + lambda/globgrph + infra/aws | 1 hit (mapping table only) / 0 / 0 / 3 (all security scanners) -- emitter NOT located, upstream of repo surfaces; denominators printed in the report |
