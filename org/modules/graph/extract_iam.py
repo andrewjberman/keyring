@@ -208,6 +208,23 @@ _BOTO3_S3 = {
     'download_file':    ['s3:GetObject'],
     'download_fileobj': ['s3:GetObject'],
     'get_paginator':    [],  # ListBucket-like, but depends on paginator used
+    # NFRA_COMPIAM Stage 4 (2026-07-25, closing the fleet K-census): generate_presigned_url is a
+    # purely LOCAL signing operation -- zero network calls, verified against AWS's own access
+    # model (the presigned URL's eventual USE by whoever holds it is what IAM checks; generating
+    # it requires no permission from the caller). Same class as get_paginator above, same []
+    # convention -- not a guess, a verified null.
+    'generate_presigned_url': [],
+    # The following 7 are real, network-calling S3 API methods -- verified against AWS's IAM
+    # action names, NOT the naive method_name->PascalCase pattern (S3 has real quirks: ListBuckets
+    # the API is s3:ListAllMyBuckets the ACTION; GetBucketEncryption is s3:GetEncryptionConfiguration;
+    # GetPublicAccessBlock is s3:GetBucketPublicAccessBlock -- each cross-checked individually).
+    'get_bucket_acl':            ['s3:GetBucketAcl'],
+    'get_bucket_logging':        ['s3:GetBucketLogging'],
+    'get_bucket_policy':         ['s3:GetBucketPolicy'],
+    'get_bucket_versioning':     ['s3:GetBucketVersioning'],
+    'get_bucket_encryption':     ['s3:GetEncryptionConfiguration'],
+    'get_public_access_block':   ['s3:GetBucketPublicAccessBlock'],
+    'list_buckets':              ['s3:ListAllMyBuckets'],
 }
 
 # boto3 ssm client method -> IAM action(s)
@@ -234,6 +251,9 @@ _BOTO3_DYNAMODB = {
     # CVO~Z's fixture (opal-globgrph-incremental-updater) calls this via a helper, but the method
     # itself was never modeled for ANY calling shape (literal or helper). Added so 7/7 is reachable.
     'describe_table':   ['dynamodb:DescribeTable'],
+    # NFRA_COMPIAM Stage 4 (2026-07-25): direct 1:1, no quirk.
+    'describe_continuous_backups': ['dynamodb:DescribeContinuousBackups'],
+    'list_tables': ['dynamodb:ListTables'],
 }
 
 # boto3 secretsmanager method -> IAM action(s)
@@ -256,6 +276,20 @@ _BOTO3_EC2 = {
     'describe_security_groups': ['ec2:DescribeSecurityGroups'],
     'describe_addresses':       ['ec2:DescribeAddresses'],
     'get_waiter':               [],
+    # NFRA_COMPIAM Stage 4 (2026-07-25): S3/Lambda already carried get_paginator: [] (same class as
+    # get_waiter above -- zero network calls); EC2 was simply missing the entry, not a different case.
+    'get_paginator':            [],
+    # The following 9 are real EC2 API methods, all direct 1:1 method-name -> PascalCase-action
+    # (EC2 has no naming quirks in this set, verified individually against the service model).
+    'describe_flow_logs':          ['ec2:DescribeFlowLogs'],
+    'describe_snapshot_attribute': ['ec2:DescribeSnapshotAttribute'],
+    'describe_snapshots':          ['ec2:DescribeSnapshots'],
+    'describe_vpcs':               ['ec2:DescribeVpcs'],
+    'create_image':                ['ec2:CreateImage'],
+    'create_snapshot':             ['ec2:CreateSnapshot'],
+    'delete_snapshot':             ['ec2:DeleteSnapshot'],
+    'deregister_image':            ['ec2:DeregisterImage'],
+    'describe_images':             ['ec2:DescribeImages'],
 }
 
 # boto3 lambda method -> IAM action(s)
@@ -273,6 +307,12 @@ _BOTO3_SNS = {
     # NFRA_COMPIAM second-insufficiency fix (2026-07-25): same class as dynamodb.describe_table
     # above -- a genuinely unmapped method, not a tracer gap. CVO~Z's fixture needs it for 7/7.
     'get_topic_attributes': ['sns:GetTopicAttributes'],
+    # NFRA_COMPIAM Stage 4 (2026-07-25): same as EC2's get_paginator entry above -- SNS was
+    # simply missing it, zero network calls, same class already established for S3/Lambda.
+    'get_paginator': [],
+    # Direct 1:1, no quirk (verified against the service model, not guessed).
+    'get_sms_sandbox_account_status': ['sns:GetSMSSandboxAccountStatus'],
+    'list_subscriptions_by_topic':    ['sns:ListSubscriptionsByTopic'],
 }
 
 # boto3 stepfunctions method -> IAM action(s). NOTE: client('stepfunctions') but
@@ -283,6 +323,9 @@ _BOTO3_STEPFUNCTIONS = {
     'describe_execution':     ['states:DescribeExecution'],
     'list_state_machines':    ['states:ListStateMachines'],
     'describe_state_machine': ['states:DescribeStateMachine'],
+    # NFRA_COMPIAM Stage 4 (2026-07-25): same 'states:' prefix quirk as the rest of this map.
+    'get_execution_history':  ['states:GetExecutionHistory'],
+    'list_executions':        ['states:ListExecutions'],
 }
 
 # boto3 cloudfront method -> IAM action(s)
