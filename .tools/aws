@@ -31,13 +31,23 @@
 set -uo pipefail
 
 # ---- resolve the REAL aws entry (first `aws` on PATH that is not this shim) ----------------
+# NFRA_TOOLARCH.PATHFIX regression (CVO~Z, 2026-07-25, verifying b519fb1c2e): ~/bin holds this
+# workspace's own bootstrap forwarder (.tools/provision-path-shims.sh), a BASH script that
+# re-invokes `aws` by name after stripping ~/bin from ITS OWN search path (to stop the exact
+# loop this file's search could otherwise create). That guard only covers ~/bin -> .tools/aws --
+# invoking THIS file directly (the explicit-prefix convention CLAUDE.md documents as the interim
+# PATH fallback) never goes through the forwarder, so ~/bin was still on PATH here, the search
+# below could pick ~/bin/aws as "the real aws," and dispatch a BASH script to python (SyntaxError,
+# diagnosis landing on the wrong file). Mirrored fix: strip ~/bin from THIS search too, in both
+# directions of the pair, not just the direction that happened to get tested first.
 _self="${BASH_SOURCE[0]}"
+_search_path="$(printf '%s' "$PATH" | tr ':' '\n' | grep -Fxv "$HOME/bin" | paste -sd: -)"
 REAL=""
 while IFS= read -r c; do
     [ "$c" = "$_self" ] && continue
     case "$c" in */.tools/aws) continue ;; esac
     REAL="$c"; break
-done < <(which -a aws 2>/dev/null)
+done < <(PATH="$_search_path" which -a aws 2>/dev/null)
 if [ -z "$REAL" ]; then
     echo "aws-shim ERROR: no real aws launcher found on PATH beyond the shim" >&2
     exit 127
