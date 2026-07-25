@@ -26761,3 +26761,13 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates --role astn-wsjft-orchestrator-role (targeted-mode control) | PASS -- SWEEP COMPLETE 1 of 1 rendered; NOT-SCHEDULABLE banner correctly suppressed (isolated negative control) |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | timeout 20 comp-iam investigate-candidates (truncated-sweep positive control) | PASS -- exit 124, banner present 1, SWEEP COMPLETE absent 0; caught TWO wrong banner placements (post-loop, then pre-loop-but-post-_build) that inspection could not see |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates-self-test (regression) | PASS 12/12 rc=0, zero AWS calls |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_antipattern.py | VERDICT |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean.py | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file org/modules/graph/tests/_p4_probe_exem... | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean2.py | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_control.py | VERDICT |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check completeness | VERDICT |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check routable | PASS |
+| 2026-07-25 | 0.8.0_AE_CloudComp~D | comp-grep (x4), comp-glob, _comprail lib, ad-hoc AST walk (80 files), commit-gate, safe-commit (x3), provision-path-shims | MIXED | P1 arity regression + dead rail fallback + watcher deaf-prefix. THREE of my own ad-hoc shell instruments returned WELL-FORMED WRONG ANSWERS (MSYS pattern rewrite -> confident 0; shebang CRLF misread; `grep -c || echo 0` -> "0\n0" != "0" -> reported COUPLED for all 15 files, the exact opposite of truth). Remedy: count with wc -l, run a positive control that must be non-zero. Fourth grep-family silent-lie on record -- ONE instrument lying four ways, not four bugs. GAP: did not comp-blast my own interface change; that is what missed the 5 stale call sites. |
