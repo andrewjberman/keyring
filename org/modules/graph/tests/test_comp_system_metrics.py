@@ -55,7 +55,13 @@ check("every metric carries {value,source,vintage}",
 print("== refresher CORRECTS a drifted span (the core behavior) ==")
 live_ti = mets["tools_index_count"]["value"]
 STALE = 37  # the exact stale number the real 03_comp_tools.md carried before this landed
-assert live_ti != STALE, "test needs the live count to differ from the stale fixture value"
+# NOT a bare `assert`: this module body runs at IMPORT, so a module-level assertion that fails
+# raises during pytest COLLECTION and aborts the entire directory (778 tests) -- the same
+# take-down-collection shape as the 2026-07-22 sys.exit() guard below and the arity regression
+# this file carried on 2026-07-25. A failed precondition must render as a FAILED CHECK, never as
+# a collection error that reads like broken infrastructure.
+check("fixture precondition: live tools_index_count differs from the stale fixture value",
+      live_ti != STALE, True)
 
 tmp = tempfile.mkdtemp(prefix="cs_metrics_test_")
 prose_before = "The routed surface. Section 10 is the health overlay. See LD-0208."
@@ -71,12 +77,15 @@ _orig_dir = cs._MANAGED_DOCS_DIR
 cs._MANAGED_DOCS_DIR = tmp
 try:
     # report-only first: it should SEE the drift and touch nothing on disk.
-    changes, problems = cs.refresh_managed_regions(mets, write=False)
+    changes, problems, scanned = cs.refresh_managed_regions(mets, write=False)
     check("report-only run detects the drift", (("03_fixture.md", "tools_index_count", str(STALE), str(live_ti)) in changes), True)
     check("report-only run wrote NOTHING to disk", Path(fixture).read_text(encoding="utf-8"), doc)
+    check("report-only run reports its DENOMINATOR (1 region in 1 file)",
+          scanned, {"regions": 1, "files": 1})
 
     # write: it should correct the span to the live value.
-    changes, problems = cs.refresh_managed_regions(mets, write=True)
+    changes, problems, scanned = cs.refresh_managed_regions(mets, write=True)
+    check("write run reports the same denominator", scanned, {"regions": 1, "files": 1})
     after = Path(fixture).read_text(encoding="utf-8")
     check("write corrected the span to the live count",
           f"<!--cs:tools_index_count-->{live_ti}<!--/cs-->" in after, True)
@@ -84,26 +93,55 @@ try:
     check("surrounding prose is UNTOUCHED (only the span changed)", prose_before in after, True)
 
     # idempotent: a second write is a no-op.
-    changes2, _ = cs.refresh_managed_regions(mets, write=True)
+    changes2, _, scanned2 = cs.refresh_managed_regions(mets, write=True)
     check("second run is a no-op (idempotent)", changes2, [])
+    # THE POINT OF THE DENOMINATOR: "0 changed" and "watched nothing" are the same output
+    # without it. An idempotent no-op must still report that it SCANNED the region.
+    check("idempotent no-op still reports a NON-ZERO denominator (0 changed != 0 watched)",
+          scanned2, {"regions": 1, "files": 1})
 
     print("== SAFE: UNKNOWN metric is refused, real number preserved ==")
     Path(fixture).write_text(
         "keep <!--cs:tools_index_count-->99<!--/cs--> here\n", encoding="utf-8")
     poisoned = dict(mets)
     poisoned["tools_index_count"] = cs._metric(cs.UNKNOWN, "forced", cs.UNKNOWN)
-    ch, pb = cs.refresh_managed_regions(poisoned, write=True)
+    ch, pb, scanned_unknown = cs.refresh_managed_regions(poisoned, write=True)
     after = Path(fixture).read_text(encoding="utf-8")
     check("UNKNOWN metric did NOT overwrite the existing number", ">99<!--/cs-->" in after, True)
+    check("a REFUSED write still counts toward the denominator (refused != unscanned)",
+          scanned_unknown, {"regions": 1, "files": 1})
     check("the UNKNOWN overwrite was reported as a problem",
           any(p[1] == "tools_index_count" for p in pb), True)
 
     print("== unknown metric NAME is reported, not applied ==")
     Path(fixture).write_text("x <!--cs:no_such_metric-->5<!--/cs--> y\n", encoding="utf-8")
-    ch, pb = cs.refresh_managed_regions(mets, write=True)
+    ch, pb, scanned_badname = cs.refresh_managed_regions(mets, write=True)
     check("unknown metric name reported as a problem",
           any(p[1] == "no_such_metric" and "no such metric" in p[2] for p in pb), True)
     check("unknown-name span left unchanged", ">5<!--/cs-->" in Path(fixture).read_text(encoding="utf-8"), True)
+    check("an unknown-NAME span is still a well-formed region, so it IS counted",
+          scanned_badname, {"regions": 1, "files": 1})
+
+    # -----------------------------------------------------------------------
+    # THE CASE THE DENOMINATOR EXISTS FOR (4d2588f35e / CTO~Z dispatch 145445Z, off CVO~Z's
+    # finding against _REGION_RE): a MALFORMED marker matches zero regexes, so it vanishes
+    # from `changes` SILENTLY. Without `scanned` that is byte-identical to "nothing drifted".
+    # This asserts the count DROPS -- the mutant CVO~Z ran by hand, made permanent.
+    # -----------------------------------------------------------------------
+    print("== malformed regions are EXCLUDED, and the denominator makes that VISIBLE ==")
+    Path(fixture).write_text(
+        f"good <!--cs:tools_index_count-->{live_ti}<!--/cs--> end\n", encoding="utf-8")
+    _c, _p, scanned_one = cs.refresh_managed_regions(mets, write=False)
+    check("baseline: one well-formed region is counted", scanned_one, {"regions": 1, "files": 1})
+
+    # same file, closer removed -- the ONLY change.
+    Path(fixture).write_text(
+        f"good <!--cs:tools_index_count-->{live_ti} end\n", encoding="utf-8")
+    _c, _p, scanned_malformed = cs.refresh_managed_regions(mets, write=False)
+    check("MUTANT: a malformed region drops the count to zero, not silently to 'clean'",
+          scanned_malformed, {"regions": 0, "files": 0})
+    check("and the zero-state is DISTINGUISHABLE from a clean scan (0 regions != 0 drifted)",
+          scanned_one != scanned_malformed, True)
 finally:
     cs._MANAGED_DOCS_DIR = _orig_dir
     for f in Path(tmp).glob("*"):
