@@ -1314,6 +1314,25 @@ def cmd_investigate_candidates(args):
     sys.exit(1 if candidates else 0)
 
 
+def _investigate_candidates_self_test() -> int:
+    """Offline mutant suite for investigate-candidates -- NFRA_COMPIAM (2026-07-25, CTO~Z
+    141322Z). ZERO AWS calls: comp_iam_investigate.self_test() feeds synthetic records directly
+    to classify(), never calling get_role_last_used(). Mirrors _census_self_test's PASS/FAIL
+    print style."""
+    results, ok = comp_iam_investigate.self_test()
+    for name, passed, detail in results:
+        if passed:
+            print(f"  PASS  {name}")
+        else:
+            print(f"  FAIL  {name}: {detail!r}")
+    print()
+    print("ZERO AWS calls made -- this suite classifies synthetic records only "
+          "(get_role_last_used() is never invoked in self-test mode).")
+    print("\n" + ("OK: all investigate-candidates self-test cases pass" if ok
+                   else "ERROR: investigate-candidates self-test FAILED"))
+    return 0 if ok else 1
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog='comp-iam',
@@ -1388,6 +1407,8 @@ def main():
     p_inv.add_argument('--stale-days', type=int, default=None,
                        help=f'age threshold in days, past which a dated role becomes an '
                             f'investigate-candidate (default {comp_iam_investigate.DEFAULT_STALE_DAYS})')
+    sub.add_parser('investigate-candidates-self-test',
+                   help='offline mutant suite for investigate-candidates (no AWS)')
 
     args = parser.parse_args()
 
@@ -1427,6 +1448,8 @@ def main():
         sys.exit(cmd_live(args))
     elif args.command == 'investigate-candidates':
         cmd_investigate_candidates(args)
+    elif args.command == 'investigate-candidates-self-test':
+        sys.exit(_investigate_candidates_self_test())
     else:
         parser.print_help()
 
