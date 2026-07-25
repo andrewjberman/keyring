@@ -15,6 +15,7 @@ Authoritative sources:
 
 from __future__ import annotations
 
+import ast
 import json
 import os
 import re
@@ -229,6 +230,10 @@ _BOTO3_DYNAMODB = {
     'scan':         ['dynamodb:Scan'],
     'batch_write_item': ['dynamodb:BatchWriteItem'],
     'batch_get_item':   ['dynamodb:BatchGetItem'],
+    # NFRA_COMPIAM second-insufficiency fix (2026-07-25): missing entirely, not a tracer gap --
+    # CVO~Z's fixture (opal-globgrph-incremental-updater) calls this via a helper, but the method
+    # itself was never modeled for ANY calling shape (literal or helper). Added so 7/7 is reachable.
+    'describe_table':   ['dynamodb:DescribeTable'],
 }
 
 # boto3 secretsmanager method -> IAM action(s)
@@ -265,6 +270,9 @@ _BOTO3_LAMBDA = {
 # boto3 sns method -> IAM action(s)
 _BOTO3_SNS = {
     'publish': ['sns:Publish'],
+    # NFRA_COMPIAM second-insufficiency fix (2026-07-25): same class as dynamodb.describe_table
+    # above -- a genuinely unmapped method, not a tracer gap. CVO~Z's fixture needs it for 7/7.
+    'get_topic_attributes': ['sns:GetTopicAttributes'],
 }
 
 # boto3 stepfunctions method -> IAM action(s). NOTE: client('stepfunctions') but
@@ -1193,6 +1201,172 @@ def _compute_ec2_shipped_line_ranges(content: str) -> set[int]:
     return shipped_lines
 
 
+# ---------------------------------------------------------------------------
+# NFRA_COMPIAM second insufficiency (CVO~Z cycle 12, 20260725T112339Z; CTO~Z dispatch
+# 20260725T112637Z): the regex scanner below only recognizes a LITERAL `boto3.client('svc')` /
+# `boto3.resource('svc')` call at the binding site. A client constructed one call deeper, through
+# a module-level helper function -- `def _boto(svc): return boto3.client(svc, ...)`, called as
+# `_boto("dynamodb").describe_table(...)` -- was completely invisible: 5 of 7 real operations on
+# the fixture (opal-globgrph-incremental-updater) went undetected, 29% coverage silently reading
+# as exhaustive (the tool's disclosure caveated two axes -- unmapped role, unparsed deny -- and
+# said nothing about this third). Fixed via a real AST pass (CTO~Z's explicit "architecture
+# choice, not engine choice" framing -- regex-on-Python is the parse-fragility class that already
+# missed 5/7 once; an AST pass is the structurally sound answer), not a wider regex.
+# ---------------------------------------------------------------------------
+
+def _find_boto_client_helpers(content: str) -> dict:
+    """Find module-level functions whose body constructs a boto3 client/resource using the VALUE
+    OF ONE OF THE FUNCTION'S OWN PARAMETERS as the service argument -- the defining shape of a
+    client-factory helper (`def _boto(svc): return boto3.client(svc, ...)`), as opposed to a
+    function that merely happens to call boto3.client with a literal or unrelated expression.
+
+    Returns {func_name: {'params': [declared param names, in order], 'service_param': the one
+    param name that flows into the service argument}}. A function with no such call is absent
+    from the result -- this is deliberately NARROW (parametrized-by-the-function's-own-arg only),
+    not "any function that calls boto3.client anywhere," which would over-match unrelated code.
+
+    Malformed source (SyntaxError) yields an EMPTY result, never a crash -- a file this cannot
+    parse contributes nothing to the AST pass; the caller's regex pass still runs independently."""
+    try:
+        tree = ast.parse(content)
+    except (SyntaxError, ValueError):
+        return {}
+    helpers: dict = {}
+    for node in ast.walk(tree):
+        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            continue
+        params = [a.arg for a in node.args.args]
+        if not params:
+            continue
+        service_param = None
+        for sub in ast.walk(node):
+            if sub is node or not isinstance(sub, ast.Call):
+                continue
+            func = sub.func
+            if not (isinstance(func, ast.Attribute) and func.attr in ('client', 'resource')
+                    and isinstance(func.value, ast.Name) and func.value.id == 'boto3'):
+                continue
+            svc_arg = sub.args[0] if sub.args else None
+            if svc_arg is None:
+                for kw in sub.keywords:
+                    if kw.arg in ('service_name', None):
+                        svc_arg = kw.value
+                        break
+            if isinstance(svc_arg, ast.Name) and svc_arg.id in params:
+                service_param = svc_arg.id
+                break
+        if service_param:
+            helpers[node.name] = {'params': params, 'service_param': service_param}
+    return helpers
+
+
+def _resolve_const_ast(node, consts: dict):
+    """Resolve an AST expression node to a literal string if possible: a string Constant, or a
+    Name referencing a module-level constant already resolved by _build_py_const_map. Returns
+    (resolved_str_or_None, display_expr) -- display_expr is the human-readable source text
+    (via ast.unparse) for the UNRESOLVED-CLIENT report when resolution fails -- reported, never a
+    silent drop (the open-set discipline CTO~Z's dispatch specifically named)."""
+    if isinstance(node, ast.Constant) and isinstance(node.value, str):
+        return node.value, repr(node.value)
+    if isinstance(node, ast.Name) and node.id in consts:
+        return consts[node.id], node.id
+    try:
+        return None, ast.unparse(node)
+    except Exception:  # noqa: BLE001 -- unparse itself must not crash the scan
+        return None, '<unparseable>'
+
+
+def _resolve_helper_client_calls(content: str, helpers: dict, consts: dict,
+                                  file_path: str) -> tuple[list, dict]:
+    """Find call sites of the helper functions `_find_boto_client_helpers` identified, resolve
+    each one's service argument, and return (ops, assign_resolved):
+      ops             -- Operation rows for the DIRECT-CHAINED call shape (the real fixture's
+                          shape: `_boto("dynamodb").describe_table(...)`), resolved ones carrying
+                          real iam_actions (same _BOTO3_BY_SERVICE lookup the regex path uses),
+                          unresolved ones as an explicit UNRESOLVED-CLIENT row.
+      assign_resolved -- {var_name: service} for the ASSIGN-THEN-USE shape (`x = _boto("dynamodb")`,
+                          `x.describe_table(...)` later) -- returned separately so the caller folds
+                          it into the existing client_map and reuses that per-line method scan
+                          rather than duplicating it.
+    Empty `helpers` short-circuits to ([], {}) -- no wasted parse when nothing could match."""
+    if not helpers:
+        return [], {}
+    try:
+        tree = ast.parse(content)
+    except (SyntaxError, ValueError):
+        return [], {}
+
+    ops: list = []
+    assign_resolved: dict = {}
+
+    def _helper_service_arg(call_node, helper_name):
+        info = helpers[helper_name]
+        params, service_param = info['params'], info['service_param']
+        idx = params.index(service_param)
+        if idx < len(call_node.args):
+            return call_node.args[idx]
+        for kw in call_node.keywords:
+            if kw.arg == service_param:
+                return kw.value
+        return None
+
+    for node in ast.walk(tree):
+        # Shape 1: direct-chained -- Call(func=Attribute(value=Call(func=Name(helper)), attr=method))
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
+            inner = node.func.value
+            if isinstance(inner, ast.Call) and isinstance(inner.func, ast.Name) \
+                    and inner.func.id in helpers:
+                helper_name = inner.func.id
+                method = node.func.attr
+                svc_arg = _helper_service_arg(inner, helper_name)
+                resolved, display = (None, '<no-arg>') if svc_arg is None \
+                    else _resolve_const_ast(svc_arg, consts)
+                lineno = getattr(node, 'lineno', 0)
+                if resolved is None:
+                    ops.append(Operation(
+                        iam_actions=['UNRESOLVED-CLIENT'],
+                        source_pattern=f'UNRESOLVED-CLIENT({helper_name}({display}).{method})',
+                        file_path=file_path, line_number=lineno,
+                    ))
+                    continue
+                service = resolved
+                if service not in _MODELED_BOTO3_SERVICES:
+                    ops.append(Operation(
+                        iam_actions=[f'{service}:UNMODELED'],
+                        source_pattern=f'{helper_name}({display}).{method} '
+                                        f'(boto3 service {service!r} not modeled by comp-iam)',
+                        file_path=file_path, line_number=lineno,
+                    ))
+                    continue
+                action_map = _BOTO3_BY_SERVICE.get(service, {})
+                if method in action_map and action_map[method]:
+                    ops.append(Operation(
+                        iam_actions=action_map[method],
+                        source_pattern=f'{helper_name}({display}).{method}  [via helper]',
+                        file_path=file_path, line_number=lineno,
+                    ))
+        # Shape 2: assign-then-use -- Assign(targets=[Name(var)], value=Call(func=Name(helper)))
+        elif isinstance(node, ast.Assign) and isinstance(node.value, ast.Call) \
+                and isinstance(node.value.func, ast.Name) and node.value.func.id in helpers \
+                and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+            helper_name = node.value.func.id
+            var_name = node.targets[0].id
+            svc_arg = _helper_service_arg(node.value, helper_name)
+            resolved, display = (None, '<no-arg>') if svc_arg is None \
+                else _resolve_const_ast(svc_arg, consts)
+            lineno = getattr(node, 'lineno', 0)
+            if resolved is None:
+                ops.append(Operation(
+                    iam_actions=['UNRESOLVED-CLIENT'],
+                    source_pattern=f'UNRESOLVED-CLIENT({var_name} = {helper_name}({display}))',
+                    file_path=file_path, line_number=lineno,
+                ))
+            else:
+                assign_resolved[var_name] = resolved
+
+    return ops, assign_resolved
+
+
 def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]:
     """Scan a Python file for boto3 client method calls and AWS CLI subprocess invocations."""
     ops = []
@@ -1201,6 +1375,17 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
 
     # Module-level string constants, for resolving `Bucket=PLATINUM_BUCKET`.
     consts = _build_py_const_map(content)
+
+    # AST pass for helper-constructed boto3 clients (second insufficiency fix, see the block
+    # above this function). Runs independently of the regex scan below -- a parse failure here
+    # returns empty and the regex pass is unaffected either way. Uses `ops` (declared above,
+    # the function's single accumulator) -- not a second list.
+    _helpers = _find_boto_client_helpers(content)
+    if _helpers:
+        _helper_ops, _helper_assign = _resolve_helper_client_calls(content, _helpers, consts, file_path)
+        ops.extend(_helper_ops)
+    else:
+        _helper_assign = {}
 
     def _args_at(lineno: int, paren_idx: int) -> str:
         """Argument text of a call whose '(' is at `paren_idx` of line `lineno` (1-based).
@@ -1217,7 +1402,7 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
     unmodeled_emitted: set = set()
 
     # Map client variable names to service: s3_client = boto3.client('s3') -> {'s3_client': 's3'}
-    client_map: dict[str, str] = {}
+    client_map: dict[str, str] = dict(_helper_assign)  # assign-then-use helper calls, resolved above
     for m in re.finditer(
         r'(\w+)\s*=\s*(?:boto3\.client|boto3\.resource|self\.\w+\.client)\s*\(\s*[\'"](\w+)[\'"]',
         content

@@ -229,9 +229,20 @@ def cmd_service(args):
         # the reader to trust the third. Unconditional (the tool cannot know when the pattern is
         # present in THIS file -- that is the point) and printed regardless of whether any operations
         # were found (a 0-operations result is exactly as ungrounded on this axis as a nonzero one).
-        print("  NOTE: operation list = literal boto3.client()/boto3.resource() call sites only; "
-              "clients constructed via helper functions are NOT traced -- treat as a FLOOR, not a "
-              "census.")
+        # Stage 2 (AST pass, same day): now traces MOST helper-constructed clients (a helper whose
+        # body derives its boto3.client/resource service arg from its OWN parameter, called with a
+        # literal or module-const-resolvable service name) -- 'via:' rows tagged '[via helper]'
+        # below are these. A DYNAMIC service argument the AST pass cannot resolve renders as an
+        # explicit 'UNRESOLVED-CLIENT(...)' row (reported, never silently dropped) rather than
+        # vanishing. Still a FLOOR, not a census: a helper defined in a DIFFERENT file than the one
+        # scanned, or a client bound through a shape neither the regex nor this AST pass models
+        # (e.g. stored in a dict/object attribute rather than a bare call chain or simple
+        # assignment), remains untraced with no signal at all -- this note stays unconditional.
+        print("  NOTE: operation list = literal boto3.client()/boto3.resource() call sites, PLUS "
+              "helper-constructed clients this AST pass can resolve ('[via helper]' rows) -- a "
+              "DYNAMIC service arg to a helper renders as UNRESOLVED-CLIENT, never silently dropped. "
+              "Still a FLOOR, not a census: a cross-file helper or an unmodeled construction shape "
+              "is untraced with no signal.")
         print()
 
         if not profile.operations:
