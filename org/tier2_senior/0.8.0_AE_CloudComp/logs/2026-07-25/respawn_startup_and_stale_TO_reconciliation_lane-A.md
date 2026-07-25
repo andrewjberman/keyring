@@ -183,3 +183,79 @@ problem is solved.
 ~A clear, event-driven, no open build work. R2 correctly labeled accepted-not-verified. The
 investigate-candidates scheduling constraint is mechanical at three surfaces and exercised in
 both directions. Awaiting the next TOOLUNIFY item from CTO~Z.
+
+---
+
+# ADDENDUM 2 -- Andrew-direct STANDING ruling on NFRA tool design; audit of my own surface
+
+**archetype:** VALIDATE
+
+Three copies of one ruling landed within ~16s: base 0.8.0's relay (190040Z), CTO~Z direct
+(190050Z), base CTO's safety carve-out (190056Z). **Read all three before acting** -- the second
+corrected the first's routing and the third bounded what may be touched.
+
+## The ruling (verbatim, Andrew-direct to `1.0.0_SA_CTO`, ~2026-07-25T185538Z)
+
+> *"our comp tools should absolutely never be limited on governance. governance is handled at the
+> aws cli/aws user iam level, not at the tool level, If i am understanding properly what youre
+> saying, that sounds like the tools have built in blind spots for absolutely no reason"*
+
+STANDING, binding on NFRA tool design generally: no comp-tool gets a governance predicate, a hold
+check, or an `*_INCLUDE_HELD` env var. Durable record already committed by base @9e886f7e2a --
+not duplicated here.
+
+**Nothing was dispatched to me. All three notes explicitly authorize nothing. I edited nothing.**
+
+## Forward trigger fired on my own surface
+
+CTO~Z said this arc's thesis is now law and the surface would be mine. Audited the tools I own:
+`comp_iam.py`, `comp_iam_investigate.py`, `iam_cli.py`, `comp_dataflow` — **all clean.**
+
+`extract_iam.py` is **not**, and it is comp-iam surface:
+- imports `is_held_path` + `include_held` from `sovereign_held` (`:27-33`)
+- carries `COMP_IAM_INCLUDE_HELD` — literally the `*_INCLUDE_HELD` var the ruling names
+- `_read_source_if_allowed()` gates a `read_text()` of **local repo files** (`:58-68`)
+
+That last limb is CTO~Z's sharper half instantiated: **IAM does not govern local file reads, so
+this path was never governed, only PRETEND-governed.** The file's own comment calls the decision
+"a pure str.startswith on the relative path" — and *startswith is not an access control.*
+
+**STATE, measured not assumed: the blindness is DORMANT, not live.** `SOVEREIGN_HELD_PATHS = ()`
+(`sovereign_held.py:40`), so `is_held_path` returns False for everything and no read is currently
+skipped. What remains is dead governance scaffolding. "Silently under-reporting right now" and
+"carries a retracted, inert guard" are different claims and only the second is made.
+
+## The finding worth reusing: the two tuples are byte-identical
+
+```
+RETRACTED_20260709_PATHS   = ("data/black_diamond/", "data/canonical/schwab/silver/", "schwab/silver/")
+PROD_WRITE_FORBIDDEN_PATHS = ("data/black_diamond/", "data/canonical/schwab/silver/", "schwab/silver/")
+```
+
+Same for both BUCKET tuples. **The retracted governance set and the live safety set are
+INDISTINGUISHABLE BY VALUE — separable only by IDENTIFIER NAME.** So the most natural way to
+honour this ruling (grep the bd/schwab literals, remove them) is exactly the one that destroys
+`PROD_WRITE_FORBIDDEN` while appearing to work. Base CTO warned the rip takes out the safety half;
+**this is why.** Operational rule routed to both CTO lanes: **a rip must key on the SYMBOL NAME,
+never on the path literals.** The split comment in the file does not say this, and a careful
+reader can still reach for the values. The `@1fcf560b8` regression detector protects the control
+but trips *after* deletion — naming the symbol-not-value rule up front is the cheaper control.
+
+## Not adjudicated
+
+Whether `extract_iam`'s guard is in scope is CTO~Z's; whether `PROD_WRITE` is in or out is open at
+Andrew via base CTO. Neither resolved from inference. Routed, not acted on.
+
+## Tool defect found in passing
+
+**`comp-grep` is broken in this session type**: `rg: command not found`, after which the shim
+executes the Python body as bash (cascading syntax errors). The on-rails search primitive fails in
+a Cygwin-shell session — which pushes agents toward raw grep precisely where the rail wants them
+on-rails. Used native `Grep` instead; did **not** override the rail with a `rail-checked` marker.
+Flagged to CTO~Z as its own item, not fixed off a broadcast. (The rail gate itself worked
+correctly — it caught a `.tf` token in one of my probes and denied it.)
+
+## Current State
+
+~A clear, nothing edited, no dispatch held. ACKs + the finding routed to CTO~Z and base CTO;
+record-custody leg to MSTR including the base-addressed-mail delivery gap.
