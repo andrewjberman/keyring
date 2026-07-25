@@ -538,6 +538,35 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && printf '%s\n' "${PATHSPEC[@]}" | grep -qE '\.too
       fi
       _csk=$((_csk + 1))
     done
+    # ADDITIVE (TO safe-commit-F-read-override-fix, 2026-07-21): ALSO fold in any -F/--file
+    # commit-body FILE contents so the LD-0276-mandated -F path can carry the
+    # system-current-override that the F-010 git gate blocks on -m ($(/backtick). STRICTLY
+    # ADDITIVE -- the -m loop above and the CS_OVR extract below are BYTE-UNCHANGED; this
+    # inserts a separate loop (own vars _cf*) that ONLY APPENDS -F-file text to CS_MSG. The -F
+    # file is NEVER shell-parsed -> ZERO injection surface (unlike -m). A -F body WITHOUT the
+    # trailer appends no match -> clean no-override (the commit still BLOCKs, exactly as today).
+    # Handles the mandated -F <file> plus --file <file> / --file=<file>; skips stdin (-).
+    _cfk=0
+    while [ $_cfk -lt ${#COMMIT_ARGS[@]} ]; do
+      _cfa="${COMMIT_ARGS[$_cfk]}"; _cff=""
+      if [ "$_cfa" = "-m" ] && [ $((_cfk + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
+        _cfk=$((_cfk + 2)); continue                                  # skip -m VALUE (read above)
+      elif { [ "$_cfa" = "-F" ] || [ "$_cfa" = "--file" ]; } && [ $((_cfk + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
+        _cff="${COMMIT_ARGS[$((_cfk + 1))]}"; _cfk=$((_cfk + 2))       # -F <file> / --file <file>
+      elif [ "${_cfa#--file=}" != "$_cfa" ]; then
+        _cff="${_cfa#--file=}"; _cfk=$((_cfk + 1))                     # --file=<file>
+      else
+        _cfk=$((_cfk + 1)); continue
+      fi
+      if [ -n "$_cff" ] && [ "$_cff" != "-" ] && [ -f "$_cff" ]; then
+        # Normalize an optional leading comment marker on the trailer line
+        # (`# system-current-override:` -> `system-current-override:`) so the -F body can carry
+        # the override in the codebase's `# <marker>: <reason>` comment convention (cf.
+        # `# never-override:` / `# rail-checked:`) AND still be read by the BYTE-UNCHANGED extract
+        # below. A plain (no-#) trailer passes through untouched -> -F matches -m identically.
+        CS_MSG="${CS_MSG}"$'\n'"$(cat -- "$_cff" 2>/dev/null | sed 's/^[[:space:]]*#[[:space:]]*system-current-override:/system-current-override:/' || true)"
+      fi
+    done
     CS_OVR="$(printf '%s' "$CS_MSG" | sed -n 's/^[[:space:]]*system-current-override:[[:space:]]*//p' | head -1)"
     if [ -n "$CS_OVR" ]; then
       mkdir -p "$(dirname "$AUDIT_LOG")"
