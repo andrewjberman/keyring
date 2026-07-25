@@ -51,21 +51,42 @@ space produces a clean report about the wrong address space.
 **This is the round-2 item, more than the poverty is.** Vocabulary poverty is loud and self-correcting
 (BR008 fires, someone notices). Near-miss capture is silent and self-reinforcing.
 
-## Recommendation (for adversarial read, not yet dispatched)
+## Finding 2, sharpened by the adversarial read (CVO~Z, 145952Z) — TWO ADDITIONS
 
-1. **Adopt the 4 live-and-undeclared terms** — they are measured, not proposed: `code_call_site`,
+**(a) The general principle: a declared-term whitelist gives the validator THE DISCRIMINATION OF ITS
+LOOSEST MEMBER.** A near-miss term is a **false-accept** — and in a vocabulary, **false-accepts are
+SILENT while false-rejects (BR008) are LOUD. Loud errors self-correct; silent ones compound.** That is
+the structural reason poverty is the visible problem and near-miss capture is the dangerous one. (Same
+shape as the cycle-14 finding one level up: OR-ing a frozen literal with a generic word gives the check
+the sensitivity of the *generic* one.)
+
+**(b) >> THE METRIC THAT FOUND THIS CANNOT MEASURE THE HALF THAT MATTERS: `BR008`'s RATE IS A BIASED
+ESTIMATOR OF VOCABULARY HEALTH. <<** It counts accurate-novel emissions and **structurally cannot count
+precise-wrong ones.** So "4 BR008 notes" *understates* the drift, and **vocabulary quality is not
+inferable from the BR008 rate at all** — the dangerous cases are exactly the ones that never fire it.
+**Stated explicitly because someone will otherwise adopt BR008 as the health metric.**
+
+## Recommendation — ADVERSARIALLY READ, one defect found and corrected, now dispatchable
+
+1. **Adopt the 4 live-and-undeclared terms** — measured, not proposed: `code_call_site`,
    `dag_node_type`, `lambda_env_key`, `kuzu_schema_element`.
-2. **Do NOT prune the 7 unemitted terms.** Instead, **mark each as `ANTICIPATED` vs `RETIRED`** so
-   "declared for a sensor not yet built" is distinguishable from "declared and forgotten" — the
-   distinction that currently does not exist. This is the `DECLARED`-vs-`UNKNOWN` separation L1b proved
-   load-bearing, applied one level down.
+2. **Do NOT prune the 7 unemitted terms** — mark each `ANTICIPATED` vs `RETIRED`, so "declared for a
+   sensor not yet built" is distinguishable from "declared and forgotten." *(The `DECLARED`-vs-`UNKNOWN`
+   separation L1b proved load-bearing, one level down.)*
+   > **⚠ DEFECT IN THE ORIGINAL PROPOSAL, caught by CVO~Z and corrected here: `ANTICIPATED` with no
+   > expiry RECREATES the indistinguishability one level up** — a term marked ANTICIPATED in 2026 and
+   > still unemitted in 2028 is indistinguishable from forgotten. **`ANTICIPATED` MUST carry the same
+   > OWNER + TRIGGER discipline the L0b ratification attached to RESEMANT's deferral**: *"anticipated
+   > for sensor X, owner Y, trigger: X's first conformant emission."* **A bank with no trigger is a
+   > note; an ANTICIPATED with no trigger is a forgotten term with better branding.**
 3. **Disambiguate the two near-miss pairs in-place** — each declared term states what it is *not*
-   (`dag_node_id`: *"a node's identity; for its KIND use dag_node_type"*). Cheap, and it puts the
-   correction where the mistake is made.
-4. **Report the intersection.** `boundary_report` should be able to answer *"how many declared spaces
-   has any sensor ever emitted?"* — the same coverage-denominator discipline the estate applied to
-   everything else today, applied to the vocabulary itself. **1-of-8 is the number that would have
-   surfaced this months earlier.**
+   (`dag_node_id`: *"a node's identity; for its KIND use dag_node_type"*). Puts the correction where the
+   mistake is made.
+4. **Report BOTH denominators, not just the intersection** *(CVO~Z's addition)*: `declared 8 /
+   live-emitted 5 / intersection 1`. **1-of-8 alone conflates two questions with OPPOSITE remedies — is
+   the vocabulary OVER-DECLARED (8→1, prune/mark) or are sensors UNDER-CONFORMING (5→1, fix the
+   emitters)?** A single ratio picks neither. 1-of-8 would have surfaced this months ago;
+   1-of-8-**and**-1-of-5 says what to do about it.
 
 **Explicitly NOT recommended: closing the set.** It is intentionally open (the frozen-enumeration
-defect), and nothing here changes that.
+defect), and the open-set discipline is what made BR008 informative in the first place.

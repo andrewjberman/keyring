@@ -86,22 +86,34 @@ in the denominator's "do not" side, explicitly excluded from any sum, never sile
 
 ## 6 · Per-cell aggregate + method-mix bias (acceptance 2+3, banked input 1)
 
-**Aggregation is on `cell` name ONLY across reports — never across `address_space`** (acceptance 2). A
-`covered` count from `comp-cache` and a `covered` count from `comp-kuzu` are summed because they are the
-SAME cell; their different address spaces (`code_call_site` vs `kuzu_schema_element`) are never
-conflated or compared directly.
+> **CORRECTED 20260725T1426Z (CTO~Z verify, CVO~Z-checked).** The original version of this section
+> published a per-cell SCALAR total (e.g. `covered: 138`) that summed across all 5 reports' different
+> `address_space`s — 105 `code_call_site` + 3 `dag_node_type` + 13 `dag_edge_type` + 5 `lambda_env_key` +
+> 12 `kuzu_schema_element`. **138 has no referent**: it adds call-sites to graph edge-types to env keys.
+> Listing the components beside the sum did not cure the violation — a total published next to its
+> components is still read as the summary, and it is the number that gets quoted. **Fixed**: report per
+> **(cell × address_space)**, never a per-cell scalar. CVO~Z explicitly tested and rejected the reading
+> that acceptances 1 and 2 are jointly unsatisfiable (they would be only if a per-cell number had to be a
+> scalar) — the per-(cell × address_space) rendering satisfies both, so this was an implementation defect,
+> not a spec conflict.
 
-| Cell | Applicability denominator | Total (where applicable) | Method-mix bias |
-|---|---|---|---|
-| `covered` | 5/5 tools applicable | 138 | 121 via traversal (EXACT), 17 via mention (UNDER-REPORTS) |
-| `doc_only` | **2/5** tools applicable (3 N/A) | 4 | 4 via mention (UNDER-REPORTS) |
-| `member` | 5/5 tools applicable | 1 | 1 via traversal (EXACT) |
-| `orphan` | 5/5 tools applicable | 7 | 7 via traversal (EXACT) |
+**Aggregation is on `cell` name ONLY across reports — never a scalar total across `address_space`**
+(acceptance 2). The applicability DENOMINATOR (a count of tools, e.g. "5/5 applicable") is a legitimate
+scalar — it counts commensurable things (tools), not incommensurable ones (call-sites vs edge-types).
+Every actual COUNT stays broken out per address_space.
 
-**`doc_only`'s bias statement is the one to read carefully**: its entire applicable total (4) is
-`mention`-derived, i.e. UNDER-REPORTING by the type's own definition (a mention proves reference, never
-proves non-traversal beyond what was named). If the true doc-only surface is larger than 4, this
-aggregate cannot see it — that is the bias, stated, not hidden behind a clean-looking number.
+| Cell | Applicability denominator | Counts, per (tool / address_space) — no cross-space sum |
+|---|---|---|
+| `covered` | 5/5 tools applicable | `comp-cache/code_call_site`=105 (traversal, EXACT) · `comp-blast/dag_node_type`=3 (traversal, EXACT) · `comp-blast/dag_edge_type`=13 (traversal, EXACT) · `inf-gold-trigger/lambda_env_key`=5 (mention, UNDER-REPORTS) · `comp-kuzu/kuzu_schema_element`=12 (mention, UNDER-REPORTS) |
+| `doc_only` | **2/5** tools applicable (3 N/A) | `comp-cache/code_call_site`=4 (mention, UNDER-REPORTS) · `comp-kuzu/kuzu_schema_element`=0 (mention, UNDER-REPORTS) |
+| `member` | 5/5 tools applicable | `comp-cache`=0 · `comp-blast/dag_node_type`=0 · `comp-blast/dag_edge_type`=0 · `inf-gold-trigger`=1 (traversal, EXACT) · `comp-kuzu`=0 |
+| `orphan` | 5/5 tools applicable | `comp-cache`=0 · `comp-blast/dag_node_type`=**7** (traversal, EXACT) · `comp-blast/dag_edge_type`=0 · `inf-gold-trigger`=0 · `comp-kuzu`=0 |
+
+**`doc_only`'s bias is read PER SPACE now, not blended**: `comp-cache`'s 4 and `comp-kuzu`'s 0 are BOTH
+`mention`-derived (UNDER-REPORTING by the type's own definition — a mention proves reference, never
+proves non-traversal beyond what was named), but they describe two entirely different surfaces (React
+hook call-sites vs Kuzu table comments) and were never addable in the first place — the fix makes that
+structurally impossible to forget, not just documented.
 
 **The 3-way `doc_only` split CTO~Z specifically flagged as an asset, not noise** (141210Z): across this
 corpus's 5 reports, `doc_only` takes THREE distinct epistemic states, not a binary applicable/not:
