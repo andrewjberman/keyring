@@ -1137,6 +1137,22 @@ def cmd_reconcile(args):
               "This verdict is NOT an APPLIED-plane authority.")
         print()
 
+    # APPLIED-PLANE HONESTY FIX (2026-07-25, CTO~Z ruling @125708Z, precedent: system_parity.py:134
+    # -- "an instrument must not assert the absence of something it cannot observe"). `overperm`
+    # below is READ from a census JSON field (`overperm_flags`) comp-iam itself never computes --
+    # whatever generated the census populates it, or doesn't. The CURRENT generator
+    # (comp_iam_census.py build_census(), the one every census since the 07-20/22 applied-plane
+    # build has used) never sets this key on any role dict -- so `r.get("overperm_flags") or []`
+    # silently returns `[]` for EVERY role, UNCONDITIONALLY, and "0 over-perm" has printed as a
+    # clean, computed verdict since the applied plane landed. It is not a computed zero; the field
+    # is structurally absent. Distinguish PRESENT-and-empty (a real generator that DID check and
+    # found none -- a future generator, or a hand-authored census, may legitimately set
+    # "overperm_flags": [] on every role) from ABSENT-everywhere (this generator, today) by
+    # checking whether the KEY appears on any role dict at all, not just whether its value is
+    # truthy -- `in` distinguishes "the question was asked and answered no" from "the question was
+    # never asked."
+    _overperm_computed = any("overperm_flags" in r for r in (census.get("roles") or []))
+
     live = {}
     for r in (census.get("roles") or []):
         acts = set()
@@ -1195,16 +1211,27 @@ def cmd_reconcile(args):
         for n, flags in overperm_findings:
             print(f"    ?? {n}: {flags}")
         print()
+    elif not _overperm_computed:
+        print("OVER-PERM: NOT COMPUTED -- this census's generator carries no `overperm_flags` "
+              "field on any role. This is NOT a finding of zero over-perm roles; it is a")
+        print("  question this census never asked. Do not quote '0 over-perm' from this run.")
+        print()
     if tf_only_roles:
         print(f"INFO: {len(tf_only_roles)} TF-parsed role(s) not in the (customer-scoped) census "
               f"-- expected if service-linked/internal; not drift.")
         print()
 
     total_drift = len(live_only_roles) + len(drift_action_findings)
+    _overperm_summary = f"{len(overperm_findings)} over-perm" if _overperm_computed else "over-perm NOT COMPUTED"
     print(f"Total: {len(live_only_roles)} live-only-role | {len(drift_action_findings)} live-only-action | "
-          f"{len(overperm_findings)} over-perm")
+          f"{_overperm_summary}")
     if total_drift == 0 and not overperm_findings:
-        print("  CLEAN: live AWS matches Terraform (no desired-vs-live drift, no over-perms).")
+        if _overperm_computed:
+            print("  CLEAN: live AWS matches Terraform (no desired-vs-live drift, no over-perms).")
+        else:
+            print("  DRIFT-CLEAN (live-only role/action axes only): no live-only role or action "
+                  "drift found. Over-perm is NOT COMPUTED for this census -- the absence of an ")
+            print("  over-perm finding above is NOT evidence of absence; it was never checked.")
     sys.exit(1 if total_drift else 0)
 
 
