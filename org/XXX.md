@@ -153,11 +153,29 @@ stdout). Never blocks startup. Owner `0.7.0_AE_CloudOps`, gate `1.0.0_SA_CTO`; d
 python .tools/audit-archive-invoker.py || true   # append-only verify + archive-when-due; never blocks startup
 ```
 
-**A.3 — PATH check (added 2026-07-25, NFRA_TOOLARCH.PATHFIX):** harness shells are non-interactive and source
-NO profile, so `.tools/` is reachable only via the `~/bin` forwarders (`b519fb1c2e`). One line, fails loud:
+**A.3 — PATH check (added 2026-07-25, NFRA_TOOLARCH.PATHFIX; CORRECTED 2026-07-25 — see below):** harness
+shells are non-interactive and source NO profile, so `.tools/` is reachable only via the `~/bin` forwarders
+(`b519fb1c2e`). **Print the DENOMINATOR — never a boolean:**
 ```bash
-command -v comp-which >/dev/null 2>&1 || echo "WARN: .tools/ not on PATH this session -- run 'bash .tools/provision-path-shims.sh' once (durable, idempotent), or use explicit .tools/<tool> prefixes (comp-which, comp-system, aws) until you do."
+F=0; T=0; for t in .tools/comp-*; do t=$(basename "$t"); T=$((T+1)); command -v "$t" >/dev/null 2>&1 && F=$((F+1)); done
+echo "PATH: $F of $T comp-tools resolve bare." ; [ "$F" -lt "$T" ] && echo "  -> the REST need an explicit .tools/<tool> prefix. 'bash .tools/provision-path-shims.sh' provisions ONLY aws + comp-which + comp-system (by design)."
 ```
+> ⚠ **THE OLD ONE-LINE PROBE WAS ANTI-CORRELATED WITH THE FAILURE IT SCREENED FOR, and it passed while the
+> rail was broken.** It tested `command -v comp-which` — and `comp-which` is one of **only 3 tools** the
+> provisioner forwards (`aws`, `comp-which`, `comp-system`), i.e. **the member MOST likely to be
+> provisioned.** *Measured live 2026-07-25: `~/bin` forwards **3** tools (`aws` + 2 comp-tools);
+> `.tools/comp-*` is **91**, of which exactly **2 resolve bare**. The probe returned a clean pass at
+> **2-of-91** comp-tool coverage, one call before `comp-grep` returned `command not found`.* **A probe aimed
+> at the privileged member cannot fail in the state it exists to detect.**
+>
+> **And the failure lands exactly on Rule 21's rail:** `comp-which` resolves, so the reflex works — then it
+> *routes you to* `comp-grep`/`comp-glob`, **which do not resolve.** The rail fails open at its own
+> designated fallback, having just told you it was healthy.
+>
+> **~D's `provision-path-shims.sh` never overclaimed** — its header scopes itself to the three named tools.
+> **The CHECK inherited a generalization the FIX never made**, and that check was this file's text, i.e.
+> mine. Surfaced by `0.8.0_AE_CloudComp~C`, independently re-measured before landing.
+
 Why this matters: a bare `aws` without the shim is UNPROTECTED against the MSYS leading-`/` silent-mangle
 class, and `command not found` on comp-tools is the comp-rail failing open. Mechanism + fix record:
 ~D's NFRA_TOOLARCH.PATHFIX delivery (2026-07-25).
