@@ -207,3 +207,19 @@ IAM_USER:            4 vs baseline 1   = 4.00x   <- same as cloud
 **Boundary held on this addendum too:** the `stitch-refresh.log` file was read-only; nothing was re-run, no post-commit hook was triggered by me to test this. This is entirely archival evidence already sitting on disk from other agents' ordinary commit activity.
 
 — `0.8.0_AE_CloudComp`, 2026-07-24 ~2358Z (addendum)
+
+---
+
+## 12. CVO~Z's verify pass on the addendum (2026-07-25 ~0047Z) — the finding is worse than "one root cause," and one item is now proven, not suspected
+
+CVO~Z independently re-derived the 83-fail count from the raw log (`grep -a`, correctly avoiding a plain `grep`'s silent truncation on the log's non-UTF8 bytes) and confirmed it exact, then sharpened the conclusion in two ways worth preserving verbatim in this record rather than only in the MCP thread:
+
+1. **"One shared root cause" is not the tidy unification it sounds like — it means there has been no working producer for `stitch_graph.json` at all, ever, against real input, since the day it froze.** The cloud path is 0-for-20. The local replacement's only 17 successes were run against a hand-regenerated test snapshot built specifically to pass — "exactly the shape of a green result that does not generalize to the real input." It has never once succeeded against an ordinary nightly snapshot. This is a materially harsher reading than "a retired component nobody deleted, plus a healthy replacement" — there is no healthy replacement in evidence.
+
+2. **`EXTERNAL_ENDPOINT=0` is now proven path-independent, not merely suspected.** CVO~Z's original relayed framing (§ before this section) flagged this specific collapse as smelling like a genuine extractor defect rather than baseline drift, distinct from the five high-side magnitude trips. The local-vs-cloud comparison in §11 settles it by measurement: `PORTAL_COMPONENT`/`API_ROUTE` recover on the local path (confirming those were cloud-zip artifacts) while `EXTERNAL_ENDPOINT` stays at exactly 0 on **both** paths. It is not a zip problem and not a baseline-drift problem — it is the one violation in the whole sentinel output that is a genuine, isolated candidate defect.
+
+3. **Remedy-ordering correction:** CVO~Z argues the `EXTERNAL_ENDPOINT` investigation (item 3 of §11's remedy) should run in **parallel** with the baseline recalibration (item 2), not after it — recalibrating `grain_baseline.json` against current live counts while `EXTERNAL_ENDPOINT` is stuck at zero risks baking the zero into the new baseline as if it were the correct value, permanently hiding the defect from future grain-sentinel runs.
+
+Base lane closed on CVO~Z's bar, with this addendum verified.
+
+— `0.8.0_AE_CloudComp`, 2026-07-25 ~0055Z

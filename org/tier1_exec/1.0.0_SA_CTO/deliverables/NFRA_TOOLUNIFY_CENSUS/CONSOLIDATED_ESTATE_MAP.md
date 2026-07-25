@@ -114,13 +114,18 @@ is a queryable property, not a separate store — plus (a) the cheap alias table
 
 ## 4 · Defect themes (FINDINGS — audit-first, not repaired)
 
-1. **Inaudible-controls theme (§0.2)** — the through-line. `stitch` is **retired-by-design but never
-   deleted**: BOTH the cloud CodeBuild (20/20 fail) AND the local post-commit replacement (83 consecutive
-   grain-sentinel fails since 07-08) share one root. 3-part remedy (supersedes the PORTAL_REPO_PAT framing):
-   (a) finish the 07-07-ordered cloud decommission — silently failing 18 nights past its own retirement date;
-   (b) recalibrate `grain_baseline.json` against legitimate estate growth (REACT_QUERY_KEY now trips HIGH,
-   2.66x, not zero); (c) separately investigate the standing `EXTERNAL_ENDPOINT=0` detection gap. Alerts
-   don't land (476 unconsumed, missing email sub).
+1. **Inaudible-controls theme (§0.2)** — the through-line. `stitch` is **retired-by-design but never deleted,
+   AND its replacement never actually worked.** The cloud CodeBuild failed 20/20 AND the local post-commit
+   replacement has failed 83 straight since 07-08 (CVO~Z re-derived with `grep -a` — the log carries non-UTF8
+   that silently truncates a plain grep). **There has been NO working producer for `stitch_graph.json` since
+   the day it froze** — the replacement's only 17 "successes" were against a hand-regenerated TEST snapshot
+   that never generalized to real input. So the remedy is NOT "finish the retirement" alone; a working
+   producer must be established. Corrected, ordered remedy: (a) finish the 07-07-ordered cloud decommission
+   (silently failing 18 nights past its retirement date); (b) **investigate `EXTERNAL_ENDPOINT=0` IN PARALLEL,
+   not after** (path-independent — 0 in both cloud and local); (c) recalibrate `grain_baseline.json` against
+   legitimate growth **only after (b)** — recalibrating while EXTERNAL_ENDPOINT is stuck at 0 would BAKE THE
+   ZERO IN and blind the sentinel to the very thing it is currently, correctly, refusing to publish over.
+   Alerts don't land (476 unconsumed, missing email sub).
 2. **graph.json pollution** — 82 phantom Lambda nodes (73 vendored-dep Rule-3 site + 9 org-dir-noise) + 24
    unexplained inflate the LOCAL plane; the cloud truth (kuzu=191) is clean.
 3. **Rule-4 drift** — 4 live Lambdas missing from the CI source-map, 5 registered-but-undeployed.
@@ -128,7 +133,11 @@ is a queryable property, not a separate store — plus (a) the cheap alias table
    to a local var and read through it lost its name (and could hand a call site a confidently WRONG binding —
    the `comp-types` cross-function collision). Fixed via function-scoped const + return-value resolution; the
    fix surfaced that **`comp-iam` writes its own DERIVED-CACHE** (a self-producer of what it later reads —
-   notable, it is the Rule-22a fails-GREEN tool).
+   notable). CVO~Z source-confirmed it (`extract_iam.py:116` returns the cache path, `:133` writes it) and
+   recommends **`SELF-PRODUCER` as its own register role_flag**: production and consumption share ONE trust
+   boundary — no external producer, no external watcher to catch a stale/bad write — on the tool Rule 22a
+   already flags as failing GREEN (it cannot distinguish `(action)` from `(action,resource)` AND reads a
+   vintage only it governs). The compound is worse than either half.
 5. **Terraform/manifest gap** (Andrew-direct to base): plain object-store prefixes have zero Terraform
    declaring their purpose; `derive-build.tf` CodeBuild has no trigger config found.
 
