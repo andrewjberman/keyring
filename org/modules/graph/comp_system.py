@@ -659,6 +659,26 @@ def self_test() -> int:
         (lambda v: v[0] == 2 and "BLOCKED-ON-PEER-LANDING" in v[1] and "regenerate" not in v[1])
         (_gate_verdict(False, "sources unchanged, age 0h < TTL 24h",
                        [("03_comp_tools.md", "tools_index_count", 59, 61)], dirty=None)))
+    # 11b-11d. v2 (2026-07-25, CVO~Z's recommendation after the v1 UNION block deadlocked ~D behind
+    #          an unrelated lane's untracked debris it never touched): scope the dirty-check to the
+    #          file(s) that FEED the SPECIFICALLY-drifted metric(s), not the whole _SOURCES union.
+    chk("11b gate v2: metric X drifts, dirty file feeds ONLY metric Y -> NOT blocked, plain DRIFT/regen (false-block eliminated, mutant)",
+        _gate_verdict(False, "sources unchanged, age 0h < TTL 24h",
+                      [("03_comp_tools.md", "tools_index_count", 59, 61)],
+                      dirty=["org/modules/graph/comp-coverage-map.yaml"])  # feeds ledger_union_count, not tools_index_count
+        == (2, "SYSTEM DRIFT (fail-closed): 1 managed-region span(s) drifted from live metrics: "
+               "03_comp_tools.md cs:tools_index_count 59->61"))
+    chk("11c gate v2: metric X drifts, dirty file feeds metric X -> still BLOCKED-ON-PEER-LANDING (true-block preserved)",
+        (lambda v: v[0] == 2 and "BLOCKED-ON-PEER-LANDING" in v[1] and "regenerate" not in v[1]
+         and "graph-call-manifest.yaml" in v[1])
+        (_gate_verdict(False, "sources unchanged, age 0h < TTL 24h",
+                       [("03_comp_tools.md", "tools_index_count", 59, 61)],
+                       dirty=["org/modules/graph/graph-call-manifest.yaml", "org/modules/graph/comp-coverage-map.yaml"])))
+    chk("11d gate v2: drifted metric has NO _METRIC_SOURCE_FILES entry -> conservative whole-union BLOCK (protection preserved for unmapped metrics)",
+        (lambda v: v[0] == 2 and "BLOCKED-ON-PEER-LANDING" in v[1])
+        (_gate_verdict(False, "sources unchanged, age 0h < TTL 24h",
+                       [("06_current_state.md", "graph_marker", "abc123", "def456")],
+                       dirty=["org/modules/graph/canon-patterns.yaml"])))
     chk("12 gate: age>=TTL ALONE -> WARN not block (rc 0) -- staleness-conditioned, no false-Monday",
         _gate_verdict(True, "age 30h exceeds TTL 24h (live-grounded values may have moved)", [], dirty=[])[0] == 0)
     chk("13 gate: CURRENT -> gate open (rc 0)",
@@ -734,6 +754,52 @@ def _dirty_sources():
     return dirty
 
 
+#: v2 (CVO~Z's recommendation, 2026-07-25, dispatched by CTO~Z after the v1 union-block deadlocked
+#: ~D behind an unrelated lane's untracked debris it never touched): the metric-name -> its own
+#: repo-relative source-file(s), for the metrics compute_metrics() grounds against a _SOURCES-glob-
+#: matching file (MANIFEST/LEDGER below -- same constants compute_metrics() itself uses, not a
+#: forked duplicate). Metrics grounded against something else entirely (a live kuzu marker, a JSON
+#: snap, a promote manifest) have no repo-file input among _SOURCES and so have no entry here --
+#: see _relevant_dirty()'s unmapped-metric branch for how that absence is handled (fail-closed, not
+#: silently exempted).
+_METRIC_SOURCE_FILES = {
+    "tools_index_count": ["org/modules/graph/graph-call-manifest.yaml"],
+    "ledger_union_count": ["org/modules/graph/comp-coverage-map.yaml"],
+}
+
+
+def _relevant_dirty(region_changes: list, fingerprint_drift: bool, dirty):
+    """Narrow the uncommitted-source guard to the file(s) that actually FEED the drift under
+    evaluation, instead of the whole _SOURCES union (the v1 defect: a correct lane's regen froze
+    behind an unrelated lane's untracked debris it never touched).
+
+    - `dirty is None` (git-status unverifiable): stays None regardless of scope -- unchanged,
+      still fail-closed.
+    - `fingerprint_drift` (the coarse whole-_SOURCES aggregate mtime/file-count signal -- no
+      per-file attribution exists for it): CANNOT be narrowed. Returns `dirty` UNCHANGED (v1
+      behavior, deliberately not widened this pass -- a disclosed residual, not a gap left silent).
+    - region_changes only (the common case; each span already names its own metric via `name`):
+      returns only the dirty files that are a MAPPED source of one of the drifted metrics. A
+      drifted metric with NO entry in `_METRIC_SOURCE_FILES` (we don't know its file) is treated
+      conservatively -- returns the WHOLE `dirty` for that case, never silently exempted, so
+      "you still cannot launder unlanded work into a metric it feeds" holds even for metrics this
+      map doesn't (yet) cover.
+
+    Pure (no I/O) -- `region_changes`/`fingerprint_drift`/`dirty` are all already-computed inputs,
+    keeping _gate_verdict's offline-testable contract intact."""
+    if dirty is None:
+        return None
+    if fingerprint_drift:
+        return dirty
+    mapped = set()
+    for _fn, name, _old, _new in region_changes:
+        srcs = _METRIC_SOURCE_FILES.get(name)
+        if srcs is None:
+            return dirty  # unmapped metric -- fail-closed, cannot prove the dirty set is irrelevant
+        mapped.update(srcs)
+    return [f for f in dirty if f in mapped]
+
+
 def _staleness(header: dict):
     """(is_stale, reason). THE single predicate. --check reports it; the emit path stores what it
     computes. Never two expressions that agree today."""
@@ -803,19 +869,31 @@ def check_stale() -> int:
     except Exception as e:  # noqa: BLE001 -- a probe that cannot evaluate is an ERROR, never "fresh"
         print("06 UNVERIFIABLE: --check could not evaluate (%s: %s)" % (type(e).__name__, e))
         return 1
-    genuine_drift = bool(region_changes) or (stale and not reason.startswith("age "))
+    fingerprint_drift = stale and not reason.startswith("age ")
+    genuine_drift = bool(region_changes) or fingerprint_drift
     if genuine_drift:
         # Genuine drift on a DIRTY source tree: regenerating now would bake a peer's UNLANDED work
         # into 06's committed self-description as if it were real (CVO~Z near-miss, 2026-07-25).
-        # Clean-tree genuine drift is unaffected below -- unchanged STALE/regenerate behavior.
-        dirty = _dirty_sources()
-        if dirty:
-            print("SYSTEM BLOCKED-ON-PEER-LANDING: genuine drift detected, but source file(s) are "
-                  "uncommitted -- %s. Running comp-system now would launder unlanded peer work into "
-                  "06's committed self-description. Wait for landing, then re-run comp-system --check."
-                  % ", ".join(dirty[:6]))
+        # v2 (CVO~Z, 2026-07-25): scoped to the file(s) that FEED the drifting metric(s), not the
+        # whole _SOURCES union (v1 deadlocked a correct lane behind an unrelated lane's untouched
+        # debris) -- see _relevant_dirty()'s docstring for the fingerprint/unmapped-metric cases it
+        # still fails closed on. Clean-tree / not-relevant-dirty genuine drift is unaffected below --
+        # unchanged STALE/regenerate behavior.
+        relevant = _relevant_dirty(region_changes, fingerprint_drift, _dirty_sources())
+        if relevant:
+            # Honest wording: only claim metric-specific attribution when it actually narrowed the
+            # set (region_changes present, not the coarse fingerprint signal, every drifted metric
+            # mapped) -- the fingerprint/unmapped-metric fallback cases return the whole union, and
+            # saying "feed the drifted metric(s)" there would overclaim precision this pass doesn't have.
+            scoped = bool(region_changes) and not fingerprint_drift and all(
+                nm in _METRIC_SOURCE_FILES for _fn, nm, _o, _n in region_changes)
+            what = "source file(s) that feed the drifted metric(s)" if scoped else "source file(s)"
+            print("SYSTEM BLOCKED-ON-PEER-LANDING: genuine drift detected, but %s are uncommitted "
+                  "-- %s. Running comp-system now would launder unlanded peer work into 06's "
+                  "committed self-description. Wait for landing, then re-run comp-system --check."
+                  % (what, ", ".join(relevant[:6])))
             return 2
-        if dirty is None:
+        if relevant is None:
             print("SYSTEM BLOCKED-ON-PEER-LANDING (fail-closed): genuine drift detected, but source "
                   "cleanliness could not be verified (git status did not complete). Re-run once git "
                   "status succeeds.")
@@ -873,23 +951,39 @@ def _gate_verdict(stale: bool, reason: str, region_changes: list, dirty=None) ->
     is treated the SAME as "could not verify clean" (fail toward BLOCKED, never toward a silent
     DRIFT-with-regen prescription) -- a live caller (gate()) always computes and passes the real list;
     only a genuine, checked-clean tree (dirty == []) gets the unchanged DRIFT/regenerate verdict.
-    On genuine drift with dirty non-empty (or unverifiable): (2, BLOCKED-ON-PEER-LANDING) -- 06 is
-    behind the estate, but regenerating now would launder a peer's UNLANDED work into 06's committed
-    self-description (CVO~Z near-miss, 2026-07-25) -- never says "regenerate", says wait for landing.
+
+    v2 (2026-07-25, CVO~Z's recommendation after the v1 union-block deadlocked ~D behind an
+    unrelated lane's untracked debris): `dirty` is narrowed via `_relevant_dirty()` to just the
+    file(s) that FEED the metric(s) actually drifting, not the whole _SOURCES union -- see that
+    function's docstring for the fingerprint-drift / unmapped-metric fail-closed cases it preserves.
+    A dirty file that feeds a DIFFERENT, non-drifting metric no longer blocks (the false-block v1
+    defect); a dirty file that feeds the drifting metric still does.
+
+    On genuine drift with the RELEVANT dirty set non-empty (or unverifiable): (2,
+    BLOCKED-ON-PEER-LANDING) -- 06 is behind the estate, but regenerating now would launder a peer's
+    UNLANDED work into 06's committed self-description (CVO~Z near-miss, 2026-07-25) -- never says
+    "regenerate", says wait for landing.
     Returns (rc, verdict_str)."""
     genuine = []
     if region_changes:
         drift = "; ".join("%s cs:%s %s->%s" % (fn, nm, o, n) for fn, nm, o, n in region_changes[:6])
         genuine.append("%d managed-region span(s) drifted from live metrics: %s"
                        % (len(region_changes), drift))
-    if stale and not reason.startswith("age "):   # source-drift / pre-predicate / not-emitted
+    fingerprint_drift = stale and not reason.startswith("age ")   # source-drift / pre-predicate / not-emitted
+    if fingerprint_drift:
         genuine.append(reason)
     if genuine:
-        if dirty:
-            return 2, ("SYSTEM BLOCKED-ON-PEER-LANDING: genuine drift (%s), but source file(s) are "
-                       "uncommitted -- %s. Wait for landing, then re-run." % (" | ".join(genuine),
-                       ", ".join(dirty[:6])))
-        if dirty is None:
+        relevant = _relevant_dirty(region_changes, fingerprint_drift, dirty)
+        if relevant:
+            # Honest wording -- see check_stale()'s identical `scoped` comment: only claim
+            # metric-specific attribution when it actually narrowed the set.
+            scoped = bool(region_changes) and not fingerprint_drift and all(
+                nm in _METRIC_SOURCE_FILES for _fn, nm, _o, _n in region_changes)
+            what = "source file(s) that feed the drifted metric(s)" if scoped else "source file(s)"
+            return 2, ("SYSTEM BLOCKED-ON-PEER-LANDING: genuine drift (%s), but %s are uncommitted "
+                       "-- %s. Wait for landing, then re-run."
+                       % (" | ".join(genuine), what, ", ".join(relevant[:6])))
+        if relevant is None:
             return 2, ("SYSTEM BLOCKED-ON-PEER-LANDING (fail-closed): genuine drift (%s), but source "
                        "cleanliness could not be verified. Wait, then re-run." % " | ".join(genuine))
         return 2, "SYSTEM DRIFT (fail-closed): " + " | ".join(genuine)
