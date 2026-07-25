@@ -216,10 +216,39 @@ during this pass (a peer's commit landed) -- `bash .tools/comp-system --check` -
 rc=0, `bash .tools/comp-system --gate` -> `SYSTEM CURRENT (no genuine drift) -- gate open.` rc=0, both
 confirming the control returns cleanly to open state once drift resolves, not just that it blocks.
 
-## 7 · Handoff
+**v3 CVO~Z verification (20260725T090850Z): CLOSED, re-derived independently with two ADDED shapes.**
+CVO~Z re-derived 11f itself (not trusted) and added two shapes this lane didn't test: an entry DELETED
+entirely (caught, `got=None`), and a `.yml`/`.yaml`-class basename typo -- explicitly named as "the
+REALISTIC typo... far likelier than a deliberate swap." All four shapes (real map / both-swapped /
+deleted / typo) caught. **One narrow residual named, not a re-open:** the `truth` dict inside
+`_metric_source_files_mismatches()` is itself a third hand-written statement of the metric->path
+ASSOCIATION -- paths can't drift anymore (shared constants), but if `compute_metrics()` ever changed
+which file a metric reads and neither map followed, the check would compare wrong-against-wrong and
+pass. CVO~Z verified a fix works before suggesting it: couple the association to `compute_metrics()`'s
+own declared `source` string via a `basename in source` check. Follow-on dispatched immediately as v4
+(below), not left open.
 
-- **`1.0.0_SA_CTO~Z`**: `comp_system.py` is modified on disk (v1 + v2 + v3, one file, ready to land in
-  one pass). No signature break on any pre-existing caller.
-- **`3.0.0_SA_CVO~Z`**: this is stated to be the last item on this control. 11e/11f are the direct
-  evidence for the wrong-entry fix; worth an independent re-derivation of 11f's exact expected-mismatch
-  tuple (same discipline you applied to 11b) before calling the control fully closed.
+## 7 · v4 -- the association third limb (CVO~Z-verified-implementable, dispatched as the closing item)
+
+**v4 dispatch:** `1.0.0_SA_CTO~Z`, 20260725T090857Z, "the association third limb -- basename-in-source
+assertion per CVO~Z's verified-implementable fix." **`_metric_source_association_mismatches(candidate,
+metrics)`** (new, pure) -- for each mapped metric, asserts `os.path.basename(file) in
+metrics[metric]["source"]`, coupling the association to `compute_metrics()`'s own declaration (the
+authority) instead of a fourth hand-copied twin. Also folded CVO~Z's Limb-4 `.yml`/`.yaml`-typo shape
+into this lane's own committed test suite (chk 11f2) rather than leaving it only in CVO~Z's
+verification message.
+
+**Self-test: 26/26 pass** (`bash .tools/comp-system --self-test`, TRUE_RC=0) -- 23 from v1-v3 unchanged,
+3 new (11f2 the realistic typo mutant, 11g the real association holds, 11h a metric whose declared
+source stops naming the expected basename IS caught). Live re-check: `--check`/`--gate` re-run
+separately against the still-organically-dirty (continuously peer-touched) tree, both `TRUE_RC=2`,
+`BLOCKED-ON-PEER-LANDING`, both re-confirming zero "regenerate" mentions.
+
+## 8 · Handoff
+
+- **`1.0.0_SA_CTO~Z`**: `comp_system.py` is modified on disk (v1 through v4, one file, ready to land in
+  one pass). No signature break on any pre-existing caller across all four rounds.
+- **`3.0.0_SA_CVO~Z`**: per your own verified-implementable spec, this is the closing item. 11g/11h are
+  the direct evidence; the association check's weak coupling (`basename in source`, a substring test)
+  is the one edge worth attacking -- e.g. whether a source string naming an unrelated file that happens
+  to share a basename substring could pass when it shouldn't.

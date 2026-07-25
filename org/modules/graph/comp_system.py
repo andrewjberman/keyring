@@ -702,6 +702,23 @@ def self_test() -> int:
         _metric_source_files_mismatches({"tools_index_count": [_LEDGER_PATH],   # swapped -- wrong on purpose
                                           "ledger_union_count": [_LEDGER_PATH]}) == [
             ("tools_index_count", [_MANIFEST_PATH], [_LEDGER_PATH])])
+    chk("11f2 mutant: a realistic .yml/.yaml basename typo IS caught (CVO~Z's Limb 4 -- the likely real-world drift mode, not just a deliberate swap)",
+        _metric_source_files_mismatches({"tools_index_count": ["org/modules/graph/graph-call-manifest.yml"],
+                                          "ledger_union_count": [_LEDGER_PATH]}) == [
+            ("tools_index_count", [_MANIFEST_PATH], ["org/modules/graph/graph-call-manifest.yml"])])
+    # 11g-11h. v4 (CVO~Z's named residual on v3, 2026-07-25): _metric_source_files_mismatches()'s own
+    #          `truth` dict is a THIRD hand-written statement of the metric->path ASSOCIATION (paths
+    #          themselves can't drift anymore -- shared constants -- but the association could).
+    #          Couples the check to compute_metrics()'s OWN declared `source` string (the authority)
+    #          instead of a third hand-copied twin -- CVO~Z-verified this basename-in-source check
+    #          holds today before it was implemented here.
+    chk("11g association: _METRIC_SOURCE_FILES's basenames are named in compute_metrics()'s OWN declared source strings (real map, real metrics)",
+        _metric_source_association_mismatches(_METRIC_SOURCE_FILES, mets) == [])
+    chk("11h mutant: a metric whose declared source string stops naming the expected basename IS caught",
+        _metric_source_association_mismatches(
+            _METRIC_SOURCE_FILES,
+            {**mets, "tools_index_count": {"value": 1, "source": "totally-different-file.yaml", "vintage": "x"}}
+        ) == [("tools_index_count", "graph-call-manifest.yaml", "totally-different-file.yaml")])
     chk("12 gate: age>=TTL ALONE -> WARN not block (rc 0) -- staleness-conditioned, no false-Monday",
         _gate_verdict(True, "age 30h exceeds TTL 24h (live-grounded values may have moved)", [], dirty=[])[0] == 0)
     chk("13 gate: CURRENT -> gate open (rc 0)",
@@ -805,6 +822,35 @@ def _metric_source_files_mismatches(candidate: dict) -> list:
     truth = {"tools_index_count": [_MANIFEST_PATH], "ledger_union_count": [_LEDGER_PATH]}
     return [(name, expected, candidate.get(name))
             for name, expected in truth.items() if candidate.get(name) != expected]
+
+
+def _metric_source_association_mismatches(candidate: dict, metrics: dict) -> list:
+    """v4 (CVO~Z's named residual on the v3 fix, 2026-07-25): _metric_source_files_mismatches()'s own
+    `truth` dict is a THIRD hand-written statement of the metric -> path ASSOCIATION (which metric
+    reads which constant) -- the PATHS themselves can no longer drift (shared _MANIFEST_PATH/
+    _LEDGER_PATH constants, v3), but if compute_metrics() ever changed which file a metric actually
+    reads and neither `_METRIC_SOURCE_FILES` nor `truth` followed, the two hand-written dicts would
+    compare wrong-against-wrong and PASS -- narrower than the original hole (needs a semantic change
+    PLUS two omissions, not one edit) but the same duplicate-record shape one level in.
+
+    Couples the association to compute_metrics()'s OWN declared `source` string instead of a third
+    hand-copied twin (CVO~Z-verified this holds today: a weak `basename in source` check, e.g.
+    "graph-call-manifest.yaml" in "graph-call-manifest.yaml:tools_index (mapping length)"). `metrics`
+    is a compute_metrics()-shaped dict (metric -> {value, source, vintage}), passed in -- pure
+    otherwise, no live recompute inside.
+
+    Returns [(metric, expected_basename, declared_source)] for every mapped metric whose declared
+    `source` string does NOT name the expected file's basename -- catches both a wrong association
+    AND the realistic drift mode (a `.yml`/`.yaml`-class typo in the expected basename itself, per
+    CVO~Z's own added test shape)."""
+    out = []
+    for name, files in candidate.items():
+        source = (metrics.get(name) or {}).get("source", "")
+        for f in files:
+            base = os.path.basename(f)
+            if base not in source:
+                out.append((name, base, source))
+    return out
 
 
 def _relevant_dirty(region_changes: list, fingerprint_drift: bool, dirty):
