@@ -158,8 +158,13 @@ shells are non-interactive and source NO profile, so `.tools/` is reachable only
 (`b519fb1c2e`). **Print the DENOMINATOR — never a boolean:**
 ```bash
 F=0; T=0; for t in .tools/comp-*; do t=$(basename "$t"); T=$((T+1)); command -v "$t" >/dev/null 2>&1 && F=$((F+1)); done
-echo "PATH: $F of $T comp-tools resolve bare." ; [ "$F" -lt "$T" ] && echo "  -> the REST need an explicit .tools/<tool> prefix. 'bash .tools/provision-path-shims.sh' provisions ONLY aws + comp-which + comp-system (by design)."
+echo "PATH: $F of $T comp-tools resolve bare." ; [ "$F" -lt "$T" ] && echo "  -> the REST need an explicit .tools/<tool> prefix. 'bash .tools/provision-path-shims.sh' provisions a NAMED SUBSET (read its header for the current list) -- it is not, and does not claim to be, all $T."
 ```
+> ⚠ **The remedy line above once named the subset literally ("aws + comp-which + comp-system"). It went
+> stale the same day** — `~D` added `comp-grep`/`comp-glob` to close Rule 21's dead fallback, and the line
+> kept saying three. **A hand-copied list inside the fix for a hand-copied-list defect**; it now points at
+> the provisioner's own header instead of restating it. *The count is deliberately `$T`-derived, never a
+> digit.*
 > ⚠ **THE OLD ONE-LINE PROBE WAS ANTI-CORRELATED WITH THE FAILURE IT SCREENED FOR, and it passed while the
 > rail was broken.** It tested `command -v comp-which` — and `comp-which` is one of **only 3 tools** the
 > provisioner forwards (`aws`, `comp-which`, `comp-system`), i.e. **the member MOST likely to be
