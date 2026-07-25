@@ -51,10 +51,10 @@ if _HERE not in sys.path:
 import harness         # noqa: E402  -- reuse score_run (REACH x USABILITY rubric) + AUTHOR_ID un-forked
 import tool_corpus     # noqa: E402
 
-_GRAPH = os.path.dirname(_HERE)                       # compproof -> graph (home of sovereign_held)
+_GRAPH = os.path.dirname(_HERE)                       # compproof -> graph (home of prod_write_guard)
 if _GRAPH not in sys.path:
     sys.path.insert(0, _GRAPH)
-from sovereign_held import is_prod_write_forbidden  # noqa: E402 -- probe write/target safety guard
+from prod_write_guard import is_prod_write_forbidden  # noqa: E402 -- probe write/target safety guard
 
 _WS = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(_HERE))))  # compproof->graph->modules->org->ws
 sys.path.insert(0, os.path.join(_WS, ".tools"))
@@ -287,10 +287,11 @@ def _iso_days_ago(days: int, *, now_ts: float | None = None) -> str:
 # tests/test_tool_probe_discrimination.py -- the tests must NEVER re-type this literal.
 #
 # WHY IT IS A CONSTANT AND NOT A STRING (2026-07-25, CTO). This marker was renamed
-# SOVEREIGN -> PROD-TARGET in the R7 split (sovereign_held.py:127-129). The guard kept working;
+# SOVEREIGN -> PROD-TARGET in the R7 split (the NAME NOTE now lives in prod_write_guard.py, moved
+# there verbatim by GOVRIP step 1 2026-07-25). The guard kept working;
 # the three tests asserting `"SOVEREIGN" in void_reason` went red and STAYED red, so the only
 # regression detector on a live, never-retracted prod-write prohibition was dark for an
-# unmeasured window. sovereign_held.py:127-129 already carried a NAME NOTE warning that this
+# unmeasured window. That NAME NOTE already carried a warning that this
 # exact rename "made a reviewer's positive control return a false ABSENT" -- and it then did it
 # again, to the test suite, three days later.
 #   >> THE NOTE RECORDED THE INCIDENT AND DID NOT BECOME A CONTROL. This constant is that note

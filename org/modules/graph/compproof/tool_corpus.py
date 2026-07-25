@@ -31,11 +31,11 @@ from __future__ import annotations
 import os
 import sys
 
-# sovereign_held lives one dir up (compproof -> graph); reach it for the by-construction sovereign assert.
+# prod_write_guard lives one dir up (compproof -> graph); reach it for the by-construction prod-target assert.
 _GRAPH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _GRAPH not in sys.path:
     sys.path.insert(0, _GRAPH)
-from sovereign_held import is_prod_write_forbidden  # noqa: E402
+from prod_write_guard import is_prod_write_forbidden  # noqa: E402
 
 
 # The probe corpus. Kept SMALL + representative (per-tool, per-class) -- this is a RECURRING probe, not
@@ -405,7 +405,7 @@ def assert_sovereign_safe(probe_list: list | None = None) -> None:
     """SOVEREIGN-SAFE BY CONSTRUCTION (CTO 2026-07-12): NO probe may target a held bd/schwab path or bucket
     -- not in its `run` argv, not in its discrimination fixture scratch target. A held target would make the
     recurring probe read opal-data-bd on a re-run. This fails the corpus LOAD (never a silent bd read), and
-    is the canonical PROD-TARGET predicate (sovereign_held.is_prod_write_forbidden), which is
+    is the canonical PROD-TARGET predicate (prod_write_guard.is_prod_write_forbidden), which is
     IN FORCE and did NOT move with the 2026-07-14 governance retraction. Vigilance-independent."""
     offenders = []
     for p in (probe_list if probe_list is not None else TOOL_PROBES):
