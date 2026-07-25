@@ -1644,6 +1644,30 @@ def _resolve_resource_subobjects(content: str, client_map: dict,
     subobject_assign: dict = {}
     deferred_candidates: list = []
 
+    # NFRA_COMPIAM Stage 6 FINAL ROUND (2026-07-25, CVO~Z verify): `Key`/`Attr` are ambiguous --
+    # both a REAL resource sub-object constructor name (KMS's `.Key(key_id)`) AND the boto3
+    # DynamoDB condition-builder class name (`boto3.dynamodb.conditions.Key`/`Attr`), imported as
+    # a MODULE alias (`import boto3.dynamodb.conditions as conditions` -> `conditions.Key(...)`)
+    # rather than the bare-name form (`from ... import Key` -> `Key(...)`, which never reaches
+    # this function at all -- Shape A/B both require a DOTTED constructor, `<expr>.Key(...)`, and
+    # a bare call has no dot). `conditions.Key('pk').eq(...)` builds a local Condition OBJECT --
+    # boto3 source: `Key.eq -> Equals(self, value)` -- no client, no request, zero IAM impact.
+    # Measured false positive: opal-portfolio-export-download:78, `UNRESOLVED-RESOURCE(<unresolved
+    # >.Key(...).eq)` on a KeyConditionExpression builder. Detected via AST import inspection
+    # (grounded, not a hardcoded 'conditions' guess) -- only `import boto3.dynamodb.conditions
+    # [as X]` binds a NAME that could precede `.Key(`/`.Attr(` this way.
+    _condition_builder_aliases: set = set()
+    for _n in ast.walk(tree):
+        if isinstance(_n, ast.Import):
+            for _alias in _n.names:
+                if _alias.name == 'boto3.dynamodb.conditions':
+                    _condition_builder_aliases.add(_alias.asname or 'conditions')
+
+    def _is_condition_builder(constructor: str, parent_expr) -> bool:
+        return (constructor in ('Key', 'Attr')
+                and isinstance(parent_expr, ast.Name)
+                and parent_expr.id in _condition_builder_aliases)
+
     for node in ast.walk(tree):
         # Shape A: assign-then-use -- Assign(targets=[Name(var)], value=Call(func=Attribute(
         #          value=<resource_expr>, attr=CONSTRUCTOR)))
@@ -1652,6 +1676,8 @@ def _resolve_resource_subobjects(content: str, client_map: dict,
                 and node.value.func.attr in _BOTO3_RESOURCE_SUBOBJECT_ACCESSORS \
                 and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
             constructor = node.value.func.attr
+            if _is_condition_builder(constructor, node.value.func.value):
+                continue  # a condition-builder object, not a resource sub-object -- no signal
             service, _display = _resolve_resource_service(node.value.func.value, client_map)
             var_name = node.targets[0].id
             lineno = getattr(node, 'lineno', 0)
@@ -1672,6 +1698,8 @@ def _resolve_resource_subobjects(content: str, client_map: dict,
                     and inner.func.attr in _BOTO3_RESOURCE_SUBOBJECT_ACCESSORS:
                 constructor = inner.func.attr
                 method = node.func.attr
+                if _is_condition_builder(constructor, inner.func.value):
+                    continue  # a condition-builder chain (Key('pk').eq(...)) -- no signal
                 service, display = _resolve_resource_service(inner.func.value, client_map)
                 lineno = getattr(node, 'lineno', 0)
                 if service is None:
