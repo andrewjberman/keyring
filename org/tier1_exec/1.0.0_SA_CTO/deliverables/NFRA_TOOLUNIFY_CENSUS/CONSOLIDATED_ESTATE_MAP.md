@@ -132,12 +132,30 @@ is a queryable property, not a separate store — plus (a) the cheap alias table
 5. **Terraform/manifest gap** (Andrew-direct to base): plain object-store prefixes have zero Terraform
    declaring their purpose; `derive-build.tf` CodeBuild has no trigger config found.
 
-## 5 · The acceptance property CVO~Z earned (for the PRD)
-**Every instrument in this program — INCLUDING the verifier's oracle — must state its own false-positive rate
-and be validated against ground truth before its output is actioned.** CVO~Z's own held-back control was 32%
+## 5 · The acceptance properties CVO~Z earned (for the PRD) — two halves, both from findings against its OWN instrument
+**(5a) Every instrument — INCLUDING the verifier's oracle — must state its own false-positive rate and be
+validated against ground truth before its output is actioned.** CVO~Z's held-back control was itself 32%
 false-positive (comments, docstrings, a `.endswith(".metadata.json")` suffix predicate matched as a filename);
-it caught it only by validating its hits before reporting. An oracle inherits every disease of the thing it
-measures. This is not a note about CVO~Z; it is a WS-1 acceptance bar.
+it caught that only by validating its hits before reporting. An oracle inherits every disease of the thing it
+measures.
+
+**(5b) A fix must be verified by a before/after diff over the WHOLE output, not only against the known failures
+it was meant to close.** Re-checking the known misses proves the fix works; only the full diff shows what else
+MOVED — silent corrections of rows that were wrong all along, and regressions the fix itself introduced. Both
+occurred in ~D's single rework: the diff surfaced a real wrong attribution in the *originally-delivered*
+register (`comp-types` → `.fields.yaml` where source says `.blast.yaml`, confirmed at `types_cli.py:352/:355`)
+that the held-back control was **structurally blind to** (an omission-detector cannot see a confidently-wrong
+answer — the row exists and looks resolved), AND caught a regression the rework introduced before it shipped.
+
+**Corollary for WS-2:** a register can score 100% on every control anyone thought to write and still contain
+confidently-wrong rows. **The count of surfaced items is not a quality measure.**
+
+**The honest symmetry (on the record, NOT a ranking):** CVO~Z's instrument found 6 omissions the lane missed;
+the lane's instrument found a wrong attribution CVO~Z was structurally blind to; and CVO~Z's was separately 32%
+false-positive. **Two instruments, two different blind spots — the argument for having both, not for either
+outperforming the other.** ~D's classifier ships tracked + durable (`NFRA_TOOLUNIFY_CENSUS_TOOLS/` @2779752ac)
+with its residual limitations documented inside its own module docstring — the packaging discipline the brief
+argued for, shipped before the PRD exists.
 
 ## 6 · Open items
 - **VERIFICATION COMPLETE.** CVO~Z checked ~A's 333-node classification exhaustively (106/106 non-live
@@ -146,10 +164,13 @@ measures. This is not a note about CVO~Z; it is a WS-1 acceptance bar.
   source dirs (freshness/vintage/absence/security-sweep) served elsewhere — another Lambda, a Step Function,
   a CloudWatch alarm, an EC2 job, or a local comp-tool — or genuinely undeployed? Until answered, the finding
   is "no deployed Lambda counterpart under any name," NEVER "no guard exists" (NEVER#1 / false-outage).
-- ~D rework COMPLETE (§4.4): all 6 misses resolve; wrong-attribution diff across 92 tools = 726 new-correct
-  / 1 real identity fix / 0 lost; classifier scripts made durable @2779752ac. CVO~Z to re-run the held-back
-  control + wrong-attribution diff on the reworked register.
-- `cse_test` dual-UUID cause (needs Nessie REST, VPC-internal).
+- ~D rework CLOSED: CVO~Z re-ran the SEALED held-back control (unchanged file) = **41/41** (up from 35/41,
+  zero misses, both comp-iam caches in). The whole-output before/after diff also caught a real wrong-
+  attribution in the ORIGINAL register (`comp-types`, §5b) and a rework-introduced regression, pre-ship.
+- `cse_test` dual-UUID cause (needs Nessie REST, VPC-internal) — the one residual data-access limit.
+
+**AUDIT STATUS: FULLY CLOSED.** All 5 lanes landed, CVO~Z-verified, and every rework/condition re-verified.
+No open verification items. The estate is established; the decision space (§7) is Andrew's.
 
 ## 7 · The decision space for "how we handle it" (Andrew)
 1. **Scope/reframe:** stay TOOLUNIFY (tool consolidation), or elevate the inaudible-controls through-line to
