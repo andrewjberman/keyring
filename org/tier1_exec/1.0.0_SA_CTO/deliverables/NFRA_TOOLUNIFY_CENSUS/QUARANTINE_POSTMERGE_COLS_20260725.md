@@ -37,3 +37,14 @@ run and are left in place** — their disposition belongs to the comp-types debr
 to per-incident quarantines. If the gate names more later, same procedure. **The two back-to-back
 incidents strengthen the DEBRIS-CANDIDATE guard-refinement case: both blocking sets were month-old
 never-committed files, zero were live peer work.**
+
+## Third pass, same session (~0851Z): the remaining pool drained (14 files)
+
+The gate names a SUBSET of matching debris per run (~D observed a third slice of 5 from the same
+population), making per-slice quarantines whack-a-mole against a fully-enumerated static pool. Ruling:
+drained the whole remaining pool — all 14 remaining untracked `types-index/*.yaml` moved to the same
+quarantine dir (tracked files verified untouched via `git ls-files` per file; 5 tracked files remain in
+place). Same evidence class throughout (the Lane-E-documented comp-types debris population). **The durable
+close is `~A`'s guard-v2 metric-scoped dirty-check (dispatched)** — under it, debris feeding neither
+drifted metric stops blocking at all, and quarantines stop being needed. Total quarantined this session:
+6 postmerge-cols + 19 types-index = 25 files, all reversible, all recorded.
