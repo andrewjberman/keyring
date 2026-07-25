@@ -1,6 +1,6 @@
 #!/bin/bash
 # comp-kuzu — Cypher query wrapper for NFRA_GLOBGRPH Kuzu local DB
-# Usage: comp-kuzu "MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' RETURN n.id LIMIT 10"
+# Usage: comp-kuzu "MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' RETURN n.node_id LIMIT 10"
 #        comp-kuzu --json "..."         # JSON output
 #        comp-kuzu --limit 20 "..."     # auto-append LIMIT
 #        comp-kuzu --db-path PATH "..."

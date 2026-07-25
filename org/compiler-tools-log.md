@@ -26485,3 +26485,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY (CTO~Z dispatch, CVO~Z cycle 10) | system_parity | :134 message honesty fix (instrument must not assert absence it cannot observe) + ct-catalog grep_present -> new derived_count type; battery 10/10, live positive honest PASS 69=69, gate caught one real defect pre-commit | VERDICT |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY (CTO~Z dispatch, CVO~Z surface-4) | system_parity | resident 22-cell chk()-battery landed (week's verified behaviors made resident, provenance-commented, _read-monkeypatch synthetic vintages); --self-test 22/22 green, --self-test-negative reddens rc=1; count-grain docstring line verbatim | VERDICT |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_COMPLEARN (comp-kuzu fix) | comp-kuzu + ~E sensor | 8-site n.id->node_id fix (5 teaching + 3 executed broken-live); sensor closure CLEAN rc=0 N=12=12+0+0 (was 13=11+1+1 rc=2) -- FIRST end-to-end residue-clearing cycle, PENDING-VERIFY; run_validation revived: Q1 clean 342 edges, Q2 FINDING 1 EC2 no-profile | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-kuzu infra/aws/globgrph/kuzu_cli.py infra/aws/... | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-kuzu infra/aws/globgrph/kuzu_cli.py infra/aws/... | VERDICT |
