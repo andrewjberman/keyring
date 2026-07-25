@@ -565,6 +565,23 @@ drift it was built to fix. Recursive corollary from the same census: **a `grep` 
 is itself a hand-copied count** — the check inherits the defect it checks for, and the fix is to drop the
 digits from the pattern and verify the remaining limbs.
 
+**17. WHEN YOU MOVE VALUES INTO A GUARD, VERIFY THE GUARD'S COVERAGE REPORTING *BEFORE* THE MOVE, NOT
+AFTER — a migration raises the stakes on the destination's blind spots, and the person recommending the
+migration owes that check.** Filed by a verifier against itself as **the third instance in one session**:
+it recommended a check-type migration and left the coverage denominator at one of three sites; it
+recommended that check type again without knowing its sensitivity was borrowed rather than intrinsic; and
+then it ruled that nineteen hand-copied numbers should become managed regions — a correct ruling,
+executed well — **without first looking at whether the managing mechanism could report what it was
+watching.** It could not: the guard printed *"0 drifted"* with **no denominator**, and a malformed region
+was silently unscanned (demonstrated against the regex, not inferred), so *"all 24 regions are
+malformed"* and *"nothing has drifted"* rendered identically — and the contract unit consuming that exit
+code would have read PASS under a description asserting freshness. **A true verdict about nothing.** The
+pattern in the verifier's own words, which is the sharpest form of it: *each time, the recommendation
+improved the estate and quietly increased what a single unexamined silence could hide.* **The pre-step
+is cheaper than the post-hoc every time, and the fix is usually one line: make the guard state its
+denominator — "N regions compared across M files, 0 drifted" — so a wiring typo appears as a count drop
+instead of as silence.**
+
 **Two structural notes the day earned, recorded because they change what a record is FOR:**
 **(a) A prematurely-checked prerequisite does not merely misreport status — it AUTHORIZES downstream
 work.** A build-order item marked DONE on 2 of its 3 clauses would have opened a design phase the
