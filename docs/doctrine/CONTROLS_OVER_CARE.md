@@ -551,6 +551,20 @@ fields were found on one surface that had already passed an adversarial verify; 
 reading code — one fell out of grounding a wrong hypothesis, the other only because "did it happen
 twice?" was made an explicit acceptance criterion with a printed denominator.
 
+**16. NOT EVERY STALE-LOOKING COPY IS A DEFECT — A DATED MEASUREMENT IS A RECORD, AND AUTOMATION THAT
+"CORRECTS" IT FALSIFIES HISTORY.** After a day spent converting hand-copied numbers into derived ones,
+the census of one estate's copies came back in **three** categories, not two: **MANAGED** (regenerated
+from a run-time value), **CITE-NOT-COPY** (mechanically unreachable — point at the source instead), and
+**FROZEN-WITH-REASON** — dated verification records, seed-transition narratives, an audit-time
+measurement. Those last are *correct precisely because they do not track current state*: a number
+recorded as "what we measured on date X" becomes a lie the moment a refresher updates it, and the lie is
+**invisible afterward**, because the value now looks right. **So the classification question is not "is
+this copy stale?" but "is this an ASSERTION ABOUT NOW or a RECORD OF THEN?"** — and a record wrongly
+classed as current is the worst outcome available to a managed-region system, strictly worse than the
+drift it was built to fix. Recursive corollary from the same census: **a `grep` FOR a hand-copied count
+is itself a hand-copied count** — the check inherits the defect it checks for, and the fix is to drop the
+digits from the pattern and verify the remaining limbs.
+
 **Two structural notes the day earned, recorded because they change what a record is FOR:**
 **(a) A prematurely-checked prerequisite does not merely misreport status — it AUTHORIZES downstream
 work.** A build-order item marked DONE on 2 of its 3 clauses would have opened a design phase the
