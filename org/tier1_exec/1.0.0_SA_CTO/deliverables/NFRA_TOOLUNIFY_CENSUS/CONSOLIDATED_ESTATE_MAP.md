@@ -25,15 +25,29 @@ The store has since grown a *symbol-grain* code-semantic plane it was never writ
 Counter-control (CVO~Z, against its own framing): `LOG_GROUP` 233 is a plain *resource* type and is also
 undeclared — so bucket C is not purely the semantic plane.
 
-**(2) THE THROUGH-LINE — "a control that works and is inaudible reads exactly like health."** Five instances
-of ONE class surfaced in one night, independently, across lanes:
+**(2) THE THROUGH-LINE — "a control that works and is inaudible reads exactly like health."** SIX instances of
+ONE class, independent, in one night. The first five are controls that RAN and were inaudible:
 - `stitch` CodeBuild: 20/20 nightly builds FAILED across its whole lifetime (07-07→07-24), heard by no one
 - `opal-critical-surface-alerts`: 476 unconsumed messages, 0 consumers, email-to-Andrew subscription missing live
 - `ms_heat`: real analytic, zero scheduled trigger, no consumer (its `comp-ms-find` route never shipped)
 - `mdpf-daily`: event-only, no schedule (the pre-existing frozen-with-fresh-inputs class)
 - two raw-cache readers (fixed @68bbf3dd2): no vintage guard at all
-CVO~Z's assessment, which I share: **this through-line may outrank the tool-unification goal the census was
-chartered under.** It is a candidate REFRAME (see §7).
+
+**The SIXTH (CVO~Z, from ~A's residual-24) is higher severity — a control you can READ in the tree that ISN'T
+in the runtime at all.** NARROW, VERIFIED FACT: nine source directories — `bd-49f-freshness-probe`,
+`bd-cot-freshness-probe`, `inf-gold-freshness-guard`, `mdpf-freshness-checker`, `bd-served-vintage-alarm`,
+`opal-assets-absence-check`, `schwab-bronze-freshness`, `security-sweep-daily`, `market_query` — have **no
+deployed Lambda counterpart under any name** (live substring search: zero live Lambdas contain "freshness"/
+"vintage"/"absence"/"security-sweep"). **MANDATORY LIMIT — DO NOT DROP IT:** this is NOT "the estate has no
+freshness guards" — that would be a false-outage claim of exactly the class CLAUDE.md's first NEVER-rule
+forbids. The intended function may be served elsewhere (another Lambda, a Step Function, a CloudWatch alarm,
+an EC2 job, or a local comp-tool — `comp-freshness` demonstrably exists). What is established is exact: THESE
+SOURCE DIRS HAVE NO DEPLOYED LAMBDA UNDER ANY NAME. Whether served elsewhere is **UNVERIFIED**, and verifying
+it is the necessary next investigation before any gap is asserted.
+
+CVO~Z's assessment, which I share: the census was chartered to unify tools; what it produced is a six-instance
+census of **controls that do not reach the runtime** — inaudible, unconsumed, unscheduled, or entirely
+undeployed. That may be a more urgent program than tool consolidation, found BY it. Candidate REFRAME (§7).
 
 ---
 
@@ -121,10 +135,13 @@ false-positive (comments, docstrings, a `.endswith(".metadata.json")` suffix pre
 it caught it only by validating its hits before reporting. An oracle inherits every disease of the thing it
 measures. This is not a note about CVO~Z; it is a WS-1 acceptance bar.
 
-## 6 · Open items (do not close the audit as "clean" without them)
-- ~A's full 333-node classification DELIVERED (`A_lambda_enumeration.json`, 5 buckets); CVO~Z's random sample
-  across the buckets is the last verification step. The 24 genuinely-unexplained Lambda names are reported
-  open, not forced into a bucket.
+## 6 · Open items
+- **VERIFICATION COMPLETE.** CVO~Z checked ~A's 333-node classification exhaustively (106/106 non-live
+  confirmed); 191/191 live coverage stands. All 5 lanes verified, zero open verification items.
+- **NEXT INVESTIGATION — required before any gap is asserted (§0.2 sixth instance):** are the 9 GROUP-2
+  source dirs (freshness/vintage/absence/security-sweep) served elsewhere — another Lambda, a Step Function,
+  a CloudWatch alarm, an EC2 job, or a local comp-tool — or genuinely undeployed? Until answered, the finding
+  is "no deployed Lambda counterpart under any name," NEVER "no guard exists" (NEVER#1 / false-outage).
 - ~D 6-miss local-variable-binding rework (prioritized above its 6/41 weight — the comp-iam caches).
 - `cse_test` dual-UUID cause (needs Nessie REST, VPC-internal).
 
