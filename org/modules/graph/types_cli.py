@@ -224,6 +224,18 @@ def cmd_index(args: argparse.Namespace) -> int:
 
     print(f'COMP-TYPES index: {type_name}')
 
+    # Fail-closed validation (NFRA_TOOLPASS follow-on, 2026-07-25 -- same shape as cmd_blast's fix,
+    # same call, CTO~Z dispatch 20260725T095104Z): an unknown type previously WARNed then continued
+    # into a degraded "search consumers by name only" path that STILL wrote {type_name}.yaml
+    # unconditionally -- the identical debris class. Validate BEFORE running; a known type is
+    # unchanged below (byte-identical WARN/Definition branch, grep, manifest write, PASS path).
+    known_types = _enumerate_known_types()
+    print(f'  Validated against {len(known_types)} known portal type/interface/const declaration(s).')
+    if type_name not in known_types:
+        print(f'  CANNOT-ANSWER: {type_name!r} is not a known exported interface/type/const in '
+              f'portal/src -- nothing was compared, so nothing is concluded. No manifest written.')
+        return 1
+
     def_file = _find_type_definition(type_name)
     if def_file:
         print(f'  Definition: {_rel(str(def_file))}')
