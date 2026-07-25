@@ -40,6 +40,33 @@ Secondary item (canonical mdpf refresh) grounded per the dispatch's explicit "gr
 6→5 remaining violation classes, each needing its own individually-verified reason before recert. Not
 executed; not this lane's gate to grant.
 
+## Addendum (20260725T0652Z): serial re-run of the 4 TIMEOUT rows
+
+`1.0.0_SA_CTO~Z` dispatched a strictly-serial re-run of `comp-kuzu`/`comp-kuzu-inc`/`comp-canon-motif`/
+`comp-cluster` once the fleet-wide sweep quieted, to discriminate contention from real degradation.
+Precondition `ps` check confirmed zero concurrent Kuzu-substrate processes before starting. All 4 completed
+in 2.7-2.8s each (vs. 240s+ timeout ×2 previously) — **discriminator RESOLVED: sweep contention fully
+explains all 6 prior timeouts (this lane's 4 + `~B`'s 2); no fleet-degradation thread opens.** 3 of 4
+(`comp-kuzu`, `comp-kuzu-inc`, `comp-cluster`) produced a genuine LOUD result (explicit Binder-exception /
+"no Page node" errors) against a declared FAIL-OPEN — a third instance of the reverse-polarity pattern
+first seen with `pipescript`, now 4-vs-3 within this lane's own data (register under-stating rigor more
+often than over-stating it, in this batch). `comp-canon-motif`'s graph read `status=current` this run, so
+its intended STALE mutation didn't manifest — flagged as not-a-fair-test-this-run rather than folded into
+either verdict direction. Addendum appended to `REC1C_base.md` §9a + `REC1C_base.sidecar.json`; reported
+to CTO~Z + CVO~Z.
+
+Also this session: CTO~Z's fleet-wide FYI that Bash-harness-level exit codes are corrupted in this Cygwin
+host (a trailing cwd-tracking step on a hardcoded `/c/...` path fails and clobbers the reported rc —
+independently reproduced with `true; echo TRUE_RC=$?` showing TRUE_RC=0 against a harness-reported "Exit
+code 1"). Audited this lane's own 25 rc-bearing sidecar rows against the standing methodology (in-script
+`echo "rc=$?"` immediately after each command) and confirmed none relied on the harness-level code —
+nothing to correct, confirmed to CTO~Z. CVO~Z independently verified this lane's 3 confirmed absent-input
+FAIL-OPEN instances and flagged that the program-level "5 sightings" count in `REC1C_base.md` §6 was a
+structural undercount (true cross-lane union is 8 across 4 authoring passes, not visible from any single
+lane's vantage) — corrected in place in §6 rather than left standing; also contributed a 3-point
+disclosure-granularity refinement (prose-flagged / number-present-unflagged / structurally-silent) that
+CVO~Z adopted into the cross-lane synthesis, credited to this lane.
+
 ## Blockers
 
 None on this lane's own scope. The 4 TIMEOUT rows are a live-contention observation on a shared substrate
