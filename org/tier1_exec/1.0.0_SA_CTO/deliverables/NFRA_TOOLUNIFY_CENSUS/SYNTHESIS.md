@@ -1,0 +1,55 @@
+# NFRA_TOOLUNIFY — Exercise-Program Synthesis (REC-1 → REC-1c + the GRAPHUNI arc)
+
+**author:** `1.0.0_SA_CTO~Z` (cross-lane aggregation owner per the adopted count-mitigation rule; CVO~Z verifies these aggregates) · **status: DRAFT — as-of 2026-07-25 ~0740Z.** PENDING slots marked explicitly; nothing in them is claimable until filled. **Program-level counts appear ONLY here** (lanes report own-batch counts; any earlier per-message program total — including this author's own "5 instances" in a pushed commit message — is superseded by this document).
+
+---
+
+## 0 · The headline (CVO~Z's framing, adopted — it outranks either direction's count)
+
+**The register's `failure_mode` column is wrong in BOTH directions.** Under-declared (declared-LOUD tools that go FAIL-OPEN or quieter, concentrated on wholly-absent inputs) AND over-declared (declared-FAIL-OPEN tools that are genuinely LOUD). **Bidirectional error is NOISE, not bias — no global correction exists.** The AST-derivation cannot be repaired by tuning; the column's individually-source-read rows are trustworthy and its rule-derived/default rows are coin-flips until exercised. **The register's honest shape is per-row verification provenance** (exercised / source-read / rule-derived / default), not a uniform-looking column.
+
+## 1 · Coverage (the program denominator)
+
+All **92 register rows** dispatched and accounted across 7 passes (REC-1: 5 · REC-1b: 3 · REC-1c C: 16 · E: 16 rows/15 distinct (whoread pair deduped at source) · base: 17 · A: 18 · B: 17). Every row carries an exercised verdict **or an explicit honest non-verdict** (UNKNOWN / UNTESTABLE-SAFELY / NOT-A-FAIR-TEST-THIS-RUN) — zero silent drops, per-lane denominators printed in each deliverable. Verification state as-of this draft: REC-1, REC-1b, C, A, base-mismatches+Kuzu-rerun **CVO~Z-verified**; **[PENDING: E verdict · base MATCH-row spot-checks · B verdict]**.
+
+## 2 · The confirmed cross-cutting patterns
+
+**2a · ABSENT-INPUT under-catch (declared-LOUD → observed quieter, on wholly-absent input).** Union as-of C+base verification: **8 instances / 7 at MED+ declared confidence** (comp-freshness · comp-surface-check scan · comp-tool-health · comp-tool-health-gate · comp-coverage · comp-aws · comp-assets · comp-heat). B's comp-grep and A's instances are candidates to extend this **[PENDING: fold after E/B verdicts — do not quote a larger union before then]**. Settled: the pattern is banked, further existence-sampling is spend without signal.
+
+**2b · The disclosure limb is a 3-POINT scale, not binary** (base's finding, CVO~Z-adopted): clear-prose-flag / number-present-but-unflagged / structurally-silent. rc-silence is uniform across 2a's instances; stdout disclosure varies independently. Automation gates on rc (all fail there); humans read stdout (only some mislead there). The dangerous cell is **number-present-but-unflagged** (comp-coverage's well-formed 0.0% report on a nonexistent filter — a plausible wrong number, worse than a crash).
+
+**2c · SCOPE-COERCION is its own axis, not poor disclosure** (C's finding, CVO~Z re-derived, ~A concurring): comp-dups fed an invalid `--class` runs the FULL unfiltered scan and presents it as the answer to the filtered question — FILTER-IGNORED/SCOPE-COERCED. A reader who asked for class X reasonably believes the results are class-X. Distinct register dimension.
+
+**2d · REVERSE-POLARITY (declared-FAIL-OPEN → observed genuinely LOUD).** Instances accumulated across lanes (base: comp-kuzu, comp-kuzu-inc, comp-cluster, pipescript · B: comp-pydeps, comp-residue, comp-imgread · A: comp-lambdamap). **[PENDING: exact union count after E/B verdicts]**. Direction is the good one (register too pessimistic) — but its existence alongside 2a is what makes §0 noise-not-bias.
+
+**2e · CALL-SITE AUDIBILITY ≠ tool failure_mode** (REC-1's founding finding): comp-stitch-refresh is exercise-confirmed LOUD at its boundary and was operationally SILENT for 17 days because its only call site backgrounds+discards+exit-0s. A mechanism claim is not a reception claim; candidate register dimension, distinct from failure_mode.
+
+## 3 · The environment-layer class (distinct altitude from §2 — do not collapse)
+
+**Three coexisting path conventions on this host; every tool resolves a different subset.** Four measured instances in one day, three silent, each returning a plausible falsy value (exit 0 / False / null) — the same through-line shape the census documents, sitting UNDER every lane's instruments: (1) Monitor `/c/` launch — LOUD exit-127; (2) stitch hook `/c/` — silent 17-day producer outage; (3) harness wrapper cwd `/c/` — corrupts every reported exit code (mitigation: in-stdout TRUE_RC capture, fabric-adopted; root fix is host-level session-shell config, with Andrew); (4) sidecar builder `/cygdrive/c/` into native python3 — 42 evidence fields silently nulled. **The one-line rule, fabric-adopted (5/5 lane read-ACKs):** any path crossing a tool boundary uses the native `C:/...` form from `git rev-parse --show-toplevel`. Banked loaded-always in workspace memory.
+
+## 4 · Method findings the program itself produced (feed the PRD/L0b design)
+
+- **L0b seed vocabulary (provisional, deliberately NOT settled — per the alignment-audit addendum all lanes carried):** input-mutation types EMPTY / NONEXISTENT / MALFORMED / STALE (+ per-lane named extensions), plus the candidate axes from §2: ABSENT-behavior (two-limbed: rc + 3-point disclosure), SCOPE-COERCED, call-site audibility. **The sweep records candidates; L0b gets designed deliberately against them.**
+- **role_flags confirmation and failure_mode confidence are different axes** (REC-1b, twice-verified): confirmed-only criticality filters under-catch — 2 of 3 register-representable through-line instances carried candidate-only flags.
+- **Parallel-execution costs, measured:** (a) 6-lane Kuzu contention manufactured UNKNOWNs (~80× wall-time delta, discriminator resolved as contention by serial re-run — a measurement program's own method corrupting a subset of its measurements must be NAMED, not averaged in); (b) any lane computing a program-wide total computes from a stale vantage (three parties independently said "5" against different memberships; rule adopted: own-batch counts only, one aggregation owner, verifier checks the aggregate).
+- **Pre-registration controls need provable ordering:** a prediction committed WITH its results is self-attested (CVO~Z's finding on the emission-trace control — weak limb passed, strong limb failed, provenance unverifiable). Standard adopted: prediction-only commit first, then run, then results.
+- **Layer-scoped refutation** (CVO~Z's method note against itself, carried at its own insistence): three times a hypothesis was refuted at the layer tested rather than the layer it aimed at (seed count vs identity · WRITES-healthy at terminal vs intermediate · canonicalization terminal vs intermediate). A refutation is scoped to the layer it tested.
+
+## 5 · The GRAPHUNI arc (census → mechanism, 6 measurement passes)
+
+Chronology compressed: wire-in premise (192 orphaned edges) → count reconciled exactly (306) → **set-identity REFUTED** (the member-level bar CVO~Z demanded) → corrected to 91%/19-missing (~D self-caught a wrong-node harness bug) → emission-filter premise **REFUTED as dominant** (13/17 PRESENT-UNREACHABLE — a chain problem, not a filter) → chain-trace: **SHALLOW**, 3 classes → unified to 2 root causes (key-identity transformation dominant; `:94` lambda exclusion deterministic, 6/6 zero-exception) → canon-walk: **MIXED — prediction failed on the sharp case** (19 unchanged across 3 consecutive passes; control improved 49→36; class-C blocker narrowed to a genuinely absent INF-firm write = content gap, not identity split).
+→ RULED (073601Z): **the measurement HARNESS is demonstrably lossy** — CVO~Z found a concrete instance: an edge the producer emits (the class-C INF write), which survives ~D's own transform functions verbatim (18 writers, zero guard-dropped), is reported absent by the measurement. Both the canon-walk prediction (CVO~Z's, owned) AND the content-gap diagnosis (~D's) are refuted. **Every producer number in the arc ran through that instrument — producer gaps and harness losses are currently indistinguishable, which is the whole question.** Next pass ruled: HARNESS INTEGRITY — reconcile producer-emitted vs reconstruction-held edge sets with per-reason drop accounting (bar: every dropped edge accounted by a named, intended reason, or the harness is unfit to measure). No wire-in ruling possible until it closes. CVO~Z explicitly declined to let the suspect instrument excuse its own refuted prediction — both stand on the record.
+**Stable facts:** function grain is PROVEN sound (6+ independent exact measurements — the residual mechanism is script/artifact-grain-specific); **cause-1 (lambda, `:94`) is the one thread-item resting on source-level structural fact rather than harness measurement — the only thing ready to proceed**; ingestion NEVER un-gated at any point; the 2 S3KEY_FIRM_UNRESOLVED keys were already fixed weeks prior (staged, unemitted, reconfirmed).
+
+## 6 · Fixes landed during the program (all verified)
+
+grain_baseline EXTERNAL_ENDPOINT recert 3→0 (@0e97e0350f — stale predicate, not broken extractor; sovereign 06-26 drop; the other 5 grain classes untouched pending individual verified_reasons) · stitch hook path portability (@fbc91c6e28 — run-time `git rev-parse` resolution; outer-wrapper failure gone, inner-trigger path still unexercised by a matching commit) · ~A sidecar excerpt repopulation (path-class instance 4) · CANON TO correction block + status-field corrections (@3150c28e4c, @ca532b57a4).
+
+## 7 · Open items at draft time (each with an owner)
+
+1. **[CVO~Z]** E · base-MATCHes · B verdicts (bounded queue). 2. **[CVO~Z]** GRAPHUNI canon-walk ruling. 3. **[open]** REC1_EXERCISE s10's inner-trigger stitch-hook path — unexercised by a matching commit since the fix. 4. **[0.7.0/DT, routed]** 3 Rule-4 lambda-source-map MISSING_ENTRY + 3 WRONG_SOURCE_DIR. 5. **[CTO~Z]** grain_baseline's remaining 5 tripped classes — individual verified_reasons before any recert; stitch publish stays blocked until then (known-wrong-frozen is safer than unheld). 6. **[held]** WS-4 crosswalk + PRD-the-frame — explicitly not started, pending Andrew. 7. **[banked]** ms_heat disposition memo (leave-dormant-with-declared-status) — recommendation awaiting a ruling. 8. **[open question]** 2 s3: GENUINELY-ABSENT keys (accounts_dim, interpolated_prices) — source-extraction gap, needs a source read of the referencing gold scripts.
+
+## 8 · Exit-bar position (TOOLUNIFY → COMPLEARNS)
+
+Adopted bar (map §10): WS-4 crosswalk conformance passes + WS-7 register-as-control enforced. **Neither is started** — this synthesis closes the EXERCISE program (the register's failure_mode column is now evidence-based per §0-§2), not TOOLUNIFY itself. The sweep's L0b seed data (§4) is the designed handoff into COMPLEARNS L0b→L1b per `IMPLEMENTATION_LEVELS_AND_SEQUENCING.md` — deliberately recorded as candidates, not settled vocabulary.
