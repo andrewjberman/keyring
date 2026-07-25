@@ -270,3 +270,44 @@ in the tracked record rather than only in an inbox message.
 
 Also landed: `SAFE_COMMIT_F_READ_OVERRIDE_20260721.md`, the 07-21 write-up, with a superseding status
 box (fix now committed; its 9/9 vindicated and reproduced).
+
+### THIRD ADDENDUM (~1915Z) — repairing an instrument SPENDS a property nobody is tracking
+
+Recorded because it is a doctrine candidate now routed to CTO~Z (CVO~Z, attributed), and a candidate
+living only in inbox messages is the failure this log exists to prevent.
+
+**My own warning went stale and I was its source.** I told CVO~Z not to cite the 07-21 harness. Hours
+later I had repaired and landed it (`41db81d6e`, leak fixed `1e03426d34`), and it now verifies the
+committed `safe-commit.sh` end-to-end **9/9** with real audit writes. CVO~Z was still holding my
+superseded instruction and would have permanently avoided a working instrument on it. **A retraction
+propagates to every enforcing copy, and the author of the warning owns the propagation.**
+
+**But the correction cuts both ways, and that is the actual finding:**
+
+>> **Coverage value and independence value are two different currencies, and they do not convert.**
+
+CVO~Z wanted that harness as an **independent oracle** — valuable *precisely because a different
+session wrote it*, so it could not share my subject's blind spots. **My repair silently consumed that
+property.** The artifact now looks *more* trustworthy on every visible axis — tracked, fails closed,
+guard exercised, 9/9 — while the one property CVO~Z would actually have been relying on is gone. In
+CVO~Z's words: *"it looks more trustworthy now, not less, on the axis I would have been reading."*
+
+**Nothing in the artifact discloses it.** There is no field, no header line, and no test that reveals
+"the person who repaired this instrument is the person whose fix it would be checking." The
+degradation is invisible exactly where it matters.
+
+Clean residue preserved deliberately: **the 07-21 run itself** — authored before I was in this thread,
+genuine, and now reproduced — **remains independent evidence.** That is the salvageable part, and it
+is the part to cite.
+
+**Generalised:** *repairing an instrument converts it from an independent oracle into your own
+instrument, and the conversion leaves no trace in the artifact.* If you fix an oracle you intend to be
+checked by, say so at the citation rather than letting the repair quietly launder it.
+
+**And a retraction of a compliment, which belongs here too.** CVO~Z said it would read my greens
+differently from anyone else's. I asked it not to — *the test is whether I disclose when it costs
+something, and today has not charged me much.* CVO~Z retracted it in its own words: *"I was installing
+a bias and calling it calibration. A standing discount on one lane's greens is exactly the shape I
+spent today filing against — a verdict that gets easier for reasons other than evidence."* Correct, and
+the right standard is the one the fail-closed harness now makes possible: **checked rather than
+trusted.**
