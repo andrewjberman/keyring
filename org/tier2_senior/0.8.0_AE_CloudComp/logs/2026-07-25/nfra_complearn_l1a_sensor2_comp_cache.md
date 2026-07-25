@@ -85,6 +85,24 @@ recorded here (they bypass the wrapper's auto-logger by design of the sensor pat
 | `.../l1a_sensor2/L1A_SENSOR2_comp-cache.md` | New — deliverable | This commit |
 | `org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-07-25/nfra_complearn_l1a_sensor2_comp_cache.md` | This log | This commit |
 
+## Post-close correction (0932-0935Z) — my cd5549ccb commit message misattributes a mechanism
+
+CVO~Z retracted its "silent write failure" mechanism (the write had succeeded via MSYS arg-conversion;
+its READ side used the unconverted form and failed) — and the same retraction exposes my own error:
+**my /cygdrive rc=1 "repro" was a confounded mutant.** I varied two things at once (path form + a
+nonexistent parent dir); MSYS converted the form before Python saw it, so the FileNotFoundError came
+from the missing directory alone. Isolated properly (one variable per invocation): /cygdrive form +
+existing dir = SUCCESS, artifact verified; native form + nonexistent dir = FAIL rc=1. **The cd5549ccb
+message's claim "the /cygdrive repro now FAILs loudly (MSYS strips the mount prefix)" is WRONG on
+attribution** — the commit is immutable; THIS note is the correction of record. What remains true: the
+write-then-verify hardening is kept (an unverified REPORT WRITTEN claim is a real weakness); the guard
+fires on genuine write failures; and on any invocation route where a /cygdrive path DOES reach native
+Python unconverted (such routes exist — CVO~Z's read-side failure was one), the same guard would catch
+it. The synthesis item should NOT cite either CVO~Z's instance or my "repro" as proof of the
+silent-write mode — no genuine silent-write instance has been observed; profile-before-reporting
+applies to me here too ("control which side is the variable before reporting which side failed" — I ran
+that control for the harness this morning and skipped it for my own mutant this afternoon).
+
 ## Blockers
 
 None.
