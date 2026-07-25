@@ -279,7 +279,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MISMATCH (good direction)"
+          }
+        ]
+      }
     },
     "comp-assets": {
       "tool": "comp-assets",
@@ -503,7 +512,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=FAIL-OPEN | match_verdict=MISMATCH"
+          }
+        ]
+      }
     },
     "comp-aws": {
       "tool": "comp-aws",
@@ -4492,7 +4510,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=FAIL-OPEN | match_verdict=MISMATCH"
+          }
+        ]
+      }
     },
     "comp-axes": {
       "tool": "comp-axes",
@@ -4568,7 +4595,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-blast": {
       "tool": "comp-blast",
@@ -9543,7 +9579,16 @@
       ],
       "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
       "reads_note": "TRANSITIVE closure (30 modules via cli.py) includes org/modules/graph/nerves_resolve.py -- the KNOWN-MISSED FN CASE. Reachable via cli.py:376-392 (_print_risk_by_ref), a FUNCTION-LOCAL deferred import (`from nerves_resolve import resolve as _resolve` at :383, inside a try/except, itself inside a function only called on the NOT-FOUND path of a node lookup) -- invisible to any depth-1 or module-top-level-only import scan. nerves_resolve.py:73-74 (_trace_graph()) does `TraceGraph.load(cache) if cache.exists() else None` -- existence-guarded but NOT vintage/freshness-guarded (no SHA-drift check, unlike cli.py's own primary _get_graph() path) -- vintage_discipline=SILENT for this specific read path, distinct from cli.py's own GUARDED-REBUILD primary path. Same graph.json, two different discipline levels depending on which internal path reaches it -- itself a finding.",
-      "false_negative_found": "CONFIRMED: nerves_resolve.py IS in the closure (verified via closure_modules), reachable only through a function-local deferred import 2+ hops deep -- exactly the shape a depth-1 scanner (the predecessor method) would miss. FN gate case, closed."
+      "false_negative_found": "CONFIRMED: nerves_resolve.py IS in the closure (verified via closure_modules), reachable only through a function-local deferred import 2+ hops deep -- exactly the shape a depth-1 scanner (the predecessor method) would miss. FN gate case, closed.",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD | match=True"
+          }
+        ]
+      }
     },
     "comp-build": {
       "tool": "comp-build",
@@ -14516,7 +14561,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD | match=True"
+          }
+        ]
+      }
     },
     "comp-cache": {
       "tool": "comp-cache",
@@ -14750,7 +14804,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool"
+      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MISMATCH (well-disclosed FAIL-OPEN)"
+          }
+        ]
+      }
     },
     "comp-canon-motif": {
       "tool": "comp-canon-motif",
@@ -15065,7 +15128,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=UNKNOWN (timeout, not tool-attributable) | match_verdict=UNKNOWN"
+          }
+        ]
+      }
     },
     "comp-chainrun": {
       "tool": "comp-chainrun",
@@ -15327,7 +15399,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-clobber": {
       "tool": "comp-clobber",
@@ -15380,7 +15461,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=LOUD-via-unhandled-exception (botocore.errorfactory.NoSuchBucket, uncaught) | verdict=MATCH-but-flagged"
+          }
+        ]
+      }
     },
     "comp-cluster": {
       "tool": "comp-cluster",
@@ -15880,7 +15970,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=UNKNOWN (timeout, not tool-attributable) | match_verdict=UNKNOWN"
+          }
+        ]
+      }
     },
     "comp-constants": {
       "tool": "comp-constants",
@@ -16191,7 +16290,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=FAIL-OPEN | match=True"
+          }
+        ]
+      }
     },
     "comp-coverage": {
       "tool": "comp-coverage",
@@ -16421,7 +16529,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool"
+      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=FAIL-OPEN | verdict=MISMATCH (first individual verification of this LOW/default row)"
+          }
+        ]
+      }
     },
     "comp-coverage-check": {
       "tool": "comp-coverage-check",
@@ -16664,7 +16781,16 @@
       "role_flags": [
         "GATE-BLOCKING-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-dataflow": {
       "tool": "comp-dataflow",
@@ -16898,7 +17024,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool"
+      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD | match=True"
+          }
+        ]
+      }
     },
     "comp-deadgrant": {
       "tool": "comp-deadgrant",
@@ -17200,7 +17335,20 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=PASS | verdict=MATCH-positive-control"
+          },
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=INCONCLUSIVE | verdict=UNKNOWN"
+          }
+        ]
+      }
     },
     "comp-deadgrant.py": {
       "tool": "comp-deadgrant.py",
@@ -17318,7 +17466,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=INCONCLUSIVE (byte-identical to wrapper) | verdict=UNKNOWN"
+          }
+        ]
+      }
     },
     "comp-debris": {
       "tool": "comp-debris",
@@ -17585,7 +17742,20 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=PASS (incl. explicit trading-calendar MUTANT check) | verdict=MATCH-positive-control"
+          },
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=FAIL-OPEN (stderr names the invalid type, but proceeds to print a full 0-resources report and exits 0) | verdict=MISMATCH"
+          }
+        ]
+      }
     },
     "comp-denytest": {
       "tool": "comp-denytest",
@@ -17876,7 +18046,20 @@
         "GATE-BLOCKING-CANDIDATE",
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH"
+          },
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-denytest.py": {
       "tool": "comp-denytest.py",
@@ -17982,7 +18165,16 @@
       "role_flags": [
         "GATE-BLOCKING-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=LOUD (byte-identical to comp-denytest EMPTY probe) | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-depth": {
       "tool": "comp-depth",
@@ -22945,7 +23137,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD | match=True"
+          }
+        ]
+      }
     },
     "comp-describe": {
       "tool": "comp-describe",
@@ -23393,7 +23594,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MATCH (LOUD, epistemically careful; interactive-latency concern + confound noted)"
+          }
+        ]
+      }
     },
     "comp-diff": {
       "tool": "comp-diff",
@@ -28367,7 +28577,16 @@
         "PRODUCER-CANDIDATE"
       ],
       "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
-      "reads_note": "same nerves_resolve.py transitive reachability as comp-blast (shared cli.py backing)."
+      "reads_note": "same nerves_resolve.py transitive reachability as comp-blast (shared cli.py backing).",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD | match=True"
+          }
+        ]
+      }
     },
     "comp-dispatch": {
       "tool": "comp-dispatch",
@@ -28412,7 +28631,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool"
+      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1B_EXERCISE.md",
+            "observed_verdict": "observed_verdict=LOUD | match=True"
+          }
+        ]
+      }
     },
     "comp-drift": {
       "tool": "comp-drift",
@@ -28711,7 +28939,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=TIMEOUT (my own budget, not the tool's exit code); partial: seam-1 comp-heat drift -> CLEAN, seam-2 comp-pipescript deployed -> MATCH, seam-3 globgrph derive marker-oracle did not complete in budget | verdict=UNKNOWN"
+          }
+        ]
+      }
     },
     "comp-dups": {
       "tool": "comp-dups",
@@ -28809,7 +29046,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=SILENT-EMPTY as to the mutation (zero acknowledgment anywhere; ran full unfiltered scan) | verdict=MISMATCH"
+          }
+        ]
+      }
     },
     "comp-fedobs": {
       "tool": "comp-fedobs",
@@ -28879,7 +29125,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=LOUD | match_verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-firmsep-sweep": {
       "tool": "comp-firmsep-sweep",
@@ -29115,7 +29370,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool"
+      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-firmsep-sweep.py": {
       "tool": "comp-firmsep-sweep.py",
@@ -29165,7 +29429,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool"
+      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=LOUD (byte-identical) | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-freshness": {
       "tool": "comp-freshness",
@@ -29427,7 +29700,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1_EXERCISE.md",
+            "observed_verdict": "observed_verdict=WARN (tool's own documented contract: 'WARN alone does not block dispatch')"
+          }
+        ]
+      }
     },
     "comp-genesis": {
       "tool": "comp-genesis",
@@ -29741,7 +30023,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=LOUD | match_verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-gitdrill": {
       "tool": "comp-gitdrill",
@@ -34787,7 +35078,20 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1B_EXERCISE.md",
+            "observed_verdict": "observed_verdict=LOUD (all 6 self-test assertions pass, including the vintage-parity property the 2026-07-24 fix targeted) | match=True"
+          },
+          {
+            "deliverable": "REC1B_EXERCISE.md",
+            "observed_verdict": "observed_verdict=LOUD | match=True"
+          }
+        ]
+      }
     },
     "comp-glob": {
       "tool": "comp-glob",
@@ -34838,7 +35142,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1_EXERCISE.md",
+            "observed_verdict": "observed_verdict=FAIL-OPEN (explicit labeled 'NO MATCH:' block with correct-use caveats -- better-instrumented than comp-iam's case, still rc=0) | match=True"
+          }
+        ]
+      }
     },
     "comp-graph": {
       "tool": "comp-graph",
@@ -35262,7 +35575,16 @@
         "PRODUCER-CANDIDATE(clear-mode-only, local-cache-delete)"
       ],
       "confidence": "HIGH -- full source read (graph_status_cli.py, 361 lines), FP gate case #2",
-      "false_positive_reproduced": "CONFIRMED NEGATIVE: predecessor's method would see the strings 'kuzu_db'/'stitch_graph.json'/'graph.json' in this file's source and tag it a content reader of all three. Every actual call-site hit is meta_only=true (.exists/.stat) or a 512-byte bounded header peek -- zero full-content reads, zero kuzu.Connection() calls, confirmed by my AST pass."
+      "false_positive_reproduced": "CONFIRMED NEGATIVE: predecessor's method would see the strings 'kuzu_db'/'stitch_graph.json'/'graph.json' in this file's source and tag it a content reader of all three. Every actual call-site hit is meta_only=true (.exists/.stat) or a 512-byte bounded header peek -- zero full-content reads, zero kuzu.Connection() calls, confirmed by my AST pass.",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD | match=True"
+          }
+        ]
+      }
     },
     "comp-grep": {
       "tool": "comp-grep",
@@ -35313,7 +35635,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=FAIL-OPEN"
+          }
+        ]
+      }
     },
     "comp-heat": {
       "tool": "comp-heat",
@@ -35378,7 +35709,20 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=N/A -- not a fair test of the declared property | match_verdict=NOT-A-FAIR-TEST"
+          },
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=FAIL-OPEN | match_verdict=MISMATCH"
+          }
+        ]
+      }
     },
     "comp-honesty": {
       "tool": "comp-honesty",
@@ -35454,7 +35798,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-iam": {
       "tool": "comp-iam",
@@ -36060,7 +36413,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1_EXERCISE.md",
+            "observed_verdict": "observed_verdict=FAIL-OPEN (human-readable 'No service matching' note present; nothing a script gating on exit code would catch) | match=True"
+          }
+        ]
+      }
     },
     "comp-iam-usage": {
       "tool": "comp-iam-usage",
@@ -36376,7 +36738,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=FAIL-OPEN-by-design | verdict=MISMATCH-at-exit-code-layer"
+          }
+        ]
+      }
     },
     "comp-icedrill": {
       "tool": "comp-icedrill",
@@ -36600,7 +36971,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool"
+      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=LOUD | match_verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-imgread": {
       "tool": "comp-imgread",
@@ -36651,7 +37031,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD"
+          }
+        ]
+      }
     },
     "comp-incrparity": {
       "tool": "comp-incrparity",
@@ -36901,7 +37290,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MATCH (both layers)"
+          }
+        ]
+      }
     },
     "comp-keys": {
       "tool": "comp-keys",
@@ -37143,7 +37541,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=FAIL-OPEN-by-design (self-documented BLIND caveat) | verdict=MISMATCH-at-exit-code-layer"
+          }
+        ]
+      }
     },
     "comp-kit-striplist-gate": {
       "tool": "comp-kit-striplist-gate",
@@ -37187,7 +37594,16 @@
       "role_flags": [
         "GATE-BLOCKING-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH (weak-signal row individually confirmed)"
+          }
+        ]
+      }
     },
     "comp-kuzu": {
       "tool": "comp-kuzu",
@@ -37695,7 +38111,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=UNKNOWN (timeout, not tool-attributable) | match_verdict=UNKNOWN"
+          }
+        ]
+      }
     },
     "comp-kuzu-full": {
       "tool": "comp-kuzu-full",
@@ -38141,7 +38566,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=NOT EXERCISED FOR REAL -- CTO arch-gated non-MSTR restriction | match_verdict=UNTESTABLE-SAFELY"
+          }
+        ]
+      }
     },
     "comp-kuzu-inc": {
       "tool": "comp-kuzu-inc",
@@ -38587,7 +39021,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=UNKNOWN (timeout, not tool-attributable) -- contradicts the wrapper's own documented ~5s incremental claim under this load | match_verdict=UNKNOWN"
+          }
+        ]
+      }
     },
     "comp-lambdamap": {
       "tool": "comp-lambdamap",
@@ -38913,7 +39356,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=LOUD | verdict=MISMATCH-reverse"
+          }
+        ]
+      }
     },
     "comp-learns-score": {
       "tool": "comp-learns-score",
@@ -39285,7 +39737,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=MATCH-VIA-SELFTEST (internal LOUD-on-fail harness; external input not independently exercised this pass) | match_verdict=MATCH-VIA-SELFTEST"
+          }
+        ]
+      }
     },
     "comp-learns-status": {
       "tool": "comp-learns-status",
@@ -39349,7 +39810,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool"
+      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=LOUD | match_verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-manifest-check": {
       "tool": "comp-manifest-check",
@@ -40008,7 +40478,16 @@
         "GATE-BLOCKING"
       ],
       "confidence": "HIGH -- full source read (manifest_check_cli.py, 1540 lines), FP gate case #1",
-      "false_positive_reproduced": "CONFIRMED NEGATIVE: predecessor tagged this tool as touching live kuzu/graph.json content (string-presence match on the ADHOC_PATTERNS regex LITERALS at :184-228, which contain the substrings 'kuzu.Connection'/'graph.json' as TEXT BEING SEARCHED FOR in other files, not code this tool executes). My AST call-site pass shows zero KUZU-CANONICAL / graph-content hits -- every read is CONFIG (its own registries) or SOURCE-SCAN-DYNAMIC (the text of files being committed, scanned for the regex patterns). The regex pattern DEFINITIONS are re.compile() call arguments (string literals), never kuzu.Connection()/open(graph.json) call sites themselves."
+      "false_positive_reproduced": "CONFIRMED NEGATIVE: predecessor tagged this tool as touching live kuzu/graph.json content (string-presence match on the ADHOC_PATTERNS regex LITERALS at :184-228, which contain the substrings 'kuzu.Connection'/'graph.json' as TEXT BEING SEARCHED FOR in other files, not code this tool executes). My AST call-site pass shows zero KUZU-CANONICAL / graph-content hits -- every read is CONFIG (its own registries) or SOURCE-SCAN-DYNAMIC (the text of files being committed, scanned for the regex patterns). The regex pattern DEFINITIONS are re.compile() call arguments (string literals), never kuzu.Connection()/open(graph.json) call sites themselves.",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1_EXERCISE.md",
+            "observed_verdict": "observed_verdict=LOUD | match=True"
+          }
+        ]
+      }
     },
     "comp-ontolint": {
       "tool": "comp-ontolint",
@@ -40248,7 +40727,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-parity": {
       "tool": "comp-parity",
@@ -40476,7 +40964,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool"
+      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH (second individual verification of a LOW/default row)"
+          }
+        ]
+      }
     },
     "comp-passcraft": {
       "tool": "comp-passcraft",
@@ -41724,7 +42221,20 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=LOUD | match_verdict=MATCH"
+          },
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=MATCH-VIA-SELFTEST (corroborating) | match_verdict=MATCH-VIA-SELFTEST"
+          }
+        ]
+      }
     },
     "comp-perf": {
       "tool": "comp-perf",
@@ -41972,7 +42482,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-pii": {
       "tool": "comp-pii",
@@ -42367,7 +42886,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-pipescript": {
       "tool": "comp-pipescript",
@@ -47150,7 +47678,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=PER-SUBCOMMAND HETEROGENEOUS: chain LOUD / deployed FAIL-OPEN / io loud-text-rc0 / postdeps affirmative-negative-rc0 (cited). One register row cannot represent this faithfully -- same finding shape as REC-1b's comp-surface-check."
+          }
+        ]
+      }
     },
     "comp-platinum": {
       "tool": "comp-platinum",
@@ -51983,7 +52520,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD | match=True"
+          }
+        ]
+      }
     },
     "comp-pulse": {
       "tool": "comp-pulse",
@@ -52253,7 +52799,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MATCH (with self-cert nuance)"
+          }
+        ]
+      }
     },
     "comp-pydeps": {
       "tool": "comp-pydeps",
@@ -52507,7 +53062,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD"
+          }
+        ]
+      }
     },
     "comp-registry": {
       "tool": "comp-registry",
@@ -52747,7 +53311,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=LOUD | verdict=MISMATCH (louder than declared)"
+          }
+        ]
+      }
     },
     "comp-residue": {
       "tool": "comp-residue",
@@ -53011,7 +53584,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD"
+          }
+        ]
+      }
     },
     "comp-routable-check": {
       "tool": "comp-routable-check",
@@ -53094,7 +53676,16 @@
       "role_flags": [
         "GATE-BLOCKING-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=live-state only: rc=0, 'OK: every registered tool is a live routing target' + advisory WARN listing 4 uncatalogued routables | verdict=UNKNOWN"
+          }
+        ]
+      }
     },
     "comp-routes": {
       "tool": "comp-routes",
@@ -53428,7 +54019,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=FAIL-OPEN | verdict=MISMATCH"
+          }
+        ]
+      }
     },
     "comp-secrets": {
       "tool": "comp-secrets",
@@ -53543,7 +54143,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-shell": {
       "tool": "comp-shell",
@@ -53581,7 +54190,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=FAIL-OPEN | match=True"
+          }
+        ]
+      }
     },
     "comp-similar": {
       "tool": "comp-similar",
@@ -54096,7 +54714,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD"
+          }
+        ]
+      }
     },
     "comp-state": {
       "tool": "comp-state",
@@ -54261,7 +54888,20 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=MATCH-VIA-SELFTEST | match_verdict=MATCH-VIA-SELFTEST"
+          },
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=N/A -- not a fair test of the declared property | match_verdict=NOT-A-FAIR-TEST"
+          }
+        ]
+      }
     },
     "comp-stitch-refresh": {
       "tool": "comp-stitch-refresh",
@@ -54394,7 +55034,20 @@
         "PRODUCER"
       ],
       "confidence": "HIGH -- full source read (comp-stitch-refresh wrapper + derive_stitch.py header), FP gate case #3",
-      "false_positive_reproduced": "CONFIRMED NEGATIVE, AND A REAL BUG FOUND+FIXED IN MY OWN CLASSIFIER ALONG THE WAY: my first pass mis-classified the two `aws s3 cp \"$ART\" \"s3://...\" --quiet || { ...error handling... }` lines as READS, because the bash write-direction check inspected the LAST TOKEN OF THE WHOLE LINE (which was inside the `|| { }` error-handler clause, not the s3:// destination) -- then, after isolating just the command portion, failed AGAIN because the token was quoted (`\"s3://...\"` does not literally start with `s3://`, it starts with a quote mark). Both fixed (isolate the command before `||`/`&&`/`;`; strip quote chars before the prefix check). Confirmed post-fix: writes_typed.LIVE-AWS now correctly shows both S3 uploads; reads_typed shows only the boto3 AWS-snapshot FETCH. This is the exact producer-vs-consumer class the gate exists to catch, and it caught it in my own tool before I could ship it wrong."
+      "false_positive_reproduced": "CONFIRMED NEGATIVE, AND A REAL BUG FOUND+FIXED IN MY OWN CLASSIFIER ALONG THE WAY: my first pass mis-classified the two `aws s3 cp \"$ART\" \"s3://...\" --quiet || { ...error handling... }` lines as READS, because the bash write-direction check inspected the LAST TOKEN OF THE WHOLE LINE (which was inside the `|| { }` error-handler clause, not the s3:// destination) -- then, after isolating just the command portion, failed AGAIN because the token was quoted (`\"s3://...\"` does not literally start with `s3://`, it starts with a quote mark). Both fixed (isolate the command before `||`/`&&`/`;`; strip quote chars before the prefix check). Confirmed post-fix: writes_typed.LIVE-AWS now correctly shows both S3 uploads; reads_typed shows only the boto3 AWS-snapshot FETCH. This is the exact producer-vs-consumer class the gate exists to catch, and it caught it in my own tool before I could ship it wrong.",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1_EXERCISE.md",
+            "observed_verdict": "observed_verdict=LOUD | match_at_tool_level=True"
+          },
+          {
+            "deliverable": "REC1_EXERCISE.md",
+            "observed_verdict": "observed_verdict_operational=SILENT-EMPTY"
+          }
+        ]
+      }
     },
     "comp-surface-check": {
       "tool": "comp-surface-check",
@@ -59555,7 +60208,20 @@
         "GATE-BLOCKING-CANDIDATE",
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1B_EXERCISE.md",
+            "observed_verdict": "observed_verdict=FAIL-OPEN, by explicit design (tool's own output names the design intent: 'never crash the nightly')"
+          },
+          {
+            "deliverable": "REC1B_EXERCISE.md",
+            "observed_verdict": "observed_verdict=Loud in substance (comprehensive, correctly severity-tagged) but rc=0 -- explained by source: cmd_scan is the ADVISORY nightly report; the actual blocking gate (cmd_selfcheck) is a separate code path reading critical-surfaces.yaml directly, not graph.json. | match=not-a-mismatch-once-traced-to-source"
+          }
+        ]
+      }
     },
     "comp-symbols": {
       "tool": "comp-symbols",
@@ -59593,7 +60259,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool"
+      "confidence": "LOW -- failure_mode is a named-reason convention default, not source-verified for this tool",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD | match=True"
+          }
+        ]
+      }
     },
     "comp-system": {
       "tool": "comp-system",
@@ -61197,7 +61872,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=UNKNOWN -- no natural bad-input surface; --check is a health probe not a mismatch test; --self-test not completed within budget | match_verdict=UNKNOWN"
+          }
+        ]
+      }
     },
     "comp-tagauthz": {
       "tool": "comp-tagauthz",
@@ -61333,7 +62017,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-tagauthz.py": {
       "tool": "comp-tagauthz.py",
@@ -61469,7 +62162,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_A.md",
+            "observed_verdict": "observed=LOUD (byte-identical) | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-to": {
       "tool": "comp-to",
@@ -61494,7 +62196,16 @@
       "role_flags": [
         "CONFIG"
       ],
-      "confidence": "HIGH -- full source read (26-line bash script, no python)"
+      "confidence": "HIGH -- full source read (26-line bash script, no python)",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=FAIL-OPEN | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-tool-health": {
       "tool": "comp-tool-health",
@@ -61579,7 +62290,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=FAIL-OPEN | verdict=MISMATCH"
+          }
+        ]
+      }
     },
     "comp-tool-health-gate": {
       "tool": "comp-tool-health-gate",
@@ -61623,7 +62343,16 @@
       "role_flags": [
         "GATE-BLOCKING-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=FAIL-OPEN by documented design | verdict=MISMATCH"
+          }
+        ]
+      }
     },
     "comp-toolgraph": {
       "tool": "comp-toolgraph",
@@ -61711,7 +62440,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=live-state only: rc=0, well-formed 98-line edges report | verdict=UNKNOWN"
+          }
+        ]
+      }
     },
     "comp-tooltip": {
       "tool": "comp-tooltip",
@@ -61933,7 +62671,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-trace": {
       "tool": "comp-trace",
@@ -66907,7 +67654,16 @@
         "PRODUCER-CANDIDATE"
       ],
       "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
-      "reads_note": "same nerves_resolve.py transitive reachability as comp-blast (shared cli.py backing)."
+      "reads_note": "same nerves_resolve.py transitive reachability as comp-blast (shared cli.py backing).",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD | match=True"
+          }
+        ]
+      }
     },
     "comp-transform": {
       "tool": "comp-transform",
@@ -67196,7 +67952,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-trigger": {
       "tool": "comp-trigger",
@@ -67418,7 +68183,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-types": {
       "tool": "comp-types",
@@ -67660,7 +68434,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MISMATCH (affirmative FAIL-OPEN + silent local manifest write)"
+          }
+        ]
+      }
     },
     "comp-v5-composite-test.sh": {
       "tool": "comp-v5-composite-test.sh",
@@ -67724,7 +68507,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-validate": {
       "tool": "comp-validate",
@@ -68123,7 +68915,16 @@
         "GATE-BLOCKING-CANDIDATE",
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-which": {
       "tool": "comp-which",
@@ -68477,7 +69278,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=FAIL-OPEN | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-which-routing-test.py": {
       "tool": "comp-which-routing-test.py",
@@ -68776,7 +69586,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-whoread": {
       "tool": "comp-whoread",
@@ -68852,7 +69671,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=MATCH (covers both comp-whoread and comp-whoread.py register rows via the source-confirmed exec dedup)"
+          }
+        ]
+      }
     },
     "comp-whoread.py": {
       "tool": "comp-whoread.py",
@@ -68928,7 +69756,16 @@
       "role_flags": [
         "ADVISORY"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_E.md",
+            "observed_verdict": "row_verdict=COVERED-BY-DEDUP: same tool as comp-whoread (wrapper is 'exec python .tools/comp-whoread.py', read at source this session; D.md:43 already rows the pair as one tool). Not separately invoked -- an identical second invocation would add noise, not information."
+          }
+        ]
+      }
     },
     "comp-xray": {
       "tool": "comp-xray",
@@ -69138,7 +69975,16 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_C.md",
+            "observed_verdict": "observed=LOUD | verdict=MATCH"
+          }
+        ]
+      }
     },
     "comp-xref": {
       "tool": "comp-xref",
@@ -74112,7 +74958,16 @@
         "PRODUCER-CANDIDATE"
       ],
       "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
-      "reads_note": "same nerves_resolve.py transitive reachability as comp-blast (shared cli.py backing)."
+      "reads_note": "same nerves_resolve.py transitive reachability as comp-blast (shared cli.py backing).",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_B.md",
+            "observed_verdict": "observed_verdict=LOUD | match=True"
+          }
+        ]
+      }
     },
     "pipescript": {
       "tool": "pipescript",
@@ -74521,7 +75376,26 @@
       "role_flags": [
         "PRODUCER-CANDIDATE"
       ],
-      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read"
+      "confidence": "MEDIUM -- AST/call-site grounded reads+writes+closure; binding/evaluation/failure_mode rule-derived + spot-checked, not individually source-read",
+      "verification_provenance": {
+        "basis": "exercised",
+        "citations": [
+          {
+            "deliverable": "REC1C_base.md",
+            "observed_verdict": "observed_verdict=LOUD -- stricter than declared | match_verdict=MISMATCH (reverse polarity)"
+          }
+        ]
+      }
     }
+  },
+  "verification_provenance_denominator": {
+    "total_rows": 92,
+    "exercised": 92,
+    "source_read_unexercised": 0,
+    "rule_derived_unexercised": 0,
+    "default_unexercised": 0,
+    "unmapped_conf_fallback_to_default": 0,
+    "exercised_tools_not_matched_to_a_register_row": [],
+    "method": "WS-7 (0.8.0_AE_CloudComp base, 2026-07-25): folded REC-1/REC-1b/REC-1c A/B/C/E/base exercise deliverables' 'tool' + verdict fields into D.sidecar.json rows. A row with 1+ exercise records across any deliverable is basis=exercised, citing every deliverable that touched it + that deliverable's observed verdict for this tool. All other rows fall back to D.md's own confidence key (HIGH=source-read, MED=rule-derived, LOW=default) -- unchanged from D.md's original meaning, just surfaced as a column instead of prose."
   }
 }
