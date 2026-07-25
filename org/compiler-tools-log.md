@@ -26547,3 +26547,23 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | synthetic Shape-B direct-chained + mutant fixture | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater (Stage 5 regression) | PASS 7/7 |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam stats/gaps/roles (Stage 5 regression) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-data-refresh-api | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service etfs-canon-fanin | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service infrastructure_monitor | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-data-refresh-api | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam stats | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam roles | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/extract_iam.py org/modules/graph/iam_cli.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | py_compile | extract_iam.py + iam_cli.py (Stage 6: DEFERRED/UNTRACED resolver) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-data-refresh-api (Stage 6 site 1: presigned_url names s3:PutObject) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service etfs-canon-fanin (Stage 6 site 2: batch_writer names dynamodb:BatchWriteItem) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service infrastructure_monitor (Stage 6 site 4: 4 services named via paginator/waiter) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-data-refresh-api (Stage 6 clean case: paginator annotation suppressed, already visible) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | synthetic UNRESOLVED-CLIENT/RESOURCE wording unification (4 shapes) + mutant re-check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | fleet DEFERRED/UNTRACED census, 157 Lambdas | PASS (22/157, 50 rows) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | fleet superset diff, Stage 6 vs 65876f746 | PASS (22 increased, 0 regressions) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | negative control bd-client-detail, Stage 6 | PASS (byte-identical) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater (Stage 6 regression) | PASS 7/7 |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam stats/gaps/roles (Stage 6 regression) | PASS |
