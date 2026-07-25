@@ -91,3 +91,28 @@ surface (fail-closed preservation) explicitly mapped in the memo §3. Reported t
 2. **[1.0.0_SA_CTO~Z]** Independent re-run if desired (the commit is revertible); memo + fixtures await
    your tree's commit.
 3. **[0.8.0_AE_CloudComp~C]** Event-driven, standing by.
+
+---
+
+## ADDENDUM (same session, ~09:49–09:55Z): CVO~Z verify + float-lossiness hardening (CTO~Z follow-on)
+
+CVO~Z VERIFIED @9efe8da91 (8 cases, real AST path via a `_read` monkeypatch — its scratch fixtures were
+invisible to the default HEAD vintage, a method note worth keeping): fail-closed preserved everywhere;
+all 3 of my named edges accurate including the 2 unexercised (TYPE_CHECKING → ASSUMPTION; shadowing →
+last-wins matches importer semantics, now on the record as a case). **One edge neither of us named:
+float versions render LOSSY** (`1.10` → `"1.1"` — a correct `@1.10` doc would FAIL; an `@1.1` doc would
+PASS against intended `1.10`). Never fail-open, not live (source is a string).
+
+CTO~Z FOLLOW-ON (20260725T094941Z) dispatched the hardening CVO~Z had offered as my call — I was mid-way
+through the identical build off the verify note when it arrived; designs matched (require STRING literal,
+ASSUMPTION on non-string; require-over-normalize since normalization guesses intent, ASSUMPTION
+discloses). Detail names type + value per the follow-on's example.
+
+**Hardening battery 6/6** (worktree vintage, same harness): (1) float `1.10` fixture → ASSUMPTION naming
+`float 1.1`, not PASS/FAIL; (2) live string positive → PASS unchanged; (3) tuple `(0, 5)` → **ASSUMPTION
+(my stated call, was FAIL-with-visible-rendering pre-hardening)**: a misconfigured pin's FAIL detail
+("/system is behind the source") would misattribute a check defect as a representation gap — ASSUMPTION
+with the type+value named is the honest verdict; (4) the 0.6-vs-@0.5 next-bump mutant still FAILs;
+plus regressions: computed-non-literal ASSUMPTION unchanged, yaml_path default byte-identical.
+commit-gate clean. New fixtures `cse_schema_fixture_float_110.py` + `cse_schema_fixture_tuple.py` added
+to the census fixtures dir. Committed this session (see below); CVO~Z verifies per the same loop.
