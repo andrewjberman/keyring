@@ -26474,3 +26474,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types index DefinitelyNotARealTypeZzz9999 | UNKNOWN |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types blast ClientDirectoryEntry | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLPASS.MSYS-ARGV-GUARD | msys_argv_guard | python3 .tools/msys_argv_guard.py | PASS | 12/12 self-test: predicate matrix + mutant + positive control + adversarial (quotes/backticks/$) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types blast DefinitelyNotARealTypeZzz9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types index DefinitelyNotARealTypeZzz9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types fields DefinitelyNotARealTypeZzz9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types blast ClientDirectoryEntry | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types index ClientDirectoryEntry | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types fields ClientDirectoryEntry | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLPASS.MSYS-ARGV-GUARD-HARDENING | msys_argv_guard | python3 .tools/msys_argv_guard.py | PASS | 15/15, fixed rc=127 + predicate ordering, added load-bearing quoting comment |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLPASS.MSYS-ARGV-GUARD-HARDENING | comp-types | bash .tools/comp-types {blast,index,fields} | PASS | post-migration full battery, 750-type denominator unchanged, artifacts identical |
