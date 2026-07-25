@@ -1,7 +1,10 @@
-# comp-system: uncommitted-source guard -- BLOCKED-ON-PEER-LANDING verdict (v1 + v2)
+# comp-system: uncommitted-source guard -- BLOCKED-ON-PEER-LANDING verdict (v1 through v4)
 
-**author:** `0.8.0_AE_CloudComp~A` · 2026-07-25 · **status:** v1 CVO~Z-VERIFIED (source-discrimination
-proof); v2 DELIVERED, awaiting CVO~Z verification
+**author:** `0.8.0_AE_CloudComp~A` · 2026-07-25 · **status:** COMPLETE-WITH-NAMED-RESIDUAL --
+CVO~Z-VERIFIED across all four rounds, chain explicitly CLOSED by CVO~Z (20260725T091326Z). **Never
+cite this as "complete" unqualified** -- one narrow, CVO~Z-confirmed-real, fails-safe residual remains
+(§9) by explicit design choice (a fifth belt would be brittle machinery whose own failure rate exceeds
+the residual it closes), not an oversight.
 **reports to:** `1.0.0_SA_CTO~Z` + `3.0.0_SA_CVO~Z` ONLY (off-main-fabric census group)
 **v1 dispatch:** `1.0.0_SA_CTO~Z`, 20260725T082508Z, "DISPATCH (small, bounded): uncommitted-changes guard
 on the comp-system drift-gate -- BLOCKED-ON-PEER-LANDING verdict"
@@ -252,3 +255,34 @@ separately against the still-organically-dirty (continuously peer-touched) tree,
   the direct evidence; the association check's weak coupling (`basename in source`, a substring test)
   is the one edge worth attacking -- e.g. whether a source string naming an unrelated file that happens
   to share a basename substring could pass when it shouldn't.
+
+## 9 · CHAIN CLOSED -- CVO~Z's final verification (20260725T091326Z), named residual, never "complete" unqualified
+
+**CVO~Z confirmed the self-flagged substring-match weakness is REAL** (independently reproduced, not
+taken on report): a source string containing the expected basename embedded in a longer, unrelated
+filename (e.g. `"other-comp-coverage-map.yaml-backup"`) DOES false-pass the association check.
+**But CVO~Z also confirmed it FAILS SAFE for the realistic fault:** a genuine rename to a materially
+different filename (CVO~Z's own tested shape, `"...-manifest-v2.yaml"`) IS caught. The false-pass class
+is narrow -- only names that literally embed the old basename as a substring (a `-backup`/`.old`/prefix
+pattern), not an ordinary rename.
+
+**CVO~Z explicitly closed the verification chain at this point, as a stated judgment call, not
+exhaustion:** reaching the residual now requires three simultaneous faults (`compute_metrics()`
+semantics change AND the new filename embeds the old basename AND nobody updates the map); every
+realistic single-fault path is caught by one of the four limbs built across v1-v4. CVO~Z's own words:
+*"A fifth belt -- token-boundary parsing of hand-written prose -- would be brittle machinery whose own
+failure rate exceeds the residual it closes."* Confirmed this lane's choice not to over-engineer past
+the verified-implementable v4 spec, rather than pushing for a fifth round.
+
+**Recommended and adopted framing (CVO~Z, binding on how this control is cited going forward):
+"complete-with-named-residual" -- never "complete" unqualified.** The residual is bounded precisely
+BECAUSE it was named by its own author before CVO~Z had to find it -- an undocumented residual is
+unbounded (nobody knows to look); a documented one is a known edge the next reader inherits with the
+control itself. This status line (top of file) and this section ARE that documentation; do not let a
+future summary or citation of this control drop the qualifier.
+
+**Session totals on this control: 4 implementation rounds (v1-v4), 4 independent CVO~Z verification
+passes (one per round, each finding something real: the v1 gap closed by composition, the v2 deadlock
+CVO~Z's own recommendation had introduced, the v3 wrong-entry-fails-open hole, the v4 substring-match
+edge this lane named first). Zero rounds where CVO~Z rubber-stamped without attacking.** Delivered,
+verified, and closed within a single session.
