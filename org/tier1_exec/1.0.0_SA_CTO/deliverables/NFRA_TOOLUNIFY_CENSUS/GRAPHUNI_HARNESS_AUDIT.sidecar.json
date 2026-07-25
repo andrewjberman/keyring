@@ -1,0 +1,41 @@
+{
+  "total_raw_edges": 3609,
+  "total_accounted": 3609,
+  "drop_reasons": {
+    "CONTAINS-skip": 1362,
+    "unmapped-source (un_pipeline_id failed)": 0,
+    "unmapped-target (un_s3_id/un_pipeline_id failed)": 0,
+    "kept": 2247
+  },
+  "drop_examples": {
+    "CONTAINS-skip": [],
+    "unmapped-source (un_pipeline_id failed)": [],
+    "unmapped-target (un_s3_id/un_pipeline_id failed)": [],
+    "kept": []
+  },
+  "duplicate_triples": 0,
+  "positive_control": {
+    "target_key": "s3:silver/prices/canonical_prices.parquet",
+    "graph_writer_count": 16,
+    "graph_writers": [
+      "gold:A_03.positions_cube:_load_phantom_exclusion_set",
+      "gold:B_01.holdings_lots:load_latest_prices",
+      "gold:E_00.decompose_aua_gap:main",
+      "gold:E_01.account_quality_tiers:main",
+      "gold:E_05.gap_by_pricing_source:main",
+      "gold:E_06.trace_asset_pricing:main",
+      "gold:E_07.account_gap_buckets:main",
+      "gold:E_08.tail_asset_drill:main",
+      "gold:E_09.unrecognized_exit_types:main",
+      "gold:E_10.validate_ffill_cap:main",
+      "gold:E_11.unmatched_asset_analysis:main",
+      "gold:E_12.dump_all_non_yahoo:read_pq",
+      "gold:E_13.tail_decomposition:main",
+      "gold:E_14.audit_existing_mappings:main",
+      "gold:E_16.unit_math_audit:main",
+      "gold:build_canonical_prices_v2:build_canonical"
+    ],
+    "raw_expected_writer_count": 16,
+    "missing_from_graph_despite_surviving_transforms": []
+  }
+}
