@@ -1,0 +1,94 @@
+{
+  "author": "0.8.0_AE_CloudComp~D",
+  "dispatch": "1.0.0_SA_CTO~Z 20260725T035435Z NFRA_TOOLUNIFY REC-1",
+  "denominator": {
+    "exercised_distinct_tools": 5,
+    "total_invocations": 6,
+    "register_total": 92,
+    "note": "v1 light-cycle sample per dispatch scope, not a sweep -- see REC1_EXERCISE.md S2 for selection logic."
+  },
+  "invocations": [
+    {
+      "id": "4a_positive_control",
+      "tool": "comp-manifest-check",
+      "declared_failure_mode": "LOUD",
+      "declared_confidence": "HIGH",
+      "invocation": "bash .tools/comp-manifest-check check --file <synthetic_anti_pattern.py> --mode blocking",
+      "input_class": "mismatched (synthetic anti-pattern file, same 2 violation classes as the tool's own selfcheck AC4)",
+      "observed_rc": 1,
+      "observed_stdout_stderr_verbatim": "MANIFEST-CHECK [ERROR] anti_pattern_probe.py:2 (C_adhoc_reimplementation)\n    > q = \"MATCH (n:CloudNode) RETURN n.id\"\n    embeds raw Cypher outside comp-kuzu. Route graph queries through comp-kuzu so they hit the canonical persisted Kuzu DB (manifest cloud.* / xlayer.*).\nMANIFEST-CHECK [WARN] anti_pattern_probe.py:3 (B_rebuild_when_query)\n    > subprocess.run([\"comp-aws\", \"derive\", \"--out\", \"/tmp/g\"])\n    comp-aws derive is the 8-min REBUILD write-path. To ANSWER a lookup / reachability / blast question, QUERY comp-kuzu instead.\n\nBLOCKED: 1 ERROR-class graph-access finding(s). Use the canonical manifest call, or justify the exception.\nRC=1",
+      "observed_verdict": "LOUD",
+      "match": true
+    },
+    {
+      "id": "4b_mutant_tool_level",
+      "tool": "comp-stitch-refresh (exercised via derive_stitch.py directly, read-only, no S3 write)",
+      "declared_failure_mode": "LOUD",
+      "declared_confidence": "HIGH",
+      "invocation": "python3 infra/aws/globgrph/derive_stitch.py --out <scratch>",
+      "input_class": "live/real (today's actual repo+AWS-snapshot state, containing the real EXTERNAL_ENDPOINT=0 grain anomaly -- not fabricated)",
+      "observed_rc": 2,
+      "observed_stdout_stderr_verbatim": "GRAIN-SENTINEL: FAIL (6 violation group(s))\n  [AC-GRAIN.2] EXTERNAL_ENDPOINT: count 0 vs baseline 3 = 0.00x (outside [0.4, 2.5]x band)\n  [AC-GRAIN.2] REACT_QUERY_KEY: count 85 vs baseline 32 = 2.66x (outside [0.4, 2.5]x band)\n  [AC-GRAIN.2] SQS_QUEUE: count 12 vs baseline 4 = 3.00x (outside [0.4, 2.5]x band)\n  [AC-GRAIN.2] ECS_TASK_DEFINITION: count 7 vs baseline 2 = 3.50x (outside [0.4, 2.5]x band)\n  [AC-GRAIN.2] SCHEDULE: count 10 vs baseline 3 = 3.33x (outside [0.4, 2.5]x band)\n  [AC-GRAIN.2] IAM_USER: count 4 vs baseline 1 = 4.00x (outside [0.4, 2.5]x band)\nERROR: GRAIN_SENTINEL_FAIL -- refusing to emit grain-violating stitch graph\nRC=2",
+      "observed_verdict": "LOUD",
+      "match_at_tool_level": true
+    },
+    {
+      "id": "4b_mutant_call_site_level",
+      "tool": "comp-stitch-refresh, production call site",
+      "declared_failure_mode": "LOUD (per register; register does not model call sites)",
+      "invocation_evidence": ".tools/git-hooks/stitch-refresh-post-commit.sh:26 (source read, not executed by this lane)",
+      "evidence_line": "( bash \"$WS/.tools/stitch-refresh\" >> \"${TMPDIR:-/tmp}/stitch-refresh.log\" 2>&1 & ) >/dev/null 2>&1\nexit 0",
+      "corroboration": [
+        "stitch-refresh.log (local, pre-existing): 166 GRAIN_SENTINEL_FAIL-class lines (83 occurrences x 2 lines each), matching the estate map's '83 straight since 07-08' finding",
+        "s3://opal-313476888478-globgrph/stitch/stitch_marker.json LastModified=2026-07-08T02:27:55Z (17 days stale at time of this exercise, 2026-07-25) -- confirms no successful publish since the failures began AND confirms this exercise wrote nothing to S3"
+      ],
+      "observed_verdict_operational": "SILENT-EMPTY",
+      "match_at_call_site_level": false,
+      "note": "Headline finding, not a defect in the register row -- see REC1_EXERCISE.md S4c. failure_mode is a per-tool property; loudness only reaches an observer if the call site listens."
+    },
+    {
+      "id": "5_comp_iam",
+      "tool": "comp-iam service <name>",
+      "declared_failure_mode": "FAIL-OPEN",
+      "declared_confidence": "MED",
+      "invocation": "bash .tools/comp-iam service nonexistent-lambda-zzz-9999",
+      "input_class": "mismatched (nonexistent Lambda/service name)",
+      "observed_rc": 0,
+      "observed_stdout_stderr_verbatim": "No service matching 'nonexistent-lambda-zzz-9999'\n\n  Lambda services (178): ... (list printed)\n  IAM roles (163): ... (list printed)\nRC=0",
+      "observed_verdict": "FAIL-OPEN (human-readable 'No service matching' note present; nothing a script gating on exit code would catch)",
+      "match": true,
+      "related_note": "comp-iam simulate-self-test was also run for context: the newer 22a-hardened `simulate` subcommand explicitly PASSes 4 labeled mutant cases (multi-ARN refusal, conditioned-unevaluated, control-unproven, control-proven) -- that subcommand is well-guarded. The `service`/default `gaps`-family machinery Rule 22a actually warns about is a DIFFERENT code path within the same tool; both are true simultaneously."
+    },
+    {
+      "id": "5_comp_freshness",
+      "tool": "comp-freshness artifact <s3-prefix>",
+      "declared_failure_mode": "LOUD",
+      "declared_confidence": "MED",
+      "invocation": "python3 .tools/comp-freshness artifact s3://opal-data-inf/definitely-nonexistent-prefix-zzz-9999/",
+      "input_class": "empty (wholly nonexistent S3 prefix, not merely stale)",
+      "observed_rc": 0,
+      "observed_stdout_stderr_verbatim": "artifact_id | s3_key | last_modified | age_h | fail_at_h | STATUS\ns3://opal-data-inf/definitely-nonexist | ... | N/A | N/A | 48h | WARN\n  NOTE: Prefix not found in S3: s3://opal-data-inf/definitely-nonexistent-prefix-zzz-9999/\nRC=0",
+      "observed_verdict": "WARN (tool's own documented contract: 'WARN alone does not block dispatch')",
+      "match": false,
+      "note": "Flagged as priority follow-up input to the open S0.2 sixth-instance investigation (are the 9 freshness/vintage/absence-probe dirs served elsewhere?) -- see REC1_EXERCISE.md S5.1. NOT asserting a broken pipeline (NEVER-rule #1 discipline); this is one subcommand's default severity on total absence, exercised and reported as found, first individual verification of this MED-confidence row."
+    },
+    {
+      "id": "5_comp_glob",
+      "tool": "comp-glob",
+      "declared_failure_mode": "FAIL-OPEN",
+      "declared_confidence": "MED",
+      "invocation": "python3 .tools/comp-glob zzz_definitely_no_match_pattern_9999 .",
+      "input_class": "empty (pattern matching 0 files)",
+      "observed_rc": 0,
+      "observed_stdout_stderr_verbatim": "NO MATCH: comp-glob -- 0 file(s) for pattern=zzz_definitely_no_match_pattern_9999 pathspec=.\n  This is NOT a confirmation the file is absent -- it is 0 hits in the .gitignore-aware working set. Next: widen the pattern, search content instead (comp-grep <text>), or check whether the path is gitignored.\nRC=0",
+      "observed_verdict": "FAIL-OPEN (explicit labeled 'NO MATCH:' block with correct-use caveats -- better-instrumented than comp-iam's case, still rc=0)",
+      "match": true
+    }
+  ],
+  "method_findings": [
+    {
+      "id": "idiom_mismatch",
+      "summary": "bash .tools/comp-freshness and bash .tools/comp-glob (both idiom-2, shebang-file-is-the-entry per D.md S3.1) both threw bash syntax errors when invoked via bash instead of python3 -- an exerciser-side dispatch mistake, not a tool failure_mode signal. Corrected before recording either result; kept on the record per this project's 'care is not a control' discipline."
+    }
+  ]
+}
