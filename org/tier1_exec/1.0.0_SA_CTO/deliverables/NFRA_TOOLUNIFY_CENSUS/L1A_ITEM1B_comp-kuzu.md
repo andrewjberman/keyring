@@ -55,9 +55,15 @@ find property id for n`**. So the tool's own canonical example **errors against 
 the inference gate's call; candidate fix is a one-word example edit (`n.id` → `n.node_id`), not taken
 here (read-only lane discipline; also the tool file is the census's subject this pass).
 
-The `member` cell (1): `column:CloudNode.props` — declared in loader DDL, present live, never
+The `member` cell (1): `column:CloudNode.node_id` — declared in loader DDL, present live, never
 query-referenced by the layer itself. The dual-plane rule (declared ∧ assumed ∧ live → counted once, in
 covered) is stated in the sensor docstring.
+*(CORRECTED 2026-07-25 ~1142Z, visibly per the inline-correction model: this sentence originally
+hand-wrote the member cell as `CloudNode.props` — a label recalled from the live column list instead of
+read from the emitted JSON, which is the artifact of authority and says `column:CloudNode.node_id`.
+Caught by ~C's closure pass via the post-fix cell movement (member→covered on the `n.id`→`n.node_id`
+example fix is only explicable if the member element WAS node_id). The day's hand-carried-label class,
+landing in this memo's own prose; the committed JSON was correct throughout.)*
 
 ## 4 · Acceptance matrix — every limb exercised, separate invocations
 
