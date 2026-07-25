@@ -26677,3 +26677,5 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | census-self-test / simulate-self-test (regression) | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | pytest | test_iam_census_vintage.py (regression) | PASS 10/10 |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | commit-gate/ruff | caught 1 f-string lint defect, fixed pre-commit | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/iam_dr_exempt_roles.json | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY (CTO~Z dispatch, L1b findings A+B) | system_parity | borrowed-sensitivity disclosure on every version_pin outcome (A1: no derived_count migration possible -- countables exist, report side doesn't, near-miss cse_measures checked); inf-intraday-iam off immobile assumption onto hollow-proof grep_present (ASSUMPTION->PASS, 5/5+0assu); battery 29/29 | VERDICT |
