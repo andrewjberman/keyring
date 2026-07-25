@@ -797,6 +797,7 @@ def _simulate_self_test():
 
 import comp_iam_census  # noqa: E402 -- APPLIED-plane census generation + vintage honesty
 import comp_iam_live  # noqa: E402 -- LIVE-PRIMARY plane (Andrew flip 2026-07-22) -- APPLIED-plane census generation + vintage honesty
+import comp_iam_investigate  # noqa: E402 -- RoleLastUsed TRIAGE signal only (2026-07-25)
 
 # NOTE: this default is the 2026-06-03 census: 111 roles vs 158 in Terraform, and it carries NO
 # _meta.generated_utc. It is retained so `reconcile` has a path to point at, but the vintage gate
@@ -1235,6 +1236,84 @@ def cmd_reconcile(args):
     sys.exit(1 if total_drift else 0)
 
 
+def cmd_investigate_candidates(args):
+    """RoleLastUsed as a TRIAGE signal only (NFRA_COMPIAM, 2026-07-25, CTO~Z dispatch @133907Z).
+
+    Licenses EXACTLY ONE inference: "this role warrants human investigation." Never "unused,"
+    never a deletion warrant -- see comp_iam_investigate.REFUSAL_LINE, printed unconditionally
+    below. Full grounding (tracking window, null semantics, region semantics -- pinned GLOBAL
+    not per-region) is in comp_iam_investigate.py's module docstring, not restated here.
+    """
+    if getattr(args, "role", None):
+        role_names = list(args.role)
+    else:
+        _profiles, tf_roles, _gaps = _build()
+        role_names = sorted(tf_roles)
+
+    dr = comp_iam_investigate.load_dr_exempt()
+    stale_days = args.stale_days if getattr(args, "stale_days", None) else \
+        comp_iam_investigate.DEFAULT_STALE_DAYS
+
+    print("IAM INVESTIGATE-CANDIDATES  (TRIAGE ONLY -- see refusal below)")
+    print(f"  roles checked: {len(role_names)} | age threshold: {stale_days}d | "
+          f"AWS tracking window: {comp_iam_investigate.TRACKING_WINDOW_DAYS}d")
+    print(f"  DR/break-glass exemptions: {len(dr['exempt_roles'])} declared "
+          f"(source: {dr['source']})")
+    print()
+
+    results = []
+    errors = []
+    for name in role_names:
+        last_used = comp_iam_investigate.get_role_last_used(name)
+        verdict = comp_iam_investigate.classify(
+            name, last_used, set(dr["exempt_roles"]), stale_days=stale_days)
+        results.append(verdict)
+        if verdict["verdict"] == "ERROR":
+            errors.append(verdict)
+
+    candidates = [r for r in results if r["verdict"] == "INVESTIGATE-CANDIDATE"]
+    active = [r for r in results if r["verdict"] == "ACTIVE"]
+    aged = [r for r in candidates if r.get("reason") == "AGED"]
+    unknown = [r for r in candidates if r.get("reason") == "UNKNOWN"]
+    exempt_candidates = [r for r in candidates if r["exempt"]]
+
+    # ACTIVE roles are named explicitly only in --role (targeted/verification) mode -- an --all
+    # sweep naming every active role would bury the triage signal in noise, but a targeted check
+    # must show ALL THREE states distinctly, never just "not a candidate, trust me."
+    if getattr(args, "role", None) and active:
+        print(f"ACTIVE ({len(active)} role(s)) -- NOT investigate-candidates:")
+        for r in active:
+            print(f"    ok {r['role']}")
+            print(f"       {r['detail']}")
+        print()
+    if unknown:
+        print(f"INVESTIGATE-CANDIDATE -- UNKNOWN ({len(unknown)} role(s)) -- no LastUsedDate recorded:")
+        for r in unknown:
+            tag = "  [DR-EXEMPT, still investigate-worthy]" if r["exempt"] else ""
+            print(f"    ?? {r['role']}{tag}")
+            print(f"       {r['detail']}")
+        print()
+    if aged:
+        print(f"INVESTIGATE-CANDIDATE -- AGED ({len(aged)} role(s)) -- dated, exceeds threshold:")
+        for r in aged:
+            tag = "  [DR-EXEMPT, still investigate-worthy]" if r["exempt"] else ""
+            print(f"    ?? {r['role']}{tag}")
+            print(f"       {r['detail']}")
+        print()
+    if errors:
+        print(f"ERROR ({len(errors)} role(s)) -- could not be checked, NOT counted as any verdict:")
+        for r in errors:
+            print(f"    !! {r['role']}: {r['detail']}")
+        print()
+
+    print(f"Total: {len(results)} checked | {len(active)} active | {len(candidates)} "
+          f"investigate-candidate ({len(unknown)} unknown, {len(aged)} aged) | "
+          f"{len(exempt_candidates)} of those DR-exempt | {len(errors)} error")
+    print()
+    print(comp_iam_investigate.REFUSAL_LINE)
+    sys.exit(1 if candidates else 0)
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog='comp-iam',
@@ -1302,6 +1381,14 @@ def main():
     p_live.add_argument('--allow-stale-derive', action='store_true',
                         help='AUDITED override: report from a stale live snapshot')
 
+    p_inv = sub.add_parser('investigate-candidates',
+                           help='TRIAGE ONLY: RoleLastUsed-based investigate-worthy roles (never "unused")')
+    p_inv.add_argument('--role', action='append',
+                       help='check only this role (repeatable); default: all TF-parsed roles')
+    p_inv.add_argument('--stale-days', type=int, default=None,
+                       help=f'age threshold in days, past which a dated role becomes an '
+                            f'investigate-candidate (default {comp_iam_investigate.DEFAULT_STALE_DAYS})')
+
     args = parser.parse_args()
 
     # Default: gaps if no subcommand given, but also handle gaps with optional --service
@@ -1338,6 +1425,8 @@ def main():
         sys.exit(_census_self_test())
     elif args.command == 'live':
         sys.exit(cmd_live(args))
+    elif args.command == 'investigate-candidates':
+        cmd_investigate_candidates(args)
     else:
         parser.print_help()
 
