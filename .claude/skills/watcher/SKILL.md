@@ -228,9 +228,14 @@ an empty `TaskList`, and never conclude "reachable" off (3) alone.
 - **Serial:** the full serial you registered under this session, **including any
   `~B`/`~C`/`~D` lane suffix**. Lane agents watch their nested dir; registering or
   arming under the base serial means your lane inbox is never watched.
-- **Workspace abs path:** `/c/Users/AndrewBerman/Desktop/ajb_workspace` (the
-  Monitor command must use the absolute path — the bare-path guard hook blocks
-  relative `org/mcp/inbox-watch.sh` launches).
+- **Workspace abs path:** `<resolved-prefix>/Users/AndrewBerman/Desktop/ajb_workspace`
+  — the Monitor command must use the **absolute** path (the bare-path guard hook
+  blocks relative `org/mcp/inbox-watch.sh` launches), but **the drive prefix is NOT
+  a constant on this box.** Resolve it per Step 3; do not hardcode `/c/` or
+  `/cygdrive/c/` here. *(This line carried the hardcoded `/c/` form after
+  `aef2840826` corrected Step 3 — the fix landed on the instruction an agent reads
+  LAST and left the one it reads FIRST, so a Step-0 reader still got the wrong
+  prefix. A correction is only as complete as its last surviving copy.)*
 
 ## Step 1 — Registration check
 
