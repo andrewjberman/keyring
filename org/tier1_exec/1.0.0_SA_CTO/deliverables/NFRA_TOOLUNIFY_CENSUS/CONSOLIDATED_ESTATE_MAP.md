@@ -189,3 +189,26 @@ No open verification items. The estate is established; the decision space (§7) 
 3. **Author the 86.5%:** commit to authoring symbol-grain vocabulary, or declare it out-of-ontology-by-design.
 4. **PRD now?** WS-1's feasibility is *proven* (~D built a depth-4 sound instrument that beat the verifier's
    oracle) — the register seed exists. We can write the PRD against a verified estate whenever you say.
+
+## 8 · Andrew's sequencing ruling (2026-07-25, session terminal, post power-crash restoration)
+
+**VERBATIM:** *"Start with REC1, lets just get TOOLUNIFY sorted completely, then I think we can get into
+COMPLEARNS from the perspective of putting the denominator expansion self-healing delta loop stuff into
+play. There should be some /ontology docs on implementation describing these threads in greater detail"*
+
+**Reading, surfaced not adjudicated beyond this:** REC-1 (exercise the register's `failure_mode` column,
+seeded by the §0.2 six-instance through-line) is GO — dispatched to `0.8.0_AE_CloudComp~D` this turn,
+`3.0.0_SA_CVO~Z` holding the positive-control+mutant bar. **§7.1 (REC-2, GRAPHLEARNS-as-WS-8) reads as
+NOT ruled the way the fork's fork proposed** — Andrew sequenced COMPLEARNS as the NEXT program after
+TOOLUNIFY closes, not folded in as a TOOLUNIFY workstream. The original separation ruling (*"This is a
+separate project than GRAPHLEARNS and ARCHTOOL, we will return to those later. This will be TOOLUNIFY
+under the NFRA macro"*) stands; this adds a sequencing slot, not a merge. Grounding docs for the
+COMPLEARNS phase when it opens: `docs/architecture/NFRA_COMPLEARN_PRD.md` (the self-learning ratchet
+loop — Behavior/Estate/Change federation, scheduled worklist), `docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md`
+(the denominator doctrine), `docs/architecture/NFRA_TOOLARCH_PRD.md` (archetypes->patterns->tools,
+sequenced behind this program's R-series), `docs/architecture/NFRA_ONTOLOGY2_PRD.md` (the D1/D2/D3 grain
+rails).
+
+**WS-4 (crosswalk build)** was also affirmed clean by the prior-session fork review (correct-but-hold,
+now buildable) but was NOT explicitly named in this ruling — holding it pending an explicit go, since
+Andrew named REC-1 specifically ("start with REC1").
