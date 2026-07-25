@@ -26510,3 +26510,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam service security-sweep-comprehensive | PASS |
 | 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam service infrastructure-daily-snapshot | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY (CTO~Z ruling: teaching sites track current) | version_pin | 6/6 rulebank sites updated v1.1->v1.2 (in-situ check: all carried ratification CITATIONS, zero compatibility rationales -> all UPDATE per ruling; citation refreshed to the bank's own meta LD-0311 @086238604); staleness limb now CLEAN, required-limb FAIL-by-design remains (DENOM item A) | VERDICT |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam stats | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/extract_iam.py org/modules/graph/iam_cli.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_COMPIAM.STAGE3-UNMAPPED-METHOD | comp-iam | ad-hoc fleet K-census (157 Lambdas) | PASS | UNMAPPED-METHOD control added, self-caught+fixed a resource-accessor noise source (97->46 genuine gaps) |
