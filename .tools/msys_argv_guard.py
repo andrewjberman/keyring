@@ -73,10 +73,18 @@ def is_msys_risky(arg) -> bool:
     this predicate would ever see them, so False is the correct/only sound answer here."""
     if not isinstance(arg, str):
         return False
+    # Whitespace check FIRST (CVO~Z verify finding, 2026-07-25): whitespace forces Windows-level
+    # quoting, so MSYS never reparses the element unquoted -- this protects the independent '{'
+    # trigger too, not just the backslash+metachar class. Checking '{' before whitespace (the
+    # original ordering) made the predicate CONTRADICT its own documented matrix -- '{a, b}' and
+    # 'a\s {x}' both false-flagged as risky despite the docstring's own "whitespace -> safe" claim.
+    # Fail-safe direction (over-flagging, not a hole), but a gate whose code and documented matrix
+    # disagree is its own declarative-drift defect -- fixed here, not left for the next reader to
+    # discover which of the two to trust.
+    if " " in arg or "\t" in arg:
+        return False
     if "{" in arg:
         return True  # independent trigger, no backslash needed (brace expansion)
-    if " " in arg or "\t" in arg:
-        return False  # whitespace forces Windows-level quoting; MSYS never reparses it unquoted
     return "\\" in arg and any(c in arg for c in _TRIGGER_METACHARS)
 
 
@@ -106,7 +114,30 @@ def msys_safe_run(cmd: list, **kwargs) -> subprocess.CompletedProcess:
             "unguarded MSYS-binary spawn"
         )
     shell_cmd = " ".join(shlex.quote(str(c)) for c in cmd)
-    return subprocess.run([bash, "-c", shell_cmd], **kwargs)
+    result = subprocess.run([bash, "-c", shell_cmd], **kwargs)
+    # A direct subprocess.run(["missing-binary", ...]) raises FileNotFoundError -- LOUD. Routing
+    # through bash -c instead reports a missing/misspelled binary as rc=127 -- QUIET, and every
+    # migrated call site written as `if result.returncode == 0:` (a real, live pattern found in
+    # this estate's own `find` call sites, CVO~Z verify finding 2026-07-25) would then silently
+    # read a nonexistent binary as "zero results" -- exactly the silent-empty shape this whole
+    # guard exists to eliminate, reintroduced one layer down by the fix itself. Re-raise to
+    # preserve the ORIGINAL loud semantics. Confirmed message text (this host, Git-for-Windows
+    # bash): "bash: line N: <name>: command not found"; bash's exit code 127 is otherwise a
+    # legitimate exit code a real invoked command could return on its own, so both signals
+    # (rc==127 AND the message) are required when stderr is inspectable -- only rc==127 alone
+    # (stderr not captured by the caller, so unreadable) is treated as inconclusive-but-still-raise,
+    # since staying loud is the safer default for a probe that cannot fully verify the cause.
+    if result.returncode == 127:
+        stderr = result.stderr
+        if stderr is None or "command not found" in (
+            stderr if isinstance(stderr, str) else stderr.decode(errors="replace")
+        ):
+            raise FileNotFoundError(
+                f"msys_safe_run: {cmd[0]!r} not found via bash -c (rc=127) -- raised to preserve "
+                f"the loud subprocess.run(FileNotFoundError) semantics a direct spawn would have "
+                f"given; do not catch this as 'zero results'."
+            )
+    return result
 
 
 def _find_echo() -> str | None:
@@ -143,6 +174,12 @@ if __name__ == "__main__":
         not is_msys_risky("ab*") and not is_msys_risky("ab[") and not is_msys_risky("ab("))
     chk("9 detect: whitespace present -> NOT risky (forces Windows-level quoting)",
         not is_msys_risky(r"a\s (x)"))
+    chk("9a detect: whitespace protects the INDEPENDENT '{' trigger too (CVO~Z verify finding, "
+        "predicate-vs-docstring precision fix -- was a false positive before the ordering fix)",
+        not is_msys_risky("{a, b}") and not is_msys_risky(r"a\s {x}") and not is_msys_risky("{x} y"))
+    chk("9b detect: '{' with NO whitespace still risky (the ordering fix must not over-correct "
+        "into a false negative on the genuine independent trigger)",
+        is_msys_risky("{a,b}") and is_msys_risky("ab{"))
 
     # 10-11. the spawn helper itself: mutant (known-mangling argv arrives INTACT) + positive
     #        control (a plain safe call, unaffected) -- BOTH measured via the echo-back oracle
@@ -181,6 +218,19 @@ if __name__ == "__main__":
     else:
         print("  [SKIP] 10/11/12 -- echo.exe not found near the resolved bash.exe; "
               "mutant/positive-control/adversarial need it")
+
+    # 13. regression (CVO~Z verify finding, 2026-07-25): a missing/misspelled binary must raise
+    #     FileNotFoundError, matching direct subprocess.run's own loud semantics -- NOT rc=127
+    #     silently returned, which is the exact silent-empty shape this guard exists to eliminate,
+    #     reintroduced one layer down by the fix itself.
+    raised = False
+    try:
+        msys_safe_run(["definitely_nonexistent_binary_zzz_9999"], capture_output=True, text=True,
+                      timeout=10)
+    except FileNotFoundError:
+        raised = True
+    chk("13 regression: a missing binary raises FileNotFoundError (loud), not a silent rc=127",
+        raised)
 
     n = sum(1 for x in ok if x)
     print(f"--- self-test: {n}/{len(ok)} passed ---")
