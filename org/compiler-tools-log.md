@@ -26648,3 +26648,32 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam census-self-test | PASS 17/17 |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam simulate-self-test | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | pytest | org/modules/graph/tests/test_iam_census_vintage.py | PASS 10/10 |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam service opal-assets-daily-emitter | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam service opal-data-refresh-api | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam service keyword-drilldown-generator | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates --role astn-wsjft-orchestrator-role --role AWSServiceRo... | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates --role canonical-schwab-si2-daily-events-ssm-role --rol... | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates --role dc2-test1-eventbridge-invoke-role | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates --role astn-wsjft-orchestrator-role --role AWSServiceRo... | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates --role astn-wsjft-orchestrator-role --role AWSServiceRo... | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates --role astn-wsjft-orchestrator-role --role AWSServiceRo... | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates --role astn-wsjft-orchestrator-role | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates --role lambda-test-role | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam census-self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam simulate-self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam stats | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam roles | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates --role astn-wsjft-orchestrator-role | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_iam_investigate.py org/modules/grap... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_iam_investigate.py org/modules/grap... | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | WebFetch | AWS IAM API Reference RoleLastUsed grounding | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | aws iam list-roles vs get-role, RoleLastUsed positive control | PASS (list-roles null unconditionally; get-role real) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | py_compile | comp_iam_investigate.py + iam_cli.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates, 6 real roles, all 3 states | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | grep forbidden-noun zero-occurrence proof | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | DR-exemption honored, missing-file default-empty | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | census-self-test / simulate-self-test (regression) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | pytest | test_iam_census_vintage.py (regression) | PASS 10/10 |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | commit-gate/ruff | caught 1 f-string lint defect, fixed pre-commit | PASS |
