@@ -74,18 +74,85 @@ CELLS = {
     "orphan": "nothing downstream knows it exists -- Route C territory",
 }
 
-#: Address spaces seen so far. INTENTIONALLY NOT CLOSED -- new shapes will appear, and a
-#: closed set here would be the frozen-enumeration defect. Unknown spaces are ALLOWED but
-#: REPORTED (BR008), so a new space is visible rather than silent.
+#: Address spaces. INTENTIONALLY NOT CLOSED -- new shapes will appear, and a closed set
+#: here would be the frozen-enumeration defect. Unknown spaces are ALLOWED but REPORTED
+#: (BR008), so a new space is visible rather than silent.
+#:
+#: ROUND-2 ITEM 5 REWORK (2026-07-25, design read @0a26851db, CVO~Z-sharpened): the set
+#: -> a STATUSED dict, because the flat set carried the both-directions filter drift in
+#: the type's OWN vocabulary (8 declared / 5 live-emitted / intersection 1), and two
+#: declared terms were NEAR-MISSES for live ones -- rewarding the precisely-wrong term
+#: with silence while flagging the accurately-novel one with BR008.
+#: STATUSES:
+#:   LIVE              -- measured emitted by a conformant sensor report (named).
+#:   ANTICIPATED       -- declared for a NAMED sensor not yet emitting; MUST carry
+#:                        owner + trigger (the L0b RESEMANT-deferral shape: an
+#:                        ANTICIPATED with no trigger is a forgotten term with better
+#:                        branding). Grep-provable: every ANTICIPATED entry carries
+#:                        "owner:" and "trigger:" in its note.
+#:   RETIRED-CANDIDATE -- no nameable owner/trigger exists; naming one would be
+#:                        invention. Kept declared (mark, don't prune -- the design
+#:                        read's ruling) pending the program owner's retire call.
+#: Near-miss pairs are disambiguated IN-PLACE, at the term, where the mistake is made.
+#:
+#: >> METRIC WARNING (carry this wherever vocabulary health is measured): BR008's rate
+#: is a BIASED ESTIMATOR of vocabulary health. It counts accurate-NOVEL emissions and
+#: structurally CANNOT count precise-WRONG ones -- a near-miss declared term produces a
+#: clean report about the wrong address space, silently. False-accepts are SILENT while
+#: false-rejects are LOUD; loud errors self-correct, silent ones compound. Do NOT adopt
+#: the BR008 rate as the health metric. <<
 KNOWN_ADDRESS_SPACES = {
-    "yaml_key_path",     # comp-residue over a schema source (dotted dict keys)
-    "json_key_path",
-    "dag_node_id",       # a graph node identity
-    "dag_edge_type",
-    "cf_behavior_ordinal",   # CloudFront behavior ordering
-    "tf_resource_address",
-    "code_branch_id",    # an if/else branch in a router
-    "s3_prefix",
+    # -- LIVE (measured, per the 5-report conformant corpus 2026-07-25) ------------------
+    "dag_edge_type": {
+        "status": "LIVE", "note": "an edge's KIND (e.g. CALLS); emitter: comp-blast sensor-3"},
+    "code_call_site": {
+        "status": "LIVE", "note": "a call site 'path:line:callee' in code text; emitter: "
+        "comp-cache sensor-2. NOT code_branch_id (an if/else branch is not a call site)"},
+    "dag_node_type": {
+        "status": "LIVE", "note": "a node's KIND (e.g. LAMBDA); emitter: comp-blast "
+        "sensor-3. NOT dag_node_id (identity, e.g. lambda:opal-foo, is a different space)"},
+    "lambda_env_key": {
+        "status": "LIVE", "note": "an env-var NAME on a Lambda's flat Variables map; "
+        "emitter: item-1b env sensor"},
+    "kuzu_schema_element": {
+        "status": "LIVE", "note": "'table:<T>' / 'column:<T>.<c>' of a live Kuzu schema; "
+        "emitter: item-1b kuzu sensor"},
+    # -- ANTICIPATED: NONE. yaml_key_path was proposed here and RULED invention-by-
+    #    citation at verify (CVO~Z 161223Z): SENSOR_CONTRACT s8.3 SEQUENCES comp-residue's
+    #    emission but names neither an owner nor a trigger, and comp-residue is already
+    #    recorded as a named NON-EMITTER in L2's coverage-of-itself -- "anticipated" and
+    #    "known not to emit" cannot be asserted about the same tool simultaneously.
+    #    0 ANTICIPATED + 7 RETIRED-CANDIDATE is the honest split: this vocabulary was
+    #    declared ahead of its sensors and none of it arrived. -------------------------
+    # -- RETIRED-CANDIDATE (no nameable owner/trigger; kept declared pending the
+    #    program owner's retire ruling -- marked, not pruned) ---------------------------
+    "yaml_key_path": {
+        "status": "RETIRED-CANDIDATE", "note": "dotted dict-key path of a schema source "
+        "(comp-residue's shape -- a sensor that exists and is a recorded NON-EMITTER; "
+        "SENSOR_CONTRACT s8.3 sequences its emission but names no owner and no trigger, "
+        "so ANTICIPATED would be invention-by-citation -- CVO~Z ruling 20260725T161223Z)"},
+    "json_key_path": {
+        "status": "RETIRED-CANDIDATE", "note": "no sensor names this shape; no owner/"
+        "trigger nameable without invention"},
+    "dag_node_id": {
+        "status": "RETIRED-CANDIDATE", "note": "a node's IDENTITY (lambda:opal-foo). "
+        "NOT dag_node_type (the KIND) -- the live near-miss: a node-KIND report emitted "
+        "under this term would be precisely wrong and silent. No identity-addressed "
+        "sensor exists or is named; no owner/trigger nameable without invention"},
+    "code_branch_id": {
+        "status": "RETIRED-CANDIDATE", "note": "an if/else branch in a router. NOT "
+        "code_call_site (the live near-miss). The CODE-BRANCHES shape is real "
+        "(shared-advisor-router, platform-or-pattern read) but no branch-addressed "
+        "sensor exists or is named; no owner/trigger nameable without invention"},
+    "cf_behavior_ordinal": {
+        "status": "RETIRED-CANDIDATE", "note": "CloudFront behavior ordering -- a real "
+        "shape with no named sensor; no owner/trigger nameable without invention"},
+    "tf_resource_address": {
+        "status": "RETIRED-CANDIDATE", "note": "a real shape with no named sensor; no "
+        "owner/trigger nameable without invention"},
+    "s3_prefix": {
+        "status": "RETIRED-CANDIDATE", "note": "a real shape with no named sensor; no "
+        "owner/trigger nameable without invention"},
 }
 
 REQUIRED_TOP = ("tool", "source", "address_space", "head", "surface_total", "cells")
@@ -228,3 +295,26 @@ def denominator_note(reports) -> str:
                          and r["cells"][cell].get("applicable") is True)
         per_cell[cell] = (applicable, len(reports))
     return " | ".join("%s: %d/%d tools applicable" % (c, a, n) for c, (a, n) in per_cell.items())
+
+
+def vocabulary_denominators(reports) -> str:
+    """BOTH vocabulary denominators, never one ratio (round-2 item 5, CVO~Z's addition).
+
+    declared N / live-emitted M / intersection K -- because over-declared (N >> K) and
+    under-conforming (M >> K) have OPPOSITE remedies (prune-or-mark vs fix-the-emitters)
+    and a single ratio picks neither. Also prints the per-status composition so
+    'declared for a named future sensor' is distinguishable from 'declared and
+    forgotten' from the outside.
+    """
+    declared = set(KNOWN_ADDRESS_SPACES)
+    emitted = {r.get("address_space") for r in reports if r.get("address_space")}
+    inter = declared & emitted
+    by_status = {}
+    for term, meta in KNOWN_ADDRESS_SPACES.items():
+        by_status.setdefault(meta["status"], []).append(term)
+    status_part = " | ".join("%s: %d (%s)" % (s, len(ts), ", ".join(sorted(ts)))
+                             for s, ts in sorted(by_status.items()))
+    return ("address_space vocabulary: declared %d / live-emitted %d / intersection %d "
+            "(undeclared-but-emitted: %s) || %s"
+            % (len(declared), len(emitted), len(inter),
+               ", ".join(sorted(emitted - declared)) or "none", status_part))
