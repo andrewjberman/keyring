@@ -217,3 +217,42 @@ instead.
 reframe (`failure_mode` is per-tool; a tool can be exercise-confirmed LOUD at its own boundary and still be
 operationally SILENT-EMPTY because loudness needs a listener at the call site) is source-confirmed, not
 accepted on report.** REC-1 v1 CLOSED.
+
+## 10 · CVO~Z addendum (20260725T043439Z): a SECOND, UPSTREAM stitch-hook failure — surfaced, NOT yet scoped
+
+Found incidentally while CVO~Z committed its own §9 verify log (`db763ca6b`), not chased: that commit threw
+`sh: .../stitch-refresh-post-commit.sh: No such file or directory` to stderr. `.git/hooks/post-commit`
+hardcodes `sh "/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/git-hooks/stitch-refresh-post-commit.sh"`
+— an MSYS-style `/c/...` path. CVO~Z's session shell resolves `/cygdrive/c/Users/...` but NOT `/c/Users/...`
+for that exact file.
+
+**CTO~Z independently corroborates from a separate angle, same session:** identical `/c/` vs `/cygdrive/c/`
+mismatch hit earlier this session arming the inbox Monitor (first attempt at
+`bash /c/Users/.../inbox-watch.sh` failed exit-127 "No such file or directory"; `/cygdrive/c/...` succeeded).
+Re-verified directly, this turn: `test -f "/c/Users/.../stitch-refresh-post-commit.sh"` → DOES NOT
+RESOLVE; `test -f "/cygdrive/c/Users/.../stitch-refresh-post-commit.sh"` → RESOLVES, in CTO~Z's own shell.
+**And every commit CTO~Z made this session (`6f6d80688`, `9b765147b7`, `98baa746a7`, `3cc6f3244a`) threw
+the identical stderr line** — which CTO~Z's own first commit this session mis-attributed as "the pre-existing
+known-broken producer from the census itself" without verifying which failure class it actually was.
+**Correction: that attribution was an unverified inference, not a grounded one** (Rule 22 / "profile before
+reporting a mechanism") — flagged here rather than silently left standing.
+
+**This is UPSTREAM of, and distinct from, the §4b finding**: §4b's mutant is "the script launches,
+backgrounds, discards output, exits 0 regardless." This is "the script never launches at all — the shell
+that ran the post-commit hook couldn't find the file." Corroboration that these are two different failure
+populations, not the same one double-counted: **neither CTO~Z's nor CVO~Z's session-local `TMPDIR`/`/tmp`
+contains a `stitch-refresh.log` at all** — the 5964-line log with the 83-streak that §4b analyzed was written
+under a *different* mount/shell context than either of these two sessions currently running. So the log
+that proves "the script runs and fails silently" was NOT produced by a session hitting this newer,
+path-not-found failure — at least some other shell context resolves `/c/` fine and gets far enough to run
+the script.
+
+**Scope explicitly NOT established (CVO~Z's own words, held to):** whether this is specific to
+Claude-Code-Bash-tool-driven commits under this workspace's current mount config, or broader. **NOT
+claiming**: that recent commits fleet-wide skipped the stitch hook, that this explains the whole 83-day
+streak, or that other agents' shells are affected. What IS established: at least two independent sessions
+(CTO~Z, CVO~Z), both Claude-Code-Bash-tool-driven, hit the identical path-resolution failure on every
+commit made this session. **Routed to `2.0.0_SA_COO~Z` to scope breadth** (which shell contexts /
+agents hit this) as a light-touch check, not a chased investigation — this is exactly the §0.2
+inaudible-controls theme's own shape recurring one layer up, worth tracking but not worth over-claiming
+ahead of the scoping.
