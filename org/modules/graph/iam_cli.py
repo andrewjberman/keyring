@@ -222,6 +222,16 @@ def cmd_service(args):
         print(f"SERVICE: {profile.name}  [{profile.service_type}]")
         print(f"  IAM role: {profile.iam_role or '(not mapped)'}")
         print(f"  Source files: {', '.join(profile.source_files)}")
+        # NFRA_COMPIAM second insufficiency (CVO~Z cycle 12, 20260725T112339Z): the operation list
+        # caveats the unmapped-role and unparsed-deny-statement axes but was SILENT on a third --
+        # clients constructed via a helper function (e.g. `_boto(svc)`) rather than a literal
+        # boto3.client(...)/boto3.resource(...) call. Caveat-on-two-axes-silence-on-the-third trains
+        # the reader to trust the third. Unconditional (the tool cannot know when the pattern is
+        # present in THIS file -- that is the point) and printed regardless of whether any operations
+        # were found (a 0-operations result is exactly as ungrounded on this axis as a nonzero one).
+        print("  NOTE: operation list = literal boto3.client()/boto3.resource() call sites only; "
+              "clients constructed via helper functions are NOT traced -- treat as a FLOOR, not a "
+              "census.")
         print()
 
         if not profile.operations:
