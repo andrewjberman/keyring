@@ -122,6 +122,16 @@ def msys_safe_run(cmd: list, **kwargs) -> subprocess.CompletedProcess:
             "no Git Bash found (git_bash_resolver); refusing to fall back to a direct, "
             "unguarded MSYS-binary spawn"
         )
+    # shlex.quote is LOAD-BEARING, not cosmetic -- do not make it conditional (e.g. "only quote if
+    # is_msys_risky(arg)"). Measured (CVO~Z, 2026-07-25): WITHOUT it, 4 of the 5 confirmed trigger
+    # shapes reach bash -c unquoted and come back rc=0 with the backslash silently stripped -- the
+    # ORIGINAL corruption, reproduced INSIDE this fix (only the `(` shape throws a loud bash syntax
+    # error and would tip you off; the other four fail exactly as silently as the bug this guard
+    # exists to close). This quoting -- not "bash's own arg parsing" as a separate mechanism -- is
+    # what closes hazards A and B; only hazard C (System32-shadowing) is independently closed by
+    # bash's own MSYS PATH rewrite. Selective/conditional quoting would make is_msys_risky's
+    # completeness load-bearing for CORRECTNESS again, exactly the mistake this module's docstring
+    # already explains why "always route" avoids.
     shell_cmd = " ".join(shlex.quote(str(c)) for c in cmd)
     result = subprocess.run([bash, "-c", shell_cmd], **kwargs)
     # A direct subprocess.run(["missing-binary", ...]) raises FileNotFoundError -- LOUD. Routing
