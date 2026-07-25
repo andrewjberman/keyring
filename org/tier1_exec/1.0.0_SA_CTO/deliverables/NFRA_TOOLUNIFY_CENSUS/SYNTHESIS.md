@@ -26,7 +26,19 @@ All **92 register rows** dispatched and accounted across 7 passes (REC-1: 5 · R
 
 **2f · SELF-INFLICTED DEBRIS from a read-shaped command** (E's finding, CVO~Z-quantified — the worst single tool behavior of the sweep): `comp-types blast <garbage>` returns rc=0, prints `PASS: … complete`, AND persists `<garbage>.blast.yaml` into `types-index/` — which now holds **20 untracked residue files of 25 (~80%)**, sorting alphabetically among real entries so the directory can no longer distinguish type entries from typo debris. A comp-tool as the PRODUCER of the debris class comp-debris exists to find. Distinct axis from ABSENT (side-effect, not disclosure).
 
-**2g · THE POSITIVE EXEMPLAR** (E's find, CVO~Z-named as the reference implementation): `comp-cache` is rc-silent on a miss but prints its denominator AND its predicate unprompted (`captured 105 of 105 useQuery call-site(s); 0 unparseable` + an explicit not-audited scope caveat). The axis catalogue lists 8+ failures; this is the target lanes copy.
+**2g · THE ABSENT AXIS IS A 4-TIER HIERARCHY** (exemplar idea + additions: ~E; tier separation: CVO~Z; the 3-point disclosure scale under tiers 2–4: base — attributed as it lies, per-tier reference implementations all exercised this sweep):
+```
+TIER 1 — BEST:  FAIL-CLOSED on zero coverage. rc!=0; refuses to answer rather than answering emptily.
+                comp-whoread (rc=1 "CANNOT ANSWER"; never-captured vs never-read made explicit)
+TIER 2 — GOOD:  rc-silent BUT fully disclosed: denominator + scope caveat + match-miss-≠-absence.
+                comp-cache (105/105 + not-audited caveat) · comp-trigger (141+10 scanned + explicit
+                "match-miss, not proof no trigger exists" disclaimer — arguably the best of the tier)
+TIER 3 — BAD:   rc-silent AND undisclosed — a well-formed result with no signal the input was absent.
+                comp-coverage (0.0% with no cause disclosed) · comp-assets (bare JSON)
+TIER 4 — WORST: rc-silent, AFFIRMATIVELY successful, WITH a side-effect.
+                comp-types (rc=0 + "PASS complete" + persists garbage into types-index/)
+```
+The hierarchy beats a flat split because it prescribes in priority order: prefer failing closed; if returning 0, print denominator AND predicate; never affirm PASS on absence; never persist an artifact named after it. It also resolves the 2-limb framing's gap — fail-closed isn't "not applicable," it's THE RECOMMENDATION. Method note banked with it (CVO~Z): comp-trigger was verified from captured verbatim + declared write-safety, deliberately NOT invoked against live infrastructure — "the register says read-only" is not a licence to fire a tool named *trigger*.
 
 **2h · ONE-ROW-MANY-SUBCOMMANDS is a register-SHAPE finding, not a per-tool note** (2 independent instances: comp-surface-check's 7 subcommands [REC-1b], comp-pipescript's chain-LOUD/deployed-FAIL-OPEN/io-loudtext-rc0/postdeps-affirmative-negative [E]): the register's unit of description — one row per tool — cannot faithfully represent tools whose subcommands differ in failure semantics; a single failure_mode value for such a tool is unavoidably wrong for part of its surface. Register grain question, feeds L0b/WS design.
 
