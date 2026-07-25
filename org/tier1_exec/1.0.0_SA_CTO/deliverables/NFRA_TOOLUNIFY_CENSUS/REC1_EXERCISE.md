@@ -256,3 +256,17 @@ commit made this session. **Routed to `2.0.0_SA_COO~Z` to scope breadth** (which
 agents hit this) as a light-touch check, not a chased investigation — this is exactly the §0.2
 inaudible-controls theme's own shape recurring one layer up, worth tracking but not worth over-claiming
 ahead of the scoping.
+
+**SCOPING RESULT (COO~Z, 20260725T043841Z): 4/4 of every currently-live agent confirms.** `1.0.0_SA_CTO~Z`,
+`3.0.0_SA_CVO~Z`, `2.0.0_SA_COO~Z` (positive-controlled — confirmed the file exists, ruling out a
+missing-file false negative), and `0.8.0_AE_CloudComp~D` (which hit it LIVE on its own real commit
+`c3c68389b`, not a synthetic probe) — all Cygwin bash (`bash --version` → `x86_64-pc-cygwin`,
+`pwd` → `/cygdrive/c/...`). **No base `0.8.0_AE_CloudComp` or `~A` session was live to sample beyond
+this** — bound stated, not silently dropped: this is 4/4 of the population that COULD be checked right
+now, not a claim about the whole fleet or about whatever shell wrote the 5964-line 83-streak log (which
+is confirmed NOT one of these four sessions, per §10 above).
+
+**Open sub-question, explicitly not resolved (~D's own caveat, relayed not adjudicated):** which layer
+actually fails — the OUTER `.git/hooks/post-commit` wrapper (whose own `sh "/c/..."` invocation is what
+throws to the terminal), or the INNER `stitch-refresh-post-commit.sh` (which per its own source shells
+out with further `/c/`-style paths). Left open; not chased further this pass.
