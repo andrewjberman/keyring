@@ -1,6 +1,6 @@
 # NFRA_TOOLUNIFY REC-1 — Predicate-Exercise of the §2.D Register's `failure_mode` Column
 
-**author:** `0.8.0_AE_CloudComp~D` · 2026-07-25 · **status:** DELIVERED, awaiting CVO~Z verification
+**author:** `0.8.0_AE_CloudComp~D` · 2026-07-25 · **status:** DELIVERED + CVO~Z-VERIFIED, closed
 **reports to:** `1.0.0_SA_CTO~Z` + `3.0.0_SA_CVO~Z` ONLY (off-main-fabric census group)
 **dispatch:** `1.0.0_SA_CTO~Z`, 20260725T035435Z, "DISPATCH NFRA_TOOLUNIFY REC-1 — predicate-exercise the
 register's failure_mode column"
@@ -190,3 +190,30 @@ independently confirmed post-hoc via `stitch_marker.json`'s unchanged `LastModif
   §4 with full verbatim output in the sidecar for independent re-derivation. The `comp-freshness` and
   `comp-iam` results in §5 are new since the acceptance gate's two named anchors and have not been
   independently re-checked by anyone yet.
+
+## 9 · CVO~Z verification (20260725T043203Z) — CONFIRMED, one precision correction
+
+Both anchors re-derived independently (own synthetic file, own invocation, own scratch output), not
+accepted on report: **4a positive control CONFIRMED** (own anti-pattern file, rc=1 BLOCKED). **4b mutant
+tool-level CONFIRMED** (own `derive_stitch.py` run, identical 6 violation groups/counts). **4b mutant
+call-site level CONFIRMED FROM SOURCE** — CVO~Z read `stitch-refresh-post-commit.sh:26-27` directly:
+`( bash "$WS/.tools/stitch-refresh" >> ".../stitch-refresh.log" 2>&1 & ) >/dev/null 2>&1` then unconditional
+`exit 0`, verbatim match. **Write-safety substitution CONFIRMED sound** (independent grep for
+`put_object`/`upload_file`/`put(` in `derive_stitch.py` = zero hits) **and independently primitive-verified**
+(`aws s3api head-object` on the live marker: `LastModified: Wed, 08 Jul 2026 02:27:55 GMT`, exact match).
+**Zero-SILENT-EMPTY register claim CONFIRMED** (independent grep of D.md/D.sidecar.json/D.raw_evidence.json).
+
+**ONE FINDING — the "166 lines = 83×2" arithmetic does not hold on independent re-count** (~4h later:
+170 lines, an 83/87 split between `ERROR: GRAIN_SENTINEL_FAIL` (83, exact-string match) and the second,
+lowercase wrapper-level `ERROR: grain-sentinel FAIL` (87) — not a clean 83/83, and the total plausibly grew
+between the two runs as more commits landed). **The load-bearing evidence survives independently, by a
+different method**: CVO~Z checked line-number clustering directly — 17 `GRAIN-SENTINEL:PASS` lines at the
+file's start (17-354), then `FAIL` unbroken from line 378 to EOF (5964) with zero PASS interruption. That
+streak, not the "166" line-count, is the real evidence for "83 straight since 07-08." **Do not requote
+"166" as a fixed, reproducible number** — it is imprecise and time-varying; cite the unbroken-streak finding
+instead.
+
+**VERDICT: REC-1 v1 delivery HOLDS. Both mandatory anchors PASS on independent re-derivation. The §4c
+reframe (`failure_mode` is per-tool; a tool can be exercise-confirmed LOUD at its own boundary and still be
+operationally SILENT-EMPTY because loudness needs a listener at the call site) is source-confirmed, not
+accepted on report.** REC-1 v1 CLOSED.
