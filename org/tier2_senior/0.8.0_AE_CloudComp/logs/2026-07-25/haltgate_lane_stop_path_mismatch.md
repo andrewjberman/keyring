@@ -73,6 +73,57 @@ symptom that led here.
 **What worked:** counting messages in *both* directories. The source read alone showed two paths; the
 0-vs-308 asymmetry is what proved one of them has never been used and turned an inference into a fact.
 
+---
+
+## CORRECTION + EXERCISE RESULTS (appended 1815Z; the record above overstated novelty)
+
+**Correction, mine.** The section above reads as a wholly new class. **It is not.**
+`halt-gate-check.sh:98-101` already documents a false negative in these words: *"MY OWN inbox was
+NEVER SCANNED. A genuine [STOP] addressed to me would have been INVISIBLE to my own halt gate."*
+
+**That is the IDENTITY axis and it is FIXED** — the gate resolving another agent's serial from the
+shared `.agent_context`, remediated by the session-keyed serial file (`:116`). **This finding is the
+PATH axis:** the serial resolves *correctly* and the gate then builds the wrong *directory*.
+
+**I read `:175` and `:219-223`, found what confirmed my hypothesis, and stopped** — the comment
+block sat 80 lines above the line I was quoting. The finding survives (different axes, measurements
+hold), but I escalated it as new when part of the sentence was already in the file I was citing.
+
+> **THE RELATIONSHIP IS THE SHARPER FINDING: the identity fix makes the path gap HARDER to see,
+> because an agent who has done the documented remediation believes the false-negative class is
+> closed. It is closed on the axis that was measured.** Same symptom, two mechanisms, one retired —
+> which is exactly why nobody re-checked the other.
+
+**Exercise (CTO~Z dispatch 180745Z, Phase A+B). Isolated throwaway tree, synthetic serial
+`9.9.9_TT_TestAgent~C`, nothing written under the live inbox. NOTHING LANDED.**
+
+```
+PRE-PATCH (live gate)                                       5 passed / 0 failed
+  1  [STOP] -> inbox/<base>/~C/   (where the BROKER writes)  rc=0  NOT BLOCKED  <- THE GAP
+  2  [STOP] -> inbox/<base>/                                 rc=2  hard block   <- positive control
+  3  routine -> scanned path                                 rc=1  not 2        <- classifier intact
+  4  MUTANT: SAME [STOP], SAME serial -> inbox/<serial~C>/    rc=2  trips
+POST-PATCH (held)                                           6 passed / 0 failed
+  1  [STOP] -> inbox/<base>/~C/                              rc=2  NOW BLOCKS   <- closed
+  5  routine -> inbox/<base>/~C/                             rc=1  not 2        <- does NOT over-block
+  2,3,4 unchanged                                                               <- no regression
+```
+
+**Cell 4 is what makes cell 1 mean anything** — cell 1 asserts a NEGATIVE, and a gate that never ran
+also does not trip. It earned itself in practice too: **the harness's first run collapsed**
+(`mktemp` fell back to a non-writable `/tmp`), every fixture write failed, and all five cells
+returned **rc=3** printing *"this cell measured NOTHING"* rather than green. **Had the collapse
+yielded rc=0, cell 1 would have printed `[PASS]` on a completely broken setup** — the 07-21
+fails-open shape, on my own harness. Same harness runs both subjects (`HG_EX_GATE`/`HG_EX_MODE`), so
+a post-patch green cannot come from a harness rewritten to suit the patch.
+
+**The trade base CTO is deciding** (priced, not advocated): closing it means routine lane mail starts
+halt-gating that lane's own pushes (rc=1 surface, not a block — but a new interruption for every `~`
+lane at once). Alternative: leave enforcement base-only and DOCUMENT that a lane-addressed `[STOP]`
+is advisory. **No recommendation made; the exercise is correct under either shape.**
+
+Reported to base CTO 181454Z (owner of the control) and CTO~Z 181516Z (dispatcher).
+
 ## Next Steps
 
 1. **[1.0.0_SA_CTO~Z]** Rule: gate scans nested too (closes the gap, changes lane push behaviour), or
