@@ -36,8 +36,24 @@ import pii_cli as pii  # noqa: E402
 def test_pii_derives_hashed_set_from_live_pseudonymizer():
     """DRIFT fix: the hashed-field set is parsed from the LIVE pseudonymizer.py at
     runtime (it only CLAIMED to before)."""
-    derived, src = pii._derive_pseudonymized_fields(pii._WORKSPACE)
+    derived, src, masking_live = pii._derive_pseudonymized_fields(pii._WORKSPACE)
     assert src is not None, "pseudonymizer.py must be locatable for runtime derivation"
+    # ARITY FIX 2026-07-25: this unpacked 2 while the function has returned 3 since @2094d30c9b
+    # (2026-07-11) -- 14 days stale. Asserting on the third value rather than discarding it,
+    # because it is the one that carries whether the hashing GATE can fire at all.
+    #
+    # The assertion is `is not None`, NOT `is False`. The tri-state is deliberate:
+    #   True  = masking can fire        False = gate unconditionally retired (today's value,
+    #   retired 2026-04-15 Andrew)      None  = the gate could not be PARSED (fail-safe)
+    # Pinning False would break the day masking is restored -- a correct change failing a test.
+    # But None is the dangerous state: if _serve_time_masking_reachable's AST parse ever breaks,
+    # masking_live silently becomes None, the caller fails safe, and NOBODY LEARNS THE PARSER
+    # DIED -- it looks identical to a legitimately-retired gate. This asserts reachability was
+    # DETERMINED, not merely defaulted. Same shape as "0 drifted" vs "scanned nothing".
+    assert masking_live is not None, (
+        "serve-time masking reachability must be DETERMINED (True/False), not None -- "
+        "None means _serve_time_masking_reachable could not parse the gate, which is "
+        "indistinguishable from a genuinely retired gate at every call site")
     # The pseudonymizer's _transform_field hashes these (prefix-mapped):
     assert derived.get("relationship_name") == "Client"
     assert derived.get("account_id") == "Acct"
@@ -49,7 +65,10 @@ def test_pii_account_number_clientkey_not_in_runtime_hashed_set():
     """The static list FALSELY claimed account_number + clientKey are hashed; the
     live pseudonymizer hashes NEITHER. The runtime derivation must not include them
     (they were demoted to cleartext-potential)."""
-    derived, _ = pii._derive_pseudonymized_fields(pii._WORKSPACE)
+    # ARITY FIX 2026-07-25 (see the sibling test): 2 -> 3. Discarding both trailing values is
+    # correct HERE -- this test is about set membership only, and the reachability assertion
+    # lives once, in the test whose subject it actually is.
+    derived, _, _ = pii._derive_pseudonymized_fields(pii._WORKSPACE)
     assert "account_number" not in derived
     assert "clientKey" not in derived
 

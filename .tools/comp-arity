@@ -1,0 +1,439 @@
+#!/usr/bin/env python3
+"""comp-arity -- find UNPACK-ARITY MISMATCHES between a tuple-unpacking call site and the
+actual return arity of the repo-defined function it calls.
+
+WHY THIS EXISTS (CTO~Z dispatch 2026-07-25 182805Z). Two instances of this class landed in
+org/modules/graph/ within two weeks, both with the same signature: a function's return arity
+changed, the production call sites were updated, and the TEST call sites were not.
+
+  instance 1  comp_system.refresh_managed_regions   2->3 tuple (2026-07-25, @4d2588f35e)
+              8 production sites updated, 5 test sites stale. Fixed @0e8ea80.
+  instance 2  pii_cli._derive_pseudonymized_fields  ->3 tuple (2026-07-11, @2094d30c9b)
+              production site :205 unpacks 3, tests unpack 2. Stale for 14 days.
+
+Both were INVISIBLE for most of their life because the stale unpack sat at MODULE level in a
+test file, so it raised during pytest COLLECTION -- which aborts the whole directory and renders
+as an infra-looking ERROR rather than a red test.
+
+WHY AST AND NOT GREP -- the same reason the module-level-assert sweep needed one:
+**a grep for `a, b = f(...)` cannot tell you what `f` returns.** The defect is a RELATION between
+two places in the tree, and text matching sees neither end of it.
+
+>> THE PRECISION PROBLEM, AND WHY THE VERDICT SPACE IS FOUR AND NOT TWO. Static arity is only
+sound when a function's returns are TUPLE LITERALS. `return result` where result is a tuple built
+earlier is arity-1 to the AST and arity-N at runtime. A tool that calls those MISMATCH emits a
+long, confident list of non-defects -- a scary number with no signal in it, which is the exact
+failure this sweep is supposed to be the remedy for. So a call site is only MISMATCH when EVERY
+return in the callee is a tuple literal and none matches; anything softer is AMBIGUOUS, and
+AMBIGUOUS and UNRESOLVABLE are printed as first-class counts, never folded into "clean." <<
+
+VERDICTS
+  MISMATCH      every return in f is a tuple LITERAL and none has the unpacked arity. Actionable.
+  MULTI-ARITY   f returns tuple literals of DIFFERING arity. A finding in its own right.
+  AMBIGUOUS     f has >=1 non-literal return; static arity cannot decide. NOT a defect claim.
+  UNRESOLVABLE  callee not resolvable to a repo-defined function (external, method on a
+                non-module object, dynamic dispatch, rebinding).
+  OK            resolved, all returns literal, arity agrees.
+
+USAGE
+  comp-arity [PATH ...]            default: org/modules/graph
+  comp-arity --self-test           run the built-in positive control
+"""
+from __future__ import annotations
+
+import ast
+import os
+import sys
+from collections import defaultdict
+
+WS = os.environ.get("OPAL_WS") or os.getcwd()
+
+# Module-level binding is REQUIRED, not stylistic: report() reads this, and without a definition
+# here it exists only as a side effect of build_index() having already run. It happened to work
+# because of call order, which is not a guarantee -- it is a latent NameError waiting on a
+# refactor. commit-gate's undefined-name check caught it; recorded because a gate finding that
+# gets silently fixed teaches nobody.
+VENDORED_SKIPPED = 0
+
+
+# --------------------------------------------------------------------------------------
+# return-arity model
+# --------------------------------------------------------------------------------------
+def _return_arities(fn: ast.AST):
+    """(literal_arities, has_nonliteral_return) for a function, ignoring nested defs.
+
+    A bare `return` / falling off the end yields None -- unpacking that ALWAYS fails, so it is
+    reported as arity 0 (a real signal), never silently skipped.
+    """
+    lits, nonlit = set(), False
+    for node in ast.walk(fn):
+        # do not attribute a nested function's returns to its parent
+        if node is not fn and isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            continue
+        if not isinstance(node, ast.Return):
+            continue
+        v = node.value
+        if v is None:
+            lits.add(0)
+        elif isinstance(v, ast.Tuple):
+            if any(isinstance(e, ast.Starred) for e in v.elts):
+                nonlit = True          # *rest in a return -> runtime-variable width
+            else:
+                lits.add(len(v.elts))
+        else:
+            nonlit = True
+    return lits, nonlit
+
+
+def _walk_own_returns(fn):
+    """ast.walk descends into nested defs; filter them out properly."""
+    lits, nonlit = set(), False
+    stack = list(fn.body)
+    while stack:
+        n = stack.pop()
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda, ast.ClassDef)):
+            continue                    # a nested def's returns are not ours
+        if isinstance(n, ast.Return):
+            v = n.value
+            if v is None:
+                lits.add(0)
+            elif isinstance(v, ast.Tuple):
+                if any(isinstance(e, ast.Starred) for e in v.elts):
+                    nonlit = True
+                else:
+                    lits.add(len(v.elts))
+            else:
+                nonlit = True
+        for f in ast.iter_child_nodes(n):
+            stack.append(f)
+    return lits, nonlit
+
+
+# --------------------------------------------------------------------------------------
+# index every repo-defined function
+# --------------------------------------------------------------------------------------
+# Vendored/bundled third-party trees. EXCLUDED BY DEFAULT and the count is REPORTED, never
+# silently dropped -- these are not our code, we cannot fix them, and many are bundled MULTIPLE
+# TIMES (several Lambda layers each ship their own scipy/pydantic), so same-named functions from
+# different COPIES of one library cross-resolve and manufacture findings. Measured 2026-07-25:
+# including them turned 0 real first-party findings into ~200 reported ones.
+# --include-vendored restores them.
+_VENDOR_MARKERS = ("/site-packages/", "/dist-info/", "/layers/", "/_build_tmp/", "/node_modules/",
+                   "/.venv/", "/vendor/", "/_vendor/", "/dist-packages/")
+
+
+def _is_vendored(rel):
+    r = "/" + rel.replace("\\", "/").strip("/") + "/"
+    return any(m in r for m in _VENDOR_MARKERS)
+
+
+def build_index(roots, include_vendored=False):
+    """modname -> {funcname: (literal_arities, has_nonliteral)}; plus a global name index."""
+    by_mod, by_name, files = {}, defaultdict(list), []
+    global VENDORED_SKIPPED
+    VENDORED_SKIPPED = 0
+    _v = [0]
+    for root in roots:
+        if os.path.isfile(root) and root.endswith(".py"):
+            files.append(root)
+            continue
+        for dirpath, dirnames, filenames in os.walk(root):
+            dirnames[:] = [d for d in dirnames if d not in
+                           (".git", "__pycache__", "node_modules", ".venv")]
+            for fn in filenames:
+                if not fn.endswith(".py"):
+                    continue
+                full = os.path.join(dirpath, fn)
+                if not include_vendored and _is_vendored(os.path.relpath(full, WS)):
+                    _v[0] += 1
+                    continue
+                files.append(full)
+
+    unreadable = []
+    for path in files:
+        # UNREADABLE IS FIRST-CLASS, NOT A `continue`. Found 2026-07-25 running this over org/:
+        # os.walk ENUMERATES a path that open() then cannot read (Windows MAX_PATH -- a
+        # ~150-char filename under org/threads/). The tool died with FileNotFoundError and
+        # printed NOTHING for that scope, which in a summary table is indistinguishable from
+        # "0 findings". A sweep that dies mid-scope must say so, loudly, with a count -- the
+        # same reason UNRESOLVABLE is not folded into OK.
+        try:
+            text = open(path, encoding="utf-8", errors="replace").read()
+        except (OSError, ValueError) as e:
+            unreadable.append((path, type(e).__name__))
+            continue
+        try:
+            tree = ast.parse(text, filename=path)
+        except SyntaxError:
+            continue
+        # KEY BY FULL PATH, NEVER BASENAME.
+        # >> This was a real false positive, caught 2026-07-25 by grounding a single finding
+        # instead of trusting the count. Keying by basename collided
+        #   data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py  (returns 8)
+        #   data/cot/scripts/gold/C_06.client_mix_timeseries.py            (returns 4)
+        # -- cot's def overwrote bd's, and the tool reported bd's CORRECT 8-unpack call site as
+        # a MISMATCH against cot's arity. So the instrument committed a bd<->cot CROSS-FIRM
+        # CONFLATION, which is precisely what firm separation exists to prevent, and emitted it
+        # as a confident finding against a gold script.
+        # The estate is FULL of same-basename modules (every Lambda has lambda_function.py), so
+        # this did not misfire once -- it scaled with the size of the scanned tree, which is the
+        # opposite of how a trustworthy instrument should behave. <<
+        mod = os.path.relpath(path, WS).replace("\\", "/")
+        fns = {}
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                fns[node.name] = _walk_own_returns(node)
+        by_mod[mod] = fns
+        for name, ar in fns.items():
+            by_name[name].append((mod, ar))
+    VENDORED_SKIPPED = _v[0]
+    return by_mod, by_name, files, unreadable
+
+
+# --------------------------------------------------------------------------------------
+# resolve a call site's callee to an indexed function
+# --------------------------------------------------------------------------------------
+def resolve(call, cur_mod, aliases, by_mod, by_name):
+    """-> (arities_tuple, label) or (None, why_unresolvable)"""
+    def _cross_module(name, why):
+        """Resolve a name NOT defined locally. Never guesses across same-named modules:
+        if candidates disagree on arity the answer is UNRESOLVABLE, not a coin flip.
+        Prefers a candidate in the SAME DIRECTORY -- sibling scripts are the realistic
+        import, and it keeps firm-separated trees (bd vs cot) from resolving into each other."""
+        cands = by_name.get(name, [])
+        if not cands:
+            return None, why
+        here = os.path.dirname(cur_mod)
+        local = [c for c in cands if os.path.dirname(c[0]) == here]
+        pool = local or cands
+        if len(pool) == 1:
+            return pool[0][1], f"{pool[0][0]}::{name}"
+        arities = {(frozenset(a[0]), a[1]) for _, a in pool}
+        if len(arities) == 1:
+            return pool[0][1], f"{name} ({len(pool)} defs, all same arity)"
+        return None, (f"AMBIGUOUS-NAME: {len(pool)} defs of '{name}' with DIFFERING arity "
+                      f"-- refusing to guess")
+
+    fnode = call.func
+    if isinstance(fnode, ast.Name):
+        name = fnode.id
+        if cur_mod in by_mod and name in by_mod[cur_mod]:
+            return by_mod[cur_mod][name], f"{cur_mod}::{name}"
+        if name in aliases:                       # from X import name
+            for m in by_mod:
+                if os.path.splitext(os.path.basename(m))[0] == aliases[name] and name in by_mod[m]:
+                    return by_mod[m][name], f"{m}::{name}"
+        return _cross_module(name, f"not a repo-defined function ('{name}')")
+
+    if isinstance(fnode, ast.Attribute) and isinstance(fnode.value, ast.Name):
+        obj, name = fnode.value.id, fnode.attr
+        want = aliases.get(obj, obj)              # import mod as obj
+        hits = [m for m in by_mod
+                if os.path.splitext(os.path.basename(m))[0] == want and name in by_mod[m]]
+        if len(hits) == 1:
+            return by_mod[hits[0]][name], f"{hits[0]}::{name}"
+        if len(hits) > 1:
+            ar = {(frozenset(by_mod[m][name][0]), by_mod[m][name][1]) for m in hits}
+            if len(ar) == 1:
+                return by_mod[hits[0]][name], f"{want}::{name} ({len(hits)} modules, same arity)"
+            return None, (f"AMBIGUOUS-MODULE: {len(hits)} modules named '{want}' define "
+                          f"'{name}' with DIFFERING arity -- refusing to guess")
+        # DO NOT fall back to global name matching here. `obj` did not resolve to a known
+        # module, so `obj.name()` is a METHOD CALL ON A VALUE whose type we do not know --
+        # and matching `name` against same-named repo functions is a guess, not a resolution.
+        #
+        # >> This produced ~200 false positives, measured 2026-07-25. `year, month, day =
+        # match.groups()` is re.Match.groups() from the stdlib; the old fallback matched it to
+        # some repo function named `groups` and reported a MISMATCH against ITS arity. Every
+        # first-party "finding" in infra/aws/lambda was this. The tool was one report away from
+        # handing the gate ~200 defects in Lambda code, none of them real. <<
+        #
+        # UNRESOLVABLE is the correct, honest answer for a method call on an unknown type.
+        return None, (f"method call '{obj}.{name}()' -- '{obj}' is not a resolvable module, "
+                      f"so the receiver's type is unknown (NOT guessed by name)")
+
+    return None, "dynamic or chained call expression"
+
+
+def module_aliases(tree):
+    al = {}
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for a in node.names:
+                al[a.asname or a.name.split(".")[0]] = a.name.split(".")[-1]
+        elif isinstance(node, ast.ImportFrom) and node.module:
+            for a in node.names:
+                al[a.asname or a.name] = node.module.split(".")[-1]
+    return al
+
+
+# --------------------------------------------------------------------------------------
+# the sweep
+# --------------------------------------------------------------------------------------
+def sweep(roots, include_vendored=False):
+    by_mod, by_name, files, unreadable = build_index(roots, include_vendored)
+    rows, n_sites = [], 0
+
+    for path in files:
+        # Second of TWO identical read sites (the other is in build_index). I guarded that one
+        # first and this one still crashed the whole run -- i.e. I fixed SOME call sites of a
+        # changed contract and not ALL of them, which is the exact class this tool sweeps for,
+        # committed inside the tool while writing it. Left recorded rather than quietly fixed.
+        try:
+            src = open(path, encoding="utf-8", errors="replace").read()
+        except (OSError, ValueError):
+            continue          # already counted in build_index's unreadable list
+        try:
+            tree = ast.parse(src, filename=path)
+        except SyntaxError:
+            continue
+        cur_mod = os.path.splitext(os.path.basename(path))[0]
+        aliases = module_aliases(tree)
+
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Assign) or not isinstance(node.value, ast.Call):
+                continue
+            tgt = node.targets[0]
+            if not isinstance(tgt, (ast.Tuple, ast.List)):
+                continue
+            n_sites += 1
+            starred = any(isinstance(e, ast.Starred) for e in tgt.elts)
+            want = len(tgt.elts)
+            ar, label = resolve(node.value, cur_mod, aliases, by_mod, by_name)
+            rel = os.path.relpath(path, WS).replace("\\", "/")
+
+            if ar is None:
+                rows.append(("UNRESOLVABLE", rel, node.lineno, want, "-", label))
+                continue
+            lits, nonlit = ar
+            got = ",".join(str(x) for x in sorted(lits)) or "-"
+            if starred:
+                rows.append(("OK", rel, node.lineno, want, got, label + " [starred/flexible]"))
+            elif nonlit:
+                rows.append(("AMBIGUOUS", rel, node.lineno, want, got + ",?", label))
+            elif len(lits) > 1:
+                v = "MULTI-ARITY" if want in lits else "MISMATCH"
+                rows.append((v, rel, node.lineno, want, got, label))
+            elif lits and want not in lits:
+                rows.append(("MISMATCH", rel, node.lineno, want, got, label))
+            else:
+                rows.append(("OK", rel, node.lineno, want, got, label))
+
+    return rows, by_mod, n_sites, files, unreadable
+
+
+ORDER = ["MISMATCH", "MULTI-ARITY", "AMBIGUOUS", "UNRESOLVABLE", "OK"]
+
+
+def report(rows, by_mod, n_sites, files, roots, unreadable):
+    counts = defaultdict(int)
+    for r in rows:
+        counts[r[0]] += 1
+    n_fns = sum(len(v) for v in by_mod.values())
+
+    for verdict in ("MISMATCH", "MULTI-ARITY"):
+        hits = [r for r in rows if r[0] == verdict]
+        if not hits:
+            continue
+        print(f"\n=== {verdict} ({len(hits)}) ===")
+        for _, f, ln, want, got, label in sorted(hits):
+            print(f"  {f}:{ln}")
+            print(f"      unpacks {want}, {label} returns {got}")
+
+    print("\n" + "-" * 78)
+    print(f"DENOMINATOR  scanned {len(files)} file(s) under {', '.join(roots)}")
+    print(f"             {n_fns} repo-defined function(s) indexed")
+    print(f"             {n_sites} tuple-unpacking call site(s) examined")
+    if VENDORED_SKIPPED:
+        print(f"             {VENDORED_SKIPPED} vendored/bundled file(s) EXCLUDED (third-party, "
+              f"not ours to fix; --include-vendored to scan)")
+    if unreadable:
+        print(f"             {len(unreadable)} file(s) UNREADABLE (enumerated but could not be "
+              f"opened -- NOT scanned, NOT clean):")
+        for pth, why in unreadable[:5]:
+            print(f"               {why}: ...{pth[-70:]}")
+        if len(unreadable) > 5:
+            print(f"               (+{len(unreadable) - 5} more)")
+    print("-" * 78)
+    for v in ORDER:
+        note = ""
+        if v == "UNRESOLVABLE":
+            note = "  <- NOT clean: callee not statically resolvable"
+        elif v == "AMBIGUOUS":
+            note = "  <- NOT clean: callee has a non-literal return"
+        print(f"  {v:<13} {counts[v]:>5}{note}")
+    print("-" * 78)
+    if counts["MISMATCH"] or counts["MULTI-ARITY"]:
+        print("VERDICT: FINDINGS PRESENT")
+    else:
+        print("VERDICT: no MISMATCH/MULTI-ARITY in the RESOLVED subset "
+              f"({counts['OK']} of {n_sites} sites decided; "
+              f"{counts['AMBIGUOUS'] + counts['UNRESOLVABLE']} undecidable).")
+    return 1 if counts["MISMATCH"] else 0
+
+
+def self_test():
+    """POSITIVE CONTROL (CTO~Z acceptance): the sweep MUST rediscover the instance that
+    motivated it. Reconstructs the pre-0e8ea80 pair in a temp dir and asserts the 5 stale
+    refresh_managed_regions sites are FOUND -- then asserts HEAD is clean, so the control
+    DISCRIMINATES rather than merely fires."""
+    import subprocess
+    import tempfile
+    ok = True
+    tmp = tempfile.mkdtemp(prefix="comp_arity_selftest_")
+    pair = [("org/modules/graph/comp_system.py", "comp_system.py"),
+            ("org/modules/graph/tests/test_comp_system_metrics.py", "test_comp_system_metrics.py")]
+
+    for ref, want_hits, tag in (("0e8ea80~1", 5, "PRE-FIX (must FIND 5)"),
+                                ("HEAD", 0, "HEAD (must find 0)")):
+        d = os.path.join(tmp, ref.replace("~", "_"))
+        os.makedirs(d, exist_ok=True)
+        for src, dst in pair:
+            out = subprocess.run(["git", "show", f"{ref}:{src}"], cwd=WS,
+                                 capture_output=True, text=True)
+            if out.returncode != 0:
+                print(f"  FAIL  could not retrieve {ref}:{src} -- {out.stderr.strip()[:80]}")
+                ok = False
+                continue
+            open(os.path.join(d, dst), "w", encoding="utf-8").write(out.stdout)
+        rows, _, _, _, _ = sweep([d])
+        hits = [r for r in rows if r[0] == "MISMATCH"
+                and "refresh_managed_regions" in r[5]]
+        good = len(hits) == want_hits
+        ok = ok and good
+        print(f"  {'PASS' if good else 'FAIL'}  {tag}: found {len(hits)}, want {want_hits}")
+        for _, f, ln, want, got, label in hits:
+            print(f"          {os.path.basename(f)}:{ln} unpacks {want}, returns {got}")
+
+    # ---------------------------------------------------------------------------------
+    # NEGATIVE CONTROL, made permanent: the bd<->cot basename collision.
+    # An earlier build keyed the index by BASENAME, so these two firm-separated files
+    # collided and the tool reported bd's CORRECT 8-unpack as a MISMATCH against cot's
+    # arity-4 def. A positive control alone would never have caught it -- it fires on
+    # finding things, and this was the tool finding something that was not there.
+    # ---------------------------------------------------------------------------------
+    bd = "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py"
+    cot = "data/cot/scripts/gold/C_06.client_mix_timeseries.py"
+    if os.path.isfile(os.path.join(WS, bd)) and os.path.isfile(os.path.join(WS, cot)):
+        rows, _, _, _, _ = sweep([os.path.join(WS, bd), os.path.join(WS, cot)])
+        bogus = [r for r in rows if r[0] == "MISMATCH" and "load_static_tables" in r[5]]
+        good = not bogus
+        ok = ok and good
+        print(f"  {'PASS' if good else 'FAIL'}  NEGATIVE CONTROL bd/cot same-basename "
+              f"collision: {len(bogus)} false MISMATCH, want 0")
+        for _, f, ln, want, got, label in bogus:
+            print(f"          FALSE POSITIVE {f}:{ln} unpacks {want}, resolved to {label} ({got})")
+    else:
+        print("  SKIP  bd/cot negative control -- fixture files not present")
+
+    print(f"\nself-test: {'PASS' if ok else 'FAIL'}")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    args = [a for a in sys.argv[1:] if not a.startswith("-")]
+    if "--self-test" in sys.argv:
+        sys.exit(self_test())
+    roots = args or ["org/modules/graph"]
+    rows, by_mod, n_sites, files, unreadable = sweep(roots, "--include-vendored" in sys.argv)
+    sys.exit(report(rows, by_mod, n_sites, files, roots, unreadable))
