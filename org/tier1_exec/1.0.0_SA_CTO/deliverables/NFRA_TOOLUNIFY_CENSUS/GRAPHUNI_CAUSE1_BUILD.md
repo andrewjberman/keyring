@@ -62,8 +62,24 @@ Does not build the ingestion join that would actually fold this slice into the l
 that remains the separately-gated integration step named in `GRAPHUNI_OPT12_DISCRIMINATOR.md`. Does not
 touch cause 2 (reachability) at all — fully independent, as CVO~Z's framing established.
 
+## PARKED (CTO~Z ruling, 20260725T075018Z, adopting CVO~Z's recommendation)
+
+**PARKED: built for GRAPHUNI cause-1 (2026-07-25). The gold-compute producer was ruled NON-VIABLE as a
+fixture-equivalent source the same day (CVO~Z ruling `@c5bf5cfbe`), so this bridge has NO CURRENT
+CONSUMER. Correct, self-testing, additive — activate only if a consumer for the producer's lambda-adjacent
+slice is NAMED. Do not wire speculatively; that is how orphans are made (see NFRA_TOOLUNIFY census
+§0.2).**
+
+This is a deliberate PARK, not a revert — CVO~Z flagged that the build landed with zero consumers only
+because the non-viability ruling fired after cause-1 was already scoped (CVO~Z's own sequencing, not a
+flaw in this build), and named it as the pattern this exact census keeps finding elsewhere
+(`comp_marker_read.py`, the 192-edge producer JSON, the 9 undeployed guard dirs) — landing a matching
+annotation here, rather than letting a fourth instance sit undocumented, closes that loop instead of
+repeating it. The same annotation is landed verbatim in `build_lambda_bridge()`'s own docstring
+(`infra/aws/globgrph/extract_gold_compute.py`).
+
 ## Files
 
 | File | Change |
 |---|---|
-| `infra/aws/globgrph/extract_gold_compute.py` | Additive: `build_lambda_bridge()`, `_lambda_bridge_self_test()`, 3 new CLI flags. Zero changes to existing `build()`/`main()` default path logic. |
+| `infra/aws/globgrph/extract_gold_compute.py` | Additive: `build_lambda_bridge()`, `_lambda_bridge_self_test()`, 3 new CLI flags. Zero changes to existing `build()`/`main()` default path logic. Now carries the PARKED annotation above, verbatim, in its own docstring. |
