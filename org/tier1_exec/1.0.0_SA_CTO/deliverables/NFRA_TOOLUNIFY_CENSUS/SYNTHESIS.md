@@ -130,3 +130,16 @@ Adopted bar (map §10): WS-4 crosswalk conformance passes + WS-7 register-as-con
 This synthesis closes the EXERCISE program (the register's failure_mode column is now evidence-based per
 §0-§2). The sweep's L0b seed data (§4) is the designed handoff into COMPLEARNS L0b→L1b per
 `IMPLEMENTATION_LEVELS_AND_SEQUENCING.md` — deliberately recorded as candidates, not settled vocabulary.
+
+**COMPLEARNS opening state (as-of ~0931Z):** L1a's mixed-shapes item DONE + VERIFIED — sensor-2 (comp-cache,
+code-text; traversal-literal, the self-expiring-exclusion pattern; the useAutoSaveQuery blind spot at 3
+call sites + 1 labeled definition) and sensor-3 (comp-blast, DAG type-plane, doc_only honestly N/A;
+verified by CVO~Z WITHOUT executing the sensor — independent 6-line derivation reproduced 10=3+7 exactly).
+Sensor-3's headline is the archetype of the L2 argument: `cli.py:320`'s filter admits 3 of 10 live node
+types AND names 2 dead ones — reads-broader-than-it-is — and only a comparison against the LIVE population
+reveals either direction; a schema-level check would pass it as internally consistent. **CVO~Z's
+verification queue is EMPTY: every deliverable of this session is dispositioned.** GATEBOUND closed (both
+stages). Gating item for the next build step (L1b): **L0b ratification — Andrew's word**, on the
+review-corrected draft. Banked follow-ons with owners: comp-cache walk-extension · the cli.py:320 filter
++ EDGE_TYPES vocabulary drift (intent question first) · comp-types debris fix (§2f) · the DEBRIS-CANDIDATE
+guard refinement · address-space promotions at second consumers · the RESEMANT provenance-pin design.
