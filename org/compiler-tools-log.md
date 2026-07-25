@@ -26730,3 +26730,20 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | (log-window summary) | Respawn + self-initiated subdir frozen-numeric sub-scan (the denominator NEITHER my census NOR CVO~Z sweep covered; ~D had covered subdir markers only). comp-which honest-declined; comp-glob correctly self-flagged its 0-hits as non-absence; comp-kuzu PASSED on the WRONG POPULATION (20419 nodes vs the DAG graph.json 2255 the doc actually names) | 0 defects / 1 borderline / 1 named un-measured residual; v1 predicate reproduced CVO~Z predicate-too-loose class at 15x (213 lines) before noun-adjacency fix; 2 startup-infra gaps routed (XXX.md A.3 clears 91-member class off 1-member probe; /watcher /c/ literal fails on Cygwin) |
 | 2026-07-25Z | 0.8.0_AE_CloudComp | safe-commit-F-read-override-fix | comp-system | comp-system --gate --changed org/modules/graph/boundary_report.py | rc=0 -- no _SOURCE in changeset, gate n/a/open (establishes the override branch is not naturally reachable) |
 | 2026-07-25Z | 0.8.0_AE_CloudComp | safe-commit-F-read-override-fix | fread_selftest.sh (built this session) | bash deliverables/safe_commit_f_read/fread_selftest.sh | PASS 13/13 incl. mutant control M1 + injection control T11 |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/tests/test_boundary_report_conformance.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_antipattern.py | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file org/modules/graph/tests/_p4_probe_exem... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean2.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_control.py | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/tests/test_comp_system_metrics.py | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-manifest-check | comp-manifest-check routable | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates-self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam --help | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | commit-gate | .tools/commit-gate.sh org/modules/graph/tests/test_boundary_report_conformance.py | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | owned-paths-validate | --check-agent 0.8.0_AE_CloudComp~E (target: org/modules/graph/tests/**) | PASS (permitted) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | owned-paths-validate | --check-agent 0.8.0_AE_CloudComp~E (CONTROL, separate invocation: boundary_report.py) | VIOLATION (expected -- instrument shown to fire) |
