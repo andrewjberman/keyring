@@ -172,7 +172,10 @@ a **documented, deliberate Phase-A deferral** (`:189-190`, keys with no `writer_
 and **a `--full` flag already exists to disable it** (`:230`, `build(phase_a=not a.full)`). Option 2 is VOID
 as a distinct choice — the producer already calls `build_graph` internally. Options 3/4 stay rejected.
 
-**RULING: OPTION 1 — re-populate at build_graph fidelity.** Concrete path: (1) flip `--full`, fresh re-run
+**RULING: OPTION 1 — re-populate at build_graph fidelity.** *(Label conceded by CVO~Z 064256Z: "Option 1"
+implies changing the marker-head compute to REACH build_graph fidelity; what's actually needed is to
+CONNECT a producer that already HAS it — "neither original option; the fix is a wire-in" is the precise
+framing, and the record carries it. Substance unchanged.)* Concrete path: (1) flip `--full`, fresh re-run
 (the month-old null-vintage artifact is NOT ready-to-ingest — superseded by the re-run); (2) resolve the 2
 `S3KEY_FIRM_UNRESOLVED` keys (both `gold/timeseries/client_performance.parquet`, reader-firm ambiguous);
 (3) canonicalize polarity + namespace (`script→s3` `pipeline:bd:gold:*` vs the fixture's `s3→script`
