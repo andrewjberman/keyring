@@ -1,0 +1,3198 @@
+{
+  "emission_trace": {
+    "seed": "gold:D_01.partner_analytics",
+    "reachable_set_size": 201,
+    "classification_counts": {
+      "PRESENT-UNREACHABLE": 13,
+      "GENUINELY-ABSENT": 4
+    },
+    "per_member": {
+      "gold:A_03.positions_cube": {
+        "fixture_edge_classes": [
+          "READS_S3",
+          "TRIGGERS",
+          "WRITES_S3"
+        ],
+        "classification": "PRESENT-UNREACHABLE",
+        "producer_edges_referencing_this_id_any_form": [
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube",
+            "raw_target": "opal-data-bd/gold/meta/positions_cube_incr_watermark.json",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:A_03.positions_cube",
+            "canon_target": "s3:gold/meta/positions_cube_incr_watermark.json"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube",
+            "raw_target": "opal-data-bd/gold/dimensions/schwab_bd_account_mapping.parquet",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:A_03.positions_cube",
+            "canon_target": "s3:gold/dimensions/schwab_bd_account_mapping.parquet"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube",
+            "raw_target": "opal-data-bd/gold/timeseries/positions_cube/",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:A_03.positions_cube",
+            "canon_target": "s3:gold/timeseries/positions_cube/"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube",
+            "raw_target": "opal-data-bd/silver/allocations/{*}.parquet",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:A_03.positions_cube",
+            "canon_target": "s3:silver/allocations/{*}.parquet"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube",
+            "raw_target": "opal-data-bd/silver/prices/canonical_prices.parquet",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:A_03.positions_cube",
+            "canon_target": "s3:silver/prices/canonical_prices.parquet"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube",
+            "raw_target": "opal-data-bd/silver/realized/bd_realized_agg.parquet",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:A_03.positions_cube",
+            "canon_target": "s3:silver/realized/bd_realized_agg.parquet"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube",
+            "raw_target": "opal-data-bd/silver/unrealized/unrealized_gain_loss.parquet",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:A_03.positions_cube",
+            "canon_target": "s3:silver/unrealized/unrealized_gain_loss.parquet"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube",
+            "raw_target": "opal-data-bd/gold/_parity/positions_cube/{*}/scorecard.json",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:A_03.positions_cube",
+            "canon_target": "s3:gold/_parity/positions_cube/{*}/scorecard.json"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube",
+            "raw_target": "opal-data-bd/gold/meta/positions_cube_incr_watermark.json",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:A_03.positions_cube",
+            "canon_target": "s3:gold/meta/positions_cube_incr_watermark.json"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube",
+            "raw_target": "opal-data-bd/gold/timeseries/positions_cube/{*}.parquet",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:A_03.positions_cube",
+            "canon_target": "s3:gold/timeseries/positions_cube/{*}.parquet"
+          }
+        ],
+        "n_producer_edges_found": 11
+      },
+      "gold:A_03.positions_cube:_gate_write_watermark": {
+        "fixture_edge_classes": [
+          "CALLS",
+          "WRITES_S3"
+        ],
+        "classification": "PRESENT-UNREACHABLE",
+        "producer_edges_referencing_this_id_any_form": [
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube:run_shadow_gate_evidence",
+            "raw_target": "pipeline:bd:gold:A_03.positions_cube:_gate_write_watermark",
+            "edge_type": "CALLS",
+            "canon_source": "gold:A_03.positions_cube:run_shadow_gate_evidence",
+            "canon_target": "gold:A_03.positions_cube:_gate_write_watermark"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube:main",
+            "raw_target": "pipeline:bd:gold:A_03.positions_cube:_gate_write_watermark",
+            "edge_type": "CALLS",
+            "canon_source": "gold:A_03.positions_cube:main",
+            "canon_target": "gold:A_03.positions_cube:_gate_write_watermark"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube:_gate_write_watermark",
+            "raw_target": "opal-data-bd/gold/meta/positions_cube_incr_watermark.json",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:A_03.positions_cube:_gate_write_watermark",
+            "canon_target": "s3:gold/meta/positions_cube_incr_watermark.json"
+          }
+        ],
+        "n_producer_edges_found": 3
+      },
+      "gold:A_03.positions_cube:run_shadow_gate_evidence": {
+        "fixture_edge_classes": [
+          "CALLS",
+          "WRITES_S3"
+        ],
+        "classification": "PRESENT-UNREACHABLE",
+        "producer_edges_referencing_this_id_any_form": [
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube:run_shadow_gate_evidence",
+            "raw_target": "pipeline:bd:gold:A_03.positions_cube:_gate_list_etags",
+            "edge_type": "CALLS",
+            "canon_source": "gold:A_03.positions_cube:run_shadow_gate_evidence",
+            "canon_target": "gold:A_03.positions_cube:_gate_list_etags"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube:run_shadow_gate_evidence",
+            "raw_target": "pipeline:bd:gold:A_03.positions_cube:_gate_load_watermark",
+            "edge_type": "CALLS",
+            "canon_source": "gold:A_03.positions_cube:run_shadow_gate_evidence",
+            "canon_target": "gold:A_03.positions_cube:_gate_load_watermark"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube:run_shadow_gate_evidence",
+            "raw_target": "pipeline:bd:gold:A_03.positions_cube:_gate_write_watermark",
+            "edge_type": "CALLS",
+            "canon_source": "gold:A_03.positions_cube:run_shadow_gate_evidence",
+            "canon_target": "gold:A_03.positions_cube:_gate_write_watermark"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube:run_shadow_gate_evidence",
+            "raw_target": "pipeline:bd:gold:A_03.positions_cube:compute_run_fingerprint",
+            "edge_type": "CALLS",
+            "canon_source": "gold:A_03.positions_cube:run_shadow_gate_evidence",
+            "canon_target": "gold:A_03.positions_cube:compute_run_fingerprint"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube:main",
+            "raw_target": "pipeline:bd:gold:A_03.positions_cube:run_shadow_gate_evidence",
+            "edge_type": "CALLS",
+            "canon_source": "gold:A_03.positions_cube:main",
+            "canon_target": "gold:A_03.positions_cube:run_shadow_gate_evidence"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube:run_shadow_gate_evidence",
+            "raw_target": "opal-data-bd/gold/_parity/positions_cube/*/scorecard.json",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:A_03.positions_cube:run_shadow_gate_evidence",
+            "canon_target": "s3:gold/_parity/positions_cube/*/scorecard.json"
+          }
+        ],
+        "n_producer_edges_found": 6
+      },
+      "gold:E_15.validate_yf_overrides:main": {
+        "fixture_edge_classes": [
+          "CALLS",
+          "WRITES_S3"
+        ],
+        "classification": "PRESENT-UNREACHABLE",
+        "producer_edges_referencing_this_id_any_form": [
+          {
+            "raw_source": "pipeline:bd:gold:E_15.validate_yf_overrides:main",
+            "raw_target": "pipeline:bd:gold:E_15.validate_yf_overrides:log",
+            "edge_type": "CALLS",
+            "canon_source": "gold:E_15.validate_yf_overrides:main",
+            "canon_target": "gold:E_15.validate_yf_overrides:log"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:E_15.validate_yf_overrides:main",
+            "raw_target": "opal-data-bd/silver/historical_prices.parquet",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:E_15.validate_yf_overrides:main",
+            "canon_target": "s3:silver/historical_prices.parquet"
+          }
+        ],
+        "n_producer_edges_found": 2
+      },
+      "gold:INF_B_03.account_gains": {
+        "fixture_edge_classes": [
+          "READS_S3",
+          "TRIGGERS",
+          "WRITES_S3"
+        ],
+        "classification": "PRESENT-UNREACHABLE",
+        "producer_edges_referencing_this_id_any_form": [
+          {
+            "raw_source": "pipeline:inf:gold:INF_B_03.account_gains",
+            "raw_target": "opal-data-inf/gold/lots/lots_latest.parquet",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:INF_B_03.account_gains",
+            "canon_target": "s3:gold/lots/lots_latest.parquet"
+          },
+          {
+            "raw_source": "pipeline:inf:gold:INF_B_03.account_gains",
+            "raw_target": "opal-data-inf/gold/account_gains/{*}.parquet",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:INF_B_03.account_gains",
+            "canon_target": "s3:gold/account_gains/{*}.parquet"
+          }
+        ],
+        "n_producer_edges_found": 2
+      },
+      "gold:INF_build_canonical_prices": {
+        "fixture_edge_classes": [
+          "READS_S3",
+          "TRIGGERS",
+          "WRITES_S3"
+        ],
+        "classification": "PRESENT-UNREACHABLE",
+        "producer_edges_referencing_this_id_any_form": [
+          {
+            "raw_source": "pipeline:inf:gold:INF_build_canonical_prices",
+            "raw_target": "opal-data-bd/silver/historical_prices.parquet",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:INF_build_canonical_prices",
+            "canon_target": "s3:silver/historical_prices.parquet"
+          }
+        ],
+        "n_producer_edges_found": 1
+      },
+      "gold:build_canonical_prices_v2": {
+        "fixture_edge_classes": [
+          "READS_S3",
+          "TRIGGERS",
+          "WRITES_S3"
+        ],
+        "classification": "PRESENT-UNREACHABLE",
+        "producer_edges_referencing_this_id_any_form": [
+          {
+            "raw_source": "pipeline:bd:gold:build_canonical_prices_v2",
+            "raw_target": "opal-data-bd/silver/historical_prices.parquet",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:build_canonical_prices_v2",
+            "canon_target": "s3:silver/historical_prices.parquet"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:build_canonical_prices_v2",
+            "raw_target": "opal-data-bd/config/ticker_lookup.json",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:build_canonical_prices_v2",
+            "canon_target": "s3:config/ticker_lookup.json"
+          }
+        ],
+        "n_producer_edges_found": 2
+      },
+      "gold:build_canonical_prices_v2:load_historical_prices": {
+        "fixture_edge_classes": [
+          "CALLS",
+          "WRITES_S3"
+        ],
+        "classification": "PRESENT-UNREACHABLE",
+        "producer_edges_referencing_this_id_any_form": [
+          {
+            "raw_source": "pipeline:bd:gold:build_canonical_prices_v2:build_canonical",
+            "raw_target": "pipeline:bd:gold:build_canonical_prices_v2:load_historical_prices",
+            "edge_type": "CALLS",
+            "canon_source": "gold:build_canonical_prices_v2:build_canonical",
+            "canon_target": "gold:build_canonical_prices_v2:load_historical_prices"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:build_canonical_prices_v2:load_historical_prices",
+            "raw_target": "opal-data-bd/silver/historical_prices.parquet",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:build_canonical_prices_v2:load_historical_prices",
+            "canon_target": "s3:silver/historical_prices.parquet"
+          }
+        ],
+        "n_producer_edges_found": 2
+      },
+      "lambda:bd-price-update": {
+        "fixture_edge_classes": [
+          "READS_S3",
+          "WRITES_S3"
+        ],
+        "classification": "GENUINELY-ABSENT",
+        "producer_edges_referencing_this_id_any_form": [],
+        "n_producer_edges_found": 0
+      },
+      "lambda:opal-partners-data": {
+        "fixture_edge_classes": [
+          "FETCHES",
+          "READS_S3"
+        ],
+        "classification": "GENUINELY-ABSENT",
+        "producer_edges_referencing_this_id_any_form": [],
+        "n_producer_edges_found": 0
+      },
+      "s3:config/ticker_lookup.json": {
+        "fixture_edge_classes": [
+          "READS_S3"
+        ],
+        "classification": "PRESENT-UNREACHABLE",
+        "producer_edges_referencing_this_id_any_form": [
+          {
+            "raw_source": "pipeline:bd:gold:build_canonical_prices_v2",
+            "raw_target": "opal-data-bd/config/ticker_lookup.json",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:build_canonical_prices_v2",
+            "canon_target": "s3:config/ticker_lookup.json"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:E_06.trace_asset_pricing",
+            "raw_target": "opal-data-bd/config/ticker_lookup.json",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:E_06.trace_asset_pricing",
+            "canon_target": "s3:config/ticker_lookup.json"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:E_08.tail_asset_drill",
+            "raw_target": "opal-data-bd/config/ticker_lookup.json",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:E_08.tail_asset_drill",
+            "canon_target": "s3:config/ticker_lookup.json"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:E_11.unmatched_asset_analysis",
+            "raw_target": "opal-data-bd/config/ticker_lookup.json",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:E_11.unmatched_asset_analysis",
+            "canon_target": "s3:config/ticker_lookup.json"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:E_14.audit_existing_mappings",
+            "raw_target": "opal-data-bd/config/ticker_lookup.json",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:E_14.audit_existing_mappings",
+            "canon_target": "s3:config/ticker_lookup.json"
+          }
+        ],
+        "n_producer_edges_found": 5
+      },
+      "s3:gold/account_gains/{*}.parquet": {
+        "fixture_edge_classes": [
+          "READS_S3",
+          "WRITES_S3"
+        ],
+        "classification": "PRESENT-UNREACHABLE",
+        "producer_edges_referencing_this_id_any_form": [
+          {
+            "raw_source": "pipeline:inf:gold:INF_B_03.account_gains",
+            "raw_target": "opal-data-inf/gold/account_gains/{*}.parquet",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:INF_B_03.account_gains",
+            "canon_target": "s3:gold/account_gains/{*}.parquet"
+          }
+        ],
+        "n_producer_edges_found": 1
+      },
+      "s3:gold/meta/positions_cube_incr_watermark.json": {
+        "fixture_edge_classes": [
+          "READS_S3",
+          "WRITES_S3"
+        ],
+        "classification": "PRESENT-UNREACHABLE",
+        "producer_edges_referencing_this_id_any_form": [
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube:_gate_write_watermark",
+            "raw_target": "opal-data-bd/gold/meta/positions_cube_incr_watermark.json",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:A_03.positions_cube:_gate_write_watermark",
+            "canon_target": "s3:gold/meta/positions_cube_incr_watermark.json"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube",
+            "raw_target": "opal-data-bd/gold/meta/positions_cube_incr_watermark.json",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:A_03.positions_cube",
+            "canon_target": "s3:gold/meta/positions_cube_incr_watermark.json"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube",
+            "raw_target": "opal-data-bd/gold/meta/positions_cube_incr_watermark.json",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:A_03.positions_cube",
+            "canon_target": "s3:gold/meta/positions_cube_incr_watermark.json"
+          }
+        ],
+        "n_producer_edges_found": 3
+      },
+      "s3:silver/accounts_dim/latest.parquet": {
+        "fixture_edge_classes": [
+          "READS_S3"
+        ],
+        "classification": "GENUINELY-ABSENT",
+        "producer_edges_referencing_this_id_any_form": [],
+        "n_producer_edges_found": 0
+      },
+      "s3:silver/historical_prices.parquet": {
+        "fixture_edge_classes": [
+          "READS_S3",
+          "WRITES_S3"
+        ],
+        "classification": "PRESENT-UNREACHABLE",
+        "producer_edges_referencing_this_id_any_form": [
+          {
+            "raw_source": "pipeline:bd:gold:build_canonical_prices_v2:load_historical_prices",
+            "raw_target": "opal-data-bd/silver/historical_prices.parquet",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:build_canonical_prices_v2:load_historical_prices",
+            "canon_target": "s3:silver/historical_prices.parquet"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:build_canonical_prices_v2",
+            "raw_target": "opal-data-bd/silver/historical_prices.parquet",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:build_canonical_prices_v2",
+            "canon_target": "s3:silver/historical_prices.parquet"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:E_06.trace_asset_pricing:main",
+            "raw_target": "opal-data-bd/silver/historical_prices.parquet",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:E_06.trace_asset_pricing:main",
+            "canon_target": "s3:silver/historical_prices.parquet"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:E_08.tail_asset_drill:main",
+            "raw_target": "opal-data-bd/silver/historical_prices.parquet",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:E_08.tail_asset_drill:main",
+            "canon_target": "s3:silver/historical_prices.parquet"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:E_15.validate_yf_overrides:main",
+            "raw_target": "opal-data-bd/silver/historical_prices.parquet",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:E_15.validate_yf_overrides:main",
+            "canon_target": "s3:silver/historical_prices.parquet"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:E_15.validate_yf_overrides",
+            "raw_target": "opal-data-bd/silver/historical_prices.parquet",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:E_15.validate_yf_overrides",
+            "canon_target": "s3:silver/historical_prices.parquet"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:E_17.check_49f_tickers",
+            "raw_target": "opal-data-bd/silver/historical_prices.parquet",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:E_17.check_49f_tickers",
+            "canon_target": "s3:silver/historical_prices.parquet"
+          },
+          {
+            "raw_source": "pipeline:inf:gold:INF_build_canonical_prices",
+            "raw_target": "opal-data-bd/silver/historical_prices.parquet",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:INF_build_canonical_prices",
+            "canon_target": "s3:silver/historical_prices.parquet"
+          }
+        ],
+        "n_producer_edges_found": 8
+      },
+      "s3:silver/interpolated_prices.parquet": {
+        "fixture_edge_classes": [
+          "READS_S3",
+          "WRITES_S3"
+        ],
+        "classification": "GENUINELY-ABSENT",
+        "producer_edges_referencing_this_id_any_form": [],
+        "n_producer_edges_found": 0
+      },
+      "s3:silver/realized/bd_realized_agg.parquet": {
+        "fixture_edge_classes": [
+          "READS_S3",
+          "WRITES_S3"
+        ],
+        "classification": "PRESENT-UNREACHABLE",
+        "producer_edges_referencing_this_id_any_form": [
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube:_load_phantom_exclusion_set",
+            "raw_target": "opal-data-bd/silver/realized/bd_realized_agg.parquet",
+            "edge_type": "WRITES_S3",
+            "canon_source": "gold:A_03.positions_cube:_load_phantom_exclusion_set",
+            "canon_target": "s3:silver/realized/bd_realized_agg.parquet"
+          },
+          {
+            "raw_source": "pipeline:bd:gold:A_03.positions_cube",
+            "raw_target": "opal-data-bd/silver/realized/bd_realized_agg.parquet",
+            "edge_type": "READS_S3",
+            "canon_source": "gold:A_03.positions_cube",
+            "canon_target": "s3:silver/realized/bd_realized_agg.parquet"
+          }
+        ],
+        "n_producer_edges_found": 2
+      }
+    }
+  },
+  "emission_trace_control": {
+    "held_out_target": "s3:gold/timeseries/client_performance.parquet",
+    "old_n": 168,
+    "new_n": 120,
+    "missing_n": 54,
+    "classification_counts": {
+      "PRESENT-UNREACHABLE": 47,
+      "GENUINELY-ABSENT": 7
+    },
+    "genuinely_absent_prefixes": [
+      "gold",
+      "gold",
+      "lambda",
+      "lambda",
+      "lambda",
+      "lambda",
+      "s3"
+    ],
+    "per_member": {
+      "gold:A_03.positions_cube": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 11,
+        "node_type_prefix": "gold"
+      },
+      "gold:A_03.positions_cube:_gate_write_watermark": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 3,
+        "node_type_prefix": "gold"
+      },
+      "gold:A_03.positions_cube:_load_phantom_exclusion_set": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 6,
+        "node_type_prefix": "gold"
+      },
+      "gold:A_03.positions_cube:_load_realized_sell_events": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 5,
+        "node_type_prefix": "gold"
+      },
+      "gold:A_03.positions_cube:build_full": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 14,
+        "node_type_prefix": "gold"
+      },
+      "gold:A_03.positions_cube:build_single_date": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 3,
+        "node_type_prefix": "gold"
+      },
+      "gold:A_03.positions_cube:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 7,
+        "node_type_prefix": "gold"
+      },
+      "gold:A_03.positions_cube:run_shadow_gate_evidence": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 6,
+        "node_type_prefix": "gold"
+      },
+      "gold:B_01.holdings_lots:_apply_silver_noncash_cap": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 3,
+        "node_type_prefix": "gold"
+      },
+      "gold:B_01.holdings_lots:_build_authoritative_reopen_lots": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 4,
+        "node_type_prefix": "gold"
+      },
+      "gold:B_01.holdings_lots:_build_rps_context": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 5,
+        "node_type_prefix": "gold"
+      },
+      "gold:B_01.holdings_lots:_build_rps_synthetic_lots": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 2,
+        "node_type_prefix": "gold"
+      },
+      "gold:B_01.holdings_lots:_build_synthetic_lots": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 2,
+        "node_type_prefix": "gold"
+      },
+      "gold:B_01.holdings_lots:_build_uln_sleeve_lots": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 4,
+        "node_type_prefix": "gold"
+      },
+      "gold:B_01.holdings_lots:_load_fallback_context": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 4,
+        "node_type_prefix": "gold"
+      },
+      "gold:B_01.holdings_lots:_load_sleeve_allocations_mv": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 3,
+        "node_type_prefix": "gold"
+      },
+      "gold:B_01.holdings_lots:_read_parquet_from_s3": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 9,
+        "node_type_prefix": "gold"
+      },
+      "gold:B_01.holdings_lots:build_holdings_lots_snapshot": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 16,
+        "node_type_prefix": "gold"
+      },
+      "gold:B_01.holdings_lots:load_latest_prices": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 2,
+        "node_type_prefix": "gold"
+      },
+      "gold:B_01.holdings_lots:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 10,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_00.decompose_aua_gap:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 8,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_01.account_quality_tiers:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 6,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_05.gap_by_pricing_source:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 8,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_06.trace_asset_pricing:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 7,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_07.account_gap_buckets:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 7,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_08.tail_asset_drill:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 8,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_09.unrecognized_exit_types:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 6,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_10.validate_ffill_cap:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 6,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_11.unmatched_asset_analysis:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 6,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_12.dump_all_non_yahoo:read_pq": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 3,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_13.tail_decomposition:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 6,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_14.audit_existing_mappings:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 6,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_15.validate_yf_overrides:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 2,
+        "node_type_prefix": "gold"
+      },
+      "gold:E_16.unit_math_audit:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 6,
+        "node_type_prefix": "gold"
+      },
+      "gold:INF_build_canonical_prices": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 1,
+        "node_type_prefix": "gold"
+      },
+      "gold:build_canonical_prices_v2": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 2,
+        "node_type_prefix": "gold"
+      },
+      "gold:build_canonical_prices_v2:build_canonical": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 8,
+        "node_type_prefix": "gold"
+      },
+      "gold:build_canonical_prices_v2:load_historical_prices": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 2,
+        "node_type_prefix": "gold"
+      },
+      "gold:build_canonical_prices_v2:main": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 1,
+        "node_type_prefix": "gold"
+      },
+      "gold:gold_dispatch": {
+        "classification": "GENUINELY-ABSENT",
+        "n_producer_edges_found": 0,
+        "node_type_prefix": "gold"
+      },
+      "gold:orion-gold-dispatch": {
+        "classification": "GENUINELY-ABSENT",
+        "n_producer_edges_found": 0,
+        "node_type_prefix": "gold"
+      },
+      "lambda:bd-price-update": {
+        "classification": "GENUINELY-ABSENT",
+        "n_producer_edges_found": 0,
+        "node_type_prefix": "lambda"
+      },
+      "lambda:inf-portal-advisor-publisher": {
+        "classification": "GENUINELY-ABSENT",
+        "n_producer_edges_found": 0,
+        "node_type_prefix": "lambda"
+      },
+      "lambda:inf-portal-publisher": {
+        "classification": "GENUINELY-ABSENT",
+        "n_producer_edges_found": 0,
+        "node_type_prefix": "lambda"
+      },
+      "lambda:opal-partners-data": {
+        "classification": "GENUINELY-ABSENT",
+        "n_producer_edges_found": 0,
+        "node_type_prefix": "lambda"
+      },
+      "s3:config/ticker_lookup.json": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 5,
+        "node_type_prefix": "s3"
+      },
+      "s3:gold/dimensions/schwab_bd_account_mapping.parquet": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 6,
+        "node_type_prefix": "s3"
+      },
+      "s3:gold/meta/positions_cube_incr_watermark.json": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 3,
+        "node_type_prefix": "s3"
+      },
+      "s3:gold/timeseries/positions_cube/": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 2,
+        "node_type_prefix": "s3"
+      },
+      "s3:silver/historical_prices.parquet": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 8,
+        "node_type_prefix": "s3"
+      },
+      "s3:silver/interpolated_prices.parquet": {
+        "classification": "GENUINELY-ABSENT",
+        "n_producer_edges_found": 0,
+        "node_type_prefix": "s3"
+      },
+      "s3:silver/prices/canonical_prices.parquet": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 22,
+        "node_type_prefix": "s3"
+      },
+      "s3:silver/realized/bd_realized_agg.parquet": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 2,
+        "node_type_prefix": "s3"
+      },
+      "s3:silver/unrealized/unrealized_gain_loss.parquet": {
+        "classification": "PRESENT-UNREACHABLE",
+        "n_producer_edges_found": 5,
+        "node_type_prefix": "s3"
+      }
+    }
+  },
+  "residual_sweep_supplementary": {
+    "summary": {
+      "n_targets_swept": 17,
+      "coverage_pct_per_target_sorted": [
+        58.2,
+        58.3,
+        60.1,
+        62.9,
+        64.9,
+        65.7,
+        67.9,
+        87.7,
+        91.2,
+        91.2,
+        91.2,
+        91.2,
+        91.2,
+        96.6,
+        98.1,
+        98.7,
+        100.0
+      ],
+      "coverage_min": 58.2,
+      "coverage_max": 100.0,
+      "coverage_median": 91.2,
+      "strict_predicate_out_of_scope_total": 22,
+      "strict_predicate_in_scope_total": 495,
+      "edge_class_distribution_all_missing": {
+        "READS_S3,WRITES_S3": 125,
+        "READS_S3,TRIGGERS,WRITES_S3": 117,
+        "READS_S3,TRIGGERS": 14,
+        "READS_S3": 42,
+        "FETCHES,READS_S3": 16,
+        "WRITES_S3": 46,
+        "CALLS,WRITES_S3": 100,
+        "TRIGGERS": 22,
+        "CALLS": 35
+      },
+      "function_controls_all_clean": true,
+      "function_controls": {
+        "gold:D_01.partner_analytics:generate_header_metrics": {
+          "old_n": 39,
+          "new_n": 39,
+          "missing_n": 0,
+          "extra_n": 0,
+          "missing": [],
+          "extra": []
+        },
+        "gold:D_02.advisor_client_detail:main": {
+          "old_n": 39,
+          "new_n": 39,
+          "missing_n": 0,
+          "extra_n": 0,
+          "missing": [],
+          "extra": []
+        },
+        "gold:INF_D_02.advisor_client_detail:build_advisor_books": {
+          "old_n": 21,
+          "new_n": 21,
+          "missing_n": 0,
+          "extra_n": 0,
+          "missing": [],
+          "extra": []
+        }
+      }
+    },
+    "per_target": {
+      "gold:D_04.client_portal_summary:main": {
+        "old_n": 52,
+        "new_n": 53,
+        "missing_n": 0,
+        "extra_n": 1,
+        "coverage_pct": 100.0,
+        "missing_members_with_edge_class": {},
+        "strict_out_of_scope_n": 0,
+        "strict_in_scope_n": 0,
+        "extra_members": [
+          "gold:cottonwood_aua"
+        ]
+      },
+      "gold:B_01.holdings_lots:build_holdings_lots_snapshot": {
+        "old_n": 148,
+        "new_n": 96,
+        "missing_n": 52,
+        "extra_n": 0,
+        "coverage_pct": 64.9,
+        "missing_members_with_edge_class": {
+          "gold:C_01b.role_aua_backfill": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "gold:C_02.client_performance": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_03.account_performance": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_04.validate_aua": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_06.client_mix_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_07.advisor_attribution": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_08.advisor_fee_efficiency": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:D_00c.portal_leaderboard": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:D_00f.advisor_nna_canonical": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:D_03.composition_artifacts": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_01b.role_aua_backfill": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_02.client_performance": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_03.account_performance": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_04.validate_aua": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:INF_C_06.client_mix_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_07.advisor_attribution": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:INF_C_08.advisor_fee_efficiency": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_00.portal_aggregates": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_00b.portal_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_00c.portal_leaderboard": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_00d.cumulative_chart": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_02.advisor_client_detail": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_03.composition_artifacts": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_05.activity_scan": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:INF_D_05.client_top_holdings": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_06.client_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_09.account_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_mdpf_inflection_history_from_spine": [
+            "READS_S3"
+          ],
+          "gold:build_mdpf_wsc_inflection_feeder": [
+            "READS_S3"
+          ],
+          "lambda:inf-portal-advisor-publisher": [
+            "READS_S3"
+          ],
+          "lambda:inf-portal-publisher": [
+            "READS_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ],
+          "s3:gold/artifacts/client_mix_timeseries.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/cumulative_chart.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/employee_leaderboard.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/firm_mix_views.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/firm_mix_views_daily.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/cache/hh_timeseries_anchors_{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/advisors/{*}/mix.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/advisors/{*}/mix_daily.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/clients/{*}.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/timeseries/account_performance.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/timeseries/client_performance.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/validation/aua_validation_{*}.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/account_team.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/mix_daily_summary.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/rel_architect_lookup.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/relationship_team.parquet": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/clients/{*}/detail.json": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/firm/clients_tab.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:platinum/firm/filters/dimensions.json": [
+            "WRITES_S3"
+          ],
+          "s3:silver/allocations/{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 0,
+        "strict_in_scope_n": 52,
+        "extra_members": []
+      },
+      "gold:B_00.canonical_holdings:main": {
+        "old_n": 76,
+        "new_n": 75,
+        "missing_n": 1,
+        "extra_n": 0,
+        "coverage_pct": 98.7,
+        "missing_members_with_edge_class": {
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 0,
+        "strict_in_scope_n": 1,
+        "extra_members": []
+      },
+      "gold:A_03.positions_cube:build_full": {
+        "old_n": 141,
+        "new_n": 82,
+        "missing_n": 59,
+        "extra_n": 0,
+        "coverage_pct": 58.2,
+        "missing_members_with_edge_class": {
+          "gold:B_01.holdings_lots": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_01b.role_aua_backfill": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "gold:C_02.client_performance": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_03.account_performance": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_04.validate_aua": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_06.client_mix_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_07.advisor_attribution": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_08.advisor_fee_efficiency": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:D_00c.portal_leaderboard": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:D_00f.advisor_nna_canonical": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:D_03.composition_artifacts": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_01b.role_aua_backfill": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_02.client_performance": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_03.account_performance": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_04.validate_aua": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:INF_C_06.client_mix_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_07.advisor_attribution": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:INF_C_08.advisor_fee_efficiency": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_00.portal_aggregates": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_00b.portal_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_00c.portal_leaderboard": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_00d.cumulative_chart": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_02.advisor_client_detail": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_03.composition_artifacts": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_05.activity_scan": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:INF_D_05.client_top_holdings": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_06.client_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_09.account_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_mdpf_inflection_history_from_spine": [
+            "READS_S3"
+          ],
+          "gold:build_mdpf_wsc_inflection_feeder": [
+            "READS_S3"
+          ],
+          "lambda:inf-portal-advisor-publisher": [
+            "READS_S3"
+          ],
+          "lambda:inf-portal-publisher": [
+            "READS_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ],
+          "s3:gold/_parity/holdings_lots/{*}/scorecard.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/client_mix_timeseries.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/cumulative_chart.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/employee_leaderboard.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/firm_mix_views.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/firm_mix_views_daily.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/cache/hh_timeseries_anchors_{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/advisors/{*}/mix.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/advisors/{*}/mix_daily.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/clients/{*}.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/holdings_lots_v2_dryrun/{*}.parquet": [
+            "WRITES_S3"
+          ],
+          "s3:gold/meta/holdings_lots_incr_watermark.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/timeseries/account_performance.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/timeseries/client_performance.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/timeseries/holdings_lots/backfill_{*}.parquet": [
+            "WRITES_S3"
+          ],
+          "s3:gold/timeseries/holdings_lots/{*}.parquet": [
+            "WRITES_S3"
+          ],
+          "s3:gold/timeseries/holdings_lots_shadow/{*}.parquet": [
+            "WRITES_S3"
+          ],
+          "s3:gold/validation/aua_validation_{*}.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/account_team.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/mix_daily_summary.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/rel_architect_lookup.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/relationship_team.parquet": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/clients/{*}/detail.json": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/firm/clients_tab.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:platinum/firm/filters/dimensions.json": [
+            "WRITES_S3"
+          ],
+          "s3:silver/allocations/{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 0,
+        "strict_in_scope_n": 59,
+        "extra_members": []
+      },
+      "gold:INF_D_04.client_portal_summary:main": {
+        "old_n": 157,
+        "new_n": 155,
+        "missing_n": 3,
+        "extra_n": 1,
+        "coverage_pct": 98.1,
+        "missing_members_with_edge_class": {
+          "lambda:inf-portal-advisor-publisher": [
+            "READS_S3"
+          ],
+          "lambda:inf-portal-publisher": [
+            "READS_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 0,
+        "strict_in_scope_n": 3,
+        "extra_members": [
+          "gold:INF_D_02c.client_directory"
+        ]
+      },
+      "gold:INF_D_02.advisor_client_detail:main": {
+        "old_n": 134,
+        "new_n": 88,
+        "missing_n": 46,
+        "extra_n": 0,
+        "coverage_pct": 65.7,
+        "missing_members_with_edge_class": {
+          "gold:C_01b.role_aua_backfill": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "gold:C_06.client_mix_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_07.advisor_attribution": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_08.advisor_fee_efficiency": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:D_00c.portal_leaderboard": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:D_00f.advisor_nna_canonical": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:D_03.composition_artifacts": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_01b.role_aua_backfill": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_03.account_performance": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_05.client_tax_liability": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_07.advisor_attribution": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:INF_C_08.advisor_fee_efficiency": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_00c.portal_leaderboard": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_03.composition_artifacts": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_05.client_top_holdings": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_06.client_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_09.account_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "lambda:inf-portal-advisor-publisher": [
+            "READS_S3"
+          ],
+          "lambda:inf-portal-publisher": [
+            "READS_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ],
+          "s3:gold/artifacts/advisor_fee_efficiency.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/client_tax_liability.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/clients_tab.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/employee_leaderboard.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/filters/dimensions.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/firm_mix_views.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/firm_mix_views_daily.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/implementor_leaderboard.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/timeseries_chart.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/cache/hh_timeseries_anchors_{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/canonical/advisor_fee_detail/{*}.parquet": [
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/advisors/{*}/mix.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/advisors/{*}/mix_daily.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/advisors/{*}/mix_timeseries.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/clients/{*}.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/clients/{*}/detail.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/timeseries/account_performance.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/account_team.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/mix_daily_summary.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/rel_architect_lookup.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/relationship_team.parquet": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/advisors/{*}}/composition.json": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/clients/{*}/timeseries.json": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/clients/{*}/top_holdings.json": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/firm/firm_composition.json": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/{*}/ownership_map.json": [
+            "WRITES_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 0,
+        "strict_in_scope_n": 46,
+        "extra_members": []
+      },
+      "gold:D_04.client_portal_summary": {
+        "old_n": 216,
+        "new_n": 200,
+        "missing_n": 19,
+        "extra_n": 3,
+        "coverage_pct": 91.2,
+        "missing_members_with_edge_class": {
+          "gold:A_03.positions_cube": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_gate_write_watermark": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:run_shadow_gate_evidence": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_15.validate_yf_overrides:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:INF_B_03.account_gains": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_build_canonical_prices": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:load_historical_prices": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:gold_dispatch": [
+            "TRIGGERS"
+          ],
+          "gold:orion-gold-dispatch": [
+            "TRIGGERS"
+          ],
+          "lambda:bd-price-update": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ],
+          "s3:config/ticker_lookup.json": [
+            "READS_S3"
+          ],
+          "s3:gold/account_gains/{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/meta/positions_cube_incr_watermark.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/accounts_dim/latest.parquet": [
+            "READS_S3"
+          ],
+          "s3:silver/historical_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/interpolated_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/realized/bd_realized_agg.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 2,
+        "strict_in_scope_n": 17,
+        "extra_members": [
+          "gold:INF_D_02c.client_directory:_write_json",
+          "gold:INF_D_02c.client_directory:main",
+          "s3:silver/api_dims/tax_unrealized/snapshot_date={*}/data.parquet"
+        ]
+      },
+      "gold:INF_D_04.client_portal_summary": {
+        "old_n": 216,
+        "new_n": 200,
+        "missing_n": 19,
+        "extra_n": 3,
+        "coverage_pct": 91.2,
+        "missing_members_with_edge_class": {
+          "gold:A_03.positions_cube": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_gate_write_watermark": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:run_shadow_gate_evidence": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_15.validate_yf_overrides:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:INF_B_03.account_gains": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_build_canonical_prices": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:load_historical_prices": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:gold_dispatch": [
+            "TRIGGERS"
+          ],
+          "gold:orion-gold-dispatch": [
+            "TRIGGERS"
+          ],
+          "lambda:bd-price-update": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ],
+          "s3:config/ticker_lookup.json": [
+            "READS_S3"
+          ],
+          "s3:gold/account_gains/{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/meta/positions_cube_incr_watermark.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/accounts_dim/latest.parquet": [
+            "READS_S3"
+          ],
+          "s3:silver/historical_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/interpolated_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/realized/bd_realized_agg.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 2,
+        "strict_in_scope_n": 17,
+        "extra_members": [
+          "gold:INF_D_02c.client_directory:_write_json",
+          "gold:INF_D_02c.client_directory:main",
+          "s3:silver/api_dims/tax_unrealized/snapshot_date={*}/data.parquet"
+        ]
+      },
+      "gold:D_00.portal_aggregates": {
+        "old_n": 216,
+        "new_n": 200,
+        "missing_n": 19,
+        "extra_n": 3,
+        "coverage_pct": 91.2,
+        "missing_members_with_edge_class": {
+          "gold:A_03.positions_cube": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_gate_write_watermark": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:run_shadow_gate_evidence": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_15.validate_yf_overrides:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:INF_B_03.account_gains": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_build_canonical_prices": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:load_historical_prices": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:gold_dispatch": [
+            "TRIGGERS"
+          ],
+          "gold:orion-gold-dispatch": [
+            "TRIGGERS"
+          ],
+          "lambda:bd-price-update": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ],
+          "s3:config/ticker_lookup.json": [
+            "READS_S3"
+          ],
+          "s3:gold/account_gains/{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/meta/positions_cube_incr_watermark.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/accounts_dim/latest.parquet": [
+            "READS_S3"
+          ],
+          "s3:silver/historical_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/interpolated_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/realized/bd_realized_agg.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 2,
+        "strict_in_scope_n": 17,
+        "extra_members": [
+          "gold:INF_D_02c.client_directory:_write_json",
+          "gold:INF_D_02c.client_directory:main",
+          "s3:silver/api_dims/tax_unrealized/snapshot_date={*}/data.parquet"
+        ]
+      },
+      "gold:D_02.advisor_client_detail": {
+        "old_n": 216,
+        "new_n": 200,
+        "missing_n": 19,
+        "extra_n": 3,
+        "coverage_pct": 91.2,
+        "missing_members_with_edge_class": {
+          "gold:A_03.positions_cube": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_gate_write_watermark": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:run_shadow_gate_evidence": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_15.validate_yf_overrides:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:INF_B_03.account_gains": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_build_canonical_prices": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:load_historical_prices": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:gold_dispatch": [
+            "TRIGGERS"
+          ],
+          "gold:orion-gold-dispatch": [
+            "TRIGGERS"
+          ],
+          "lambda:bd-price-update": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ],
+          "s3:config/ticker_lookup.json": [
+            "READS_S3"
+          ],
+          "s3:gold/account_gains/{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/meta/positions_cube_incr_watermark.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/accounts_dim/latest.parquet": [
+            "READS_S3"
+          ],
+          "s3:silver/historical_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/interpolated_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/realized/bd_realized_agg.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 2,
+        "strict_in_scope_n": 17,
+        "extra_members": [
+          "gold:INF_D_02c.client_directory:_write_json",
+          "gold:INF_D_02c.client_directory:main",
+          "s3:silver/api_dims/tax_unrealized/snapshot_date={*}/data.parquet"
+        ]
+      },
+      "gold:B_02.canonical_lots": {
+        "old_n": 130,
+        "new_n": 114,
+        "missing_n": 16,
+        "extra_n": 0,
+        "coverage_pct": 87.7,
+        "missing_members_with_edge_class": {
+          "gold:A_03.positions_cube": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_gate_write_watermark": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:run_shadow_gate_evidence": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_15.validate_yf_overrides:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:INF_build_canonical_prices": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:load_historical_prices": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:gold_dispatch": [
+            "TRIGGERS"
+          ],
+          "gold:orion-gold-dispatch": [
+            "TRIGGERS"
+          ],
+          "lambda:bd-price-update": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ],
+          "s3:config/ticker_lookup.json": [
+            "READS_S3"
+          ],
+          "s3:gold/meta/positions_cube_incr_watermark.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/historical_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/interpolated_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/realized/bd_realized_agg.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 2,
+        "strict_in_scope_n": 14,
+        "extra_members": []
+      },
+      "gold:D_01.partner_analytics": {
+        "old_n": 216,
+        "new_n": 200,
+        "missing_n": 19,
+        "extra_n": 3,
+        "coverage_pct": 91.2,
+        "missing_members_with_edge_class": {
+          "gold:A_03.positions_cube": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_gate_write_watermark": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:run_shadow_gate_evidence": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_15.validate_yf_overrides:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:INF_B_03.account_gains": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_build_canonical_prices": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:load_historical_prices": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:gold_dispatch": [
+            "TRIGGERS"
+          ],
+          "gold:orion-gold-dispatch": [
+            "TRIGGERS"
+          ],
+          "lambda:bd-price-update": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ],
+          "s3:config/ticker_lookup.json": [
+            "READS_S3"
+          ],
+          "s3:gold/account_gains/{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/meta/positions_cube_incr_watermark.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/accounts_dim/latest.parquet": [
+            "READS_S3"
+          ],
+          "s3:silver/historical_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/interpolated_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/realized/bd_realized_agg.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 2,
+        "strict_in_scope_n": 17,
+        "extra_members": [
+          "gold:INF_D_02c.client_directory:_write_json",
+          "gold:INF_D_02c.client_directory:main",
+          "s3:silver/api_dims/tax_unrealized/snapshot_date={*}/data.parquet"
+        ]
+      },
+      "s3:gold/dimensions/accounts_dimension_latest.parquet": {
+        "old_n": 145,
+        "new_n": 144,
+        "missing_n": 5,
+        "extra_n": 4,
+        "coverage_pct": 96.6,
+        "missing_members_with_edge_class": {
+          "gold:gold_dispatch": [
+            "TRIGGERS"
+          ],
+          "gold:orion-gold-dispatch": [
+            "TRIGGERS"
+          ],
+          "lambda:inf-portal-advisor-publisher": [
+            "READS_S3"
+          ],
+          "lambda:inf-portal-publisher": [
+            "READS_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 2,
+        "strict_in_scope_n": 3,
+        "extra_members": [
+          "gold:INF_D_02c.client_directory",
+          "gold:INF_D_04b.client_publishers",
+          "gold:INF_D_07.concentration_risk",
+          "gold:INF_D_07a.firm_concentrations"
+        ]
+      },
+      "s3:silver/prices/canonical_prices.parquet": {
+        "old_n": 163,
+        "new_n": 95,
+        "missing_n": 68,
+        "extra_n": 0,
+        "coverage_pct": 58.3,
+        "missing_members_with_edge_class": {
+          "gold:C_01b.role_aua_backfill": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "gold:C_02.client_performance": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_03.account_performance": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_04.validate_aua": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_06.client_mix_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_07.advisor_attribution": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:C_08.advisor_fee_efficiency": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:D_00c.portal_leaderboard": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:D_00f.advisor_nna_canonical": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:D_03.composition_artifacts": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:E_15.validate_yf_overrides:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_01b.role_aua_backfill": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_02.client_performance": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_03.account_performance": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_04.validate_aua": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:INF_C_06.client_mix_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_C_07.advisor_attribution": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:INF_C_08.advisor_fee_efficiency": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_00.portal_aggregates": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_00b.portal_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_00c.portal_leaderboard": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_00d.cumulative_chart": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_02.advisor_client_detail": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_03.composition_artifacts": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_05.activity_scan": [
+            "READS_S3",
+            "TRIGGERS"
+          ],
+          "gold:INF_D_05.client_top_holdings": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_06.client_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_09.account_timeseries": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_build_canonical_prices": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:load_historical_prices": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:build_mdpf_inflection_history_from_spine": [
+            "READS_S3"
+          ],
+          "gold:build_mdpf_wsc_inflection_feeder": [
+            "READS_S3"
+          ],
+          "gold:gold_dispatch": [
+            "TRIGGERS"
+          ],
+          "gold:orion-gold-dispatch": [
+            "TRIGGERS"
+          ],
+          "lambda:bd-price-update": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "lambda:inf-portal-advisor-publisher": [
+            "READS_S3"
+          ],
+          "lambda:inf-portal-publisher": [
+            "READS_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ],
+          "s3:config/ticker_lookup.json": [
+            "READS_S3"
+          ],
+          "s3:gold/artifacts/advisor_fee_efficiency.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/client_mix_timeseries.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/cumulative_chart.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/employee_leaderboard.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/firm_mix_views.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/artifacts/firm_mix_views_daily.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/cache/hh_timeseries_anchors_{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/canonical/advisor_fee_detail/{*}.parquet": [
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/advisors/{*}/mix.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/advisors/{*}/mix_daily.json": [
+            "WRITES_S3"
+          ],
+          "s3:gold/entities/clients/{*}.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/timeseries/account_performance.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/timeseries/client_performance.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/validation/aua_validation_{*}.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/account_team.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/mix_daily_summary.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/rel_architect_lookup.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/views/relationship_team.parquet": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/advisors/{*}}/composition.json": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/clients/{*}/detail.json": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/clients/{*}/timeseries.json": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/clients/{*}/top_holdings.json": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/firm/clients_tab.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:platinum/firm/filters/dimensions.json": [
+            "WRITES_S3"
+          ],
+          "s3:platinum/firm/firm_composition.json": [
+            "WRITES_S3"
+          ],
+          "s3:silver/allocations/{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/historical_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/interpolated_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 2,
+        "strict_in_scope_n": 66,
+        "extra_members": []
+      },
+      "s3:gold/timeseries/client_performance.parquet": {
+        "old_n": 168,
+        "new_n": 119,
+        "missing_n": 54,
+        "extra_n": 5,
+        "coverage_pct": 67.9,
+        "missing_members_with_edge_class": {
+          "gold:A_03.positions_cube": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_gate_write_watermark": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_load_phantom_exclusion_set": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_load_realized_sell_events": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:build_full": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:build_single_date": [
+            "CALLS"
+          ],
+          "gold:A_03.positions_cube:main": [
+            "CALLS"
+          ],
+          "gold:A_03.positions_cube:run_shadow_gate_evidence": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:_apply_silver_noncash_cap": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_build_authoritative_reopen_lots": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:_build_rps_context": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_build_rps_synthetic_lots": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_build_synthetic_lots": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_build_uln_sleeve_lots": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_load_fallback_context": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_load_sleeve_allocations_mv": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:_read_parquet_from_s3": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:build_holdings_lots_snapshot": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:load_latest_prices": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:main": [
+            "CALLS"
+          ],
+          "gold:E_00.decompose_aua_gap:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_01.account_quality_tiers:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_05.gap_by_pricing_source:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_06.trace_asset_pricing:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_07.account_gap_buckets:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_08.tail_asset_drill:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_09.unrecognized_exit_types:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_10.validate_ffill_cap:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_11.unmatched_asset_analysis:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_12.dump_all_non_yahoo:read_pq": [
+            "WRITES_S3"
+          ],
+          "gold:E_13.tail_decomposition:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_14.audit_existing_mappings:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_15.validate_yf_overrides:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_16.unit_math_audit:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:INF_build_canonical_prices": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:build_canonical": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:load_historical_prices": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:main": [
+            "CALLS"
+          ],
+          "gold:gold_dispatch": [
+            "TRIGGERS"
+          ],
+          "gold:orion-gold-dispatch": [
+            "TRIGGERS"
+          ],
+          "lambda:bd-price-update": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "lambda:inf-portal-advisor-publisher": [
+            "READS_S3"
+          ],
+          "lambda:inf-portal-publisher": [
+            "READS_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ],
+          "s3:config/ticker_lookup.json": [
+            "READS_S3"
+          ],
+          "s3:gold/dimensions/schwab_bd_account_mapping.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/meta/positions_cube_incr_watermark.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/timeseries/positions_cube/": [
+            "READS_S3"
+          ],
+          "s3:silver/historical_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/interpolated_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/prices/canonical_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/realized/bd_realized_agg.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/unrealized/unrealized_gain_loss.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 2,
+        "strict_in_scope_n": 52,
+        "extra_members": [
+          "gold:C_01b.role_aua_backfill:main",
+          "gold:INF_D_02c.client_directory",
+          "gold:INF_D_02c.client_directory:_write_json",
+          "gold:INF_D_02c.client_directory:main",
+          "s3:silver/api_dims/tax_unrealized/snapshot_date={*}/data.parquet"
+        ]
+      },
+      "s3:gold/views/account_team.parquet": {
+        "old_n": 148,
+        "new_n": 119,
+        "missing_n": 59,
+        "extra_n": 30,
+        "coverage_pct": 60.1,
+        "missing_members_with_edge_class": {
+          "gold:A_03.positions_cube": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_gate_write_watermark": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_load_phantom_exclusion_set": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_load_realized_sell_events": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:build_full": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:build_single_date": [
+            "CALLS"
+          ],
+          "gold:A_03.positions_cube:main": [
+            "CALLS"
+          ],
+          "gold:A_03.positions_cube:run_shadow_gate_evidence": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:_apply_silver_noncash_cap": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_build_authoritative_reopen_lots": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:_build_rps_context": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_build_rps_synthetic_lots": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_build_synthetic_lots": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_build_uln_sleeve_lots": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_load_fallback_context": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_load_sleeve_allocations_mv": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:_read_parquet_from_s3": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:build_holdings_lots_snapshot": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:load_latest_prices": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:main": [
+            "CALLS"
+          ],
+          "gold:E_00.decompose_aua_gap:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_01.account_quality_tiers:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_05.gap_by_pricing_source:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_06.trace_asset_pricing:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_07.account_gap_buckets:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_08.tail_asset_drill:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_09.unrecognized_exit_types:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_10.validate_ffill_cap:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_11.unmatched_asset_analysis:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_12.dump_all_non_yahoo:read_pq": [
+            "WRITES_S3"
+          ],
+          "gold:E_13.tail_decomposition:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_14.audit_existing_mappings:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_15.validate_yf_overrides:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_16.unit_math_audit:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:INF_B_03.account_gains": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_02.advisor_client_detail:load_buy_lot_acquisitions": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_02.advisor_client_detail:main": [
+            "CALLS"
+          ],
+          "gold:INF_build_canonical_prices": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:build_canonical": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:load_historical_prices": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:main": [
+            "CALLS"
+          ],
+          "gold:gold_dispatch": [
+            "TRIGGERS"
+          ],
+          "gold:orion-gold-dispatch": [
+            "TRIGGERS"
+          ],
+          "lambda:bd-price-update": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "lambda:inf-portal-advisor-publisher": [
+            "READS_S3"
+          ],
+          "lambda:inf-portal-publisher": [
+            "READS_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ],
+          "s3:config/ticker_lookup.json": [
+            "READS_S3"
+          ],
+          "s3:gold/account_gains/{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/dimensions/schwab_bd_account_mapping.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/lots/lots_latest.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/meta/positions_cube_incr_watermark.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/timeseries/positions_cube/": [
+            "READS_S3"
+          ],
+          "s3:silver/historical_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/interpolated_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/prices/canonical_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/realized/bd_realized_agg.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/unrealized/unrealized_gain_loss.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 2,
+        "strict_in_scope_n": 57,
+        "extra_members": [
+          "gold:C_01.canonical_nna",
+          "gold:C_01c.role_aua_flow_join",
+          "gold:C_06.client_mix_timeseries",
+          "gold:INF_C_04.validate_aua",
+          "gold:INF_C_06.client_mix_timeseries",
+          "gold:INF_C_07.advisor_attribution",
+          "gold:INF_D_00b.portal_timeseries",
+          "gold:INF_D_00d.cumulative_chart",
+          "gold:INF_D_02c.client_directory",
+          "gold:INF_D_02c.client_directory:_write_json",
+          "gold:INF_D_02c.client_directory:main",
+          "gold:INF_D_05.activity_scan",
+          "gold:INF_D_05.client_top_holdings",
+          "gold:INF_D_06.client_timeseries",
+          "gold:INF_D_09.account_timeseries",
+          "gold:build_mdpf_inflection_history_from_spine",
+          "gold:build_mdpf_wsc_inflection_feeder",
+          "s3:gold/artifacts/client_mix_timeseries.json",
+          "s3:gold/artifacts/cumulative_chart.json",
+          "s3:gold/cache/hh_timeseries_anchors_{*}.parquet",
+          "s3:gold/canonical/nna/{*}.parquet",
+          "s3:gold/canonical/nna_atomic/{*}.parquet",
+          "s3:gold/canonical/nna_validation/{*}.json",
+          "s3:gold/entities/clients/{*}.json",
+          "s3:gold/views/mix_daily_summary.json",
+          "s3:gold/views/rel_architect_lookup.parquet",
+          "s3:gold/views/relationship_team.parquet",
+          "s3:platinum/clients/{*}/timeseries.json",
+          "s3:platinum/clients/{*}/top_holdings.json",
+          "s3:silver/api_dims/tax_unrealized/snapshot_date={*}/data.parquet"
+        ]
+      },
+      "s3:gold/timeseries/account_performance.parquet": {
+        "old_n": 159,
+        "new_n": 119,
+        "missing_n": 59,
+        "extra_n": 19,
+        "coverage_pct": 62.9,
+        "missing_members_with_edge_class": {
+          "gold:A_03.positions_cube": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_gate_write_watermark": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_load_phantom_exclusion_set": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:_load_realized_sell_events": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:build_full": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:A_03.positions_cube:build_single_date": [
+            "CALLS"
+          ],
+          "gold:A_03.positions_cube:main": [
+            "CALLS"
+          ],
+          "gold:A_03.positions_cube:run_shadow_gate_evidence": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:_apply_silver_noncash_cap": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_build_authoritative_reopen_lots": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:_build_rps_context": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_build_rps_synthetic_lots": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_build_synthetic_lots": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_build_uln_sleeve_lots": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_load_fallback_context": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:_load_sleeve_allocations_mv": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:_read_parquet_from_s3": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:build_holdings_lots_snapshot": [
+            "CALLS"
+          ],
+          "gold:B_01.holdings_lots:load_latest_prices": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:B_01.holdings_lots:main": [
+            "CALLS"
+          ],
+          "gold:E_00.decompose_aua_gap:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_01.account_quality_tiers:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_05.gap_by_pricing_source:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_06.trace_asset_pricing:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_07.account_gap_buckets:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_08.tail_asset_drill:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_09.unrecognized_exit_types:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_10.validate_ffill_cap:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_11.unmatched_asset_analysis:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_12.dump_all_non_yahoo:read_pq": [
+            "WRITES_S3"
+          ],
+          "gold:E_13.tail_decomposition:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_14.audit_existing_mappings:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_15.validate_yf_overrides:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:E_16.unit_math_audit:main": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:INF_B_03.account_gains": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_02.advisor_client_detail:load_buy_lot_acquisitions": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:INF_D_02.advisor_client_detail:main": [
+            "CALLS"
+          ],
+          "gold:INF_build_canonical_prices": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2": [
+            "READS_S3",
+            "TRIGGERS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:build_canonical": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:load_historical_prices": [
+            "CALLS",
+            "WRITES_S3"
+          ],
+          "gold:build_canonical_prices_v2:main": [
+            "CALLS"
+          ],
+          "gold:gold_dispatch": [
+            "TRIGGERS"
+          ],
+          "gold:orion-gold-dispatch": [
+            "TRIGGERS"
+          ],
+          "lambda:bd-price-update": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "lambda:inf-portal-advisor-publisher": [
+            "READS_S3"
+          ],
+          "lambda:inf-portal-publisher": [
+            "READS_S3"
+          ],
+          "lambda:opal-partners-data": [
+            "FETCHES",
+            "READS_S3"
+          ],
+          "s3:config/ticker_lookup.json": [
+            "READS_S3"
+          ],
+          "s3:gold/account_gains/{*}.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/dimensions/schwab_bd_account_mapping.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/lots/lots_latest.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/meta/positions_cube_incr_watermark.json": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:gold/timeseries/positions_cube/": [
+            "READS_S3"
+          ],
+          "s3:silver/historical_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/interpolated_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/prices/canonical_prices.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/realized/bd_realized_agg.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ],
+          "s3:silver/unrealized/unrealized_gain_loss.parquet": [
+            "READS_S3",
+            "WRITES_S3"
+          ]
+        },
+        "strict_out_of_scope_n": 2,
+        "strict_in_scope_n": 57,
+        "extra_members": [
+          "gold:C_01.canonical_nna",
+          "gold:C_01b.role_aua_backfill:main",
+          "gold:C_01c.role_aua_flow_join",
+          "gold:INF_C_04.validate_aua",
+          "gold:INF_C_06.client_mix_timeseries",
+          "gold:INF_D_00b.portal_timeseries",
+          "gold:INF_D_00d.cumulative_chart",
+          "gold:INF_D_02c.client_directory",
+          "gold:INF_D_02c.client_directory:_write_json",
+          "gold:INF_D_02c.client_directory:main",
+          "gold:INF_D_05.activity_scan",
+          "gold:build_mdpf_inflection_history_from_spine",
+          "gold:build_mdpf_wsc_inflection_feeder",
+          "s3:gold/artifacts/client_mix_timeseries.json",
+          "s3:gold/artifacts/cumulative_chart.json",
+          "s3:gold/canonical/nna/{*}.parquet",
+          "s3:gold/canonical/nna_atomic/{*}.parquet",
+          "s3:gold/canonical/nna_validation/{*}.json",
+          "s3:silver/api_dims/tax_unrealized/snapshot_date={*}/data.parquet"
+        ]
+      }
+    }
+  }
+}
