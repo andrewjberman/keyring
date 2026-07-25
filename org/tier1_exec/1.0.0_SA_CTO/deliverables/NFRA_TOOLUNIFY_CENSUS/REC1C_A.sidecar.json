@@ -39,8 +39,8 @@
       "rc": 1,
       "observed": "LOUD",
       "verdict": "MISMATCH-reverse",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "comp-lambdamap check -- source-map vs TF + on-disk dirs (read-only)\n  source-map functions: 192 | top-level non-meta: 0 | TF lambdas: 165\n  DRIFT: 3 WRONG_SOURCE_DIR, 3 MISSING_ENTRY\n    [WRONG_SOURCE_DIR] seeking-alpha-analysis-coordinator: source-map=infra/aws/lambda/seeking-alpha-analysis-coordinator != TF=infra/aws/lambda/seeking-alpha-url-coordinator\n    [WRONG_SOURCE_DIR] seeking-alpha-analysis-listing-parser: source-map=infra/aws/lambda/seeking-alpha-analysis-listing-parser != TF=infra/aws/lambda/seeking-alpha-listing-parser\n    [WRONG_SOURCE_DIR] seeking-alpha-analysis-scraper: source-map=infra/aws/lambda/seeking-alpha-analysis-scraper != TF=infra/aws/lambda/seeking-alpha-article-scraper\n    [MISSING_ENTRY] find-insure-crawl-job-posting-{board}: TF-backed (in infra/aws/terraform/imo-pipeline/phase2b-lambdas.tf) but no functions{} entry\n    [MISSING_ENTRY] m365-ms-ingest-liveness: TF-backed (in infra/aws/terraform/m365-mcp-gateway/ms-ingest.tf) but no functions{} entry\n    [MISSING_ENTRY] opal-49f-value-parity: TF-backed (in infra/aws/terraform/49f-value-parity/49f_value_parity.tf) but no functions{} entry\n",
+      "stderr_excerpt": "(empty)"
     },
     {
       "tool": "comp-routes",
@@ -52,8 +52,8 @@
       "rc": 0,
       "observed": "FAIL-OPEN",
       "verdict": "MISMATCH",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "No match for: DefinitelyNonexistentComponentZzz9999\nTry a URL (/api/...), endpoint function name, or component name.\n",
+      "stderr_excerpt": "COVERAGE: the portal request path as DECLARED in source: CloudFront origins/behaviors/custom-error-responses parsed from cloudfront-distribution.tf, URL->S3 rewrite rules from the Lambda@Edge routers, API GW routes from api-gateway .tf, and frontend endpoint/component bindings from portal/src | BLIND: trace resolves a URL to an S3 key ONLY through the modelled static rewrite table; a key computed INSIDE a Lambda@Edge router or a backend Lambda is invisible, and an uncovered prefix renders UNRESOLVED (missing coverage, NOT a proof that no key exists); a catch-all `/*` match is a DEFAULT, not a resolution -- it matches any path no other behavior claimed, including paths that do not exist; it is disclosed always-on and must never be read as evidence the path is served; DESIRED plane only: this is parsed Terraform + committed router source, so it CANNOT tell a declared behavior/rewrite from a deployed one -- a drifted distribution or a pinned stale Lambda@Edge version reads identical here (see `edge-versions` for the pinning axis); the rewrite table is PARSED from the Lambda@Edge routers' if/else chains (NFRA_TOOLARCH.MACHINEFLAG R2, 2026-07-24 -- was TRANSCRIBED and had drifted), and the parser FAILS LOUD on any branch shape it cannot represent, so a router edit either parses or errors, never silently drifts. Still SOURCE plane (committed .mjs, not the deployed edge version -- ground a security-critical branch on the deployed artifact per Rule 22a, as done for the summary.json 4...[truncated]"
     },
     {
       "tool": "comp-iam-usage",
@@ -65,8 +65,8 @@
       "rc": 0,
       "observed": "FAIL-OPEN-by-design",
       "verdict": "MISMATCH-at-exit-code-layer",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "{\n \"read\": false,\n \"verdict\": \"UNKNOWN\",\n \"error\": \"get_role failed: An error occurred (ValidationError) when calling the GetRole operation: The specified value for roleName is invalid. It \",\n \"note\": \"role unreadable -> UNKNOWN, never a deny\"\n}\n\n  RULE-22a fix-or-carry (comp-iam's 3 named limits -- NAMED, never silently inherited):\n    (a) (action,resource) blindness  -> FIXED: reach-check simulates the EXACT --resource-arns\n        (comp-iam models (action) only; a grant on ANY arn falsely reads GRANTED for EVERY arn).\n    (b) 2+-ARN implicitDeny poisoning -> FIXED: ONE --resource-arns per reach-check call; the\n        positive control is a SEPARATE invocation (batching corrupts the control).\n    (c) Condition-block false-deny    -> FIXED/CARRIED: --context-entries when given; a conditioned\n        statement with no context is UNKNOWN, never a (false) deny.\n    (+) DESIRED-not-APPLIED           -> FIXED: who-can-reach / reach-check read LIVE policies;\n        an unreadable/unparseable policy is UNKNOWN, never 'no reach' (an unparsed Deny != silence).\n",
+      "stderr_excerpt": "(empty)"
     },
     {
       "tool": "comp-deadgrant",
@@ -78,8 +78,8 @@
       "rc": 0,
       "observed": "PASS",
       "verdict": "MATCH-positive-control",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "SELF-TEST PASS: get-function consolidation field-reads (Handler/Env/Location + fail-safe) + axis-B SILENT/LOUD classifier.\n",
+      "stderr_excerpt": "(empty)"
     },
     {
       "tool": "comp-deadgrant",
@@ -92,8 +92,8 @@
       "observed": "INCONCLUSIVE",
       "verdict": "UNKNOWN",
       "note": "account-dependent branch (deadgrant.py:490) only reached when axis-A x axis-B candidates exist; --limit 1 found 0 candidates so the mutation never reached the code path it targets. Separately confirmed via source: list_functions (the fleet enumeration) is NOT scoped by --account at all.",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "NOTE: --limit 1 -> inspecting 1 of 191 lambdas (BOUNDED sweep, not the full fleet -- coverage is partial by request).\nlive secret names (both regions): 83\nlambdas in account: 191 (inspecting 1)\n\n\n=========== CANDIDATES: axis A (dead reach) x axis B (fail-silent reader) ===========\n  AXIS C IS UNVERIFIED BY THIS TOOL and is required before any row is a finding:\n    does the swallowing path EXECUTE, and does anything downstream DEPEND on its output?\n  Ground each row against its CloudWatch log and its SERVED artifact. Do not route raw rows.\n\n  none\n\n  dead-reach rows: 0   axis-A x axis-B candidates: 0   uninspectable: 0 (never silently dropped)\n",
+      "stderr_excerpt": "  ... 1/1 lambdas      0s elapsed  0.0s/lambda  ~0.0min left\n"
     },
     {
       "tool": "comp-deadgrant.py",
@@ -106,8 +106,8 @@
       "observed": "INCONCLUSIVE (byte-identical to wrapper)",
       "verdict": "UNKNOWN",
       "note": "confirms wrapper/.py parity; same reason as comp-deadgrant row above",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "NOTE: --limit 1 -> inspecting 1 of 191 lambdas (BOUNDED sweep, not the full fleet -- coverage is partial by request).\nlive secret names (both regions): 83\nlambdas in account: 191 (inspecting 1)\n\n\n=========== CANDIDATES: axis A (dead reach) x axis B (fail-silent reader) ===========\n  AXIS C IS UNVERIFIED BY THIS TOOL and is required before any row is a finding:\n    does the swallowing path EXECUTE, and does anything downstream DEPEND on its output?\n  Ground each row against its CloudWatch log and its SERVED artifact. Do not route raw rows.\n\n  none\n\n  dead-reach rows: 0   axis-A x axis-B candidates: 0   uninspectable: 0 (never silently dropped)\n",
+      "stderr_excerpt": "  ... 1/1 lambdas      0s elapsed  0.0s/lambda  ~0.0min left\n"
     },
     {
       "tool": "comp-denytest",
@@ -119,8 +119,8 @@
       "rc": 1,
       "observed": "LOUD",
       "verdict": "MATCH",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "(empty)",
+      "stderr_excerpt": "FAIL: supply --from-plan (preferred) or --change-type.\n"
     },
     {
       "tool": "comp-denytest",
@@ -132,8 +132,8 @@
       "rc": 1,
       "observed": "LOUD",
       "verdict": "MATCH",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "change-type = deny-add  ->  DERIVED expected verdict = explicitDeny\n(the author does not choose this; it is derived from the change type)\n\n=== the change's own principals: every (principal x resource x action) ===\n  [FAIL] definitely-nonexistent-role-zzz-9999 s3:GetObject                   -> <NO VERDICT: rc=255 err=An error occurred (NoSuchEntity) when calling the SimulatePrincipalPolicy operat>\n\nRESULT: FAIL (1)\n  !! definitely-nonexistent-role-zzz-9999 s3:GetObject arn:aws:s3:::definitely-nonexistent-bucket-zzz-9999 -> <NO VERDICT: rc=255 err=An error occurred (NoSuchEntity) when calling the SimulatePrincipalPolicy operat> (want explicitDeny)\n",
+      "stderr_excerpt": "(empty)"
     },
     {
       "tool": "comp-denytest.py",
@@ -145,8 +145,8 @@
       "rc": 1,
       "observed": "LOUD (byte-identical to comp-denytest EMPTY probe)",
       "verdict": "MATCH",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "(empty)",
+      "stderr_excerpt": "FAIL: supply --from-plan (preferred) or --change-type.\n"
     },
     {
       "tool": "comp-tagauthz",
@@ -158,8 +158,8 @@
       "rc": 1,
       "observed": "LOUD",
       "verdict": "MATCH",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "------------------------------------------------------------------------------\nSWEPT (derived from the account, one call: iam get-account-authorization-details):\n  roles 206   local+attached policies 54   users 6   groups 1\n  SCPs: NOT APPLICABLE -- account is not in an AWS Organization (AWSOrganizationsNotInUseException). Stated, not implied.\nNOT SWEPT (named, not implied): S3 bucket policies, KMS key policies,\n  permission boundaries, session policies, resource policies generally.\ntag-conditioned statements found: 12 (4 ours, 8 AWS service-linked)\n------------------------------------------------------------------------------\n",
+      "stderr_excerpt": "ERROR: --default-tags-tree is REQUIRED when gating candidates (--candidate / --from-state).\n       Without it there is no tree whose default_tags could overwrite anything, so a\n       PASS would mean 'nothing to compare against', not 'safe'. Failing closed (rc=1).\n"
     },
     {
       "tool": "comp-tagauthz.py",
@@ -171,8 +171,8 @@
       "rc": 1,
       "observed": "LOUD (byte-identical)",
       "verdict": "MATCH",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "------------------------------------------------------------------------------\nSWEPT (derived from the account, one call: iam get-account-authorization-details):\n  roles 206   local+attached policies 54   users 6   groups 1\n  SCPs: NOT APPLICABLE -- account is not in an AWS Organization (AWSOrganizationsNotInUseException). Stated, not implied.\nNOT SWEPT (named, not implied): S3 bucket policies, KMS key policies,\n  permission boundaries, session policies, resource policies generally.\ntag-conditioned statements found: 12 (4 ours, 8 AWS service-linked)\n------------------------------------------------------------------------------\n",
+      "stderr_excerpt": "ERROR: --default-tags-tree is REQUIRED when gating candidates (--candidate / --from-state).\n       Without it there is no tree whose default_tags could overwrite anything, so a\n       PASS would mean 'nothing to compare against', not 'safe'. Failing closed (rc=1).\n"
     },
     {
       "tool": "comp-secrets",
@@ -185,8 +185,8 @@
       "observed": "LOUD",
       "verdict": "MATCH",
       "note": "first attempt (bash .tools/comp-secrets get ...) mis-dispatched (idiom-2 tool); logged not discarded, corrected before recording verdict",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "(empty)",
+      "stderr_excerpt": "comp-secrets: no secret named/matching 'definitely-nonexistent-secret-zzz-9999'.\n"
     },
     {
       "tool": "comp-pii",
@@ -198,8 +198,8 @@
       "rc": 1,
       "observed": "LOUD",
       "verdict": "MATCH",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "WARN [comp-pii] SERVE-TIME MASKING NOT LIVE (C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\infra\\aws\\lambda\\v2_portal\\partners\\lambdas\\opal-partners-data\\pseudonymizer.py): needs_pseudonymization() returns False on every path (retired 2026-04-15, Andrew).\n  _transform_field is UNREACHABLE -- the field-hashing this tool models is NOT applied at serve time.\n  PII is served CLEARTEXT, protected by UPSTREAM AUTH (allowedFirmIds authorizer + auth-validator-edge), NOT by field-hashing.\n  -> HONEST POSTURE: 0 pseudonymized fields. Audit the AUTH, not _transform_field.\nComponent not found: DefinitelyNonexistentComponentZzz9999\n",
+      "stderr_excerpt": "(empty)"
     },
     {
       "tool": "comp-keys",
@@ -211,8 +211,8 @@
       "rc": 0,
       "observed": "FAIL-OPEN-by-design (self-documented BLIND caveat)",
       "verdict": "MISMATCH-at-exit-code-layer",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "EXISTENCE of prefix 'definitely/nonexistent/prefix/zzz9999/' across 3 enabled pipeline firm(s) (denominator: data/firm_registry.json, enabled + pipeline-scoped)\n  49financial      s3://opal-data-bd/definitely/nonexistent/prefix/zzz9999/  ABSENT\n  inflection       s3://opal-data-inf/definitely/nonexistent/prefix/zzz9999/  ABSENT\n  cottonwood       s3://opal-data-cot/definitely/nonexistent/prefix/zzz9999/  ABSENT\n",
+      "stderr_excerpt": "COVERAGE: keys / partition dates / per-firm existence under an S3 prefix, from a LIVE s3api listing | BLIND: lists ONLY what s3api returns for the exact prefix given -- a typo'd or wrong prefix reads as a true (loud) zero, not an error; the denominator is always the exact bucket+prefix, never the intended one; partition dates are DERIVED from key text (YYYY-MM-DD / YYYYMMDD / date=), not --delimiter (which MSYS-mangles); a key that encodes its date differently is not counted; gaps are calendar-weekday, not trading-calendar (resolve NEVER#1 before calling a weekday gap a defect); prefix/partitions enumerate ONE bucket; only `exists` is complete-over the declared firm scope (data/firm_registry.json enabled+pipeline)\nPLANE: applied | VINTAGE: LIVE s3api list-objects-v2 at run time; LastModified is ISO-8601 Z (never `aws s3 ls` local time)\n"
     },
     {
       "tool": "comp-clobber",
@@ -225,8 +225,8 @@
       "rc": 1,
       "observed": "LOUD-via-unhandled-exception (botocore.errorfactory.NoSuchBucket, uncaught)",
       "verdict": "MATCH-but-flagged",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "(empty)",
+      "stderr_excerpt": "Traceback (most recent call last):\n  File \"C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\.tools\\comp-clobber\", line 30, in <module>\n    runpy.run_path(_ENGINE, run_name=\"__main__\")\n  File \"<frozen runpy>\", line 287, in run_path\n  File \"<frozen runpy>\", line 98, in _run_module_code\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\modules\\graph\\clobber_scan.py\", line 328, in <module>\n    sys.exit(main())\n             ^^^^^^\n  File \"C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\modules\\graph\\clobber_scan.py\", line 307, in main\n    res = live_confirm(args.live[0], args.live[1])\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\modules\\graph\\clobber_scan.py\", line 182, in live_confirm\n    (v for v in s3.list_object_versions(Bucket=bucket, Prefix=key).get(\"Versions\", []) if v[\"Key\"] == key),\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\botocore\\client.py\", line 606, in _api_call\n    return self._make_api_call(operation_name, kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\botocore\\context.py\", line 123, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-package...[truncated]"
     },
     {
       "tool": "comp-debris",
@@ -238,8 +238,8 @@
       "rc": 0,
       "observed": "PASS (incl. explicit trading-calendar MUTANT check)",
       "verdict": "MATCH-positive-control",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "  [PASS] refine1.guard_not_in_reap\n  [PASS] refine1.guard_is_stillborn\n  [PASS] refine1.new_is_too_young\n  [PASS] refine2.blind_is_unknown\n  [PASS] refine3.held_excluded\n  [PASS] control.known_hot_is_hot\n  [PASS] control.dormant_is_reap   (reap={'cold-dormant-fn'})\n\nOK: never-invoked!=cold, UNKNOWN-is-a-band, hold-aware, never-deletes -- all held\n\n=== debris_adapters self-test (offline mutants; reuses cd.classify) ===\n  [PASS] ddb_dormant_is_reap  (reap={'cfg-table-cold'})\n  [PASS] s3_flat_old_is_stillborn\n  [PASS] s3_new_is_too_young\n  [PASS] ec2_blind_is_unknown\n  [PASS] held_excluded\n  [PASS] event_hot_is_hot\n  [PASS] signal_basis_on_every_row\n  [PASS] MUTANT.t1_pipeline_weekend_is_HOT_not_debris  (dormancy_basis=trading-days)\n  [PASS] MUTANT.wall_clock_control_WOULD_have_flagged  (SAME Fri->Mon dates under wall-clock DO reap -- proves the fold changed the verdict, not a no-op)\n  [PASS] CADENCE.monthly_23d_is_HOT_not_debris\n  [PASS] CADENCE.daily_21d_IS_a_finding\n  OK: multi-type never-active!=cold, UNKNOWN-band, hold-aware, signal-basis-per-row, trading-calendar false-outage mutant + cadence mutant -- all held\n",
+      "stderr_excerpt": "(empty)"
     },
     {
       "tool": "comp-debris",
@@ -251,8 +251,8 @@
       "rc": 0,
       "observed": "FAIL-OPEN (stderr names the invalid type, but proceeds to print a full 0-resources report and exits 0)",
       "verdict": "MISMATCH",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "comp-debris --types -- multi-type coldest-first ledger (ADVISORY; NEVER deletes; hold-aware)\n  window 30d (hot 7d) | 0 resources | 0 held EXCLUDED | per-row SIGNAL BASIS + DORMANCY BASIS\n  bands: HOT=0 COLD-DORMANT=0 TOO-YOUNG=0 STILLBORN-OR-GUARD=0 UNKNOWN=0\n  NEVER#1: T-1 pipeline/data dormancy counted in TRADING days (lib/trading_calendar);\n  scheduled rules judged against their OWN cadence -- a weekend/monthly gap is NOT debris.\n\n  REAP RANK -- COLD-DORMANT only (dormancy AFTER activity; coldest first):\n    (none dormant-after-activity in window)\n\n  CONFIRMATION PASS (run ON this cold tail; NOT in this tool): comp-heat federated,\n  comp-dups, comp-deadgrant, comp-trigger, comp-iam-usage. Reaping is a human, never-widen act.\n",
+      "stderr_excerpt": "unknown type 'nonexistent_type_zzz_9999' (known: lambda,ddb,s3,ec2,events)\n"
     },
     {
       "tool": "comp-dups",
@@ -264,8 +264,8 @@
       "rc": 0,
       "observed": "SILENT-EMPTY as to the mutation (zero acknowledgment anywhere; ran full unfiltered scan)",
       "verdict": "MISMATCH",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "==============================================================================\ncomp-dups -- BM25 dup/dead-twin scanner (advisory; ranked; NEVER removes)\n==============================================================================\n\n=== CLASS A-high: TF EXACT-label collisions across modules (15) ===\n    (the real twin/double-management signal -- each a possible two-states-one-resource)\n  TF_LABEL_COLLISION 10.45 [EXACT] aws_iam_role_policy.events_invoke_ssm <infra\\aws\\terraform\\canonical-schwab-ec2> ~ aws_iam_role_policy.events_invoke_ssm <infra\\aws\\terraform\\consolidation-gold-runner>\n  TF_LABEL_COLLISION 10.45 [EXACT] aws_iam_role_policy.events_invoke_ssm <infra\\aws\\terraform\\canonical-schwab-ec2> ~ aws_iam_role_policy.events_invoke_ssm <infra\\aws\\terraform\\canonical-schwab-si2-schedule>\n  TF_LABEL_COLLISION 10.45 [EXACT] aws_iam_role_policy.events_invoke_ssm <infra\\aws\\terraform\\canonical-schwab-si2-schedule> ~ aws_iam_role_policy.events_invoke_ssm <infra\\aws\\terraform\\consolidation-gold-runner>\n  TF_LABEL_COLLISION 10.35 [EXACT] aws_iam_role_policy.automation_start <infra\\aws\\terraform\\canonical-schwab-ec2> ~ aws_iam_role_policy.automation_start <infra\\aws\\terraform\\consolidation-gold-runner>\n  TF_LABEL_COLLISION 9.63  [EXACT] aws_iam_role.events_invoke_ssm <infra\\aws\\terraform\\canonical-schwab-ec2> ~ aws_iam_role.events_invoke_ssm <infra\\aws\\terraform\\consolidation-gold-runner>\n  TF_LABEL_COLLISION 9.63  [EXACT] aws_iam_role.events_invoke_ssm <infra\\aws\\terraform\\canonic...[truncated]",
+      "stderr_excerpt": "SOVEREIGN HOLD: 354 held path(s) EXCLUDED from the corpus (data/black_diamond/, data/canonical/schwab/silver/) -- not read (--allow-held to include when lifted).\n"
     },
     {
       "tool": "comp-drift",
@@ -278,8 +278,8 @@
       "observed": "TIMEOUT (my own budget, not the tool's exit code); partial: seam-1 comp-heat drift -> CLEAN, seam-2 comp-pipescript deployed -> MATCH, seam-3 globgrph derive marker-oracle did not complete in budget",
       "verdict": "UNKNOWN",
       "note": "no upfront target-existence validation observed (source-confirmed via drift_cli.py: raw string passed to each seam adapter's `if target:` branch); two adapters returned substantive non-error verdicts for a nonexistent artifact -- flagged, not adjudicated, per REC1C_A.md S4i",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "(empty)",
+      "stderr_excerpt": "  [sweep] seam-1   comp-heat drift ...\n  [sweep] seam-1   comp-heat drift -> CLEAN (3.2s)\n  [sweep] seam-2   comp-pipescript deployed ...\n  [sweep] seam-2   comp-pipescript deployed -> MATCH (6.3s)\n  [sweep] seam-2   comp-lambdamap parity ...\n  [sweep] seam-2   comp-lambdamap parity -> COST-GUARDED (0.0s)\n  [sweep] seam-2   comp-iam reconcile ...\n  [sweep] seam-2   comp-iam reconcile -> COST-GUARDED (0.0s)\n  [sweep] seam-3   globgrph derive marker-oracle (comp-kuzu provenance header) ...\n"
     },
     {
       "tool": "comp-firmsep-sweep",
@@ -291,8 +291,8 @@
       "rc": 1,
       "observed": "LOUD",
       "verdict": "MATCH",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "(empty)",
+      "stderr_excerpt": "comp-firmsep-sweep: cannot resolve secret 'definitely-nonexistent-secret-zzz-9999': An error occurred (ResourceNotFoundException) when calling the DescribeSecret operation: Secrets Manager can't find the specified secret.\n"
     },
     {
       "tool": "comp-firmsep-sweep.py",
@@ -304,8 +304,8 @@
       "rc": 1,
       "observed": "LOUD (byte-identical)",
       "verdict": "MATCH",
-      "stdout_excerpt": null,
-      "stderr_excerpt": null
+      "stdout_excerpt": "(empty)",
+      "stderr_excerpt": "comp-firmsep-sweep: cannot resolve secret 'definitely-nonexistent-secret-zzz-9999': An error occurred (ResourceNotFoundException) when calling the DescribeSecret operation: Secrets Manager can't find the specified secret.\n"
     }
   ],
   "cross_batch_pattern": {
@@ -348,5 +348,6 @@
     ],
     "grounding_method": "current infra/aws/terraform/** presence (grep) + full git history literal-string search (git log -S<name> -- infra/aws/terraform), per name; rail-checked marker used (historical TF-string search not answerable by comp-aws/comp-iam)",
     "remaining_unresolved": 0
-  }
+  },
+  "excerpt_repopulation_note": "CVO~Z-caught defect fixed 2026-07-25 post-verification: original build used a /cygdrive/c/... path with native Windows python3 (Python312), which cannot resolve that mount form -- os.path.exists() silently returned False for all 21 rows, leaving stdout_excerpt/stderr_excerpt null throughout. Fixed by rebuilding with the native Windows path form; excerpts now populated from the same raw capture files used to author REC1C_A.md (0 relabeled, 0 reclassified -- this is an evidence-population fix only, verdicts unchanged)."
 }
