@@ -280,6 +280,27 @@ def cmd_service(args):
                 if note:
                     print(f"      note: {note}")
 
+        # NFRA_COMPIAM Stage 3 (CVO~Z finding #3, 2026-07-25): a MODELED service whose called
+        # METHOD is absent from _BOTO3_BY_SERVICE previously yielded ZERO signal -- no operation,
+        # no sentinel. `comp-iam` now emits an UNMAPPED-METHOD Operation at every such call site
+        # (extract_iam.py); this line converts that into the per-service denominator CTO~Z asked
+        # for -- NOT a percentage of all of boto3 (deliberately declined -- a whitelist only needs
+        # the estate's own methods), the finding is the missing CONTROL, not a ratio. Emitted only
+        # when K>0 -- a clean K=0 file adds nothing to read.
+        def _is_sentinel(op):
+            return len(op.iam_actions) == 1 and (
+                op.iam_actions[0] in ('UNMAPPED-METHOD', 'UNRESOLVED-CLIENT')
+                or op.iam_actions[0].endswith(':UNMODELED')
+            )
+        _unmapped_ops = [op for op in profile.operations if op.iam_actions == ['UNMAPPED-METHOD']]
+        if _unmapped_ops:
+            _mapped_n = sum(1 for op in profile.operations if not _is_sentinel(op))
+            _names = sorted({op.source_pattern.split(' (')[0] for op in _unmapped_ops})
+            print()
+            print(f"  METHOD-MAP COVERAGE: {_mapped_n + len(_unmapped_ops)} call(s) to a modeled "
+                  f"service detected, {_mapped_n} mapped, {len(_unmapped_ops)} UNMAPPED-METHOD "
+                  f"(named: {', '.join(_names)})")
+
         # DENOMINATOR. A tool that cannot state what it could not check has not checked.
         n_stmts = len(role.statements) if role else 0
         print()

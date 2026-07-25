@@ -492,6 +492,23 @@ _BOTO3_BY_SERVICE: dict[str, dict] = {
 }
 _MODELED_BOTO3_SERVICES = set(_BOTO3_BY_SERVICE)
 
+# NFRA_COMPIAM Stage 3 precision fix (found WHILE building Stage 3, 2026-07-25, disclosed not
+# silently absorbed into the "unmapped method" count): a boto3.resource()'s SUB-RESOURCE
+# accessors (`dynamodb.Table("name")`, `s3.Bucket("name")`, `s3.Object("b","k")`,
+# `sqs.Queue("url")`, `sns.Topic("arn")`, `ec2.Instance("id")`, ...) return a resource OBJECT,
+# make NO API call themselves, and imply NO IAM action -- they are not the same kind of thing as
+# `client.get_item(...)`. The client_map regex (built for boto3.client(), reused for
+# boto3.resource() too) cannot tell the two apart, so a fleet K-census run while building this
+# stage found ~20 Lambdas' worth of `.Table(` alone dominating the UNMAPPED-METHOD count with
+# structural noise, not real coverage gaps -- diluting the exact signal Stage 3 exists to
+# surface. Excluded HERE (not silently -- named, with the reasoning) rather than fixed by tracing
+# further into what happens to the returned resource object (its own methods, e.g. `table.
+# get_item(...)`, are a SEPARATE, deeper insufficiency -- resource sub-objects are not traced at
+# all -- out of this stage's scope, flagged not solved).
+_BOTO3_RESOURCE_SUBOBJECT_ACCESSORS = frozenset({
+    'Table', 'Bucket', 'Object', 'Queue', 'Topic', 'Instance', 'Role', 'Key',
+})
+
 # AWS CLI patterns in shell/Python subprocess -> IAM action(s)
 _AWS_CLI_S3 = [
     (re.compile(r'aws\s+s3\s+rm\b'),         ['s3:DeleteObject']),
@@ -1345,6 +1362,18 @@ def _resolve_helper_client_calls(content: str, helpers: dict, consts: dict,
                         source_pattern=f'{helper_name}({display}).{method}  [via helper]',
                         file_path=file_path, line_number=lineno,
                     ))
+                elif method not in _BOTO3_RESOURCE_SUBOBJECT_ACCESSORS:
+                    # NFRA_COMPIAM Stage 3 (CVO~Z finding #3, 2026-07-25): a MODELED service whose
+                    # specific METHOD is absent from _BOTO3_BY_SERVICE previously fell through here
+                    # with ZERO signal -- no Operation, no sentinel, nothing. Every call site this
+                    # AST pass newly finds (Stage 2) that happens to hit an unmapped method silently
+                    # WIDENED that exact exposure. Sentinel mirrors the existing UNMODELED pattern.
+                    ops.append(Operation(
+                        iam_actions=['UNMAPPED-METHOD'],
+                        source_pattern=f'{helper_name}({display}).{method}  [via helper] '
+                                        f'(method not in comp-iam\'s {service!r} action map)',
+                        file_path=file_path, line_number=lineno,
+                    ))
         # Shape 2: assign-then-use -- Assign(targets=[Name(var)], value=Call(func=Name(helper)))
         elif isinstance(node, ast.Assign) and isinstance(node.value, ast.Call) \
                 and isinstance(node.value.func, ast.Name) and node.value.func.id in helpers \
@@ -1459,6 +1488,21 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
                             resource_exact=_exact,
                             resource_expr=_expr,
                         ))
+                    # else: method IS in the map, deliberately mapped to zero actions (no IAM
+                    # impact by design) -- distinct from "not in the map at all"; stays silent,
+                    # matching this branch's existing pre-Stage-3 behavior. Only a TRUE absence
+                    # from action_map is the Stage 3 control gap (below).
+                elif method not in _BOTO3_RESOURCE_SUBOBJECT_ACCESSORS:
+                    # NFRA_COMPIAM Stage 3 (CVO~Z finding #3, 2026-07-25): a MODELED service whose
+                    # specific METHOD is absent from action_map previously fell through with ZERO
+                    # signal. Sentinel mirrors the existing UNMODELED pattern one level down.
+                    ops.append(Operation(
+                        iam_actions=['UNMAPPED-METHOD'],
+                        source_pattern=f'{client_var}.{method} '
+                                        f'(method not in comp-iam\'s {service!r} action map)',
+                        file_path=file_path,
+                        line_number=lineno,
+                    ))
 
         # Generic boto3 method calls even without tracked client var
         # e.g.: boto3.client('s3').delete_object(...)
@@ -1476,17 +1520,29 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
                     ))
                 continue
             action_map = _BOTO3_BY_SERVICE.get(service, {})
-            if method in action_map and action_map[method]:
-                _arn, _exact, _expr = _op_resource(
-                    service, method, action_map[method], _args_at(lineno, m.end() - 1), consts)
+            if method in action_map:
+                actions = action_map[method]
+                if actions:
+                    _arn, _exact, _expr = _op_resource(
+                        service, method, actions, _args_at(lineno, m.end() - 1), consts)
+                    ops.append(Operation(
+                        iam_actions=actions,
+                        source_pattern=f"boto3.client('{service}').{method}",
+                        file_path=file_path,
+                        line_number=lineno,
+                        resource_arn=_arn,
+                        resource_exact=_exact,
+                        resource_expr=_expr,
+                    ))
+                # else: deliberately mapped to zero actions -- see the sibling block's comment.
+            else:
+                # NFRA_COMPIAM Stage 3 (CVO~Z finding #3, 2026-07-25) -- same control gap, third site.
                 ops.append(Operation(
-                    iam_actions=action_map[method],
-                    source_pattern=f"boto3.client('{service}').{method}",
+                    iam_actions=['UNMAPPED-METHOD'],
+                    source_pattern=f"boto3.client('{service}').{method} "
+                                    f"(method not in comp-iam's {service!r} action map)",
                     file_path=file_path,
                     line_number=lineno,
-                    resource_arn=_arn,
-                    resource_exact=_exact,
-                    resource_expr=_expr,
                 ))
 
         # AWS CLI via subprocess: subprocess.run(['aws', 's3', 'rm', ...]) or os.system('aws s3 rm ...')
