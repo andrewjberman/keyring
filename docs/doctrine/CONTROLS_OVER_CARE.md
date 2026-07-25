@@ -370,6 +370,65 @@ The DS line, verbatim, because it is the whole point: *the parquet footer read c
 path-based scan missed because it COULD NOT FAIL QUIETLY, not because DS was more careful. Care
 is not a control; instrument choice can be.*
 
+## III-d. Six that earned it in one day (2026-07-25, NFRA_TOOLUNIFY → COMPLEARNS; ~15 wrong mechanisms caught, none by anyone being careful)
+
+**1. AN UNSATISFIABLE GATE IS NOT A STRICT GATE — IT IS AN AMBIGUOUS ONE, AND AMBIGUITY RESOLVES
+TOWARD WHOEVER NEEDS TO SHIP.** An emit-flip was gated on "the 14-mutant conformance suite lands"
+when one member's mutant is *unwritable by construction* — the suite tops out at 13, permanently.
+Two failure modes pull opposite ways: **STALL** (wait forever for a mutant nobody can write) or,
+likelier, **FUDGE** (land 13, call it complete, absorb the exemption silently). **The fudge path
+required no corner-cutting — an ordinary reading of the gate reaches it.** Fix: state the bar as
+`13 SATISFIED + 1 DECLARED-EXEMPT`, rendered by the suite itself. *Gateable: any gate whose
+condition names a count must be checkable against a reachable maximum.* Sibling: the second time
+in one day a rule failed by being *followed* (the other: an "avoid parens" workaround that
+under-covered 4 of its 5 real triggers and **read as complete**).
+
+**2. "I VERIFIED THE FIX" IS NOT "I VERIFIED THE MECHANISM OF THE FIX" — ONLY ABLATION ANSWERS
+WHICH PART IS LOAD-BEARING.** A guard was measured end-to-end (0 → 9 matches) and its closure
+attributed to the wrong component; removing the *actual* load-bearing part (`shlex.quote`) showed
+4 of 5 hazard shapes silently corrupting **inside** the guard. The misattribution reached CLAUDE.md
+and was caught only by re-reading the landed text. **A law that misattributes a control's closure
+is the premise a reader needs to REMOVE the control while reasoning correctly from the record.**
+
+**3. A MECHANISM CLAIM ENTERS A RECORD ONLY AFTER INDEPENDENT REPRODUCTION — AND THE REPRODUCTION'S
+ORACLE MUST OBSERVE THE HYPOTHESIZED FAULT DIRECTLY.** Symptoms record immediately; mechanisms wait.
+When the hypothesis is *"the argument is being corrupted,"* the only valid oracle **echoes the
+argument back** — the downstream tool's verdict cannot distinguish *intact* from
+*corrupted-but-matched-by-luck*. A verifier's "NOT REPRODUCED" was a **false negative** produced
+exactly that way: its own control was being mangled the whole time and matched by coincidence.
+Three parties held three wrong stories about one real symptom before the echo-back settled it.
+*Corollary already paid for: a sweep scoped off an unverified mechanism does not merely waste
+effort — it manufactures a FALSE ALL-CLEAR over the actual hole.*
+
+**4. A CORRECT EXCLUSION CAN DELETE THE ONLY TELL OF A BLINDNESS.** Filtering sub-resource
+constructors out of a coverage census was *right* (they make no API call) — and it removed the one
+textual marker of a code shape whose operations were **entirely untraced**. Verified mechanically
+correct, and consequentially blinding. *When you exclude a token, ask what else that token was the
+only evidence of.*
+
+**5. REDUNDANT DERIVATION IS A CONTROL ONLY WHEN THE DERIVATIONS CAN DISAGREE.** The day's
+error-detection came from producers publishing **raw accounting lines** that collided — not from
+the verification lane being right (it was wrong 8 times, self-caught). Conclusion-only reporting
+structurally removes the detector, and **two agents asserting the same wrong thing sail through
+with nothing flagging it.** Design consequence: a report contract must require the raw denominator
+and predicate, not just the verdict — that is what makes the *verifier* verifiable.
+
+**6. EVERY COMPARISON HARNESS GETS AN EXPLICIT `INCONCLUSIVE` BRANCH.** The failure mode is a
+**broken side reading as a negative result**: a set-diff printed "NOT IDENTICAL" because one vintage
+loaded empty (a `__file__`-derived path resolved into a scratch dir), and a map-census reported
+"1,677 invisible items" because it diffed against a set its parser had read as zero. Both were
+caught only because a number contradicted something the author already knew. *A harness that cannot
+say "I don't know" says "no" instead.*
+
+**Two structural notes the day earned, recorded because they change what a record is FOR:**
+**(a) A prematurely-checked prerequisite does not merely misreport status — it AUTHORIZES downstream
+work.** A build-order item marked DONE on 2 of its 3 clauses would have opened a design phase the
+unmet clause existed to prevent. **(b) The verification-depth call belongs to the DISPATCHER, not the
+verifier.** A verifier under queue pressure starts accepting self-reports — the rubber-stamp path —
+so thinning must be a decision with an owner (`FULL` = adversarial pass; `REDUCED` = re-derive the
+headline only, tagged per item, untagged defaults to FULL), never ambient drift. Its first use
+produced a *precision caveat* instead of a rubber stamp at the same cost.
+
 ## IV. Guards
 
 **A NULL THAT MEANS TWO THINGS IS A LIE ABOUT ONE OF THEM.**
