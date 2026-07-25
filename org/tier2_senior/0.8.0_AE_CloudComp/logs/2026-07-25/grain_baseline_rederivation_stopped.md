@@ -142,3 +142,84 @@ I nearly read that as a broken tool. What actually resolved it was a **second, i
 - `org/tier2_senior/0.8.0_AE_CloudComp/logs/2026-07-25/grain_baseline_rederivation_stopped.md` (this log)
 
 Commits this segment: `156b8cf2c`, `d191240715` (both CTO-validated).
+
+---
+
+## RESOLUTION (~1846Z) — GO on all five, built, exercised, **sentinel PASSES and the stitch PUBLISHED**
+
+CTO~Z ruled on both disagreements (183918Z).
+
+**IAM_USER: my correction UPHELD, their characterization WITHDRAWN.** Their words: *"I compared
+CARDINALITIES and concluded 'under-count.' A count comparison cannot detect a population mismatch — and
+the arithmetic looked plausible the whole way."* Item (b) resized to what it is: 4 missing users **and**
+2 type-confusions, different defects with different fixes.
+
+**Naming fork RESOLVED, and my hypothesis did NOT fire.** The sentinel is fed the **stitch stream**,
+which uses SCREAMING_SNAKE and matches the baseline keys. My 57 was the canonical DB — genuinely a
+different store, exactly as I suspected but could not resolve. **CTO~Z's 85 stands, and the published
+artifact confirms it at exactly 85.** Reporting both and refusing to pick was right; picking would have
+been wrong either way.
+
+### Built and exercised
+
+Baseline written with 5 `per_class` updates + 5 recertification entries, each `verified_reason` carrying
+live source + count + date + **MATCHES-live vs APPROACHES-live**, plus a `_naming_fragility_note`
+recording the dormant lookup hazard where the next person changing a node_type will see it. IAM_USER's
+reason names the composition and never uses the phrase "under-read."
+
+```
+GRAIN-SENTINEL: PASS (0 identity-format + 0 magnitude violations)
+OK: wrote infra/aws/globgrph/stitch_graph.json      UNIONED nodes = 22355, edges = 43633
+```
+
+| | before | after |
+|---|---|---|
+| mtime | 2026-07-07T15:45:33Z | **2026-07-25T18:44:34Z** |
+| size / edges | 3,170,624 B / 5,651 | 25,489,187 B / 43,633 |
+
+All five confirmed **in the published artifact**: SQS 12 · ECS 7 · SCHEDULE 10 · RQK 85 · IAM_USER 4.
+
+### FINDING — the acceptance criterion was always satisfied
+
+*"`stitch_graph.json` EXISTS"* could never discriminate. **The file existed throughout the 17-day
+block** — at `infra/aws/globgrph/`, a **third root** outside the two COO~Z's absence finding was
+honestly bounded to; 18d 2h stale; and **gitignored**, so `git log` shows nothing for it and a
+git-based check reads as "never existed."
+
+**An existence test would have returned GREEN for the entire outage.** It cannot distinguish
+*published* from *an 18-day-old corpse*. I used **mtime advance** instead and kept the pre/post values
+so the claim is checkable. Same class as the fails-open harness earlier today: *a check whose passing
+state is indistinguishable from the failure it exists to catch.*
+
+### FINDING — `derive_stitch` still exits 1 on a SEPARATE, previously-masked defect
+
+`DERIVE_RC=1` — `ERROR: genuine (non-wildcard) dangling edges = 8`. The grain block was hiding it.
+Order is: dangling check → ERROR (rc set) → GRAIN-SENTINEL PASS → artifact **written**. So **the
+artifact publishes and the producer still reports failure**; any consumer keying on exit code still
+sees a failing stitch, and COO~Z's "hook fires and still hard-fails" chain is only half resolved.
+
+Offered, not adjudicated: several dangling targets are AWS-**managed** resources with an **empty account
+field** (`arn:aws:ssm:us-east-1::document/AWS-RunPowerShellScript`) — externals our extractor would
+never emit as nodes, plausibly needing the same treatment the code already gives wildcards rather than
+being 8 real defects. Two ELB `IN_SUBNET` edges look like a different and more plausibly real gap.
+
+### On my own claim, corrected by CTO~Z
+
+I wrote that recalibrating the three clean dimensions *"unblocks most of the sentinel."* It would have
+unblocked **nothing** — the sentinel refuses on any violation, so 5 → 2 still yields no artifact. The
+win would have been *isolation*, not progress. "Most" invites someone to expect a file that will not
+appear.
+
+I also checked CTO~Z's IAM rationale in both directions rather than accepting it: baselining the live 6
+would **also** pass today (4/6 = 0.67x, in band), so band arithmetic does not discriminate between 4 and
+6. Their ruling stands on the stronger reason — a baseline certifies *what a healthy graph produces*,
+and that number is not yet known for this class.
+
+## Blockers
+
+**`grain_baseline.json` is ON DISK, UNCOMMITTED** — exec-locked, CTO~Z lands it. Flagged to them the
+same turn it was written, deliberately: an exec-locked artifact sitting on disk unannounced is precisely
+the orphan shape cleared earlier today, and the mitigation is that its owner knows within seconds rather
+than days.
+
+Extractor defects (a) and (b) not yet filed as a formal item — awaiting CTO~Z on where they belong.
