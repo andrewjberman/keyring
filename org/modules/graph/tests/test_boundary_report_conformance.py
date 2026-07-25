@@ -170,5 +170,103 @@ class AggregateDenominator(unittest.TestCase):
         self.assertIn("orphan: 2/2 tools applicable", note)
 
 
+ANTICIPATED_REQUIRED_TOKENS = ("owner:", "trigger:")
+KNOWN_STATUSES = {"LIVE", "ANTICIPATED", "RETIRED-CANDIDATE"}
+
+
+def anticipated_violations(vocab):
+    """ANTICIPATED terms whose note fails the owner+trigger contract.
+
+    boundary_report's header calls that contract "grep-provable". This IS that grep,
+    run. It lives in the test file rather than the module because the L0a semantic
+    type is exec-locked (ANY_EXEC) and this lane authors tests, not the type.
+    """
+    bad = []
+    for term, meta in vocab.items():
+        if meta.get("status") != "ANTICIPATED":
+            continue
+        note = meta.get("note", "")
+        if not all(tok in note for tok in ANTICIPATED_REQUIRED_TOKENS):
+            bad.append(term)
+    return sorted(bad)
+
+
+def status_violations(vocab):
+    """Terms carrying a status outside the closed set -- the contract's bypass."""
+    return sorted(t for t, m in vocab.items() if m.get("status") not in KNOWN_STATUSES)
+
+
+class AnticipatedCarriesOwnerAndTrigger(unittest.TestCase):
+    """The header's strongest sentence, converted from prose into a check.
+
+    CVO~Z proved by mutant (verdict 20260725T170032Z) that this contract had ZERO
+    enforcement: injecting an owner-less ANTICIPATED term left the suite green at
+    17/17 with nothing objecting, and zero tests anywhere referenced ANTICIPATED.
+    The bucket was empty because a RULING emptied it, not because a CONTROL kept it
+    empty -- care, standing in for a control, inside the artifact built to name that
+    substitution.
+
+    NOTE THE SHAPE OF THE FIXTURES, it is the whole point: the mutant and the control
+    run against SYNTHETIC vocabularies, never the live one. A test that merely looped
+    over the live dict would pass vacuously today (0 ANTICIPATED entries) and would be
+    the very untested assertion it was written to replace -- green from emptiness
+    rather than from correctness.
+    """
+
+    def test_MUTANT_anticipated_without_owner_or_trigger_REDDENS(self):
+        mutant = {"made_up_space": {"status": "ANTICIPATED",
+                                    "note": "no owner, no trigger, pure invention"}}
+        self.assertEqual(anticipated_violations(mutant), ["made_up_space"],
+                         "MUTANT FAILED: an ANTICIPATED term carrying neither owner nor "
+                         "trigger was accepted -- 'a forgotten term with better branding'")
+
+    def test_MUTANT_owner_without_trigger_REDDENS(self):
+        """Half the contract is not the contract: an owner with no trigger never expires."""
+        mutant = {"half_kept": {"status": "ANTICIPATED",
+                                "note": "owner: 1.0.0_SA_CTO~Z, but no trigger named"}}
+        self.assertEqual(anticipated_violations(mutant), ["half_kept"],
+                         "MUTANT FAILED: owner alone cannot retire a term; the trigger is "
+                         "what makes ANTICIPATED distinguishable from forgotten")
+
+    def test_POSITIVE_CONTROL_conformant_anticipated_is_accepted(self):
+        """The check MUST be able to accept, or it is not a check."""
+        ok = {"future_space": {
+            "status": "ANTICIPATED",
+            "note": "owner: 1.0.0_SA_CTO~Z; trigger: comp-foo's first conformant emission"}}
+        self.assertEqual(anticipated_violations(ok), [],
+                         "POSITIVE CONTROL FAILED: a conformant ANTICIPATED entry was rejected")
+
+    def test_RETIRED_CANDIDATE_is_not_subject_to_the_contract(self):
+        """RETIRED-CANDIDATE carries no owner BY DEFINITION -- that is the honest label."""
+        retired = {"yaml_key_path": {"status": "RETIRED-CANDIDATE",
+                                     "note": "no owner/trigger nameable without invention"}}
+        self.assertEqual(anticipated_violations(retired), [])
+
+    def test_MUTANT_misspelled_status_silently_EXEMPTS_and_the_status_check_catches_it(self):
+        """A status typo is the contract's quiet bypass -- documented AND closed.
+
+        anticipated_violations keys on an exact string, so 'Anticipated' is not
+        checked at all: the term reads as anticipated to a human and is invisible to
+        the control. That hole cannot be closed by the owner/trigger predicate itself
+        -- it needs a second one over the status vocabulary.
+        """
+        mutant = {"typo": {"status": "Anticipated", "note": "no owner, no trigger"}}
+        self.assertEqual(anticipated_violations(mutant), [],
+                         "documenting the hole: a typo'd status is not seen by the contract")
+        self.assertEqual(status_violations(mutant), ["typo"],
+                         "MUTANT FAILED: an out-of-set status must be caught by the "
+                         "status check, or the contract stays bypassable by typo")
+
+    def test_LIVE_vocabulary_satisfies_the_owner_trigger_contract(self):
+        """Live application. VACUOUS TODAY (0 ANTICIPATED) and that is a TRUE state, not
+        a passing one -- it starts doing real work the moment the count stops being 0."""
+        self.assertEqual(anticipated_violations(B.KNOWN_ADDRESS_SPACES), [])
+
+    def test_LIVE_statuses_are_all_in_the_closed_set(self):
+        """NOT vacuous: this runs over every declared term, today."""
+        self.assertEqual(status_violations(B.KNOWN_ADDRESS_SPACES), [],
+                         "a status outside the closed set silently exempts its term")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
