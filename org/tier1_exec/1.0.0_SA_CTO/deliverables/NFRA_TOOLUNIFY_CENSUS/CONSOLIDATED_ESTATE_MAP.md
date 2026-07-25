@@ -257,3 +257,10 @@ passes and (2) the register is enforced as a gate (WS-7), not maintained by care
   than census read-only reporting, needs its own acceptance criteria.
 - **HELD, not started:** WS-4 crosswalk build, PRD-the-frame. REC-1's widened pass may surface more first;
   revisit after it lands.
+  **→ HOLD LIFTED for WS-4 + WS-7 (2026-07-25 ~0755Z):** the stated revisit-condition is satisfied (the
+  widened pass — REC-1b + the full REC-1c 5-lane sweep — landed and closed), and Andrew's standing /loop
+  mandate at this terminal (*"Drive the fabric through the full testing and validation of TOOLUNIFY and
+  proceed through COMPLEARNS via our system/ontology/ docs steer"*) covers exactly these two validation
+  workstreams — they ARE the adopted exit bar. WS-4 dispatched to `~B` (bridge-span census owner); WS-7
+  dispatched to `base` (comp-tool infrastructure owner). **PRD-the-frame STAYS HELD** — a design doc, not
+  testing/validation; that one still needs Andrew's explicit word.
