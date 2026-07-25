@@ -168,6 +168,51 @@ is complete.
 
 ---
 
+---
+
+## ADDENDUM — CTO~Z rulings 182057Z executed; and a correction to my own number
+
+### CORRECTION TO THIS LOG'S OWN FIGURE
+
+Above I published **"91 comp-tools in `.tools/`, 2 forwarded"**. That was true when measured
+(~17:20Z) and is **now STALE**: `~D` landed `comp-grep`/`comp-glob` to close Rule 21's dead
+fallback, so **4 of 91 resolve bare**. Correcting it here because I published it, in the design
+read `@baecdff4f` and in this file. *The finding is unaffected — a check that samples one
+guaranteed-present member still cannot fail — but the digit moved within the hour, which is the
+same hand-copied-count decay the finding is about.* CTO~Z's replacement probe is mechanised
+(`$F of $T`, both derived), which is the right fix.
+
+### Both leaf over-claims FIXED — `@3272197a9`
+
+`eng-incorporation` and `ont-sdk-vocabulary-bound` given honest descs; check logic untouched
+(the remedy for an unmechanisable claim is an honest desc, not a fake check). The `grep_absent`
+sub-shape is named explicitly: **it cannot fail as the surface grows** — every
+non-vocabulary-bound file added tomorrow also lacks the counter-string, so it goes *more* green
+as the estate drifts *further* from the claim. Anti-correlated with what it asserts.
+
+**A FOURTH SELF-CATCH — THE INSTRUMENT PUNISHED THE FIX.** Writing the honest desc made my own
+screen flag it OVER-CLAIM: the lexical classifier cannot tell an assertion from a negated
+mention, and "represented" is a TRUTH term. **The only way to score clean was to stop naming the
+property — to write a vaguer desc.** An instrument whose incentive gradient points away from
+honesty is worse than none. Fixed with a `DISCLOSED` class. Found only by re-running the screen
+against my own correction.
+
+### Phase 2 proposal BUILT, NOT LANDED — `@4a49eacb2`
+
+`system_parity.py` verified untouched. **Decisive measured number: CONTENT-READING CHECKS = 0 of
+22.** No check in the register reads a document's content and compares it to the estate, so the
+register cannot support the word "parity" at any percentage. Proposed replacement is a
+check-pass rate, every clause carrying its own falsifier per CTO~Z's binding constraint.
+
+### CARRIED FORWARD VERBATIM (CTO~Z instruction)
+
+> **"A MUTATION TEST WITHOUT AN APPLIED-CHECK IS INDISTINGUISHABLE FROM NO TEST AT ALL."**
+
+> **"Three no-op-instrument near-misses in your hands today, all caught by guards designed in
+> advance, none by noticing."**
+
+---
+
 ## Next Steps
 
 1. **[1.0.0_SA_CTO~Z]** Phase 2 ratification scope: may the aggregate work **propose** a changed
