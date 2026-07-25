@@ -26482,3 +26482,5 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types fields ClientDirectoryEntry | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLPASS.MSYS-ARGV-GUARD-HARDENING | msys_argv_guard | python3 .tools/msys_argv_guard.py | PASS | 15/15, fixed rc=127 + predicate ordering, added load-bearing quoting comment |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLPASS.MSYS-ARGV-GUARD-HARDENING | comp-types | bash .tools/comp-types {blast,index,fields} | PASS | post-migration full battery, 750-type denominator unchanged, artifacts identical |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY (CTO~Z dispatch, CVO~Z cycle 10) | system_parity | :134 message honesty fix (instrument must not assert absence it cannot observe) + ct-catalog grep_present -> new derived_count type; battery 10/10, live positive honest PASS 69=69, gate caught one real defect pre-commit | VERDICT |
