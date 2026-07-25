@@ -97,6 +97,57 @@ def _classify_line(content: str, type_name: str) -> str:
     return 'reference'
 
 
+def _enumerate_known_types() -> set[str]:
+    """The real population comp-types blast validates against (NFRA_TOOLPASS follow-on, 2026-07-25):
+    every TS interface/type/const NAME actually exported from portal/src. Same grep-based mechanism
+    _find_type_definition() already uses to confirm a SINGLE name exists (and that cmd_fields already
+    gates on, ERROR + return 1) -- generalized here to enumerate ALL of them, not new machinery.
+
+    NO CAPTURE GROUPS, NO '=' IN THE PATTERN -- caught by self-testing before shipping, not assumed
+    safe: a grep pattern containing a `(...)` capture group, OR the literal `=` character, is SILENTLY
+    mangled by this box's MSYS-linked grep.exe when spawned from a non-MSYS parent (native Windows
+    Python) -- rc=1 (grep's own "no matches" code), EMPTY stdout, NO stderr, indistinguishable from a
+    genuinely empty result. First exercise of this exact code (against a REAL, known type,
+    'ClientDirectoryEntry', via the live `comp-types blast` wrapper) returned "0 known types" and
+    rejected a real type as unknown -- caught before reporting, not shipped. A third instance of this
+    box's path/argv-mangling class (sibling to the `/c/` vs `/cygdrive/c/` and the `/cygdrive/c/` vs
+    native-Windows-Python `os.path` mismatches found earlier this session), narrower still: capture
+    groups AND a bare `=`, not paths this time. Matches are extracted with `-oh` (only-matching, no
+    filename prefix) + a plain Python `str.split()`/`rstrip()` on the LAST whitespace token instead of
+    a regex capture group.
+
+    Read-only; an unreachable portal/src (or a grep failure) returns an EMPTY set, never raises and
+    never falls back to permissive -- an empty population fails every lookup closed (see cmd_blast),
+    matching this module's existing discipline of never treating "could not check" as "must be fine."
+    """
+    if not _PORTAL_SRC.exists():
+        return set()
+    known: set[str] = set()
+    # No parens, no '=' (see docstring). The `const` pattern also drops '\s*:'/'\s+:' before the
+    # colon (self-tested: also mangled, cause not fully isolated) in favor of the no-space-before-
+    # colon form, which covers the overwhelmingly common `export const Name: Type` style; the rare
+    # `export const Name : Type` (space before colon) is a known, disclosed gap, not a silent one.
+    patterns = [
+        r'export\s+interface\s+\w+',
+        r'export\s+type\s+\w+',
+        r'export\s+const\s+\w+:',
+    ]
+    for pattern in patterns:
+        try:
+            result = subprocess.run(
+                ['grep', '-rohE', '--include=*.ts', '--include=*.tsx', '--binary-files=without-match',
+                 pattern, str(_PORTAL_SRC)],
+                capture_output=True, text=True, timeout=15
+            )
+        except Exception:  # noqa: BLE001 -- inconclusive for this pattern; other patterns still tried
+            continue
+        for line in result.stdout.splitlines():
+            parts = line.split()
+            if parts:
+                known.add(parts[-1].rstrip(':').rstrip('='))
+    return known
+
+
 def _find_type_definition(type_name: str) -> Path | None:
     """Find the .ts file defining an interface/type/const with the given name."""
     # Use literal grep (no regex metacharacters) since grep may not support \\s+
@@ -320,6 +371,19 @@ def cmd_blast(args: argparse.Namespace) -> int:
     type_name = args.type_name
     print(f'COMP-TYPES blast: {type_name}')
     print('  What breaks if this type changes shape?')
+
+    # Fail-closed validation (NFRA_TOOLPASS follow-on, 2026-07-25 -- tier-4 worst behavior the sweep
+    # found): a garbage/nonexistent type previously returned rc=0, printed PASS, AND persisted a
+    # <garbage>.blast.yaml manifest into types-index/ -- an affirmative false success WITH a side
+    # effect, the exact debris class quarantined 19 files today. Validate BEFORE running: a known
+    # type is UNCHANGED below (byte-identical grep/manifest/PASS path); an unknown type never reaches
+    # the grep or the manifest write at all.
+    known_types = _enumerate_known_types()
+    print(f'  Validated against {len(known_types)} known portal type/interface/const declaration(s).')
+    if type_name not in known_types:
+        print(f'  CANNOT-ANSWER: {type_name!r} is not a known exported interface/type/const in '
+              f'portal/src -- nothing was compared, so nothing is concluded. No manifest written.')
+        return 1
 
     hits = _grep_portal(type_name)
     # Also search for the hook variant (strip common type suffixes)
