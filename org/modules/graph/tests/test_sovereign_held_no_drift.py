@@ -54,7 +54,13 @@ _MIGRATED = [
     # This list means "still imports the shared predicate"; a migrated-OFF module must leave it, or
     # the test asserts the presence of the very import the ruling removed.
     _GRAPH / "pipeline_cli.py",
-    _GRAPH / "incrparity_cli.py",
+    # incrparity_cli.py REMOVED from _MIGRATED (GOVRIP, 2026-07-25): its sovereign_held import was
+    # deleted at f9ddda52f -- it carried the ONE LIVE governance guard (rc=3 blocked-by-default).
+    # This list means "still imports the shared predicate", so a migrated-OFF module must leave it.
+    # I made this EXACT omission for comp_constants_cli one commit earlier (2bc837ee4), caught it
+    # by running the suite, wrote the lesson into that commit message -- and then repeated it here
+    # by running only incrparity's own rc check. Knowing a failure mode by name does not immunise
+    # you against it; only running the suite the change VIOLATED does.
     _TOOLS / "freshness_manifest_gen.py",
     _TOOLS / "comp-secrets",
 ]
