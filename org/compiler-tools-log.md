@@ -26700,3 +26700,20 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY (CVO~Z ruling 142354Z) | system_parity | inf-intraday-iam pattern BLOCK-ANCHORED (tempered span, cannot cross resource boundary) + re-pinned to the LOAD-BEARING dynamodb:DescribeTable (lambda_function.py:300); cross-policy mutant cell 29 proves the disclosed edge CLOSED; battery 30/30 | VERDICT |
 | 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY (STOP-unwind + re-aim 142116Z) | comp-system managed regions | 19 managed spans across 5 docs (rulebank 14/10/6 + fedobs 1729/6 current-state assertions), 3 cite-not-copy sites (incl. the unit PATTERN's frozen digits), ~6 dated records frozen-with-reason; both drift-mutant directions exercised (direction-1 first run failed on my own recalled denominator -- measurement beat recall, disclosed) | VERDICT |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_system.py | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~E | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/boundary_report.py org/tier2_senior/0.8.... | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | (none -- single-file self-check) | python structural walk of L2_aggregate_output.json (acceptance-2 re-derivation; not an estate search, no comp-tool applicable) | PASS -- 0 scalars on all 4 cells, 0 *total* keys, 138 absent |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id IN ['component:portal/src/pages/Ad... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id IN ['endpoint:claimTicket','endpoi... | PASS |
