@@ -604,6 +604,16 @@ def _selfroute_invariant(files) -> int:
 
     HARD-BLOCK on MISS (deterministic, role-invariant, margin-free). WARN on NEARTIE (the tool
     surfaces only inside comp-which's within-margin list -- threshold-shaped, so reporting only).
+
+    HARD-BLOCK on UNEVALUABLE too (NFRA_TOOLARCH.GATEBOUND Stage A, 0.8.0_AE_CloudComp~D
+    2026-07-25): `self_route_verdicts` now bounds its warm call on a watchdog deadline (comp-
+    which:1201's fallback subprocess has no timeout of its own and caused an 84-minute hang here
+    before this landed) and reports UNEVALUABLE, never MISS, when a call does not finish in time
+    -- that call's real routing status is UNKNOWN, not "confirmed absent." Treating UNKNOWN as a
+    pass would let a commit land on top of an unverified router-surfacing guarantee for exactly
+    the tool the watchdog could not check; treating it the same as MISS would misreport what was
+    actually found. So it gets its own printed line and the same hard-block MISS gets -- a bounded
+    UNKNOWN is still an UNKNOWN, and this gate's whole reason to exist is not shipping past one.
     """
     norm = _norm(files)
     corpus_touched = any(f.endswith(s) for s in _SELFROUTE_CORPUS for f in norm)
@@ -645,10 +655,21 @@ def _selfroute_invariant(files) -> int:
 
     misses = sorted(t for t, (v, _r, _q) in verdicts.items() if v == "MISS")
     nearties = sorted(t for t, (v, _r, _q) in verdicts.items() if v == "NEARTIE")
+    unevaluable = sorted(t for t, (v, _r, _q) in verdicts.items() if v == "UNEVALUABLE")
     for t in nearties:
         print("  self-route WARN: %s surfaces only inside comp-which's near-tie list (never rank-1)" % t)
-    if not misses:
+    if not misses and not unevaluable:
         return 0
+    if unevaluable:
+        deadline = getattr(mod, "WARM_DEADLINE_S", None)
+        print("\nBLOCKED: %d catalogued tool(s) could NOT be evaluated (watchdog deadline%s):"
+              % (len(unevaluable), (", %.0fs" % deadline) if deadline is not None else ""))
+        for t in unevaluable:
+            print("  - %-22s comp-which's warm call did not finish -- status UNKNOWN, not MISS" % t)
+        print("  Route status unknown is not a pass. Re-run once the underlying slowness/hang is")
+        print("  understood; do not re-run blindly hoping it clears -- see NFRA_TOOLARCH.GATEBOUND.")
+    if not misses:
+        return 1
     print("\nBLOCKED: %d catalogued tool(s) do NOT surface for their own use_case:" % len(misses))
     for t in misses:
         print("  - %-22s comp-which returns nothing naming it" % t)

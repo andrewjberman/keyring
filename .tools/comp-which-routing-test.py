@@ -173,6 +173,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import threading
 import types
 
 WS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -299,9 +300,16 @@ def _run_comp_which(q: str) -> str:
 # only the `-> ` regex -- `self_route_verdict` also does `if tool not in out`, a substring test over
 # the WHOLE stdout+stderr text. Only re-emitting comp-which's real output can reproduce that.
 #
-# NOTHING IS SWITCHED BY THIS ADDITION. `_run_comp_which` remains the live path; this sits beside it
-# until verdict-identity is proven across all 68 (step 2), per the ratified 3-step sequencing -- so
-# the gate never passes through a half-switched state.
+# STEP 2 (0.8.0_AE_CloudComp~B): verdict-identity proven 65/65 (see NFRA_TOOLARCH.GATEBOUND TO,
+# `<inherited_state_do_not_rederive>`). NOTHING was switched yet at that point -- `_run_comp_which`
+# stayed the live path deliberately, so the gate never passed through a half-switched state.
+#
+# STEP 3 / FLIP (0.8.0_AE_CloudComp~D, 2026-07-25, NFRA_TOOLARCH.GATEBOUND Stage A): `self_route_
+# verdict` now calls `_run_comp_which_warm_bounded` (below), NOT `_run_comp_which`. The flip landed
+# only after mutants (a)/(b) held per the TO's acceptance criteria 1-4 -- see the GATEBOUND
+# deliverable for the mutant runs. `_run_comp_which` is INTENTIONALLY KEPT, unused by the live path:
+# it is the pre-flip reference implementation the regression check (verdict-identity, re-run POST-
+# flip) compares against. Deleting it would remove the only independent oracle for that regression.
 _COMP_WHICH_MOD = None
 
 
@@ -353,6 +361,72 @@ def _run_comp_which_warm(q: str) -> str:
     return buf_out.getvalue() + buf_err.getvalue()
 
 
+# --- WATCHDOG BOUND on the warm path (NFRA_TOOLARCH.GATEBOUND Stage A, 0.8.0_AE_CloudComp~D
+# 2026-07-25) ----------------------------------------------------------------------------------
+# INHERITED FACT, do not re-derive: comp-which has exactly ONE hang-capable call --
+# `subprocess.call([...])` at comp-which:1201 (the comp-grep/comp-glob fallback), no timeout.
+# `_run_comp_which_warm` reaches it via `mod.main()`, so the warm path inherits the same
+# unbounded-hang exposure the subprocess path always had. THIS WRAPPER BOUNDS THE GATE. IT DOES
+# NOT KILL THE HANG -- Python has no API to force-terminate another thread, only to stop waiting
+# on it. That is Design B's job (comp-which:1201 itself gets timeout+kill), landing separately.
+# Report this distinction explicitly wherever this function's behavior is described: a caller
+# that times out here has PROVEN THE GATE COMPLETES, not that the underlying compute stopped.
+#
+# WHY A LOCK, NOT JUST A DEADLINE: `_run_comp_which_warm` mutates PROCESS-GLOBAL state
+# (`sys.argv`, `os.getcwd()`, and -- via `contextlib.redirect_stdout/stderr` -- `sys.stdout`/
+# `sys.stderr` themselves). None of that is thread-local. If a timed-out call's worker thread is
+# simply abandoned and a LATER call starts a second worker thread while the first is still
+# inside `mod.main()`, the two threads race the same globals: the second call's redirect can
+# silently steal the first (still-running) call's output mid-flight, corrupting BOTH results
+# without either one raising. A non-blocking `Lock` closes this: once a worker thread is
+# abandoned past its deadline, it is NEVER released, so every SUBSEQUENT call in this process
+# fails `acquire(blocking=False)` immediately and reports UNEVALUABLE without ever touching the
+# shared globals -- no race, no silent corruption, and the failure mode after one hang is "every
+# further self-route call in this process returns fast and UNEVALUABLE," which is the honest,
+# bounded shape Design A promises (once one call hangs, the REST of the run finishes in
+# O(remaining tools) time instead of hanging again per tool).
+_WARM_LOCK = threading.Lock()
+
+# 20s is not tuned against a measured warm-call latency distribution -- it is chosen to be an
+# order of magnitude above any observed warm call (sub-second to low single-digit seconds per
+# TO-1's own cost accounting) while remaining far below the 84-minute hang class this bound
+# exists to catch. If real warm latency is ever shown to approach this, raise it with evidence;
+# do not lower it without re-measuring.
+WARM_DEADLINE_S = 20.0
+
+
+def _run_comp_which_warm_bounded(q: str, deadline: float = WARM_DEADLINE_S):
+    """(ok, text). ok=False means UNEVALUABLE -- either this call's own worker thread did not
+    finish inside `deadline`, or an EARLIER call's worker thread is still holding `_WARM_LOCK`
+    (see the module comment above for why that must fail closed rather than race).
+
+    The abandoned worker thread is a daemon thread: it is never force-killed (CPython cannot do
+    that), it keeps running until it finishes or the process exits, and it keeps `_WARM_LOCK`
+    held forever if it never finishes. That is CONTINUED-PAST, not KILLED -- state it that way,
+    never as "the hang was stopped."
+    """
+    got_lock = _WARM_LOCK.acquire(blocking=False)
+    if not got_lock:
+        return False, None
+    result = {}
+
+    def _worker():
+        try:
+            result["text"] = _run_comp_which_warm(q)
+        except Exception as e:  # surfaced to the caller only on the fast path, below
+            result["error"] = e
+
+    t = threading.Thread(target=_worker, daemon=True)
+    t.start()
+    t.join(deadline)
+    if t.is_alive():
+        return False, None  # deadline breached; _WARM_LOCK intentionally NOT released
+    _WARM_LOCK.release()
+    if "error" in result:
+        raise result["error"]
+    return True, result.get("text", "")
+
+
 def self_route_query(manifest, tool):
     """The tool's OWN richest sentence -- its manifest use_case if it has one, else its
     tools_index `does`."""
@@ -365,12 +439,18 @@ def self_route_query(manifest, tool):
 
 
 def self_route_verdict(manifest, tool):
-    """(verdict, ranked, query) for ONE tool. verdict in {RANK1, NEARTIE, MISS}.
+    """(verdict, ranked, query) for ONE tool. verdict in {RANK1, NEARTIE, MISS, UNEVALUABLE}.
 
     MISS    -- comp-which does not surface the tool AT ALL for its own use_case.
                DETERMINISTIC + role-invariant -> a gate MAY hard-block on it.
     NEARTIE -- surfaces, but never rank-1. THRESHOLD-shaped -> a gate must only WARN.
     RANK1   -- the router decided on it.
+    UNEVALUABLE -- the call did not complete inside the watchdog deadline (GATEBOUND Stage A,
+               0.8.0_AE_CloudComp~D 2026-07-25), or an earlier call in this process hung and
+               never released the shared warm-call resource. NOT a claim the tool fails to
+               route -- a claim the ROUTE IS UNKNOWN. Must be reported as its own outcome,
+               never folded into MISS (a false "does not route" is worse than an honest
+               "could not confirm") and never silently dropped from the population.
     (CTO ruling: "every hard-blocking member asserts a DETERMINISTIC fact; anything
     threshold-shaped REPORTS.")
 
@@ -381,7 +461,9 @@ def self_route_verdict(manifest, tool):
     stop reporting as a headline.
     """
     q = self_route_query(manifest, tool)
-    out = _run_comp_which(q)
+    ok, out = _run_comp_which_warm_bounded(q)
+    if not ok:
+        return "UNEVALUABLE", [], q
     ranked = [m.group(1) for m in (_ARROW.match(ln) for ln in out.split("\n")) if m]
     if tool not in out:
         return "MISS", ranked, q
