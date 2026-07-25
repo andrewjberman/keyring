@@ -26198,3 +26198,5 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-iam | comp-iam simulate-self-test | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-iam | comp-iam service --help | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-iam | comp-iam service nonexistent-lambda-zzz-9999 | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --file /tmp/cvoz_rec1_verify/my_anti_pattern_probe.py --mode ... | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --file /cygdrive/c/Users/ANDREW~1/AppData/Local/Temp/claude/C... | VERDICT |
