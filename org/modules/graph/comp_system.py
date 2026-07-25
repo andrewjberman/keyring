@@ -643,15 +643,32 @@ def self_test() -> int:
     # 10-13. --gate (WS-2): staleness-CONDITIONED fail-closed, exercised BOTH directions on the PURE
     #        verdict. Genuine drift (source-fingerprint / managed-region) FAILS-CLOSED (rc 2); age>=TTL
     #        ALONE is a WARN, never a block (the false-Monday distinction, NEVER#1); CURRENT is open.
-    chk("10 gate: source-fingerprint drift -> FAIL-CLOSED (rc 2)",
-        _gate_verdict(True, "source drift: fingerprint (1, 2) -> (3, 4)", [])[0] == 2)
-    chk("11 gate: managed-region drift -> FAIL-CLOSED (rc 2)",
+    #        dirty=[] pins these as the CLEAN-TREE positive control (unchanged DRIFT/regen verdict) --
+    #        see 10a/11a below for the dirty-source mutant (BLOCKED-ON-PEER-LANDING, no regen wording).
+    chk("10 gate: source-fingerprint drift, clean tree -> FAIL-CLOSED (rc 2), DRIFT/regen (positive control)",
+        _gate_verdict(True, "source drift: fingerprint (1, 2) -> (3, 4)", [], dirty=[])
+        == (2, "SYSTEM DRIFT (fail-closed): source drift: fingerprint (1, 2) -> (3, 4)"))
+    chk("11 gate: managed-region drift, clean tree -> FAIL-CLOSED (rc 2), DRIFT/regen (positive control)",
         _gate_verdict(False, "sources unchanged, age 0h < TTL 24h",
-                      [("03_comp_tools.md", "tools_index_count", 59, 61)])[0] == 2)
+                      [("03_comp_tools.md", "tools_index_count", 59, 61)], dirty=[])[0] == 2)
+    chk("10a gate: source-fingerprint drift, DIRTY source -> BLOCKED-ON-PEER-LANDING (rc 2), no regen wording (mutant)",
+        (lambda v: v[0] == 2 and "BLOCKED-ON-PEER-LANDING" in v[1] and "regenerate" not in v[1])
+        (_gate_verdict(True, "source drift: fingerprint (1, 2) -> (3, 4)", [],
+                       dirty=["org/modules/graph/canon-patterns.yaml"])))
+    chk("11a gate: managed-region drift, git-status UNVERIFIABLE (dirty=None) -> BLOCKED, fail-closed not silent-pass (mutant)",
+        (lambda v: v[0] == 2 and "BLOCKED-ON-PEER-LANDING" in v[1] and "regenerate" not in v[1])
+        (_gate_verdict(False, "sources unchanged, age 0h < TTL 24h",
+                       [("03_comp_tools.md", "tools_index_count", 59, 61)], dirty=None)))
     chk("12 gate: age>=TTL ALONE -> WARN not block (rc 0) -- staleness-conditioned, no false-Monday",
-        _gate_verdict(True, "age 30h exceeds TTL 24h (live-grounded values may have moved)", [])[0] == 0)
+        _gate_verdict(True, "age 30h exceeds TTL 24h (live-grounded values may have moved)", [], dirty=[])[0] == 0)
     chk("13 gate: CURRENT -> gate open (rc 0)",
-        _gate_verdict(False, "sources unchanged, age 0h < TTL 24h", [])[0] == 0)
+        _gate_verdict(False, "sources unchanged, age 0h < TTL 24h", [], dirty=[])[0] == 0)
+    # 13a. _dirty_sources() shape: never raises, returns a list or None -- exercised live against the
+    #      REAL working tree (not a synthetic list) so this check also proves the git-status plumbing
+    #      itself works on this box, not just the pure-decision logic above.
+    _ds = _dirty_sources()
+    chk("13a _dirty_sources(): live git-status probe returns a list or None, never raises",
+        _ds is None or isinstance(_ds, list))
     # 14-15. --changed staleness-conditioning: a _SOURCE touch triggers the check; a non-source
     #        changeset is n/a (the commit-gate leg fires ONLY at the genuine drift moment).
     chk("14 gate --changed: a comp-system _SOURCE path IS a trigger surface",
@@ -684,6 +701,37 @@ def _source_fingerprint():
     """The enforcing expression, imported not forked (graph_cache is the one implementation)."""
     import graph_cache as _gc
     return list(_gc.source_fingerprint(_SOURCES))
+
+
+def _dirty_sources():
+    """comp-system _SOURCE files that are modified-but-uncommitted RIGHT NOW (git status --porcelain).
+    Non-empty (or None on an inconclusive git-status) means: regenerating now would launder a peer's
+    unlanded work into 06's committed self-description -- the check/gate path must say so instead of
+    prescribing a regenerate. Read-only (git status only, no mutation, no index touch).
+
+    Fails toward "cannot prove clean" (returns None on any git-status failure), never toward a silent
+    clean pass -- matching this module's existing discipline (a probe that cannot evaluate is never
+    treated as fresh/safe; see check_stale's/gate's own except-blocks)."""
+    import fnmatch
+    rels = [(os.path.relpath(d, WS).replace(os.sep, "/"), g) for d, g in _SOURCES]
+    try:
+        out = subprocess.run(["git", "status", "--porcelain"], cwd=WS, capture_output=True,
+                              text=True, timeout=10, check=True).stdout
+    except Exception:  # noqa: BLE001 -- inconclusive, not clean; caller treats None as unverifiable
+        return None
+    dirty = []
+    for line in out.splitlines():
+        if len(line) < 4:
+            continue
+        fn = line[3:].strip()
+        if " -> " in fn:  # rename/copy porcelain line: "old -> new" -- the NEW path is what's dirty
+            fn = fn.split(" -> ", 1)[1]
+        fn = fn.strip('"').replace(os.sep, "/")
+        for d, g in rels:
+            if fn.startswith(d.rstrip("/") + "/") and fnmatch.fnmatch(os.path.basename(fn), g):
+                dirty.append(fn)
+                break
+    return dirty
 
 
 def _staleness(header: dict):
@@ -755,6 +803,23 @@ def check_stale() -> int:
     except Exception as e:  # noqa: BLE001 -- a probe that cannot evaluate is an ERROR, never "fresh"
         print("06 UNVERIFIABLE: --check could not evaluate (%s: %s)" % (type(e).__name__, e))
         return 1
+    genuine_drift = bool(region_changes) or (stale and not reason.startswith("age "))
+    if genuine_drift:
+        # Genuine drift on a DIRTY source tree: regenerating now would bake a peer's UNLANDED work
+        # into 06's committed self-description as if it were real (CVO~Z near-miss, 2026-07-25).
+        # Clean-tree genuine drift is unaffected below -- unchanged STALE/regenerate behavior.
+        dirty = _dirty_sources()
+        if dirty:
+            print("SYSTEM BLOCKED-ON-PEER-LANDING: genuine drift detected, but source file(s) are "
+                  "uncommitted -- %s. Running comp-system now would launder unlanded peer work into "
+                  "06's committed self-description. Wait for landing, then re-run comp-system --check."
+                  % ", ".join(dirty[:6]))
+            return 2
+        if dirty is None:
+            print("SYSTEM BLOCKED-ON-PEER-LANDING (fail-closed): genuine drift detected, but source "
+                  "cleanliness could not be verified (git status did not complete). Re-run once git "
+                  "status succeeds.")
+            return 2
     if region_changes:
         drift = "; ".join("%s cs:%s %s->%s" % (fn, name, old, new) for fn, name, old, new in region_changes[:6])
         print("SYSTEM STALE: %d managed-region span(s) drifted from live metrics: %s -- regenerate (comp-system)."
@@ -790,16 +855,27 @@ def _file_touches_sources(files) -> bool:
     return False
 
 
-def _gate_verdict(stale: bool, reason: str, region_changes: list) -> tuple:
+def _gate_verdict(stale: bool, reason: str, region_changes: list, dirty=None) -> tuple:
     """PURE gate decision (offline-testable, both directions). Distinguishes GENUINE DRIFT from the
     wall-clock age>=TTL case:
       GENUINE drift -- a source INPUT the artifact reads changed (fingerprint), a managed-region span
         drifted from a live metric, or a pre-predicate/absent artifact -> 06 is FACTUALLY behind the
-        estate a commit just changed -> (2, DRIFT) FAIL-CLOSED.
+        estate a commit just changed -> (2, DRIFT) FAIL-CLOSED, UNLESS `dirty` says the drift traces
+        to an UNCOMMITTED source (see below).
       age>=TTL ALONE -- no source/region drift, only the live-grounded-values-may-have-moved TTL ->
         (0, AGE-WARN). NEVER a block: blocking on wall-clock idle is the false-Monday class (NEVER#1);
         the response is an on-demand refresh, not stopping a working commit.
       else -> (0, CURRENT).
+
+    `dirty` -- comp-system _SOURCE files modified-but-uncommitted right now (from _dirty_sources(),
+    or a synthetic list/None in tests -- kept as a plain parameter, not a live git-status call inside
+    this function, so the pure-decision contract holds). Default None means "caller did not check" and
+    is treated the SAME as "could not verify clean" (fail toward BLOCKED, never toward a silent
+    DRIFT-with-regen prescription) -- a live caller (gate()) always computes and passes the real list;
+    only a genuine, checked-clean tree (dirty == []) gets the unchanged DRIFT/regenerate verdict.
+    On genuine drift with dirty non-empty (or unverifiable): (2, BLOCKED-ON-PEER-LANDING) -- 06 is
+    behind the estate, but regenerating now would launder a peer's UNLANDED work into 06's committed
+    self-description (CVO~Z near-miss, 2026-07-25) -- never says "regenerate", says wait for landing.
     Returns (rc, verdict_str)."""
     genuine = []
     if region_changes:
@@ -809,6 +885,13 @@ def _gate_verdict(stale: bool, reason: str, region_changes: list) -> tuple:
     if stale and not reason.startswith("age "):   # source-drift / pre-predicate / not-emitted
         genuine.append(reason)
     if genuine:
+        if dirty:
+            return 2, ("SYSTEM BLOCKED-ON-PEER-LANDING: genuine drift (%s), but source file(s) are "
+                       "uncommitted -- %s. Wait for landing, then re-run." % (" | ".join(genuine),
+                       ", ".join(dirty[:6])))
+        if dirty is None:
+            return 2, ("SYSTEM BLOCKED-ON-PEER-LANDING (fail-closed): genuine drift (%s), but source "
+                       "cleanliness could not be verified. Wait, then re-run." % " | ".join(genuine))
         return 2, "SYSTEM DRIFT (fail-closed): " + " | ".join(genuine)
     if stale:                                      # the only remaining stale case is age>=TTL
         return 0, "SYSTEM AGE-WARN (not a block): " + reason
@@ -846,8 +929,10 @@ def gate(changed=None) -> int:
         print("SYSTEM UNVERIFIABLE (fail-closed): --gate could not evaluate (%s: %s)"
               % (type(e).__name__, e))
         return 1
-    rc, verdict = _gate_verdict(stale, reason, region_changes)
-    suffix = (" -- regenerate (comp-system) or add an audited override." if rc == 2
+    dirty = _dirty_sources() if (region_changes or (stale and not reason.startswith("age "))) else []
+    rc, verdict = _gate_verdict(stale, reason, region_changes, dirty=dirty)
+    suffix = ("" if "BLOCKED-ON-PEER-LANDING" in verdict  # verdict text already states the remedy
+              else " -- regenerate (comp-system) or add an audited override." if rc == 2
               else " -- refresh recommended (on-demand); gate stays open." if "AGE-WARN" in verdict
               else " -- gate open.")
     print(verdict + suffix)
