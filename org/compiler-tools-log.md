@@ -26679,3 +26679,21 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | commit-gate/ruff | caught 1 f-string lint defect, fixed pre-commit | PASS |
 | 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/iam_dr_exempt_roles.json | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY (CTO~Z dispatch, L1b findings A+B) | system_parity | borrowed-sensitivity disclosure on every version_pin outcome (A1: no derived_count migration possible -- countables exist, report side doesn't, near-miss cse_measures checked); inf-intraday-iam off immobile assumption onto hollow-proof grep_present (ASSUMPTION->PASS, 5/5+0assu); battery 29/29 | VERDICT |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam investigate | VERDICT |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam investigate-candidates | VERDICT |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam investigate-candidates --help | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-iam | comp-iam investigate-candidates --role opal-data-refresh-lambda-role --role opal-globgr... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates-self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates-self-test | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam service opal-globgrph-incremental-updater | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam census-self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam simulate-self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~D | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_system.py infra/system/06_current_s... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_iam_investigate.py org/modules/grap... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | py_compile | comp_iam_investigate.py + iam_cli.py (--self-test cheap close) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates-self-test | PASS 12/12 |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | mutant exercise: inserted+observed FAIL, reverted, re-confirmed PASS | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | AST-based zero-AWS-calls proof (text grep first false-positived, corrected) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | full regression (service/gaps/roles/census-self-test/simulate-self-test) | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | pytest | test_iam_census_vintage.py (regression) | PASS 10/10 |
