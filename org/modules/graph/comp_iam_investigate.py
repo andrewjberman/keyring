@@ -38,6 +38,31 @@ GROUNDED (2026-07-25, AWS IAM API Reference + User Guide, fetched live -- not re
     SAME moment, returned a real, non-null LastUsedDate/Region. Verified via a positive-
     controlled same-role comparison, not assumed. Consequence: no bulk shortcut exists -- this
     module calls `get-role` once per role.
+
+SCHEDULING CONSTRAINT -- NOT SCHEDULABLE (CTO~Z ruling, 2026-07-25 @170702Z, STANDING):
+  `investigate-candidates` MUST NOT be run as a routine/periodic/automated sweep until the
+  fleet-scale path is designed for. This is a CONSTRAINT, not a backlog note.
+
+  Grounds: the no-bulk-shortcut finding directly above means a full sweep is one `get-role` per
+  role against 200+ roles in this account, sequential. CVO~Z's own fleet-wide attempt TIMED OUT
+  at 60 sequential calls. So there is no fleet-level output here -- there is a per-role output
+  and an untested extrapolation, and nobody can currently speak to how this tool behaves at scale.
+
+  WHY A CONSTRAINT AND NOT A WARNING: a tool scheduled before its scale limit is understood does
+  not fail loudly at 200 roles. It fails PARTIALLY -- returning a real, correctly-formatted result
+  over whatever subset finished before the kill -- and A PARTIAL SWEEP WITH NO STATED DENOMINATOR
+  IS INDISTINGUISHABLE FROM A COMPLETE ONE. That is the print-the-denominator class with a
+  scheduler attached: it would manufacture a clean fleet-wide verdict out of a fraction of the
+  fleet, wearing this module's own careful refusal language while doing it.
+
+  PARTIAL MITIGATION SHIPPED (iam_cli.cmd_investigate_candidates): the sweep now emits a terminal
+  `SWEEP COMPLETE: examined X of M intended role(s)` line, so a run killed mid-loop is missing it
+  and ITS ABSENCE IS THE TELL. That closes the indistinguishability at the OUTPUT layer only --
+  it does NOT lift the constraint, because a scheduler that never reads the line is unaffected.
+
+  WHOEVER BUILDS THE FLEET PATH OWES ALL THREE: (1) batching or parallelism; (2) a denominator in
+  the output (`N of M roles examined`); (3) a state for TIMED-OUT distinct from EXAMINED-AND-CLEAN.
+  Those last two must never both render as absence-of-finding. Not assigned as of 2026-07-25.
 """
 
 from __future__ import annotations

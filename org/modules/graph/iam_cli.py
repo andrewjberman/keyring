@@ -1244,7 +1244,30 @@ def cmd_investigate_candidates(args):
     below. Full grounding (tracking window, null semantics, region semantics -- pinned GLOBAL
     not per-region) is in comp_iam_investigate.py's module docstring, not restated here.
     """
-    if getattr(args, "role", None):
+    targeted = bool(getattr(args, "role", None))
+
+    # NOT-SCHEDULABLE banner, sweep mode only. Emitted FIRST -- before _build(), before the
+    # header, before any AWS call -- because this constraint exists for the run that gets KILLED
+    # MID-SWEEP, and anything printed later is absent from exactly that case.
+    # MEASURED, not assumed (2026-07-25): a 25s-truncated sweep died INSIDE _build() (the TF
+    # parse) having printed nothing but comp-iam's own NOTE lines. Two earlier placements -- after
+    # the loop, then after the header -- both failed this same control for the same reason: each
+    # was downstream of an expensive step. Print the constraint before you spend anything.
+    if not targeted:
+        print("  NOT SCHEDULABLE: this command is BLOCKED from routine/periodic sweeps "
+              "(CTO~Z ruling 20260725T170702Z).")
+        print("    Grounds: one get-role per role, sequential, no batching -- CVO~Z's own fleet "
+              "attempt TIMED OUT at 60 sequential calls against 200+ roles. There is no "
+              "fleet-level output here, only a per-role output and an untested extrapolation.")
+        print("    A scheduled run would not fail loudly at 200 roles -- it would fail PARTIALLY "
+              "and render a clean fleet-wide verdict out of a fraction of the fleet.")
+        print("    The fleet path owes ALL THREE: batching or parallelism; a denominator in the "
+              "output; and a TIMED-OUT state distinct from EXAMINED-AND-CLEAN -- those last two "
+              "must never both render as absence-of-finding.")
+        print()
+        sys.stdout.flush()  # survive a kill during the TF parse below
+
+    if targeted:
         role_names = list(args.role)
     else:
         _profiles, tf_roles, _gaps = _build()
@@ -1309,6 +1332,25 @@ def cmd_investigate_candidates(args):
     print(f"Total: {len(results)} checked | {len(active)} active | {len(candidates)} "
           f"investigate-candidate ({len(unknown)} unknown, {len(aged)} aged) | "
           f"{len(exempt_candidates)} of those DR-exempt | {len(errors)} error")
+
+    # COMPLETION LINE -- the discriminator between a COMPLETE sweep and a TRUNCATED one
+    # (CTO~Z ruling 20260725T170702Z). The loop above is sequential and un-batched: one
+    # get-role per role. A wall-clock kill (scheduler timeout, CI step limit, Ctrl-C) dies
+    # MID-LOOP, so the per-role rows already printed are real, correctly-formatted, and
+    # cover an unstated subset -- "a partial sweep with no stated denominator is
+    # indistinguishable from a complete one." This line is emitted ONLY after every intended
+    # role has been examined, so ITS ABSENCE IS THE TELL. Do not move it above the loop and
+    # do not compute its denominator from `results` (that would make it tautological -- it
+    # must compare what was EXAMINED against what was INTENDED).
+    intended = len(role_names)
+    if len(results) == intended:
+        print(f"SWEEP COMPLETE: examined {len(results)} of {intended} intended role(s).")
+    else:  # defensive: not reachable on the sequential path, correct if it ever is
+        print(f"SWEEP INCOMPLETE: examined {len(results)} of {intended} intended role(s) "
+              f"-- this output covers a SUBSET; absence of findings is NOT evidence of none.")
+    print("  (No SWEEP COMPLETE / SWEEP INCOMPLETE line above = the run was KILLED mid-loop. "
+          "Treat the output as a subset of unknown size, never as a fleet verdict.)")
+
     print()
     print(comp_iam_investigate.REFUSAL_LINE)
     sys.exit(1 if candidates else 0)
@@ -1401,7 +1443,8 @@ def main():
                         help='AUDITED override: report from a stale live snapshot')
 
     p_inv = sub.add_parser('investigate-candidates',
-                           help='TRIAGE ONLY: RoleLastUsed-based investigate-worthy roles (never "unused")')
+                           help='TRIAGE ONLY: RoleLastUsed-based investigate-worthy roles '
+                                '(never "unused"); NOT SCHEDULABLE as a routine sweep')
     p_inv.add_argument('--role', action='append',
                        help='check only this role (repeatable); default: all TF-parsed roles')
     p_inv.add_argument('--stale-days', type=int, default=None,
