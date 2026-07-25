@@ -272,7 +272,31 @@ Monitor is still running and `ps` confirms it. Re-arm only when `ps` shows none.
    ```
 2. **Arm the Monitor** — use the **Monitor tool**, `persistent: true`,
    `timeout_ms: 3600000`:
-   - command: `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh {serial} stream`
+   - **RESOLVE THE DRIVE PREFIX FIRST — DO NOT HARDCODE EITHER FORM.** The box runs
+     **two** shell flavors and they disagree about how `C:` is spelled: a **cygwin**
+     session has `/cygdrive/c/...` and **no `/c/`**; an **MSYS/Git-Bash** session has
+     `/c/...` and **no `/cygdrive/c/`**. The Monitor needs an **absolute** path (the
+     guard hook blocks the relative form), so one of the two is always wrong. Measure,
+     then arm:
+     ```bash
+     test -d /cygdrive/c && echo /cygdrive/c/Users/AndrewBerman/Desktop/ajb_workspace \
+                         || echo /c/Users/AndrewBerman/Desktop/ajb_workspace
+     ```
+   - command: `bash <resolved-prefix>/org/mcp/inbox-watch.sh {serial} stream`
+   - **A wrong prefix does NOT fail like a wrong path — it fails as `exit 127` on a
+     Monitor you have already been told is the standing mechanism.** The tool returns a
+     task id and reports success; the death arrives separately as a
+     `<task-notification status=failed>`. **An agent that does not read that
+     notification has armed nothing and is deaf for the entire session — while
+     `register_agent`, `check_inbox` and `get_agent_status` all still read healthy**,
+     because none of them observes the Monitor. Same `/c/`-vs-`/cygdrive/c/` root as
+     the corrupted-harness-exit-code class. *(Measured 2026-07-25: this doc's
+     previously-hardcoded `/c/` form killed the arm for both `1.0.0_SA_CTO~Z` and
+     `0.8.0_AE_CloudComp~E` on the same fleet respawn. Every live watcher on the box
+     was already using `/cygdrive/c/` — **the doc was wrong, not the fabric.**)*
+   - **After arming, positively confirm it:** `TaskOutput(<id>, block=false)` →
+     `running`. This is the one check that observes a *consumer*; do not skip it on the
+     assumption that a returned task id means a live stream.
    - The tool returns a **task id** — note it; that id is what you pass to
      `TaskOutput(<id>, block=false)` (positive liveness check) or `TaskStop(<id>)`
      (clean teardown). It is **not** visible in `TaskList`. Each `[INBOX] <file>`
