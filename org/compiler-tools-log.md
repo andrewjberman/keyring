@@ -26697,3 +26697,4 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | ad-hoc | AST-based zero-AWS-calls proof (text grep first false-positived, corrected) | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | full regression (service/gaps/roles/census-self-test/simulate-self-test) | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | pytest | test_iam_census_vintage.py (regression) | PASS 10/10 |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | NFRA_SYSPARITY (CVO~Z ruling 142354Z) | system_parity | inf-intraday-iam pattern BLOCK-ANCHORED (tempered span, cannot cross resource boundary) + re-pinned to the LOAD-BEARING dynamodb:DescribeTable (lambda_function.py:300); cross-policy mutant cell 29 proves the disclosed edge CLOSED; battery 30/30 | VERDICT |
