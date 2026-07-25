@@ -520,6 +520,37 @@ Companion discipline from the same delivery: *prove a suite can redden by making
 deliberately wrong check, watch it FAIL and exit non-zero, then remove it and re-confirm the clean pass.
 An assertion that a suite *could* fail, never once run wrong, has not been tested.
 
+**14. A COMPARISON BETWEEN TWO OUTPUTS OF THE SAME COMPUTATION IS NOT A CHECK — IT IS A TAUTOLOGY THAT
+RENDERS PASS FOREVER AND LOOKS LIKE COVERAGE.** A remedy chain reached its obvious final step —
+compare a source population's size against a newly-added report-side count of that same population —
+and the step was **wrong**: the source side reads `len(roles)` from a file, and the report side is a
+compiler's serialization of `len(roles)` from that same file. **The two sides cannot disagree.** The
+same check type had been genuinely powerful one unit over, where the report side was a **managed number
+a human could let drift** — so **the type is not what makes a check real; the INDEPENDENCE of its two
+sides is.** The question to ask before wiring any comparison: *what would have to happen for these two
+sides to disagree?* If the answer is "nothing — the same code computes both," it is not a check, and
+shipping it is worse than shipping nothing because it manufactures the appearance of coverage. *Caught
+here two minutes after the dispatch, by a reviewer who had recommended the underlying remedy and
+therefore had every incentive to let its natural conclusion stand.* The re-aimed target was the real
+one: the same derived value, checked against **six hand-copied prose copies** that had drifted precisely
+because nothing derived them.
+
+**15. A CLAIM A LATER COMMIT OBSOLETES IS NOT AN ERROR — THE MISSING SCOPE IS THE VINTAGE.** A lane
+determined "no migration is possible; no report-side count exists," named its own falsifier
+(*"unless you find a count I missed"*), and refused a plausible near-miss after checking its provenance.
+A subsequent build then **created** the count. **That is supersession by construction, not a wrong
+determination** — and recording it as "they were wrong" would misattribute careful work and teach the
+lane to hedge next time. Companion controls: **(a)** a vocabulary control must match on the **assertion,
+not the token** — measured twice in one hour, in two distinct modes: *polarity-blindness* (a refusal
+line reading "not UNUSED" passes a `\bunused\b` search **because it contains the word**) and
+*sense-blindness* (a forbidden-token sweep flagging seven correct uses of one word in an unrelated
+sense). Check the structured field, never the rendered prose. **(b)** **A schema/reader mismatch is
+undetectable by exercise alone**, because the happy path never populates the missing field either — it
+needs a **WRITE-SITE CENSUS: for every field a surface READS, name the code that WRITES it.** Two dead
+fields were found on one surface that had already passed an adversarial verify; neither was found by
+reading code — one fell out of grounding a wrong hypothesis, the other only because "did it happen
+twice?" was made an explicit acceptance criterion with a printed denominator.
+
 **Two structural notes the day earned, recorded because they change what a record is FOR:**
 **(a) A prematurely-checked prerequisite does not merely misreport status — it AUTHORIZES downstream
 work.** A build-order item marked DONE on 2 of its 3 clauses would have opened a design phase the
