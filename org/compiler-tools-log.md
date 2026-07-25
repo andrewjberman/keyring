@@ -26771,3 +26771,21 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check completeness | VERDICT |
 | 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check routable | PASS |
 | 2026-07-25 | 0.8.0_AE_CloudComp~D | comp-grep (x4), comp-glob, _comprail lib, ad-hoc AST walk (80 files), commit-gate, safe-commit (x3), provision-path-shims | MIXED | P1 arity regression + dead rail fallback + watcher deaf-prefix. THREE of my own ad-hoc shell instruments returned WELL-FORMED WRONG ANSWERS (MSYS pattern rewrite -> confident 0; shebang CRLF misread; `grep -c || echo 0` -> "0\n0" != "0" -> reported COUPLED for all 15 files, the exact opposite of truth). Remedy: count with wc -l, run a positive control that must be non-zero. Fourth grep-family silent-lie on record -- ONE instrument lying four ways, not four bugs. GAP: did not comp-blast my own interface change; that is what missed the 5 stale call sites. |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking org/tier2_senior/0.4.0_DS_ClientPlatform/promp... | VERDICT |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-which org/modules/graph/comp_which_signals.py ... | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_antipattern.py | VERDICT |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean.py | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file org/modules/graph/tests/_p4_probe_exem... | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_clean2.py | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check check --mode blocking --file _p4_probe_control.py | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-which org/modules/graph/comp_which_signals.py ... | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~C | F4 | (log-window summary) | comp-which mis-route diagnosis: extractor ATTRIBUTION over ranked-output reading -- curated layer was correct (0.50), surface_first_extractor minted 0.85 and outranked it; band re-set 0.60/floor 0.52 + new decommission rule + comp-iam-usage spaced lifecycle forms | GREEN 27+1xfail, 96 across which/route, 0 regressions in 18 pre-existing. commit-gate self-route invariant BLOCKED my first attempt (bare "retire" stole comp-tool-health) -- the gate covered 68 tools where my cells covered 1 |
