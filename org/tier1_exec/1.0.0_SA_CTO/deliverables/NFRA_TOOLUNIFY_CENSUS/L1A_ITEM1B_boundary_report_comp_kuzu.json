@@ -1,0 +1,44 @@
+{
+  "tool": "comp-kuzu",
+  "source": "kuzu layer source (7 files + 0 extra) vs LIVE kuzu_nessie_db",
+  "address_space": "kuzu_schema_element",
+  "head": "kuzu_nessie_db@read-only (provenance header above; pin==marker checked by the tool's own header)",
+  "surface_total": 13,
+  "cells": {
+    "covered": {
+      "applicable": true,
+      "count": 11,
+      "method": "mention"
+    },
+    "member": {
+      "applicable": true,
+      "count": 1,
+      "method": "mention"
+    },
+    "doc_only": {
+      "applicable": false,
+      "count": null,
+      "method": null
+    },
+    "orphan": {
+      "applicable": true,
+      "count": 1,
+      "method": "mention"
+    }
+  },
+  "doc_only_na_reason": "N/A BY SHAPE: the live surface is a binary Kuzu database whose complete metadata introspection surface (show_tables/table_info -- enumerated in --oracle-check, not assumed) carries name/type/arity fields ONLY. No prose plane exists in which a schema element could be named-but-unwalked.",
+  "items": [
+    {
+      "address": "column:CloudNode.id",
+      "cell": "orphan",
+      "method": "mention",
+      "evidence": "referenced in layer source (assumed plane); ABSENT from live schema"
+    },
+    {
+      "address": "column:CloudNode.node_id",
+      "cell": "member",
+      "method": "mention",
+      "evidence": "declared in loader DDL, present live, never query-referenced"
+    }
+  ]
+}
