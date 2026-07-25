@@ -1,0 +1,91 @@
+{
+  "tool": "comp-blast",
+  "source": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\.comp-graph\\graph.json",
+  "address_space": "dag_node_type",
+  "head": "1784960132.636277",
+  "surface_total": 10,
+  "cells": {
+    "covered": {
+      "applicable": true,
+      "count": 3,
+      "method": "traversal"
+    },
+    "member": {
+      "applicable": true,
+      "count": 0,
+      "method": "traversal"
+    },
+    "doc_only": {
+      "applicable": false,
+      "count": null,
+      "method": null
+    },
+    "orphan": {
+      "applicable": true,
+      "count": 7,
+      "method": "traversal"
+    }
+  },
+  "items": [
+    {
+      "address": "COMPONENT",
+      "cell": "orphan",
+      "method": "traversal",
+      "evidence": "candidate filter EXECUTED: cli._producer_node_types() -> ['GOLD_FUNCTION', 'GOLD_SCRIPT', 'LAMBDA', 'S3_ARTIFACT', 'SILVER_SCRIPT'] | engine-file mention: org/modules/graph/cli.py, org/modules/graph/trace_graph.py"
+    },
+    {
+      "address": "ENDPOINT",
+      "cell": "orphan",
+      "method": "traversal",
+      "evidence": "candidate filter EXECUTED: cli._producer_node_types() -> ['GOLD_FUNCTION', 'GOLD_SCRIPT', 'LAMBDA', 'S3_ARTIFACT', 'SILVER_SCRIPT'] | engine-file mention: org/modules/graph/trace_graph.py"
+    },
+    {
+      "address": "EVENTBRIDGE",
+      "cell": "orphan",
+      "method": "traversal",
+      "evidence": "candidate filter EXECUTED: cli._producer_node_types() -> ['GOLD_FUNCTION', 'GOLD_SCRIPT', 'LAMBDA', 'S3_ARTIFACT', 'SILVER_SCRIPT'] | engine-file mention: org/modules/graph/trace_graph.py"
+    },
+    {
+      "address": "GOLD_SCRIPT",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "candidate filter EXECUTED: cli._producer_node_types() -> ['GOLD_FUNCTION', 'GOLD_SCRIPT', 'LAMBDA', 'S3_ARTIFACT', 'SILVER_SCRIPT'] | engine-file mention: org/modules/graph/cli.py, org/modules/graph/trace_graph.py"
+    },
+    {
+      "address": "LAMBDA",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "candidate filter EXECUTED: cli._producer_node_types() -> ['GOLD_FUNCTION', 'GOLD_SCRIPT', 'LAMBDA', 'S3_ARTIFACT', 'SILVER_SCRIPT'] | engine-file mention: org/modules/graph/cli.py, org/modules/graph/trace_graph.py"
+    },
+    {
+      "address": "S3_ARTIFACT",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "candidate filter EXECUTED: cli._producer_node_types() -> ['GOLD_FUNCTION', 'GOLD_SCRIPT', 'LAMBDA', 'S3_ARTIFACT', 'SILVER_SCRIPT'] | engine-file mention: org/modules/graph/cli.py, org/modules/graph/trace_graph.py"
+    },
+    {
+      "address": "S3_BUCKET",
+      "cell": "orphan",
+      "method": "traversal",
+      "evidence": "candidate filter EXECUTED: cli._producer_node_types() -> ['GOLD_FUNCTION', 'GOLD_SCRIPT', 'LAMBDA', 'S3_ARTIFACT', 'SILVER_SCRIPT'] | engine-file mention: org/modules/graph/cli.py"
+    },
+    {
+      "address": "SNS_TOPIC",
+      "cell": "orphan",
+      "method": "traversal",
+      "evidence": "candidate filter EXECUTED: cli._producer_node_types() -> ['GOLD_FUNCTION', 'GOLD_SCRIPT', 'LAMBDA', 'S3_ARTIFACT', 'SILVER_SCRIPT'] | NO engine-file mention (walked/excluded anonymously)"
+    },
+    {
+      "address": "SQS_QUEUE",
+      "cell": "orphan",
+      "method": "traversal",
+      "evidence": "candidate filter EXECUTED: cli._producer_node_types() -> ['GOLD_FUNCTION', 'GOLD_SCRIPT', 'LAMBDA', 'S3_ARTIFACT', 'SILVER_SCRIPT'] | NO engine-file mention (walked/excluded anonymously)"
+    },
+    {
+      "address": "STATE_MACHINE",
+      "cell": "orphan",
+      "method": "traversal",
+      "evidence": "candidate filter EXECUTED: cli._producer_node_types() -> ['GOLD_FUNCTION', 'GOLD_SCRIPT', 'LAMBDA', 'S3_ARTIFACT', 'SILVER_SCRIPT'] | NO engine-file mention (walked/excluded anonymously)"
+    }
+  ]
+}

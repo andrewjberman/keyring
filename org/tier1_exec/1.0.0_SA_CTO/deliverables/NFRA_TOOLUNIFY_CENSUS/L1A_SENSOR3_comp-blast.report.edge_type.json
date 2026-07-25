@@ -1,0 +1,109 @@
+{
+  "tool": "comp-blast",
+  "source": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\.comp-graph\\graph.json",
+  "address_space": "dag_edge_type",
+  "head": "1784960132.636277",
+  "surface_total": 13,
+  "cells": {
+    "covered": {
+      "applicable": true,
+      "count": 13,
+      "method": "traversal"
+    },
+    "member": {
+      "applicable": true,
+      "count": 0,
+      "method": "traversal"
+    },
+    "doc_only": {
+      "applicable": false,
+      "count": null,
+      "method": null
+    },
+    "orphan": {
+      "applicable": true,
+      "count": 0,
+      "method": "traversal"
+    }
+  },
+  "items": [
+    {
+      "address": "CALLS",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "traversed by the blast BFS: AST-verified TYPE-BLIND this run (no If-test on edge_type in trace_graph.upstream/downstream) | engine-file mention: org/modules/graph/trace_graph.py"
+    },
+    {
+      "address": "EVENT_INVOKED_BY",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "traversed by the blast BFS: AST-verified TYPE-BLIND this run (no If-test on edge_type in trace_graph.upstream/downstream) | NO engine-file mention (walked/excluded anonymously)"
+    },
+    {
+      "address": "EVENT_INVOKES",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "traversed by the blast BFS: AST-verified TYPE-BLIND this run (no If-test on edge_type in trace_graph.upstream/downstream) | NO engine-file mention (walked/excluded anonymously)"
+    },
+    {
+      "address": "FETCHES",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "traversed by the blast BFS: AST-verified TYPE-BLIND this run (no If-test on edge_type in trace_graph.upstream/downstream) | engine-file mention: org/modules/graph/trace_graph.py"
+    },
+    {
+      "address": "READS_S3",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "traversed by the blast BFS: AST-verified TYPE-BLIND this run (no If-test on edge_type in trace_graph.upstream/downstream) | engine-file mention: org/modules/graph/trace_graph.py"
+    },
+    {
+      "address": "S3_INVOKED_BY",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "traversed by the blast BFS: AST-verified TYPE-BLIND this run (no If-test on edge_type in trace_graph.upstream/downstream) | NO engine-file mention (walked/excluded anonymously)"
+    },
+    {
+      "address": "S3_INVOKES",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "traversed by the blast BFS: AST-verified TYPE-BLIND this run (no If-test on edge_type in trace_graph.upstream/downstream) | NO engine-file mention (walked/excluded anonymously)"
+    },
+    {
+      "address": "SFN_INVOKED_BY",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "traversed by the blast BFS: AST-verified TYPE-BLIND this run (no If-test on edge_type in trace_graph.upstream/downstream) | NO engine-file mention (walked/excluded anonymously)"
+    },
+    {
+      "address": "SFN_INVOKES",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "traversed by the blast BFS: AST-verified TYPE-BLIND this run (no If-test on edge_type in trace_graph.upstream/downstream) | NO engine-file mention (walked/excluded anonymously)"
+    },
+    {
+      "address": "SNS_INVOKED_BY",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "traversed by the blast BFS: AST-verified TYPE-BLIND this run (no If-test on edge_type in trace_graph.upstream/downstream) | NO engine-file mention (walked/excluded anonymously)"
+    },
+    {
+      "address": "SNS_INVOKES",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "traversed by the blast BFS: AST-verified TYPE-BLIND this run (no If-test on edge_type in trace_graph.upstream/downstream) | NO engine-file mention (walked/excluded anonymously)"
+    },
+    {
+      "address": "TRIGGERS",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "traversed by the blast BFS: AST-verified TYPE-BLIND this run (no If-test on edge_type in trace_graph.upstream/downstream) | engine-file mention: org/modules/graph/trace_graph.py"
+    },
+    {
+      "address": "WRITES_S3",
+      "cell": "covered",
+      "method": "traversal",
+      "evidence": "traversed by the blast BFS: AST-verified TYPE-BLIND this run (no If-test on edge_type in trace_graph.upstream/downstream) | engine-file mention: org/modules/graph/trace_graph.py"
+    }
+  ]
+}
