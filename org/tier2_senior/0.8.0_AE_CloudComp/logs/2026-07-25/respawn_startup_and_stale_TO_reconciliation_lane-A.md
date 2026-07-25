@@ -259,3 +259,77 @@ correctly — it caught a `.tf` token in one of my probes and denied it.)
 
 ~A clear, nothing edited, no dispatch held. ACKs + the finding routed to CTO~Z and base CTO;
 record-custody leg to MSTR including the base-addressed-mail delivery gap.
+
+---
+
+# ADDENDUM 3 -- GOVRIP review exchange with base CTO: two findings adopted, one claim of mine REFUTED
+
+**archetype:** VALIDATE
+
+Review exchange off base CTO's carve-out (which authorized nothing and dispatched nothing).
+Recording the refutation as prominently as the adoptions -- a log that carries only the wins is
+the stale-record class applied to oneself.
+
+## Adopted
+
+1. **Byte-identical tuples.** `RETRACTED_20260709_*` and `PROD_WRITE_FORBIDDEN_*` are identical in
+   value; separable only by identifier name. Now a standing rule in the GOVRIP spec: **a rip must
+   key on the SYMBOL NAME, never the path literals.** Landed in the new module's own docstring.
+2. **Control ordering.** The `@1fcf560b8` regression detector is a *detector* -- it fires after
+   the deletion is written. A rule in the dispatch *prevents*. Base CTO: "I had been relying on
+   the catcher." Both ship.
+3. **Import atomicity.** Verified by base CTO across **all seven importers, no exceptions** (4
+   dual-import, 3 bare -- all fail unhandled on delete). My three-step order adopted: extract the
+   safety half -> de-guard every importer -> delete last.
+4. **Denominator/classification split** kept wholesale: one pass establishes the denominator,
+   another classifies within it. Collapsing them is what let base CTO's scopes drift.
+
+Chasing (3) exposed a defect in base CTO's own census: the deletion scope included
+`RETRACTED_20260709` but the census predicate did not, so a file consuming only that half was
+invisible. Their line, worth keeping: **"'Re-derive it' does not protect against a wrong
+predicate; it propagates one."** That deletion is now HELD -- `RETRACTED_*` has 4 live green
+consumers.
+
+## REFUTED -- my module-name census was NOT complete
+
+I claimed a consumer census keyed on the **module name** is *structurally complete*, because a
+consumer cannot consume the leaf without naming the module at its import edge. **Base CTO tested
+it before adopting and it is false.** Verified the counterexample at source myself:
+
+```
+extract_s3.py   grep -c sovereign_held -> 0        (misses my census)
+extract_s3.py:19    from .trace_graph import ... _held_path_hit
+extract_s3.py:337, :358             two live calls
+trace_graph.py:30/32   imports is_held_path from the leaf
+trace_graph.py:149-163 defines _held_path_hit over it
+```
+
+**True at depth 1; I stated it as true at depth N.** A re-export creates a consumer whose import
+edge names the *re-exporter*, not the leaf. Correct form: **the import edge must be FOLLOWED, not
+MATCHED -- a consumer census over a re-exported symbol is a transitive-closure problem, not a
+grep.** The two censuses were not even nested (27 vs 30, unique members both ways), so neither
+was ever the superset.
+
+Refinement I sent back: `_held_path_hit` is a locally-`def`'d **wrapper that WIDENS**
+(`:163` ORs `is_held_path` with `HELD_BUCKET_PREFIXES`), not a rebound import -- so a pass-2
+implementation keying on re-exported *names* would still miss it. The criterion that catches it is
+**any local binding whose body reaches the leaf**. `extract_s3.py` is now mandatory in the
+de-guard set; it would have raised ImportError at import time.
+
+## The lesson, which is the actual deliverable
+
+**Both censuses failed the same way: each was complete against the failure its author had just
+seen.** Base CTO's against "wrong symbol"; mine against "wrong symbol list"; neither against
+"consumer never names it at all." **A predicate hardened against the last miss is not a predicate
+that cannot miss.**
+
+And the control was not a better pattern -- it was base CTO *running the claim against a file
+neither of us had reason to suspect.* The predicate is the input to the control, not the control.
+I deliberately did NOT respond by proposing a third predicate certified complete; the closure is
+complete against STATIC import edges and I did not enumerate what sits outside that.
+
+## Current State
+
+Nothing open at me, nothing edited, no dispatch held. GOVRIP step 1 has passed both gates (31
+passed, mutant 3/3 RED, guard still armed post-extraction). `PROD_WRITE` IN FORCE; the boundary
+question remains unanswered at Andrew and is not mine to resolve.
