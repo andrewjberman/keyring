@@ -1,0 +1,118 @@
+{
+  "seed": "gold:D_01.partner_analytics",
+  "n_traced": 8,
+  "first_hop_frequency": {
+    "gold:A_03.positions_cube --WRITES_S3--> s3:silver/allocations/{*}.parquet": 3,
+    "lambda:bd-price-update --WRITES_S3--> s3:silver/prices/canonical_prices.parquet": 2,
+    "s3:gold/account_gains/{*}.parquet --READS_S3--> gold:INF_C_03.account_performance": 1,
+    "gold:INF_build_canonical_prices --WRITES_S3--> s3:silver/prices/canonical_prices.parquet": 1,
+    "gold:build_canonical_prices_v2 --WRITES_S3--> s3:silver/prices/canonical_prices.parquet": 1
+  },
+  "per_member": {
+    "gold:A_03.positions_cube": {
+      "direction": "upstream",
+      "path_length": 4,
+      "full_path": [
+        "s3:gold/artifacts/partner_analytics/header_metrics_{*}.json --READS_S3--> gold:D_01.partner_analytics",
+        "gold:D_04.client_portal_summary --WRITES_S3--> s3:gold/artifacts/partner_analytics/header_metrics_{*}.json",
+        "s3:silver/allocations/{*}.parquet --READS_S3--> gold:D_04.client_portal_summary",
+        "gold:A_03.positions_cube --WRITES_S3--> s3:silver/allocations/{*}.parquet"
+      ],
+      "first_absent_hop": "gold:A_03.positions_cube --WRITES_S3--> s3:silver/allocations/{*}.parquet"
+    },
+    "gold:A_03.positions_cube:_gate_write_watermark": {
+      "direction": "upstream",
+      "path_length": 6,
+      "full_path": [
+        "s3:gold/artifacts/partner_analytics/header_metrics_{*}.json --READS_S3--> gold:D_01.partner_analytics",
+        "gold:D_04.client_portal_summary --WRITES_S3--> s3:gold/artifacts/partner_analytics/header_metrics_{*}.json",
+        "s3:silver/allocations/{*}.parquet --READS_S3--> gold:D_04.client_portal_summary",
+        "gold:A_03.positions_cube --WRITES_S3--> s3:silver/allocations/{*}.parquet",
+        "s3:gold/meta/positions_cube_incr_watermark.json --READS_S3--> gold:A_03.positions_cube",
+        "gold:A_03.positions_cube:_gate_write_watermark --WRITES_S3--> s3:gold/meta/positions_cube_incr_watermark.json"
+      ],
+      "first_absent_hop": "gold:A_03.positions_cube --WRITES_S3--> s3:silver/allocations/{*}.parquet"
+    },
+    "gold:A_03.positions_cube:run_shadow_gate_evidence": {
+      "direction": "upstream",
+      "path_length": 7,
+      "full_path": [
+        "s3:gold/artifacts/partner_analytics/header_metrics_{*}.json --READS_S3--> gold:D_01.partner_analytics",
+        "gold:D_04.client_portal_summary --WRITES_S3--> s3:gold/artifacts/partner_analytics/header_metrics_{*}.json",
+        "s3:silver/allocations/{*}.parquet --READS_S3--> gold:D_04.client_portal_summary",
+        "gold:A_03.positions_cube --WRITES_S3--> s3:silver/allocations/{*}.parquet",
+        "s3:gold/meta/positions_cube_incr_watermark.json --READS_S3--> gold:A_03.positions_cube",
+        "gold:A_03.positions_cube:_gate_write_watermark --WRITES_S3--> s3:gold/meta/positions_cube_incr_watermark.json",
+        "gold:A_03.positions_cube:run_shadow_gate_evidence --CALLS--> gold:A_03.positions_cube:_gate_write_watermark"
+      ],
+      "first_absent_hop": "gold:A_03.positions_cube --WRITES_S3--> s3:silver/allocations/{*}.parquet"
+    },
+    "gold:E_15.validate_yf_overrides:main": {
+      "direction": "upstream",
+      "path_length": 8,
+      "full_path": [
+        "s3:gold/artifacts/partner_analytics/header_metrics_{*}.json --READS_S3--> gold:D_01.partner_analytics",
+        "gold:D_04.client_portal_summary --WRITES_S3--> s3:gold/artifacts/partner_analytics/header_metrics_{*}.json",
+        "s3:gold/canonical/holdings/{*}.parquet --READS_S3--> gold:D_04.client_portal_summary",
+        "gold:B_00.canonical_holdings --WRITES_S3--> s3:gold/canonical/holdings/{*}.parquet",
+        "s3:silver/prices/canonical_prices.parquet --READS_S3--> gold:B_00.canonical_holdings",
+        "lambda:bd-price-update --WRITES_S3--> s3:silver/prices/canonical_prices.parquet",
+        "s3:silver/historical_prices.parquet --READS_S3--> lambda:bd-price-update",
+        "gold:E_15.validate_yf_overrides:main --WRITES_S3--> s3:silver/historical_prices.parquet"
+      ],
+      "first_absent_hop": "lambda:bd-price-update --WRITES_S3--> s3:silver/prices/canonical_prices.parquet"
+    },
+    "gold:INF_B_03.account_gains": {
+      "direction": "upstream",
+      "path_length": 4,
+      "full_path": [
+        "s3:gold/timeseries/account_performance.parquet --READS_S3--> gold:D_01.partner_analytics",
+        "gold:INF_C_03.account_performance --WRITES_S3--> s3:gold/timeseries/account_performance.parquet",
+        "s3:gold/account_gains/{*}.parquet --READS_S3--> gold:INF_C_03.account_performance",
+        "gold:INF_B_03.account_gains --WRITES_S3--> s3:gold/account_gains/{*}.parquet"
+      ],
+      "first_absent_hop": "s3:gold/account_gains/{*}.parquet --READS_S3--> gold:INF_C_03.account_performance"
+    },
+    "gold:INF_build_canonical_prices": {
+      "direction": "upstream",
+      "path_length": 6,
+      "full_path": [
+        "s3:gold/artifacts/partner_analytics/header_metrics_{*}.json --READS_S3--> gold:D_01.partner_analytics",
+        "gold:D_04.client_portal_summary --WRITES_S3--> s3:gold/artifacts/partner_analytics/header_metrics_{*}.json",
+        "s3:gold/canonical/holdings/{*}.parquet --READS_S3--> gold:D_04.client_portal_summary",
+        "gold:B_00.canonical_holdings --WRITES_S3--> s3:gold/canonical/holdings/{*}.parquet",
+        "s3:silver/prices/canonical_prices.parquet --READS_S3--> gold:B_00.canonical_holdings",
+        "gold:INF_build_canonical_prices --WRITES_S3--> s3:silver/prices/canonical_prices.parquet"
+      ],
+      "first_absent_hop": "gold:INF_build_canonical_prices --WRITES_S3--> s3:silver/prices/canonical_prices.parquet"
+    },
+    "gold:build_canonical_prices_v2": {
+      "direction": "upstream",
+      "path_length": 6,
+      "full_path": [
+        "s3:gold/artifacts/partner_analytics/header_metrics_{*}.json --READS_S3--> gold:D_01.partner_analytics",
+        "gold:D_04.client_portal_summary --WRITES_S3--> s3:gold/artifacts/partner_analytics/header_metrics_{*}.json",
+        "s3:gold/canonical/holdings/{*}.parquet --READS_S3--> gold:D_04.client_portal_summary",
+        "gold:B_00.canonical_holdings --WRITES_S3--> s3:gold/canonical/holdings/{*}.parquet",
+        "s3:silver/prices/canonical_prices.parquet --READS_S3--> gold:B_00.canonical_holdings",
+        "gold:build_canonical_prices_v2 --WRITES_S3--> s3:silver/prices/canonical_prices.parquet"
+      ],
+      "first_absent_hop": "gold:build_canonical_prices_v2 --WRITES_S3--> s3:silver/prices/canonical_prices.parquet"
+    },
+    "gold:build_canonical_prices_v2:load_historical_prices": {
+      "direction": "upstream",
+      "path_length": 8,
+      "full_path": [
+        "s3:gold/artifacts/partner_analytics/header_metrics_{*}.json --READS_S3--> gold:D_01.partner_analytics",
+        "gold:D_04.client_portal_summary --WRITES_S3--> s3:gold/artifacts/partner_analytics/header_metrics_{*}.json",
+        "s3:gold/canonical/holdings/{*}.parquet --READS_S3--> gold:D_04.client_portal_summary",
+        "gold:B_00.canonical_holdings --WRITES_S3--> s3:gold/canonical/holdings/{*}.parquet",
+        "s3:silver/prices/canonical_prices.parquet --READS_S3--> gold:B_00.canonical_holdings",
+        "lambda:bd-price-update --WRITES_S3--> s3:silver/prices/canonical_prices.parquet",
+        "s3:silver/historical_prices.parquet --READS_S3--> lambda:bd-price-update",
+        "gold:build_canonical_prices_v2:load_historical_prices --WRITES_S3--> s3:silver/historical_prices.parquet"
+      ],
+      "first_absent_hop": "lambda:bd-price-update --WRITES_S3--> s3:silver/prices/canonical_prices.parquet"
+    }
+  }
+}
