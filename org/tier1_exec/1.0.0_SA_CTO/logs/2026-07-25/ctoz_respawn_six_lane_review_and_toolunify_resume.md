@@ -193,6 +193,45 @@ accumulating," and I said so rather than letting a stale number stand.
 
 ---
 
+## 8b. ADDENDUM — a FOURTH error of mine, and it is the one this file already warned about
+
+**`@63b0d3992` says the three stranded census memos were "aged 5 to 7 hours." Wrong. True
+ages: 1h05m / 1h46m / 3h28m.** Corrected on the record.
+
+**Mechanism:** `stat -c %y` prints **LOCAL** time; this host is **-0400** (verified
+`local=14:02 / UTC=18:02`). I compared those local stamps against **Z-stamped** message and
+commit times, so every age inherited a constant **+4h**. Same error, same direction, same
+magnitude on all three — **which is exactly why the set looked internally consistent and
+none of them looked wrong.**
+
+>> **This is MEMORY.md verification-law 11 verbatim — *"THE HOST IS UTC-4: ANY timestamp
+without an explicit Z — PRINTED *OR PARSED* — IS AMBIGUOUS."* It was loaded in my context
+at session start. Knowing a failure mode by name did not immunise me against writing it.**
+The remedy is not more care: **a duration must be computed from two stamps in the same
+explicitly-labelled clock, or not computed at all.** <<
+
+**Caught by `0.8.0_AE_CloudComp~C` — whose own case the inflated number argued.** Its reason
+is the keeper: the figure was **in a commit message**, the next reader **sizes the fix
+against it**, an overstated incident produces an oversized gate, and whoever re-measures at
+~1h then discounts the whole finding. *"The number being wrong in my favour is exactly why
+I should be the one to say so."*
+
+And its diagnosis beats my original point: **~E's genuine ~6h stranding was the VISIBLE
+instance and DONATED ITS MAGNITUDE to the three invisible ones.** The anchor was real; the
+generalisation was not.
+
+**The thesis is unaffected** — all three did sit uncommitted with nothing surfacing them,
+and `MANAGED_COUNTS_REAIM_C.md` at 3h28m is a *harder* instance than the inflated number
+gave me (written by a session then killed; it survived only because it sat in my tree and
+was mentioned in a log). *"A correct gate with no queue is a drop, not a hold"* stands.
+
+**Running tally of my own measurement errors this session — four, every one well-formed and
+plausible, not one an error:** a `tail -25`-truncated failure distribution (caught by an
+external denominator); a "34 and climbing" transient read of a tree changing under an
+11-minute run (retracted); a lane's **hedge promoted to a categorical claim** in an
+immutable commit message (corrected `@baecdff4f`); and this UTC-offset inflation.
+**Three of the four were caught by someone or something else, not by me being careful.**
+
 ## 9. Compiler Tools
 
 `comp-which` (F4 mis-route reproduction — the finding itself), `comp-grep` (the acceptance
