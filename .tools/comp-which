@@ -242,13 +242,56 @@ RULES = [
      "perms before deploy (note: a Principal:* on Effect=Deny is a GUARDRAIL, not a public grant)"),
     (["unused", "cold", "coldness", "last-used", "lastused", "rolelastused", "reach", "reaches",
       "reachable", "who-can-reach", "decommission", "dormant", "usage", "still-used", "role-cold",
-      "break-glass"],
+      "break-glass",
+      # F4 (CTO~Z 170603Z): the rule carried only HYPHENATED lifecycle forms ("still-used",
+      # "who-can-reach"), so the way an agent actually types the question -- "is this iam role
+      # still used", "who can still reach this bucket" -- matched NONE of them and lost to
+      # comp-iam (deploy-time correctness, +4 on the bare "iam"+"role" tokens). The rule's own
+      # discriminator line already claims this intent ("usage/lifecycle/reachability ->
+      # comp-iam-usage"); only the spaced spellings were missing. Losing to your own declared
+      # discriminator because the vocabulary is hyphen-only is a spelling gap, not a routing
+      # judgement -- and it sends a decommission question to the grant-correctness tool.
+      "still used", "still in use", "role still used", "still be used",
+      "can still reach", "who can still reach", "still reaches", "safe to remove this role"],
      "IAM usage / reachability (lifecycle)",
      ["comp-iam-usage role-cold", "comp-iam-usage who-can-reach <arn>",
       "comp-iam-usage reach-check <role> <action> <arn>"],
      "is this role/grant still USED / who still REACHES a resource / access-plane coldness -- the "
      "lifecycle SIBLING of comp-iam (deploy-time correctness). Discriminator: usage/lifecycle/"
      "reachability -> comp-iam-usage; grant-sufficiency/correctness -> comp-iam"),
+    # ---- DECOMMISSION / RETIRE intent (F4, CTO~Z dispatch 170603Z) ---------------------------
+    # The decommission tools were all REGISTERED and individually routable (comp-iam-usage :243,
+    # comp-similar :521, comp-debris :875, comp-dups :268) -- but the ESTATE-WIDE "what can we
+    # retire?" question named none of their per-plane vocabulary, so it fell through every one of
+    # them. Measured before this rule: `find deprecated unused or overlapping AWS resources` put
+    # comp-transform (React field-render) at rank-1; comp-dups sat at 0.46, comp-iam-usage 0.21,
+    # comp-debris 0.19. "deprecated" and "overlapping" existed NOWHERE as curated keywords.
+    #
+    # MULTI-TOOL BY DESIGN, not indecision: "can we retire this?" is answered on four different
+    # planes -- invocation-cold (comp-debris), access-cold (comp-iam-usage), duplicate
+    # (comp-dups), functional-overlap (comp-similar). A bare retire question does not say which,
+    # so co-equal surfacing IS the correct answer and route() disambiguates. Naming one would
+    # encode a preference the question does not carry.
+    #
+    # Deliberately NOT bare "field"/"component" vocabulary -- "unused" is a CROSS-SENSE token
+    # (unused React field vs unused cloud resource) and comp-transform owns the field sense via
+    # its "unused field audit" PHRASE (+3, which outscores this rule's +2 token on that query).
+    # The sense split is carried by the phrase, not by removing the token from either side.
+    # BARE "retire"/"retired" REMOVED before landing -- the self-route invariant gate caught them
+    # stealing comp-tool-health, whose own use_case reads "should we KEEP, FIX, PROMOTE or RETIRE
+    # it". "retire" is CROSS-SENSE exactly like "unused": retire a TOOL vs retire a RESOURCE. Kept
+    # only in resource-scoped PHRASES, which cannot match the tool-health question. This is the same
+    # over-fire class the non-vacuity cells below guard -- my cells covered comp-transform and
+    # missed comp-tool-health; the gate covered what the tests did not.
+    (["deprecated", "overlapping", "dead", "unused", "orphaned",
+      "dead resource", "dead resources", "unused resources", "deprecated resources",
+      "retire the resource", "resources to retire", "safe to retire",
+      "left running", "safe to delete", "still running but", "no longer used", "candidates for removal"],
+     "estate DECOMMISSION / retire-candidate sweep",
+     ["comp-dups", "comp-debris", "comp-iam-usage role-cold", "comp-similar --supersede"],
+     "what can we RETIRE across the estate -- the four coldness/overlap planes surfaced together "
+     "(invocation-cold -> comp-debris; access-cold -> comp-iam-usage; duplicate -> comp-dups; "
+     "functional-overlap/superseded -> comp-similar). All advisory, NONE deletes"),
     (["what resources", "aws resource", "which thread owns", "estate", "cloud graph", "blast radius of"],
      "AWS resources / thread ownership",
      ["comp-aws", "pipescript <name>", "comp-pipescript deployed"],

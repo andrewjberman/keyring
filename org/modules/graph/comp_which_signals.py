@@ -118,7 +118,34 @@ def curated_extractor(intent, ctx_d):
 
 def surface_first_extractor(intent, ctx_d):
     """VETTED (the CI-guarded coverage-map). comp-which's surface-first ledger drill -> the surface's
-    tool(s). Confidence in [0, 1) (below curated's 1.0), rank-decayed within the surface toolkit."""
+    tool(s). Confidence BELOW strong-curated and ABOVE confident-fuzzy, rank-decayed within the toolkit.
+
+    BAND CORRECTED 2026-07-25 (0.8.0_AE_CloudComp~C, CTO~Z F4 dispatch 170603Z). This docstring used to
+    read "Confidence in [0, 1) (below curated's 1.0)" and the base was 0.85 -- BOTH WRONG ABOUT THE SAME
+    NUMBER. Curated's *confidence* is not 1.0: the 1.0 is `_VETTED_OFFSET`, which comp_route.py:381 adds
+    to EVERY vetted candidate identically, surface-first included. Curated's actual confidences are
+    `min(1.0, score/6.0)` for a STRONG hit (score 4 -> 0.667, score 5 -> 0.833) and a flat 0.5 for the
+    weak cascade-step-6 hit. So a 0.85 surface-first beat EVERY curated hit except a perfect score-6
+    rule -- the exact inverse of the cascade `fuzzy_extractor`'s own docstring states
+    ("strong-curated > surface-first > fuzzy") and of comp-which:44 ("so surface-first never steals a
+    vetted curated route"). Two docstrings asserted the invariant; the constants implemented its
+    opposite, and nothing compared them.
+
+    MEASURED CONSEQUENCE (the dispatch case): `comp-which "find deprecated unused or overlapping AWS
+    resources"` -> comp-transform (a React field-render tool) rank-1 at 1.85 VETTED, no fuzzy-guess
+    banner. Generic "aws" resolved the AWS-CLOUD surface, then the drill ranked that surface's tools by
+    concern-token overlap and comp-transform won on the single token "UNUSED" -- present in its concern
+    text meaning an unused *React field*, matched against a query meaning an unused *cloud resource*.
+    A one-token collision across two senses, promoted above the correct curated routes by the band bug.
+
+    THE BAND, explicitly, so the next editor can check it against the cascade instead of inferring it:
+        strong-curated  0.667 .. 1.000   (score/6.0, floor 0.15 after rank decay)
+        surface-first   0.520 .. 0.600   <- HERE (below strong-curated, above confident-fuzzy)
+        weak-curated    0.500            (cascade step 6)
+        confident-fuzzy 0.500
+    Surface-first deliberately still outranks a WEAK single-token curated hit: an explicitly-named
+    surface plus a ledger drill is better evidence than one incidental keyword. It must not outrank a
+    STRONG one."""
     q = (intent or "").strip()
     qtok = _CW._tokens(q)
     sf = _CW._surface_first(q, qtok)
@@ -133,7 +160,7 @@ def surface_first_extractor(intent, ctx_d):
         if not cid or cid in seen:
             continue
         seen.add(cid)
-        out.append({"cap_id": cid, "confidence": max(0.05, 0.85 - 0.15 * rank), "vetted": True})
+        out.append({"cap_id": cid, "confidence": max(0.52, 0.60 - 0.05 * rank), "vetted": True})
     return out
 
 

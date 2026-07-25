@@ -116,6 +116,99 @@ def test_no_regression(q, canon):
     assert any(t == canon for t in tools), f"REGRESSION: {q!r} -> {tools} (want {canon})"
 
 
+# ---- F4: DECOMMISSION intent must reach the decommission-family tools --------------------
+# CTO~Z dispatch 170603Z, reproduced on two shells: `comp-which "find deprecated unused or
+# overlapping AWS resources"` returned comp-transform (a React component field-render tool) at
+# rank-1, score 1.85 VETTED -- i.e. presented as a curated routing DECISION, with no fuzzy-guess
+# banner, while comp-dups sat at 0.46, comp-iam-usage 0.21 and comp-debris 0.19.
+#
+# MECHANISM (why it is structural, not a tuning miss): the vetted offset (+1.0) means ANY curated
+# rule that fires outranks EVERY fuzzy match regardless of semantic fit. The decommission tools had
+# no curated rule at all, so they could never cross 1.0 -- they were unreachable BY CONSTRUCTION,
+# not merely out-ranked. comp-transform won on "unused" vocabulary it acquired in the tranche-1
+# near-tie hardening: a remedy for one mis-route created another.
+#
+# WHY THIS CELL EXISTS AT ALL (CTO~Z's binding condition, and the real defect): a router that
+# mis-routes at 1.85 HAS NO FAILURE CHANNEL -- the score reads as an answer, so nothing in the
+# fabric surfaces it except a human recognising the wrong tool in a ranked list. These cells are
+# that missing channel. Fixing the instance without them closes nothing.
+_DECOM_FAMILY = {"comp-debris", "comp-iam-usage", "comp-dups", "comp-deadgrant", "comp-similar"}
+
+
+@pytest.mark.parametrize("q", [
+    "find deprecated unused or overlapping AWS resources",   # CTO~Z's EXACT reproduction string
+    "which cloud resources can we decommission",             # not tuned against: plain intent
+    "what aws resources are dead or unused",                 # not tuned against: synonym form
+])
+def test_decommission_intent_reaches_a_decommission_tool(q):
+    """FAMILY-level, deliberately. The intent is 'retire something'; WHICH plane answers it
+    (invocation-cold / access-cold / duplicate / functional-overlap) is a legitimate near-tie.
+    Asserting one exact tool here would encode a preference the question does not carry."""
+    kind, tools = _route(q)
+    assert tools and tools[0] in _DECOM_FAMILY, (
+        f"{q!r} -> rank-1 {tools[:1]} is not a decommission tool (want one of "
+        f"{sorted(_DECOM_FAMILY)}); full={tools}")
+
+
+@pytest.mark.parametrize("q,canon", [
+    ("is this iam role still used", "comp-iam-usage"),
+    ("who can still reach this bucket", "comp-iam-usage"),
+    ("which lambdas are cold and never invoked", "comp-debris"),
+])
+def test_decommission_plane_specific_routes(q, canon):
+    """Where the query DOES name a plane, the specific tool must win -- family-level routing is the
+    floor, not the ceiling."""
+    kind, tools = _route(q)
+    assert tools and tools[0] == canon, f"{q!r} -> {tools} (want {canon} rank-1)"
+
+
+# ---- NON-VACUITY for F4: the new rule must DISAMBIGUATE, not merely outrank ----------------
+
+@pytest.mark.parametrize("q,canon", [
+    ("what hands data to the advisor panel", "comp-transform"),
+    ("which response fields does the panel actually render", "comp-transform"),
+])
+def test_decommission_rule_does_NOT_steal_portal_render_queries(q, canon):
+    kind, tools = _route(q)
+    assert tools and tools[0] == canon, f"F4 rule over-fired on {q!r} -> {tools} (want {canon})"
+
+
+@pytest.mark.xfail(reason=(
+    "PRE-EXISTING, NOT caused by the F4 rule -- measured RED before the F4 rule existed and RED "
+    "unchanged after it, so F4 neither caused nor fixed it. SEPARATE DEFECT, surfaced to CTO~Z "
+    "170603Z-thread: 'unused field audit for a component' yields THREE co-equal confident-fuzzy "
+    "vetted candidates at 0.500 each (comp-adapter-audit / comp-cache / comp-transform), and "
+    "comp_route.py:384 breaks the tie as `(-score, cap.id)` -- ALPHABETICALLY. comp-adapter-audit "
+    "wins on the letter 'a'. comp-transform's own curated hit is the weak cascade-step-6 0.5, which "
+    "TIES rather than beats. This is the same neighbour the tranche-1 near-tie hardening "
+    "(comp-which:161) was written to beat -- that fix has silently regressed, and an alphabetical "
+    "tie-break is a deterministic-but-arbitrary rank-1, not a routing judgement. Fixing it means "
+    "ruling on how weak-curated should rank against confident-fuzzy, which is a router-precedence "
+    "decision above this lane. Kept as a LIVE xfail (not deleted, not skipped) so it flips to XPASS "
+    "the moment the precedence is ruled on -- a deleted cell would lose the only detector."),
+    strict=False)
+def test_component_unused_field_audit_stays_comp_transform():
+    """The cross-sense token: 'unused' means an unused React FIELD here and an unused CLOUD RESOURCE
+    in the F4 rule. comp-transform owns the field sense via its 'unused field audit' PHRASE (+3)."""
+    kind, tools = _route("unused field audit for a component")
+    assert tools and tools[0] == "comp-transform", f"-> {tools} (want comp-transform rank-1)"
+
+
+def test_routed_tools_exist_on_disk():
+    """comp-which must never name a tool that does not exist.
+
+    SCOPE, deliberately narrow: this asserts the ROUTER'S OWN contract (the target is real), NOT
+    that the name resolves bare on PATH. Bare-name resolution is ~/bin provisioning (~D's lane,
+    2 of 91 comp-tools resolving as of 170603Z) -- asserting it here would turn comp-which's suite
+    red for a defect in a different component and point the blame at the wrong file.
+    The PATH half is covered by the A.3 N-of-M denominator probe @949d8c174."""
+    for q in ("find deprecated unused or overlapping AWS resources", "grep the repo for X"):
+        kind, tools = _route(q)
+        for t in tools:
+            assert (_WS / ".tools" / t).exists(), (
+                f"comp-which routed {q!r} to {t!r}, which does not exist at .tools/{t}")
+
+
 # ---- --json contract (CD1) ----
 
 def test_json_contract():
