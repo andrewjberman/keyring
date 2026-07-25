@@ -26361,3 +26361,53 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-drift | comp-drift <nonexistent target> | PARTIAL | 150s timeout-bounded, no upfront target validation observed |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-firmsep-sweep | comp-firmsep-sweep --secret <nonexistent> | PASS | matches declared LOUD |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_TOOLUNIFY.REC1c-LaneA | comp-firmsep-sweep.py | comp-firmsep-sweep.py --secret <nonexistent> | PASS | byte-identical to wrapper |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-similar | comp-similar zzz_definitely_nonexistent_resource_9999 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (m:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE m.node_type = '... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (s:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE s.node_type = '... | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-lambdamap | comp-lambdamap check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:NonexistentNodeType_zzz9999) RETURN n.id LIMIT 5 | FAIL |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu-inc | comp-kuzu-inc MATCH (n:NonexistentNodeType_zzz9999) RETURN n.id LIMIT 5 | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-cluster | comp-cluster DefinitelyNonexistentPageZzz9999 | UNKNOWN |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:MyOwnNonexistentType_zzz4242) RETURN n.id LIMIT 5 | FAIL |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type IN ['LAMBDA','S3Key','Component'... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-blast | comp-blast zzz_denominator_probe_9999 | REFUSE |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='ReactComponent' AND n.name CONT... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='Component' RETURN n.node_id, n.... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='ReactComponent' RETURN n.node_i... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id='component:portal/src/pages/Adviso... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id IN ['component:portal/src/pages/Ad... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='Endpoint' RETURN n.node_id, n.n... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='S3Key' RETURN n.node_id, n.name... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id IN ['endpoint:approveSubmission','... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check completeness | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id IN ['component:portal/src/pages/Ad... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id IN ['endpoint:claimTicket','endpoi... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id IN ['component:portal/src/pages/Ad... | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id IN ['endpoint:claimTicket','endpoi... | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id IN ['component:portal/src/pages/Ad... | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id IN ['endpoint:claimTicket','endpoi... | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check completeness | VERDICT |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-types | comp-types blast MyOwnBogusType4242 | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-cache | comp-cache key my-own-bogus-cache-key-4242 | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-adapter-audit | comp-adapter-audit MyOwnBogusAdapterFn4242 --manifest-dir /cygdrive/c/Users/ANDREW~1/Ap... | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check completeness | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check completeness | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --check | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate | VERDICT |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check completeness | PASS |
+| 2026-07-25Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-system | comp-system --self-test | PASS |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-pydeps | comp-pydeps consumers my_own_bogus_file_4242.py | UNKNOWN |
+| 2026-07-25Z | 3.0.0_SA_CVO~Z | (no-TO) | comp-residue | comp-residue surface my_own_bogus_source_4242.yaml | UNKNOWN |
+| 2026-07-25Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.BLOCKED-ON-PEER-LANDING | comp-system | bash .tools/comp-system --self-test | PASS | 18/18, 2 re-pinned + 3 new checks for the uncommitted-source guard |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.BLOCKED-ON-PEER-LANDING | comp-system | bash .tools/comp-system --check | PASS | live mutant, real organically-dirty tree, BLOCKED-ON-PEER-LANDING confirmed |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | NFRA_SYSPARITY.BLOCKED-ON-PEER-LANDING | comp-system | bash .tools/comp-system --gate | PASS | same, both entry points confirmed, 0 regenerate mentions |
