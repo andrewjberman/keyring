@@ -110,3 +110,76 @@ parity with the estate for this lane. Two of my prior deliverables await CVO~Z's
    item BEFORE anyone schedules that tool as a routine sweep, not after.
 3. **[3.0.0_SA_CVO~Z]** `--self-test @760fd29c9` + over-perm honesty `@91bc39980` verify.
 4. **[0.8.0_AE_CloudComp~A]** Event-driven, standing by for dispatch.
+
+---
+
+# ADDENDUM -- CTO~Z rulings on both residuals, landed @1ecfe671f
+
+**archetype:** IMPLEMENT
+
+Both residuals I surfaced came back ruled @20260725T170702Z, same session. Actioned this turn.
+
+## Ruling 1 -- MSBEFF.R2: discharged as a gate, retained as a label
+
+Status is now the literal string `ACCEPTED (build) -- CVO~Z standing verify NEVER OBSERVED`,
+not `complete`. CTO~Z's reasoning, carried into the TO: the standing verify gates nothing and
+CVO~Z's queue holds items gating live builds, so it is discharged -- but it must not be recorded
+as verified, because it is not. **"Complete" and "independently verified" are different claims,
+and this estate's recurring failure is the second silently inheriting the first's authority.**
+The distinction now lives in the status field, where a reader cannot miss it, rather than in a
+comment or a message where it would decay.
+
+## Ruling 2 -- investigate-candidates BLOCKED from routine scheduling
+
+Recorded at three surfaces (module docstring in the tool's own refusal voice, CLI subcommand
+help, runtime banner in sweep mode) rather than as a backlog note.
+
+### I got the banner placement wrong twice, and inspection could not see it
+
+The hazard is a run killed mid-sweep rendering a clean fleet verdict over an unstated subset.
+
+1. **First cut: printed AFTER the loop.** So it appeared only on runs that COMPLETED -- exactly
+   the set that never needed it.
+2. **Second cut: moved above the loop.** A 25s-truncated sweep showed it STILL did not print:
+   `_build()` (the TF parse) runs before any output and consumed the entire budget. The process
+   died having emitted only comp-iam's own NOTE lines.
+3. **Third cut, correct:** emitted first -- before `_build()`, before the header, before any AWS
+   call -- with an explicit `sys.stdout.flush()` so it survives a kill during the parse.
+
+**The reusable form: both bad placements looked correct and were merely DOWNSTREAM OF SOMETHING
+EXPENSIVE.** A truncation warning is worthless if anything costly precedes it, and that ordering
+is invisible to code review -- it only appears when you actually kill the run. *Print the
+constraint before you spend anything.* Neither error was caught by reading the diff back; both
+were caught by running the control.
+
+Also added the completion line: `SWEEP COMPLETE: examined X of M intended role(s)`, denominator
+from INTENDED roles, never from `results` -- a results-derived denominator is tautological (the
+same shape as the tautological-`derived_count` STOP CTO~Z called on ~C). **Its absence is the
+discriminator** between a complete sweep and a truncated one.
+
+### Acceptance -- all four exercised on the real tool
+
+| # | Control | Result |
+|---|---|---|
+| B | truncated sweep (`timeout 20`, exit 124) | banner present 1, `SWEEP COMPLETE` absent 0 |
+| C | targeted `--role`, **isolated** invocation | banner absent 0 (correctly suppressed) |
+| A | targeted `--role` | `SWEEP COMPLETE: examined 1 of 1 intended role(s)` |
+| D | `investigate-candidates-self-test` | 12/12 PASS, rc 0 (regression, zero AWS) |
+
+`py_compile` PASS on both modified modules. Negative control run in a SEPARATE invocation from
+the target, per the mode-1 discipline.
+
+### Scope held
+
+The fleet path was explicitly NOT assigned and is NOT built: no batching, no parallelism, no
+timed-out-vs-clean state machine. All three remain owed and are named in the docstring.
+**This does NOT lift the constraint** -- it makes truncation detectable at the OUTPUT layer, but
+a scheduler that never reads the banner is unaffected, so the prohibition still carries the
+weight. The docstring states that explicitly rather than letting the mitigation imply the
+problem is solved.
+
+## Current State
+
+~A clear, event-driven, no open build work. R2 correctly labeled accepted-not-verified. The
+investigate-candidates scheduling constraint is mechanical at three surfaces and exercised in
+both directions. Awaiting the next TOOLUNIFY item from CTO~Z.

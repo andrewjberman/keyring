@@ -26758,3 +26758,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates-self-test | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/iam_cli.py org/modules/graph/comp_iam_in... | PASS |
 | 2026-07-25Z | 0.8.0_AE_CloudComp | NFRA_SYSPARITY-register | sysparity_register.py + selftest_register.py (built this session) | python selftest_register.py | PASS 26/26 incl. K1 hard-kill durability + N1 derived-denominator mutant + D1 dangling-pointer |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates --role astn-wsjft-orchestrator-role (targeted-mode control) | PASS -- SWEEP COMPLETE 1 of 1 rendered; NOT-SCHEDULABLE banner correctly suppressed (isolated negative control) |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | timeout 20 comp-iam investigate-candidates (truncated-sweep positive control) | PASS -- exit 124, banner present 1, SWEEP COMPLETE absent 0; caught TWO wrong banner placements (post-loop, then pre-loop-but-post-_build) that inspection could not see |
+| 2026-07-25Z | 0.8.0_AE_CloudComp~A | (no-TO) | comp-iam | comp-iam investigate-candidates-self-test (regression) | PASS 12/12 rc=0, zero AWS calls |
