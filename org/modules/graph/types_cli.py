@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import argparse
 import re
-import subprocess
 import sys
 import time
 from pathlib import Path
@@ -13,6 +12,13 @@ _THIS_DIR = Path(__file__).resolve().parent
 _WORKSPACE = _THIS_DIR.parent.parent.parent
 _PORTAL_SRC = _WORKSPACE / 'portal' / 'src'
 _TYPES_INDEX_DIR = _WORKSPACE / 'org' / 'modules' / 'graph' / 'types-index'
+
+# Estate precedent for a cross-directory .tools/ import (comp_ws4_crosswalk.py:45-46) -- this is
+# where the class was first found (2026-07-25), and dogfooding the fix in its own discovery site is
+# the interface's first production consumer (CTO~Z dispatch 20260725T101108Z).
+_TOOLS_DIR = _WORKSPACE / '.tools'
+sys.path.insert(0, str(_TOOLS_DIR))
+from msys_argv_guard import msys_safe_run  # noqa: E402 -- needs _TOOLS_DIR on sys.path first
 
 # -------- Severity constants --------
 SEV_INFO  = 'INFO'
@@ -30,7 +36,7 @@ def _grep_portal(pattern: str, extra_flags: list[str] | None = None) -> list[str
     if extra_flags:
         flags.extend(extra_flags)
     try:
-        result = subprocess.run(
+        result = msys_safe_run(
             ['grep'] + flags + [pattern, str(_PORTAL_SRC)],
             capture_output=True, text=True, timeout=15
         )
@@ -148,11 +154,16 @@ def _enumerate_known_types() -> set[str]:
     ]
     for pattern in patterns:
         try:
-            result = subprocess.run(
+            result = msys_safe_run(
                 ['grep', '-rohE', '--include=*.ts', '--include=*.tsx', '--binary-files=without-match',
                  pattern, str(_PORTAL_SRC)],
                 capture_output=True, text=True, timeout=15
             )
+        # A per-pattern failure here (incl. msys_safe_run's own FileNotFoundError if grep/bash is
+        # missing) silently yields a PARTIAL known-types set -- accepted trade, not an oversight
+        # (CTO~Z verify note, 2026-07-25): the other patterns still run, and the printed denominator
+        # line at each call site (`Validated against N known ...`) surfaces the resulting count so a
+        # caller sees a real, if possibly incomplete, N rather than a silent full-population claim.
         except Exception:  # noqa: BLE001 -- inconclusive for this pattern; other patterns still tried
             continue
         for line in result.stdout.splitlines():
