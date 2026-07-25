@@ -159,9 +159,28 @@ if __name__ == "__main__":
         r2 = msys_safe_run([echo, safe_arg], capture_output=True, text=True, timeout=10)
         chk("11 positive control: a plain safe call is unaffected through msys_safe_run",
             r2.returncode == 0 and r2.stdout.rstrip("\n") == safe_arg)
+
+        # 12. adversarial: shlex.quote()'s OWN escaping must itself survive the same MSYS boundary
+        #     this class lives at -- single/double quotes, backticks, `$`, and a combined
+        #     backslash+paren+quote shape (CVO~Z's own follow-up ask, checked before waiting for
+        #     the sweep to find it).
+        adversarial = [
+            "contains'single'quotes",
+            "contains`backtick`",
+            'contains"double"quotes',
+            "contains$dollar${braces}",
+            "mixed \\ backslash and 'quote' and (paren)",
+        ]
+        adv_ok = True
+        for a in adversarial:
+            ra = msys_safe_run([echo, a], capture_output=True, text=True, timeout=10)
+            if not (ra.returncode == 0 and ra.stdout.rstrip("\n") == a):
+                adv_ok = False
+        chk("12 adversarial: quotes/backticks/$/mixed-backslash-paren-quote all arrive INTACT",
+            adv_ok)
     else:
-        print("  [SKIP] 10/11 -- echo.exe not found near the resolved bash.exe; "
-              "mutant/positive-control need it")
+        print("  [SKIP] 10/11/12 -- echo.exe not found near the resolved bash.exe; "
+              "mutant/positive-control/adversarial need it")
 
     n = sum(1 for x in ok if x)
     print(f"--- self-test: {n}/{len(ok)} passed ---")
