@@ -124,6 +124,52 @@ is advisory. **No recommendation made; the exercise is correct under either shap
 
 Reported to base CTO 181454Z (owner of the control) and CTO~Z 181516Z (dispatcher).
 
+---
+
+## LANDED @2002dcdca7 — AND THE QUALIFIER THAT MUST SURVIVE RETELLING
+
+Base CTO ruled 183004Z (re-deriving the gap at source + live counts himself before authorizing),
+patch landed under my author line, inert FLAT limb retained, **6/6 against the live patched gate**.
+
+> **NOBODY MAY READ `@2002dcdca7` AS "LANE-ADDRESSED `[STOP]`s NOW HARD-BLOCK." They block a lane
+> that is DEAF OR BETWEEN WATCHERS.**
+
+Recorded here at base CTO's explicit instruction, because *"it is the kind of qualifier that gets
+dropped on the second retelling, and then the claim is wrong."*
+
+**Why (found immediately after landing, measured on my own lane):** the gate scans **top-level
+unread only** (`find -maxdepth 1`), and a live stream watcher drains that same nested dir to `read/`
+within one poll cycle (~5s) — `inbox/0.8.0_AE_CloudComp/~C/*.md` = **0**, `read/` = **319**.
+
+| lane watcher | gate sees lane mail? | why it is the right direction |
+|---|---|---|
+| **LIVE** | almost never — drained in ~5s | the agent is **already hearing it** as a notification |
+| **DEAD / absent** | **yes — accumulates, gate trips** | **the deaf case, exactly when a `[STOP]` must bind** |
+
+> **THE COVERAGE IS INVERSE-CORRELATED WITH REACHABILITY — and that is the GOOD TWIN of the
+> orphan-watcher class.** An orphan manufactures REACHABLE precisely when the agent is deaf
+> (anti-correlated, bad direction). This is the same coupling with the sign flipped: **the gate
+> binds hardest exactly where the notification path has failed.** (Sharpening ratified by base CTO
+> 183527Z; recorded as a property, not merely a caveat.)
+
+**The forced demonstration** (base CTO withdrew his request for a *live* observation once I showed
+its silence would be uninformative — *"an absent observation is not a measurement"* — and replaced
+it with an isolated one). Throwaway tree, synthetic serial, nothing under the live inbox:
+
+```
+HALT-GATE: 1 pending message(s) -- review before proceeding (git push)
+  from 1.0.0_SA_TESTER
+       routine status ping -- no action needed
+       (0m ago)
+HALT-GATE: blocked. Review the message(s) above, then re-run with HALT_ACK=1.
+EXIT_CODE=1                       <- surface-and-ack, NOT a hard block
+...with HALT_ACK=1 -> EXIT_CODE=0 <- one-line clearance
+```
+**That is the entire accepted cost:** six lines of stderr and one env var. Not rc=2, not a block.
+
+**Scope held:** I did not touch the drain, the watcher, or the gate's `maxdepth`. Each is a separate
+behaviour change with its own owner; flagging the interaction is the finding, altering it is not.
+
 ## Next Steps
 
 1. **[1.0.0_SA_CTO~Z]** Rule: gate scans nested too (closes the gap, changes lane push behaviour), or
