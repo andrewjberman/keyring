@@ -177,18 +177,18 @@ me to verify is populated in the data, not merely permitted by the schema (see �
 
 ## 5 · Multi-valued discipline (CVO~Z's specific check)
 
-**77/92 tools (84%) show 2+ distinct surface types in `reads[]`∪`writes[]`.** Frequency across the full
-92-tool population (a tool can contribute to multiple rows):
+**80/92 tools (87%) show 2+ distinct surface types in `reads[]`∪`writes[]`** (post-§10 rework; was 77/92 at
+first delivery). Frequency across the full 92-tool population (a tool can contribute to multiple rows):
 
 | Type | # tools touching it |
 |---|---|
-| `SOURCE-SCAN-DYNAMIC` (caller-supplied path, resolved at runtime — a legitimate distinct sub-case, not a failure to resolve) | 83 |
+| `SOURCE-SCAN-DYNAMIC` (caller-supplied path, resolved at runtime — a legitimate distinct sub-case, not a failure to resolve) | 86 |
 | `SOURCE-SCAN` (fixed repo/local target) | 66 |
-| `CONFIG` | 65 |
+| `CONFIG` | 66 |
 | `LIVE-AWS` | 55 |
 | `KUZU-CANONICAL` | 20 |
 | `ICEBERG-DIRECT` | 20 |
-| `DERIVED-CACHE` | 14 |
+| `DERIVED-CACHE` | 16 |
 | `FROZEN-SNAPSHOT` | 12 |
 
 No tool collapsed to a single label when its closure genuinely touched more than one surface — the exact
@@ -214,12 +214,12 @@ docstring or CLAUDE.md's own compiler-tools table.
 
 | Tool | reads[] | writes[] | binding | evaluation | failure_mode | role_flags | conf |
 |---|---|---|---|---|---|---|---|
-| `comp-adapter-audit` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | FAIL-OPEN | PRODUCER? | MED |
+| `comp-adapter-audit` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | CONFIG, SOURCE-SCAN | ANSWER-BEARING | RUNTIME | FAIL-OPEN | PRODUCER? | MED |
 | `comp-assets` | CONFIG, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER? | MED |
 | `comp-aws` | CONFIG, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
 | `comp-axes` | LIVE-AWS, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
-| `comp-blast` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
-| `comp-build` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
+| `comp-blast` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
+| `comp-build` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
 | `comp-cache` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD (default) | PRODUCER? | LOW |
 | `comp-canon-motif` | CONFIG, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | FAIL-OPEN | PRODUCER? | MED |
 | `comp-chainrun` | CONFIG, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER? | MED |
@@ -230,13 +230,13 @@ docstring or CLAUDE.md's own compiler-tools table.
 | `comp-coverage-check` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | (none) | GUARD | RUNTIME | LOUD | GATE-BLOCKING? | MED |
 | `comp-dataflow` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD (default) | PRODUCER? | LOW |
 | `comp-deadgrant` | CONFIG, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER? | MED |
-| `comp-deadgrant.py` | LIVE-AWS | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
+| `comp-deadgrant.py` | LIVE-AWS, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
 | `comp-debris` | CONFIG, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER? | MED |
 | `comp-denytest` | CONFIG, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | GUARD | RUNTIME | LOUD | GATE-BLOCKING?,PRODUCER? | MED |
 | `comp-denytest.py` | LIVE-AWS, SOURCE-SCAN-DYNAMIC | (none) | GUARD | RUNTIME | LOUD | GATE-BLOCKING? | MED |
-| `comp-depth` | CONFIG, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
+| `comp-depth` | CONFIG, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | LIVE-AWS, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
 | `comp-describe` | CONFIG, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER? | MED |
-| `comp-diff` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
+| `comp-diff` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
 | `comp-dispatch` | SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD (default) | ADVISORY | LOW |
 | `comp-drift` | CONFIG, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | LIVE-AWS, SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER? | MED |
 | `comp-dups` | LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
@@ -245,13 +245,13 @@ docstring or CLAUDE.md's own compiler-tools table.
 | `comp-firmsep-sweep.py` | LIVE-AWS | (none) | ANSWER-BEARING | RUNTIME | LOUD (default) | ADVISORY | LOW |
 | `comp-freshness` | CONFIG, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
 | `comp-genesis` | CONFIG, ICEBERG-DIRECT, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
-| `comp-gitdrill` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
+| `comp-gitdrill` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
 | `comp-glob` | SOURCE-SCAN | (none) | ANSWER-BEARING | RUNTIME | FAIL-OPEN | ADVISORY | MED |
 | `comp-graph` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, KUZU-CANONICAL, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | LABEL | DERIVED | LOUD | ADVISORY,PRODUCER?(clear-mode-only, local-cache-delete) | HIGH |
 | `comp-grep` | SOURCE-SCAN | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
 | `comp-heat` | LIVE-AWS, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
 | `comp-honesty` | SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
-| `comp-iam` | CONFIG, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | FAIL-OPEN | PRODUCER? | MED |
+| `comp-iam` | CONFIG, DERIVED-CACHE, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | DERIVED-CACHE, SOURCE-SCAN | ANSWER-BEARING | DERIVED | FAIL-OPEN | PRODUCER? | MED |
 | `comp-iam-usage` | CONFIG, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER? | MED |
 | `comp-icedrill` | CONFIG, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD (default) | PRODUCER? | LOW |
 | `comp-imgread` | SOURCE-SCAN | (none) | ANSWER-BEARING | RUNTIME | FAIL-OPEN | ADVISORY | MED |
@@ -270,8 +270,8 @@ docstring or CLAUDE.md's own compiler-tools table.
 | `comp-passcraft` | CONFIG, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | DERIVED | LOUD | ADVISORY | MED |
 | `comp-perf` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | CONFIG, SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER? | MED |
 | `comp-pii` | CONFIG, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER? | MED |
-| `comp-pipescript` | CONFIG, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
-| `comp-platinum` | CONFIG, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
+| `comp-pipescript` | CONFIG, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
+| `comp-platinum` | CONFIG, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
 | `comp-pulse` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | FAIL-OPEN | PRODUCER? | MED |
 | `comp-pydeps` | CONFIG, DERIVED-CACHE, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | DERIVED | FAIL-OPEN | PRODUCER? | MED |
 | `comp-registry` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | FAIL-OPEN | PRODUCER? | MED |
@@ -283,28 +283,28 @@ docstring or CLAUDE.md's own compiler-tools table.
 | `comp-similar` | CONFIG, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | FAIL-OPEN | PRODUCER? | MED |
 | `comp-state` | LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
 | `comp-stitch-refresh` | DERIVED-CACHE, LIVE-AWS, SOURCE-SCAN-DYNAMIC | LIVE-AWS | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER | HIGH |
-| `comp-surface-check` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | GUARD | DERIVED | LOUD | GATE-BLOCKING?,PRODUCER? | MED |
+| `comp-surface-check` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | GUARD | DERIVED | LOUD | GATE-BLOCKING?,PRODUCER? | MED |
 | `comp-symbols` | SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD (default) | ADVISORY | LOW |
-| `comp-system` | CONFIG, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
+| `comp-system` | CONFIG, DERIVED-CACHE, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
 | `comp-tagauthz` | LIVE-AWS, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
 | `comp-tagauthz.py` | LIVE-AWS, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
 | `comp-to` | (none) | CONFIG | CONFIG | RUNTIME | FAIL-OPEN | CONFIG | HIGH |
-| `comp-tool-health` | DERIVED-CACHE, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | DERIVED | LOUD | ADVISORY | MED |
+| `comp-tool-health` | CONFIG, DERIVED-CACHE, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | DERIVED | LOUD | ADVISORY | MED |
 | `comp-tool-health-gate` | SOURCE-SCAN-DYNAMIC | (none) | GUARD | RUNTIME | LOUD | GATE-BLOCKING? | MED |
 | `comp-toolgraph` | CONFIG, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | FAIL-OPEN | ADVISORY | MED |
 | `comp-tooltip` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER? | MED |
-| `comp-trace` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
+| `comp-trace` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
 | `comp-transform` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER? | MED |
 | `comp-trigger` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | FAIL-OPEN | PRODUCER? | MED |
 | `comp-types` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | CONFIG, SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER? | MED |
 | `comp-v5-composite-test.sh` | LIVE-AWS, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
 | `comp-validate` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | GUARD | RUNTIME | LOUD | GATE-BLOCKING?,PRODUCER? | MED |
 | `comp-which` | CONFIG, DERIVED-CACHE, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | DERIVED | FAIL-OPEN | ADVISORY | MED |
-| `comp-which-routing-test.py` | CONFIG, DERIVED-CACHE, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | CONFIG, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
-| `comp-whoread` | LIVE-AWS | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
-| `comp-whoread.py` | LIVE-AWS | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
+| `comp-which-routing-test.py` | CONFIG, DERIVED-CACHE, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
+| `comp-whoread` | LIVE-AWS, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
+| `comp-whoread.py` | LIVE-AWS, SOURCE-SCAN-DYNAMIC | (none) | ANSWER-BEARING | RUNTIME | LOUD | ADVISORY | MED |
 | `comp-xray` | CONFIG, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | RUNTIME | LOUD | PRODUCER? | MED |
-| `comp-xref` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
+| `comp-xref` | CONFIG, DERIVED-CACHE, FROZEN-SNAPSHOT, ICEBERG-DIRECT, KUZU-CANONICAL, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | ANSWER-BEARING | DERIVED | LOUD | PRODUCER? | MED |
 | `pipescript` | CONFIG, FROZEN-SNAPSHOT, ICEBERG-DIRECT, LIVE-AWS, SOURCE-SCAN, SOURCE-SCAN-DYNAMIC | SOURCE-SCAN | ANSWER-BEARING | DERIVED | FAIL-OPEN | PRODUCER? | MED |
 
 **Note on the two 5-tool "backing implementation" pairs and the 2 test harnesses** (accounted in the
@@ -367,7 +367,94 @@ or the `graph.json` dual-discipline finding beyond recording them.
 
 - **`1.0.0_SA_CTO~Z`**: consolidation input for the 5-lane estate map; `comp-residue`'s registration gap
   and the `graph.json` dual-discipline finding are candidate WS-2/WS-3/WS-7 items.
-- **`3.0.0_SA_CVO~Z`**: register + sidecar ready for verification. The held-back cases you derive from the
-  import closure should be checked against `census_classifier.py`'s actual behavior (the script is left in
-  `.comp-graph/tmp/` for this session — gitignored, so tell me if you need it moved somewhere durable for
-  your own re-run rather than trusting my re-derivation).
+- **`3.0.0_SA_CVO~Z`**: register + sidecar re-delivered post-rework (§10) for re-verification.
+
+---
+
+## 10 · Rework addendum (CVO~Z held-back control, 20260725T000124Z-000358Z)
+
+**VERDICT ON THE ORIGINAL DELIVERY: PASS at 85% (35/41 real pairs)** on CVO~Z's sealed held-back set
+(committed `45ec1d7ee`, before this deliverable existed). CVO~Z disclosed first that their OWN control was
+32% wrong on its own hits (19 of 25 apparent "misses" were the verifier's false positives, caught by
+CVO~Z validating before reporting) — the same string-presence-adjacent disease this whole census exists to
+catch, aimed at the instrument measuring it. **Corrected score: 41 real pairs, 35 surfaced, 85%, PASS.**
+
+**The 6 real misses were ONE class**, all variable-bound paths: `rp = os.path.join(..., "nerves-risk-
+edges.json")` then `open(rp)` later — the literal lives at an assignment, not the read call's own
+arguments. `comp-gitdrill`/`comp-surface-check` missed `nerves-edges.json`/`nerves-risk-edges.json`
+(`cli.py:338,422`); `comp-iam` missed `managed_policy_actions_cache.json`/`comp_aws_derive_iam.json`
+(`extract_iam.py:116`, `comp_iam_live.py:78`) — the second pair prioritized by CVO~Z ahead of its numeric
+weight: `comp-iam` is the tool CLAUDE.md Rule 22a already names as failing GREEN, and both misses are
+caches sitting behind it.
+
+**ROOT CAUSE (mine, superseding CVO~Z's own "variable-bound paths aren't resolved" description of the
+symptom):** `ConstCollector` was a SINGLE FLAT DICT across an entire module — one forward pass, one
+namespace. A short, commonly-reused local name (`rp`, or any generic 2-3 letter name) collides across
+UNRELATED functions in a 700-line file; whichever assignment the flat pass visits last for that name wins,
+for every call site using that name anywhere in the file.
+
+**CVO~Z's follow-up (000358Z) found the sharper implication before I had measured it: a flat namespace
+doesn't only DROP bindings — it can hand a DIFFERENT call site a CONFIDENTLY WRONG artifact**, indistinguishable
+in the register from a correct resolution. The held-back control (a false-negative test) structurally
+cannot see this false-positive-shaped risk. Requested bar: measure every existing resolved call site
+before vs. after the fix, not just confirm the 6 reappear.
+
+### Fix
+
+`census_classifier.py` (now committed at
+`org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_TOOLUNIFY_CENSUS_TOOLS/`, `@2779752ac` — see §9):
+1. **Function-scoped const resolution** (`ShallowVisitor`) — each function gets an independent
+   local-variable namespace seeded from module-level consts, never a flat whole-file dict.
+2. **Return-value resolution** (`_collect_return_consts`) for simple single-return path-builder helpers
+   (`_managed_policy_cache_path(ws) -> ws/".comp-graph"/"managed_policy_actions_cache.json"` — the
+   comp-iam miss: the caller sees only an opaque `p = helper(x); p.read_text()`).
+3. Four new `DERIVED-CACHE` vocabulary entries (`nerves-edges.json`, `nerves-risk-edges.json`,
+   `managed_policy_actions_cache.json`, `comp_aws_derive_iam.json`) — resolution and vocabulary were
+   separate gaps; fixing one without the other still under-reports.
+
+**A regression the measurement itself caught, not guessed:** the first version of return-value resolution
+treated every single-return helper as a fixed constant, including `_abs(p): return os.path.join(
+WORKSPACE_ROOT, p)` — where the parameter IS the meaningful, call-site-varying part. Caching one resolved
+value for `_abs` and reusing it at every call site discarded each call's actual argument (`_abs(ROLLING_LOG)`
+resolved to `WORKSPACE_ROOT`'s own path fragments instead of `ROLLING_LOG`'s literal). Fixed with a
+guard: skip the fast path only when the return expression references a parameter **AND** carries no
+string literal of its own — `_managed_policy_cache_path` keeps its literal-bearing return (the filename
+survives regardless of the parameter); `_abs` does not (both operands are bare names, nothing in the
+return itself is a literal).
+
+### Measurement (the bar CVO~Z set, run before redelivering)
+
+Every resolved call site across all 92 tools, before vs. after, diffed programmatically (not sampled):
+
+| Category | Count |
+|---|---|
+| Identical (unchanged) | 7,057 |
+| New resolutions (previously unresolved → now resolved) | 726 |
+| Changed resolutions (resolved both before AND after, to a different value) | 139 |
+| — of which: cosmetic-only (no artifact-filename token differs, just surrounding noise-word drift) | 131 |
+| — of which: real artifact-identity change | **1** |
+| Lost resolutions (resolved before → unresolved after) | 0 |
+
+The 131 cosmetic-only rows are the flat-namespace bug's OTHER symptom made visible: phantom words
+(`warehouse_bucket warehouse_bucket`, stray path fragments) bleeding in from unrelated functions'
+same-named locals, now correctly absent. **The single real identity change was checked against source
+directly, not assumed correct because the diff produced it:** `org/modules/graph/types_cli.py:356`
+(`comp-types`) — a `manifest_path` local reused across two unrelated functions in the same file (line 352's
+`f'{type_name}.blast.yaml'` vs. line 406's `f'{type_name}.fields.yaml'`). Before this fix, line 356's
+write resolved to `.fields.yaml` (bled in from the *other* function) — genuinely wrong in the delivered
+register. After: `.blast.yaml`, confirmed correct by reading `types_cli.py:340-356` directly (the write at
+:356 sits inside the function that assigns `manifest_path` at :352). **Zero unexplained real
+identity changes; the one found was root-caused, not just noted.**
+
+**Net effect on the register:** `comp-blast`/`comp-build`/`comp-diff`/`comp-gitdrill`/`comp-pipescript`/
+`comp-platinum`/`comp-surface-check`/`comp-trace`/`comp-xref` gained `LIVE-AWS`+`SOURCE-SCAN` in `writes[]`
+(the `_provenance.py` stamp-writers and `extract_pipeline.py` dispatch parsers, previously invisible
+through the same wrapper-taint-plus-flat-namespace gap); `comp-iam` gained `DERIVED-CACHE` in both
+`reads[]` and `writes[]` (it both reads AND refreshes its own IAM-action cache — a write path this lane
+had not previously surfaced); `comp-system`/`comp-tool-health` gained `DERIVED-CACHE`/`CONFIG` respectively.
+Full per-tool diff preserved in `.comp-graph/tmp/before_scoping_fix.json` (session-local) if a future audit
+wants the exact before-state; the committed `D.raw_evidence.json` now reflects the corrected pipeline only.
+
+Gate-case + held-out regression check (re-run after every fix in this section, not just once at the end):
+all 4 published acceptance-gate cases and both held-out self-check tools (`comp-secrets`, `comp-lambdamap`)
+confirmed unchanged in substance. Full detail: MCP thread with CTO~Z/CVO~Z, `20260725T0001Z`-`0035Z`.

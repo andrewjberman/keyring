@@ -124,8 +124,11 @@ is a queryable property, not a separate store — plus (a) the cheap alias table
 2. **graph.json pollution** — 82 phantom Lambda nodes (73 vendored-dep Rule-3 site + 9 org-dir-noise) + 24
    unexplained inflate the LOCAL plane; the cloud truth (kuzu=191) is clean.
 3. **Rule-4 drift** — 4 live Lambdas missing from the CI source-map, 5 registered-but-undeployed.
-4. **Tool-map local-variable-binding miss class** (~D 6 misses, CVO~Z-found) — an artifact bound to a local
-   var and read through it loses its name; 2 of 6 are caches behind `comp-iam` (the Rule-22a fails-GREEN tool).
+4. **Tool-map local-variable-binding miss class** (~D 6 misses, CVO~Z-found) — **RESOLVED**: an artifact bound
+   to a local var and read through it lost its name (and could hand a call site a confidently WRONG binding —
+   the `comp-types` cross-function collision). Fixed via function-scoped const + return-value resolution; the
+   fix surfaced that **`comp-iam` writes its own DERIVED-CACHE** (a self-producer of what it later reads —
+   notable, it is the Rule-22a fails-GREEN tool).
 5. **Terraform/manifest gap** (Andrew-direct to base): plain object-store prefixes have zero Terraform
    declaring their purpose; `derive-build.tf` CodeBuild has no trigger config found.
 
@@ -143,7 +146,9 @@ measures. This is not a note about CVO~Z; it is a WS-1 acceptance bar.
   source dirs (freshness/vintage/absence/security-sweep) served elsewhere — another Lambda, a Step Function,
   a CloudWatch alarm, an EC2 job, or a local comp-tool — or genuinely undeployed? Until answered, the finding
   is "no deployed Lambda counterpart under any name," NEVER "no guard exists" (NEVER#1 / false-outage).
-- ~D 6-miss local-variable-binding rework (prioritized above its 6/41 weight — the comp-iam caches).
+- ~D rework COMPLETE (§4.4): all 6 misses resolve; wrong-attribution diff across 92 tools = 726 new-correct
+  / 1 real identity fix / 0 lost; classifier scripts made durable @2779752ac. CVO~Z to re-run the held-back
+  control + wrong-attribution diff on the reworked register.
 - `cse_test` dual-UUID cause (needs Nessie REST, VPC-internal).
 
 ## 7 · The decision space for "how we handle it" (Andrew)
