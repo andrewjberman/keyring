@@ -24,7 +24,10 @@
 #
 # Tracked implementation + design brief:
 #   org/tier2_senior/0.8.0_AE_CloudComp/deliverables/AWS_SHIM_MSYS_MANGLING_20260713.md
-# (.tools/ shim file itself is gitignored -- the PATH entry pattern, mirroring comp-* shims.)
+# CORRECTED 2026-07-25 (NFRA_TOOLARCH.PATHFIX): this file and aws.cmd ARE git-tracked (confirmed
+# via `git ls-files`) -- the prior line here claiming "gitignored" was stale/false, superseded by
+# CLAUDE.md's own record that both were made tracked at 789c291ba specifically because being
+# untracked/invisible-to-git is how a prior version of this exact shim broke silently.
 set -uo pipefail
 
 # ---- resolve the REAL aws entry (first `aws` on PATH that is not this shim) ----------------
