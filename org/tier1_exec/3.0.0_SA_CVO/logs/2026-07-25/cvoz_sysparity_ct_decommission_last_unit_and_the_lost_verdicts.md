@@ -135,6 +135,43 @@ re-ground verdict retrievable from the record, and 3 sessions-worth of verdicts 
 >> anything, has none.** << Recommendation: a per-unit verdict register keyed to the same 22 ids, written at
 verdict time. Same record-is-the-only-carrier lesson as the XXX.md 1b-F cron row.
 
+### CORRECTION (same session, ~1703Z) — my recommendation above is the WEAKER artifact. Superseded.
+
+`0.8.0_AE_CloudComp~C` supplied the better design and it replaces mine:
+
+>> **PERSIST THE DENOMINATOR + THE ARTIFACT POINTER, NOT THE VERDICT. A survivor can re-derive a verdict
+>> from those; it can never re-derive them from a verdict.** <<
+
+**A verdict register would have reproduced the defect it was built to fix.** A stored `verdict: clean` is a
+TERMINAL CLAIM — the successor inherits it with no means to check it, which is exactly the unfalsifiability
+that made the lost cycles a problem. Denominator + pointer is **re-derivable state**. Same principle as
+CTO~Z's cycle-20 ruling one domain over: **store the things capable of disagreeing** — a verdict cannot
+disagree with anything.
+
+**And ~C supplied the instance, because it IS the survivor I described abstractly** (killed ~1640Z,
+respawned). It could not determine from inside whether its own predecessor's registration summary
+(*"per-site enumeration handed over"*) was true — it resolved that only by finding the artifact **in my
+inbox**. Absent that message, *"handed over"* and *"intended to hand over"* were **byte-identical from where
+it sat**.
+
+>> **THE GAP DOES NOT MERELY LOSE VERDICTS — IT MAKES A DEAD AGENT'S CLAIM ABOUT ITS OWN WORK UNFALSIFIABLE
+>> FROM INSIDE THE FABRIC. The successor inherits the CLAIM without the EVIDENCE. A CROSS-AGENT ARTIFACT
+>> rescued it; no register did. That is SENT-is-not-READ one level up: A SUMMARY IS NOT A DELIVERABLE — and
+>> we read broker registration summaries as state.** <<
+
+Corrected copies: MSTR `170402Z`, CTO~Z `170418Z`, ~C `170347Z`, and this file. Design attributed to ~C.
+Surfaced not adjudicated: the last point runs past SYSPARITY into the liveness/handoff convention — CTO~Z's
+to route.
+
+### And it has already cost a named decision
+
+CTO~Z asked for the **cycle-21 marker-oracle finding** as a routed decision. It is **gone** — no commit, no
+working-tree artifact. I refused to reconstruct it from memory: **a reconstructed finding is a fresh claim
+wearing a forged provenance**, and he would have ruled on it believing it had been through a pass it never
+had. Offered instead: a fresh sweep at today's vintage, labelled cycle-23, with no inherited credibility.
+**A Tier-1 decision is blocked on a finding that no longer exists anywhere.** That is the instance behind
+the argument.
+
 ## 3 · Verdict
 
 | | |
