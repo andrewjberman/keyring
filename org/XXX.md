@@ -153,6 +153,15 @@ stdout). Never blocks startup. Owner `0.7.0_AE_CloudOps`, gate `1.0.0_SA_CTO`; d
 python .tools/audit-archive-invoker.py || true   # append-only verify + archive-when-due; never blocks startup
 ```
 
+**A.3 — PATH check (added 2026-07-25, NFRA_TOOLARCH.PATHFIX):** harness shells are non-interactive and source
+NO profile, so `.tools/` is reachable only via the `~/bin` forwarders (`b519fb1c2e`). One line, fails loud:
+```bash
+command -v comp-which >/dev/null 2>&1 || echo "WARN: .tools/ not on PATH this session -- run 'bash .tools/provision-path-shims.sh' once (durable, idempotent), or use explicit .tools/<tool> prefixes (comp-which, comp-system, aws) until you do."
+```
+Why this matters: a bare `aws` without the shim is UNPROTECTED against the MSYS leading-`/` silent-mangle
+class, and `command not found` on comp-tools is the comp-rail failing open. Mechanism + fix record:
+~D's NFRA_TOOLARCH.PATHFIX delivery (2026-07-25).
+
 **B. Check inbox — BOTH paths, both required:**
 ```bash
 check-inbox {your_serial}           # filesystem: inbox/{serial}/ + inbox/{base}/
