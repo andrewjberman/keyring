@@ -85,16 +85,51 @@ class GrainViolation:
 class GrainResult:
     passed: bool
     violations: list  # list[GrainViolation]
+    #: AC-GRAIN.2 coverage. None when no baseline was supplied (AC-GRAIN.1-only run).
+    #: Optional + defaulted so existing constructors and callers are unaffected.
+    coverage: dict | None = None
 
     def render(self) -> str:
         if self.passed:
-            return "GRAIN-SENTINEL: PASS (0 identity-format + 0 magnitude violations)"
-        out = [f"GRAIN-SENTINEL: FAIL ({len(self.violations)} violation group(s))"]
-        for v in self.violations:
-            out.append(f"  [{v.bar}] {v.node_type}: {v.detail}")
-            for s in v.samples[:3]:
-                out.append(f"      e.g. {s}")
+            out = ["GRAIN-SENTINEL: PASS (0 identity-format + 0 magnitude violations)"]
+        else:
+            out = [f"GRAIN-SENTINEL: FAIL ({len(self.violations)} violation group(s))"]
+            for v in self.violations:
+                out.append(f"  [{v.bar}] {v.node_type}: {v.detail}")
+                for s in v.samples[:3]:
+                    out.append(f"      e.g. {s}")
+        out.extend(self.render_coverage())
         return "\n".join(out)
+
+    def render_coverage(self) -> list:
+        """The verdict's DENOMINATOR, printed on PASS and FAIL alike.
+
+        check_magnitude iterates the BASELINE's keys, so the baseline -- not the live
+        stream -- is the denominator. A live class absent from the baseline is never
+        examined, and before this the all-clear said nothing about it: measured 2026-07-25,
+        35 baseline keys against 58 live node types, so 23 types were unexamined while the
+        sentinel reported an unqualified PASS. That is a verdict whose denominator is
+        narrower than its reading.
+
+        UNCOVERED IS REPORTED, NEVER BLOCKING. A new node type is ordinary estate growth,
+        and failing on it would re-create the 17-day publication blackout this control
+        already caused once. The defect was the silence, not the skip policy.
+        """
+        c = self.coverage
+        if not c:
+            return []
+        unc, zero = c.get("uncovered", []), c.get("zero_baseline", [])
+        line = (f"  COVERAGE: {c.get('checked', 0)} of {c.get('live_types', 0)} live node "
+                f"type(s) band-checked")
+        if unc:
+            line += f"; {len(unc)} UNCOVERED (live, absent from baseline -- NEVER EXAMINED)"
+        if zero:
+            line += f"; {len(zero)} zero-baseline (skipped by policy)"
+        out = [line]
+        if unc:
+            out.append("    UNCOVERED: " + ", ".join(sorted(unc)[:12])
+                       + (" ..." if len(unc) > 12 else ""))
+        return out
 
 
 def check_identity_format(nodes) -> list:
@@ -144,6 +179,34 @@ def run_grain_sentinel(nodes, baseline: dict | None = None) -> GrainResult:
     baseline: {node_type: count} for AC-GRAIN.2; omit to run AC-GRAIN.1 only."""
     nodes = list(nodes)
     violations = check_identity_format(nodes)
+    coverage = None
     if baseline:
         violations += check_magnitude(nodes, baseline)
-    return GrainResult(passed=(len(violations) == 0), violations=violations)
+        coverage = magnitude_coverage(nodes, baseline)
+    return GrainResult(passed=(len(violations) == 0), violations=violations,
+                       coverage=coverage)
+
+
+def magnitude_coverage(nodes, baseline: dict) -> dict:
+    """What AC-GRAIN.2 actually examined, versus what was live.
+
+    Derived from the SAME two inputs check_magnitude uses and with the SAME skip rule
+    (`base <= 0`), so the reported coverage cannot drift from the check it describes --
+    if this and check_magnitude ever disagree, one of them has been edited alone.
+    """
+    live: dict[str, int] = {}
+    for n in nodes:
+        t = n.get("node_type") or n.get("type") or ""
+        if t:
+            live[t] = live.get(t, 0) + 1
+    checked = {k for k, v in baseline.items() if v > 0}
+    zero_baseline = sorted(k for k, v in baseline.items() if v <= 0)
+    uncovered = sorted(set(live) - set(baseline))
+    return {
+        "live_types": len(live),
+        "checked": len(checked),
+        "uncovered": uncovered,
+        "zero_baseline": zero_baseline,
+        # baseline keys with no live nodes are NOT listed here: they are band-checked at
+        # ratio 0.00 and surface as violations, which is the correct louder treatment.
+    }
