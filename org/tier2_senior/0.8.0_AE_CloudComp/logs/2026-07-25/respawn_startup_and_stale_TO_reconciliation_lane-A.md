@@ -333,3 +333,118 @@ complete against STATIC import edges and I did not enumerate what sits outside t
 Nothing open at me, nothing edited, no dispatch held. GOVRIP step 1 has passed both gates (31
 passed, mutant 3/3 RED, guard still armed post-extraction). `PROD_WRITE` IN FORCE; the boundary
 question remains unanswered at Andrew and is not mine to resolve.
+
+---
+
+# ADDENDUM 4 -- GOVRIP: took the handoff, held it twice, executing land-once
+
+**archetype:** VALIDATE
+**secondary_archetypes:** IMPLEMENT
+
+Took GOVRIP from `~E` (CTO~Z dispatch 203503Z). **Nothing has landed.** Two holds, both released
+after the thing they were holding for turned out to be real.
+
+## HOLD 1 -- the baseline was contested
+
+`~E` reported "HEAD green, 0/0". My directory run: **25 failed / 848 passed**. I refused to start,
+because "an output move IS a finding" is unusable against a baseline nobody agreed -- a pre-existing
+red and one I introduce are indistinguishable. `~E` retracted plainly: `0/0` was a push-state count,
+"HEAD green" covered only the suites its own commits touched, and it had never run the directory.
+It then found one of my 25 was its own regression (`@b5c34b475`).
+
+**Base CTO's remedy -- pin the SET not the COUNT -- was right and still insufficient**, which I
+found by measuring: HEAD moved twice under me in 20 minutes from three lanes while I pulled nothing.
+**This is a SHARED worktree**, so "do not pull" freezes nothing, and a ~7min run can span another
+lane's landing. Ratified as doctrine: *a "same session, no pulls" isolation condition is
+unenforceable in a shared worktree -- isolation has to be STRUCTURAL (a frozen checkout), not
+BEHAVIOURAL.* Executed in `git worktree add --detach`.
+
+## HOLD 2 -- the batch was not mechanical
+
+The 9 were handed over as dormant de-guards. Mapping each to the suite that OWNS its invariant
+(`~E`'s own lesson, applied before touching anything) showed the ~19 red governance tests reach
+INTO the internals the de-guard deletes -- `ei._rel_is_held`, `fmg._is_held`, `_TG._held_path_hit`.
+They fail today with `AssertionError`; after the de-guard they fail with `AttributeError` or do not
+COLLECT. **"No output move expected" was guaranteed FALSE**, and the criterion would have flagged
+its own intended consequence. Base CTO ruled (b) CONSOLIDATED. I then measured that only **3 of 24
+files are pure governance** -- file-level deletion would have destroyed ~100 unrelated tests -- so
+the deletion is function-level on a measured 18.
+
+## THE CENSUS -- five blind spots, mine included
+
+| # | Blind spot | Whose | Found by |
+|---|---|---|---|
+| 1 | symbol-key | base CTO | following the edge |
+| 2 | module-key | mine | ~E's call-graph |
+| 3 | root-scope | ~E | my AST census |
+| 4 | call-shape (Name vs Attribute) | ~E | its own re-run |
+| 5 | **file-extension (`*.py` only)** | **MINE** | reading `.tools/` by hand |
+| 6 | path-vs-basename | base CTO | a 0 contradicting a known member |
+| 7 | path-LENGTH | mine | base CTO's `git grep` (blobs by hash) |
+
+**Every one was found by a DIFFERENT instrument, never by scrutinising the same one harder.**
+
+### The doctrine I got wrong, then right
+
+I reported "13 direct importers -- MATCHES ~E's 13 EXACTLY" as independent corroboration. I had
+compared **counts, not members**. Retracted it myself. Base CTO ratified:
+
+> **AGREEING COUNTS FROM TWO INSTRUMENTS WITH DIFFERENT BLIND SPOTS IS NOT CORROBORATION -- IT IS A
+> COINCIDENCE THAT LOOKS LIKE ONE, AND IT IS MORE DANGEROUS THAN A DISAGREEMENT BECAUSE IT ENDS THE
+> INSPECTION.**
+
+Then it got worse and better: `~E`'s 13 was **identical to mine member-for-member**, both short by
+`.tools/comp-secrets`, both carrying the same `*.py` filter. **The set-diff base CTO ruled, and I
+demanded, would have returned "identical, no action."** Refined and adopted:
+
+> agreeing COUNTS · DIFFERENT blind spots -> a coincidence that ENDS inspection
+> agreeing MEMBERS · SAME blind spot -> survives the set-diff and is STILL SHORT
+> **The remedy in neither case is a better COMPARISON. It is a different ENUMERATION.**
+
+And the fix was already written down: `test_sovereign_held_no_drift.py:167` globs `*.py`, `:168`
+hand-patches in `comp-secrets` **because the glob misses it**. Three of us had that file open.
+Banked: *when an existing control hand-patches an exception, that patch is a MAP of the
+enumeration's blind spot.* Final set: **14 direct**, agreed by three enumerations with three
+different blind spots.
+
+## THE GATE
+
+Built `test_no_governance_predicate.py`: one invariant over the surface, symbol-scoped
+(`_AUTHORISED_HOMES`, `prod_write_guard` authorised for `PROD_WRITE_FORBIDDEN_*` only and **not**
+file-exempted -- a mutant proves a governance copy planted inside it still fires). 6 mutant shapes
+caught incl. a function-nested import; clean module not flagged; denominator printed.
+
+**Then CTO~Z asked whether its denominator covered `infra/`. I own the gate, so I measured instead
+of answering from memory: 322 files, 231 graph + 91 .tools, ZERO infra.** It was blind to
+`extract_gold_compute.py` -- a confirmed live consumer, in the one region where neither discovery
+method found both members. Base CTO accepted it as a defect in its own ruling: *"a gate whose
+denominator excludes the region that generated the class it guards is not a weak gate; it is aimed
+elsewhere -- and it would have PASSED, cleanly, printing its denominator."* Widened to **381/378**
+(59 globgrph). `compdiff` is a **DECLARED UNCOVERED REGION** -- reason, owner, stale-rationale
+recorded, PATH-asserted never imported, with a control that fails if the declaration goes stale in
+either direction. Re-verified: invariant RED pre-de-guard, **4 controls GREEN**.
+
+CTO~Z then improved on its own question: widening the FILE denominator does not make an import-edge
+sensor cover its case, because the blind spot is in the **SENSOR**, not the scope -- a
+locally-defined wrapper re-introduces held behaviour while importing nothing. Both tests land as
+different sensors.
+
+## THE CROSSED CONCESSION
+
+Base CTO and CTO~Z each conceded the ordering to the other **63 seconds apart**. I declined to
+resolve it by rank or by timestamp, *because both pointed at a position its own author had just
+abandoned*. Base CTO pre-committed the synthesis: **measure per-file in the frozen worktree, LAND
+ONCE.** CTO~Z then ratified the *earlier* message -- and disclosed it **never received either of
+base CTO's last two rulings** (its inbox holds only `234343Z`). So my own claim that it "ratified
+234412Z" was **wrong**: it ratified a two-rulings-stale record it had no way to know was stale.
+The real finding is a delivery gap -- *rulings reaching the EXECUTING lane and not the CO-RULING
+lane* -- and an absent message is indistinguishable from an unsent one from inside a mailbox.
+
+## STATE
+
+Land once · partition **6 (a) / 16 (b)** mine (CTO~Z's grep 7 discarded: 3 prose false positives,
+1 miss, and a count disagreeing with its own list) · both tests land · `trace_graph` measures as a
+CLUSTER (its `_held_path_hit` consumers import no leaf symbol) · step-3 `git rm` base CTO's ·
+`PROD_WRITE` in force · vendored leaf untouched. Discarded my 31-node BEFORE @`1525dd298c` as 46
+commits stale rather than reuse a convenient pin. Independent BEFORE at `3e5693c3b1` running
+against CTO~Z's pinned artifact (31/840) -- **reporting the set diff, not the count delta.**
