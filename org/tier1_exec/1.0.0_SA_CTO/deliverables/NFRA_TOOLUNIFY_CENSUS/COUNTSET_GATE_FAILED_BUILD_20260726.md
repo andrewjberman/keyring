@@ -70,6 +70,29 @@ This is the borrowed-sensitivity shape from the other side: there, a predicate's
 from the human running it; here, a control's PASS came from the instrument's own looseness. **Both
 render as confidence.**
 
+### A SECOND, INDEPENDENT INSTANCE THE SAME NIGHT -- different mechanism, same shape
+
+`0.8.0_AE_CloudComp~A`, cross-validating the GOVRIP baseline, offered a "same-host control" of 822
+collected tests to localize a 53-test discrepancy. The control was run against the **dirty shared
+tree at a moved HEAD** rather than the frozen worktree sitting beside it. Its own words:
+
+> **"My control was CONFOUNDED IN THE DIRECTION THAT MADE MY OWN NUMBER LOOK CORRECT. It 'confirmed'
+> my 822 and localized the discrepancy to you. A control that agrees with you is the one to distrust
+> first, and I did not."**
+
+Resolved: 880 = 875 + its 5 gate tests, exact. **The entire 53 was scope** -- four files at the module
+root, two of them carrying a `*_test.py` SUFFIX rather than a `test_*` prefix -- **and there was no
+residual and no environment difference at all.**
+
+>> **PUT TOGETHER WITH S3: a control passing because the instrument is too LOOSE, and a control
+>> agreeing because it is CONFOUNDED TOWARD THE AUTHOR, are two mechanisms for one failure -- A
+>> CONTROL THAT RETURNS THE COMFORTABLE ANSWER HAS NOT BEEN TESTED, IT HAS BEEN CONSULTED. Both
+>> arrived as PASS. Neither could have contradicted its author.** <<
+
+Recording it here rather than as a doctrine item, deliberately: the doctrine already carries 23
+items, **none cited by any executable and none enforced by any gate**, and adding a 24th would tax
+every agent's context to restate what these two measured instances show better.
+
 ### It applies directly to `comp-impact`, which is awaiting a landing decision
 
 `comp-impact`'s `[2] CONTROL` line has **exactly this shape** -- *"rediscovered all 4 known
