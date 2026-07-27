@@ -93,6 +93,41 @@ Recording it here rather than as a doctrine item, deliberately: the doctrine alr
 items, **none cited by any executable and none enforced by any gate**, and adding a 24th would tax
 every agent's context to restate what these two measured instances show better.
 
+### A THIRD INSTANCE, and it is the deepest -- ASSERTING ABSENCE CANNOT DETECT A BROKEN PRODUCER OF THAT ABSENCE
+
+GOVRIP de-guard 3. I specified that a re-expressed control must assert **positive content evidence**
+(`A_01` present in the parsed catalog) rather than `assert not result.get("held")`, because after the
+de-guard the `held` key never exists and the absence-form passes on an empty dict, on garbage, on an
+`analyze()` that reads nothing.
+
+**On its first use the spec found a PRE-EXISTING defect nobody was looking for.** Verified
+independently at source:
+
+    comp_dispatch.py:117   re.search(r"CATALOG\s*<<\s*'?(\w+)'?.*?\n(.*?)\n\1", ...)   # HEREDOC form
+    the test fixture       _DISPATCH = 'CATALOG="\nA_01 | a.py | \n"\n'                 # ASSIGNMENT form
+
+    measured:  assignment-form -> {}
+               heredoc-form    -> {'A_01': {'file': 'a.py', 'flags': ''}}
+
+**The fixture never parsed. `catalog` returned `{}` on every run since the file was written**, so the
+suite exercised a dispatch analysis that opened a file, parsed nothing out of it, and reported PASS.
+It survived because the only assertion was the ABSENCE of a skip flag -- **and an empty parse
+satisfies that exactly as well as a real read.**
+
+The test's own name was `test_bd_dispatch_held_by_default_reads_under_override_nonvacuous`.
+**It asserted non-vacuity in its name and was vacuous in its body.**
+
+>> **AN ASSERTION OF ABSENCE CANNOT DISTINGUISH "the thing correctly did not happen" FROM "the
+>> machinery that would have made it happen is broken" -- BECAUSE A BROKEN PRODUCER PRODUCES
+>> ABSENCE.** Asserting positive content is what surfaced it; no amount of asserting absence ever
+>> could. Same night, same class, second measured instance: `comp_ws4`'s `matched=0 missing=[]`
+>> rendered "nothing was reachable" as "22 components disappeared." <<
+
+**And note what this says about the two earlier items in this file:** a control that returns the
+comfortable answer (S3) and a control whose subject never ran are the same failure seen from
+different ends. The countset scanner's control passed because the matcher was loose; this fixture's
+control passed because the parse was empty. **Neither could have failed.**
+
 ### It applies directly to `comp-impact`, which is awaiting a landing decision
 
 `comp-impact`'s `[2] CONTROL` line has **exactly this shape** -- *"rediscovered all 4 known
