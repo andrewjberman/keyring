@@ -1,0 +1,255 @@
+#!/usr/bin/env python
+"""comp-countset -- find a doc-carried CARDINAL adjacent to an ENUMERATION it does not derive from.
+
+WHY THIS EXISTS
+    Four instances in two days, three of them by authors who had written the rule against it:
+      - CONTROLS_OVER_CARE III-d header: frozen "Six that earned it" over TWELVE items
+      - CTO~Z GOVRIP partition:          "7 files" over an EIGHT-file list
+      - CTO~Z class tally:               "NOW AT THREE TONIGHT" over TWO rows
+      - AE~A / CTO~Z:                    7-vs-7 with DISJOINT members   <-- SEE BLIND SPOT
+    The doctrine already said "state the property instead". Prose did not stop it. This does.
+
+WHAT IT IS NOT -- STATED FIRST, BECAUSE IT IS THE HALF THAT MISLEADS
+    >> IT CANNOT CATCH TWO COUNTS THAT AGREE WITH DIFFERENT MEMBERS. <<
+    Instance 4 above (7-vs-7, disjoint sets) is STRUCTURALLY INVISIBLE here: this tool's sensor is
+    CARDINAL-vs-LENGTH, and a set disagreement has no length disagreement. A clean run means
+    "no count contradicts its own list", NEVER "the counts are right".
+    Catching 3 of the 4 known instances is the CEILING of this instrument, not a tuning target.
+
+OUTPUTS (all three mandatory -- a finding without them is not actionable)
+    [1] DENOMINATOR  what was scanned, and what was NOT
+    [2] CONTROL      does it rediscover known-present instances? PASS/FAIL
+    [3] FINDINGS     cardinal, derived length, and the span, so a reader can re-derive
+"""
+from __future__ import annotations
+
+import argparse
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+def _repo_root() -> Path:
+    """Derive the repo root from git, NOT from parents[N].
+
+    comp-impact hardcodes parents[1], which is correct at .tools/<tool> and WRONG anywhere else --
+    parked one directory deeper it resolved to the wrong root and reported
+    'no existing .py subject files resolved', i.e. it blamed the CALLER for its own broken
+    retrieval. A location-dependent root turns a move into a silent wrong answer.
+    """
+    try:
+        out = subprocess.run(
+            ["git", "rev-parse", "--show-toplevel"],
+            cwd=Path(__file__).resolve().parent, capture_output=True, text=True, timeout=30,
+        )
+        if out.returncode == 0 and out.stdout.strip():
+            return Path(out.stdout.strip())
+    except Exception:
+        pass
+    raise SystemExit("comp-countset: cannot resolve repo root via git -- refusing to guess")
+
+
+REPO = _repo_root()
+
+WORDS = {
+    "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8,
+    "nine": 9, "ten": 10, "eleven": 11, "twelve": 12,
+}
+
+# A cardinal followed by a plural-ish noun. Requiring the noun is what keeps precision up --
+# a bare digit ("step 3", "rc=2", a date) is not a count OF anything.
+# (?<![\d,.$]) rejects the TAIL of a larger number: "1,198 files" must not yield 198,
+# "315,197 rows" must not yield 197, "$196.99M" must not yield 99. That single lookbehind was
+# responsible for the overwhelming majority of the first build's 2,026 findings.
+CARD = re.compile(
+    r"(?<![\d,.$])\b(?P<n>\d{1,3}|" + "|".join(WORDS) + r")\s+"
+    r"(?P<noun>[a-z][a-z-]{2,20}(?:s|men|people)?)\b",
+    re.IGNORECASE,
+)
+
+# Nouns that plausibly count list members. Deliberately NARROW: a broad list produces false
+# positives, and a false positive in a warning teaches dismissal (III-d.8).
+COUNTABLE = {
+    "items", "files", "rows", "tools", "tests", "entries", "instances", "sites", "lanes",
+    "consumers", "importers", "members", "axes", "commits", "agents", "cases", "checks",
+    "gates", "findings", "defects", "failures", "columns", "spaces", "terms", "predicates",
+}
+
+
+def tracked_md() -> tuple[list[Path], str]:
+    try:
+        out = subprocess.run(
+            ["git", "ls-files", "*.md"], cwd=REPO, capture_output=True, text=True, timeout=120
+        )
+        files = [REPO / p for p in out.stdout.split("\n") if p.strip()]
+        return [f for f in files if f.exists()], "git ls-files '*.md' (tracked only; UNTRACKED EXCLUDED and unmeasured)"
+    except Exception as e:  # pragma: no cover
+        return [], f"FAILED: {e}"
+
+
+def enumeration_after(lines: list[str], start: int, window: int = 3) -> tuple[int, int, int] | None:
+    """Return (length, first_line, last_line) of the first enumeration beginning within `window`."""
+    i = start + 1
+    limit = min(len(lines), start + 1 + window)
+    while i < limit and not lines[i].strip():
+        i += 1
+    if i >= limit:
+        return None
+
+    # fenced block -> count non-blank lines inside
+    if lines[i].strip().startswith("```"):
+        j, n = i + 1, 0
+        while j < len(lines) and not lines[j].strip().startswith("```"):
+            if lines[j].strip():
+                n += 1
+            j += 1
+        return (n, i, j) if n else None
+
+    # bullet / numbered list -> count consecutive markers at the same depth
+    m = re.match(r"^(\s*)([-*+]|\d+\.)\s+\S", lines[i])
+    if m:
+        indent, j, n = len(m.group(1)), i, 0
+        while j < len(lines):
+            mm = re.match(r"^(\s*)([-*+]|\d+\.)\s+\S", lines[j])
+            if mm and len(mm.group(1)) == indent:
+                n += 1
+                j += 1
+            elif not lines[j].strip() or (lines[j].startswith(" " * (indent + 2))):
+                j += 1  # continuation / blank inside the list
+            else:
+                break
+        return (n, i, j) if n else None
+
+    # indented literal block (4-space), as used in messages and specs
+    if lines[i].startswith("    ") and lines[i].strip():
+        j, n = i, 0
+        while j < len(lines) and (lines[j].startswith("    ") or not lines[j].strip()):
+            if lines[j].strip():
+                n += 1
+            j += 1
+        return (n, i, j) if n else None
+    return None
+
+
+def scan(path: Path) -> list[dict]:
+    try:
+        lines = path.read_text(encoding="utf-8", errors="replace").split("\n")
+    except Exception:
+        return []
+    hits, in_fence = [], False
+    for idx, line in enumerate(lines):
+        if line.strip().startswith("```"):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
+        for m in CARD.finditer(line):
+            noun = m.group("noun").lower()
+            if noun not in COUNTABLE:
+                continue
+            raw = m.group("n").lower()
+            n = WORDS.get(raw, None)
+            if n is None:
+                try:
+                    n = int(raw)
+                except ValueError:
+                    continue
+            if not (2 <= n <= 200):
+                continue
+            # The cardinal must plausibly INTRODUCE the list, not merely appear on a line
+            # somewhere above one. Two accepted shapes: the line ends at/near the count, or the
+            # line ends in a colon. Without this, "- Compacted 1,198 files into x.parquet (…)"
+            # matches the next unrelated bullet -- the second-largest false-positive source.
+            tail = line[m.end():].rstrip()
+            introduces = line.rstrip().endswith(":") or len(tail) <= 25
+            if not introduces:
+                continue
+            enum = enumeration_after(lines, idx)
+            # A 1-member "list" is almost never what a cardinal >= 2 is counting.
+            if enum and enum[0] >= 2 and enum[0] != n:
+                hits.append({
+                    "file": str(path.relative_to(REPO)).replace("\\", "/"),
+                    "line": idx + 1,
+                    "claimed": n,
+                    "found": enum[0],
+                    "noun": noun,
+                    "text": line.strip()[:100],
+                })
+    return hits
+
+
+CONTROL_FIXTURE = """# fixture
+Header claiming a count over a list that contradicts it.
+
+I measured 7 files touching the predicate:
+
+- alpha.py
+- bravo.py
+- charlie.py
+- delta.py
+- echo.py
+- foxtrot.py
+- golf.py
+- hotel.py
+"""
+
+
+def control(tmp: Path) -> tuple[bool, str]:
+    """Positive control: a KNOWN-PRESENT instance the tool must rediscover.
+
+    Generated, not hand-picked from the corpus -- a hand-chosen control measures the AUTHOR.
+    Shape is the real 7-vs-8 GOVRIP instance.
+    """
+    f = tmp / "control_fixture.md"
+    f.write_text(CONTROL_FIXTURE, encoding="utf-8")
+    try:
+        hits = scan(f)
+    finally:
+        f.unlink(missing_ok=True)
+    ok = any(h["claimed"] == 7 and h["found"] == 8 for h in hits)
+    return ok, ("rediscovered the 7-vs-8 shape" if ok else
+                f"DID NOT rediscover the known 7-vs-8 shape (got {hits}) -- INSTRUMENT IS BROKEN, findings below are UNSOUND")
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(prog="comp-countset")
+    ap.add_argument("paths", nargs="*", help="limit to these files (default: all tracked .md)")
+    ap.add_argument("--max", type=int, default=40)
+    a = ap.parse_args()
+
+    if a.paths:
+        files = [Path(p) if Path(p).is_absolute() else REPO / p for p in a.paths]
+        files = [f for f in files if f.exists()]
+        how = f"explicit paths ({len(files)} resolved)"
+    else:
+        files, how = tracked_md()
+
+    print("=== comp-countset ===")
+    print(f"[1] DENOMINATOR  {len(files)} markdown file(s)")
+    print(f"                 derived: {how}")
+    print("                 BLIND SPOT: cannot see two counts that AGREE with DIFFERENT members.")
+    print("                 A clean run means 'no count contradicts its own list', NOT 'counts are right'.")
+
+    ok, note = control(REPO / "org" / "tier1_exec")
+    print(f"[2] CONTROL      {'PASS' if ok else 'FAIL'}")
+    print(f"                 {note}")
+    if not ok:
+        print("\nABORTING: an instrument that cannot rediscover a known-present instance", file=sys.stderr)
+        print("reports silence indistinguishable from absence.", file=sys.stderr)
+        return 2
+
+    hits: list[dict] = []
+    for f in files:
+        hits.extend(scan(f))
+
+    print(f"[3] FINDINGS     {len(hits)} cardinal(s) disagreeing with an adjacent enumeration")
+    for h in sorted(hits, key=lambda x: (-abs(x["claimed"] - x["found"])))[: a.max]:
+        print(f"    {h['file']}:{h['line']}  claims {h['claimed']} {h['noun']}, list has {h['found']}")
+        print(f"        {h['text']}")
+    if len(hits) > a.max:
+        print(f"    ... {len(hits) - a.max} more SUPPRESSED by --max (not absent -- truncated)")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
