@@ -82,6 +82,57 @@ to the executing lane. That was my scoping error. Against THIS set:
 - `test_prod_write_guard.py` is OUT of scope, currently GREEN, and must stay green -- verify it
   independently before and after every commit; if it moves, stop and escalate rather than diagnose
 
+## ⚠ AMENDMENT 2026-07-27 -- THIS BASELINE WAS NOT FULLY PINNED, AND THE "2 skipped" WERE DATA
+
+**Two of the numbers above are state-dependent, not code-dependent. Corrected here rather than
+rewritten, because the original run is a true record of what it measured.**
+
+`comp_ws4_crosswalk_test.py` reads `_WORKSPACE_ROOT / ".comp-graph" / "graph.json"`
+(`comp_ws4_crosswalk.py:230`, `_WORKSPACE_ROOT` derived from `__file__` at `:44`, so per-tree).
+**That file is UNTRACKED** -- `git ls-files .comp-graph/` returns **0** -- so `git worktree add`
+does not create it and a SHA does not pin it. **The suite writes it mid-run:** my worktree was
+created ~23:33Z with no `.comp-graph/`; the file appeared at **23:42:43Z, inside the 486s run.**
+
+### Controlled demonstration -- same SHA, same worktree, same command, artifact state the ONLY variable
+
+    baseline (artifact ABSENT when comp_ws4 ran)   31 failed, 840 passed, 2 SKIPPED, 2 xfailed = 875
+    rerun    (artifact PRESENT from the start)     33 failed, 840 passed, 0 skipped,  2 xfailed = 875
+
+**33 = 31 + 2.** The two skips became the two failures. Nothing else moved -- 840 passed in both.
+
+Positive control, both directions, reproduced independently by `0.8.0_AE_CloudComp~A`:
+
+    artifact ABSENT   ->  10 passed, 2 SKIPPED   (FileNotFoundError -> the guard fires correctly)
+    artifact PRESENT  ->  10 passed, 2 FAILED    (loads, returns 0 nodes, no exception, hits the assert)
+
+### The two findings
+
+> **1. A FROZEN WORKTREE PINS TRACKED CONTENT ONLY.** Anything generated is unpinned inside a
+> "pinned" baseline -- and the more thoroughly the pin is trusted, the less likely anyone is to
+> check. The worktree was adopted precisely to defeat a moving population; it silently did not
+> cover the generated plane, and that bound was never stated.
+
+> **2. THE `2 skipped` WERE THE FINDING AND BOTH OF US READ PAST THEM.** The cross-validation that
+> "agreed 31 of 31, member-for-member" was a FAILURE-set diff; these two lived in the SKIPPED
+> bucket, where such a diff structurally cannot see them. I published `2 skipped` as a number and
+> never asked which tests they were; `~A` read the same line and did not ask either.
+> **A test that does not COLLECT is invisible; a test that SKIPS is invisible too** -- and in a
+> summary line a skip from a missing file is indistinguishable from a deliberate platform guard.
+> **The summary line is the blind spot, not the bucket.**
+
+### Separately: a real defect in that test, independent of GOVRIP
+
+`_skip_if_live_plane_unavailable(exc: Exception)` (`:223`) can only fire from an `except` block.
+A load that SUCCEEDS and returns EMPTY never reaches it and falls through to `assert len(...) >= 10`.
+The guard catches THROWS and is blind to LOADS-EMPTY. `matched=0 missing=[]` then renders
+"nothing was reachable" as "22 components disappeared." **It should skip on empty, not assert.**
+
+### Method correction for anyone using this baseline
+
+Delete `.comp-graph/graph.json` in the measurement worktree before EVERY run, BEFORE and AFTER
+alike. Then these two skip deterministically in both and cancel honestly rather than by luck.
+Do NOT delete the shared tree's copy -- it is live for other lanes and `.agent_context` sits beside it.
+
 ## What this baseline does NOT establish
 
 It is a single run at one SHA. It does not establish flakiness bounds -- no test here has been run
