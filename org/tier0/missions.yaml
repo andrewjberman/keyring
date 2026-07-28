@@ -51,6 +51,15 @@ groups:
                  MDPF_CADENCE, MDPF_COUNTS, MDPF_BASISSWITCH, MDPF_SCOPED, MDPF_VARFLAG,
                  MDPF_COTMDL, MDPF_ASSETS, OPAL_CONSOLIDATION]
         holes: [MDPF_CHANNEL_INDEPENDENCE]
+      PORTAL.DEBT:
+        title: "Frontend debt -- portal API route migration + non-canonical deprecation"
+        # NOT A FOCUS -- Andrew-direct 2026-07-28 (LOW priority). Deliberately narrow paths so it does
+        # not hoover portal commits it was told not to care about.
+        paths:
+          - org/projects/UIUX_*
+          - docs/briefs/DEBT_FRONTEND*
+        attach: []
+        holes: []
       PORTAL.ADVISOR_INTELLIGENCE:
         title: Advisor Intelligence
         paths:
@@ -82,6 +91,20 @@ groups:
         mechanism: [NFRA_COMPRAIL]     # enforcement point, not scope
         inert: [NFRA_TOOLSEM]          # 4 commits / 0 code files -- routing here lands nowhere
         holes: [NFRA_TOOLUNIFY]        # 109 commits, no project JSON
+      INFRASTRUCTURE.DEBT:
+        title: "Backend debt -- AWS resource and system debt"
+        # Andrew-direct 2026-07-28: DEBT is no longer a top-level group. It is the DEBT COMPONENT of
+        # its parent. Backend debt belongs to INFRASTRUCTURE because that is the estate it decays in,
+        # and because pattern-consolidation and legacy-retirement are the same motion seen twice.
+        paths:
+          - infra/aws/ec2/**
+          - infra/aws/terraform/**
+          - org/modules/graph/debtscan/**
+          - org/projects/NFRA_DEBTSCAN*
+          - org/projects/DEBT_*
+        attach: [MDPF_DEBTCLEAN, NFRA_TERRAFORM, NFRA_COSTAWS, OPAL_CONSOLIDATION, OPAL_PRISTINE,
+                 NFRA_COMPSIMILAR, OPAL_LCLRPO, NFRA_PSTMRT]
+        holes: []
       INFRASTRUCTURE.GRAPH:
         title: Canonical taxonomy and resource design patterns
         paths:
@@ -98,46 +121,45 @@ groups:
                  NFRA_GLOBGRPH, NFRA_GRAPHS, NFRA_GRAPHUNI, NFRA_GRAPHDEPTH, NFRA_TSGRAPH,
                  NFRA_SEMCTL, NFRA_NERVES, NFRA_EDGES]
         holes: []
-  DEBT:
-    title: Debt
-    subgroups:
-      DEBT.BACKEND:
-        title: AWS resource and system debt
-        paths:
-          - infra/aws/ec2/**
-          - infra/aws/terraform/**
-          - org/modules/graph/debtscan/**
-          - org/projects/NFRA_DEBTSCAN*
-          - org/projects/DEBT_*
-        attach: [NFRA_DEBTSCAN, MDPF_DEBTCLEAN, MDPF_MONOCLEANUP, NFRA_TERRAFORM,
-                 NFRA_COSTAWS, OPAL_CONSOLIDATION, DEBT_1STRUN]
-        holes: []
-      DEBT.FRONTEND:
-        title: Portal-level debt
-        # NOT A FOCUS -- Andrew-direct 2026-07-28. Deliberately narrow paths so it does not
-        # hoover portal commits it was told not to care about.
-        paths:
-          - org/projects/UIUX_*
-          - docs/briefs/DEBT_FRONTEND*
-        attach: []
-        holes: []
   EXTERNAL:
     title: External
+    # ANDREW-DIRECT 2026-07-28: "that should not even exist really, we have yet to do any true
+    # external work, it is a NEW CATEGORY FOR NON-PORTAL WORK."
+    #
+    # >> THESE SUB-GROUPS ARE FORWARD CONTAINERS. NEAR-ZERO COMMITS IS THE CORRECT READING, NOT A GAP. <<
+    #
+    # The earlier globs here (org/projects/ADVI_49*, ADVI_INF*, ADVI_COT*) were WRONG: that work is
+    # portal/advisor-intelligence pipeline work, and attributing it to EXTERNAL manufactured a
+    # 238-commit EXTERNAL<->PORTAL "contention" that was an artifact of MY taxonomy, not a property of
+    # the estate. A per-firm PREFIX is not the same thing as non-portal client work. Globs removed
+    # rather than narrowed -- a container for work that does not exist yet should match nothing, and
+    # an empty match set is honest where a plausible one is not.
     subgroups:
+      EXTERNAL.ALONGSIDE:
+        title: "Alongside -- scoped adjacent work that is explicitly NOT portal data analytics"
+        # ANDREW-DIRECT 2026-07-28: "scoped work that may eventually tie into the portal, but it is
+        # very prospective, e.g. building out salesforce integrations for 49 and so on, EXPLICITLY NOT
+        # portal data analytics."
+        # THE BOUNDARY IS THE POINT: work belongs here when it serves an advisor ALONGSIDE the portal
+        # rather than THROUGH it. The moment something becomes portal data analytics it leaves this
+        # sub-group -- that migration is the signal, not an inconsistency.
+        paths: []
+        attach: []
+        holes: []
       EXTERNAL.49FINANCIAL:
         title: 49 Financial
-        paths: [org/projects/ADVI_49*, data/schwab/**]
-        attach: [NFRA_PPL49F, SSCN_PFOE, BD_RPSAUTO]
+        paths: []
+        attach: []
         holes: []
       EXTERNAL.INFLECTION:
         title: Inflection Wealth Management
-        paths: [org/projects/ADVI_INF*]
-        attach: [NFRA_PPLINF]
+        paths: []
+        attach: []
         holes: []
       EXTERNAL.COTTONWOOD:
         title: Cottonwood Capital Advisors
-        paths: [org/projects/ADVI_COT*, org/projects/NFRA_COT*, org/projects/WSE_COTMDL*]
-        attach: [NFRA_PPLCOT, NFRA_COT_RULE15, MDPF_COTMDL, WSE_COTMDL, AUTH_COTTON]
+        paths: []
+        attach: []
         holes: []
 
 # Classification of touched files, for the ENACTED-vs-RECORDED ratio (CVO's signal).
