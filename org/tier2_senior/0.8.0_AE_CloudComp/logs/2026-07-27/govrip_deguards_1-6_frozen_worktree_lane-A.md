@@ -117,3 +117,75 @@ node-ID diff + collected-count reconciliation -> PROD_WRITE enumeration (a drop 
 2. **[1.0.0_SA_CTO]** takes the landing: cumulative delta, per-de-guard PROD_WRITE enumeration,
    cluster verdict, mutant results. Step-3 `git rm` is its boundary.
 3. **[1.0.0_SA_CTO~Z]** the four filed defects, post-landing.
+
+---
+
+# ADDENDUM -- GOVRIP STOOD DOWN (Andrew-direct, 2026-07-28). Nothing landed. Worktree released.
+
+**archetype:** SCRIBE
+
+## The ruling, VERBATIM
+
+Andrew-direct, in session 2026-07-28, **relayed by `1.0.0_SA_CTO`** (which received it directly)
+at 20260728T124627Z, subject prefixed `[STOP]`:
+
+> **"i dont know what GOVRIP is or if we even really wanted to get that pushed through"**
+> **"no i dont care about that"** *(said of the re-introduction gate)*
+> **"but cleanup of dead code wold be nice if it can take 5 minutes to do so"**
+
+Base CTO measured the batch against that bar -- **74 references across 11 files**, `trace_graph` with
+3 cross-file consumers, `clobber_scan` exposing `include_held` as a public parameter -- and ruled it
+a no. It explicitly declined a partial pass: cleaning some of 11 files leaves the dead code in place
+AND adds inconsistency.
+
+## Executed
+
+```
+RELEASED   the frozen worktree (de-guards 1-6 DISCARDED), the pinned baseline, the measurement
+LANDED     nothing
+KEPT       step 1 @afa4dcdee -- verified an ancestor of HEAD; prod_write_guard.py present
+UNTOUCHED  sovereign_held.py · PROD_WRITE_FORBIDDEN (IN FORCE, 2 refs each in both files) · RETRACTED_*
+```
+
+**Verified before releasing rather than asserted after:** my only two commits in the whole arc are
+LOGS (`634a9f775`, `e62c1cc2f`); `git status` on all seven de-guard targets and `tests/` is clean in
+the shared tree. Zero de-guard code reached CLOUD. The worktree removal discarded the work, which is
+why the check had to run first.
+
+## What survives, and it is not consolation
+
+The batch dies; the findings were never about the batch:
+
+- **Seven independent enumeration blind spots**, none subsuming another, **every one closed by a
+  DIFFERENT instrument** rather than by scrutinising the same one harder.
+- **Count-vs-set, and its refinement:** agreeing MEMBERS from instruments sharing a blind spot
+  survive a set-diff and are still short. The remedy is never a better comparison -- it is a
+  different ENUMERATION.
+- **The predicate IS the denominator** -- a predicate nobody states is a denominator nobody can check.
+- **An empty delta is only evidence if the instruments that could have filled it were able to fire.**
+
+Plus the live defects found and filed, which outlive the arc: the PROD_WRITE control routing through
+the governance internal; two independent `is_prod_write_forbidden` definitions with no identity
+binding; a fixture that never parsed; `_imports_sovereign_held` defeatable by a comment (4 files in
+the shared tree already defeat it); `comp_ws4`'s skip-guard blind to the LOADS-EMPTY path.
+
+## The upstream lesson, recorded because it is the reusable one
+
+Base CTO's words: *"Andrew made a one-line remark, I named it a project, and it ran for two days
+without him knowing it existed."* **A one-line remark sized into a program is a scoping failure that
+no amount of execution rigour downstream can correct** -- and the rigour was real: five defects in
+the issuing specs were caught, a fork where both authorities had abandoned their positions was
+refused rather than guessed, and a baseline was discarded unasked when the rule that made it
+authoritative also made it unusable. None of that could make the batch worth landing.
+
+>> **THE COST BAR IS PART OF THE REQUIREMENT.** "Cleanup would be nice if it takes 5 minutes" is a
+   conditional, and the condition was measurable on day one: 74 refs / 11 files. Nobody measured it
+   until day two. <<
+
+`~Z`'s `comp_ws4_crosswalk_test.py` skip-guard hold is RELEASED -- the measurement it protected no
+longer exists, so that fix is unblocked.
+
+## Current State
+
+Stood down. Frozen worktree gone, nothing landed, no open GOVRIP work. `PROD_WRITE_FORBIDDEN` in
+force and untouched. Step-3 `git rm` never approached. Event-driven, awaiting next dispatch.
