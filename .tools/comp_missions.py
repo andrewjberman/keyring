@@ -443,9 +443,165 @@ def emit(since: str, until: str | None, rebuild: bool = False) -> str:
     return "\n".join(hdr + out)
 
 
+# ---------------------------------------------------------------------------
+# compile -- generate org/missions/MISSIONS.md from the tree.
+#
+# MISSIONS.md IS A BUILD ARTIFACT. It is an AGGREGATION of the per-sub-group execsum.yaml +
+# state.yaml, ordered by ACTIVITY INTENSITY, and it is regenerated rather than edited. Andrew-direct:
+# "compiled as much as possible rather than hand-written so that it does not go stale."
+#
+# Nothing here is authored at compile time. Every sentence in the output already exists in a
+# state.yaml or an execsum.yaml written deliberately by MSTR. The compiler ORDERS and SELECTS; it
+# never composes -- because a compiler that writes prose is a compiler that can invent a stance.
+# ---------------------------------------------------------------------------
+
+_BOOL_BACK = {True: "YES", False: "NO", "true": "YES", "false": "NO"}
+
+
+def _stance(v):
+    """YAML 1.1 coerces bare YES/NO to booleans. A stance that silently becomes True/False is a
+    corrupted stance, so normalise on READ as well as quoting on write -- belt and braces, because
+    the write-side fix depends on nobody hand-editing the file back."""
+    if isinstance(v, bool):
+        return _BOOL_BACK[v]
+    if v is None:
+        return "?"
+    return _BOOL_BACK.get(str(v).lower(), str(v))
+
+
+def _load_yaml(path):
+    try:
+        import yaml
+        return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return {}
+
+
+def compile_md(recent_days: int = 14) -> str:
+    import datetime
+    idx = load_index()
+    sgs = subgroups(idx)
+    head = _run(["git", "log", "-1", "--pretty=format:%h\x1f%aI\x1f%an\x1f%s"]).split("\x1f")
+
+    # cutoff for the RECENT window, derived from the newest commit in the tree (never a wall clock)
+    newest = None
+    per = {}
+    for sid in sgs:
+        grp, sub = sid.split(".", 1)
+        d = MISSIONS_DIR / grp / sub
+        rows = []
+        f = d / "commits.jsonl"
+        if f.exists():
+            for ln in f.read_text(encoding="utf-8").splitlines():
+                ln = ln.strip()
+                if ln:
+                    try:
+                        rows.append(json.loads(ln))
+                    except Exception:
+                        pass
+        st = _load_yaml(d / "state.yaml")
+        ex = _load_yaml(d / "execsum.yaml")
+        times = sorted((r.get("time") or "") for r in rows if r.get("time"))
+        if times and (newest is None or times[-1] > newest):
+            newest = times[-1]
+        per[sid] = {"rows": rows, "state": st, "exec": ex, "newest": times[-1] if times else None}
+
+    cutoff = ""
+    if newest:
+        try:
+            cutoff = (datetime.datetime.fromisoformat(newest)
+                      - datetime.timedelta(days=recent_days)).isoformat()
+        except Exception:
+            cutoff = ""
+
+    for sid, e in per.items():
+        e["recent"] = sum(1 for r in e["rows"] if cutoff and (r.get("time") or "") >= cutoff)
+        e["total"] = len(e["rows"])
+        e["authors"] = len({r.get("author") for r in e["rows"] if r.get("author")})
+
+    order = sorted(per.items(), key=lambda kv: (-kv[1]["recent"], -kv[1]["total"], kv[0]))
+
+    L = []
+    L.append("# MISSIONS — Opal mission register")
+    L.append("")
+    L.append("    GENERATED ARTIFACT -- do NOT edit. `comp-missions compile` regenerates this file.")
+    L.append("    Every sentence below is SELECTED from a state.yaml or execsum.yaml, never composed")
+    L.append("    here: a compiler that writes prose is a compiler that can invent a stance.")
+    L.append("")
+    L.append("    ANCHOR COMMIT   %s" % head[0])
+    L.append("    ANCHOR TIME     %s   (author-time, not a wall clock)" % head[1])
+    L.append("    ANCHOR AUTHOR   %s" % head[2])
+    L.append("    ORDERING        activity intensity -- commits in the last %d days, then total" % recent_days)
+    L.append("    SOURCE          org/missions/{GROUP}/{SUB_GROUP}/{state,execsum}.yaml")
+    L.append("")
+    L.append("> **If the anchor is not HEAD, this file is history rather than state.** Re-run "
+             "`comp-missions emit && comp-missions compile`.")
+    L.append("")
+    L.append("---")
+    L.append("")
+    L.append("## Priority board — ordered by activity intensity")
+    L.append("")
+    L.append("| # | sub-group | recent | total | authors | DECIDED | BUILT | SERVING | blocked on |")
+    L.append("|---|---|---|---|---|---|---|---|---|")
+    for i, (sid, e) in enumerate(order, 1):
+        st = e["state"].get("stance") or {}
+        L.append("| %d | `%s` | **%d** | %d | %d | %s | %s | %s | %s |" % (
+            i, sid, e["recent"], e["total"], e["authors"],
+            _stance(st.get("decided")), _stance(st.get("built")), _stance(st.get("serving")),
+            (e["state"].get("blocked_on") or "—")[:44] or "—"))
+    L.append("")
+    stale = [sid for sid, e in per.items() if str(e["exec"].get("prose_stale")).lower() == "true"]
+    if stale:
+        L.append("**PROSE STALE (a commit landed after the summary was written):** %s"
+                 % ", ".join("`%s`" % x for x in stale))
+    else:
+        L.append("**All sub-group summaries are current to the anchor.**")
+    L.append("")
+    L.append("---")
+    L.append("")
+
+    for sid, e in order:
+        st, ex = e["state"], e["exec"]
+        stance = st.get("stance") or {}
+        L.append("## %s — %s" % (sid, st.get("title") or sgs.get(sid, {}).get("title", "")))
+        L.append("")
+        L.append("    activity   %d commit(s) in the last %d days · %d total · %d author(s)"
+                 % (e["recent"], recent_days, e["total"], e["authors"]))
+        L.append("    newest     %s" % (e["newest"] or "— no activity —"))
+        L.append("    stance     DECIDED %s · BUILT %s · SERVING %s"
+                 % (_stance(stance.get("decided")), _stance(stance.get("built")), _stance(stance.get("serving"))))
+        if st.get("version"):
+            L.append("    version    %s" % st["version"])
+        if st.get("priority"):
+            L.append("    priority   %s" % " ".join(str(st["priority"]).split()))
+        L.append("")
+        if st.get("frontier"):
+            L.append("**FRONTIER —** %s" % " ".join(str(st["frontier"]).split()))
+            L.append("")
+        if st.get("blocked_on"):
+            L.append("**BLOCKED ON —** %s" % " ".join(str(st["blocked_on"]).split()))
+            L.append("")
+        prose = (ex.get("prose") or "").rstrip()
+        if prose and "(not yet written)" not in prose:
+            L.append(prose)
+            L.append("")
+        holes = st.get("holes") or []
+        if holes:
+            L.append("**HOLES — live work no project code covers (%d):**" % len(holes))
+            for hh in holes:
+                L.append("- %s" % " ".join(str(hh).split()))
+            L.append("")
+        if st.get("grounded"):
+            L.append("*grounded: %s*" % " ".join(str(st["grounded"]).split()))
+            L.append("")
+        L.append("---")
+        L.append("")
+    return "\n".join(L)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(prog="comp-missions")
-    ap.add_argument("cmd", choices=["scan", "json", "emit"], nargs="?", default="scan")
+    ap.add_argument("cmd", choices=["scan", "json", "emit", "compile"], nargs="?", default="scan")
     ap.add_argument("--since", default="midnight")
     ap.add_argument("--until", default=None)
     ap.add_argument("--limit", type=int, default=20)
@@ -454,6 +610,12 @@ def main() -> int:
                          "attribution rules in missions.yaml change)")
     a = ap.parse_args()
     r = scan(a.since, a.until)
+    if a.cmd == "compile":
+        out = compile_md()
+        (MISSIONS_DIR / "MISSIONS.md").write_text(out + "\n", encoding="utf-8")
+        print("comp-missions compile -> %s  (%d lines)" % (MISSIONS_DIR / "MISSIONS.md",
+                                                           out.count("\n") + 1))
+        return 0
     if a.cmd == "emit":
         print(emit(a.since, a.until, a.rebuild))
         return 0
