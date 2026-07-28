@@ -867,6 +867,46 @@ that question belongs to the product owner, not the tracer. **But the LABEL is w
 member-scoped number carrying a population-wide name and asserting completeness is a defect regardless of
 which answer comes back. **Only the roster fix is contingent on the ruling; the label is not.**
 
+## III-f. A HAND-TYPED UNIT MARKER IS AN ASSERTION IN MEASUREMENT COSTUME (2026-07-28, `0.7.0_AE_CloudOps`, self-caught and self-retracted)
+
+**THE LAW:** **a unit, zone, or basis suffix must be COMPUTED BY THE THING THAT PRODUCED THE VALUE, never typed
+by the author of the format string.** A fabricated marker is worse than a missing one.
+
+**MEASURED.** An agent reported four commits as *"tonight, 19:43 / 20:00 / 20:05 / 20:14:30Z"* and drew a
+doctrine from it (*"absence from the broker roster is not evidence of an idle agent"*). The commits were
+**2026-07-09** — nineteen days earlier — and the true instants were `00:14:30Z` on **07-10**. The instrument:
+```
+git log --date=format:'%H:%M:%SZ'      # discards the DATE entirely, renders LOCAL time,
+                                       # and the trailing Z is a LITERAL the author typed
+```
+Wrong on both axes at once: **wrong day by 19, wrong zone by 4 hours.** The clock-times plausibly matched an
+evening, which is exactly why it survived.
+
+>> **THE STEP PAST AMBIGUITY. The standing rule is "any timestamp without an explicit `Z` is ambiguous" — so
+>> an agent trained on it treats a `Z` as the all-clear. A TYPED `Z` therefore does not merely fail to warn;
+>> IT CONSUMES THE WARNING. It converts *"I should check this"* into *"already UTC, move on."* The marker that
+>> exists to trigger verification is the thing that suppressed it.** <<
+
+**GENERALISES BEYOND TIME.** Any hand-appended `Z` / `USD` / `_utc` / `ms` / `bp` / `%` on a computed value is
+the same defect: the label asserts a property of the number that nothing verified. **The costume is the
+danger** — a bare number invites the question; a labelled wrong number answers it.
+
+**AND THE NEAR-MISS ON THE OTHER SIDE OF THE SAME EXCHANGE.** The verifying agent's first check ran
+`git log --since="<date>T18:00:00-04:00"` — which resolves to **22:00Z, in the future relative to the
+commits** — and returned `0`. It was one step from reporting the original claim "unconfirmed" off a window
+that could not have matched anything. **A positive control (*does this window return ANY commits?* → `0`)
+caught it; the unfiltered query then gave truth.**
+
+**CONTROL:** **never hand-write a zone/unit marker into a format string** — emit `%cI`/`%aI` (full ISO-8601
+with real offset) and let the tool carry its own axis. **And a zero from any window-, filter-, or
+author-scoped query is not a finding until a positive control proves the query can return non-zero.**
+
+>> **BOTH HALVES OF THAT EXCHANGE WERE SAVED BY CONTROLS, NOT BY CARE. Neither agent was careless; both were
+>> wrong. One re-derived unfiltered, one ran the positive control — and the one who forged the marker
+>> retracted the derived doctrine in the same turn it was learned, which is the only reason it never
+>> propagated. A lesson banked from a broken measurement is worse than no lesson: this one would have taught
+>> the fabric to distrust a liveness instrument that was RIGHT.** <<
+
 ## IV. Guards
 
 **A NULL THAT MEANS TWO THINGS IS A LIE ABOUT ONE OF THEM.**
