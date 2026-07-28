@@ -33,6 +33,49 @@ deploy ledgers, oldest 98.6h, one malformed — WO-0 for the COO, below.)*
 
 ---
 
+## ⚡ AMENDMENT 1 — ANDREW RE-SEQUENCING, ~2225Z (supersedes the WO order below where they conflict)
+
+Andrew, going element-by-element down the chain status: **(4) "Have we fixed the emitter and backfilled
+properly? That is the first thing to do here."** · **(6)** the publisher is fixed **after** 4 is
+rectified · **(7)** cottonwood's absence from platinum is rectified **by moving to the /platinum
+structure already rendered canonical** — i.e. by WO-2 publishing the canonical gold tree (which HAS
+cottonwood), never by enrolling cottonwood into the legacy producer. Cohort mapping (1) is COO's, in
+flight via its subagents.
+
+**EXECUTION ORDER, revised:**
+```
+WO-4a  EMITTER FIX (new, FIRST)      ┐ parallel — code work vs chain runtime
+WO-1   CHAIN FIRE + gold validation  ┘
+WO-4b  DDB BACKFILL (after 4a lands and WO-1 gives fresh inputs)
+WO-2   PUBLISHER (unchanged content; now gated behind WO-4 + WO-1)
+WO-3   CONSUMER RE-POINT (unchanged; gated behind WO-2)
+```
+
+### WO-4 — EMITTER FIX + PROPER BACKFILL  *(owner: fresh `0.7.0_AE_CloudOps`; FIRST)*
+**The defect, located tonight (mechanism measured, per-cohort logic still unread):**
+`opal-assets-daily-emitter` (17:15Z cron → `opal-assets-daily-aua`) wrote `as_of 2026-07-06`
+`rolled_forward` for the four 49F ETF cohorts (~$522mm) **while its own input**
+(`platinum/mdpf/aggregate_aua/2026-07-28.json`) **carried `partner_held_etf: {49financial: 2026-07-28}`
+with current values** — self-declared via the row's own `source_field`, which names
+`opal-data-etfs/daily/49financial/2026-07-06.json`. **The data was collected; the emitter selected a
+stale source.** Discriminator: the SAME input array yields FRESH for inflection
+(`attribution_basis: rps_actual:49financial; target_weight:inflection`).
+**Second defect, same component:** `_total__partner_aua` emits **value 0 with a current `as_of`** when
+100% of its additive constituents are missing — a false zero, worse than a declared hole.
+
+**DO (4a):** read the per-cohort logic; fix why the 49F-ETF path prefers `opal-data-etfs/daily/` over
+the fresh `partner_held_etf` in its input (or fix that source's selection); make the zero-constituent
+total emit ABSENT with a reason, never 0. **Sovereign note:** Andrew's direct order IS the authorization
+to touch this component — the R1 legacy-hands-off posture yields to it here, for the emitter only,
+attributed in the commit.
+**DO (4b), after 4a + WO-1:** backfill the DDB rows the defect corrupted — the four ETF cohorts from
+07-06 forward (inputs exist: the 434-object date-keyed accrual series), the false-zero totals, and the
+07-23/24 hole where no rows landed at all. **Backfill = re-emit from the historical inputs, never
+hand-written values.** Verify per §III-g: sets both directions, per-row `vintage_state` read, not row
+presence.
+
+---
+
 ## WO-1 — GOLD CONSOLIDATION: RUN + VALIDATE  *(owner: fresh `0.7.0_AE_CloudOps`)*
 
 **State (grounded 2157Z, applied plane):** `portal/gold/mdpf/` produces daily — 11 objects, 4 scopes,
