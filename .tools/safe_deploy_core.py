@@ -122,11 +122,23 @@ CODE_TREES: dict[str, dict] = {
         "artifacts": {
             "partner_roster": {
                 "repo_path": "data/mdpf/config/partner_roster.json",
-                "s3_key": None,
+                # RESOLVED 2026-07-28T2333Z (CTO 233212Z/233329Z insert; DS's
+                # DEPLOYED resolver defines the contract -- script-adjacent,
+                # checked FIRST at /opt/mdpf/scripts/gold/partner_roster.json).
+                # Published + ETag==local-md5 verified (a22fc62be04777eb...).
+                # DURABILITY: safe-deploy uploads are per-file `s3 cp` (no S3
+                # prefix --delete), so this object survives DS gold deploys; the
+                # runner's S3->EC2 sync then propagates it every run.
+                "s3_key": "code/scripts/gold/partner_roster.json",
                 "owner": "0.7.0_AE_CloudOps base / 1.0.0_SA_CTO",
+                # THE REFRESH MECHANISM (one line, per CTO 233329Z): AE-base
+                # republishes this key on ANY commit touching repo_path -- the
+                # repo copy is the ONE authority; the S3 copy is a deploy of it.
+                "republish_on_change_by": "0.7.0_AE_CloudOps",
                 "why": "canonical partner roster; gold consumers need it in the "
                        "gold runtime. Cross-tree import RAISEs, repo-relative read "
-                       "fail-closes, --delete reverts a hand-placed copy.",
+                       "fail-closes, --delete reverts a hand-placed RUNNER copy "
+                       "(the S3->EC2 sync direction; the S3 object is durable).",
             },
         },
         "layers": {
