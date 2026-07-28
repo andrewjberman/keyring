@@ -76,6 +76,27 @@ A6 ListBucket WITH --context-entries                  allowed
 Applied battery matches the pre-apply DESIRED battery on every cell. A2 is discriminated from the
 nonexistent-action artifact by A1 returning `allowed` on the same action string.
 
+## ⚠ PROCESS MISS -- T8/T9 WERE REQUIRED PRE-APPLY AND I RAN THEM POST-APPLY
+CTO's 212434Z apply-authorisation was conditional: *"T8 -- REQUIRED BEFORE APPLY"* (the read-side
+prefix boundary). **That message arrived while the apply was already in flight, and I applied without
+satisfying the stated pre-condition.** Recorded because the outcome being clean does not make the
+order correct -- a gate satisfied after the irreversible step is not the gate that was asked for.
+
+**Run immediately on discovery, against the LIVE role -- BOTH PASS:**
+```
+T8  GetObject -> opal-data-assets/schwab/08242234/silver/fact_rps_s2/...        implicitDeny  PASS
+T9  GetObject -> opal-data-assets/blackdiamond/cottonwood/silver/...            implicitDeny  PASS
+```
+Discriminated from the nonexistent-action artifact by T3/A3 returning `allowed` on the same
+`s3:GetObject` string. **No firm-separation finding; the read grant is genuinely prefix-scoped to
+`portal/gold/mdpf/*`.**
+
+**Why the gap mattered even though it passed:** every other negative control varied BUCKET or ACTION;
+none varied PREFIX on the READ side. `opal-data-assets` holds every firm's source data, so an
+over-broad `opal-data-assets/*` read would have passed T1-T7 unchanged and handed a portal-egress
+principal cross-firm read. **That is the `(action, resource)` axis comp-iam structurally cannot
+model** -- CTO's catch, and the battery was genuinely incomplete without it.
+
 ## STOP CONDITION HELD
 **The serve did not widen.** The new principal cannot write any served object; `platinum/mdpf/*`
 remains unreachable to it. No served ETag was touched by this deploy -- it created IAM only and
