@@ -189,6 +189,38 @@ INTO AN UNGUARDED COALESCER.** Order: D2 log line → 4a (minutes, closes the se
 → 4c (restores the data) → 4b backfill. Both land tonight; the sequence is the safety property, not a
 preference.
 
+## ⚡ AMENDMENT 5 — ANDREW ~2242Z: THE ETF PIVOT QUEUE + HIS DIAGNOSIS, CONFIRMED AGAINST THE MEASUREMENTS
+
+**VERBATIM:** *"The number 1 most important fix right now is the completion of mdpf. Immediately after
+that is done... we need to pivot directly into the ETFs fixes that will solve the problem areas described
+in that brief. This is something we have been circling around for a long time with regard to the
+questionable EVENTBRIDGE RULES and EVENTBRIDGE SCHEDULES, because if that timing is wrong or if things
+are not scheduled that is our entire problem. What it is sounding like to me is that the issue is we have
+weird freshness rules that are confounding us based on a backwards ingestion versus consumption trigger
+schedule."*
+
+**DIAGNOSIS CONFIRMED, two sub-classes:** (1) **PHASE ERRORS** — consumer fires before its source lands
+(emitter 17:15Z-D demanding date==D vs rps D+1 10:16Z / eclipse D+1 03:30Z; ETF puller 22:00Z AFTER its
+16:45Z consumer — literally backwards); (2) **MISSING SCHEDULES** (`bd-49f-etf-ownership-daily`: no rule,
+no policy, one invocation ever — the NEVER#4 class). The "weird freshness rules" are same-day assumptions
+encoded against T-1 reality (`date==run_date`, the settled-frontier drop, the 2-of-5 vintage basis).
+**WO-4c is the durable fix for (1): cadence-aware consumption, not schedule-chasing.**
+
+**THE ETF PIVOT QUEUE (fires the moment MDPF's WOs close; NOT before):**
+```
+E1  bd-49f-etf-ownership-daily revive-vs-retire  <- WO-4d TF evidence -> CTO rules (contract change)
+E2  fund-level phase: puller 22:00Z vs consumer 16:45Z -> either re-phase ONCE deliberately, or declare
+    the T-1 cadence in the roster so the rows read fresh-per-cadence instead of perpetual rolled_forward
+    (WO-4c generalizes; prefer declaration over re-phasing)
+E3  Filepoint forward-dating label artifact (PFDE/PFOE overstate freshness 1 day; all four ETFs at the
+    same true valuation date) -> normalize at the feeder with the vendor convention documented in the
+    roster layout; also correct the recorded-false mechanism in 0.5.0's 06-25 log
+E4  instrument defects with the cluster (sentinel overload, wrong-cause alarm string, coverage-by-
+    assertion) -- corrections of false claims, moratorium-compatible
+```
+**WO-5 SPEC SHARPENED (COO):** the census captures, per producer/consumer pair, **the rule's firing time
+relative to its source's measured arrival** — existence was never the whole question; PHASE is.
+
 ## ⚡ AMENDMENT 1 — ANDREW RE-SEQUENCING, ~2225Z (supersedes the WO order below where they conflict)
 
 Andrew, going element-by-element down the chain status: **(4) "Have we fixed the emitter and backfilled
