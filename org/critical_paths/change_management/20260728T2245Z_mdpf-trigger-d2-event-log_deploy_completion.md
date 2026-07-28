@@ -16,4 +16,9 @@ otherwise frozen; scheduled-floor row 10 must not ride) -> 0-diff -> tag.
 
 ## Completion
 
-(open)
+**CLOSED 2026-07-28T22:51Z.** L1: `ebb6e5a3e4` + `9a60a19502` pushed. L2: targeted apply
+`module.mdpf_daily_trigger` 0add/1change/0destroy; 0-diff re-plan clean; live
+`CodeSha256 e+UKa2C0AiQXOSm7aavHlzL9ixt+GQq6e+8VLr13nyU=` `LastModified 2026-07-28T22:44:10Z`
+Active/Successful; tag `mdpf-pipeline-v1.8.1`. Residual: the line's runtime behavior is
+exercised by tomorrow's scheduled fire (which IS the D2 evidence); no pre-exercise tonight
+because an invoke dispatches the whole chain.
