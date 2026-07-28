@@ -1,0 +1,35 @@
+{
+  "project_code": "MDPF_DEBTCLEAN",
+  "macro_code": "MDPF",
+  "name": "MDPF Debt Cleanup — robust /portfolios pattern + legacy elimination",
+  "description": "Andrew-direct 2026-07-28, authored during the live MDPF P0. Finalize a robust serving pattern for /portfolios and eliminate the accumulated legacy mess: 12 breaks, 5 clobbers, 5 scheduling defects, all measured. Locks in the per-channel bronze ingestion schedule across BOTH EventBridge surfaces. Root cause of the incident was not an error but an absence: the mdpf tree has no deploy path (absent from PIPELINE_MAP), its producer has no S3 write path, its served keys have two producers with no arbitration, and its final publish has no schedule.",
+  "prds": [
+    {
+      "path": "docs/architecture/MDPF_DEBTCLEAN_PRD.md",
+      "label": "MDPF_DEBTCLEAN PRD v1.0 — robust /portfolios pattern + legacy debt elimination",
+      "date": "2026-07-28"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0 — PRD v1.0 AUTHORED + COMMITTED 2026-07-28 (CTO, Andrew-direct charter verbatim in PRD §0). 12 breaks / 5 clobbers / 5 scheduling defects documented, every one MEASURED against live S3, DynamoDB, IAM and both EventBridge surfaces. Highest-value open thread is D1: 49F reports no_source_partition WHILE its source partitions for 2026-07-27 demonstrably EXIST (fact_rps, fact_rps_s2, fact_acc all present; SmartX silver at 07-28) -- a READER defect, not an ingestion gap. D2 is its opposite: Cottonwood fact_holdings + fact_holdings_s2 stall at 07-24 while fact_allocations reaches 07-27 and fact_model_assignment reaches 07-28 -- a table stalled inside a live channel, the shape a channel-grain freshness check cannot see. Architecture fork A-2 is at CTO and is NOT symmetric: re-pointing the publisher into portal-v2 is blocked by an EXPLICIT Deny (opal-assets-mdpf-portal-publisher-role sits on opal-assets-one-way-fan-in-fence, 12 principals, enumerating portal-v2) and an explicit Deny cannot be cured by adding an Allow -- shipping it means deliberately removing a role from a working guardrail; the alternative (a more-specific CloudFront behavior for /api/general/mdpf/*) touches no fence, but a WHOLESALE behavior-18 re-point is an outage because that behavior also serves json/portfolios/* and account-distribution.json. §6 settles _s{N} permanently: a MECHANICAL section suffix (Schwab feed sections with genuinely different schemas, 53 vs 34 columns), deliberately not semantic, dictionary v0.4.",
+  "blocking": "COO decomposition into task orders. CTO owes the A-2 serving-origin ruling (fence cost must be priced explicitly, not discovered as a runtime AccessDenied). D9 seeded by 3.0.0_SA_CVO's comp-tool reliability audit -- each named coverage gap becomes a build, not a filing.",
+  "created": "2026-07-28",
+  "pods": ["0.2", "0.4", "0.6", "0.7", "1.0", "3.0"],
+  "pipeline": "mdpf",
+  "thread_counter": 0,
+  "threads": [],
+  "related": [
+    "docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md",
+    "docs/architecture/MDPF_3FIRMS_PRD.md",
+    "docs/architecture/MDPF_MONOCLEANUP_PRD.md",
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_PORTAL_LINEAGE_POSTMORTEM_20260724.md",
+    "org/critical_paths/change_management/20260728T1341Z_mdpf-serve-restore-0723-revamp-set_deploy_completion.md"
+  ],
+  "standing_guards": [
+    "mdpf-pipeline is FROZEN to targeted applies only -- 4 committed-but-unapplied resources would attach a NEW EventBridge schedule to mdpf-daily-trigger on any untargeted apply.",
+    "NO axis normalisation until the portal segment/trend path is read -- if the renderer aligns by position, an axis change silently MOVES a client-facing number while looking like a tidy-up (COO standing block).",
+    "The Denies protecting the served keys are PRINCIPAL-scoped, not prefix-scoped: >=6 other principals still hold PutObject reaching them. 'Nobody writes that prefix' is a CONVENTION, not a control.",
+    "An ad-hoc run is never the production path (NEVER#4). The 07-23 artifact Andrew sovereign-verified was never reproducible by the scheduled path -- that is the failure this project exists to make impossible.",
+    "Do NOT close D6 on Andrew's canonical-basis ruling: it makes the question DECIDABLE, it does not decide it. Neither producer has been traced to the definition."
+  ]
+}
