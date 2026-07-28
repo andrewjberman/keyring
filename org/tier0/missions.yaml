@@ -47,6 +47,12 @@ groups:
           - infra/aws/terraform/mdpf*/**
           - docs/architecture/MDPF_*
           - org/projects/MDPF_*
+          # PORTAL SURFACES -- added 2026-07-28 after a lookup returned UNMAPPED for
+          # portal/src/pages/ModelPortfolios.tsx. A register whose PORTAL group cannot see the
+          # portal is a defect; caught before it swallowed a commit, not after.
+          - portal/src/pages/ModelPortfolios*
+          - portal/src/components/ModelPortfolios/**
+          - portal/src/pages/api/**/mdpf/**
         attach: [MDPF_REVAMP, MDPF_3FIRMS, MDPF_DEBTCLEAN, MDPF_MONOCLEANUP, MDPF_OWNTS,
                  MDPF_CADENCE, MDPF_COUNTS, MDPF_BASISSWITCH, MDPF_SCOPED, MDPF_VARFLAG,
                  MDPF_COTMDL, MDPF_ASSETS, OPAL_CONSOLIDATION]
