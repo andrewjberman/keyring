@@ -133,3 +133,61 @@ open deploy. Event-driven on Monitor `blq7dkh1y`.
    stall is a separate legacy-lineage defect and is **not** this grant failing.
 2. **[1.0.0_SA_CTO]** The three open calls above.
 3. **[0.4.0_DS]** Still HELD -- production before consumption; not signalled.
+
+---
+
+## APPENDED 2145-2200Z -- R14: extend the serve deny (CTO 213109Z GO, 214924Z proceed)
+
+`aa739a36eb` (statement + ledger) -> `9fe9bf51de` (closed ledger). Both confirmed on `origin/CLOUD`.
+
+**I reported the pre-apply battery BEFORE editing, as instructed, and it surfaced a finding that
+changed what the commit could claim.** CTO required me to identify the positive control myself from
+the dispatch, with an explicit escape: *"if you cannot establish what it legitimately writes, say so
+and STOP."*
+
+**P1 identified from the DEPLOYED dispatch `:576`** (32077 B, positive-controlled on retrieval):
+`platinum/mdpf/aggregate_aua/{date}.json`, `aggregate_aua_timeseries.json`,
+`etf_ownership_timeseries/{DIVZ,IDVZ,PFDE,PFOE}.json` -- all on `opal-data-portal-v2`, **the same
+bucket as the deny**, which is what makes it a real control rather than a bucket-away reassurance.
+
+**THE FINDING: no deployed runner code writes either target key.** Deployed
+`build_legacy_compat_emit.py` (44436 B) writes exactly the two keys already denied; deployed
+`build_aggregate_aua_timeseries.py` (32715 B) writes no `json/portfolios` key. Zero occurrences of
+`aum-metrics` or `account-distribution` in either. **So the deny is a LATENT-CAPABILITY FENCE, not an
+interception** -- it does not stop whoever wrote those objects at 2026-07-23 16:57, and DT's three
+candidate writers stay unattributed.
+
+**CTO adopted my limit verbatim over his own** (his said "narrows the known clobberer"; measurement
+says it does not narrow the clobberer at all), and identified the decisive reason as one my
+measurement produced as a by-product: **the blast radius is PROVABLY EMPTY on the runner side -- not
+"unlikely to break the chain", CANNOT.** Danger eliminated by enumeration rather than argument.
+
+**RECORD PLACEMENT -- I had to correct the instruction to make it work.** CTO asked for the limit in
+"the Sid **or** the statement comment." **A `#` comment in `iam.tf` is not part of the policy document
+and `get-role-policy` never renders it** -- taking the "or" would have placed the warning where the
+guarded-against reader cannot see it, which is the very class being catalogued. **The warning is in
+the Sid**, 96 chars, alphanumeric, rendering in full on the applied plane:
+`R14LatentFenceOnlyNOTAPROTECTIONRunnerIsNotADemonstratedWriterObservedWriterUnidentified20260728`.
+
+**Battery -- 6 isolated invocations, one `--resource-arns` each:**
+```
+PRE  D1 allowed | D2 allowed | P1 allowed                      (exposure real, baseline set)
+POST P1 platinum/mdpf/aggregate_aua/2026-07-29   allowed   <== THE ONE THAT MATTERS, chain intact
+     D1 aum-metrics                              explicitDeny
+     D2 account-distribution                     explicitDeny
+     P2 assets gold/mdpf_revamp/cottonwood       allowed
+     C1 json/mdpf/global/aggregate-aua-timeseries explicitDeny  UNMOVED
+     C2 account_distribution.json UNDERSCORE twin allowed    <== ADDED BY ME
+```
+**C2 is the control for my own design claim.** I argued the literal-key form spares the underscore
+twin "by construction" -- **an argument, not a measurement.** C2 measures it. A claim I make about my
+own change is exactly the claim I should not leave untested, and a prefix deny would have failed it.
+
+`0 added, 1 changed, 0 destroyed`; targeted re-plan `No changes`; full plan still shows **only** row
+10's four -- tree still FROZEN; `comp-tagauthz` self-ran, zero override. **NEVER#6 discharged**, ledger
+opened at deploy-start and closed on 4 proven legs. **No run fired.**
+
+**Verified rather than assumed:** `git push` printed *"Everything up-to-date"* immediately after a
+commit -- checked `HEAD == origin/CLOUD` and both hashes contained in the remote branch rather than
+taking the message at face value. It was correct (safe-commit had already pushed), but that output
+shape is indistinguishable from a failed push.
