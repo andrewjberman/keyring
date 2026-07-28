@@ -13,7 +13,7 @@
 
 Respawned, ran startup, and found BOTH threads my predecessor's broker summary carried were stale. Reconciled them against ground truth, then worked three inbound items -- a hygiene finding, an Andrew-direct sovereign broadcast, and the closure verification of a finding I had raised earlier in the window. Net: one 42h-untracked commissioned deliverable rescued, one 17-day publish blackout confirmed genuinely ended, one partial sovereign broadcast caught and closed.
 
-**Zero commits authored this window** -- not for lack of work: `2.0.0_SA_COO~Z` is not enumerated in `.owned-paths.yaml` and `org/tier1_exec/2.0.0_SA_COO/**` resolves to lane `BASE_EXEC`. I am gate-blocked from my own tree. See Current State; this log's own commit is expected to hit the same gate.
+**Zero commits authored during the 0725 window.** I attributed this to being owned-paths blocked from my own tree. **That attribution was FALSE and is retracted in full under Blockers** -- this log's own commit passed the gate clean (`33f33fb50`, audit `PASS ... all paths in-lane`), and a `~lane` owns its base's home folder by explicit design. I was never blocked; I asserted a behavioral claim from a config read and never exercised it, and it propagated to three agents and into two durable records before the commit I was told to write falsified it.
 
 ---
 
@@ -120,17 +120,55 @@ Significant: base AE SNS stale-record correction (in) -> ACK (out) - stitch/grai
 
 ## Blockers
 
-**None BLOCKED.** One structural constraint, evidence-cited, not a blocker on the work:
+**None BLOCKED. And the one constraint I claimed all session was FALSE -- retracted here, in full.**
 
-`2.0.0_SA_COO~Z` is not enumerated anywhere in `.owned-paths.yaml`; `org/tier1_exec/2.0.0_SA_COO/**` -> lane `BASE_EXEC` -> permitted `1.0.0_SA_CTO`, `2.0.0_SA_COO`, `3.0.0_SA_CVO`. **I cannot commit to my own tree**, including this log. The recurring tilde-lane enumeration gap.
+> ### RETRACTION (2026-07-28, caught by exercising the gate to commit this very log)
+>
+> **I claimed repeatedly, to three agents, that `2.0.0_SA_COO~Z` is owned-paths BLOCKED from `org/tier1_exec/2.0.0_SA_COO/**`. IT IS NOT. I am not blocked and never was.**
+>
+> **Evidence:** this log's own commit `33f33fb50` landed clean, and the gate's audit log records
+> `2026-07-28T12:45:31Z PASS 2.0.0_SA_COO~Z 2 (all paths in-lane)` -- a positive evaluation, not a
+> fail-open (that prints `WARN UNKNOWN`) and not an override (that prints `OVERRIDE`). The same
+> serial carries four prior PASS entries from 2026-07-13. It has been in-lane the whole time.
+>
+> **Mechanism, source-confirmed at `.tools/owned-paths-validate.py:57-83`:** `_owns_home_folder()`
+> resolves "the committer's base identity (self if a base serial; **tilde-stripped base if a
+> ~lane**)", and line 83 permits a `~lane` against its base's home folder -- with an explicit guard
+> so a true base cannot false-permit against another agent's folder. `2.0.0_SA_COO~Z` -> base
+> `2.0.0_SA_COO` -> owns `org/tier1_exec/2.0.0_SA_COO/**`. **A whole home-folder ownership rule
+> exists for exactly this case, and it runs independent of the `permitted_agents` enumeration.**
+>
+> **How I got it wrong:** I read `permitted_agents` in `.owned-paths.yaml`, saw my suffixed serial
+> absent, and concluded I was blocked. **That is a BEHAVIORAL claim ("I cannot commit") derived from
+> a CONFIG READ and never exercised** -- Rule 22a's exact prohibition, which I could have falsified
+> in ten seconds by trying. I generalised the MEMORY.md CRO note ("enumeration-based, no tier
+> wildcard, so a new serial is BLOCKED until amended") from its real case -- a brand-new Tier-1
+> serial with no base home folder to inherit -- to a `~lane` of an existing base, which is not that
+> case. The memory is not wrong; my application of it was.
+>
+> **Blast radius, and it is the part that matters.** This false premise did not stay with me:
+> - I told base CTO I could not land the 18 files. He landed them anyway (correct outcome, wrong
+>   stated reason). **He wrote the premise into the commit body of `b38f05df50`:** "the tilde-lane
+>   enumeration gap does not tell a blocked agent 'wait,' it tells them 'no'."
+> - **`0.8.0_AE_CloudComp~C` is carrying it into the exec-path-commit-queue DESIGN RECORD as "the
+>   sharpest instance"** of a correct-gate-with-no-queue drop. It is not an instance at all.
+> - I told `1.0.0_SA_CTO~Z` the same thing.
+> All three notified this turn. **A design record built on my unexercised inference is a worse
+> outcome than the original untracked file.**
+>
+> **The irony is the lesson, not decoration:** I spent this session correcting two other agents for
+> substituting a recalled or read state for a measured one -- and I asserted an unexercised gate
+> verdict to three agents while doing it. Knowing a failure mode by name did not stop me committing
+> it. What caught it was not care; it was being forced to actually run the command.
 
-I deliberately did **not** lobby for the grant (CRO precedent, LD-0331 / MEMORY.md). The gate is working as designed; base CTO is on the lane and landed the files in ~2 minutes. ~C is carrying this as the sharpest instance of "a correct gate with no queue is a drop, not a hold" in the exec-path-queue design record.
+What stands from the original entry: I deliberately did not lobby for a permission grant -- correct, and now doubly so, since there was nothing to grant. Routing the MDPF synthesis to base CTO was still defensible on ownership grounds (his program, his deliverable, and he had already landed it ~90s after my message), but **"I am gate-blocked" was not a valid reason and I should not have offered it.**
 
 ---
 
 ## Current State (zero-prior-context handoff)
 
 - **Me:** `2.0.0_SA_COO~Z`, PID 21860, LIVE, Monitor `bpennvvrr` persistent, **zero crons**, IDLE/event-driven. NFRA-only scope. Nothing open at me in either direction as of 190412Z.
+- **RETRACTED (see Blockers):** I am **NOT** owned-paths blocked from my own tree. `~lane` owns its base's home folder by design (`owned-paths-validate.py:57-83`); audit shows `PASS` for this serial on 07-13 and 07-28. Anything downstream citing my gate-block is citing a false premise.
 - **All three threads I raised: CLOSED and independently verified.**
   - 18 untracked COO-tree files -> `b38f05df50` (base CTO); `MDPF_SERVING_ARCHITECTURE_synthesis.md` tracked; `git status --porcelain org/tier1_exec/2.0.0_SA_COO/` -> 0 untracked.
   - Grain recert -> `fc8b81ec09`; sentinel PASS; `infra/aws/globgrph/stitch_graph.json` 25,489,187 bytes @184434Z, published to `s3://opal-313476888478-globgrph/stitch/stitch_graph.json`. **17-day blackout over.** **BUT the PASS was 35/58 coverage -- 23 node types unexamined (`ba8d9908b5`, CTO~Z, Andrew-direct, coverage now printed). Publish is real; the assurance is narrower than "PASS" reads. Do not cite it as full-coverage evidence.**
@@ -145,5 +183,7 @@ I deliberately did **not** lobby for the grant (CRO precedent, LD-0331 / MEMORY.
 
 - **[1.0.0_SA_CTO]** Nothing owed to me. Open at him from his own thread: Andrew's answer on the `PROD_WRITE_FORBIDDEN_*` boundary.
 - **[1.0.0_SA_CTO~Z]** Nothing owed to me. NFRA_TOOLUNIFY coordination continues in his lane; the 16-file governance-branch removal is undispatched as of session end and now has the STOP half distributed to every lane.
-- **[2.0.0_SA_COO~Z / successor]** Do **not** re-carry the SNS TO -- it is cancelled, not staged. Do **not** arm `/drive` (Step 1b-F row is discharged; the re-point offer to Andrew is not an authorization). Expect the owned-paths block on your own tree; route commits to base CTO rather than overriding.
+- **[2.0.0_SA_COO~Z / successor]** Do **not** re-carry the SNS TO -- it is cancelled, not staged. Do **not** arm `/drive` (Step 1b-F row is discharged; the re-point offer to Andrew is not an authorization). **You CAN commit to `org/tier1_exec/2.0.0_SA_COO/**` -- a `~lane` owns its base's home folder (`owned-paths-validate.py:57-83`). Do not repeat my error of reading `permitted_agents` and concluding otherwise; if you are ever unsure whether a gate blocks you, EXERCISE IT, do not read it.**
+- **[0.8.0_AE_CloudComp~C]** Your exec-path-commit-queue design record cites my gate-block as its sharpest instance. **Pull it** -- the premise is retracted, I was never blocked. Notified this turn.
+- **[1.0.0_SA_CTO]** The commit body of `b38f05df50` carries my false premise ("the tilde-lane enumeration gap ... tells them 'no'"). Immutable, so no action possible on the message itself -- flagging so it is not cited forward as evidence of a real gap. Notified this turn.
 - **[whoever loads base `2.0.0_SA_COO`]** Your 18 previously-untracked artifacts are now in HEAD under base CTO's author line, content untouched, your authorship preserved in the file headers (author = history, tag = ownership, LD-0331). Do not "reconcile" the author line.
