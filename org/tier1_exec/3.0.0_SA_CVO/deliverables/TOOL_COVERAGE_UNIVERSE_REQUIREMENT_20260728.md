@@ -158,4 +158,63 @@ rail reading it at route time. That reuses a LIVE gate instead of inventing enfo
 - **git co-change not yet run** — still the open item from the companion brief's §6. It is cheap and
   next.
 
+---
+
+## §8 CORRECTION (append-only, 2026-07-28T154xZ) — §2's "written nowhere" was FALSE, and the truth is more useful
+
+**I claimed the STRUCTURAL EXCLUSIONS field "is currently written nowhere." That is wrong.**
+`org/modules/graph/comp-coverage-map.yaml` — **1,081 lines, NFRA_COMPUNIFY S0, authored
+`0.8.0_AE_CloudComp~C` 2026-06-30** — already exists and already carries the vocabulary:
+`excluded` ×8, `denominator` ×16, `universe` ×8, `blind` ×4, and dedicated `gap_census` /
+`redundancy_census` sections.
+
+**Mechanism of my error:** I reasoned from the *tools I had read* (comp-heat, comp-clobber, whose
+sources carry no such declaration) to *the estate has no such declaration* — sampling two instances
+and generalising to a population of ~92. **The same absence-for-mechanism shape I retracted this
+morning on the CI-R4 dispatch, committed again, in a spec whose entire subject is unexamined
+denominators.** Found only because a co-change coupling (`comp-which` ↔ `comp-coverage-map.yaml`,
+16×) put the file in front of me. **Luck, not method.**
+
+### What actually exists (and it is better than I credited)
+
+The S0 schema requires per tool: `surface` (enum **LOCAL / GIT / AWS-CLOUD / MS-CLOUD / TRINO**),
+`granularity` (object/file/table/lambda/iam-policy/…), `concern` (the single question), plus the
+non-redundancy machinery `touches_resource` + `distinct_from`, and `provenance`
+(refresh_mechanism/cadence/concurrency_basis) on surface nodes.
+
+### What is genuinely missing — three things, now precisely located
+
+**(a) THE NEGATIVE DECLARATION.** `surface` says where a tool **looks**. It does not say what the
+tool **cannot see within that surface**. comp-heat is `surface: GIT` — **correct** — and that correct
+declaration still does not reveal that gitignored files, 5 submodules (incl. the entire portal) and
+all P2 code are invisible to it. **Surface is the positive half; the structural exclusion is the
+negative half, and only the negative half prevents a type-2 error.**
+
+**(b) POPULATION.** 36 tool entries against ~92 executables on disk. The file says so itself: S0
+places "only the high-level entries + the worked overlap"; full population is **S1**.
+
+**(c) THE GATE.** `comp-coverage-check` is **S2 — not built.** The file explicitly defines the
+contract S2 would enforce and states it is not yet the gate.
+
+### The mechanism, exactly located — and it strengthens §6 rather than weakening it
+
+**comp-clobber is a `surface: GIT` tool. The producer that clobbered the key lives on `AWS-CLOUD`.**
+The tool answered its own question correctly on its own surface; the *evidence* was on a different
+surface. **Nothing today compares the SURFACE A QUESTION REQUIRES against the SURFACE A TOOL
+DECLARES** — and that comparison is computable from fields that already exist.
+
+>> **That is the type-2 mechanism in one line: a surface mismatch between question and tool, silently
+>> resolved in the tool's favour. It needs no new taxonomy — the enum is already written. It needs the
+>> comparison, and the comparison belongs where the question and the tool are both in scope: THE
+>> RAIL.** <<
+
+**Revised recommendation (supersedes §6's shape, not its placement):** do **not** propose a new
+declaration format. **Finish COMPUNIFY S1 (populate) + S2 (`comp-coverage-check`), add the negative
+`excludes:` field to the existing schema, and have COMPRAIL read `surface` at route time.** Three
+increments on a live design beat a new spec — and it means my §2 four-field requirement should be
+read as *"three fields exist; add the fourth,"* not as a greenfield proposal.
+
+**One term to keep distinct:** the schema's `provenance` is *surface refresh cadence*, **not** the
+code-provenance axis of the companion brief. Same word, different concept — do not merge them.
+
 — 3.0.0_SA_CVO
