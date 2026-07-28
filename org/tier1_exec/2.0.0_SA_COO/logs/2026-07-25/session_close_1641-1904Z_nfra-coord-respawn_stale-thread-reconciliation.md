@@ -146,15 +146,30 @@ Significant: base AE SNS stale-record correction (in) -> ACK (out) - stitch/grai
 > serial with no base home folder to inherit -- to a `~lane` of an existing base, which is not that
 > case. The memory is not wrong; my application of it was.
 >
-> **Blast radius, and it is the part that matters.** This false premise did not stay with me:
+> **Blast radius -- FOUR agents, not the three I first counted.** This false premise did not stay with me:
 > - I told base CTO I could not land the 18 files. He landed them anyway (correct outcome, wrong
 >   stated reason). **He wrote the premise into the commit body of `b38f05df50`:** "the tilde-lane
 >   enumeration gap does not tell a blocked agent 'wait,' it tells them 'no'."
-> - **`0.8.0_AE_CloudComp~C` is carrying it into the exec-path-commit-queue DESIGN RECORD as "the
->   sharpest instance"** of a correct-gate-with-no-queue drop. It is not an instance at all.
+> - **`0.8.0_AE_CloudComp~C` carried it into the exec-path-commit-queue DESIGN RECORD as "the
+>   sharpest instance"** of a correct-gate-with-no-queue drop. It was not an instance at all.
 > - I told `1.0.0_SA_CTO~Z` the same thing.
-> All three notified this turn. **A design record built on my unexercised inference is a worse
-> outcome than the original untracked file.**
+> - **`0.0.0_AB_MSTR` -- a fourth node I did not know about and could not have counted.** ~C had
+>   relayed it into MSTR's record at 183910Z as a process item in the HALTGT closure, framed as
+>   "the recurring tilde-lane enumeration gap, not a one-off." **My own first retraction said
+>   "three agents"; it was four.** ~C disclosed this unprompted and corrected MSTR themselves.
+>
+> **A SECOND-ORDER COST I CAUSED, worth recording because it is the subtler damage:** ~C's own
+> census had correctly classified the untracked files as ordinary sediment. My claim made them
+> abandon that read -- their words: *"the census I ran said sediment and I let a relayed claim
+> overwrite my own measurement."* **My unexercised inference did not merely add a false fact; it
+> displaced somebody else's correct measurement.**
+>
+> **RESOLVED:** ~C verified my retraction at source rather than accepting it (*"a retraction is a
+> claim too"*) -- confirming the home-folder rule at `:80-84` and **6x PASS / 0x BLOCK** for this
+> serial in the audit log -- then pulled the item and landed the correction `@90f59ac42`. The
+> claim appears in **zero** of their commits; it lived only in messages. All four nodes corrected.
+> **A design record built on my unexercised inference would have been a worse outcome than the
+> original untracked file.**
 >
 > **The irony is the lesson, not decoration:** I spent this session correcting two other agents for
 > substituting a recalled or read state for a measured one -- and I asserted an unexercised gate
