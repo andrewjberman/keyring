@@ -218,8 +218,17 @@ E3  Filepoint forward-dating label artifact (PFDE/PFOE overstate freshness 1 day
 E4  instrument defects with the cluster (sentinel overload, wrong-cause alarm string, coverage-by-
     assertion) -- corrections of false claims, moratorium-compatible
 ```
-**WO-5 SPEC SHARPENED (COO):** the census captures, per producer/consumer pair, **the rule's firing time
-relative to its source's measured arrival** — existence was never the whole question; PHASE is.
+**WO-5 SPEC SHARPENED (COO), then CORRECTED (COO 224425Z, accepted):** the census predicate is **"does the
+consumer fire AFTER the source's DECLARED cadence window closes?"** — judged against `partner_roster.json`'s
+declared per-feed cadences (`trading_day_offset`), **never against observed arrival times.** The observed
+times (6-sample rps, 1-sample eclipse, 0 elsewhere) are CORROBORATION that the declared cadence is honoured
+— a second independent signal, never the criterion. **Reason: a census keyed on raw observations goes stale
+the moment WO-4c lands** (a T-1 feed at D+1 10:16Z stops being a phase error and becomes correct), and a
+vendor moving its delivery would invalidate it silently. Same law as the roster: read the authority, never
+restate the observation as one. **Two feeds are NOT in the roster — the ETF vendor puller (22:00Z) and the
+emitter itself: declared UNKNOWNs in the census, and E2's declaration path is what closes the first one.**
+E4 explicitly includes the `:1412` tautological AC7 reconcile — a guard that cannot fail is a defect in an
+existing instrument, not new machinery.
 
 ## ⚡ AMENDMENT 1 — ANDREW RE-SEQUENCING, ~2225Z (supersedes the WO order below where they conflict)
 
