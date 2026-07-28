@@ -193,6 +193,57 @@ rc=1 on the pre-existing cottonwood IAM gap (NOT a DS regression); all six ETags
 rc goes to 1, or OWNTS/Stage 6 do not run, the try/except analysis was wrong -- escalate to CTO
 immediately.
 
+## OUTCOME OF THE ~15:10Z WINDOW (appended 15:36Z) -- THE PRE-REGISTRATION ABOVE DID NOT HAPPEN
+
+**NO RUN OCCURRED. Every expectation pre-registered above is UNTESTED, not confirmed.** Leaving the
+prediction standing without this would make a stale record say something false with authority.
+
+Measured 15:26Z: all six served keys intact, byte-identical to baseline (four json/mdpf at CTO's 1341Z
+restore, both json/portfolios still 27 Jul 15:10:07Z). **But the Denies did not cause that** -- nothing
+executed. No `mdpf_daily_20260728_*` log key exists (independently re-confirmed by a watch to 15:35:33Z);
+`status.json` still reads `run_id mdpf_daily_20260727_150800` / `updated_at 2026-07-27T15:11:34Z`; runner
+`i-02448edb624a7a7cf` is `stopped`.
+
+**BOTH DENIES REMAIN VERIFIED ONLY BY `simulate-principal-policy`. THE PRODUCTION EXERCISE DID NOT HAPPEN,
+AND NEITHER DID DS's PRODUCER DEPLOY.** A clean detector over a chain that never ran is not the same result
+as a clean detector over a chain that degraded as designed (COO's framing, and it is the whole point).
+
+**WHY:** `mdpf-daily-trigger` fired once at 15:04:00Z with 0 errors (CloudWatch: exactly 2 invocations in
+26h, 07-27 and 07-28 both at 15:04:00Z) and the INF event source DID land
+(`opal-data-inf/gold/meta/pipeline-complete.json` 15:04:07Z). The gate returned
+`"dispatched": false, "deferred": true` -- 49financial RPS silver at `latest_partition 2026-07-23`,
+`trading_days_behind 3` vs `max_lag_trading_days 2`. **The DEFER is CORRECT**, and the gate counted in
+TRADING DAYS itself, so NEVER#1 is satisfied.
+
+**THE DEFECT FOUND -- THE GATE NAMED THE WRONG FAILURE.** It logged
+`ROLL_SOURCE_UNREADABLE 2026-07-23.json (403) -- a CONFIG/IAM fault that will NOT clear on its own`.
+Measured: that object **does not exist** (my head_object -> 404; the prefix runs 07-17, 07-18, then 07-25,
+07-26, 07-27 -- no 07-19..07-24, the six-day freeze still legible). The trigger role HOLDS `GetObject` on
+the key (`allowed`) but LACKS `s3:ListBucket` (`implicitDeny`) -- and **without ListBucket, S3 returns 403
+instead of 404 for an absent key.** So `_roll_source_exists()` (`lambda_function.py:351-382`), which was
+built specifically to separate "cannot read it" from "it does not exist", **has that discrimination
+defeated by a missing grant on a DIFFERENT ACTION than the one it tests** -- and it fails in the expensive
+direction, reporting a DATA condition as a permanent CONFIG fault. Per its own docstring
+`mdpf-freshness-checker` alarms on UNREADABLE and never on ABSENT (alarm existence NOT verified -- flagged,
+not claimed).
+
+**NOT MY DENY, proven four ways, not asserted:** different principal
+(`mdpf-daily-trigger-lambda-role` vs `mdpf-daily-runner-ec2-role`; isolated control shows my statements are
+not even in the trigger's evaluation -> `implicitDeny`); different action (`head_object` = `s3:GetObject`
+vs my `PutObject`); different prefix (`platinum/mdpf/aggregate_aua/*` vs `json/*`); and the trigger role's
+GetObject on that exact key simulates `allowed`.
+
+**RECOMMENDED, NOT EXECUTED (tree frozen, CTO's gate):** `s3:ListBucket` on `opal-data-portal-v2` for
+`mdpf-daily-trigger-lambda-role`, prefix-conditioned to `platinum/mdpf/*`, mirroring the runner's existing
+`PlatinumMdpfListScoped`. **IT FIXES ONLY THE LABEL -- ABSENT and UNREADABLE both DEFER, so it unblocks
+nothing.** The chain stays blocked until 49F RPS silver clears. Stated explicitly because "add the grant"
+is exactly the shape that gets reported as a resolution.
+
+**STANDING RISK TO CARRY:** the next production exercise requires a dispatched run, and the gate will keep
+deferring while 49F is stale. **The Denies may sit unexercised for days, and accumulated silence reads as
+confirmation.** Recorded here so "the hold is proven" cannot become the remembered state. It is landed and
+simulated, not proven.
+
 ## Next Steps
 
 1. **[0.7.0_AE_CloudOps]** Report the ~15:10Z run from its OWN log: Stage 4 rc, the WARN naming
