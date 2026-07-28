@@ -4,9 +4,9 @@
     Every sentence below is SELECTED from a state.yaml or execsum.yaml, never composed
     here: a compiler that writes prose is a compiler that can invent a stance.
 
-    ANCHOR COMMIT   bbada5f826
-    ANCHOR TIME     2026-07-28T16:00:20-04:00   (author-time, not a wall clock)
-    ANCHOR AUTHOR   1.0.0_SA_CTO
+    ANCHOR COMMIT   a11b8e2cc3
+    ANCHOR TIME     2026-07-28T17:21:56-04:00   (author-time, not a wall clock)
+    ANCHOR AUTHOR   0.7.0_AE_CloudOps
     ORDERING        activity intensity -- commits in the last 14 days, then total
     SOURCE          org/missions/{GROUP}/{SUB_GROUP}/{state,execsum}.yaml
 
@@ -24,10 +24,10 @@
 
 | # | sub-group | recent | total | authors | DECIDED | BUILT | SERVING | blocked on |
 |---|---|---|---|---|---|---|---|---|
-| 1 | `INFRASTRUCTURE.GRAPH` | **355** | 1088 | 35 | PARTIAL | PARTIAL | PARTIAL | — |
-| 2 | `INFRASTRUCTURE.DEBT` | **157** | 1675 | 42 | YES | PARTIAL | PARTIAL | — |
-| 3 | `PORTAL.MODEL_PORTFOLIOS` | **146** | 396 | 16 | YES | YES | NO | 1.0.0_SA_CTO -- an architecture call that PR |
-| 4 | `INFRASTRUCTURE.TOOLS` | **117** | 728 | 37 | YES | YES | UNASSESSED | — |
+| 1 | `INFRASTRUCTURE.GRAPH` | **357** | 1090 | 35 | PARTIAL | PARTIAL | PARTIAL | — |
+| 2 | `INFRASTRUCTURE.DEBT` | **157** | 1679 | 42 | YES | PARTIAL | PARTIAL | — |
+| 3 | `PORTAL.MODEL_PORTFOLIOS` | **147** | 398 | 17 | YES | YES | NO | 1.0.0_SA_CTO -- an architecture call that PR |
+| 4 | `INFRASTRUCTURE.TOOLS` | **119** | 730 | 37 | YES | YES | UNASSESSED | 1.0.0_SA_CTO -- TWO calls CVO explicitly did |
 | 5 | `PORTAL.ADVISOR_INTELLIGENCE` | **34** | 1726 | 36 | PARTIAL | UNASSESSED | UNASSESSED | — |
 | 6 | `PORTAL.DEBT` | **2** | 2 | 2 | PARTIAL | NO | NO | — |
 | 7 | `EXTERNAL.49FINANCIAL` | **0** | 0 | 0 | UNASSESSED | UNASSESSED | UNASSESSED | Andrew -- per-client initiative detail. |
@@ -45,12 +45,36 @@
 
 > Lock in a canonical taxonomy and canonical resource design patterns, and unify the system on that basis in earnest; and track the enumeration of that coverage as the universe grows, so that related grants and permissions in IAM do not silently break.
 
-    activity   355 commit(s) in the last 14 days · 1088 total · 35 author(s)
-    newest     2026-07-28T15:15:06-04:00
+    activity   357 commit(s) in the last 14 days · 1090 total · 35 author(s)
+    newest     2026-07-28T17:15:04-04:00
     stance     DECIDED PARTIAL · BUILT PARTIAL · SERVING PARTIAL
     version    v1.2
 
 **FRONTIER —** Lock the taxonomy -- one canonical statement the rest can be migrated onto. But note the 92% figure reframes the bottleneck: DECIDED is not what is holding this, ADOPTION is.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -95,12 +119,36 @@ priority that received nothing today.
 
 > Ensure that as Infrastructure consolidates patterns and improves design, legacy AWS resources are appropriately decommissioned and terminated -- so agents are never confronted with multiple pipelines, paths and buckets that clobber each other.
 
-    activity   157 commit(s) in the last 14 days · 1675 total · 42 author(s)
-    newest     2026-07-28T13:21:26-04:00
+    activity   157 commit(s) in the last 14 days · 1679 total · 42 author(s)
+    newest     2026-07-28T17:21:56-04:00
     stance     DECIDED YES · BUILT PARTIAL · SERVING PARTIAL
     version    v1.1
 
 **FRONTIER —** Make retirement a CONDITION of a migration rather than a follow-up to it. Nothing structurally prevents a replacement shipping while its predecessor keeps running.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -154,14 +202,38 @@ files both under INFRASTRUCTURE.GRAPH. Both statements are on the record and the
 
 > Lock in the proper canonical pipelines for the Model Portfolios product so it serves correct numbers every day without hand-restoration; and establish the Opal-level definition of how the four AUA types aggregate -- ETF Models (the 5 archetypal portfolios), SMA Strategies (TAX SMA, the incoming MUNI SMA, 49F SMAs tracked in SmartX such as PFOE), Custom Models (client-specific SMAs that are not a larger strategy), and Non-Model Residual (assets we advise upon that fall into none of the prior three).
 
-    activity   146 commit(s) in the last 14 days · 396 total · 16 author(s)
-    newest     2026-07-28T15:56:48-04:00
+    activity   147 commit(s) in the last 14 days · 398 total · 17 author(s)
+    newest     2026-07-28T17:11:02-04:00
     stance     DECIDED YES · BUILT YES · SERVING NO
     version    v1.2
 
 **FRONTIER —** The defined publisher. Nothing automated writes the serve.
 
 **BLOCKED ON —** 1.0.0_SA_CTO -- an architecture call that PRECEDES the build: which serving namespace is canonical.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -210,12 +282,38 @@ entire repository -- in Andrew's own sentence in this register.
 
 > Establish an enumerated coverage universe per tool -- what each tool covers, what it does not, and where its silence means nothing-there rather than cannot-see -- consolidating the extensive prior art already held in the NFRA projects; and define how each tool must present information so that responses are high-signal and never inadvertently truncated, redacted or garbled.
 
-    activity   117 commit(s) in the last 14 days · 728 total · 37 author(s)
-    newest     2026-07-28T15:52:06-04:00
+    activity   119 commit(s) in the last 14 days · 730 total · 37 author(s)
+    newest     2026-07-28T16:43:27-04:00
     stance     DECIDED YES · BUILT YES · SERVING UNASSESSED
     version    v1.3
 
-**FRONTIER —** Wire the declared-vs-actual diff at suite scale -- each tool's DECLARED surface against the surface implied by its ENUMERATION PRIMITIVE. Needs no oracle (Andrew's constraint); comp-toolgraph already implements the shape for coupling. NOW CHEAPER: per-tool primitive rows persist as JSON, so excludes: can be populated MECHANICALLY from the primitive. That was the blocker and it is removed.
+**FRONTIER —** Wire comp-which to IMPORT tool_index instead of re-parsing the manifest. Cheap, and it is now the single next thing -- until it lands, the compiled index is a fast artifact nobody reads. (The suite-scale declared-vs-actual diff remains real but is downstream of this, and is now cheaper because per-tool primitive rows persist as JSON.)
+
+**BLOCKED ON —** 1.0.0_SA_CTO -- TWO calls CVO explicitly did NOT make: (a) the comp-which wiring, and (b) whether this 5th registry should FOLD INTO comp-coverage-map.yaml, which already has a passing gate it would inherit. Both routed to him in the same window.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -252,12 +350,13 @@ that a missing entry is silent, so an eleventh would fail identically.
 The frontier got cheaper rather than closer: per-tool primitive rows now persist as JSON, so the
 excludes: field can be populated mechanically from the primitive. That was the blocker and it is gone.
 
-**HOLES — live work no project code covers (6):**
+**HOLES — live work no project code covers (7):**
 - NFRA_TOOLUNIFY -- 109 commits, 18 code files, 113 doc files, NO PROJECT JSON. Second-largest body of work in the tool program. Positive-controlled: the same glob finds NFRA_TOOLARCH.json.
 - The NEGATIVE declaration -- what a tool cannot see WITHIN its declared surface.
 - The runtime-provenance axis.
 - INFRASTRUCTURE.TOOLS.O2 itself (response scope / output contract).
 - Cross-tool coverage diffing at suite scale -- comp-toolgraph does declared-vs-actual for COUPLING, nothing for COVERAGE.
+- comp-which RE-PARSES 133KB OF YAML PER CALL -- yaml.safe_load x10, ~97% of runtime (measured by 0.8.0_AE_CloudComp~B with cProfile, 07-24) -- ON THE TOOL CLAUDE.md RULE 21 MANDATES AS THE FIRST REFLEX FOR EVERY SEARCH. CVO built the fix (a compiled index: 0.4ms warm import vs 2,870ms, 7,726x) BUT THE WIRING IS NOT ITS CALL. Live work, no project code, no named owner. UNTIL IT LANDS THIS IS A FAST ARTIFACT NOBODY READS.
 - UNDER-CLASSIFICATION IS INVISIBLE, and it was found INSIDE a field that read COVERED. CVO's classifier had NO SIMULATE primitive -- the pattern CVO itself documented four hours earlier as the strongest enumeration mechanism we have. Five tools use it: three came back UNRESOLVED and so announced themselves, but comp-which, comp-whoread and comp-deadgrant RESOLVED ON OTHER PRIMITIVES and read as fully classified while their strongest mechanism was invisible. >> AN UNRESOLVED TOOL ANNOUNCES ITSELF; AN UNDER-CLASSIFIED ONE READS AS COMPLETE. <<
 
 *grounded: 2026-07-28T192952Z -- CVO resolved primitive census, re-runnable anchor.*
@@ -276,6 +375,30 @@ excludes: field can be populated mechanically from the primitive. That was the b
     version    v1.1
 
 **FRONTIER —** Enumerate, per gold runner, which silver source it actually reads today. The artifact does not exist. SHARED with PORTAL.MODEL_PORTFOLIOS.O3 -- CTO confirmed it is ONE piece of work, not two, and COO is building it. ADVI MUST NOT COMMISSION A SECOND ONE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -338,6 +461,30 @@ not two. CTO confirmed it, COO is building it, and this sub-group must not commi
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 LOW priority by sovereign instruction, and that is a decision on the record rather than an accident
 of attention. Two commits, brief only, not decomposed, not staffed.
 
@@ -368,6 +515,30 @@ This mission finishes a migration already begun; the precedent is recorded in-so
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -421,6 +592,30 @@ Source of record when work begins: SCHWAB (certified-AUA deprecated 2026-07-24).
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 PROSPECTIVE and net-new. Zero commits is correct.
 
 Andrew-direct: scoped work that may eventually tie into the portal but is very prospective -- for
@@ -448,6 +643,30 @@ Nothing registered, nothing blocked, no paths claimed.
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -491,6 +710,30 @@ Open at Andrew: "Cottonwood Capital Advisory" (his wording) vs "Advisors" (the e
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
