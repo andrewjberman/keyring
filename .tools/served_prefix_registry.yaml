@@ -1,0 +1,164 @@
+schema_version: '0.1'
+purpose: THE COVERAGE DENOMINATOR for S3Key graph ingest. Declares what the S3Key producer must cover
+  so a served artifact can never be structurally invisible.
+authority: Andrew-direct 2026-07-28. Step 1 of the comp-opalbizcluster reroute.
+generated_by: .tools/gen_served_prefix_registry.py -- re-runnable; DEMAND from the canonical graph, SUPPLY
+  from live S3. Nothing hand-listed.
+method:
+  demand: ServedURL nodes in the canonical graph (what the portal actually reads)
+  supply: live list_objects_v2 over opal-data-portal-v2
+  url_is_not_key: 'MEASURED: /api/general/mdpf/aggregate-aua-timeseries.json coexists with BOTH json/mdpf/aggregate-aua-timeseries.json
+    AND json/mdpf/global/aggregate-aua-timeseries.json. The registry NEVER derives a key from a URL --
+    it declares prefixes and lets the producer OBSERVE the keys.'
+  dump_rule: keys_per_endpoint > 10 => KEYSET (a dump, declare served keys) else PREFIX (a served set,
+    declare the prefix -- robust to key moves)
+denominators:
+  served_urls_total: 45
+  static_json_served: 33
+  dynamic_api_routes: 12
+  live_keys_under_json: 957
+  keys_in_PREFIX_scope: 46
+  prefixes_declared: 14
+  live_prefixes_with_NO_served_url: 7
+dynamic_routes_out_of_scope:
+- /api/private/portfolio/export-and-submit
+- /api/private/portfolio/funds
+- /api/private/portfolio/parse-pickle
+- /api/scoped/data-refresh/archive
+- /api/scoped/data-refresh/rollback
+- /api/scoped/data-refresh/time-machine
+- /api/scoped/data-refresh/trigger
+- /api/scoped/data-refresh/upload-urls
+- /api/scoped/security-scanner/factors
+- /aum/summary
+- /returns/etf-periods
+- /v1/sentiment/keyword-intelligence
+entries:
+- prefix: json/benchmarks/
+  scope: PREFIX
+  served_endpoints: 4
+  live_keys: 6
+  keys_per_endpoint: 1.5
+  endpoints:
+  - /api/general/benchmarks/benchmark_returns.json
+  - /api/general/benchmarks/etf_returns.json
+  - /api/general/benchmarks/model_portfolio_benchmarks.json
+  - /api/general/benchmarks/model_portfolio_timeseries.json
+- prefix: json/capital-markets/
+  scope: PREFIX
+  served_endpoints: 2
+  live_keys: 2
+  keys_per_endpoint: 1.0
+  endpoints:
+  - /api/general/capital-markets/assumptions.json
+  - /api/general/capital-markets/views.json
+- prefix: json/correlations/
+  scope: PREFIX
+  served_endpoints: 1
+  live_keys: 1
+  keys_per_endpoint: 1.0
+  endpoints:
+  - /api/general/correlations/correlation_data.json
+- prefix: json/factor-tilts/
+  scope: PREFIX
+  served_endpoints: 3
+  live_keys: 3
+  keys_per_endpoint: 1.0
+  endpoints:
+  - /api/general/factor-tilts/tier1-snapshot.json
+  - /api/general/factor-tilts/tier2-spreads.json
+  - /api/general/factor-tilts/tier3-timeseries.json
+- prefix: json/macro/
+  scope: KEYSET
+  served_endpoints: 4
+  live_keys: 84
+  keys_per_endpoint: 21.0
+  endpoints:
+  - /api/general/macro/macro_data.json
+  - /api/general/macro/vix_data.json
+  - /api/general/macro/volatility_data.json
+  - /api/general/macro/yield_curve_fred.json
+- prefix: json/market/
+  scope: PREFIX
+  served_endpoints: 1
+  live_keys: 3
+  keys_per_endpoint: 3.0
+  endpoints:
+  - /api/general/market/all_returns.json
+- prefix: json/mdpf/
+  scope: PREFIX
+  served_endpoints: 1
+  live_keys: 10
+  keys_per_endpoint: 10.0
+  endpoints:
+  - /api/general/mdpf/aggregate-aua-timeseries.json
+- prefix: json/peers/
+  scope: PREFIX
+  served_endpoints: 1
+  live_keys: 1
+  keys_per_endpoint: 1.0
+  endpoints:
+  - /api/general/peers/peer_performance.json
+- prefix: json/portfolios/
+  scope: PREFIX
+  served_endpoints: 4
+  live_keys: 13
+  keys_per_endpoint: 3.2
+  endpoints:
+  - /api/general/portfolios/account-distribution.json
+  - /api/general/portfolios/aum-metrics.json
+  - /api/general/portfolios/aum-timeseries.json
+  - /api/general/portfolios/non_model_assets.json
+- prefix: json/positioning/
+  scope: PREFIX
+  served_endpoints: 3
+  live_keys: 3
+  keys_per_endpoint: 1.0
+  endpoints:
+  - /api/general/positioning/holdings_attribution_data.json
+  - /api/general/positioning/model.json
+  - /api/general/positioning/positioning_data.json
+- prefix: json/semantic-trending/
+  scope: PREFIX
+  served_endpoints: 1
+  live_keys: 1
+  keys_per_endpoint: 1.0
+  endpoints:
+  - /api/general/semantic-trending/latest.json
+- prefix: json/sentiment/
+  scope: KEYSET
+  served_endpoints: 5
+  live_keys: 722
+  keys_per_endpoint: 144.4
+  endpoints:
+  - /api/general/sentiment/aaii-history.json
+  - /api/general/sentiment/aaii-latest.json
+  - /api/general/sentiment/articles.json
+  - /api/general/sentiment/fear-greed-index.json
+  - /api/general/sentiment/keyword-sentiments.json
+- prefix: json/trending/
+  scope: PREFIX
+  served_endpoints: 1
+  live_keys: 1
+  keys_per_endpoint: 1.0
+  endpoints:
+  - /api/general/trending/latest.json
+- prefix: json/valuation/
+  scope: PREFIX
+  served_endpoints: 2
+  live_keys: 2
+  keys_per_endpoint: 1.0
+  endpoints:
+  - /api/general/valuation/risk_premium_data.json
+  - /api/general/valuation/valuation_data.json
+live_prefixes_with_no_served_url:
+- json/latest/
+- json/market-overview/
+- json/model_portfolios/
+- json/returns/
+- json/security_scanner/
+- json/valuations/
+- json/yang/
+monolith_note: opal-data-assets (the monolith) also serves. Its gold/ and json/ prefixes need the same
+  treatment; NOT enumerated here because its ServedURL edges are not yet in the graph. STATED AS A GAP,
+  not silently omitted.
