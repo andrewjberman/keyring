@@ -4,9 +4,9 @@
     Every sentence below is SELECTED from a state.yaml or execsum.yaml, never composed
     here: a compiler that writes prose is a compiler that can invent a stance.
 
-    ANCHOR COMMIT   a11b8e2cc3
-    ANCHOR TIME     2026-07-28T17:21:56-04:00   (author-time, not a wall clock)
-    ANCHOR AUTHOR   0.7.0_AE_CloudOps
+    ANCHOR COMMIT   61d8b8a0c3
+    ANCHOR TIME     2026-07-28T18:01:26-04:00   (author-time, not a wall clock)
+    ANCHOR AUTHOR   0.7.0_AE_CloudOps~C
     ORDERING        activity intensity -- commits in the last 14 days, then total
     SOURCE          org/missions/{GROUP}/{SUB_GROUP}/{state,execsum}.yaml
 
@@ -24,10 +24,10 @@
 
 | # | sub-group | recent | total | authors | DECIDED | BUILT | SERVING | blocked on |
 |---|---|---|---|---|---|---|---|---|
-| 1 | `INFRASTRUCTURE.GRAPH` | **357** | 1090 | 35 | PARTIAL | PARTIAL | PARTIAL | — |
-| 2 | `INFRASTRUCTURE.DEBT` | **157** | 1679 | 42 | YES | PARTIAL | PARTIAL | — |
-| 3 | `PORTAL.MODEL_PORTFOLIOS` | **147** | 398 | 17 | YES | YES | NO | 1.0.0_SA_CTO -- an architecture call that PR |
-| 4 | `INFRASTRUCTURE.TOOLS` | **119** | 730 | 37 | YES | YES | UNASSESSED | 1.0.0_SA_CTO -- TWO calls CVO explicitly did |
+| 1 | `INFRASTRUCTURE.GRAPH` | **358** | 1092 | 35 | PARTIAL | PARTIAL | PARTIAL | — |
+| 2 | `INFRASTRUCTURE.DEBT` | **158** | 1680 | 42 | YES | PARTIAL | PARTIAL | — |
+| 3 | `PORTAL.MODEL_PORTFOLIOS` | **148** | 399 | 17 | YES | YES | NO | 1.0.0_SA_CTO -- an architecture call that PR |
+| 4 | `INFRASTRUCTURE.TOOLS` | **118** | 730 | 37 | YES | YES | UNASSESSED | 1.0.0_SA_CTO -- TWO calls CVO explicitly did |
 | 5 | `PORTAL.ADVISOR_INTELLIGENCE` | **34** | 1726 | 36 | PARTIAL | UNASSESSED | UNASSESSED | — |
 | 6 | `PORTAL.DEBT` | **2** | 2 | 2 | PARTIAL | NO | NO | — |
 | 7 | `EXTERNAL.49FINANCIAL` | **0** | 0 | 0 | UNASSESSED | UNASSESSED | UNASSESSED | Andrew -- per-client initiative detail. |
@@ -45,8 +45,8 @@
 
 > Lock in a canonical taxonomy and canonical resource design patterns, and unify the system on that basis in earnest; and track the enumeration of that coverage as the universe grows, so that related grants and permissions in IAM do not silently break.
 
-    activity   357 commit(s) in the last 14 days · 1090 total · 35 author(s)
-    newest     2026-07-28T17:15:04-04:00
+    activity   358 commit(s) in the last 14 days · 1092 total · 35 author(s)
+    newest     2026-07-28T17:38:16-04:00
     stance     DECIDED PARTIAL · BUILT PARTIAL · SERVING PARTIAL
     version    v1.2
 
@@ -65,49 +65,29 @@
 
 
 
+Top of the board on activity -- 357 recent across 35 authors -- and the session finally put capacity
+here after a day where it had none.
 
+The standard-versus-adoption reading is unchanged and remains the sub-group in one line: 121 scheduled
+EventBridge Rules against 10 Scheduler schedules, 92% of the estate on the non-standard side of a
+standard that already exists. DECIDED is not the bottleneck. ADOPTION is.
 
+MOVED SINCE THE LAST SUMMARY. The tool registry landed and was EXERCISED, and the one-declaration
+principle got its first real test: the fix CTO ruled for the PIPELINE_MAP gap would have been a SILENT
+NO-OP, because one S3 code tree is fed by TWO repo trees. Adding the missing layers to the obvious
+tuple would have globbed a directory those files do not live in, hit a `continue`, and skipped both --
+same clean summary, same rc=0, same zero UNCOVERED, with a layer list that merely LOOKED complete.
 
+IT WOULD HAVE CONVERTED A VISIBLE 4-VS-6 GAP INTO AN INVISIBLE ONE -- the precise outcome the ruling
+exists to prevent, reproduced by the fix for it. That is this sub-group's whole thesis demonstrated at
+its own expense, and it is worth more than the fix.
 
+DECIDED remains PARTIAL: key grammar, naming law and one-capacity-one-service exist; there is still NO
+provenance taxonomy and NO code-location standard, measured by token census with a positive control so
+the zeros are real. BUILT remains PARTIAL on exactly one live gate, one bucket.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-The standard exists and the estate is not on it. That is the sub-group in one line, and it means the
-bottleneck is ADOPTION, not decision.
-
-SERVING is PARTIAL on a hard number: 121 scheduled EventBridge Rules against 10 Scheduler schedules.
-92% of the estate sits on the non-standard side of a standard that already exists. A taxonomy nobody
-migrates onto is indistinguishable from no taxonomy, and this register must not let "we have a
-standard" read as progress while that ratio holds.
-
-DECIDED is PARTIAL and the gaps are specific: key grammar, naming law and one-capacity-one-service
-exist; there is NO provenance taxonomy and NO code-location standard. That was measured by token
-census with a positive control, so the zeros are real zeros.
-
-BUILT is PARTIAL on exactly one live gate -- the parquet-under-bronze bucket-policy deny, on ONE
-bucket. Other trees remain open.
-
-A recorded disagreement stands here rather than being reconciled away. CTO framed the instance --
-one tree missing from a map. CVO framed the class -- Rule-12 conformance makes every such tree
-invisible identically. THE REGISTER CARRIES THE CLASS, because the instance fix closes one tree and
-leaves the next to rot the same way. CTO has since accepted the reframe; the disagreement stays on
-the record anyway, because agreement reached afterwards does not make two framings equivalent.
-
-1,088 commits and no live capacity assigned. This is one of the two sub-groups named joint-highest
-priority that received nothing today.
+The CTO-versus-CVO instance-versus-class disagreement still stands on the record. The register carries
+the CLASS.
 
 *grounded: 2026-07-28 -- CVO state pull @8ac1e7d04, live EventBridge/Scheduler counts, token census with positive control.*
 
@@ -119,8 +99,8 @@ priority that received nothing today.
 
 > Ensure that as Infrastructure consolidates patterns and improves design, legacy AWS resources are appropriately decommissioned and terminated -- so agents are never confronted with multiple pipelines, paths and buckets that clobber each other.
 
-    activity   157 commit(s) in the last 14 days · 1679 total · 42 author(s)
-    newest     2026-07-28T17:21:56-04:00
+    activity   158 commit(s) in the last 14 days · 1680 total · 42 author(s)
+    newest     2026-07-28T17:52:18-04:00
     stance     DECIDED YES · BUILT PARTIAL · SERVING PARTIAL
     version    v1.1
 
@@ -139,52 +119,26 @@ priority that received nothing today.
 
 
 
+Second on activity, 157 recent across 42 authors, and the enacted-not-recorded character held: this
+window was applied infrastructure, not documentation.
 
+MOVED SINCE THE LAST SUMMARY. A SEPARATE EGRESS PRINCIPAL was built and APPLIED, scoped to a
+NON-SERVED staging location and verified on live primitives rather than on a config read. And a PHANTOM
+SCHEDULE was deleted from EC2_MANIFEST.json -- notable because that file is the Rule-8 source of truth,
+so a phantom entry there is not clutter, it is the source of truth asserting a thing that does not
+exist.
 
+DECIDED stays YES. The stated cost remains agent-facing rather than financial: multiple pipelines,
+paths and buckets that clobber each other are confusing to agents and very problematic.
 
+SERVING stays PARTIAL for the structural reason, unchanged: there is NO standing mechanism tying a
+migration to the retirement of what it replaced. Nothing prevents a replacement shipping while its
+predecessor keeps running, and making retirement a CONDITION of migration rather than a follow-up is
+still the frontier.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1,675 commits, and today's slice was the only one in the whole tree that was purely ENACTED rather
-than recorded -- five commits, all code, zero doc. That is the right shape for a debt mission.
-
-DECIDED is YES: decommission-as-you-migrate is standing direction, and the stated cost is
-agent-facing rather than financial -- multiple pipelines and paths and buckets that clobber each
-other are confusing to agents and very problematic.
-
-SERVING is PARTIAL and the reason is structural: there is NO standing mechanism tying a migration to
-the retirement of what it replaced. Nothing prevents a replacement shipping while its predecessor
-keeps running. The frontier is to make retirement a CONDITION of a migration rather than a follow-up
-to it.
-
-Both directions were live today. Working: the GitHub Actions EC2 runner recorded its own exit
-condition at build time and is being decommissioned now that the condition fired -- a stopgap that
-named its own exit and was actually retired. Broken: the MDPF legacy writer clobbered served keys
-daily from a deprecated path, needed two IAM Denies to stop, and its manifest entry read NOT YET
-APPLIED while a live instance existed. Multiple paths, clobbering, and a stale record hiding a live
-resource, in one incident.
-
-Holes: OPAL_SCHEDULE and OPAL_ALERTS were briefed and MEASURED against live AWS -- 151 triggers, 51
-alarms -- with project creation handed to CTO four days ago. Neither exists. The alarm-map census is
-absent while its trigger twin exists complete with a CI drift gate. NFRA_DEBTSCAN declares two
-follow-ons open under a COMPLETE status, with its own warning that a debt-scanner rots if never re-run.
-
-Open and NOT adjudicated: Andrew named OPAL_TAXONOMY and OPAL_STNDRD as constituents here; the index
-files both under INFRASTRUCTURE.GRAPH. Both statements are on the record and they disagree.
+The holes are unchanged and still unowned: OPAL_SCHEDULE and OPAL_ALERTS briefed and MEASURED against
+live AWS four days ago with project creation handed to CTO, and neither code exists. The alarm-map
+census is still absent while its trigger twin exists complete with a CI drift gate.
 
 **HOLES — live work no project code covers (4):**
 - OPAL_SCHEDULE and OPAL_ALERTS -- BRIEFED, MEASURED, NEVER REGISTERED. CVO's preempting brief (org/tier1_exec/3.0.0_SA_CVO/deliverables/OPAL_SCHEDULE_AND_ALERTS_PREEMPTING_BRIEF_20260724.md @6543fd12ef) enumerated 151 live triggers and 51 live alarms against live AWS on 07-24 and handed project creation to CTO. Four days on, neither code exists. POSITIVE CONTROLS: the project glob returns 16 OPAL_* files; the doc glob finds STNDRD/TAXONOMY/CONSOLIDATION but 0 for alert|monitor|notif|alarm across 378 architecture docs.
@@ -202,8 +156,8 @@ files both under INFRASTRUCTURE.GRAPH. Both statements are on the record and the
 
 > Lock in the proper canonical pipelines for the Model Portfolios product so it serves correct numbers every day without hand-restoration; and establish the Opal-level definition of how the four AUA types aggregate -- ETF Models (the 5 archetypal portfolios), SMA Strategies (TAX SMA, the incoming MUNI SMA, 49F SMAs tracked in SmartX such as PFOE), Custom Models (client-specific SMAs that are not a larger strategy), and Non-Model Residual (assets we advise upon that fall into none of the prior three).
 
-    activity   147 commit(s) in the last 14 days · 398 total · 17 author(s)
-    newest     2026-07-28T17:11:02-04:00
+    activity   148 commit(s) in the last 14 days · 399 total · 17 author(s)
+    newest     2026-07-28T17:52:18-04:00
     stance     DECIDED YES · BUILT YES · SERVING NO
     version    v1.2
 
@@ -224,49 +178,28 @@ files both under INFRASTRUCTURE.GRAPH. Both statements are on the record and the
 
 
 
+Producer FIXED, serve STILL NOT. Unchanged as the headline, and the gap is now better specified
+rather than smaller.
 
+DECIDED and BUILT remain YES, anchored on the 16:48:04Z scheduled run -- 450 dates, cottonwood at 47
+slots, sum identity 0 failing of 426 tested where it had been 425/425 FAILING, exact to the cent. That
+BUILT is scored on the RUN; a two-leg builder is structurally incapable of that result.
 
+SERVING remains NO and the reason has not softened: the client surface carries a hand-restored 07-23
+artifact fed by NEITHER producer. It is a human-published object and no automated path writes it.
 
+MOVED SINCE THE LAST SUMMARY. The consumer contract is now specified -- CTO's s.19 rules JOIN ON
+MACHINE KEYS, with INVARIANT N-1 recorded alongside it, so the publisher has a contract to build
+against rather than a shape to infer. DS closed F-2 quantity-blindness in the held patch. And the
+Stage 6 IAM grant landed as THREE grants rather than one, which is the kind of correction that only
+surfaces when someone counts instead of assuming.
 
+Andrew authorised cottonwood inclusion at 203435Z and the legacy aggregator still carries ZERO
+cottonwood tokens against 14 inflection -- a real absence, positive-controlled. A successor AE session
+is on-mission for the roster single-sourcing and enrollment; CTO dispatches.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-The producer is FIXED and the serve is NOT. That is the whole state in one line.
-
-DECIDED and BUILT are both YES. The scheduled path produced a correct 3-firm Global at 16:48:04Z --
-450 dates, cottonwood present at 47 slots, sum identity 0 failing of 426 tested where it had been
-425/425 FAILING, and opal_aggregate_aua at 2026-07-22 exact to the cent at $1,951,676,164.42. That
-BUILT is anchored on the RUN, not on the producer landing: a two-leg builder is structurally
-incapable of that result, which is what makes the run discriminating and the commit not.
-
-SERVING is NO and must stay NO. What is on the client surface is a hand-restored 07-23 artifact fed
-by NEITHER producer. Both portal-v2 Deny statements are production-exercised. The serve is a
-human-published object and no automated path writes it -- a good day does not make that a mechanism.
-
-The frontier is the defined publisher, and it is blocked on an architecture call that PRECEDES the
-build: which serving namespace is canonical. Not blocked on Andrew, not blocked on a lane.
-
-Two registry holes underneath: MDPF_CHANNEL_INDEPENDENCE (PRD'd, cited as law, drove today's P0, no
-JSON, no registry row -- confirmed three times independently) and MDPF_COT_CONVENTION_PARITY, a
-SECOND live MDPF PRD with no code, chartered five days after the first. Six served objects under
-json/portfolios/ have no owner and unknown consumers.
-
-Pending at Andrew and deliberately unstarted: the Opal-level AUA aggregation definition. Zero of its
-four categories has a project that owns the aggregation, and "MUNI SMA" occurs exactly once in the
-entire repository -- in Andrew's own sentence in this register.
+The frontier is unchanged and is still the whole gap: the defined publisher. Blocked on a CTO
+architecture call -- which serving namespace is canonical -- that PRECEDES the build.
 
 **HOLES — live work no project code covers (2):**
 - MDPF_CHANNEL_INDEPENDENCE -- PRD'd (docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md), cited as law in CLAUDE.md Rule 20/NEVER#4, drove today's P0. NO project JSON, ZERO REGISTRY.md rows. Confirmed independently THREE times (MSTR authoring, CVO /spot-check F-1, CTO state pull).
@@ -282,7 +215,7 @@ entire repository -- in Andrew's own sentence in this register.
 
 > Establish an enumerated coverage universe per tool -- what each tool covers, what it does not, and where its silence means nothing-there rather than cannot-see -- consolidating the extensive prior art already held in the NFRA projects; and define how each tool must present information so that responses are high-signal and never inadvertently truncated, redacted or garbled.
 
-    activity   119 commit(s) in the last 14 days · 730 total · 37 author(s)
+    activity   118 commit(s) in the last 14 days · 730 total · 37 author(s)
     newest     2026-07-28T16:43:27-04:00
     stance     DECIDED YES · BUILT YES · SERVING UNASSESSED
     version    v1.3
@@ -304,51 +237,36 @@ entire repository -- in Andrew's own sentence in this register.
 
 
 
+The registry architecture landed, one blocked-on call was ANSWERED, and the answer immediately caught
+a real defect in the generator that implemented it.
 
+CTO ruled 212335Z on the question CVO explicitly declined to decide: comp-coverage-map.yaml is the
+SOLE POPULATION AUTHORITY. TOOL_MASTER.yaml may remain a separate ATTRIBUTE STORE but must NEVER be a
+population source, and the generator must FAIL LOUD on divergence in either direction -- no silent
+skip, no continue. CVO's own generator was in violation: it derived population from disk, making the
+master a FIFTH copy of the population.
 
+THE PARITY GUARD FIRED ON FIRST EXERCISE AND THIS IS THE PART TO KEEP:
+AUTHORITY 89. MASTER 89. COUNTS MATCH EXACTLY. SETS DIVERGE BY 12 MEMBERS.
+A count-equality check would have passed clean and said nothing.
 
+THAT UPGRADES A RULE I WROTE INTO THIS REGISTER EARLIER TODAY. I recorded the count cascade -- 93 disk
+/ 89 classified / 89 homed / 69 tools_index / 105 use-cases -- with the rule that the POPULATION must
+ride with the NUMBER. CTO's doctrine III-g shows that is necessary and NOT SUFFICIENT: two populations
+can share a denominator and not share a member, BECAUSE THE DENOMINATOR IS A SCALAR TOO. The rule is
+now COMPARE SETS, BOTH DIRECTIONS, AND NAME THE DIVERGING MEMBERS. My version would have passed the
+exact check that caught this.
 
+BUILT stays YES for classification -- 89 of 93 typed, generated mechanically from source. O2 moved to
+PARTIAL: the card now carries knows_own_denominator and excludes, the two fields that make silent
+truncation detectable, but NO TOOL HAS BEEN CHANGED TO USE THEM. The artifact exists; the behaviour
+has not moved.
 
+SERVING stays UNASSESSED. Gate wiring was never established and nobody has guessed at it.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-The coverage universe is now ENUMERATED and that is a real close, not a claim. 93 of 93 comp-* tools
-classified by enumeration primitive, UNRESOLVED zero, against a re-runnable resolver rather than a
-one-shot assertion. The inventory gate was EXERCISED, not read.
-
-The denominator that matters is 90, not 93. Three tools legitimately enumerate nothing -- a writer,
-a binary reader, a test harness. "No primitive" and "not an enumerator" are different verdicts and
-only the first is a gap; recording 93 would show three uncovered tools that do not exist.
-
-SERVING stays UNASSESSED: whether the gate is wired into a commit path or is invoke-only was never
-established, and CVO declined to guess after making three false claims about this same project
-earlier the same day from reading documents instead of exercising them.
-
-The finding worth carrying is one CVO surfaced against ITSELF. Its classifier had no SIMULATE
-primitive -- the mechanism it had documented four hours earlier as the strongest we have. Three
-affected tools came back UNRESOLVED and announced themselves. Three others resolved on other
-primitives and READ AS FULLY CLASSIFIED while their strongest mechanism was invisible.
-AN UNRESOLVED TOOL ANNOUNCES ITSELF; AN UNDER-CLASSIFIED ONE READS AS COMPLETE. That is a hole that
-was hiding inside a field that read covered, which is precisely what this sub-group exists to catch.
-
-BUILT = YES is correct for the CENSUS being complete. It is NOT a claim that the taxonomy is CLOSED.
-The primitive list is ten entries and is not provably exhaustive -- the SIMULATE miss is the proof
-that a missing entry is silent, so an eleventh would fail identically.
-
-The frontier got cheaper rather than closer: per-tool primitive rows now persist as JSON, so the
-excludes: field can be populated mechanically from the primitive. That was the blocker and it is gone.
+The open frontier is cheap and unowned: wire comp-which to IMPORT the compiled index rather than
+re-parsing 133KB of YAML per call (~97% of runtime, on the tool Rule 21 makes the first reflex).
+Until that lands it is a fast artifact nobody reads.
 
 **HOLES — live work no project code covers (7):**
 - NFRA_TOOLUNIFY -- 109 commits, 18 code files, 113 doc files, NO PROJECT JSON. Second-largest body of work in the tool program. Positive-controlled: the same glob finds NFRA_TOOLARCH.json.
@@ -389,46 +307,23 @@ excludes: field can be populated mechanically from the primitive. That was the b
 
 
 
+Largest body of work in the tree, least established state, and that has not changed: 1,726 commits
+against 34 recent, BUILT and SERVING both UNASSESSED.
 
+Nothing landed against this sub-group in the window since the last summary. That is itself the
+finding -- it sits fifth on activity while carrying the most accumulated work and the least
+assessment, and the two Infrastructure sub-groups above it absorbed the session.
 
+DECIDED stays PARTIAL. The basis is set -- 365-day calendar TWR, gross and net, daily, Account365
+pinned. The METHOD PER SOURCE is not, and the per-source data-availability analysis has still not been
+done. That analysis remains the frontier and everything downstream is unanswerable until it exists.
 
+The hole is unchanged and remains the largest in the register: THE BD-REPLACEMENT TOTAL-RETURN BUILD
+HAS NO PROJECT CODE. CRO's research is delivered, the build is held at registration, and a TWR search
+across all 281 project JSONs returns five hits of which every one is terminal -- zero active projects.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-The largest commit volume in the tree and the least established state. Those two facts belong
-together: 1,726 commits is channel and pipeline work landing steadily, and none of it has been
-assessed against what this sub-group is actually FOR.
-
-DECIDED is PARTIAL. The basis is set -- 365-day calendar TWR, gross and net, daily, Account365
-pinned because it is defensible to refer to. The METHOD PER SOURCE is not set, and the per-source
-data-availability analysis has never been done. That analysis is the frontier and everything
-downstream is unanswerable until it exists.
-
-BUILT and SERVING are UNASSESSED, deliberately, and that is not NO. Nobody has enumerated which
-silver source each gold runner actually reads today.
-
-The hole here is the largest single gap the register has found: THE BD-REPLACEMENT TOTAL-RETURN
-BUILD HAS NO PROJECT CODE. CRO's research is delivered and the build is held at registration. A
-TWR keyword search across all 281 project JSONs returns five hits and every one is terminal --
-ZERO ACTIVE PROJECTS mention TWR. The strategic intent to supplant Black Diamond and Orion
-currently has no registry carrier at all.
-
-The frontier is SHARED with PORTAL.MODEL_PORTFOLIOS: one per-channel source-and-schedule artifact,
-not two. CTO confirmed it, COO is building it, and this sub-group must not commission a second.
+The shared frontier with MODEL_PORTFOLIOS.O3 still stands: ONE per-channel source-and-schedule
+artifact, not two. COO is building it. This sub-group must not commission a second.
 
 **HOLES — live work no project code covers (2):**
 - THE BD-REPLACEMENT TOTAL-RETURN BUILD (fact_account_return) -- NO PROJECT JSON. CRO research is DELIVERED (RCN-0001, org/tier1_exec/4.0.0_SA_CRO/briefs/MASTER_BLACK_DIAMOND_ANALYSIS.md); the build is HELD at CTO registration. RECON_REGISTER.md:105-106 states it verbatim: 'no project JSON registered under any BDX/total-return code'. POSITIVE CONTROL: a TWR/time-weighted keyword search across ALL 281 project JSONs returns 5 hits, ALL TERMINAL -- ZERO ACTIVE PROJECTS mention TWR. This is scope clause (c) with no registry carrier.
@@ -465,39 +360,16 @@ not two. CTO confirmed it, COO is building it, and this sub-group must not commi
 
 
 
+Unchanged, and correctly so. LOW priority by sovereign instruction, two commits total, brief only --
+not decomposed, not staffed. Nothing landed in the window.
 
+The canonical model is set: /api/general/ and /api/scoped/ are canonical, everything else is debt. The
+surface is enumerated in full -- 24 cache behaviors plus one default, 18 canonical and 5 not, with
+unauth probes. /json-tiered/* answers 200 UNAUTH with zero portal clients.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-LOW priority by sovereign instruction, and that is a decision on the record rather than an accident
-of attention. Two commits, brief only, not decomposed, not staffed.
-
-The canonical model is already set: /api/general/ and /api/scoped/ are canonical and everything else
-is debt. DT enumerated the surface in full -- 24 cache behaviors plus one default on the live
-distribution, 18 canonical and 5 not, with unauth probes. /json-tiered/* answers 200 UNAUTH with
-zero portal clients.
-
-The frontier is Andrew's own hypothesis, and it is the cheapest question here: GENERATED IS NOT
-DISPLAYED. Early evidence supports it. If it holds, most of this debt gets deleted rather than
-migrated, which is why investigation precedes any migration work.
-
-This mission finishes a migration already begun; the precedent is recorded in-source.
+The frontier remains the cheapest question here and it is Andrew's own hypothesis: GENERATED IS NOT
+DISPLAYED. If it holds, most of this debt is deleted rather than migrated -- which is exactly why
+investigation precedes migration and why staying at zero activity is the right posture for now.
 
 *grounded: 2026-07-28 -- DT brief, live CloudFront config, denominator enumerated in full.*
 
@@ -529,39 +401,16 @@ This mission finishes a migration already begun; the precedent is recorded in-so
 
 
 
+PROSPECTIVE. Zero commits, and zero is the CORRECT reading rather than a gap.
 
+Nothing landed in the window and nothing was expected to. The path globs are deliberately EMPTY: a
+container for work that does not exist should match nothing, and an empty match set is honest where a
+plausible one is not.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-PROSPECTIVE. Zero commits is the CORRECT reading, not a gap.
-
-Andrew-direct: no true external work has been done yet -- this is a new category for NON-PORTAL
-work. The path globs here are deliberately EMPTY rather than narrow, because a container for work
-that does not exist should match nothing, and an empty match set is honest where a plausible one is
-not.
-
-This matters because an earlier version of this index globbed per-firm project prefixes into
-EXTERNAL and manufactured a 238-commit cross-group overlap that was a property of the index rather
-than of the estate. A per-firm PREFIX is not non-portal client work. That error is corrected and
-recorded so nobody restores the globs believing they are fixing a coverage gap.
-
-Nothing is blocked. Awaiting Andrew's per-client initiative detail.
+This is recorded rather than left implicit because an earlier version of the index globbed per-firm
+project prefixes here and manufactured a 238-commit cross-group overlap that was a property of the
+index, not of the estate. A per-firm PREFIX is not non-portal client work. Nobody should restore those
+globs believing they are closing a coverage gap.
 
 Source of record when work begins: SCHWAB (certified-AUA deprecated 2026-07-24).
 
@@ -596,36 +445,16 @@ Source of record when work begins: SCHWAB (certified-AUA deprecated 2026-07-24).
 
 
 
+PROSPECTIVE and net-new. Zero commits is correct; nothing landed and nothing was expected to.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-PROSPECTIVE and net-new. Zero commits is correct.
-
-Andrew-direct: scoped work that may eventually tie into the portal but is very prospective -- for
-example building out Salesforce integrations for 49 Financial -- and EXPLICITLY NOT portal data
+Scoped adjacent work that may eventually tie into the portal but is not portal work today -- Andrew's
+example is building out Salesforce integrations for 49 Financial -- and EXPLICITLY NOT portal data
 analytics.
 
-The boundary is the whole point of the sub-group. Work belongs here when it serves an advisor
-ALONGSIDE the portal rather than THROUGH it. The moment something becomes portal data analytics it
-LEAVES this sub-group and moves to PORTAL -- that migration is the signal that it graduated, not an
-inconsistency to be tidied away.
+The boundary is the entire point of the sub-group. Work belongs here when it serves an advisor
+ALONGSIDE the portal rather than THROUGH it, and the moment something becomes portal data analytics it
+LEAVES and moves to PORTAL. That migration is the signal that it graduated, not an inconsistency to be
+tidied away.
 
 Nothing registered, nothing blocked, no paths claimed.
 
@@ -657,39 +486,16 @@ Nothing registered, nothing blocked, no paths claimed.
 
 
 
+PROSPECTIVE. Zero commits, and zero is the CORRECT reading rather than a gap.
 
+Nothing landed in the window and nothing was expected to. The path globs are deliberately EMPTY: a
+container for work that does not exist should match nothing, and an empty match set is honest where a
+plausible one is not.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-PROSPECTIVE. Zero commits is the CORRECT reading, not a gap.
-
-Andrew-direct: no true external work has been done yet -- this is a new category for NON-PORTAL
-work. The path globs here are deliberately EMPTY rather than narrow, because a container for work
-that does not exist should match nothing, and an empty match set is honest where a plausible one is
-not.
-
-This matters because an earlier version of this index globbed per-firm project prefixes into
-EXTERNAL and manufactured a 238-commit cross-group overlap that was a property of the index rather
-than of the estate. A per-firm PREFIX is not non-portal client work. That error is corrected and
-recorded so nobody restores the globs believing they are fixing a coverage gap.
-
-Nothing is blocked. Awaiting Andrew's per-client initiative detail.
+This is recorded rather than left implicit because an earlier version of the index globbed per-firm
+project prefixes here and manufactured a 238-commit cross-group overlap that was a property of the
+index, not of the estate. A per-firm PREFIX is not non-portal client work. Nobody should restore those
+globs believing they are closing a coverage gap.
 
 Source of record when work begins: BLACK DIAMOND.
 Open at Andrew: "Cottonwood Capital Advisory" (his wording) vs "Advisors" (the estate's).
@@ -724,39 +530,16 @@ Open at Andrew: "Cottonwood Capital Advisory" (his wording) vs "Advisors" (the e
 
 
 
+PROSPECTIVE. Zero commits, and zero is the CORRECT reading rather than a gap.
 
+Nothing landed in the window and nothing was expected to. The path globs are deliberately EMPTY: a
+container for work that does not exist should match nothing, and an empty match set is honest where a
+plausible one is not.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-PROSPECTIVE. Zero commits is the CORRECT reading, not a gap.
-
-Andrew-direct: no true external work has been done yet -- this is a new category for NON-PORTAL
-work. The path globs here are deliberately EMPTY rather than narrow, because a container for work
-that does not exist should match nothing, and an empty match set is honest where a plausible one is
-not.
-
-This matters because an earlier version of this index globbed per-firm project prefixes into
-EXTERNAL and manufactured a 238-commit cross-group overlap that was a property of the index rather
-than of the estate. A per-firm PREFIX is not non-portal client work. That error is corrected and
-recorded so nobody restores the globs believing they are fixing a coverage gap.
-
-Nothing is blocked. Awaiting Andrew's per-client initiative detail.
+This is recorded rather than left implicit because an earlier version of the index globbed per-firm
+project prefixes here and manufactured a 238-commit cross-group overlap that was a property of the
+index, not of the estate. A per-firm PREFIX is not non-portal client work. Nobody should restore those
+globs believing they are closing a coverage gap.
 
 Source of record when work begins: ORION, plus Eclipse for models.
 
