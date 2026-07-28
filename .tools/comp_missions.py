@@ -537,8 +537,22 @@ def compile_md(recent_days: int = 14) -> str:
     L.append("> **If the anchor is not HEAD, this file is history rather than state.** Re-run "
              "`comp-missions emit && comp-missions compile`.")
     L.append("")
-    L.append("---")
-    L.append("")
+    root = _load_yaml(MISSIONS_DIR / "GOALS.yaml")
+    if root.get("root_goal"):
+        rs = str(root.get("root_goal_status") or "PROPOSED")
+        L.append("## ROOT GOAL")
+        L.append("")
+        if rs == "APPROVED":
+            L.append("*approved %s by %s, %s*" % (root.get("root_goal_version") or "v1",
+                                                  root.get("root_goal_approved_by") or "?",
+                                                  root.get("root_goal_approved_at") or "?"))
+        else:
+            L.append("**%s — DRAFT, NOT sovereign intent**" % rs)
+        L.append("")
+        L.append("> %s" % " ".join(str(root["root_goal"]).split()))
+        L.append("")
+        L.append("---")
+        L.append("")
     L.append("## Priority board — ordered by activity intensity")
     L.append("")
     L.append("| # | sub-group | recent | total | authors | DECIDED | BUILT | SERVING | blocked on |")
@@ -565,6 +579,18 @@ def compile_md(recent_days: int = 14) -> str:
         stance = st.get("stance") or {}
         L.append("## %s — %s" % (sid, st.get("title") or sgs.get(sid, {}).get("title", "")))
         L.append("")
+        if st.get("goal"):
+            status = str(st.get("goal_status") or "PROPOSED")
+            if status == "APPROVED":
+                L.append("**GOAL** — *approved %s by %s, %s*" % (
+                    st.get("goal_version") or "v1",
+                    st.get("goal_approved_by") or "?", st.get("goal_approved_at") or "?"))
+            else:
+                L.append("**GOAL (%s — DRAFT, NOT sovereign intent)** — *%s*" % (
+                    status, st.get("goal_version") or "v1"))
+            L.append("")
+            L.append("> %s" % " ".join(str(st["goal"]).split()))
+            L.append("")
         L.append("    activity   %d commit(s) in the last %d days · %d total · %d author(s)"
                  % (e["recent"], recent_days, e["total"], e["authors"]))
         L.append("    newest     %s" % (e["newest"] or "— no activity —"))

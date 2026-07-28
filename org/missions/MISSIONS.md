@@ -4,13 +4,19 @@
     Every sentence below is SELECTED from a state.yaml or execsum.yaml, never composed
     here: a compiler that writes prose is a compiler that can invent a stance.
 
-    ANCHOR COMMIT   6493257fcb
-    ANCHOR TIME     2026-07-28T15:50:23-04:00   (author-time, not a wall clock)
-    ANCHOR AUTHOR   0.4.0_DS_ClientPlatform
+    ANCHOR COMMIT   bbada5f826
+    ANCHOR TIME     2026-07-28T16:00:20-04:00   (author-time, not a wall clock)
+    ANCHOR AUTHOR   1.0.0_SA_CTO
     ORDERING        activity intensity -- commits in the last 14 days, then total
     SOURCE          org/missions/{GROUP}/{SUB_GROUP}/{state,execsum}.yaml
 
 > **If the anchor is not HEAD, this file is history rather than state.** Re-run `comp-missions emit && comp-missions compile`.
+
+## ROOT GOAL
+
+*approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
+
+> Run Opal's handful of very large-scale initiatives as durable intents that sit ABOVE the Macro/Project Registry -- attached to it but explicitly not 1:1 -- so that the state of each, the projects beneath it, the holes no project covers, and the assignment of agents to it can all be read without a briefing. Sometimes an initiative is close to a single project; sometimes it aggregates many project codes; sometimes it aggregates macro codes across disparate macros. The register exists so that running four of these at once does not require the sovereign to reconstruct state per topic.
 
 ---
 
@@ -19,9 +25,9 @@
 | # | sub-group | recent | total | authors | DECIDED | BUILT | SERVING | blocked on |
 |---|---|---|---|---|---|---|---|---|
 | 1 | `INFRASTRUCTURE.GRAPH` | **355** | 1088 | 35 | PARTIAL | PARTIAL | PARTIAL | — |
-| 2 | `INFRASTRUCTURE.DEBT` | **158** | 1675 | 42 | YES | PARTIAL | PARTIAL | — |
-| 3 | `PORTAL.MODEL_PORTFOLIOS` | **142** | 392 | 16 | YES | YES | NO | 1.0.0_SA_CTO -- an architecture call that PR |
-| 4 | `INFRASTRUCTURE.TOOLS` | **116** | 727 | 37 | YES | YES | UNASSESSED | — |
+| 2 | `INFRASTRUCTURE.DEBT` | **157** | 1675 | 42 | YES | PARTIAL | PARTIAL | — |
+| 3 | `PORTAL.MODEL_PORTFOLIOS` | **146** | 396 | 16 | YES | YES | NO | 1.0.0_SA_CTO -- an architecture call that PR |
+| 4 | `INFRASTRUCTURE.TOOLS` | **117** | 728 | 37 | YES | YES | UNASSESSED | — |
 | 5 | `PORTAL.ADVISOR_INTELLIGENCE` | **34** | 1726 | 36 | PARTIAL | UNASSESSED | UNASSESSED | — |
 | 6 | `PORTAL.DEBT` | **2** | 2 | 2 | PARTIAL | NO | NO | — |
 | 7 | `EXTERNAL.49FINANCIAL` | **0** | 0 | 0 | UNASSESSED | UNASSESSED | UNASSESSED | Andrew -- per-client initiative detail. |
@@ -29,11 +35,15 @@
 | 9 | `EXTERNAL.COTTONWOOD` | **0** | 0 | 0 | UNASSESSED | UNASSESSED | UNASSESSED | Andrew -- per-client initiative detail. |
 | 10 | `EXTERNAL.INFLECTION` | **0** | 0 | 0 | UNASSESSED | UNASSESSED | UNASSESSED | Andrew -- per-client initiative detail. |
 
-**All sub-group summaries are current to the anchor.**
+**PROSE STALE (a commit landed after the summary was written):** `PORTAL.MODEL_PORTFOLIOS`, `PORTAL.DEBT`, `PORTAL.ADVISOR_INTELLIGENCE`, `INFRASTRUCTURE.TOOLS`, `INFRASTRUCTURE.DEBT`, `INFRASTRUCTURE.GRAPH`, `EXTERNAL.ALONGSIDE`, `EXTERNAL.49FINANCIAL`, `EXTERNAL.INFLECTION`, `EXTERNAL.COTTONWOOD`
 
 ---
 
 ## INFRASTRUCTURE.GRAPH — Canonical taxonomy and resource design patterns
+
+**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
+
+> Lock in a canonical taxonomy and canonical resource design patterns, and unify the system on that basis in earnest; and track the enumeration of that coverage as the universe grows, so that related grants and permissions in IAM do not silently break.
 
     activity   355 commit(s) in the last 14 days · 1088 total · 35 author(s)
     newest     2026-07-28T15:15:06-04:00
@@ -41,6 +51,14 @@
     version    v1.2
 
 **FRONTIER —** Lock the taxonomy -- one canonical statement the rest can be migrated onto. But note the 92% figure reframes the bottleneck: DECIDED is not what is holding this, ADOPTION is.
+
+
+
+
+
+
+
+
 
 
 The standard exists and the estate is not on it. That is the sub-group in one line, and it means the
@@ -73,12 +91,24 @@ priority that received nothing today.
 
 ## INFRASTRUCTURE.DEBT — AWS resource and system debt
 
-    activity   158 commit(s) in the last 14 days · 1675 total · 42 author(s)
+**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
+
+> Ensure that as Infrastructure consolidates patterns and improves design, legacy AWS resources are appropriately decommissioned and terminated -- so agents are never confronted with multiple pipelines, paths and buckets that clobber each other.
+
+    activity   157 commit(s) in the last 14 days · 1675 total · 42 author(s)
     newest     2026-07-28T13:21:26-04:00
     stance     DECIDED YES · BUILT PARTIAL · SERVING PARTIAL
     version    v1.1
 
 **FRONTIER —** Make retirement a CONDITION of a migration rather than a follow-up to it. Nothing structurally prevents a replacement shipping while its predecessor keeps running.
+
+
+
+
+
+
+
+
 
 
 1,675 commits, and today's slice was the only one in the whole tree that was purely ENACTED rather
@@ -120,14 +150,26 @@ files both under INFRASTRUCTURE.GRAPH. Both statements are on the record and the
 
 ## PORTAL.MODEL_PORTFOLIOS — Model Portfolios
 
-    activity   142 commit(s) in the last 14 days · 392 total · 16 author(s)
-    newest     2026-07-28T15:46:46-04:00
+**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
+
+> Lock in the proper canonical pipelines for the Model Portfolios product so it serves correct numbers every day without hand-restoration; and establish the Opal-level definition of how the four AUA types aggregate -- ETF Models (the 5 archetypal portfolios), SMA Strategies (TAX SMA, the incoming MUNI SMA, 49F SMAs tracked in SmartX such as PFOE), Custom Models (client-specific SMAs that are not a larger strategy), and Non-Model Residual (assets we advise upon that fall into none of the prior three).
+
+    activity   146 commit(s) in the last 14 days · 396 total · 16 author(s)
+    newest     2026-07-28T15:56:48-04:00
     stance     DECIDED YES · BUILT YES · SERVING NO
     version    v1.2
 
 **FRONTIER —** The defined publisher. Nothing automated writes the serve.
 
 **BLOCKED ON —** 1.0.0_SA_CTO -- an architecture call that PRECEDES the build: which serving namespace is canonical.
+
+
+
+
+
+
+
+
 
 
 The producer is FIXED and the serve is NOT. That is the whole state in one line.
@@ -164,12 +206,24 @@ entire repository -- in Andrew's own sentence in this register.
 
 ## INFRASTRUCTURE.TOOLS — Enumerated coverage universe per tool
 
-    activity   116 commit(s) in the last 14 days · 727 total · 37 author(s)
-    newest     2026-07-28T15:28:32-04:00
+**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
+
+> Establish an enumerated coverage universe per tool -- what each tool covers, what it does not, and where its silence means nothing-there rather than cannot-see -- consolidating the extensive prior art already held in the NFRA projects; and define how each tool must present information so that responses are high-signal and never inadvertently truncated, redacted or garbled.
+
+    activity   117 commit(s) in the last 14 days · 728 total · 37 author(s)
+    newest     2026-07-28T15:52:06-04:00
     stance     DECIDED YES · BUILT YES · SERVING UNASSESSED
     version    v1.3
 
 **FRONTIER —** Wire the declared-vs-actual diff at suite scale -- each tool's DECLARED surface against the surface implied by its ENUMERATION PRIMITIVE. Needs no oracle (Andrew's constraint); comp-toolgraph already implements the shape for coupling. NOW CHEAPER: per-tool primitive rows persist as JSON, so excludes: can be populated MECHANICALLY from the primitive. That was the blocker and it is removed.
+
+
+
+
+
+
+
+
 
 
 The coverage universe is now ENUMERATED and that is a real close, not a claim. 93 of 93 comp-* tools
@@ -212,12 +266,24 @@ excludes: field can be populated mechanically from the primitive. That was the b
 
 ## PORTAL.ADVISOR_INTELLIGENCE — Advisor Intelligence
 
+**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
+
+> Complete the migration whereby the Gold Runners source from the opal-data-assets silver buckets relevant to their channel; then canonize the logic across the various data shapes -- above all performance reporting and attribution on a 365-day calendar Total Weighted Return basis, gross and net, reliably every single day -- so that Opal supplants Black Diamond and Orion rather than depending on them.
+
     activity   34 commit(s) in the last 14 days · 1726 total · 36 author(s)
     newest     2026-07-24T13:05:07-04:00
     stance     DECIDED PARTIAL · BUILT UNASSESSED · SERVING UNASSESSED
     version    v1.1
 
 **FRONTIER —** Enumerate, per gold runner, which silver source it actually reads today. The artifact does not exist. SHARED with PORTAL.MODEL_PORTFOLIOS.O3 -- CTO confirmed it is ONE piece of work, not two, and COO is building it. ADVI MUST NOT COMMISSION A SECOND ONE.
+
+
+
+
+
+
+
+
 
 
 The largest commit volume in the tree and the least established state. Those two facts belong
@@ -251,6 +317,10 @@ not two. CTO confirmed it, COO is building it, and this sub-group must not commi
 
 ## PORTAL.DEBT — Portal-level debt
 
+**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
+
+> Retire portal-level debt: establish which non-canonical API routes are actually displayed rather than merely generated, then deprecate what is dead and migrate only what is live, leaving /api/general/ and /api/scoped/ as the canonical namespaces. LOW priority by standing instruction.
+
     activity   2 commit(s) in the last 14 days · 2 total · 2 author(s)
     newest     2026-07-28T14:43:39-04:00
     stance     DECIDED PARTIAL · BUILT NO · SERVING NO
@@ -258,6 +328,14 @@ not two. CTO confirmed it, COO is building it, and this sub-group must not commi
     priority   LOW -- Andrew-direct 2026-07-28. Recorded so the deprioritization is a DECISION, not an accident of attention. Do not open work here without Andrew.
 
 **FRONTIER —** Answer Andrew's own hypothesis -- GENERATED != DISPLAYED. Early evidence supports it, and if it holds most of this debt can be deleted rather than migrated.
+
+
+
+
+
+
+
+
 
 
 LOW priority by sovereign instruction, and that is a decision on the record rather than an accident
@@ -280,12 +358,24 @@ This mission finishes a migration already begun; the precedent is recorded in-so
 
 ## EXTERNAL.49FINANCIAL — 49 Financial
 
+**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
+
+> Client-facing NON-PORTAL work for 49 Financial. PROSPECTIVE -- no initiative detail specified yet.
+
     activity   0 commit(s) in the last 14 days · 0 total · 0 author(s)
     newest     — no activity —
     stance     DECIDED UNASSESSED · BUILT UNASSESSED · SERVING UNASSESSED
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
+
+
+
+
+
 
 
 PROSPECTIVE. Zero commits is the CORRECT reading, not a gap.
@@ -313,10 +403,22 @@ Source of record when work begins: SCHWAB (certified-AUA deprecated 2026-07-24).
 
 ## EXTERNAL.ALONGSIDE — Alongside -- scoped adjacent work that is explicitly NOT portal data analytics
 
+**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
+
+> Scoped adjacent work that may eventually tie into the portal but is not portal work today -- for example building out Salesforce integrations for 49 Financial. EXPLICITLY NOT portal data analytics: work graduates OUT of this sub-group the moment it becomes that.
+
     activity   0 commit(s) in the last 14 days · 0 total · 0 author(s)
     newest     — no activity —
     stance     DECIDED UNASSESSED · BUILT UNASSESSED · SERVING UNASSESSED
     version    v1.0
+
+
+
+
+
+
+
+
 
 
 PROSPECTIVE and net-new. Zero commits is correct.
@@ -336,12 +438,24 @@ Nothing registered, nothing blocked, no paths claimed.
 
 ## EXTERNAL.COTTONWOOD — Cottonwood Capital Advisors
 
+**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
+
+> Client-facing NON-PORTAL work for Cottonwood Capital Advisors. PROSPECTIVE -- no initiative detail specified yet.
+
     activity   0 commit(s) in the last 14 days · 0 total · 0 author(s)
     newest     — no activity —
     stance     DECIDED UNASSESSED · BUILT UNASSESSED · SERVING UNASSESSED
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
+
+
+
+
+
 
 
 PROSPECTIVE. Zero commits is the CORRECT reading, not a gap.
@@ -367,12 +481,24 @@ Open at Andrew: "Cottonwood Capital Advisory" (his wording) vs "Advisors" (the e
 
 ## EXTERNAL.INFLECTION — Inflection Wealth Management
 
+**GOAL** — *approved v1 by Andrew Berman (sovereign), 2026-07-28T200316Z*
+
+> Client-facing NON-PORTAL work for Inflection Wealth Management. PROSPECTIVE -- no initiative detail specified yet.
+
     activity   0 commit(s) in the last 14 days · 0 total · 0 author(s)
     newest     — no activity —
     stance     DECIDED UNASSESSED · BUILT UNASSESSED · SERVING UNASSESSED
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
+
+
+
+
+
 
 
 PROSPECTIVE. Zero commits is the CORRECT reading, not a gap.

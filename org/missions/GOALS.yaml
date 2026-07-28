@@ -1,0 +1,28 @@
+# GOALS.yaml -- the ROOT-level mission goal. MSTR-synthesized, Andrew-approved.
+# Per-sub-group goals live in org/missions/{GROUP}/{SUB_GROUP}/state.yaml under `goal:`.
+
+root_goal: >
+  Run Opal's handful of very large-scale initiatives as durable intents that sit ABOVE the
+  Macro/Project Registry -- attached to it but explicitly not 1:1 -- so that the state of each,
+  the projects beneath it, the holes no project covers, and the assignment of agents to it can all
+  be read without a briefing. Sometimes an initiative is close to a single project; sometimes it
+  aggregates many project codes; sometimes it aggregates macro codes across disparate macros. The
+  register exists so that running four of these at once does not require the sovereign to
+  reconstruct state per topic.
+root_goal_status: APPROVED
+root_goal_version: v1
+root_goal_synthesized_from: "Andrew-direct charter 2026-07-28 (the mission-architecture message)"
+root_goal_approved_by: "Andrew Berman (sovereign)"
+root_goal_approved_at: "2026-07-28T200316Z"
+
+groups:
+  PORTAL: >
+    Major initiatives spanning portal product items and any associated backend with those
+    products and pipelines.
+  INFRASTRUCTURE: >
+    The stable-reference layer the rest of the estate is built on -- tool coverage and canonical
+    taxonomy/resource design -- plus the backend debt that accrues as it consolidates.
+  EXTERNAL: >
+    Client-facing NON-PORTAL work, subdivided by advisor, plus ALONGSIDE for scoped adjacent work
+    that may eventually tie into the portal. Entirely prospective at this time.
+groups_status: APPROVED
