@@ -523,6 +523,58 @@ fork, unlike the `public-data-router` pair. **2b is NOT undercut.**
 is not a gated partner, so likely correctly scoped). **1 defect in 2 is NOT a rate to extrapolate: I
 picked those two BECAUSE they were highest-consequence, the least representative sample in the set.**
 
+## ANDREW-DIRECT ~1725Z -- FRESHNESS-CHECKER LINE STOPPED; QUEUE RE-ORDERED (appended 17:36Z)
+
+**VERBATIM:** *"We don't need freshness checkers at this point, what we need to do is create established,
+canonical routes and schedules and make sure they are robust. This is a significantly higher priority than
+making freshness checkers before these patterns are designed and deployed."*
+
+**The freshness checker is a RECORD, not a build.** Do NOT build it, size it, or route the DS predicate
+question (CTO withdrew that ask -- it existed only to feed a monitor we are not building). The finding
+stands as postmortem §10 E2, confirmed from three directions (CVO this morning, me at 17:23Z, and the TF
+comment asserting an emitter that does not exist).
+
+**WHY, and it re-reads today's headline finding:** a monitor built now would encode the PRE-CUTOVER
+topology -- serving origin unresolved, publisher unbuilt, legacy rollup pending decommission, serving set
+only established as FIVE artifacts this afternoon -- and would report GREEN against routes we intend to
+retire. **You cannot monitor your way out of an unstable pattern; a checker on a non-canonical route
+measures the wrong thing PRECISELY, which is what this entire incident is made of.** The absent alarm was
+never the root defect: **there was nothing stable for it to check.**
+
+**RE-ORDERED QUEUE. STANDING TEST: does this make a route CANONICAL and ROBUST? If it observes, reports,
+alarms or measures WITHOUT changing what the route IS, it goes behind the things that do.**
+1. `PIPELINE_MAP` part 1 + the Rule-12 class (scoping in msg 20260728T165951Z -- **do NOT land as a map
+   entry**: emits `code/<layer>/` vs live `code/scripts/<layer>/`; 4 of 6 live dirs outside `VALID_LAYERS`
+   incl. `backfill/` = the ROLLUP and `assets_gold/` = the Stage-6 script; would resolve to a NONEXISTENT
+   key, worse than not registering. Needs a schema change: declare prefix + layers per tree.)
+2. 2b's AUTH-invariant enforcement (elevated -- canonical-route work; gated on DT's Q4)
+3. Stage 6's three grants (Andrew-ratified, AUTHORIZED, prefix-scoped to
+   `opal-data-assets/blackdiamond/cottonwood/gold/`) -- unblocks `cycle-complete.json`, the publisher's
+   precondition
+4. The stale `public-data-router` fork (two artifacts, one live, ON the serving path)
+5. Sweep's 6 outstanding -- **RE-SCOPED: hunting enumerations that will silently omit a firm from a
+   CANONICAL ROUTE**, not monitoring gaps. **Deployed-vs-repo FIRST on every one.**
+
+**Nothing already landed is affected** -- the two Denies, row 13, and the decommission all stand.
+
+## MY OWN ERRORS TODAY, CONSOLIDATED (so they are not scattered across comms)
+1. **"Blocked until 49F clears"** -- inherited the gate's own verdict without asking what object produced
+   it (NEVER#1 clause 2). Corrected in ~20 min on COO's challenge.
+2. **"7 other roles"** -- was 6 roles + 1 managed policy; imprecise in the direction that understates.
+3. **Broke the gate** -- re-pointed a reader at a bucket its role could not read. Verified the data was
+   there; never verified the caller could reach it. **The Rule-22a battery was real and aimed at the wrong
+   principal.**
+4. **"Three allowlist omissions"** -- was TWO; inflated in the direction that made my own finding bigger.
+   Caught by a precondition aimed at something else.
+5. **JSON round-trip mojibake'd six unrelated manifest entries** -- caught pre-commit because a pure
+   deletion must have zero added lines.
+6. **"It exists, IT RUNS"** -- inferred a RUNTIME claim from a SOURCE FILE, in the sentence crediting
+   myself for refusing an unverified alarm 3h earlier. **BOUND AS A RULE: a claim about what an instrument
+   DOES is a claim about a RUNTIME -- establish deployment first, or say INFERRED-FROM-SOURCE in the same
+   sentence.**
+7. **"Routed to DS"** -- I stated it as done at the moment I decided to do it, and never sent it. Harmless
+   only because CTO withdrew the ask. **"I will route it" and "it is routed" are different claims.**
+
 ## Next Steps
 
 1. **[0.7.0_AE_CloudOps]** Report the ~15:10Z run from its OWN log: Stage 4 rc, the WARN naming
