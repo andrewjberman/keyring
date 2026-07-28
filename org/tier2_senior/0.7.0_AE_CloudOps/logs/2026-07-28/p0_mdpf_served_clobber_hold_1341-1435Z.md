@@ -244,6 +244,87 @@ deferring while 49F is stale. **The Denies may sit unexercised for days, and acc
 confirmation.** Recorded here so "the hold is proven" cannot become the remembered state. It is landed and
 simulated, not proven.
 
+## ROW 13 IS THE REAL BLOCKER (appended 15:50Z) -- AND I HAD IT WRONG FIRST
+
+**MY ERROR, on the record:** in the 15:35Z outcome above I wrote "the chain stays blocked until 49F RPS
+silver clears." **That was wrong.** I accepted the gate's `latest_partition 2026-07-23 /
+trading_days_behind 3` as a DATA condition without asking what object produced it -- NEVER#1's second
+clause (*the instrument's own verdict is not a second opinion, it is the same error*), committed inside the
+report where I was warning about accumulated silence. COO challenged the premise; the challenge held.
+
+**MEASURED, both paths, 15:41Z:**
+```
+WHAT THE GATE READS   s3://opal-data-bd/schwab/silver/rps/            newest date=20260723   FROZEN
+WHERE THE DATA IS     s3://opal-data-assets/schwab/08242234/silver/fact_rps/
+                                                                     newest date=2026-07-27  FRESH (T-1)
+```
+Source-confirmed @HEAD: `:54 BD_BUCKET=env("BD_BUCKET","opal-data-bd")`, `:96
+SCHWAB_RPS_PREFIX=env(...,"schwab/silver/rps")`, `:440 paginate(Bucket=BD_BUCKET)`; the LIVE function
+overrides NEITHER. **So the gate's verdict is a TRUE READING OF A DEPRECATED OBJECT.** The chain defers on
+a dead path, not a data condition. Corroborated three ways: COO's 544-partition measurement, DS's L1 row,
+and my own listing.
+
+**THE TRAP -- row 13 is NOT a two-env-var change.** Both knobs are env-overridable, so the obvious fix is
+`BD_BUCKET=opal-data-assets` + `SCHWAB_RPS_PREFIX=schwab/08242234/silver/fact_rps`. **That silently returns
+ZERO.** `:443` is `re.match(r"date=(\d{8})/(.+)$", rel)` -- compact form only; the monolith is
+`date=2026-07-27`, hyphenated. Every key fails the regex, `latest` stays `None`, the gate returns
+`fresh:false, latest_partition:null` and defers for a reason further from the truth. That regex is a
+DELIBERATE CTO arch-gated hardening ("a stray flat/partial object must NOT read as fresh") -- **a correct
+control that becomes a blindness the moment it is pointed at a population with a different key grammar.**
+
+**CTO RULINGS (20260728T154511Z):** (a) GO -- re-point and grammar fix are ONE commit or neither;
+(b) NOT "accept both" -- **DECLARE THE GRAMMAR PER SOURCE**, a non-matching key FAILS LOUDLY (accepting
+both would keep the dead path a valid freshness source, i.e. curing row 13 with row 13's own disease);
+(c) row 13 lands **ALONE**, targeted, never entangled with row 10's four pending resources.
+**TIMING: HOLD until CTO's word -- Andrew may still be presenting.**
+
+### (b) ENUMERATION -- DENOMINATOR STATED, GRAMMARS MEASURED LIVE
+Freshness surface = **3 check functions** (`_check_inf_spine` :303, `_check_bd_silver` :320,
+`_check_schwab_rps` :458); **2 are partition-scanning**; `:614` selects ONE BD-side check per invocation
+via `custody_source`, so the gate reads **2 sources per run, never 3**.
+
+| Src | Location | Grammar (MEASURED) | Newest |
+|---|---|---|---|
+| S1 inflection spine | `opal-data-inf/gold/meta/pipeline-complete.json` | NOT a partition -- date from JSON body `run_date` | 2026-07-28T15:04:07Z |
+| S2 49F BD silver (dormant) | `opal-data-bd/silver/{allocations,fees}` | FLAT `{YYYY-MM-DD}.parquet` | `2026-07-24.parquet` |
+| S3 49F Schwab RPS (LIVE) | `opal-data-bd/schwab/silver/rps` | DIR `date=YYYYMMDD/` COMPACT + `data.parquet` | `date=20260723/` |
+| TARGET row 13 | `opal-data-assets/schwab/08242234/silver/fact_rps` | DIR `date=YYYY-MM-DD/` HYPHENATED + `data.parquet` | `date=2026-07-27/` |
+
+**VERDICT: GENUINELY MIXED, not theoretical.** Three structurally unrelated grammars (JSON body field /
+flat filename stem / directory token). **The gate already IS a multi-grammar reader -- the mix is hardcoded
+per function rather than declared.** This also kills "accept both" twice over: there is no single "both",
+and a sniffing parser would make every source silently accept every other's grammar (a stray
+`2026-07-27.parquet` under the RPS prefix would satisfy RPS freshness).
+
+**OPEN GATE ON ROW 13, raised not answered:** the monolith carries TWO RPS silver tables, both hyphenated,
+both fresh at 2026-07-27 -- `fact_rps` AND `fact_rps_s2`. Row 13 must DECLARE which is the
+freshness source-of-record. Choosing by name-length is exactly the 0824/0833 never-SUBSTITUTE shape -- a
+SELECTION between similar masters made at a call site instead of derived from a declared
+consumer-anchored purpose. Routed to CTO; needs 0.6.2_PartnerETL or DS to state what `_s2` denotes.
+
+**FLAGGED, NOT CLAIMED:** S2 (`opal-data-bd/silver/{allocations,fees}`) sits at 2026-07-24 = 2 trading days
+behind vs `BD_MAX_LAG_TRADING_DAYS=2` -- `fresh:true` by exactly one day of margin. Dormant today
+(`custody_source=schwab`). If custody ever flips back to `bd`, that path is one trading day from deferring
+and nobody would expect it, because the RPS story will have been "fixed."
+
+## DURABLE CHECK FOR THE NEXT WINDOW -- A PROCEDURE, NOT A PROCESS
+
+**I CANNOT arm a watch that survives this session** (background tasks die with it; my lane arms ZERO crons
+by standing order, LD-0157). I told COO I would re-arm and then retracted it within the hour -- accepting
+that ask would have put a phantom detector into the sweep record, which is the same class this whole
+session has been closing, authored by me. **So the durable artifact is this procedure plus the baselines,
+not a watcher.** Whoever is live after ~15:05Z next cycle:
+```
+aws s3 ls s3://opal-data-mdpf/telemetry/mdpf-daily-runner/logs/ | grep 2026072       # did it RUN
+aws s3 cp s3://opal-data-mdpf/telemetry/mdpf-daily-runner/status.json -              # run_id + per-stage rc
+aws logs describe-log-streams --log-group-name /aws/lambda/mdpf-daily-trigger \
+    --order-by LastEventTime --descending --max-items 1                              # dispatch-vs-DEFER + reason
+```
+Then head-object the six served keys and compare to the baselines recorded above. **`mdpf-freshness-checker`
+reportedly alarms on ROLL_SOURCE_UNREADABLE per the gate docstring -- I have NOT verified it exists or has
+ever fired, so it is NOT counted as coverage** (same rule applied to the fan-in fence: an unverified alarm
+is a document).
+
 ## Next Steps
 
 1. **[0.7.0_AE_CloudOps]** Report the ~15:10Z run from its OWN log: Stage 4 rc, the WARN naming
