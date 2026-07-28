@@ -1,0 +1,164 @@
+# missions.yaml -- machine-readable mission register index.
+#
+# OWNER: 0.0.0_AB_MSTR. Companion to org/tier0/MISSIONS.md (the prose register).
+# THIS FILE IS THE ATTRIBUTION SOURCE OF TRUTH for `comp-missions`.
+#
+# WHAT THIS FILE IS FOR, AND ITS ONE HARD LIMIT
+# ---------------------------------------------
+# It maps commits -> sub-groups so the register's ACTIVITY blocks are machine-maintained.
+#
+#   >> COMMIT ACTIVITY IS NOT PROGRESS. <<
+#
+# A commit scanner can tell you what was TOUCHED. It can never tell you whether the thing
+# WORKS. That distinction is the whole reason MISSIONS.md separates DECIDED/BUILT/SERVING --
+# and it was proven again on 2026-07-28, when a BUILT stance scored off a producer LANDING was
+# ~2h stale and had to be corrected off an EXERCISED RUN. A scanner structurally cannot see a
+# run. So:
+#
+#   MACHINE WRITES  activity, volume, contributors, recency, code:doc ratio, unmapped count
+#   HUMANS WRITE    DECIDED / BUILT / SERVING, FRONTIER, BLOCKED-ON, HOLES
+#
+# Anything that requires judgment or an exercised run stays human. The machine's job is to keep
+# the *facts of motion* current and to FLAG when motion and stance have diverged.
+
+version: 1
+
+# Attribution precedence. First hit wins; the rest is recorded, never guessed.
+attribution:
+  # 1. DECLARED -- a `Mission: <ID>` git trailer. Authoritative.
+  #    Written automatically by the prepare-commit-msg hook from the spawning session's
+  #    mission file; NO agent is asked to remember it.
+  declared_trailer: "Mission"
+  # 2. DERIVED -- path globs below. Advisory.
+  # 3. UNMAPPED -- a first-class outcome. Counted, printed, never silently dropped.
+  #
+  # AMBIGUOUS (a commit whose paths derive to >1 sub-group) is REPORTED, not tie-broken.
+  # Manufacturing a winner would invent precision the evidence does not carry.
+
+groups:
+  PORTAL:
+    title: Portal
+    subgroups:
+      PORTAL.MODEL_PORTFOLIOS:
+        title: Model Portfolios
+        paths:
+          - data/mdpf/**
+          - infra/aws/lambda/mdpf-*/**
+          - infra/aws/terraform/mdpf*/**
+          - docs/architecture/MDPF_*
+          - org/projects/MDPF_*
+        attach: [MDPF_REVAMP, MDPF_3FIRMS, MDPF_DEBTCLEAN, MDPF_MONOCLEANUP, MDPF_OWNTS,
+                 MDPF_CADENCE, MDPF_COUNTS, MDPF_BASISSWITCH, MDPF_SCOPED, MDPF_VARFLAG,
+                 MDPF_COTMDL, MDPF_ASSETS, OPAL_CONSOLIDATION]
+        holes: [MDPF_CHANNEL_INDEPENDENCE]
+      PORTAL.ADVISOR_INTELLIGENCE:
+        title: Advisor Intelligence
+        paths:
+          - data/black_diamond/**
+          - data/inf/**
+          - data/cot/**
+          - org/projects/ADVI_*
+          - docs/architecture/ADVI_*
+        attach: [OPAL_ASSETS, OPAL_CONSOLIDATION, NFRA_PPL49F, NFRA_PPLINF, NFRA_PPLCOT]
+        holes: []
+  INFRASTRUCTURE:
+    title: Infrastructure
+    subgroups:
+      INFRASTRUCTURE.TOOLS:
+        title: Enumerated coverage universe per tool
+        paths:
+          - .tools/comp-*
+          - .tools/comp_*.py
+          - .tools/git-hooks/**
+          - org/modules/graph/comp*
+          - org/projects/NFRA_TOOL*
+          - org/projects/NFRA_COMP*
+          - docs/architecture/NFRA_TOOL*
+          - docs/architecture/NFRA_COMP*
+          - docs/briefs/nfra-tool*
+        attach: [NFRA_COMPUNIFY, NFRA_MSBEFF, NFRA_COMPLEARN, NFRA_COMPDRIFT, NFRA_TOOLARCH,
+                 NFRA_TOOLBHVR, NFRA_TOOLCHECK, NFRA_TOOLGRAPH, NFRA_TOOLHEALTH, NFRA_TOOLHUD,
+                 NFRA_COMPASSURANCE, NFRA_COMPREG, NFRA_COMPROUTE, NFRA_SYSPARITY]
+        mechanism: [NFRA_COMPRAIL]     # enforcement point, not scope
+        inert: [NFRA_TOOLSEM]          # 4 commits / 0 code files -- routing here lands nowhere
+        holes: [NFRA_TOOLUNIFY]        # 109 commits, no project JSON
+      INFRASTRUCTURE.GRAPH:
+        title: Canonical taxonomy and resource design patterns
+        paths:
+          - org/modules/graph/**
+          - infra/system/**
+          - org/projects/OPAL_STNDRD*
+          - org/projects/OPAL_TAXONOMY*
+          - org/projects/NFRA_ONTO*
+          - org/projects/NFRA_GRAPH*
+          - docs/architecture/NFRA_GRAPH*
+          - docs/architecture/OPAL_TAXONOMY*
+          - docs/architecture/OPAL_STNDRD*
+        attach: [OPAL_STNDRD, OPAL_TAXONOMY, NFRA_ONTOLOGY, NFRA_ONTOLOGY2, NFRA_ONTOCLARITY,
+                 NFRA_GLOBGRPH, NFRA_GRAPHS, NFRA_GRAPHUNI, NFRA_GRAPHDEPTH, NFRA_TSGRAPH,
+                 NFRA_SEMCTL, NFRA_NERVES, NFRA_EDGES]
+        holes: []
+  DEBT:
+    title: Debt
+    subgroups:
+      DEBT.BACKEND:
+        title: AWS resource and system debt
+        paths:
+          - infra/aws/ec2/**
+          - infra/aws/terraform/**
+          - org/modules/graph/debtscan/**
+          - org/projects/NFRA_DEBTSCAN*
+          - org/projects/DEBT_*
+        attach: [NFRA_DEBTSCAN, MDPF_DEBTCLEAN, MDPF_MONOCLEANUP, NFRA_TERRAFORM,
+                 NFRA_COSTAWS, OPAL_CONSOLIDATION, DEBT_1STRUN]
+        holes: []
+      DEBT.FRONTEND:
+        title: Portal-level debt
+        # NOT A FOCUS -- Andrew-direct 2026-07-28. Deliberately narrow paths so it does not
+        # hoover portal commits it was told not to care about.
+        paths:
+          - org/projects/UIUX_*
+        attach: []
+        holes: []
+  EXTERNAL:
+    title: External
+    subgroups:
+      EXTERNAL.49FINANCIAL:
+        title: 49 Financial
+        paths: [org/projects/ADVI_49*, data/schwab/**]
+        attach: [NFRA_PPL49F, SSCN_PFOE, BD_RPSAUTO]
+        holes: []
+      EXTERNAL.INFLECTION:
+        title: Inflection Wealth Management
+        paths: [org/projects/ADVI_INF*]
+        attach: [NFRA_PPLINF]
+        holes: []
+      EXTERNAL.COTTONWOOD:
+        title: Cottonwood Capital Advisors
+        paths: [org/projects/ADVI_COT*, org/projects/NFRA_COT*, org/projects/WSE_COTMDL*]
+        attach: [NFRA_PPLCOT, NFRA_COT_RULE15, MDPF_COTMDL, WSE_COTMDL, AUTH_COTTON]
+        holes: []
+
+# Classification of touched files, for the ENACTED-vs-RECORDED ratio (CVO's signal).
+classify:
+  code:  [".tools/", "org/modules/", "infra/", "data/", "portal/"]
+  doc:   ["docs/", "org/tier", "org/projects/"]
+
+# GOVERNANCE/META -- register upkeep, ledger entries, law edits, session logs, comms.
+# These are NOT mission execution and must NOT be counted as a blind spot. Folding them into
+# UNMAPPED would inflate the blind-spot number with work that is correctly unattributed, and a
+# blind-spot metric that counts the wrong thing is worse than none.
+meta_paths:
+  - org/tier0/**
+  - org/tier0_exec/**
+  - CLAUDE.md
+  - org/XXX.md
+  - org/mcp/**
+  - org/compiler-tools-log.md
+  - org/*.log
+
+# A sub-group whose ACTIVITY is high while its STANCE has not been re-grounded is the drift
+# case this whole mechanism exists to surface. Motion without re-grounding is exactly how a
+# register becomes a stale record that reads confident.
+drift:
+  stale_after_days: 3

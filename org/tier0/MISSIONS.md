@@ -21,8 +21,8 @@ containment claim, and it is explicitly NOT 1:1.**
 
 ```
 MISSION GROUP    Portal · Infrastructure · Debt · External   (4, fixed unless Andrew changes them)
-  SUB-GROUP      the large initiative -- VERSIONED           (PORTAL.MP v1.0, INFRA.GRAPH v1.0, ...)
-    OBJECTIVE    a nameable outcome inside it                (PORTAL.MP.O2, ...)
+  SUB-GROUP      the large initiative -- VERSIONED           (PORTAL.MODEL_PORTFOLIOS v1.0, INFRASTRUCTURE.GRAPH v1.0, ...)
+    OBJECTIVE    a nameable outcome inside it                (PORTAL.MODEL_PORTFOLIOS.O2, ...)
       -> attaches to  macro codes and/or project codes       (many-to-many, non-exclusive)
 ```
 
@@ -30,7 +30,7 @@ MISSION GROUP    Portal · Infrastructure · Debt · External   (4, fixed unless
 |---|---|---|
 | **Mission Group** | `Portal`, `Infrastructure`, `Debt`, `External` | no — these are stable |
 | **Sub-group** | `Advisor Intelligence` under Portal · `Backend` under Debt | **YES** |
-| **Objective** | `PORTAL.MP.O3` | no — versioned by its parent |
+| **Objective** | `PORTAL.MODEL_PORTFOLIOS.O3` | no — versioned by its parent |
 
 **Sub-group versioning.** Each sub-group carries a `vMAJOR.MINOR` and a version history.
 **MAJOR** = the intent or scope changed (what "done" means is now different). **MINOR** = objectives
@@ -105,9 +105,99 @@ Cheap by design; it must survive being run every session.
 
 ---
 
+# EXEC SUMMARY — current state
+
+    ANCHOR COMMIT   a7c78a05ec
+    ANCHOR TIME     2026-07-28T14:55:20-04:00   (author-time of that commit, not a wall clock)
+    ANCHOR AUTHOR   1.0.0_SA_CTO
+    ANCHOR SUBJECT  prd(MDPF_DEBTCLEAN): s.13.2a ASSETS-SIDE HOME -- portal/gold/mdpf/{scope}/{artifact-
+    WINDOW          2026-07-28 00:00 -04:00 -> anchor
+    SOURCE          `comp-missions scan`. Prose is MSTR's; every number is the tool's output,
+                    not recollection.
+
+> **Re-derived, never edited in place. Stale the moment a commit lands after the anchor — which is
+> why the anchor is a COMMIT, not a clock. If the anchor is not HEAD, this is history, not state.**
+
+## The measured shape of the day
+
+**85 commits.** 12 are governance/meta (register upkeep, ledger, law, comms) and are **excluded from
+the denominator** — correctly unattributed, not a blind spot. That leaves **73 mission-attributable
+commits: 19 mapped, 54 unmapped.**
+
+| sub-group | commits | code | doc | newest |
+|---|---|---|---|---|
+| `PORTAL.MODEL_PORTFOLIOS` | **18** | 6 | 17 | `a7c78a05ec` 14:55:20 |
+| `DEBT.BACKEND` | **5** | 5 | 0 | `04e230b749` 13:21:26 |
+| `PORTAL.ADVISOR_INTELLIGENCE` | 0 | — | — | **no activity** |
+| `INFRASTRUCTURE.TOOLS` | 0 | — | — | **no activity** |
+| `INFRASTRUCTURE.GRAPH` | 0 | — | — | **no activity** |
+| `DEBT.FRONTEND` · `EXTERNAL.49FINANCIAL` · `EXTERNAL.INFLECTION` · `EXTERNAL.COTTONWOOD` | 0 | — | — | **no activity** |
+
+**Four commits are AMBIGUOUS** (`DEBT.BACKEND` + `PORTAL.MODEL_PORTFOLIOS`) — all four are the MDPF
+IAM/Terraform work, which genuinely is both. **Reported, not tie-broken.** A commit that is honestly
+two things is not improved by forcing it to be one.
+
+## What it says, in one line
+
+**Every mission-attributable commit today landed in Model Portfolios or backend debt. The two
+Infrastructure sub-groups named joint-highest priority received nothing.**
+
+Second instrument to say so today, and **the two disagree on detail**: CVO's independent mapper read
+`INFRASTRUCTURE.TOOLS` at 5 and `INFRASTRUCTURE.GRAPH` at 1 (that one from a stale session); this one
+reads 0 and 0. **Neither is wrong — they classify differently, and I am not reconciling them into a
+false precision.** What survives both is the direction, and the direction is unambiguous: **roughly an
+order of magnitude of misallocation against the stated priority.**
+
+## The blind spot, as a number rather than a caveat
+
+**54 of 73 attributable commits could not be attributed — 74%.** They are overwhelmingly **agent-home
+deliverables, session logs and record commits** under `org/tier1_exec/**` and `org/tier2_senior/**`:
+real work product, neither pure governance nor path-attributable.
+
+> **That number is the argument for the DECLARED trailer, and it is why path-globs alone cannot be the
+> mechanism.** A path map only ever sees work that touches a distinctive directory. Most of this
+> fabric's output is prose in an agent's own folder, and no glob will tell you which mission it served.
+> **The commit's author knows; the filesystem does not.** The trailer moves attribution to the only
+> party holding the information — and because the hook writes it from the spawn tag, it asks no agent
+> to remember anything.
+
+**Do not read 74% as a defect rate.** It is the coverage of a mechanism live for zero commits so far.
+**The honest reading: this is the baseline the trailer has to beat.**
+
+## Register state at the anchor
+
+- **`PORTAL.MODEL_PORTFOLIOS`** — `DECIDED` YES · `BUILT` **YES** (corrected off the 16:48:04Z
+  *scheduled run*, not off a commit) · `SERVING` **NO**: the serve is a hand-restored artifact fed by
+  neither producer. **Frontier: the defined publisher. Blocked on a CTO architecture call — which
+  serving namespace is canonical — that precedes the build.**
+- **`INFRASTRUCTURE.TOOLS`** — `DECIDED` YES · `BUILT` YES for positive enumeration (gate
+  **exercised**: 88 homed tools, 12 rules, 0 unverifiable) / NO for the negative declaration ·
+  `SERVING` **UNASSESSED** — gate wiring unestablished, and CVO declined to guess after three false
+  claims about that same project earlier the same day. **Largest hole in the register: `NFRA_TOOLUNIFY`
+  — 109 commits, 113 doc files, no project JSON.**
+- **`INFRASTRUCTURE.GRAPH`** — `SERVING` PARTIAL: **121 EventBridge Rules vs 10 Scheduler schedules —
+  92% on the non-standard side of a standard that already exists.** The bottleneck is **adoption**,
+  not decision.
+- **`DEBT.BACKEND`** — 5 commits, **all code, zero doc**: the only sub-group today whose output was
+  purely enacted rather than recorded.
+- **`DEBT.FRONTEND`** — **LOW priority by sovereign instruction**, brief only, not decomposed, not
+  staffed (`docs/briefs/DEBT_FRONTEND_mission_brief_20260728.md`, DT). Measured: **24 cache behaviors
+  + 1 default enumerated in full, 18 canonical, 5 not.** Its central question is Andrew's own
+  hypothesis — *generated ≠ displayed* — and early evidence supports it. **It finishes a migration
+  already begun**, with the precedent recorded in-source at `portal-proxy.ts:356-357`.
+
+## Open at Andrew
+
+1. The **AUA aggregation expansion** (`PORTAL.MODEL_PORTFOLIOS.O2`) he said he would send.
+2. **Per-client initiative detail** for the three `EXTERNAL.*` sub-groups.
+3. **"Cottonwood Capital Advisory" vs "Advisors."**
+4. **The allocation gap above** — surfaced, not sized. Allocation is COO's, dispatch is CTO's.
+
+---
+
 ## PRIORITY (Andrew-direct 2026-07-28)
 
-**Highest priority right now:** `PORTAL.MP` (Model Portfolios) · `INFRA.TOOLS` + `INFRA.GRAPH`
+**Highest priority right now:** `PORTAL.MODEL_PORTFOLIOS` (Model Portfolios) · `INFRASTRUCTURE.TOOLS` + `INFRASTRUCTURE.GRAPH`
 (enumeration and coverage clarity). Everything else is real but is not what the fabric is being
 pointed at this week.
 
@@ -123,17 +213,17 @@ cannot run four mission groups. Every field in here is chosen so state can be re
 >
 > | sub-group | commits | live capacity |
 > |---|---|---|
-> | `PORTAL.MP` | **42**, across 5 agents | heavy |
+> | `PORTAL.MODEL_PORTFOLIOS` | **42**, across 5 agents | heavy |
 > | `DEBT.BACKEND` | 14 | present |
-> | `INFRA.TOOLS` | **5** | thin |
-> | `INFRA.GRAPH` | **1** — and that one from a **STALE** session | **none live** |
+> | `INFRASTRUCTURE.TOOLS` | **5** | thin |
+> | `INFRASTRUCTURE.GRAPH` | **1** — and that one from a **STALE** session | **none live** |
 >
-> **Two of the three joint-highest-priority sub-groups have six commits between them, and `INFRA.GRAPH`
+> **Two of the three joint-highest-priority sub-groups have six commits between them, and `INFRASTRUCTURE.GRAPH`
 > has no live capacity at all.** The stated priority and the actual allocation disagree by roughly an
 > order of magnitude.
 >
 > **CAVEAT, CVO's own and load-bearing: 32 of 82 commits went unmapped (~39%), and the mapper likely
-> undercounts `INFRA.TOOLS` because its deliverables cite MDPF as their worked example. DIRECTIONAL
+> undercounts `INFRASTRUCTURE.TOOLS` because its deliverables cite MDPF as their worked example. DIRECTIONAL
 > ONLY — do not quote it as a metric.** The direction survives the caveat; the precision does not.
 >
 > **Surfaced, not sized.** Allocation is COO's call and dispatch is CTO's. **This is the one thing a
@@ -181,8 +271,8 @@ on a **tilde-lane basis** as needed. *"It really is just a function of launch in
 **The whole mechanism, and it is deliberately this small:**
 
 ```
-1. COO names the sub-group it needs an agent for      ->  "spawn for PORTAL.MP"
-2. MSTR spawns with that tag in the startup context   ->  /mstr-spawn <serial> --mission PORTAL.MP
+1. COO names the sub-group it needs an agent for      ->  "spawn for PORTAL.MODEL_PORTFOLIOS"
+2. MSTR spawns with that tag in the startup context   ->  /mstr-spawn <serial> --mission PORTAL.MODEL_PORTFOLIOS
 3. The agent starts already knowing its mission,      ->  reads MISSIONS.md at that sub-group:
    its intent, its attached codes, and its frontier       intent + ATTACH + FRONTIER + BLOCKED-ON
 ```
@@ -193,7 +283,7 @@ THIS FILE, not a copy of it** — so it cannot drift from the register, which is
 briefing would guarantee.
 
 **Tilde lanes are the unit of mission focus.** A base serial spread across three sub-groups is the
-context dilution this is meant to end; `~A` on `PORTAL.MP` and `~B` on `INFRA.GRAPH` keeps each
+context dilution this is meant to end; `~A` on `PORTAL.MODEL_PORTFOLIOS` and `~B` on `INFRASTRUCTURE.GRAPH` keeps each
 session's working set coherent.
 
 ### TWO SPAWN TRIGGERS, TWO PATHS (COO refinement 183123Z — accepted)
@@ -214,9 +304,9 @@ transcription step and nothing else — and a transcription step is exactly wher
 provisions and tags (it owns spawn/kill); CTO dispatches the actual work. **Spawn is not dispatch** —
 the tag orients a session, it does not authorise work.
 
-**FIRST EXERCISE, 2026-07-28 ~1832Z:** `0.7.0_AE_CloudOps~C` spawned tagged `INFRA.TOOLS`, successor to
+**FIRST EXERCISE, 2026-07-28 ~1832Z:** `0.7.0_AE_CloudOps~C` spawned tagged `INFRASTRUCTURE.TOOLS`, successor to
 the context-exhausted base serial. Taxonomy call was MSTR's — COO explicitly deferred it. Placement
-reasoning at `INFRA.TOOLS`.
+reasoning at `INFRASTRUCTURE.TOOLS`.
 
 ---
 ---
@@ -225,7 +315,7 @@ reasoning at `INFRA.TOOLS`.
 
 *Major initiatives spanning portal product surfaces and the backend/pipelines behind them.*
 
-## PORTAL.MP — Model Portfolios   `SUB-GROUP` **v1.2**
+## PORTAL.MODEL_PORTFOLIOS — Model Portfolios   `SUB-GROUP` **v1.2**
 
 *Version history: `v1.0` 2026-07-28 created · `v1.1` +O3 (Andrew-direct 174108Z channel-trace) · `v1.2` CTO state pull 183143Z — O1 BUILT corrected to YES, HOLES recorded*
 
@@ -237,7 +327,7 @@ every day, without hand-restoration.
 `MDPF_COUNTS`, `MDPF_BASISSWITCH`, `MDPF_SCOPED`, `MDPF_VARFLAG`, `MDPF_COTMDL`, `MDPF_ASSETS` ·
 plus `OPAL_CONSOLIDATION`, `ETFS_*`, `OPAL_TAXSMA*`, `SSCN_PFOE`.
 
-### PORTAL.MP.O1 — Lock in the canonical pipelines
+### PORTAL.MODEL_PORTFOLIOS.O1 — Lock in the canonical pipelines
 ```
 DECIDED : YES      @ Andrew-direct 2026-07-28 ~1427Z (canonical non-model basis) + ~1710Z
                      (deprecate legacy, move full force to REVAMP canonical) -- bf986d81a
@@ -265,7 +355,7 @@ serving namespace is canonical. **Not blocked on Andrew, not blocked on a lane.*
 
 **GROUNDED:** 2026-07-28T183143Z, CTO-corrected against the 16:48:04Z scheduled run.
 
-### PORTAL.MP.O2 — The Opal AUA aggregation definition  *(PENDING — Andrew to expand)*
+### PORTAL.MODEL_PORTFOLIOS.O2 — The Opal AUA aggregation definition  *(PENDING — Andrew to expand)*
 **Logged now at Andrew's direction so it is not lost; he will delineate it in a future message and
 expand it into project PRDs + registration with CTO.**
 
@@ -287,7 +377,7 @@ SERVING : NO
 mission, not its ceiling.
 **GROUNDED:** 2026-07-28, authored from Andrew-direct. Nothing measured yet.
 
-### PORTAL.MP.O3 — Every channel traced to the Gold DDB: what feeds it, on what schedule, and whether it arrives
+### PORTAL.MODEL_PORTFOLIOS.O3 — Every channel traced to the Gold DDB: what feeds it, on what schedule, and whether it arrives
 **Andrew-direct 2026-07-28T174108Z, VERBATIM** (COO-recorded `db9b11524`):
 > *"I agree with your framing, we need to trace every necessary channel, e.g. 0824 schwab and smartx
 > buckets for 49F, and identify what feeds them on what schedule and make sure that they are getting
@@ -308,7 +398,7 @@ BUILT   : NO       -- no per-channel feed+schedule+arrival enumeration exists as
 SERVING : NO
 ```
 **FRONTIER:** the enumeration itself — per channel, its feeder, its schedule, and evidence it lands in
-the Gold DDB. **Note this is the same shape as `PORTAL.ADVI.O1`'s frontier** (enumerate what each gold
+the Gold DDB. **Note this is the same shape as `PORTAL.ADVISOR_INTELLIGENCE.O1`'s frontier** (enumerate what each gold
 runner actually reads). Two missions, one missing artifact class: **we do not have a per-channel
 source-and-schedule map anywhere.** That is worth seeing as one gap rather than two.
 **BLOCKED-ON:** `1.0.0_SA_CTO` as PRD owner; COO holds the decomposition.
@@ -317,7 +407,7 @@ schedule and is a defect** — it freezes silently when its upstream breaks. Thi
 direct remedy for that class, and `mdpf-daily-trigger` is a live instance of it.
 **GROUNDED:** 2026-07-28, from the sovereign record. Nothing enumerated yet.
 
-### PORTAL.MP — HOLES (field 2), returned by CTO 183143Z
+### PORTAL.MODEL_PORTFOLIOS — HOLES (field 2), returned by CTO 183143Z
 
 Live work covered by **no project code**:
 
@@ -338,7 +428,7 @@ Live work covered by **no project code**:
 > sovereign already knows, and then spends credibility defending it. **An unanswered question is not
 > a finding.** Recorded as *open at Andrew, held by CTO*, and nothing more.
 
-### ⚠ PORTAL.MP — REGISTRY GAP FOUND AT AUTHORING (this is the register earning its keep)
+### ⚠ PORTAL.MODEL_PORTFOLIOS — REGISTRY GAP FOUND AT AUTHORING (this is the register earning its keep)
 Andrew named `MDPF_CHANNEL_INDEPENDENCE` as a driver of this mission. **It has a PRD
 (`docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md`), it is cited as law in `CLAUDE.md`, it is
 driving live P0 work today — and it has NO project JSON and ZERO rows in `REGISTRY.md`.**
@@ -353,7 +443,7 @@ a register starts lying.
 
 ---
 
-## PORTAL.ADVI — Advisor Intelligence   `SUB-GROUP` **v1.0**
+## PORTAL.ADVISOR_INTELLIGENCE — Advisor Intelligence   `SUB-GROUP` **v1.0**
 
 *Version history: `v1.0` 2026-07-28 created*
 
@@ -363,7 +453,7 @@ attribution computed our own way — reliably, every day.
 **Attaches to:** `ADVI_*` (macro, ~90 project codes) · `OPAL_ASSETS`, `OPAL_CONSOLIDATION`,
 `NFRA_PPL49F`, `NFRA_PPLINF`, `NFRA_PPLCOT`.
 
-### PORTAL.ADVI.O1 — Gold Runners source from the channel's `opal-data-assets` silver
+### PORTAL.ADVISOR_INTELLIGENCE.O1 — Gold Runners source from the channel's `opal-data-assets` silver
 ```
 DECIDED : YES      @ OPAL_CONSOLIDATION is the ratified P0 master; the assets grammar is live
                      (s3://opal-data-assets, {source}/{scope}/{layer}/{type|feed}/{date})
@@ -374,7 +464,7 @@ SERVING : UNASSESSED
 enumeration does not exist as a single artifact — building it is the next move, and it is cheap.
 **GROUNDED:** 2026-07-28, structure only. **Deliberately `UNASSESSED`, not `NO`.**
 
-### PORTAL.ADVI.O2 — Canonical performance + attribution: 365-day TWR, gross and net, daily
+### PORTAL.ADVISOR_INTELLIGENCE.O2 — Canonical performance + attribution: 365-day TWR, gross and net, daily
 **The larger refactor.** Decide how to make canonical logic across the various data shapes,
 particularly performance reporting and attribution.
 
@@ -411,7 +501,7 @@ across both must respect the business-purpose split; this mission does not loose
 
 *Two items, stable for reference.*
 
-## INFRA.TOOLS — enumerated coverage universe per tool   `SUB-GROUP` **v1.3**
+## INFRASTRUCTURE.TOOLS — enumerated coverage universe per tool   `SUB-GROUP` **v1.3**
 
 *Version history: `v1.0` 2026-07-28 created · `v1.1` +O2 (Andrew-direct response-scope) · `v1.2` CVO state pull 183509Z — attach corrected (+COMPUNIFY), stance grounded on an exercised gate, O2 sharpened*
 
@@ -498,7 +588,7 @@ constraint), and `comp-toolgraph` already implements the shape for *coupling*.
 > COO's sharper version: assume the instrument that would find them is the same one that missed these.**
 
 Also holed, no project code covers any: the **negative declaration** (what a tool cannot see *within*
-its declared surface) · the **runtime-provenance axis** · **`INFRA.TOOLS.O2` itself** · **cross-tool
+its declared surface) · the **runtime-provenance axis** · **`INFRASTRUCTURE.TOOLS.O2` itself** · **cross-tool
 coverage diffing at suite scale** (`comp-toolgraph` does declared-vs-actual for coupling, nothing for
 coverage).
 
@@ -511,7 +601,7 @@ defect, not the trace. **An unenumerated coverage universe is what makes a tool'
 uninterpretable.**
 **GROUNDED:** 2026-07-28, structure + prior art located. Per-tool coverage NOT enumerated.
 
-### INFRA.TOOLS.O2 — response scope: high-signal output that is not truncated, redacted or garbled
+### INFRASTRUCTURE.TOOLS.O2 — response scope: high-signal output that is not truncated, redacted or garbled
 **Andrew-direct 2026-07-28, and it is a distinct function from coverage:** once the coverage universe
 is known, decide **how each tool must work mechanically — namely the scope of how information is
 presented.** Big responses get truncated; the output must be high-signal and **not inadvertently
@@ -527,7 +617,7 @@ SERVING : NO
 > is correct and useful. The defect is **truncation the reader cannot detect** — which is *the same
 > property as an unenumerated coverage universe*: the output is **byte-identical to the complete one**,
 > so the silence is uninterpretable. **O2 is the coverage problem on the OUTPUT side.** Stated that way,
-> `INFRA.TOOLS` carries one doctrine rather than two.
+> `INFRASTRUCTURE.TOOLS` carries one doctrine rather than two.
 
 **FRONTIER:** a per-tool **output contract**, four clauses (CVO):
 **C1** declare the denominator **in-band** (`showing N of M`, with **M measured BEFORE bounding**) ·
@@ -563,7 +653,7 @@ scan you reason from* · **a wrong number is more dangerous than a zero**, becau
 suspicion and a plausible count does not.
 **GROUNDED:** 2026-07-28, authored from Andrew-direct + a live self-caught instance.
 
-## INFRA.GRAPH — canonical taxonomy and resource design patterns   `SUB-GROUP` **v1.2**
+## INFRASTRUCTURE.GRAPH — canonical taxonomy and resource design patterns   `SUB-GROUP` **v1.2**
 
 *Version history: `v1.0` 2026-07-28 created · `v1.1` CVO state pull 183509Z — class-over-instance framing recorded*
 
@@ -661,7 +751,7 @@ accident of attention. **Do not open work here without Andrew.**
 
 *Subdivided by client. Andrew: initiative detail for these is not being specified at this time.*
 
-## EXT.49F — 49 Financial   `SUB-GROUP` **v1.0**
+## EXTERNAL.49FINANCIAL — 49 Financial   `SUB-GROUP` **v1.0**
 
 *Version history: `v1.0` 2026-07-28 created*
 **Attaches to:** `ADVI_49*`, `MDPF_3FIRMS`, `NFRA_PPL49F`, `SSCN_PFOE`, `OPAL_TAXSMA*`, `BD_RPSAUTO`.
@@ -673,7 +763,7 @@ DECIDED : UNASSESSED   BUILT : UNASSESSED   SERVING : UNASSESSED
 ```
 **GROUNDED:** 2026-07-28, container only. Awaiting Andrew's initiative detail.
 
-## EXT.IWM — Inflection Wealth Management   `SUB-GROUP` **v1.0**
+## EXTERNAL.INFLECTION — Inflection Wealth Management   `SUB-GROUP` **v1.0**
 
 *Version history: `v1.0` 2026-07-28 created*
 **Attaches to:** `ADVI_INF*` (~25 codes), `NFRA_PPLINF`. Source of record: **Orion**.
@@ -682,7 +772,7 @@ DECIDED : UNASSESSED   BUILT : UNASSESSED   SERVING : UNASSESSED
 ```
 **GROUNDED:** 2026-07-28, container only.
 
-## EXT.CCA — Cottonwood Capital Advisors   `SUB-GROUP` **v1.0**
+## EXTERNAL.COTTONWOOD — Cottonwood Capital Advisors   `SUB-GROUP` **v1.0**
 
 *Version history: `v1.0` 2026-07-28 created*
 **Attaches to:** `ADVI_COT*`, `NFRA_PPLCOT`, `NFRA_COT_RULE15`, `MDPF_COTMDL`, `WSE_COTMDL`,
@@ -707,14 +797,14 @@ knowing.
 | groups | 4 (fixed unless Andrew changes them) |
 | mission groups | 4 |
 | sub-groups (all versioned) | 9 |
-| objectives with a measured stance | 5 (`PORTAL.MP.O1`, `PORTAL.MP.O3`, `INFRA.TOOLS`, `INFRA.GRAPH`, `DEBT.BACKEND`) |
-| objectives `UNASSESSED` | 4 (`PORTAL.ADVI.O1` partial, `EXT.*` x3) |
-| objectives pending Andrew | 1 (`PORTAL.MP.O2` — the AUA aggregation definition) |
-| last maintenance pass | 2026-07-28T17:45Z — folded Andrew-direct 174108Z as `PORTAL.MP.O3` |
+| objectives with a measured stance | 5 (`PORTAL.MODEL_PORTFOLIOS.O1`, `PORTAL.MODEL_PORTFOLIOS.O3`, `INFRASTRUCTURE.TOOLS`, `INFRASTRUCTURE.GRAPH`, `DEBT.BACKEND`) |
+| objectives `UNASSESSED` | 4 (`PORTAL.ADVISOR_INTELLIGENCE.O1` partial, `EXTERNAL.*` x3) |
+| objectives pending Andrew | 1 (`PORTAL.MODEL_PORTFOLIOS.O2` — the AUA aggregation definition) |
+| last maintenance pass | 2026-07-28T17:45Z — folded Andrew-direct 174108Z as `PORTAL.MODEL_PORTFOLIOS.O3` |
 
 ### Cross-sub-group observation (the kind only this layer surfaces)
 
-`PORTAL.MP.O3` and `PORTAL.ADVI.O1` have **the same frontier**: enumerate, per channel/runner, what
+`PORTAL.MODEL_PORTFOLIOS.O3` and `PORTAL.ADVISOR_INTELLIGENCE.O1` have **the same frontier**: enumerate, per channel/runner, what
 the actual source is and on what schedule it arrives. **Neither is blocked on a decision; both are
 blocked on an artifact that does not exist.** Sitting in either project alone it reads as that
 project's homework. Seen across sub-groups it is **one missing artifact class — a per-channel
@@ -726,8 +816,8 @@ layer."* **The register's job here was not to find the work — it was to stop i
 Standing note until the artifact exists. Routing stays with CTO and COO.
 
 **Open at Andrew:**
-1. `PORTAL.MP.O2` — the AUA aggregation expansion he said he would send.
-2. `EXT.*` — initiative detail per client, when he wants it.
+1. `PORTAL.MODEL_PORTFOLIOS.O2` — the AUA aggregation expansion he said he would send.
+2. `EXTERNAL.*` — initiative detail per client, when he wants it.
 3. Whether "Cottonwood Capital Advisory" or "Advisors" is correct.
 
 **Known gap this register surfaced on day one:** `MDPF_CHANNEL_INDEPENDENCE` — live, load-bearing,
