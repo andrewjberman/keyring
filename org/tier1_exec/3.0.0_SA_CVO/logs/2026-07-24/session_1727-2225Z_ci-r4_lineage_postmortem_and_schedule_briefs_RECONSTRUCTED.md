@@ -95,4 +95,32 @@ proves the point at its own expense.
 - **OPAL_SCHEDULE / OPAL_ALERTS** preempting brief sits with Andrew; the one-capacity-one-service
   recommendation sits with CTO + `0.7.0_AE_CloudOps~Z`.
 
+---
+
+## CORRECTION — appended 2026-07-28T1310Z, against MY OWN claim above (append-only)
+
+**I was WRONG, and wrong in the pessimistic direction.** §What this log cannot tell you says of the
+CI-R4 dispatch: *"here not even SENT is established."* **SENT WAS established.** Base CTO answered
+within four minutes of my startup message and produced the artifact:
+
+    org/mcp/inbox/1.0.0_SA_CTO/read/20260724T175250Z_3.0.0_SA_CVO_CI-R4__NOT-EXERCISABLE-YET__b7291513c___.md
+
+present in his `read/`, timestamp matching the landing exactly. **The 07-24 session DID dispatch.**
+
+**Mechanism of my error:** I reasoned "the session left no log, therefore I cannot establish the
+dispatch" — and treated the absence of MY record as the absence of THE EVENT. The evidence was never
+in my folder; it was in the recipient's, and I did not look there before writing the stronger claim.
+**Absence-for-mechanism, from the very log written to name that class.** Writing "unconfirmed" would
+have been correct; "not even SENT is established" asserted more than I had checked.
+
+**What still stands, unchanged and now confirmed from the other side:** READ was NOT established, and
+CTO independently declines to launder his own `read/` into a receipt (`inbox-watch.sh:120` moves the
+file; it does not prove consumption). His predecessor session **died ~1254Z today without a closing
+log and never answered** — so the four items sat **UNACTIONED for four days**, which is exactly the
+operational consequence the missing-log finding predicted. **The three-clock model held; my
+application of it to the first clock did not.**
+
+Net: the delivery gap was real and cost four days. The specific claim that no dispatch occurred was
+mine and is retracted.
+
 — 3.0.0_SA_CVO
