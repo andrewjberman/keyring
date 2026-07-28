@@ -751,6 +751,9 @@ paths:
   "org/tier0/**":
     lane: TIER0_MSTR
     note: "Tier-0 catch-all -- MSTR operating artifacts (longest-match yields the specific rules above)"
+  "org/missions/**":
+    lane: TIER0_MSTR
+    note: "MSTR mission tree -- org/missions/{GROUP}/{SUB_GROUP}/ (commits.jsonl · state.yaml · execsum.yaml) + README. Andrew-direct 2026-07-28; the durable form of the mission register (org/tier0/MISSIONS.md, LD-0341). MSTR is the SOLE writer; no other lane writes here and none is asked to -- it creates no gate, no hook and no obligation on any lane, which is the register's founding constraint. GRANTED BY 1.0.0_SA_CTO as grantor, MSTR as grantee, per SoD -- MSTR requested it rather than adding it, on the same principle as the 4.0.0_SA_CRO grant (LD-0331) and this file's own record-path ruling: a gate whose subject can amend its scope is a suggestion with an audit log. MSTR could have written this rule in ten seconds and declined to. Scoped EXPLICITLY to org/missions/** rather than anything broader: per the enumeration discriminator, a path rule that decays toward MORE friction (a new tree blocked, loudly, at commit) is the safe direction -- unlike a serving allowlist, which decays toward silent unavailability. Added 2026-07-28 by ws CTO."
   "org/tier0_exec/**":
     lane: TIER0_EXEC
     note: "MSTR agent home folder -- the broker-resolvable directory (org/mcp/server.py TIER_DIRS). Holds ONLY 0.0.0_AB_MSTR/; deliberately separate from org/tier0/ so the law + control-plane subdirs are never scanned as agent folders."
