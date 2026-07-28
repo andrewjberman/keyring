@@ -33,6 +33,48 @@ deploy ledgers, oldest 98.6h, one malformed — WO-0 for the COO, below.)*
 
 ---
 
+## ⚡⚡ AMENDMENT 2 — THE DONE DEFINITION (Andrew ~2230Z, verbatim) + THE COMPLETE WO SET
+
+> *"We are not done here until the entire pipeline is locked in completely and you can tell me for a
+> FACT that we have complete data in gold for all cohorts, that all pipelines are operating correctly
+> on a day over day basis, that all related publishers are emitting what they are supposed to, to the
+> correct location in the pipeline as we are designing it, and that the portal reader and publisher is
+> executed as we've described here in the /platinum format."*
+
+**FOUR DONE CONDITIONS — nothing closes until all four are independently certified:**
+```
+D1  COMPLETE DATA IN GOLD, ALL COHORTS   32/32 rows fresh-or-declared per cadence; zero false zeros;
+                                         backfill landed; cohort ingestion paths traced (COO, in flight)
+D2  DAY-OVER-DAY OPERATION               every stage fires from its OWN schedule, proven by an
+                                         UNATTENDED fire — a hand-run never counts (chain 15:00Z,
+                                         emitter 17:15Z, publisher ~16:15Z)
+D3  PUBLISHERS → CORRECT LOCATIONS       written set ≡ canonical design set, both directions, per §III-g
+D4  /platinum FORMAT END-TO-END          publisher writes platinum/mdpf/{scope}/{type}.json AND the
+                                         portal READS it (WO-3 complete)
+```
+**CERTIFIER: `3.0.0_SA_CVO` (live, idle, independent).** When WO-owners report done, CVO runs the
+end-to-end verification against D1–D4 and certifies — or refuses. **"For a FACT" = CVO's independent
+verdict on live state, never an executor's self-report.** (Verification law: the verifier is not the
+do-er.)
+
+**THE COMPLETE WO SET** *(4a/1/4b/2/3 unchanged below; 5–7 new, from COO's 2218Z gap list)*:
+| WO | what | owner | state |
+|---|---|---|---|
+| 4a | emitter fix (stale-source selection + false zero) | AE (pid 26488) | IN FLIGHT |
+| 1 | chain fire + gold validation **+ COTTONWOOD CONDITIONAL** (below) | AE | IN FLIGHT |
+| 4b | DDB backfill from historical inputs | AE | gated: 4a+1 |
+| 2 | publisher re-point + own schedule + first publish | AE | gated: 4+1 |
+| 5 | **PER-CHANNEL SCHEDULE CENSUS** — every channel: trigger mechanism, ScheduleExpression, applied-plane verified, UNKNOWN declared where unknown. Mandate part 1, never completed. | COO (subagent fleet) | NEW |
+| 6 | cohort ingestion-path tracing, 27 remaining | COO (in flight ~20 min) | IN FLIGHT |
+| 7 | **UNATTENDED-FIRE LEDGER + CVO CERTIFICATION** of D1–D4 | CVO | gated: all above |
+| 3 | portal re-point to /platinum | COO seq → DE/DT | gated: WO-2 |
+
+**THE COTTONWOOD CONDITIONAL (WO-1, explicit):** the known cause of the silver→gold gap is the `:523`
+IAM short-circuit, fixed 20:26Z with **zero runs since** — WO-1's fire is the test. **If cottonwood
+gold does NOT advance to its silver frontier after the run, the IAM fix was NOT the whole cause: STOP,
+report it as a NEW untraced defect, do not iterate blind re-runs.** Andrew: *"We need to look into the
+Cottonwood chain and figure out what is going on with that"* — one run answers it one way or the other.
+
 ## ⚡ AMENDMENT 1 — ANDREW RE-SEQUENCING, ~2225Z (supersedes the WO order below where they conflict)
 
 Andrew, going element-by-element down the chain status: **(4) "Have we fixed the emitter and backfilled
