@@ -4,8 +4,8 @@
     Every sentence below is SELECTED from a state.yaml or execsum.yaml, never composed
     here: a compiler that writes prose is a compiler that can invent a stance.
 
-    ANCHOR COMMIT   34e9257709
-    ANCHOR TIME     2026-07-28T18:45:46-04:00   (author-time, not a wall clock)
+    ANCHOR COMMIT   3d1dcbe7b6
+    ANCHOR TIME     2026-07-28T18:54:58-04:00   (author-time, not a wall clock)
     ANCHOR AUTHOR   0.7.0_AE_CloudOps
     ORDERING        activity intensity -- commits in the last 14 days, then total
     SOURCE          org/missions/{GROUP}/{SUB_GROUP}/{state,execsum}.yaml
@@ -86,6 +86,9 @@
 
 
 
+
+
+
 Top of the board on activity -- 357 recent across 35 authors -- and the session finally put capacity
 here after a day where it had none.
 
@@ -110,6 +113,9 @@ the zeros are real. BUILT remains PARTIAL on exactly one live gate, one bucket.
 The CTO-versus-CVO instance-versus-class disagreement still stands on the record. The register carries
 the CLASS.
 
+**HOLES — live work no project code covers (1):**
+- json/latest/ -- 6 keys, WRITTEN TODAY (ALIVE), with NO MODELLED CONSUMER in the canonical graph. ROUTED HERE FROM INFRASTRUCTURE.DEBT BY CVO, DELIBERATELY: an unmodelled thing that is DEAD is debt, but an unmodelled thing that is ALIVE is a COVERAGE DEFECT -- the graph is wrong, not the estate. Something is producing this daily for a consumer the graph cannot see. Anchor: CVO served-prefix registry @bf8aae9c40, liveness measured live with a control (json/mdpf/ = 0d, so the band discriminates). Belongs with the comp-opalbizcluster work.
+
 *grounded: 2026-07-28 -- CVO state pull @8ac1e7d04, live EventBridge/Scheduler counts, token census with positive control.*
 
 ---
@@ -126,6 +132,9 @@ the CLASS.
     version    v1.1
 
 **FRONTIER —** Make retirement a CONDITION of a migration rather than a follow-up to it. Nothing structurally prevents a replacement shipping while its predecessor keeps running.
+
+
+
 
 
 
@@ -241,6 +250,9 @@ census is still absent while its trigger twin exists complete with a CI drift ga
 
 
 
+
+
+
 Producer FIXED, serve STILL NOT. Unchanged as the headline, and the gap is now better specified
 rather than smaller.
 
@@ -286,6 +298,9 @@ architecture call -- which serving namespace is canonical -- that PRECEDES the b
 **FRONTIER —** Wire comp-which to IMPORT tool_index instead of re-parsing the manifest. Cheap, and it is now the single next thing -- until it lands, the compiled index is a fast artifact nobody reads. (The suite-scale declared-vs-actual diff remains real but is downstream of this, and is now cheaper because per-tool primitive rows persist as JSON.)
 
 **BLOCKED ON —** 1.0.0_SA_CTO -- TWO calls CVO explicitly did NOT make: (a) the comp-which wiring, and (b) whether this 5th registry should FOLD INTO comp-coverage-map.yaml, which already has a passing gate it would inherit. Both routed to him in the same window.
+
+
+
 
 
 
@@ -412,6 +427,9 @@ Until that lands it is a fast artifact nobody reads.
 
 
 
+
+
+
 Largest body of work in the tree, least established state, and that has not changed: 1,726 commits
 against 34 recent, BUILT and SERVING both UNASSESSED.
 
@@ -486,6 +504,9 @@ artifact, not two. COO is building it. This sub-group must not commission a seco
 
 
 
+
+
+
 Unchanged, and correctly so. LOW priority by sovereign instruction, two commits total, brief only --
 not decomposed, not staffed. Nothing landed in the window.
 
@@ -513,6 +534,9 @@ investigation precedes migration and why staying at zero activity is the right p
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
 
 
 
@@ -613,6 +637,9 @@ Source of record when work begins: SCHWAB (certified-AUA deprecated 2026-07-24).
 
 
 
+
+
+
 PROSPECTIVE and net-new. Zero commits is correct; nothing landed and nothing was expected to.
 
 Scoped adjacent work that may eventually tie into the portal but is not portal work today -- Andrew's
@@ -640,6 +667,9 @@ Nothing registered, nothing blocked, no paths claimed.
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
 
 
 
@@ -705,6 +735,9 @@ Open at Andrew: "Cottonwood Capital Advisory" (his wording) vs "Advisors" (the e
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
 
 
 
