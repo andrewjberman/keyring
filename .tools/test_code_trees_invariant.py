@@ -156,6 +156,46 @@ def test_uncovered_direction(results: list) -> None:
     )
 
 
+def test_artifacts_are_modelled_and_unresolved_ones_surface(results: list) -> None:
+    """Non-script artifacts must be EXPRESSIBLE, and an unresolved target must SURFACE.
+
+    Raised by AE-base 210149Z: the dispatch syncs code/scripts/ with --delete, so a
+    config file with no declared home is silently reverted on the next run. A model
+    that only knows .py files excludes the class entirely.
+    """
+    workspace = _TOOLS.parent
+    arts = _core.CODE_TREES["mdpf"].get("artifacts")
+    _check(
+        results,
+        "mdpf declares a non-script artifact class",
+        bool(arts),
+        "artifacts key absent -- the config-artifact class has nowhere to live",
+    )
+    if not arts:
+        return
+    # A declared artifact's repo_path must exist -- same fail-loudly rule as layers.
+    missing = [
+        f"{n} -> {a['repo_path']}"
+        for n, a in arts.items()
+        if not (workspace / a["repo_path"]).is_file()
+    ]
+    _check(
+        results,
+        "every declared artifact repo_path exists on disk",
+        not missing,
+        "MISSING: " + "; ".join(missing),
+    )
+    # UNRESOLVED targets must be VISIBLE, never silently treated as done.
+    unresolved = sorted(n for n, a in arts.items() if a.get("s3_key") is None)
+    _check(
+        results,
+        f"unresolved artifact targets surface by name ({len(unresolved)} open)",
+        all(arts[n].get("owner") and arts[n].get("why") for n in unresolved),
+        "an unresolved artifact must carry owner + why, else it is an absence "
+        "wearing a declaration's costume",
+    )
+
+
 def test_mutation_exercises_the_invariant(results: list) -> None:
     """A passing assertion never mutated has never been tested.
 
@@ -207,6 +247,7 @@ def main_test() -> int:
     test_file_to_s3_target_unchanged(results)
     test_declared_repo_homes_exist(results)
     test_uncovered_direction(results)
+    test_artifacts_are_modelled_and_unresolved_ones_surface(results)
     test_mutation_exercises_the_invariant(results)
 
     print("CODE_TREES invariant suite")

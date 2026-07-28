@@ -106,6 +106,29 @@ CODE_TREES: dict[str, dict] = {
         # the blindness it replaced. The INVERSE direction is unaffected: an S3
         # object with no repo counterpart still surfaces as UNCOVERED.
         "shared_repo_homes": {"assets_gold", "silver"},
+        # NON-SCRIPT ARTIFACTS that must be PRESENT in the synced runtime prefix.
+        # Raised by 0.7.0_AE_CloudOps base (210149Z), measured live: the dispatch
+        # syncs code/scripts/ with --delete, so a hand-placed config copy is
+        # SILENTLY REVERTED on the next run; the tree currently carries 34 objects
+        # and partner_roster.json is ABSENT. A model that only knows .py files
+        # excludes this class entirely, and the next person solves it with a
+        # one-off `aws s3 cp` that the following --delete undoes.
+        #
+        # s3_key None = DECLARED, TARGET UNRESOLVED. The destination key is a real
+        # decision (code/scripts/ is fed by two repo trees), and picking one here
+        # would be exactly the call-site literal this table exists to abolish.
+        # Declared-with-an-unknown is auditable; omitted is not -- the same
+        # sentinel shape ruled for the manifest trigger field.
+        "artifacts": {
+            "partner_roster": {
+                "repo_path": "data/mdpf/config/partner_roster.json",
+                "s3_key": None,
+                "owner": "0.7.0_AE_CloudOps base / 1.0.0_SA_CTO",
+                "why": "canonical partner roster; gold consumers need it in the "
+                       "gold runtime. Cross-tree import RAISEs, repo-relative read "
+                       "fail-closes, --delete reverts a hand-placed copy.",
+            },
+        },
         "layers": {
             "gold": ("data/mdpf/scripts/gold", "code/scripts/gold/"),
             "backfill": ("data/mdpf/scripts/backfill", "code/scripts/backfill/"),
