@@ -1,0 +1,2000 @@
+schema_version: '0.1'
+authority: Andrew-direct 2026-07-28 -- standardized constants for tool classification
+generated_by: .tools/gen_tool_classification.py (re-runnable; derived from source, not asserted)
+source_of_truth_note: 'This file classifies HOW a tool retrieves and what it covers. Tool INVENTORY (which
+  tools exist + their one home) remains org/modules/graph/comp-coverage-map.yaml per CTO ruling #1. This
+  does NOT supersede it and must not duplicate its fields.'
+constants:
+  state:
+  - LIVE
+  - PERSISTED
+  state_doc: WHERE THE ANSWER COMES FROM. LIVE = established at call time. PERSISTED = read from a store
+    built earlier. ONLY PERSISTED CAN BE STALE.
+  derived:
+  - true
+  - false
+  derived_doc: A QUALIFIER ON state, NOT A STATE (Andrew-direct). derived=true means computed from a more
+    primitive source; false means read/authored directly. PERSISTED+derived needs a REFRESH MECHANISM;
+    PERSISTED+authored needs an AUTHORSHIP GATE.
+  denominator_construction:
+  - ENUMERATED
+  - MATCHED
+  - TRAVERSED
+  - EXERCISED
+  - INHERITED
+  denominator_construction_doc: 'HOW THE POPULATION IS BUILT. ENUMERATED = listed from an authoritative
+    source, you get the whole set. MATCHED = discovered by pattern/search, you get HITS and never the
+    set. TRAVERSED = walked from a seed, depth-dependent. EXERCISED = probed candidate-by-candidate against
+    the live plane. NOTE: a bounded/unbounded BOOLEAN was tried first and measured VACUOUS (true for 89/89)
+    -- a field that cannot vary is not a classification.'
+  denominator_knowable_up_front:
+  - true
+  - false
+  denominator_knowable_doc: 'Derived from construction: can the tool state N-of-M BEFORE it scans? ENUMERATED
+    and EXERCISED yes; MATCHED and TRAVERSED no. THIS IS THE TRUNCATION-RISK AXIS -- a tool that cannot
+    know its denominator cannot honestly report showing-N-of-M.'
+  control_established:
+  - POSITIVE
+  - NEGATIVE
+  - NONE
+  control_doc: POSITIVE = can concretely show what IS covered. NEGATIVE = can also establish what is NOT
+    there (only SIMULATE achieves this today -- it exercises rather than reads). NEGATIVE archetyping
+    is the goal; POSITIVE is the floor and is enough to start.
+known_limitations:
+  universe_and_denominator_construction_are_PRECEDENCE_PICKED: 'A tool matching MULTIPLE primitives gets
+    `universe` and `denominator_construction` from the PRECEDENCE-WINNING primitive, which is NOT always
+    its dominant behaviour. Worked defect: comp-heat matches [GIT, SQL/TRINO] and is labelled with the
+    Trino universe, but its true universe is GIT (object_freshness.py:46 ls-files). MEASURED BLAST RADIUS:
+    67 of 89 tools (75%) are multi-primitive -- so treat `universe` as RELIABLE only for the 22 single-primitive
+    tools. v0.2 fix: make `universe` and `denominator_construction` LISTS, one per primitive, since a
+    multi-primitive tool genuinely has more than one universe.'
+  fields_NOT_affected: '`state` (PERSISTED dominates -- if ANY read is from a store, staleness is a real
+    question), `excludes` (UNIONED across all primitives, so it accumulates conservatively in the SAFE
+    direction), and `control_established` (strongest across primitives) are sound for multi-primitive
+    tools.'
+  classification_is_DECLARED_from_source: 'Derived by source-pattern match, NOT by execution. A primitive
+    reached only on a rare code path may be mis-binned. Exercised for: comp-heat, comp-clobber, comp-coverage-check,
+    comp-which, comp-grep, comp-glob.'
+  negative_control: Only EXERCISED (SIMULATE) tools can establish absence. 8 of 89 today. For the other
+    81, POSITIVE control is the floor and is what is claimed -- per Andrew-direct, that is enough to start.
+counts:
+  classified: 89
+  unclassified: 4
+  unclassified_tools:
+  - comp-imgread
+  - comp-tagauthz
+  - comp-to
+  - comp-v5-composite-test.sh
+tools:
+  comp-adapter-audit:
+    primitives:
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-arity:
+    primitives:
+    - GIT
+    - FS-WALK
+    - FS-GLOB
+    - AWS-API
+    - GRAPH-DB
+    - REGISTRY
+    - AST
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - paths outside the pattern
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    - non-Python lanes
+    - runtime/dynamic construction
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --limit N
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-assets:
+    primitives:
+    - AWS-API
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-aws:
+    primitives:
+    - FS-WALK
+    - AWS-API
+    - SIMULATE
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - other regions
+    - other accounts
+    - resource types not queried
+    - candidates not enumerated for simulation
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: NEGATIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-axes:
+    primitives:
+    - AWS-API
+    - GRAPH-DB
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    control_established: POSITIVE
+    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-blast:
+    primitives:
+    - GIT
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-build:
+    primitives:
+    - GIT
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-cache:
+    primitives:
+    - FS-WALK
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-canon-motif:
+    primitives:
+    - GRAPH-DB
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    control_established: POSITIVE
+    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_is_incremental: true
+    bounding:
+    - json out
+    declares_denominator_in_output: false
+  comp-chainrun:
+    primitives:
+    - AWS-API
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-clobber:
+    primitives:
+    - FS-WALK
+    - AWS-API
+    state: LIVE
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: the live AWS control plane for the queried service
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - other regions
+    - other accounts
+    - resource types not queried
+    control_established: POSITIVE
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-cluster:
+    primitives:
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-constants:
+    primitives:
+    - REGISTRY
+    - AST
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    - non-Python lanes
+    - runtime/dynamic construction
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-coverage:
+    primitives:
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-coverage-check:
+    primitives:
+    - GIT
+    - GRAPH-DB
+    - REGISTRY
+    - SQL/TRINO
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    - catalogs not federated
+    - in-VPC only; ~3-4 min/call
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - json out
+    declares_denominator_in_output: true
+  comp-dataflow:
+    primitives:
+    - FS-WALK
+    - AWS-API
+    - REGISTRY
+    - AST
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything unregistered -- THE PHANTOM CLASS
+    - non-Python lanes
+    - runtime/dynamic construction
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-deadgrant:
+    primitives:
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-deadgrant.py:
+    primitives:
+    - AWS-API
+    - SIMULATE
+    state: LIVE
+    derived: false
+    denominator_construction: EXERCISED
+    denominator_knowable_up_front: true
+    universe: actual reach, established by exercising each enumerated candidate
+    excludes:
+    - other regions
+    - other accounts
+    - resource types not queried
+    - candidates not enumerated for simulation
+    control_established: NEGATIVE
+    bounding:
+    - --limit N
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-debris:
+    primitives:
+    - AWS-API
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-denytest:
+    primitives:
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-denytest.py:
+    primitives:
+    - SIMULATE
+    state: LIVE
+    derived: false
+    denominator_construction: EXERCISED
+    denominator_knowable_up_front: true
+    universe: actual reach, established by exercising each enumerated candidate
+    excludes:
+    - candidates not enumerated for simulation
+    control_established: NEGATIVE
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-depth:
+    primitives:
+    - GIT
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    declares_denominator_in_output: false
+  comp-describe:
+    primitives:
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-diff:
+    primitives:
+    - GIT
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-dispatch:
+    primitives:
+    - GIT
+    - FS-WALK
+    state: LIVE
+    derived: true
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: git-tracked files + commit history at call time
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    control_established: POSITIVE
+    bounding:
+    - json out
+    declares_denominator_in_output: false
+  comp-drift:
+    primitives:
+    - GIT
+    - AWS-API
+    - GRAPH-DB
+    - REGISTRY
+    - SQL/TRINO
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    - catalogs not federated
+    - in-VPC only; ~3-4 min/call
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --max N
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-dups:
+    primitives:
+    - GIT
+    - AWS-API
+    state: LIVE
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: the live AWS control plane for the queried service
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - other regions
+    - other accounts
+    - resource types not queried
+    control_established: POSITIVE
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-fedobs:
+    primitives:
+    - AWS-API
+    - GRAPH-DB
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    control_established: POSITIVE
+    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-firmsep-sweep:
+    primitives:
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-firmsep-sweep.py:
+    primitives:
+    - SIMULATE
+    state: LIVE
+    derived: false
+    denominator_construction: EXERCISED
+    denominator_knowable_up_front: true
+    universe: actual reach, established by exercising each enumerated candidate
+    excludes:
+    - candidates not enumerated for simulation
+    control_established: NEGATIVE
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-freshness:
+    primitives:
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --max N
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-genesis:
+    primitives:
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-gitdrill:
+    primitives:
+    - GIT
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --limit N
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-glob:
+    primitives:
+    - FS-GLOB
+    state: LIVE
+    derived: true
+    denominator_construction: MATCHED
+    denominator_knowable_up_front: false
+    universe: working tree matched by glob pattern
+    excludes:
+    - paths outside the pattern
+    - non-filesystem stores
+    control_established: POSITIVE
+    bounding:
+    - NONE -- unbounded output
+    declares_denominator_in_output: true
+  comp-graph:
+    primitives:
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-grep:
+    primitives:
+    - GIT
+    state: LIVE
+    derived: true
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: git-tracked files + commit history at call time
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    control_established: POSITIVE
+    bounding:
+    - head slice
+    declares_denominator_in_output: true
+  comp-heat:
+    primitives:
+    - GIT
+    - SQL/TRINO
+    state: LIVE
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: the Trino federation by physical catalog
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - catalogs not federated
+    - in-VPC only; ~3-4 min/call
+    control_established: POSITIVE
+    bounding:
+    - --top N
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-honesty:
+    primitives:
+    - AWS-API
+    - AST
+    state: LIVE
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: the live AWS control plane for the queried service
+    excludes:
+    - other regions
+    - other accounts
+    - resource types not queried
+    - non-Python lanes
+    - runtime/dynamic construction
+    control_established: POSITIVE
+    bounding:
+    - NONE -- unbounded output
+    declares_denominator_in_output: false
+  comp-iam:
+    primitives:
+    - AWS-API
+    - SIMULATE
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - other regions
+    - other accounts
+    - resource types not queried
+    - candidates not enumerated for simulation
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: NEGATIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-iam-usage:
+    primitives:
+    - AWS-API
+    - SIMULATE
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - other regions
+    - other accounts
+    - resource types not queried
+    - candidates not enumerated for simulation
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: NEGATIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --limit N
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-icedrill:
+    primitives:
+    - AWS-API
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --max N
+    - head slice
+    - MaxKeys
+    - json out
+    declares_denominator_in_output: true
+  comp-incrparity:
+    primitives:
+    - AWS-API
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-keys:
+    primitives:
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --top N
+    - --max N
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-kit-striplist-gate:
+    primitives:
+    - FS-WALK
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    declares_denominator_in_output: false
+  comp-kuzu:
+    primitives:
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-kuzu-full:
+    primitives:
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-kuzu-inc:
+    primitives:
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-lambdamap:
+    primitives:
+    - FS-WALK
+    - AWS-API
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-learns-score:
+    primitives:
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --top N
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-learns-status:
+    primitives:
+    - GIT
+    - GRAPH-DB
+    - SQL/TRINO
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - catalogs not federated
+    - in-VPC only; ~3-4 min/call
+    control_established: POSITIVE
+    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_is_incremental: true
+    bounding:
+    - json out
+    declares_denominator_in_output: false
+  comp-manifest-check:
+    primitives:
+    - GIT
+    - GRAPH-DB
+    - REGISTRY
+    - SQL/TRINO
+    - SUBPROC
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    - catalogs not federated
+    - in-VPC only; ~3-4 min/call
+    - inherits the callee blind spots
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-missions:
+    primitives:
+    - GIT
+    - FS-GLOB
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - paths outside the pattern
+    - non-filesystem stores
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --limit N
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-ontolint:
+    primitives:
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-parity:
+    primitives:
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-passcraft:
+    primitives:
+    - GIT
+    - GRAPH-DB
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    control_established: POSITIVE
+    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-perf:
+    primitives:
+    - REGISTRY
+    - AST
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    - non-Python lanes
+    - runtime/dynamic construction
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-pii:
+    primitives:
+    - FS-WALK
+    - REGISTRY
+    - AST
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - anything unregistered -- THE PHANTOM CLASS
+    - non-Python lanes
+    - runtime/dynamic construction
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-pipescript:
+    primitives:
+    - GIT
+    - AWS-API
+    - GRAPH-DB
+    - REGISTRY
+    - AST
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    - non-Python lanes
+    - runtime/dynamic construction
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --limit N
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-platinum:
+    primitives:
+    - FS-WALK
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-pulse:
+    primitives:
+    - GIT
+    - FS-WALK
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --top N
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-pydeps:
+    primitives:
+    - FS-WALK
+    - AWS-API
+    - GRAPH-DB
+    - REGISTRY
+    - AST
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    - non-Python lanes
+    - runtime/dynamic construction
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-registry:
+    primitives:
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-residue:
+    primitives:
+    - FS-WALK
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --max N
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-routable-check:
+    primitives:
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-routes:
+    primitives:
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-secrets:
+    primitives:
+    - AWS-API
+    state: LIVE
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: the live AWS control plane for the queried service
+    excludes:
+    - other regions
+    - other accounts
+    - resource types not queried
+    control_established: POSITIVE
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-shell:
+    primitives:
+    - FS-WALK
+    state: LIVE
+    derived: true
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: working tree under declared roots, filtered by extension
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    control_established: POSITIVE
+    bounding:
+    - head slice
+    declares_denominator_in_output: true
+  comp-similar:
+    primitives:
+    - GRAPH-DB
+    - REGISTRY
+    - SQL/TRINO
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    - catalogs not federated
+    - in-VPC only; ~3-4 min/call
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --top N
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-state:
+    primitives:
+    - GIT
+    state: LIVE
+    derived: true
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: git-tracked files + commit history at call time
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    control_established: POSITIVE
+    bounding:
+    - --top N
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-stitch-refresh:
+    primitives:
+    - GIT
+    - GRAPH-DB
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    control_established: POSITIVE
+    refresh_mechanism: auto-refresh on HEAD-advance; provenance header printed per call
+    refresh_is_incremental: true
+    bounding:
+    - json out
+    declares_denominator_in_output: false
+  comp-surface-check:
+    primitives:
+    - GIT
+    - AWS-API
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-symbols:
+    primitives:
+    - GIT
+    - AST
+    state: LIVE
+    derived: true
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: git-tracked files + commit history at call time
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - non-Python lanes
+    - runtime/dynamic construction
+    control_established: POSITIVE
+    bounding:
+    - json out
+    declares_denominator_in_output: false
+  comp-system:
+    primitives:
+    - GIT
+    - FS-GLOB
+    - AWS-API
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - paths outside the pattern
+    - non-filesystem stores
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --limit N
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-tagauthz.py:
+    primitives:
+    - FS-WALK
+    state: LIVE
+    derived: true
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: working tree under declared roots, filtered by extension
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    control_established: POSITIVE
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-tool-health:
+    primitives:
+    - GIT
+    - GRAPH-DB
+    - REGISTRY
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - --top N
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-tool-health-gate:
+    primitives:
+    - GIT
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-toolgraph:
+    primitives:
+    - GIT
+    - FS-WALK
+    - GRAPH-DB
+    - REGISTRY
+    - AST
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    - non-Python lanes
+    - runtime/dynamic construction
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-tooltip:
+    primitives:
+    - FS-WALK
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-trace:
+    primitives:
+    - GIT
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-transform:
+    primitives:
+    - FS-WALK
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-trigger:
+    primitives:
+    - FS-WALK
+    - AWS-API
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - paths outside the declared roots
+    - unlisted extensions
+    - non-filesystem stores
+    - other regions
+    - other accounts
+    - resource types not queried
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-types:
+    primitives:
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-validate:
+    primitives:
+    - REGISTRY
+    - AST
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    - non-Python lanes
+    - runtime/dynamic construction
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-which:
+    primitives:
+    - SIMULATE
+    - GRAPH-DB
+    - REGISTRY
+    - AST
+    - SQL/TRINO
+    - SUBPROC
+    state: PERSISTED
+    derived: true
+    denominator_construction: TRAVERSED
+    denominator_knowable_up_front: false
+    universe: the derived globgrph (kuzu) nodes and edges
+    excludes:
+    - candidates not enumerated for simulation
+    - anything not yet ingested into the graph
+    - a scratch --db-path is a frozen vintage
+    - anything unregistered -- THE PHANTOM CLASS
+    - non-Python lanes
+    - runtime/dynamic construction
+    - catalogs not federated
+    - in-VPC only; ~3-4 min/call
+    - inherits the callee blind spots
+    control_established: NEGATIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-which-routing-test.py:
+    primitives:
+    - GIT
+    - REGISTRY
+    - SQL/TRINO
+    - SUBPROC
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything unregistered -- THE PHANTOM CLASS
+    - catalogs not federated
+    - in-VPC only; ~3-4 min/call
+    - inherits the callee blind spots
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
+  comp-whoread:
+    primitives:
+    - SQL/TRINO
+    state: LIVE
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: the Trino federation by physical catalog
+    excludes:
+    - catalogs not federated
+    - in-VPC only; ~3-4 min/call
+    control_established: POSITIVE
+    bounding:
+    - NONE -- unbounded output
+    declares_denominator_in_output: false
+  comp-whoread.py:
+    primitives:
+    - SIMULATE
+    - REGISTRY
+    - SQL/TRINO
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - candidates not enumerated for simulation
+    - anything unregistered -- THE PHANTOM CLASS
+    - catalogs not federated
+    - in-VPC only; ~3-4 min/call
+    control_established: NEGATIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    declares_denominator_in_output: true
+  comp-xray:
+    primitives:
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: false
+  comp-xref:
+    primitives:
+    - GIT
+    - REGISTRY
+    state: PERSISTED
+    derived: false
+    denominator_construction: ENUMERATED
+    denominator_knowable_up_front: true
+    universe: an authored ledger (coverage-map / manifest / project JSON)
+    excludes:
+    - gitignored paths
+    - submodule contents (gitlink only)
+    - anything not in the repo
+    - anything unregistered -- THE PHANTOM CLASS
+    control_established: POSITIVE
+    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
+    refresh_is_incremental: true
+    bounding:
+    - head slice
+    - json out
+    declares_denominator_in_output: true
