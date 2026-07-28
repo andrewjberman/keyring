@@ -325,6 +325,45 @@ reportedly alarms on ROLL_SOURCE_UNREADABLE per the gate docstring -- I have NOT
 ever fired, so it is NOT counted as coverage** (same rule applied to the fan-in fence: an unverified alarm
 is a document).
 
+## ROW 13 RESOLVED + BUILT + STAGED @938fc74211 (16:01Z) -- STILL NOT APPLIED
+
+**Both design gates cleared by CTO:** grammar = DECLARE PER SOURCE (154511Z); source-of-record =
+**`fact_rps_s2`, NOT `fact_rps`** (155053Z) -- consumer-anchored, because the producer reads `_s2` and only
+`_s2` for 49F custody (`dim_mdpf_aggregate_aua_timeseries.py:326,:387`). `_s{N}` is a MECHANICAL SECTION
+suffix carrying NO seniority (`silver_registry.py:72-81`); for RPS the substantive full-envelope data is in
+section 2. Gating on `fact_rps` would have moved the gate off a dead bucket onto a live-but-WRONG table and
+looked fixed. **My refusal to infer it from the suffix was the right call** -- picking by name-length is the
+0824/0833 never-SUBSTITUTE shape.
+
+**BUILT:** `_GRAMMARS` declaration table + `_latest_dir_partition(bucket, prefix, grammar)` returning
+`(date, reason)` over four worlds a bare `None` collapsed -- `OK` / `PREFIX_EMPTY` / `GRAMMAR_MISMATCH` /
+`NO_DATA_PARTITION` -- plus `UNDECLARED_GRAMMAR` (a bug, never guessed). The verdict now carries
+**bucket + grammar + read_status** and a distinct `config_fault`, so a mis-declared source can NEVER be
+read as a freshness verdict. Both original hardenings preserved verbatim; only the date token is
+parameterised.
+
+**EXERCISED OFFLINE (mocked boto3, no AWS -- NEVER#4 intact, no run manufactured): 20/20 PASS**, including
+the one that encodes CTO's ruling (a):
+`MUTANT env-only re-point (dashed keys, compact grammar) -> None` + `MUTANT names itself GRAMMAR_MISMATCH,
+NOT stale data`. Also: dashed grammar REJECTS a compact key (no cross-grammar tolerance, so the dead path
+cannot return as a valid freshness source). **One of my own tests failed first and the TEST was wrong, not
+the code** -- a bare `date=.../` marker is excluded by hardening (a) (nothing after the slash fails
+`(.+)$`), not by (b); to reach (b) a key must MATCH the grammar and still carry no data. Asserting the
+right label against the wrong mechanism is its own failure mode, so the corrected test says why.
+
+**THE LIVE LAMBDA IS UNTOUCHED and still reads the dead path. Nothing done today altered the running gate.**
+Remaining gate is CTO's timing word for one targeted apply.
+
+**PRE-EXISTING DEFECT FOUND, NOT MINE, NOT FIXED:**
+`test_convergence_gate_weekend.py::test_handler_defers_on_genuine_bd_slip` **FAILS AT HEAD** -- 1 failed /
+6 passed WITH and WITHOUT my change, verified by running HEAD's own copies in an isolated scratch dir.
+*(`git stash` was correctly BLOCKED by the never-rules gate -- shared worktree, stash parks every dirty
+file including other agents' unsaved work. The gate was right; `git show HEAD:<path>` answered the same
+question without mutating global state.)* It fails via a **REAL `ec2:StartInstances` call**, so: (a) the
+handler reaches DISPATCH on a case the test names a genuine slip and expects to DEFER -- harness defect or
+handler defect, UNDETERMINED and not guessed; (b) **with a valid instance id this test suite would start
+live EC2.** Routed to CTO.
+
 ## Next Steps
 
 1. **[0.7.0_AE_CloudOps]** Report the ~15:10Z run from its OWN log: Stage 4 rc, the WARN naming
