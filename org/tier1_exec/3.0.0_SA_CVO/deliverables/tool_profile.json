@@ -1,0 +1,1908 @@
+[
+ {
+  "tool": "comp-adapter-audit",
+  "engines": [
+   "org/modules/graph/adapter_audit_cli.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 48852
+ },
+ {
+  "tool": "comp-arity",
+  "engines": [
+   "infra/aws/globgrph/kuzu_cli.py",
+   "org/modules/graph/comp_coverage_view.py",
+   "org/modules/graph/comp_system.py",
+   "org/modules/graph/cse_schema.py",
+   "org/modules/graph/tests/test_comp_system_metrics.py"
+  ],
+  "primitives": [
+   "GIT",
+   "FS-WALK",
+   "FS-GLOB",
+   "AWS-API",
+   "GRAPH-DB",
+   "REGISTRY",
+   "AST"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "derived-on-demand, pattern-matched over the tree",
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "derived-on-demand from source at the READ vintage"
+  ],
+  "bounding": [
+   "--limit N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 179829
+ },
+ {
+  "tool": "comp-assets",
+  "engines": [
+   "org/modules/graph/comp_assets.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "AWS-API",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 40388
+ },
+ {
+  "tool": "comp-aws",
+  "engines": [
+   "org/modules/graph/comp_aws_cli.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "FS-WALK",
+   "AWS-API",
+   "SIMULATE",
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "LIVE exercise; the only primitive that PROVES reach rather than reading a declaration",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 172236
+ },
+ {
+  "tool": "comp-axes",
+  "engines": [],
+  "primitives": [
+   "AWS-API",
+   "GRAPH-DB"
+  ],
+  "freshness": [
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 26149
+ },
+ {
+  "tool": "comp-blast",
+  "engines": [
+   "org/modules/graph/cli.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "GIT",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 63000
+ },
+ {
+  "tool": "comp-build",
+  "engines": [
+   "org/modules/graph/cli.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "GIT",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 63341
+ },
+ {
+  "tool": "comp-cache",
+  "engines": [
+   "org/modules/graph/cache_cli.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "FS-WALK",
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 31880
+ },
+ {
+  "tool": "comp-canon-motif",
+  "engines": [],
+  "primitives": [
+   "GRAPH-DB"
+  ],
+  "freshness": [
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header"
+  ],
+  "bounding": [
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 1160
+ },
+ {
+  "tool": "comp-chainrun",
+  "engines": [
+   "org/modules/graph/chainrun_cli.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "AWS-API",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 49019
+ },
+ {
+  "tool": "comp-clobber",
+  "engines": [
+   "org/modules/graph/clobber_scan.py"
+  ],
+  "primitives": [
+   "FS-WALK",
+   "AWS-API"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "LIVE plane; fresh by construction, cost is latency not staleness"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 16983
+ },
+ {
+  "tool": "comp-cluster",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 16602
+ },
+ {
+  "tool": "comp-constants",
+  "engines": [
+   "org/modules/graph/comp_constants_cli.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "REGISTRY",
+   "AST"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "derived-on-demand from source at the READ vintage"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 47004
+ },
+ {
+  "tool": "comp-coverage",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/coverage_cli.py"
+  ],
+  "primitives": [
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 28873
+ },
+ {
+  "tool": "comp-coverage-check",
+  "engines": [
+   "org/modules/graph/comp_coverage_check.py"
+  ],
+  "primitives": [
+   "GIT",
+   "GRAPH-DB",
+   "REGISTRY",
+   "SQL/TRINO"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "LIVE federation; in-VPC one-shot, ~3-4 min/call"
+  ],
+  "bounding": [
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 61908
+ },
+ {
+  "tool": "comp-dataflow",
+  "engines": [
+   "org/modules/graph/comp_dataflow.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "FS-WALK",
+   "AWS-API",
+   "REGISTRY",
+   "AST"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "derived-on-demand from source at the READ vintage"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 39288
+ },
+ {
+  "tool": "comp-deadgrant",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 16378
+ },
+ {
+  "tool": "comp-deadgrant.py",
+  "engines": [],
+  "primitives": [
+   "AWS-API",
+   "SIMULATE"
+  ],
+  "freshness": [
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "LIVE exercise; the only primitive that PROVES reach rather than reading a declaration"
+  ],
+  "bounding": [
+   "--limit N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 32347
+ },
+ {
+  "tool": "comp-debris",
+  "engines": [
+   "org/modules/graph/comp_debris.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "AWS-API",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 34700
+ },
+ {
+  "tool": "comp-denytest",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 16402
+ },
+ {
+  "tool": "comp-denytest.py",
+  "engines": [],
+  "primitives": [
+   "SIMULATE"
+  ],
+  "freshness": [
+   "LIVE exercise; the only primitive that PROVES reach rather than reading a declaration"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 21499
+ },
+ {
+  "tool": "comp-depth",
+  "engines": [
+   "org/modules/graph/comp_depth_cli.py"
+  ],
+  "primitives": [
+   "GIT",
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 9447
+ },
+ {
+  "tool": "comp-describe",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/debtscan/summary_corpus.py"
+  ],
+  "primitives": [
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 107288
+ },
+ {
+  "tool": "comp-diff",
+  "engines": [
+   "org/modules/graph/cli.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "GIT",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 62966
+ },
+ {
+  "tool": "comp-dispatch",
+  "engines": [
+   "org/modules/graph/comp_dispatch.py"
+  ],
+  "primitives": [
+   "GIT",
+   "FS-WALK"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state"
+  ],
+  "bounding": [
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 16807
+ },
+ {
+  "tool": "comp-drift",
+  "engines": [
+   "infra/aws/globgrph/code_heat_parity.py",
+   "infra/aws/globgrph/iceberg_parity.py",
+   "infra/aws/globgrph/tool_activity_parity.py",
+   "infra/aws/globgrph/trino_catalog_parity.py",
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/drift_cli.py"
+  ],
+  "primitives": [
+   "GIT",
+   "AWS-API",
+   "GRAPH-DB",
+   "REGISTRY",
+   "SQL/TRINO"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "LIVE federation; in-VPC one-shot, ~3-4 min/call"
+  ],
+  "bounding": [
+   "--max N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 117099
+ },
+ {
+  "tool": "comp-dups",
+  "engines": [
+   "org/modules/graph/debtscan/dup_scan.py"
+  ],
+  "primitives": [
+   "GIT",
+   "AWS-API"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "LIVE plane; fresh by construction, cost is latency not staleness"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 32656
+ },
+ {
+  "tool": "comp-fedobs",
+  "engines": [],
+  "primitives": [
+   "AWS-API",
+   "GRAPH-DB"
+  ],
+  "freshness": [
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 6470
+ },
+ {
+  "tool": "comp-firmsep-sweep",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 16461
+ },
+ {
+  "tool": "comp-firmsep-sweep.py",
+  "engines": [],
+  "primitives": [
+   "SIMULATE"
+  ],
+  "freshness": [
+   "LIVE exercise; the only primitive that PROVES reach rather than reading a declaration"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 8170
+ },
+ {
+  "tool": "comp-freshness",
+  "engines": [],
+  "primitives": [
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "--max N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 78886
+ },
+ {
+  "tool": "comp-genesis",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 16283
+ },
+ {
+  "tool": "comp-gitdrill",
+  "engines": [
+   "org/modules/graph/comp_gitdrill.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "GIT",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "--limit N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 27131
+ },
+ {
+  "tool": "comp-glob",
+  "engines": [],
+  "primitives": [
+   "FS-GLOB"
+  ],
+  "freshness": [
+   "derived-on-demand, pattern-matched over the tree"
+  ],
+  "bounding": [],
+  "declares_denominator": true,
+  "src_bytes": 6293
+ },
+ {
+  "tool": "comp-graph",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/graph_status_cli.py"
+  ],
+  "primitives": [
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 31674
+ },
+ {
+  "tool": "comp-grep",
+  "engines": [],
+  "primitives": [
+   "GIT"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)"
+  ],
+  "bounding": [
+   "head slice"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 7848
+ },
+ {
+  "tool": "comp-heat",
+  "engines": [],
+  "primitives": [
+   "GIT",
+   "SQL/TRINO"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "LIVE federation; in-VPC one-shot, ~3-4 min/call"
+  ],
+  "bounding": [
+   "--top N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 11758
+ },
+ {
+  "tool": "comp-honesty",
+  "engines": [
+   "org/modules/graph/comp_honesty.py"
+  ],
+  "primitives": [
+   "AWS-API",
+   "AST"
+  ],
+  "freshness": [
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "derived-on-demand from source at the READ vintage"
+  ],
+  "bounding": [],
+  "declares_denominator": false,
+  "src_bytes": 24264
+ },
+ {
+  "tool": "comp-iam",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/iam_cli.py"
+  ],
+  "primitives": [
+   "AWS-API",
+   "SIMULATE",
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "LIVE exercise; the only primitive that PROVES reach rather than reading a declaration",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 98145
+ },
+ {
+  "tool": "comp-iam-usage",
+  "engines": [
+   "org/modules/graph/comp_iam_usage.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "AWS-API",
+   "SIMULATE",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "LIVE exercise; the only primitive that PROVES reach rather than reading a declaration",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "--limit N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 36104
+ },
+ {
+  "tool": "comp-icedrill",
+  "engines": [
+   "org/modules/graph/comp_icedrill.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "AWS-API",
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "--max N",
+   "head slice",
+   "MaxKeys",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 34980
+ },
+ {
+  "tool": "comp-imgread",
+  "engines": [],
+  "primitives": [],
+  "freshness": [],
+  "bounding": [
+   "head slice"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 8914
+ },
+ {
+  "tool": "comp-incrparity",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/incrparity_cli.py"
+  ],
+  "primitives": [
+   "AWS-API",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 23601
+ },
+ {
+  "tool": "comp-keys",
+  "engines": [
+   "org/modules/graph/comp_keys.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "--top N",
+   "--max N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 29484
+ },
+ {
+  "tool": "comp-kit-striplist-gate",
+  "engines": [],
+  "primitives": [
+   "FS-WALK",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 14336
+ },
+ {
+  "tool": "comp-kuzu",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 17330
+ },
+ {
+  "tool": "comp-kuzu-full",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 16749
+ },
+ {
+  "tool": "comp-kuzu-inc",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 16867
+ },
+ {
+  "tool": "comp-lambdamap",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/lambdamap_cli.py"
+  ],
+  "primitives": [
+   "FS-WALK",
+   "AWS-API",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 47984
+ },
+ {
+  "tool": "comp-learns-score",
+  "engines": [
+   "org/modules/graph/comp_learns_score.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "--top N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 56730
+ },
+ {
+  "tool": "comp-learns-status",
+  "engines": [],
+  "primitives": [
+   "GIT",
+   "GRAPH-DB",
+   "SQL/TRINO"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "LIVE federation; in-VPC one-shot, ~3-4 min/call"
+  ],
+  "bounding": [
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 1502
+ },
+ {
+  "tool": "comp-manifest-check",
+  "engines": [
+   "org/modules/graph/comp_capability_provider.py",
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/manifest_check_cli.py"
+  ],
+  "primitives": [
+   "GIT",
+   "GRAPH-DB",
+   "REGISTRY",
+   "SQL/TRINO",
+   "SUBPROC"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "LIVE federation; in-VPC one-shot, ~3-4 min/call",
+   "delegates -- inherits the freshness of the tool it calls"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 114201
+ },
+ {
+  "tool": "comp-missions",
+  "engines": [
+   ".tools/comp_missions.py"
+  ],
+  "primitives": [
+   "GIT",
+   "FS-GLOB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "derived-on-demand, pattern-matched over the tree",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "--limit N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 21429
+ },
+ {
+  "tool": "comp-ontolint",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/comp_ontolint.py"
+  ],
+  "primitives": [
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 32073
+ },
+ {
+  "tool": "comp-parity",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/comp_parity_cli.py"
+  ],
+  "primitives": [
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 34785
+ },
+ {
+  "tool": "comp-passcraft",
+  "engines": [
+   "org/modules/graph/comp_passcraft.py",
+   "org/modules/graph/cse_schema.py"
+  ],
+  "primitives": [
+   "GIT",
+   "GRAPH-DB"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 97249
+ },
+ {
+  "tool": "comp-perf",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/vectorize_audit_cli.py"
+  ],
+  "primitives": [
+   "REGISTRY",
+   "AST"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "derived-on-demand from source at the READ vintage"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 27672
+ },
+ {
+  "tool": "comp-pii",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/pii_cli.py"
+  ],
+  "primitives": [
+   "FS-WALK",
+   "REGISTRY",
+   "AST"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "derived-on-demand from source at the READ vintage"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 55858
+ },
+ {
+  "tool": "comp-pipescript",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/pipeline_cli.py"
+  ],
+  "primitives": [
+   "GIT",
+   "AWS-API",
+   "GRAPH-DB",
+   "REGISTRY",
+   "AST"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "derived-on-demand from source at the READ vintage"
+  ],
+  "bounding": [
+   "--limit N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 166046
+ },
+ {
+  "tool": "comp-platinum",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/platinum_cli.py"
+  ],
+  "primitives": [
+   "FS-WALK",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 61456
+ },
+ {
+  "tool": "comp-pulse",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/comp_pulse.py",
+   "org/modules/graph/nerves_lexical.py"
+  ],
+  "primitives": [
+   "GIT",
+   "FS-WALK",
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "--top N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 66914
+ },
+ {
+  "tool": "comp-pydeps",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/comp_pydeps.py"
+  ],
+  "primitives": [
+   "FS-WALK",
+   "AWS-API",
+   "GRAPH-DB",
+   "REGISTRY",
+   "AST"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "derived-on-demand from source at the READ vintage"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 33235
+ },
+ {
+  "tool": "comp-registry",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/registry_cli.py"
+  ],
+  "primitives": [
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 41366
+ },
+ {
+  "tool": "comp-residue",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/residue_cli.py"
+  ],
+  "primitives": [
+   "FS-WALK",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "--max N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 37512
+ },
+ {
+  "tool": "comp-routable-check",
+  "engines": [],
+  "primitives": [
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 8992
+ },
+ {
+  "tool": "comp-routes",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/routes_cli.py"
+  ],
+  "primitives": [
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 48530
+ },
+ {
+  "tool": "comp-secrets",
+  "engines": [],
+  "primitives": [
+   "AWS-API"
+  ],
+  "freshness": [
+   "LIVE plane; fresh by construction, cost is latency not staleness"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 16096
+ },
+ {
+  "tool": "comp-shell",
+  "engines": [
+   "org/modules/graph/shell_cli.py"
+  ],
+  "primitives": [
+   "FS-WALK"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state"
+  ],
+  "bounding": [
+   "head slice"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 12924
+ },
+ {
+  "tool": "comp-similar",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/debtscan/comp_similar.py"
+  ],
+  "primitives": [
+   "GRAPH-DB",
+   "REGISTRY",
+   "SQL/TRINO"
+  ],
+  "freshness": [
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "LIVE federation; in-VPC one-shot, ~3-4 min/call"
+  ],
+  "bounding": [
+   "--top N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 46763
+ },
+ {
+  "tool": "comp-state",
+  "engines": [
+   "org/modules/graph/state_scan.py"
+  ],
+  "primitives": [
+   "GIT"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)"
+  ],
+  "bounding": [
+   "--top N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 20392
+ },
+ {
+  "tool": "comp-stitch-refresh",
+  "engines": [],
+  "primitives": [
+   "GIT",
+   "GRAPH-DB"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header"
+  ],
+  "bounding": [
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 4287
+ },
+ {
+  "tool": "comp-surface-check",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/surface_check_cli.py"
+  ],
+  "primitives": [
+   "GIT",
+   "AWS-API",
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 60417
+ },
+ {
+  "tool": "comp-symbols",
+  "engines": [
+   "org/modules/graph/comp_symbols.py"
+  ],
+  "primitives": [
+   "GIT",
+   "AST"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "derived-on-demand from source at the READ vintage"
+  ],
+  "bounding": [
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 9501
+ },
+ {
+  "tool": "comp-system",
+  "engines": [
+   "infra/aws/globgrph/kuzu_cli.py",
+   "org/modules/graph/comp_coverage_view.py",
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/comp_system.py",
+   "org/modules/graph/cse_schema.py"
+  ],
+  "primitives": [
+   "GIT",
+   "FS-GLOB",
+   "AWS-API",
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "derived-on-demand, pattern-matched over the tree",
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "--limit N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 165375
+ },
+ {
+  "tool": "comp-tagauthz",
+  "engines": [],
+  "primitives": [],
+  "freshness": [],
+  "bounding": [],
+  "declares_denominator": false,
+  "src_bytes": 745
+ },
+ {
+  "tool": "comp-tagauthz.py",
+  "engines": [],
+  "primitives": [
+   "FS-WALK"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 18796
+ },
+ {
+  "tool": "comp-to",
+  "engines": [],
+  "primitives": [],
+  "freshness": [],
+  "bounding": [],
+  "declares_denominator": false,
+  "src_bytes": 1603
+ },
+ {
+  "tool": "comp-tool-health",
+  "engines": [
+   "org/modules/graph/comp_learns_score.py",
+   "org/modules/graph/comp_tool_health.py"
+  ],
+  "primitives": [
+   "GIT",
+   "GRAPH-DB",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "--top N",
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 92214
+ },
+ {
+  "tool": "comp-tool-health-gate",
+  "engines": [
+   "org/modules/graph/comp_tool_health.py",
+   "org/modules/graph/comp_tool_health_gate.py"
+  ],
+  "primitives": [
+   "GIT",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 73151
+ },
+ {
+  "tool": "comp-toolgraph",
+  "engines": [
+   "org/modules/graph/cli.py",
+   "org/modules/graph/comp_toolgraph.py"
+  ],
+  "primitives": [
+   "GIT",
+   "FS-WALK",
+   "GRAPH-DB",
+   "REGISTRY",
+   "AST"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "derived-on-demand from source at the READ vintage"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 88192
+ },
+ {
+  "tool": "comp-tooltip",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/tooltip_cli.py"
+  ],
+  "primitives": [
+   "FS-WALK",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 25879
+ },
+ {
+  "tool": "comp-trace",
+  "engines": [
+   "org/modules/graph/cli.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "GIT",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 63001
+ },
+ {
+  "tool": "comp-transform",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/transform_cli.py"
+  ],
+  "primitives": [
+   "FS-WALK",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 58000
+ },
+ {
+  "tool": "comp-trigger",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/comp_trigger.py"
+  ],
+  "primitives": [
+   "FS-WALK",
+   "AWS-API",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from the working tree; reflects UNCOMMITTED state",
+   "LIVE plane; fresh by construction, cost is latency not staleness",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 33710
+ },
+ {
+  "tool": "comp-types",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/types_cli.py"
+  ],
+  "primitives": [
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 42452
+ },
+ {
+  "tool": "comp-v5-composite-test.sh",
+  "engines": [],
+  "primitives": [],
+  "freshness": [],
+  "bounding": [],
+  "declares_denominator": false,
+  "src_bytes": 4888
+ },
+ {
+  "tool": "comp-validate",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py",
+   "org/modules/graph/validate_cli.py"
+  ],
+  "primitives": [
+   "REGISTRY",
+   "AST"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "derived-on-demand from source at the READ vintage"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 59068
+ },
+ {
+  "tool": "comp-which",
+  "engines": [
+   "org/modules/graph/comp_route.py"
+  ],
+  "primitives": [
+   "SIMULATE",
+   "GRAPH-DB",
+   "REGISTRY",
+   "AST",
+   "SQL/TRINO",
+   "SUBPROC"
+  ],
+  "freshness": [
+   "LIVE exercise; the only primitive that PROVES reach rather than reading a declaration",
+   "PERSISTED derived DB -- STALENESS IS REAL; auto-refresh on HEAD-advance, read the provenance header",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "derived-on-demand from source at the READ vintage",
+   "LIVE federation; in-VPC one-shot, ~3-4 min/call",
+   "delegates -- inherits the freshness of the tool it calls"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 197083
+ },
+ {
+  "tool": "comp-which-routing-test.py",
+  "engines": [],
+  "primitives": [
+   "GIT",
+   "REGISTRY",
+   "SQL/TRINO",
+   "SUBPROC"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "LIVE federation; in-VPC one-shot, ~3-4 min/call",
+   "delegates -- inherits the freshness of the tool it calls"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 89810
+ },
+ {
+  "tool": "comp-whoread",
+  "engines": [],
+  "primitives": [
+   "SQL/TRINO"
+  ],
+  "freshness": [
+   "LIVE federation; in-VPC one-shot, ~3-4 min/call"
+  ],
+  "bounding": [],
+  "declares_denominator": false,
+  "src_bytes": 499
+ },
+ {
+  "tool": "comp-whoread.py",
+  "engines": [],
+  "primitives": [
+   "SIMULATE",
+   "REGISTRY",
+   "SQL/TRINO"
+  ],
+  "freshness": [
+   "LIVE exercise; the only primitive that PROVES reach rather than reading a declaration",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists",
+   "LIVE federation; in-VPC one-shot, ~3-4 min/call"
+  ],
+  "bounding": [
+   "head slice"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 10077
+ },
+ {
+  "tool": "comp-xray",
+  "engines": [
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "REGISTRY"
+  ],
+  "freshness": [
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": false,
+  "src_bytes": 16425
+ },
+ {
+  "tool": "comp-xref",
+  "engines": [
+   "org/modules/graph/cli.py",
+   "org/modules/graph/comp_log_auto.py"
+  ],
+  "primitives": [
+   "GIT",
+   "REGISTRY"
+  ],
+  "freshness": [
+   "derived-on-demand from git; NEVER stale (git IS the write history)",
+   "PERSISTED authored artifact -- stale iff the author did not update it; gate-enforced where a gate exists"
+  ],
+  "bounding": [
+   "head slice",
+   "json out"
+  ],
+  "declares_denominator": true,
+  "src_bytes": 62957
+ }
+]
