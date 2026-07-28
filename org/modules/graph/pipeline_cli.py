@@ -68,6 +68,17 @@ except Exception:  # defensive: .tools/ unimportable in some invocation contexts
         "cot": ("opal-data-cot", "cot"),
     }
 
+# CODE_TREES is the ONE declaration of per-(tree, layer) repo homes + S3 prefixes
+# (safe_deploy_core). DELIBERATELY NO FALLBACK COPY: a hand-maintained duplicate
+# here is precisely the divergence this table was introduced to end -- the 4-vs-6
+# mdpf layer drift lived in exactly such a restatement. If the import fails we
+# carry None and the consumer reports UNCOVERED loudly; it never enumerates a
+# guessed layer set.
+try:
+    from safe_deploy_core import CODE_TREES as _CODE_TREES  # noqa: E402
+except Exception:
+    _CODE_TREES = None
+
 # firm label -> the cmd_deployed pipeline-key whose branch enumerates that tree
 # (gold + silver for the firm; mdpf covers its 4 layers in its own branch).
 _LABEL_TO_DEPLOYED_PIPELINE = {"bd": "bd-gold", "inf": "inf-gold", "cot": "cot-gold"}
@@ -1912,7 +1923,15 @@ def cmd_deployed(args):
         print("DEPLOYED STATUS [inf-gold]: local repo vs s3://opal-data-inf/code/{gold,silver,bronze}/")
         print(f"  Runner: inf-gold-layer-runner ({inf_instance})")
     elif pipeline == "mdpf":
-        print("DEPLOYED STATUS [mdpf]: local repo vs s3://opal-data-mdpf/code/scripts/{gold,backfill,feeders,bronze}/")
+        _hdr_layers = (
+            ",".join(sorted(_CODE_TREES["mdpf"]["layers"]))
+            if _CODE_TREES is not None
+            else "UNKNOWN -- CODE_TREES unavailable"
+        )
+        print(
+            "DEPLOYED STATUS [mdpf]: local repo vs "
+            f"s3://opal-data-mdpf/code/scripts/{{{_hdr_layers}}}"
+        )
         print("  Runner: mdpf-daily-runner")
     elif pipeline in ("bd-silver", "inf-silver", "cot-silver"):
         print(f"DEPLOYED STATUS [{pipeline}]: local repo vs s3://{S3_BUCKET}/code/silver/")
@@ -1941,10 +1960,45 @@ def cmd_deployed(args):
         # MDPF has no comp-graph DAG -> enumerate the deployed script layers directly.
         # Layout: data/mdpf/scripts/<layer>/X.py -> s3://opal-data-mdpf/code/scripts/<layer>/X.py
         skip_gold = False
-        _mdpf_root = _WORKSPACE / "data" / "mdpf" / "scripts"
-        for _layer in ("gold", "backfill", "feeders", "bronze"):
-            _ldir = _mdpf_root / _layer
+        # DERIVED from safe_deploy_core.CODE_TREES -- previously a hardcoded
+        # 4-tuple ("gold","backfill","feeders","bronze") against SIX live layers,
+        # which made assets_gold/ and silver/ structurally invisible: 4 of 28 .py,
+        # including Stage-6 build_dim_model_portfolio.py and BOTH cottonwood
+        # scripts. Those two layers are fed from data/assets/, NOT data/mdpf/ --
+        # which is why a layer LIST could not express this tree and why adding
+        # two names to the old tuple would have skipped both silently.
+        if _CODE_TREES is None:
+            uncovered.append(
+                "[mdpf] CODE_TREES UNAVAILABLE -- safe_deploy_core did not import; "
+                "layer set UNKNOWN, refusing to guess"
+            )
+            _mdpf_layers = {}
+        else:
+            _mdpf_layers = _CODE_TREES["mdpf"]["layers"]
+        _mdpf_shared = (
+            set()
+            if _CODE_TREES is None
+            else set(_CODE_TREES["mdpf"].get("shared_repo_homes", ()))
+        )
+        for _layer, (_repo_home, _s3_prefix) in sorted(_mdpf_layers.items()):
+            _ldir = _WORKSPACE / _repo_home
             if not _ldir.is_dir():
+                # FAIL LOUDLY, NEVER `continue`. A declared layer whose repo home
+                # is absent is a DECLARATION DEFECT, not an empty layer -- the old
+                # silent `continue` is what let a wrong layer list read as a clean
+                # sweep (0 MATCH / 0 UNCOVERED / rc=0). This check sits UPSTREAM of
+                # the skip, which is the only place it can fire: a guard downstream
+                # of the routing it audits cannot see what the routing dropped.
+                uncovered.append(
+                    f"[mdpf:{_layer}] DECLARED repo_home MISSING: {_repo_home} "
+                    "-- declaration and repo disagree"
+                )
+                checked_any = True
+                print(
+                    f"  [mdpf:{_layer}] {'(declared repo_home absent)':<44} "
+                    f"{'UNCOVERED':<14}"
+                )
+                print(f"             declared: {_repo_home}")
                 continue
             for p in sorted(_ldir.glob("*.py")):
                 if p.name.startswith("__") or p.name.endswith("_fixtures.py"):
@@ -1953,7 +2007,14 @@ def cmd_deployed(args):
                     continue
                 label = f"[mdpf:{_layer}] {p.name}"
                 checked_any = True
-                status, extras = _check_one("mdpf", label, p, f"code/scripts/{_layer}/{p.name}")
+                status, extras = _check_one("mdpf", label, p, f"{_s3_prefix}{p.name}")
+                # SHARED repo home: only a subset of the dir deploys to this
+                # prefix, so "absent on S3" means NOT A MEMBER, not a missing
+                # deploy. Reclassified as informational and NOT counted as a
+                # defect. STALE/MATCH still bind -- those are real membership.
+                if status == "MISSING_ON_S3" and _layer in _mdpf_shared:
+                    print(f"  [mdpf:{_layer}] {p.name:<44} {'not-in-tree':<14}")
+                    continue
                 print(f"  [mdpf:{_layer}] {p.name:<44} {status:<14}")
                 for line in extras:
                     print(f"             {line}")

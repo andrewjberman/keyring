@@ -18,15 +18,134 @@ from typing import Optional
 
 WORKSPACE = pathlib.Path(__file__).parent.parent
 
-# Pipeline detection table: data_dir_name -> (s3_bucket, pipeline_label)
+# ---------------------------------------------------------------------------
+# CODE_TREES -- THE ONE DECLARATION (INFRA.TOOLS; CTO ruling 20260728T203649Z:
+# "ONE PLAN, all three registries, or none").
+#
+# WHAT THIS REPLACES. The same population was previously described by THREE
+# machine-readable authorities that each RESTATED the layout at their own call
+# site, and all three were wrong in different ways:
+#   1. PIPELINE_MAP + VALID_LAYERS here -- single-layout: emitted code/<layer>/
+#      and knew only {gold,silver,bronze}, so mdpf could not be expressed at all.
+#   2. pipeline_cli.py:1945 -- a hardcoded 4-layer tuple against SIX live layers.
+#   3. EC2_MANIFEST.json code_prefix -- one path segment too coarse to address
+#      the code tree.
+# Consumers now DERIVE from this table. Same principle as the row-13 per-source
+# grammar declaration and the roster-derived partner cohorts: DERIVE FROM ONE
+# DECLARED AUTHORITY, NEVER RESTATE AT A CALL SITE.
+#
+# >> WHY A LAYER *LIST* IS NOT ENOUGH, AND WHY THE OBVIOUS FIX IS A SILENT NO-OP:
+# THE REPO HOME IS NOT DERIVABLE FROM THE TREE NAME. Every consumer used to
+# assume data/<tree>/scripts/<layer>/. For mdpf that is FALSE -- ONE S3 code tree
+# is fed by TWO repo trees:
+#     s3 code/scripts/assets_gold/  <- data/assets/scripts/gold      (NOT data/mdpf/)
+#     s3 code/scripts/silver/       <- data/assets/scripts/silver    (NOT data/mdpf/)
+# Adding "assets_gold"/"silver" to a layer list would glob a nonexistent
+# data/mdpf/scripts/<layer>/, hit `continue`, and report a CLEAN summary with a
+# layer list that merely LOOKS complete -- converting a visible gap into an
+# invisible one. Hence per-(tree, layer) -> (repo_home, s3_prefix). <<
+#
+# deploy_gated: True  = in the Rule-13 deploy gate (file_to_s3_target resolves;
+#                       a push DEPLOYS it). bd/inf/cot -- unchanged, byte-identical.
+# deploy_gated: False = DECLARED CHECK-ONLY. Visible to staleness sweeps, NOT a
+#                       deploy target. This is the declared-UNKNOWN sentinel
+#                       applied to gate membership: mdpf having no deploy path is
+#                       now an AUDITABLE one-line fact instead of an absence
+#                       nobody can query. Flipping mdpf to True would start
+#                       uploading on DS pushes -- a live-behavior change that is
+#                       deliberately NOT bundled here (CTO's call, not a side
+#                       effect of a record fix).
+# ---------------------------------------------------------------------------
+CODE_TREES: dict[str, dict] = {
+    "black_diamond": {
+        "bucket": "opal-data-bd",
+        "label": "bd",
+        "deploy_gated": True,
+        "layers": {
+            "gold": ("data/black_diamond/scripts/gold", "code/gold/"),
+            "silver": ("data/black_diamond/scripts/silver", "code/silver/"),
+            "bronze": ("data/black_diamond/scripts/bronze", "code/bronze/"),
+        },
+    },
+    "inf": {
+        "bucket": "opal-data-inf",
+        "label": "inf",
+        "deploy_gated": True,
+        "layers": {
+            "gold": ("data/inf/scripts/gold", "code/gold/"),
+            "silver": ("data/inf/scripts/silver", "code/silver/"),
+            "bronze": ("data/inf/scripts/bronze", "code/bronze/"),
+        },
+    },
+    "cot": {
+        "bucket": "opal-data-cot",
+        "label": "cot",
+        "deploy_gated": True,
+        "layers": {
+            "gold": ("data/cot/scripts/gold", "code/gold/"),
+            "silver": ("data/cot/scripts/silver", "code/silver/"),
+            "bronze": ("data/cot/scripts/bronze", "code/bronze/"),
+        },
+    },
+    # CHECK-ONLY. Non-standard layout: preserves scripts/<layer>/ under code/,
+    # and two of its six layers are fed from data/assets/, not data/mdpf/.
+    # MDPF_COUNTS (2026-06-05) proved an mdpf script can strand stale on S3, so
+    # it must stay VISIBLE to the sweep even while outside the deploy gate.
+    "mdpf": {
+        "bucket": "opal-data-mdpf",
+        "label": "mdpf",
+        "deploy_gated": False,
+        # SHARED repo homes: data/assets/scripts/{gold,silver} serve MULTIPLE
+        # destinations, and only a SUBSET of each is deployed to mdpf's tree
+        # (3 of 7 under gold; 1 of 13 under silver, measured 2026-07-28). For a
+        # shared home the S3 side is the authority on membership: a repo file
+        # with no counterpart at the mdpf prefix was never meant to be there and
+        # is NOT a missing deploy. Without this the sweep emits ~16 false
+        # MISSING_ON_S3 rows -- and a sweep with more false positives than
+        # findings trains people to ignore it, which is the same end state as
+        # the blindness it replaced. The INVERSE direction is unaffected: an S3
+        # object with no repo counterpart still surfaces as UNCOVERED.
+        "shared_repo_homes": {"assets_gold", "silver"},
+        "layers": {
+            "gold": ("data/mdpf/scripts/gold", "code/scripts/gold/"),
+            "backfill": ("data/mdpf/scripts/backfill", "code/scripts/backfill/"),
+            "feeders": ("data/mdpf/scripts/feeders", "code/scripts/feeders/"),
+            "bronze": ("data/mdpf/scripts/bronze", "code/scripts/bronze/"),
+            "assets_gold": ("data/assets/scripts/gold", "code/scripts/assets_gold/"),
+            "silver": ("data/assets/scripts/silver", "code/scripts/silver/"),
+        },
+    },
+}
+
+# Pipeline detection table: data_dir_name -> (s3_bucket, pipeline_label).
+# DERIVED -- the deploy gate is exactly the deploy_gated trees. Byte-identical to
+# the hand-written table it replaces: {black_diamond, inf, cot}.
 PIPELINE_MAP: dict[str, tuple[str, str]] = {
-    "black_diamond": ("opal-data-bd", "bd"),
-    "inf": ("opal-data-inf", "inf"),
-    "cot": ("opal-data-cot", "cot"),
+    name: (tree["bucket"], tree["label"])
+    for name, tree in CODE_TREES.items()
+    if tree["deploy_gated"]
 }
 
 BYPASS_AUDIT_LOG = WORKSPACE / "org" / "safe-deploy-bypass-audit.log"
-VALID_LAYERS = {"gold", "silver", "bronze"}
+
+# DERIVED -- the layer vocabulary of the GATED trees. Byte-identical to the
+# hand-written {"gold", "silver", "bronze"}. mdpf's extra layers are deliberately
+# NOT here: they are check-only and must never widen the deploy gate.
+VALID_LAYERS = {
+    layer
+    for tree in CODE_TREES.values()
+    if tree["deploy_gated"]
+    for layer in tree["layers"]
+}
+
+
+def tree_layers(tree_name: str) -> dict[str, tuple[str, str]]:
+    """Return {layer: (repo_home, s3_prefix)} for a declared tree.
+
+    Raises KeyError on an undeclared tree -- NEVER returns {} for one, because a
+    silent empty layer set is exactly the false-clean this table exists to end.
+    """
+    return CODE_TREES[tree_name]["layers"]
 
 # ---------------------------------------------------------------------------
 # Phase-1 serve-gate (CTO, Andrew-approved). A committed deploy-scope .py does
@@ -94,28 +213,32 @@ def file_to_s3_target(rel_path: str) -> Optional[tuple[str, str, str]]:
     Scope: data/<pipeline_dir>/scripts/{gold,silver,bronze}[/lib]/*.py
     Returns None if path is not in a recognized deploy scope.
     """
-    p = pathlib.PurePosixPath(rel_path.replace("\\", "/"))
+    norm = rel_path.replace("\\", "/")
+    p = pathlib.PurePosixPath(norm)
     parts = p.parts
     # Minimum: data / <pd> / scripts / <layer> / <file>.py  (5 parts)
     if len(parts) < 5:
         return None
     if parts[0] != "data":
         return None
-    pipeline_dir = parts[1]
-    if pipeline_dir not in PIPELINE_MAP:
+    if not norm.endswith(".py"):
         return None
-    if parts[2] != "scripts":
-        return None
-    layer = parts[3]
-    if layer not in VALID_LAYERS:
-        return None
-    if not rel_path.endswith(".py"):
-        return None
-    bucket, label = PIPELINE_MAP[pipeline_dir]
-    # S3 key = code/<layer>/[lib/]<file>.py
-    s3_suffix = "/".join(parts[3:])
-    s3_key = f"code/{s3_suffix}"
-    return bucket, s3_key, label
+
+    # DERIVED from CODE_TREES -- the layout is no longer hardcoded here. Only
+    # deploy_gated trees resolve; a check-only tree (mdpf) returns None exactly as
+    # before, so the Rule-13 gate's behavior is unchanged.
+    for tree in CODE_TREES.values():
+        if not tree["deploy_gated"]:
+            continue
+        for layer, (repo_home, s3_prefix) in tree["layers"].items():
+            if not norm.startswith(repo_home + "/"):
+                continue
+            # Remainder after the layer dir, preserving any [lib/] subpath.
+            suffix = norm[len(repo_home) + 1:]
+            if not suffix:
+                continue
+            return tree["bucket"], f"{s3_prefix}{suffix}", tree["label"]
+    return None
 
 
 def detect_script_files(
