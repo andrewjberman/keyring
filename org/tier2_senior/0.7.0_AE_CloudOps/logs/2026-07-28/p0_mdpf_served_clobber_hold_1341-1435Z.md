@@ -557,6 +557,45 @@ alarms or measures WITHOUT changing what the route IS, it goes behind the things
 
 **Nothing already landed is affected** -- the two Denies, row 13, and the decommission all stand.
 
+## ⛔ STAND DOWN (appended 19:45Z) -- 2b, THE OAC PREFIX GRANT, AND THE AUTH-INVARIANT ARE ALL **DEAD**
+
+**Andrew ~1858Z:** *"`/json` should not even be there, the serving side is in `opal-data-portal-v2`, we
+dont need a serving duplicate in `opal-data-assets`."* **`opal-data-assets/json/mdpf/` and
+`json/portfolios/` are being DELETED -- that was 2b's ORIGIN.** So, DEAD, do not spend a minute:
+- ❌ **2b** narrow CloudFront behavior `/api/general/mdpf/*` -> `opal-data-assets`
+  (design `MDPF_LEGB_2B_DESIGN_20260728.md` is now HISTORICAL -- do NOT build from it)
+- ❌ **The OAC prefix-grant ruling** (`json/mdpf/*` + `json/portfolios/*`, SourceArn pinned) -- **do NOT
+  land it**; the objects it would cover are going away
+- ❌ **The AUTH-invariant enforcement** -- dead with its parent
+
+**THE FINDINGS OUTLIVED THE DESIGN and stay in the PRD as doctrine:** the nine-key hand-enumerated
+allowlist + its two cottonwood omissions · *"an enumerated allowlist is a control that silently narrows as
+the estate grows"* · the origin defined-and-unreferenced. **The ground moved; the costing was correct when
+made.**
+
+**NEW, ANDREW-APPROVED -- a SEPARATE EGRESS PRINCIPAL for the publisher** (serving is now
+`opal-data-portal-v2` only, and `opal-assets-mdpf-portal-publisher-role` is fence-denied):
+```
+NEW ROLE   read   opal-data-assets/portal/gold/mdpf/*   prefix-scoped
+           write  opal-data-portal-v2/platinum/mdpf/*   prefix-scoped
+           on NEITHER fence
+```
+**RATIONALE MUST GO IN THE TF DESCRIPTION VERBATIM** or the next reader sees a fence bypass: **11 of the
+12 `one-way-fan-in-fence` members are INGEST roles; the publisher is the ONLY EGRESS component on the
+list, swept in because it is named `opal-assets-*`.** A new egress principal leaves the fence enforcing
+exactly what it was built for. **Removing the publisher from the fence reaches the same place by
+WEAKENING the guardrail -- we are not doing that.**
+⚠ **Read path is `portal/gold/mdpf/*`, NOT `gold/mdpf_revamp/*`** -- locked layout
+`opal-data-assets/portal/{layer}/{product}/{scope}/{artifact-type}/{YYYY-MM-DD}.json` (PRD §16).
+**Scope to the TARGET tree, not today's.**
+⚠ **This grants a NEW principal read on a bucket it has never touched -- the EXACT shape that bit me at
+16:39Z. Simulate the caller (with `--context-entries` for conditioned statements) BEFORE relying on it,
+separately-invoked negative control for prefix-scope, targeted apply, verify on the live primitive.**
+
+**QUEUE NOW:** 1. `PIPELINE_MAP` + the Rule-12 class (**the class matters more than the instance**) ·
+2. this egress principal · 3. Stage 6's three grants · 4. the stale `public-data-router` fork ·
+5. the sweep's 6 outstanding (re-scoped to canonical-route omissions, deployed-vs-repo first).
+
 ## MY OWN ERRORS TODAY, CONSOLIDATED (so they are not scattered across comms)
 1. **"Blocked until 49F clears"** -- inherited the gate's own verdict without asking what object produced
    it (NEVER#1 clause 2). Corrected in ~20 min on COO's challenge.
