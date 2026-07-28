@@ -907,6 +907,57 @@ author-scoped query is not a finding until a positive control proves the query c
 >> propagated. A lesson banked from a broken measurement is worse than no lesson: this one would have taught
 >> the fabric to distrust a liveness instrument that was RIGHT.** <<
 
+## III-g. A SCALAR CANNOT REPORT ITS OWN OMISSIONS (2026-07-28 — five measured instances in one night, four different substrates)
+
+**THE LAW:** **a count, a pass/fail, and an exit code are all SCALARS — each one collapses the population it
+summarised, so none of them can tell you what it left out.** Compare **SETS, both directions**; assert on
+**what ran**, not on what passed.
+
+**THE INSTANCE THAT PROVES IT, and it fired within minutes of the ruling that demanded it** (`3.0.0_SA_CVO`,
+population-parity guard on a generated tool registry):
+```
+population authority:  89 tools
+generated master:      89 tools
+COUNTS IDENTICAL. SETS DIVERGE BY 12 MEMBERS.
+```
+>> **A COUNT-EQUALITY CHECK WOULD HAVE PASSED CLEAN AND TOLD US NOTHING. Only the two-directional
+>> set-difference sees it.** *"Print the denominator"* is necessary and **not sufficient**: two populations can
+>> share a denominator and not share a member. **The denominator is a scalar too.** <<
+
+**Three causes, and the taxonomy matters more than the fix:** (1) an **extension convention** — the authority
+drops `.py`, an on-disk listing keeps it, so the same tool carries two ids; (2) a **membership test that was a
+naming convention** — the authority's rule is `startswith("comp-") OR base == "pipescript"`, the generator's
+was the prefix alone, so *a naming convention is not a membership test*; (3) **a silent `continue`** that
+dropped three tools whose primitive would not resolve. **A dropped member does not announce itself — the
+population just quietly shrinks.** Repaired not by removing the skip but by **emitting the tool with an
+explicit `classification_status: "UNCLASSIFIED — present in the authority, no primitive resolved. NOT a claim
+that it covers nothing; a claim that this generator could not determine it."** *An honest UNKNOWN in the
+record beats an absence nobody can see.*
+
+**FOUR MORE, same night, same law, unrelated substrates:**
+| green signal | what it was silent about |
+|---|---|
+| `OK: 11/11 cases passed` | **three tests written and never registered** in the runner — caught because the author expected 14, *by the COUNT, not the result* |
+| file wrote, `rc=0` | a generated module that **failed on `import`** (`json.dumps` emits `true`/`false`, not Python literals) — caught by importing it, **not by reading it** |
+| `0 UNCOVERED` from a coverage sweep | the script was **excluded before the thing that counts exclusions ran** — *a guard downstream of the routing it protects against is not a guard* |
+| 9 CloudFront behaviors **declared** in Terraform | **0 applied** on the live distribution — a comp-tool reporting the desired plane cannot tell landed from planned (Rule 22a) |
+
+**CONTROLS, all cheap:**
+- **Assert on the COUNT OF CHECKS EXECUTED**, not only on their results. A suite that cannot say how many
+  assertions ran cannot distinguish *passed* from *absent*.
+- **Compare sets in BOTH directions** (`A−B` and `B−A`), and **name the diverging members** in the failure.
+- **`rc=0` on a write is a claim about a FILE. If the artifact is code, IMPORT IT; if it is a policy,
+  SIMULATE IT; if it is a deploy, EXERCISE IT.** The estate's standing form: *DEPLOYED = downloaded AND
+  imported.*
+- **Exercise the guard.** Inject a phantom member and require the raise, naming direction and member; then run
+  clean and require silence. **A guard that has never failed has never been tested, and its silence carries no
+  information until it can.**
+
+>> **THE UNIFYING PROPERTY: every one of these five was GREEN, and green is the shape a missing observation
+>> takes. Absence has no signal of its own — it inherits the signal of whatever summarised over it. So the
+>> question is never "did it pass," it is "what population did it pass OVER, and can it name what fell
+>> outside?"** <<
+
 ## IV. Guards
 
 **A NULL THAT MEANS TWO THINGS IS A LIE ABOUT ONE OF THEM.**
