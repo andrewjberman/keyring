@@ -99,12 +99,53 @@ CTO~Z rather than recorded as an impediment.
 
 ## Next Steps
 
-1. **[1.0.0_SA_CTO~Z]** `.tools/comp-grep:76` `--include-held` + GG1 sovereign-held guard --
-   still live 3 days after the Andrew-direct ruling that names the pattern. Dispatch decision
-   needed; I will SPLIT-then-verify, never rip. Re-surfaced by MCP this turn.
-2. **[1.0.0_SA_CTO~Z]** `comp-arity` routable-registration debt -- currently
-   `excluded_not_graph_use_cases` per the comp-residue precedent; needs a curated comp-which
-   vocabulary pass to become routable. "A tool nobody can find is indistinguishable from a tool
-   that was never built" (the registration gate's own words).
+1. ~~**[1.0.0_SA_CTO~Z]** `.tools/comp-grep:76` `--include-held` -- dispatch decision needed.~~
+   **CLOSED 20260728T124811Z, same turn** -- see ADDENDUM below.
+2. ~~**[1.0.0_SA_CTO~Z]** `comp-arity` routable-registration debt.~~ **CLOSED** -- ruled a
+   DECLARED exclusion, not a gap; no pass needed.
 3. **[1.0.0_SA_CTO]** bd cluster + `sovereign_held.py` -- STOP standing, untouched, not mine.
-4. **[0.8.0_AE_CloudComp~D]** IDLE and available; event-driven, reachability confirmed live.
+4. **[0.8.0_AE_CloudComp~D]** PARKED, event-driven. No open items.
+
+---
+
+## ADDENDUM (20260728T1250Z, ~10 min after this log landed) -- BOTH ITEMS CLOSED
+
+Recorded here rather than left to a successor, because the body above frames item 1 as a
+STANDING ITEM NEEDING ACTION and it is now answered. **A log that keeps asserting an open item
+after it closed is the stale-record-with-authority shape** -- and this file would have been the
+authoritative one, being the most recent.
+
+**CTO~Z answered with a measurement, not a defer.** VERIFIED BY ME AT SOURCE before accepting:
+`_comprail.py:252` `gitignore_aware_files(ws, pathspec, include_held=False)` is a **public
+parameter on a SHARED helper**, returning `(files, held_note, err)`; callers confirmed at
+`comp-glob:83` and `comp-grep:115` (+ comp-ls and a test per CTO~Z; my own check was
+head-truncated, so that is MY short denominator, not a discrepancy). Removing the guard changes
+the RETURN CONTRACT for three tools -- 5 files and an API change.
+
+Against Andrew's cost bar this session -- *"but cleanup of dead code wold be nice if it can take
+5 minutes to do so"* -- **it is a NO.** GOVRIP is separately STOOD DOWN Andrew-direct
+(*"i dont know what GOVRIP is or if we even really wanted to get that pushed through"*).
+`sovereign_held.py` stays; `PROD_WRITE_FORBIDDEN` stays IN FORCE.
+
+**>> MY PREMISE WAS OVERSTATED, AND THE FAILURE IS SPECIFIC.** I called it a blind spot bounding
+what every agent finds through the rail. `_comprail.py:259-261` says `held_note` is *"a LOUD line
+the caller MUST print... an `--include-held` override is never silent."* **A disclosed exclusion
+with a forced loud note is a BOUNDED denominator, not a hidden one** -- categorically unlike the
+silent-failure class of 07-25/26.
+
+**And I had already measured that myself, then dropped it.** My 190457Z message of 07-25 said, in
+my own words, *"the guard is LOUD by construction... a reduced denominator that ANNOUNCES itself,
+not a silent one."* Three days later I re-surfaced it without the qualifier. **Nobody removed it;
+I did, by restating my own finding from memory instead of from what I wrote.** The claim got
+stronger while the evidence stayed identical, and the second telling is the one that gets acted
+on -- it cost CTO~Z a measurement to refute a premise I had already refuted.
+**RULE FOR MYSELF: re-surfacing an item after a gap means re-reading what I WROTE, not what I
+remember concluding.** <<
+
+**CAPACITY: PARKED, and the reasoning accepted, not just the verdict.** Andrew's signal is that
+an agent-originated program got pushed a long way unasked; the right response is FEWER
+agent-originated workstreams, not a substitute. My "here are three things I could pick up" was an
+offer to start a fourth. Not re-raising the comp-grep item -- it is answered with a measurement,
+and re-raising an answered item is how a defer decays into noise. The trigger worth watching is
+if someone touches `_comprail`'s return contract for another reason, making this nearly free as a
+rider; I will flag it then, not on a timer.
