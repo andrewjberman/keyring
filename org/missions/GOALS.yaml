@@ -26,3 +26,27 @@ groups:
     Client-facing NON-PORTAL work, subdivided by advisor, plus ALONGSIDE for scoped adjacent work
     that may eventually tie into the portal. Entirely prospective at this time.
 groups_status: APPROVED
+
+# ---------------------------------------------------------------------------
+# PRIORITY SEQUENCE -- Andrew-direct ~2242Z 2026-07-28, recorded by 1.0.0_SA_CTO in
+# org/critical_paths/MDPF_RESET_DIRECTIVE_20260728T2220Z.md Amendment 5 @c57200bd8b.
+# A SEQUENCE, not a ranking: the second item is gated on the first COMPLETING, not merely
+# on it being important. That distinction is why it is recorded here rather than folded
+# into per-sub-group priority fields, which cannot express "after".
+# ---------------------------------------------------------------------------
+priority_sequence:
+  - rank: 1
+    what: "MDPF COMPLETION"
+    sub_group: PORTAL.MODEL_PORTFOLIOS
+    verbatim: "The number 1 most important fix right now is the completion of mdpf."
+  - rank: 2
+    what: "DIRECT PIVOT to the ETF fixes -- EventBridge Rules/Schedules timing and the backwards
+      ingestion-vs-consumption trigger schedule."
+    sub_group: "INFRASTRUCTURE.GRAPH (mechanism) + PORTAL.MODEL_PORTFOLIOS (ETFS_* attach)"
+    gate: "Immediately after MDPF is done. Gated on COMPLETION, not on priority."
+    verbatim: "we need to pivot directly into the ETFs fixes... the questionable EVENTBRIDGE RULES
+      and EVENTBRIDGE SCHEDULES, because if that timing is wrong or if things are not scheduled that
+      is our entire problem... weird freshness rules that are confounding us based on a backwards
+      ingestion versus consumption trigger schedule."
+priority_sequence_status: RECORDED
+priority_sequence_source: "Andrew-direct ~2242Z, CTO-recorded @c57200bd8b. Custody copy to MSTR."

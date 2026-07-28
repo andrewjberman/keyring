@@ -4,9 +4,9 @@
     Every sentence below is SELECTED from a state.yaml or execsum.yaml, never composed
     here: a compiler that writes prose is a compiler that can invent a stance.
 
-    ANCHOR COMMIT   61d8b8a0c3
-    ANCHOR TIME     2026-07-28T18:01:26-04:00   (author-time, not a wall clock)
-    ANCHOR AUTHOR   0.7.0_AE_CloudOps~C
+    ANCHOR COMMIT   34e9257709
+    ANCHOR TIME     2026-07-28T18:45:46-04:00   (author-time, not a wall clock)
+    ANCHOR AUTHOR   0.7.0_AE_CloudOps
     ORDERING        activity intensity -- commits in the last 14 days, then total
     SOURCE          org/missions/{GROUP}/{SUB_GROUP}/{state,execsum}.yaml
 
@@ -26,7 +26,7 @@
 |---|---|---|---|---|---|---|---|---|
 | 1 | `INFRASTRUCTURE.GRAPH` | **358** | 1092 | 35 | PARTIAL | PARTIAL | PARTIAL | — |
 | 2 | `INFRASTRUCTURE.DEBT` | **158** | 1680 | 42 | YES | PARTIAL | PARTIAL | — |
-| 3 | `PORTAL.MODEL_PORTFOLIOS` | **148** | 399 | 17 | YES | YES | NO | 1.0.0_SA_CTO -- an architecture call that PR |
+| 3 | `PORTAL.MODEL_PORTFOLIOS` | **149** | 400 | 17 | YES | YES | NO | 1.0.0_SA_CTO -- an architecture call that PR |
 | 4 | `INFRASTRUCTURE.TOOLS` | **118** | 730 | 37 | YES | YES | UNASSESSED | 1.0.0_SA_CTO -- TWO calls CVO explicitly did |
 | 5 | `PORTAL.ADVISOR_INTELLIGENCE` | **34** | 1726 | 36 | PARTIAL | UNASSESSED | UNASSESSED | — |
 | 6 | `PORTAL.DEBT` | **2** | 2 | 2 | PARTIAL | NO | NO | — |
@@ -51,6 +51,27 @@
     version    v1.2
 
 **FRONTIER —** Lock the taxonomy -- one canonical statement the rest can be migrated onto. But note the 92% figure reframes the bottleneck: DECIDED is not what is holding this, ADOPTION is.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -119,6 +140,27 @@ the CLASS.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Second on activity, 157 recent across 42 authors, and the enacted-not-recorded character held: this
 window was applied infrastructure, not documentation.
 
@@ -156,14 +198,35 @@ census is still absent while its trigger twin exists complete with a CI drift ga
 
 > Lock in the proper canonical pipelines for the Model Portfolios product so it serves correct numbers every day without hand-restoration; and establish the Opal-level definition of how the four AUA types aggregate -- ETF Models (the 5 archetypal portfolios), SMA Strategies (TAX SMA, the incoming MUNI SMA, 49F SMAs tracked in SmartX such as PFOE), Custom Models (client-specific SMAs that are not a larger strategy), and Non-Model Residual (assets we advise upon that fall into none of the prior three).
 
-    activity   148 commit(s) in the last 14 days · 399 total · 17 author(s)
-    newest     2026-07-28T17:52:18-04:00
+    activity   149 commit(s) in the last 14 days · 400 total · 17 author(s)
+    newest     2026-07-28T18:40:04-04:00
     stance     DECIDED YES · BUILT YES · SERVING NO
     version    v1.2
 
 **FRONTIER —** The defined publisher. Nothing automated writes the serve.
 
 **BLOCKED ON —** 1.0.0_SA_CTO -- an architecture call that PRECEDES the build: which serving namespace is canonical.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -223,6 +286,27 @@ architecture call -- which serving namespace is canonical -- that PRECEDES the b
 **FRONTIER —** Wire comp-which to IMPORT tool_index instead of re-parsing the manifest. Cheap, and it is now the single next thing -- until it lands, the compiled index is a fast artifact nobody reads. (The suite-scale declared-vs-actual diff remains real but is downstream of this, and is now cheaper because per-tool primitive rows persist as JSON.)
 
 **BLOCKED ON —** 1.0.0_SA_CTO -- TWO calls CVO explicitly did NOT make: (a) the comp-which wiring, and (b) whether this 5th registry should FOLD INTO comp-coverage-map.yaml, which already has a passing gate it would inherit. Both routed to him in the same window.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -307,6 +391,27 @@ Until that lands it is a fast artifact nobody reads.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Largest body of work in the tree, least established state, and that has not changed: 1,726 commits
 against 34 recent, BUILT and SERVING both UNASSESSED.
 
@@ -360,6 +465,27 @@ artifact, not two. COO is building it. This sub-group must not commission a seco
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Unchanged, and correctly so. LOW priority by sovereign instruction, two commits total, brief only --
 not decomposed, not staffed. Nothing landed in the window.
 
@@ -387,6 +513,27 @@ investigation precedes migration and why staying at zero activity is the right p
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -445,6 +592,27 @@ Source of record when work begins: SCHWAB (certified-AUA deprecated 2026-07-24).
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 PROSPECTIVE and net-new. Zero commits is correct; nothing landed and nothing was expected to.
 
 Scoped adjacent work that may eventually tie into the portal but is not portal work today -- Andrew's
@@ -472,6 +640,27 @@ Nothing registered, nothing blocked, no paths claimed.
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -516,6 +705,27 @@ Open at Andrew: "Cottonwood Capital Advisory" (his wording) vs "Advisors" (the e
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
