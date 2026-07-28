@@ -208,7 +208,15 @@ encoded against T-1 reality (`date==run_date`, the settled-frontier drop, the 2-
 
 **THE ETF PIVOT QUEUE (fires the moment MDPF's WOs close; NOT before):**
 ```
-E1  bd-49f-etf-ownership-daily revive-vs-retire  <- WO-4d TF evidence -> CTO rules (contract change)
+E1  bd-49f-etf-ownership-daily -- RULED 232612Z: RETIRE-AND-CONSOLIDATE onto wsd-49f-partner-held-etf-
+    daily. Evidence: never-wired BY DESIGN (S-D2 monthly ruling, declared==applied, zero drift); both
+    premises superseded (frozen legacy source + monthly cadence); "revive" would BUILD a duplicate daily
+    producer of a quantity wsd already measures. GATE ON EXECUTION: verify wsd's 49F basis is measured
+    rps_actual, per-(ticker,partner), at the emitter's grain -- read its source; re-ratify the CTO~B
+    contract citing this ruling, never a quiet swap. If any leg fails, back to CTO. Until executed, the
+    49F ETF cohorts stay honestly rolled_forward -- the guard working. (Also recorded: the staleness
+    mechanism was a wire existing only in a TF comment, never adopted by the executing runbook -- the
+    two-records-one-subject class again.)
 E2  fund-level phase: puller 22:00Z vs consumer 16:45Z -> either re-phase ONCE deliberately, or declare
     the T-1 cadence in the roster so the rows read fresh-per-cadence instead of perpetual rolled_forward
     (WO-4c generalizes; prefer declaration over re-phasing)
