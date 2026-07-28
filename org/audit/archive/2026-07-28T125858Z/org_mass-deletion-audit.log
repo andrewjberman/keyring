@@ -1,0 +1,6 @@
+2026-07-09T19:51:49Z  WARNED     agent=Andrew Berman  deletions=84  threshold=25  mode=warn  attribution=<none>
+2026-07-09T19:52:54Z  WARNED     agent=Andrew Berman  deletions=59  threshold=25  mode=warn  attribution=<none>
+2026-07-09T19:54:34Z  WARNED     agent=Andrew Berman  deletions=204  threshold=25  mode=warn  attribution=<none>
+2026-07-09T19:57:49Z  WARNED     agent=Andrew Berman  deletions=256  threshold=25  mode=warn  attribution=<none>
+2026-07-09T20:00:08Z  ATTRIBUTED  agent=Andrew Berman  deletions=108  threshold=25  mode=warn  attribution=ledger-id LD-0264
+2026-07-09T20:02:40Z  ATTRIBUTED  agent=Andrew Berman  deletions=156  threshold=25  mode=warn  attribution=ledger-id LD-0264
