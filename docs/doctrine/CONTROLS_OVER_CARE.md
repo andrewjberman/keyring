@@ -796,6 +796,77 @@ so thinning must be a decision with an owner (`FULL` = adversarial pass; `REDUCE
 headline only, tagged per item, untagged defaults to FULL), never ambient drift. Its first use
 produced a *precision caveat* instead of a rubber stamp at the same cost.
 
+## III-e. A ROSTER RESTATED IS A ROSTER ROTTED — and the control that inherits it certifies the failure it was built to catch (2026-07-28, MDPF; three substrates in one day)
+
+**THE LAW:**
+> **THE ROSTER IS DECLARED ONCE, AT THE PRODUCT'S AUTHORITY, AND EVERY CONTROL *READS* IT — NEVER RESTATES
+> IT. TYPES ARE DERIVED PER SCOPE.**
+> **A roster restated as a literal inside a control is a COPY, and a copy of a roster is a stale roster with
+> a delay fuse.**
+
+**Both halves are load-bearing and inverting either one produces a distinct, measured defect:**
+- **Roster DERIVED from the data** → an absent member cannot register as absent. Its own completeness fields
+  go quiet: `feeders_missing: []` is *literally true* over a denominator that never contained the missing
+  member.
+- **Types HAND-MODELLED per scope** → the producer ships only the shapes it was developed against and
+  silently under-publishes every other scope.
+
+**"DECLARED" WAS THE FIRST FORM OF THIS RULE AND IT WAS WRONG.** It was drafted as *"roster declared, types
+derived,"* endorsed by a second Tier-1 agent, and held one commit short of landing. **The file that motivated
+it DECLARES its roster — twice — and the draft would have certified it compliant.** The correction came from
+reading the body after the location was already agreed.
+
+**MEASURED — the control is purpose-built, ERROR-level, reviewed, and silent:**
+```python
+# data/mdpf/scripts/gold/mdpf_aggregate_aua.py  (71,863 B / 1,385 lines; `cottonwood` token count 0)
+:492  def expected_partners_for(date):        # ROSTER COPY #1 -> drives sentinel 2
+:497      base = {"49financial"}
+:498      if date >= INFLECTION_PARTNER_ONBOARD_DATE: base.add("inflection")
+:736  # MDPF_ASSETS.019 SENTINEL 2 -- expected partners present  <- built AFTER a 5/19 partial-emission miss
+:744  missing_partners = sorted(expected - present_firms)
+:750  s2_status = "ERROR"                     # if any expected partner is missing
+:757  s2_detail = "all expected partners present: [...]"        <- WHAT IT ACTUALLY EMITS
+:1132 expected_partners = {"49financial","inflection"}          # ROSTER COPY #2, different function
+:1199 "feeders_missing": sorted(expected_partners - present)    # -> [] in the served artifact
+```
+The file's own header states why the control exists: *"the reconcile block never checked WHICH partners were
+present."* **Someone found this class, built the correct control, and gave it an identifier.** It evaluates
+`{49financial, inflection} - {49financial, inflection}` = empty and reports **PASS**, while a third declared
+scope is absent from a client-facing number. **Five independent self-certifications passed on the same
+artifact** — `status: "current"`, `lag_vs_as_of_days: 0`, `rolled_forward_partners: {}`, `feeders_missing: []`,
+and a reconciliation identity that re-derives **to the cent**.
+
+>> **THE CONTROL IS NOT BROKEN, BYPASSED, OR ADVISORY. IT IS TRUTHFUL AND SILENT, BECAUSE ITS EXPECTATION SET
+>> AND THE DATA SHARE THE SAME OMISSION. ENROLLED-THEN-FAILED THROWS `ERROR`; NEVER-ENROLLED CERTIFIES
+>> HEALTHY. THE CONTROL'S SENSITIVITY IS ANTI-CORRELATED WITH THE SEVERITY OF THE FAILURE — partial breakage
+>> is caught, total absence is stamped compliant.** <<
+
+**This is the third anti-correlated instrument in the estate's record, and the second substrate for this exact
+signature:** the orphan watcher reads `REACHABLE` *because* the agent is deaf; the derived-denominator
+artifact reads healthiest in the worst case; this control passes *because* the partner was never enrolled.
+**All three share one mechanism — the instrument's denominator is derived from the thing being measured.**
+When one failure signature appears in unrelated substrates (comms fabric and data pipeline) it is a design
+class, not a coincidence.
+
+**AND THE COPY-DIVERGENCE HALF WAS PAID FOR THREE TIMES IN ONE DAY, AT THREE ALTITUDES:** a `CLAUDE.md` rule
+text that landed in one copy and not the other · the watcher skill's `/c/` drive prefix corrected in Step 3
+and left wrong in **Step 0**, the instruction an agent reads *first* · and this partner roster duplicated
+across two functions in one file. **Prose, procedure, and code. A correction is only as complete as its
+last surviving copy.**
+
+**CONTROL (cheap, and it is a question not a tool):** for any control that compares reality against an
+expected set, ask **"where did the EXPECTED side come from, and is that the same authority that defines the
+population?"** If the expected set is a literal in the control's own file, it is a copy — single-source it.
+**And enumerate the copies before fixing one:** here, enrolling the missing member requires finding *both*
+`:492` and `:1132`, and nothing links them.
+
+**COROLLARY — a phased-enrollment mechanism makes absence AMBIGUOUS, and code cannot resolve it.** The same
+file carries `INFLECTION_PARTNER_ONBOARD_DATE = "2026-05-18"`: members are deliberately phased in. So a
+missing member is either a **DEFECT** or a **PENDING ENROLLMENT**, and *the wiring cannot distinguish them* —
+that question belongs to the product owner, not the tracer. **But the LABEL is wrong either way:** a
+member-scoped number carrying a population-wide name and asserting completeness is a defect regardless of
+which answer comes back. **Only the roster fix is contingent on the ruling; the label is not.**
+
 ## IV. Guards
 
 **A NULL THAT MEANS TWO THINGS IS A LIE ABOUT ONE OF THEM.**
