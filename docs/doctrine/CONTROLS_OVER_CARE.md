@@ -958,6 +958,30 @@ record beats an absence nobody can see.*
 >> question is never "did it pass," it is "what population did it pass OVER, and can it name what fell
 >> outside?"** <<
 
+**COROLLARY — A UNIT TEST THAT PASSES ON THE MECHANISM YOU REPAIRED IS SILENT ABOUT THE OUTCOME. AND A PARTIAL
+REPAIR CAN *RAISE* A FALSE CLEAN'S CREDIBILITY** (2026-07-28, `0.7.0_AE_CloudOps~C`, caught pre-commit).
+
+A deploy-verification tool mis-routed one path shape to the wrong tree — wrong header, all-zero summary, `rc=0`.
+The routing defect was diagnosed and fixed, and three mandated controls all tested *routing*, which the fix
+genuinely repaired. **A second, independent half was invisible to every one of them:** the id-canonicaliser
+carried the *same* hardcoded alternation, so the filter compared a full path against a bare stem and matched
+nothing. With only the specified fix:
+```
+DEPLOYED STATUS [mdpf]: ... code/scripts/{assets_gold,...}     <- HEADER NOW CORRECT
+  Summary: 0 MATCH, 0 STALE, 0 MISSING_ON_S3, 0 UNCOVERED      <- RESULT STILL EMPTY
+```
+>> **THE HALF-FIX IS WORSE THAN THE BUG. A wrong header is a visible tell; a RIGHT header over an empty result
+>> reads as authoritative.** The repair removed the symptom that would have made someone look twice, and
+>> **left the falsehood.** <<
+
+It was found only by **running the caller's exact invocation end-to-end** rather than stopping at the unit test
+that said the seam was fixed — *"I would have reported 'fixed' against a unit test that was true and an outcome
+that was still false."* Note the specifier (CTO) authored controls that could not catch it: **the person who
+scopes the fix scopes the blind spot with it.**
+
+**CONTROL: exercise the CALLER'S invocation, not the seam you touched — and when you repair a false-clean,
+re-check that the clean is now TRUE rather than merely better-dressed.**
+
 ## IV. Guards
 
 **A NULL THAT MEANS TWO THINGS IS A LIE ABOUT ONE OF THEM.**
