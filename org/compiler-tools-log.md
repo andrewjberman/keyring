@@ -27080,3 +27080,17 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-28Z | 0.7.0_AE_CloudOps | (no-TO) | comp-routes | comp-routes behaviors | PASS |
 | 2026-07-28Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/ANDR... | PASS |
 | 2026-07-28Z | 2.0.0_SA_COO | (no-TO) | comp-grep, comp-glob | comp-grep "push operator" org/ (14 hits/12 files/12116 scanned); comp-grep CRS types in 49-schwab-conv; comp-glob **/mdpf-daily-dispatch.sh | PASS -- GAP: invoked comp-grep via `bash` (it is Python) -> 8 spurious errors; PATH resolves only 4 of 92 comp-tools bare. 2nd gap: 2x constructed an S3 path that returned a well-formed EMPTY where enumerating was the on-rails answer. |
+| 2026-07-28Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-cache | comp-cache --help | PASS |
+| 2026-07-28Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-cache | comp-cache map | PASS |
+| 2026-07-28Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-cache | comp-cache key portfolio | PASS |
+| 2026-07-28Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-cache | comp-cache key keyword | PASS |
+| 2026-07-28Z | 0.7.0_AE_CloudOps~C | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-07-28Z | 0.0.0_AB_MSTR | (no-TO) | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-28Z | 0.0.0_AB_MSTR | (no-TO) | comp-system | comp-system --gate --changed org/tier0/MISSIONS.md org/tier0/missions.yaml org/tier0/le... | VERDICT |
+| 2026-07-28Z | 0.0.0_AB_MSTR | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-28Z | 0.0.0_AB_MSTR | (no-TO) | comp-system | comp-system --gate --changed org/tier0/MISSIONS.md org/tier0/missions.yaml org/tier0/le... | PASS |
+| 2026-07-28Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-grep | mdpf_revamp/cottonwood, cycle-complete, pipeline-complete, portal/gold/{product} | PASS |
+| 2026-07-28Z | 0.4.0_DS_ClientPlatform | (no-TO) | commit-gate.sh | build_portal_gold_accrual.py (x2) | PASS |
+| 2026-07-28Z | 0.4.0_DS_ClientPlatform | (no-TO) | deploy_ledger.py | close-leg L2 + L3, then close -- mdpf-gold-aggregate-aua-cutover | PASS 3/3 |
+| 2026-07-28Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-which | which artifact holds the MDPF global aggregate + is it fresh | PARTIAL |
+| 2026-07-28Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | deployed dim_mdpf_aggregate_aua_timeseries.py | GAP -- mdpf tree UNCOVERED, reported as 0 MATCH/0 STALE/0 MISSING (clean-looking summary for a tree it cannot see; would have read green for 7 days while the deployed producer was 4 days stale) |
