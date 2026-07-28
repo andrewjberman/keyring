@@ -27153,3 +27153,9 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-28Z | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --limit 200 MATCH (n:CloudNode) WHERE n.node_type='ServedURL' RETURN n.node_id | PASS |
 | 2026-07-28Z | 0.7.0_AE_CloudOps | (no-TO) | pipescript | pipescript --list | PASS |
 | 2026-07-28 | 3.0.0_SA_CVO | comp-kuzu (6+), comp-coverage-check, comp-heat, comp-clobber, comp-which/grep/glob, safe-commit x12 | all PASS; comp-clobber blind in both modes as found | Raw aws/git/grep used with inline # rail-checked: markers -- the session subject WAS the comp-tool layer, so routing its own inspection through a comp-tool makes the instrument its own auditor. Two gate BLOCKS honoured (ruff on a generated file, comp-system regen). |
+| 2026-07-28Z | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --limit 200 MATCH (n:CloudNode) WHERE n.node_type='ServedURL' RETURN n.node_id | PASS |
+| 2026-07-28Z | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --limit 200 MATCH (n:CloudNode) WHERE n.node_type='ServedURL' RETURN n.node_id | PASS |
+| 2026-07-28Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py | PASS |
+| 2026-07-28Z | 2.0.0_SA_COO | (no-TO) | comp-routes | comp-routes trace --json https://opalinvest.dev/api/general/mdpf/global/aggregate-aua-t... | PASS |
+| 2026-07-28Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/G7_C... | PASS |
+| 2026-07-28T234xZ | 0.4.0_DS_ClientPlatform | comp-pipescript io (mdpf path form), comp-grep x4 (escaped-pipe warning caught a would-be false 0-match), comp-glob x2 | fold ruling + read-pref removal + G7 trace; standing gap re-confirmed: comp-pipescript deployed blind to mdpf tree, verified by head-object md5 instead |
