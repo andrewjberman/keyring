@@ -32,6 +32,20 @@ REPO="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
 [ "${MISSIONS_REFRESH:-1}" = "0" ] && exit 0
 
 WM="$REPO/org/missions/.watermark.json"
+OWNER_FILE="$REPO/org/missions/.register-owner"
+
+# MULTI-DEVICE GUARD. org/missions/ is DERIVED; if two devices compile and commit it, the later push
+# overwrites the earlier with a view built from a different git state and the losing rows vanish
+# with no error. Exactly one device owns it. A non-owner SKIPS SILENTLY -- no warning, because a
+# hook that complains on every commit of a correctly-configured second device is a hook that gets
+# deleted.
+if [ -f "$OWNER_FILE" ]; then
+  _owner="$(sed -n 's/^owner_hostname:[[:space:]]*//p' "$OWNER_FILE" | head -1 | tr -d '\r')"
+  _host="$(hostname 2>/dev/null)"
+  if [ -n "$_owner" ] && [ -n "$_host" ] && [ "$_owner" != "$_host" ]; then
+    exit 0
+  fi
+fi
 
 (
   cd "$REPO" || exit 0

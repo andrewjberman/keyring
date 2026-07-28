@@ -1,0 +1,18 @@
+# .register-owner -- which DEVICE compiles and commits the mission register.
+#
+# WHY THIS EXISTS: org/missions/ is a DERIVED tree. If two devices both compile and commit it, the
+# later push overwrites the earlier with a view built from a DIFFERENT git state -- and neither
+# device is wrong, they simply saw different commits. The register would thrash, and the losing
+# device's rows would vanish without an error.
+#
+# THE RULE: exactly ONE device compiles and commits. Others may READ freely and may run
+# `comp-missions scan` for their own use; they must not run `emit`/`compile` into a commit.
+#
+# The post-commit hook checks this file. A device whose hostname does not match SKIPS silently --
+# it does not warn on every commit, because a hook that cries on a correctly-configured second
+# device is a hook that gets deleted.
+#
+# To move ownership: change the hostname here, commit it, and let the other device pull.
+
+owner_hostname: Andrew
+owner_note: "The device where 0.0.0_AB_MSTR runs. MSTR owns the register per LD-0341."
