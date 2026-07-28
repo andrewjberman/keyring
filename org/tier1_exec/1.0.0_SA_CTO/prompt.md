@@ -80,8 +80,25 @@ then roll corrections all the way back up through every connected document.
 Your first tool invocations every session. No exceptions. **Run `/watcher` — it does all of this.**
 
 1. **MCP tool call:** `register_agent("1.0.0_SA_CTO", summary="<session purpose>")`
-2. **Monitor tool** (`persistent: true`, `timeout_ms: 3600000`), absolute path:
-   `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh 1.0.0_SA_CTO stream`
+2. **Monitor tool** (`persistent: true`, `timeout_ms: 3600000`), **absolute path — RESOLVE THE DRIVE
+   PREFIX, NEVER HARDCODE IT.** A cygwin shell has `/cygdrive/c/` and NO `/c/`; an MSYS/Git-Bash shell
+   has `/c/` and NO `/cygdrive/c/`. Measure, then build the path:
+   ```bash
+   test -d /cygdrive/c && echo /cygdrive/c/Users/AndrewBerman/Desktop/ajb_workspace \
+                       || echo /c/Users/AndrewBerman/Desktop/ajb_workspace
+   ```
+   then `bash <resolved-prefix>/org/mcp/inbox-watch.sh 1.0.0_SA_CTO stream`.
+   **A wrong prefix arms NOTHING and returns a task id anyway** — it dies `exit 127` in a separate
+   `<task-notification status=failed>`, so a session that misses that notification is **deaf for its
+   entire life while `register_agent`, `check-inbox` and `get_agent_status` all read healthy** (none of
+   them observes the Monitor). Confirm with `TaskOutput(<id>, block=false)` → `running`; that is the only
+   probe that observes a *consumer*.
+
+> **CORRECTED 2026-07-28.** This block hardcoded `/c/` and was the THIRD surviving copy of a defect
+> fixed on 07-25 in the other two (`.claude/skills/watcher/SKILL.md` + `org/XXX.md`, `aef2840826`).
+> It bit `1.0.0_SA_CTO~Z` and `0.8.0_AE_CloudComp~E` on the 07-25 fleet respawn. **A retraction is only
+> as dead as its last surviving copy** — and the copy that outlived the fix was the one an agent reads
+> at Step 0, before it has done anything else.
 
 **CORRECTED 2026-07-10 — this section previously mandated the two things that are now BANNED.**
 The old text ordered `inbox-watch 1.0.0_SA_CTO` under the Bash tool's `run_in_background`, plus a
