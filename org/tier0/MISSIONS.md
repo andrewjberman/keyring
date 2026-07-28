@@ -174,9 +174,27 @@ briefing would guarantee.
 context dilution this is meant to end; `~A` on `PORTAL.MP` and `~B` on `INFRA.GRAPH` keeps each
 session's working set coherent.
 
-**Authority unchanged:** COO decides *which* mission needs capacity (it owns allocation); MSTR
+### TWO SPAWN TRIGGERS, TWO PATHS (COO refinement 183123Z — accepted)
+
+**COO falsified my step 1 using the day's own evidence.** It assumed spawn demand originates with COO.
+**Today's only real spawn need did not** — `0.7.0_AE_CloudOps` hit context limit and said so itself.
+
+| trigger | who names the mission | why |
+|---|---|---|
+| **NEW CAPACITY** | **COO** | a genuine allocation decision, and allocation is COO's |
+| **CONTINUITY** (context-exhausted / dying agent) | **nobody — the successor INHERITS the predecessor's tag** | a mechanical succession is not a decision at all |
+
+**COO's reasoning is my own pointer-not-copy principle turned back on my design:** routing a succession
+through COO so it can name a tag *it would simply copy off the predecessor's broker summary* **adds a
+transcription step and nothing else — and a transcription step is exactly where drift enters.**
+
+**Authority unchanged:** COO decides which mission needs **new** capacity (it owns allocation); MSTR
 provisions and tags (it owns spawn/kill); CTO dispatches the actual work. **Spawn is not dispatch** —
 the tag orients a session, it does not authorise work.
+
+**FIRST EXERCISE, 2026-07-28 ~1832Z:** `0.7.0_AE_CloudOps~C` spawned tagged `INFRA.TOOLS`, successor to
+the context-exhausted base serial. Taxonomy call was MSTR's — COO explicitly deferred it. Placement
+reasoning at `INFRA.TOOLS`.
 
 ---
 ---
@@ -185,9 +203,9 @@ the tag orients a session, it does not authorise work.
 
 *Major initiatives spanning portal product surfaces and the backend/pipelines behind them.*
 
-## PORTAL.MP — Model Portfolios   `SUB-GROUP` **v1.1**
+## PORTAL.MP — Model Portfolios   `SUB-GROUP` **v1.2**
 
-*Version history: `v1.0` 2026-07-28 created · `v1.1` 2026-07-28 +O3 (Andrew-direct 174108Z channel-trace)*
+*Version history: `v1.0` 2026-07-28 created · `v1.1` +O3 (Andrew-direct 174108Z channel-trace) · `v1.2` CTO state pull 183143Z — O1 BUILT corrected to YES, HOLES recorded*
 
 **Intent:** the Model Portfolios product serves correct, canonical numbers from canonical pipelines,
 every day, without hand-restoration.
@@ -200,18 +218,30 @@ plus `OPAL_CONSOLIDATION`, `ETFS_*`, `OPAL_TAXSMA*`, `SSCN_PFOE`.
 ### PORTAL.MP.O1 — Lock in the canonical pipelines
 ```
 DECIDED : YES      @ Andrew-direct 2026-07-28 ~1427Z (canonical non-model basis) + ~1710Z
-                     (deprecate legacy, move full force to REVAMP canonical) -- LD-0339 amend,
-                     bf986d81a
-BUILT   : PARTIAL  @ REVAMP producer satisfies the 0824 canonical EXACT 3/3 (DT trace f68266a2d);
-                     correct 3-firm gold exists at gold/mdpf_revamp/global/
+                     (deprecate legacy, move full force to REVAMP canonical) -- bf986d81a
+BUILT   : YES      @ CTO-CORRECTED 183143Z. At 16:48:04Z the SCHEDULED path produced a correct
+                     3-firm Global -- 450 dates, cottonwood 47 slots, sum identity 0 failing /
+                     426 tested (was 425/425 FAILING), opal_aggregate_aua @2026-07-22 =
+                     $1,951,676,164.42 exact. DS producer landed 14:08Z.
 SERVING : NO       @ serve is a hand-restored 07-23 artifact fed by NEITHER producer; both
                      portal-v2 Deny statements production-exercised 2026-07-28 16:44Z
 ```
-**FRONTIER:** a publisher that puts `gold/mdpf_revamp/*` on the served keys. It does not exist —
-AE's leg-b is **design-only** by its own commit message (13:02Z, *"DESIGN ONLY, nothing built"*).
-**BLOCKED-ON:** `1.0.0_SA_CTO` — sequencing. Deprecating legacy removes the only producer ever wired
-to serve, and its replacement is unbuilt. **This is the live sovereign-class exposure in this mission.**
-**GROUNDED:** 2026-07-28, against live serve state + commit trail.
+**FRONTIER:** the **defined publisher** — nothing automated writes the serve.
+**BLOCKED-ON:** `1.0.0_SA_CTO`, and it is **an architecture call that precedes the build**: which
+serving namespace is canonical. **Not blocked on Andrew, not blocked on a lane.**
+
+> **MY `BUILT: PARTIAL` WAS ~2 HOURS STALE AND CTO CORRECTED IT.** I scored it against the producer
+> *landing*; the discriminating evidence is **the run, not the deploy** — *"a two-leg builder is
+> structurally incapable of"* a 3-firm identity-clean result. **A register that scores BUILT off a
+> commit rather than off an exercised run reproduces the exact deployed-is-not-working error the
+> three axes exist to prevent.** Scoring rule adopted: **BUILT anchors on an exercised run wherever
+> a run exists.**
+
+> **`SERVING: NO` kept EXACTLY as written, at CTO's explicit request** — *"the serve is a human-
+> published object; no automated path writes it. That is the whole gap and it should not soften just
+> because today went well."* **A good day is not a mechanism.**
+
+**GROUNDED:** 2026-07-28T183143Z, CTO-corrected against the 16:48:04Z scheduled run.
 
 ### PORTAL.MP.O2 — The Opal AUA aggregation definition  *(PENDING — Andrew to expand)*
 **Logged now at Andrew's direction so it is not lost; he will delineate it in a future message and
@@ -248,7 +278,10 @@ work, not monitoring** — so the gold-DDB value-stall sequences **upstream** of
 than behind it.
 
 ```
-DECIDED : YES      @ Andrew-direct 174108Z + the ~1725Z priority ruling c60de93156
+DECIDED : YES      @ Andrew ~1815Z mandate 5851ba0eca -- SUPERSEDES the 1725Z ruling as the
+                     governing statement: channels ingest daily -> a DEFINED publisher slots
+                     platinum to the portal's locations -> derive server-vs-client.
+                     (Prior anchors: Andrew 174108Z; CTO 1725Z routes-before-monitoring c60de93156)
 BUILT   : NO       -- no per-channel feed+schedule+arrival enumeration exists as an artifact
 SERVING : NO
 ```
@@ -261,6 +294,27 @@ source-and-schedule map anywhere.** That is worth seeing as one gap rather than 
 schedule and is a defect** — it freezes silently when its upstream breaks. This objective is the
 direct remedy for that class, and `mdpf-daily-trigger` is a live instance of it.
 **GROUNDED:** 2026-07-28, from the sovereign record. Nothing enumerated yet.
+
+### PORTAL.MP — HOLES (field 2), returned by CTO 183143Z
+
+Live work covered by **no project code**:
+
+1. **`MDPF_CHANNEL_INDEPENDENCE` — CONFIRMED ABSENT from `REGISTRY.md`** by CTO, independently of my
+   authoring check and of CVO's `/spot-check` F-1. **Three independent confirmations.** PRD'd, cited
+   as law in `CLAUDE.md` (Rule 20 / NEVER#4), drove today's P0.
+2. **Six unaccounted served objects** under `json/portfolios/` — `latest` · `manifest` · `metrics` ·
+   `summary` · `timeseries` · `non_model_assets_preview`. **No owner, no project, unknown consumers.**
+
+**DELIBERATELY NOT RECORDED AS A FINDING — the two-namespace serving question** (`json/mdpf/*` vs
+`json/portfolios/*`, ~23 live objects, including `account-distribution.json` **and**
+`account_distribution.json` in the same directory). CTO surfaced it and then withheld it himself:
+**Andrew has told him these are known data shapes, not a discovery** — the open question is the
+*migration state*, not the existence — and **he has asked Andrew and not yet had an answer.**
+
+> **Logging the withholding rather than the item, because the discipline is the point.** A register
+> that hoovers every surfaced observation into "findings" manufactures a backlog out of things the
+> sovereign already knows, and then spends credibility defending it. **An unanswered question is not
+> a finding.** Recorded as *open at Andrew, held by CTO*, and nothing more.
 
 ### ⚠ PORTAL.MP — REGISTRY GAP FOUND AT AUTHORING (this is the register earning its keep)
 Andrew named `MDPF_CHANNEL_INDEPENDENCE` as a driver of this mission. **It has a PRD
@@ -335,26 +389,58 @@ across both must respect the business-purpose split; this mission does not loose
 
 *Two items, stable for reference.*
 
-## INFRA.TOOLS — enumerated coverage universe per tool   `SUB-GROUP` **v1.1**
+## INFRA.TOOLS — enumerated coverage universe per tool   `SUB-GROUP` **v1.2**
 
-*Version history: `v1.0` 2026-07-28 created · `v1.1` 2026-07-28 +O2 (Andrew-direct response-scope/truncation)*
+*Version history: `v1.0` 2026-07-28 created · `v1.1` +O2 (Andrew-direct response-scope) · `v1.2` CVO state pull 183509Z — attach corrected (+COMPUNIFY), stance grounded on an exercised gate, O2 sharpened*
 
 **Intent:** for every comp-tool, a known and enumerated coverage universe — what it covers, what it
 does not, and where its silence means "nothing there" versus "I cannot see that."
 
-**Attaches to:** `NFRA_TOOLARCH`, `NFRA_TOOLBHVR`, `NFRA_TOOLCHECK`, `NFRA_TOOLGRAPH`,
-`NFRA_TOOLHEALTH`, `NFRA_TOOLHUD`, `NFRA_TOOLSEM`, `NFRA_COMPRAIL`, `NFRA_COMPASSURANCE`,
-`NFRA_COMPREG`, `NFRA_COMPROUTE`, `NFRA_SYSPARITY`.
+**Attaches to (CVO-CORRECTED 183509Z @`8ac1e7d04`):** **`NFRA_COMPUNIFY`** (the owner — see below) ·
+`NFRA_MSBEFF` · `NFRA_COMPLEARN` + `NFRA_COMPDRIFT` (the map's own *"one noun, two verbs"* pair,
+LD-0227 — structurally attached, not adjacent) · `NFRA_TOOLARCH`, `NFRA_TOOLBHVR`, `NFRA_TOOLCHECK`,
+`NFRA_TOOLGRAPH`, `NFRA_TOOLHEALTH`, `NFRA_TOOLHUD`, `NFRA_COMPASSURANCE`, `NFRA_COMPREG`,
+`NFRA_COMPROUTE`, `NFRA_SYSPARITY`.
+· **`NFRA_COMPRAIL` — reclassified MECHANISM, not scope**: the live enforcement point where a coverage
+mismatch becomes catchable.
+· **`NFRA_TOOLSEM` — attached but INERT: 4 commits and ZERO code files.** Anything routed there lands
+nowhere today. Flagged so nobody dispatches into a hollow project.
+
+> ### ⚠ MY ATTACH LIST OMITTED THE PROJECT THAT *IS* THIS SUB-GROUP — and the reason indicts the method
+> `NFRA_COMPUNIFY` owns **`comp-coverage-map.yaml`** (a 1,081-line per-tool ledger) **and** its
+> enforcing gate **`comp-coverage-check`**. CVO **exercised** the gate: it **PASSES** — 88 homed tools
+> (36 `tools[]` + 52 `meta_tools[]`), 12 `gate_contract` rules, 0 unverifiable, inventory complete.
+>
+> **I built the attach list from CODE PREFIXES.** `COMPUNIFY`'s name says nothing about tools, so a
+> prefix scan cannot see it — **and it is the answer to the sub-group.** That is text-local,
+> connection-blind retrieval producing a confident and wrong map: **precisely the failure the comp-rail
+> exists to prevent, committed by the agent maintaining the register.** *A register assembled by
+> pattern-matching names inherits every blind spot of the names.* **Attach lists get built from
+> knowing the work, or they get verified by someone who does.**
 
 ```
-DECIDED : PARTIAL  -- extensive prior art exists across the NFRA_* projects above; Andrew has
-                      discussed the shape with 3.0.0_SA_CVO. Not consolidated into one target
-BUILT   : PARTIAL  @ comp-manifest-check enforces a registration invariant; the registries carry
-                      the true tool count; comp-which routes ~68 tools
-SERVING : PARTIAL
+DECIDED : YES      @ NFRA_COMPUNIFY defines the target; the coverage map + gate exist
+BUILT   : YES      @ comp-coverage-check EXERCISED (not read) 155xZ -- PASSES, 88 homed tools,
+                     12 gate_contract rules, 0 unverifiable
+          NO       @ for the NEGATIVE declaration -- what a tool cannot see WITHIN its declared
+                     surface. Beyond COMPUNIFY's charter; a HOLE, not drift.
+SERVING : UNASSESSED  -- whether the gate is wired into a commit path or is invoke-only is NOT
+                        established. CVO refused to guess; see below.
 ```
-**FRONTIER:** the consolidated statement of the target — Andrew was explicit that the details already
-exist inside those NFRA projects, so **the work is consolidation, not discovery.**
+
+> **`SERVING: UNASSESSED` is the most credible field in this entry.** CVO's stated reason: *"I made
+> three false claims about this same project today — 'gate not built,' '36 tools,' 'exclusions written
+> nowhere' — all from reading documents instead of exercising them."* A forward-looking S0 header read
+> to it as current state. **`UNASSESSED` is it declining to do that a fourth time.** This is exactly
+> what the value was made legal for.
+
+**FRONTIER:** wire **PATTERN C (cross-derive) at suite scale** — diff each tool's DECLARED `surface`
+against the surface implied by its ENUMERATION PRIMITIVE. **It needs no oracle** (Andrew's explicit
+constraint), and `comp-toolgraph` already implements the shape for *coupling*.
+
+**HOLES — four, no project code covers any:** the **negative declaration** · the **runtime-provenance
+axis** · **`INFRA.TOOLS.O2` itself** · **cross-tool coverage diffing at suite scale** (`comp-toolgraph`
+does declared-vs-actual for coupling, nothing for coverage).
 **NOTE — why this mission is not cosmetic:** we have repeatedly found tools whose *silence* was read
 as *absence*. `comp-iam` reports nothing for whole classes of call and that silence has been the
 defect, not the trace. **An unenumerated coverage universe is what makes a tool's silence
@@ -372,8 +458,24 @@ DECIDED : NO       -- no standard exists for how a comp-tool bounds and shapes i
 BUILT   : NO
 SERVING : NO
 ```
-**FRONTIER:** a per-tool output contract — what it returns by default, how it bounds a large result,
-and how it says *"there is more"* instead of silently stopping.
+> ### CVO'S SHARPENING, ADOPTED — it unifies O2 with coverage instead of letting them drift apart
+> **BOUNDING IS NOT THE PROBLEM. UNDECLARED BOUNDING IS.** A tool returning **40 of 400 and saying so**
+> is correct and useful. The defect is **truncation the reader cannot detect** — which is *the same
+> property as an unenumerated coverage universe*: the output is **byte-identical to the complete one**,
+> so the silence is uninterpretable. **O2 is the coverage problem on the OUTPUT side.** Stated that way,
+> `INFRA.TOOLS` carries one doctrine rather than two.
+
+**FRONTIER:** a per-tool **output contract**, four clauses (CVO):
+**C1** declare the denominator **in-band** (`showing N of M`, with **M measured BEFORE bounding**) ·
+**C2** truncation is a **visible token**, never an absence ·
+**C3** an **EMPTY** result must be distinguishable from a **FAILED** retrieval (this folds the
+`git show` clean-empty and binary-mode-`grep` classes into one clause) ·
+**C4 THE CONTRACT IS THE TOOL'S, NOT THE CALLER'S.**
+
+> **C4 is the load-bearing clause.** All four measured instances came from a **caller's** bounding.
+> **A tool that emits its own denominator survives a careless caller; one that does not cannot be made
+> safe by discipline** — which is the entire argument for building this into the tools rather than into
+> a habit. *Care is not a control, applied to output shape.*
 **WHY THIS IS NOT COSMETIC — a truncated response and a complete one are byte-indistinguishable to
 the reader.** This is the retrieval-control class the estate already knows by name: `grep` silently
 entering binary mode and truncating its own output at exit 0; a `git show` on a bad ref returning
@@ -384,14 +486,22 @@ kind:** a manifest inspection piped through `head -40` truncated mid-output, and
 out of a truncated retrieval, on a decommission decision. Caught and corrected within one turn, but
 **nothing in the output distinguished truncated from complete** — which is precisely the defect this
 objective is about.
+**FOUR MEASURED INSTANCES IN ONE DAY, TWO AGENTS:**
+1. **MSTR's** — `head -40` → I told Andrew the GH-Actions runner was **NOT** in `EC2_MANIFEST.json`. It was.
+2. CVO — `--query length(events)` applies **per page**: returned `2,0,0,0,0`, no total.
+3. **CVO's, and the sharpest: THE FIX WAS THE DEFECT.** `--no-paginate` truncated to page one and
+   reported **1 invocation instead of 4** — turning *"1 of 4, it stopped"* into *"1 of 1, still firing
+   every run."* **Opposite verdict, same log, via a flag whose entire purpose is tidier output.**
+4. CVO — `head -40` on `comp-clobber`; had to re-run unbounded before the zero could be trusted.
+
 **RELATED STANDING LAW:** *control the RETRIEVAL, not the pattern* · *print the denominator of every
 scan you reason from* · **a wrong number is more dangerous than a zero**, because a zero invites
 suspicion and a plausible count does not.
 **GROUNDED:** 2026-07-28, authored from Andrew-direct + a live self-caught instance.
 
-## INFRA.GRAPH — canonical taxonomy and resource design patterns   `SUB-GROUP` **v1.0**
+## INFRA.GRAPH — canonical taxonomy and resource design patterns   `SUB-GROUP` **v1.1**
 
-*Version history: `v1.0` 2026-07-28 created*
+*Version history: `v1.0` 2026-07-28 created · `v1.1` CVO state pull 183509Z — class-over-instance framing recorded*
 
 **Intent:** lock in canonical taxonomy and resource design patterns, and sincerely unify the system on
 that basis.
@@ -406,6 +516,15 @@ DECIDED : PARTIAL  -- the intent is stated across OPAL_STNDRD / OPAL_TAXONOMY an
 BUILT   : PARTIAL  @ comp-kuzu, the global graph, comp-system parity checking all live
 SERVING : PARTIAL
 ```
+> ### RECORDED DISAGREEMENT — CVO vs CTO, and the register carries the CLASS version
+> Sent by CVO **without reconciling with CTO**, per my instruction that two views of one sub-group is
+> signal. CTO's framing was **the INSTANCE**: `mdpf` missing from `PIPELINE_MAP`. CVO's is **the
+> CLASS**: Rule-12 conformance makes *every* such tree invisible the same way.
+> **The register carries the CLASS.** CVO's reason, adopted: *"the instance fix closes one tree and
+> leaves the next to rot identically."* CTO has since accepted the reframe in writing; the disagreement
+> is kept on the record anyway, because **an agreement reached after the fact does not retroactively
+> make the two framings equivalent** — and the next reader needs to know which one the register means.
+
 **FRONTIER:** lock the taxonomy — one canonical statement that the rest can be migrated onto.
 **THE OPERATIVE PROBLEM, in Andrew's framing:** *as the universe grows, we need to track the
 enumeration of that coverage so we don't get breaks in, for example, grants and permissions in related
@@ -527,7 +646,11 @@ the actual source is and on what schedule it arrives. **Neither is blocked on a 
 blocked on an artifact that does not exist.** Sitting in either project alone it reads as that
 project's homework. Seen across sub-groups it is **one missing artifact class — a per-channel
 source-and-schedule map — that two separate large initiatives are independently waiting on.**
-Surfaced, not sized; routing stays with CTO and COO.
+**CONFIRMED BY CTO 183143Z: it is ONE piece of work, not two — and COO is building it right now** for
+Andrew's Part 1. **ADVI MUST NOT COMMISSION A SECOND ONE.** CTO's framing is exact: that would be
+*"the parallel-channel pattern we spent today on, reproduced at the project layer instead of the data
+layer."* **The register's job here was not to find the work — it was to stop it being done twice.**
+Standing note until the artifact exists. Routing stays with CTO and COO.
 
 **Open at Andrew:**
 1. `PORTAL.MP.O2` — the AUA aggregation expansion he said he would send.
