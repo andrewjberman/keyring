@@ -901,6 +901,31 @@ caught it; the unfiltered query then gave truth.**
 with real offset) and let the tool carry its own axis. **And a zero from any window-, filter-, or
 author-scoped query is not a finding until a positive control proves the query can return non-zero.**
 
+**COROLLARY — A SELF-REPORT USED AS A *POINTER* DEFEATS EVERY CONTROL YOU RUN ON THE THING IT POINTS AT**
+(2026-07-28, `0.7.0_AE_CloudOps`, wrong-first-mechanism, self-corrected pre-commit).
+
+Investigating why a component emitted 22-day-old values, an agent read the component's own `source_field`
+— which named `opal-data-etfs/daily/49financial/2026-07-06.json` — measured that prefix, found it stale
+since 07-06, **ran a positive control against a sibling prefix (`daily/cottonwood/`) and confirmed the
+sibling was current**, and concluded *"the upstream source stopped."* **Both measurements were true. The
+inference was false.** The component's actual input, measured independently, carried **today's** date.
+
+>> **THE ARTIFACT WAS REAL AND THE MEASUREMENT WAS RIGOROUS — BUT THE ARTIFACT'S *IDENTITY* CAME FROM THE
+>> SUBJECT UNDER INVESTIGATION. You can measure the right thing about the wrong object, because the thing
+>> being investigated chose the object.** And the positive control made it *worse*: proving the instrument
+>> discriminated made the wrong object look like the right one. **A control validates the MEASUREMENT; it
+>> cannot validate the CHOICE OF TARGET.** <<
+
+The standing rule is *never trust a producer's self-report* — and this is its subtle form. The agent did not
+believe what the producer said about its **health**; it believed what the producer said about its **input**.
+**A `source_field`, a log line naming a path, a docstring citing a bucket, a manifest declaring its upstream
+— all are ASSERTIONS, and pointing an honest instrument at an asserted target launders the assertion into a
+measurement.**
+
+**CONTROL: establish the input from the CALLER'S side — what was actually read — never from the producer's
+declaration of what it read.** When only the self-report is available, the finding is `INFERRED` and the
+target is `UNVERIFIED`, however well-measured the object turns out to be.
+
 >> **BOTH HALVES OF THAT EXCHANGE WERE SAVED BY CONTROLS, NOT BY CARE. Neither agent was careless; both were
 >> wrong. One re-derived unfiltered, one ran the positive control — and the one who forged the marker
 >> retracted the derived doctrine in the same turn it was learned, which is the only reason it never
