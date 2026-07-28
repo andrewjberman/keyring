@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import fnmatch
 import json
+import hashlib
 import subprocess
 import sys
 from collections import Counter, defaultdict
@@ -77,7 +78,17 @@ def commits(since: str, until: str | None) -> list[dict]:
     # confident 100%-unmapped table -- a wrong answer with no error, which is worse than a crash.
     sep, rec, end = "\x1f", "\x1e", "\x02"
     fmt = rec + sep.join(["%H", "%h", "%aI", "%an", "%s", "%b"]) + end
-    rng = ["--since", since] if not since.startswith("REF:") else [since[4:] + "..HEAD"]
+    # RANGE SELECTION. A sha range is preferred over --since for the incremental path because
+    # AUTHOR-DATE IS NOT MONOTONIC ACROSS MERGES: a commit merged in from another branch can carry
+    # an author-date older than the watermark and would be silently skipped by a time filter.
+    # `<sha>..HEAD` walks the commit DAG and cannot miss an ancestor. Same class as the
+    # timestamp traps this estate already has laws about.
+    if since.startswith("RANGE:"):
+        rng = [since[6:]]
+    elif since.startswith("REF:"):
+        rng = [since[4:] + "..HEAD"]
+    else:
+        rng = ["--since", since]
     raw = _run(["git", "log", "--no-merges", "--pretty=format:" + fmt, "--name-only"] + rng)
     out = []
     for chunk in raw.split(rec):
@@ -217,14 +228,235 @@ def fmt_report(r: dict, limit: int) -> str:
     return "\n".join(L)
 
 
+
+WATERMARK = REPO / "org" / "missions" / ".watermark.json"
+
+
+def config_fingerprint(idx: dict) -> str:
+    """Hash ONLY the parts of the index that can change a commit's attribution.
+
+    THE POINT: a commit is immutable (no rebase -- gate-enforced), but its ATTRIBUTION is a
+    function of (commit x index). Edit a path glob, add a sub-group, change meta_paths, and rows
+    already written may now belong somewhere else. Incremental append would never revisit them and
+    the file would silently disagree with its own index. So the fingerprint FORCES a rebuild when
+    the rules move -- the caller does not get to forget.
+
+    Deliberately EXCLUDES attach/holes/title/notes: those are prose about a sub-group, not inputs
+    to attribution, and hashing them would trigger pointless full rebuilds on every edit.
+    """
+    material = {}
+    for sid, sg in subgroups(idx).items():
+        material[sid] = sorted(sg.get("paths") or [])
+    material["__meta_paths__"] = sorted(idx.get("meta_paths") or [])
+    material["__trailer__"] = (idx.get("attribution") or {}).get("declared_trailer", "")
+    blob = json.dumps(material, sort_keys=True, ensure_ascii=False)
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()[:16]
+
+
+def read_watermark() -> dict:
+    if not WATERMARK.exists():
+        return {}
+    try:
+        return json.loads(WATERMARK.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def load_existing(d) -> tuple[list, set]:
+    f = d / "commits.jsonl"
+    if not f.exists():
+        return [], set()
+    rows, seen = [], set()
+    for ln in f.read_text(encoding="utf-8").splitlines():
+        ln = ln.strip()
+        if not ln:
+            continue
+        try:
+            r = json.loads(ln)
+        except Exception:
+            continue          # a corrupt line is dropped, and the count difference shows in the report
+        if r.get("sha") in seen:
+            continue          # dedupe: re-emitting the same range must be idempotent
+        seen.add(r.get("sha"))
+        rows.append(r)
+    return rows, seen
+
+
+# ---------------------------------------------------------------------------
+# emit -- write the org/missions/ tree.
+#
+# LAYOUT: org/missions/{GROUP}/{SUB_GROUP}/
+#     commits.jsonl   MACHINE-OWNED, append-only. One JSON record per attributed commit.
+#                     Rewritten wholesale each emit from git, which IS the source of truth --
+#                     so it can never drift from the repo. Never hand-edit.
+#     state.yaml      HUMAN/AGENT-OWNED. Stance, frontier, blocked-on, attach, holes.
+#                     emit CREATES it if absent and NEVER overwrites it. The machine has no
+#                     business writing a stance: BUILT anchors on an exercised run, which a
+#                     commit scanner structurally cannot see.
+#     execsum.yaml    MSTR-OWNED prose + the commit it was written against.
+#                     emit refreshes only `anchor_*` and `activity`; `prose` is left alone and
+#                     flagged STALE when the anchor moves.
+# ---------------------------------------------------------------------------
+
+MISSIONS_DIR = REPO / "org" / "missions"
+
+
+def _yaml_str(v: str) -> str:
+    return json.dumps(v, ensure_ascii=False)
+
+
+def emit(since: str, until: str | None, rebuild: bool = False) -> str:
+    idx = load_index()
+    sgs = subgroups(idx)
+    fp = config_fingerprint(idx)
+    wm = read_watermark()
+    prior_sha, prior_fp = wm.get("last_sha"), wm.get("config_fingerprint")
+
+    if rebuild:
+        mode, reason = "FULL", "--rebuild requested"
+    elif not prior_sha:
+        mode, reason = "FULL", "no watermark (first emit)"
+    elif prior_fp != fp:
+        mode, reason = "FULL", ("attribution rules CHANGED (%s -> %s) -- every prior row may re-map"
+                                % (prior_fp or "none", fp))
+    else:
+        mode, reason = "INCREMENTAL", "watermark %s..HEAD" % prior_sha[:10]
+
+    # A FULL rebuild MUST scan ALL history, never the caller's --since. Otherwise a rules-change
+    # rebuild silently TRUNCATES commits.jsonl to whatever window happened to be on the command
+    # line -- measured: a forced rebuild with the default --since cut 162 rows to 27 and 472 to 63,
+    # with no error. The repair path destroying the data it was repairing is the worst shape there
+    # is, so FULL ignores --since by construction rather than by discipline.
+    scan_since = "RANGE:HEAD" if mode == "FULL" else ("RANGE:%s..HEAD" % prior_sha)
+    r = scan(scan_since, until)
+    cs = commits(scan_since, until)
+    by_sg = defaultdict(list)
+    for c in cs:
+        # NOTE `amode` not `mode`: `mode` is the FULL/INCREMENTAL flag decided above. Rebinding it
+        # here silently sent FULL down the incremental branch and printed "MODE: unmapped".
+        # Caught only because the header prints the mode in-band -- a mode that is never displayed
+        # is a mode nobody can see is wrong.
+        ids, amode = attribute(c, sgs)
+        for sid in ids:
+            by_sg[sid].append((c, amode))
+
+    out = []
+    for sid, sg in sgs.items():
+        group, sub = sid.split(".", 1)
+        d = MISSIONS_DIR / group / sub
+        d.mkdir(parents=True, exist_ok=True)
+
+        # commits.jsonl -- machine-owned. INCREMENTAL: prior rows are immutable (no rebase) and are
+        # kept as-is; only new commits are added, deduped by sha. FULL: rewritten from git.
+        prior_rows, seen = ([], set()) if mode == "FULL" else load_existing(d)
+        recs = [json.dumps(x, ensure_ascii=False) for x in prior_rows]
+        added = 0
+        for c, amode in sorted(by_sg.get(sid, []), key=lambda x: x[0]["iso"], reverse=True):
+            if c["sha"] in seen:
+                continue
+            seen.add(c["sha"])
+            added += 1
+            recs.insert(0, json.dumps({
+                "sha": c["sha"], "short": c["short"], "time": c["iso"],
+                "author": c["author"], "subject": c["subject"],
+                "attribution": amode, "files": len(c["paths"]),
+                "paths": c["paths"][:40],
+                "paths_truncated": max(0, len(c["paths"]) - 40),
+            }, ensure_ascii=False))
+        (d / "commits.jsonl").write_text(
+            ("\n".join(recs) + "\n") if recs else "", encoding="utf-8")
+
+        # state.yaml -- created once, never overwritten
+        sp = d / "state.yaml"
+        if not sp.exists():
+            lines = [
+                "# state.yaml -- HUMAN/AGENT-OWNED. `comp-missions emit` never overwrites this file.",
+                "# The machine cannot write a stance: BUILT anchors on an EXERCISED RUN, and a commit",
+                "# scanner cannot see a run. Anything below requiring judgment stays here.",
+                "sub_group: %s" % sid,
+                "title: %s" % _yaml_str(sg.get("title") or sub),
+                "version: v1.0",
+                "stance:",
+                "  decided: UNASSESSED   # NO | PARTIAL | YES | UNASSESSED   (+ anchor)",
+                "  built: UNASSESSED",
+                "  serving: UNASSESSED",
+                "  anchors: []",
+                "frontier: \"\"        # the ONE next thing. Not a plan.",
+                "blocked_on: \"\"       # a named owner, a named sovereign call, or empty",
+                "attach: %s" % json.dumps(sg.get("attach") or [], ensure_ascii=False),
+                "holes: %s" % json.dumps(sg.get("holes") or [], ensure_ascii=False),
+                "grounded: \"\"        # date + what it was re-derived against",
+            ]
+            sp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+        # execsum.yaml -- anchor + activity machine-refreshed; prose preserved
+        e = r["per"].get(sid, {})
+        prose, prose_anchor = "", ""
+        ep = d / "execsum.yaml"
+        if ep.exists():
+            txt = ep.read_text(encoding="utf-8")
+            for ln in txt.splitlines():
+                if ln.startswith("prose_written_against:"):
+                    prose_anchor = ln.split(":", 1)[1].strip()
+            if "prose: |" in txt:
+                prose = txt.split("prose: |", 1)[1]
+        h = r["head"]
+        stale = bool(prose.strip()) and prose_anchor and prose_anchor != h["short"]
+        body = [
+            "# execsum.yaml -- MSTR-owned. `anchor_*` and `activity` are machine-refreshed by",
+            "# `comp-missions emit`; `prose` is written by MSTR and is NEVER machine-generated.",
+            "sub_group: %s" % sid,
+            "anchor_commit: %s" % h["short"],
+            "anchor_time: %s        # author-time of that commit, NOT a wall clock" % h["iso"],
+            "anchor_author: %s" % h["author"],
+            "activity:",
+            "  commits: %d" % (e.get("commits", 0)),
+            "  code_files: %d" % (e.get("code", 0)),
+            "  doc_files: %d" % (e.get("doc", 0)),
+            "  newest_commit: %s" % (e.get("newest_sha") or "null"),
+            "  newest_time: %s" % (e.get("newest") or "null"),
+            "  contributors: %s" % json.dumps(e.get("authors") or {}, ensure_ascii=False),
+            "prose_written_against: %s" % (prose_anchor or "null"),
+            "prose_stale: %s   # true = a commit landed after the prose was written" % ("true" if stale else "false"),
+            "prose: |",
+        ]
+        body.append((prose.rstrip("\n") if prose.strip() else "  (not yet written)"))
+        ep.write_text("\n".join(body) + "\n", encoding="utf-8")
+        out.append("%-32s total=%-5d +%-4d this emit" % (sid, len(recs), added))
+    head_sha = _run(["git", "rev-parse", "HEAD"]).strip()
+    WATERMARK.parent.mkdir(parents=True, exist_ok=True)
+    WATERMARK.write_text(json.dumps({
+        "last_sha": head_sha,
+        "last_emit_anchor": r["head"]["short"],
+        "last_emit_time": r["head"]["iso"],
+        "config_fingerprint": fp,
+        "mode": mode,
+        "scanned_commits": r["total"],
+    }, indent=2) + "\n", encoding="utf-8")
+
+    hdr = ["comp-missions emit -> %s" % MISSIONS_DIR,
+           "MODE: %s  (%s)" % (mode, reason),
+           "anchor %s @ %s" % (r["head"]["short"], r["head"]["iso"]),
+           "scanned %d commit(s) this pass; config fingerprint %s" % (r["total"], fp),
+           "state.yaml preserved; execsum prose preserved",
+           ""]
+    return "\n".join(hdr + out)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(prog="comp-missions")
-    ap.add_argument("cmd", choices=["scan", "json"], nargs="?", default="scan")
+    ap.add_argument("cmd", choices=["scan", "json", "emit"], nargs="?", default="scan")
     ap.add_argument("--since", default="midnight")
     ap.add_argument("--until", default=None)
     ap.add_argument("--limit", type=int, default=20)
+    ap.add_argument("--rebuild", action="store_true",
+                    help="force a FULL rebuild of commits.jsonl (also forced automatically when the "
+                         "attribution rules in missions.yaml change)")
     a = ap.parse_args()
     r = scan(a.since, a.until)
+    if a.cmd == "emit":
+        print(emit(a.since, a.until, a.rebuild))
+        return 0
     if a.cmd == "json":
         r2 = dict(r)
         r2["unmapped"] = [{k: c[k] for k in ("short", "author", "subject", "iso")} for c in r["unmapped"]]

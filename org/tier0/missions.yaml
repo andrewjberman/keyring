@@ -118,6 +118,7 @@ groups:
         # hoover portal commits it was told not to care about.
         paths:
           - org/projects/UIUX_*
+          - docs/briefs/DEBT_FRONTEND*
         attach: []
         holes: []
   EXTERNAL:
