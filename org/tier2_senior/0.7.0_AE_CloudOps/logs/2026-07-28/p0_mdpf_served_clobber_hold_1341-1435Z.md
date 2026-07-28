@@ -364,6 +364,71 @@ handler reaches DISPATCH on a case the test names a genuine slip and expects to 
 handler defect, UNDETERMINED and not guessed; (b) **with a valid instance id this test suite would start
 live EC2.** Routed to CTO.
 
+## ROW 13 APPLIED + THE PRODUCTION EXERCISE OBTAINED (appended 16:52Z) -- CLOSING STATE
+
+**Andrew-direct GO ~1625Z ("go ahead on firing Row 13"), CTO GO 163042Z.** Applied targeted; artifact built
+via `build-and-upload.sh` (write-VERIFIED, sha256 metadata match), `CodeSha256` on the live function ==
+the uploaded artifact, three declarations live as env vars, 0-diff on the target, **row 10's four resources
+held back**. The `comp-tagauthz` gate **SELF-RAN with no override** -- exporting a writable `TMPDIR` fixes
+the cygwin `/tmp` defect, **retiring the audited bypass used twice earlier today.**
+
+### MY ERROR, AND THE ONLY REASON IT WAS CAUGHT
+The first post-apply invoke did NOT return a verdict -- it THREW:
+`AccessDenied ListObjectsV2 ... mdpf-daily-trigger-lambda-role ... s3:ListBucket on opal-data-assets`, at
+`lambda_function.py:512` (my new reader). **I re-pointed a reader at a bucket its role could not read.**
+Gate went from clean-DEFER to unhandled exception. Served set unaffected; I STOPPED and reported without
+iterating. Andrew ratified (A) directly -- *"It is more important to add the correct grants versus roll back
+to a broken setup"* -- rollback off the table.
+
+>> **THE LESSON, AND IT IS DISTINCT FROM EVERY OTHER ONE TODAY: I VERIFIED THE DATA WAS THERE; I NEVER
+VERIFIED THE CALLER COULD REACH IT.** I ran an exhaustive Rule-22a battery that day -- on the RUNNER role's
+WRITES -- then changed a DIFFERENT principal's READ target without re-applying it. The rigour was real and
+it was pointed at the wrong actor. **And the offline mutant suite passed 20/20 the whole time it was
+broken, because it MOCKS BOTO3 -- IAM structurally cannot exist inside it. A GREEN TEST PLANE SAYS NOTHING
+ABOUT REACHABILITY.** Two planes, one green light. Both now landed as MDPF_DEBTCLEAN controls. <<
+
+**FIX:** two prefix-conditioned grants on `mdpf-daily-trigger-lambda-role` (`AssetsSchwabRpsS2GateRead` +
+`AssetsSchwabRpsS2GateList`), targeted apply, 6/6 discriminating -- reader `allowed` **with
+`--context-entries s3:prefix`** (without which the conditioned statement returns an `implicitDeny`
+byte-identical to a real deny, i.e. I would have "proved" my own grant failed), and `implicitDeny` on
+another firm's monolith prefix, on the SIBLING `fact_rps` table, and on writes. **Never bucket-wide on the
+monolith.**
+
+### THE GATE'S OWN VERDICT -- IT WORKS
+```
+"49financial": {"fresh": true, "bucket": "opal-data-assets",
+                "prefix": "schwab/08242234/silver/fact_rps_s2",
+                "grammar": "dir:date=YYYY-MM-DD", "latest_partition": "2026-07-27",
+                "trading_days_behind": 1, "read_status": "OK"}
+"all_fresh": true -> "dispatched": true, ssm_command_id b8a0f56f-...
+```
+`read_status: OK` is the discriminator proving BOTH halves landed -- re-point AND parser.
+
+### THE PRODUCTION EXERCISE, FINALLY -- run `mdpf_daily_20260728_164452`, CHAIN complete
+```
+LEG 1: FOUR AccessDenied WARNs (NOT three -- top-level key PLUS 3 firm slices), each
+       "with an explicit deny in an identity-based policy"; "primary timeseries IS written ... Continuing."
+       step ROLLUP rc=0 dur=27s status=ok          <- the try/except analysis was RIGHT
+LEG 2: UPLOADING .../json/portfolios/aum-timeseries.json -> AccessDenied, explicit deny
+       step LEGACY-EMIT rc=1 status=error ... "chain continues"   <- the DISPATCH-tolerates analysis was RIGHT
+       step OWNTS rc=0 status=ok                   <- OWNTS was NOT collateral
+ALL SIX SERVED ETags: byte-identical to CTO's 1341Z restore, through a run that ACTIVELY TRIED to write them.
+```
+**BOTH MECHANISMS CONFIRMED SEPARATELY IN ONE RUN** -- leg 1 safe because the SCRIPT swallows, leg 2 safe
+because the DISPATCH tolerates. Neither is evidence for the other; that is why leg 2's cascade check had to
+be redone from scratch. *(Precision: leg 2 died on the FIRST of its two writes, so `non_model_assets.json`
+was never reached -- same statement covers it, but the OBSERVED evidence covers one key.)*
+
+**>> "LANDED AND SIMULATED, NOT EXERCISED" IS NOW RETIRED, BY EVIDENCE. <<**
+
+### WHAT IS STILL BROKEN -- pre-registered BEFORE the evidence existed
+- **Stage 6 rc=1**, `opal-data-assets/blackdiamond/cottonwood/gold/dim_model_portfolio/date=2026-07-28/
+  data.parquet` -- *"because no identity-based policy allows"*, textually DISTINCT from my Deny's *"with an
+  explicit deny"*. `cycle-complete.json` **still never emitted**. Needs THREE grants, not one.
+- **The rollup still logged "2 partner(s)".** DS's fix went to `code/scripts/gold/`; ROLLUP is `backfill/`
+  -- a different directory. **The legacy producer is exactly as wrong as it was this morning and still
+  cannot emit cottonwood.** THE CHAIN RAN; THE PRODUCT IS NOT FIXED. Do not let those merge.
+
 ## Next Steps
 
 1. **[0.7.0_AE_CloudOps]** Report the ~15:10Z run from its OWN log: Stage 4 rc, the WARN naming
