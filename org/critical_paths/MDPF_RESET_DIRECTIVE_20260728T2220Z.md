@@ -110,6 +110,54 @@ gold does NOT advance to its silver frontier after the run, the IAM fix was NOT 
 report it as a NEW untraced defect, do not iterate blind re-runs.** Andrew: *"We need to look into the
 Cottonwood chain and figure out what is going on with that"* — one run answers it one way or the other.
 
+## ⚡⚡⚡ AMENDMENT 3 — WO-4 REVISED ON COO'S 32-COHORT TRACE (223157Z brief; supersedes Amendment 1's WO-4 text)
+
+**Source:** `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_GOLD_DDB_32_COHORT_INGESTION_TRACE_BRIEF_20260728.md`
+— all 32 cohorts traced with `file:line`, COO re-verified every load-bearing claim against live AWS.
+
+**THE HEADLINE, verbatim:** *"THE DAILY SCHEDULED PATH HAS ESSENTIALLY NEVER POPULATED THIS TABLE. Every
+real value in it was written by manual backfill walks... Bronze, silver and gold are healthy. The defect
+is entirely in the scheduling + consumption layer."* (Walk-artifact proof: rows for 07-16/20/21 all cite
+`partition 2026-07-23` in their own `source_field` — one walk wrote them all.)
+
+**RETRACTED from WO-4a:** the "emitter selects a stale ETF source" fix (CTO-supplied mechanism, refuted).
+The emitter's ETF behavior is a GUARD WORKING AS DESIGNED — it refuses intent-for-observation per the
+ratified contract at `lambda_function.py:694-698`. **The 49F ETF staleness root cause is a DEAD PRODUCER:**
+`bd-49f-etf-ownership-daily` — no EventBridge rule, no resource policy, ONE CloudWatch datapoint ever.
+
+**WO-4a (revised): the totals cluster.** `_total__partner_aua` served **$137.17mm as the firm-wide total,
+labelled fresh, on 07-18** (one leg), and 0-stamped-`fresh` on 07-25/26. Mechanism measured:
+`:1398 (x.get("value") or 0)` → `:1402` overwrites the correct mdpf headline with 0 → `_stamp_state` never
+re-called → `:1412` tautological reconcile (`0==0`) destroys the genuine `:1101` verdict, so `assert_ac7`
+CANNOT fire. **Fix mirrors `_total__etf_fund:1123-1129`** (refuse a partial sum) + emit-predicate behavior
+of `_global__aua_total` (absent + named reason, never 0) + re-stamp + delete the self-comparison.
+Trigger-event log line rides in the same edit (D2).
+
+**WO-4c (new): the CADENCE root cause, Groups A+B.** The emitter demands `date == run_date`; the sources
+are healthy T-1 producers landing D+1 (fact_rps_s2 10:16Z, eclipse 03:30Z). Discriminating control:
+`inflection_orion_custody` — same path/IAM, lands pre-run, works. **RULED: accept latest partition
+<= run_date, judged per the feed's DECLARED roster cadence (T-1 at D-1 IS fresh, PIN-3), consumed-partition
+identity stamped in the row. Never same-day-demand from a T-1 feed; never re-phase the emitter to D+1.**
+SmartX frontier-drop (`:172-174`) handled in the same logic.
+
+**WO-4d (new): the dead producer.** Read `bd-49f-etf-ownership-daily`'s TF first (never-wired vs removed —
+declared-vs-applied unreconciled). **Revive-vs-retire (vs healthy `wsd-49f-partner-held-etf-daily`) is a
+CONTRACT change on a CTO~B-ratified source: CTO rules it on the TF evidence; AE does not self-ratify.**
+
+**WO-4b scope:** 8 model cohorts backfillable NOW for 07-22/23/24 (source verified); Group B only after 4c;
+**the platinum `aggregate_aua/` 07-19..07-24 hole is UNTRACED — trace before backfilling over it.**
+
+**INSTRUMENT DEFECTS recorded (fix-with-the-cluster, moratorium-compatible = correcting false claims, not
+building alerting):** the `:1412` AC7 tautology · **the source's claim of "14 live mdpf-cohort-freshness
+alarms" is FALSE — CloudWatch holds ZERO** (stale claim in load-bearing source; also voids the earlier
+"don't touch 99, it desyncs 14 alarms" caution — there is nothing to desync, though the sentinel's
+dual-purpose overload is real and still hides the 16-day gap) · the value-repeat alarm prints a hardcoded
+wrong-cause string · `coverage_state` is asserted by `.get` default, never derived.
+
+**NOT BROKEN (so remediation is not misaimed):** bronze/silver/gold all healthy; `_global__aua_total`,
+`_total__etf_fund`, the ETF `rolled_forward` labels, and the 49F held-ETF refusal are all CORRECT behavior;
+`inflection_orion_custody` proves code path + IAM + freshness rule sound.
+
 ## ⚡ AMENDMENT 1 — ANDREW RE-SEQUENCING, ~2225Z (supersedes the WO order below where they conflict)
 
 Andrew, going element-by-element down the chain status: **(4) "Have we fixed the emitter and backfilled
