@@ -87,6 +87,53 @@ def bootstrap_overrides(classification):
     return out, len(concern), len(call)
 
 
+def population_from_map():
+    """THE SOLE POPULATION AUTHORITY is comp-coverage-map.yaml (CTO ruling #1, reaffirmed 212335Z).
+
+    This master is an ATTRIBUTE STORE and MUST NEVER be a population source -- a peer file that
+    enumerates its own tool list becomes a 5th copy of the population and drifts. This estate has a
+    MEASURED history of exactly that in exactly this domain (comp-tools.yaml: 28/29/~30/42/63/66).
+    """
+    cm = load(COVERAGE_MAP, {}) or {}
+    pop = set()
+    for section in ('tools', 'meta_tools'):
+        for row in (cm.get(section) or []):
+            if isinstance(row, dict) and row.get('tool'):
+                pop.add(norm_tool(str(row['tool'])))
+    return pop
+
+
+def norm_tool(name):
+    """Canonical tool id. The map drops the .py suffix; an on-disk listing keeps it.
+
+    FIRST EXERCISE OF THE PARITY CHECK found both sides at EXACTLY 89 with 12 DIVERGENT MEMBERS --
+    a count-equality check would have passed clean and said nothing. 5 of the 12 were this suffix
+    convention alone. Normalising here is correct; hiding the divergence would not be.
+    """
+    n = name.strip()
+    return n[:-3] if n.endswith('.py') else n
+
+
+class PopulationDivergence(RuntimeError):
+    """Raised on ANY population divergence, either direction. Never a silent skip."""
+
+
+def assert_population_parity(authority, mine):
+    """FAIL LOUD, both directions (CTO ruling 212335Z). No silent skip, no continue."""
+    missing = sorted(authority - mine)   # in the authority, absent from this master
+    extra = sorted(mine - authority)     # in this master, absent from the authority
+    if missing or extra:
+        raise PopulationDivergence(
+            'POPULATION DIVERGENCE vs %s (the SOLE population authority).\n'
+            '  authority=%d  master=%d\n'
+            '  IN AUTHORITY, MISSING FROM MASTER (%d): %s\n'
+            '  IN MASTER, ABSENT FROM AUTHORITY (%d): %s\n'
+            '  This master is an ATTRIBUTE STORE and must never source its own population.'
+            % (COVERAGE_MAP, len(authority), len(mine), len(missing), missing[:20],
+               len(extra), extra[:20]))
+    return len(authority)
+
+
 def main():
     cls_doc = load(CLASSIFICATION) or {}
     classification = cls_doc.get('tools') or {}
@@ -107,10 +154,14 @@ def main():
     else:
         ov = ov.get('tools') or {}
 
+    # POPULATION comes from the AUTHORITY, never from this file's own inputs (CTO ruling 212335Z).
+    authority = population_from_map()
+
     master_tools = {}
-    for tool, c in classification.items():
-        p = profile.get(tool, {})
-        o = ov.get(tool, {}) if isinstance(ov, dict) else {}
+    for tool_raw, c in classification.items():
+        tool = norm_tool(tool_raw)
+        p = profile.get(tool_raw, {})
+        o = ov.get(tool_raw, ov.get(tool, {})) if isinstance(ov, dict) else {}
         prims = c.get('primitives', [])
         master_tools[tool] = {
             'concern': o.get('concern'),
@@ -131,6 +182,25 @@ def main():
             'bounding': c.get('bounding', []),
         }
 
+    # NO SILENT SKIP (CTO ruling 212335Z, explicit). A tool in the authority that this generator
+    # could not classify is EMITTED WITH AN EXPLICIT MARKER, never dropped -- dropping it is how a
+    # population quietly shrinks. First exercise found 3 such tools being `continue`d away.
+    for tool in sorted(authority - set(master_tools)):
+        o = ov.get(tool, {}) if isinstance(ov, dict) else {}
+        master_tools[tool] = {
+            'concern': o.get('concern'),
+            'canonical_call': o.get('canonical_call'),
+            'classification_status': 'UNCLASSIFIED -- present in the population authority, no '
+                                     'enumeration primitive resolved. NOT a claim that it covers '
+                                     'nothing; a claim that this generator could not determine it.',
+            'state': None, 'derived': None, 'denominator_construction': None,
+            'knows_own_denominator': None, 'control_established': None,
+            'universe': None, 'excludes': [], 'cost_band': 'UNKNOWN',
+            'primitives': [], 'engines': [], 'bounding': [],
+        }
+
+    n_pop = assert_population_parity(authority, set(master_tools))
+
     master = {
         'schema_version': '1.0',
         'authority': 'Andrew-direct 2026-07-28 -- one heavy master, one light compiled index',
@@ -139,7 +209,11 @@ def main():
                                  'Every other field is derived from source or measured.',
         'inventory_source_of_truth': 'org/modules/graph/comp-coverage-map.yaml (CTO ruling #1) -- '
                                      'this master does not supersede it, it composes with it.',
-        'counts': {'tools': len(master_tools)},
+        'population_authority': 'org/modules/graph/comp-coverage-map.yaml -- tools[] + meta_tools[]. '
+                                'THIS FILE IS AN ATTRIBUTE STORE AND IS NEVER A POPULATION SOURCE '
+                                '(CTO ruling 20260728T212335Z). gen_tool_registry.py FAILS LOUD on any '
+                                'population divergence in either direction -- no silent skip.',
+        'counts': {'tools': len(master_tools), 'population_authority_count': n_pop},
         'tools': dict(sorted(master_tools.items())),
     }
     with open(MASTER, 'w', encoding='utf-8') as f:

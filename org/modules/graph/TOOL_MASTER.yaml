@@ -5,8 +5,12 @@ hand_authored_surface: ONLY .tools/tool_overrides.yaml (concern + canonical_call
   derived from source or measured.
 inventory_source_of_truth: 'org/modules/graph/comp-coverage-map.yaml (CTO ruling #1) -- this master does
   not supersede it, it composes with it.'
+population_authority: org/modules/graph/comp-coverage-map.yaml -- tools[] + meta_tools[]. THIS FILE IS
+  AN ATTRIBUTE STORE AND IS NEVER A POPULATION SOURCE (CTO ruling 20260728T212335Z). gen_tool_registry.py
+  FAILS LOUD on any population divergence in either direction -- no silent skip.
 counts:
   tools: 89
+  population_authority_count: 89
 tools:
   comp-adapter-audit:
     concern: portal ADAPTER field-threading audit vs LIVE S3 envelope (schema-drift / not-threaded / fallback-order)
@@ -493,28 +497,6 @@ tools:
   comp-deadgrant:
     concern: null
     canonical_call: comp-deadgrant [<lambda|role>]
-    state: PERSISTED
-    derived: false
-    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
-    refresh_is_incremental: true
-    denominator_construction: ENUMERATED
-    knows_own_denominator: true
-    declares_denominator_in_output: false
-    control_established: POSITIVE
-    universe: an authored ledger (coverage-map / manifest / project JSON)
-    excludes:
-    - anything unregistered -- THE PHANTOM CLASS
-    cost_band: SUB_SECOND
-    primitives:
-    - REGISTRY
-    engines:
-    - org/modules/graph/comp_log_auto.py
-    bounding:
-    - head slice
-    - json out
-  comp-deadgrant.py:
-    concern: null
-    canonical_call: null
     state: LIVE
     derived: false
     refresh_mechanism: null
@@ -569,28 +551,6 @@ tools:
   comp-denytest:
     concern: null
     canonical_call: comp-denytest <plan|change-spec>
-    state: PERSISTED
-    derived: false
-    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
-    refresh_is_incremental: true
-    denominator_construction: ENUMERATED
-    knows_own_denominator: true
-    declares_denominator_in_output: false
-    control_established: POSITIVE
-    universe: an authored ledger (coverage-map / manifest / project JSON)
-    excludes:
-    - anything unregistered -- THE PHANTOM CLASS
-    cost_band: SUB_SECOND
-    primitives:
-    - REGISTRY
-    engines:
-    - org/modules/graph/comp_log_auto.py
-    bounding:
-    - head slice
-    - json out
-  comp-denytest.py:
-    concern: null
-    canonical_call: null
     state: LIVE
     derived: false
     refresh_mechanism: null
@@ -832,28 +792,6 @@ tools:
   comp-firmsep-sweep:
     concern: null
     canonical_call: comp-firmsep-sweep <firm> [--write-reach]
-    state: PERSISTED
-    derived: false
-    refresh_mechanism: gate-enforced at registration (comp-coverage-check)
-    refresh_is_incremental: true
-    denominator_construction: ENUMERATED
-    knows_own_denominator: true
-    declares_denominator_in_output: false
-    control_established: POSITIVE
-    universe: an authored ledger (coverage-map / manifest / project JSON)
-    excludes:
-    - anything unregistered -- THE PHANTOM CLASS
-    cost_band: SUB_SECOND
-    primitives:
-    - REGISTRY
-    engines:
-    - org/modules/graph/comp_log_auto.py
-    bounding:
-    - head slice
-    - json out
-  comp-firmsep-sweep.py:
-    concern: null
-    canonical_call: null
     state: LIVE
     derived: false
     refresh_mechanism: null
@@ -1169,6 +1107,22 @@ tools:
     - head slice
     - MaxKeys
     - json out
+  comp-imgread:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-incrparity:
     concern: INCREMENTAL BD-pipeline parity (incremental cache vs full-recompute oracle)
     canonical_call: comp-incrparity <args>
@@ -2096,7 +2050,7 @@ tools:
     - --limit N
     - head slice
     - json out
-  comp-tagauthz.py:
+  comp-tagauthz:
     concern: null
     canonical_call: null
     state: LIVE
@@ -2119,6 +2073,22 @@ tools:
     bounding:
     - head slice
     - json out
+  comp-to:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-tool-health:
     concern: null
     canonical_call: comp-tool-health [<tool>] [--json]
@@ -2351,6 +2321,22 @@ tools:
     bounding:
     - head slice
     - json out
+  comp-v5-composite-test:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-validate:
     concern: gold-artifact INVARIANT validation pre-upload (key_present/count_min/sum_approx/...; the
       no-crash-but-wrong-output gate)
@@ -2414,7 +2400,7 @@ tools:
     bounding:
     - head slice
     - json out
-  comp-which-routing-test.py:
+  comp-which-routing-test:
     concern: null
     canonical_call: null
     state: PERSISTED
@@ -2447,27 +2433,6 @@ tools:
   comp-whoread:
     concern: null
     canonical_call: comp-whoread <bucket>[/prefix] [--since ...]
-    state: LIVE
-    derived: false
-    refresh_mechanism: null
-    refresh_is_incremental: null
-    denominator_construction: ENUMERATED
-    knows_own_denominator: true
-    declares_denominator_in_output: false
-    control_established: POSITIVE
-    universe: the Trino federation by physical catalog
-    excludes:
-    - catalogs not federated
-    - in-VPC only; ~3-4 min/call
-    cost_band: MINUTES
-    primitives:
-    - SQL/TRINO
-    engines: []
-    bounding:
-    - NONE -- unbounded output
-  comp-whoread.py:
-    concern: null
-    canonical_call: null
     state: PERSISTED
     derived: false
     refresh_mechanism: gate-enforced at registration (comp-coverage-check)
@@ -2540,3 +2505,19 @@ tools:
     bounding:
     - head slice
     - json out
+  pipescript:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
