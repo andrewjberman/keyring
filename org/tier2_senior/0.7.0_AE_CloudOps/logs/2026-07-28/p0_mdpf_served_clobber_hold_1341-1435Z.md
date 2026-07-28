@@ -475,6 +475,39 @@ channel grain** (`fact_model_assignment` 07-28 / `fact_allocations` 07-27 / `fac
 needs PER-TABLE declaration. Choosing a max-lag myself would be the call-site-literal error the roster
 exists to prevent. **NOT BUILT.**
 
+### ⚠ CORRECTION (17:23Z) -- THE FRESHNESS CHECKER IS **NOT DEPLOYED**. MY FINDING WAS WRONG AND UNDERSTATED
+```
+aws lambda get-function-configuration --function-name mdpf-freshness-checker
+  -> ResourceNotFoundException.  Deployed mdpf lambdas: ONLY mdpf-daily-trigger
+     and opal-assets-mdpf-portal-publisher.
+```
+Terraform REFERENCES it in comments while nothing deploys it. Confirms CVO's morning measurement
+independently.
+
+>> **I WROTE "it exists, IT RUNS, and for cottonwood it is structurally blind." "IT RUNS" WAS FALSE, AND I
+INFERRED IT FROM THE PRESENCE OF A SOURCE FILE.** That is the deployed-vs-repo class -- the same one that
+opened this whole incident, the same one I caught in the gate reading a dead bucket, in the
+`public-data-router` fork, in the mdpf `code/` prefix. **I committed it in the very sentence where I was
+crediting myself for refusing at 15:35Z to count an unverified alarm** -- then counted it at 17:10Z on
+strictly weaker evidence than I had demanded three hours earlier. CTO told me to establish
+deployed-vs-repo BEFORE reading the enumeration; I read first. That ordering was the discriminator. <<
+
+**CORRECTED FINDING, LARGER NOT SMALLER: there is no freshness alarm at all.** The 14 cohorts describe an
+instrument that does not exist. **NOBODY's freshness is monitored** -- not cottonwood's, not
+49financial's nine, not inflection's. The cottonwood omission is real but it is a detail of a monitor
+that never ran. **So mechanism (iv) is not "an alarm blind to cottonwood" -- it is "NO ALARM."** The
+compounding claim survives and is stronger: (i)-(iii) endured because **nothing was watching anything**.
+This is postmortem §10 E2, still open, now confirmed from a second direction.
+
+**CONSEQUENCE FOR THE RULING:** CTO's roster-derived fix stands but is **no longer a fix to an existing
+Lambda -- it is a BUILD-AND-DEPLOY** of an instrument that has never existed (TF resource + artifact +
+schedule), materially larger than "make the cohort table derive from the roster." Sizing is CTO's; not
+silently re-scoped by me.
+
+**METHOD COMMITMENT: never report an instrument's BEHAVIOUR without first establishing the instrument is
+DEPLOYED.** Describing what a cohort table monitors is a claim about a RUNTIME made from a FILE. Remaining
+6 candidates get a deployed-vs-repo check BEFORE any reading.
+
 ### CLEARED -- `mdpf_revamp_model_crosswalk.py` (a FALSE POSITIVE of my own predicate)
 Names both firms **only in comments/docstring**; the code branches `if firm_id == "global": ... else:
 entry_for_key(model_key).display_name` -- **global vs NOT-global, never a firm list.** Cottonwood takes
