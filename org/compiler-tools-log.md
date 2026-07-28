@@ -27159,3 +27159,5 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-28Z | 2.0.0_SA_COO | (no-TO) | comp-routes | comp-routes trace --json https://opalinvest.dev/api/general/mdpf/global/aggregate-aua-t... | PASS |
 | 2026-07-28Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/G7_C... | PASS |
 | 2026-07-28T234xZ | 0.4.0_DS_ClientPlatform | comp-pipescript io (mdpf path form), comp-grep x4 (escaped-pipe warning caught a would-be false 0-match), comp-glob x2 | fold ruling + read-pref removal + G7 trace; standing gap re-confirmed: comp-pipescript deployed blind to mdpf tree, verified by head-object md5 instead |
+| 2026-07-28Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-28 ~2350Z | 1.0.0_SA_CTO | comp-routes behaviors, comp-grep, comp-pipescript (via lanes, path-form), live primitives | MDPF reset window: WO-3 mechanism grounding, 3-leg falsifier, G7 seed; comp-freshness gap re-confirmed (bare invocation = help text) |
