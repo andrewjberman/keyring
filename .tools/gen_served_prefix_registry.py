@@ -19,6 +19,7 @@ json/mdpf/aggregate-aua-timeseries.json AND json/mdpf/global/aggregate-aua-times
 URL->key string transform resolves to the BARE key -- not the global/ one the incident was about.
 So the registry NEVER derives a key from a URL; it declares prefixes and lets the producer observe.
 """
+import datetime as dt
 import os
 import re
 import subprocess
@@ -60,17 +61,43 @@ def served_urls():
 
 
 def live_prefix_counts(bucket, prefix):
+    """Per-sub-prefix key count AND newest write.
+
+    The newest write is the DISCRIMINATOR for a prefix with no ServedURL. Without it, "nothing
+    serves this" and "the graph does not model what serves this" are indistinguishable -- I flagged
+    exactly that as unresolvable in v0.1 and it is resolvable: A PREFIX STILL BEING WRITTEN IS BEING
+    PRODUCED FOR SOMEONE. Absence of a consumer edge on a live producer is a GRAPH GAP, not dead code.
+    """
     s3 = boto3.client('s3')
-    subs, counts = [], {}
+    subs, out = [], {}
     r = s3.list_objects_v2(Bucket=bucket, Prefix=prefix, Delimiter='/')
     for p in r.get('CommonPrefixes', []):
         subs.append(p['Prefix'])
     for sub in subs:
-        n = 0
+        n, newest = 0, None
         for pg in s3.get_paginator('list_objects_v2').paginate(Bucket=bucket, Prefix=sub):
-            n += pg.get('KeyCount', 0)
-        counts[sub] = n
-    return counts
+            for o in pg.get('Contents', []):
+                n += 1
+                if newest is None or o['LastModified'] > newest:
+                    newest = o['LastModified']
+        out[sub] = {'keys': n, 'newest': newest}
+    return out
+
+
+# write-age bands for a prefix carrying NO ServedURL edge
+ALIVE_DAYS = 7
+DORMANT_DAYS = 90
+
+
+def liveness(newest, now):
+    if newest is None:
+        return 'EMPTY'
+    age = (now - newest).days
+    if age <= ALIVE_DAYS:
+        return 'ALIVE'
+    if age <= DORMANT_DAYS:
+        return 'DORMANT'
+    return 'STALE'
 
 
 def main():
@@ -95,7 +122,8 @@ def main():
 
     entries = []
     for pfx, endpoints in sorted(demand.items()):
-        n_keys = counts.get(pfx)
+        rec_ = counts.get(pfx)
+        n_keys = rec_['keys'] if rec_ else None
         if n_keys is None:
             entries.append({'prefix': pfx, 'scope': 'ABSENT-ON-LIVE', 'served_endpoints': len(endpoints),
                             'live_keys': None,
@@ -115,7 +143,26 @@ def main():
 
     covered = sum(e['live_keys'] or 0 for e in entries if e['scope'] == 'PREFIX')
     dumps = [e for e in entries if e['scope'] == 'KEYSET']
-    unmatched = sorted(set(counts) - set(demand))
+    unmatched_raw = sorted(set(counts) - set(demand))
+    now = dt.datetime.now(dt.timezone.utc)
+    unmatched = []
+    for u in unmatched_raw:
+        c = counts[u]
+        lv = liveness(c['newest'], now)
+        unmatched.append({
+            'prefix': u, 'keys': c['keys'],
+            'newest_write': c['newest'].strftime('%Y-%m-%dT%H%MZ') if c['newest'] else None,
+            'age_days': (now - c['newest']).days if c['newest'] else None,
+            'liveness': lv,
+            'disposition': (
+                'GRAPH GAP -- actively written with NO ServedURL edge. A live producer with no '
+                'modelled consumer is a coverage defect, NOT dead code. MUST be resolved before '
+                'this registry is complete.' if lv == 'ALIVE' else
+                'MIGRATION REMNANT or dormant product surface -- written within 90d then stopped. '
+                'Candidate debt; NOT a graph gap.' if lv == 'DORMANT' else
+                'STALE -- no write in >90d. Almost certainly decommissioned; excluded from ingest '
+                'scope, recorded so the exclusion is visible rather than silent.'),
+        })
 
     doc = {
         'schema_version': '0.1',
@@ -139,7 +186,7 @@ def main():
             'served_urls_total': len(urls),
             'static_json_served': len(static),
             'dynamic_api_routes': len(dynamic),
-            'live_keys_under_json': sum(counts.values()),
+            'live_keys_under_json': sum(c['keys'] for c in counts.values()),
             'keys_in_PREFIX_scope': covered,
             'prefixes_declared': len(entries),
             'live_prefixes_with_NO_served_url': len(unmatched),
@@ -147,6 +194,7 @@ def main():
         'dynamic_routes_out_of_scope': sorted(dynamic),
         'entries': entries,
         'live_prefixes_with_no_served_url': unmatched,
+        'unmatched_liveness_summary': {k: sum(1 for u in unmatched if u['liveness'] == k) for k in ('ALIVE','DORMANT','STALE','EMPTY')},
         'monolith_note': 'opal-data-assets (the monolith) also serves. Its gold/ and json/ prefixes '
                          'need the same treatment; NOT enumerated here because its ServedURL edges '
                          'are not yet in the graph. STATED AS A GAP, not silently omitted.',

@@ -152,13 +152,60 @@ entries:
   - /api/general/valuation/risk_premium_data.json
   - /api/general/valuation/valuation_data.json
 live_prefixes_with_no_served_url:
-- json/latest/
-- json/market-overview/
-- json/model_portfolios/
-- json/returns/
-- json/security_scanner/
-- json/valuations/
-- json/yang/
+- prefix: json/latest/
+  keys: 6
+  newest_write: 2026-07-28T1324Z
+  age_days: 0
+  liveness: ALIVE
+  disposition: GRAPH GAP -- actively written with NO ServedURL edge. A live producer with no modelled
+    consumer is a coverage defect, NOT dead code. MUST be resolved before this registry is complete.
+- prefix: json/market-overview/
+  keys: 1
+  newest_write: 2026-01-13T1706Z
+  age_days: 196
+  liveness: STALE
+  disposition: STALE -- no write in >90d. Almost certainly decommissioned; excluded from ingest scope,
+    recorded so the exclusion is visible rather than silent.
+- prefix: json/model_portfolios/
+  keys: 25
+  newest_write: 2026-06-01T1416Z
+  age_days: 57
+  liveness: DORMANT
+  disposition: MIGRATION REMNANT or dormant product surface -- written within 90d then stopped. Candidate
+    debt; NOT a graph gap.
+- prefix: json/returns/
+  keys: 1
+  newest_write: 2025-12-23T2340Z
+  age_days: 216
+  liveness: STALE
+  disposition: STALE -- no write in >90d. Almost certainly decommissioned; excluded from ingest scope,
+    recorded so the exclusion is visible rather than silent.
+- prefix: json/security_scanner/
+  keys: 69
+  newest_write: 2026-05-22T1607Z
+  age_days: 67
+  liveness: DORMANT
+  disposition: MIGRATION REMNANT or dormant product surface -- written within 90d then stopped. Candidate
+    debt; NOT a graph gap.
+- prefix: json/valuations/
+  keys: 2
+  newest_write: 2025-12-26T1856Z
+  age_days: 214
+  liveness: STALE
+  disposition: STALE -- no write in >90d. Almost certainly decommissioned; excluded from ingest scope,
+    recorded so the exclusion is visible rather than silent.
+- prefix: json/yang/
+  keys: 1
+  newest_write: 2026-01-14T2256Z
+  age_days: 194
+  liveness: STALE
+  disposition: STALE -- no write in >90d. Almost certainly decommissioned; excluded from ingest scope,
+    recorded so the exclusion is visible rather than silent.
+unmatched_liveness_summary:
+  ALIVE: 1
+  DORMANT: 2
+  STALE: 4
+  EMPTY: 0
 monolith_note: opal-data-assets (the monolith) also serves. Its gold/ and json/ prefixes need the same
   treatment; NOT enumerated here because its ServedURL edges are not yet in the graph. STATED AS A GAP,
   not silently omitted.
