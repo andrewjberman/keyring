@@ -625,9 +625,36 @@ def compile_md(recent_days: int = 14) -> str:
     return "\n".join(L)
 
 
+def list_subgroups() -> str:
+    """The LIVE sub-group roster, one command.
+
+    Built because COO quoted a sub-group ID from a 90-minute-old MESSAGE while explicitly deferring to
+    the register -- the tag had been re-parented in between. That is the stale-copy class committed in
+    the act of avoiding it, and it is partly a DESIGN failure: there was no cheap way to read the
+    current roster, so the cheapest available source was a chat message. A roster nobody can read in
+    one command WILL be quoted from memory.
+    """
+    idx = load_index()
+    L = ["comp-missions -- LIVE sub-group roster (read this, never a message)"]
+    L.append("")
+    for gname, g in (idx.get("groups") or {}).items():
+        subs = list((g.get("subgroups") or {}).keys())
+        L.append("%-16s %s" % (gname, ", ".join(subs) if subs else "(none)"))
+    L.append("")
+    L.append("RENAMED 2026-07-28 (Andrew-direct fold -- DEBT is no longer a top-level group):")
+    L.append("  DEBT.BACKEND   -> INFRASTRUCTURE.DEBT")
+    L.append("  DEBT.FRONTEND  -> PORTAL.DEBT")
+    L.append("  EXT.49F/IWM/CCA -> EXTERNAL.49FINANCIAL / .INFLECTION / .COTTONWOOD")
+    L.append("  PORTAL.MP      -> PORTAL.MODEL_PORTFOLIOS")
+    L.append("  PORTAL.ADVI    -> PORTAL.ADVISOR_INTELLIGENCE")
+    L.append("  INFRA.*        -> INFRASTRUCTURE.*")
+    L.append("  NEW: EXTERNAL.ALONGSIDE")
+    return chr(10).join(L)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(prog="comp-missions")
-    ap.add_argument("cmd", choices=["scan", "json", "emit", "compile"], nargs="?", default="scan")
+    ap.add_argument("cmd", choices=["scan", "json", "emit", "compile", "list"], nargs="?", default="scan")
     ap.add_argument("--since", default="midnight")
     ap.add_argument("--until", default=None)
     ap.add_argument("--limit", type=int, default=20)
@@ -636,6 +663,9 @@ def main() -> int:
                          "attribution rules in missions.yaml change)")
     a = ap.parse_args()
     r = scan(a.since, a.until)
+    if a.cmd == "list":
+        print(list_subgroups())
+        return 0
     if a.cmd == "compile":
         out = compile_md()
         (MISSIONS_DIR / "MISSIONS.md").write_text(out + "\n", encoding="utf-8")
