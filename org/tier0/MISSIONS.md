@@ -11,18 +11,36 @@ A layer that sits **above** the Macro/Project Registry. Opal is running a handfu
 initiatives that no single project code contains. This register names them, and tracks whether each is
 actually moving.
 
-A **Mission** is a durable intent. It ends when the intent is satisfied, not when a ticket closes.
-Missions attach to macro codes and project codes **many-to-many and non-exclusively** — sometimes a
-mission is roughly one project, sometimes it spans a dozen project codes, sometimes it spans several
+A **Sub-group** is a durable intent. It ends when the intent is satisfied, not when a ticket closes.
+Sub-groups attach to macro codes and project codes **many-to-many and non-exclusively** — sometimes a
+sub-group is roughly one project, sometimes it spans a dozen project codes, sometimes it spans several
 macros that otherwise have nothing to do with each other. **The attachment is a pointer, never a
 containment claim, and it is explicitly NOT 1:1.**
 
+## Taxonomy (Andrew-direct 2026-07-28, ratified)
+
 ```
-GROUP        Portal · Infrastructure · Debt · External      (4, fixed unless Andrew changes them)
-  MISSION    the large initiative                           (PORTAL.MP, INFRA.GRAPH, ...)
-    OBJECTIVE  a nameable outcome inside it                 (PORTAL.MP.O2, ...)
-      -> attaches to  macro codes and/or project codes      (many-to-many, non-exclusive)
+MISSION GROUP    Portal · Infrastructure · Debt · External   (4, fixed unless Andrew changes them)
+  SUB-GROUP      the large initiative -- VERSIONED           (PORTAL.MP v1.0, INFRA.GRAPH v1.0, ...)
+    OBJECTIVE    a nameable outcome inside it                (PORTAL.MP.O2, ...)
+      -> attaches to  macro codes and/or project codes       (many-to-many, non-exclusive)
 ```
+
+| level | examples | versioned? |
+|---|---|---|
+| **Mission Group** | `Portal`, `Infrastructure`, `Debt`, `External` | no — these are stable |
+| **Sub-group** | `Advisor Intelligence` under Portal · `Backend` under Debt | **YES** |
+| **Objective** | `PORTAL.MP.O3` | no — versioned by its parent |
+
+**Sub-group versioning.** Each sub-group carries a `vMAJOR.MINOR` and a version history.
+**MAJOR** = the intent or scope changed (what "done" means is now different). **MINOR** = objectives
+added, removed, or re-anchored within an unchanged intent. **The version is a statement about the
+DEFINITION, not about progress** — progress lives in the three axes below and must never be inferred
+from a version number.
+
+> *Read of Andrew's "the mission sub-segments should be versioned" as applying at the **sub-group**
+> level, since that is the level he named in the same breath. If he meant the objective level instead,
+> the scheme pushes down one tier unchanged — say the word.*
 
 ## What this is NOT — the design constraint that matters most
 
@@ -31,7 +49,7 @@ GROUP        Portal · Infrastructure · Debt · External      (4, fixed unless 
 > want to add more process architecture and bullshit for the tier1 agents to have to do."*
 
 **MSTR derives every value here from artifacts the fabric already produces** — commits, project JSONs,
-PRDs, ledger entries, live/served state. If a mission's state cannot be derived from what already
+PRDs, ledger entries, live/served state. If a sub-group's state cannot be derived from what already
 exists, that is a **finding about our instrumentation**, not a request for someone to file a form.
 
 It is also **not** a replacement for `org/projects/REGISTRY.md`. The registry answers *"what work
@@ -65,7 +83,7 @@ Each objective also carries:
 - **BLOCKED-ON** — a named owner or a named sovereign call, when something is genuinely waiting.
 - **GROUNDED** — the date this was last re-derived, and against what.
 
-> **A MISSION STATE IS A CLAIM WITH A DATE ON IT.** Anything not re-grounded in the current pass is
+> **A SUB-GROUP STATE IS A CLAIM WITH A DATE ON IT.** Anything not re-grounded in the current pass is
 > marked `STALE` rather than carried forward silently. A stale record that reads confident is worse
 > than one that reads unknown — the estate's own recurring lesson, and this register is not exempt
 > from it.
@@ -83,7 +101,7 @@ Cheap by design; it must survive being run every session.
 3. Update stances **and their GROUNDED dates**. Mark anything not re-derived `STALE`.
 4. Surface to Andrew, in his terms: **what moved, what did not move that should have, and what is
    waiting on him.** Not a status dump.
-5. Missions do not get dispatched from here. Routing stays with CTO and COO; MSTR observes and reports.
+5. Sub-groups do not get dispatched from here. Routing stays with CTO and COO; MSTR observes and reports.
 
 ---
 ---
@@ -92,7 +110,9 @@ Cheap by design; it must survive being run every session.
 
 *Major initiatives spanning portal product surfaces and the backend/pipelines behind them.*
 
-## PORTAL.MP — Model Portfolios
+## PORTAL.MP — Model Portfolios   `SUB-GROUP` **v1.1**
+
+*Version history: `v1.0` 2026-07-28 created · `v1.1` 2026-07-28 +O3 (Andrew-direct 174108Z channel-trace)*
 
 **Intent:** the Model Portfolios product serves correct, canonical numbers from canonical pipelines,
 every day, without hand-restoration.
@@ -140,6 +160,33 @@ SERVING : NO
 mission, not its ceiling.
 **GROUNDED:** 2026-07-28, authored from Andrew-direct. Nothing measured yet.
 
+### PORTAL.MP.O3 — Every channel traced to the Gold DDB: what feeds it, on what schedule, and whether it arrives
+**Andrew-direct 2026-07-28T174108Z, VERBATIM** (COO-recorded `db9b11524`):
+> *"I agree with your framing, we need to trace every necessary channel, e.g. 0824 schwab and smartx
+> buckets for 49F, and identify what feeds them on what schedule and make sure that they are getting
+> to the Gold DDB table."*
+
+Sits under the ~1725Z priority ruling — **canonical routes and schedules before monitoring**
+(CTO-recorded, `c60de93156`). That ruling had an ambiguity and this direction resolves it:
+establishing *what a route is, what feeds it, on what schedule, and whether it arrives* is **ROUTE
+work, not monitoring** — so the gold-DDB value-stall sequences **upstream** of the publisher rather
+than behind it.
+
+```
+DECIDED : YES      @ Andrew-direct 174108Z + the ~1725Z priority ruling c60de93156
+BUILT   : NO       -- no per-channel feed+schedule+arrival enumeration exists as an artifact
+SERVING : NO
+```
+**FRONTIER:** the enumeration itself — per channel, its feeder, its schedule, and evidence it lands in
+the Gold DDB. **Note this is the same shape as `PORTAL.ADVI.O1`'s frontier** (enumerate what each gold
+runner actually reads). Two missions, one missing artifact class: **we do not have a per-channel
+source-and-schedule map anywhere.** That is worth seeing as one gap rather than two.
+**BLOCKED-ON:** `1.0.0_SA_CTO` as PRD owner; COO holds the decomposition.
+**RELATED STANDING LAW:** a pipeline whose only trigger is another pipeline's success **has no
+schedule and is a defect** — it freezes silently when its upstream breaks. This objective is the
+direct remedy for that class, and `mdpf-daily-trigger` is a live instance of it.
+**GROUNDED:** 2026-07-28, from the sovereign record. Nothing enumerated yet.
+
 ### ⚠ PORTAL.MP — REGISTRY GAP FOUND AT AUTHORING (this is the register earning its keep)
 Andrew named `MDPF_CHANNEL_INDEPENDENCE` as a driver of this mission. **It has a PRD
 (`docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md`), it is cited as law in `CLAUDE.md`, it is
@@ -155,7 +202,9 @@ a register starts lying.
 
 ---
 
-## PORTAL.ADVI — Advisor Intelligence
+## PORTAL.ADVI — Advisor Intelligence   `SUB-GROUP` **v1.0**
+
+*Version history: `v1.0` 2026-07-28 created*
 
 **Intent:** Advisor Intelligence runs on canonical, channel-correct sources, with performance and
 attribution computed our own way — reliably, every day.
@@ -211,7 +260,9 @@ across both must respect the business-purpose split; this mission does not loose
 
 *Two items, stable for reference.*
 
-## INFRA.TOOLS — enumerated coverage universe per tool
+## INFRA.TOOLS — enumerated coverage universe per tool   `SUB-GROUP` **v1.0**
+
+*Version history: `v1.0` 2026-07-28 created*
 
 **Intent:** for every comp-tool, a known and enumerated coverage universe — what it covers, what it
 does not, and where its silence means "nothing there" versus "I cannot see that."
@@ -235,7 +286,9 @@ defect, not the trace. **An unenumerated coverage universe is what makes a tool'
 uninterpretable.**
 **GROUNDED:** 2026-07-28, structure + prior art located. Per-tool coverage NOT enumerated.
 
-## INFRA.GRAPH — canonical taxonomy and resource design patterns
+## INFRA.GRAPH — canonical taxonomy and resource design patterns   `SUB-GROUP` **v1.0**
+
+*Version history: `v1.0` 2026-07-28 created*
 
 **Intent:** lock in canonical taxonomy and resource design patterns, and sincerely unify the system on
 that basis.
@@ -262,7 +315,9 @@ IAMs.* **This is a coverage-tracking problem before it is a modelling problem.**
 
 # GROUP 3 — DEBT
 
-## DEBT.BACKEND — AWS resource and system debt  **[THE FOCUS]**
+## DEBT.BACKEND — AWS resource and system debt  **[THE FOCUS]**   `SUB-GROUP` **v1.0**
+
+*Version history: `v1.0` 2026-07-28 created*
 
 **Intent:** as Infrastructure consolidates patterns and designs, legacy resources are **actually
 decommissioned and terminated** — not left running alongside their replacements.
@@ -292,7 +347,9 @@ nothing structurally prevents a replacement from shipping while its predecessor 
   hiding a live resource, in one incident.**
 **GROUNDED:** 2026-07-28, against today's live work.
 
-## DEBT.FRONTEND — portal-level debt
+## DEBT.FRONTEND — portal-level debt   `SUB-GROUP` **v1.0**
+
+*Version history: `v1.0` 2026-07-28 created*
 
 ```
 DECIDED : n/a   BUILT : n/a   SERVING : n/a
@@ -309,7 +366,9 @@ accident of attention. **Do not open work here without Andrew.**
 
 *Subdivided by client. Andrew: initiative detail for these is not being specified at this time.*
 
-## EXT.49F — 49 Financial
+## EXT.49F — 49 Financial   `SUB-GROUP` **v1.0**
+
+*Version history: `v1.0` 2026-07-28 created*
 **Attaches to:** `ADVI_49*`, `MDPF_3FIRMS`, `NFRA_PPL49F`, `SSCN_PFOE`, `OPAL_TAXSMA*`, `BD_RPSAUTO`.
 **Standing constraints that bind anything here:** AUA source is **Schwab** (certified-AUA deprecated,
 Andrew-direct 2026-07-24); `0824`/`0833` never added and never substituted; bd↔cot↔inf firm separation
@@ -319,14 +378,18 @@ DECIDED : UNASSESSED   BUILT : UNASSESSED   SERVING : UNASSESSED
 ```
 **GROUNDED:** 2026-07-28, container only. Awaiting Andrew's initiative detail.
 
-## EXT.IWM — Inflection Wealth Management
+## EXT.IWM — Inflection Wealth Management   `SUB-GROUP` **v1.0**
+
+*Version history: `v1.0` 2026-07-28 created*
 **Attaches to:** `ADVI_INF*` (~25 codes), `NFRA_PPLINF`. Source of record: **Orion**.
 ```
 DECIDED : UNASSESSED   BUILT : UNASSESSED   SERVING : UNASSESSED
 ```
 **GROUNDED:** 2026-07-28, container only.
 
-## EXT.CCA — Cottonwood Capital Advisors
+## EXT.CCA — Cottonwood Capital Advisors   `SUB-GROUP` **v1.0**
+
+*Version history: `v1.0` 2026-07-28 created*
 **Attaches to:** `ADVI_COT*`, `NFRA_PPLCOT`, `NFRA_COT_RULE15`, `MDPF_COTMDL`, `WSE_COTMDL`,
 `AUTH_COTTON`. Source of record: **Black Diamond**.
 ```
@@ -347,10 +410,21 @@ knowing.
 |---|---|
 | created | 2026-07-28, `0.0.0_AB_MSTR`, Andrew-direct |
 | groups | 4 (fixed unless Andrew changes them) |
-| missions | 9 |
-| objectives with a measured stance | 4 (`PORTAL.MP.O1`, `INFRA.TOOLS`, `INFRA.GRAPH`, `DEBT.BACKEND`) |
+| mission groups | 4 |
+| sub-groups (all versioned) | 9 |
+| objectives with a measured stance | 5 (`PORTAL.MP.O1`, `PORTAL.MP.O3`, `INFRA.TOOLS`, `INFRA.GRAPH`, `DEBT.BACKEND`) |
 | objectives `UNASSESSED` | 4 (`PORTAL.ADVI.O1` partial, `EXT.*` x3) |
 | objectives pending Andrew | 1 (`PORTAL.MP.O2` — the AUA aggregation definition) |
+| last maintenance pass | 2026-07-28T17:45Z — folded Andrew-direct 174108Z as `PORTAL.MP.O3` |
+
+### Cross-sub-group observation (the kind only this layer surfaces)
+
+`PORTAL.MP.O3` and `PORTAL.ADVI.O1` have **the same frontier**: enumerate, per channel/runner, what
+the actual source is and on what schedule it arrives. **Neither is blocked on a decision; both are
+blocked on an artifact that does not exist.** Sitting in either project alone it reads as that
+project's homework. Seen across sub-groups it is **one missing artifact class — a per-channel
+source-and-schedule map — that two separate large initiatives are independently waiting on.**
+Surfaced, not sized; routing stays with CTO and COO.
 
 **Open at Andrew:**
 1. `PORTAL.MP.O2` — the AUA aggregation expansion he said he would send.
