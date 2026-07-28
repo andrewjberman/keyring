@@ -596,6 +596,53 @@ separately-invoked negative control for prefix-scope, targeted apply, verify on 
 2. this egress principal · 3. Stage 6's three grants · 4. the stale `public-data-router` fork ·
 5. the sweep's 6 outstanding (re-scoped to canonical-route omissions, deployed-vs-repo first).
 
+## 🔴 STAGE 6 GRANTS ARE NOW #1 -- AND THE `|| return 1` FINDING (appended 19:47Z)
+
+**They are NOT housekeeping.** `0.4.0_DS` source-confirmed in `mdpf-daily-dispatch.sh`:
+```
+:523  build_dim_model_portfolio.py   --date $cot_date --upload || return 1   <- the AccessDenied
+:524  build_cottonwood_mdpf_pair.py  --date $cot_date --upload || return 1   <- NEVER EXECUTED
+:525  build_cottonwood_mdpf_slice.py --upload                  || return 1   <- NEVER EXECUTED
+```
+`:525` is what writes `gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries.json`. **`:523`'s AccessDenied
+short-circuited the block before either cottonwood emitter ran.**
+
+>> **STAGE 6 rc=1 AND THE MISSING COTTONWOOD ARTIFACT ARE ONE DEFECT, NOT TWO. Three of us tracked them
+separately all day. NEITHER SYMPTOM, READ ALONE, POINTS AT THE OTHER** -- an IAM gap presented as a missing
+artifact three steps downstream, with nothing in either signal naming the link. **This is a FIFTH mechanism
+on cottonwood and unlike the other four it was INVISIBLE TO ENUMERATION -- it lived in shell control
+flow.** Worth more than the fix. <<
+
+**I DECLINED TO START IT, deliberately: NEVER#6** (a begun deploy FINISHES in-session). I could not
+guarantee edit -> apply -> 6-control verification, and **a half-landed IAM change on the role carrying both
+live Denies is worse than a 10-minute delay.** *(Noted for accuracy: this is NOT the 16:39Z shape -- that
+was a NEW principal on an untouched bucket; this is an EXISTING role already measured against this exact
+prefix today. Lower risk; the binding constraint was finishing the verification, not the grant.)*
+
+### PRE-COMPUTED SPEC -- next session lands it in ~10 min
+`infra/aws/terraform/mdpf-pipeline/iam.tf`, on `aws_iam_role_policy.mdpf_runner`, mirroring the
+`AssetsSchwabRpsS2GateRead`/`GateList` pair landed 16:44Z:
+```
+Sid AssetsCottonwoodGoldWrite  Allow s3:PutObject, s3:GetObject
+    arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/gold/*
+    ** GetObject is NOT redundant: build_dim_model_portfolio.py:383 head_objects AFTER the put,
+       and HeadObject IS s3:GetObject. PutObject alone moves the failure one line down. **
+Sid AssetsCottonwoodGoldList   Allow s3:ListBucket
+    arn:aws:s3:::opal-data-assets  Condition StringLike
+      s3:prefix = ["blackdiamond/cottonwood/gold/*"]      ** NEVER bucket-wide -- firm separation **
+```
+`TMPDIR=<writable> .tools/safe-apply.sh -chdir=infra/aws/terraform/mdpf-pipeline apply
+-target=aws_iam_role_policy.mdpf_runner` (TMPDIR makes comp-tagauthz self-run: 4 clean applies today,
+zero overrides). **Tree frozen; row 10 must not ride along.**
+**6 controls, isolated calls, one `--resource-arns` each:** T1 PutObject cottonwood gold key -> allowed ·
+T2 GetObject same key (the `:383` verify) -> allowed · T3 ListBucket +context
+`s3:prefix=blackdiamond/cottonwood/gold/` -> allowed · C1 ListBucket +context `schwab/08242234/silver/`
+-> deny · C2 PutObject cottonwood **SILVER** -> deny · C3 PutObject `json/mdpf/global/...` -> explicitDeny
+(leg-1 still holds).
+**REAL TEST = the next scheduled run:** `:523` passes -> `:524`/`:525` execute -> cottonwood's
+`aggregate_aua_timeseries.json` appears -> Stage 6 rc=0 -> **`cycle-complete.json` emitted for the FIRST
+TIME EVER.**
+
 ## MY OWN ERRORS TODAY, CONSOLIDATED (so they are not scattered across comms)
 1. **"Blocked until 49F clears"** -- inherited the gate's own verdict without asking what object produced
    it (NEVER#1 clause 2). Corrected in ~20 min on COO's challenge.
