@@ -11,4 +11,9 @@ first emit). If the pair fails AGAIN with tolerance in place: STOP, report delta
 
 ## Completion
 
-(open)
+**CLOSED 2026-07-28T22:58Z.** L1 upload verified (ETag e0ef77832f..., byte roundtrip). L2 record
+committed `16ed33b6c6`. L3 re-run `mdpf_daily_20260728_225137`: identity-(i) delta **0.0100**
+logged, PASS; 6d cottonwood legs complete; Stage 6 rc=0; **cycle-complete.json first emit
+22:55:12Z**. Accrual hand-run 22:57:22Z (written=4 cottonwood objects; R5 skipped 7; 3
+ruled-DRIFT errors). Residual: accrual has no schedule/runner-side home (repo-path-bound) —
+carried into WO-2/WO-3 sequencing at CTO.
