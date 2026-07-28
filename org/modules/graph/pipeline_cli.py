@@ -79,6 +79,41 @@ try:
 except Exception:
     _CODE_TREES = None
 
+def resolve_pipeline_from_arg(raw_script: str) -> str:
+    """Map a `deployed` filter argument to the pipeline-key whose branch handles it.
+
+    THREE CASES, in precedence order, and the third is deliberately preserved:
+
+    1. DATA-DIR PATH -- `data/<dir>/scripts/...` where <dir> owns its own tree
+       (black_diamond / inf / cot / mdpf). Unchanged behaviour.
+    2. CROSS-TREE REPO HOME -- a path under a repo home DECLARED by CODE_TREES but
+       whose directory is not itself a tree name. mdpf's assets_gold + silver layers
+       are fed from `data/assets/`, which is NOT a data-dir key, so case 1 matched
+       nothing and these fell to bd-gold: WRONG TREE in the header, all-zero summary,
+       rc=0 -- a deploy-verification instrument failing OPEN, on the exact path shape
+       the cottonwood STALE findings came from (CTO measured it himself, 213109Z).
+       DERIVED from CODE_TREES, never a fourth hardcoded dir list.
+    3. BARE ID -> 'bd-gold'. **PRESERVED DELIBERATELY** (documented backward-compat
+       for bare bd ids like D_00; CTO made preservation an explicit requirement).
+       This is NOT the bug case 2 fixes: the bug was a PATH naming a real tree and
+       resolving to the wrong one. A bare id cannot reach cases 1 or 2 at all --
+       both require a `data/.../` prefix -- so closing the path case leaves this
+       interface untouched BY CONSTRUCTION rather than by luck.
+    """
+    np = (raw_script or "").replace("\\", "/")
+    for _dir, _pk in _DATADIR_TO_PIPELINE.items():
+        if f"data/{_dir}/scripts/" in np or np.startswith(f"data/{_dir}/"):
+            return _pk
+    if _CODE_TREES is not None:
+        for tree in _CODE_TREES.values():
+            for repo_home, _prefix in tree["layers"].values():
+                if np.startswith(repo_home + "/"):
+                    resolved = _FIRM_TO_PIPELINE.get(tree["label"])
+                    if resolved:
+                        return resolved
+    return "bd-gold"
+
+
 # firm label -> the cmd_deployed pipeline-key whose branch enumerates that tree
 # (gold + silver for the firm; mdpf covers its 4 layers in its own branch).
 _LABEL_TO_DEPLOYED_PIPELINE = {"bd": "bd-gold", "inf": "inf-gold", "cot": "cot-gold"}
@@ -303,7 +338,27 @@ def _canonicalize_script_id(raw: str) -> str:
     Does NOT uppercase -- callers uppercase as needed.
     """
     s = raw.strip().replace('\\', '/')
-    # Rule 2: extract filename from full data/ path
+    # Rule 2: extract filename from full data/ path.
+    #
+    # DECLARED REPO HOMES FIRST (CTO 213109Z). The hardcoded alternation below omits
+    # data/assets/ and the assets_gold layer, so a `data/assets/scripts/gold/x.py`
+    # argument was NEVER stripped to its stem -- the filter then compared a full path
+    # against a bare stem, matched nothing, and produced an all-zero summary. That is
+    # the SECOND half of the same false-clean: fixing the router alone yields the
+    # correct header over an empty result, which is arguably worse than the wrong
+    # header because it looks authoritative. Derived from CODE_TREES so a new repo
+    # home never has to be restated here.
+    if _CODE_TREES is not None:
+        for _tree in _CODE_TREES.values():
+            for _repo_home, _prefix in _tree["layers"].values():
+                if s.startswith(_repo_home + "/"):
+                    s = s[len(_repo_home) + 1:]
+                    break
+            else:
+                continue
+            break
+    # Legacy alternation retained for the shapes CODE_TREES does not model
+    # (notably data/schwab/, which is not a declared code tree).
     m = re.search(
         r'data/(?:black_diamond|inf|schwab|cot|mdpf)/scripts/(?:gold|silver|bronze|backfill|feeders)/(.+)', s
     )
@@ -1787,13 +1842,7 @@ def cmd_deployed(args):
         # (firm separation: each tree's branch reads ONLY its own bucket). A bare id
         # (e.g. D_00) matches no dir -> falls through to bd-gold (backward compatible).
         if not pipeline:
-            _np = _raw_script.replace('\\', '/')
-            for _dir, _pk in _DATADIR_TO_PIPELINE.items():
-                if f"data/{_dir}/scripts/" in _np or _np.startswith(f"data/{_dir}/"):
-                    pipeline = _pk
-                    break
-        if not pipeline:
-            pipeline = 'bd-gold'
+            pipeline = resolve_pipeline_from_arg(_raw_script)
     elif not pipeline:
         # No filter, no firm, no explicit --pipeline -> SWEEP ALL TREES (bd+inf+cot+mdpf).
         return _deployed_sweep_all(args)

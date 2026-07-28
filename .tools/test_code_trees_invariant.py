@@ -241,6 +241,78 @@ def test_mutation_exercises_the_invariant(results: list) -> None:
     )
 
 
+def _load_pipeline_cli():
+    return importlib.machinery.SourceFileLoader(
+        "pipeline_cli", str(_TOOLS.parent / "org" / "modules" / "graph" / "pipeline_cli.py")
+    ).load_module()  # noqa: FWD001
+
+
+# Routing contract. Case 3 (bare id -> bd-gold) is PRESERVED BACKWARD-COMPAT, not a
+# bug -- asserted explicitly so a future reader cannot mistake it for one.
+FROZEN_ROUTING = [
+    ("data/black_diamond/scripts/gold/x.py", "bd-gold", "case1 data-dir path"),
+    ("data/inf/scripts/silver/s.py", "inf-gold", "case1 data-dir path"),
+    ("data/cot/scripts/bronze/b.py", "cot-gold", "case1 data-dir path"),
+    ("data/mdpf/scripts/gold/m.py", "mdpf", "case1 data-dir path"),
+    ("data/assets/scripts/gold/build_cottonwood_mdpf_pair.py", "mdpf", "case2 cross-tree repo home"),
+    ("data/assets/scripts/silver/rebalancer_schemas.py", "mdpf", "case2 cross-tree repo home"),
+    ("D_00", "bd-gold", "case3 PRESERVED bare-id backward-compat"),
+    ("dim_mdpf_aggregate_aua_timeseries.py", "bd-gold", "case3 PRESERVED bare id"),
+    ("", "bd-gold", "case3 PRESERVED empty"),
+]
+
+
+def test_routing_contract(results: list) -> None:
+    pcli = _load_pipeline_cli()
+    bad = [
+        f"{arg or '(empty)'}: got={pcli.resolve_pipeline_from_arg(arg)!r} want={exp!r} [{note}]"
+        for arg, exp, note in FROZEN_ROUTING
+        if pcli.resolve_pipeline_from_arg(arg) != exp
+    ]
+    _check(
+        results,
+        f"routing contract holds ({len(FROZEN_ROUTING)} cases: identity + new + PRESERVED)",
+        not bad,
+        "; ".join(bad),
+    )
+    # The preserved case, called out on its own so it cannot be "cleaned up".
+    _check(
+        results,
+        "PRESERVED: a bare bd id still routes to bd-gold (documented backward-compat)",
+        pcli.resolve_pipeline_from_arg("D_00") == "bd-gold",
+        "the bare-id fallthrough is an interface, not a bug -- do not remove it",
+    )
+
+
+def test_routing_mutant(results: list) -> None:
+    """Perturb the derived mapping; the routing contract must FAIL, then restore."""
+    pcli = _load_pipeline_cli()
+    tree = pcli._CODE_TREES["mdpf"]
+    original = dict(tree["layers"])
+    try:
+        broken = dict(original)
+        broken["assets_gold"] = ("data/nowhere/scripts/gold", "code/scripts/assets_gold/")
+        tree["layers"] = broken
+        _check(
+            results,
+            "MUTANT: breaking assets_gold's repo_home BREAKS routing (detected)",
+            pcli.resolve_pipeline_from_arg(
+                "data/assets/scripts/gold/build_cottonwood_mdpf_pair.py"
+            ) != "mdpf",
+            "mutation not detected -- the routing test is inert",
+        )
+    finally:
+        tree["layers"] = original
+    _check(
+        results,
+        "routing restored after mutation",
+        pcli.resolve_pipeline_from_arg(
+            "data/assets/scripts/gold/build_cottonwood_mdpf_pair.py"
+        ) == "mdpf",
+        "restore failed -- shared state left corrupted",
+    )
+
+
 def main_test() -> int:
     results: list = []
     test_pipeline_map_identical(results)
@@ -248,6 +320,8 @@ def main_test() -> int:
     test_declared_repo_homes_exist(results)
     test_uncovered_direction(results)
     test_artifacts_are_modelled_and_unresolved_ones_surface(results)
+    test_routing_contract(results)
+    test_routing_mutant(results)
     test_mutation_exercises_the_invariant(results)
 
     print("CODE_TREES invariant suite")
