@@ -20,18 +20,19 @@
 # process on this machine regardless of shell flavor or interactivity. That is the one layer that
 # actually reaches the harness's real invocation pattern; profile files structurally cannot.
 #
-# WHAT THIS SCRIPT DOES: writes small, single-purpose forwarding shims into ~/bin for an
-# EXPLICITLY NAMED LIST of tools -- currently aws, comp-which, comp-system, comp-grep, comp-glob
+# WHAT THIS SCRIPT DOES: writes small, single-purpose forwarding shims into ~/bin for the
+# DERIVED FULL SET of .tools/comp-* (93 on disk) PLUS the named non-comp `aws` case
 # -- both a bash-invocable form (no
 # extension) and a PowerShell/cmd-invocable .cmd form, mirroring the existing .tools/aws +
 # .tools/aws.cmd atomic-pair precedent (PATHEXT prefers .cmd under Windows shells; bash ignores
 # it and uses the extensionless file). ALL LOGIC STAYS IN THE TRACKED .tools/ ORIGINALS -- these
 # shims are dumb, absolute-path forwarders, never a second copy of any real logic.
 #
-# >> SCOPE -- READ THIS BEFORE CITING THIS SCRIPT AS COVERAGE. The list above is a NAMED,
-# ENUMERATED SET. It is NOT general coverage of .tools/, and this script has never claimed to be:
-# there are ~91 `.tools/comp-*` executables and this provisions 5 tools. A PASSING `command -v`
-# on any one of them says NOTHING about the other ~86.
+# >> SCOPE -- WIDENED TO THE FULL DERIVED SET, 2026-07-28 (3.0.0_SA_CVO, Andrew-direct). This
+# now provisions EVERY .tools/comp-* plus aws, with each tool's Windows interpreter READ FROM ITS
+# OWN SHEBANG rather than hand-named. The historical caveat below is PRESERVED because the reasoning
+# is still correct and still binding on any FUTURE narrowing -- but the specific claim it makes
+# ("provisions 5 tools") is NO LONGER TRUE. Count from the run output, never from this prose.
 #
 # That distinction is not pedantry -- it is the exact defect this comment exists to prevent
 # recurring. org/XXX.md Step 1b-A.3's startup check probes `comp-which` alone and an agent reads
@@ -48,11 +49,16 @@
 # denied the raw search and handed the agent an escape hatch that was `command not found` -- the
 # door real, the key not -- and comp-which's own output printed that dead fallback verbatim.
 #
-# STILL OPEN AND UNASSIGNED: whether to widen to the full comp-* set. That is a real design
-# question, not an oversight -- it needs per-tool shebang VERIFICATION across ~86 more tools
-# (uniformity must be measured, never assumed; a bash script fed to py.exe fails immediately),
-# and it trades a small audited surface for a large one. It is deliberately NOT done here.
-# Stated explicitly so this residual is a named decision rather than a silent gap. <<
+# RESOLVED 2026-07-28 (3.0.0_SA_CVO, Andrew-direct) -- the widening above. The blocker named here
+# was per-tool shebang verification across the remaining tools; that is now MECHANICAL rather than
+# manual: the loop reads each tool's own shebang and maps python->py.exe, bash->Git-Bash, and
+# REPORTS-AND-SKIPS anything unmappable instead of guessing. Shebang census at widening time:
+# 70 bash / 23 python across 93 tools, ZERO without a shebang.
+#
+# WHAT FORCED IT (an outage, not a cleanup): safe-commit.sh:483 guards its COMPUNIFY coverage gate
+# on `command -v comp-coverage-check`. That tool was NOT in the named five, so the guard FAILED and
+# THE GATE SILENTLY SKIPPED ON EVERY COMMIT. comp-manifest-check was in the same position. A gate
+# that cannot be found is not advisory -- it is off, and it reports nothing while being off. <<
 #
 # THE aws CASE NEEDS EXTRA CARE: .tools/aws itself does `which -a aws` at runtime to find the
 # REAL underlying pip-installed CLI, skipping any candidate matching `*/.tools/aws`. If a naive
@@ -114,7 +120,38 @@ declare -A _INTERP_WIN=(
     [comp-glob]="py.exe"
 )
 
-for tool in comp-which comp-system comp-grep comp-glob; do
+# --- DERIVED SET (3.0.0_SA_CVO 2026-07-28, Andrew-direct) -------------------------------------
+# WAS: a hardcoded `for tool in comp-which comp-system comp-grep comp-glob`. THE NAMED SET WAS THE
+# DEFECT. Measured this session: 4 of 92 comp-tools resolved bare, and BOTH commit-gate tools --
+# comp-coverage-check and comp-manifest-check -- were outside the five. safe-commit.sh:483 guards
+# its coverage gate on `command -v comp-coverage-check`, so the guard FAILED and THE GATE SILENTLY
+# SKIPPED. A gate that cannot be found is not advisory, it is off.
+#
+# The interpreter is now DERIVED FROM EACH TOOL'S OWN SHEBANG, never assumed -- which is exactly
+# why the set was hand-named before (the .cmd form has no shebang mechanism and must name the
+# interpreter explicitly). Reading it per-tool removes the reason for the hand-list.
+# Shebang census at authoring: 70 bash / 23 python across 93 tools, ZERO without a shebang.
+# Anything unmappable is REPORTED AND SKIPPED LOUDLY -- never guessed, never silently dropped.
+_GITBASH='"C:\\Program Files\\Git\\bin\\bash.exe"'
+_unmapped=""
+_derived=""
+for _f in "$WS"/.tools/comp-*; do
+    [ -f "$_f" ] || continue
+    _t=$(basename "$_f")
+    case "$_t" in *.cmd) continue;; esac
+    _sb=$(head -1 "$_f" | tr -d '\r' | sed 's/[[:space:]]*$//')
+    case "$_sb" in
+        *python*) _INTERP_WIN[$_t]="py.exe" ;;
+        *bash*)   _INTERP_WIN[$_t]="$_GITBASH" ;;
+        *)        _unmapped="$_unmapped $_t"; continue ;;
+    esac
+    _derived="$_derived $_t"
+done
+if [ -n "$_unmapped" ]; then
+    echo "provision-path-shims: UNMAPPED SHEBANG (skipped, NOT guessed):$_unmapped" >&2
+fi
+
+for tool in $_derived; do
     cat > "$BIN/$tool" << EOF
 #!/usr/bin/env bash
 # Bootstrap shim (NFRA_TOOLARCH.PATHFIX) -- generated by .tools/provision-path-shims.sh, do not
@@ -142,4 +179,4 @@ done
 # unstated-denominator defect this script's header is about.
 _written=$(ls "$BIN" 2>/dev/null | grep -cv '\.cmd$')
 echo "provision-path-shims: wrote $_written tool(s) x2 forms to $BIN -- $(ls "$BIN" | grep -v '\.cmd$' | tr '\n' ' ')"
-echo "provision-path-shims: SCOPE = this NAMED set only, NOT all $(ls "$WS"/.tools/comp-* 2>/dev/null | wc -l) .tools/comp-* tools (see header)."
+echo "provision-path-shims: SCOPE = DERIVED from .tools/comp-* ($(ls "$WS"/.tools/comp-* 2>/dev/null | wc -l) on disk) + the named non-comp set. Interpreter per-tool from its OWN shebang."
