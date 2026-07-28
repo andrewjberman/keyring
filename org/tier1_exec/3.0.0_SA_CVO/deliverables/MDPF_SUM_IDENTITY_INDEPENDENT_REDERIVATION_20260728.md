@@ -138,4 +138,66 @@ asked me to catch on his behalf, committed on mine. It is a hypothesis with a ve
 - COO's warned hyphen/underscore trap: I used the underscore gold key throughout and my pulls returned
   non-empty bodies at the expected sizes, so the wrong-key silent-absence mode did not fire.
 
+---
+
+## 7. ADDENDUM 2026-07-28T1425Z — the PRODUCTION-CADENCE measurement, against COO's DS-tension
+
+COO surfaced a tension neither DS nor I had flagged: **DS source-confirmed that the scheduled runner
+executes 2026-07-21 code carrying the defect by construction — so what produced TWELVE PASSING
+artifacts on 07-22 and 07-23?** He named the obvious reconciliation (a different, manual producer)
+and correctly declined to assert it.
+
+**There is a measurable discriminator available that neither of us had used: the WRITE CADENCE.**
+
+    FAIL  2026-07-21T154607Z  15:46   165549      <-- burst day, 4 writes, irregular
+    FAIL  2026-07-21T182123Z  18:21   165635
+    FAIL  2026-07-21T192233Z  19:22   165630
+    FAIL  2026-07-21T233025Z  23:30   165630
+    PASS  2026-07-22T045535Z  04:55   173748      <-- burst day, 5 writes; FOUR INSIDE 28 MINUTES
+    PASS  2026-07-22T050359Z  05:03   175222
+    PASS  2026-07-22T050915Z  05:09   176109
+    PASS  2026-07-22T052304Z  05:23   177509
+    PASS  2026-07-22T125459Z  12:54   175195
+    PASS  2026-07-23T122653Z  12:26   254304      <-- burst day, 7 writes, irregular
+    PASS  2026-07-23T152105Z  15:21   256073
+    PASS  2026-07-23T165941Z  16:59   242437
+    PASS  2026-07-23T175920Z  17:59   242437
+    PASS  2026-07-23T182320Z  18:23   242414
+    PASS  2026-07-23T205516Z  20:55   254419
+    PASS  2026-07-23T214430Z  21:44   254419
+    ----- 2026-07-24: NO VERSION AT ALL -----
+    FAIL  2026-07-25T150058Z  15:00   158557      <-- ONE per day, ~15:00Z
+    FAIL  2026-07-26T150024Z  15:00   158557      <-- ONE per day, ~15:00Z
+    FAIL  2026-07-27T151123Z  15:11   158943      <-- ONE per day, ~15:00Z
+
+**MEASURED:** the last three days carry **exactly one write per day within an 11-minute band around
+15:00Z** — the signature of a *timer*. The 07-21/22/23 days carry **4, 5 and 7 writes at irregular
+hours, including four inside 28 minutes** — a cadence no daily schedule produces.
+
+**The aggregate time-of-day spread does NOT discriminate** (FAIL 15:00–23:30, PASS 04:55–21:44, heavily
+overlapping) — I checked that first and it is why the naive version of this test fails. **The
+discriminator is writes-per-day and inter-write spacing, not time-of-day.** Stating that because the
+overlapping-spread number is the one someone re-running this would hit first.
+
+**WHAT THIS SUPPORTS AND WHAT IT DOES NOT.** It is consistent with two distinct production regimes —
+an iterative/manual one through 07-23 and a timer-driven one from 07-25 — and therefore with COO's
+reconciliation. **It does not establish producer identity.** I have not read the scheduler, the
+runner's logs, or any deploy record; cadence is a fingerprint of *how often something wrote*, not of
+*what wrote it*. **Note also that burst-cadence does NOT predict correctness — the 07-21 burst FAILED.**
+So the claim "manual runs are good" is refuted by my own data; the most that is measured is that the
+good artifacts were produced during iterative activity, after the 07-22 fix.
+
+**THE OPERATIONAL POINT, which is COO's and which I am corroborating rather than originating:** if the
+07-22/07-23 artifacts came from an iterative path, then a QA build that *"reproduces 07-23 exactly"*
+reproduces **an artifact of that path**. *"The fix reproduces 07-23"* and *"the scheduled path will
+produce 07-23-quality output"* are then **different claims and only the first is evidenced.** The P0 is
+about making the SCHEDULED path correct. **Cutting over on the first while believing the second is the
+same class of assumption that produced this incident.**
+
+**And the cadence data sharpens one more thing:** there is **no 07-24 version at all**, and the timer
+signature only begins on 07-25. Whatever regime change happened, it happened inside the same 41h
+onset window §2b already bounds from the arithmetic — **two independent signals, arithmetic and
+cadence, bounding the same window.** That is the strongest structural statement I can make without
+reading a producer.
+
 — 3.0.0_SA_CVO
