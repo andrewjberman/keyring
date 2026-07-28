@@ -27112,3 +27112,18 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-28Z | 0.7.0_AE_CloudOps~C | (no-TO) | comp-pipescript deployed --pipeline mdpf | exercise CODE_TREES: do the 2 previously-invisible layers appear | PASS -- 6/6 layers now derived; IMMEDIATELY surfaced 2 STALE cottonwood scripts (build_cottonwood_mdpf_pair.py, build_cottonwood_mdpf_slice.py) the tool could not see before. Also exposed a false-positive class I introduced (shared repo home -> ~16 bogus MISSING_ON_S3), fixed via shared_repo_homes before commit. |
 | 2026-07-28Z | 0.7.0_AE_CloudOps~C | (no-TO) | comp-grep | consumers of PIPELINE_MAP/file_to_s3_target/VALID_LAYERS | PASS -- and it WARNED that my '\|' was Python-re literal, not BRE alternation, instead of silently returning 0 matches. A tool that names its own misuse mode; cite as the good example alongside its printed working set. |
 | 2026-07-28Z | 0.7.0_AE_CloudOps~C | (no-TO) | commit-gate.sh | 3 .py across 2 commits | PASS 3/3 + 2/2 |
+| 2026-07-28Z | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed data/assets/scripts/gold/build_cottonwood_mdpf_pair.py | PASS |
+| 2026-07-28Z | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed data/assets/scripts/gold/build_cottonwood_mdpf_slice.py | PASS |
+| 2026-07-28Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed data/mdpf/scripts/gold/build_portal_gold_accrual.py org/ti... | PASS |
+| 2026-07-28Z | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-07-28Z | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system --gate --changed .tools/gen_tool_registry.py .tools/tool_overrides.yaml .to... | VERDICT |
+| 2026-07-28Z | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system --gate --changed .tools/gen_tool_registry.py .tools/tool_overrides.yaml .to... | VERDICT |
+| 2026-07-28Z | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system --gate --changed .tools/gen_tool_registry.py .tools/tool_index.py org/modul... | VERDICT |
+| 2026-07-28Z | 0.7.0_AE_CloudOps~C | (no-TO) | comp-pipescript | comp-pipescript deployed data/assets/scripts/gold/build_cottonwood_mdpf_pair.py | PASS |
+| 2026-07-28Z | 0.7.0_AE_CloudOps~C | (no-TO) | comp-pipescript | comp-pipescript deployed data/assets/scripts/gold/build_cottonwood_mdpf_pair.py | PASS |
+| 2026-07-28Z | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-28Z | 0.7.0_AE_CloudOps~C | (no-TO) | comp-pipescript | comp-pipescript deployed data/assets/scripts/gold/build_cottonwood_mdpf_pair.py | PASS |
+| 2026-07-28Z | 0.7.0_AE_CloudOps~C | (no-TO) | comp-pipescript | comp-pipescript deployed D_00 | PASS |
+| 2026-07-28Z | 0.7.0_AE_CloudOps~C | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/pipeline_cli.py .tools/test_code_trees_i... | PASS |
+| 2026-07-28Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-28Z | 0.7.0_AE_CloudOps~C | (no-TO) | comp-pipescript deployed <data/assets path> | close CTO's false-clean; end-to-end verify | PASS after fix -- returns [mdpf] header + 1 STALE. **KEY: the fix was TWO halves. Fixing only the ROUTER gave a CORRECT header over an EMPTY 0/0/0 summary -- worse than the wrong header, because a right header over nothing looks authoritative. Caught ONLY by running the exact invocation end-to-end rather than trusting the passing unit test.** Second half was _canonicalize_script_id carrying the same hardcoded dir x layer alternation. |
