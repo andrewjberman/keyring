@@ -118,6 +118,28 @@ pointed at this week.
 **The register's job is to make that possible.** A sovereign who has to reconstruct state per topic
 cannot run four mission groups. Every field in here is chosen so state can be read without a briefing.
 
+> ### ⚠ PRIORITY vs ACTUAL ALLOCATION — measured 2026-07-28 (CVO)
+> Today's session ran **82 commits**, mapped by sub-group:
+>
+> | sub-group | commits | live capacity |
+> |---|---|---|
+> | `PORTAL.MP` | **42**, across 5 agents | heavy |
+> | `DEBT.BACKEND` | 14 | present |
+> | `INFRA.TOOLS` | **5** | thin |
+> | `INFRA.GRAPH` | **1** — and that one from a **STALE** session | **none live** |
+>
+> **Two of the three joint-highest-priority sub-groups have six commits between them, and `INFRA.GRAPH`
+> has no live capacity at all.** The stated priority and the actual allocation disagree by roughly an
+> order of magnitude.
+>
+> **CAVEAT, CVO's own and load-bearing: 32 of 82 commits went unmapped (~39%), and the mapper likely
+> undercounts `INFRA.TOOLS` because its deliverables cite MDPF as their worked example. DIRECTIONAL
+> ONLY — do not quote it as a metric.** The direction survives the caveat; the precision does not.
+>
+> **Surfaced, not sized.** Allocation is COO's call and dispatch is CTO's. **This is the one thing a
+> project-level view structurally cannot show you: not what is happening, but what is happening
+> INSTEAD of what you said mattered.**
+
 ---
 
 ## THE ASSESSMENT PROTOCOL — how state gets logged on a consistent basis
@@ -389,7 +411,7 @@ across both must respect the business-purpose split; this mission does not loose
 
 *Two items, stable for reference.*
 
-## INFRA.TOOLS — enumerated coverage universe per tool   `SUB-GROUP` **v1.2**
+## INFRA.TOOLS — enumerated coverage universe per tool   `SUB-GROUP` **v1.3**
 
 *Version history: `v1.0` 2026-07-28 created · `v1.1` +O2 (Andrew-direct response-scope) · `v1.2` CVO state pull 183509Z — attach corrected (+COMPUNIFY), stance grounded on an exercised gate, O2 sharpened*
 
@@ -419,14 +441,39 @@ nowhere today. Flagged so nobody dispatches into a hollow project.
 > knowing the work, or they get verified by someone who does.**
 
 ```
-DECIDED : YES      @ NFRA_COMPUNIFY defines the target; the coverage map + gate exist
-BUILT   : YES      @ comp-coverage-check EXERCISED (not read) 155xZ -- PASSES, 88 homed tools,
-                     12 gate_contract rules, 0 unverifiable
-          NO       @ for the NEGATIVE declaration -- what a tool cannot see WITHIN its declared
-                     surface. Beyond COMPUNIFY's charter; a HOLE, not drift.
-SERVING : UNASSESSED  -- whether the gate is wired into a commit path or is invoke-only is NOT
-                        established. CVO refused to guess; see below.
+DECIDED : YES      @ comp-coverage-map.yaml:87-153 -- a 12-rule gate_contract + 4 locked CTO rulings
+BUILT   : YES      @ comp-coverage-check EXERCISED 2026-07-28T155xZ (a RUN, not a read), verbatim:
+                     "PASS ... 88 homed tool(s) (36 tools[] + 52 meta_tools[]) | 12 gate_contract
+                     rule(s), 0 unverifiable | inventory complete."
+          NO       @ for the NEGATIVE declaration -- no `excludes:` field exists in the schema.
+                     Anchor: CVO @a3dac97be section 2. Beyond COMPUNIFY's charter: a HOLE, not drift.
+SERVING : UNASSESSED  -- gate wiring (commit/CI path vs invoke-only) NOT established. DO NOT upgrade
+                        this to NO; they are different claims.
 ```
+
+**PROJECT TABLE — measured 2026-07-28 (CVO).** `code` = distinct files under
+`.tools/|org/modules/|infra/|data/`; `doc` = under `docs/|org/tier*|org/projects`.
+**The ratio is the ENACTED-vs-RECORDED signal**, which is why both columns are kept.
+
+```
+project              status    commits  code  doc
+NFRA_SYSPARITY       active      143     43    77
+NFRA_TOOLUNIFY       NO-JSON     109     18   113   <-- HOLE
+NFRA_COMPLEARN       active       75     22    75
+NFRA_TOOLARCH        active       69     24    41
+NFRA_COMPRAIL        complete     46     17    23
+NFRA_TOOLCHECK       active       45     20    25
+NFRA_COMPUNIFY       complete     41      7    29
+NFRA_MSBEFF          active       39     25    39
+NFRA_TOOLHEALTH      active       29     12    29
+NFRA_COMPDRIFT       complete     27     12    12
+NFRA_TOOLBHVR        active       10      1     5
+NFRA_TOOLGRAPH       active        5     17    14
+NFRA_TOOLSEM         active        4      0     1
+```
+**`NFRA_TOOLGRAPH` is disproportionately relevant to the frontier** — only 5 commits but **17 code
+files**, and it already implements the declared-vs-actual diff shape for coupling. Small, real, and
+the nearest existing thing to what the frontier needs.
 
 > **`SERVING: UNASSESSED` is the most credible field in this entry.** CVO's stated reason: *"I made
 > three false claims about this same project today — 'gate not built,' '36 tools,' 'exclusions written
@@ -438,9 +485,26 @@ SERVING : UNASSESSED  -- whether the gate is wired into a commit path or is invo
 against the surface implied by its ENUMERATION PRIMITIVE. **It needs no oracle** (Andrew's explicit
 constraint), and `comp-toolgraph` already implements the shape for *coupling*.
 
-**HOLES — four, no project code covers any:** the **negative declaration** · the **runtime-provenance
-axis** · **`INFRA.TOOLS.O2` itself** · **cross-tool coverage diffing at suite scale** (`comp-toolgraph`
-does declared-vs-actual for coupling, nothing for coverage).
+### HOLES — and the largest one found so far in this register
+
+> ## `NFRA_TOOLUNIFY` — 109 commits, 18 code files, 113 doc files, **NO PROJECT JSON**
+> **The second-largest body of work in the entire tool program, and it has no project code.**
+> Verified with a positive control: `NFRA_TOOLARCH.json` is found by the same glob; `TOOLUNIFY` is
+> absent. **This is not drift on a delinquent record — there is no record to drift from.**
+>
+> **It is bigger than `MDPF_CHANNEL_INDEPENDENCE`, which was the example I used to justify the whole
+> exercise.** Two holes of this size found on the register's first two population passes, in two
+> different mission groups, by two different agents. **The prior is not "assume there are more" — it is
+> COO's sharper version: assume the instrument that would find them is the same one that missed these.**
+
+Also holed, no project code covers any: the **negative declaration** (what a tool cannot see *within*
+its declared surface) · the **runtime-provenance axis** · **`INFRA.TOOLS.O2` itself** · **cross-tool
+coverage diffing at suite scale** (`comp-toolgraph` does declared-vs-actual for coupling, nothing for
+coverage).
+
+**NOT ASSESSED — recorded so it is not read as covered:** gate wiring · `NFRA_COMPASSURANCE` /
+`COMPSIMILAR` / `COMPTEAM` (active, unmeasured) · **the remaining 57 of 92 tool enumeration primitives
+— UNRESOLVED, not absent.**
 **NOTE — why this mission is not cosmetic:** we have repeatedly found tools whose *silence* was read
 as *absence*. `comp-iam` reports nothing for whole classes of call and that silence has been the
 defect, not the trace. **An unenumerated coverage universe is what makes a tool's silence
@@ -499,7 +563,7 @@ scan you reason from* · **a wrong number is more dangerous than a zero**, becau
 suspicion and a plausible count does not.
 **GROUNDED:** 2026-07-28, authored from Andrew-direct + a live self-caught instance.
 
-## INFRA.GRAPH — canonical taxonomy and resource design patterns   `SUB-GROUP` **v1.1**
+## INFRA.GRAPH — canonical taxonomy and resource design patterns   `SUB-GROUP` **v1.2**
 
 *Version history: `v1.0` 2026-07-28 created · `v1.1` CVO state pull 183509Z — class-over-instance framing recorded*
 
@@ -511,11 +575,20 @@ that basis.
 `NFRA_TSGRAPH`, `NFRA_SEMCTL`, `NFRA_NERVES`, `NFRA_EDGES`.
 
 ```
-DECIDED : PARTIAL  -- the intent is stated across OPAL_STNDRD / OPAL_TAXONOMY and others; a single
-                      canonical taxonomy is not locked
-BUILT   : PARTIAL  @ comp-kuzu, the global graph, comp-system parity checking all live
-SERVING : PARTIAL
+DECIDED : PARTIAL  @ key grammar + naming law + one-capacity-one-service EXIST; NO provenance
+                     taxonomy, NO code-location standard. Token census over NFRA_TOOLARCH_PRD.md
+                     (116 lines): provenance 0, "Rule 12" 0, "artifact store" 0 --
+                     POSITIVE CONTROL: "archetype" 12, so the zeros are real.
+BUILT   : PARTIAL  @ exactly ONE live gate -- the .parquet-under-bronze/ bucket-policy deny, on ONE
+                     bucket (opal-data-assets, 07-16). Other trees open.
+SERVING : PARTIAL  @ 121 scheduled EventBridge Rules vs 10 Scheduler schedules --
+                     92% on the NON-STANDARD side of a standard that already exists. Measured live.
 ```
+
+> **That last number is the sub-group in one line: the standard exists and 92% of the estate is not on
+> it.** `DECIDED: PARTIAL` is therefore not the bottleneck — **adoption is.** A taxonomy nobody migrates
+> onto is indistinguishable from no taxonomy, and the register should not let "we have a standard" read
+> as progress while the ratio sits there.
 > ### RECORDED DISAGREEMENT — CVO vs CTO, and the register carries the CLASS version
 > Sent by CVO **without reconciling with CTO**, per my instruction that two views of one sub-group is
 > signal. CTO's framing was **the INSTANCE**: `mdpf` missing from `PIPELINE_MAP`. CVO's is **the
