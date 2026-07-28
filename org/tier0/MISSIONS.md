@@ -104,6 +104,81 @@ Cheap by design; it must survive being run every session.
 5. Sub-groups do not get dispatched from here. Routing stays with CTO and COO; MSTR observes and reports.
 
 ---
+
+## PRIORITY (Andrew-direct 2026-07-28)
+
+**Highest priority right now:** `PORTAL.MP` (Model Portfolios) · `INFRA.TOOLS` + `INFRA.GRAPH`
+(enumeration and coverage clarity). Everything else is real but is not what the fabric is being
+pointed at this week.
+
+**Why it is stated here rather than left implicit** — Andrew's reason, and it is the operative one:
+> *"I cannot be getting in the weeds right now on one topic as it prevents me from pushing the fabric
+> forward on the collective missions above."*
+
+**The register's job is to make that possible.** A sovereign who has to reconstruct state per topic
+cannot run four mission groups. Every field in here is chosen so state can be read without a briefing.
+
+---
+
+## THE ASSESSMENT PROTOCOL — how state gets logged on a consistent basis
+
+**MSTR owns the register; Tier-1 owns the ground truth.** This is the exchange format between them.
+Five fields, deliberately few, because a format nobody can produce in five minutes does not get
+produced.
+
+For each sub-group they hold, a Tier-1 agent returns:
+
+| # | field | what it must contain |
+|---|---|---|
+| 1 | **ATTACH** | which macro/project codes actually cover this, in their view |
+| 2 | **HOLES** | live work covered by **NO** project code — named, with evidence |
+| 3 | **STANCE** | `DECIDED` / `BUILT` / `SERVING`, each `NO`/`PARTIAL`/`YES` **with an anchor** |
+| 4 | **FRONTIER** | the single next thing that would move it |
+| 5 | **BLOCKED-ON** | a named owner or a named sovereign call — or `nothing` |
+
+**Field 2 is the one that justifies the exercise.** The registry can already answer *what projects
+exist*. It cannot answer *what is happening that no project covers* — and that gap is where the
+expensive surprises live. `MDPF_CHANNEL_INDEPENDENCE` was exactly this: live, PRD'd, cited as law,
+driving a P0, and **invisible to every registry instrument we own.** Assume there are more.
+
+**Rules that keep the exchange honest:**
+- **`UNASSESSED` is a legal answer.** *"I have not looked"* is information; a guess is not.
+- **An unanchored stance is `ASSERTED` and non-actionable.** Same bar as any other claim here.
+- **Nobody re-derives another agent's lane.** Report your own; disagreements are findings, not edits.
+- **This is a state pull, NOT a dispatch.** Routing and sequencing remain CTO's and COO's. MSTR
+  collects, grounds, folds, and reports — under Andrew-direct instruction to coordinate, which does
+  not convert the observer into a dispatcher.
+
+---
+
+## MISSION-TAGGED SPAWNS — grouping the fabric by mission so context stays focused
+
+Andrew-direct: deploy agents **grouped by mission per session**, so context is focused and preserved,
+on a **tilde-lane basis** as needed. *"It really is just a function of launch instructions at spawn."*
+
+**The whole mechanism, and it is deliberately this small:**
+
+```
+1. COO names the sub-group it needs an agent for      ->  "spawn for PORTAL.MP"
+2. MSTR spawns with that tag in the startup context   ->  /mstr-spawn <serial> --mission PORTAL.MP
+3. The agent starts already knowing its mission,      ->  reads MISSIONS.md at that sub-group:
+   its intent, its attached codes, and its frontier       intent + ATTACH + FRONTIER + BLOCKED-ON
+```
+
+**No new artifact, no new registry, no new obligation.** The tag rides the existing `--say`
+first-message channel that `/mstr-spawn` already carries. **The mission context is a POINTER INTO
+THIS FILE, not a copy of it** — so it cannot drift from the register, which is the failure a copied
+briefing would guarantee.
+
+**Tilde lanes are the unit of mission focus.** A base serial spread across three sub-groups is the
+context dilution this is meant to end; `~A` on `PORTAL.MP` and `~B` on `INFRA.GRAPH` keeps each
+session's working set coherent.
+
+**Authority unchanged:** COO decides *which* mission needs capacity (it owns allocation); MSTR
+provisions and tags (it owns spawn/kill); CTO dispatches the actual work. **Spawn is not dispatch** —
+the tag orients a session, it does not authorise work.
+
+---
 ---
 
 # GROUP 1 — PORTAL
@@ -260,9 +335,9 @@ across both must respect the business-purpose split; this mission does not loose
 
 *Two items, stable for reference.*
 
-## INFRA.TOOLS — enumerated coverage universe per tool   `SUB-GROUP` **v1.0**
+## INFRA.TOOLS — enumerated coverage universe per tool   `SUB-GROUP` **v1.1**
 
-*Version history: `v1.0` 2026-07-28 created*
+*Version history: `v1.0` 2026-07-28 created · `v1.1` 2026-07-28 +O2 (Andrew-direct response-scope/truncation)*
 
 **Intent:** for every comp-tool, a known and enumerated coverage universe — what it covers, what it
 does not, and where its silence means "nothing there" versus "I cannot see that."
@@ -285,6 +360,34 @@ as *absence*. `comp-iam` reports nothing for whole classes of call and that sile
 defect, not the trace. **An unenumerated coverage universe is what makes a tool's silence
 uninterpretable.**
 **GROUNDED:** 2026-07-28, structure + prior art located. Per-tool coverage NOT enumerated.
+
+### INFRA.TOOLS.O2 — response scope: high-signal output that is not truncated, redacted or garbled
+**Andrew-direct 2026-07-28, and it is a distinct function from coverage:** once the coverage universe
+is known, decide **how each tool must work mechanically — namely the scope of how information is
+presented.** Big responses get truncated; the output must be high-signal and **not inadvertently
+redacted or garbled.**
+
+```
+DECIDED : NO       -- no standard exists for how a comp-tool bounds and shapes its output
+BUILT   : NO
+SERVING : NO
+```
+**FRONTIER:** a per-tool output contract — what it returns by default, how it bounds a large result,
+and how it says *"there is more"* instead of silently stopping.
+**WHY THIS IS NOT COSMETIC — a truncated response and a complete one are byte-indistinguishable to
+the reader.** This is the retrieval-control class the estate already knows by name: `grep` silently
+entering binary mode and truncating its own output at exit 0; a `git show` on a bad ref returning
+clean-empty stdout that reads as *"file absent."*
+**MEASURED INSTANCE, 2026-07-28, MSTR's own — recorded because a self-inflicted one is the honest
+kind:** a manifest inspection piped through `head -40` truncated mid-output, and I reported
+*"the runner is NOT registered in EC2_MANIFEST"* to Andrew. **It was registered.** I read an absence
+out of a truncated retrieval, on a decommission decision. Caught and corrected within one turn, but
+**nothing in the output distinguished truncated from complete** — which is precisely the defect this
+objective is about.
+**RELATED STANDING LAW:** *control the RETRIEVAL, not the pattern* · *print the denominator of every
+scan you reason from* · **a wrong number is more dangerous than a zero**, because a zero invites
+suspicion and a plausible count does not.
+**GROUNDED:** 2026-07-28, authored from Andrew-direct + a live self-caught instance.
 
 ## INFRA.GRAPH — canonical taxonomy and resource design patterns   `SUB-GROUP` **v1.0**
 
