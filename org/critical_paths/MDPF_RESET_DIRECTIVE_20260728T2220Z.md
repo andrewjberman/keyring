@@ -158,6 +158,37 @@ wrong-cause string · `coverage_state` is asserted by `.get` default, never deri
 `_total__etf_fund`, the ETF `rolled_forward` labels, and the 49F held-ETF refusal are all CORRECT behavior;
 `inflection_orion_custody` proves code path + IAM + freshness rule sound.
 
+## ⚡ AMENDMENT 4 — TWO PRODUCTS IN ONE TABLE (Andrew framing correction) + WO-6 DISPOSITION + THE 4a-BEFORE-4c GUARD RULE
+
+**ANDREW'S FRAMING CORRECTION (via COO 223836Z):** the gold DDB carries **TWO PRODUCTS interleaved** —
+```
+MDPF (Model Portfolios)  15 cohorts   Groups A, B, E    <- THE PRIORITY
+ETF FUND TRACKING        17 cohorts   Groups C, D       <- parallel product; Andrew verbatim:
+                                                           "still important but not as important"
+```
+They tangled because the ETF held-by-partner cohorts slice by the SAME partners and share ONE emitter,
+ONE table, ONE schedule — **one cadence defect throws symptoms into two products at once.** Every future
+report labels which product a cohort belongs to. **ETF-only fixes (WO-4d revive-vs-retire, the fund-level
+phase lag) rank BELOW every MDPF item.**
+
+**WO-6 DISPOSITION: path half CLOSED (32/32 traced, file:line), schedule half FOLDED INTO WO-5.** COO is
+right that observed arrival times from 6 samples are not a declared cadence — building on them would be
+the materiality-vs-source error again. **BUT the declared cadences for WO-4c ALREADY EXIST:**
+`partner_roster.json` declares per-feed cadence for exactly the Group A/B feeds (schwab_rps_s2 **T-1** ·
+eclipse_portfolios_full **T-1** · orion_assets **same_day** · smartx **same_day** · BD cottonwood
+**D+2**). **WO-4c reads the roster; it does not wait for WO-5.** The observed D+1 10:16Z / 03:30Z arrivals
+CORROBORATE the declared T-1 — they are the same fact seen from the wire. WO-5 keeps the genuinely
+missing half: **what FIRES each producer** (trigger mechanism, applied plane, UNKNOWN declared).
+
+**FIX ORDER RULED — 4a BEFORE 4c, and the reason is a trap:** COO flagged that on MDPF-priority grounds
+the cadence fix (the CAUSE) might outrank the `:1398` coalescer fix (the symptom-amplifier). **Inverted,
+it detonates: the first post-4c run in which exactly ONE additive leg lands routes a one-leg sum through
+the unfixed `(value or 0)` — and serves the next $137.17mm partial as the firm-wide total, stamped
+fresh.** That is precisely the 07-18 incident, re-armed by the fix for its cause. **NEVER RESTORE FLOW
+INTO AN UNGUARDED COALESCER.** Order: D2 log line → 4a (minutes, closes the serving hazard) → chain fire
+→ 4c (restores the data) → 4b backfill. Both land tonight; the sequence is the safety property, not a
+preference.
+
 ## ⚡ AMENDMENT 1 — ANDREW RE-SEQUENCING, ~2225Z (supersedes the WO order below where they conflict)
 
 Andrew, going element-by-element down the chain status: **(4) "Have we fixed the emitter and backfilled
