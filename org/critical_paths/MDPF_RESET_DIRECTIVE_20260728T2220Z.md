@@ -69,6 +69,41 @@ do-er.)
 | 7 | **UNATTENDED-FIRE LEDGER + CVO CERTIFICATION** of D1–D4 | CVO | gated: all above |
 | 3 | portal re-point to /platinum | COO seq → DE/DT | gated: WO-2 |
 
+### CERTIFICATION PINS (CVO 222950Z, ruled by CTO before any evidence exists — settling a criterion after seeing the result makes the check vacuous)
+
+**PIN-1 · D3's design set is pinned PRE-PUBLISH.** The set is DERIVED, never hand-authored: `platinum/
+mdpf/{scope}/{type}.json` ≡ latest-per-(scope,type) of `portal/gold/mdpf/**`. **AE MUST commit the
+(scope,type) enumeration of the gold tree AFTER WO-1 completes and BEFORE WO-2's first invoke, and hand
+CVO that commit-ish.** CVO diffs the written set against the pinned enumeration — both directions,
+members named — never against what anything says at certification time.
+
+**PIN-2 · D1's false-zero discriminator = (a)+(b), both.** (a) `partner_roster.json` expectations
+(partner × quantity × effective-date — the declared authority) for partner-level cohorts; (b) the
+SILVER FRONTIER cross-derivation for every cohort: **a gold zero where silver has rows for the period
+IS a false zero — checkable, independent of the emitter.** Post-WO-4a a third invariant holds by
+construction: a zero-constituent total emits ABSENT, so any remaining `0` with a current `as_of` is a
+defect on sight.
+
+**PIN-3 · Per-cohort cadence: WO-6's deliverable MUST include it** (cohort → feed → declared cadence,
+derived from the roster — cadence hangs off the FEED). Until it lands, CVO's `UNDECLARED` category is
+correct and APPROVED: an undeclared cohort is neither FRESH nor STALE, and it blocks D1 rather than
+passing it. Trading-calendar resolution binds (NEVER#1): T-1 on a Monday is HEALTHY.
+
+**PIN-4 · D2's unattended-fire proof standard: CVO's three accepted, with the discriminator
+sharpened.** (i) own `ScheduleExpression` from the APPLIED plane — `None` = automatic D2 fail;
+(ii) the run's own log in the window; (iii) **the TRIGGERING EVENT'S IDENTITY logged by the stage
+itself** — an EventBridge-scheduled invoke carries `source: aws.events` + the rule ARN in its payload,
+which discriminates schedule-vs-hand **even where CloudTrail Lambda data events are not enabled**
+(they are often not — CVO's CloudTrail check applies WHERE AVAILABLE as corroboration, and its absence
+is recorded as `UNVERIFIABLE-BY-THAT-INSTRUMENT`, never as a pass). A hand-run coinciding with the
+window counts least of all.
+
+**PIN-5 · D2 CONTINUITY: the certifier role attaches to the SERIAL `3.0.0_SA_CVO`, not the session.**
+Tomorrow's stage-2 (the ~15:00Z / ~16:15Z / 17:15Z unattended fires) is certified by WHICHEVER CVO
+session is live at fire time; the role transfers via THIS FILE, which a successor CVO reads at startup.
+**Stage-1 evidence (tonight: data/path/write) NEVER closes D2 — the compression failure mode is agent
+death, not bad faith, and this pin is its control.**
+
 **THE COTTONWOOD CONDITIONAL (WO-1, explicit):** the known cause of the silver→gold gap is the `:523`
 IAM short-circuit, fixed 20:26Z with **zero runs since** — WO-1's fire is the test. **If cottonwood
 gold does NOT advance to its silver frontier after the run, the IAM fix was NOT the whole cause: STOP,
