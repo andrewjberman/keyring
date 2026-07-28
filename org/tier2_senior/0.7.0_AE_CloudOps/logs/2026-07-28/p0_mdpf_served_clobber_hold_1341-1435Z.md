@@ -429,6 +429,67 @@ was never reached -- same statement covers it, but the OBSERVED evidence covers 
   -- a different directory. **The legacy producer is exactly as wrong as it was this morning and still
   cannot emit cottonwood.** THE CHAIN RAN; THE PRODUCT IS NOT FIXED. Do not let those merge.
 
+## ITEM 1 -- ENUMERATED-LIST SWEEP (appended 17:13Z). 2 of 8 TRIAGED: 1 DEFECT, 1 CLEAR
+
+**Hypothesis (CTO 170204Z, from my own inference):** cottonwood was onboarded AFTER these artifacts were
+written, so **every non-wildcard enumeration silently never got updated.** Tested; holds.
+
+**METHOD.** `DENOMINATOR 257 files` (.py/.tf/.sh/.json/.mjs/.yaml/.yml) across 8 roots (data/mdpf,
+data/assets/scripts, terraform/{mdpf-pipeline,opal-assets}, ec2/mdpf-daily-runner,
+lambda/{mdpf-pipeline,opal-assets}, lambda-edge). **PREDICATE: names BOTH `49financial` AND `inflection`
+-- firms treated as a SET -- but NOT `cottonwood`. 18 candidates, 8 on the live path.**
+**FIRST PREDICATE DISCARDED:** *"names 49financial OR inflection without cottonwood"* gave **49 hits and
+was junk** -- it flags every single-firm-by-design script. **A single-firm script cannot omit a member;
+only a firms-as-a-SET enumeration can.** The bigger number would have looked better and meant less.
+**Positive control:** the sweep independently re-found today's two known defects
+(`build_aggregate_aua_timeseries.py`, `build_legacy_compat_emit.py`).
+**Reference is clean:** `data/mdpf/config/partner_roster.json` (owner_lane = mine) DOES carry cottonwood.
+
+### CONFIRMED DEFECT -- `mdpf-freshness-checker/lambda_function.py`
+```
+COHORTS DEFINED: 14   partner values: {'49financial': 9, 'inflection': 1}   cottonwood: 0
+"cottonwood" anywhere in the file: FALSE
+```
+>> **THE FRESHNESS ALARM CANNOT SEE COTTONWOOD.** The instrument whose entire job is to notice when a
+firm's data stops advancing has no cohort for the firm whose data stopped. **Nothing fired because
+cottonwood was never in its enumeration.** <<
+
+**FOURTH MECHANISM ON ONE VICTIM:** (i) legacy 2-partner producer cannot emit it · (ii) `fact_holdings`
+stalled 07-24 while siblings advance · (iii) OAC allowlist omits its 2 served keys (produced, present,
+403) · **(iv) no freshness cohort.** **THE COMPOUNDING IS THE POINT: (iv) is what should have caught
+(i)-(iii). The detector and the defects share a blind spot, so the omission is not additive -- it is what
+made the other three SURVIVABLE.** Four enumerations, four omissions, one firm: the prediction is now a
+measured pattern, not an inference.
+
+**Closes a loop:** at 15:35Z I refused to count this alarm as coverage because I had not verified it
+existed. Right call, sharper reason: **it exists, it runs, and for cottonwood it is structurally blind.
+An unverified alarm was a document; a verified one turns out to be a document FOR ONE FIRM.**
+
+**CTO RULING ON THE FIX (171123Z) -- NOT "add a cottonwood cohort":** a 15th hardcoded entry rebuilds the
+defect with one more member and guarantees the fifth firm repeats it. **The cohort table becomes DERIVED
+FROM `partner_roster.json`**, and **must ERROR on a roster member whose predicate it cannot evaluate,
+never silently skip.** Same principle as the prefix grant and per-source grammar declaration: **derived
+from one declared authority, never restated at a call site.**
+**PREDICATE ROUTED TO `0.4.0_DS`, NOT PICKED BY ME** -- cottonwood has **no single freshness answer at
+channel grain** (`fact_model_assignment` 07-28 / `fact_allocations` 07-27 / `fact_holdings` 07-24), so it
+needs PER-TABLE declaration. Choosing a max-lag myself would be the call-site-literal error the roster
+exists to prevent. **NOT BUILT.**
+
+### CLEARED -- `mdpf_revamp_model_crosswalk.py` (a FALSE POSITIVE of my own predicate)
+Names both firms **only in comments/docstring**; the code branches `if firm_id == "global": ... else:
+entry_for_key(model_key).display_name` -- **global vs NOT-global, never a firm list.** Cottonwood takes
+the generic per-firm path. **My predicate cannot distinguish a comment from a control** -- which is why
+the 8 were reported as CANDIDATES, not findings. It also already raises `UnknownModelError` rather than
+dropping (CVO F5), i.e. it **already implements the fail-loud property CTO just ruled for the freshness
+fix** -- cite it as the in-house precedent. **Both copies BYTE-IDENTICAL** (`d43c99acf061f0a3d...`): no
+fork, unlike the `public-data-router` pair. **2b is NOT undercut.**
+
+### OUTSTANDING (6, lower prior)
+`mdpf_aggregate_aua.py` · `wsd_partner_held_etf.py` (x2 copies) · `verify_wsd2_clears_identity2.py` ·
+`mdpf-daily-trigger/lambda_function.py` (mine -- gate checks inflection spine + 49F custody, cottonwood
+is not a gated partner, so likely correctly scoped). **1 defect in 2 is NOT a rate to extrapolate: I
+picked those two BECAUSE they were highest-consequence, the least representative sample in the set.**
+
 ## Next Steps
 
 1. **[0.7.0_AE_CloudOps]** Report the ~15:10Z run from its OWN log: Stage 4 rc, the WARN naming
