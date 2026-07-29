@@ -27360,3 +27360,32 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29T0252Z | 0.8.0_AE_CloudComp | cProfile, A/B-routing-identity-harness, comp-grep, comp-glob, comp-system, commit-gate, comp-which | comp-which index wiring @162eb94231: zero hot-path yaml parses, 1.07s->372ms, 25/25 byte-identical routing incl. exercised stale-path |
 | 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/missions/EXTERNAL/49FINANCIAL/execs... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/missions/EXTERNAL/49FINANCIAL/execsum.yaml org/missions/EXTERNAL/AL... | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/etfs_reports_email_csv_... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-grep | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-grep | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-grep | VERDICT |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/PFMG_TAXSMA.json --file or... | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/projects/PFMG_TAXSMA.json org/projects/TCKT_CENTER.json | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-grep --file infra/system/06... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-grep infra/system/06_current_state.json infra/system/06_cur... | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-grep infra/system/06_current_state.md infra/sy... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-grep | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/etfs-reports-orchestra... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py org/criti... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.8.0_AE_CloudComp/task_orders/safe-commit-F-read-over... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/provision-path-shims.sh | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/provision-path-shims.sh | VERDICT |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/provision-path-shims.sh | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/provision-path-shims.sh | VERDICT |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/provision-path-shims.sh --file o... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/provision-path-shims.sh org/tier0/ledger/LD-0344.md | VERDICT |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff portal | VERDICT |
+| 2026-07-29T0315Z | 0.8.0_AE_CloudComp | comp-grep x4 (O2 cells C/E/A/D) + comp-which x2 (fallback shapes) | O2 fix @6fef09fd45 independently VERIFIED behavior-grade; comp-which fallback healthy post-patch; RC-flip blast-radius fact routed |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
