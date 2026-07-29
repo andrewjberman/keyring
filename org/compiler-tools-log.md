@@ -27437,3 +27437,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-trigger | comp-trigger opal-smartx-ingestion-pipeline | PASS |
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T041304Z__0.0.0_AB_MSTR__0.0.0_... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T041304Z__0.0.0_AB_MSTR__0.0.0_... | PASS |
+| 2026-07-29 0415Z | 0.4.0_DE_ClientPlatform | comp-surface-check blocking (SEV1 ack, in-message) + provenance-read-guard PASS + ui-smoke x4 (forced-fail control caught census C6; hoverlast DOM oracle $1.95B) | trend field-read + stamps + carried idiom shipped f6c11812 (CTO-validated, COO D4 PASS); census C6/C7 amend 72c80472d5 |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff portal | VERDICT |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DE_ClientPlatform/logs... | PASS |
