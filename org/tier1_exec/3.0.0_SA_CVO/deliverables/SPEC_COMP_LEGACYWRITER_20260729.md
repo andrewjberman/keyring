@@ -65,6 +65,26 @@ entries, teardown-wave orders naming it). Classification: **CANONICAL-CANDIDATE 
 (superseded, retirement ordered or due) / ZOMBIE (trigger live, no sanctioned reader) /
 DIAGNOSTIC (ad-hoc, unscheduled) / UNRESOLVED**.
 
+## Phase 3b — THE EXERCISE COLUMN (folded per Andrew ~1655Z, from CTO base's 164909Z
+never-exercised-write-path concept + my 165039Z judgment)
+
+Every writer dossier carries an **EXERCISE VINTAGE**: first/last successful REAL write **since the
+writer's last MATERIAL CHANGE** (code deploy, role/grant change, target re-point, trigger change —
+a config change invalidates prior exercise evidence; the accrual bridge is the motivating incident:
+"validated" by a dry-run, first-ever PutObject was its production fire, AccessDenied). Verdict is
+**THREE-VALUED, hard requirement:**
+- `EXERCISED` — positive evidence of ≥1 real completed write (run-log success line, provenance
+  `written_by` stamp, or a new version in a single-writer location post-change), basis stated;
+- `NEVER` — positive evidence of zero (complete run history holding only dry-runs/crashes, or the
+  full declared write set showing no attributable version);
+- `UNDETERMINABLE` — no instrument covers the path. **Absence of instrument is never evidence;
+  rotated logs must read UNDETERMINABLE, not NEVER** — that distinction is what keeps the column
+  honest.
+Writers whose next SCHEDULED fire would be their first exercise get the flag + the date
+(comp-trigger, both systems). **Entry point `--never-exercised`** runs just this column over the
+declared-producer denominator (the three C-3 registries — never "all write sinks").
+**A dry-run validates planning; it cannot validate permission. A green half is not a green whole.**
+
 ## Phase 4 — VERDICT TABLE + the decommission hand-off (the streamlining)
 
 Per location: writer set + contest class + per-writer classification + **the recommended
@@ -81,6 +101,16 @@ its axis blindness; `rc=2` on failed retrieval (empty path resolution, unreadabl
 comp-grep convention. NOT an alarm, NOT scheduled — an on-demand lens (moratorium-compatible; if
 someone later wants it periodic, that is a separate Andrew-ask).
 
+**READER LINE (added on the 165112Z incident):** the verdict table also lists KNOWN READERS per
+location — producer-readers via comp-dataflow `origin` (SERVED-ORIGIN flags) + portal consumers via
+the portal census — with the population of each reader axis STATED. Motivating incident, same hour:
+`json/mdpf/*` was reported "no live consumer" from a PORTAL-scoped census while a gold producer
+imported it as a value source (committed code, `dim_mdpf_aggregate_aua_timeseries.py:558-571`) —
+its teardown is now blocked on a re-point, found only because one comp-dataflow origin call ran.
+**Suppression without reader removal is the same defect as suppression without writer removal, one
+direction over. A null is only as general as the population enumerated — the table names each
+axis's population.**
+
 ## Acceptance battery (stated before build)
 
 1. **The case-study regression:** pointed at `platinum/mdpf/cottonwood/aggregate-aua-timeseries`,
@@ -94,6 +124,13 @@ someone later wants it periodic, that is a separate Andrew-ask).
    report, both with trigger identity (the 15:45Z two-driver minute is the live fixture).
 4. **Negative control:** a single-writer healthy location reports SOLE with zero contest — the
    tool must be able to say "nothing wrong here" with its denominator, not manufacture findings.
+5. **Exercise-column controls (Phase 3b):** a known-exercised path reads EXERCISED with its
+   evidence cited (positive control); a fresh-deployed never-run fixture reads NEVER; **a path
+   whose run logs are deliberately hidden reads UNDETERMINABLE, not NEVER** — the control that
+   keeps the instrument honest.
+6. **Reader-line control:** pointed at `json/mdpf/*`, the table must surface the
+   `dim_mdpf_aggregate_aua_timeseries.py:567` producer-read (the consumer a portal-scoped census
+   structurally missed).
 
 ## Routing
 
