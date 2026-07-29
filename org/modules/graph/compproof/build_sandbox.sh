@@ -16,7 +16,13 @@
 # Usage: build_sandbox.sh [TEMPLATE_DIR]   (default: a fresh mktemp -d)  ->  prints TEMPLATE path.
 set -eu
 
-WS="/c/Users/AndrewBerman/Desktop/ajb_workspace"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+WS="$(cd "$SCRIPT_DIR/../../../.." && pwd)"   # <root>/org/modules/graph/compproof -> <root>
+# WAS: a hardcoded base-device path. THE ONE RULE: derive, never encode a site path.
+# Found 2026-07-29 by 0.0.0_AB_MSTR~Z on a RE-EXAMINATION of the ARCHIVE_OR_TEST bucket, after
+# I caught my own triage regex misfiling an ACTIVE file there. This one matched on the word
+# "sandbox" IN ITS OWN FILENAME -- it is live compproof tooling, invoked by spawn_solver.sh.
+# A classifier that reads a NAME will keep finding archives that are not archives.
 TEMPLATE="${1:-$(mktemp -d -t compproof_sandbox_XXXXXX)}"
 mkdir -p "$TEMPLATE"
 

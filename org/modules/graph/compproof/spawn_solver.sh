@@ -7,7 +7,11 @@
 # pgrep/pkill/flock/setsid). See AFFORDANCE_SPEC.md for the full mechanism.
 set -eu
 
-WS="/c/Users/AndrewBerman/Desktop/ajb_workspace"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+WS="$(cd "$SCRIPT_DIR/../../../.." && pwd)"   # <root>/org/modules/graph/compproof -> <root>
+# WAS: a hardcoded base-device path (THE ONE RULE). Same defect as build_sandbox.sh, which
+# this script invokes -- found by sweeping the MODULE after the first hit, rather than
+# fixing the one file the classifier happened to surface.
 CP="$WS/org/modules/graph/compproof"
 CASE="${1:?usage: spawn_solver.sh <case_id e.g. B-01> [sanitized_cwd]}"
 PAYLOAD="$CP/solver_view_${CASE}.txt"
