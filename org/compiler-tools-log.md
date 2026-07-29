@@ -27645,3 +27645,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/GRAPH_CODE_LOCATION_STANDARD.md docs/architecture/GRA... | PASS |
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/agentbus-sqs.sh --file .tools/sp... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff .tools/agentbus-sqs.sh .tools/spawn-agent.ps1 org/projects/OPAL_SQSCHAT... | VERDICT |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_AGENTBUS_PRD.md ... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_AGENTBUS_PRD.md org/projects/OPAL_SQSCHAT.json o... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_AGENTBUS_PRD.md ... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_AGENTBUS_PRD.md org/projects/OPAL_SQSCHAT.json o... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
