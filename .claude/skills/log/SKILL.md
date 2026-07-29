@@ -53,7 +53,8 @@ you're not certain of:
 ```bash
 git log --oneline --author="{your_serial}" --since="<window start>"   # your commits
 cat .comp-graph/.agent_context                                         # current TO context
-ls -t org/mcp/inbox/{your_serial}/read/ | head                        # only if MCP recall is fuzzy
+ls -t org/mcp/inbox/{base}/[~{lane}/]read/ | head   # only if MCP recall is fuzzy; lane = NESTED,
+                                                   # never inbox/{base}~{lane}/ (flat, unread by all)
 ```
 Plus (cite from context, verify only the uncertain ones): deploys/tags, artifacts verified,
 RAVC loops opened/closed, rulings/findings issued or received.
