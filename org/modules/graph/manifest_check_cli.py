@@ -30,6 +30,7 @@ Subcommands:
 from __future__ import annotations
 
 import argparse
+import copy as _copy
 import datetime as _dt
 import json
 import re
@@ -235,12 +236,41 @@ def _is_comment_line(stripped: str) -> bool:
 
 
 # ------------------------------------------------------------------------------------ load layer
+# PER-PROCESS YAML CACHE (3.0.0_SA_CVO 2026-07-28, Andrew-direct, /seams-validated).
+#
+# WHY: cProfile on the live module -- cmd_check on ONE file = 3.048s, of which
+# _completeness_invariants 2.728s (90%) and yaml.safe_load x12 = 2.683s (88%). The gate re-parsed
+# the same YAMLs a dozen times per file check. Same reparse tax measured on comp-which (10 parses,
+# ~97% of its runtime) -- a second instance of one class, not a one-off.
+#
+# WHY deepcopy AND NOT a bare cached reference -- THIS LINE IS LOAD-BEARING, NOT DEFENSIVE:
+# load_config() MUTATES what load_yaml returns (5 x setdefault at :254-265 below). Handing every
+# caller the same object would make those mutations shared state. The deepcopy preserves the
+# existing contract exactly: each caller still gets its OWN mutable dict. Measured: deepcopy 0.7ms
+# vs parse 95.5ms for the 133KB manifest, so the copy is not the cost.
+#
+# LIFETIME IS THE PROCESS -- and that is the correct scope here: commit_gate_runner is ONE process
+# per commit, so the cache spans every file in that commit (the compounding win) and dies with it.
+# THE ASSUMPTION THIS RESTS ON: no YAML the gate reads is REWRITTEN mid-run. True today (the gate
+# reads what it is handed and writes no YAML). If that ever changes, this cache serves a stale parse
+# silently -- the failure mode would be invisible, so change this deliberately, never incidentally.
+#
+# VALIDATED BEFORE LANDING (/seams 2340Z, all 3 axes PASS): parity harness ran the LIVE module at
+# its real path in both arms with ONLY caching differing -- stdout/stderr/exit-code BYTE-IDENTICAL
+# across 3 cases; load_config mutability probe confirmed independent objects + isolated mutation on
+# both arms. Measured 1.6x (1 file) -> 2.3x (3 files); it grows with commit size.
+_YAML_CACHE: dict[str, dict] = {}
+
+
 def load_yaml(path: Path) -> dict:
     if not path.exists():
         sys.stderr.write(f"ERROR: not found: {path}\n")
         sys.exit(2)
-    with path.open(encoding="utf-8") as fh:
-        return yaml.safe_load(fh) or {}
+    _key = str(path)
+    if _key not in _YAML_CACHE:
+        with path.open(encoding="utf-8") as fh:
+            _YAML_CACHE[_key] = yaml.safe_load(fh) or {}
+    return _copy.deepcopy(_YAML_CACHE[_key])
 
 
 def load_manifest() -> dict:
