@@ -57,6 +57,25 @@ Certification executes from ~15:05Z (timer task brjo17kej: 15:05 / 15:50 / 16:20
 - Adjacent hard-dated flag (do not lose): **Aug-1 `etfs-reports-monthly-run` is a SCHEDULER entry**
   — a `list-rules` check reads it as unscheduled with full confidence.
 
+## EVIDENCE COLLECTED (running log; certification writes from here)
+
+**CHAIN LEG @15:05Z tick — EVENT PATH EXERCISED, ZERO HANDS, SELF-IDENTIFIED. CLEAN.**
+- Marker ADVANCED (listing-verified, not Head): `opal-data-inf/gold/meta/pipeline-complete.json`
+  135 B, ETag `1b39d06d5d54a919c7a3bc0f43d28a17`, LastModified 2026-07-29T15:02:30Z (baseline
+  5ff381b4 / 07-28T15:04:07Z — AE~A's discriminator satisfied).
+- Trigger identity FROM THE RUN'S OWN LOG (PIN-4(iii), the acceptance step that reads the trigger):
+  RequestId 421dd1ec, event `"source": "aws.s3"`, detail-type "Object Created", same bucket/key,
+  **etag in the event == the landed marker's etag**, event time 15:02:29Z. NOT aws.events — the run
+  positively self-identifies as EVENT-FIRED, which is exactly what the pinned D2-as-scheduled FAIL
+  + event-path claim predict. No anomaly.
+- Convergence gate reasoning logged per-source: inflection fresh as_of 07-29; 49financial
+  latest_partition 07-28 = trading_days_behind 1 (≤2) → FRESH BY TRADING CALENDAR (NEVER#1
+  implemented correctly in production, worth naming in the cert); custody_source=schwab (the 07-24
+  deprecation honored); all_fresh=true, stale_partners=[].
+- Dispatch: runner i-02448edb624a7a7cf, SSM 34f8056f-25fa-4ff4-ad47-c6ef3b5a301c, run_date
+  2026-07-29, detached; telemetry s3://opal-data-mdpf/telemetry/mdpf-daily-runner/. Chain
+  COMPLETION (gold vintages) checked at the 15:50/16:20 ticks — dispatch is not landing.
+
 ## Sequenced after certification
 
 comp-grep rc=2 flip (CTO GO 031744Z; I land, 0.8.0_AE verifies exit path — 3 fallback-exercisers,
