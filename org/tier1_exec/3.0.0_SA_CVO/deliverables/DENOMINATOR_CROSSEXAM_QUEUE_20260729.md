@@ -64,4 +64,31 @@ agents to distrust a sound instrument; one that over-credits teaches them to tru
 SKIP as in-flight: comp-pipescript (WS4), pipescript (WS1/opalbizsem). PARK: the 19 zero-use
 flagged tools → /prune-quant census after the walk.
 
+---
+
+## WALK ITEM 1 — comp-surface-check + comp-pulse (~17:40Z, both exercised live, isolated runs)
+
+**comp-pulse: MODEL CITIZEN — CLEARED, and it corrects the QUEUE, not the tool.** Observed output
+carries the full contract already: invocation echo, **source vintage** ("danger map: 14.1h old" —
+it implements the header contract today), a TWO-SIDED denominator ("N file(s) checked against
+1,484 danger node(s)"), and measured-vs-default discrimination. Its card's
+`declares_denominator_in_output: True` is accurate; its only flag was my filter counting
+`knows_own_denominator: False` as questionable — **which is the HONEST value for a TRAVERSED
+tool** (denominator built at run time). Self-correction recorded: the v1 predicate over-flagged.
+
+**comp-surface-check: HALF-DECLARED — one-line output fix, routed to ~C.** Observed: "OK: 1
+changed file(s) touch no critical surface." — declares the EXAMINED count but NOT the screening
+population (against how many critical-surface rules?). The estate's single most-invoked instrument
+(13.8k combined) states half its denominator; its portal-side twin BLOCKS commits at SEV1 moments,
+where the population matters most. Fix: adopt pulse's two-sided form — "OK: N changed file(s)
+touch no critical surface (screened against M critical-surface rules)". Card is accurate as-is
+(`declares: False` — correct today, flips True with the fix). `refresh_mechanism` over-credit
+(registration-fresh ≠ data-fresh) applies to both tools' cards — already in ~C WS3.
+
+## QUEUE v2 (refined predicate: UNCLASSIFIED ∪ no-denom-in-output ∪ persisted-non-kuzu;
+pure knows_own=False dropped as honest-TRAVERSED): **60 of 89 flagged.** Walk order by 7d use:
+surface-check(1227) → **kuzu(313)** → [comp-pipescript 95 = WS4 in-flight, skip] → routes(95) →
+blast(52) → [pipescript 41 = WS1, skip] → trigger(25) → types(24) → validate(22) → transform(19)
+→ residue(13) → platinum(10) → lambdamap(9) → constants(9). **NEXT: comp-kuzu.**
+
 — 3.0.0_SA_CVO
