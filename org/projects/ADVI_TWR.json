@@ -1,0 +1,23 @@
+{
+  "project_code": "ADVI_TWR",
+  "macro_code": "ADVI",
+  "name": "fact_account_return -- the BD-replacement total-return build (365-day calendar TWR, gross + net, daily, Account365 method)",
+  "description": "REGISTRY CARRIER for the largest hole in the mission register (PORTAL.ADVISOR_INTELLIGENCE hole #1: CRO research DELIVERED, build HELD at CTO registration, and a TWR keyword search across all 281 project JSONs returned ZERO active projects). THE CONVERGENCE FACT (CRO RECON_REGISTER 'Downstream', CTO-named 'four names, one fact'): fact_account_return IS BD-replacement Phase-1 Tier-A == COO~A's total-return proposal == the 49F-runner fields-not-scripts field-emit == the OPAL_CONSOLIDATION serve -- ONE fact, ONE owner, registered under ONE code precisely so the four threads cannot fork. METHOD: pinned to Account365 per Andrew's defensibility steer (2026-07-21 ~0048Z verbatim 'I like the BD approach because its defensible to refer to'), under the standing METHOD-vs-NUMBERS split doctrine (CRO charter README s.2.5). RESEARCH BASIS: RCN-0001 + org/tier1_exec/4.0.0_SA_CRO/briefs/MASTER_BLACK_DIAMOND_ANALYSIS.md (the two-surface BD map; Opal ingests via Surface A DataMining today, consumes none of Surface B). REGISTRATION TIMING: the hold's stated precondition was 'post-MDPF-flip' -- the flip landed 2026-07-29 (portal reads platinum/mdpf canonical, 4 promotes), so this registration DISCHARGES the D6 precondition on time, not late. WHAT THIS REGISTRATION IS NOT: a build order. The build + serve remain GATED on (i) CTO ratification of final grain/columns, and (ii) the two OPEN-AT-ANDREW decisions: D1 Account365 confirm, D2 classification build-vs-license. SHARED-FRONTIER GUARD: the per-runner silver-source enumeration is ONE artifact shared with PORTAL.MODEL_PORTFOLIOS.O3 and COO is building it -- this project consumes that artifact and MUST NOT commission a second (mission-register directive, preserved here so it survives staffing changes).",
+  "status": "active",
+  "phase": "REGISTERED 2026-07-29 by CTO (infra-directive registration sweep; discharges the D6 hold-at-registration named in RECON_REGISTER.md:105-106). Build NOT started, correctly: gated on grain/columns ratification (CTO) + D1/D2 (Andrew). Next concrete steps when gates open: grain/columns spec from the COO~A proposal + CRO Tier-A research, ratified by CTO; then decomposition (the one-fact-one-owner rule picks a single executing lane).",
+  "hazards": [
+    "FORK HAZARD, the reason this code exists: four live threads describe this same fact. Any thread that starts emitting account returns under another name re-creates the fork this registration closes -- new return-emitting work cites ADVI_TWR or stops.",
+    "Do not commission a second per-runner silver-source enumeration -- COO's O3 artifact is the one input (shared with MODEL_PORTFOLIOS); duplicating it is the exact two-instruments-one-quantity drift class.",
+    "METHOD-vs-NUMBERS: Account365 is the METHOD pin; matching BD's NUMBERS is explicitly not the acceptance bar (BD's own outputs carry their data defects -- CRO s.9 documents where sources disagree). Acceptance is method-faithful computation on OUR silver, not parity with a vendor artifact."
+  ],
+  "owner": "1.0.0_SA_CTO",
+  "created": "2026-07-29",
+  "created_by": "1.0.0_SA_CTO",
+  "grounding": [
+    "org/tier1_exec/4.0.0_SA_CRO/RECON_REGISTER.md:95-106 (convergence, method pin, hold terms)",
+    "org/tier1_exec/4.0.0_SA_CRO/briefs/MASTER_BLACK_DIAMOND_ANALYSIS.md (RCN-0001 master brief)",
+    "org/missions/MISSIONS.md PORTAL.ADVISOR_INTELLIGENCE hole #1 (anchor 1308a5ced4; TWR search 5 hits all terminal / 0 active)"
+  ],
+  "verification_bar": "Build-phase bar to be ratified with grain/columns. Registration-phase bar (met): the code exists, the four converging threads are named in one place, the gates and their holders are explicit, and a TWR search across project JSONs now returns an ACTIVE carrier.",
+  "blocking": "Grain/columns ratification (CTO) + D1 Account365 confirm and D2 build-vs-license (Andrew). COO O3 artifact is an input dependency, in progress."
+}
