@@ -663,6 +663,268 @@ def retirecond_entry(bucket: str, key: str, entry: dict) -> dict:
 
 
 # =================================================================================================
+# ENRICHMENT AXES -- the deep dossier (Andrew-direct 2026-07-29: "go way, way harder ... really
+# analyze these items from all sides, check their last invocation, run comp-heat and comp-dups on
+# them, we want to know everything about these surfaces")
+# =================================================================================================
+# THREE INDEPENDENT INSTRUMENTS, JOINED -- still zero new scanners. Each is run ONCE and joined,
+# never shelled per-surface (which would be thousands of invocations for the same answer).
+#
+#   comp-heat freshness --json   -> CODE recency per producer FILE (git write-history)
+#   comp-dups --json             -> EXACT-DUP twins per producer FILE (is this a copy?)
+#   comp-debris --json           -> LAST INVOCATION per RESOURCE (lambda / bucket)
+#
+# EACH AXIS ANSWERS A DIFFERENT QUESTION AND NONE OF THEM ALONE MEANS DEAD:
+#   cold CODE      = nobody has EDITED the producer. A correct, finished producer is cold.
+#   dup CODE       = two files carry the same body. Says nothing about which one RUNS.
+#   dormant RESOURCE = the bucket/lambda has not been INVOKED. The strongest signal, and the one
+#                    with the weakest coverage -- comp-debris' own row declares
+#                    signal_basis "storage-delta(write-only; READ-UNKNOWN)".
+#
+# >> THE JOIN IS THE POINT. A surface that is cold AND duplicated AND dormant AND has no reader is
+# >> a different claim from any one of those. A single axis produces a suspicion; the intersection
+# >> produces a candidate. Neither produces a kill order. <<
+#
+# A MISSING INPUT IS "UNAVAILABLE", NEVER A CLEAN COLUMN. If an axis's JSON was not supplied, every
+# surface reads UNAVAILABLE on that axis and the header says so -- absence of an instrument is not
+# evidence about the surface.
+
+_AXES = ("heat", "dups", "debris")
+
+
+def _load_json(path):
+    if not path:
+        return None, "not supplied"
+    p = Path(path)
+    if not p.is_file():
+        return None, f"absent at {p}"
+    try:
+        return json.loads(p.read_text(encoding="utf-8")), _stat_mtime_utc(p)
+    except (OSError, ValueError) as e:
+        return None, f"unreadable ({type(e).__name__}: {e})"
+
+
+def load_heat(path):
+    """-> ({relpath: {band, age_days}}, vintage_or_reason)."""
+    blob, meta = _load_json(path)
+    if blob is None:
+        return {}, meta
+    out = {}
+    for row in blob.get("paths", []):
+        rp = str(row.get("path", "")).replace("\\", "/")
+        if rp:
+            out[rp] = {"band": row.get("band"), "age_days": row.get("age_days")}
+    return out, f"{meta} ({len(out)} path(s))"
+
+
+def load_dups(path):
+    """-> ({relpath: [twin, ...]}, vintage). EXACT body dups only -- the unambiguous half."""
+    blob, meta = _load_json(path)
+    if blob is None:
+        return {}, meta
+    out = {}
+    for grp in (blob.get("content", {}) or {}).get("exact_dups", []) or []:
+        members = [str(m).replace("\\", "/") for m in grp.get("members", [])]
+        for m in members:
+            out[m] = [x for x in members if x != m]
+    return out, f"{meta} ({len(out)} file(s) in an exact-dup group)"
+
+
+def load_debris(path):
+    """-> ({resource_name: row}, vintage). Invocation/dormancy per cloud resource."""
+    blob, meta = _load_json(path)
+    if blob is None:
+        return {}, meta
+    out = {}
+    for bucketed in blob.values():
+        if isinstance(bucketed, list):
+            for row in bucketed:
+                if isinstance(row, dict) and row.get("name"):
+                    out[row["name"]] = row
+    return out, f"{meta} ({len(out)} resource(s))"
+
+
+def dossier(bucket, key, entry, heat, dups, debris):
+    """Everything this estate can say about ONE (bucket,key) surface."""
+    writers = entry["writers"]
+    readers = entry["readers"]
+    wfiles = sorted({h.file for h in writers})
+
+    prod = []
+    for f in wfiles:
+        h = heat.get(f)
+        prod.append({
+            "file": f,
+            "code_band": (h or {}).get("band", "UNAVAILABLE"),
+            "code_age_days": (h or {}).get("age_days"),
+            "exact_dup_of": dups.get(f, []),
+        })
+
+    d = debris.get(bucket) if bucket != UNRESOLVED_BUCKET else None
+    invocation = {
+        "resource": bucket,
+        "band": (d or {}).get("band", "UNAVAILABLE"),
+        "last_invoked": (d or {}).get("last_invoked"),
+        "dormant_days": (d or {}).get("dormant_days"),
+        "signal_basis": (d or {}).get("signal_basis"),
+        "dormancy_basis": (d or {}).get("dormancy_basis"),
+    }
+
+    silent = [r for r in readers if r.removal == "silent-default"]
+    signals, score = [], 0
+
+    # AN AXIS ONLY SCORES WHEN IT WAS ACTUALLY EVALUABLE.
+    # The first version of this scorer awarded 5/5 to UNRESOLVED-BUCKET surfaces and floated them to
+    # the TOP of the list -- but an unresolved bucket means the invocation axis could not even be
+    # ATTEMPTED. That ranked the LEAST KNOWABLE surfaces as the MOST dead, which is the precise
+    # inversion a retirement list must never make: the items a reviewer can verify least would have
+    # been the ones handed to them first. Blindness is not evidence, and it must not be scored like
+    # evidence. So each axis reports whether it was evaluable, the score is stated OVER ITS
+    # DENOMINATOR, and ties break toward the surface with MORE axes actually measured.
+    evaluable, blind = 0, []
+
+    # reader axis -- always evaluable (the population is this scan's, and it is printed)
+    evaluable += 1
+    if writers and not readers:
+        signals.append("NO-READER-IN-POPULATION")
+        score += 3
+
+    # code-heat axis
+    if prod and all(p["code_band"] not in (None, "UNAVAILABLE") for p in prod):
+        evaluable += 1
+        if all(p["code_band"] == "cold" for p in prod):
+            signals.append("ALL-PRODUCER-CODE-COLD")
+            score += 2
+    else:
+        blind.append("code-heat")
+
+    # dup axis -- evaluable whenever the dups corpus loaded at all
+    if dups:
+        evaluable += 1
+        if any(p["exact_dup_of"] for p in prod):
+            signals.append("PRODUCER-IS-AN-EXACT-DUP")
+            score += 2
+    else:
+        blind.append("exact-dup")
+
+    # invocation axis -- the strongest signal, and the one most often blind
+    if bucket == UNRESOLVED_BUCKET:
+        blind.append("invocation(bucket-unresolved)")
+        signals.append("BUCKET-UNRESOLVED")
+    elif invocation["band"] in (None, "UNAVAILABLE"):
+        blind.append("invocation(resource-not-in-ledger)")
+    else:
+        evaluable += 1
+        if str(invocation["band"]).startswith("COLD"):
+            signals.append("RESOURCE-DORMANT")
+            score += 3
+
+    if silent:
+        signals.append("SILENT-DEFAULT-READER")  # raises RISK of retiring, not likelihood of death
+
+    return {
+        "location": f"s3://{bucket}/{key}",
+        "bucket": bucket,
+        "key": key,
+        "contest": contest_class(entry, bucket),
+        "producers": prod,
+        "readers": [
+            {"site": f"{r.file}:{r.line}", "removal_behaviour": r.removal or "unknown"}
+            for r in readers
+        ],
+        "probes": [f"{h.file}:{h.line}" for h in entry["probes"]],
+        "invocation": invocation,
+        "signals": signals,
+        "deadness_score": score,
+        "axes_evaluable": evaluable,
+        "axes_blind": blind,
+        "retire_risk": "HIGH-SILENT" if silent else ("LOW" if not readers else "LOUD"),
+    }
+
+
+def cmd_census(args) -> int:
+    heat, hv = load_heat(getattr(args, "heat_json", None))
+    dups, dv = load_dups(getattr(args, "dups_json", None))
+    debris, bv = load_debris(getattr(args, "debris_json", None))
+
+    print()
+    print("ENRICHMENT AXES -- vintage stated, missing means UNAVAILABLE not clean")
+    print(f"  comp-heat   (producer CODE recency) : {hv}")
+    print(f"  comp-dups   (exact-dup twins)       : {dv}")
+    print(f"  comp-debris (RESOURCE invocation)   : {bv}")
+    for name, loaded in (("heat", heat), ("dups", dups), ("debris", debris)):
+        if not loaded:
+            print(f"  *** {name.upper()} UNAVAILABLE -- every surface reads UNAVAILABLE on that axis.")
+            print("  *** That is a gap in THIS RUN's coverage, never a statement about the surfaces.")
+
+    st = static_axis()
+    locs = build_locations(st["hits"])
+    rows = [dossier(b, k, e, heat, dups, debris) for (b, k), e in locs.items() if e["writers"]]
+    # Rank by score, then by HOW MANY AXES ACTUALLY MEASURED IT. A 5 confirmed by four live axes
+    # outranks a 5 where two axes were blind -- the reviewer's time goes to what is verifiable.
+    rows.sort(key=lambda r: (-r["deadness_score"], -r["axes_evaluable"], r["location"]))
+
+    print()
+    print("PHASE 5 -- WRITE-SURFACE CENSUS WITH DOSSIERS")
+    print(f"  {len(rows)} written surface(s) of {len(locs)} location(s); {st['examined']} file(s) scanned")
+    band = {}
+    for r in rows:
+        band[r["deadness_score"]] = band.get(r["deadness_score"], 0) + 1
+    print("  deadness-score distribution (higher = more independent signals agree):")
+    for sc in sorted(band, reverse=True):
+        print(f"    score {sc}: {band[sc]} surface(s)")
+    print(f"  SILENT-DEFAULT readers present on: {sum(1 for r in rows if r['retire_risk']=='HIGH-SILENT')}")
+
+    top = [r for r in rows if r["deadness_score"] >= max(1, args.min_score)]
+    print()
+    print(f"  showing {min(len(top), args.top)} of {len(top)} surface(s) at score >= {args.min_score}")
+    for r in top[: args.top]:
+        print()
+        print(f"  [{r['deadness_score']}] {r['location']}")
+        print(f"      signals   : {', '.join(r['signals']) or 'none'}")
+        print(f"      contest   : {r['contest']}   retire-risk: {r['retire_risk']}"
+              f"   axes measured: {r['axes_evaluable']}/4"
+              + (f"   BLIND: {', '.join(r['axes_blind'])}" if r["axes_blind"] else ""))
+        for p in r["producers"]:
+            dup = f"  EXACT-DUP-OF {', '.join(p['exact_dup_of'])}" if p["exact_dup_of"] else ""
+            print(f"      producer  : {p['file']}  code={p['code_band']}"
+                  f"({p['code_age_days']}d){dup}")
+        inv = r["invocation"]
+        print(f"      invocation: BUCKET-GRAIN {inv['resource']} band={inv['band']} "
+              f"last={inv['last_invoked']} dormant={inv['dormant_days']}")
+        if inv["band"] not in (None, "UNAVAILABLE"):
+            print("                  ^ this bands the BUCKET, NOT this key. A HOT bucket says only")
+            print("                    that SOMETHING in it moved -- never that THIS key did.")
+        if inv["signal_basis"]:
+            print(f"                  basis={inv['signal_basis']} / {inv['dormancy_basis']}")
+        for rd in r["readers"]:
+            print(f"      reader    : {rd['site']}  removal={rd['removal_behaviour']}")
+
+    print()
+    print("  READ THIS BEFORE ANY LINE ABOVE BECOMES A RETIRE:")
+    print("  A HIGH SCORE IS AGREEMENT BETWEEN INDEPENDENT AXES, NOT A DEATH CERTIFICATE. Cold CODE")
+    print("  means nobody EDITED the producer -- a finished producer is cold. An exact dup says")
+    print("  nothing about which copy RUNS. comp-debris' own rows declare their basis as")
+    print("  write-only with READ-UNKNOWN. And a SILENT-DEFAULT reader makes a surface MORE")
+    print("  dangerous to retire, not less -- it raises retire-risk while lowering nothing.")
+    print("  AND READ THE AXES-MEASURED COLUMN: a score is only as good as its denominator. A high")
+    print("  score with 2/4 axes blind is a WEAKER claim than a lower score measured on all four.")
+    print()
+    print("  GRAIN MISMATCH, stated because it is the easiest line here to over-read: the invocation")
+    print("  axis is BUCKET-GRAIN. comp-debris bands a bucket or a lambda, not an individual key.")
+    print("  So `band=HOT` beside a key means the BUCKET saw activity -- it is NOT evidence that")
+    print("  this key was written, and a dormant-key-inside-a-hot-bucket is exactly the zombie")
+    print("  shape this tool hunts. KEY-grain liveness needs comp-clobber --live or a head-object")
+    print("  on the key itself; neither is run here.")
+
+    if args.as_json:
+        print()
+        print(json.dumps({"surfaces": rows, "axes": {"heat": hv, "dups": dv, "debris": bv},
+                          "examined_files": st["examined"]}, indent=2))
+    return 0
+
+
+# =================================================================================================
 # SELF-TEST -- the live-fixture battery (spec §Acceptance, COO §165733Z)
 # =================================================================================================
 
@@ -920,6 +1182,16 @@ def main(argv=None) -> int:
     ap.add_argument("target", nargs="?", help="artifact key substring, bucket, or pipeline name")
     ap.add_argument("--json", action="store_true", dest="as_json")
     ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--census", action="store_true",
+                    help="full write-surface census with deep dossiers (heat x dups x invocation)")
+    ap.add_argument("--heat-json", dest="heat_json", metavar="PATH",
+                    help="comp-heat freshness --json output (producer CODE recency)")
+    ap.add_argument("--dups-json", dest="dups_json", metavar="PATH",
+                    help="comp-dups --json output (exact-dup twins)")
+    ap.add_argument("--debris-json", dest="debris_json", metavar="PATH",
+                    help="comp-debris --json output (RESOURCE last-invocation / dormancy)")
+    ap.add_argument("--top", type=int, default=25, help="dossiers to print (default 25)")
+    ap.add_argument("--min-score", type=int, default=3, help="minimum deadness score to show")
     ap.add_argument("--require-live-substrate", action="store_true",
                     help="Phase 0 REFUSES (rc=2) unless the canonical graph substrate is fresh")
     args = ap.parse_args(argv)
@@ -930,6 +1202,8 @@ def main(argv=None) -> int:
 
     if args.self_test:
         return self_test()
+    if args.census:
+        return cmd_census(args)
     return run_report(args.target, args.as_json, args.require_live_substrate)
 
 
