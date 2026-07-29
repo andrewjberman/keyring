@@ -18,12 +18,28 @@ signature). Hours of ad-hoc composition that this tool makes one invocation.
 `comp-clobber --live` (observed) × `comp-heat`+git (dossier). The value is the JOIN + the verdict
 table; every primitive already exists. Estimated build: wiring + output, not new detection.
 
-## Phase 1 — PATH RESOLUTION (reuse pipescript/graph)
+## Phase 0 — SUBSTRATE COVERAGE PRECONDITION (added post-verification, Andrew's challenge)
+
+**Measured 2026-07-29:** `pipescript` (the named-thread traversal — distinct tool from
+`comp-pipescript`, both verified on disk) HAS an mdpf thread with full path schema
+(trigger→runner→feeders→served→frontend, DDB included) — **but its data is a resolver SNAPSHOT
+frozen 2026-06-15 (44d), and its own banner names the exhibit: the mdpf platinum key.** It serves
+the underscore TWIN as "the primary served rollup, LIVE fresh" and lists a retired
+freshness-checker as a producer. **A stale estate map actively DEFENDS zombies — it is a
+legacy-writer preservation mechanism.** Therefore: the tool REFUSES to run (rc=2) if its path
+substrate fails a freshness check — comp-kuzu provenance header must read CURRENT; the resolver
+snapshot is legal only as the NAMING layer, never for load-bearing keys. `comp-clobber` coverage
+is versioning-dependent: declared per-target (versioned buckets covered; DDB + unversioned =
+UNVERIFIABLE-BY-THIS-INSTRUMENT).
+
+## Phase 1 — PATH RESOLUTION (comp-kuzu canonical + pipescript thread naming)
 
 Input: a served artifact (bucket/key or prefix) or a pipeline name. Walk the serving path BACKWARD
-from serve → platinum → gold → silver → bronze, enumerating every LOCATION (stage output: S3
-key/prefix, DDB table) on the path. Output: the ordered location list — **each location is a
-potential clobber site; multi-stage is why single-key tools miss the war.**
+from serve → platinum → gold → silver → bronze via the **auto-refreshing canonical graph
+(comp-kuzu, HEAD-advance refresh)** — pipescript's thread definitions supply the human names, the
+graph supplies the live keys. Enumerate every LOCATION (stage output: S3 key/prefix, DDB table) on
+the path. Output: the ordered location list — **each location is a potential clobber site;
+multi-stage is why single-key tools miss the war.**
 
 ## Phase 2 — WRITER CENSUS per location, THREE INDEPENDENT AXES (the case study is the proof no
 single axis suffices)
