@@ -22,7 +22,12 @@
 
 set -uo pipefail
 
-WS="/c/Users/AndrewBerman/Desktop/ajb_workspace"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WS="$(dirname "$SCRIPT_DIR")"   # <root>/.tools -> <root>; THE ONE RULE: derive, never encode
+# WAS: a hardcoded base-device path. Found 2026-07-29 by 0.0.0_AB_MSTR~Z AFTER declaring the
+# ACTIVE_TOOLING tier closed 12/12 -- my own triage regex `/test` matched ".tools/test-..." and
+# filed this ACTIVE safe-commit harness as ARCHIVE_OR_TEST. A path-segment pattern silently
+# matched a FILENAME prefix, and the misfiling is what made the "closed" claim wrong.
 SC="$WS/.tools/safe-commit.sh"
 LIB="$WS/.tools/commit_gate_lib.sh"
 AUTHOR='0.7.0_AE_CloudOps <0.7.0_AE_CloudOps@opal.agent>'
