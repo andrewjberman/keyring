@@ -27713,3 +27713,12 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-trigger | comp-trigger mdpf | PASS |
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-trigger | comp-trigger opal-assets-daily-emitter | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CRLF_AND_COMPLOG_ROOTCAUSE_PRO... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CRLF_AND_COMPLOG_ROOTCAUSE_PRO... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CRLF_AND_COMPLOG_ROOTCAUSE_PRO... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
