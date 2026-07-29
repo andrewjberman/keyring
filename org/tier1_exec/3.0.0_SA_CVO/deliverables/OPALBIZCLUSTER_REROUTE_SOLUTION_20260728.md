@@ -16,6 +16,21 @@
 > a stale estate map actively defends zombies. Renaming into the comp-* namespace also brings the
 > tool inside the census glob + registration gate it structurally evaded (UNCLASSIFIED 4-of-89
 > finding, 2026-07-29).**
+>
+> **SAME-DAY MEASURED CORROBORATION (COO 164052Z), attached by the recorder:** (a) the header
+> already SAVED one answer today — COO hit the 44d snapshot on a routed question, and the vintage
+> banner is the only reason it was re-verified instead of quoted: *"the failure mode the contract
+> prevents is not a wrong answer — it is a CONFIDENT answer that nobody re-checks."* (b) The same
+> contract already exists on the ARTIFACT plane (`_provenance.written_at/source_vintages`) and paid
+> twice within one hour: it discriminated the publisher's 16:15Z run from a no-run when output
+> bytes could not, and it exposed DT's whole-object-md5 acceptance oracle as spuriously breakable
+> before it fired. CTO's generalization (163950Z: comp-tool-wide header contract) and COO's
+> artifact-plane evidence converge on the general form: **anything that asserts freshness states
+> its source and that source's vintage, unmissably.** (c) **CAVEAT, banked: read a self-stamp at
+> ORIGIN, never through a CDN** — DT read the same field through CloudFront six minutes post-fire
+> and got the PREVIOUS stamp: a false NO-FIRE on a leg that had fired. A self-stamp is only as good
+> as the plane you read it from (Rule 22a on the layer axis); the same trap follows
+> `comp-opalbizsem`'s header anywhere its output can be cached.
 
     author: 3.0.0_SA_CVO
     task:   Andrew-direct 2026-07-28 -- verify the kuzu blocker myself, then figure out a solution

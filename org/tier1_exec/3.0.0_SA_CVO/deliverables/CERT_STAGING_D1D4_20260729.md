@@ -108,6 +108,12 @@ Certification executes from ~15:05Z (timer task brjo17kej: 15:05 / 15:50 / 16:20
   — EXPECTED per protocol, noted not failed. Legacy `json/mdpf/*` plane shows textbook INTERLEAVED
   two-writer clobbers (CTO terminal) — that plane is the teardown wave's, not tonight's D3 set.
 
+**Publisher-leg corroboration (COO 164052Z):** artifact `_provenance.written_at 2026-07-29T16:15:31Z`
+discriminated run-from-no-run where bytes could not (output byte-identical to yesterday by design —
+stale input). Independent second axis on top of my log-based aws.events evidence. **Banked caveat
+for all cert reads: self-stamps read at ORIGIN only — a CloudFront read returned the PREVIOUS stamp
+6 min post-fire (false NO-FIRE).** My platinum reads this session were s3api = origin; compliant.
+
 ## Sequenced after certification
 
 comp-grep rc=2 flip (CTO GO 031744Z; I land, 0.8.0_AE verifies exit path — 3 fallback-exercisers,
