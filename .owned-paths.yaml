@@ -345,6 +345,21 @@ lanes:
       - 0.2.0_DT_PortfolioAnalytics
     description: "opal-assets bd49f dim-convert deploy lane -- full AE set PRESERVED + 0.2.0_DT, scoped to the ONE converter (lambda source dir + its dedicated TF file), per CTO arch-gate 20260717T170500Z ('APPROVED... permanent, scoped to the bd49f converter dir only'; premise: Andrew's standing routing of BD/tax-pt2 pod work at DT -- second Andrew-direct tasking there 07-17). NOT an opal-assets-wide grant: the shared opal-assets CHANGELOG.json + other converters stay AE-only (CLOUD_OPS_OR_ETL); if the CI deploy-record write frictions on the shared CHANGELOG, that is a surfaced seam, not a silent widen. Closes the 4-override cluster 2026-07-17 16:33-16:56Z (audited, clean three-defect cure @opal-assets-v0.26.0). Grantor-landed by 2.0.0_SA_COO (SoD). Mirrors DATA_REFRESH_DEPLOY / YANG_PIPELINE_DEPLOY."
 
+  PUBLIC_DATA_ROUTER_DEPLOY:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 0.2.0_DT_PortfolioAnalytics
+    description: "public-data-router edge deploy lane -- full AE CLOUD_OPS_OR_ETL set PRESERVED verbatim (no AE regression) + 0.2.0_DT_PortfolioAnalytics, SCOPED to infra/aws/lambda-edge/public-data-router/** ONLY. NOT a blanket lambda-edge grant: the other edge functions stay AE-only (CLOUD_OPS_OR_ETL). Basis: CTO WO-3 dispatch 234425Z names the edge router as DT's surface; CTO GO 005733Z orders the MDPF consumer re-point deploy; Andrew-direct 2026-07-29 ~0058Z 'I do not want to wait to tomorrow to repoint'; LD-0338 records 0.2.0_DT as the live portal-promote lane. FOURTH instance of the identical DT-enumeration gap (YANG_PIPELINE_DEPLOY, DATA_REFRESH_DEPLOY, BD49F_CONVERT_DEPLOY) -- each of the prior three began with an audited override and closed the lane afterward; this one is grantor-landed BEFORE the commit so the record carries zero overrides. A repeat override for a standing role is a coverage gap, not an exception -- the recurrence is the signal. If record-terraform-deploy frictions on infra/aws/terraform/portal-auth/CHANGELOG.json, that is a SURFACED SEAM to route back, not a silent widen. Grantor-landed by 2.0.0_SA_COO (SoD: the grantee does not commit its own grant); CTO arch-gate cc'd. Mirrors DATA_REFRESH_DEPLOY / BD49F_CONVERT_DEPLOY / YANG_PIPELINE_DEPLOY."
+
   TIER0_LAW:
     permitted_agents: []
     description: "Tier-0 governance law -- Constitution, Stakes Matrix, Directives. NO agent; Andrew-only (human commit). Constitution Art. III. The owned-paths hook fails OPEN for a no-serial human committer (owned-paths-check.sh lines 67-72: GIT_AUTHOR_NAME unset -> skip), so Andrew commits the law docs unimpeded while any agent serial hits the empty permitted_agents and is blocked. Added 2026-05-22 by COO per Andrew directive (Tier-0 framework)."
@@ -1383,6 +1398,10 @@ paths:
   "infra/aws/lambda/data_refresh/**":
     lane: DATA_REFRESH_DEPLOY
     note: "data_refresh Lambda source -- full AE set preserved + DT 0.2.0 (sovereign-delegate DT holding the CTO-issued TO authority on this Lambda; deployed BE01 v2.3.0 under audited override 2026-07-17). Longest-match overrides infra/aws/** AE-only. COO grantor-landed on CTO arch-gate pass 20260717T163706Z; mirrors YANG_PIPELINE_DEPLOY."
+
+  "infra/aws/lambda-edge/public-data-router/**":
+    lane: PUBLIC_DATA_ROUTER_DEPLOY
+    note: "public-data-router edge function source -- full AE set PRESERVED + DT 0.2.0 (the live portal-promote lane; CTO WO-3 names this router as DT's surface, GO 005733Z, Andrew-direct repoint-tonight). Longest-match overrides infra/aws/** AE-only. SCOPED to this one edge function: the other lambda-edge functions remain CLOUD_OPS_OR_ETL. COO grantor-landed 2026-07-29 (SoD); CTO arch-gate cc'd."
 
   "infra/aws/lambda/ci/lambda-source-map.json":
     lane: YANG_PIPELINE_DEPLOY
