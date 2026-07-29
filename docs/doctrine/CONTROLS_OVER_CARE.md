@@ -341,6 +341,37 @@ artifact that had been sitting in the bucket, unread, for two weeks.)*
 right — and "internally consistent" is exactly what a corrupted pipeline looks like from the inside.**
 **Never lead a co-sign with conservation. State it, then state what it CANNOT see.**
 
+**COROLLARY — AN AGGREGATE IS NEVER GRADED ON ITS TOTAL ALONE; EVERY CONSTITUENT SERIES IS DIFFED**
+(2026-07-28/29, three live instances in ~24h, two of them on a client-facing surface).
+
+> # **A CLEAN HEADLINE OVER TWO OFFSETTING MOVES IS NOT A CLEAN RESULT — IT IS TWO DEFECTS THAT FOUND EACH OTHER.**
+
+The section above prescribes the remedy for a self-comparing invariant: **diff against a PRIOR VINTAGE.** This
+is the failure mode of that remedy performed lazily. **A prior-vintage diff taken on the TOTAL is itself
+scalar-shaped** (III-g) — it collapses the population it summarised, so it cannot say which constituents moved,
+and it is *exactly* silent when two of them moved in opposite directions. The remedy and its own blind spot
+share a step, which is why this keeps surviving review.
+
+| instance | the headline | what it was hiding |
+|---|---|---|
+| twin-deletion leg, overnight 07-28 | firm total **unmoved** | `model` and `non_model` each moved a cent, netting to zero |
+| `platinum/mdpf/global/account-distribution.json` **count**, live in PROD since promote `42b0f524` | plausible, survived multiple promotes + human review | a **+183 blend-sleeve ADD** masking a **−292 cottonwood EXCLUSION**; 49f 7,053 + inflection 544 = **7,597 = global exactly** |
+| same artifact, **AUM** | never examined | 1,404,555,608.22 + 141,883,748.54 = **1,546,439,356.76 = global to the cent**; cottonwood's **$125,894,245.45 absent** |
+
+**THE THIRD INSTANCE IS THE ONE THAT BINDS, because it is this clause catching a violation of itself.** The
+count defect was already found, named, and relayed. The AUM defect on the *same object* was found only because
+the verifier refused to grade the artifact on the series he had been handed — **had he checked the number he
+was told about, he would have confirmed a real defect and walked past a second one of equal standing.** *Being
+told which series is wrong is not permission to check only that series.*
+
+**IMPERATIVE:** diff **every** parallel series an aggregate publishes — counts *and* dollars, each partition
+*and* the roll-up — and require each to move **on its own**. Offsetting moves are the target, not the noise.
+**GATE (acceptance-vocabulary, standing):** an acceptance predicate over an aggregate is invalid if it names a
+total without naming its constituents; a co-sign states **which series were diffed and which were not.**
+"The total ties" is a statement about arithmetic, never about correctness. **And when a producer emits an
+in-band marker of its own composition, ABSENCE OF THE MARKER IS THE FINDING** — the same artifact's missing
+`meta.cottonwood_fold` was the tell that a written-and-deployed fold had never run.
+
 ---
 
 ## III-c. Count-shaped instruments and silent absence (2026-07-22, five exercised instances in one night)
