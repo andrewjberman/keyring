@@ -27879,3 +27879,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29T17:09Z | 2.0.0_SA_COO | (no-TO) | comp-grep | comp-grep portal/gold/mdpf data infra | PASS | LOAD-BEARING on a NEVER#3 ruling. DENOMINATOR PRINTED: 8213 of 9814 files scanned. Every hit a READER (publisher lambda, its TF, egress read-prefix); NO WRITER found for a tree written at 00:35:16-17Z -- reported to CTO as a bounded repo-plane null, explicitly NOT proof of absence. The printed denominator is what let the null be stated honestly. |
 | 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-29/d... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/DENOMINATOR_CROSSEXAM_QUEUE_20... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/agentbus-sqs.sh | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~B | (no-TO) | comp-pulse | comp-pulse diff .tools/agentbus-sqs.sh | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff portal | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CERT_MDPF_D1D4_20260729.md | PASS |
+| 2026-07-29T17:26Z | 1.0.0_SA_CTO~B | comp-which (A.3 exercise, output-scored) PASS; A.3 PATH denominator 93/93 PASS; comp-surface-check x2 PASS (auto, safe-commit); risk-reflex comp-pulse diff x2 CLEAN (1 file vs 1484 danger nodes); audit-archive-invoker rc=1 2 findings (git-author-override-audit.log non-append edit 1696149B->12917B, routed to base CTO). GAP: no comp-tool answers "can serial X commit path Y" -- resolved .owned-paths.yaml by hand 4x this session; it blocked/nearly-blocked THREE lanes and is always discovered at COMMIT time, after the work is built. comp-ownpath <serial> <path> would have cost minutes and saved hours. |
+| 2026-07-29Z | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-29/C... | PASS |
