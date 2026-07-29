@@ -1099,6 +1099,36 @@ nearly disclosed a real advisor's money as "unattributable."*
 
 **A GUARD WHOSE SOUNDNESS RESTS ON A PROPERTY OF THE PRODUCER IT EXISTS NOT TO TRUST IS NOT A GUARD.**
 
+**A CONTROL WHOSE FAILURE TEXT RECOMMENDS ITS OWN REMOVAL IS A CONTROL WITH A COUNTDOWN**
+(2026-07-29, MDPF; CTO-ruled a SECURITY defect, not a logging one).
+
+The mdpf dispatch ROLLUP step fails a dual-write every run, continues `rc=0`, and emits:
+```
+WARN: CF-canonical dual-write FAILED for json/mdpf/aggregate-aua-timeseries.json
+(AccessDenied ... explicit deny) -- ... (runner json/mdpf/* grant?)
+```
+That parenthetical proposes **exactly the grant `P0DenyJsonMdpfClobber20260728` exists to withhold.**
+
+>> **THE DISCRIMINATOR AGAINST EVERY OTHER LABEL DEFECT: a wrong signpost sends a responder to the WRONG
+>> OBJECT. This hands them a CORRECT-SOUNDING INSTRUCTION WHOSE EXECUTION IS THE BREACH — and nothing
+>> errors when they comply.** The other three label defects that day (a leg named for the inverse of its
+>> intent; a dispatch naming a retired key as the casualty; a comment asserting FRESH over a frozen route)
+>> all failed by pointing somewhere wrong. **This one fails by pointing somewhere right-sounding and wrong,
+>> with a rationale attached, repeated every single run, in a log an on-call reads at 03:00 under pressure
+>> with no context. THE COMPLIANT RESPONDER IS THE FAILURE MODE.** <<
+
+**The mechanism held perfectly — the deny did its job on every run. What was unsafe was the sentence next
+to it.** *The estate keeps producing controls that are correct in mechanism and dangerous in prose*, and a
+remediation hint is the highest-authority prose a control emits: it is read as the author's instruction by
+someone who has none of the author's context.
+
+**RULE: a control's failure text is part of the control.** It must state (a) that the denial is
+INTENTIONAL, (b) the enforcing Sid/rule BY NAME, (c) that performing the "obvious" fix IS the breach, and
+(d) what the responder should do instead — often nothing, or escalate. **Never emit a speculative
+remediation hint (`(grant X?)`) from a deny path.** A hint that has not been checked against the control's
+own purpose is an attack surface with a helpful tone. **Reviewing a control means reading what it SAYS when
+it fires, not only whether it fires.**
+
 ---
 
 ## V. Scope
