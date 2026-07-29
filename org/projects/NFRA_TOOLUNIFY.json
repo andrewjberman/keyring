@@ -1,0 +1,23 @@
+{
+  "project_code": "NFRA_TOOLUNIFY",
+  "macro_code": "NFRA",
+  "name": "Tool unification + the exercise program -- per-tool failure-mode truth established by EXERCISE, not declaration",
+  "description": "RETROACTIVE REGISTRY CARRIER for the second-largest body of work in the tool program (mission-register INFRASTRUCTURE.TOOLS hole #1: 109 commits, 18 code files, 113 doc files, NO project JSON -- positive-controlled against NFRA_TOOLARCH.json). The work exists and much is COMPLETE; this carrier makes it attributable and pins what remains. THE PROGRAM (synthesis: org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_TOOLUNIFY_CENSUS/SYNTHESIS.md, ~70 deliverables beside it): all 92 tool-register rows dispatched across 7 exercise passes, every row carrying an exercised verdict or an explicit honest non-verdict, zero silent drops, per-lane denominators printed. THE HEADLINE FINDING (CVO~Z-adopted): the register's failure_mode column is wrong in BOTH directions -- under-declared (declared-LOUD tools that fail open on wholly-absent inputs: 8 instances banked) AND over-declared (declared-FAIL-OPEN tools genuinely loud: B-batch understates tool quality 4:1) -- bidirectional error is NOISE not bias, so no global correction exists and the honest register shape is PER-ROW VERIFICATION PROVENANCE (exercised / source-read / rule-derived / default). BANKED PATTERN AXES: 2b disclosure is a 3-point scale (the dangerous cell = number-present-but-unflagged, a plausible wrong number beats a crash); 2c scope-coercion is its own axis (a filter silently ignored answers a question that was not asked); 2e call-site audibility != tool failure mode (a LOUD tool backgrounded+discarded by its one call site is operationally silent). ALSO UNDER THIS CARRIER: the MSYS argv-guard class (msys_argv_guard.py, the 5-member native-parent/POSIX-child class), the GRAPHUNI arc, and the toolpass fixes the census drove.",
+  "status": "active",
+  "phase": "REGISTERED RETROACTIVELY 2026-07-29 by CTO (infra-directive sweep). Landed work attributed. OPEN REMAINDER pinned from the synthesis's own PENDING slots + the mission register: (1) the per-row verification-provenance register migration (the honest shape -- replaces the uniform failure_mode column); (2) the PENDING verification slots (E verdict, base MATCH-row spot-checks, B verdict) if not since closed; (3) the negative-declaration axis (what a tool cannot see WITHIN its declared surface) and runtime-provenance axis, both named as INFRASTRUCTURE.TOOLS holes; (4) O2 output-contract adoption (fields exist on 89 cards, zero tools consume them -- reference implementation candidate: comp-freshness).",
+  "hazards": [
+    "Do not quote program-level counts from any per-lane deliverable or commit message -- the synthesis's own rule: program counts appear ONLY in SYNTHESIS.md, and its superseded '5 instances' commit-message count is the recorded counterexample.",
+    "A MED-confidence FAIL-OPEN register row's more likely error is the ROW, not the tool (2d) -- readers must distrust unexercised declarations before distrusting tools; inverting this burns real tool quality on register noise.",
+    "A drifting live denominator is a FEATURE (the tool counts the real working set each run); only a FROZEN denominator is suspect. Naive readers misflag exactly this."
+  ],
+  "owner": "1.0.0_SA_CTO",
+  "created": "2026-07-29",
+  "created_by": "1.0.0_SA_CTO",
+  "grounding": [
+    "org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_TOOLUNIFY_CENSUS/SYNTHESIS.md (program synthesis; per-lane deliverables beside it)",
+    "org/missions/MISSIONS.md INFRASTRUCTURE.TOOLS hole #1 (anchor 1308a5ced4)",
+    "CLAUDE.md Git section (msys_argv_guard 5-member class, @37c7ece98 CVO~Z-verified 16/16)"
+  ],
+  "verification_bar": "Registration phase (met): the 109-commit body is attributable; the open remainder is enumerated against the synthesis's own PENDING slots rather than re-derived. Remainder phases: per-row provenance migration verified by a sets-both-directions diff of the register before/after (no row loses its exercised verdict); each PENDING slot closes with CVO~Z verification per the program's standing convention.",
+  "blocking": "None -- remainder items route through INFRASTRUCTURE.TOOLS prioritization (T-1 comp-which wiring outranks all of them)"
+}
