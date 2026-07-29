@@ -83,4 +83,52 @@ F-2/F-3/L-2 land. Recommend it as the first move; CTO to route the owner (rail l
 attr state = `git ls-files --eol` on 4 files (hot file + 3 controls). Site-Z config NOT measured
 (no access) — F-2's whole point is that it doesn't need to be.
 
+---
+
+## DISPOSITION (CTO 143807Z + 144114Z; Andrew follow-up question folded) — supersedes L-1..L-4
+
+**Accepted with amendments; the design got sharper twice after commit:**
+
+1. **CTO independently reproduced BOTH classes within the hour** (cite): @741d336281 — a 2-row
+   append stat'd as 178/174 (set-difference proved TRULY LOST = 0; *"a real-loss detector
+   permanently saturated by noise"*), and the ~1428Z pull collision (three agents wrote the
+   identical unblock-chore commit today: fe3c4e4c93 / 9c95f0f485 / d73b6bc4cd).
+2. **Andrew's question ("don't the session logs already carry Compiler Tools?") produced the
+   reader census:** ZERO runtime consumers parse the central md as data; the charter-2 join
+   already migrated to the jsonl (no_signal 6,508/6,509 against the md's midnight-ET clock).
+   **L-1..L-4 SUPERSEDED by delete-the-write:** comp_log_auto stops appending per-run rows to the
+   md; the md keeps only the /log one-liners (~15/day). ~97% contention cut, negative machinery.
+3. **CTO's blocker, measured (144114Z) — the correction that governs:** `comp-tool-runs.jsonl` is
+   **UNTRACKED + GITIGNORED (.gitignore:447), 2.7MB, THIS HOST ONLY.** Deleting the md append
+   before the jsonl has durable off-host custody would recreate the morning's audit-log defect
+   (sole per-run record one `>` from gone) in the act of cleaning up. *"The lesson lands on
+   whichever file carries the record, not on whichever file we were already thinking about."*
+   **PRECONDITION: custody first, then delete — never the reverse.** CTO's candidate (0.8.0 free
+   to beat): daily tracked shards `org/mcp/comp-tool-runs/YYYY-MM-DD.jsonl`, immutable at day-roll
+   (zero contention by construction, custody complete, and a real per-day join boundary).
+4. **Census-widening made binding:** my denominator covered `.tools/` + `org/modules/graph/` +
+   `.claude/skills/` — NOT site Z. Site-Z consumer check (via MSTR~Z / agentbus) is required
+   before any write is deleted.
+
+**Final sequence (CTO routing, nothing tonight):** 0.8.0_AE_CloudComp tomorrow — (1) site-Z census
+→ (2) jsonl custody design → (3) delete the md auto-append → (4) F-1 newline on surviving sinks.
+F-2/F-3/F-4 land as ONE atomic quiet-window operation, CTO's hand (the piecemeal-attribute failure
+mode — each file renormalizing whenever next touched — is CTO's 741d336281 instance redistributed
+fabric-wide). CVO recused from build; verifies the build against these denominators.
+
+## ANDREW-DIRECT RULING (my terminal, 2026-07-29 ~14:48Z) — VERBATIM, binds the design
+
+> *"yeah id like to keep that file because it would be interesting to parse through, but i dont
+> want commits tied to it. i dont mind the mcp/comp-tool-runs.jsonl either, would be curious to
+> check that out."*
+
+Recorded per the record-verbatim/broadcast-same-turn protocol; scope adjudication is CTO's, not
+mine. Plain reading surfaced to CTO with the relay: **keep `compiler-tools-log.md` as a live
+parse-target, but decouple it from the COMMIT path** (the churn, not the data, is the objection) —
+i.e., the md's disposition moves from "tracked, low-frequency" toward "kept, commit-free," which
+INTERSECTS the custody precondition: if the md goes commit-free AND the jsonl is host-local, BOTH
+per-run records are single-copy. The custody design (CTO's daily-tracked-shard candidate or better)
+becomes the sole durability carrier and its precondition-ordering becomes even more load-bearing.
+CTO holds the reconciliation; Andrew's phrasing is the ruling, this paragraph is only a relay.
+
 — 3.0.0_SA_CVO
