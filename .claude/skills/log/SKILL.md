@@ -1,6 +1,6 @@
 ---
 name: log
-description: Universal session-log writer — EVERY agent, every tier (lanes included). Writes your canonically-formatted session log per org/ref/SESSION_LOG_STANDARD.md (base template + your role's additions + the archetype tag) for the work since your last log, and commits it under your own author line via safe-commit.sh. Bare `/log` = AD-HOC one-shot, log now. `/log 90m` / `/log [90m]` / `/log 30m` / `/log 2h` = arm a recurring CronCreate loop at that cadence for long-running processes (operator-initiated only — NEVER auto-armed at launch per LD-0175); each tick logs the delta since the previous tick and SKIPS silently (heartbeat only, no noise file) when there is no substantive delta. `/log once` = same as bare. `/log off` = cancel the running /log cron. Compiler Tools section is mandatory in every log (one-sentence why if none were run — blank is not acceptable); append the org/compiler-tools-log.md line in the same pass.
+description: Universal session-log writer — EVERY agent, every tier (lanes included). Writes your canonically-formatted session log per org/ref/SESSION_LOG_STANDARD.md (base template + your role's additions + the archetype tag) for the work since your last log, and commits it under your own author line via safe-commit.sh. Bare `/log` = AD-HOC one-shot, log now. `/log 90m` / `/log [90m]` / `/log 30m` / `/log 2h` = arm a recurring CronCreate loop at that cadence for long-running processes (operator-initiated only — NEVER auto-armed at launch per LD-0175); each tick logs the delta since the previous tick and SKIPS silently (heartbeat only, no noise file) when there is no substantive delta. `/log once` = same as bare. `/log off` = cancel the running /log cron. Compiler Tools section is mandatory in every log (one-sentence why if none were run — blank is not acceptable).
 ---
 
 # /log — canonical session log (ad-hoc or looped)
@@ -94,8 +94,8 @@ COMPOSITION, never PROCESS):**
 
 ## Step 3 — Compiler-tools log line + commit
 
-1. Append ONE line to `org/compiler-tools-log.md` summarizing the window's tool runs (or the
-   one-sentence why-none).
+1. (RETIRED 2026-07-29, Andrew-direct.) Do **not** append to or commit `org/compiler-tools-log.md`.
+   The Compiler Tools section stays in your session log; the shared-file append is gone.
 2. Commit BOTH files via the wrapper, under YOUR author line, pathspec-scoped — do NOT
    pre-`git add` (the wrapper stages your pathspec itself, CLAUDE.md Rule 14a). **Run from the
    workspace root** — a CWD left in `portal/` (or any subdir) errors the wrapper:
@@ -103,7 +103,7 @@ COMPOSITION, never PROCESS):**
 ```bash
 .tools/safe-commit.sh --author "{serial} <{serial}@opal.agent>" \
   -m "log({serial}): <one-line summary of the window>" \
-  -- org/{tier_folder}/{serial}/logs/{date}/{file}.md org/compiler-tools-log.md
+  -- org/{tier_folder}/{serial}/logs/{date}/{file}.md
 ```
 
 3. `heartbeat("{serial}", summary="<current state one-liner>")`.

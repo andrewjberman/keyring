@@ -310,7 +310,7 @@ test -L .git/hooks/pre-commit || bash .tools/git-hooks/install-owned-paths.sh
 ```bash
 mkdir -p .comp-graph && printf "SERIAL=%s\nTO_ID=\n" "{your_serial}" > .comp-graph/.agent_context
 ```
-Every comp-* run then auto-appends a row to `org/compiler-tools-log.md`.
+Comp-* runs record to `org/mcp/comp-tool-runs.jsonl` only. **The `org/compiler-tools-log.md` auto-append is RETIRED** (Andrew-direct 2026-07-29, *"just constant commit nonsense"*) — killed at source in `comp_log_auto.py:_append_log`, exercised. **SCOPE: the WRITE is gone, THE FILE IS PRESERVED** at its committed state as readable history — never commit it, never re-point a writer at it. ⚠ **`comp-tool-runs.jsonl` IS GITIGNORED (`.gitignore:447`) = DEVICE-LOCAL, NOT a durable cross-device record** — each device sees only its own runs, so any "estate's comp-tool runs" claim read from it is silently short by every other device's traffic. *(That qualifier is here because the retirement commit originally pointed doctrine at this file as "the machine record" without it — redirecting a TRACKED record to a gitignored one, the same absent-from-git class as the `memory/` paths CLAUDE.md cites. The redirect is correct and wanted; the durability implication was not.)*
 
 **When you start a new TO, set it with `comp-to` — never by writing `TO_ID=` into `.agent_context`:**
 ```bash
@@ -388,7 +388,7 @@ work. **There is no centralized tick — `/drive` is OFF (Andrew standing order;
 Full template: `org/ref/SESSION_LOG_STANDARD.md`.
 
 Every session log must include **`## Compiler Tools`** — a table of tools run, results, what worked, what
-failed, any gap found. Append one line to `org/compiler-tools-log.md`.
+failed, any gap found. **Do NOT append to or commit `org/compiler-tools-log.md`** (retired 2026-07-29, Andrew-direct).
 **"Blank" and "N/A" are not acceptable.** One sentence explaining why you didn't run one is fine.
 
 **`comp-which "<plain-English question>"` is the DEFAULT for every search and inspection — all roles.** It routes
@@ -524,4 +524,4 @@ issue them a task order.
 | Times to Andrew | US Eastern only (never UTC) |
 | MCP server | `org/mcp/server.py` — `opal-agent-comms` |
 | Broker | Auto-launched by `register_agent`, port 7800 |
-| Compiler tools | Trigger table in CLAUDE.md § "Compiler Tools". Log: `org/compiler-tools-log.md` |
+| Compiler tools | Trigger table in CLAUDE.md § "Compiler Tools". Runs: `org/mcp/comp-tool-runs.jsonl` — **gitignored/device-local, not a cross-device record**. `org/compiler-tools-log.md`: auto-append RETIRED, file preserved, never committed |

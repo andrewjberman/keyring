@@ -231,20 +231,26 @@ def _classify_result(tool: str, exit_code: int) -> str:
 
 def _append_log(workspace: Path, tool: str, args: str, exit_code: int,
                 serial: str, to_id: str) -> None:
-    """Append one structured row to compiler-tools-log.md."""
-    log_file = workspace / "org" / "compiler-tools-log.md"
-    if not log_file.exists():
-        # DISCLOSE, don't swallow (R5/R7): an absent log file silently drops EVERY emission -- exactly the
-        # "loop freshness signal undercounts invisibly" hole. Surface it instead of a bare return.
-        _disclose_drop(workspace, tool, "log-file-absent")
-        return
+    """Append one run record to the JSONL run sink.
 
-    # UTC, Z-SUFFIXED (Law-11, CVO~Z tick-10 055547Z): the bare local date filed
-    # 0113-0326Z rows under the PRIOR day and false-undercounted a live verify
-    # (today-filter read 15 rows as 4). Z-suffix makes every row SELF-LABELING:
-    # no-Z rows (pre-2026-07-23) are known-LOCAL(UTC-4), Z rows are UTC -- the
-    # axis discontinuity is machine-discriminable instead of silent.
-    date = datetime.now(timezone.utc).strftime("%Y-%m-%dZ")
+    MARKDOWN APPEND RETIRED 2026-07-29, ANDREW-DIRECT (verbatim: "we need to completely take out
+    any doctrine or hook or anything that would say to write to that compiler-tools-log.md file,
+    its just constant commit nonsense"). SCOPE GUARD: this removed the WRITE, not the file --
+    `org/compiler-tools-log.md` IS PRESERVED at its committed state and is still readable history.
+    What is gone is the per-run auto-append that re-dirtied a TRACKED file on every comp-tool call,
+    which forced a commit-or-discard decision on every agent before every pull.
+
+    CUSTODY, verified before the write was cut: the JSONL sink below is written in this same
+    function on the same call, so it already carried every row the markdown did -- 10,147 rows,
+    873 in the trailing 24h at cut time -- at FINER granularity (real ts_epoch vs the markdown's
+    day-granular date). Nothing was single-copy at the moment of the cut.
+
+    KNOW WHAT THIS SINK IS, THOUGH: `org/mcp/comp-tool-runs.jsonl` is GITIGNORED (.gitignore:447),
+    so it is DEVICE-LOCAL. It is not a durable cross-device record and must never be cited as one
+    -- each device sees only its own runs. That is acceptable because the telemetry was ruled
+    low-value by the owner, but a completeness claim over "the estate's comp-tool runs" read from
+    this file is short by every other device's traffic, silently.
+    """
     result = _classify_result(tool, exit_code)
 
     # Synthetic-fixture marking (NFRA_TOOLCHECK P2, log-signal-honesty): a DELIBERATE test-fixture run --
@@ -261,22 +267,14 @@ def _append_log(workspace: Path, tool: str, args: str, exit_code: int,
     if len(command) > 90:
         command = command[:87] + "..."
 
-    row = f"| {date} | {serial} | {to_id} | {tool} | {command} | {result} |\n"
-
-    try:
-        with open(log_file, "a", encoding="utf-8") as f:
-            f.write(row)
-    except Exception as e:
-        # DISCLOSE, don't swallow (R5/R7): a failed append is a dropped emission -- surface a count/marker.
-        _disclose_drop(workspace, tool, f"append-failed: {type(e).__name__}")
-
-    # SECOND-GRANULARITY RUN SINK (NFRA_COMPCLOSE 2026-07-14) -- the missing half of the
-    # route->run outcome join. The markdown row above is DAY-granular by design, and the
-    # charter-2 join window is 300 SECONDS: measured, 15,842 of 15,904 rolling-corpus rows
-    # carried ts_epoch == midnight-ET, so the join returned no_signal on 6,508 of 6,509
-    # joinable routes -- `outcome: null` on every training row was ARITHMETIC, not accident
-    # (a window 288x finer than its corpus's clock can never match). This jsonl row carries
-    # the real clock. Same caller-safety invariant: any failure discloses, never raises.
+    # SECOND-GRANULARITY RUN SINK (NFRA_COMPCLOSE 2026-07-14) -- now the ONLY sink, since the
+    # day-granular markdown append above it was retired 2026-07-29. It was already the better
+    # record: the charter-2 join window is 300 SECONDS, and measured, 15,842 of 15,904
+    # rolling-corpus markdown rows carried ts_epoch == midnight-ET, so the join returned
+    # no_signal on 6,508 of 6,509 joinable routes -- `outcome: null` on every training row was
+    # ARITHMETIC, not accident (a window 288x finer than its corpus's clock can never match).
+    # This jsonl row carries the real clock. Caller-safety invariant: any failure discloses,
+    # never raises -- a telemetry sink must never break the tool it is measuring.
     try:
         import json as _json
         runs_sink = workspace / "org" / "mcp" / "comp-tool-runs.jsonl"
