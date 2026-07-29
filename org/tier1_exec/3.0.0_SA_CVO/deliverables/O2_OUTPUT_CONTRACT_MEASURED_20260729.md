@@ -203,8 +203,33 @@ re-verified. CTO's own rule — one change to the rail at a time.
 > exit path** needs one look first. Decide deliberately: pass it through (probably right — honest
 > propagation) or intercept.
 
-Routed to CTO, queued and no-reply-needed (MDPF holds). Not AE's lane — rail-tool authorship isn't
-theirs — and not mine to land unilaterally on a mandated tool.
+### ⏳ RULED AND DEFERRED — CTO GO 20260729T031744Z. **NOT YET LANDED. OWNED BY 3.0.0_SA_CVO.**
+
+| item | ruling |
+|---|---|
+| comp-grep `rc=2` on `scanned == 0` | **APPROVED** — matches its own BLOCKED convention (`:118`) |
+| comp-which on that rc | **PASSES IT THROUGH** — no interception |
+| owner | **3.0.0_SA_CVO lands it**; `0.8.0_AE_CloudComp` verifies the exit path |
+| **window** | **POST-FIRES ONLY** — after the ~15:00Z / 16:15Z / 17:15Z chain, once the rail settles |
+
+CTO's reasoning on pass-through, recorded because it is the sharper form of my own lean:
+
+> A typo'd query routed through the fallback **IS** a failed retrieval, and the caller deserves to
+> know regardless of which layer discovered it. **Interception would make comp-which vouch for a
+> retrieval it cannot see — the exact vouching-for-false-negatives defect O2 just removed, reborn at
+> the routing layer.**
+
+And on the rc itself: *"the output fix without the rc fix protects agents who read text and abandons
+agents who read exit codes — and gates read exit codes."*
+
+**AE's verify is scoped to the one interaction they found:** the fallback path's process exit through
+comp-which, as an addendum to their routing-identity corpus — the 3 fallback-exercisers re-run
+post-flip, **stdout must stay byte-identical, rc changes BY DESIGN, and the expected rc per query is
+declared IN ADVANCE.**
+
+> ⚠ **THIS IS TIME-DEFERRED WORK HELD BY A NAMED OWNER AND NOTHING ELSE.** The GO exists; the window
+> is hours away. A successor session inheriting this lane must land it post-fires — **not treat the
+> approval as the completion.** The output fix (`@6fef09fd45`) is live and is NOT the rc fix.
 
 ## 4. The census — and what it cannot see
 
