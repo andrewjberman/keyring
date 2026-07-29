@@ -39,6 +39,22 @@ The plan-review addition (~22:4xZ — the standing-evolution requirement, WS-C9/
 > CORE and ESTATE group's work, but it is essential to keep the loop alive and the velocity
 > accelerating."
 
+The objective-function framing (~23:25Z, relayed + recorded by `1.0.0_SA_CTO~C` per XXX.md):
+
+> "Something i think that is important to keep in mind, is this is setting up the framework. After
+> this project is done and this infrastructure is created, the real test will be running
+> ADVI_PERFORMANCE MDPF_GLOBAL and others."
+
+**Consequence (binding on §5 and both PRDs): the framework is graded on PRODUCTS, never on
+itself.** ADVI_PERFORMANCE + MDPF_GLOBAL — both Phase-0, zero surfaces built at commissioning —
+are the program's **held-out set** (fenced from rail-shaping, WS-C2) and its **product-grade
+metric** (§5.9). Their pre-framework build-cost baseline is PERISHABLE: it must be captured at
+their decomposition, BEFORE WS-E1/E2 touch the estate, or the program permanently loses its only
+honest answer to "did this work?". Their true blocking edge on the framework is **WS-C1's draft
+lifecycle vocabulary ONLY** — everything else arrives alongside them, never as their prerequisite
+(a framework that delays the products it exists to accelerate is the DEBTLOOPS complaint turned on
+the project written to answer it).
+
 **Source artifacts (the three corpora that converged 2026-07-29):**
 `docs/briefs/NFRA_DEBTLOOPS_ANDREW_VOICE_MEMO_20260729.md` (the founding voice memo — highest priority:
 *"type two errors where we do not have full recall"*) ·
@@ -215,6 +231,17 @@ E4's R8 instrument.
 8. **Archetype dynamics steer the program** (WS-C9/E7, standing) — per-window error mass by
    mechanism class with trend; the synthesis/gate queue demonstrably ranked by it; a class's weight
    falling after its gate lands is the program's proof-of-work, indefinitely.
+9. **THE PRODUCT-GRADE METRIC (the real test — Andrew ~23:25Z via ~C):** ADVI_PERFORMANCE +
+   MDPF_GLOBAL build cost vs their pre-framework baseline — (a) archaeology-vs-build wall-clock and
+   agent-context, (b) count of "which artifact is canonical / who writes this / is it live"
+   questions, (c) rail-override count, (d) rework waves caused by a wrong denominator. Hand-tagged
+   is fine; it is a baseline, not a gate. **Captured at their decomposition, BEFORE WS-E1/E2 touch
+   the estate — perishable and unrecoverable after.** Every other metric here measures the
+   framework against the framework; this one measures whether a product got faster and cleaner,
+   which is the objective function. Both projects build **contract-at-creation** (every new
+   artifact/process declares its D3 contract incl. lifecycle as it is built) — the forward half of
+   the thesis, proven on a real build rather than a specimen; without it the framework retires old
+   debt while the products mint new debt at the same rate and both sides report success.
 
 ## §6 Standing constraints (bound into both PRDs)
 

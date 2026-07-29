@@ -50,6 +50,17 @@ Starts on WS-C1's **draft** D3 grammar and hardens at ratification — the speci
 vocabulary's test bed (one co-evolution round-trip budgeted; divergences feed back to WS-C1, not
 worked around locally).
 
+**THE FORWARD HALF — CONTRACT-AT-CREATION (~C, on Andrew's ~23:25Z framing — binding):**
+retroactive contracting (the order of attack above) is the CLEANUP; **contract-at-creation is the
+PRODUCT.** ADVI_PERFORMANCE and MDPF_GLOBAL create new surfaces across 7 and 6 pods during P1–P5;
+if they build conventionally, the framework retires old debt while they mint new debt at the same
+rate, and the program nets zero while both sides report success. Binding on both product projects
+at their P1: **every new artifact/process declares its D3 contract — including lifecycle, and
+TRANSIENT where it applies — as it is built.** Their only true blocking edge on this program is
+WS-C1's draft lifecycle vocabulary; nothing else here is their prerequisite. **The perishable
+baseline (program §5.9) is captured at their decomposition, BEFORE this workstream or WS-E2
+touches the estate.**
+
 *Acceptance:* the specimen chain fully contracted end-to-end; **the bronze-after-gold violation
 falls out as a type error** (or the rails are wrong — a WS-C1 feedback, loudly); coverage
 denominator printed (contracted / total per tree).

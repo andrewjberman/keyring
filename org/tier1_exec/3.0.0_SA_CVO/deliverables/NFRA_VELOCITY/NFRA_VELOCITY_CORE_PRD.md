@@ -79,8 +79,17 @@ cheap to change.
 210 incidents onto these independently derived axes IS the re-bucket control; publish whether the
 55% four-mechanism concentration survives the re-bucketing.
 
+**HELD-OUT SET DISCIPLINE (~C, on Andrew's ~23:25Z framing — binding):** all three validation
+corpora are HISTORICAL and are being used to SHAPE the vocabulary — *a type system validated
+against the corpus that shaped it is fitted, not validated.* **ADVI_PERFORMANCE and MDPF_GLOBAL
+are the held-out set** (Phase-0 at commissioning; nothing about them has informed the rails), and
+they are **fenced from rail-shaping**: no surface of either used as a vocabulary example, no
+contract authored to make a rail look expressive. "Can the rails type a project nobody shaped them
+against?" is then answerable at their build, instead of assumed.
+
 *Acceptance:* a typed corpus table with a stated residual (unexpressible items → WS-C1 round 2 or
-declared out-of-scope with reason); the concentration-survival verdict published.
+declared out-of-scope with reason); the concentration-survival verdict published; the held-out
+fence stated in the rail sections themselves (so a future author cannot innocently breach it).
 
 ## WS-C3 — Archetype census + pattern inventory (debt patterns first-class)
 
