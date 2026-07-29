@@ -66,7 +66,26 @@
 # must work before/without git, and a CWD-sensitive resolver would re-introduce
 # exactly the ambient-state coupling being removed.
 # ---------------------------------------------------------------------------
-if ($PSScriptRoot) {
+# OPAL_WS_ROOT is the DEVICE-LEVEL ESCAPE HATCH (Andrew-direct 2026-07-29: "we need a bare
+# solution for the launcher that somehow env-vars the path for the device"). It is checked
+# FIRST and wins over derivation.
+#
+# WHY AN ENV VAR IS THE *RIGHT* HOME FOR DEVICE-SPECIFIC TRUTH, and does not violate the
+# one-rule: the rule is that NO SITE ENCODES ITS OWN PATH **IN THE REPO** -- because a repo
+# is shared, and two sites' literals silently overwrite each other with no merge conflict.
+# An environment variable lives OUTSIDE the repo, per machine, and can never be pushed. It
+# is the one place a device-specific value CAN live without colliding.
+#
+# Set it per device (PowerShell, persists for the user):
+#   [Environment]::SetEnvironmentVariable('OPAL_WS_ROOT','<your clone path>','User')
+# Leave it UNSET and derivation handles it -- the env var is a fallback for odd layouts
+# (a worktree, a UNC path, a relocated .tools), NOT the normal path.
+if ($env:OPAL_WS_ROOT -and (Test-Path -LiteralPath $env:OPAL_WS_ROOT)) {
+    $Global:AjbRepoRoot = (Resolve-Path -LiteralPath $env:OPAL_WS_ROOT).Path
+} elseif ($env:OPAL_WS_ROOT) {
+    Write-Host "[ajb] WARN: OPAL_WS_ROOT is set but does not exist: $env:OPAL_WS_ROOT -- ignoring it and deriving instead." -ForegroundColor Yellow
+    $Global:AjbRepoRoot = Split-Path -Parent $PSScriptRoot
+} elseif ($PSScriptRoot) {
     $Global:AjbRepoRoot = Split-Path -Parent $PSScriptRoot
 } elseif (-not $Global:AjbRepoRoot) {
     # Only reachable if this file is pasted into a session rather than dot-sourced.
@@ -252,11 +271,26 @@ function ajb {
             # extra words don't get re-parsed by the inner shell (LD-0078 class).
             $extraLit = ''
             if ($Extra) { $extraLit = " '" + (($Extra -join ' ').Replace("'", "''")) + "'" }
-            # Inner command: mark the relaunch so the inner `ajb` doesn't recurse,
-            # dot-source ajb.ps1, then run the same ajb invocation in the new tab.
-            # Backtick-escape $env: + the inner quotes so the OUTER string doesn't
-            # expand them; $Serial + $extraLit DO interpolate (baked in).
-            $inner = "`$env:AJB_NO_WT_RELAUNCH='1'; . `"$ajbPath`"; ajb $Serial$extraLit"
+            # SPACE-IN-ROOT BUG FIXED 2026-07-29 (found by 0.0.0_AB_MSTR~Z, whose clone lives
+            # under "C:\Users\Opal Bloomberg\..."). This line used DOUBLE quotes around the
+            # path: `. "$ajbPath"`. powershell.exe's NATIVE-ARGUMENT layer strips inner double
+            # quotes from a -Command string, so a root containing a space arrived split and
+            # every `ajb <Serial>` at that site died with:
+            #     The term 'C:\Users\Opal' is not recognized as the name of a cmdlet...
+            # Base could never see it: "C:\Users\AndrewBerman" has no space. Z proved the
+            # mechanism with a clean 3-way, one variable (double->FAIL, single->OK,
+            # -EncodedCommand->OK), after catching that their own first test was a
+            # CONTAMINATED CONTROL where both arms failed identically.
+            #
+            # FIX: SINGLE-quoted PS literals, which survive the strip. Embedded single quotes
+            # are doubled, the PS escape. Same treatment $extraLit already had -- the extras
+            # were quoted correctly and the PATH was not.
+            #
+            # Also hand the child OPAL_WS_ROOT so the new tab resolves the root from an
+            # ENVIRONMENT VALUE rather than re-deriving through another quoting layer.
+            $ajbLit  = "'" + $ajbPath.Replace("'", "''") + "'"
+            $rootLit = "'" + $Global:AjbRepoRoot.Replace("'", "''") + "'"
+            $inner = "`$env:AJB_NO_WT_RELAUNCH='1'; `$env:OPAL_WS_ROOT=$rootLit; . $ajbLit; ajb $Serial$extraLit"
             # wt parses `;` as its action-separator -> escape every `;` as `\;`
             # so the whole statement reaches powershell.exe intact.
             $innerForWt = $inner -replace ';', '\;'

@@ -44,7 +44,15 @@ param(
 # Andrew-direct 2026-07-28: repo functions cap at the REPO path, never a user path -- a second
 # device clones elsewhere and every spawn/kill/audit path must follow the clone. $ajb and $log
 # below already derive from $ws, so this one line makes all three portable.
-$ws  = Split-Path -Parent $PSScriptRoot
+# OPAL_WS_ROOT: device-level escape hatch, checked FIRST (Andrew-direct 2026-07-29). An env var
+# lives OUTSIDE the repo, per machine, and can never be pushed -- so it is the one place a
+# device-specific path may live without two sites silently overwriting each other. Unset is the
+# normal case; derivation below handles it.
+if ($env:OPAL_WS_ROOT -and (Test-Path -LiteralPath $env:OPAL_WS_ROOT)) {
+    $ws = (Resolve-Path -LiteralPath $env:OPAL_WS_ROOT).Path
+} else {
+    $ws = Split-Path -Parent $PSScriptRoot
+}
 $ajb = Join-Path $ws '.tools\ajb.ps1'
 $log = Join-Path $ws 'org\mcp\agent-spawn-audit.log'
 
