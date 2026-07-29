@@ -58,5 +58,44 @@ delta = routing/caching artifact -> escalate, do not rationalise).
   carried point distinguishably from a measured one is a disclosure question for DE/CTO — named
   here so Andrew hears it from us first.
 
+## 2026-07-29T01:17Z — APPLY HALTED BY DT, ESCALATED TO CTO. NOTHING LANDED.
+
+**AWS state UNCHANGED:** `public-data-router` still `:5` on `EVTSA9VEHNZVH`, distribution untouched,
+serve still `json/mdpf/*`. L1 + L2a closed clean; **L2b (apply) HALTED BEFORE IT RAN.**
+
+**Cause — the module carries held work that is one `apply` from live.** `terraform plan` on
+portal-auth = **1 to add, 2 to change**, and exactly ONE line of it belongs to this deploy
+(`public_data_router` s3_object_version, v5 -> v6). The rest is `0.7.0_AE_CloudOps`'
+**MDPF_REVAMP.S5 CF flip**, committed `328248c135` (2026-07-22), subject verbatim *"HELD for
+CTO+COO+Andrew re-land co-sign; apply the pinned plan on GO"*, whose predecessor `9a59360605` is
+the **P0 rollback of the same flip** (*"buggy Global aggregate-aua on the live serve"*):
+- `aws_cloudfront_origin_access_control.assets` CREATED — *"OAC for opal-data-assets MDPF served keys (Option C direct behaviors)"*
+- `aws_cloudfront_distribution.portal` **+11 ordered_cache_behaviors** (live 24 -> 35; 7 further
+  render as positional `path_pattern` rewrites; **0 removed**; the `origin` -/+ pairs are TF
+  set-ordering noise — same `domain_name`/`origin_id` re-added, verified line-by-line).
+
+**Why this is a mechanism swap, not a ride-along.** The 11 behaviors are EXACT-KEY and therefore
+**more specific** than `/api/general/*`, so CloudFront matches them first and the request **never
+reaches `public-data-router`** — the GO'd Mechanism-A branch would be inert on arrival. And they
+target origin **`S3-opal-data-assets`** (the gold tree), while tonight's verified artifact — AE's
+11/11, COO's PASS diff, `1,950,519,805.86` @ 07-27 — lives in
+**`opal-data-portal-v2/platinum/mdpf/`**. Applying would have served clients an origin nobody
+verified tonight.
+
+**No `-target` rescues it:** the behaviors and this deploy's Lambda association live in the same
+`aws_cloudfront_distribution.portal` resource; applying only the Lambda publishes v6 while the
+distribution stays pinned to `:5` — no flip.
+
+**Escalated:** CTO `011658Z` (ruling requested; recommendation **(A)** AE de-stages the S5 block —
+their lane, held work preserved on a branch/patch — leaving this plan at exactly `1 to change`,
+then apply tonight per Andrew's in-session order), AE `011720Z`, COO cc.
+**Standing warning raised with both: the module is one un-targeted `apply` from ANY lane away from
+landing S5.**
+
+**Environment defect found + fixed en route (L2a):** `/tmp` resolved to `C:\Program Files\Git\tmp`
+(unwritable — the build died at `mktemp`). Restored the mapping the build script's own comment
+assumes, additively and non-durably: `mount -f C:/Users/AndrewBerman/AppData/Local/Temp /tmp`
+(MSYS shared memory, dies on reboot; same class as the `mount -f C: /c` harness-rc fix).
+
 ## Completion
-*(open)*
+*(open — L2b HALTED-ESCALATED, awaiting CTO ruling; NEVER#6 window live, closes in-session)*
