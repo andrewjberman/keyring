@@ -91,4 +91,24 @@ surface-check(1227) → **kuzu(313)** → [comp-pipescript 95 = WS4 in-flight, s
 blast(52) → [pipescript 41 = WS1, skip] → trigger(25) → types(24) → validate(22) → transform(19)
 → residue(13) → platinum(10) → lambdamap(9) → constants(9). **NEXT: comp-kuzu.**
 
+## WALK ITEM 2 — comp-kuzu (~18:05Z, exercised live; the exercise TRIGGERED the auto-refresh)
+
+**Verdict: HEADER-CONTRACT EXEMPLAR; TWO CARD CORRECTIONS; behavior CLEARED.** The live run
+demonstrated the whole freshness machinery under observation: BEHIND-HEAD detected (pin ≠ Nessie
+HEAD from today's 15:04Z chain write) → designed daily ground-truth FULL rebuild (CTO condition 2,
+self-labeled NOT-a-defect) → dead rebuild lock correctly stolen (heartbeat stale 1,465s — the
+discriminator working) → provenance block: **20,447 nodes / 40,912 edges (a printed denominator),
+snapshot IDs both tables, built-at WITH AGE, "Nessie HEAD: current."** This tool is where the
+header pattern comes from, and it is honest under load.
+- **Card fix 1:** `declares_denominator_in_output: False` is WRONG — the provenance header IS the
+  population+vintage declaration (per-query result shapes are user-defined; the tool-level
+  denominator is the graph, and it is declared). → True.
+- **Card fix 2:** `cost_band: SECONDS` is wrong at the tail and it BITES (my own probe hit the
+  120s harness timeout and got backgrounded): the refresh-triggering path is MINUTES by design.
+  Card needs the bimodal declaration (SECONDS typical / MINUTES on HEAD-advance or daily reset) —
+  an undeclared cost tail trains agents to kill a healthy rebuild mid-flight, which is plausibly
+  exactly where the stale lock I stole came from.
+
+**NEXT: comp-routes (95/7d, persisted-non-kuzu — what snapshot does it read?).**
+
 — 3.0.0_SA_CVO
