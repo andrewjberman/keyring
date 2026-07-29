@@ -279,16 +279,42 @@ case "$cmd" in
             # ordering that would mis-attribute ids to bodies on any multi-message receive --
             # silently, and worst exactly when traffic is heaviest. jq keeps each pair together
             # because it parses the structure instead of the text.
+            # DELETE IS GATED ON A SUCCESSFUL EMIT. NEVER UNCONDITIONAL.
+            #
+            # DATA-LOSS BUG, shipped in the id-emit build and caught by 0.0.0_AB_MSTR on the
+            # laptop within minutes: the delete loop sat OUTSIDE this branch, so on a box with no
+            # jq the consumer printed an ERROR *about* the message, emitted nothing, and DELETED
+            # IT ANYWAY. At least one message addressed to the laptop was permanently lost.
+            # The file's own stated invariant is "emit THEN delete ... always fail toward the
+            # duplicate" -- I wrote that paragraph and then broke it in this function, because
+            # the failure branch handled the FORMATTING failure and forgot it still held an
+            # undelivered MESSAGE. A guard placed outside the branch it guards is not a guard.
+            emitted=0
             if command -v jq >/dev/null 2>&1; then
-                printf '%s' "$out" | jq -r '.Messages[] | "[AGENTBUS -> '"${dev}"'] [id \(.MessageId)] \(.Body)"'
+                if printf '%s' "$out" | jq -r '.Messages[] | "[AGENTBUS -> '"${dev}"'] [id \(.MessageId)] \(.Body)"'; then
+                    emitted=1
+                fi
             else
-                # Fail LOUD rather than silently degrading to an id-less emit -- an emit without
-                # an id looks like a delivery and cannot be acked, which is worse than no emit.
-                echo "[agentbus] ERROR: jq absent -- cannot emit MessageId with body. Ack discipline (Rule 22b) is unsatisfiable without it. Install jq or run 'recv --keep' by hand."
+                # DEGRADE, NEVER DROP. An id-less emit is worse than an emit with an id, and far
+                # better than silence -- the agent still sees the content and can ack by
+                # timestamp+sender (which base MSTR did, correctly, when this build gave it no
+                # id). Losing the id costs discipline; losing the message costs the message.
+                echo "[agentbus] WARN: jq absent -- emitting WITHOUT MessageId. Ack by timestamp+sender; install jq to restore ack-by-id (Rule 22b)."
+                if printf '%s' "$out" | grep -o '"Body": "[^"]*"' | cut -d'"' -f4 | while read -r b; do
+                       echo "[AGENTBUS -> ${dev}] [id UNAVAILABLE] ${b}"
+                   done; then
+                    emitted=1
+                fi
             fi
-            printf '%s' "$out" | grep -o '"ReceiptHandle": "[^"]*"' | cut -d'"' -f4 | while read -r rh; do
-                aws sqs delete-message --region "$REGION" --queue-url "$q" --receipt-handle "$rh" >/dev/null 2>&1 || true
-            done
+            if [ "$emitted" -eq 1 ]; then
+                printf '%s' "$out" | grep -o '"ReceiptHandle": "[^"]*"' | cut -d'"' -f4 | while read -r rh; do
+                    aws sqs delete-message --region "$REGION" --queue-url "$q" --receipt-handle "$rh" >/dev/null 2>&1 || true
+                done
+            else
+                # Not deleted -> becomes visible again after the visibility timeout and is
+                # redelivered. A duplicate is recoverable; a deletion is not.
+                echo "[agentbus] NOT DELETED -- emit failed, message left on the queue for redelivery."
+            fi
         fi
     done
     ;;
