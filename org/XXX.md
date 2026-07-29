@@ -159,6 +159,11 @@ shells are non-interactive and source NO profile, so `.tools/` is reachable only
 ```bash
 F=0; T=0; for t in .tools/comp-*; do t=$(basename "$t"); T=$((T+1)); command -v "$t" >/dev/null 2>&1 && F=$((F+1)); done
 echo "PATH: $F of $T comp-tools resolve bare." ; [ "$F" -lt "$T" ] && echo "  -> the REST need an explicit .tools/<tool> prefix. 'bash .tools/provision-path-shims.sh' provisions a NAMED SUBSET (read its header for the current list) -- it is not, and does not claim to be, all $T."
+# MANDATORY SECOND HALF (added 2026-07-29): RESOLUTION IS NOT EXECUTION. Actually RUN one, and
+# score it on OUTPUT, not on rc -- comp-which's exit code tracks MATCH/NO-MATCH, not health, so
+# `comp-which --help` or a no-match question BOTH exit 1 on a perfectly working tool. (Written
+# wrong the first time, same day, in the line meant to replace a false PASS with a false FAIL.)
+comp-which "how do I grep the repo" 2>&1 | grep -q "comp-which --" && echo "EXERCISE: a forwarder RAN (produced its own banner)." || echo "EXERCISE: *** RESOLVED BUT DEAD *** -- the forwarder exists and its TARGET does not. Run: bash .tools/provision-path-shims.sh"
 ```
 > ⚠ **The remedy line above once named the subset literally ("aws + comp-which + comp-system"). It went
 > stale the same day** — `~D` added `comp-grep`/`comp-glob` to close Rule 21's dead fallback, and the line
@@ -169,6 +174,25 @@ echo "PATH: $F of $T comp-tools resolve bare." ; [ "$F" -lt "$T" ] && echo "  ->
 > rail was broken.** It tested `command -v comp-which` — **the member MOST likely to be provisioned**, because
 > the provisioner forwards a small named subset and `comp-which` is in it. **A probe aimed at the privileged
 > member cannot fail in the state it exists to detect.**
+>
+> ⚠ **SECOND, WORSE INSTANCE — 2026-07-29, and it is why the EXERCISE line above is mandatory.**
+> `0.0.0_AB_MSTR~Z` rebooted. **A.3 reported `PATH: 93 of 93 comp-tools resolve bare`. ZERO of them
+> ran.** `command -v` tests that the **forwarder FILE EXISTS** in `~/bin`; it never executes it, so it
+> **structurally cannot see that the forwarder's TARGET is gone.** All 186 forwarders had been
+> generated while LD-0340's `mount -f C: /c` was live, so every one pointed at `/c/...`; the reboot
+> took the mount and killed all of them at once.
+>
+> **THE PROBE READ 100% HEALTHY PRECISELY BECAUSE THE BREAKAGE WAS TOTAL AND SINGLE-CAUSED** — all 93
+> exist *because* the provisioner ran, and all 93 are dead *because* they share one prefix. Same
+> anti-correlation as the orphan watcher: **the cleaner the pass, the more complete the failure.**
+> Downstream, `safe-commit`'s surface-check and risk-reflex hooks printed `No such file or directory`
+> and **let the commit through** — a live gate failing OPEN and SILENT.
+>
+> **GENERAL FORM, worth carrying past this probe: A NON-DURABLE FIX THAT GENERATES DURABLE ARTIFACTS
+> PROPAGATES ITS OWN EXPIRY INTO THEM.** `mount -f` was correctly labelled *"dies at reboot."* Nobody
+> labelled the 186 forwarders it had silently made conditional on itself.
+>
+> **EXERCISE THE TOOL; DO NOT RESOLVE ITS NAME.** Found by `~Z` 2026-07-29, approved by Andrew-direct.
 >
 > **RECORD OF THEN — 2026-07-25 morning, NOT a current claim.** *At that moment `~/bin` forwarded 3 tools and
 > exactly 2 of 91 `.tools/comp-*` resolved bare; the probe returned a clean pass at that coverage, one call

@@ -77,8 +77,32 @@ Say "       fstab:    $fstab"
 
 # --- 3. Compose the desired content -------------------------------------------
 # Format: <device> <mount point> <type> <options> <dump> <pass>
-$cOpts = if ($NoAcl) { 'binary,noacl,posix=0,user,noumount,auto' }
-         else        { 'binary,posix=0,user,noumount,auto' }
+# ---------------------------------------------------------------------------
+# `noumount` REMOVED 2026-07-29 -- IT REJECTS THE WHOLE LINE.
+#
+# Found by 0.0.0_AB_MSTR~Z after Andrew rebooted site Z (the first genuinely
+# fresh MSYS mount table). Every bash on that box emitted, verbatim:
+#     0 [main] bash (NNNN) fstab_read_flags: invalid fstab option - 'noumount'
+# and `/c` never mounted. NOT "fstab ignored" and NOT "parsed-and-overridden" --
+# a THIRD state: PARSED-AND-REJECTED. A file that is not read does not emit a
+# parse error naming a token inside it. One invalid option voids the entire line.
+#
+# >> THE TRAP, AND IT IS THE REUSABLE PART: `noumount` IS PRESENT on the working
+# /cygdrive/c mount --  C: on /cygdrive/c type ntfs (binary,noacl,posix=0,user,noumount,auto)
+# It is valid as an INTERNAL MOUNT FLAG and invalid as an FSTAB-WRITABLE OPTION
+# in this build. I wrote this line by copying the flags off the working mount,
+# which is the obvious move and the wrong one:
+#     THE FLAGS YOU CAN READ ARE NOT THE FLAGS YOU MAY WRITE.
+# Same shape as every other defect this file's own header warns about: a value
+# observed in one context, assumed valid in another. <<
+#
+# STATUS: THE REMOVAL IS INDICATED, NOT VERIFIED. Proving it needs an elevated
+# write PLUS a fresh shared-memory mount table (i.e. a reboot), and neither site
+# has both available. LD-0340 STAYS OPEN until a post-reboot
+# `mount | grep ' /c '` shows binary,posix=0,user,auto. Do not record this as fixed.
+# ---------------------------------------------------------------------------
+$cOpts = if ($NoAcl) { 'binary,noacl,posix=0,user,auto' }
+         else        { 'binary,posix=0,user,auto' }
 
 $lines = @(
     '# Git for Windows /etc/fstab -- managed by .tools/fix-git-fstab.ps1',
@@ -164,8 +188,22 @@ if (Test-Path $bash) {
     #   volatile      -> binary,user      (what `mount -f` with no options gives)
     $cLine = ($mountOut | Where-Object { $_ -match ' on /c ' }) -join ''
     Say ""
-    if (-not $cLine) {
-        Say "    /c: ABSENT from this table. fstab is written but not yet applied." 'Yellow'
+    # THIRD CELL ADDED 2026-07-29: the original two-cell test (LIVE vs NOT-READ) mapped an ABSENT
+    # /c to "fstab not being read" -- which was WRONG at site Z and would have sent the next agent
+    # hunting the wrong defect. A rejected line and an unread file are indistinguishable by the
+    # mount table ALONE; only the PARSE ERROR separates them. Check stderr, not just `mount`.
+    $parseErr = ($mountOut | Where-Object { $_ -match 'invalid fstab option' }) -join '; '
+    if ($parseErr) {
+        Say "    /c: FSTAB IS BEING READ AND ITS LINE IS *REJECTED*." 'Red'
+        Say "        $parseErr" 'Red'
+        Say "        One invalid option voids the WHOLE line, so /c never mounts. This is NOT"
+        Say "        'fstab ignored' -- an unread file cannot emit a parse error about its own"
+        Say "        contents. Fix the named option and re-run. LD-0340 stays open."
+    } elseif (-not $cLine) {
+        Say "    /c: ABSENT and NO parse error surfaced here." 'Yellow'
+        Say "        AMBIGUOUS, not negative: this shell may be attached to a cached MSYS mount"
+        Say "        table that predates the fstab, in which case the file has never been read at"
+        Say "        all. Re-check from a genuinely fresh table (reboot) before concluding."
     } elseif ($cLine -match 'noumount' -and $cLine -match 'posix=0') {
         Say "    /c: FSTAB IS LIVE (flags carry posix=0 + noumount) -- durably fixed." 'Green'
     } else {
