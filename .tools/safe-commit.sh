@@ -479,10 +479,55 @@ if command -v comp-pulse >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
   fi
 fi
 
-# Advisory comp-coverage-check gate (COMPUNIFY; never blocks).
-if command -v comp-coverage-check >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
-  if echo "$IN_SCOPE" | grep -qE 'comp-coverage-map\.yaml|\.tools/comp-'; then
-    comp-coverage-check check 2>&1 | sed 's/^/  [coverage-check] /' || true
+# BLOCKING comp-coverage-check gate (COMPUNIFY S2). Flipped advisory->blocking 2026-07-28
+# (3.0.0_SA_CVO, Andrew-direct) on a measured basis: 538ms fixed cost, does NOT scale with commit
+# size, tri-state with an honest UNVERIFIABLE, and its own selfcheck demonstrates it FAILS on
+# injected defects (an unplaced tool / silent overlap / stale projection) -- i.e. it can fail, so
+# its PASS carries information.
+#
+# >> THE DEFECT THIS ALSO CLOSES, and it is the reason the `command -v` guard is no longer a silent
+# skip: comp-coverage-check WAS NOT ON PATH (only 4 of 92 comp-tools resolved bare before the
+# 2026-07-28 forwarder widening). `command -v` returned false, the whole block was skipped, and
+# THE GATE REPORTED NOTHING WHILE BEING OFF -- on every commit, indefinitely. A gate that cannot be
+# FOUND is not advisory, it is absent, and absence looked exactly like a pass. Never let a missing
+# gate binary be silent again.
+if [ -n "$IN_SCOPE" ] && echo "$IN_SCOPE" | grep -qE 'comp-coverage-map\.yaml|\.tools/comp-'; then
+  if ! command -v comp-coverage-check >/dev/null 2>&1; then
+    # LOUD, not silent. Cannot block on a missing binary (that would wedge every commit on a
+    # machine that never provisioned the shims) -- but it must never again pass unremarked.
+    echo "  [coverage-check] WARN: comp-coverage-check NOT ON PATH -- the COMPUNIFY gate did NOT" >&2
+    echo "  [coverage-check]       run for this commit. Fix: bash .tools/provision-path-shims.sh" >&2
+  else
+    _cc_out="$(comp-coverage-check check 2>&1)"; _cc_rc=$?
+    printf '%s\n' "$_cc_out" | sed 's/^/  [coverage-check] /'
+    if [ "$_cc_rc" -eq 1 ]; then
+      echo "BLOCKED: comp-coverage-check FAIL -- the comp-tool coverage map has drifted from the" >&2
+      echo "  territory (unplaced tool / silent overlap / phantom seam / stale projection /" >&2
+      echo "  incomplete inventory). The offending node is NAMED above. Fix the map, then re-commit." >&2
+      exit 1
+    elif [ "$_cc_rc" -eq 2 ]; then
+      # UNVERIFIABLE (rc=2) = THE GATE ITSELF IS BROKEN (ledger unreadable, or a gate_contract rule
+      # has no checker) -- NOT that the map is bad. DELIBERATE ASYMMETRY: rc=1 BLOCKS, rc=2 WARNS.
+      #
+      # WHY NOT BLOCK ON rc=2. Blocking would wedge EVERY in-scope commit fabric-wide the moment the
+      # gate broke -- converting a broken instrument into a self-inflicted outage. Today already
+      # produced the inverse defect (this gate silently OFF for want of a PATH entry); shipping a
+      # gate-wedge tonight would just be the same mistake mirrored.
+      #
+      # IT IS STILL NOT A PASS. It prints UNVERIFIABLE on stderr on EVERY in-scope commit until
+      # fixed -- loud, repeated, and impossible to mistake for a clean run. Per the tool's own
+      # tri-state doctrine and CVO's: could-not-verify is a FINDING, and a finding that shouts on
+      # every commit is not a silent one.
+      #
+      # (An audited-override form was written first and REMOVED: it keyed on $COMMIT_MSG_RAW, a
+      # variable that DOES NOT EXIST in this script -- the real message extraction builds CS_MSG
+      # ~90 lines further down. The override could never have matched. A dead escape hatch that
+      # reads as a live one is worse than no escape hatch, so it is gone rather than plausible.)
+      echo "  [coverage-check] UNVERIFIABLE (rc=2) -- THE GATE COULD NOT EVALUATE ITSELF." >&2
+      echo "  [coverage-check]   The ledger was unreadable, or a gate_contract rule has no checker." >&2
+      echo "  [coverage-check]   This is NOT a pass. It does not block (a broken gate must not wedge" >&2
+      echo "  [coverage-check]   the fabric) -- but it will print on every in-scope commit until fixed." >&2
+    fi
   fi
 fi
 
