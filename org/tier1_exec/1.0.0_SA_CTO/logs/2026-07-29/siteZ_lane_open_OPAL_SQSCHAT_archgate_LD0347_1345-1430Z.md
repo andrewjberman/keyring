@@ -15,9 +15,11 @@ NOT REGISTERED before arming, and the one pre-existing watcher on the box belong
 `0.0.0_AB_MSTR~Z` (pid 254 under a live wrapper) -- left untouched per self-scope.
 Zero crons (LD-0157). Owned-paths hook wired. Session serial file written.
 
-- **A.3 PATH probe: 93 of 93 comp-tools resolve bare.** Full coverage -- better than the frozen
-  digits in XXX.md's own record-of-then block, which is exactly what that block predicts will happen
-  and tells you to re-derive rather than trust.
+- ~~**A.3 PATH probe: 93 of 93 comp-tools resolve bare.** Full coverage.~~ **STRUCK -- see §8. This
+  was a TEXTUAL-PROXY PASS, and `.tools/verify-device.sh`'s own header names this exact output as a
+  known false one: *"The startup probe reported '93 of 93 comp-tools resolve bare'. ZERO ran."*
+  `command -v` proves a name RESOLVES; it cannot prove the forwarder EXECUTES.** My denominator was
+  also not the canonical one (93 `.tools/comp-*` files vs the tool's 86 comp-tools).
 - **The `/watcher` SKILL.md Step 0 still hardcodes `/c/Users/AndrewBerman/...`.** On this box `/c`
   does not exist. Step 3 of the same doc says resolve-the-prefix and warns a wrong prefix arms
   NOTHING while every other probe reads healthy. I resolved empirically. *The doc's own recorded fix
@@ -229,3 +231,50 @@ WS-3 contradicted each other.
 
 **Commits this addendum:** `d8347dd0c` (corrections + attribution + IAM trigger), `0a48ee393` (B.2a
 no-consumer + poll-on-heartbeat restoration). Pushed through `0a48ee393`.
+
+## 8. THIRD false pass, mine, caught from one line of MSTR's message -- and this one had a REAL FIX
+
+MSTR's correction listed its own errors of the day, including *"a probe that reported 93/93 comp-tools
+healthy while 0 ran."* **That is MY §1 headline.** Chased it: `.tools/verify-device.sh` (arrived in this
+session's own merge) exists specifically for this class, and **its header quotes my exact output as the
+canonical false pass** -- *"The startup probe reported '93 of 93 comp-tools resolve bare'. ZERO ran."*
+
+**The defect:** `command -v` tests whether a NAME RESOLVES. It cannot test whether the forwarder RUNS.
+XXX.md's A.3 probe -- which I ran as written -- is a **textual proxy**, and the file's own adjacent
+warning is that a probe aimed at a proxy cannot fail in the state it exists to detect. My denominator
+was wrong too: 93 = `.tools/comp-*` files; the canonical count is **86 comp-tools**.
+
+**What I actually had evidence for, and it is not nothing:** `comp-grep` produced real hits three
+times, `safe-commit`'s hook chain ran and **blocked me twice** (owned-paths on the ledger, the
+shared-worktree gate on `git stash`), and the `aws` shim executed. So this shell's rail is genuinely
+live -- **but my probe is not what established that; the tools I exercised are.**
+
+**RAN THE REAL INSTRUMENT: `bash .tools/verify-device.sh` -> `PASS=10 FAIL=1 UNVERIFIABLE=1`,
+`RESULT: FAIL -- this device is NOT fully protected.`**
+- `[PASS]` jq present AND parses -- so the 8 PreToolUse hooks are **not** inert here (the site-Z
+  failure mode from 07-28 where a missing gitignored `jq.exe` let `git rebase` pass **silently**).
+- `[PASS]` **never-rules-gate DENIES a rebase**, exercised -- "the only detector for a silent history
+  rewrite," confirmed live on this device rather than assumed.
+- `[FAIL]` **forwarder has NO prefix fallback** -- it baked one MSYS flavor, so a reboot would kill
+  **every** forwarder at once (186 died that way at site Z). The comp rail would be dead at the
+  entrypoint while `safe-commit`'s hooks print "No such file or directory" and **let commits through**.
+
+**FIXED, not filed:** `bash .tools/provision-path-shims.sh` -> wrote 95 tools x2 forms; **re-verified
+-> `PASS=11 FAIL=0`, `[PASS] forwarder reboot-fallback present -- tries both /c and /cygdrive/c`.**
+The fix is exercised, not assumed.
+
+**RESIDUAL, honestly unverifiable and not called fine:** item 5 (fstab/mount) reads `[UNVER]` --
+*"/c absent, no parse error in this shell. AMBIGUOUS: unread fstab and rejected fstab look identical
+from the mount table alone. Re-check from a fresh table (reboot)."* Three outcomes, not two; "cannot
+tell" is not "fine."
+
+**THE PATTERN ACROSS ALL THREE OF MY FALSE PASSES TODAY** (`93/93`, PROP-absent, LD-0347-parked)
+**is one thing: I accepted a PROXY for the SEMANTIC FACT every time** -- a name resolving for a tool
+running, one directory listing for the estate, a `Write` success message for a file on disk. MSTR's
+formulation is the compressed version and it is now in PRD B.6: **we verify the things we are ARGUING
+about and assert the things we are merely MENTIONING.** All three of mine were things I was merely
+mentioning.
+
+**Recommendation to whoever owns XXX.md (not my lane to edit this session): A.3's probe should BE
+`verify-device.sh`, or at minimum call it.** The current A.3 text is a proxy check standing where a
+semantic one is needed, and it has now produced a documented false pass at least twice on this device.
