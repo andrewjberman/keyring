@@ -1,5 +1,22 @@
 # `comp-opalbizcluster` reroute — root cause, solution, and implementation recommendation
 
+> **ANDREW-DIRECT RULING (2026-07-29 ~16:45Z, CVO terminal, VERBATIM — supersedes the name below
+> and binds the build):** *"first of all, that tool should have a refresh function built in and a
+> head with timestamp of its source very clearly depicted, it also should not be named pipescript
+> it should be named comp-opalbizsem"*
+> Three binding requirements onto the §6 plan: **(1) NAME = `comp-opalbizsem`** (updates this doc's
+> `comp-opalbizcluster`; every reference below reads as opalbizsem). **(2) REFRESH FUNCTION BUILT
+> IN** — the §5C reroute EXCEEDS this (the snapshot is eliminated; auto-refresh on HEAD-advance),
+> but until steps 2-4 land, an interim `--refresh` that regenerates the resolver snapshot is the
+> bridge; a frozen source with no refresh path is prohibited either way. **(3) SOURCE-TIMESTAMP
+> HEAD, unmissable** — first line of every invocation's output states the source + its vintage
+> (the current banner does this; the requirement makes it a CONTRACT, not a courtesy, and it
+> survives the reroute as the kuzu provenance header). **Context that motivated the ruling: the
+> 44-day frozen snapshot was serving the underscore TWIN as "primary served rollup LIVE fresh" —
+> a stale estate map actively defends zombies. Renaming into the comp-* namespace also brings the
+> tool inside the census glob + registration gate it structurally evaded (UNCLASSIFIED 4-of-89
+> finding, 2026-07-29).**
+
     author: 3.0.0_SA_CVO
     task:   Andrew-direct 2026-07-28 -- verify the kuzu blocker myself, then figure out a solution
             and recommend how to implement it. Not routed to CTO; he is on MDPF.
