@@ -14,7 +14,11 @@
 # SETUP (one time): dot-source this from your PowerShell profile so `ajb`
 # is always available. Add this line to $PROFILE:
 #
-#   . "C:\Users\AndrewBerman\Desktop\ajb_workspace\.tools\ajb.ps1"
+#   . "<your-clone-of-ajb_workspace>\.tools\ajb.ps1"
+#
+# (On Andrew's base device that is C:\Users\AndrewBerman\Desktop\ajb_workspace;
+#  on any other device it is wherever YOU cloned the repo. Everything this file
+#  does is derived from its own location, so the clone path is the only input.)
 #
 # (Open the profile with:  notepad $PROFILE   -- create it if it does not exist.)
 # To use it immediately in the current session without editing the profile,
@@ -43,6 +47,32 @@
 #   4. Injects an Andrew global ruling (2026-05-22) into the first message:
 #      every agent runs the /watcher skill at startup to self-heal its
 #      inbox-watcher + broker registration before anything else.
+
+# ---------------------------------------------------------------------------
+# REPO ROOT -- resolved ONCE, from THIS FILE'S OWN LOCATION. Never a user path.
+#
+# Andrew-direct 2026-07-28: "The functions of the repo cannot be rooted to the
+# local path, they have to cap at the repo path." This file lives in <root>/.tools/,
+# so the repo root is its parent. A second device clones to a different absolute
+# path; everything below must follow the clone, not the original machine.
+#
+# MEASURED, not assumed (2026-07-29): $PSScriptRoot DOES resolve inside a function
+# defined in a dot-sourced script, and it survives a Set-Location. So the six call
+# sites below could each use $PSScriptRoot directly -- this single global exists so
+# there is ONE definition to audit, not six, and so a future non-.tools/ caller has
+# a named thing to override.
+#
+# NO GIT DEPENDENCY: deliberately not `git rev-parse --show-toplevel`. This launcher
+# must work before/without git, and a CWD-sensitive resolver would re-introduce
+# exactly the ambient-state coupling being removed.
+# ---------------------------------------------------------------------------
+if ($PSScriptRoot) {
+    $Global:AjbRepoRoot = Split-Path -Parent $PSScriptRoot
+} elseif (-not $Global:AjbRepoRoot) {
+    # Only reachable if this file is pasted into a session rather than dot-sourced.
+    $Global:AjbRepoRoot = (Get-Location).Path
+    Write-Host "[ajb] WARN: no `$PSScriptRoot -- repo root guessed from CWD: $Global:AjbRepoRoot" -ForegroundColor Yellow
+}
 
 # Get-AgentLoopDirective: serial -> role-specific CronCreate directive string,
 # baked into the launcher first-message so canonical loops are armed
@@ -174,7 +204,7 @@ function ajb {
     # owned-paths COMP_LEARNS lane in .owned-paths.yaml).
     $base = $Serial -replace '~[A-Za-z0-9]+$', ''
     if ($env:AJB_FORCE_WS -eq '1') {
-        $ws = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
+        $ws = $Global:AjbRepoRoot
         Write-Host "[ajb] AJB_FORCE_WS=1 -> ajb_workspace cwd (LD-0088 A.1 bypass; Andrew-direct framework-3 fallback)" -ForegroundColor Yellow
     } else {
         switch -Regex ($base) {
@@ -183,11 +213,11 @@ function ajb {
                 # Route CL serials to ws-root as the fallback so a launch does NOT hard-error on the
                 # deleted worktree (was: $ws = ...\feature_clb -> Test-Path fail -> Write-Error). The CL
                 # serial-routing identity (this case + the pattern) is PRESERVED for re-home if CL resumes.
-                $ws = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
+                $ws = $Global:AjbRepoRoot
                 Write-Host "[ajb] CL worktree RETIRED (LD-0222); CL paused -> ws-root fallback (re-home TBD)" -ForegroundColor Yellow
             }
             default {
-                $ws = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
+                $ws = $Global:AjbRepoRoot
             }
         }
     }
@@ -217,7 +247,7 @@ function ajb {
     if (-not $Headless -and $env:WT_SESSION -and $env:AJB_NO_WT_RELAUNCH -ne '1') {
         $wtCmd = Get-Command wt.exe -ErrorAction SilentlyContinue
         if ($wtCmd) {
-            $ajbPath = 'C:\Users\AndrewBerman\Desktop\ajb_workspace\.tools\ajb.ps1'
+            $ajbPath = Join-Path $Global:AjbRepoRoot '.tools\ajb.ps1'
             # Quote extras as a single-quoted PS literal so metacharacters in the
             # extra words don't get re-parsed by the inner shell (LD-0078 class).
             $extraLit = ''
@@ -363,7 +393,7 @@ function spawn-agent {
         [string[]]$Extra
     )
 
-    $script = 'C:\Users\AndrewBerman\Desktop\ajb_workspace\.tools\spawn-agent.ps1'
+    $script = Join-Path $Global:AjbRepoRoot '.tools\spawn-agent.ps1'
     if (-not (Test-Path $script)) {
         Write-Error "spawn-agent: script not found at $script"
         return
@@ -386,7 +416,7 @@ function kill-agent {
         [string[]]$Args
     )
 
-    $script = 'C:\Users\AndrewBerman\Desktop\ajb_workspace\.tools\kill-agent.ps1'
+    $script = Join-Path $Global:AjbRepoRoot '.tools\kill-agent.ps1'
     if (-not (Test-Path $script)) {
         Write-Error "kill-agent: script not found at $script"
         return

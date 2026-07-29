@@ -40,7 +40,11 @@ param(
     [string[]]$Extra
 )
 
-$ws  = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
+# Repo root from THIS FILE'S OWN LOCATION (<root>/.tools/spawn-agent.ps1 -> parent of .tools).
+# Andrew-direct 2026-07-28: repo functions cap at the REPO path, never a user path -- a second
+# device clones elsewhere and every spawn/kill/audit path must follow the clone. $ajb and $log
+# below already derive from $ws, so this one line makes all three portable.
+$ws  = Split-Path -Parent $PSScriptRoot
 $ajb = Join-Path $ws '.tools\ajb.ps1'
 $log = Join-Path $ws 'org\mcp\agent-spawn-audit.log'
 
