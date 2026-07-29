@@ -216,11 +216,43 @@ $inner = "[Console]::Write(([char]27).ToString() + ']0;$Serial' + ([char]7).ToSt
 # actions.
 $wt = Get-Command wt.exe -ErrorAction SilentlyContinue
 $hostPid = $null
-if ($wt) {
+# Resolve the ajb.ps1 path the wt payload will carry BEFORE choosing a branch: if it
+# cannot be made space-free, wt is not a usable transport for this box (see the
+# SPACE-IN-PATH note below) and we must take the Start-Process path instead.
+$ajbForWt = $null
+try { $ajbForWt = (New-Object -ComObject Scripting.FileSystemObject).GetFile($ajb).ShortPath } catch { $ajbForWt = $null }
+if (-not $ajbForWt) { $ajbForWt = $ajb }
+$usableWt = [bool]$wt -and ($ajbForWt -notmatch ' ')
+if (-not $usableWt -and $wt) {
+    Write-Host "[spawn-agent] wt.exe present but ajb.ps1 path is not space-free ($ajbForWt) -- routing to Start-Process so the payload survives CommandLineToArgvW."
+}
+if ($usableWt) {
     # wt.exe semicolon-escape: wt parses `;` as action-separator. Use `\;` to
     # escape ANY semicolon inside the -Command payload so wt passes the full
     # statement string to powershell.exe.
-    $innerForWt = $inner -replace ';', '\;'
+    #
+    # SPACE-IN-PATH (0.0.0_AB_MSTR~Z, 2026-07-29 -- site-Z spawn failure, EXERCISED FIX).
+    # wt hands its trailing commandline to CreateProcess via CommandLineToArgvW,
+    # which CONSUMES `"` characters. $inner dot-sources ajb.ps1 as `. "$ajb"`; strip
+    # those quotes and powershell receives the path BARE and splits it on whitespace.
+    # On a spaceless profile path (C:\Users\AndrewBerman\...) losing the quotes is
+    # harmless -- which is why this survived every spawn on the primary box. On site Z
+    # (C:\Users\Opal Bloomberg\...) it is fatal: powershell resolves `C:\Users\Opal` as
+    # the command, `ajb` is then undefined, and the window dies -- WHILE this script
+    # prints "launched ... in a new window", because it never observes the child's
+    # fate. Producer self-report is not evidence (Rule 22a); the sound oracle is the
+    # spawned agent's own register_agent.
+    #
+    # `\"` was tried FIRST and DID NOT WORK (measured, not assumed -- the identical
+    # error reproduced). Rather than hunt further escape variants through two layers
+    # of parser, remove the need for quoting: dot-source the 8.3 SHORT path, which
+    # contains no spaces, so the payload carries NO double quotes for wt to strip.
+    # Every other literal in $inner is single-quoted and passes through untouched.
+    # Falls back to the long path if 8.3 generation is disabled on the volume; the
+    # `-not $usableWt` guard below then routes to Start-Process, which passes the
+    # payload intact as a single -ArgumentList element.
+    $innerWtPayload = "[Console]::Write(([char]27).ToString() + ']0;$Serial' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$Serial'; . $ajbForWt; ajb -Headless $Serial$extraStr $marker`: $Serial"
+    $innerForWt = $innerWtPayload -replace ';', '\;'
     # `-w new` opens a fresh WT window (preserves the one-window-per-agent UX
     # convention). `new-tab --title $Serial` sets the tab title that WT will
     # display at creation. powershell.exe then runs our $inner script inside.
