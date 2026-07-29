@@ -27737,3 +27737,24 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CERT_STAGING_D1D4_20260729.md | PASS |
 | 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/prune/SKILL.md | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/prune/SKILL.md | VERDICT |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-trigger | comp-trigger mdpf --days 2 | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CERT_STAGING_D1D4_20260729.md | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/emitte... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/.open_deploys/emitter-wo4c-cadence-acceptance.json | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript deployed dim_mdpf_account_distribution.py | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/prune-qual/SKILL.md --fi... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/prune-qual/SKILL.md .claude/skills/prune-quant/SKILL.md | VERDICT |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/CONTROLS_OVER_CARE.md | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff docs/doctrine/CONTROLS_OVER_CARE.md | VERDICT |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/doctrine/CONTROLS_OVER_CARE.md | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff docs/doctrine/CONTROLS_OVER_CARE.md | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/prune-qual/SKILL.md | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/prune-qual/SKILL.md | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260729T0345Z_non-model-assets-js... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-which,comp-grep | comp-which A.3 exercise (RAN, banner) + comp-which enumerate-vs-whitelist (near-tie, routed) + comp-grep mdpf-portal-publisher (localized source/TF/source-map, surfaced stale PRD RF-1) | PASS/PARTIAL |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
