@@ -82,6 +82,32 @@ deep-read: 0.8.0's OPAL_TAXONOMY_DC_LEDGER_20260717.md** — if any clause there
 vocabulary, my no-contradiction verdict does not cover it; a 5-minute check by you or 0.8.0 closes
 that residual.
 
+## RESIDUAL CLOSED (~14:35Z, Andrew-directed): OPAL_TAXONOMY DC ledger deep-read
+
+`OPAL_TAXONOMY_DC_LEDGER_20260717.md` read in full. **It fixes NO value-level vocabulary — the
+provenance-taxonomy no-contradiction verdict now covers the whole record.** The ledger is
+structural (SS-A prefix grammar / SS-B repo homes / SS-D scheduler grammar / SS-E-C OS-IAM-region).
+Three CODE-LOCATION touchpoints surfaced, none a contradiction, all worth folding into v0.2:
+
+1. **DC-7 is a prior-RULED instance of C-1 and should be cited as precedent:** `landing_guard.py`
+   exists as two byte-identical copies with no canonical home — "CONFORM-BY-LUCK" — and CTO already
+   ruled canonical-home + build-manifest sha-tie (W3). It is also the clean CONTRAST case for my
+   polyglot-pair amendment: landing_guard is a same-language REPLICA pair (generate/canonicalize —
+   C-1 as drafted applies in full); aws/aws.cmd is the polyglot pair (pair-invariant + parity
+   exercise). Citing both makes the clause's boundary teachable.
+2. **C-2's deployed-location enumeration is already behind a ruling:** DC-1's ruled disposition
+   migrates runner shell scripts to `opal-runner-shared` — a location class C-2's prose
+   (`s3://opal-data-{pipeline}/code/` or the Lambda artifact bucket) does not name. Not a conflict;
+   an enumeration-drift instance ON ARRIVAL. Fix: derive the legitimate-locations set from a
+   registry (the C-3 mapping files themselves) rather than enumerating in prose — prose enumerations
+   are this workspace's named stale-record class.
+3. **The DENY-at-birth recommendation should ride the ledger's own hard-won pattern:** RS-1's lesson
+   ("an instrument that measures the wrong breadth is a gate that either floods or lies" — the raw
+   `conforms` field flagged 153/154) plus the DC-8..11 enforce-grammar build (grandfather-pin 11,
+   scoped exit-2, estate-wide WARN @e9b271291) is exactly the mechanism my C-3 DENY needs: measure
+   how many trees are currently unmapped FIRST; grandfather-pin the stock; DENY only births past the
+   pin. Same recommendation, now with its ride-surface named.
+
 ## What you should have asked but did not
 
 **The taxonomy cannot catch a source that forges vintage INTO the data.** MEASURED's law (as_of
