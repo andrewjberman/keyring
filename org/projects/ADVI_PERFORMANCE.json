@@ -1,0 +1,46 @@
+{
+  "project_code": "ADVI_PERFORMANCE",
+  "macro_code": "ADVI",
+  "name": "Advisor Intelligence Performance -- three-firm gold analytics runner completion and vendor performance migration",
+  "description": "Andrew-direct 2026-07-29 voice memo: create the Advisor Intelligence performance project for proper performance attribution and performance reporting in the gold analytics runners across 49 Financial / BD-Pipeline, Inflection / INF-Pipeline, and Cottonwood / COT-Pipeline. The project is backend-only at this stage. It continues the runner refactor begun in OPAL_CONSOLIDATION, OPAL_RUNNERS, OPAL_GLDRNS, and OPAL_ASSETS_49METATABLES, but gives the performance problem its own ADVI carrier. Primary doctrine: product-facing performance must not be modeled as market-performance residual from NNA. 49F goes first and must migrate to Schwab 0833 silver in opal-data-assets plus one scoped Black Diamond meta table for advisor/fee role context, while fitting exactly into the existing D publisher shape consumed by the portal. Inflection follows using Orion/Eclipse performance endpoints. Cottonwood remains a lower-priority question mark until its source and runner shape are proven.",
+  "status": "active",
+  "phase": "PHASE 0 -- PRD v1.0 + registry authored 2026-07-29 by 1.0.0_SA_CTO~A from Andrew-direct transcription and fresh grounding. Kuzu was rebuilt and checked current against the S3 branch-head marker; it currently models legacy bd/inf performance scripts but not the new data/assets/scripts/gold/runners_49f tree, making graph coverage an acceptance gap. AWS/S3 state confirms 49F/BD, Inflection, and Cottonwood runner surfaces exist but the 49F account/client performance prefixes checked under schwab/08335338/gold/canonical have no visible partitions, Inflection daily performance_dim bronze is current for 2026-07-29, and Cottonwood account_performance is fresh while client_performance is stale.",
+  "current_phase": "Awaiting COO decomposition. Recommended execution: WS-0 evidence/source census with CRO Black Diamond input; WS-1 49F script-by-script completion and D-shape fit; WS-2 Inflection endpoint-backed performance completion; WS-3 Cottonwood discovery; WS-4 runner infra; WS-5 graph/contracts; WS-6 parity/cutover.",
+  "blocking": "COO decomposition; CRO/CTO confirmation of Black Diamond performance endpoint method and single 49F meta table; ADVI_TWR grain/column ratification plus Andrew D1 Account365 and D2 build-vs-license decisions before any reusable account-return fact emits; Cottonwood source decision before COT implementation.",
+  "depends_on": [
+    "ADVI_TWR",
+    "OPAL_CONSOLIDATION",
+    "OPAL_GLDRNS",
+    "OPAL_RUNNERS",
+    "OPAL_ASSETS_49METATABLES"
+  ],
+  "depends_on_note": "Consumes OPAL_CONSOLIDATION serving law and OPAL_GLDRNS runner-audit evidence. Does not supersede ADVI_TWR; ADVI_TWR remains the single owner for reusable daily account-return fact work. OPAL_RUNNERS and OPAL_ASSETS_49METATABLES are complete-as-superseded reference records whose source and meta-table laws carry forward.",
+  "owner": "1.0.0_SA_CTO",
+  "created": "2026-07-29",
+  "created_by": "1.0.0_SA_CTO~A",
+  "updated": "2026-07-29",
+  "pods": [
+    "1.0",
+    "2.0",
+    "4.0",
+    "0.4",
+    "0.6",
+    "0.7",
+    "0.8"
+  ],
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_PERFORMANCE_PRD.md",
+      "label": "PRD v1.0 -- backend-only Advisor Intelligence performance runner completion across 49F, Inflection, Cottonwood",
+      "date": "2026-07-29"
+    },
+    {
+      "path": "docs/references/ADVI_PERFORMANCE_ANDREW_RECORDING_20260729.md",
+      "label": "Andrew-direct machine transcript substrate",
+      "date": "2026-07-29"
+    }
+  ],
+  "source_brief": "C:\\Users\\AndrewBerman\\Downloads\\ADVI 49 and INF Runners_3303.m4a, transcribed by 1.0.0_SA_CTO~A on 2026-07-29.",
+  "pipeline": "49F: Schwab 0833 silver + one scoped BD meta table -> A/B/C gold performance facts -> existing D publishers -> existing portal artifacts. Inflection: Orion/Eclipse performance endpoint -> bronze performance_dim -> silver/performance -> gold C/D consumers -> existing portal artifacts. Cottonwood: source discovery first, then firm-native C/D path if endpoint-backed method exists.",
+  "verification_bar": "No frontend changes; D artifact shape unchanged; residuals not mislabeled as performance; 49F account/client performance partitions exist and pass dry-fit/parity; Inflection D outputs consume endpoint-backed performance fields; Cottonwood has an explicit source decision; Kuzu can discover the new runner surfaces or a graph-coverage defect is filed."
+}
