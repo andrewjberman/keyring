@@ -154,14 +154,57 @@ if not matches:
 
 plus, in the footer, `scanned %d of %d file(s)` and `>=` semantics on a truncated match count.
 
-**HELD, NOT LANDED, and the reason is a live collision:** `comp-which` runs `comp-grep`/`comp-glob`
-as its fallback path, and `0.8.0_AE_CloudComp` is at this moment capturing BEFORE-output for CTO's
-**mandatory byte-identical routing-identity control** on the comp-which wiring. If that capture
-includes comp-which's stdout bytes, a footer change of mine appears in their AFTER as a divergence
-that has nothing to do with their diff. Flagged to them at 015851Z; land is gated on their answer
-(routing DECISIONS → orthogonal, land freely; STDOUT BYTES → land after their capture closes).
+### LANDED `@6fef09fd45` — held first, then released, then independently verified
+
+**HELD, correctly.** `comp-which` runs `comp-grep` as its fallback, and `0.8.0_AE_CloudComp` was
+capturing BEFORE-output for CTO's mandatory byte-identical routing-identity control. They confirmed
+the collision was **real** — comp-grep's footer, including the exact `"is a real result"` line, was
+verbatim inside their frozen BEFORE bytes on all 3 fallback queries. Landing during their window
+would have surfaced as **their** defect. Released on their explicit message (024916Z), never on
+silence or on a commit.
+
+**RAVC CLOSED by `0.8.0_AE_CloudComp` (031337Z) — verified, not adopted.** They re-exercised every
+cell with *their own* inputs (token `return` not `import`, their own pathspecs, each cell an
+isolated invocation, positive control run separately):
+
+- **Cell C confirmed behavior-grade** — a failed retrieval can no longer read as a real zero.
+- **Cell D on their inputs:** `--max 10` → `scanned 2 of 260 ... TRUNCATED at --max 10 -- true total is >=10`.
+- **comp-which fallback RE-CAPTURED LIVE** (not diffed against their archive, per my flag): the
+  on-rails comp-grep ran, systems-context intact, footer flowed through cleanly. **Nothing in
+  comp-which parses the footer, so a wording-only change is structurally invisible to routing.**
+
+**The `>=` clause: KEPT, on their argument, over my own doubt.** I offered to drop it as trivially
+true. They showed it is not redundant with `scanned N of M`:
+
+> `scanned 54 of 260` is on the **FILE axis** (scope coverage). `>=200` is on the **MATCH axis** —
+> the count an agent will actually quote. **Two different denominators.** `[TRUNCATED at --max 200]`
+> alone leaves "the count is a floor" as an *inference step*; `>=` deletes the step. Trivially true
+> to a careful reader and **load-bearing to a hasty one — and the hasty one is who O2 protects.**
+
+That is enumerate-what-a-number-is-OF applied to my own output, and it is the better call.
 
 ---
+
+### 3a. THE REMAINDER — rc is still 0 on a failed retrieval. This fix is INCOMPLETE by design.
+
+`scanned == 0` arguably warrants **rc=2** — comp-grep's own BLOCKED convention (`:118`). Until then
+**an agent reading only the exit code still gets "clean" on a failed retrieval**, which is the same
+defect one layer down from the one just fixed.
+
+Deliberately **not bundled**: comp-which's fallback wiring landed 20 minutes earlier
+(`@162eb94231`), and an rc flip is a separate blast radius through a path that had just been
+re-verified. CTO's own rule — one change to the rail at a time.
+
+**The interaction that must be decided before any flip** (found by `0.8.0_AE_CloudComp`, not by me):
+
+> **comp-which's auto-run fallback INVOKES comp-grep and RETURNS THROUGH IT.** If `scanned == 0`
+> flips comp-grep to rc=2, a typo'd query routed through comp-which's fallback surfaces **rc=2
+> through comp-which**. Their wiring parses neither footer nor rc for routing, but the **process
+> exit path** needs one look first. Decide deliberately: pass it through (probably right — honest
+> propagation) or intercept.
+
+Routed to CTO, queued and no-reply-needed (MDPF holds). Not AE's lane — rail-tool authorship isn't
+theirs — and not mine to land unilaterally on a mandated tool.
 
 ## 4. The census — and what it cannot see
 
