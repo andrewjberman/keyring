@@ -1,0 +1,17 @@
+{
+ "bm25": {
+  "C000": {
+   "arm": "decoy",
+   "cluster_id": "decoy_bm25_r00"
+  },
+  "C001": {
+   "arm": "baseline",
+   "cluster_id": "base_bm25_r00"
+  },
+  "C002": {
+   "arm": "real",
+   "cluster_id": "bm25_r00"
+  }
+ },
+ "semantic": {}
+}
