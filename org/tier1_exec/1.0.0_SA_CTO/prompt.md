@@ -292,7 +292,7 @@ These exist to keep agents from exploring blind and to prevent the silent-drift 
 - Cache collision → add a key-rename TO before the feature TOs
 - Schema check shows field gaps → add a data-path TO to Wave 1
 
-**Append to `org/compiler-tools-log.md`** at PRD commit time with one row per tool run.
+**RETIRED 2026-07-29 (Andrew-direct):** do NOT append to or commit `org/compiler-tools-log.md`. Tool runs are recorded in your session log; `org/mcp/comp-tool-runs.jsonl` is the machine record.
 
 ## Your Role: CEO Interview -> PRD
 

@@ -6,13 +6,14 @@
 # Warn-only: always exits 0. Never blocks commits.
 # Usage:
 #   prd-evidence-check.sh <file> [file ...]   -- check named PRD(s)
-#   prd-evidence-check.sh --baseline          -- scan all docs/architecture/*.md, log to compiler-tools-log.md
+#   prd-evidence-check.sh --baseline          -- scan all docs/architecture/*.md, print coverage report to stdout
+#                                                (md-log append RETIRED 2026-07-29 Andrew-direct; LD-0348 -- never re-point a writer at org/compiler-tools-log.md)
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WORKSPACE_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-COMPIL_LOG="$WORKSPACE_ROOT/org/compiler-tools-log.md"
+# COMPIL_LOG retired 2026-07-29 (Andrew-direct; LD-0348): the md log is preserved read-only; no writer may target it.
 PRD_DIR="$WORKSPACE_ROOT/docs/architecture"
 
 COMP_TOOLS="comp-pipescript comp-blast comp-iam comp-routes comp-platinum comp-transform comp-validate comp-cache comp-pii comp-trace comp-build comp-diff comp-xref"
@@ -54,11 +55,11 @@ run_baseline() {
     # Delegate to python3 for baseline scan — avoids per-grep process overhead on Windows
     # (165 files × grep calls via bash subshells is prohibitively slow on Windows Git Bash)
     if command -v python3 >/dev/null 2>&1; then
-        python3 - "$PRD_DIR" "$COMPIL_LOG" << 'PYEOF'
+        python3 - "$PRD_DIR" << 'PYEOF'
 import os, re, sys
 from datetime import datetime, timezone
 
-arch_dir, log_file = sys.argv[1], sys.argv[2]
+arch_dir = sys.argv[1]
 s5_re = re.compile(r'^#{1,3}\s*(§5|5[. )—]|Compiler Evidence)', re.IGNORECASE | re.MULTILINE)
 comp_re = re.compile(r'\bcomp-(pipescript|blast|iam|routes|platinum|transform|validate|cache|pii|trace|build|diff|xref|freshness|constants|shell)\b')
 
@@ -85,13 +86,12 @@ for fname in sorted(os.listdir(arch_dir)):
 ts = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 total = len(results)
 print(f'\nBaseline complete: {pass_n} PASS / {warn_n} WARN / {total} total')
-with open(log_file, 'a', encoding='utf-8') as f:
-    f.write(f'\n## prd-evidence-check --baseline | {ts}\n\n')
-    f.write('| Status | File | Notes |\n|--------|------|-------|\n')
-    for s, fn, note in results:
-        f.write(f'| {s} | {fn} | {note} |\n')
-    f.write(f'\nTotal: {pass_n} PASS, {warn_n} WARN, {total} PRDs scanned.\n')
-print(f'Coverage report appended to {log_file}')
+# md-log append RETIRED 2026-07-29 (Andrew-direct; LD-0348) -- report to stdout only
+print(f'\n## prd-evidence-check --baseline | {ts}\n')
+print('| Status | File | Notes |\n|--------|------|-------|')
+for s, fn, note in results:
+    print(f'| {s} | {fn} | {note} |')
+print(f'\nTotal: {pass_n} PASS, {warn_n} WARN, {total} PRDs scanned.')
 PYEOF
         return
     fi
@@ -118,9 +118,9 @@ PYEOF
     done < <(find "$PRD_DIR" -maxdepth 1 -name "*.md" | sort)
     echo ""
     echo "Baseline complete: $pass PASS / $warn WARN / $total total"
-    { echo ""; echo "## prd-evidence-check --baseline | $ts"; echo ""; echo "| Status | File | Notes |"; echo "|--------|------|-------|"; cat "$tmp_rows"; echo ""; echo "Total: $pass PASS, $warn WARN, $total PRDs scanned."; } >> "$COMPIL_LOG"
+    # md-log append RETIRED 2026-07-29 (Andrew-direct; LD-0348) -- report to stdout only
+    { echo ""; echo "## prd-evidence-check --baseline | $ts"; echo ""; echo "| Status | File | Notes |"; echo "|--------|------|-------|"; cat "$tmp_rows"; echo ""; echo "Total: $pass PASS, $warn WARN, $total PRDs scanned."; }
     rm -f "$tmp_rows"
-    echo "Coverage report appended to $COMPIL_LOG"
 }
 
 # --- Main ---
