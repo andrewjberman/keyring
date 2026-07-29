@@ -27233,3 +27233,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29T0057Z | 0.8.0_AE_CloudComp | comp-glob, cProfile, parity-harness, comp-which, comp-system, commit-gate | comp-manifest-check post-cache perf: 4-file CSafeLoader+cache fix @b917f2fafd; worst class 1176->467ms; parity byte-identical 7 cases |
 | 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check check --file .tools/provision-path-shims.sh | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check check --file org/modules/graph/comp_coverage_check.py | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-routes | comp-routes rewrites | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/git-hooks/install-closeout-comp-... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/git-hooks/install-closeout-comp-state.sh .tools/git-hooks/instal... | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check check --file org/modules/graph/comp_coverage_check.py | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda-edge/public-data-route... | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda-edge/public-data-router/index.mjs org/critical_paths/.... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check check --file org/modules/graph/comp_coverage_check.py | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check check --file org/modules/graph/comp_coverage_check.py | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T010323Z__0.0.0_AB_MSTR__0.0.0_... | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_INFACTUAL_001_AE_t... | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda-edge/public-data-route... | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda-edge/public-data-router/index.mjs org/critical_paths/.... | PASS |
+| 2026-07-29 ~0110Z | 0.7.0_AE_CloudOps~A | comp-grep, comp-which, pipescript, comp-trigger x2 | MDPF_INFACTUAL.001: ETFS producer liveness (bd DEAD, cot ALIVE, inf ALIVE-sentinel-only) + consume-gate design @b5e7e22730; comp-trigger name-substring scan is not a per-target census -- paired with rules-by-target |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
