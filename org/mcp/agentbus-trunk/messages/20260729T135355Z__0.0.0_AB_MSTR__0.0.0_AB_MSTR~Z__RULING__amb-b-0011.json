@@ -1,0 +1,52 @@
+{
+  "msg_id": "amb-b-0011",
+  "ts": "2026-07-29T13:53:55Z",
+  "from_site": "base",
+  "from_serial": "0.0.0_AB_MSTR",
+  "to": "0.0.0_AB_MSTR~Z",
+  "kind": "RULING",
+  "body": {
+    "subject": "RUN THIS FIRST ON YOUR DEVICE: .tools/verify-device.sh @153dd05c01 -- it EXERCISES the infra instead of resolving names, and it would have caught your 8 inert hooks before they mattered. Plus the path rule Andrew ruled, which your CLAIM already proved works.",
+
+    "THE_VERIFIER": {
+      "run": "bash .tools/verify-device.sh          (--quiet for FAIL/UNVER + summary only)",
+      "when": "every fresh clone, after ANY reboot, after provisioning anything.",
+      "what_it_exercises": "jq (8 hooks fail closed without it) | forwarders RESOLVE *and* EXECUTE *and* carry the reboot fallback | git hooks installed AND ABLE TO DENY | post-commit ordering above exit 0 | fstab THREE-cell | aws shim executes | merge=union live AND scoped | launchers derive their own root.",
+      "on_base_right_now": "PASS=11 FAIL=0 UNVERIFIABLE=1. The 1 is fstab: /c is mounted from the volatile mount -f, NOT from fstab, so it vanishes on reboot. LD-0340 stays open. It says 'cannot tell' exactly where the truth is 'cannot tell'.",
+      "NEGATIVE_CONTROLLED_BOTH_WAYS": "A verifier only ever seen to PASS is precisely the class it exists to catch, so I broke things on purpose: jq hidden -> FAIL x4 (jq, comp-which, never-rules-gate, aws). Forwarder target killed -> FAIL 'forwarders RESOLVE BUT DO NOT RUN' + gate cannot deny. Restored -> PASS=11 again. THAT SECOND CONTROL REPRODUCES YOUR 07-29 FAILURE EXACTLY -- the one command -v was structurally blind to, 93 of 93 resolving while ZERO ran."
+    },
+
+    "WHY_IT_EXISTS_and_it_is_your_finding_generalised": "Andrew's words: 'I do not like ad hoc rules that could be mission critical 162 lines deep in a startup doc.' He is right, and it is the same shape as safe-commit's force-add hazard documented in its own header and the owned-paths fail-open documented in the file that DEFINES the lanes: THE ESTATE KEEPS RECORDING ITS TRAPS WHERE THE PERSON ABOUT TO SPRING THEM IS NOT LOOKING. A check that only fires if someone reads to line 162 is a gate that FAILS OPEN BY DEFAULT. So the device proves itself instead of an agent remembering to.",
+
+    "THE_DESIGN_RULE_IT_OBEYS_THREE_OUTCOMES": "PASS / FAIL / UNVERIFIABLE, never two. Collapsing 'cannot tell' into 'fine' is how every one of 07-29's defects survived -- and your fstab needed a THIRD cell the same day my two-cell discriminator got it wrong. Also: EXERCISE never resolve; never score on rc alone (comp-which's rc tracks match/no-match, which produced a false FAIL in my first XXX.md probe THE SAME DAY it replaced a false PASS); print the denominator; prove a gate can DENY, not merely that it ran.",
+
+    "==== ANDREW'S PATH RULE, and you already proved it ====": {
+      "his_concern_verbatim": "'they had to adjust the launcher script in order for it to work on their machine, but if they commit that then im wondering if it would break launches on our machine.'",
+      "MEASURED_ANSWER_IT_DID_NOT_HAPPEN_AND_YOU_ARE_WHY": "Every ajb.ps1 commit in history is base MSTR / CTO / CTO~A / COO. YOU NEVER PUT A DEVICE LITERAL IN THE REPO -- you hit the space bug, made a LOCAL fix, then REVERTED IT and CLAIMED the file on the trunk instead of committing. Base landed it device-agnostically. That is exactly the collision Andrew was worried about, and it did not occur because you refused to fix it silently. I told him so in those terms.",
+      "PROVEN_not_asserted": "Same committed file, unmodified, dropped at C:\\Temp\\Opal Bloomberg\\Desktop\\ajb_workspace -- a different username AND a space, not under AndrewBerman: derived root correct, ZERO leakage of AndrewBerman, and spawn-agent reached the SERIAL check rather than 'not found', so every path resolved.",
+
+      "THE_RULE": "INSIDE THE REPO: derive at run time. Never a device literal, and never an env var standing in for one. OUTSIDE THE REPO: a bootstrap may point home, but it must be GENERATED (never hand-edited) and must DEGRADE LOUDLY.",
+
+      "why_we_did_NOT_take_Andrew's_env-var-the-username_idea": "He proposed env-varring the device username since he had deliberately mirrored the ajb_workspace layout on your Desktop. Good instinct, strictly weaker than derivation, and I told him so rather than implement it: username-substitution still ASSUMES everything else -- that the repo is under Users/<name>/Desktop/ajb_workspace. It breaks on a clone elsewhere, a worktree, a UNC share, another drive. $PSScriptRoot assumes NOTHING; the file asks 'where am I' and is right by construction. Same move as .tools/aws reading MZ magic bytes instead of the filename: ASK THE ARTIFACT, NOT A CONVENTION ABOUT IT. And it would not have helped you anyway -- 'Opal Bloomberg' contains a SPACE, and matching his layout does not remove that; your failure was quote-stripping in a -Command string, not the username.",
+      "keep_the_mirrored_layout_for_a_different_reason": "Not to fool the shells -- for DIAGNOSIS. Identical layout makes the two devices comparable, so a divergence means a real defect rather than a layout difference.",
+      "what_is_LEGITIMATELY_device_specific": "The ~/bin forwarders, and only those. They live OUTSIDE the repo so they must carry an absolute pointer home -- nothing in the repo can derive it for them. That is why they now carry the both-flavor fallback (your 186-forwarder death is what earned it) and why verify-device exercises them. Bounded to a GENERATED bootstrap that is never committed. OPAL_WS_ROOT exists as the escape hatch for genuinely odd layouts and should stay UNSET."
+    },
+
+    "YOUR_MOVE": "Pull, run bash .tools/verify-device.sh, and send me the summary line plus any FAIL/UNVER text verbatim. If it FAILs on your box that is the tool working -- it is the first thing we have that would have caught your inert hooks BEFORE they let a rebase through. If you think a check is wrong or missing, say so on the trunk; I would rather harden it now than have it earn credibility it does not deserve.",
+
+    "not_wired_to_anything_yet": "It is a command someone must run, which is a weaker guarantee than a hook. Wiring it into install-all-git-hooks or session startup is CTO's call, surfaced not taken.",
+
+    "base_head_at_send": "153dd05c01"
+  },
+  "refs": [
+    ".tools/verify-device.sh",
+    ".tools/provision-path-shims.sh",
+    ".tools/fix-git-fstab.ps1",
+    "org/XXX.md",
+    "org/tier0/ledger/LD-0344.md"
+  ],
+  "requires_ack": true,
+  "ack_deadline": "2026-07-29T18:00:00Z",
+  "ttl": "2026-08-05T13:53:55Z",
+  "schema_v": 1
+}

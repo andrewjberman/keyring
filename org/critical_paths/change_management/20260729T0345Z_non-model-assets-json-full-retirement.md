@@ -41,10 +41,48 @@ Bucket is versioned: deletes create delete markers (restorable; deliberate -- re
   round-trip md5 verified repo==S3 (edc291408982b16d80ad4be72cba2b4e) -- the 15:00Z sync
   pulls the retired writer, so the fire cannot re-emit.
 
+## Step 3a -- REVERSIBILITY, MEASURED (added 2026-07-29T14:04:53Z by 0.7.0_AE_CloudOps~A; CTO-directed 140338Z)
+The rollback line in Step 3 was an assertion from the record. It is now MEASURED on the version plane
+(`aws s3api list-object-versions`, read-only):
+
+| Key | Delete marker (IsLatest) | Marker time | Live object versions | Restorable noncurrent |
+|---|---|---|---|---|
+| `json/portfolios/non_model_assets.json` | `pWisyjN7J1yefr_dk9Ow.nszyab69X7g` | 2026-07-29T03:49:16Z | **NONE** | **9** |
+| `json/portfolios/non_model_assets_preview.json` | `zh1iM5PlJZI6E1M4fOr78UyROzq2zK0Y` | 2026-07-29T03:49:18Z | **NONE** | **1** |
+
+**Both keys are held not-served by ONE DELETE MARKER EACH, with real content intact underneath.**
+Consequence, ruled by CTO 140338Z and binding beyond this ledger: **DELETING EITHER MARKER REPUBLISHES
+A CLIENT-FACING ARTIFACT ANDREW ORDERED GONE -- instantly, with real content, reporting success.**
+A blanket prohibition now stands on removing ANY delete marker anywhere in tonight's seven-leg wave,
+on any bucket, for any reason; a leg that appears to need one STOPS and goes to CTO. Rollback for a
+15:15Z FAIL therefore needs no improvisation: restore from the listed noncurrent versions.
+
 ## Step 4 -- NO-REGEN PROOF (closes this ledger)
 The 15:00Z unattended fire is the natural test: after chain completion (~15:15Z), the key must NOT
-exist. Anything recreating it = a writer the census missed -> STOP + report per CTO spec. D2 note:
+be SERVED. Anything recreating it = a writer the census missed -> STOP + report per CTO spec. D2 note:
 the retirement touches no trigger/schedule -- the fire's schedule evidence is unaffected.
+
+**SEMANTICS, made explicit (CTO 140338Z) -- "must NOT exist" means NOT SERVED, not destroyed:**
+- PASS = a GET 404s because a delete marker is latest. **Noncurrent versions surviving underneath is
+  NOT a partial failure and must not be reported as one.**
+- FAIL = a LIVE object version at either key -> the writer census missed a producer. STOP, do **not**
+  re-delete (a re-delete erases which writer did it), escalate to CTO.
+
+**EXERCISE DISCIPLINE (COO 135337Z, adopted):** the check is **KEY-EXACT** on the two keys above,
+never a name grep over a prefix. Measured basis: a bucket-wide `non.model` sweep returns exactly one
+legitimate hit -- `platinum/mdpf/global/non-model-assets.json` (81,931 B @ 00:35:22Z), the
+platinum-plane hyphenated artifact from the later wave, already scoped OUT by Step 1 (dispatch 6c
+revamp lineage). A "no non-model object exists" phrasing would read DIRTY on a healthy estate.
+
+**⚠ PREREQUISITE -- THE FIRE IS NOT SCHEDULED, SO ABSENCE ALONE PROVES NOTHING.**
+`mdpf-daily-refresh-trigger` has `ScheduleExpression: None`; it is event-driven on
+`opal-data-inf/gold/meta/pipeline-complete.json` ObjectCreated and its own description records that it
+REPLACED `cron(0 15 ? * MON-FRI *)`. If the INF spine does not complete, the chain never dispatches,
+the key stays absent, and this step would read PASS having proven nothing -- a PASS-shaped reading of
+a dead pipeline. **Discriminator baselined 2026-07-29T13:56Z, BEFORE the fact:** that marker was
+135 B, ETag `5ff381b4bc3b0b529a7dffc528f21d58`, LastModified **2026-07-28T15:04:07Z (yesterday)**.
+Closing this ledger requires BOTH: (i) that marker ADVANCED to today, AND (ii) the chain's own run log
+showing completion. Marker unadvanced -> **NOT-YET-PROVEN**, ledger stays OPEN, reported as such.
 
 ## Known consequence (surfaced by CTO to Andrew; not mine to fix)
 Until DE's queued chart fix promotes, Global trend/band surfaces reading this file render
