@@ -132,6 +132,22 @@ pipescript reroute). **The queue is mostly a card-refresh queue.** Implication f
 the field-semantics split, a RE-CLASSIFICATION pass over the reformed tools is the bulk fix —
 per-tool walk continues to catch the exceptions.
 
+## WALK ITEM 4 — comp-blast (~18:45Z, exercised live on dim_mdpf_aggregate_aua_timeseries)
+
+**Verdict: HONEST-BUT-ANSWERS-ANYWAY — one behavior refinement, two card fixes.** The tool opened
+with the best staleness declaration of the walk: `STALE_NODE_WARN: 35 node(s) have source-file SHA
+drift since last comp-build`, per-node indexed→current SHAs, and the remediation named
+(`rerun comp-build`). Then it **built the trace graph and answered over the drifted index anyway**
+(2,252 nodes / 2,944 edges in 104.4s). The warn is excellent; the proceed is the gap: a blast
+radius involving any of the 35 drifted nodes (which tonight included `endpoint:getMdpfAggregate-
+AUATimeSeriesByFirm` — MDPF-central) is UNVERIFIED-AT-CURRENT-SHA and nothing in the answer says
+which parts. **Refinement (→ ~C queue, small): tag result rows that traverse drifted nodes, or
+offer `--fresh` to auto-comp-build first.** Card fixes: `cost_band: SECONDS` → bimodal (104s
+build-on-invoke tail — same class as kuzu's); `universe: authored ledger` → hybrid (persisted
+index + graph built at invocation from git+registry). The drift-declares-but-proceeds pattern is
+WEAKER than kuzu's auto-refresh and STRONGER than silence — worth naming as the middle tier of
+the freshness ladder: auto-refresh > declare-and-proceed > silent-stale.
+
 ## RETRACTION (~18:40Z, ~C's WS3 census + my own re-verification): THE "PHANTOM ROW" WAS MY FALSE FINDING
 
 **`comp-v5-composite-test` IS NOT A PHANTOM — `.tools/comp-v5-composite-test.sh` exists (4,894 B,
