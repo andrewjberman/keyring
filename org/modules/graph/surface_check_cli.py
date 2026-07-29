@@ -268,6 +268,24 @@ def _pop_line(surfaces: list[dict]) -> str:
     return f"{len(surfaces)} surface(s) ({sev1} SEV1 / {sev2} SEV2), {watched} watched carve token(s)"
 
 
+def _unverifiable(args, why: str) -> int:
+    """ONE path for both unverifiable branches (~C verification finding 1: the two branches had
+    asymmetric explanations -- the zero-surfaces case, the WORSE one, exited 0 bare). Emits the
+    greppable token SURFACE-CHECK-UNVERIFIABLE (~C rec 3: rc lies in blocking mode pending the
+    fail-closed ruling, so the detectable channel is a fixed token any CI/log grep can key on --
+    'a loud message attached to a quiet success code is not a loud failure')."""
+    print(f"SURFACE-CHECK-UNVERIFIABLE: {why}.")
+    print("  NOTHING WAS SCREENED. This is NOT a pass -- an empty result and a failed")
+    print("  retrieval are different verdicts, and this is the second one.")
+    if args.mode == "blocking":
+        print("  WARNING (blocking mode): the exit code below is 0 and IT IS WRONG for this")
+        print("  situation -- it is preserved only by the documented best-effort contract while")
+        print("  the fail-closed flip is a pending design ruling. Do NOT read the green check as")
+        print("  a screen; grep for SURFACE-CHECK-UNVERIFIABLE to detect this state.")
+        return 0
+    return 2
+
+
 def cmd_check(args) -> int:
     # Rules load. A gate whose OWN RULES cannot be read has not screened anything: that is
     # UNVERIFIABLE, never a pass (O2/C3a; the coverage-check rc-asymmetry precedent). Advisory
@@ -279,23 +297,12 @@ def cmd_check(args) -> int:
         surfaces = load_surfaces()
         print(_rules_header())
     except Exception as e:
-        print("UNVERIFIABLE: comp-surface-check could NOT load critical-surfaces.yaml "
-              f"({type(e).__name__}: {e}).")
-        print("  NOTHING WAS SCREENED. This is NOT a pass -- an empty result and a failed")
-        print("  retrieval are different verdicts, and this is the second one.")
-        if args.mode == "blocking":
-            print("  (blocking mode: exit stays 0 per the documented best-effort contract; the")
-            print("  fail-closed flip for the portal gate is a pending design ruling.)")
-            return 0
-        return 2
+        return _unverifiable(args, "could NOT load critical-surfaces.yaml "
+                             f"({type(e).__name__}: {e})")
     if not surfaces:
-        print(_rules_header())
-        print("UNVERIFIABLE: rules file loaded but ZERO surfaces registered -- the screening")
-        print("  population is EMPTY. Nothing was screened; this is NOT a pass. (A shrunken or")
-        print("  truncated rules list looks exactly like this.)")
-        if args.mode == "blocking":
-            return 0
-        return 2
+        return _unverifiable(args, "rules file loaded but ZERO surfaces registered -- the "
+                             "screening population is EMPTY (a shrunken or truncated rules "
+                             "list looks exactly like this)")
 
     files = _changed_files(args)
     if not files:
