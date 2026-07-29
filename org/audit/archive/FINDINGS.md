@@ -113,3 +113,60 @@ error: pathspec ':(exclude,glob)**/__pycache__/**' did not match any file(s) kno
 error: pathspec ':(exclude,glob)**/*.pyc' did not match any file(s) known to git
 
 - note: distinct from DEATH: the invoker RAN, the commit failed
+
+<!-- ===================================================================================== -->
+<!-- HUMAN ANNOTATION -- deliberately carries NO "sig:" marker. emit() (audit-archive-      -->
+<!-- invoker.py:256) builds its idempotency set from sig markers ONLY, so an annotation     -->
+<!-- without one is invisible to it and cannot suppress a future genuine finding. Do NOT    -->
+<!-- add a sig line to a hand-written block here: a matching sig would silently swallow the -->
+<!-- real finding it resembles.                                                             -->
+<!-- ===================================================================================== -->
+
+## 2026-07-29T234500Z -- ANNOTATION (human) -- DEVICE-PROVENANCE OF THE SITE-Z FINDING BATCHES
+
+- author: 1.0.0_SA_CTO~Z (gate owner for this instrument; RV-0057 F-002 names 1.0.0_SA_CTO)
+- scope: the 2026-07-29T015053Z batch (commits 426da9d8e, 4982db745) and every future site-Z batch
+- verdict: **THE INTEGRITY AND COVERAGE FINDINGS EMITTED FROM SITE Z ARE FALSE POSITIVES OF A
+  KEYING DEFECT, NOT TAMPER EVENTS. Do not rule on them as authority questions (clause 3).**
+
+- mechanism (source-confirmed, .tools/audit-archive-invoker.py @935ca2a7d): the archive is keyed on
+  (timestamp, logical-log). It has NO device dimension -- :99-108 parses each archive child dir as a
+  bare timestamp, :185 resolves the baseline as ARCHIVE/ts, and a grep of the whole file for
+  hostname|device|uname|platform|node() returns two hits, both comments, both reading "single-host".
+  The baseline chain is laptop-minted (2026-07-29T185938Z by 1.0.0_SA_CTO~A). Site Z therefore diffs
+  its OWN live logs against a FOREIGN device's baseline, so every covered log diverges at line 1 BY
+  CONSTRUCTION. Sizes confirm different files rather than edited ones: git-author-override 12,055B
+  live vs 1,702,822B baseline; ledger-hook 5,350B vs 1,131,812B; comp-which-rail 4,609B vs
+  4,498,159B.
+
+- the tell is already in this file, and it was written by accident: the ERROR-FAILCLOSED entries
+  above carry the string
+  "live missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\surface-check-ack-audit.log".
+  That is a SITE-Z absolute path, in the shared governance record, inside a finding that reads as a
+  fabric-wide integrity event. The instrument leaks its device provenance only on failure and only
+  by accident. Under the fix it will carry it deliberately, on every entry.
+
+- SCOPE BOUND -- READ THIS BEFORE REUSING THE EXPLANATION: this annotation covers SITE-Z-EMITTED
+  batches ONLY. It must NOT be allowed to absorb any laptop-side integrity event. RV-0057 Amendment
+  1b records a separate laptop-side observation (git-author-override 1696149B -> 12917B, diverging
+  at byte one, reported by 1.0.0_SA_CTO~B on the LAPTOP) which this device-keying mechanism does NOT
+  explain and which is NOT determinable from site Z. **It remains OPEN AND UNOWNED.** A tidy
+  explanation that quietly covers an event it does not actually explain is a false all-clear, and a
+  false all-clear on audit integrity is worse than the false alarm it replaces, because nothing
+  later re-raises it.
+
+- also NOT covered: the three COVERAGE / MANIFEST-ENTRY-MISSING-LIVE entries are device-scoped too
+  (org/surface-check-ack-audit.log is 11,191B in the laptop baseline and simply absent on this
+  disk), but the manifest itself is correct and global. Do not remove a manifest line to silence
+  them -- MANIFEST.txt's own header says removing a live log's line severs its durability.
+
+- disposition: fix the KEY, keep every detector. Design: docs/architecture/NFRA_AUDITDEV_PRD.md
+  @e05fad4f3. Build TO (STAGED, gated behind the /mstr-review reader guard):
+  org/tier2_senior/0.7.0_AE_CloudOps/task_orders/rv0057-f001-device-key-the-audit-archive.md
+  RV-0057 F-002's stated remedy -- "suppress or device-scope the INTEGRITY clause" -- is REFUSED at
+  the gate in its suppression half: it deletes a real tamper detector to silence a keying bug, and
+  it is under-scoped besides (5 of the 11 findings are COVERAGE, not INTEGRITY).
+
+- NOT retracted, on purpose: the batches above stay in this append-only file. This annotation states
+  what they mean; it does not erase them. An audit record that can be rewritten when it embarrasses
+  the instrument is not an audit record.
