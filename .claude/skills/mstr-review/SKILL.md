@@ -94,6 +94,48 @@ Read the window, not just list it:
   (constitutional ledger-hook overrides vs commit-scope owned-paths/author overrides)
   and the OVERRIDE_REVIEW must name which log each override came from. Re-derive
   counts independently every time — never carry a prior summary or a tail-N sample.
+
+  > ### **READER GUARD — PRINT THE DEVICE CHAINS YOU WALKED, AND REFUSE THE COUNT IF THEY ARE NOT ALL OF THEM.**
+  > **(RV-0057 F-001 item 1. Landed as a GATE, not a convention. GATES the device-keyed archive
+  > build — order is a safety property, see below.)**
+  >
+  > **The audit logs are DEVICE-LOCAL. A walk on one device sees one device's overrides.** Measured
+  > site Z 2026-07-29: `org/git-author-override-audit.log` held **73 lines all-time, every one from
+  > two `~Z` serials, earliest 11h AFTER the review window opened** — against **17,174 lines** on the
+  > laptop at RV-0056 one day earlier. **The same instrument, the same window, a 235× difference in
+  > denominator, and nothing in the output said so.**
+  >
+  > **THEREFORE, MANDATORY, both limbs:**
+  > 1. **PRINT THE DENOMINATOR AS A DEVICE SET.** Every audit-walk output names **which device
+  >    chains were walked** and **which declared devices were not** — e.g.
+  >    `walked: [sitez]; declared: [laptop, sitez]; UNWALKED: [laptop]`. A count with no device set
+  >    beside it is not a count.
+  > 2. **REFUSE THE FABRIC-WIDE ASSERTION when `walked ⊂ declared`.** Render
+  >    **`OVERRIDE_COUNT: UNMEASURABLE (walked 1 of 2 device chains)`** — never a number, and never
+  >    a zero. **A `0` from an unwalked chain is a measurement of the boundary, not of the fabric**
+  >    (the RV-0047 F-015 class, arriving through a device instead of a window).
+  >
+  > **THE SAME GUARD BINDS THE TIER-1 LIVENESS CHECK BELOW, and there it is load-bearing for a
+  > different reason: its prescribed remediation WRITES.** `org/mcp/liveness.json` is device-local
+  > too, so a site-Z pass finds 6/6 canonical Tier-1 serials absent, raises a fabric-wide
+  > `liveness_gap`, and reaches for **`spawn-agent.ps1`** — spawning duplicates against serials
+  > already live on the other device. **A false negative whose remedy is to spawn is a false negative
+  > that writes to production.** Liveness renders `UNMEASURABLE` under the same condition and
+  > **must never reach a spawn off a single-device read.**
+  >
+  > **ORDERING (CTO~Z, `e05fad4f3`): this guard lands BEFORE the device-keyed audit archive.** If
+  > the archive lands first, governance gets partial multi-device data that **looks complete** —
+  > strictly worse than one chain a reader knows is partial. The AE task order
+  > (`rv0057-f001-device-key-the-audit-archive.md`) is deliberately **STAGED, not GO**, until this
+  > guard is live.
+  >
+  > **PREMISE CORRECTION, measured by CTO~Z and folded here because it changes the FIX:** RV-0057
+  > F-001 said `.gitignore:68`'s blanket `*.log` makes *every* audit log device-local. **5 of 13
+  > covered logs ARE TRACKED** — four via declared `!` un-ignores at `.gitignore:494-497`, plus
+  > `org/ws-charter-hard-block-audit.log`, tracked since `7f1d3b29c` with **no `!` rule at all**
+  > (it survives only because tracking outranks ignoring). **So the sharing mechanism already exists
+  > for 5 of 13: the fix is EXTEND THE KEY, not invent consolidation.** The finding stands; the
+  > premise was one sentence too broad.
 - **S0–S4 distribution** — count the window's decisions by class. A high S3/S4
   share is a flag that the autonomy dial is mis-set — report it so Andrew can
   tune the Stakes Matrix.
