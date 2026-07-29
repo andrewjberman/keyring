@@ -132,4 +132,20 @@ pipescript reroute). **The queue is mostly a card-refresh queue.** Implication f
 the field-semantics split, a RE-CLASSIFICATION pass over the reformed tools is the bulk fix —
 per-tool walk continues to catch the exceptions.
 
+## RETRACTION (~18:40Z, ~C's WS3 census + my own re-verification): THE "PHANTOM ROW" WAS MY FALSE FINDING
+
+**`comp-v5-composite-test` IS NOT A PHANTOM — `.tools/comp-v5-composite-test.sh` exists (4,894 B,
+May 26; `ls`-verified by me after ~C's catch).** My probe checked the bare stem; the file carries
+`.sh`; I read a suffix-blind predicate's miss as "NO FILE ON DISK" and filed it as "the sharper
+finding" — **the unprinted-predicate class, committed by the prosecutor mid-prosecution.** ~C's
+inversion warning stands verbatim: the delete-the-row remedy I implied would have DE-REGISTERED a
+real tool, and the later re-flag would never have been connected to the deletion. Same suffix
+class: `comp-which-routing-test.py`. Same predicate-blindness inverted: ~C's own comp-* glob
+missed bare-named `pipescript` and they caught themselves before filing it. **The 93-vs-89
+"discrepancy" also dissolves: 94 FILES vs 90 LOGICAL TOOLS vs 89 master rows — five dual-file
+tools double-counted, two suffixed-only tools missed; two honest instruments, two predicates,
+reconciling by COUNT would have manufactured a defect.** Propagated-to and now corrected-at: CTO
+(163837Z/171426Z threads), MSTR (custody note), ~C dispatch. The UNCLASSIFIED-4 finding itself
+STANDS (classification empty for all four) — only the phantom characterization retracts.
+
 — 3.0.0_SA_CVO
