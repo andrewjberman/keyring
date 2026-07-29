@@ -10,9 +10,9 @@
       "date": "2026-07-23"
     }
   ],
-  "status": "active",
-  "phase": "[Layer: BEHAVIORAL of NFRA_TOOLSTACK] Phase 0 CHARTERED 2026-07-23. LAST in the stack -- streamlines a loop the 3 layers below must first make exist. P1 conversion instrument (R8: route id carried into the run + comp-which self-reporting, closing the 295x under-report); P2 trigger binding (R4: closeout->comp-state, deploy->pipescript-deployed, mutant-proven); P3 path tuning (query-layer -> selection-path -> correct-tool-rate map, then cut friction). Not a mandate-tightening exercise.",
-  "blocking": "None (sequenced LAST; seed R-cells R4/R6/R8 already in flight at 0.8.0)",
+  "status": "complete",
+  "phase": "CLOSED COMPLETE-AS-SUPERSEDED by NFRA_VELOCITY 2026-07-29: Re-homed to NFRA_VELOCITY_ESTATE WS-E6 (R8 conversion instrument shared with WS-E4): trigger binding, path tuning, memorized-head protection. PRD stays as design provenance. Closed 2026-07-29 per Andrew-direct plan-review ruling (close-as-superseded) at the NFRA_VELOCITY commissioning; open-work visibility: NFRA_VELOCITY_PROGRAM.md s.3b ledger (anti-opacity control, ~C item 6).",
+  "blocking": "None",
   "created": "2026-07-23",
   "pods": [
     "1.0~Z",
@@ -21,5 +21,6 @@
   ],
   "pipeline": "estate-wide (tool framework / behavioral layer)",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "completed": "2026-07-29"
 }

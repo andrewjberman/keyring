@@ -12,11 +12,11 @@
     "NFRA_COMPDRIFT",
     "NFRA_GLOBGRPH"
   ],
-  "status": "active",
+  "status": "complete",
   "reopened": "2026-07-10",
   "prior_completion": "2026-07-01 (CVO-verified bdc6d01a6; reopened 2026-07-10 for the loop-closure amendment, Andrew-direct via CTO~A ruling #1)",
-  "phase": "REOPENED 2026-07-10 (Andrew-direct via CTO~A ruling #1; arch-gate set @ 8dfcf1e75). The loop-closure amendment (NFRA_COMPLEARN_amend_loop-closure_20260710.md) CORRECTS declarative drift in the close: the phase claimed 'P3 (nightly refresh) LIVE' but P3-as-specified (PRD sec.7 EventBridge->Fargate server-side) is NOT what runs -- it is host-local, behind a comment claiming a Fargate emit that was NEVER materialized. The close-gates (Goodhart + scorer-honesty) were correctly GREEN on WHAT THEY TESTED; the 'P3 LIVE' prose was drift. 3 AMD TOs (COO~A 2026-07-10, staged, arch-gate PASS, org/projects/NFRA_COMPLEARN/task_orders/AMD-*) drive P3 to done + a hardening leg: AMD-P3a leg-3 producer robustness + HARD freshness gate (exercised-by-going-stale) + 'make the nightly-Fargate claim TRUE or DELETE it' (0.7.0 LANE -- Andrew's, double-gated, COO~A cannot issue); AMD-P3b leg-4 DRV activation behind the CTO-owned value-anchored Goodhart gate, advisory-never-auto-mutating (0.8.0~E); AMD-P3c comp_log_auto ingestion-honesty disclosure (0.8.0~E, daylight-held). Dispatch HELD on builder spawns. --- PRIOR CLOSE: COMPLETE 2026-07-01 (2-step close, COO~B). P0 (tool_activity 3rd Trino catalog) + P1 (federated views + gap_heat) + P3 (nightly refresh) LIVE; P2 value-anchored scorer LANDED (15e88557d + CTO-caveat refine 3dffba0a9). BOTH close-gates GREEN: (a) CTO Goodhart/worklist RATIFY (grounded -- read source + ran --goodhart-audit: 250 value-vs-count inversions, merge-retire IS the Goodhart bite, value=friction-averted-not-usage, advisory-only) + (b) CVO~B scorer-honesty verify (verdict bdc6d01a6 -- scores VALUE not usage, gap-map ground-truth real, preventive-gate caveat test-locked). Single iteration -> 596-candidate advisory worklist (routing-misses first-class; one-signal-two-consumers w/ COMPROUTE L3's outcome_value). CAVEAT rides the worklist: retire-disposition on ENFORCEMENT/GATE tools = human-judgment not auto (a preventive gate scores low-value-per-run by design). [orig: PHASE 0 PRD AUTHORED, LD-0225/0226]. The USE-verb of the NFRA_COMP* program. tool_activity = 3rd Trino catalog (reuse the live federation); reclaimed comp-learns-run/status ratchet; value-anchored scorer = the CTO-owned Goodhart gate (CVO verifies); mutation space includes comp-which routing-rules (LD-0226 reference iteration); seed corpus (3mo backfill); scheduled-alive (EventBridge->Fargate). Phasing P0 catalog+seed-backfill -> P1 federated-views+status-dashboard (stands alone) -> P2 scorer+single-iteration -> P3 scheduled-autonomous-loop. References COMPUNIFY map (held until its apex shapes); shares COMPDRIFT substrate. Decomp routes to COO~B.",
-  "blocking": "REOPENED for the loop-closure amendment. Dispatch of the 3 AMD TOs is HELD on Andrew's builder spawns (a 0.7.0 CloudOps lane for AMD-P3a -- 0.7.0 is Andrew's, COO~A cannot issue; 0.8.0~E for AMD-P3b/P3c). CTO~A arch-gate PASS on the AMD TO set @ 8dfcf1e75. AMD-P3c edit sequences behind the .tools/**->BASE_EXEC daylight hold. The Goodhart gate (AMD-P3b) is CTO-owned + shared with NFRA_TOOLGRAPH.TO-3 (one gate, both consumers). BOUNDARY (sovereign): no bd/49F/Schwab read or target.",
+  "phase": "CLOSED COMPLETE-AS-SUPERSEDED by NFRA_VELOCITY 2026-07-29: Reopened AMD loop-closure scope re-cut inside NFRA_VELOCITY_ESTATE WS-E4 (the measurement plane owns the tool_activity/telemetry substrate; the 3 AMD TOs' intent -- honest loop closure, Goodhart gate, ingestion honesty -- carries as WS-E4 acceptance). Original P0-P3 build stands as shipped. Closed 2026-07-29 per Andrew-direct plan-review ruling (close-as-superseded) at the NFRA_VELOCITY commissioning; open-work visibility: NFRA_VELOCITY_PROGRAM.md s.3b ledger (anti-opacity control, ~C item 6).",
+  "blocking": "None",
   "created": "2026-06-30",
   "pods": [
     "0.8",
@@ -37,5 +37,6 @@
       "urgency": "none (advisory, not a defect)",
       "source": "3.0.0_SA_CVO~B comp-tool-health TH-B; recorded 2.0.0_SA_COO 2026-07-11"
     }
-  ]
+  ],
+  "completed": "2026-07-29"
 }
