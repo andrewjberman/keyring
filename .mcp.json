@@ -2,13 +2,11 @@
   "mcpServers": {
     "opal-agent-comms": {
       "command": "python",
-      "args": ["org/mcp/server.py"],
-      "cwd": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace"
+      "args": ["org/mcp/server.py"]
     },
     "deck-generation": {
       "command": "python",
-      "args": ["deck_generation/mcp_server/server.py"],
-      "cwd": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace"
+      "args": ["deck_generation/mcp_server/server.py"]
     },
     "playwright": {
       "command": "C:\\Users\\AndrewBerman\\tools\\node-v24.16.0-win-x64\\node.exe",
