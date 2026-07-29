@@ -47,6 +47,35 @@ first fixture independently. **Owner: 1.0.0_SA_CTO~C (WS4).**
 4. Positive control per tree: one known-deployed script per PIPELINE_MAP tree resolves and MATCHes.
 5. Output-not-rc: verdicts scored from printed text in all four cases (harness-rc corruption law).
 
+## MECHANISM AUDIT (Andrew-ordered deep dive, ~17:50Z — five measured facts)
+
+1. **The hand-synced PIPELINE_MAP fallback is byte-equal today AND DORMANT** — `pipeline_cli.py:34-35`
+   puts `.tools` on sys.path, so the real map imports under real invocation (probe-verified; my
+   first cd-based probe was a harness artifact, self-corrected). Latent hazard only: the fallback
+   fires on an undeclared "some invocation contexts" condition with nothing marking the switch.
+   WS4 add: log which map branch loaded, one line.
+2. **The bd-gold default is DOUBLE:** the documented bare-id fallthrough (:1841-1845 "backward
+   compatible") AND `_PIPELINE_SILVER_DIRS.get(pipeline, <bd silver dir>)` — an unmapped pipeline's
+   silver comparisons silently read BLACK_DIAMOND's silver tree. Both die in refuse-or-resolve.
+3. **The sovereign-hold skip is CORRECT behavior with a STALE comment** — measured:
+   `SOVEREIGN_HELD_BUCKETS = ()` ("Retracted 2026-07-14 → always False by design"); the retraction
+   propagated to the enforcing copy. The :1890-vicinity comment still describes the hold as live;
+   fix the comment, not the code. (Hypothesis that 15 days of bd checks were no-ops: REFUTED.)
+4. **THE REAL HAND-WRITTEN-NOT-CURRENT DEFECT: the mdpf layer tuple.** `build_mdpf_dag`
+   (`extract_pipeline.py:1331`) globs `("gold","backfill","feeders","bronze")` — live bucket census
+   (36 objects `code/scripts/<layer>/`, written TODAY) shows **`assets_gold` and `silver` layers
+   the tuple omits**: `code/scripts/assets_gold/build_cottonwood_mdpf_{pair,slice}.py` (deployed
+   05:09Z today) and `code/scripts/silver/rebalancer_schemas.py` are INVISIBLE to the mdpf DAG,
+   the deployed sweep, io, and postdeps. **And the assets_gold scripts' repo home is
+   `data/assets/scripts/gold/` — the ASSETS tree — a CROSS-TREE deploy the per-tree glob model
+   structurally cannot represent** (assets is not a comp-pipescript tree at all). The scope with
+   no coverage is COTTONWOOD's — the known problem child. WS4 add: derive mdpf layers from the
+   LIVE `code/scripts/` listing (or a declared manifest), never a hand tuple; cross-tree script
+   homes need an explicit (repo-home → deploy-prefix) mapping entry, C-3 style.
+5. **Dual-layout residue quantified:** 36 `code/scripts/<layer>/` vs 2 legacy `code/<layer>/` + 3
+   loose `code/<file>` — the tool's chosen layout is the right dominant one; the 5 stragglers are
+   teardown-wave rows, not tool logic.
+
 ## Sequencing
 
 Post-fires, ~C's queue AFTER WS1 steps 2-3 (nothing here blocks WS2; this is an independent
