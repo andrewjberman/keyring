@@ -10,11 +10,20 @@
 # was the git trunk -- a HISTORY tier: no ack, no ordering, no backlog signal, and it
 # needs a pull to move. This is the DELIVERY tier.
 #
-# TRANSPORT NOTE, read before extending: NFRA_AGENTBUS_PRD.md:105-108 designs the
-# cross-DEVICE case (Port 2) on DynamoDB and reserves SQS for the cross-COLLEAGUE case
-# (Port 1). This tool applies the Port-1 TRANSPORT to the Port-2 USE CASE on Andrew's
-# explicit direction 2026-07-29 ("just frontrun the SQS creation"). That is a sovereign
-# substitution, not a PRD amendment -- the PRD has not been amended. See OPAL_SQSCHAT.json.
+# TRANSPORT NOTE: SQS *IS* Port 2's ratified transport. eff96f5079 is the commit that CHANGED
+# it from the 07-17 DynamoDB draft ("THE RATIFIED DESIGN IS NOT THE DRAFTED ONE ... Ratified
+# shape = SQS FIFO queue-pair"), and NFRA_AGENTBUS_PRD.md Amendment B (@0e546bd1d, LD-0347)
+# corrected the stale DynamoDB cell to match. These queues are the design, not a substitution.
+#
+# THIS PARAGRAPH PREVIOUSLY SAID THE OPPOSITE -- "a sovereign substitution, not a PRD amendment
+# -- the PRD has not been amended" -- and it survived ~90 minutes AFTER Amendment B landed,
+# inside the very tool the amendment is about. Caught by 1.0.0_SA_CTO (base), not by me. It is
+# the third instance in one day of the same class: LD-0306's decision_summary outliving its own
+# ratification, the PRD's A.0/O-4 cells reading "awaiting ratification" for ~6h after the yes,
+# and now this header. THE LESSON IS NOT "READ MORE CAREFULLY" -- it is that a claim about a
+# document's state, written into a DIFFERENT artifact, has no mechanism keeping it true. Prefer
+# citing the governing record over restating its content; when you must restate it, expect to
+# be the one who goes stale.
 #
 # SECURITY MODEL: Port 2 deliberately carries NO cross-distrust controls (PRD A.2) --
 # the same principal owns both machines, so there is no colleague boundary to partition.
@@ -58,6 +67,52 @@ queue_for() {
     esac
 }
 
+# WHICH DEVICE AM I? -- MEASURED, never assumed, and it is the load-bearing question here.
+#
+# Arming a consumer for the WRONG device is not a harmless mistake: it drains the OTHER
+# machine's mail into a session that is not its recipient. That is the orphan-thief pattern
+# (org/mcp/inbox-watch.sh, LD-0271) with a queue in place of an inbox -- the victim's queue goes
+# to depth 0, every producer-side probe reads healthy, and the mail is simply gone. `watch` and
+# `recv` therefore DEFAULT to the measured device and refuse the other one without an explicit,
+# stated override.
+#
+# The discriminator is the workspace path's user component, because the two checkouts live under
+# different Windows profiles. Deliberately NOT the agent serial: a ~Z suffix is an attribution
+# convention, not a device fact, and base-serial agents run on site Z too (1.0.0_SA_CTO~Z is a
+# lane, but nothing stops a bare serial from being launched here).
+this_device() {
+    if [ -n "${AGENTBUS_DEVICE:-}" ]; then
+        case "$AGENTBUS_DEVICE" in
+            laptop|sitez) echo "$AGENTBUS_DEVICE"; return 0 ;;
+            *) echo "agentbus-sqs: AGENTBUS_DEVICE='$AGENTBUS_DEVICE' is not laptop|sitez" >&2; exit 2 ;;
+        esac
+    fi
+    root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd)"
+    case "$root" in
+        *Opal?Bloomberg*|*OPALBL~1*) echo sitez ;;
+        *AndrewBerman*|*ANDREW~1*)   echo laptop ;;
+        *) echo "UNKNOWN" ;;
+    esac
+}
+
+# Guard: refuse to act on a device that is not this one unless the caller says so out loud.
+assert_own_device() {
+    want="$1"; me="$(this_device)"
+    if [ "$me" = "UNKNOWN" ]; then
+        echo "agentbus-sqs: CANNOT RESOLVE THIS DEVICE from the workspace path." >&2
+        echo "  Set AGENTBUS_DEVICE=laptop|sitez explicitly. Refusing to guess -- guessing wrong" >&2
+        echo "  drains the other machine's mail (the orphan-thief pattern)." >&2
+        exit 2
+    fi
+    if [ "$want" != "$me" ]; then
+        echo "agentbus-sqs: REFUSING -- you asked to consume '${want}' mail but this device is '${me}'." >&2
+        echo "  Draining another device's queue makes its mail vanish while every producer-side" >&2
+        echo "  probe still reads healthy. If you genuinely mean it (e.g. recovering a dead peer)," >&2
+        echo "  re-run with AGENTBUS_DEVICE=${want} and say why in your log." >&2
+        exit 2
+    fi
+}
+
 cmd="${1:-}"; shift || true
 
 case "$cmd" in
@@ -80,7 +135,13 @@ case "$cmd" in
     ;;
 
   recv)
-    dev="${1:?usage: recv <laptop|sitez> [--keep] [--max N]}"; shift
+    # Device arg is OPTIONAL and defaults to this machine. Only consume $1 if it actually names
+    # a device -- otherwise `recv --keep` would read "--keep" as the device.
+    case "${1:-}" in
+        laptop|sitez) dev="$1"; shift ;;
+        *)            dev="$(this_device)" ;;
+    esac
+    assert_own_device "$dev"
     keep=0; max=10
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -151,7 +212,8 @@ case "$cmd" in
     # SCOPE: this is session-bound wherever you run it. It dies with the session, exactly like the
     # inbox Monitor, and must be re-armed next session. A durable consumer is a separate decision
     # (a service/scheduled task on each device) and is NOT this.
-    dev="${1:?usage: watch <laptop|sitez>   # the device you ARE, i.e. the queue addressed TO you}"
+    dev="${1:-$(this_device)}"        # defaults to THIS device -- you should not have to know
+    assert_own_device "$dev"
     q="$(queue_for "$dev")"
     echo "agentbus-sqs: watching ${dev} inbound (long-poll 20s). Emits one line per message; silent otherwise." >&2
     while true; do
@@ -176,6 +238,21 @@ case "$cmd" in
             done
         fi
     done
+    ;;
+
+  device)
+    # Answers "which machine am I?" so a caller never has to guess. Prints the resolution basis
+    # too -- a bare answer with no basis is the kind of unfalsifiable output this estate keeps
+    # getting burned by.
+    me="$(this_device)"
+    echo "device: ${me}"
+    echo "  basis: $([ -n "${AGENTBUS_DEVICE:-}" ] && echo "AGENTBUS_DEVICE override" || echo "workspace path")"
+    echo "  root:  $(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+    if [ "$me" = "UNKNOWN" ]; then
+        echo "  -> UNRESOLVED. Set AGENTBUS_DEVICE=laptop|sitez. Refusing to guess is deliberate." >&2
+        exit 2
+    fi
+    echo "  my inbound queue: $(queue_for "$me")"
     ;;
 
   peek)
