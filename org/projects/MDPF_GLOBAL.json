@@ -1,0 +1,131 @@
+{
+  "project_code": "MDPF_GLOBAL",
+  "macro_code": "MDPF",
+  "name": "Global segment taxonomy -- Opal-level AUA split by delivery type",
+  "description": "Andrew-direct 2026-07-29 voice substrate for a new backend-only Global view in Model Portfolios. The project defines a product-axis taxonomy that sits above the existing MDPF taxonomy at the Opal aggregate only: ETF Models, SMA Strategies, Custom Models, and Non-Model residual. It creates the segment_v1 backend contract and work plan without changing per-firm or per-advisor served views.",
+  "status": "active",
+  "owner": "1.0.0_SA_CTO",
+  "created": "2026-07-29",
+  "created_by": "1.0.0_SA_CTO~A",
+  "mission": "PORTAL.MODEL_PORTFOLIOS",
+  "pipeline": "mdpf",
+  "prd": "docs/architecture/MDPF_GLOBAL_PRD.md",
+  "prds": [
+    {
+      "path": "docs/architecture/MDPF_GLOBAL_PRD.md",
+      "label": "MDPF_GLOBAL PRD v1.0 -- Opal-level segment taxonomy, four-term global residual, backend-only workstreams",
+      "date": "2026-07-29"
+    },
+    {
+      "path": "docs/references/MDPF_GLOBAL_ANDREW_RECORDING_20260729.md",
+      "label": "Andrew-direct voice substrate transcript and scope bounds",
+      "date": "2026-07-29"
+    }
+  ],
+  "phase": "PHASE 0 -- PRD v1.0 and project registry authored 2026-07-29 from Andrew-direct voice substrate plus the mission-register PORTAL.MODEL_PORTFOLIOS goal text. No build, frontend work, dispatch, or production serving change has been started. WS-1 can inventory the ETF/SMA roster and label traps; WS-2 is gated on Andrew's Cottonwood strategy-portfolio list; WS-3 global composition is gated on D-1 global-only confirmation.",
+  "blocking": "Andrew D-1 confirmation that the four-term residual applies global-only and leaves the A4 per-firm two-term invariant untouched; Andrew's Cottonwood accessible strategy-portfolio list for WS-2; COO decomposition before dispatch. D-2/PFOE and D-3/IDVZ-Tax-Muni are roster decisions before WS-1 closes. Frontend explicitly out of scope.",
+  "pods": [
+    "0.4",
+    "0.6",
+    "0.7",
+    "1.0",
+    "2.0",
+    "3.0"
+  ],
+  "thread_counter": 0,
+  "threads": [],
+  "segment_keys": [
+    "etf_models",
+    "sma_strategies",
+    "custom_models",
+    "non_model"
+  ],
+  "axis": "segment_v1",
+  "scope": "global",
+  "related": [
+    "MDPF_3FIRMS",
+    "MDPF_DEBTCLEAN",
+    "MDPF_CHANNEL_INDEPENDENCE",
+    "WSE_COTMDL",
+    "MDPF_REVAMP",
+    "OPAL_ASSETS",
+    "OPAL_CONSOLIDATION"
+  ],
+  "workstreams": [
+    {
+      "id": "WS-1",
+      "name": "ETF and SMA segment roster",
+      "status": "not_started",
+      "gate": "Resolve D-2/PFOE and D-3/IDVZ-Tax-Muni before closing roster."
+    },
+    {
+      "id": "WS-2",
+      "name": "Cottonwood identification via BD Rebalancer",
+      "status": "blocked",
+      "gate": "Andrew provides the accessible strategy-portfolio list and naming/grouping direction."
+    },
+    {
+      "id": "WS-3",
+      "name": "Gold segment composition",
+      "status": "blocked",
+      "gate": "D-1 confirms global-only four-term residual; WS-1 and WS-2 accepted."
+    },
+    {
+      "id": "WS-4",
+      "name": "Serving path",
+      "status": "not_started",
+      "gate": "WS-3 verified; no legacy-plane adoption or serving widen by inference."
+    },
+    {
+      "id": "WS-5",
+      "name": "Verification",
+      "status": "not_started",
+      "gate": "Synthetic unclassified-member control must go loud, not silently fall into non_model."
+    }
+  ],
+  "open_decisions": [
+    {
+      "id": "D-1",
+      "decision": "Does the four-term split apply global-only, leaving A4's two-term per-firm invariant intact?",
+      "recommendation": "Yes: global-only. This matches Andrew's recording and avoids changing served per-firm numbers."
+    },
+    {
+      "id": "D-2",
+      "decision": "Is PFOE the existing SmartX model_id 843d875b... whose identity is Opal Equity Growth SMA, or a separate strategy?",
+      "recommendation": "Treat it as the existing model_id after confirmation; MDPF currently carries exactly two 49F SMAs."
+    },
+    {
+      "id": "D-3",
+      "decision": "Do IDVZ, Tax, or Muni SMAs exist today, or are they forward-looking?",
+      "recommendation": "Build the axis to carry all five; populate existing members only and represent missing inputs as absent, never zero."
+    },
+    {
+      "id": "D-4",
+      "decision": "What are the Cottonwood custom-model names and groupings?",
+      "recommendation": "Wait for Andrew's strategy-portfolio list and decide naming/grouping with him."
+    },
+    {
+      "id": "D-5",
+      "decision": "Keep project code MDPF_GLOBAL or rename to MDPF_SEGMNT?",
+      "recommendation": "Keep MDPF_GLOBAL and enforce axis: segment_v1 on emitted artifacts."
+    }
+  ],
+  "standing_guards": [
+    "Backend only. No frontend work belongs in this project.",
+    "Global-only. Do not change per-firm or per-advisor served views under this project.",
+    "Keep the existing A4 per-firm two-term residual invariant unless Andrew explicitly changes scope.",
+    "Every segment artifact must carry axis: segment_v1 and scope: global.",
+    "Bind segment membership to model_id, never display_name, model_key, or bare ETF ticker strings.",
+    "Incomplete segment inputs are null or absent, never fabricated zeroes; non_model is derived and null when any subtrahend is incomplete.",
+    "Unclassified members are loud first-class output, not silently absorbed by non_model.",
+    "Do not write org/missions directly; the mission register is MSTR-owned and machine-derived."
+  ],
+  "grounding": [
+    "docs/references/MDPF_GLOBAL_ANDREW_RECORDING_20260729.md",
+    "docs/architecture/MDPF_GLOBAL_PRD.md",
+    "org/missions/MISSIONS.md PORTAL.MODEL_PORTFOLIOS goal approved 2026-07-28T200316Z",
+    "data/mdpf/scripts/gold/mdpf_revamp_model_crosswalk.py canonical model roster and label traps",
+    "docs/architecture/MDPF_3FIRMS_PRD.md A4 two-term ruling and per-firm architecture"
+  ],
+  "verification_bar": "A scheduled-run global artifact exists with axis segment_v1 and scope global; ETF/SMA/custom/non_model segments sum to total_aua to the cent when complete; null propagation prevents fabricated residuals; firm-axis divergence is stated in-artifact; a synthetic unclassified member is exercised and surfaces loudly; no per-firm served number changes."
+}
