@@ -192,7 +192,8 @@ class, and `command not found` on comp-tools is the comp-rail failing open. Mech
 
 **B. Check inbox — BOTH paths, both required:**
 ```bash
-check-inbox {your_serial}           # filesystem: inbox/{serial}/ + inbox/{base}/
+check-inbox {your_serial}           # filesystem: base -> inbox/{base}/ ; lane -> inbox/{base}/~{lane}/
+                                    # NEVER inbox/{base}~{lane}/ (flat) -- nothing reads it. See "Inbox path" below.
 ```
 ```python
 get_agent_status("{your_serial}")   # broker channel
@@ -240,10 +241,32 @@ chat notification. **Arm once — it never exits and you never relaunch it.** If
 **Never use `TaskList` to check your watcher.** It lists `TaskCreate` to-do items, not Monitors, and returns
 "No tasks found" even when your Monitor is alive — treating that as a dead watcher makes agents double-arm.
 
-**Inbox path:** `org/mcp/inbox/{serial}/` (lane agents: `org/mcp/inbox/{base}/{~lane}/`).
+### Inbox path — CANONICAL vs the FLAT form that silently swallows mail
+
+| | path | |
+|---|---|---|
+| base serial | `org/mcp/inbox/{base}/` | ✅ |
+| **lane serial** | **`org/mcp/inbox/{base}/~{lane}/`** — NESTED | ✅ **CANONICAL** |
+| **lane serial** | **`org/mcp/inbox/{base}~{lane}/`** — FLAT | ⛔ **NEVER. INVISIBLE TO THE ENTIRE FABRIC.** |
+
+**⛔ NEVER write, read, watch, or hand-construct the FLAT form `inbox/{base}~{lane}/`.** The broker
+never writes it (`org/mcp/server.py:1615`), `check_inbox` never reads it (`:1745`), and no watcher
+ever polls it (`org/mcp/inbox-watch.sh:73-77`, header `:28-30` — *"Serial WITH ~suffix watches ONLY
+the nested dir"*). **A message placed there is delivered to nobody and reported missing by nothing.**
+
+**THE TRAP IS SUBSTITUTION, and it is why this keeps happening: for a lane serial, `inbox/{serial}/`
+IS the flat path.** Writing your own serial into a `{serial}` slot silently produces the dead form —
+so **never substitute a lane serial into a `{serial}` path slot; split it into `{base}` + `~{lane}`
+first.** (Measured 2026-07-29: 36 flat dirs holding 329 messages exist as residue, last written
+2026-06-17 — one day before LD-0202 landed the root fix. Nothing has written one since; every one is
+a substitution artifact.)
+
+Ratified: **LD-0202** (Andrew-direct 2026-06-18: *"the tilde suffix strip has all kinds of errors…
+fix every case of collapsing, clobbering, bullshit"*). Regression test: `org/mcp/test_ld0202_tilde_routing.py`.
 Design: `docs/architecture/AGENT_COMMS_ARCHITECTURE.md`.
 
-**When an `[INBOX]` event fires, that IS a new message.** Read it from `inbox/{serial}/read/<file>` (the
+**When an `[INBOX]` event fires, that IS a new message.** Read it from your canonical inbox's `read/`
+subdir — base `inbox/{base}/read/<file>`, lane `inbox/{base}/~{lane}/read/<file>` (the
 watcher already moved it there) and **act this turn** — ack (RAVC step 2), do the work, or validate the
 evidence (RAVC step 4). **No "standing by" silence. Do not relaunch anything.**
 
