@@ -91,7 +91,7 @@ check "git stash show"                    'git stash show -p stash@{0}'         
 check "git stash pop (RECOVERY)"          'git stash pop'                                      PASS
 check "git stash apply (RECOVERY)"        'git stash apply stash@{0}'                          PASS
 check "git clean -n (dry-run: look first)" 'git clean -nd'                                     PASS
-check "THE RIGHT INSTRUMENT (no mutation)" 'git show HEAD:.tools/operator.py | ruff check -'   PASS
+check "THE RIGHT INSTRUMENT (no mutation)" 'git show HEAD:.tools/operator_tool.py | ruff check -'   PASS
 
 echo ""
 echo "*** DISARM VECTOR -- THE BUG THAT LET A LIVE 'git stash' THROUGH. ***"

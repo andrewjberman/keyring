@@ -6,11 +6,11 @@ independent pieces of the fabric compute that path, and on 2026-07-09 three of t
 
     org/mcp/server.py:1133        WRITER      nested   OK
     org/mcp/inbox-watch.sh:98     MONITOR     nested   OK
-    .tools/operator.py:539        DISPATCHER  FLAT     WRONG -- writes a lane's GO where nothing watches
+    .tools/operator_tool.py:539        DISPATCHER  FLAT     WRONG -- writes a lane's GO where nothing watches
     .tools/fabric-check.py:132    CHECKER     FLAT     WRONG -- fixed in 331eb1a4a
     .tools/halt-gate-check.sh:148 INTERLOCK   FLAT     WRONG -- a lane cannot be halted by [STOP]
 
-The flat dir `inbox/<base>~<suffix>/` EXISTS (operator.py mkdir's it on demand) and receives
+The flat dir `inbox/<base>~<suffix>/` EXISTS (operator_tool.py mkdir's it on demand) and receives
 nothing from the broker. Reading it returns `0 unread` forever. That is not blindness -- it is a
 decoy that answers "healthy," which is strictly worse, because a blind instrument at least cannot
 be quoted.
@@ -103,8 +103,8 @@ def parse_server_py() -> tuple[bool, int, str]:
 
 
 def parse_operator_py() -> tuple[bool, int, str]:
-    """operator.py DISPATCHER: `inbox_root / agent` where agent carries the ~lane suffix -> FLAT."""
-    ln, txt = _source_line(".tools/operator.py", r"inbox_dir\s*=\s*inbox_root\s*/\s*agent\b")
+    """operator_tool.py DISPATCHER: `inbox_root / agent` where agent carries the ~lane suffix -> FLAT."""
+    ln, txt = _source_line(".tools/operator_tool.py", r"inbox_dir\s*=\s*inbox_root\s*/\s*agent\b")
     # Conformant only if it splits the suffix. `inbox_root / agent` does not.
     return False, ln, txt.strip()
 
@@ -243,7 +243,7 @@ def check_all() -> int:
         rows.append(("server.py", "WRITER", PARSED, ok, f":{ln}  {txt[:64]}"))
 
         ok, ln, txt = parse_operator_py()
-        rows.append(("operator.py", "DISPATCHER", PARSED, ok, f":{ln}  {txt[:64]}"))
+        rows.append(("operator_tool.py", "DISPATCHER", PARSED, ok, f":{ln}  {txt[:64]}"))
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
@@ -275,7 +275,7 @@ def check_all() -> int:
         print(f"\n  ACTION: {bad} resolver(s) disagree with the writer. A lane's mail is written to a path "
               f"they do not read.\n"
               f"          Fix the RESOLVERS, not the directories -- deleting the flat dirs destroys the "
-              f"evidence and\n          operator.py re-creates them on the next dispatch.")
+              f"evidence and\n          operator_tool.py re-creates them on the next dispatch.")
         return 1
     print("\n  All resolvers agree.")
     return 0
@@ -307,7 +307,7 @@ def self_test() -> int:
 
     # The source-line assertions must FAIL LOUD if the line vanishes, never silently pass.
     try:
-        _source_line(".tools/operator.py", r"this_pattern_cannot_match_anything_xyzzy")
+        _source_line(".tools/operator_tool.py", r"this_pattern_cannot_match_anything_xyzzy")
         check("missing source line raises", False, True)
     except LookupError:
         check("missing source line raises (not a silent pass)", True, True)
@@ -320,9 +320,9 @@ def self_test() -> int:
         check(f"server.py writer line found ({e})", False, True)
     try:
         _, ln, _ = parse_operator_py()
-        check("operator.py dispatcher line found", ln > 0, True)
+        check("operator_tool.py dispatcher line found", ln > 0, True)
     except LookupError as e:
-        check(f"operator.py dispatcher line found ({e})", False, True)
+        check(f"operator_tool.py dispatcher line found ({e})", False, True)
 
     print(f"\nself-test: {passed} passed, {failed} failed")
     return 1 if failed else 0

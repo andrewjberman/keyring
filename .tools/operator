@@ -29,4 +29,4 @@
 #   operator-ADVI_ROLLUP    # equivalent to: operator ADVI_ROLLUP --agent 2.0.0_SA_COO
 
 WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
-exec python "$WORKSPACE/.tools/operator.py" "$@"
+exec python "$WORKSPACE/.tools/operator_tool.py" "$@"
