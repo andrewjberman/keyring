@@ -99,14 +99,39 @@ if [ "${AWS_SHIM_DEBUG:-0}" = "1" ]; then
 fi
 
 # ---- exec: NOTHING further converts (MSYS_NO_PATHCONV=1); launcher gets a Windows-form path --
-case "$REAL" in
-    *.exe)
-        MSYS_NO_PATHCONV=1 exec "$REAL" "${args[@]}"
-        ;;
-    *)
-        # pip-installed python-script entry: invoke via python with the WINDOWS-FORM script path
-        # (this is exactly why bare `MSYS_NO_PATHCONV=1 aws` breaks -- the shebang hop hands
-        # python an unconverted POSIX path; we hand it a Windows one).
-        MSYS_NO_PATHCONV=1 exec python "$(cygpath -w "$REAL")" "${args[@]}"
-        ;;
-esac
+#
+# DISPATCH ON WHAT THE FILE *IS*, NOT WHAT IT IS *CALLED* (fixed 2026-07-29; found and
+# post-fix-confirmed by 0.0.0_AB_MSTR~Z, amb-z-0006 / amb-z-0007).
+#
+# THE BUG: this used to branch on the `*.exe` FILENAME SUFFIX. On a box with AWS CLI v2,
+# `which -a aws` returns TWO entries and the EXTENSIONLESS ALIAS COMES FIRST
+# (.../AWSCLIV2/aws, then .../AWSCLIV2/aws.exe). The resolver above breaks on the first
+# hit, so $REAL carried no .exe, the *.exe arm did not match, and the fallback ran
+# `python` against a NATIVE PE BINARY:
+#     SyntaxError: Non-UTF-8 code starting with '\x90' in file ...\AWSCLIV2\aws.exe
+# The \x90 is the PE header -- python being handed a compiled launcher as SOURCE. The
+# AWSCLIV2 directory contains ONLY aws.exe; the extensionless name is a PATHEXT-resolved
+# alias that `which` reports for a file that does not exist under that name.
+#
+# WHY IT IS THE SAME CLASS AS THE PATH BUGS (~Z's framing, and it is the better one): the
+# launchers baked WHERE THEY WERE at write time; this baked WHAT SOMETHING IS. `*.exe` is a
+# write-time TEXTUAL property standing in for "is this a native binary?", which is a
+# RUN-TIME property of the file's CONTENT. A path-flavor audit could never find it, because
+# the defect contains no path literal.
+#
+# THE FIX: read the first two bytes. `MZ` is the DOS/PE magic -- every Windows native
+# executable starts with it, whatever it is named. Falls back to the suffix test only when
+# the file cannot be read, so behaviour on an unreadable path is unchanged.
+_is_native_pe() {
+    [ -r "$1" ] || return 1
+    [ "$(head -c 2 "$1" 2>/dev/null)" = "MZ" ]
+}
+
+if _is_native_pe "$REAL" || [ "${REAL%.exe}" != "$REAL" ]; then
+    MSYS_NO_PATHCONV=1 exec "$REAL" "${args[@]}"
+else
+    # pip-installed python-script entry: invoke via python with the WINDOWS-FORM script path
+    # (this is exactly why bare `MSYS_NO_PATHCONV=1 aws` breaks -- the shebang hop hands
+    # python an unconverted POSIX path; we hand it a Windows one).
+    MSYS_NO_PATHCONV=1 exec python "$(cygpath -w "$REAL")" "${args[@]}"
+fi
