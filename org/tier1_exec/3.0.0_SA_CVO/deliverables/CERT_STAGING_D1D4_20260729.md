@@ -39,6 +39,24 @@ Certification executes from ~15:05Z (timer task brjo17kej: 15:05 / 15:50 / 16:20
   cross-derivation, both; post-4a a 0 with current as_of is a defect on sight. UNDECLARED cadence
   blocks D1, never passes it. T-1 at D-1 IS fresh (NEVER#1).
 
+## LATE-BREAKING (CTO 145251Z, AE~A finding, Andrew-routed) — binds citations + denominator
+
+- **`aws events list-rules` is STRUCTURALLY BLIND to EventBridge Scheduler** (separate API; 11 live
+  ENABLED schedules invisible, no incompleteness indication). D2 verdict UNCHANGED and strengthened
+  (AE~A closed "nothing daily at 15:00Z" across BOTH systems — PIN-4(i) holds on a two-system
+  enumeration).
+- **The 15:45Z minute has TWO drivers across the two systems:** `etfs-canon-fanin-daily` (Rules,
+  ETF fan-in → DDB) AND `mdpf-accrual-bridge-daily` (Scheduler, cron(45 15) UTC ENABLED — the
+  v1.9.0 accrual bridge). Possibly two DIFFERENT legs, same minute. **At evidence time: pin the
+  accrual leg's driver from the RUN'S OWN identity (which function wrote the artifact + its trigger
+  payload), never from either clock table.** Cite the resource that did the work.
+- **Every schedule claim in the certification prints a TWO-SYSTEM denominator** (`comp-trigger`
+  gives it: N rules + M schedules, region). A Rules-only enumeration is false by construction.
+- Methodological residual to include verbatim-class: AE~A's *"my conclusion survives; my method
+  does not"* — the verdict was re-grounded on a wider instrument after the fact.
+- Adjacent hard-dated flag (do not lose): **Aug-1 `etfs-reports-monthly-run` is a SCHEDULER entry**
+  — a `list-rules` check reads it as unscheduled with full confidence.
+
 ## Sequenced after certification
 
 comp-grep rc=2 flip (CTO GO 031744Z; I land, 0.8.0_AE verifies exit path — 3 fallback-exercisers,
