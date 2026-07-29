@@ -27892,3 +27892,85 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29T17:26Z | 1.0.0_SA_CTO~B | comp-which (A.3 exercise, output-scored) PASS; A.3 PATH denominator 93/93 PASS; comp-surface-check x2 PASS (auto, safe-commit); risk-reflex comp-pulse diff x2 CLEAN (1 file vs 1484 danger nodes); audit-archive-invoker rc=1 2 findings (git-author-override-audit.log non-append edit 1696149B->12917B, routed to base CTO). GAP: no comp-tool answers "can serial X commit path Y" -- resolved .owned-paths.yaml by hand 4x this session; it blocked/nearly-blocked THREE lanes and is always discovered at COMMIT time, after the work is built. comp-ownpath <serial> <path> would have cost minutes and saved hours. |
 | 2026-07-29Z | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 1.0.0_SA_CTO~B | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-29/C... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-grep | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-grep | VERDICT |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/MDPF_COTTONWOOD_P... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0_exec/0.0.0_AB_MSTR/deliverabl... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0_exec/0.0.0_AB_MSTR/deliverables/OPAL_SQSCHAT_COMPLETION_RECOR... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-grep | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-grep | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-grep | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-grep | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-grep | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/mdpf-pipeline/iam.tf | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/mdpf-pipeline/iam.tf | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/mdpf-pipeline/iam.tf | VERDICT |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_COTMDL/COTTO... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam gaps | FAIL |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-manifest-check | comp-manifest-check | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~B | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-29/CTOB_session_close_ANDREW_D... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/MDPF_COTTONWOOD_P... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_COTMDL/COTTO... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/MDPF_COTTONWOOD_P... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~B | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/OPAL_SQSCHAT_COMPLETION_RECORD... | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/ANDREW_DIRECT_20260729... | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/ANDREW_DIRECT_20260729_1740Z_comp_tool_work_to_C.md | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CERT_MDPF_D1D4_20260729.md | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/deliverable... | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260729_1740Z_c... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-legacywriter --file org/mod... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-legacywriter org/modules/graph/comp-coverage-map.yaml org/m... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-grep | comp-grep getNonModelAssets / NOT_MEASURED / perFirmNonModelByPeriod (x5, 404-file denominator printed) | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DE_ClientPlatform/logs... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/DENOMINATOR_CROSSEXAM_QUEUE_20... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-legacywriter --file org/mod... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-legacywriter org/modules/graph/comp-coverage-map.yaml org/m... | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/audit-archive-invoker.py | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff .tools/audit-archive-invoker.py | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260729T1737Z_mdpf-runner-portal-... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-legacywriter --file .tools/... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-legacywriter .tools/comp-which org/modules/graph/comp-cover... | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/SPEC_WS4_PIPESCRIPT_DEPLOYED_H... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) | FAIL |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-legacywriter --file .tools/... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-legacywriter .tools/comp-which org/modules/graph/comp-cover... | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/DENOMINATOR_CROSSEXAM_QUEUE_20... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-legacywriter --file .tools/... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-legacywriter .tools/comp-which org/modules/graph/comp-cover... | VERDICT |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_legacywriter.py .tools/comp-legacyw... | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/DENOMINATOR_CROSSEXAM_QUEUE_20... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_COTMDL/COTTO... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-legacywriter --file .tools/... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-legacywriter .tools/comp-which org/modules/graph/comp-cover... | VERDICT |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_legacywriter.py .tools/comp-legacyw... | VERDICT |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/audit/archive/FINDINGS.md | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-grep | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-grep | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-grep | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-grep | VERDICT |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes rewrites | PASS |

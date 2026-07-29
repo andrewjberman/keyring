@@ -323,7 +323,25 @@ def governance_permitted(serial: str | None) -> bool | None:
 
 
 # ---------------- snapshot (concurrent-double-snapshot guarded; exec-gated commit) ----------------
-def take_snapshot(now: datetime, paths: list[str], dry: bool) -> tuple[str, str]:
+def take_snapshot(now: datetime, paths: list[str], dry: bool,
+                  pinned: frozenset[str] = frozenset(), base: Path | None = None) -> tuple[str, str]:
+    """Mint a snapshot. `pinned` logs carry their PREVIOUS baseline copy forward unchanged.
+
+    UNWEDGE (CTO direct word 2026-07-29T174222Z, clause (a)): a NON-APPEND finding on ONE log must
+    not withhold the snapshot of the other covered logs -- they are innocent and accrue unarchived
+    meanwhile. So the mint proceeds, and the dirty log is PINNED: its baseline copy is carried
+    forward byte-for-byte instead of being refreshed from live.
+
+    Pinning (not exclusion) is load-bearing three ways:
+      1. EVIDENCE -- the last-good content stays the baseline, so the divergence remains provable.
+      2. DETECTION IS NOT WEAKENED -- prefix_test still compares live against that same baseline and
+         still FIRES NON-APPEND every run. Unwedged is not silenced.
+      3. IT MUST NOT BE *EXCLUDED* -- an absent baseline copy makes the next prefix_test return
+         ERROR "baseline missing" (fail-closed), which re-wedges the tool while disguising an
+         adjudicated finding as an instrument fault. Pinning keeps the honest verdict.
+    It also makes clause (b) self-clearing: a reconstruction of baseline + UNRECOVERABLE-GAP seam +
+    live tail is append-compatible with the pin, so the finding clears on its own evidence.
+    """
     serial = running_serial()
     if governance_permitted(serial) is False:                         # non-exec: defer, no snapshot I/O
         return ("deferred", f"lane: {serial} not GOVERNANCE_AUDIT-permitted -- an exec startup will archive")
@@ -331,7 +349,9 @@ def take_snapshot(now: datetime, paths: list[str], dry: bool) -> tuple[str, str]
     if snaps and age_hours(snaps[-1][0], now) < SNAPSHOT_INTERVAL_H:   # guard 1: pre-commit age re-check
         return ("skip", f"newest {snaps[-1][1].name} is < {SNAPSHOT_INTERVAL_H}h old")
     if dry:
-        return ("dry", f"would mint {fmt_ts(now)} covering {len(paths)} logs as author={serial or 'UNKNOWN'}")
+        pin_note = f"; {len(pinned)} PINNED (baseline carried forward): {sorted(pinned)}" if pinned else ""
+        return ("dry", f"would mint {fmt_ts(now)} covering {len(paths)} logs "
+                       f"as author={serial or 'UNKNOWN'}{pin_note}")
     if not serial:
         return ("deferred", "no running serial (LD-0290 file) -- cannot attribute a tamper-lane commit")
     try:                                                              # guard 2: atomic mkdir lock
@@ -354,14 +374,25 @@ def take_snapshot(now: datetime, paths: list[str], dry: bool) -> tuple[str, str]
         if dest.exists():                                             # guard 3: unique-second collision
             return ("skip", f"{ts} already exists (concurrent)")
         dest.mkdir(parents=True)
-        copied = [rel for rel in paths if (WS / rel).is_file()
-                  and (shutil.copy2(WS / rel, dest / flatten(rel)) or True)]
+        copied: list[str] = []
+        carried: list[str] = []
+        for rel in paths:
+            src_pin = (base / flatten(rel)) if base is not None else None
+            if rel in pinned and src_pin is not None and src_pin.is_file():
+                shutil.copy2(src_pin, dest / flatten(rel))   # PIN: last-good baseline, NOT live
+                carried.append(rel)
+            elif (WS / rel).is_file():
+                shutil.copy2(WS / rel, dest / flatten(rel))
+                copied.append(rel)
+        pin_msg = f" + {len(carried)} PINNED at prior baseline (adjudicated non-append)" if carried else ""
         rc, out = safe_commit(serial, [f"org/audit/archive/{ts}"],
-                              f"snapshot({ts}): audit-archive-invoker automated snapshot ({len(copied)} logs)")
+                              f"snapshot({ts}): audit-archive-invoker automated snapshot "
+                              f"({len(copied)} logs refreshed{pin_msg})")
         if rc == 0:
             BASELINE_PTR.write_text(ts + "\n", encoding="utf-8")
             safe_commit(serial, ["org/audit/archive/.baseline"], f"baseline({ts}): advance clean baseline pointer")
-            return ("minted", f"{ts} minted + baseline advanced ({len(copied)} logs) by {serial}")
+            return ("minted", f"{ts} minted + baseline advanced ({len(copied)} refreshed"
+                              f"{', ' + str(len(carried)) + ' pinned: ' + ','.join(sorted(carried)) if carried else ''}) by {serial}")
         shutil.rmtree(dest, ignore_errors=True)                       # roll back the created dir
         if "not in permitted_agents" in out or "owned-paths lane violation" in out:
             return ("deferred", f"lane: commit by {serial} denied by owned-paths gate -- an exec will archive")
@@ -438,6 +469,7 @@ def run(now: datetime, dry: bool) -> tuple[int, dict]:
     base = baseline_dir()
     integrity_clean = True
     uncaptured_tail = False
+    dirty_logs: set[str] = set()   # per-log integrity: these get PINNED, they no longer wedge the rest
     live_nl_map: dict[str, int] = {}
     if base is None:
         report["findings"].append({"clause": "INTEGRITY", "verdict": "NO-BASELINE",
@@ -453,10 +485,13 @@ def run(now: datetime, dry: bool) -> tuple[int, dict]:
                     uncaptured_tail = True
             elif st == NON_APPEND:
                 integrity_clean = False
+                dirty_logs.add(rel)
                 report["findings"].append({"clause": "INTEGRITY", "verdict": "NON-APPEND-EDIT", "log": rel, "detail": d,
-                                           "action": "snapshot WITHHELD; baseline NOT advanced; needs human authority ruling (clause 3)"})
+                                           "action": "THIS log PINNED at its prior baseline (evidence preserved, still FIRING); "
+                                                     "other covered logs continue to archive. Needs human authority ruling (clause 3)."})
             else:  # ERROR -> fail-closed, never a silent no-growth
                 integrity_clean = False
+                dirty_logs.add(rel)
                 report["findings"].append({"clause": "INTEGRITY", "verdict": "ERROR-FAILCLOSED", "log": rel, "detail": d})
 
     # clause 1 (liveness, growth-conditioned).
@@ -465,7 +500,8 @@ def run(now: datetime, dry: bool) -> tuple[int, dict]:
         if liveness_fires(now, AGE_THRESHOLD_H, [(base_dt, base)], uncaptured_tail):
             report["findings"].append({"clause": "LIVENESS", "verdict": "STALE-BASELINE",
                                        "detail": f"baseline {base.name} is {age_hours(base_dt, now):.1f}h old (>{AGE_THRESHOLD_H}h) AND uncaptured tail exists",
-                                       "action": "minting fresh snapshot below" if integrity_clean else "snapshot withheld (integrity not clean)"})
+                                       "action": "minting fresh snapshot below" if integrity_clean else
+                                                 f"minting below; {len(dirty_logs)} dirty log(s) PINNED at prior baseline, the rest archive"})
 
     # clause 4 (death, growth-in-window; distinct from snapshot-failure). Growth via interlocked map.
     hb = read_heartbeat()
@@ -478,10 +514,26 @@ def run(now: datetime, dry: bool) -> tuple[int, dict]:
                                        "detail": f"last run {hb['last_run']} ({silent_h:.1f}h ago) and covered logs grew since -- uncaptured churn",
                                        "prior_outcome": hb.get("last_snapshot_outcome", "?")})
 
-    # archive: mint if stale-enough AND growth AND integrity clean.
+    # archive: mint if stale-enough AND a CLEAN log has growth. A dirty log is PINNED, never a wedge.
+    #
+    # UNWEDGE (CTO direct 174222Z (a)): the gate was a single global `integrity_clean`, so ONE dirty
+    # log withheld the snapshot of ALL covered logs -- 12 innocent logs accruing unarchived to preserve
+    # evidence about 1. Integrity is now PER-LOG: dirty logs are pinned inside take_snapshot, the rest
+    # archive normally. `uncaptured_tail` is set only from APPEND_OK logs, so this cannot mint off a
+    # dirty log's growth alone.
+    #
+    # HONESTY: "not-due" was the DEFAULT literal and a withheld snapshot rendered byte-identical to a
+    # routine 12h-not-elapsed idle -- invisible in the one string an agent reads. Each non-mint branch
+    # now names itself.
     snapshot_outcome = "not-due"
-    if base is not None and integrity_clean and uncaptured_tail and age_hours(parse_ts(base.name), now) >= SNAPSHOT_INTERVAL_H:
-        status, detail = take_snapshot(now, paths, dry)
+    if base is None:
+        snapshot_outcome = "no-baseline (cannot mint)"
+    elif not uncaptured_tail:
+        snapshot_outcome = "not-due: no uncaptured tail on any clean log"
+    elif age_hours(parse_ts(base.name), now) < SNAPSHOT_INTERVAL_H:
+        snapshot_outcome = f"not-due: baseline {age_hours(parse_ts(base.name), now):.1f}h < {SNAPSHOT_INTERVAL_H}h"
+    else:
+        status, detail = take_snapshot(now, paths, dry, pinned=frozenset(dirty_logs), base=base)
         snapshot_outcome = f"{status}: {detail}"
         report["snapshot"] = snapshot_outcome
         if status == "commit-fail":

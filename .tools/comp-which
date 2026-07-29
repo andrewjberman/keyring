@@ -334,6 +334,26 @@ RULES = [
      "where a stale/deprecated producer overwrites a fresh one. STATIC code candidate-finder + a LIVE "
      "version-history etag-lineage ORACLE (--sweep across a prefix). DISTINCT from comp-dups (duplicate CODE "
      "bodies / TF labels -- same code twice); this is DIFFERENT producers -> ONE destination. Advisory/read-only"),
+    # comp-legacywriter = WRITER-CONTEST + DECOMMISSION-SAFETY lens (1.0.0_SA_CTO~C 2026-07-29).
+    # Vocab is deliberately RETIREMENT/DELETION/READER-shaped, not collision-shaped, so a "is it safe
+    # to delete this" query lands here while a "who else writes this key" query stays with the
+    # collision scanner. Description names NO sibling tool -- a description is routing input, and
+    # naming a sibling hands it your intent (the gate's own warning).
+    (["safe to retire", "safe to decommission", "safe to delete", "safe to remove",
+      "legacy writer", "legacy writers", "writer contest", "decommission", "decommissioning",
+      "decommission safety", "removal behaviour", "removal behavior", "silently default",
+      "silent default", "silent-default reader", "kill list", "teardown", "tear down",
+      "retirement", "retire this producer", "retire the writer", "retire this artifact",
+      "can i retire", "can i delete", "zombie writer", "dormant writer", "still writing this",
+      "who reads this key", "who consumes this", "any readers", "no live consumer",
+      "suppress this artifact", "what breaks if this is gone", "fails silently if missing"],
+     "writer-contest + decommission safety -- who writes it, who reads it, what breaks when it is gone (comp-legacywriter)",
+     ["comp-legacywriter <key-or-bucket>", "comp-legacywriter", "comp-legacywriter --json"],
+     "before retiring a producer or deleting a served artifact: the WRITER set, the READER set, and each "
+     "reader's REMOVAL BEHAVIOUR -- does deletion hard-fail loudly, or silently return an empty default? "
+     "Location identity is the (BUCKET,KEY) pair and call DIRECTION is modelled, so a path match across "
+     "FIRM buckets is not a contest and an existence PROBE is not a writer. Emits ready-to-paste retires: "
+     "entries with the evidence bar pre-filled. Advisory/read-only -- it recommends, it never kills"),
     (["cache", "collision", "query key", "react query"],
      "cache collisions",
      ["comp-cache collisions"],

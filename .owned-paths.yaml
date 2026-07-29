@@ -36,6 +36,36 @@ rollout_phase: 2  # 2026-04-30: flipped to fail-closed per Andrew directive (TO 
 # =========================================================================
 lanes:
 
+  # =========================================================================
+  # READ THIS BEFORE ASKING FOR A TILDE-LANE GRANT  (added 2026-07-29, COO)
+  #
+  # A TILDE LANE IS ALREADY PERMITTED WHEREVER ITS BASE SERIAL IS ENUMERATED.
+  # `1.0.0_SA_CTO~C` needs no entry to commit wherever `1.0.0_SA_CTO` may.
+  #
+  # MECHANISM, source-confirmed at .tools/owned-paths-validate.py:125-160:
+  # check_agent() tries an exact normalized match; ON MISS it strips ONE
+  # trailing `_<alnum>` lane segment and re-tests. Deliberate, additive-only
+  # (consulted only after exact-match failure, so it can never REVOKE), and
+  # leak-free by construction (a true base serial strips to a non-serial that
+  # matches nothing). RV-0030 F-003, ws CTO, 2026-06-08.
+  #
+  # EXERCISED 2026-07-29 with a positive control:
+  #   check_agent('1.0.0_SA_CTO~C','org/modules/graph/comp_*.py') -> True  (no entry present)
+  #   check_agent('2.0.0_SA_COO','org/tier0/ledger/*')            -> False (a real refusal, taken that day)
+  #
+  # >> THIS FILE CONTAINS **18** NOTES DESCRIBING A "recurring tilde-lane
+  # >> enumeration gap". FOR ANYTHING AFTER 2026-06-08 THAT GAP IS A PHANTOM,
+  # >> AND NOT ONE OF THOSE NOTES CITES AN EXERCISED REFUSAL -- they are all
+  # >> config reads. The prose is persuasive, self-consistent, repeated, and
+  # >> wrong; it trained a new lane to ask for a grant it already held and cost
+  # >> a grantor a commit on 2026-07-29. Grants dated BEFORE 2026-06-08 were
+  # >> live. AFTER it, EXERCISE THE GATE BEFORE ASKING OR GRANTING. <<
+  #
+  # CONSEQUENCE FOR SCOPING: a tilde lane CANNOT be given LESS than its base by
+  # omitting it -- withholding an entry is a no-op. Narrowing a lane below its
+  # base needs a real mechanism (a longest-match path rule), not an absence.
+  # =========================================================================
+
   BASE_EXEC:
     permitted_agents:
       - 1.0.0_SA_CTO
@@ -572,7 +602,7 @@ lanes:
   ANY_EXEC_OR_AE:
     permitted_agents:
       - 1.0.0_SA_CTO
-      - 1.0.0_SA_CTO~C   # ADDED 2026-07-29 by 2.0.0_SA_COO (grantor; ~C is grantee -- SoD, and ~C explicitly DECLINED to self-land it under Andrew's ~1714Z "do absolutely whatever you need", on the grounds that a lane whose first commit widens its own grant is the wrong precedent no matter how correct the grant. Correct, and it is the reasoning this rule exists to produce). Andrew-direct ~1705-1714Z put the full INFRASTRUCTURE.TOOLS package (comp-opalbizsem, comp-legacywriter, registry census, comp-pipescript hardening) on the ~C lane. The recurring tilde-lane enumeration gap (0.4.0_DS~A-~E / 0.4.2_RD~B-~C / 0.3.1_RD~B-~C / 0.8.0~C-~D precedents). >> NOTE THE SHAPE, because it is worse than a clean block: `.tools/**` is lane ANY, so ~C could land a comp-tool EXECUTABLE while `org/modules/graph/comp_*.py` + `*_cli.py` + `extract_*.py` (this lane) refused its ENGINE -- a HALF-LANDABLE TOOL, a wrapper whose engine cannot follow it. << SCOPE: this lane only, which is the measured block. ~C's own proposed patch (add to ANY_CTO) was verified WRONG at source by the grantor -- ANY_CTO gates architecture docs and would NOT have unblocked the engine; ~C flagged the uncertainty rather than guessing, which is why the wrong patch did not land. ANY_CTO deliberately NOT granted: no demonstrated need, and least-privilege over parity.
+      - 1.0.0_SA_CTO~C   # Added 2026-07-29 by 2.0.0_SA_COO (grantor; ~C is grantee -- SoD; ~C declined to self-land under Andrew's ~1714Z "do absolutely whatever you need", correctly: a lane whose first commit widens its own grant is the wrong precedent however right the grant). Andrew-direct ~1705-1740Z put the whole comp-tool package on ~C. >> ⚠ **THIS ENTRY IS REDUNDANT AND I AM LEAVING IT ONLY AS DOCUMENTATION -- DO NOT CITE IT AS EVIDENCE THAT ENUMERATION WAS REQUIRED.** I landed it on the inference "~C is not enumerated, therefore BLOCKED" and NEVER EXERCISED THE GATE. Exercised afterwards, with a positive control: `check_agent('1.0.0_SA_CTO~C', 'org/modules/graph/comp_*.py')` returns **True WITHOUT this entry**; control `check_agent('2.0.0_SA_COO','org/tier0/ledger/*')` returns False (reproducing a real refusal, so the harness discriminates). MECHANISM, source-confirmed at `.tools/owned-paths-validate.py:125-160`: after an exact-match miss, `check_agent` strips ONE trailing `_<alnum>` lane segment and re-tests, so **a tilde lane is permitted wherever its BASE serial is enumerated** -- deliberate, documented, additive-only, RV-0030 F-003 (ws CTO, 2026-06-08). << **THE GOVERNANCE CONSEQUENCE, which is the part worth keeping: A TILDE LANE CANNOT BE SCOPED BELOW ITS BASE BY OMISSION.** I withheld ANY_CTO here as "least-privilege over parity" -- that withholding is a NO-OP; ~C already holds ANY_CTO, ANY_EXEC and this lane through base `1.0.0_SA_CTO`. Any future attempt to give a lane LESS than its base needs a real mechanism, not an absent enumeration. **Grants dated BEFORE 2026-06-08 (the auto-permit) were live; tilde-lane grants after it may be no-ops -- check the date before citing any of them as precedent.**
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
       - 4.0.0_SA_CRO   # Andrew-direct 2026-07-22 "You can register projects yes." -> SCOPED TO PROJECT REGISTRATION (org/projects/REGISTRY.md + org/projects/*.json). The CRO explicitly did NOT claim the lane's other surfaces (hook-config etc.) and its membership must NOT be read as blanket. Granted by 0.0.0_AB_MSTR (grantor; CRO is grantee -- SoD). LD-0331.

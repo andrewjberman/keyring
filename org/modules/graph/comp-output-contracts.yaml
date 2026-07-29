@@ -348,6 +348,41 @@ contracts:
 # blocks a NEW tools_index tool that appears in NEITHER list.
 # ---------------------------------------------------------------------------------------------------
 
+  comp-legacywriter:
+    coverage: >-
+      Every (BUCKET,KEY) S3 location named by a resolvable write/read/probe call in the scanned
+      producer population -- .py and .sh under data/, infra/aws/, org/modules/, portal/scripts.
+      Location identity is the (bucket,key) PAIR, never the key alone; call DIRECTION is modelled,
+      so an existence probe is classified PROBE and never counted as a writer. Each reader carries
+      a REMOVAL BEHAVIOUR derived from its enclosing error handling.
+    blind_spots:
+    - STATIC axis only by default -- CAPABILITY (simulate-principal-policy) and OBSERVED
+      (comp-clobber --live version/ETag interleave) are NOT run and print
+      UNVERIFIABLE-BY-THIS-INSTRUMENT rather than rendering clean.
+    - deployed-vs-repo divergence is NOT modelled; the plane is the working tree, so a deployed
+      artifact whose source has drifted is invisible here.
+    - a dynamically constructed key renders UNRESOLVED-WRITER (never absent), and an unresolved
+      BUCKET renders UNDETERMINABLE in BOTH directions -- never CONTESTED, never "not a collision".
+    - EXERCISE VINTAGE reads UNDETERMINABLE with no run-log instrument attached; absence of an
+      instrument is never evidence of no write.
+    - DDB and unversioned buckets have no version history; that axis is UNVERIFIABLE by this tool.
+    - readers reached by a non-AST path (shell readers, portal TSX consumers) are outside the
+      scanned population -- a "no reader found" is a statement about THIS population, and the
+      report says so rather than claiming no reader exists.
+    plane: source
+    grain: artifact
+    scope: estate
+    vintage: repo working tree at run time; source + vintage printed on line 1 of every invocation
+    exit_codes:
+      '1':
+        class: verdict
+        meaning: self-test control(s) failed
+      '2':
+        class: retrieval
+        meaning: >-
+          could-not-retrieve -- header sources unresolvable (SOURCE UNRESOLVABLE printed, never
+          silence) or Phase 0 substrate refusal under --require-live-substrate
+    exit_source: comp_legacywriter.py emit_header (2=SOURCE UNRESOLVABLE) + phase0_substrate (2=stale substrate refusal); author 1.0.0_SA_CTO~C 2026-07-29
 pending_declaration:
   - comp-adapter-audit
   - comp-assets
