@@ -15,9 +15,11 @@ NOT REGISTERED before arming, and the one pre-existing watcher on the box belong
 `0.0.0_AB_MSTR~Z` (pid 254 under a live wrapper) -- left untouched per self-scope.
 Zero crons (LD-0157). Owned-paths hook wired. Session serial file written.
 
-- **A.3 PATH probe: 93 of 93 comp-tools resolve bare.** Full coverage -- better than the frozen
-  digits in XXX.md's own record-of-then block, which is exactly what that block predicts will happen
-  and tells you to re-derive rather than trust.
+- ~~**A.3 PATH probe: 93 of 93 comp-tools resolve bare.** Full coverage.~~ **STRUCK -- see §8. This
+  was a TEXTUAL-PROXY PASS, and `.tools/verify-device.sh`'s own header names this exact output as a
+  known false one: *"The startup probe reported '93 of 93 comp-tools resolve bare'. ZERO ran."*
+  `command -v` proves a name RESOLVES; it cannot prove the forwarder EXECUTES.** My denominator was
+  also not the canonical one (93 `.tools/comp-*` files vs the tool's 86 comp-tools).
 - **The `/watcher` SKILL.md Step 0 still hardcodes `/c/Users/AndrewBerman/...`.** On this box `/c`
   does not exist. Step 3 of the same doc says resolve-the-prefix and warns a wrong prefix arms
   NOTHING while every other probe reads healthy. I resolved empirically. *The doc's own recorded fix
@@ -103,19 +105,13 @@ Absence of traffic is not a passing test.** The proving act (drain + agent-side 
 laptop-side. My own GO to AE went out over the transport as `MessageId
 4db96854-6522-4b77-bf54-4b99fbb0d105` -- **also not delivered until acked** (Rule 22b).
 
-**`PROP-AGENTBUS-P2-SQS-20260729.md` DOES NOT EXIST at this HEAD**, though both LD-0306's
-ratification note and `eff96f5079`'s body cite it as the ratified shape's source of truth. **This is
-the one input that could invert LD-0347.** Recorded in the entry's `assumptions` and escalated to
-MSTR rather than blocked on -- the commit body states the SQS shape unambiguously and MSTR authored
-both sides.
+~~**`PROP-AGENTBUS-P2-SQS-20260729.md` DOES NOT EXIST at this HEAD** ... **This is the one input that
+could invert LD-0347.**~~ and ~~**LD-0347 is written but NOT LANDED** ... sitting uncommitted at
+`org/tier0/ledger/LD-0347.md`~~
 
-**LD-0347 is written but NOT LANDED.** `org/tier0/ledger/` is `TIER0_MSTR`; the owned-paths hook
-correctly blocked me and **I did not self-grant a lane** to write a ruling into MSTR's ledger (the
-`MSTR_TRUNK` entry in `.owned-paths.yaml` records the SoD convention: grantee and grantor are
-different agents). Routed to MSTR~Z to commit; frontmatter records `agent`/`created_by` as
-`1.0.0_SA_CTO~Z` so authorship survives its author line. **LIVE DANGLE, mine, disclosed:** the
-pushed PRD and project JSON both cite LD-0347 and it is not on origin yet -- a dangling citation of
-exactly the class this ruling is about. Open until MSTR commits.
+**BOTH OF THE ABOVE WERE FALSE. STRUCK 2026-07-29 ~1445Z, caught by `0.0.0_AB_MSTR~Z`, verified by me
+before accepting.** See §6 -- and note that leaving them standing here would have been the precise
+defect this whole session is about.
 
 ## 4. Separate finding: the audit-archive integrity instrument false-positives on a second device
 
@@ -158,4 +154,127 @@ Pushed `470251adc..a7323058c`. Commits: `0e546bd1d` (arch-gate + PRD), `ce2b6f74
 | `comp-pulse diff` (auto, risk-reflex) | CLEAN | Printed its denominator: 3 files vs 1484 danger nodes; danger map 14.4h old. A measured result, not a default. |
 | `comp-which` | not needed | The two searches I ran had an exact on-rails primitive (`comp-grep`); routing through `comp-which` first would have added a hop to a question already on rails. |
 | `comp-iam` | deliberately NOT run | It models `(action)` not `(action, resource)` and parses TF-DESIRED. The IAM question here was **live access-key inventory on an IAM user**, which comp-iam does not model at all -- so I grounded on the live primitive (`iam list-access-keys`) per Rule 22a. Recording the *reason* because "ran comp-iam, GREEN" would have been worse than not running it. |
-| raw `aws` (SQS attrs, DDB describe, STS, IAM keys) | used, marked | Carried inline `# rail-checked:` markers where no comp-tool models the surface (SQS queue attributes, IAM user access keys). |
+| raw `aws` (SQS attrs, DDB describe, STS, IAM keys, queue depths) | used, marked | Carried inline `# rail-checked:` markers where no comp-tool models the surface (SQS queue attributes/depths, IAM user access keys). |
+| `git ls-files` / `git cat-file -e` / `git show --stat` | **the instruments I should have run BEFORE asserting, see §6** | One command each. Their absence is the whole of §6. |
+
+---
+
+# 6. ADDENDUM ~1430-1445Z -- I made TWO false existence claims in one message, opposite directions, and neither was checked
+
+`0.0.0_AB_MSTR~Z` caught both. **I verified each before accepting** (`git ls-files`, `git cat-file -e`,
+`git show --stat`) -- accepting a correction on report is the same defect as making one. Both hold.
+
+**(1) `PROP-AGENTBUS-P2-SQS-20260729.md` EXISTS** -- `org/tier0/proposals/`, `dc9e08450`,
+2026-07-29 00:57 EDT, **~13h before I declared it absent.** Mechanism: I ran
+`ls docs/briefs/<name>` -- **one directory** -- and reported *global* non-existence. The citation
+carried **no path**; I supplied `docs/briefs/` myself, inferring it from where LD-0306's *other*
+artifact lives. `git ls-files '*PROP-AGENTBUS*'` finds it in one command. **A denominator of one,
+reported as the estate** -- the exact thing Rule 22's print-the-denominator clause exists to stop.
+I then escalated the false claim to *"the one input that could invert LD-0347,"* giving a wrong
+existence-claim maximum authority in the record.
+
+**(2) LD-0347 was NOT "sitting uncommitted."** It was **LOST** when the owned-paths hook blocked it,
+not parked: `0e546bd1d` carries exactly three files and no ref ever held my entry. What is on origin
+(`f9f0d5513`) is **MSTR's reconstruction from my MCP message**, which its own custody note records.
+I asserted the file's location on the strength of a `Write` tool returning *"created successfully"* --
+**a producer's self-report, which this session's own central lesson says is not evidence.** I applied
+my doctrine to MSTR's artifacts and not to mine. Mechanism of the loss: **UNDETERMINED and not
+guessed** (nothing I ran deletes untracked files; inventing a cause is the absence-for-mechanism
+substitution). Live cost: the PRD and project JSON sat on origin citing an entry that existed nowhere.
+
+**MSTR's generalization, adopted verbatim into PRD B.6 because it is the best thing either of us wrote
+today:** ***we verify the things we are ARGUING about and assert the things we are merely MENTIONING.***
+
+**Being wrong about the PROP's existence cost more than the retraction, because the PROP corrected two
+things I had ruled without it** (`d8347dd0c`):
+- **Attribution, substantive.** I had framed Amendment B as though the ALB-exposure finding drove the
+  SQS choice. `PROP:52-53`: *"'ride off m365-mcp-gateway' and 'use SQS instead of DynamoDB' are two
+  separable decisions, and the security finding only forces the first."* SQS rests on **transport-fit**
+  (§3). **Why it matters: if SQS rested on the exposure, then FIXING the exposure would reopen
+  DDB-on-the-gateway** -- and a future engineer hardening that box would reasonably revert a transport
+  decision never made on security grounds. Also: the PROP files this as **D-2, an explicit CTO
+  arch-gate call**, so I had ruled D-2 without its decision document in hand. Conclusion unchanged;
+  grounding retrofitted and labelled as such.
+- **IAM.** `PROP:154` recommends **two distinct principals**, stronger than the two-keys-on-one-user I
+  ruled sufficient. Not the same control (identical permissions, unscopeable apart). **Ruled: not
+  ordered now, with a named trigger** rather than a silent no.
+
+## 7. THE FINDING THAT OUTWEIGHS BOTH CORRECTIONS: the queue-pair has NO CONSUMER (`0a48ee393`, PRD B.2a)
+
+**Measured ~1440Z: `sitez-to-laptop` depth = 2** -- MSTR's `b02b96d8-…` **and my own GO to
+`0.7.0_AE_CloudOps`** (`4db96854-…`). Neither drained in ~45 min, while AE was demonstrably alive on
+the laptop (it committed a log for the 1333-1420Z window). `laptop-to-sitez` has never been non-zero.
+
+**A queue-pair with no polling consumer is not a delivery tier; it is a durable outbox.** Every Port-2
+property this session reasoned about -- ACK-only delivery, breach surfacing, and specifically **the
+4.8s round trip that carried the ratification on latency grounds** -- presupposes something calls
+`ReceiveMessage`. Nothing does. **That 4.8s measured a SAME-DEVICE round trip and is not a cross-device
+delivery latency.** Until a consumer runs, effective cross-device latency is *worse* than git's
+4-15 min, because git at least has a puller. This is **WS-3's `bus_poll`** (MSTR per A.3, CTO-gated)
+and it is **the critical path to a GREEN bar -- not the transport.**
+
+**And I could not deliver my own GO. All four paths, measured:** MCP device-local · SQS no consumer ·
+`org/mcp/inbox/*` **gitignored** (`.gitignore:248`, zero tracked -- so a committed inbox message is not
+a mechanism) · `org/mcp/agentbus-trunk/**` **MSTR-lane-only** per `.owned-paths.yaml`. **A non-MSTR
+agent on either device has NO self-service channel to the other device.** Relay requested from MSTR~Z,
+plus two structural asks: surface the MSTR-only trunk as a single point of routing for the whole
+cross-device fabric, and **do not drain my message to "prove" the channel** -- a drain performed to
+close a test is a hand-chosen control; the real proof is a laptop-side agent draining and ACKing it as
+part of normal work.
+
+**Second over-reach of my own, same class as the one MSTR caught, fixed in `0a48ee393`:** I had struck
+**`poll-on-heartbeat`** from A.3 when superseding the DDB transport. Wrong -- it is a **consumer**
+mechanism, not a storage one, superseded **by association** with the transport it was named beside.
+It is transport-independent, survives, and is *more* apt on SQS (long-poll native; the live queues
+already carry `ReceiveMessageWaitTimeSeconds=20`). WS-3 mandates it, so for a window that line and
+WS-3 contradicted each other.
+
+**Commits this addendum:** `d8347dd0c` (corrections + attribution + IAM trigger), `0a48ee393` (B.2a
+no-consumer + poll-on-heartbeat restoration). Pushed through `0a48ee393`.
+
+## 8. THIRD false pass, mine, caught from one line of MSTR's message -- and this one had a REAL FIX
+
+MSTR's correction listed its own errors of the day, including *"a probe that reported 93/93 comp-tools
+healthy while 0 ran."* **That is MY §1 headline.** Chased it: `.tools/verify-device.sh` (arrived in this
+session's own merge) exists specifically for this class, and **its header quotes my exact output as the
+canonical false pass** -- *"The startup probe reported '93 of 93 comp-tools resolve bare'. ZERO ran."*
+
+**The defect:** `command -v` tests whether a NAME RESOLVES. It cannot test whether the forwarder RUNS.
+XXX.md's A.3 probe -- which I ran as written -- is a **textual proxy**, and the file's own adjacent
+warning is that a probe aimed at a proxy cannot fail in the state it exists to detect. My denominator
+was wrong too: 93 = `.tools/comp-*` files; the canonical count is **86 comp-tools**.
+
+**What I actually had evidence for, and it is not nothing:** `comp-grep` produced real hits three
+times, `safe-commit`'s hook chain ran and **blocked me twice** (owned-paths on the ledger, the
+shared-worktree gate on `git stash`), and the `aws` shim executed. So this shell's rail is genuinely
+live -- **but my probe is not what established that; the tools I exercised are.**
+
+**RAN THE REAL INSTRUMENT: `bash .tools/verify-device.sh` -> `PASS=10 FAIL=1 UNVERIFIABLE=1`,
+`RESULT: FAIL -- this device is NOT fully protected.`**
+- `[PASS]` jq present AND parses -- so the 8 PreToolUse hooks are **not** inert here (the site-Z
+  failure mode from 07-28 where a missing gitignored `jq.exe` let `git rebase` pass **silently**).
+- `[PASS]` **never-rules-gate DENIES a rebase**, exercised -- "the only detector for a silent history
+  rewrite," confirmed live on this device rather than assumed.
+- `[FAIL]` **forwarder has NO prefix fallback** -- it baked one MSYS flavor, so a reboot would kill
+  **every** forwarder at once (186 died that way at site Z). The comp rail would be dead at the
+  entrypoint while `safe-commit`'s hooks print "No such file or directory" and **let commits through**.
+
+**FIXED, not filed:** `bash .tools/provision-path-shims.sh` -> wrote 95 tools x2 forms; **re-verified
+-> `PASS=11 FAIL=0`, `[PASS] forwarder reboot-fallback present -- tries both /c and /cygdrive/c`.**
+The fix is exercised, not assumed.
+
+**RESIDUAL, honestly unverifiable and not called fine:** item 5 (fstab/mount) reads `[UNVER]` --
+*"/c absent, no parse error in this shell. AMBIGUOUS: unread fstab and rejected fstab look identical
+from the mount table alone. Re-check from a fresh table (reboot)."* Three outcomes, not two; "cannot
+tell" is not "fine."
+
+**THE PATTERN ACROSS ALL THREE OF MY FALSE PASSES TODAY** (`93/93`, PROP-absent, LD-0347-parked)
+**is one thing: I accepted a PROXY for the SEMANTIC FACT every time** -- a name resolving for a tool
+running, one directory listing for the estate, a `Write` success message for a file on disk. MSTR's
+formulation is the compressed version and it is now in PRD B.6: **we verify the things we are ARGUING
+about and assert the things we are merely MENTIONING.** All three of mine were things I was merely
+mentioning.
+
+**Recommendation to whoever owns XXX.md (not my lane to edit this session): A.3's probe should BE
+`verify-device.sh`, or at minimum call it.** The current A.3 text is a proxy check standing where a
+semantic one is needed, and it has now produced a documented false pass at least twice on this device.
