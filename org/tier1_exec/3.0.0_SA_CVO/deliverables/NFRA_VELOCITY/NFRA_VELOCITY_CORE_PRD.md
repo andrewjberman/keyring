@@ -249,12 +249,16 @@ ESTATE half (intake at occurrence + the archetype weight/dynamics report) is WS-
 ≤5-minute act with a defined intake form; one new-class event exercised through the gate
 end-to-end; the schema's own coverage boundary printed.
 
-**FLAGGED PENDING ANDREW (~C item 7):** the full schema build stays P5 per Andrew's placement —
-but the archetype-weight ranking is what steers WS-C3/C4's queue, and installed at P5 it ranks
-nothing (a steering signal installed after the voyage is a log, not a rudder). Proposal: a
-**minimal hand-classified intake form at P1** (M-code + one line, no automation) so the queue is
-weight-ranked from the start; the schema build itself stays P5. Requires Andrew's word because he
-placed C9/E7 "at the very end."
+**PLACEMENT RULED (Andrew-direct, CVO terminal, 2026-07-29 ~23:2xZ, VERBATIM): *"the reason it is
+at the end, is because it is going to steer the fabric/estates velocity infrastructure in
+perpetuity."*** The P5 placement is deliberate and STANDS. Resolution of ~C item 7 (adjudicated,
+not merely overruled): C9/E7 is **not a construction-time instrument — it is the perpetual
+steering layer for the COMPLETED velocity infrastructure.** Construction-time ranking of the
+WS-C3/C4 queue draws on the **already-measured static corpora** — the 210-incident taxonomy's
+mechanism weights (55% in four), MSBEFF's 718 findings, the 187 rail-override demand signals — a
+snapshot that is current at program start by construction. The living schema then takes over the
+ranking at P5 and keeps it current forever. The rudder for the voyage is the static snapshot;
+C9/E7 is the rudder for everything after.
 
 ---
 

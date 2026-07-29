@@ -253,7 +253,9 @@ retirement — **and the TRANSIENT lifecycle trap** (a live written→consumed�
 reads absent AND dormant AND reader-less — two confirmed signals, both wrong; closed by the WS-C1
 TRANSIENT vocabulary requirement, ~C item 3). · **Consolidation opacity** (8 stalled records become
 one opaque "absorbed" — ~C item 6) → the §3b open-work ledger with named owners, kept current. ·
-**Steering signal arrives after the voyage** (C9/E7 at P5 means the synthesis queue is
-judgment-ranked all program — ~C item 7) → proposed minimal hand-classified intake at P1,
-**FLAGGED PENDING ANDREW's word** (he placed the schema at the very end; the P1 form is an intake
-slip, not the schema build).
+**Steering signal arrives after the voyage** (~C item 7) → **RULED CLOSED, Andrew-direct
+2026-07-29 ~23:2xZ, verbatim: *"the reason it is at the end, is because it is going to steer the
+fabric/estates velocity infrastructure in perpetuity."*** P5 stands: C9/E7 is the perpetual
+steering layer for the completed infrastructure, not a construction instrument; construction-time
+ranking uses the static corpus weights (taxonomy 210 mechanism distribution + MSBEFF 718 + 187
+override-demand), which are current at program start by construction.

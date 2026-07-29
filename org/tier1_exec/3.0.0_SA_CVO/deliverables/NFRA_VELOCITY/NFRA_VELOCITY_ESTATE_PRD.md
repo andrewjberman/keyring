@@ -108,8 +108,19 @@ program an early visible win against an otherwise back-loaded payoff.
 **First adjudicated population: the 353 dead surfaces** from `comp-legacywriter --census`, joined
 against contracts as they land.
 
+**RECALL SCOPING (~C clean-read finding 2 — binding):** "full recall by construction" holds OF THE
+CONTRACTED SET — the derivation's recall EQUALS contract coverage, which starts near zero and grows
+through P1–P3, while today's debt lives precisely in the uncontracted complement (the 353 were
+derived from SOURCE; none is contracted yet). The derived engine and the census cover
+**complementary populations** (contracted+intent vs all-source-visible+no-intent). Retiring the
+census while coverage is partial makes actual recall FALL at the moment the program reports it
+rising — the denominator-shrinks-and-looks-like-progress shape inside the workstream built to
+prevent it. **The census retires when the coverage gap is zero, not when the engine works.**
+
 *Acceptance:* E3.0 safe-slice retirements executed clean at P1 (the gates exercised, denominator
-printed); the derived kill list exists with its derivation printed; ≥N contract-derived retirements
+printed); the derived kill list exists with its derivation printed; **every wave states BOTH
+numbers — the derived-from-contracts count AND the census-only count (surfaces the derivation
+structurally cannot see), with the gap named as coverage debt**; ≥N contract-derived retirements
 executed under gates at P3 (N set at decomposition); **zero new C-SILENT residents going forward**
 — a resource created without a contract is a commit-gate warning ramping to a deny
 (announce-then-enforce); zero retirements against uncontracted-lifecycle or TRANSIENT keys.
@@ -120,7 +131,12 @@ executed under gates at P3 (N set at decomposition); **zero new C-SILENT residen
    conditions): the verdict set DERIVED from declared exit contracts via the registration
    invariant, never a frozen list; **UNKNOWN-CONTRACT is a loud verdict, never defaulted** (with
    the required mutant: one deliberately undeclared tool surfaces as UNKNOWN); supersession history
-   recorded; historical rows re-baselined so trend claims stand on corrected data.
+   recorded; historical rows re-baselined so trend claims stand on corrected data — **preserving
+   the ORIGINAL rows alongside the re-baselined ones under a `verdict_basis` version column** (~C
+   clean-read finding 3): a rewritten-only history cannot separate "the verdict logic changed"
+   from "the estate changed" — both move a re-baselined series identically, and the discriminating
+   residue is unrecoverable if not kept now. Every trend claim re-derivable under either basis,
+   which also makes the §8 no-aggregate-headline rule checkable ACROSS the re-baseline boundary.
 2. **Separate the FAIL column's three meanings** — deliberate negative-control probes · tool usage
    errors · genuine findings — the two-meaning-null that currently makes "are we getting better?"
    unanswerable in either direction.
@@ -148,9 +164,21 @@ AccessDenied-indistinguishable-from-absent · list-rules Scheduler blindness · 
 predicates · UTC-4 LastModified misreads · terraform "No changes" as success · rc=0 PASS/STALE
 conflation · not-due default literals · the two self-authored unfailable acceptance criteria.
 
+**THE ENFORCEMENT MECHANISM (~C clean-read finding 1 — without this the invariant below is a diary
+entry by this PRD's own TRIGGER_LAYER clause):** estate detectors are not comp-tools — no
+comp-manifest-check ever sees a freshness Lambda, an EC2-side gold check, or a deploy verify, so
+there is no registration event to gate and no detector registry to attach an invariant to.
+Resolution (registry-reuse, not a parallel one): **an estate detector IS a contracted process — it
+registers in the WS-E1 estate-contract registry, and its contract carries its boundary
+declaration.** The WS-E3 C-SILENT commit-gate ramp (warning → deny on the producer trees) then
+covers detectors exactly as it covers writers: a new/edited detector lacking a contracted boundary
+declaration trips the same gate. One registry, one gate; E5's enforcement is therefore a stated
+dependency on E1's registry, which precedes it in the phase order.
+
 *Acceptance:* N of M estate detectors emitting boundary reports (count printed; target set at
-decomposition); the nine-specimen suite green estate-side; **no new detector registers without a
-recall denominator.**
+decomposition); the nine-specimen suite green estate-side; **no new detector past the gate ramp
+without a contracted boundary declaration carrying its recall denominator — enforced by the WS-E1
+registry + WS-E3 commit gate, not by prose.**
 
 ## WS-E6 — Behavioral / harness (the last mile, measured)
 
@@ -206,9 +234,11 @@ slice retirements** (~C item 4 — the gates exercised on the zero-blast populat
 **P3** = E3 contract-derived retirements + E5 sensors →
 **P4** = E6 tuning →
 **P5** = E7 (live intake + dynamics — last, and then standing forever).
-*(FLAGGED PENDING ANDREW, ~C item 7: a minimal hand-classified error-intake form at P1 — M-code +
-one line, no automation — so WS-C3/C4's queue is weight-ranked from the start; the E7 build itself
-stays P5 per Andrew's placement.)*
+*(PLACEMENT RULED — Andrew-direct 2026-07-29 ~23:2xZ, verbatim: "the reason it is at the end, is
+because it is going to steer the fabric/estates velocity infrastructure in perpetuity." P5 stands;
+~C item 7 resolved: construction-time ranking uses the static corpus weights (taxonomy 210 +
+MSBEFF 718 + 187 override-demand), current at program start by construction; E7 takes over the
+ranking at P5 and keeps it current forever.)*
 
 ## Governance
 

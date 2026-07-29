@@ -4,11 +4,19 @@
   "name": "VELOCITY CORE (~Z site fabric) -- the type system, the loop, and the tools: D1/D2/D3+lifecycle rails, learning loop L2+L3, stability-graded tool synthesis, typed routing, doctrine collapse, living error schema",
   "description": "Andrew-direct commission 2026-07-29 (CVO terminal, verbatim in PRD): NFRA_VELOCITY wraps the unfinished NFRA stack + the DEBTLOOPS voice memo + MSTR's INCIDENT_TAXONOMY into one program with one objective function -- production velocity that does not decay -- run as two synergistic PRDs on two fabrics simultaneously. CORE is the ~Z-site half: WS-C1 rails D1/D2/D3 + lifecycle (incl. TRANSIENT, ~C item 3); WS-C2 expressiveness validation vs the 3 corpora (718 MSBEFF + 210 taxonomy + DEBTLOOPS specimens) BEFORE the types freeze; WS-C3 archetype census + pattern inventory (debt shapes first-class); WS-C4 stability grader + synthesis; WS-C5 L2 aggregate + L3 inference gate (the loop closes); WS-C6 typed routing (comp-which successor, honest empty, law-sufficiency); WS-C7 recall standard (boundary reports join the registration invariant + pre-flight + shell-reachability); WS-C8 doctrine collapse per the PREVENTION ruling (14 M-laws + gates; M15 DIVERGENT-TRANSPORT candidate); WS-C9 living error-classification schema (versioned head, open-set, new classes via the inference gate).",
   "prds": [
-    {"path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_VELOCITY/NFRA_VELOCITY_CORE_PRD.md", "label": "CORE PRD (staged; canonical docs/architecture/NFRA_VELOCITY_CORE_PRD.md landing relayed to base CTO -- ANY_CTO gate)", "date": "2026-07-29"},
-    {"path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_VELOCITY/NFRA_VELOCITY_PROGRAM.md", "label": "Program index: thesis, two-fabric architecture, consolidation map + open-work ledger (s.3b), seam protocols, metrics", "date": "2026-07-29"}
+    {
+      "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_VELOCITY/NFRA_VELOCITY_CORE_PRD.md",
+      "label": "CORE PRD (staged; canonical docs/architecture/NFRA_VELOCITY_CORE_PRD.md landing relayed to base CTO -- ANY_CTO gate)",
+      "date": "2026-07-29"
+    },
+    {
+      "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_VELOCITY/NFRA_VELOCITY_PROGRAM.md",
+      "label": "Program index: thesis, two-fabric architecture, consolidation map + open-work ledger (s.3b), seam protocols, metrics",
+      "date": "2026-07-29"
+    }
   ],
   "status": "active",
-  "phase": "REGISTERED 2026-07-29 (plan approved by Andrew at review; ~C's seven pushbacks folded @f0ea0a055d; item-8 corruption claim retracted by ~C -- transport-only, source verified clean). Phases: P1 = C1+C2 (vocabulary, validated) -> P2 = C3+C7 -> P3 = C5 -> P4 = C4+C6 -> P5 = C9 (living schema, per Andrew's very-end placement); C8 parallel from P1. OPEN FLAG PENDING ANDREW: minimal hand-classified error-intake at P1 (~C item 7) so the synthesis queue is weight-ranked from the start. Supersedes (closed complete-as-superseded, open work in the s.3b ledger): NFRA_ONTOLOGY2, NFRA_TOOLARCH, NFRA_TOOLSEM, NFRA_LIVELEARN (C5/E5 half), NFRA_TOOLUNIFY.",
+  "phase": "REGISTERED 2026-07-29 (plan approved by Andrew at review; ~C's seven pushbacks folded @f0ea0a055d; item-8 corruption claim retracted by ~C -- transport-only, source verified clean). Phases: P1 = C1+C2 (vocabulary, validated) -> P2 = C3+C7 -> P3 = C5 -> P4 = C4+C6 -> P5 = C9 (living schema, per Andrew's very-end placement); C8 parallel from P1. PLACEMENT RULED (Andrew-direct 2026-07-29 ~23:2xZ verbatim: 'the reason it is at the end, is because it is going to steer the fabric/estates velocity infrastructure in perpetuity'): P5 stands; construction-time queue ranks on the static corpus weights (taxonomy 210 + MSBEFF 718 + 187 override-demand); C9/E7 takes over the ranking in perpetuity at P5. No open flags. Supersedes (closed complete-as-superseded, open work in the s.3b ledger): NFRA_ONTOLOGY2, NFRA_TOOLARCH, NFRA_TOOLSEM, NFRA_LIVELEARN (C5/E5 half), NFRA_TOOLUNIFY.",
   "blocking": "None (P1 ready to decompose at CTO~Z; canonical PRD landing at base CTO)",
   "owner": "1.0.0_SA_CTO~Z (design + gate)",
   "build": "0.8.0_AE base + ~A..~E lanes; 0.8.0_AE~C on rule-bank content",
@@ -17,7 +25,12 @@
   "sovereign": "Andrew (commission + three plan-review rulings: CORE@~Z/ESTATE@main split; close-as-superseded; PREVENTION on the corpus question)",
   "sibling": "NFRA_VELOCITY_ESTATE (main fabric); vocabulary flows Z->main as versioned rule-bank heads, evidence flows main->Z",
   "created": "2026-07-29",
-  "pods": ["1.0~Z", "3.0~Z", "0.8", "0.0~Z"],
+  "pods": [
+    "1.0~Z",
+    "3.0~Z",
+    "0.8",
+    "0.0~Z"
+  ],
   "pipeline": "estate-wide (ontology substrate / tool framework / learning loop)",
   "thread_counter": 0,
   "threads": []
