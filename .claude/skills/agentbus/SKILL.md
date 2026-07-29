@@ -48,6 +48,22 @@ Prints `laptop` or `sitez`, the basis for the answer, and your inbound queue.
 
 ## Step 2 — Arm the consumer (the actual point of this skill)
 
+> **ONE CONSUMER PER DEVICE, AND THE TOOL NOW ENFORCES IT — DO NOT ARM BLINDLY AT STARTUP.**
+> **SQS delivers exactly-once, so a second consumer does not duplicate mail — IT STEALS IT.**
+> Each message goes to whichever receiver wins the race, arbitrarily, and the losing session
+> sees nothing: no error, no gap, no trace. That is strictly worse than the `/watcher` double-arm
+> *race*, because this one silently partitions a device's inbox between two sessions.
+>
+> `watch` therefore takes a PID lock and **refuses** (`rc=3`, naming the running pid) if a live
+> consumer already holds this device. A stale lock self-clears. **If you get the refusal, that is
+> success — a consumer is already running and you are reachable. Do not work around it.**
+>
+> *This paragraph exists because the first version of this skill stated the invariant and then
+> told every agent to arm one at session start — and `1.0.0_SA_CTO~Z` had to notice the
+> contradiction and decline to run the skill to avoid splitting another agent's mail. A skill
+> that depends on its reader spotting a flaw in its own instructions is not a control, which is
+> why the refusal now lives in the tool.*
+
 Use the **Monitor tool**, `persistent: true`, `timeout_ms: 3600000`:
 
 - command: `cd "<workspace-root>" && exec bash .tools/agentbus-sqs.sh watch`
@@ -84,6 +100,20 @@ bash .tools/agentbus-sqs.sh send <to-device> <your-full-serial> <body...>
 **SENT IS NOT READ.** A `SendMessage` 200, a `MessageId`, a CloudWatch count, and a queue depth
 of 0 are all **producer-side** signals. None establishes delivery — a depth of 0 is equally
 consistent with "read" and "drained by something that discarded it."
+
+> **AND AN ACK PROVES THE AGENT READ THE CONTENT — NOT THAT THIS TRANSPORT DELIVERED IT.**
+> Those are two different claims and the ack oracle closes only the first. Where a helpful peer
+> can hand-carry content out of band (git trunk, a local MCP relay), **the ack oracle silently
+> certifies the wrong proposition — and does so more confidently the more cooperative everyone
+> is being.** Measured live 2026-07-29: an agent acked a MessageId it had been *told*, not one it
+> had *received*, and every participant was acting in good faith.
+> **A TRANSPORT claim additionally needs a consumer-side RECEIVE event** attributable to the
+> recipient: a falling depth, a non-zero in-flight, a consumer log line, or CloudWatch
+> `NumberOfMessagesReceived`.
+> **Do not use `ApproximateNumberOfMessagesNotVisible` for this.** It is an *instantaneous gauge*
+> of in-flight messages, not a cumulative counter — `recv --keep` releases messages back after
+> the visibility timeout, leaving it reading 0. It cannot distinguish *never received* from
+> *received and released*, and it produced a false retraction the same day.
 
 **The only delivery oracle is an agent-side ACK naming the MessageId:**
 

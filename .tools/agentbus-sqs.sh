@@ -215,6 +215,43 @@ case "$cmd" in
     dev="${1:-$(this_device)}"        # defaults to THIS device -- you should not have to know
     assert_own_device "$dev"
     q="$(queue_for "$dev")"
+
+    # SINGLE-CONSUMER GUARD (added 2026-07-29 on 1.0.0_SA_CTO~Z's finding; PRD B.4a).
+    #
+    # SQS DELIVERS EXACTLY-ONCE, SO A SECOND CONSUMER ON THIS QUEUE DOES NOT DUPLICATE MAIL --
+    # IT STEALS IT. Each message goes to whichever receiver wins the race, arbitrarily, and the
+    # losing session sees NOTHING: no error, no gap, no trace. That is strictly worse than the
+    # /watcher double-arm race it resembles, because a race duplicates while this one silently
+    # partitions an agent's inbox between two sessions.
+    #
+    # This was a live near-miss, not a hypothetical: /agentbus's own usage line invites every
+    # agent to arm a consumer at session start, and CTO~Z read that, recognised the trap, and
+    # deliberately did NOT run the skill -- which is the only reason site Z still has one
+    # consumer lineage. A skill that depends on its reader spotting a flaw in its own
+    # instructions is not a control. So the refusal lives HERE, where it fires at violation
+    # time, instead of in prose that taxes every reader forever.
+    #
+    # A LOCKFILE, DELIBERATELY NOT `ps` PARSING. CTO~Z produced two bogus orphan verdicts today
+    # parsing `ps -ef` by field position, because this box's UID column is "Opal Bloomberg" --
+    # WITH A SPACE -- so $2/$3 silently yields "pid=Blo". A PID file plus `kill -0` asks the
+    # kernel a question with one right answer and no field positions to get wrong. Stale locks
+    # self-clear: if the recorded PID is dead, we take the lock.
+    LOCK="/tmp/agentbus-consumer-${dev}.lock"
+    if [ -f "$LOCK" ]; then
+        other=$(cat "$LOCK" 2>/dev/null || echo "")
+        if [ -n "$other" ] && kill -0 "$other" 2>/dev/null; then
+            echo "agentbus-sqs: REFUSING -- a consumer for '${dev}' is ALREADY RUNNING (pid ${other})." >&2
+            echo "  SQS is exactly-once: a second consumer would STEAL this device's mail at random," >&2
+            echo "  with no trace on the losing side. This is not a duplicate-delivery race." >&2
+            echo "  If that consumer is dead, its lock self-clears -- re-run and you will take it." >&2
+            echo "  To hand over deliberately: stop the other Monitor first, then re-run." >&2
+            exit 3
+        fi
+        echo "agentbus-sqs: stale lock for pid ${other:-?} (process gone) -- taking it." >&2
+    fi
+    echo $$ > "$LOCK"
+    # Release on any exit path so a clean stop never leaves a lock that blocks the next session.
+    trap 'rm -f "$LOCK" 2>/dev/null || true' EXIT INT TERM
     echo "agentbus-sqs: watching ${dev} inbound (long-poll 20s). Emits one line per message; silent otherwise." >&2
     while true; do
         set +e
@@ -230,9 +267,25 @@ case "$cmd" in
             continue
         fi
         if printf '%s' "$out" | grep -q '"Messages"'; then
-            printf '%s' "$out" | grep -o '"Body": "[^"]*"' | cut -d'"' -f4 | while read -r b; do
-                echo "[AGENTBUS -> ${dev}] ${b}"
-            done
+            # EMIT THE MessageId WITH THE BODY. The first version emitted the body alone, and
+            # that is not cosmetic: Rule 22b's ONLY delivery oracle is an ack NAMING the
+            # MessageId, so a consumer that hides the id STRUCTURALLY PREVENTS THE DISCIPLINE
+            # THIS TOOL PREACHES. Caught live -- 1.0.0_SA_CTO~Z could not close verification
+            # leg (b) because it held no id for a message my consumer had genuinely delivered.
+            # The tool enforced an ack rule while withholding the one field an ack requires.
+            #
+            # Paired via jq, not two greps: grep -o over Body and MessageId separately yields two
+            # INDEPENDENT lists, and pairing them by position is an assumption about AWS's field
+            # ordering that would mis-attribute ids to bodies on any multi-message receive --
+            # silently, and worst exactly when traffic is heaviest. jq keeps each pair together
+            # because it parses the structure instead of the text.
+            if command -v jq >/dev/null 2>&1; then
+                printf '%s' "$out" | jq -r '.Messages[] | "[AGENTBUS -> '"${dev}"'] [id \(.MessageId)] \(.Body)"'
+            else
+                # Fail LOUD rather than silently degrading to an id-less emit -- an emit without
+                # an id looks like a delivery and cannot be acked, which is worse than no emit.
+                echo "[agentbus] ERROR: jq absent -- cannot emit MessageId with body. Ack discipline (Rule 22b) is unsatisfiable without it. Install jq or run 'recv --keep' by hand."
+            fi
             printf '%s' "$out" | grep -o '"ReceiptHandle": "[^"]*"' | cut -d'"' -f4 | while read -r rh; do
                 aws sqs delete-message --region "$REGION" --queue-url "$q" --receipt-handle "$rh" >/dev/null 2>&1 || true
             done
