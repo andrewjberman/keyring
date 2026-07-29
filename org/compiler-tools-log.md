@@ -27309,3 +27309,34 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-29 2355-0212Z 0.7.0_AE_CloudOps: comp-grep 3 runs (policy/S5/roster localization, all hits); policy verify via live get-bucket-policy before/after per Rule 22a (minutes-old apply; comp-iam census stale); rail-checked markers logged.
 | 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ModelPortfolios | UNKNOWN |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/etfs-reports-orchestra... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/etfs-reports-orchestrator/lambda_function.py | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform~A/deliverables/etfs_reports_em... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/XXX.md | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/XXX.md | VERDICT |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file .tools/gen_too... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-which .tools/gen_tool_registry.py .tools/tool_index.py infr... | VERDICT |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | VERDICT |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0346.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0346.md | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-which .tools/gen_tool_registry.py .tools/tool_... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file .tools/gen_too... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-which .tools/gen_tool_registry.py .tools/tool_index.py infr... | VERDICT |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-which .tools/gen_tool_registry.py .tools/tool_... | VERDICT |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/MDPF_FALLBACK_ROU... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/log/SKILL.md --file .cla... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/log/SKILL.md .claude/skills/watcher/SKILL.md | VERDICT |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-which .tools/gen_tool_registry.py .tools/tool_... | VERDICT |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-manifest-check | comp-manifest-check tally | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file .tools/gen_too... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-which .tools/gen_tool_registry.py .tools/tool_index.py infr... | VERDICT |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed .tools/comp-which .tools/gen_tool_registry.py .tools/tool_... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
