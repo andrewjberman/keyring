@@ -152,7 +152,33 @@ case "$cmd" in
         --message-group-id opal-sqschat \
         --message-attributes "from={StringValue=${from},DataType=String},sent_at={StringValue=${ts},DataType=String}" \
         --message-body "[${ts}] [from ${from}] ${body}")
-    mid=$(printf '%s' "$out" | grep -o '"MessageId": "[^"]*"' | cut -d'"' -f4)
+    # THE TRUNCATION QUESTION, ANSWERED AND WRITTEN DOWN (0.0.0_AB_MSTR asked for the reason, not
+    # just the change): an SQS MessageId is a UUID -- charset [0-9a-f-] -- so it CANNOT contain a
+    # quote and the escaped-quote truncation that destroyed message BODIES cannot occur on THIS
+    # field. That risk is genuinely nil here. Measured, not assumed.
+    #
+    # BUT A DIFFERENT AND REAL DEFECT LIVES ON THIS LINE, and it is the third instance of the same
+    # class in this file: A FAILED EXTRACTION RENDERED AS A SUCCESSFUL SEND.
+    #   extraction yields nothing  ->  mid=""  ->  "SENT to sitez: MessageId="   at rc=0
+    # The send genuinely SUCCEEDED -- the message is on the queue -- so this is not a send failure,
+    # it is a RECEIPT failure, and the two need different words. Rule 22b's entire ack discipline
+    # hangs off that id: an empty one makes the message UNACKABLE, so the sender holds a receipt
+    # they cannot use for a message that really was delivered. Empty must be distinguishable from
+    # failed (contract C3), and silence is not an option the header contract allows.
+    if [ -n "$JQ" ]; then
+        mid=$(printf '%s' "$out" | "$JQ" -r '.MessageId // empty')
+    else
+        mid=$(printf '%s' "$out" | grep -o '"MessageId": "[^"]*"' | cut -d'"' -f4)
+    fi
+    if [ -z "$mid" ]; then
+        echo "SENT to ${to} -- BUT THE MessageId COULD NOT BE READ FROM THE RESPONSE."
+        echo "  THE MESSAGE WAS SENT. This is a RECEIPT failure, not a send failure -- do not resend"
+        echo "  blindly or you will duplicate it. Rule 22b cannot be satisfied without the id, so"
+        echo "  this send is UNACKABLE until the recipient reports what it received."
+        echo "  Raw response follows so the id is recoverable by hand:"
+        printf '%s\n' "$out" | sed 's/^/    /'
+        exit 3
+    fi
     echo "SENT to ${to}: MessageId=${mid}"
     echo "  NOT DELIVERED until an agent on '${to}' acks this MessageId (Rule 22b)."
     ;;
