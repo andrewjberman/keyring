@@ -60,6 +60,34 @@ Raw `aws` inspections carried inline `# rail-checked:` markers (landed-vs-planne
 comp-tools do not model); simulates per Rule 22a (one --resource-arns per call, controls separate,
 5 invocations). comp-iam not used for the (action,resource) questions -- it fails GREEN there.
 
+## DELTA 0110-0130Z -- bd-49f revival (Andrew-direct via COO 011043Z/011436Z)
+
+- COO ratified Design A (decoupled onto the rebate basis), HELD Design B, assigned me the apply
+  legs + the bd-49f work. Andrew-direct (~0113Z, COO-recorded verbatim): writer hookup mine, DS~A
+  scripts the backfill, root cause of the 07-06 stop explicitly wanted.
+- **Root cause, source-confirmed:** never scheduled BY DESIGN (`349c91e35b` verbatim "NO event
+  trigger (S-D2 monthly batch)"; zero rules ever in bd-pipeline TF for this fn; 3 manual invoke
+  clusters are the entire artifact history) + the 07-14 hand-fire correctly stopped at the source's
+  own frozen frontier (bd-tree RPS 0707-0713 written 07-16T05:42Z, 0721-0723 written 07-24T15:44Z,
+  head-object grounded). "Never started", not "ran and died". Only ONE function live; `-canonical`
+  is an undeployed repo pre-stage (~4% basis step, parked).
+- **Design @5dd48c5eba:** RECOMMENDED monolith fact_rps re-source (DS~A seam 012417Z: 28/28
+  cent-exact equivalence; metronome D+1 10:16Z +/-4s verified) -- floor-only cron(45 10 * * ? *),
+  ONE new IAM Sid (implicitDeny exercised today), compute_slice reuse per one-producer law, no
+  monolith bucket config change (EventBridge DISABLED there, verified). FALLBACK fully designed:
+  bd-tree revival, floor cron(30 15) + per-partition accelerator + 8-line event-key parse closing
+  the batch-vintage hole. bd role grants exercised: 3 positive allowed, 2 negative (firm-sep +
+  cross-prefix) implicitDeny.
+- Routed: COO 012900Z, CTO ratify-ask 012913Z, DS~A seam ack 012926Z (one build-time ask: the
+  compute_slice import surface / layer question).
+
+## Compiler Tools (delta)
+
+comp-tools were the localize stage throughout the first block; this block was per-object/per-role
+live-primitive forensics (head-object write-times, list-rule-names-by-target, get-role-policy,
+simulate x6 single-arn with separate controls) -- grain no comp-tool models; all raw aws calls
+carried rail-checked markers.
+
 ## Open / waiting
 
 - CTO+COO: ratify floor time 19:00Z, grant narrowness, DLQ-parity call, **apply-window owner** (base
