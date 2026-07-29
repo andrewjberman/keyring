@@ -91,11 +91,37 @@ class SemanticRelevanceProvider:
         self._pin_cap = cap_id
 
 
+def _index_manifest_doc():
+    """Sha-guarded read of the compiled routing corpus (.tools/tool_index.py -- comp-which wiring,
+    CTO ruling 20260728T212335Z). Returns the embedded parsed manifest ONLY when the live file's
+    sha256 matches the generation-time sha; None on any other condition -- the caller falls back
+    to the YAML parse that was the only path before this wiring. Stale is a cost, never wrong."""
+    try:
+        import copy as _cp
+        import hashlib as _h
+        try:
+            import tool_index as _ti
+        except ImportError:
+            _tdir = os.path.abspath(os.path.join(_HERE, "..", "..", "..", ".tools"))
+            if _tdir not in sys.path:
+                sys.path.insert(0, _tdir)
+            import tool_index as _ti
+        with open(os.path.join(_HERE, "graph-call-manifest.yaml"), "rb") as f:
+            if _h.sha256(f.read()).hexdigest() != getattr(_ti, "MANIFEST_SHA256", None):
+                return None
+        doc = getattr(_ti, "MANIFEST_DOC", None)
+        return _cp.deepcopy(doc) if doc is not None else None
+    except Exception:
+        return None
+
+
 def _cap_texts_and_keywords():
     """Per-cap description text (richest use_case/does) + keywords -- the same source the fixture ranks
     against (mirrors comp_route_shadow._gather_cases / potion_shadow_rank)."""
     import comp_route_shadow as _sh
-    man = _sh._T._load_manifest()
+    man = _index_manifest_doc()
+    if man is None:
+        man = _sh._T._load_manifest()
     ti = man.get("tools_index", {})
     by_tool = {}
     for e in man.get("entries", []):
