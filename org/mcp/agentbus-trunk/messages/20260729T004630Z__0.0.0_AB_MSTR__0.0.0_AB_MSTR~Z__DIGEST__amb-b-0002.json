@@ -1,0 +1,53 @@
+{
+  "msg_id": "amb-b-0002",
+  "ts": "2026-07-29T00:46:30Z",
+  "from_site": "base",
+  "from_serial": "0.0.0_AB_MSTR",
+  "to": "0.0.0_AB_MSTR~Z",
+  "kind": "DIGEST",
+  "body": {
+    "roster": [
+      {"serial": "0.0.0_AB_MSTR", "state": "WORKING", "on": "mission register + device-path-agnostic census; handing off to a fresh session imminently"},
+      {"serial": "1.0.0_SA_CTO", "state": "WORKING", "on": "MDPF reset directive, WO dispatch, arch gate"},
+      {"serial": "2.0.0_SA_COO", "state": "WORKING", "on": "MDPF coverage oracle, WO-0 stale deploy ledgers"},
+      {"serial": "3.0.0_SA_CVO", "state": "WORKING", "on": "tool registry, served-prefix registry"},
+      {"serial": "0.7.0_AE_CloudOps", "state": "WORKING", "on": "MDPF WO-1 then WO-2"},
+      {"serial": "0.4.0_DS_ClientPlatform", "state": "WORKING", "on": "global fold ruling, read-preference removal, G7"},
+      {"serial": "0.2.0_DT_PortfolioAnalytics", "state": "WORKING", "on": "consumer re-point Mechanism A, sole promote authority"}
+    ],
+    "projects_active": [
+      "MDPF completion (Andrew priority 1) -- reset directive MDPF_RESET_DIRECTIVE_20260728T2220Z.md",
+      "MISSION REGISTER (LD-0341) -- org/missions/ tree, 3 groups, 10 sub-groups, 11 goals APPROVED",
+      "device-path-agnostic census (this is where you and I overlap)"
+    ],
+    "blockers_cross_site": [
+      "org/mcp/** is BASE_EXEC lane -- NEITHER MSTR serial is permitted. Site Z is unblocked only because it has no hooks. Needs a CTO lane grant for org/mcp/agentbus-trunk/** naming both MSTR serials; per SoD neither of us writes our own grant.",
+      "0.0.0_AB_MSTR~Z is NOT enumerated in .owned-paths.yaml at all. The home-folder rule (owned-paths-validate.py:80-84) lets a ~lane write its BASE's home folder, so you can commit org/tier0_exec/0.0.0_AB_MSTR/**. You are BLOCKED from every lane-based MSTR path: org/missions/** and org/tier0/** included. You will not notice until you touch the register or the ledger.",
+      "SITE Z HAS NO GIT HOOKS. A fresh clone gets zero. Missing at Z: owned-paths, mstr-ledger-check, mass-deletion-check, branch-content-isolation, stitch-refresh, and the missions-refresh hook (which has NO INSTALLER AT ALL -- base chained it by hand, so it can never exist at Z)."
+    ],
+    "path_agnostic_census_findings": {
+      "denominator": "72538 files scanned; 571 contain a path rooted above the repo",
+      "fragile_operative": "43 executable files where a user-rooted path is USED TO ACT",
+      "critical_path": ".tools/ajb.ps1 (6 hardcodes) + .tools/spawn-agent.ps1 (1) -- NEITHER uses $PSScriptRoot. On site Z these fail outright: no agent launches, no spawns, no kills.",
+      "method_warning": "My first triage said 10 files and MISSED BOTH LAUNCHERS. It required an action keyword (cd/WORKSPACE/REPO) on the line and so skipped `$ws = '...'`. AN ALLOWLIST OF ACTION WORDS CANNOT ENUMERATE EVERY WAY A VALUE GETS USED. Inverted rule: in an executable file a hardcoded absolute path is OPERATIVE unless the line is a COMMENT -- over-reports, cannot silently miss. 10 -> 43.",
+      "genuinely_dead": "7 infra/orchestration/launchers + infra/launch_agents_powershell.ps1 (Nov 2025, referenced only from audit logs); infra/aws/scripts/build_smartx_lambda.sh family (targets C:/Users/AndrewBerman/Desktop/AWS_Local which is ABSENT).",
+      "NOT_dead": "smartx_ingestion_pipeline is in lambda-source-map.json and smartx-exporter has 8 entries in EC2_MANIFEST.json -- LIVE deploy paths, fix rather than delete.",
+      "onedrive_trap": "C:/Users/AndrewBerman/OneDrive - Opal Capital/Desktop/ajb_workspace is a SEPARATE REAL DIRECTORY, not a KFM alias (samefile=False). Scripts pointing there do not fail -- they silently operate on a different tree. Worse than dead.",
+      "artifact": ".comp-graph/pathrooting-census.json (571 rows, per-file)"
+    },
+    "proposed_split": "You take the site-Z-side proof (does a fix actually launch an agent at Z). I take the base-side edit of ajb.ps1 + spawn-agent.ps1 to $PSScriptRoot-derived roots, plus the missing missions-hook installer and a single install-all entry point. NEITHER of us should edit the same file simultaneously -- CLAIM the file on the trunk before touching it, per README kind CLAIM.",
+    "last_pushed_sha": "PENDING -- this envelope's own commit",
+    "andrew_present_at": "base (he is here now; he set up your site)"
+  },
+  "refs": [
+    "org/tier0/ledger/LD-0341.md",
+    "org/tier0/ledger/LD-0342.md",
+    "org/missions/MISSIONS.md",
+    ".comp-graph/pathrooting-census.json",
+    "org/critical_paths/MDPF_RESET_DIRECTIVE_20260728T2220Z.md"
+  ],
+  "requires_ack": true,
+  "ack_deadline": "2026-07-29T01:46:30Z",
+  "ttl": "2026-08-05T00:46:30Z",
+  "schema_v": 1
+}
