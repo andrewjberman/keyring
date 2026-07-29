@@ -27258,6 +27258,57 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29 | 3.0.0_SA_CVO | comp-coverage-check (PASS->FAIL->PASS, exercised on injected drift), comp-manifest-check + selfcheck, comp-kuzu, comp-heat/which/glob (shim exercise), cProfile x2, safe-commit x4 | all PASS | GAP FOUND: each ~/bin wrapper layer costs ~330ms on this box -- the shim could exec the interpreter directly for python tools and skip a bash hop; flagged not chased. WORKED: the parity-harness pattern (live module, real path, ONE variable) -- handed to 0.8.0_AE for their routing-identity control. FAILED: my first /seams harness compared in-repo vs in-tempdir and reported a false PARITY BROKEN. |
 | 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-29/s... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T011005Z__0.0.0_AB_MSTR__0.0.0_... | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/handoffs/20... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/handoffs/2026-07-29_0112Z.md | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/wo3-md... | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/.open_deploys/wo3-mdpf-consumer-repoint-edge-flip.js... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/portal-auth/cloudfr... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/portal-auth/cloudfront-distribution.tf org/tier2_se... | VERDICT |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/etfs/scripts/backfill/backfill_49f... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff data/etfs/scripts/backfill/backfill_49f_daily_from_monolith_rps.py org/... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/deliverables/ETFS_BD49F_revival_desi... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-07-29/lane_A_mdpf_infactua... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform~A/logs/2026-07-29/mdpf_infactu... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/fix-git-fstab.ps1 --file org/tie... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/fix-git-fstab.ps1 org/tier0/ledger/LD-0340.md | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/s3-por... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/shared-infra/s3-portal-v2-import.tf | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/wo3-md... | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/.open_deploys/wo3-mdpf-consumer-repoint-edge-flip.js... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-etf... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/backfill_49f_da... | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json org/critical_paths/change_ma... | VERDICT |
+| 2026-07-29 ~0158Z | 0.7.0_AE_CloudOps~A | comp-trigger, comp-glob; raw-aws verify stage rail-checked | bd-49f revival deployed (bd-v2.53.0): monolith re-source + floor cron(45 10); 9/9 sim battery; runtime exercised. Gap noted: no comp-tool models (rule,resource-policy,invocation) liveness grain -- comp-trigger name-match missed rules-by-target |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/missions/EXTERNAL/49FINANCIAL/execs... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/missions/EXTERNAL/49FINANCIAL/execsum.yaml org/missions/EXTERNAL/AL... | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/wo3-md... | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/.open_deploys/wo3-mdpf-consumer-repoint-edge-flip.js... | PASS |
+| 2026-07-29 ~0200Z | 1.0.0_SA_CTO | comp-clobber, comp-grep, comp-routes, live primitives | cutover night: clobber census (11 sinks, 2 cross-firm), fetcher denominators, flip grounding; comp-freshness DDB gap unchanged |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-29/m... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/git-hooks/mstr-ledger-check.sh -... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/git-hooks/mstr-ledger-check.sh org/missions/EXTERNAL/49FINANCIAL... | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/O2_OUTPUT_CONTRACT_MEASURED_20... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T020651Z__0.0.0_AB_MSTR__0.0.0_... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T020651Z__0.0.0_AB_MSTR__0.0.0_... | PASS |
+- 2026-07-29 2355-0212Z 0.7.0_AE_CloudOps: comp-grep 3 runs (policy/S5/roster localization, all hits); policy verify via live get-bucket-policy before/after per Rule 22a (minutes-old apply; comp-iam census stale); rail-checked markers logged.
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
 | 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/tests/test_never_rules_gat... | PASS |
 | 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff .tools/hooks/tests/test_never_rules_gate.sh .tools/inbox-resolver-confo... | VERDICT |
 | 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/audit/archive/FINDINGS.md | PASS |

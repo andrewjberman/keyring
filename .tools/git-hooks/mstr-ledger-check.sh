@@ -180,6 +180,27 @@ while IFS= read -r path; do
     org/tier0/ledger/*|org/tier0/cycles/*|org/tier0/reviews/*|org/tier0/ratifications/*|org/tier0/sessions/*) : ;;
     org/tier0_exec/*/logs/*) : ;;  # MSTR's own session logs (org/tier0_exec/0.0.0_AB_MSTR/logs/**) are RECORDS, not strategic commitments -- the /log skill writes them here per org/XXX.md; the actual decisions are ledgered separately as LD-*. Closes the allowlist gap that misclassified every MSTR session-close /log as strategic (Andrew sovereign-authorized 2026-07-07; LD-0258).
     org/compiler-tools-log.md|org/git-author-override-audit.log|org/mcp/comp_ferry_queue.json) : ;;  # record-append / MSTR-owned execution-tracking (every-agent /log + author-override audit + the comp-ferry queue, LD-0119) -- tracking under an existing LD, not a new strategic commitment (MSTR gate-hygiene fix 2026-06-29)
+    # --- MISSION REGISTER (Andrew sovereign-authorized 2026-07-29, LD-0345) ---------------
+    # ORDER IS LOAD-BEARING: `case` takes the FIRST match, so GOALS.yaml must be listed
+    # BEFORE the general org/missions/* line or it would be swallowed as a record.
+    org/missions/GOALS.yaml) STRATEGIC=1 ;;  # THE GOALS ARE THE STRATEGIC PART -- Andrew-approved
+                                             # mission goals. Changing one IS a new commitment and
+                                             # still requires an LD. This is the half of the register
+                                             # the gate must keep holding.
+    org/missions/*) : ;;                     # The rest of the register is a RECORD, not a commitment:
+                                             # commits.jsonl is machine-written by comp-missions scan;
+                                             # MISSIONS.md is COMPILED (never hand-authored);
+                                             # state.yaml/execsum.yaml carry stance + prose ABOUT work
+                                             # whose decisions are ledgered separately (LD-0341 and its
+                                             # amendments). Same reasoning and same authority as the
+                                             # org/tier0_exec/*/logs/* line above (LD-0258): a record of
+                                             # decisions is not itself a decision. Without this, every
+                                             # register correction -- including fixing a STALE line --
+                                             # required its own ledger amendment, which made the register
+                                             # expensive to keep TRUE and left a post-commit-hook-refreshed
+                                             # file permanently dirty in a SHARED worktree, blocking peers'
+                                             # pushes. Four blocks in one session, and a live DT push
+                                             # blocked at 020142Z, is what earned this.
     *) STRATEGIC=1 ;;
   esac
 done <<EOF
