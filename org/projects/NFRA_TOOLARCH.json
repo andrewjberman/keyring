@@ -10,9 +10,9 @@
       "date": "2026-07-23"
     }
   ],
-  "status": "active",
-  "phase": "[Layer: MECHANICAL of NFRA_TOOLSTACK] Phase 0 COMPLETE 2026-07-23: chartered. Substrate fixed (NFRA_ONTOLOGY_RULE_BANK C0-C3 ladder + ROLE/RELATION/TYPE axes + VARIANCE + the PSTMRT-added COMPLETENESS axis; infra/system/ontology/; motif catalog; GENESIS SDK as the proven abstraction precedent). Three questions set: archetype census (dogfood the ladder on ourselves, starting from CVO~Z tick-29's honest uncovered-edge gap) -> pattern inventory (pattern -> archetype -> instantiating tools -> gaps, seeded from 83 tools + 718 MSBEFF findings + 187 rail-override intents) -> generalize discovery/creation/registration/testing. s.3 stability grader: GOVERNANCE/CHURN/POPULATION/VIOLATION/BLAST axes; STABLE-BY-LAW permits a pattern extractor that MUST cite the law it depends on (a change to the law then fails loudly); anything less requires structural extraction. Sequenced BEHIND the MSBEFF R-series builds (which land the coverage/vintage/registration contracts ARCHTOOL synthesis must emit into).",
-  "blocking": "None (sequenced behind MSBEFF R-series at 0.8.0)",
+  "status": "complete",
+  "phase": "CLOSED COMPLETE-AS-SUPERSEDED by NFRA_VELOCITY 2026-07-29: Re-homed to NFRA_VELOCITY_CORE WS-C3/C4: archetype census + pattern inventory (debt shapes first-class) + stability grader + synthesis pipeline. PRD stays as design provenance. Closed 2026-07-29 per Andrew-direct plan-review ruling (close-as-superseded) at the NFRA_VELOCITY commissioning; open-work visibility: NFRA_VELOCITY_PROGRAM.md s.3b ledger (anti-opacity control, ~C item 6).",
+  "blocking": "None",
   "created": "2026-07-23",
   "pods": [
     "1.0~Z",
@@ -21,5 +21,6 @@
   ],
   "pipeline": "estate-wide (ontology / comp tooling / meta)",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "completed": "2026-07-29"
 }

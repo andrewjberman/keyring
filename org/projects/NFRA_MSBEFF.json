@@ -1,7 +1,7 @@
 {
   "project_code": "NFRA_MSBEFF",
   "macro_code": "NFRA",
-  "name": "Opal Efficiency Case Study \u2014 Mechanical/Semantic/Behavioral audit of the comp-tool framework",
+  "name": "Opal Efficiency Case Study — Mechanical/Semantic/Behavioral audit of the comp-tool framework",
   "description": "Andrew-direct charter 2026-07-23 (verbatim in PRD s.0): the comp tools exist to rapidly inject extremely high-signal context fluidly; audit the framework on three layers -- MECHANICAL (tools get their data fast + reliably), SEMANTIC (the right tool is findable for the query), BEHAVIORAL (agents actually reach for the tools) -- using the most convoluted Opal projects/scenarios as the case-study base, to identify where the holistic framework is lacking most. Bar: a light query against standing Opal context should make the intent AND the completing context immediately obvious; process architecture (CLAUDE.md/XXX.md/prompts) is good pretext, the missing layer is true state+dependency understanding, which the tools must solve. Phase 0 = programmatic audit of every compiler-tools-log row (last 3 months).",
   "prds": [
     {
@@ -10,8 +10,8 @@
       "date": "2026-07-23"
     }
   ],
-  "status": "active",
-  "phase": "Phase 0 COMPLETE 2026-07-23: .tools/msbeff-log-audit.py landed + first pass over 21,775 rows (denominators printed, both schema eras, nothing dropped). Headline findings: 8.5% FAIL concentrated on workhorses (pipescript 23%, blast 22%) and record-keeping tools (registry/tooltip 44%); 129 referenced tool names vs 83 registered (~46 phantom refs incl. retired tools still cited); comp-which <0.9% of flow; ~55% of volume is auto-invoked (surface-check/pulse) not chosen; 61.6% of rows outside TO context. Next: Phase 1 (FAIL taxonomy + AUTO-vs-CHOSEN classifier), Phase 2 (convoluted-scenario case studies, MDPF arc first), Phase 3 (ranked weakest cells -> expansion items). || FAMILY (2026-07-23, main-CTO position via MSTR): MSBEFF = the MEASUREMENT-AND-REMEDIATION leg of the NFRA_PSTMRT program family; PSTMRT holds doctrine+registry umbrella; CVO~Z verifies once for both; comp-tool STANDARD changes route to main CTO before landing. Phase 1 COMPLETE: AUTO floor 53.5% (gates began June); CHOSEN rows grew 9x Apr->Jul (547->5038/mo); comp-which 1.3% of chosen; HEADLINE M2 = failure telemetry structurally silent (1979/1986 FAIL rows note-empty; taxonomy unrecoverable from the rolling log -> recover from session logs; FAIL-note convention change = first live standard-carve case). || PHASE 2+3 COMPLETE 2026-07-23: Case Study 1 (MDPF arc per-RF grid + CS1-1..4 rail-demand) + 718 verified NL findings (fanout, 0 fabricated quotes) + PHASE3_RANKED_REMEDIATION.md = 7 ranked cells with owners+acceptance. Conclusion: framework CORRECT+BROAD but blind-at-edges + untriggered (coverage 35pct top failure class, not crashes at 0.87pct). R1 coverage-visible-at-query-time + R3 vintage-honest-output = one shared standard-change (highest leverage, main-CTO gated); R2 comp-dataflow = Andrew's named state/dependency gap; R4 closeout/deploy triggers for unrun tools; R5 key/partition primitive (measured rail demand); R6 phantom-name reconcile; R7 comp-which redesign. M3 appender fix in flight = R3 first instance.",
+  "status": "complete",
+  "phase": "CLOSED COMPLETE (audit done; remediation re-homed into NFRA_VELOCITY) 2026-07-29: P0-P3 complete (21,775-row audit, AUTO/CHOSEN split, 718 verified findings, ranked remediation). R-cells: R1/R3->CORE WS-C7, R2->D2 query (CORE WS-C1/ESTATE WS-E1), R4->ESTATE WS-E6, R5->CORE WS-C4, R6 landed (forward guard), R7->CORE WS-C6, R8->ESTATE WS-E4/E6. M3 telemetry fix = ESTATE WS-E4.1 (gate-approved, 3 binding conditions). Closed 2026-07-29 per Andrew-direct plan-review ruling (close-as-superseded) at the NFRA_VELOCITY commissioning; open-work visibility: NFRA_VELOCITY_PROGRAM.md s.3b ledger (anti-opacity control, ~C item 6).",
   "blocking": "None",
   "created": "2026-07-23",
   "pods": [
@@ -21,5 +21,6 @@
   ],
   "pipeline": "estate-wide (comp tooling / process architecture)",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "completed": "2026-07-29"
 }

@@ -10,9 +10,9 @@
       "date": "2026-07-23"
     }
   ],
-  "status": "active",
-  "phase": "Phase 0 COMPLETE 2026-07-23: chartered. ADDITIVE ONLY -- ratified C0-C3 vocabulary, 14 roles, 10 relations, variance + completeness axes untouched. Seeds identified in the existing ontology (EdgeKind on derives-from; C2 motifs as typed multi-hop paths; PSTMRT completeness + TRIGGER_LAYER as proto-D3 obligations). Payoff: every tool declares (rail, grain, plane, scope) so wrong-semantic-layer answers become machine-detectable; comp-which converts from similarity scoring to TYPE MATCHING with an honest empty (kills the argmax-as-confidence defect riding 12,380 July queries); ARCHTOOL's pattern inventory gets the vocabulary it needs to type a pattern at all. P3 acceptance is hard: freshness-as-derivation must get RF-2 (Cottonwood never evaluated), the T-1 Monday false-alarm class, and the marker-oracle stalled-sole-writer all right, and must FAIL LOUD where today's config-driven version silently passes. Sequencing: ONTOLOGY2 P1 precedes ARCHTOOL P2; both behind the MSBEFF R-series builds in flight at 0.8.0. || P1 CANONIZED + VERIFIED 2026-07-23: rails D1/D2/D3 + completeness axis + type_tuple + c1_frontend_adapter co-canonized @5d1161d70 (CTO~Z arch-gate PASS, additivity verified: 10 relations/14 roles/variance byte-identical, only binds_up adapter extended). FRONTEND FORK RESOLVED ADDITIVELY 11/11 (RENDERS->consumes@field, PROP_PASSES->derives-from@field), 0 new ratified vocab, NO ratification needed. CVO~Z ACCEPT 4/4 @7d713349e (four surfaces converge on the tick-29 11-set; zero-diff CONFIRMED BY CONSTRUCTION -- summary_corpus reads canon-patterns+graph not the rule bank). >> TWO P2-GATE ACCEPTANCE ITEMS (canon-patterns.yaml runtime propagation, deferred to preserve zero-diff): (1) SPLIT SUBSCRIBES before runtime adoption -- SNS->SQS=produces but SNS->LAMBDA=triggers (produces mis-classifies the lambda leg); (2) ALIAS_TO->depends-on is resolution-flavored, resolves-through is the P2 refinement candidate. Both 1-edge today, must be resolved AT the P2 runtime gate, CVO~Z verifies the SUBSCRIBES split there. << P2 = canon-patterns runtime propagation of the 11 mappings + the 9 zero-live-token fork (separate). Upper stack (TOOLSEM/TOOLBHVR/TOOLARCH-P2) UNBLOCKED.",
-  "blocking": "None (sequenced behind MSBEFF R-series; P1 co-authored with 0.8.0_AE~C)",
+  "status": "complete",
+  "phase": "CLOSED COMPLETE-AS-SUPERSEDED by NFRA_VELOCITY 2026-07-29: P1-P4 re-homed to NFRA_VELOCITY_CORE WS-C1/C2 (rails D1/D2/D3 + lifecycle incl. TRANSIENT; expressiveness validation vs 3 corpora). The charter's 'derivable from existing contracts' clause explicitly superseded at plan review: declaring the contracts IS the work (NFRA_VELOCITY_ESTATE WS-E1). PRD stays in docs/architecture as design provenance. Closed 2026-07-29 per Andrew-direct plan-review ruling (close-as-superseded) at the NFRA_VELOCITY commissioning; open-work visibility: NFRA_VELOCITY_PROGRAM.md s.3b ledger (anti-opacity control, ~C item 6).",
+  "blocking": "None",
   "created": "2026-07-23",
   "pods": [
     "1.0~Z",
@@ -21,5 +21,6 @@
   ],
   "pipeline": "estate-wide (ontology substrate)",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "completed": "2026-07-29"
 }

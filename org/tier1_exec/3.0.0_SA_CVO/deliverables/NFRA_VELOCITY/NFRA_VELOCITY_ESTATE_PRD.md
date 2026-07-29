@@ -89,13 +89,30 @@ as the safety layer:
   identity_2-class live-gate preservation checked per retirement); never-widen sign-off where a
   served surface is touched; every retirement exercised, not inferred.
 
+**THE TRANSIENT TRAP (~C item 3 — binding on this workstream):** derivation supplies INTENT, which
+mechanical signals provably cannot — but derivation cannot supply TRANSIENCE. A live
+written→consumed→deleted trigger marker (`gold/trigger-pending.json` class) is **absent from S3 at
+every moment you look**, and it independently reads absent AND dormant AND reader-less — so the
+≥2-CONFIRMED bar passes on two signals that are both wrong, on a live pipeline trigger. **No
+retirement executes against a key whose contract lacks a lifecycle value; a `TRANSIENT`-contracted
+key is exempt from existence-based signals entirely** (WS-C1 carries the vocabulary; the
+comp-legacywriter TRANSIENT-MARKER guard @d51f6b38a0 is the stopgap until it lands).
+
+**E3.0 — THE SAFE SLICE, PULLED TO P1 (~C item 4):** the Tier-A subclass needing no contract
+registry and carrying near-zero blast radius BY CONSTRUCTION — `archive/` + `diagnostics/` +
+`test_*` writers targeting keys holding NO OBJECT (nothing to delete, nothing to re-point, no
+reader to break). Retire that slice at P1: it exercises the retirement gates while the stakes are
+trivial (prove the loop on the safe population, not first on something that matters) and gives the
+program an early visible win against an otherwise back-loaded payoff.
+
 **First adjudicated population: the 353 dead surfaces** from `comp-legacywriter --census`, joined
 against contracts as they land.
 
-*Acceptance:* the derived kill list exists with its derivation printed; ≥N retirements executed
-clean under gates (N set at decomposition — start small, prove the loop); **zero new C-SILENT
-residents going forward** — a resource created without a contract is a commit-gate warning ramping
-to a deny (announce-then-enforce).
+*Acceptance:* E3.0 safe-slice retirements executed clean at P1 (the gates exercised, denominator
+printed); the derived kill list exists with its derivation printed; ≥N contract-derived retirements
+executed under gates at P3 (N set at decomposition); **zero new C-SILENT residents going forward**
+— a resource created without a contract is a commit-gate warning ramping to a deny
+(announce-then-enforce); zero retirements against uncontracted-lifecycle or TRANSIENT keys.
 
 ## WS-E4 — The measurement plane (can we answer "are we improving?")
 
@@ -116,6 +133,11 @@ to a deny (announce-then-enforce).
 per-series with denominators; baseline published.
 
 ## WS-E5 — Estate sensors and recall denominators
+
+**Framing (~C item 1):** this is the measurement-time quadrant — the estate's commit-time gating is
+dense and demonstrably catches; measurement-time control is near-zero, and it is where 2026-07-29's
+control failures all lived. This workstream fills the empty quadrant; it does not add commit-time
+gates.
 
 Apply the recall standard (WS-C7; ships against L0a's boundary-report type as-is — it is DONE — and
 migrates when C7's registration invariant lands) to **estate detectors**: freshness, drift, debt,
@@ -178,11 +200,15 @@ the queue.
 
 ## Phases
 
-**P1** = E4.1 telemetry fix + E1 specimen chain (starts on WS-C1's draft grammar) →
+**P1** = E4.1 telemetry fix + E1 specimen chain (starts on WS-C1's draft grammar) + **E3.0 safe-
+slice retirements** (~C item 4 — the gates exercised on the zero-blast population first) →
 **P2** = E2 triggers + E1 breadth →
-**P3** = E3 retirements + E5 sensors →
+**P3** = E3 contract-derived retirements + E5 sensors →
 **P4** = E6 tuning →
 **P5** = E7 (live intake + dynamics — last, and then standing forever).
+*(FLAGGED PENDING ANDREW, ~C item 7: a minimal hand-classified error-intake form at P1 — M-code +
+one line, no automation — so WS-C3/C4's queue is weight-ranked from the start; the E7 build itself
+stays P5 per Andrew's placement.)*
 
 ## Governance
 
