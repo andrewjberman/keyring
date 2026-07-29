@@ -27353,3 +27353,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | PASS |
 | 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/missions/EXTERNAL/49FINANCIAL/execs... | PASS |
 | 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/missions/EXTERNAL/49FINANCIAL/execsum.yaml org/missions/EXTERNAL/AL... | VERDICT |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/missions/EXTERNAL/49FINANCIAL/execs... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/missions/EXTERNAL/49FINANCIAL/execsum.yaml org/missions/EXTERNAL/AL... | VERDICT |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/missions/EXTERNAL/49FINANCIAL/execs... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/missions/EXTERNAL/49FINANCIAL/execsum.yaml org/missions/EXTERNAL/AL... | VERDICT |
+| 2026-07-29T0252Z | 0.8.0_AE_CloudComp | cProfile, A/B-routing-identity-harness, comp-grep, comp-glob, comp-system, commit-gate, comp-which | comp-which index wiring @162eb94231: zero hot-path yaml parses, 1.07s->372ms, 25/25 byte-identical routing incl. exercised stale-path |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
