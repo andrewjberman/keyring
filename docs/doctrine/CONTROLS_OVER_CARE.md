@@ -345,6 +345,7 @@ right — and "internally consistent" is exactly what a corrupted pipeline looks
 (2026-07-28/29, three live instances in ~24h, two of them on a client-facing surface).
 
 > # **A CLEAN HEADLINE OVER TWO OFFSETTING MOVES IS NOT A CLEAN RESULT — IT IS TWO DEFECTS THAT FOUND EACH OTHER.**
+> # **AND THE SHARPER FORM: AN AGGREGATE IS NEVER GRADED ON THE SERIES YOU WERE ASKED ABOUT.**
 
 The section above prescribes the remedy for a self-comparing invariant: **diff against a PRIOR VINTAGE.** This
 is the failure mode of that remedy performed lazily. **A prior-vintage diff taken on the TOTAL is itself
@@ -371,6 +372,15 @@ total without naming its constituents; a co-sign states **which series were diff
 "The total ties" is a statement about arithmetic, never about correctness. **And when a producer emits an
 in-band marker of its own composition, ABSENCE OF THE MARKER IS THE FINDING** — the same artifact's missing
 `meta.cottonwood_fold` was the tell that a written-and-deployed fold had never run.
+
+>> **AND THE REASON IT WAS INVISIBLE DOWNSTREAM, which generalises far past this artifact: PROVENANCE THAT
+>> RECORDS *WHERE* DATA CAME FROM BUT NOT *WHAT IT IS OF* CANNOT REPORT AN OMISSION.** The served object's
+>> `_provenance` faithfully named one source key and one vintage and enumerated **no partners** — so it
+>> attested a complete-looking record of two thirds of the population, and every consumer downstream inherited
+>> that attestation. **A provenance block that names its source but not its constituent population is not a
+>> weaker control than one that does; on a missing constituent it is an ACTIVELY MISLEADING one** — it
+>> converts an absence into a documented lineage. *Provenance must carry its denominator, or it certifies
+>> whatever survived.* <<
 
 ---
 
