@@ -27503,3 +27503,38 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aum_metrics.py | PASS |
 | 2026-07-29Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T053725Z__0.0.0_AB_MSTR__0.0.0_... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file .tools/hooks/never-ru... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .gitignore .tools/hooks/never-rules-gate.sh .tools/jq.exe | VERDICT |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate --help | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate dim_mdpf_aum_metrics --artifact /c/Users/ANDREW~1/AppData/Local/Temp/clau... | VERDICT |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate dim_mdpf_aum_metrics --artifact /c/Users/ANDREW~1/AppData/Local/Temp/clau... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate dim_mdpf_aum_metrics --artifact /c/Users/ANDREW~1/AppData/Local/Temp/clau... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file org/mcp/inbox/0.0.0_A... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .gitignore org/mcp/inbox/0.0.0_AB_MSTR/~Z/20260729T072637Z_0.0.0_AB_MST... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate dim_mdpf_aum_metrics_global --artifact /c/Users/ANDREW~1/AppData/Local/Te... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate dim_mdpf_aum_metrics --artifact /c/Users/ANDREW~1/AppData/Local/Temp/clau... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate dim_mdpf_aum_metrics --artifact /c/Users/ANDREW~1/AppData/Local/Temp/clau... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate dim_mdpf_aum_metrics --artifact /c/Users/ANDREW~1/AppData/Local/Temp/clau... | VERDICT |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate dim_mdpf_aum_metrics_global --artifact /c/Users/ANDREW~1/AppData/Local/Te... | VERDICT |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/gold_validate_co... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/gold_validate_config.yaml | VERDICT |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T073718Z__0.0.0_AB_MSTR__0.0.0_... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T073718Z__0.0.0_AB_MSTR__0.0.0_... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/mdpf-pipeline/mdpf-acc... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/mdpf-pipeline/mdpf-accrual-trigger/lambda_function.py ... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json | VERDICT |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/backfill/build_legacy... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/backfill/build_legacy_compat_emit.py | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aum_tim... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aum_timeseries.py | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml | PASS |
+| 2026-07-29 0754Z | 0.4.0_DS_ClientPlatform~A | comp-validate x5 (3 PASS + 2 mutant FAIL, new mdpf config), comp-grep x3 (writer census -- found Stage 3.5 as the real served aum-timeseries writer), comp-glob x1 (dispatch located), commit-gate x3 | D-C gate + A2 write-kill window |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
