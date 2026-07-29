@@ -27683,3 +27683,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | aws (rail-checked) | list-buckets + s3 ls as SEPARATE pos/neg invocations -- discriminated wrong-bucket-name from missing-grant; bucket EXISTENCE is account-plane, no TF-modeled comp tool covers it (Rule 22a applied) | PASS |
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-29/p... | PASS |
+| 2026-07-29 0501-1420Z | 3.0.0_SA_CVO | comp-glob x2 PASS (O2/TAXONOMY locate) - comp-grep x3 PASS (card fields, missions DECIDED, LD-0343) - aws-shim s3/events PASS w/ GAP (cygdrive-dest passthrough mangle, stray C:\cygdrive tree, worked around C:/-style) - comp-pulse x6 CLEAN | deletion finding + D3 baseline + 3 reviews/specs + cert staging, all pre-fire |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-29/p... | PASS |
