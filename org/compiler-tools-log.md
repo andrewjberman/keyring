@@ -27293,3 +27293,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/missions/EXTERNAL/49FINANCIAL/execsum.yaml org/missions/EXTERNAL/AL... | VERDICT |
 | 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/wo3-md... | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/.open_deploys/wo3-mdpf-consumer-repoint-edge-flip.js... | PASS |
+| 2026-07-29 ~0200Z | 1.0.0_SA_CTO | comp-clobber, comp-grep, comp-routes, live primitives | cutover night: clobber census (11 sinks, 2 cross-firm), fetcher denominators, flip grounding; comp-freshness DDB gap unchanged |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-29/m... | PASS |
