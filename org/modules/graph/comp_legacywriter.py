@@ -691,6 +691,25 @@ def retirecond_entry(bucket: str, key: str, entry: dict) -> dict:
 
 _AXES = ("heat", "dups", "debris")
 
+# TRANSIENT / MARKER KEYS -- written, consumed, then DELETED. They are ABSENT at every moment you
+# look at them, which makes them indistinguishable from a dead key under an existence check, while
+# being among the MOST LIVE objects in the estate. Retiring one of these writes breaks a live
+# pipeline trigger.
+#   MEASURED 2026-07-29: a kill-list pass put gold/trigger-pending.json, gold/trigger-mode.json and
+#   orion/bronze-trigger-mode.json into TIER A on "no object found". All three are live trigger
+#   markers. gold/meta/pipeline-complete.json is the same family and additionally carries the
+#   forged-completion-signal prohibition.
+# An existence check cannot separate never-written from written-then-deleted. So the marker class is
+# FLAGGED, never silently ranked.
+_MARKER_PATTERNS = ("trigger-pending", "trigger-mode", "pipeline-complete", "trigger_pending",
+                    "_probe", "boundary_probe", "last-probe", ".lock", "/state.json")
+
+
+def is_transient_marker(key: str) -> bool:
+    """True when a key looks like a written-then-consumed marker rather than a durable artifact."""
+    k = key.lower()
+    return any(pat in k for pat in _MARKER_PATTERNS)
+
 
 def _load_json(path):
     if not path:
@@ -822,6 +841,12 @@ def dossier(bucket, key, entry, heat, dups, debris):
     if silent:
         signals.append("SILENT-DEFAULT-READER")  # raises RISK of retiring, not likelihood of death
 
+    # A marker is not a dead artifact. It DEMOTES to zero and says why -- a transient key absent from
+    # S3 is the expected steady state, not evidence of anything.
+    if is_transient_marker(key):
+        signals.append("TRANSIENT-MARKER-DO-NOT-RETIRE")
+        score = 0
+
     return {
         "location": f"s3://{bucket}/{key}",
         "bucket": bucket,
@@ -900,6 +925,11 @@ def cmd_census(args) -> int:
         for rd in r["readers"]:
             print(f"      reader    : {rd['site']}  removal={rd['removal_behaviour']}")
 
+    print()
+    mk = sum(1 for r in rows if "TRANSIENT-MARKER-DO-NOT-RETIRE" in r["signals"])
+    print(f"  TRANSIENT MARKERS demoted to score 0 (written->consumed->deleted): {mk}")
+    print("  An existence check CANNOT separate never-written from written-then-deleted, and a live")
+    print("  trigger marker is ABSENT every time you look. Retiring one breaks a live pipeline.")
     print()
     print("  READ THIS BEFORE ANY LINE ABOVE BECOMES A RETIRE:")
     print("  A HIGH SCORE IS AGREEMENT BETWEEN INDEPENDENT AXES, NOT A DEATH CERTIFICATE. Cold CODE")
