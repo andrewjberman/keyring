@@ -31,6 +31,22 @@
 > and got the PREVIOUS stamp: a false NO-FIRE on a leg that had fired. A self-stamp is only as good
 > as the plane you read it from (Rule 22a on the layer axis); the same trap follows
 > `comp-opalbizsem`'s header anywhere its output can be cached.
+>
+> **ANDREW-DIRECT NAMING RULING (~17:12Z, verbatim):** *"pipescript by itself needs to be
+> deprecated completely as a name, there should be comp-pipescript ONLY. the fact that some agent
+> made this semantic estate concept and called it pipescript plain is just so retarded... I know
+> that pipescript is a wrapper for a CLI or something they need to completely fix that."*
+> END-STATE: the bare name `pipescript` ceases to exist (tombstone through the wave transition per
+> base CTO's forwarder reconsideration, then removed); `comp-opalbizsem` = the estate-semantic
+> traversal; `comp-pipescript` = the only pipescript-named tool (pipeline-script dependencies, WS4
+> hardening applies). No bare-named estate tools — the comp-* namespace is what the census +
+> registration gates see, and the bare name is how this one evaded both.
+> **~B HANDOFF DEFECT, folded into the header CONTRACT: the current banner is wrapped in bare
+> `except Exception: pass` — a missing/corrupt resolver prints NO HEADER AT ALL.** A provenance
+> header that can silently not-appear is worse than none (its absence is unreadable). The contract
+> therefore requires the header path to FAIL LOUD: no header emittable → rc=2 + explicit
+> "SOURCE UNRESOLVABLE" line, never silence. This binds the reference implementation and every
+> tool that adopts the comp-tool-wide contract.
 
     author: 3.0.0_SA_CVO
     task:   Andrew-direct 2026-07-28 -- verify the kuzu blocker myself, then figure out a solution
