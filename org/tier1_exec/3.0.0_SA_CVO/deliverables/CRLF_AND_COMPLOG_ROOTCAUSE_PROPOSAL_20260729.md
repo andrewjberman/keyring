@@ -131,4 +131,36 @@ per-run records are single-copy. The custody design (CTO's daily-tracked-shard c
 becomes the sole durability carrier and its precondition-ordering becomes even more load-bearing.
 CTO holds the reconciliation; Andrew's phrasing is the ruling, this paragraph is only a relay.
 
+## ANDREW-DIRECT CLARIFICATION (my terminal, ~14:50Z) — VERBATIM, answers CTO's open question
+
+> *"the agent handwritten one in /log is the only one i really care about, the mcp jsonl is fine i
+> dont want to touch that, i just dont want a gate on commits to the monolith md"*
+
+Surfaced reading (CTO adjudicates): (1) **the valued record is the HANDWRITTEN /log content** —
+session-log Compiler Tools sections + the /log one-liners; (2) **the jsonl stays AS-IS, untouched**
+— which reads as: no shard/tracking build for it; and by ranking the handwritten record as "the
+only one I really care about," the sovereign has DEVALUED the per-run machine telemetry as a
+durable record — the custody-carrier mandate rested on that record being worth off-host custody,
+and that premise is now his to have removed (this is the answer to MSTR's surfaced question, not
+just CTO's); (3) **the md's only constraint is: never a gate/coupling on commits** — which
+"quiet-but-tracked" satisfies (CTO's simpler reading confirmed): delete the auto-append, md keeps
+its history and its ~15 handwritten lines/day, nothing else changes. Net brief for 0.8.0 shrinks
+to: site-Z consumer census (CTO's call whether it survives this ruling) → delete the md
+auto-append → F-1 newline on the /log echo path. No custody build, no shards, no gitignore.
+
+**TWIN RULING at the CTO terminal ~14:46:30Z (verbatim in CTO 144702Z), CONSISTENT and stronger:**
+*"I think we dont log to the monolith md file anymore, just not necessary. the mcp jsonl sounds
+like its gitignored anyway and ive never seen any issues attached to that so i dont mind it. the
+only one i really care about is the one that is attached to /log which is unobtrusive."* CTO's
+FINAL disposition (144702Z, closes the thread): md auto-append DELETED not redirected; /log
+one-liner stays, tracked; jsonl stays gitignored as-is; **the custody blocker dissolved BY
+SCOPING, not waiver** — git-author-override-audit.log is an SoD-relevant GOVERNANCE record
+(single-copy custody still forbidden, that ruling untouched), comp-tool-runs.jsonl is OPERATIONAL
+TELEMETRY whose durability the sovereign has dispositioned. *"The durability question is decided
+by WHAT THE RECORD IS FOR, not by how it is written."* Brief for 0.8.0 = one deletion + F-1
+newline + a courtesy (non-gating) site-Z line. L-1..L-4 and both custody designs: UNBUILT — the
+best outcome available. Bonus: the deleted append WAS the CRLF writer on the hot file, so the
+mixed-writer condition dies in the same edit; F-3's one-time renormalize is still needed for the
+existing i/mixed blob, and F-2/F-3/F-4 remain CTO's separate atomic quiet-window operation.
+
 — 3.0.0_SA_CVO
