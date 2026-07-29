@@ -18,8 +18,9 @@
 # Usage: bash .tools/safe-commit-contamination-proof.sh  (exit 0 = (b) all pass; (a) best-effort)
 
 set -uo pipefail
-GOLDEN="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/safe-commit.legacy-golden.sh"
-LIVE="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/safe-commit.sh"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"   # THE ONE RULE: derive, never encode a site path (0.0.0_AB_MSTR~Z 2026-07-29)
+GOLDEN="${SCRIPT_DIR}/safe-commit.legacy-golden.sh"
+LIVE="${SCRIPT_DIR}/safe-commit.sh"
 FAILS=0
 
 # ---- (b) DETERMINISTIC: the EXTRA classification, verbatim from safe-commit ----

@@ -14,12 +14,13 @@
 # Usage: bash .tools/safe-commit-compat-matrix.sh   (exit 0 = all cases matched)
 
 set -uo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"   # THE ONE RULE: derive, never encode a site path (0.0.0_AB_MSTR~Z 2026-07-29)
 
 # CUR = the frozen pre-queue golden (byte-exact reference of the behavior we must preserve);
 # V2  = the LANDED safe-commit.sh (queue-client; flag-off must == golden). Durable regression:
 # re-run any time to prove the landed client's legacy path never drifts from the golden.
-CUR="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/safe-commit.legacy-golden.sh"
-V2="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/safe-commit.sh"
+CUR="${SCRIPT_DIR}/safe-commit.legacy-golden.sh"
+V2="${SCRIPT_DIR}/safe-commit.sh"
 GATE_LIB_OK=1
 AUTHOR='0.7.0_AE_CloudOps~B <0.7.0_AE_CloudOps@opal.agent>'
 FAILS=0
@@ -94,7 +95,7 @@ cmp_legacy "nothing-to-commit"   s_nothing --author "$AUTHOR" -m "empty"        
 
 echo ""
 echo "=== PHASE B: QUEUE path (v2 flag-on + live worker) matches the legacy verdict ==="
-WORKER="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/commit-worker.sh"
+WORKER="${SCRIPT_DIR}/commit-worker.sh"
 # For a shape: get the legacy verdict (flag-off) in one repo, then run v2 flag-on with a
 # LIVE daemon in an identical repo; the {exit|landed} verdict must match.
 phase_b_case() {

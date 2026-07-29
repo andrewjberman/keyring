@@ -45,7 +45,13 @@ CMD=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.command // empty' 2>/dev/null
 # The leading boundary check ensures we don't match against '/.../bash' (absolute path
 # to bash binary). The path must not start with '/' (absolute) or '.tools/' (wrapper).
 if printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(])([a-z0-9_./-]*/)?(bash|sh)[[:space:]]+org/mcp/inbox-watch\.sh'; then
-    REASON='BLOCKED: relative-path inbox-watch.sh invocation. Use the canonical PATH wrapper "inbox-watch <serial>" or absolute path "bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh <serial>". Relative-path launches propagate bare-path $0 into auto-respawn children, creating PPID=1 zombies that survive session death and short-circuit future tracked launches via the single-watcher guard (Claude Code surfaces guard-exit-0 as misleading exit 143). See org/XXX.md Step 1b / org/mcp/INBOX_WATCH_DESIGN.md.'
+    # THE ONE RULE, and this was the worst instance of it in the estate: the deny message
+    # NAMED base's absolute path, so every agent who tripped this hook was handed a
+    # device-specific literal AS THE REMEDY. A hardcode in a comment is copied by accident;
+    # a hardcode in an instruction is copied ON PURPOSE. Derived from the hook's own
+    # location instead -- correct on every clone. (0.0.0_AB_MSTR~Z 2026-07-29)
+    WS_ROOT="$(cd "$SCRIPT_DIR/../.." 2>/dev/null && pwd)" || WS_ROOT=""
+    REASON="BLOCKED: relative-path inbox-watch.sh invocation. Use the canonical PATH wrapper \"inbox-watch <serial>\" or absolute path \"bash ${WS_ROOT:-<your-clone-root>}/org/mcp/inbox-watch.sh <serial>\". Relative-path launches propagate bare-path \$0 into auto-respawn children, creating PPID=1 zombies that survive session death and short-circuit future tracked launches via the single-watcher guard (Claude Code surfaces guard-exit-0 as misleading exit 143). See org/XXX.md Step 1b / org/mcp/INBOX_WATCH_DESIGN.md."
     "$JQ" -nc --arg r "$REASON" '{hookSpecificOutput:{hookEventName:"PreToolUse",permissionDecision:"deny",permissionDecisionReason:$r}}'
     exit 0
 fi

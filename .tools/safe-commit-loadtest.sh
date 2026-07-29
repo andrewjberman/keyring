@@ -32,6 +32,7 @@
 #   default Ns = "10 25"
 
 set -uo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"   # THE ONE RULE: derive, never encode a site path (0.0.0_AB_MSTR~Z 2026-07-29)
 
 if [ "${CMTQUE_LOADTEST_GO:-0}" != "1" ]; then
   echo "REFUSED: this load-test loads the shared box. Set CMTQUE_LOADTEST_GO=1 ONLY under" >&2
@@ -40,8 +41,8 @@ if [ "${CMTQUE_LOADTEST_GO:-0}" != "1" ]; then
 fi
 
 NS="${*:-10 25}"
-SC="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/safe-commit.sh"
-WORKER="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/commit-worker.sh"
+SC="${SCRIPT_DIR}/safe-commit.sh"
+WORKER="${SCRIPT_DIR}/commit-worker.sh"
 TMP="${TMPDIR:-/tmp}/sc_load_$$"
 PIDS=(); WORKER_PID=""
 

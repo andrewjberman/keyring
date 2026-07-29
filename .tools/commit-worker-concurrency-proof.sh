@@ -18,8 +18,9 @@
 # exit 0 = PASS.
 
 set -uo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"   # THE ONE RULE: derive, never encode a site path (0.0.0_AB_MSTR~Z 2026-07-29)
 ITER="${1:-20}"; LOAD="${2:-0}"; SINGLE_N="${3:-}"
-WORKER="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools/commit-worker.sh"
+WORKER="${SCRIPT_DIR}/commit-worker.sh"
 BASETMP="${TMPDIR:-/tmp}/cw_conc_$$"
 ALL_PIDS=(); LOAD_PIDS=()
 
