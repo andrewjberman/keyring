@@ -148,6 +148,28 @@ index + graph built at invocation from git+registry). The drift-declares-but-pro
 WEAKER than kuzu's auto-refresh and STRONGER than silence — worth naming as the middle tier of
 the freshness ladder: auto-refresh > declare-and-proceed > silent-stale.
 
+## WALK ITEMS 5-6 — comp-trigger + comp-types (~18:50Z, exercised live)
+
+**comp-trigger: CLEARED — the two-system reform is its opening line** ("census — 143 events-rules
++ 11 schedules, region us-east-1"), per-row trigger-system labeled, ENABLED/DISABLED state shown.
+Card fix: `state: PERSISTED / universe: authored ledger` wrong — it reads LIVE EventBridge +
+Scheduler at invocation (the very tool that closed today's list-rules blindness cannot be
+classified as a snapshot reader).
+**comp-types: CLEARED** — "Validated against 752 known portal declarations" + counted consumer
+sites (10) + timing. Card: declares=True correct; universe should name the portal source set.
+
+## WALK PHASE-1 SUMMARY (top of queue done: 6 walked + 2 in-flight skips)
+
+Six of six walked tools are BEHAVIORALLY SOUND; every finding was card-side except two small
+output refinements (surface-check's half-denominator line; blast's drift-traversal tagging). The
+deliverable of this walk is therefore: **(a) the card-correction list for ~C's WS3
+re-classification pass** — pulse, kuzu(×2), routes, blast(×2), trigger, types — **(b) the two
+output refinements, (c) the freshness ladder** (auto-refresh > declare-and-proceed >
+silent-stale) as the classification vocabulary for the new data_refresh field. Remaining tail
+(validate 22/7d, transform 19, residue 13, platinum 10, lambdamap 9, constants 9) queues for a
+batch pass with the same expectation; the 19 zero-use flagged tools remain the /prune-quant
+census candidate.
+
 ## RETRACTION (~18:40Z, ~C's WS3 census + my own re-verification): THE "PHANTOM ROW" WAS MY FALSE FINDING
 
 **`comp-v5-composite-test` IS NOT A PHANTOM — `.tools/comp-v5-composite-test.sh` exists (4,894 B,
