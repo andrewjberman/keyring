@@ -27934,3 +27934,35 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-grep | comp-grep getNonModelAssets / NOT_MEASURED / perFirmNonModelByPeriod (x5, 404-file denominator printed) | PASS |
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DE_ClientPlatform/logs... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/DENOMINATOR_CROSSEXAM_QUEUE_20... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-legacywriter --file org/mod... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-legacywriter org/modules/graph/comp-coverage-map.yaml org/m... | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/audit-archive-invoker.py | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff .tools/audit-archive-invoker.py | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260729T1737Z_mdpf-runner-portal-... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-legacywriter --file .tools/... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-legacywriter .tools/comp-which org/modules/graph/comp-cover... | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/SPEC_WS4_PIPESCRIPT_DEPLOYED_H... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) | FAIL |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-legacywriter --file .tools/... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-legacywriter .tools/comp-which org/modules/graph/comp-cover... | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/DENOMINATOR_CROSSEXAM_QUEUE_20... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-legacywriter --file .tools/... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-legacywriter .tools/comp-which org/modules/graph/comp-cover... | VERDICT |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_legacywriter.py .tools/comp-legacyw... | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/DENOMINATOR_CROSSEXAM_QUEUE_20... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF_COTMDL/COTTO... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-legacywriter --file .tools/... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-legacywriter .tools/comp-which org/modules/graph/comp-cover... | VERDICT |
+| 2026-07-29Z | 1.0.0_SA_CTO~C | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/comp_legacywriter.py .tools/comp-legacyw... | VERDICT |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/audit/archive/FINDINGS.md | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
