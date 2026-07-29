@@ -27424,6 +27424,9 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 0.7.0_AE_CloudOps~A | (Andrew-direct, no-TO) | comp-grep x4 + comp-glob + commit-gate x4 | non_model_assets kill census + retirement; ETFS session close | PASS | census = writers-to-the-key (comp-grep localize -> live aws per-target verify, rail-checked); no new runs in close window |
 | 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T034958Z__0.0.0_AB_MSTR~Z__0.0.... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitattributes --file .tools/aws | PASS |
 | 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .gitattributes .tools/aws | VERDICT |
 | 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/aws | PASS |
@@ -27432,7 +27435,5 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/aws org/tier0/ledger/LD-0344.md | VERDICT |
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/lib/pairedProvenanceRead.ts ... | PASS |
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-trigger | comp-trigger opal-smartx-ingestion-pipeline | PASS |
-| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
-| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/MDPF_FALLBACK_ROU... | PASS |
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
