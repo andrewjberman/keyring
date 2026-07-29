@@ -1,7 +1,7 @@
 # DEPLOY LEDGER: etfs-reports orchestrator -- CSV-attach + email_qa mode
 
 **Opened:** 2026-07-29T03:00Z by 0.7.0_AE_CloudOps~A
-**Status:** OPEN -- deploy in progress. Unclosed at session end = COO alarm.
+**Status:** CLOSED 2026-07-29T03:16Z -- deploy complete, verified, QA-exercised, fixtures cleaned.
 
 ## Authorization chain
 - Andrew-direct 2026-07-29 ~0135Z (via DS~A terminal, recorded + broadcast): month-end ETFS report
@@ -39,5 +39,42 @@ etfs-reports-v{next} -> push --follow-tags -> QA: seed platinum/reports/9999-qa/
 -> invoke email_qa month=2026-06 (real data: expect PDF-only + zero CSVs, proves disclosure branch)
 -> DELETE the 9999-qa fixtures (keys listed below on execution) -> ledger CLOSE + reports.
 
-## Execution record
-- (appended as executed)
+## Execution record (all times 2026-07-29Z)
+1. **Commit-before-apply (Rule 2):** patch applied to tree, commit-gate PASS (py_compile +
+   ds-precommit + ruff), safe-commit `68661972ab` (lambda_function.py + this ledger).
+2. **Targeted plan** (`-target=aws_lambda_function.orchestrator`, saved .build/csvqa.tfplan):
+   EXACTLY ONE resource -- aws_lambda_function.orchestrator update-in-place; source_code_hash
+   `yjOnWLNAQZlQ9X1TzsMU88X710dIbZx+WwCEXkIdDHI=` -> `jfMnlSE2VocFe7kN9uxhx35iU3JLev5flYOJKW9OE+I=`;
+   0 add / 1 change / 0 destroy. **COO line-by-line condition (030048Z) satisfied: no resource
+   beyond the CSV+email_qa lambda; NOTHING from mdpf-pipeline (separate module/state; verified in
+   the plan text, not assumed). CTO 030027Z reminder answered by the same read.**
+3. **safe-apply** (HALTGT checkpoint passed; saved-plan apply): `Apply complete! 0 added, 1
+   changed, 0 destroyed.`
+4. **Applied truth (Rule 22a):** live `get-function-configuration` CodeSha256 ==
+   `jfMnlSE2VocFe7kN9uxhx35iU3JLev5flYOJKW9OE+I=` (byte-equal to plan hash), LastModified
+   2026-07-29T03:09:32Z.
+5. **0-diff:** full untargeted plan -> `No changes. Your infrastructure matches the configuration.`
+6. **QA exercise (CTO conditions 1+2), on the DEPLOYED runtime:**
+   - Fixtures seeded: `platinum/reports/9999-qa/{etf_ownership.pdf, opaletfs_qafirm1_999901.csv,
+     opaletfs_qafirm2_999901.csv, opaletfs_qafirm3_999901.csv}` (synthetic, 26-63 bytes).
+   - Invoke `{"mode":"email_qa","month":"9999-qa"}` -> 200, attachments =
+     `[opal_etf_ownership_9999-qa.pdf, opaletfs_qafirm1_999901.csv, opaletfs_qafirm2_999901.csv,
+     opaletfs_qafirm3_999901.csv]` -- **expected set == returned set, BOTH DIRECTIONS (4/4, no
+     extras, none missing). Attach path proven pre-Aug-1.**
+   - Invoke `{"mode":"email_qa","month":"2026-06"}` (real data, read-only) -> 200, attachments =
+     `[opal_etf_ownership_2026-06.pdf]` -- **zero-CSV branch proven: PDF-only, matching the true
+     June state (write_month_csvs has never fired).**
+   - No email sent by either invoke (send-free by call-graph: the ses call site is unreachable
+     from the email_qa dispatch).
+   - **Fixture DELETION (disclosed per CTO condition 2):** all four keys above deleted 03:14Z;
+     residual `aws s3 ls platinum/reports/9999-qa/` = EMPTY (rc=1 no-such-prefix).
+7. **Tag:** `etfs-reports-v1.1.0` annotated + pushed `--follow-tags`. DISCLOSURE: this is the
+   module's FIRST tag -- the 06-25 creation deploy was never tagged (Known-Issues class, same as
+   portal-notifications); v1.1.0 chosen to leave v1.0.0 semantically for the creation state.
+8. **Reports:** window report to CTO + COO + DS~A same session; broadcast trail 025955Z/025959Z/030003Z.
+
+## Residuals / follow-ups (none blocking)
+- Aug 1 10:00 ET production fire remains the production acceptance (first full-chain exercise incl.
+  renderer-side write_month_csvs -- DS/DE lane risk line, CTO flagged to DS~A in AVGCAP plan).
+- email_qa mode is manual-invoke only; never scheduled (by design).
+- MDPF 4c apply NOT part of this deploy -- stays post-17:15Z per CTO standing ruling.
