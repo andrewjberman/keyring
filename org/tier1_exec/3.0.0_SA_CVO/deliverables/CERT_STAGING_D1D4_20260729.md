@@ -93,6 +93,21 @@ Certification executes from ~15:05Z (timer task brjo17kej: 15:05 / 15:50 / 16:20
   verdict shape: SCHEDULED FIRE EXERCISED, RUN FAILED ON GRANT — more informative than
   no-schedule, still not a pass.
 
+**PUBLISHER LEG @16:20Z tick — SCHEDULED-AND-CERTIFIED CLEAN (on stale input, attributed):**
+- Trigger identity from the run's own log: `"source": "aws.events"`, "Scheduled Event", resources =
+  rule ARN `opal-assets-mdpf-portal-publisher-daily`, time 16:15:00Z. PIN-4(iii) FULLY satisfied —
+  this is the gold-standard form.
+- Published **11/11 derived (scope,type) pairs, all_present=True, missing=[]** — exact PIN-1 design
+  set, derived not hand-listed, per-object ETags in the log (RequestId 6816c668).
+- Vintages 07-27/07-28 (cottonwood 07-24) — YESTERDAY'S, exactly as predicted: the crashed bridge
+  left gold unadvanced; the publisher correctly published latest-per-(scope,type). **The fire
+  proved the SCHEDULE; it could not prove the DATA PATH** (bridge grant failure owns that).
+  CTO-terminal comp-clobber --live corroborates independently: platinum keys 4 versions 4 etags
+  ACTIVE_CLOBBER=False, global republished at identical 200,059 B.
+- Twins: underscore keys advanced 15:05:22Z (chain Stage-4 still deployed; kill held post-17:15Z)
+  — EXPECTED per protocol, noted not failed. Legacy `json/mdpf/*` plane shows textbook INTERLEAVED
+  two-writer clobbers (CTO terminal) — that plane is the teardown wave's, not tonight's D3 set.
+
 ## Sequenced after certification
 
 comp-grep rc=2 flip (CTO GO 031744Z; I land, 0.8.0_AE verifies exit path — 3 fallback-exercisers,
