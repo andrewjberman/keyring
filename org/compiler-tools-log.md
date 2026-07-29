@@ -27826,3 +27826,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript mdpf | PASS |
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DE_ClientPlatform/logs... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/SPEC_COMP_LEGACYWRITER_2026072... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MDPF_COTTONWOOD_PLATI... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/MDPF_COTTONWOOD_PLATINUM_CONFORMANCE_DESIGN_20260729.md | PASS |
+| 2026-07-29T16:29Z | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript deployed dim_mdpf_account_distribution.py -- BOTH forms (full path + basename) | FAIL-GREEN | *** rc DEFECT REPRODUCED *** FULL PATH -> 1 STALE; BASENAME -> 0/0/0 no-coverage; TRUE_RC=0 ON BOTH. The rc-derived PASS column cannot record a STALE, corpus-wide for this tool family. AE base found it, I reproduced it, AE carried to CTO 161216Z. My own first verification was pipeline-masked ($? after grep|head = head rc) -- reproduced the defect class while verifying it. |
+| 2026-07-29T16:29Z | 2.0.0_SA_COO | (no-TO) | comp-glob | comp-glob **/_schwab_bd_match_v*.py | PASS | Located 3 diagnostics generations for the zombie-path census scoping. |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-29/c... | PASS |
