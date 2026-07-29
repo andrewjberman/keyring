@@ -27635,3 +27635,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/GRAPH_CODE_LOCATION_STANDARD.md docs/architecture/GRA... | PASS |
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check | VERDICT |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check | VERDICT |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ModelPortfolios | UNKNOWN |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode blocking --file portal/src/pages/ModelPortfolios.tsx | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DE_ClientPlatform/logs/2026-07-29/mdpf_trend_val... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/fix-git-fstab.ps1 --file .tools/... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/fix-git-fstab.ps1 .tools/provision-path-shims.sh org/XXX.md org/... | VERDICT |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/fix-git-fstab.ps1 --file .tools/... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/fix-git-fstab.ps1 .tools/provision-path-shims.sh .tools/verify-d... | VERDICT |
+| 2026-07-29 1356Z | 0.4.0_DS_ClientPlatform~A | comp-grep x4 (writer census + cottonwood producers), comp-glob x1 (dispatch); rail-checked raw parquet reads on the value_date axis no comp tool models | cottonwood reads + oracle protocol window |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
