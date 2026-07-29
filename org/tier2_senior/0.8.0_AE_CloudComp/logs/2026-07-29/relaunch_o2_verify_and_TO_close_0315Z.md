@@ -53,3 +53,18 @@ comp-which on a typo'd query -- decide pass-through vs intercept deliberately be
 | `.tools/safe-commit.sh` | TO close committed @26066f7876; risk-reflex CLEAN (1 file vs 1568 danger nodes) |
 
 No gaps found. Rail search used throughout (no raw estate grep).
+
+## Addendum ~0320-0333Z: shared-worktree merge race + compiler-tools-log corruption healed
+
+Push of this session's commits hit a diverged remote; the ensuing merge conflicted whole-file on
+org/compiler-tools-log.md. Measured cause: the REMOTE copy was corrupted -- normalized to LF it was
+byte-exactly base(27,362 lines) + a COMPLETE second copy of the log appended, residue of the
+a3f4f49473 whole-file union, saved with CRLF (zero common lines for any later merge). I reconstructed
+rather than union'd: ours + the 2 genuinely-unique remote rows (2 others were byte-identical
+double-records of one event), LF, single copy = 27,400 lines; staged it. 0.7.0_AE_CloudOps~A,
+resolving the same stranded merge concurrently, committed my staged file as 1308a5ced4 -- correct
+CONTENT, but its message describes a union ("remote 54685 + 29 local, zero content dropped") that is
+not what landed; 27,323 duplicated lines + CRLF were (correctly) dropped. Factual note sent to ~A
+033240Z. Tip verified healthy post-land: 27,402 lines, 1 frontmatter, 0 CRLF, everything pushed.
+Residual hazard on the record: a future merge crossing the a3f4f49473-era lineage can re-present the
+doubled/CRLF parent -- check for CRLF + a second frontmatter block before union-resolving this file.
