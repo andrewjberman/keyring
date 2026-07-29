@@ -1,7 +1,10 @@
 # DEPLOY LEDGER: non_model_assets.json FULL RETIREMENT (teardown-wave member #1)
 
 **Opened:** 2026-07-29T03:45Z by 0.7.0_AE_CloudOps~A
-**Status:** OPEN -- steps 1-3 executing in-session; step 4 (no-regen proof) closes on the 15:00Z fire.
+**Status:** **CLOSED 2026-07-29T15:25Z by 0.7.0_AE_CloudOps~A -- STEP 4 NO-REGEN: PASS.** Both required
+limbs satisfied and read under my own hand; see Step 4 CLOSURE below. One ADJACENT DEFECT surfaced by
+the same run and routed separately (it does not block this close): Step 2's claim that the
+aum-timeseries leg "keeps emitting unchanged" is FALSIFIED -- see Step 4 CLOSURE item C.
 
 ## Authorization
 **ANDREW-DIRECT ~0336Z (relayed by 1.0.0_SA_CTO 033738Z, VERBATIM):** *"Ok have 0.7.0_AE_CloudOps~A
@@ -83,6 +86,64 @@ a dead pipeline. **Discriminator baselined 2026-07-29T13:56Z, BEFORE the fact:**
 135 B, ETag `5ff381b4bc3b0b529a7dffc528f21d58`, LastModified **2026-07-28T15:04:07Z (yesterday)**.
 Closing this ledger requires BOTH: (i) that marker ADVANCED to today, AND (ii) the chain's own run log
 showing completion. Marker unadvanced -> **NOT-YET-PROVEN**, ledger stays OPEN, reported as such.
+
+## Step 4 CLOSURE -- 2026-07-29T15:25Z, 0.7.0_AE_CloudOps~A. VERDICT: **PASS. LEDGER CLOSED.**
+
+**A. LIMB 1 -- THE CHAIN ACTUALLY RAN (the prerequisite; absence alone proves nothing).**
+- INF completion marker ADVANCED: `2026-07-29T15:02:30Z`, ETag `1b39d06d5d54a919c7a3bc0f43d28a17`,
+  135 B -- vs my pre-fact 13:56Z baseline `5ff381b4bc3b0b529a7dffc528f21d58` @ 2026-07-28T15:04:07Z.
+  Payload carries `chain:"full"`, `run_date:"2026-07-29"`, `completed_at:"2026-07-29T15:02:29Z"`
+  (independently grounded by 0.4.0_DS_ClientPlatform, relayed 151316Z; retrieval-verified 135==135).
+- THE RUN'S OWN LOG, read by me (not rc, not a config, not a self-report):
+  `/aws/lambda/mdpf-daily-trigger` RequestId `421dd1ec-e7aa-491e-8806-1968cadb44a8` --
+  event etag matches the marker I measured; `OK: mdpf convergence gate passed -- dispatched`,
+  runner `i-02448edb624a7a7cf`, ssm_command_id `34f8056f-25fa-4ff4-ad47-c6ef3b5a301c`, `all_fresh: true`.
+- CHAIN telemetry (the dispatch log's own named location, so this is the chain's log not the trigger's):
+  `s3://opal-data-mdpf/telemetry/mdpf-daily-runner/logs/mdpf_daily_20260729_150255.log` ->
+  `[mdpf-dispatch] CHAIN complete run_id=mdpf_daily_20260729_150255`; `status.json` = `"status":"complete"`.
+
+**B. LIMB 2 -- THE KEY WAS NOT REGENERATED. And the producer's OWN LOG says so in words.**
+- Key-exact ListObjectsV2 at 15:13:31Z (AFTER the 15:05Z chain writes), both keys -> no Contents:
+  `json/portfolios/non_model_assets.json`, `json/portfolios/non_model_assets_preview.json`.
+  POSITIVE CONTROL as a SEPARATE invocation: `json/portfolios/aum-timeseries.json` -> returned a row.
+  So the instrument discriminates present from absent; the two absences are real.
+  (Independently corroborated by base lane 0.7.0_AE_CloudOps at 15:11:15Z, its own control passed.)
+- STRONGEST EVIDENCE, from the retired producer itself, run log line 226:
+  `[2026-07-29T15:04:40Z] RETIRED: json/portfolios/non_model_assets.json absent (expected
+   post-retirement) -- nm leg builds from platinum only and is NOT uploaded`
+  The retirement is not merely observed from outside; the producer announces the retired behaviour.
+- **DEFENCE IN DEPTH (discovered at close, not designed here): the retirement is held by TWO
+  INDEPENDENT MECHANISMS.** (1) the code edit (put_object removed, Step 2); (2) an IAM explicit Deny --
+  statement Sid `P0DenyLegacyPortfoliosClobber20260728` inside inline policy `mdpf-runner-scoped` on
+  `mdpf-daily-runner-ec2-role`, denying `s3:PutObject` on this exact key. Either alone would hold.
+
+**C. ADJACENT DEFECT SURFACED BY THIS RUN -- ROUTED, NOT SWALLOWED. Step 2 CONTAINS A FALSE CLAIM.**
+Step 2 states the NM read was made absence-tolerant *"so the aum-timeseries.json leg keeps emitting
+unchanged."* **That is FALSIFIED.** Stage 3.5 now fails every run:
+```
+[2026-07-29T15:04:53Z] UPLOADING to s3://opal-data-portal-v2/json/portfolios/aum-timeseries.json ...
+botocore.errorfactory.AccessDenied: ... mdpf-daily-runner-ec2-role/i-02448edb624a7a7cf is not
+authorized to perform: s3:PutObject on .../json/portfolios/aum-timeseries.json
+with an explicit deny in an identity-based policy
+[mdpf-dispatch] step LEGACY-EMIT rc=1 dur=15s status=error
+```
+- CAUSE IS **NOT** THIS RETIREMENT. The SAME Sid `P0DenyLegacyPortfoliosClobber20260728` lists BOTH
+  `non_model_assets.json` AND `aum-timeseries.json`. It was installed 2026-07-28 (WO-2 D-controls),
+  i.e. it PREDATES this retirement (03:45Z 07-29). The Step-2 claim was **untested when written and
+  already false at that moment** -- the leg it promised to preserve was fenced hours earlier.
+- CONSEQUENCE: `json/portfolios/aum-timeseries.json` is FROZEN at 2026-07-27T15:10:07Z (295,300 B) and
+  this producer cannot advance it. **Whether that is intended (legacy json plane deliberately
+  superseded by platinum) or a gap (a live consumer still reading a 2-day-stale key) is NOT mine to
+  rule -- routed to CTO + COO at close.** Not a freshness verdict here: no trading-calendar claim is
+  being made, only that the writer is denied.
+- SECOND-ORDER, and the more dangerous half: the dispatch's own error text says
+  *"non_model_assets.json stale until next run"* -- **it names the RETIRED key as the casualty.** That
+  wording is stale: non_model is gone deliberately and can never be "stale", while the ACTUAL casualty
+  (aum-timeseries.json) goes unnamed. A responder reading that line at 03:00 would chase a retired
+  artifact and miss the frozen one. Flagged for correction with the Stage-3.5 owner.
+
+**D. WHAT I DID NOT DO.** No delete marker touched (CTO 140338Z wave-wide prohibition). No re-delete.
+No object restored. Nothing applied. Freeze intact.
 
 ## Known consequence (surfaced by CTO to Andrew; not mine to fix)
 Until DE's queued chart fix promotes, Global trend/band surfaces reading this file render
