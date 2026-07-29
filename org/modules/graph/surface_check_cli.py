@@ -245,21 +245,61 @@ def _contract_advisory(sev1_surface_ids: set) -> None:
                   f"(only canonical_writer={v['canonical_writer']}).")
 
 
+def _rules_header() -> str:
+    """Source-timestamp head (comp-tool-wide CONTRACT, CTO 163950Z): line 1 of every check names
+    the RULES SOURCE + its VINTAGE, so a stale or swapped rules file is unmissable at the point of
+    reading. sha8 identifies the exact rules content; mtime dates it."""
+    import hashlib
+    from datetime import datetime, timezone
+    raw = open(SURFACES_YAML, "rb").read()
+    sha8 = hashlib.sha256(raw).hexdigest()[:8]
+    mt = datetime.fromtimestamp(os.path.getmtime(SURFACES_YAML), tz=timezone.utc)
+    return (f"comp-surface-check -- rules: critical-surfaces.yaml "
+            f"(sha {sha8}, modified {mt.strftime('%Y-%m-%dT%H:%MZ')})")
+
+
+def _pop_line(surfaces: list[dict]) -> str:
+    """The screening POPULATION, stated (the other half of the denominator): how many surfaces,
+    at what severities, watching how many carve tokens. A silently-shrunken rules list is visible
+    HERE or nowhere."""
+    sev1 = sum(1 for s in surfaces if s["severity"] == "SEV1")
+    sev2 = sum(1 for s in surfaces if s["severity"] == "SEV2")
+    watched = sum(len(s["watched"]) for s in surfaces)
+    return f"{len(surfaces)} surface(s) ({sev1} SEV1 / {sev2} SEV2), {watched} watched carve token(s)"
+
+
 def cmd_check(args) -> int:
-    # best-effort load
+    # Rules load. A gate whose OWN RULES cannot be read has not screened anything: that is
+    # UNVERIFIABLE, never a pass (O2/C3a; the coverage-check rc-asymmetry precedent). Advisory
+    # mode returns rc=2 (the workspace safe-commit call is `|| true`-tolerant, so this is loud
+    # without wedging). BLOCKING mode keeps the documented fail-open EXIT CODE pending the
+    # CTO/Andrew ruling on flipping the portal gate fail-closed -- but its OUTPUT now states
+    # plainly that nothing was screened, so the pass can no longer be read as a screen.
     try:
         surfaces = load_surfaces()
+        print(_rules_header())
     except Exception as e:
-        print(f"ADVISORY: comp-surface-check could not load critical-surfaces.yaml "
-              f"({type(e).__name__}: {e}) -- passing (never hard-block on tooling failure).")
-        return 0
+        print("UNVERIFIABLE: comp-surface-check could NOT load critical-surfaces.yaml "
+              f"({type(e).__name__}: {e}).")
+        print("  NOTHING WAS SCREENED. This is NOT a pass -- an empty result and a failed")
+        print("  retrieval are different verdicts, and this is the second one.")
+        if args.mode == "blocking":
+            print("  (blocking mode: exit stays 0 per the documented best-effort contract; the")
+            print("  fail-closed flip for the portal gate is a pending design ruling.)")
+            return 0
+        return 2
     if not surfaces:
-        print("ADVISORY: no surfaces registered -- passing.")
-        return 0
+        print(_rules_header())
+        print("UNVERIFIABLE: rules file loaded but ZERO surfaces registered -- the screening")
+        print("  population is EMPTY. Nothing was screened; this is NOT a pass. (A shrunken or")
+        print("  truncated rules list looks exactly like this.)")
+        if args.mode == "blocking":
+            return 0
+        return 2
 
     files = _changed_files(args)
     if not files:
-        print("OK: no changed files to check.")
+        print(f"OK: 0 changed file(s) -- nothing to screen. Rules loaded: {_pop_line(surfaces)}.")
         return 0
 
     # collect touches: file -> {surface_id: severity}
@@ -270,7 +310,8 @@ def cmd_check(args) -> int:
                 touches.append((f, s["id"], s["severity"]))
 
     if not touches:
-        print(f"OK: {len(files)} changed file(s) touch no critical surface.")
+        print(f"OK: {len(files)} changed file(s) screened against {_pop_line(surfaces)} -- "
+              f"no critical surface touched.")
         return 0
 
     # effective severity per file = MAX (severity_resolution); overall = max of all
