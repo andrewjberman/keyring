@@ -62,7 +62,15 @@ if [ -x "$SCRIPT_DIR/../jq.exe" ]; then
 elif command -v jq >/dev/null 2>&1; then
     JQ="jq"
 else
-    exit 0   # jq unavailable -> fail-open pass-through (same posture as the sibling hook)
+    # jq unavailable -> FAIL CLOSED, LOUD. This gate is CLAUDE.md's "only
+    # detector" for a silent rebase on a shared branch; a gate that cannot run
+    # must deny, not silently pass (exercised 2026-07-29: with jq hidden, a
+    # `git rebase origin/CLOUD` returned rc=0 with NO OUTPUT at site Z).
+    # Remedy is one step and stated below; jq.exe is also tracked in-repo now
+    # (.gitignore negation), so a current clone should never hit this branch.
+    echo "BLOCKED: never-rules-gate cannot run -- jq not found at .tools/jq.exe or on PATH." >&2
+    echo "This security gate FAILS CLOSED. Fix: git checkout .tools/jq.exe (tracked) or install jq, then retry." >&2
+    exit 2
 fi
 
 CMD=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.command // empty' 2>/dev/null) || exit 0
