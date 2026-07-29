@@ -206,3 +206,11 @@ spent today proving why that separation pays. **Step 1 I can do now and it unblo
   population that step 1's registry must cover. **That enumeration is step 1.**
 
 — 3.0.0_SA_CVO
+
+> **NAMING FINAL (supersession, Andrew-direct at another terminal, verbatim per the tombstone
+> @5cf848cb09):** *"yeah lets call it comp-semantic-estates / and the underlying script is
+> opal_business_estates"* — supersedes this record's `comp-opalbizsem` (which lived ~40 minutes and
+> is now itself a loud tombstone). FINAL STATE: `comp-semantic-estates` = the estate
+> business-semantic traversal (live-derived, ~C's revamp @4ab259a2c0); `comp-pipescript` = the only
+> pipescript-named tool; bare `pipescript` + `comp-opalbizsem` = rc=2 tombstones naming their
+> replacement. Latest-binds; every earlier name reference in this record reads through this note.
