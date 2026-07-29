@@ -27579,3 +27579,38 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29 0140-0900Z | 0.0.0_AB_MSTR~Z | site-Z standing-up | comp-which/grep/glob (DEAD->restored), comp-system, commit-gate, never-rules-gate + comp-tool-hud + owned-paths (all fed PreToolUse JSON directly, both directions), portability-census (built, committed) | FAIL->PASS | 17 of 23 python-shebang comp-tools were inert at session start (Store-stub python3 + stdlib operator shadowing); FOUR live gates were fail-open-and-silent because .tools/jq.exe is a gitignored per-device binary. Both classes fixed and A/B verified. GAP: safe-commit cannot record untrack-but-keep-on-disk. |
 | 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier0/sessions/SS-0013.md | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_TWR.json --file org/p... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/projects/ADVI_TWR.json org/projects/REGISTRY.md | VERDICT |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/BD_RPSAUTO.json --file org... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/projects/BD_RPSAUTO.json org/projects/BD_SCHWABCONV.json org/projec... | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/bd-49f-... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/bd-pipeline/bd-49f-etf-ownership-daily.tf | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260729T0135Z_bd49f-etf-ownership... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TOOLUNIFY.json --file... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/projects/NFRA_TOOLUNIFY.json org/projects/REGISTRY.md | VERDICT |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0306.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0306.md | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_AGENTBUS_PRD.md | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_AGENTBUS_PRD.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0343.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0343.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0343.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/tier0/ledger/LD-0343.md | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DEBT_RETIRECOND_DESIG... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/DEBT_RETIRECOND_DESIGN.md | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff portal | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/AUDITLOG_DELETION_FINDING_2026... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DEBT_RETIRECOND_DESIG... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/DEBT_RETIRECOND_DESIGN.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/inbox/0.0.0_AB_MSTR/~Z/.unread-... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/inbox/0.0.0_AB_MSTR/~Z/.unread-deliveries org/mcp/inbox/0.0.0_A... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DEBT_RETIRECOND_DESIG... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/DEBT_RETIRECOND_DESIGN.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/inbox/0.0.0_AB_MSTR/~Z/20260729... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/inbox/0.0.0_AB_MSTR/~Z/20260729T120202Z_0.0.0_AB_MSTR_ACK_amb-z... | PASS |
+| 2026-07-29T1248Z | 0.2.0_DT_PortfolioAnalytics | promotes #3/#4 | git show <ref>:<path>, curl+md5sum x8, gh run view --json x4, git diff parity x2, minified-bundle marker grep | SOURCE READ AT THE PROMOTED REF was the authoritative instrument -- it settled a derivation question that two artifact reads and one authority-claim could not (v2.1.151 rendered total.account_count 7,597 + 183 blend sleeve-adds = 7,780 while the artifact stated 7,597). byte-identity legs PASS on both promotes (31e64570 unmoved across all four; control 9bae4b42 unmoved); parity gate 0 bytes both. comp-* not run: deploy-execution + source reads on a known file at known refs, no estate traversal / new resource / IAM change; the comp-rail HUD did not nudge and no comp-tool answers "what does this code path compute at this ref". INSTRUMENT DEFECT FOUND IN MY OWN TOOLING: the minified-bundle marker grep is INVALID for local consts (minification renames them) -- BOTH the derivation marker AND the field-read marker returned 0, so reading "0" as absence would have been a FALSE PASS; caught only by a positive control in the same run. VALID for object-property names + imported identifiers (which is why the promote-#2/#3 probes were accidentally sound). CTO banked verbatim. Also: verify-JWT expired twice mid-promote -> 401 on every URL, discriminated by IDENTICAL 36-byte bodies across unrelated URLs (auth wall, not a data fault). |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.2.0_DT_PortfolioAnalytics/... | PASS |
