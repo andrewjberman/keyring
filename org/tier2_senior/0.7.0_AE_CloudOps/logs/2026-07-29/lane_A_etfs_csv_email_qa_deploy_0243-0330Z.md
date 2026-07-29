@@ -77,3 +77,24 @@ IAM read was desired-plane TF Sid reading + the applied-truth get-function-confi
 - **Still mine, unchanged:** 49F writer 10:45Z first-unattended-fire acceptance read; MDPF 4c apply
   post-17:15Z (explicitly NOT swept into tonight's GO).
 - Nothing half-landed: ledger CLOSED, tag pushed, tree clean of my changes.
+
+## DELTA 0336-0355Z -- non_model_assets.json FULL RETIREMENT (Andrew-direct via CTO 033738Z)
+
+**archetype:** DEPLOY (+TRACE census)
+Verbatim order in the ledger. Executed steps 1-3 in-session: writer census closed (Stage 3.5
+build_legacy_compat_emit.py = sole scheduled writer, matched to the object's 15:10:07Z LastModified;
+smartx 11:30Z rule = READER (CTO's unverified item resolved); rollup grep=0; manual backfill =
+unscheduled writer-capable; compute_* dead since 05-13; revamp 6c = different key, untouched).
+Write-level retirement per C1 (NM put_object removed, aum leg intact, NM read NoSuchKey-tolerant;
+manual backfill refuses all S3 writes rc=3); commit-gate PASS x2; retired script deployed to
+s3://opal-data-mdpf/code/scripts/backfill/ md5-verified BEFORE deletion; both family objects
+(target + preview twin) deleted ~03:52Z under Andrew's word + CTO co-sign, family listing empty,
+versioned-bucket delete markers. Ledger 20260729T0345Z OPEN on step 4 only: no-regen check after
+the 15:00Z fire (key must NOT exist post-chain; recreation = missed writer -> STOP + report).
+Reports: CTO 035035Z, COO 035045Z, DS base 035100Z (lane notification + consumer-fallback note),
+DS~A 035108Z (ETFS close + sweep-provenance ack).
+
+### Compiler Tools (delta)
+comp-grep x3 (writer census localization: repo-wide, smartx, lambda -- denominators printed);
+comp-glob (dispatch script); raw aws rule/target/S3 reads rail-checked (per-target grain + live
+truth for a KILL order); commit-gate x2 PASS.
