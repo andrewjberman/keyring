@@ -88,6 +88,25 @@ live-primitive forensics (head-object write-times, list-rule-names-by-target, ge
 simulate x6 single-arn with separate controls) -- grain no comp-tool models; all raw aws calls
 carried rail-checked markers.
 
+## DELTA 0130-0157Z -- bd-49f revival EXECUTED (freeze exception, CTO 013015Z + addendum 013139Z)
+
+**archetype:** DEPLOY
+CTO ratified the monolith re-source, granted a freeze exception (window choice mine -- chose TONIGHT,
+defended in ledger). Executed end-to-end under NEVER#6, ledger opened 0135Z and CLOSED 0155Z:
+- Vendored DS compute module verbatim (sha256-verified) + thin shell (event-identity log, explicit-date
+  fail-loud, empty-source skip). commit-gate clean. Local QA: 07-27 4/4 cent-exact + byte-identical.
+- TF: MonolithFactRpsRead (fact_rps/* EXACT) + List + floor cron(45 10 * * ? *) rule/target/permission;
+  env trimmed; header comments re-written to the revival truth. NEVER#2 commit gate PASSED the
+  monolith ref (CTO's STOP branch not triggered).
+- House build-and-upload -> targeted plan 3/2/0 -> pre-apply battery report to CTO 014450Z ->
+  safe-apply 0146Z -> 0-diff -> tag bd-v2.53.0 -> 9/9 sim battery (T8 negatives incl. monolith-WRITE
+  deny) -> deployed-runtime QA invoke (200, cent-identical re-land 015144Z).
+- Commits: 08d0a9bff6 / b0608006f8 / cfc89496ad. record-terraform-deploy.sh skipped (known-issue),
+  fields hand-recorded, disclosed. Two source-map whole-file-reformat near-misses caught pre-commit
+  and reverted (indent + unicode-escape pollution) -- final diffs surgical.
+- RAVC2 CTO 015713Z + COO 015724Z. Outstanding owned: tomorrow's unattended 10:45Z fire (acceptance),
+  then bd-tree Sid retire with its own ledger line; Design A post-freeze; Design B held.
+
 ## Open / waiting
 
 - CTO+COO: ratify floor time 19:00Z, grant narrowness, DLQ-parity call, **apply-window owner** (base
