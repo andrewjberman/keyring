@@ -58,6 +58,14 @@ def _get_graph(force_rebuild: bool = False, check_freshness: bool = True) -> Tra
                 if not drift:
                     return g
                 emit_stale_warn(drift)   # drifted -> fall through to a head-pinned rebuild
+                # Say the rebuild is HAPPENING, right after the warn -- measured misread
+                # 2026-07-29: the warn's "rerun comp-build to refresh" hint reads as
+                # answers-will-be-stale, when this path REBUILDS FROM CURRENT SOURCE before
+                # answering. A reviewer (CVO) filed a false "answers over drifted index"
+                # finding on exactly that gap between the warn and the build line.
+                print("  -> drifted cache DISCARDED; rebuilding head-pinned from CURRENT source "
+                      "now (the answers below are fresh; the warn above lists what had drifted).",
+                      file=sys.stderr)
             elif (time.time() - g.built_at) < 300:
                 # freshness opted out (e.g. internal callers) -> retain the cheap TTL fast-path
                 return g

@@ -148,6 +148,20 @@ index + graph built at invocation from git+registry). The drift-declares-but-pro
 WEAKER than kuzu's auto-refresh and STRONGER than silence — worth naming as the middle tier of
 the freshness ladder: auto-refresh > declare-and-proceed > silent-stale.
 
+## CORRECTION TO WALK ITEM 4 (~20:50Z, source-read during the immaculate pass): comp-blast is
+TOP-RUNG, my "answers-anyway" verdict was FALSE
+
+`cli.py:_get_graph:57-60`: on drift the cache is NOT served — the warn is followed by a
+**head-pinned rebuild from current source** ("KILLS the stale-cache-phantom class"; the 104.4s I
+observed WAS that rebuild). The blast answer was FRESH. My "declare-and-proceed / answers over
+the drifted index" reading was false — misled by the warn's "(rerun comp-build to refresh)" hint
+printed seconds before the tool refreshed itself. **The drift-row-tagging refinement I filed is
+WITHDRAWN (unnecessary by design); the remaining true items are the bimodal cost-band card fix
+and the hint wording** — the latter now FIXED at source (a rebuild-is-happening line follows the
+warn, citing this misread as the measured incident). Third self-correction of the day, same
+shape: a WARN adjacent to an action reads as the action not happening. comp-blast joins kuzu on
+the auto-refresh rung.
+
 ## WALK ITEMS 5-6 — comp-trigger + comp-types (~18:50Z, exercised live)
 
 **comp-trigger: CLEARED — the two-system reform is its opening line** ("census — 143 events-rules
