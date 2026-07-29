@@ -27162,3 +27162,37 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-28Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-routes | comp-routes behaviors | PASS |
 | 2026-07-28 ~2350Z | 1.0.0_SA_CTO | comp-routes behaviors, comp-grep, comp-pipescript (via lanes, path-form), live primitives | MDPF reset window: WO-3 mechanism grounding, 3-leg falsifier, G7 seed; comp-freshness gap re-confirmed (bare invocation = help text) |
 - 2026-07-28 2222-2355Z 0.7.0_AE_CloudOps: comp-glob/comp-grep ~10 runs (localization, all hits); comp-which 1 (near-tie); pipescript --list 1 (stale snapshot, self-labeled); IAM verifies via rail-checked live primitives per Rule 22a (comp-iam census stale for minutes-old applies). Gap: no comp-freshness entries for portal/gold/mdpf + platinum/mdpf flat trees (post-fires candidate).
+| 2026-07-28Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file .tools/git-hooks/miss... | PASS |
+| 2026-07-28Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .gitignore .tools/git-hooks/missions-refresh-post-commit.sh org/mission... | VERDICT |
+| 2026-07-28Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/git-hooks/missions-refresh-post-... | PASS |
+| 2026-07-28Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/git-hooks/missions-refresh-post-commit.sh org/missions/.register... | VERDICT |
+| 2026-07-28Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/provision-path-shims.sh | PASS |
+| 2026-07-28Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .tools/provision-path-shims.sh | VERDICT |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/missions/.watermark.json | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/missions/.watermark.json | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/deliverable... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260728T2358Z_I... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/missions/.watermark.json --file org... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/missions/.watermark.json org/tier0/ledger/LD-0341.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp_missions.py --file .tools/g... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/comp_missions.py .tools/git-hooks/missions-refresh-post-commit.s... | VERDICT |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check check --file org/modules/graph/comp_coverage_check.py | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check check --file .tools/provision-path-shims.sh | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check check --file org/modules/graph/comp_coverage_check.py | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check check --file .tools/provision-path-shims.sh | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check check --file .tools/provision-path-shims.sh | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check check --file org/modules/graph/comp_coverage_check.py | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/manifest_check_cli.py... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/manifest_check_cli.py org/tier1_exec/3.0.0_SA_CVO/log... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/manifest_check_cli.py org/tier1_exec/3.0... | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier2_senior/0.4.0_DS_ClientPlatform~A/task_orders/MDPF_INFACTUAL.0... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io mdpf_aggregate_aua.py | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/dim_mdpf_aggrega... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py data/mdpf/s... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-system | comp-system --gate --changed data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.p... | PASS |
+- 2026-07-29 0027Z 0.4.0_DS_ClientPlatform: commit-gate PASS (producer+tests); comp-pipescript NOT run (mdpf-tree blind, filed) -- deploy verified head-object ETag==md5 three-way; rail-checked versioned GetObjects for the set-equality diff (no comp-tool serves S3 version history).
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
