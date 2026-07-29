@@ -4,9 +4,9 @@
     Every sentence below is SELECTED from a state.yaml or execsum.yaml, never composed
     here: a compiler that writes prose is a compiler that can invent a stance.
 
-    ANCHOR COMMIT   1308a5ced4
-    ANCHOR TIME     2026-07-28T23:23:17-04:00   (author-time, not a wall clock)
-    ANCHOR AUTHOR   0.7.0_AE_CloudOps~A
+    ANCHOR COMMIT   3fdc7176cc
+    ANCHOR TIME     2026-07-29T04:19:41-04:00   (author-time, not a wall clock)
+    ANCHOR AUTHOR   Andrew Berman
     ORDERING        activity intensity -- commits in the last 14 days, then total
     SOURCE          org/missions/{GROUP}/{SUB_GROUP}/{state,execsum}.yaml
 
@@ -24,10 +24,10 @@
 
 | # | sub-group | recent | total | authors | DECIDED | BUILT | SERVING | blocked on |
 |---|---|---|---|---|---|---|---|---|
-| 1 | `INFRASTRUCTURE.GRAPH` | **360** | 1096 | 35 | PARTIAL | PARTIAL | PARTIAL | — |
-| 2 | `INFRASTRUCTURE.DEBT` | **161** | 1684 | 42 | YES | PARTIAL | PARTIAL | — |
-| 3 | `PORTAL.MODEL_PORTFOLIOS` | **154** | 405 | 17 | YES | YES | NO | 1.0.0_SA_CTO -- an architecture call that PR |
-| 4 | `INFRASTRUCTURE.TOOLS` | **123** | 737 | 37 | YES | YES | UNASSESSED | 0.8.0_AE_CloudComp -- IMPLEMENTATION of the  |
+| 1 | `INFRASTRUCTURE.GRAPH` | **361** | 1097 | 36 | PARTIAL | PARTIAL | PARTIAL | — |
+| 2 | `INFRASTRUCTURE.DEBT` | **165** | 1688 | 42 | YES | PARTIAL | PARTIAL | — |
+| 3 | `PORTAL.MODEL_PORTFOLIOS` | **163** | 414 | 17 | YES | YES | NO | — |
+| 4 | `INFRASTRUCTURE.TOOLS` | **125** | 739 | 38 | YES | YES | UNASSESSED | 0.8.0_AE_CloudComp -- IMPLEMENTATION of the  |
 | 5 | `PORTAL.ADVISOR_INTELLIGENCE` | **34** | 1726 | 36 | PARTIAL | UNASSESSED | UNASSESSED | — |
 | 6 | `PORTAL.DEBT` | **2** | 2 | 2 | PARTIAL | NO | NO | — |
 | 7 | `EXTERNAL.49FINANCIAL` | **0** | 0 | 0 | UNASSESSED | UNASSESSED | UNASSESSED | Andrew -- per-client initiative detail. |
@@ -45,12 +45,13 @@
 
 > Lock in a canonical taxonomy and canonical resource design patterns, and unify the system on that basis in earnest; and track the enumeration of that coverage as the universe grows, so that related grants and permissions in IAM do not silently break.
 
-    activity   360 commit(s) in the last 14 days · 1096 total · 35 author(s)
-    newest     2026-07-28T22:58:26-04:00
+    activity   361 commit(s) in the last 14 days · 1097 total · 36 author(s)
+    newest     2026-07-29T01:16:26-04:00
     stance     DECIDED PARTIAL · BUILT PARTIAL · SERVING PARTIAL
     version    v1.2
 
 **FRONTIER —** Lock the taxonomy -- one canonical statement the rest can be migrated onto. But note the 92% figure reframes the bottleneck: DECIDED is not what is holding this, ADOPTION is.
+
 
 
 
@@ -218,12 +219,13 @@ the CLASS.
 
 > Ensure that as Infrastructure consolidates patterns and improves design, legacy AWS resources are appropriately decommissioned and terminated -- so agents are never confronted with multiple pipelines, paths and buckets that clobber each other.
 
-    activity   161 commit(s) in the last 14 days · 1684 total · 42 author(s)
-    newest     2026-07-28T21:42:26-04:00
+    activity   165 commit(s) in the last 14 days · 1688 total · 42 author(s)
+    newest     2026-07-29T04:11:12-04:00
     stance     DECIDED YES · BUILT PARTIAL · SERVING PARTIAL
     version    v1.1
 
 **FRONTIER —** Make retirement a CONDITION of a migration rather than a follow-up to it. Nothing structurally prevents a replacement shipping while its predecessor keeps running.
+
 
 
 
@@ -391,14 +393,13 @@ census is still absent while its trigger twin exists complete with a CI drift ga
 
 > Lock in the proper canonical pipelines for the Model Portfolios product so it serves correct numbers every day without hand-restoration; and establish the Opal-level definition of how the four AUA types aggregate -- ETF Models (the 5 archetypal portfolios), SMA Strategies (TAX SMA, the incoming MUNI SMA, 49F SMAs tracked in SmartX such as PFOE), Custom Models (client-specific SMAs that are not a larger strategy), and Non-Model Residual (assets we advise upon that fall into none of the prior three).
 
-    activity   154 commit(s) in the last 14 days · 405 total · 17 author(s)
-    newest     2026-07-28T20:45:18-04:00
+    activity   163 commit(s) in the last 14 days · 414 total · 17 author(s)
+    newest     2026-07-29T03:55:31-04:00
     stance     DECIDED YES · BUILT YES · SERVING NO
     version    v1.2
 
-**FRONTIER —** The defined publisher. Nothing automated writes the serve.
+**FRONTIER —** One panel family (per-model quarterly cells) on LABELED LEGACY until the aum-metrics x3 producers deploy (built, QA'd, validate-config green @001a3374b4, deploy word held post-16:15Z). The publisher is no longer the frontier -- it is defined, scheduled (16:15Z) and fed by a scheduled accrual bridge (cron(45 15)Z, tag mdpf-pipeline-v1.9.0). Updated 2026-07-29T0812Z.
 
-**BLOCKED ON —** 1.0.0_SA_CTO -- an architecture call that PRECEDES the build: which serving namespace is canonical.
 
 
 
@@ -549,12 +550,27 @@ Andrew authorised cottonwood inclusion at 203435Z and the legacy aggregator stil
 cottonwood tokens against 14 inflection -- a real absence, positive-controlled. A successor AE session
 is on-mission for the roster single-sourcing and enrollment; CTO dispatches.
 
-The frontier is unchanged and is still the whole gap: the defined publisher. Blocked on a CTO
-architecture call -- which serving namespace is canonical -- that PRECEDES the build.
+UPDATED 2026-07-29T0815Z from 1.0.0_SA_CTO's unprompted five-field state return. The frontier has
+MOVED and the block is DISCHARGED. The CTO architecture call -- which serving namespace is
+canonical -- was RULED *and EXECUTED*: platinum/mdpf is canonical, N-1 one-namespace-per-surface.
+The client surface now reads platinum/mdpf/{scope}/{type}.json via the edge v6 flip across four
+PROD promotes (v2.1.148->151), written by the SCHEDULED publisher (16:15Z) fed by the SCHEDULED
+accrual bridge (cron(45 15)Z, tag mdpf-pipeline-v1.9.0). The hand-restored-artifact era ended at
+that flip, so "nothing automated writes the serve" is no longer true.
+
+SERVING is held at PARTIAL, not YES, and CTO offered that bound themselves: the unattended
+sequence (15:00Z chain -> 16:15Z publisher) has not yet run start-to-finish without hands, and
+CTO's own certification holds a two-day floor -- today plus tomorrow's repeat. A schedule that has
+been APPLIED is not a schedule that has FIRED; the flip to YES anchors on the second unattended
+run's own log, never on the apply.
+
+The remaining serving residual is one panel family -- per-model quarterly cells -- on labeled
+legacy until the aum-metrics x3 producers deploy (built, QA'd, validate-config green @001a3374b4,
+deploy word held post-16:15Z).
 
 **HOLES — live work no project code covers (2):**
 - MDPF_CHANNEL_INDEPENDENCE -- PRD'd (docs/architecture/MDPF_CHANNEL_INDEPENDENCE_PRD.md), cited as law in CLAUDE.md Rule 20/NEVER#4, drove today's P0. NO project JSON, ZERO REGISTRY.md rows. Confirmed independently THREE times (MSTR authoring, CVO /spot-check F-1, CTO state pull).
-- Six unaccounted served objects under json/portfolios/: latest, manifest, metrics, summary, timeseries, non_model_assets_preview. No owner, no project, unknown consumers.
+- Six unaccounted served objects under json/portfolios/ -- MOSTLY RESOLVED 2026-07-29 by CTO's state return: timeseries (writer killed in-repo, retires post-fires), non_model_assets_preview (DELETED 03:52Z with the family), metrics (labeled legacy, dies at the aum-metrics re-point). STILL GENUINELY UNACCOUNTED: latest, manifest, summary. >> CROSS-GROUP OBSERVATION WORTH MORE THAN THE HOLE ITSELF (CTO's, and I am keeping it in their framing): json/latest/ is ALSO the INFRASTRUCTURE.GRAPH hole's 6 alive keys. THE TWO HOLES MAY BE ONE HOLE SEEN FROM TWO GROUPS. That is exactly the failure the mission register was built to catch -- a sub-group boundary splitting one defect into two, each looking small from its own side. Do NOT close either independently; reconcile them against each other first. <<
 
 *grounded: 2026-07-28T183143Z -- CTO state pull, against the 16:48:04Z scheduled run + commit trail.*
 
@@ -566,14 +582,15 @@ architecture call -- which serving namespace is canonical -- that PRECEDES the b
 
 > Establish an enumerated coverage universe per tool -- what each tool covers, what it does not, and where its silence means nothing-there rather than cannot-see -- consolidating the extensive prior art already held in the NFRA projects; and define how each tool must present information so that responses are high-signal and never inadvertently truncated, redacted or garbled.
 
-    activity   123 commit(s) in the last 14 days · 737 total · 37 author(s)
-    newest     2026-07-28T22:58:26-04:00
+    activity   125 commit(s) in the last 14 days · 739 total · 38 author(s)
+    newest     2026-07-29T01:16:26-04:00
     stance     DECIDED YES · BUILT YES · SERVING UNASSESSED
     version    v1.3
 
 **FRONTIER —** Wire comp-which to IMPORT tool_index instead of re-parsing the manifest. Cheap, and it is now the single next thing -- until it lands, the compiled index is a fast artifact nobody reads. (The suite-scale declared-vs-actual diff remains real but is downstream of this, and is now cheaper because per-tool primitive rows persist as JSON.)
 
 **BLOCKED ON —** 0.8.0_AE_CloudComp -- IMPLEMENTATION of the comp-which wiring. BOTH calls this line used to name were RULED by CTO at 20260728T212335Z, ~4h before the register was first compiled: (a) wiring -> owner is 0.8.0_AE_CloudComp, CTO routing it; (b) placement -> NEITHER fold NOR peer. comp-coverage-map.yaml is SOLE POPULATION AUTHORITY; TOOL_MASTER.yaml may remain a separate ATTRIBUTE STORE only if it DERIVES population from the map and FAILS LOUD on divergence in BOTH directions, with the parity check run at COMMIT time via comp-manifest-check's registration invariant -- CTO: 'a hand-run generator is not a mechanism.' >> WHY THIS LINE IS WORTH READING TWICE: the register said BLOCKED-ON-CTO, CTO's own record said ROUTED, and the owner's inbox was EMPTY. Every record was locally consistent and the work was owned by NOBODY. That is SENT-IS-NOT-READ one step earlier -- not even SENT -- and a routing that lives only in the router's record is invisible from every side except the recipient's empty inbox. A `blocked_on` naming an AGENT is a CLAIM ABOUT THAT AGENT'S STATE, and nothing reconciles it against whether they were ever told. Deliberately NOT building a checker (Andrew's standing alert moratorium, and CVO agrees it is not worth machinery): the control is a HABIT -- when blocked_on names someone, read THEIR inbox. Caught by 3.0.0_SA_CVO 20260729T015007Z; corrected 0200Z.
+
 
 
 
@@ -890,6 +907,7 @@ Until that lands it is a fast artifact nobody reads.
 
 
 
+
 Largest body of work in the tree, least established state, and that has not changed: 1,726 commits
 against 34 recent, BUILT and SERVING both UNASSESSED.
 
@@ -1059,6 +1077,7 @@ artifact, not two. COO is building it. This sub-group must not commission a seco
 
 
 
+
 Unchanged, and correctly so. LOW priority by sovereign instruction, two commits total, brief only --
 not decomposed, not staffed. Nothing landed in the window.
 
@@ -1086,6 +1105,7 @@ investigation precedes migration and why staying at zero activity is the right p
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
 
 
 
@@ -1376,6 +1396,7 @@ Source of record when work begins: SCHWAB (certified-AUA deprecated 2026-07-24).
 
 
 
+
 PROSPECTIVE and net-new. Zero commits is correct; nothing landed and nothing was expected to.
 
 Scoped adjacent work that may eventually tie into the portal but is not portal work today -- Andrew's
@@ -1403,6 +1424,7 @@ Nothing registered, nothing blocked, no paths claimed.
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
 
 
 
@@ -1563,6 +1585,7 @@ Open at Andrew: "Cottonwood Capital Advisory" (his wording) vs "Advisors" (the e
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
 
 
 
