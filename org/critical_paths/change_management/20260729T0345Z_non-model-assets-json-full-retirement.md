@@ -36,7 +36,10 @@ Family census on S3 (`aws s3 ls json/portfolios/ | grep non_model`): exactly 2 o
   written only by the now-retired manual backfill; not served (portal route serves only the main key,
   portal_data_proxy `:2204`). Deleted under the same order, disclosed here.
 Bucket is versioned: deletes create delete markers (restorable; deliberate -- reversibility preserved).
-- (deletion timestamps appended on execution)
+- EXECUTED ~03:52Z: both objects deleted; residual family listing EMPTY (grep rc=1). Retired
+  emit script deployed to `s3://opal-data-mdpf/code/scripts/backfill/` BEFORE deletion,
+  round-trip md5 verified repo==S3 (edc291408982b16d80ad4be72cba2b4e) -- the 15:00Z sync
+  pulls the retired writer, so the fire cannot re-emit.
 
 ## Step 4 -- NO-REGEN PROOF (closes this ledger)
 The 15:00Z unattended fire is the natural test: after chain completion (~15:15Z), the key must NOT
