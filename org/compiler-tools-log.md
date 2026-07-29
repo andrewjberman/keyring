@@ -27258,3 +27258,11 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29 | 3.0.0_SA_CVO | comp-coverage-check (PASS->FAIL->PASS, exercised on injected drift), comp-manifest-check + selfcheck, comp-kuzu, comp-heat/which/glob (shim exercise), cProfile x2, safe-commit x4 | all PASS | GAP FOUND: each ~/bin wrapper layer costs ~330ms on this box -- the shim could exec the interpreter directly for python tools and skip a bash hop; flagged not chased. WORKED: the parity-harness pattern (live module, real path, ONE variable) -- handed to 0.8.0_AE for their routing-identity control. FAILED: my first /seams harness compared in-repo vs in-tempdir and reported a false PARITY BROKEN. |
 | 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-29/s... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/tests/test_never_rules_gat... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff .tools/hooks/tests/test_never_rules_gate.sh .tools/inbox-resolver-confo... | VERDICT |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/audit/archive/FINDINGS.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/audit/archive/FINDINGS.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/settings.local.json | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff .claude/settings.local.json | VERDICT |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
