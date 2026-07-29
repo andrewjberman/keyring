@@ -81,11 +81,33 @@ case "$cmd" in
         esac
     done
     q="$(queue_for "$dev")"
+    # DO NOT 2>/dev/null THIS CALL. The first version of this script did, and it turned every
+    # failure -- bad credentials, wrong region, no network, a typo'd queue name -- into the
+    # string "(no messages addressed to X)", which is BYTE-IDENTICAL to a healthy empty queue.
+    # A user then reads "it didn't work" as "nothing was sent". That is the same discarded-stderr
+    # class CLAUDE.md names for `git show 2>/dev/null`: the error goes to stderr and the empty
+    # stdout renders as a clean negative result. Capture stderr, branch on rc, and SAY WHICH.
+    set +e
     out=$(aws sqs receive-message --region "$REGION" --queue-url "$q" \
             --wait-time-seconds 10 --max-number-of-messages "$max" \
-            --message-attribute-names All 2>/dev/null || true)
-    if [ -z "$out" ] || ! printf '%s' "$out" | grep -q '"Messages"'; then
-        echo "(no messages addressed to ${dev})"; exit 0
+            --message-attribute-names All 2>&1)
+    rc=$?
+    set -e
+    if [ $rc -ne 0 ]; then
+        echo "ERROR: aws sqs receive-message FAILED (rc=$rc) -- this is NOT an empty queue." >&2
+        echo "  queue: $q" >&2
+        echo "  aws said:" >&2
+        printf '%s\n' "$out" | sed 's/^/    /' >&2
+        echo >&2
+        echo "  Common causes, in the order they actually happen:" >&2
+        echo "    1. This device has not pulled the commit that added this script's queues." >&2
+        echo "    2. No AWS credentials on this shell: run  aws sts get-caller-identity" >&2
+        echo "    3. Wrong account -- the queues live in 313476888478 / us-east-1." >&2
+        exit 1
+    fi
+    if ! printf '%s' "$out" | grep -q '"Messages"'; then
+        echo "(no messages addressed to ${dev}) -- this is a REAL empty queue: the API call succeeded."
+        exit 0
     fi
     printf '%s\n' "$out"
     if [ "$keep" -eq 1 ]; then
