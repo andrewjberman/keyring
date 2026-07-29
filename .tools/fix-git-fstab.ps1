@@ -184,7 +184,8 @@ if (Test-Path $bash) {
     # LD-0340's live repair (`mount -f C: /c`) may ALREADY have /c mounted from shared
     # memory; an existing mount wins over fstab, so the line appears either way. The
     # check has to key on something only the fstab could have produced: THE FLAGS.
-    #   fstab-applied -> binary,posix=0,user,noumount,auto
+    #   fstab-applied -> binary,posix=0,user,auto   (noumount REMOVED 2026-07-29 -- it is
+    #                    invalid as an fstab-writable option and REJECTS THE WHOLE LINE)
     #   volatile      -> binary,user      (what `mount -f` with no options gives)
     $cLine = ($mountOut | Where-Object { $_ -match ' on /c ' }) -join ''
     Say ""
@@ -229,6 +230,12 @@ Say "  above: only 'FSTAB IS LIVE' is evidence. Anything else means WRITTEN-BUT-
 Say ""
 Say "  TO CLOSE IT: reboot (always clears the cache), then run" 'Yellow'
 Say "    & `"C:\Program Files\Git\bin\bash.exe`" -lc `"mount | grep ' /c '`"" 'White'
-Say "  Expect flags binary,posix=0,user,noumount,auto. If you instead see binary,user"
-Say "  or nothing, the fstab is NOT being read and LD-0340 is still open."
+Say "  EXPECT: binary,posix=0,user,auto   <- fstab LIVE, LD-0340 CLOSES." 'White'
+Say "  binary,user                        -> still the VOLATILE mount; fstab not applied."
+Say "  nothing, AND a bash call prints 'invalid fstab option - <x>'"
+Say "                                     -> PARSED AND REJECTED. Fix option <x>: ONE bad"
+Say "                                        option voids the WHOLE line. This is exactly how"
+Say "                                        'noumount' broke it 2026-07-29 -- valid to READ"
+Say "                                        on a live mount, invalid to WRITE in fstab."
+Say "                                        DO NOT RE-ADD IT."
 Say ""
