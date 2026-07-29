@@ -1,0 +1,220 @@
+{
+  "denominators": {
+    "tracked_total": 24778,
+    "read_ok": 22964,
+    "unreadable": 1814
+  },
+  "path_literal_files": 612,
+  "path_literal_by_kind": {
+    "operative-config": 41,
+    "other": 316,
+    "operative-executable": 174,
+    "record": 81
+  },
+  "operative_path_literal_files": 215,
+  "standin_files": 0,
+  "top_operative": [
+    {
+      "file": "org/modules/graph/compproof/solver_results_full.json",
+      "kind": "operative-config",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 1319
+    },
+    {
+      "file": "org/modules/graph/compproof/report.json",
+      "kind": "operative-config",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 1101
+    },
+    {
+      "file": "org/critical_paths/.open_deploys/.unindexed_red_state.json",
+      "kind": "operative-config",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 36
+    },
+    {
+      "file": ".claude/settings.local.json",
+      "kind": "operative-config",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 33
+    },
+    {
+      "file": "org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_MSBEFF/log_audit_3mo.json",
+      "kind": "operative-config",
+      "users": [
+        "AndrewBerman",
+        "scripts"
+      ],
+      "occurrences": 22
+    },
+    {
+      "file": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/comp-which-routing-cohort.frozen.json",
+      "kind": "operative-config",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 12
+    },
+    {
+      "file": "org/modules/graph/nerves-risk-edges.json",
+      "kind": "operative-config",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 11
+    },
+    {
+      "file": "data/smartx/scripts/config.py",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 9
+    },
+    {
+      "file": "infra/aws/lambda/smartx_ingestion_pipeline/config.py",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 9
+    },
+    {
+      "file": "org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_TOOLUNIFY_CENSUS/REC1C_A.sidecar.json",
+      "kind": "operative-config",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 8
+    },
+    {
+      "file": "users/tools/list_users.py",
+      "kind": "operative-executable",
+      "users": [
+        "tools"
+      ],
+      "occurrences": 7
+    },
+    {
+      "file": "org/tier2_senior/0.8.0_AE_CloudComp/deliverables/l2_aggregate/L2_aggregate_output.json",
+      "kind": "operative-config",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 6
+    },
+    {
+      "file": "data/smartx/scripts/consolidate_smartx_to_parquet.py",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 4
+    },
+    {
+      "file": "infra/aws/ec2/smartx-exporter/smartx-workspace/scripts/consolidate_smartx_to_parquet.py",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 4
+    },
+    {
+      "file": "infra/aws/lambda/smartx_ingestion_pipeline/consolidate_smartx_to_parquet.py",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 4
+    },
+    {
+      "file": "tools/news_scanner/scripts/tests/test_individual_dictionaries_v2.py",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 4
+    },
+    {
+      "file": "tools/news_scanner/scripts/tests/test_individual_dictionaries_v3.py",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 4
+    },
+    {
+      "file": "tools/news_scanner/scripts/tests/test_individual_dictionaries_v4_FULL_TEXT.py",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 4
+    },
+    {
+      "file": ".mcp.json",
+      "kind": "operative-config",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 3
+    },
+    {
+      "file": ".tools/safe-commit-compat-matrix.sh",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 3
+    },
+    {
+      "file": "data/analysis/nna_suppression_accounting_residual/nna_suppression_audit.py",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 3
+    },
+    {
+      "file": "data/black_diamond/scripts/silver/upload_bd_assets_backfill.py",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 3
+    },
+    {
+      "file": "data/inf/manual_api/pull_tax_realize_full.py",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 3
+    },
+    {
+      "file": "data/smartx/scripts/organize_smartx_csvs.py",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 3
+    },
+    {
+      "file": "infra/aws/ec2/smartx-exporter/smartx-workspace/scripts/organize_smartx_csvs.py",
+      "kind": "operative-executable",
+      "users": [
+        "AndrewBerman"
+      ],
+      "occurrences": 3
+    }
+  ],
+  "standins": []
+}
