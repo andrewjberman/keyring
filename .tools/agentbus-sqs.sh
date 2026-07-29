@@ -67,6 +67,29 @@ queue_for() {
     esac
 }
 
+# --- JQ RESOLUTION (NFRA_TOOLARCH.PATHFIX) --------------------------------------------------------
+# RESOLVE THE TRACKED BINARY, NEVER THE BARE NAME. `command -v jq` FAILS IN EVERY HARNESS SHELL --
+# they are non-interactive, source no profile, and so never put .tools on PATH. That made the
+# jq-absent fallback below not a rare degraded path but THE LIVE PATH on this device, which is how a
+# text-parsing fallback nobody expected to run got to destroy real mail.
+#
+# `.tools/jq.exe` is TRACKED and present (jq-1.7.1). Deriving it from this script's own location is
+# the same rule already applied to the comp-* tools, and it is strictly better than hardening the
+# fallback because it means the fallback NEVER EXECUTES.
+#
+# Measured 2026-07-29 by 1.0.0_SA_CTO~B, reproducing 0.0.0_AB_MSTR's report rather than trusting it:
+#   command -v jq            -> NOT FOUND (this harness shell)
+#   .tools/jq.exe --version  -> jq-1.7.1
+JQ=""
+_jq_self_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -x "${_jq_self_dir}/jq.exe" ]; then
+    JQ="${_jq_self_dir}/jq.exe"
+elif [ -x "${_jq_self_dir}/jq" ]; then
+    JQ="${_jq_self_dir}/jq"
+elif command -v jq >/dev/null 2>&1; then
+    JQ="$(command -v jq)"
+fi
+
 # WHICH DEVICE AM I? -- MEASURED, never assumed, and it is the load-bearing question here.
 #
 # Arming a consumer for the WRONG device is not a harmless mistake: it drains the OTHER
@@ -129,7 +152,33 @@ case "$cmd" in
         --message-group-id opal-sqschat \
         --message-attributes "from={StringValue=${from},DataType=String},sent_at={StringValue=${ts},DataType=String}" \
         --message-body "[${ts}] [from ${from}] ${body}")
-    mid=$(printf '%s' "$out" | grep -o '"MessageId": "[^"]*"' | cut -d'"' -f4)
+    # THE TRUNCATION QUESTION, ANSWERED AND WRITTEN DOWN (0.0.0_AB_MSTR asked for the reason, not
+    # just the change): an SQS MessageId is a UUID -- charset [0-9a-f-] -- so it CANNOT contain a
+    # quote and the escaped-quote truncation that destroyed message BODIES cannot occur on THIS
+    # field. That risk is genuinely nil here. Measured, not assumed.
+    #
+    # BUT A DIFFERENT AND REAL DEFECT LIVES ON THIS LINE, and it is the third instance of the same
+    # class in this file: A FAILED EXTRACTION RENDERED AS A SUCCESSFUL SEND.
+    #   extraction yields nothing  ->  mid=""  ->  "SENT to sitez: MessageId="   at rc=0
+    # The send genuinely SUCCEEDED -- the message is on the queue -- so this is not a send failure,
+    # it is a RECEIPT failure, and the two need different words. Rule 22b's entire ack discipline
+    # hangs off that id: an empty one makes the message UNACKABLE, so the sender holds a receipt
+    # they cannot use for a message that really was delivered. Empty must be distinguishable from
+    # failed (contract C3), and silence is not an option the header contract allows.
+    if [ -n "$JQ" ]; then
+        mid=$(printf '%s' "$out" | "$JQ" -r '.MessageId // empty')
+    else
+        mid=$(printf '%s' "$out" | grep -o '"MessageId": "[^"]*"' | cut -d'"' -f4)
+    fi
+    if [ -z "$mid" ]; then
+        echo "SENT to ${to} -- BUT THE MessageId COULD NOT BE READ FROM THE RESPONSE."
+        echo "  THE MESSAGE WAS SENT. This is a RECEIPT failure, not a send failure -- do not resend"
+        echo "  blindly or you will duplicate it. Rule 22b cannot be satisfied without the id, so"
+        echo "  this send is UNACKABLE until the recipient reports what it received."
+        echo "  Raw response follows so the id is recoverable by hand:"
+        printf '%s\n' "$out" | sed 's/^/    /'
+        exit 3
+    fi
     echo "SENT to ${to}: MessageId=${mid}"
     echo "  NOT DELIVERED until an agent on '${to}' acks this MessageId (Rule 22b)."
     ;;
@@ -185,9 +234,23 @@ case "$cmd" in
         echo "--keep: messages NOT deleted; they return to the queue after the visibility timeout."
     else
         # Delete only what we actually received, one handle at a time.
-        printf '%s' "$out" | grep -o '"ReceiptHandle": "[^"]*"' | cut -d'"' -f4 | while read -r rh; do
-            aws sqs delete-message --region "$REGION" --queue-url "$q" --receipt-handle "$rh" >/dev/null 2>&1 || true
-        done
+        # STRUCTURAL extraction (see JQ= above): a body containing the literal text
+        # '"ReceiptHandle": "..."' would hand a text-grep a phantom handle out of payload content.
+        # NOTE this path does NOT share the watch-path truncation bug -- :205 prints the RAW JSON,
+        # so nothing here was ever emitted lossily. Verified before changing it, not assumed.
+        # With no jq resolvable we do NOT fall back to text-parsing the delete set: we decline to
+        # delete and say so, because an unrecoverable operation is the wrong place to guess.
+        if [ -n "$JQ" ]; then
+            printf '%s' "$out" | "$JQ" -r '.Messages[] | .ReceiptHandle' | while read -r rh; do
+                [ -n "$rh" ] || continue
+                aws sqs delete-message --region "$REGION" --queue-url "$q" --receipt-handle "$rh" >/dev/null 2>&1 || true
+            done
+        else
+            echo
+            echo "WARN: no jq resolvable -- NOT deleting. The messages above were printed in full"
+            echo "      (raw JSON), so nothing is lost; they redeliver after the visibility timeout."
+            exit 0
+        fi
         echo
         echo "Consumed (deleted from queue). ACK each MessageId above to the sender -- deletion is NOT an ack."
     fi
@@ -289,25 +352,52 @@ case "$cmd" in
             # duplicate" -- I wrote that paragraph and then broke it in this function, because
             # the failure branch handled the FORMATTING failure and forgot it still held an
             # undelivered MESSAGE. A guard placed outside the branch it guards is not a guard.
+            # SECOND DATA-LOSS BUG, in the FALLBACK that the first fix left standing. Reported by
+            # 0.0.0_AB_MSTR 165356Z, independently reproduced here before touching anything:
+            #
+            #   grep -o '"Body": "[^"]*"'  STOPS AT THE FIRST ESCAPED QUOTE.
+            #     body: Andrew said \"stop\" and more text after
+            #     got:  Andrew said \                        <- rest silently gone, then DELETED
+            #
+            # It emitted a FRAGMENT, so emitted=1, so the message was deleted and the remainder was
+            # unrecoverable. WORSE THAN THE BUG IT REPLACED, because a truncated line looks like a
+            # delivery instead of an error. And the traffic on this bus is largely VERBATIM ANDREW
+            # QUOTES -- which contain quote characters BY DEFINITION -- so it fired on close to
+            # every message that matters most.
+            #
+            # Independent second defect, same block: `grep | cut | while` exits 0 even when the
+            # while body runs ZERO times, so a total extraction failure also set emitted=1 and
+            # deleted. The guard could not tell "emitted successfully" from "emitted nothing".
+            #
+            # THE FIX IS RESOLUTION, NOT HARDENING (see JQ= above): with the tracked jq resolved,
+            # this fallback never runs. It is kept only for a box with no jq at all -- and it is
+            # now structurally incapable of losing anything, because IT NEVER DELETES. A duplicate
+            # is recoverable; a deletion is not. That is this file's own stated invariant, applied
+            # to the branch that kept violating it.
             emitted=0
-            if command -v jq >/dev/null 2>&1; then
-                if printf '%s' "$out" | jq -r '.Messages[] | "[AGENTBUS -> '"${dev}"'] [id \(.MessageId)] \(.Body)"'; then
+            if [ -n "$JQ" ]; then
+                if printf '%s' "$out" | "$JQ" -r '.Messages[] | "[AGENTBUS -> '"${dev}"'] [id \(.MessageId)] \(.Body)"'; then
                     emitted=1
                 fi
             else
-                # DEGRADE, NEVER DROP. An id-less emit is worse than an emit with an id, and far
-                # better than silence -- the agent still sees the content and can ack by
-                # timestamp+sender (which base MSTR did, correctly, when this build gave it no
-                # id). Losing the id costs discipline; losing the message costs the message.
-                echo "[agentbus] WARN: jq absent -- emitting WITHOUT MessageId. Ack by timestamp+sender; install jq to restore ack-by-id (Rule 22b)."
-                if printf '%s' "$out" | grep -o '"Body": "[^"]*"' | cut -d'"' -f4 | while read -r b; do
-                       echo "[AGENTBUS -> ${dev}] [id UNAVAILABLE] ${b}"
-                   done; then
-                    emitted=1
-                fi
+                # DEGRADE, NEVER DROP -- and "never drop" now means never delete, not merely
+                # "print something first". An id-less, possibly-truncated emit is a REDELIVERY
+                # PROMPT, not a delivery.
+                echo "[agentbus] WARN: no jq resolvable (tracked .tools/jq.exe absent AND no jq on PATH)."
+                echo "[agentbus] Emitting BEST-EFFORT text extraction, which MAY TRUNCATE at an escaped quote."
+                echo "[agentbus] NOTHING WILL BE DELETED on this path -- messages redeliver until a real jq is present."
+                printf '%s' "$out" | grep -o '"Body": "[^"]*"' | cut -d'"' -f4 | while read -r b; do
+                    echo "[AGENTBUS -> ${dev}] [id UNAVAILABLE] [POSSIBLY TRUNCATED] ${b}"
+                done
+                emitted=0
             fi
             if [ "$emitted" -eq 1 ]; then
-                printf '%s' "$out" | grep -o '"ReceiptHandle": "[^"]*"' | cut -d'"' -f4 | while read -r rh; do
+                # ReceiptHandles are extracted STRUCTURALLY, for the same reason bodies are: a
+                # message whose body contains the literal text '"ReceiptHandle": "..."' would hand
+                # a text-grep a PHANTOM handle out of attacker-or-accident-controlled content.
+                # Parsing the structure cannot be fooled by the payload.
+                printf '%s' "$out" | "$JQ" -r '.Messages[] | .ReceiptHandle' | while read -r rh; do
+                    [ -n "$rh" ] || continue
                     aws sqs delete-message --region "$REGION" --queue-url "$q" --receipt-handle "$rh" >/dev/null 2>&1 || true
                 done
             else

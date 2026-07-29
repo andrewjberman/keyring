@@ -1,5 +1,53 @@
 # `comp-opalbizcluster` reroute — root cause, solution, and implementation recommendation
 
+> **ANDREW-DIRECT RULING (2026-07-29 ~16:45Z, CVO terminal, VERBATIM — supersedes the name below
+> and binds the build):** *"first of all, that tool should have a refresh function built in and a
+> head with timestamp of its source very clearly depicted, it also should not be named pipescript
+> it should be named comp-opalbizsem"*
+> Three binding requirements onto the §6 plan: **(1) NAME = `comp-opalbizsem`** (updates this doc's
+> `comp-opalbizcluster`; every reference below reads as opalbizsem). **(2) REFRESH FUNCTION BUILT
+> IN** — the §5C reroute EXCEEDS this (the snapshot is eliminated; auto-refresh on HEAD-advance),
+> but until steps 2-4 land, an interim `--refresh` that regenerates the resolver snapshot is the
+> bridge; a frozen source with no refresh path is prohibited either way. **(3) SOURCE-TIMESTAMP
+> HEAD, unmissable** — first line of every invocation's output states the source + its vintage
+> (the current banner does this; the requirement makes it a CONTRACT, not a courtesy, and it
+> survives the reroute as the kuzu provenance header). **Context that motivated the ruling: the
+> 44-day frozen snapshot was serving the underscore TWIN as "primary served rollup LIVE fresh" —
+> a stale estate map actively defends zombies. Renaming into the comp-* namespace also brings the
+> tool inside the census glob + registration gate it structurally evaded (UNCLASSIFIED 4-of-89
+> finding, 2026-07-29).**
+>
+> **SAME-DAY MEASURED CORROBORATION (COO 164052Z), attached by the recorder:** (a) the header
+> already SAVED one answer today — COO hit the 44d snapshot on a routed question, and the vintage
+> banner is the only reason it was re-verified instead of quoted: *"the failure mode the contract
+> prevents is not a wrong answer — it is a CONFIDENT answer that nobody re-checks."* (b) The same
+> contract already exists on the ARTIFACT plane (`_provenance.written_at/source_vintages`) and paid
+> twice within one hour: it discriminated the publisher's 16:15Z run from a no-run when output
+> bytes could not, and it exposed DT's whole-object-md5 acceptance oracle as spuriously breakable
+> before it fired. CTO's generalization (163950Z: comp-tool-wide header contract) and COO's
+> artifact-plane evidence converge on the general form: **anything that asserts freshness states
+> its source and that source's vintage, unmissably.** (c) **CAVEAT, banked: read a self-stamp at
+> ORIGIN, never through a CDN** — DT read the same field through CloudFront six minutes post-fire
+> and got the PREVIOUS stamp: a false NO-FIRE on a leg that had fired. A self-stamp is only as good
+> as the plane you read it from (Rule 22a on the layer axis); the same trap follows
+> `comp-opalbizsem`'s header anywhere its output can be cached.
+>
+> **ANDREW-DIRECT NAMING RULING (~17:12Z, verbatim):** *"pipescript by itself needs to be
+> deprecated completely as a name, there should be comp-pipescript ONLY. the fact that some agent
+> made this semantic estate concept and called it pipescript plain is just so retarded... I know
+> that pipescript is a wrapper for a CLI or something they need to completely fix that."*
+> END-STATE: the bare name `pipescript` ceases to exist (tombstone through the wave transition per
+> base CTO's forwarder reconsideration, then removed); `comp-opalbizsem` = the estate-semantic
+> traversal; `comp-pipescript` = the only pipescript-named tool (pipeline-script dependencies, WS4
+> hardening applies). No bare-named estate tools — the comp-* namespace is what the census +
+> registration gates see, and the bare name is how this one evaded both.
+> **~B HANDOFF DEFECT, folded into the header CONTRACT: the current banner is wrapped in bare
+> `except Exception: pass` — a missing/corrupt resolver prints NO HEADER AT ALL.** A provenance
+> header that can silently not-appear is worse than none (its absence is unreadable). The contract
+> therefore requires the header path to FAIL LOUD: no header emittable → rc=2 + explicit
+> "SOURCE UNRESOLVABLE" line, never silence. This binds the reference implementation and every
+> tool that adopts the comp-tool-wide contract.
+
     author: 3.0.0_SA_CVO
     task:   Andrew-direct 2026-07-28 -- verify the kuzu blocker myself, then figure out a solution
             and recommend how to implement it. Not routed to CTO; he is on MDPF.
