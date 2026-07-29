@@ -1031,6 +1031,11 @@ paths:
     lane: MSTR_TRUNK
     note: "Cross-device MSTR trunk -- both MSTR serials (base + ~Z). Overrides the org/mcp/** BASE_EXEC catch-all per longest-match-wins. Granted 2026-07-29 by ws CTO on MSTR 003241Z request; Andrew built the trunk 07-28 late-night. ACK-deadline class: an unacked trunk message is UNDELIVERED by the trunk's own law."
 
+  # MSTR's OWN MCP inbox subtree (more-specific path; overrides org/mcp/** BASE_EXEC per longest-match-wins):
+  "org/mcp/inbox/0.0.0_AB_MSTR/**":
+    lane: MSTR_TRUNK
+    note: "Cross-device MCP mail for MSTR's OWN inbox subtree only (base + ~Z lane) -- the git-transport leg of Andrew's ~0715Z 07-29 agentbus goal. .gitignore @afa3ada086 tracks only this subtree's UNDELIVERED mail (read/ archives stay ignored, no other agent's mail is visible), and this grant makes it COMMITTABLE by the two MSTR serials -- committing mail + committing the watcher's mv-to-read/ DELETION, which is the ratified delivery-receipt semantics (receiver's deletion commit = agent-side proof of consumption per Rule 22b; CTO ratified on MSTR 075118Z). Every other inbox stays BASE_EXEC-unwritable AND gitignore-invisible. SoD: grantee MSTR, grantor ws CTO, on MSTR's 075118Z request. Granted 2026-07-29 by 1.0.0_SA_CTO."
+
   "org/mcp/live_agents_by_marker.json":
     lane: MSTR_ARTIFACT_PATHS
     note: "MSTR-maintained ground-truth artifact addressing broker-suffix-strip-gap visual-collision-class per LD-0105 Fix 2 + Andrew direct 2026-05-26T~22:00Z verbatim 'Lets do all three yes'. Fix 1 SHIPPED via MSTR scribe authority 5174e6b01; Fix 2 owned-paths lane grant SHIPPED via ws CTO this commit."
