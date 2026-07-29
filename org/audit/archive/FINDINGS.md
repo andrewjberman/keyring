@@ -88,3 +88,15 @@ Format per entry:
 <!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/tier#/audit/ledger-hook-audit.log|live missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\tier#\audit\ledger-hook-audit.log -->
 - log: org/tier0/audit/ledger-hook-audit.log
 - detail: live missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\tier0\audit\ledger-hook-audit.log
+
+## 2026-07-29T124741Z -- INTEGRITY -- NON-APPEND-EDIT
+<!-- sig: INTEGRITY|NON-APPEND-EDIT|org/mcp/orphan-audit.log|non-append edit: first divergence at line #, col # (baseline #B / live-head #B) -->
+- log: org/mcp/orphan-audit.log
+- detail: non-append edit: first divergence at line 1, col 7 (baseline 21412B / live-head 113B)
+- action: snapshot WITHHELD; baseline NOT advanced; needs human authority ruling (clause 3)
+
+## 2026-07-29T124741Z -- INTEGRITY -- NON-APPEND-EDIT
+<!-- sig: INTEGRITY|NON-APPEND-EDIT|org/tier#/audit/ledger-hook-audit.log|non-append edit: first divergence at line #, col # (baseline #B / live-head #B) -->
+- log: org/tier0/audit/ledger-hook-audit.log
+- detail: non-append edit: first divergence at line 1, col 7 (baseline 1089273B / live-head 2240B)
+- action: snapshot WITHHELD; baseline NOT advanced; needs human authority ruling (clause 3)
