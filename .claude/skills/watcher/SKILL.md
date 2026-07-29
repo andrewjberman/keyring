@@ -326,13 +326,18 @@ check-inbox {serial}
 get_agent_status("{serial}")
 ```
 
-- `check-inbox` reads **top-level** `org/mcp/inbox/{serial}/` (empty once the
+- `check-inbox` reads the **top-level** of your canonical inbox dir — base
+  `org/mcp/inbox/{base}/`, lane `org/mcp/inbox/{base}/~{lane}/` (empty once the
   stream Monitor has mv'd a message to `read/`).
+  **⛔ NEVER `org/mcp/inbox/{base}~{lane}/` (flat) — nothing in the fabric reads or
+  writes it.** For a lane serial, `inbox/{serial}/` IS that dead flat path: split
+  your serial into `{base}` + `~{lane}` rather than substituting it whole
+  (LD-0202 / LD-0346; canonical form + citations in `org/XXX.md` "Inbox path").
 - `get_agent_status` surfaces **broker-channel** push messages.
 - **Neither sees LD-0099 cross-org-root filesystem-direct ferry messages.** If you
   suspect one (a `[INBOX]` event fired but both probes are empty), scan
-  `ls -t org/mcp/inbox/{serial}/read/ | head` for the newest entry — the stream
-  Monitor already delivered it there.
+  `ls -t org/mcp/inbox/{base}/[~{lane}/]read/ | head` for the newest entry — the
+  stream Monitor already delivered it there.
 
 **Act on anything found this turn** — no silent "standing by".
 
