@@ -97,5 +97,78 @@ landing S5.**
 assumes, additively and non-durably: `mount -f C:/Users/AndrewBerman/AppData/Local/Temp /tmp`
 (MSYS shared memory, dies on reboot; same class as the `mount -f C: /c` harness-rc fix).
 
+## 2026-07-29T01:22–01:31Z — HALT CLEARED, FLIP LANDED AT THE ROUTING LAYER
+
+AE de-staged S5 (`5bb23c45a6`, held block preserved verbatim in their deliverables + a tombstone
+comment). **I re-planned myself** (CTO required my read, not AE's report): `Plan: 0 to add, 1 to
+change, 0 to destroy`, the single change being `public_data_router[0]` `s3_object_version`; residue
+grep for `S3-opal-data-assets|origin_access_control|path_pattern` = **0**.
+
+**The documented version-pinning hazard fired, and the 0-diff step caught it.** Apply #1 published
+`public-data-router:6` but the plan never listed the distribution — exactly the failure
+`cloudfront-distribution.tf:59-64` documents (*"caught 2026-04-15 when auth-validator-edge v13 was
+published but CF stayed pinned at v12"*). The post-apply re-plan surfaced
+`aws_cloudfront_distribution.portal will be updated in-place`, diff = **only** `:5 -> :6` on both
+router associations, zero residue. **Apply #2 landed it. Two applies were required, not one** —
+reported rather than smoothed over.
+
+| check | result |
+|---|---|
+| live CF association (applied plane) | `public-data-router:6` on `/api/general/*` AND `/api/general/json-tiered/*` |
+| distribution | `Deployed`, **24** ordered behaviors (unchanged — no S5 residue landed) |
+| TF 0-diff | `No changes. Your infrastructure matches the configuration.` |
+| scoped invalidation | `I6PA7CJZQ07WPOHQGLTSYH11OP`, paths `/api/general/mdpf/*` only, **Completed** 01:31:42Z |
+
+## 2026-07-29T01:33Z — INCIDENT: 403 ON ALL MDPF URLS (reader-grant absent)
+
+**The re-point is correct; the origin refuses the read.** Root cause source-confirmed at 01:35Z,
+~4 minutes from first observation — live `get-bucket-policy` on `opal-data-portal-v2`, statement
+`AllowCloudFrontOACPublicData`:
+```
+Principal cloudfront.amazonaws.com · Action s3:GetObject
+Resource  [ .../json/*, .../json-tiered/* ]          <-- platinum/* ABSENT
+Condition AWS:SourceArn = .../EVTSA9VEHNZVH
+```
+The router rewrites to `/platinum/mdpf/...`; the OAC principal holds no grant on that prefix → S3
+`AccessDenied` → CF 403 (body is the S3 AccessDenied XML). **AE confirmed the same absence in TF
+desired state (`shared-infra/s3-portal-v2-import.tf:108`) — a grant never written, not drift.**
+
+**Blast radius, MEASURED and CONFINED:**
+```
+/api/general/mdpf/{global,49financial,inflection,cottonwood}/agg-aua-ts   403  (4/4)
+CONTROL  /api/general/portfolios/aum-metrics.json      200, 7,234 B == pre-flip byte size
+NEGATIVE frozen json/mdpf/global   ETag 5f758b47 / 254,419 B / LM 13:41:05Z  UNMOVED
+```
+*(Stated honestly: a probe of `/api/general/json-tiered/positioning/latest.json` also returned 403,
+but I hold NO pre-flip baseline for it and will not call it a regression — most likely a
+nonexistent key. My baselined control is clean.)*
+
+**THE MISS, owned:** I verified the platinum **keys existed** (11/11, hyphen spellings) and never
+verified the **reader could reach them**. Presence is not access — READER-side. CTO's proportions
+note (013747Z): the reader-reach check was in nobody's plan — not the WO-3 dispatch, not the WO-2
+spec review; AE's WO-2 verify exercised the WRITER's path end-to-end only. **Standing item for the
+WO-3 class going forward: every re-point verifies the reader's grant on the new prefix BEFORE the
+flip.**
+
+**Escalated, not self-authorized:** CTO 013530Z + AE 013548Z with both options priced
+(fix-forward ~2 min, one Resource line / rollback ~10 min, byte-exact and still available). I
+reverted nothing on my own initiative and touched no serve object or policy.
+
+### RESOLUTION RULED — FIX FORWARD (sovereign + CTO, converging independently)
+**ANDREW-DIRECT, VERBATIM, at the DT terminal 2026-07-29 ~0138Z:**
+> *"no we're not wasting time rolling back, lets just do this properly in the first place and
+> point to the right place with right permissions"*
+
+Recorded + broadcast same turn (CTO 013844Z, COO 013907Z, MSTR 013925Z) per XXX.md. Scope surfaced,
+**not adjudicated by me**: the second clause may reach past tonight's one-line fix — CTO/COO own
+that read. **CTO ruled Option A independently at 013747Z**, ~1 minute before the sovereign word
+arrived. AE executes the one-line append (`platinum/mdpf/*` → the existing OAC Resource array) —
+the READ-direction twin of the exact prefix COO co-signed 221211Z for the publisher WRITE.
+
+**Acceptance fires on AE's confirmation:** four mdpf URLs 200 + platinum content (global
+`1,950,519,805.86` @ as_of_last 07-27), the 447-shared-date read against COO's free oracle (ANY
+historical value change = routing/caching artifact → escalate, never rationalise), non-mdpf control
+byte-identical, frozen `5f758b47` unmoved.
+
 ## Completion
-*(open — L2b HALTED-ESCALATED, awaiting CTO ruling; NEVER#6 window live, closes in-session)*
+*(open — awaiting AE's grant, then the acceptance battery; NEVER#6 window live, closes in-session)*
