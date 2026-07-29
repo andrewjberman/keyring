@@ -162,15 +162,31 @@ def main() -> int:
             print(_comprail.ascii_safe("%s:%d: %s" % (rel, n, text.strip()[:240])))
         hit_files = len({m[0] for m in matches})
 
-    foot = "OK: comp-grep -- %d match(es) in %d file(s); scanned %d file(s)" % (
-        len(matches), hit_files, scanned)
+    # O2/C1': the scope denominator rides WITH the count. `scanned` is files reached before any
+    # early exit; len(files) is the enumerated scope -- printing scanned bare read as a completed
+    # scan. On truncation the true match total is UNKNOWABLE (we broke out), so declare a LOWER
+    # BOUND rather than a number we do not have.
+    foot = "%s: comp-grep -- %d match(es) in %d file(s); scanned %d of %d file(s) in scope" % (
+        "OK" if scanned else "WARN", len(matches), hit_files, scanned, len(files))
     if truncated:
-        foot += " [TRUNCATED at --max %d; refine the pattern/pathspec]" % max_matches
+        foot += " [TRUNCATED at --max %d -- true total is >=%d; refine the pattern/pathspec]" % (
+            max_matches, len(matches))
     print("")
     print(foot)
     print("  (on-rails: repo-scoped + .gitignore-aware [incl. nested repos] + logged to org/mcp/comp-which-rail.log)")
     if not matches:
-        print("  0 matches is a real result here -- the .gitignore-aware working set was searched, not a stale index.")
+        # O2/C3a: NEVER assert a zero is real without having searched a non-empty population.
+        # This branch previously printed the reassurance UNCONDITIONALLY, so a typo'd or stale
+        # pathspec returned "0 matches is a real result here" -- an affirmative false assurance
+        # on a FAILED RETRIEVAL. Wording mirrors comp-glob, which already refuses to claim absence.
+        if scanned == 0:
+            print("  WARNING: 0 files were SCANNED -- this is a FAILED RETRIEVAL, not a real zero.")
+            print("  The pathspec matched no tracked, non-ignored file, so nothing was searched.")
+            print("  Verify it exists:  git ls-files <pathspec> | head")
+        else:
+            print("  0 hits in the %d file(s) actually searched. This is NOT a confirmation of"
+                  % scanned)
+            print("  absence -- widen the pattern, or check `git check-ignore -v <path>`.")
 
     # SYSTEMS UNDERSTANDING (the interplay): every matched file arrives WITH the comp-tool that
     # explains its dependencies -- so the agent cannot skim-via-grep without understanding what
