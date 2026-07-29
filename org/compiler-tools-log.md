@@ -27579,3 +27579,14 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29 0140-0900Z | 0.0.0_AB_MSTR~Z | site-Z standing-up | comp-which/grep/glob (DEAD->restored), comp-system, commit-gate, never-rules-gate + comp-tool-hud + owned-paths (all fed PreToolUse JSON directly, both directions), portability-census (built, committed) | FAIL->PASS | 17 of 23 python-shebang comp-tools were inert at session start (Store-stub python3 + stdlib operator shadowing); FOUR live gates were fail-open-and-silent because .tools/jq.exe is a gitignored per-device binary. Both classes fixed and A/B verified. GAP: safe-commit cannot record untrack-but-keep-on-disk. |
 | 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier0/sessions/SS-0013.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/build_sandb... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/modules/graph/compproof/build_sandbox.sh org/modules/graph/compproo... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/compproof/build_sandbox.sh org/modules/g... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/audit/portability/PIPELINE_TI... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier0/audit/portability/PIPELINE_TIER_TRIAGE_20260729.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T115241Z__0.0.0_AB_MSTR~Z__0.0.... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T120511Z__0.0.0_AB_MSTR~Z__0.0.... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T121312Z__0.0.0_AB_MSTR~Z__0.0.... | PASS |
