@@ -100,3 +100,16 @@ Format per entry:
 - log: org/tier0/audit/ledger-hook-audit.log
 - detail: non-append edit: first divergence at line 1, col 7 (baseline 1089273B / live-head 2240B)
 - action: snapshot WITHHELD; baseline NOT advanced; needs human authority ruling (clause 3)
+
+## 2026-07-29T180912Z -- SNAPSHOT-FAILURE -- COMMIT-FAILED
+<!-- sig: SNAPSHOT-FAILURE|COMMIT-FAILED||safe-commit rc=# (non-lane): ory, or the lock file may be stale
+error: pathspec 'org/audit/archive/#-#-#T#Z' did not match any file(s) known to git
+error: pathspec ':(exclude,glob)**/__pycache__/**' did not match any file(s) known to git
+error: pathspec ':(exclude,glob)**/*.pyc' did not match any file(s) known to git
+ -->
+- detail: safe-commit rc=1 (non-lane): ory, or the lock file may be stale
+error: pathspec 'org/audit/archive/2026-07-29T180912Z' did not match any file(s) known to git
+error: pathspec ':(exclude,glob)**/__pycache__/**' did not match any file(s) known to git
+error: pathspec ':(exclude,glob)**/*.pyc' did not match any file(s) known to git
+
+- note: distinct from DEATH: the invoker RAN, the commit failed
