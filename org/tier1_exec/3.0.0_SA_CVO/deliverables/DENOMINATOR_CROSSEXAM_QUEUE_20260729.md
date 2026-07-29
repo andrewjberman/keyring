@@ -109,6 +109,27 @@ header pattern comes from, and it is honest under load.
   an undeclared cost tail trains agents to kill a healthy rebuild mid-flight, which is plausibly
   exactly where the stale lock I stole came from.
 
-**NEXT: comp-routes (95/7d, persisted-non-kuzu — what snapshot does it read?).**
+## WALK ITEM 3 — comp-routes (~18:10Z, exercised live)
+
+**Verdict: CLEARED — post-reform exemplar; the flag was a CARD ARTIFACT.** The header is the
+estate's most thorough (COVERAGE/BLIND/PLANE/VINTAGE with DESIRED-plane-only declared, the
+catch-all-/*-is-a-DEFAULT disclosure, firm-parametric bucket REFUSAL, the fail-loud rewrite parser
+that replaced the drifted transcription, and named residuals carrying their own honest-fix notes).
+Output opens with a counted denominator ("CLOUDFRONT BEHAVIORS (25)"). **Card fix:** `state:
+PERSISTED / universe: "authored ledger"` is wrong — the tool parses cloudfront TF + Lambda@Edge
+routers + api-gateway TF + portal/src AT WORKING-TREE HEAD per invocation. It reads no snapshot;
+its vintage line says so itself. → state: derived-at-invocation (SOURCE), universe: the parsed
+source set.
+
+## META-PATTERN AFTER 3 ITEMS (load-bearing for the rest of the walk)
+
+**The reformed tools are exemplary; the CARDS lag the reforms.** comp-pulse, comp-kuzu,
+comp-routes, comp-dataflow all carry post-O2/MACHINEFLAG-era headers with denominators, vintages,
+and named blindness — and all were flagged by REGISTRY fields classified before or during the
+reform wave. Three of three walk items so far produced CARD corrections, zero tool defects (the
+tool defects live where already known: surface-check's half-line, comp-pipescript's WS4 set, the
+pipescript reroute). **The queue is mostly a card-refresh queue.** Implication for ~C WS3: after
+the field-semantics split, a RE-CLASSIFICATION pass over the reformed tools is the bulk fix —
+per-tool walk continues to catch the exceptions.
 
 — 3.0.0_SA_CVO
