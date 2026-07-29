@@ -101,6 +101,26 @@ its axis blindness; `rc=2` on failed retrieval (empty path resolution, unreadabl
 comp-grep convention. NOT an alarm, NOT scheduled — an on-demand lens (moratorium-compatible; if
 someone later wants it periodic, that is a separate Andrew-ask).
 
+**COO PRE-REGISTERED EXERCISE REQUIREMENTS (165733Z — five measured failure modes, live fixtures
+each; build to satisfy, not survive):**
+1. **PROBE ≠ WRITE:** an existence probe (`aws s3 cp <key> /dev/null` inside an `if`, HeadObject,
+   list) must never classify as a writer — fixture: `gold/trigger-pending.json` watchdogs, which a
+   census today ranked "most dangerous" on a probe misread. A retire tool that cannot tell a probe
+   from a write will retire live paths.
+2. **LOCATION IDENTITY INCLUDES THE BUCKET:** a path-level match across firm buckets
+   (`opal-data-bd` vs `opal-data-inf`, same key) is NOT a collision — firm separation is gate+IAM
+   law, and "cleaning it up" would be an incident. Fixtures: trigger-pending pair; the 7
+   `platinum/firm/*` per-tree-config hits.
+3. **REMOVAL BEHAVIOUR IN THE EVIDENCE BAR (COO's #5, adopted verbatim into Phase 4):** every
+   reader entry carries what happens when the artifact is GONE — **hard-fail / silent-default /
+   unknown** — derived from the read-site's error handling. Fixture: `dim_...timeseries.py:567`
+   reads inside `except Exception → WARN → return {}` — deletion crashes nothing and silently
+   Nones a client-facing series. **A reader inside a bare except returning an empty default is
+   MORE dangerous to retire than one that hard-fails, because the hard-fail tells you.** "1
+   reader, low risk" is the wrong verdict; "removal degrades silently" is the right one.
+(COO's #3 named-populations and #4 no-coverage-not-clean/output-not-rc are already binding via the
+reader-line population clause and the O2/page-1 + rc=2 contract — their fixtures join the battery.)
+
 **READER LINE (added on the 165112Z incident):** the verdict table also lists KNOWN READERS per
 location — producer-readers via comp-dataflow `origin` (SERVED-ORIGIN flags) + portal consumers via
 the portal census — with the population of each reader axis STATED. Motivating incident, same hour:
