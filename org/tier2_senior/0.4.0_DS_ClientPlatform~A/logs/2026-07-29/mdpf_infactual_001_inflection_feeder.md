@@ -105,3 +105,23 @@ advances despite the dim producer not naming the key — pin before any deletion
 
 AE~A seam closed: writer design @5dd48c5eba adopted my compute_slice as the one computation;
 import-surface question answered (pandas/boto3/stdlib, import-safe, client-injected).
+
+---
+
+# Addendum 3: cottonwood daily-continuity census (Andrew-direct ~0320Z, ~0330-0345Z)
+**archetype:** VALIDATE
+
+Full chain walked read-only: monolith bronze (8 feeds, both conventions) / silver (14 tables) / gold DDB
+(4,678-item scan, 6 cohorts) / gold-mdpf accrual (canonical portal/gold/mdpf per Andrew's live correction
+mid-census — root gold/mdpf_revamp flagged as duplicate write target) / platinum per-firm + global fold /
+ETFS baseline / parallel opal-data-cot tree. Calendar = lib/trading_calendar.py.
+VERDICT: cottonwood IS pulled daily (both trees at-frontier at declared cadences); all downstream breaks map
+to G7 (values end 07-22, carry covers to 07-27) + 4c (DDB rows missing 07-23..24; accrual born 07-28);
+fact_holdings known-unknown RESOLVED HEALTHY (advanced to 07-27). No fourth live break; three bounded
+residuals named UNKNOWN/CTO-routed: 06-24..25 two-day outage (both trees, healed), ETFS in-span gaps
+(06-23/24 + 07-20; floor said 31/31, measured 30), duplicate gold write target.
+Two instrument errors caught in-flight and corrected before reporting: date= / .gz filename parsing
+(silver/bronze false-EMPTY), and a partners{}-dict assumption on the global-slice schema (false 0-slot
+histogram). Deliverable: deliverables/COTTONWOOD_DAILY_CONTINUITY_CENSUS_20260729.md.
+Compiler tools: comp-grep/comp-glob for layer discovery; raw enumerations rail-checked per census mandate;
+DDB data-plane scan operational (off-rail per graph-presence principle).
