@@ -26,6 +26,15 @@ history to consult."* Written in good faith over the post-deletion file. **The a
 the history**: 17,172 lines / 15,558 PASS / 674 BLOCK / 335 OVERRIDE / 241 FORCE-BYPASS / 113 WARN /
 21 SYSTEM-CURRENT-OVERRIDE / 8 FORCE-HEADMOVE. MSTR owns the record; I surface, not edit.
 
+> **AMENDED ~12:45Z (MSTR 053040Z refinement, independently re-verified by me):** the 36 below
+> AGGREGATES THREE SIGNATURES — signature-anchored counts are **FORCE-BYPASS UNKNOWN = 18 · WARN
+> UNKNOWN = 13 · PASS UNKNOWN = 5**; **the fail-open proper (`GIT_AUTHOR_NAME unset`) = 14 events
+> across 7 days** (04-28, 05-28, 06-11, 07-02, 07-09, 07-17, 07-24), latest 07-24T18:44:45Z. My
+> word-count over-reported 2.6x. Verification trap worth banking: a naive `grep "PASS  UNKNOWN"`
+> returns 23, because **`PASS  UNKNOWN` is a SUBSTRING of `FORCE-BYPASS  UNKNOWN`** (23 = 5 + 18) —
+> anchor the signature, never the word. MSTR's bound carries: the 14 cannot be sorted into
+> designed-Andrew vs lost-identity-agent BY CONSTRUCTION; exploitation is undemonstrated.
+
 ## 3. The hook-identity question IS answerable — 36 UNKNOWN-identity events in the archive
 
 HEAD (ce39a6095a) records Z's fail-open question as "UNANSWERABLE FROM BASE TOO." That verdict was
