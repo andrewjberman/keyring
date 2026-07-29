@@ -53,3 +53,30 @@ existence/partition questions, not freshness/routing; logged to the rail audit).
 - **CTO:** activation GO (artifact upload + AE chain wiring, post-fires); basis-label edit riding
   the cutover producer spec (R7); Eclipse parity leg blocked-at-Andrew (COO carrying).
 - **COO:** push (I committed, did not push — push-operator process).
+
+---
+
+# Addendum: Andrew-direct 49F ETFS backfill (same session, ~0106-0125Z)
+**archetype:** IMPLEMENT
+
+1. **AVGCAP July measured** (COO item 2, before fix): 49F = 3 written/31 covered days, $521.9mm;
+   AC6 source_as_of_worstcase fires AS SPECIFIED but is structurally blind to dead TAILS
+   (worst-case-OLDEST = month-start on any healthy-front month); June SHIPPED mid-month
+   (generated 06-25) partial=false on 17/30 days — surfaced to COO for the Andrew-level call.
+2. **Source corrected by enumeration**: CTO spec's fact_rps_s2 = S2 account-summary (no ticker);
+   position grain = fact_rps (S1). Reported + proceeded.
+3. **Reproduction STOP-control**: 28/28 per-ETF values exact to the cent vs all 7 existing
+   burst artifacts — monolith fact_rps ≡ bd-tree silver rps on this quantity. Burst files left.
+4. **Root cause grounded**: producer NEVER SCHEDULED BY DESIGN — TF single commit 349c91e35b
+   says "NO event trigger (S-D2 monthly batch, rides next Schwab batch)"; 0 event rules in
+   full TF history. "Never started," not "stopped."
+5. **Backfill executed**: `data/etfs/scripts/backfill/backfill_49f_daily_from_monolith_rps.py`,
+   window 2026-07-07..07-27 (15 enumerated partitions; 07-03 holiday + weekends resolved),
+   15/15 uploaded + listing/md5 verified. source_as_of = partition identity. Clock answer:
+   first ETF-carrying partition = data floor 2024-05-24 (DIVZ $39.1mm).
+6. **July basis after backfill** (dry-run, NOT uploaded — re-run proposal pending):
+   49F written 3d -> 18d, total $521,948,667.35 -> $527,329,468.85 (+$5.38mm; the carry was UNDER).
+
+Compiler tools: comp-glob (located producer TF/code), comp-grep (avgcap engine), enumerations
+rail-checked. comp-pipescript io not applicable (new backfill script, S3-dynamic; manual body
+review is the record above).
