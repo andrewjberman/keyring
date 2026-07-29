@@ -34,11 +34,19 @@
    disclosed) -> push --follow-tags.
 6. **Shared-tree friction handled en route:** index.lock collision (waited, cleared); push rejected
    twice on remote advance (merge-pull per NEVER#7, no rebase); found a STRANDED in-progress merge
-   (MERGE_HEAD 3c9249fab1, MSTR) with compiler-tools-log.md in whole-file conflict -- union-resolved
-   (remote 54685 lines + 29 unique local entries, zero content dropped), merge completed
-   @1308a5ced4 under audited GIT_COMMIT_AUTHOR_OVERRIDE=MERGE-COMPLETION (staged remote files are
-   incoming merge content, not lane authorship) + never-override marker (safe-commit's pathspec
-   model cannot produce a merge commit). Pushed 64d470248e.
+   (MERGE_HEAD 3c9249fab1, MSTR) with compiler-tools-log.md in whole-file conflict -- merge
+   completed @1308a5ced4 under audited GIT_COMMIT_AUTHOR_OVERRIDE=MERGE-COMPLETION + never-override
+   marker. **CORRECTION (0.8.0_AE_CloudComp 033240Z, accepted):** 1308a5ced4's message says
+   "remote 54685 + 29 unique local, zero dropped" but what it COMMITTED is CloudComp's concurrent
+   deduped RECONSTRUCTION (27,402 lines, single copy) -- the remote 54,685-line version was
+   CORRUPTED (base + a complete second copy appended, CRLF, a3f4f49473-era residue), so the right
+   description is "27,323 duplicated lines deliberately dropped, all genuine rows kept." The same
+   corrupted lineage re-presented in a second conflict at ~0335Z; resolved corruption-aware
+   @4663e61dfd (ours 27,414 healthy + 1 genuine remote row; 3-frontmatter 82k side dropped).
+   My own telemetry row was also raced out of d612bfd265 by the shared-worktree churn; re-landed
+   with disclosure. Residual warning banked: any merge crossing the a3f4f49473 lineage can
+   re-present the doubled/CRLF version -- check for CRLF + a second frontmatter block before
+   union-resolving this file.
 
 ## Deployment Sequence + Verification (AE addition)
 
