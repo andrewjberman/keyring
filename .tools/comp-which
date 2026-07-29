@@ -193,7 +193,7 @@ RULES = [
     # rule of its own and lost rank-1 on its own use_case to comp-kuzu. Distinctive named-thread
     # vocabulary; deliberately NOT "graph query"/"MATCH" (comp-kuzu's lane) and NOT per-script
     # column/IO vocabulary (comp-pipescript io's lane).
-    # RE-POINTED 2026-07-29 (1.0.0_SA_CTO~C, WS1): the canonical call is now comp-opalbizsem.
+    # RE-POINTED 2026-07-29 (1.0.0_SA_CTO~C, WS1): the canonical call is now comp-semantic-estates.
     # Andrew-direct ~1645Z renamed the tool; ~1712Z deprecated the BARE NAME `pipescript`
     # completely. Re-pointing the router IS the deprecation mechanism -- it moves new invocations
     # to the new name without breaking anyone mid-flight, because .tools/pipescript still resolves
@@ -205,15 +205,15 @@ RULES = [
       "every resource in the thread", "producers to served", "producers -> served",
       "whole estate traversal", "which named thread", "estate thread", "thread traversal",
       "business semantic", "business-semantic", "estate semantics", "opalbizsem"],
-     "named-thread estate traversal (comp-opalbizsem)",
-     ["comp-opalbizsem <name>", "comp-opalbizsem --list", "comp-opalbizsem --resource <substr>",
-      "comp-opalbizsem --refresh"],
+     "named-thread estate traversal (comp-semantic-estates)",
+     ["comp-semantic-estates <name>", "comp-semantic-estates --list", "comp-semantic-estates --resource <substr>",
+      "comp-semantic-estates --refresh"],
      "every resource in a NAMED THREAD (news/advi/market/...) end-to-end -- producers -> served -> "
      "frontend, with owning tool + debt/reachability flags, no silent Unknown. Built-in --refresh "
      "and a FAIL-LOUD source-timestamp head (substrate + vintage on line 1; an unnameable substrate "
      "exits 2 rather than traversing silently). NOTE: the bare name `pipescript` is DEPRECATED "
      "(Andrew-direct 2026-07-29) -- it still resolves during the transition but new calls should "
-     "use comp-opalbizsem. DISTINCT from comp-kuzu (an arbitrary cross-layer graph QUERY) and "
+     "use comp-semantic-estates. DISTINCT from comp-kuzu (an arbitrary cross-layer graph QUERY) and "
      "comp-pipescript io (one script's columns)"),
     # THE DEPRECATION SHAPE, and it is deliberate: NAME lookup still finds the live executable,
     # INTENT lookup goes to the successor (the rule above). A deprecated-but-LIVE tool must remain

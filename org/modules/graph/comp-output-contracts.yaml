@@ -383,7 +383,7 @@ contracts:
           could-not-retrieve -- header sources unresolvable (SOURCE UNRESOLVABLE printed, never
           silence) or Phase 0 substrate refusal under --require-live-substrate
     exit_source: comp_legacywriter.py emit_header (2=SOURCE UNRESOLVABLE) + phase0_substrate (2=stale substrate refusal); author 1.0.0_SA_CTO~C 2026-07-29
-  comp-opalbizsem:
+  comp-semantic-estates:
     coverage: >-
       Every named business thread in the estate-coverage-resolver snapshot, and for each the
       resources, producers, served artifacts, frontend consumers, owning tool and debt flags.
@@ -410,7 +410,7 @@ contracts:
           could-not-retrieve -- substrate absent, corrupt, or carrying no last_review. Prints an
           explicit SOURCE UNRESOLVABLE naming what failed and why; never proceeds silently. Also
           returned when --refresh's producer fails, leaving the snapshot untouched and saying so.
-    exit_source: comp-opalbizsem emit_header/_fail_loud + do_refresh; author 1.0.0_SA_CTO~C 2026-07-29; header controls 4/4 (missing/corrupt/no-last_review/positive)
+    exit_source: comp-semantic-estates emit_header/_fail_loud + do_refresh; author 1.0.0_SA_CTO~C 2026-07-29; header controls 4/4 (missing/corrupt/no-last_review/positive)
 pending_declaration:
   - comp-adapter-audit
   - comp-assets

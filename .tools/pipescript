@@ -1,57 +1,31 @@
-#!/bin/bash
-# pipescript -- named-thread estate traversal (NFRA_PIPESCRIPT).
-# Single human-friendly entry point: `pipescript <name>` -> every resource in that
-# named thread + producers -> served artifacts -> frontend consumers + owning tool +
-# coverage status + debt flags, over the whole estate, with NO silent Unknown. Read-only.
-# Usage: pipescript <name> | pipescript --list | pipescript --resource <substr>
-#        pipescript --tool <name> <tool> | pipescript --validate
-WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+#!/usr/bin/env python3
+"""pipescript -- RETIRED. Use `comp-semantic-estates`.
 
-# --- NFRA_TOOLARCH.CANON: LOUD-VINTAGE disclosure (INTERIM control) -------------------------------
-# Andrew-direct 2026-07-23: "some of these comp-tools actually rely on floating jsons outside of
-# comp-kuzu canonical which is not acceptable at all."  pipescript's data source IS such a json --
-# estate-coverage-resolver.json, a GENERATED SNAPSHOT (gen-estate-resolver.py from a frozen manifest),
-# not the comp-kuzu canonical projection. Its served-artifact strings are FROZEN AT GENERATION and DO
-# drift: on 2026-07-23 it named the pre-revamp mdpf key
-#   platinum/mdpf/aggregate_aua_timeseries.json ("LIVE fresh 2026-06-15")
-# while the live serve was json/mdpf/global/aggregate-aua-timeseries.json -- a stale map, asserted with
-# no vintage, which mis-scoped a live key chase. That is the intent==denominator defect
-# (docs/doctrine/INTENT_DENOMINATOR_SYNCHRONIZATION.md s.2): the snapshot is both the claim and the
-# yardstick, so the tool cannot report its own staleness.
-#
-# Until the resolver is rerouted to canonical (blocked on refreshing the canonical mdpf/stitch thread
-# -- kuzu itself currently has no node for the new key), EVERY invocation DISCLOSES the snapshot
-# vintage. A stale fact then reads as KNOWN-MAYBE-STALE instead of silently authoritative -- the
-# comp-pulse model ("danger map: 20.2h old" on every number), and the OPAL_ASSETS lesson that a
-# known-wrong LOUD number is strictly safer than a silent-authoritative one.
-#
-# Ruling: CTO~Z 20260723T204001Z (APPROVED, land now). Sited in the WRAPPER, not pipescript_cli.py --
-# that engine is the NFRA_PIPESCRIPT_TOOL exec-lock (DS-owned) and 0.8.0_AE is deliberately not on it;
-# .tools/** is lane ANY. No owned-paths override used. Audit: deliverables/
-# NFRA_TOOLARCH_CANON_TOOL_SOURCE_AUDIT.md. Banner -> STDERR, so the stdout contract is unchanged.
-python - "$WORKSPACE" <<'PY' >&2
-import json, sys, datetime
-try:
-    ws = sys.argv[1]
-    d = json.load(open(ws + "/org/modules/graph/estate-coverage-resolver.json", encoding="utf-8"))
-    lr = str(d.get("last_review") or "unknown")
-    gf = str(d.get("generated_from") or "unknown")
-    age = ""
-    try:
-        days = (datetime.date.today() - datetime.date.fromisoformat(lr)).days
-        age = " (%dd old)" % days
-    except (ValueError, TypeError):
-        days = None
-    print("SOURCE: estate-coverage-resolver.json SNAPSHOT -- last_review %s%s -- NOT comp-kuzu canonical." % (lr, age))
-    print("  generated_from: %s" % (gf[:150],))
-    print("  VINTAGE WARNING: served-artifact / S3-key strings below are FROZEN AT GENERATION. A key that")
-    print("  changed since last_review reads STALE here (exhibit: the mdpf platinum key, 2026-07-23).")
-    print("  Verify any load-bearing key against live S3 or comp-kuzu before acting on it.")
-except Exception:
-    pass
-PY
+DEPRECATED AND RETIRED 2026-07-29 by Andrew-direct, verbatim: "we are deprecating base pipescript.
+there is comp-pipescript only for future reference" and "pipescript needs to be categorically
+renamed".
 
-python "$WORKSPACE/org/modules/graph/pipescript_cli.py" "$@"
-_exit=$?
-python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "pipescript" "$*" $_exit 2>/dev/null
-exit $_exit
+This stub exists instead of a deletion so that an explicit-path caller gets a message NAMING its
+replacement rather than a mystery. It is loud (rc=2) by design: a retired tool that exits 0 is
+indistinguishable from a working one.
+
+  comp-semantic-estates   -- the estate BUSINESS-SEMANTIC traversal this tool used to do
+                             (engine: org/modules/graph/opal_business_estates.py)
+  comp-pipescript         -- a DIFFERENT tool: per-script pipeline dependencies / io / deployed-parity
+
+Note the bare name never resolved on PATH in a harness shell anyway (no ~/bin forwarder was ever
+generated for it -- measured 2026-07-29: `pipescript` -> command not found, rc=127). Only the
+explicit `.tools/pipescript` path reached it, which is exactly the caller this stub speaks to.
+"""
+import sys
+
+sys.stderr.write(
+    "pipescript: RETIRED -> use `comp-semantic-estates`.\n"
+    "  The estate business-semantic traversal now lives at .tools/comp-semantic-estates\n"
+    "  (engine org/modules/graph/opal_business_estates.py). It re-derives S3 keys LIVE from\n"
+    "  source instead of serving them frozen from a snapshot -- the defect that made this tool\n"
+    "  report a stale mdpf key as LIVE fresh.\n"
+    "  Looking for per-script pipeline dependencies instead? That is `comp-pipescript`.\n"
+    "  rc=2 -- deliberately loud. A retired tool that exits 0 looks like a working one.\n"
+)
+sys.exit(2)
