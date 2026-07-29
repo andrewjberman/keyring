@@ -27538,3 +27538,25 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29 0754Z | 0.4.0_DS_ClientPlatform~A | comp-validate x5 (3 PASS + 2 mutant FAIL, new mdpf config), comp-grep x3 (writer census -- found Stage 3.5 as the real served aum-timeseries writer), comp-glob x1 (dispatch located), commit-gate x3 | D-C gate + A2 write-kill window |
 | 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions mdpf-accrual-trigger,mdpf-daily-trigger,w... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/mdpf-pip... | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/critical_paths/change_management/20260729T0745Z_mdpf-accrual-bridge... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/inbox/0.0.0_AB_MSTR/~Z/20260729... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/inbox/0.0.0_AB_MSTR/~Z/20260729T075524Z_0.0.0_AB_MSTR_LANE_GRAN... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/inbox/0.0.0_AB_MSTR/~Z/20260729... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/inbox/0.0.0_AB_MSTR/~Z/20260729T075524Z_0.0.0_AB_MSTR_LANE_GRAN... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/cot-pipeline/eventb... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/terraform/cot-pipeline/eventbridge.tf infra/aws/terraform/cot... | VERDICT |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/inbox/0.0.0_AB_MSTR/20260729T07... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/inbox/0.0.0_AB_MSTR/20260729T073944Z_0.0.0_AB_MSTR~Z__MCP_PATH_... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/OPAL_ALERTS.json --file or... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/projects/OPAL_ALERTS.json org/projects/OPAL_SCHEDULE.json org/proje... | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/mdpf-daily-runner/mdpf-da... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh | VERDICT |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/missions/EXTERNAL/49FINANCIAL/execs... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/missions/EXTERNAL/49FINANCIAL/execsum.yaml org/missions/EXTERNAL/AL... | PASS |
+| 2026-07-29 0855Z | 0.7.0_AE_CloudOps~A | comp-grep x6, comp-glob x1 (estate searches on-rails: mirror rule, platinum writers, twin readers, asof-lag, accrual, invoker); 2x rail-checked s3 ls (write-activity evidence, logged) |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
