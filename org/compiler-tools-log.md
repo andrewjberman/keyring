@@ -27980,3 +27980,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-system | comp-system --gate --changed org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/MDPF... | PASS |
 | 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29 1420-1915Z | 3.0.0_SA_CVO | walk x6 exercised-isolated (kuzu triggered designed rebuild; blast/routes/trigger/types/pulse/surface-check) - comp-dataflow live SERVED-ORIGIN finding - comp-grep rc-flip battery x2 - aws-shim evidence collection all fire windows | D1-D4 cert filed, rc flip landed post-discard, walk phase-1 (6/6 sound, cards lag), phantom retraction, mutant-pass spec |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/3.0.0_SA_CVO/logs/2026-07-29/f... | PASS |
