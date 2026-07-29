@@ -261,6 +261,16 @@ def _is_comment_line(stripped: str) -> bool:
 # both arms. Measured 1.6x (1 file) -> 2.3x (3 files); it grows with commit size.
 _YAML_CACHE: dict[str, dict] = {}
 
+# C-ACCELERATED PARSER (0.8.0_AE_CloudComp 2026-07-28, the post-cache remainder of the same
+# Andrew-direct thread). cProfile on the CACHED module: yaml parsing was STILL 1.99s of 2.29s for a
+# .tools-touching file, because (a) the cold first-parse of each YAML is paid through SafeLoader
+# (133KB manifest = ~118ms), and (b) two call sites bypassed the cache entirely (_section_pair's
+# HEAD-vs-worktree parses, _placement_invariant's raw open). CSafeLoader (libyaml) parses the same
+# manifest in ~9ms and was verified PARSE-EQUAL (parsed-doc ==) on all 5 YAMLs the gate reads.
+# The getattr fallback keeps the gate correct on a Python built without libyaml -- slower, never
+# wrong. safe_load == load(Loader=SafeLoader), so both branches are the SAFE loader family.
+_YAML_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+
 
 def load_yaml(path: Path) -> dict:
     if not path.exists():
@@ -269,7 +279,7 @@ def load_yaml(path: Path) -> dict:
     _key = str(path)
     if _key not in _YAML_CACHE:
         with path.open(encoding="utf-8") as fh:
-            _YAML_CACHE[_key] = yaml.safe_load(fh) or {}
+            _YAML_CACHE[_key] = yaml.load(fh, Loader=_YAML_LOADER) or {}
     return _copy.deepcopy(_YAML_CACHE[_key])
 
 
@@ -543,6 +553,10 @@ def _committed_comp_tools(files):
     return tools
 
 
+_HEAD_PAIR_CACHE: dict[str, tuple] = {}
+_HEAD_ABSENT = ("__HEAD_ABSENT__",)
+
+
 def _section_pair(path, section):
     """(old, new) value of `section` -- old from HEAD, new from the working tree. (None, None)
     when HEAD has no such file (a brand-new file: the caller must treat it as 'everything').
@@ -556,21 +570,35 @@ def _section_pair(path, section):
     Either one makes a CLEAN tree read as "everything changed", so the per-tool bound silently
     degrades to the full ~57s sweep while the gate still reports green. The bound would have been
     a claim, not a fact. (Observed: a clean manifest touch cost 33.8s instead of ~0.)
-    """
-    import subprocess as _sp
 
-    import yaml as _yaml
-    old = _sp.run(["git", "show", f"HEAD:{path}"], capture_output=True, cwd=str(_WORKSPACE)).stdout
-    if not old:
+    THE PARSED (old_doc, new_doc) PAIR IS CACHED PER PATH: three members diff the SAME manifest
+    (selfroute x2 sections, subcommand-declaration, and any future _dict_diff_keys caller), and
+    each un-cached call re-ran `git show` + re-parsed the 133KB doc TWICE -- 0.80s of the 2.29s
+    post-cache profile in ONE member alone. Same lifetime + same no-mid-run-rewrite assumption as
+    _YAML_CACHE above. Sections are returned as deepcopies (0.7ms) so the mutability contract is
+    identical to load_yaml's -- no caller can corrupt the cached docs.
+    """
+    docs = _HEAD_PAIR_CACHE.get(path)
+    if docs is None:
+        import subprocess as _sp
+        old = _sp.run(["git", "show", f"HEAD:{path}"], capture_output=True,
+                      cwd=str(_WORKSPACE)).stdout
+        if not old:
+            docs = _HEAD_ABSENT
+        else:
+            def _norm_text(b):
+                s = b.decode("utf-8", "replace") if isinstance(b, bytes) else b
+                return s.replace("\r\n", "\n").replace("\r", "\n")
+            with open(_WORKSPACE / path, "rb") as fh:
+                new_raw = fh.read()
+            old_doc = yaml.load(_norm_text(old), Loader=_YAML_LOADER) or {}
+            new_doc = yaml.load(_norm_text(new_raw), Loader=_YAML_LOADER) or {}
+            docs = (old_doc, new_doc)
+        _HEAD_PAIR_CACHE[path] = docs
+    if docs is _HEAD_ABSENT:
         return None, None
-    def _norm_text(b):
-        s = b.decode("utf-8", "replace") if isinstance(b, bytes) else b
-        return s.replace("\r\n", "\n").replace("\r", "\n")
-    with open(_WORKSPACE / path, "rb") as fh:
-        new_raw = fh.read()
-    old_doc = _yaml.safe_load(_norm_text(old)) or {}
-    new_doc = _yaml.safe_load(_norm_text(new_raw)) or {}
-    return old_doc.get(section), new_doc.get(section)
+    old_doc, new_doc = docs
+    return _copy.deepcopy(old_doc.get(section)), _copy.deepcopy(new_doc.get(section))
 
 
 def _dict_diff_keys(path, section):
@@ -600,13 +628,12 @@ def _placement_invariant(files) -> int:
     if not tools and not map_touched:
         return 0
     try:
-        import yaml as _yaml
-
         sys.path.insert(0, str(_THIS_DIR))
         import comp_coverage_check as ccc
 
-        with open(_WORKSPACE / _PLACEMENT_MAP, encoding="utf-8") as fh:
-            led = _yaml.safe_load(fh)
+        # via the process cache (deepcopy'd, so ccc mutating it cannot corrupt the cached doc) --
+        # this was the third cache-bypassing raw parse the post-cache profile found.
+        led = load_yaml(_WORKSPACE / _PLACEMENT_MAP)
         if map_touched:
             # a map edit can REMOVE a home -> the commit's own file list cannot name the victim.
             for section in ("tools", "meta_tools"):

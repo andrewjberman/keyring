@@ -50,6 +50,11 @@ try:
 except ImportError as exc:  # pragma: no cover - yaml is a repo baseline dep
     raise ImportError("comp_capability_provider requires PyYAML (repo baseline)") from exc
 
+# CSafeLoader (libyaml): ~13x faster on the 133KB manifest/coverage-map, verified parse-equal
+# (parsed-doc ==) on both. Loader swap only -- each call still parses fresh and returns its own
+# object; no caching, no shared state. SafeLoader fallback keeps a libyaml-less Python correct.
+_YAML_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_MAP_PATH = os.path.join(_HERE, "comp-coverage-map.yaml")
@@ -65,9 +70,8 @@ def _load_write_path_tools(manifest_path=None):
     drop its reads (and regress its read self-route). ~C DR2 finding: E1 tool-level exclusion is
     whole-write-tools ONLY; a write SUBCOMMAND is a COMPUTE-intent action (free, never read-routed)."""
     try:
-        import yaml
         with open(manifest_path or _MANIFEST_PATH, "r", encoding="utf-8") as fh:
-            m = yaml.safe_load(fh) or {}
+            m = yaml.load(fh, Loader=_YAML_LOADER) or {}
     except Exception:  # noqa: BLE001 -- manifest unreadable => no write-path exclusion (fail-open, surfaced)
         return frozenset()
     per_tool = {}
@@ -296,7 +300,7 @@ class ComptoolCapabilityMapProvider(CapabilityMapProvider):
     def __init__(self, map_path: Optional[str] = None):
         self.map_path = map_path or DEFAULT_MAP_PATH
         with open(self.map_path, "r", encoding="utf-8") as fh:
-            self._map = yaml.safe_load(fh) or {}
+            self._map = yaml.load(fh, Loader=_YAML_LOADER) or {}
         self._caps = _build_capabilities(self._map)
         self._by_id = {c.id: c for c in self._caps}
         self._affinity = self._map.get("role_surface_affinity") or {}

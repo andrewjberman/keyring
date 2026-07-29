@@ -55,7 +55,10 @@ def _load_yaml(path: Path) -> dict:
     'everything UNKNOWN, loudly', which is the fail-honest posture, never a silent clean."""
     try:
         import yaml  # local import: a header-only consumer should not hard-depend on PyYAML at import
-        raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+        # CSafeLoader (libyaml, ~13x): verified parse-equal on the contracts file; loader swap
+        # only, no caching. SafeLoader fallback keeps a libyaml-less Python correct.
+        raw = yaml.load(path.read_text(encoding="utf-8"),
+                        Loader=getattr(yaml, "CSafeLoader", yaml.SafeLoader))
         return raw if isinstance(raw, dict) else {}
     except Exception:
         return {}
@@ -236,7 +239,8 @@ def canon_vocab_strict() -> dict:
         raise CanonVocabUnavailable(f"canonical_source MISSING at {_RULE_BANK}")
     try:
         import yaml
-        doc = yaml.safe_load(_RULE_BANK.read_text(encoding="utf-8"))
+        doc = yaml.load(_RULE_BANK.read_text(encoding="utf-8"),
+                        Loader=getattr(yaml, "CSafeLoader", yaml.SafeLoader))
     except Exception as e:  # noqa: BLE001
         raise CanonVocabUnavailable(
             f"canonical_source UNREADABLE ({type(e).__name__}: {str(e)[:120]})") from e
