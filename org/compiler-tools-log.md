@@ -27781,3 +27781,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-which/comp-trigger/comp-grep/comp-glob | chain-read diagnosis: comp-which routed to comp-trigger; comp-trigger mdpf PARTIAL (NAME-substring predicate -- source of a false 17:15Z null); comp-grep x2 + comp-glob located accrual producer + target grammar | PARTIAL |
 | 2026-07-29Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed --help | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed --tree mdpf | FAIL |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/gold/dim_mdpf_account_distribution.py | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CERT_STAGING_D1D4_20260729.md ... | PASS |
+| 2026-07-29T15:57Z | 2.0.0_SA_COO | (no-TO) | comp-which | comp-which "acceptance vocabulary" | NO-MATCH | Honest miss, routed to comp-grep. Catalog gap, not a failure. |
+| 2026-07-29T15:57Z | 2.0.0_SA_COO | (no-TO) | comp-grep | twin-deletion / parallel series / account-distribution | PASS | Denominators printed (13705/13823; 55/56). |
+| 2026-07-29T15:57Z | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript --resource json/portfolios/aum-timeseries.json | WARN | Self-declared 44d-old snapshot + VINTAGE WARNING. NOT quoted as the estate; verified via portal + comp-routes instead. |
+| 2026-07-29T15:57Z | 2.0.0_SA_COO | (no-TO) | comp-routes | comp-routes trace x3 (portfolios + mdpf URLs) | PASS | DECISIVE: found the specific /api/general/mdpf/ -> platinum/mdpf/ rewrite that BEATS the generic -> json/ rule. Flipped a suspected client-visible staleness to benign. |
+| 2026-07-29T15:57Z | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript deployed dim_mdpf_account_distribution.py | FAIL-GREEN | *** GAP *** Returned 0 MATCH / 0 STALE / 0 UNCOVERED. That is a WRONG-TREE NO-COVERAGE (checks bd tree; mdpf is check-only per Rule 13), NOT a pass -- byte-identical to a genuine clean. See the 0.7.0_AE_CloudOps row above logging this same run as PASS. Reported to CTO. |
+| 2026-07-29T15:57Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | via safe-commit x2 | PASS | 1 file, no critical surface. |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/2.0.0_SA_COO/logs/2026-07-29/s... | PASS |
