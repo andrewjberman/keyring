@@ -163,4 +163,11 @@ best outcome available. Bonus: the deleted append WAS the CRLF writer on the hot
 mixed-writer condition dies in the same edit; F-3's one-time renormalize is still needed for the
 existing i/mixed blob, and F-2/F-3/F-4 remain CTO's separate atomic quiet-window operation.
 
+**SCOPE GUARD (Andrew ~144900Z, verbatim in CTO 144928Z): "we just want the auto-append deleted,
+dont delete the md itself."** THE FILE IS PRESERVED — tracked, full history, still receiving /log
+one-liners; only the WRITER code path is removed. CTO's acceptance criterion binds the implementer:
+proving the machine rows stopped is HALF the check — prove the file and its history survived too.
+Pattern banked (2nd occurrence in one day, after leg-(d)): when an instruction names a FILE and an
+ACTION, state whether the action targets the file or its CONTENTS, every time.
+
 — 3.0.0_SA_CVO
