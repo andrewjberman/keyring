@@ -22,7 +22,14 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if git_top="$(git -C "${SCRIPT_DIR}" rev-parse --show-toplevel 2>/dev/null)"; then
     WORKSPACE_ROOT="${git_top}"
 else
-    WORKSPACE_ROOT="/c/Users/AndrewBerman/Desktop/ajb_workspace"
+    WORKSPACE_ROOT="$(dirname "${SCRIPT_DIR}")"   # <root>/.tools -> <root>; no git needed
+    # WAS: a hardcoded base-device path. THE ONE RULE bans a site path as a FALLBACK, not
+    # only as a value -- a fallback is still a literal that is wrong on every other device.
+    # EXERCISED 2026-07-29 (0.0.0_AB_MSTR~Z): copied outside a git repo so the primary
+    # branch failed naturally, this branch fired, and it reached for
+    # C:\Users\AndrewBerman\...\comp_depth_cli.py -> No such file. Loud, but wrong.
+    # Deriving from the script's own location is correct on BOTH devices and needs no git
+    # -- the same shape base landed for the launchers (d11015b5bf).
 fi
 
 PYTHON="${COMP_LEARNS_PYTHON:-python}"
