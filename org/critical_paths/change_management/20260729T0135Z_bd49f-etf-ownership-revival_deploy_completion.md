@@ -49,3 +49,12 @@ own ledger line per CTO 013015Z. Do NOT manufacture the fire (NEVER#4).**
 Any leg fails -> `terraform apply` the prior artifact version (yang-lambda pins s3_object_version;
 previous zip version retained by bucket versioning) + revert commit; floor rule resources are pure
 adds, destroyable by targeted revert-apply. Escalate loud to COO+CTO per NEVER#6.
+
+## Retirement line CLOSED -- 2026-07-29T10:52Z (0.7.0_AE_CloudOps~A)
+First clean UNATTENDED emit CONFIRMED at 10:45:12Z (scheduled-floor rule fired, EVENT-IDENTITY
+source=aws.events, RequestId a03a73d9; DENOMINATOR source_rows=93051 accounts=6016 universe
+DIVZ,IDVZ,PFDE,PFOE day=2026-07-28; artifact daily/49financial/2026-07-28.json listing-verified
+1305B ETag 2fb701cf @10:45:12Z; total_ownership=537,668,272.77 source_as_of=2026-07-28 = T-1
+correct). bd-tree Sids (ReadOwnFirmRpsSilver + ListOwnFirmRpsSilver) RETIRED @ad91743c55, targeted
+plan 0/1/0, safe-apply, 0-diff, live get-role-policy shows 5 monolith/etfs-scoped Sids only. Code
+carries zero opal-data-bd references (checked at retirement). Tag bd-v2.53.1.
