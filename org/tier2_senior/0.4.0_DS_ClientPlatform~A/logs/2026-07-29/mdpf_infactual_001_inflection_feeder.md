@@ -80,3 +80,28 @@ existence/partition questions, not freshness/routing; logged to the rail audit).
 Compiler tools: comp-glob (located producer TF/code), comp-grep (avgcap engine), enumerations
 rail-checked. comp-pipescript io not applicable (new backfill script, S3-dynamic; manual body
 review is the record above).
+
+---
+
+# Addendum 2: etf_decomposition consumer trace (COO item 1, ~0126-0132Z)
+**archetype:** TRACE
+
+Render-backwards map, denominators stated per claim:
+- DDB/emitter path (rendered): opal-assets-daily-emitter reads etf_decomposition at exactly 2
+  sites, both extract ONLY ticker + etf_total_net_assets (NAV passthrough); held values are
+  measured opal-data-etfs artifacts ("NEVER mdpf etf_decomposition target_weight" ratified
+  in-code). Estimate-free.
+- Served timeseries (fetched, NOT rendered): aggregate_aua_timeseries.json etf_decomposition
+  block (433 dates, live through 07-28) embeds the estimate in held_total/public_residual;
+  portal types it (MdpfEtfSeries) but 0/404 src files consume the fields. Ships to browser,
+  displayed nowhere.
+- OWNTS per-ticker artifacts: consume held_by_partner, are themselves consumed by NOTHING
+  (0/1,055 portal files; repo = producer+runbook+PRD only).
+- Load-bearing exception named: identity_2 (over-attribution gate) is computed FROM the
+  decomposition and gates the platinum write — deletion would delete the gate.
+Verdict: no rendered surface displays the estimated inflection held value. Reported to COO
+(cc CTO) 013150Z. Open mechanism note (INFERRED, labeled): how the timeseries etf block
+advances despite the dim producer not naming the key — pin before any deletion decision.
+
+AE~A seam closed: writer design @5dd48c5eba adopted my compute_slice as the one computation;
+import-surface question answered (pandas/boto3/stdlib, import-safe, client-injected).
