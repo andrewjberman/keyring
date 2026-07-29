@@ -53,8 +53,18 @@ obligation or live successor, still writing) · CLOBBER (two writers at one `(ke
 adjudicating contract) · TRIGGER-MISSEQUENCE (an edge firing against the D2 topological+temporal
 order) · ZOMBIE/ORPHAN (a C-SILENT resident: no enumerator traverses it, no predicate reacts).
 
-*Acceptance:* rule-bank `meta.version` head advances carrying the D-rail sections; every derived
-property defined as a derivation; ratification chain for vocabulary; CVO~Z verify.
+**VOCABULARY REQUIREMENT (~C item 3, evidence-grounded 2026-07-29): the lifecycle enum MUST carry
+an explicit `TRANSIENT` value** — written → consumed → deleted; **absent-at-rest is its healthy
+state.** A live trigger marker is indistinguishable from a dead key under ANY existence check
+(`gold/trigger-pending.json` et al. landed in a kill list's top tier on "no object found" — and a
+transient key independently reads absent AND dormant AND reader-less, so WS-E3's ≥2-CONFIRMED bar
+does not save it: two confirmed signals, both wrong, on a live pipeline trigger). Transience cannot
+be derived; it must be declared. The comp-legacywriter TRANSIENT-MARKER guard (@d51f6b38a0) is the
+name-pattern stopgap this type replaces — a pattern-match on key names is not a type system.
+
+*Acceptance:* rule-bank `meta.version` head advances carrying the D-rail sections **including
+lifecycle `TRANSIENT`**; every derived property defined as a derivation; ratification chain for
+vocabulary; CVO~Z verify.
 
 ## WS-C2 — Expressiveness validation against the three corpora (before the types freeze)
 
@@ -163,10 +173,29 @@ the recall denominator as a required output. Fold TOOLUNIFY's pinned remainder: 
 verification-provenance register and the **negative-declaration axis** (what a tool cannot see
 WITHIN its declared surface).
 
+**Framing (~C item 1):** boundary reports ARE measurement-time controls — the estate's empty
+quadrant (commit-time gating is dense and works; measurement-time gating is near-zero, and every
+control that failed on 2026-07-29 was measurement-time). This workstream aims at the gap, not the
+strength.
+
+**Two design inputs from the registration chain's own measured cost (~C scope note):**
+(a) **a pre-flight "everything registration will require" check** — the chain is already six gates
+deep and each reveals itself only after the previous passes (five serial discoveries ≈ 40 min on
+one tool); serial discovery COMPOUNDS for synthesized tools, which is WS-C4's whole output, so the
+pre-flight is a WS-C4 dependency, not a nicety. (b) **shell-reachability joins the chain** — the
+current gates prove the ROUTER can name a tool, never that a shell can RUN it (comp-legacywriter
+landed unreachable; only exercising the forwarder caught it — the A.3 exercise-don't-resolve lesson
+as a registration gate).
+
+**Named limit (feeds WS-C8/C9):** a boundary report declares what the TOOL cannot see; it does NOT
+declare whether a CONTROL shared the target's transport path — a distinct property with no home in
+this contract (see the M15 candidate in WS-C8).
+
 *Acceptance:* the registration invariant extended (a tool cannot register without the declaration —
 comp-manifest-check enforced, announce-then-enforce ramp); N of M existing tools migrated with the
 count printed (the count is the gate's, never prose's); the nine-specimen fixture suite green —
-each specimen re-derives as a Class 1 or Class 2 failure the contract surfaces.
+each specimen re-derives as a Class 1 or Class 2 failure the contract surfaces; the pre-flight
+check exists and the registration chain includes an exercised shell-reachability gate.
 
 ## WS-C8 — The doctrine collapse (executing the PREVENTION ruling)
 
@@ -181,8 +210,23 @@ his word.
 **Landing is main-CTO-gated** (law surfaces: the doctrine files, CLAUDE.md Rule-22 re-point,
 doctrine/README fix) — a designed seam crossing, protocol 3.
 
+**First candidate M-law beyond the taxonomy's 14 (~C item 2, specimen-grounded 2026-07-29 — the
+CRLF incident, where a MECHANISM control and a PER-BUCKET control both passed while the result was
+100% wrong, 81/81 false absence):**
+
+> **M15 (candidate) — DIVERGENT-TRANSPORT CONTROL: a control that does not travel the same
+> argument/transport path as the target validates the AUTHOR, not the instrument.**
+> Exposing question: *did my control's input arrive by the same path as the target's?*
+> Counter-instrument: the argv-echo oracle (echo the argument back through the same transport —
+> already banked in CLAUDE.md's MSYS section, generalized past MSYS by this law).
+
+Adjacent to but distinct from "a hand-chosen control measures the author": the control can be
+correctly GENERATED from live data and still enter by a different path (typed in a shell vs read
+from a `\r\n` file). Enters the schema through the WS-C9 gate under the full output contract.
+
 *Acceptance:* doctrine byte-count falls; every M-law carries a named gate/test or an explicit "no
-gate possible + why"; the collapse's own diff shows zero lost instances.
+gate possible + why"; the collapse's own diff shows zero lost instances; the M15 candidate
+adjudicated (admitted with detector + mutant, or rejected with the reason on record).
 
 ## WS-C9 — The living error-classification schema (Andrew-direct at plan review)
 
@@ -204,6 +248,13 @@ ESTATE half (intake at occurrence + the archetype weight/dynamics report) is WS-
 *Acceptance:* the schema is a versioned artifact with a head; classifying a new incident is a
 ≤5-minute act with a defined intake form; one new-class event exercised through the gate
 end-to-end; the schema's own coverage boundary printed.
+
+**FLAGGED PENDING ANDREW (~C item 7):** the full schema build stays P5 per Andrew's placement —
+but the archetype-weight ranking is what steers WS-C3/C4's queue, and installed at P5 it ranks
+nothing (a steering signal installed after the voyage is a log, not a rudder). Proposal: a
+**minimal hand-classified intake form at P1** (M-code + one line, no automation) so the queue is
+weight-ranked from the start; the schema build itself stays P5. Requires Andrew's word because he
+placed C9/E7 "at the very end."
 
 ---
 

@@ -146,6 +146,24 @@ doctrine/law surfaces are authored anywhere but **landed only via main CTO**.
 | INCIDENT_TAXONOMY corpus | The validation corpus + WS-C8 input; the base-CTO follow-on project = WS-C8's main-side landing lane. |
 | DEBTLOOPS memo | The founding statement. Its A/B/C: A=WS-C3 · B=WS-C4/E1 · C=WS-C5. |
 
+### §3b The absorbed open-work ledger (anti-opacity control — ~C item 6)
+
+Absorbing 8 projects converts eight visibly-stalled records into one opaque one; if VELOCITY stalls
+at P2, "absorbed" reads as "handled" — the stale-record-with-authority class applied to the
+consolidation itself. Control: **this ledger stays current in the program index; a stall stays
+visible at the grain someone can act on.**
+
+| Absorbed project | Open work carried | Home | Named owner |
+|---|---|---|---|
+| ONTOLOGY2 | P1 rail authorship → P4 typed routing | WS-C1/C2 | CTO~Z + 0.8.0_AE~C |
+| TOOLARCH | census → inventory → grader → synthesis | WS-C3/C4 | CTO~Z + 0.8.0_AE |
+| TOOLSEM | parser → router → gap-feed | WS-C6 | CTO~Z + 0.8.0_AE |
+| TOOLBHVR | R8 conversion · R4 triggers · path tuning | WS-E6 (R8 w/ E4) | base CTO/COO + 0.7.0/hook lane |
+| COMPLEARN | AMD loop-closure scope (re-cut) | WS-E4 | COO + assigned build lane |
+| LIVELEARN | fresh-when-consumed + prove-loop-closes cycles | WS-C5/E5 | CTO~Z (C5) / base CVO (E5 verify) |
+| TOOLUNIFY | provenance register · PENDING slots (E/B verdicts, MATCH spot-checks) · negative-declaration axis · O2 adoption | WS-C7 | CTO~Z + 0.8.0_AE |
+| MSBEFF | R-cells per §3 row; M3 telemetry re-baseline | WS-E4/C7/C6 | per row; E4.1 = main CTO gate-approved build |
+
 ## §4 The seam — four protocols
 
 1. **HEAD-ADVANCE NOTICE (Z→main).** CORE publishes a new rule-bank/type-system head
@@ -177,10 +195,19 @@ E4's R8 instrument.
    baseline), wild-goose-chase sessions, router honest-empty rate (0 today).
 2. **Recall denominators exist** — % of tools/detectors emitting boundary reports (≈0 today).
 3. **Catch distribution shifts** — D1 designed-control catches rise from 2.4%; D4 somebody-read-it
-   falls from 57%. The PREVENTION ruling, made measurable.
-4. **Debt population derived and shrinking** — contracted coverage rises; derived kill list shrinks;
-   zero new uncontracted writers past the gate ramp; the 353 dead surfaces adjudicated.
-5. **Doctrine shrinks as gates absorb** — byte-count + per-file self-violation rate.
+   falls from 57%. The PREVENTION ruling, made measurable. **Read 2.4% as a PLACEMENT failure, not
+   a design failure** (~C, 2026-07-29, evidence-grounded): the estate's commit-time gating is dense
+   and catches constantly — those catches never become recorded incidents, so the incident-derived
+   D1 share structurally under-counts them; the empty quadrant is **measurement-time** controls,
+   which is exactly what boundary reports (WS-C7/E5) are. The program aims at the gap, not the
+   strength — more commit-time gates is NOT the licensed conclusion.
+4. **Debt population derived and shrinking** — contracted coverage rises; derived kill list shrinks
+   **paired with retirements EXECUTED under gates** (a shrinking list alone is Goodhart-able by
+   narrowing the predicate — ~C item 5); zero new uncontracted writers past the gate ramp; the 353
+   dead surfaces adjudicated.
+5. **Doctrine shrinks as gates absorb** — byte-count + per-file self-violation rate, **paired with
+   the count of M-laws carrying a NAMED GATE that absorbs their class** (byte-count alone falls by
+   moving text to references/, which WS-C8 explicitly does — ~C item 5).
 6. **The specimen never recurs** — bronze-after-gold structurally impossible without a loud typed
    violation.
 7. **Telemetry answers "are we improving"** — per-series FAIL decomposition, three meanings
@@ -222,4 +249,11 @@ drift → version pins on every cross-fabric claim. · The collapse deletes some
 nothing deleted (instances become rows; dated material → references/); nothing Andrew called good is
 cut without his word; main-CTO gate on every law-surface land. · Retirement harms a live path →
 COMPDEBT fail-safe defaults + ≥2-CONFIRMED bar + never-widen sign-off + exercised-not-inferred per
-retirement.
+retirement — **and the TRANSIENT lifecycle trap** (a live written→consumed→deleted trigger marker
+reads absent AND dormant AND reader-less — two confirmed signals, both wrong; closed by the WS-C1
+TRANSIENT vocabulary requirement, ~C item 3). · **Consolidation opacity** (8 stalled records become
+one opaque "absorbed" — ~C item 6) → the §3b open-work ledger with named owners, kept current. ·
+**Steering signal arrives after the voyage** (C9/E7 at P5 means the synthesis queue is
+judgment-ranked all program — ~C item 7) → proposed minimal hand-classified intake at P1,
+**FLAGGED PENDING ANDREW's word** (he placed the schema at the very end; the P1 form is an intake
+slip, not the schema build).
