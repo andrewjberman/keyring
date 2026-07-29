@@ -36,6 +36,36 @@ rollout_phase: 2  # 2026-04-30: flipped to fail-closed per Andrew directive (TO 
 # =========================================================================
 lanes:
 
+  # =========================================================================
+  # READ THIS BEFORE ASKING FOR A TILDE-LANE GRANT  (added 2026-07-29, COO)
+  #
+  # A TILDE LANE IS ALREADY PERMITTED WHEREVER ITS BASE SERIAL IS ENUMERATED.
+  # `1.0.0_SA_CTO~C` needs no entry to commit wherever `1.0.0_SA_CTO` may.
+  #
+  # MECHANISM, source-confirmed at .tools/owned-paths-validate.py:125-160:
+  # check_agent() tries an exact normalized match; ON MISS it strips ONE
+  # trailing `_<alnum>` lane segment and re-tests. Deliberate, additive-only
+  # (consulted only after exact-match failure, so it can never REVOKE), and
+  # leak-free by construction (a true base serial strips to a non-serial that
+  # matches nothing). RV-0030 F-003, ws CTO, 2026-06-08.
+  #
+  # EXERCISED 2026-07-29 with a positive control:
+  #   check_agent('1.0.0_SA_CTO~C','org/modules/graph/comp_*.py') -> True  (no entry present)
+  #   check_agent('2.0.0_SA_COO','org/tier0/ledger/*')            -> False (a real refusal, taken that day)
+  #
+  # >> THIS FILE CONTAINS **18** NOTES DESCRIBING A "recurring tilde-lane
+  # >> enumeration gap". FOR ANYTHING AFTER 2026-06-08 THAT GAP IS A PHANTOM,
+  # >> AND NOT ONE OF THOSE NOTES CITES AN EXERCISED REFUSAL -- they are all
+  # >> config reads. The prose is persuasive, self-consistent, repeated, and
+  # >> wrong; it trained a new lane to ask for a grant it already held and cost
+  # >> a grantor a commit on 2026-07-29. Grants dated BEFORE 2026-06-08 were
+  # >> live. AFTER it, EXERCISE THE GATE BEFORE ASKING OR GRANTING. <<
+  #
+  # CONSEQUENCE FOR SCOPING: a tilde lane CANNOT be given LESS than its base by
+  # omitting it -- withholding an entry is a no-op. Narrowing a lane below its
+  # base needs a real mechanism (a longest-match path rule), not an absence.
+  # =========================================================================
+
   BASE_EXEC:
     permitted_agents:
       - 1.0.0_SA_CTO
