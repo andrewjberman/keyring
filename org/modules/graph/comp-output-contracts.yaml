@@ -383,6 +383,34 @@ contracts:
           could-not-retrieve -- header sources unresolvable (SOURCE UNRESOLVABLE printed, never
           silence) or Phase 0 substrate refusal under --require-live-substrate
     exit_source: comp_legacywriter.py emit_header (2=SOURCE UNRESOLVABLE) + phase0_substrate (2=stale substrate refusal); author 1.0.0_SA_CTO~C 2026-07-29
+  comp-opalbizsem:
+    coverage: >-
+      Every named business thread in the estate-coverage-resolver snapshot, and for each the
+      resources, producers, served artifacts, frontend consumers, owning tool and debt flags.
+      The substrate and its vintage are stated on line 1 of every invocation.
+    blind_spots:
+    - SNAPSHOT-BACKED, not canonical. Served-artifact and S3-key strings are FROZEN AT GENERATION
+      and DO drift; a key that changed since last_review reads stale here. --refresh makes the
+      snapshot NEWER, never CANONICAL -- the comp-kuzu reroute is the destination.
+    - a thread absent from the snapshot is invisible; the population is the snapshot's, not the
+      estate's, so a --list count is a statement about the snapshot.
+    - the exec-locked engine still prints the literal string "pipescript" in its own stdout banner,
+      so the bare deprecated name survives in OUTPUT until a DS-lane engine change.
+    - read-at-origin caveat -- the vintage is only as good as the read that produced it. This tool
+      reads the local working tree (no network, no cache), but an adopter reading its source over a
+      network can be served a stale stamp (the 2026-07-28 CDN false NO-FIRE).
+    plane: source
+    grain: artifact
+    scope: estate
+    vintage: snapshot last_review, printed line 1 every run; STALE flagged past 14d
+    exit_codes:
+      '2':
+        class: retrieval
+        meaning: >-
+          could-not-retrieve -- substrate absent, corrupt, or carrying no last_review. Prints an
+          explicit SOURCE UNRESOLVABLE naming what failed and why; never proceeds silently. Also
+          returned when --refresh's producer fails, leaving the snapshot untouched and saying so.
+    exit_source: comp-opalbizsem emit_header/_fail_loud + do_refresh; author 1.0.0_SA_CTO~C 2026-07-29; header controls 4/4 (missing/corrupt/no-last_review/positive)
 pending_declaration:
   - comp-adapter-audit
   - comp-assets
