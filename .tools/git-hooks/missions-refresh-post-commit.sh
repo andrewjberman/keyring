@@ -31,7 +31,7 @@ REPO="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
 # Opt-out for bulk/scripted work: MISSIONS_REFRESH=0 git commit ...
 [ "${MISSIONS_REFRESH:-1}" = "0" ] && exit 0
 
-WM="$REPO/org/missions/.watermark.json"
+WM="$REPO/.comp-graph/missions-watermark.json"
 OWNER_FILE="$REPO/org/missions/.register-owner"
 
 # MULTI-DEVICE GUARD. org/missions/ is DERIVED; if two devices compile and commit it, the later push

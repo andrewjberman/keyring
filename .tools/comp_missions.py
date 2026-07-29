@@ -229,7 +229,14 @@ def fmt_report(r: dict, limit: int) -> str:
 
 
 
-WATERMARK = REPO / "org" / "missions" / ".watermark.json"
+# PER-DEVICE scan position. Lives under .comp-graph/ (already gitignored) rather than in
+# org/missions/, because a SHARED watermark is a CORRECTNESS bug: device A pulling device B's
+# position would believe it had already scanned commits it had not, and an INCREMENTAL emit
+# would SKIP THEM SILENTLY. Relocated rather than gitignored in place -- an ignore rule does
+# NOTHING to an already-tracked file, and safe-commit re-adds any path in its pathspec, so
+# fighting the tracking loses to the tooling. The DERIVED output (commits.jsonl) stays shared
+# and converges, because it is regenerated from git -- the actually-shared thing.
+WATERMARK = REPO / ".comp-graph" / "missions-watermark.json"
 
 
 def config_fingerprint(idx: dict) -> str:

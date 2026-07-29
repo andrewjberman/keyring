@@ -4,9 +4,9 @@
     Every sentence below is SELECTED from a state.yaml or execsum.yaml, never composed
     here: a compiler that writes prose is a compiler that can invent a stance.
 
-    ANCHOR COMMIT   40306ee422
-    ANCHOR TIME     2026-07-28T19:53:21-04:00   (author-time, not a wall clock)
-    ANCHOR AUTHOR   0.7.0_AE_CloudOps
+    ANCHOR COMMIT   c7753d3497
+    ANCHOR TIME     2026-07-28T20:01:38-04:00   (author-time, not a wall clock)
+    ANCHOR AUTHOR   0.0.0_AB_MSTR
     ORDERING        activity intensity -- commits in the last 14 days, then total
     SOURCE          org/missions/{GROUP}/{SUB_GROUP}/{state,execsum}.yaml
 
@@ -27,7 +27,7 @@
 | 1 | `INFRASTRUCTURE.GRAPH` | **356** | 1092 | 35 | PARTIAL | PARTIAL | PARTIAL | — |
 | 2 | `INFRASTRUCTURE.DEBT` | **158** | 1681 | 42 | YES | PARTIAL | PARTIAL | — |
 | 3 | `PORTAL.MODEL_PORTFOLIOS` | **152** | 403 | 17 | YES | YES | NO | 1.0.0_SA_CTO -- an architecture call that PR |
-| 4 | `INFRASTRUCTURE.TOOLS` | **116** | 730 | 37 | YES | YES | UNASSESSED | 1.0.0_SA_CTO -- TWO calls CVO explicitly did |
+| 4 | `INFRASTRUCTURE.TOOLS` | **117** | 731 | 37 | YES | YES | UNASSESSED | 1.0.0_SA_CTO -- TWO calls CVO explicitly did |
 | 5 | `PORTAL.ADVISOR_INTELLIGENCE` | **34** | 1726 | 36 | PARTIAL | UNASSESSED | UNASSESSED | — |
 | 6 | `PORTAL.DEBT` | **2** | 2 | 2 | PARTIAL | NO | NO | — |
 | 7 | `EXTERNAL.49FINANCIAL` | **0** | 0 | 0 | UNASSESSED | UNASSESSED | UNASSESSED | Andrew -- per-client initiative detail. |
@@ -51,6 +51,11 @@
     version    v1.2
 
 **FRONTIER —** Lock the taxonomy -- one canonical statement the rest can be migrated onto. But note the 92% figure reframes the bottleneck: DECIDED is not what is holding this, ADOPTION is.
+
+
+
+
+
 
 
 
@@ -155,6 +160,11 @@ the CLASS.
     version    v1.1
 
 **FRONTIER —** Make retirement a CONDITION of a migration rather than a follow-up to it. Nothing structurally prevents a replacement shipping while its predecessor keeps running.
+
+
+
+
+
 
 
 
@@ -322,6 +332,11 @@ census is still absent while its trigger twin exists complete with a CI drift ga
 
 
 
+
+
+
+
+
 Producer FIXED, serve STILL NOT. Unchanged as the headline, and the gap is now better specified
 rather than smaller.
 
@@ -359,14 +374,19 @@ architecture call -- which serving namespace is canonical -- that PRECEDES the b
 
 > Establish an enumerated coverage universe per tool -- what each tool covers, what it does not, and where its silence means nothing-there rather than cannot-see -- consolidating the extensive prior art already held in the NFRA projects; and define how each tool must present information so that responses are high-signal and never inadvertently truncated, redacted or garbled.
 
-    activity   116 commit(s) in the last 14 days · 730 total · 37 author(s)
-    newest     2026-07-28T16:43:27-04:00
+    activity   117 commit(s) in the last 14 days · 731 total · 37 author(s)
+    newest     2026-07-28T19:59:41-04:00
     stance     DECIDED YES · BUILT YES · SERVING UNASSESSED
     version    v1.3
 
 **FRONTIER —** Wire comp-which to IMPORT tool_index instead of re-parsing the manifest. Cheap, and it is now the single next thing -- until it lands, the compiled index is a fast artifact nobody reads. (The suite-scale declared-vs-actual diff remains real but is downstream of this, and is now cheaper because per-tool primitive rows persist as JSON.)
 
 **BLOCKED ON —** 1.0.0_SA_CTO -- TWO calls CVO explicitly did NOT make: (a) the comp-which wiring, and (b) whether this 5th registry should FOLD INTO comp-coverage-map.yaml, which already has a passing gate it would inherit. Both routed to him in the same window.
+
+
+
+
+
 
 
 
@@ -545,6 +565,11 @@ Until that lands it is a fast artifact nobody reads.
 
 
 
+
+
+
+
+
 Largest body of work in the tree, least established state, and that has not changed: 1,726 commits
 against 34 recent, BUILT and SERVING both UNASSESSED.
 
@@ -645,6 +670,11 @@ artifact, not two. COO is building it. This sub-group must not commission a seco
 
 
 
+
+
+
+
+
 Unchanged, and correctly so. LOW priority by sovereign instruction, two commits total, brief only --
 not decomposed, not staffed. Nothing landed in the window.
 
@@ -672,6 +702,11 @@ investigation precedes migration and why staying at zero activity is the right p
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
+
+
 
 
 
@@ -824,6 +859,11 @@ Source of record when work begins: SCHWAB (certified-AUA deprecated 2026-07-24).
 
 
 
+
+
+
+
+
 PROSPECTIVE and net-new. Zero commits is correct; nothing landed and nothing was expected to.
 
 Scoped adjacent work that may eventually tie into the portal but is not portal work today -- Andrew's
@@ -851,6 +891,11 @@ Nothing registered, nothing blocked, no paths claimed.
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
+
+
 
 
 
@@ -942,6 +987,11 @@ Open at Andrew: "Cottonwood Capital Advisory" (his wording) vs "Advisors" (the e
     version    v1.1
 
 **BLOCKED ON —** Andrew -- per-client initiative detail.
+
+
+
+
+
 
 
 
