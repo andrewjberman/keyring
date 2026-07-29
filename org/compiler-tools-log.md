@@ -27813,3 +27813,16 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript deployed dim_mdpf_account_distribution.py | PASS |
 | 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/logs/2026-0... | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/2.0.0_SA_COO/logs/2026-07-29/startup_verification_wave_1... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/head-truncation-pagination-... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff docs/briefs/head-truncation-pagination-brief-20260729.md | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/tier1_exec/3.0.0_SA_CVO/deliverables/CERT_STAGING_D1D4_20260729.md ... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-which | comp-which "how does the surface check gate decide which commit carries the SURFACE_ACK" | NO-MATCH (gap: no CI/gate-mechanism coverage) |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-which | comp-which "where is non-model assets display handled in the portal model portfolios page" | MIS-ROUTED (gap: render question -> SEV1 guard) |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-grep | comp-grep "non_model|nonModel|readNonModelSeries" portal/src | PASS (located all item-2 prior art) |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DE_ClientPlatform/logs... | PASS |
