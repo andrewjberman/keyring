@@ -201,7 +201,12 @@ def main() -> int:
     _comprail.log_rail(RAIL_LOG, "RUN-GREP", "comp-grep", used_pattern,
                        "matches=%d files=%d scanned=%d path=%s" % (
                            len(matches), hit_files, scanned, ",".join(pathspec) or "."))
-    return 0
+    # O2 rc contract (CTO GO 20260729T031744Z, ruled + ratified): a FAILED RETRIEVAL must not
+    # exit clean -- agents and gates that read only the exit code otherwise get "clean" on a
+    # search that searched nothing. rc=2 matches this tool's own BLOCKED convention. comp-which
+    # passes this rc through by design (interception would recreate the vouching-for-false-
+    # negatives defect at the routing layer).
+    return 2 if scanned == 0 else 0
 
 
 if __name__ == "__main__":
