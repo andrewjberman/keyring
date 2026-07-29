@@ -27196,3 +27196,40 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 - 2026-07-29 0027Z 0.4.0_DS_ClientPlatform: commit-gate PASS (producer+tests); comp-pipescript NOT run (mdpf-tree blind, filed) -- deploy verified head-object ETag==md5 three-way; rail-checked versioned GetObjects for the set-equality diff (no comp-tool serves S3 version history).
 | 2026-07-29Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DS_ClientPlatform/logs... | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/safe-commit.sh | PASS |
+| 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff .tools/safe-commit.sh | VERDICT |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T004600Z__0.0.0_AB_MSTR__0.0.0_... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff .owned-paths.yaml | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T004600Z__0.0.0_AB_MSTR__0.0.0_... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T004600Z__0.0.0_AB_MSTR__0.0.0_... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agentbus-trunk/messages/2026072... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff org/mcp/agentbus-trunk/messages/20260729T004600Z__0.0.0_AB_MSTR__0.0.0_... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate wsc_inflection_held_etf.py --artifact C:/Users/ANDREW~1/AppData/Local/Tem... | VERDICT |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-manifest-check | comp-manifest-check check --file .tools/comp-manifest-check | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/feeders/wsc_inflectio... | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pulse | comp-pulse diff data/mdpf/scripts/feeders/wsc_inflection_held_etf.py org/tier2_senior/0... | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-trigger | comp-trigger mdpf | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-blast | comp-blast wsc_inflection_held_etf | PASS |
+| 2026-07-29Z | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-blast | comp-blast partner_held_etf | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/ajb.ps1 --file .tools/spawn-agen... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/ajb.ps1 .tools/spawn-agent.ps1 | VERDICT |
+| 2026-07-29 | 0.4.0_DS_ClientPlatform~A | comp-pipescript io, comp-grep, comp-validate, comp-blast | MDPF_INFACTUAL.001 feeder: io=WARN dynamic-keys (manual read), grep located override contract, validate=NO_CONFIG for feeder class (gap flagged), blast=no extracted consumers (dynamic-key note honored) |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-trigger | comp-trigger etf-ownership | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/ajb.ps1 --file .tools/spawn-agen... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR | (no-TO) | comp-pulse | comp-pulse diff .tools/ajb.ps1 .tools/spawn-agent.ps1 org/tier0/ledger/LD-0344.md | VERDICT |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-routable-check --file org/m... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-routable-check org/modules/graph/comp_capability_provider.p... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/manifest_check_cli.py .tools/comp-routab... | VERDICT |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-routable-check --file infra... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff .tools/comp-routable-check infra/system/06_current_state.json infra/sys... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-system | comp-system --gate --changed org/modules/graph/manifest_check_cli.py .tools/comp-routab... | PASS |
+| 2026-07-29T0057Z | 0.8.0_AE_CloudComp | comp-glob, cProfile, parity-harness, comp-which, comp-system, commit-gate | comp-manifest-check post-cache perf: 4-file CSafeLoader+cache fix @b917f2fafd; worst class 1176->467ms; parity byte-identical 7 cases |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.8.0_AE_CloudComp | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.8.0_AE_CloudComp/logs/2026... | PASS |
