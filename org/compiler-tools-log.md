@@ -27758,3 +27758,10 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-which,comp-grep | comp-which A.3 exercise (RAN, banner) + comp-which enumerate-vs-whitelist (near-tie, routed) + comp-grep mdpf-portal-publisher (localized source/TF/source-map, surfaced stale PRD RF-1) | PASS/PARTIAL |
 | 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-... | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript --resource json/portfolios/aum-timeseries.json | PASS |
+| 2026-07-29Z | 2.0.0_SA_COO | (no-TO) | comp-routes | comp-routes trace /api/general/portfolios/aum-timeseries.json | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/prune/SKILL.md | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/prune/SKILL.md | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff .claude/skills/prune/SKILL.md | VERDICT |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 0.7.0_AE_CloudOps | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
