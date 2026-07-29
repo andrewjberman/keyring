@@ -76,8 +76,46 @@ except Exception:
     fi
   fi
 
-  python .tools/comp_missions.py emit    >/dev/null 2>&1 || exit 0
-  python .tools/comp_missions.py compile >/dev/null 2>&1 || exit 0
+  # =========================================================================
+  # VIEW-TIME COMPILE (Andrew-direct 2026-07-29). THIS HOOK NO LONGER WRITES
+  # ANY TRACKED FILE. It records that a refresh is DUE; the compile happens
+  # when someone LOOKS.
+  #
+  # WHY (measured, not theorized): `emit` and `compile` wrote org/missions/
+  # execsum.yaml + commits.jsonl + MISSIONS.md -- ALL TRACKED. The churn was
+  # three lines per sub-group (anchor_commit / anchor_time / anchor_author, a
+  # pointer to the latest attributed commit), so EVERY commit by ANY agent
+  # re-dirtied the register. In a SHARED WORKTREE a dirty tracked file blocks
+  # `git pull` for everyone -- it blocked 0.2.0_DT_PortfolioAnalytics twice
+  # during an MDPF P0, and it re-dirtied itself within seconds of the very
+  # commit that cleaned it, because that commit is itself a new anchor.
+  #
+  # The defect was storing a VOLATILE DERIVED VALUE in version control. A
+  # register whose job is to be TRUE cannot cost a commit every time the
+  # repository moves. Auto-committing or auto-pushing it was considered and
+  # REJECTED: a pre-push hook that commits creates the commit AFTER git has
+  # computed the refs to push, so it never ships and the tree stays ahead --
+  # and the commit re-fires this hook. That chases the symptom; this removes
+  # the source.
+  #
+  # CONSEQUENCE, ACCEPTED DELIBERATELY: org/missions/ is now STALE-BY-DESIGN
+  # between compiles. That is safe ONLY because the board carries its own
+  # anchor commit, so staleness is VISIBLE rather than silent -- a reader can
+  # always see which commit the view was built from. Refresh with:
+  #     .tools/comp-missions emit && .tools/comp-missions compile
+  # =========================================================================
+  python - <<'PYEOF' >/dev/null 2>&1 || exit 0
+import io, json, os, subprocess
+wm = os.path.join('.comp-graph', 'missions-refresh-due.json')
+os.makedirs('.comp-graph', exist_ok=True)
+head = subprocess.run(['git', 'rev-parse', 'HEAD'], capture_output=True, text=True).stdout.strip()
+io.open(wm, 'w', encoding='utf-8').write(json.dumps({
+    'refresh_due_at_head': head,
+    'note': 'org/missions/ is DERIVED and compiled at VIEW time. Run '
+            '.tools/comp-missions emit && .tools/comp-missions compile to refresh. '
+            'This file is gitignored; the hook writes nothing tracked.',
+}, indent=2))
+PYEOF
 ) >/dev/null 2>&1 &
 
 exit 0
