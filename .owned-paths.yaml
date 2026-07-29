@@ -67,6 +67,12 @@ lanes:
       - 0.0.0_AB_MSTR
     description: "MSTR-published ground-truth artifacts under org/mcp/. Per LD-0105 Fix 2 + Andrew direct sovereign 2026-05-26T~22:00Z verbatim 'Lets do all three yes' approving the 3-fix cluster (MSTR routed via 5174e6b01; ws COO ask 20260526T201028Z). Immediate scope: org/mcp/live_agents_by_marker.json (MSTR-maintained ground-truth artifact for the broker-suffix-strip-gap structural fix; addresses /allocation #12 ~21:38Z visual-collision-class spawn-race caught by Andrew direct on DS 0.4.0~D vs DS 0.1.0~D). Expansion-class: future MSTR-published artifacts under org/mcp/ get explicit path entries on this lane as published (overrides the org/mcp/** BASE_EXEC catch-all per longest-match-wins). Sister precedent: TIER0_TIER1_STARTUP_DOCS lane class added today (2904f08e7) for cross-tier coverage. Added 2026-05-26 by ws CTO."
 
+  MSTR_TRUNK:
+    permitted_agents:
+      - 0.0.0_AB_MSTR
+      - 0.0.0_AB_MSTR~Z
+    description: "Cross-device MSTR AGENTBUS trunk (org/mcp/agentbus-trunk/**) -- Andrew stood the trunk up 2026-07-28 late-night so the two MSTR devices (base + site Z) can coordinate; the trunk's own law is unacked == undelivered, and base was BLOCKED from ACKing (org/mcp/** BASE_EXEC catch-all). NARROW grant to the trunk subtree ONLY -- org/mcp/** stays BASE_EXEC; overrides per longest-match-wins (MSTR_ARTIFACT_PATHS precedent, line ~68). SoD: grantee is MSTR, grantor ws CTO (this commit), on MSTR's 20260729T003241Z request. KNOWN OPEN HAZARD recorded with the grant, not fixed by it: site Z has ZERO git hooks (fresh clone installs none; 8 installers exist, no single entry point) -- site-Z commits are currently ungated for owned-paths et al.; the install-all entry point is a named post-MDPF item (CTO to route). Added 2026-07-29 by 1.0.0_SA_CTO."
+
   COMP_LEARNS:
     permitted_agents:
       - 1.1.0_SA_CTO
@@ -1006,6 +1012,10 @@ paths:
     note: "Universal agent startup protocol — MSTR + Tier-1 execs across both fabrics. Lane widened BASE_EXEC -> TIER0_TIER1_STARTUP_DOCS 2026-05-26 by ws CTO per Andrew direct via LD-0099 + MSTR [BLOCKED-ASK] ASK 1 cluster (Andrew direct quote: 'all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'). Closes the gap that forced LD-0099 c7dee9cd5 to ship 'excl org/XXX.md' + route to ws CTO."
 
   # MSTR-published ground-truth artifact (more-specific path; overrides org/mcp/** below per longest-match-wins):
+  "org/mcp/agentbus-trunk/**":
+    lane: MSTR_TRUNK
+    note: "Cross-device MSTR trunk -- both MSTR serials (base + ~Z). Overrides the org/mcp/** BASE_EXEC catch-all per longest-match-wins. Granted 2026-07-29 by ws CTO on MSTR 003241Z request; Andrew built the trunk 07-28 late-night. ACK-deadline class: an unacked trunk message is UNDELIVERED by the trunk's own law."
+
   "org/mcp/live_agents_by_marker.json":
     lane: MSTR_ARTIFACT_PATHS
     note: "MSTR-maintained ground-truth artifact addressing broker-suffix-strip-gap visual-collision-class per LD-0105 Fix 2 + Andrew direct 2026-05-26T~22:00Z verbatim 'Lets do all three yes'. Fix 1 SHIPPED via MSTR scribe authority 5174e6b01; Fix 2 owned-paths lane grant SHIPPED via ws CTO this commit."
