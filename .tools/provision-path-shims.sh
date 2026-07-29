@@ -91,7 +91,27 @@ cat > "$BIN/aws" << EOF
 # name so .tools/aws's own "find the real aws, skip myself" search can never mistake THIS file
 # for the real underlying CLI (which would otherwise loop: this file -> aws -> .tools/aws ->
 # picks this file as "real" -> this file again).
-export PATH="$WS/.tools:\$(printf '%s' "\$PATH" | tr ':' '\n' | grep -Fxv "$BIN" | paste -sd: -)"
+#
+# PATH-FLAVOR BUG FIXED 2026-07-29: this line used to strip a GENERATION-TIME string ("\$BIN",
+# which expanded to /c/Users/<user>/bin) while PATH at RUN time carried the OTHER MSYS flavor
+# (/cygdrive/c/Users/<user>/bin). String equality across two flavors of the same directory NEVER
+# MATCHES, so the strip silently no-opped, the loop it exists to prevent fired, and every \`aws\`
+# call in every agent shell died with a Python SyntaxError reading THIS bash file. Worse, the two
+# halves of the same generated line disagreed with each other: \$WS came out cygdrive-flavored and
+# \$BIN came out /c-flavored.
+#
+# THE FIX IS THE SAME ONE AS THE LAUNCHERS (LD-0344): resolve at RUN time from this file's OWN
+# location, in whatever flavor the running shell uses, instead of baking a path string at
+# generation time. \`cd ... && pwd\` returns the flavor the CURRENT shell understands by
+# construction, so it matches its own PATH entry no matter which flavor that is.
+_self_dir="\$(cd "\$(dirname "\${BASH_SOURCE[0]}")" 2>/dev/null && pwd)"
+export PATH="\$(printf '%s' "\$PATH" | tr ':' '\n' | grep -Fxv "\$_self_dir" | paste -sd: -)"
+# Prepend the workspace .tools ONLY if it resolves here. Baked (this file lives outside the repo
+# and must point home somehow) but VERIFIED rather than assumed -- a stale or wrong-flavor bake
+# now degrades to "use whatever aws is on PATH" instead of breaking every call.
+if [ -x "$WS/.tools/aws" ]; then
+  export PATH="$WS/.tools:\$PATH"
+fi
 exec aws "\$@"
 EOF
 chmod +x "$BIN/aws"
