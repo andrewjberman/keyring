@@ -27999,3 +27999,9 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0_exec/0.0.0_AB_MSTR/deliverabl... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff org/tier0_exec/0.0.0_AB_MSTR/deliverables/INCIDENT_TAXONOMY/00_SUMMARY.md | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | RV-0057.F-001 | comp-which | comp-which "where are the audit logs and who reads them" | ROUTED -- no rich tool models .gitignore precedence/hook wiring; git-metadata + source reads carried # rail-checked: |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | RV-0057.F-001 | owned-paths-check.sh | EXERCISED per-path, audit log redirected to scratch, firing negative control (infra/aws/lambda/data_refresh/** BLOCK) beside positive (docs/architecture/** ALLOW) | PASS -- routed RV-0057 corrections to MSTR instead of self-editing org/tier0/** |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | RV-0057.F-001 | audit-archive-invoker | --self-test | PASS 7/7 -- AND THE PASS IS THE FINDING: CONTROL-A cannot fail on a non-minting device (PRD s.5) |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | RV-0057.F-001 | audit-archive-invoker | --dry-run --json (never live; re-run as control after the FINDINGS.md append) | rc=1, 11 findings, snapshot=not-due; identical verdict post-append, sig count 17 -> 17 |
