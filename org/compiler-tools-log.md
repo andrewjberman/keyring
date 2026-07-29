@@ -27645,6 +27645,14 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/GRAPH_CODE_LOCATION_STANDARD.md docs/architecture/GRA... | PASS |
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/agentbus-sqs.sh --file .tools/sp... | PASS |
+| 2026-07-29Z | 0.0.0_AB_MSTR~Z | (no-TO) | comp-pulse | comp-pulse diff .tools/agentbus-sqs.sh .tools/spawn-agent.ps1 org/projects/OPAL_SQSCHAT... | VERDICT |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_AGENTBUS_PRD.md ... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_AGENTBUS_PRD.md org/projects/OPAL_SQSCHAT.json o... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_AGENTBUS_PRD.md ... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff docs/architecture/NFRA_AGENTBUS_PRD.md org/projects/OPAL_SQSCHAT.json o... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check | VERDICT |
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check | VERDICT |
 | 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ModelPortfolios | UNKNOWN |
@@ -27699,3 +27707,6 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 3.0.0_SA_CVO | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-grep,comp-surface-check,comp-pulse | LD-0347 OPAL_SQSCHAT arch-gate: comp-grep x3 (aws_sqs_queue in infra / agentbus in infra / the nfra-agentbus module) surfaced the PORT-1 module whose KMS+queue-policy+partition-role pattern A.2 excludes from Port 2 -- that coupling became the central warning in the AE TO, and a raw grep would have returned the same text without it. comp-iam DELIBERATELY NOT RUN (models (action) not (action,resource), parses TF-DESIRED, and does not model IAM-user access-key inventory at all) -> grounded on the live primitive iam list-access-keys per Rule 22a, which is what overturned my own draft IAM finding. | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO~Z | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier1_exec/1.0.0_SA_CTO/logs/2026-07-29/s... | PASS |
