@@ -76,6 +76,23 @@ Certification executes from ~15:05Z (timer task brjo17kej: 15:05 / 15:50 / 16:20
   2026-07-29, detached; telemetry s3://opal-data-mdpf/telemetry/mdpf-daily-runner/. Chain
   COMPLETION (gold vintages) checked at the 15:50/16:20 ticks — dispatch is not landing.
 
+**15:45Z LEGS @15:50Z tick — TWO legs, one clean, ONE CRASHED:**
+- `etfs-canon-fanin` (Rules cron 45 15, ETF PRODUCT): fired unattended, 12 rows upserted to
+  opal-etfs-ownership-daily (49f dates=07-28 T-1, inflection 07-29, cottonwood 07-27), own log
+  RequestId c2ee44eb. Trigger payload NOT self-logged (evidence grade: in-window fire + single
+  enabled trigger; stated as such). COO's four-clock table mislabeled this leg "accrual" — it is
+  the ETF fan-in; corrected in my 155600Z.
+- `mdpf-accrual-trigger` (SCHEDULER cron 45 15, MDPF accrual bridge v1.9.0): fired unattended
+  15:45:21Z, dispatched SSM 85b3ef08 — **RUN CRASHED: AccessDenied, mdpf-daily-runner-ec2-role
+  lacks s3:PutObject on opal-data-assets/portal/gold/mdpf/*** (run telemetry
+  accrual-bridge-runs/20260729T154521Z.log, build_portal_gold_accrual.py:260; traceback names a
+  07-27 key → bridge rewrites trailing dates, grant must cover the full write set). Dispatcher
+  printed OK — dispatch rc, not run rc. **Gold tree ZERO writes today (newest 00:35:17Z)** → the
+  16:15Z publisher republishes yesterday's vintages absent a ruling. Routed URGENT to CTO
+  (fix-forward vs publish-stale, freeze posture theirs) + AE~A 155600/155608Z. D2 accrual-leg
+  verdict shape: SCHEDULED FIRE EXERCISED, RUN FAILED ON GRANT — more informative than
+  no-schedule, still not a pass.
+
 ## Sequenced after certification
 
 comp-grep rc=2 flip (CTO GO 031744Z; I land, 0.8.0_AE verifies exit path — 3 fallback-exercisers,
