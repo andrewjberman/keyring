@@ -116,6 +116,16 @@ CTO has bound the gate and AE~A holds the leg.
 - **Queued and NOT done: re-take the leg (d) byte-baseline after DS~A's cottonwood producer run**
   (CTO item 6). Must state which plane it is of — UNDERSCORE (dispatch Stage-4, last 15:05:22Z) vs
   HYPHEN (WO-2 publisher, still 00:35:22-23Z, `cron(15 16)` had not fired at window close).
+  **TWO preconditions, not one (AE base): the run lands AND the artifact that ran is identified by
+  hash** — else the baseline records a state nobody can attribute later. Concrete values, so a
+  successor can discriminate without re-deriving (`dim_mdpf_account_distribution.py`):
+  ```
+  deployed on S3 : fca2b76ce1e17b42e726fec6f5c7230c   <- STALE artifact (the item-ZERO defect)
+  local repo     : 2b07e99d64e384820813b9ed03db164b
+  ```
+  **The two outcomes are DISTINGUISHABLE, so UNATTRIBUTED should not be needed:** if DS~A deploys
+  before firing, the artifact that ran hashes to the LOCAL value; if it fires against the stale
+  artifact deliberately, it stays `fca2b76c`. Label the baseline with whichever it was.
 - Rollback position captured for the 4 underscore keys (`platinum/mdpf/[global|49financial|
   inflection/]aggregate_aua_timeseries.json` + trunk): VersionIds in my 154126Z message to CTO.
   AE~A will RE-DERIVE rather than reuse them, correctly.
