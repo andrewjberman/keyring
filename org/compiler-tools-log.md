@@ -27407,3 +27407,8 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-29Z | 0.7.0_AE_CloudOps~A | (Andrew-direct, no-TO) | comp-grep+commit-gate+comp-pulse | etfs-reports CSV+email_qa deploy | PASS | localize->verify->deploy chain clean; comp-iam skipped per Rule 22a (zero IAM delta; applied-truth via live get-function-configuration) |
 | 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-07-29Z | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md | PASS |
+| 2026-07-29 0335Z | 0.4.0_DE_ClientPlatform | comp-transform schema-check (WARN types-resolution only) + provenance-read-guard PASS x2 + ui-smoke x8 (forced-failure harness per Amendment 3) | MDPF headline field-read d0fb493e/1e4bdf14 + fallback census 87b3ce7e2e + codeMap/trend/cottonwood verifications + carried-point idiom (local) |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/git-author-override-audit.log | PASS |
+| 2026-07-29Z | 1.0.0_SA_CTO | (no-TO) | comp-pulse | comp-pulse diff org/git-author-override-audit.log | VERDICT |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-29Z | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pulse | comp-pulse diff org/compiler-tools-log.md org/tier2_senior/0.4.0_DE_ClientPlatform/logs... | PASS |
