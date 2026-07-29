@@ -21,9 +21,18 @@
 # Do NOT route cross-principal traffic through these queues; that is Port 1's problem.
 #
 # USAGE
-#   agentbus-sqs.sh send <to-device> <from-serial> <body...>
-#   agentbus-sqs.sh recv <this-device> [--keep] [--max N]
-#   agentbus-sqs.sh peek <device>          # depth only, consumes nothing
+#   agentbus-sqs.sh send  <to-device> <from-serial> <body...>
+#   agentbus-sqs.sh recv  <this-device> [--keep] [--max N]   # one-shot drain
+#   agentbus-sqs.sh watch <this-device>                      # THE CONSUMER -- run under Monitor
+#   agentbus-sqs.sh peek  <device>          # depth only, consumes nothing
+#
+# TO MAKE THIS DEVICE REACHABLE, arm the consumer once per session, under the Monitor tool
+# (persistent: true, timeout_ms: 3600000):
+#     bash .tools/agentbus-sqs.sh watch laptop      # on the laptop
+#     bash .tools/agentbus-sqs.sh watch sitez       # on site Z
+# WITHOUT A WATCHER ON A DEVICE, MAIL TO THAT DEVICE IS NOT DELIVERED -- it accumulates. `send`
+# returning a MessageId means STORED, never DELIVERED. Verified live 2026-07-29: site-Z watcher
+# armed and exercised end-to-end; laptop side pending Andrew's word.
 #
 #   <device> is `laptop` or `sitez`. `send laptop` puts a message on the queue the
 #   LAPTOP drains; `recv sitez` drains the queue addressed TO site Z.
@@ -121,6 +130,52 @@ case "$cmd" in
         echo
         echo "Consumed (deleted from queue). ACK each MessageId above to the sender -- deletion is NOT an ack."
     fi
+    ;;
+
+  watch)
+    # THE CONSUMER. Without this running somewhere, the queue-pair is a DURABLE OUTBOX, not a
+    # delivery tier -- measured 2026-07-29: two messages sat undrained for ~45min because nothing
+    # on either device called ReceiveMessage. Every Port-2 property (ACK-as-oracle, breach
+    # surfacing, and specifically the LATENCY case that carried the ratification) presupposes a
+    # poller. The transport was never the critical path; this is.
+    #
+    # RUN IT UNDER THE MONITOR TOOL (persistent: true), never Bash run_in_background -- the Bash
+    # tool only notifies on EXIT and this never exits, so you would go silent. Same rule, same
+    # reason, as org/mcp/inbox-watch.sh stream mode.
+    #
+    # ORDERING IS LOAD-BEARING: emit THEN delete. inbox-watch.sh's orphan-thief bug is the
+    # inverse (mv to read/ at :120 BEFORE echo at :124), so a dead consumer eats mail while every
+    # probe reads healthy. Here, a death between emit and delete redelivers after the visibility
+    # timeout -- a DUPLICATE, not a LOSS. Always fail toward the duplicate.
+    #
+    # SCOPE: this is session-bound wherever you run it. It dies with the session, exactly like the
+    # inbox Monitor, and must be re-armed next session. A durable consumer is a separate decision
+    # (a service/scheduled task on each device) and is NOT this.
+    dev="${1:?usage: watch <laptop|sitez>   # the device you ARE, i.e. the queue addressed TO you}"
+    q="$(queue_for "$dev")"
+    echo "agentbus-sqs: watching ${dev} inbound (long-poll 20s). Emits one line per message; silent otherwise." >&2
+    while true; do
+        set +e
+        out=$(aws sqs receive-message --region "$REGION" --queue-url "$q" \
+                --wait-time-seconds 20 --max-number-of-messages 10 \
+                --message-attribute-names All 2>&1)
+        rc=$?
+        set -e
+        if [ $rc -ne 0 ]; then
+            # LOUD, and never silently retried into looking like an empty queue.
+            echo "[agentbus] RECV ERROR rc=${rc} -- this is NOT an empty queue: $(printf '%s' "$out" | tr '\n' ' ' | cut -c1-160)"
+            sleep 60
+            continue
+        fi
+        if printf '%s' "$out" | grep -q '"Messages"'; then
+            printf '%s' "$out" | grep -o '"Body": "[^"]*"' | cut -d'"' -f4 | while read -r b; do
+                echo "[AGENTBUS -> ${dev}] ${b}"
+            done
+            printf '%s' "$out" | grep -o '"ReceiptHandle": "[^"]*"' | cut -d'"' -f4 | while read -r rh; do
+                aws sqs delete-message --region "$REGION" --queue-url "$q" --receipt-handle "$rh" >/dev/null 2>&1 || true
+            done
+        fi
+    done
     ;;
 
   peek)
