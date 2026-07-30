@@ -111,10 +111,14 @@
       "resources": [
         "ec2-auto-shutdown-enforcer",
         "ec2-runtime-monitor",
+        "opal-49f-value-parity",
+        "opal-cot-value-parity",
+        "opal-inf-value-parity",
         "schwab-anonymizer",
         "test-yfinance-simple",
         "yfinance-aapl-test"
-      ]
+      ],
+      "rebaselined": "CVO adjudication pass 2026-07-30: +3 value-parity lambdas (Route A assign)"
     },
     "news": {
       "named_thread": "news",
@@ -150,8 +154,13 @@
         "find-insure-crawl-web",
         "find-insure-crawl-web-scraping-browser",
         "find-insure-parse-web",
-        "find-insure-score-web"
-      ]
+        "find-insure-score-web",
+        "find-insure-serving-companies",
+        "find-insure-serving-consolidate",
+        "find-insure-serving-employees",
+        "find-insure-serving-scoring"
+      ],
+      "rebaselined": "CVO adjudication pass 2026-07-30: +4 find-insure-serving lambdas (Route A assign)"
     },
     "advi-inf": {
       "named_thread": "advi-inf",
@@ -299,13 +308,6 @@
         "yang-generate-factor-tilts"
       ]
     },
-    "attribution": {
-      "named_thread": "attribution",
-      "resource_count": 1,
-      "resources": [
-        "yang-generate-holdings-attribution"
-      ]
-    },
     "positioning": {
       "named_thread": "positioning",
       "resource_count": 1,
@@ -331,6 +333,32 @@
         "m365-mcp-gateway"
       ],
       "added": "2026-07-30 CVO tool-walk #1: fixture coverage for the two previously declared-but-unmapped threads"
+    },
+    "etf-reports": {
+      "resources": [
+        "bd-49f-etf-ownership-daily",
+        "cot-etf-ownership-daily",
+        "etf-ownership-dashboard",
+        "etfs-canon-fanin",
+        "etfs-netassets-daily",
+        "etfs-reports-orchestrator",
+        "inf-etf-ownership-daily",
+        "wsb-49f-model-aua-daily",
+        "wsd-49f-partner-held-etf-daily"
+      ],
+      "added": "CVO adjudication pass 2026-07-30: NEW vertical (naming act)"
+    },
+    "ceo-digest": {
+      "resources": [
+        "astn-wsjft-orchestrator"
+      ],
+      "added": "CVO adjudication pass 2026-07-30: NEW vertical (naming act)"
+    },
+    "ticketing": {
+      "resources": [
+        "opal-ticket-api"
+      ],
+      "added": "CVO adjudication pass 2026-07-30: NEW vertical (naming act)"
     }
   },
   "source": "AUTHORITATIVE_lambda_taxonomy.json (single resource-level source; 45 divergences reconciled)",

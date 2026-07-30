@@ -23,6 +23,12 @@
 
 schema_version: 1
 last_full_review: 2026-06-15   # the CVO census 2d9a0a2a1
+adjudications_20260730: 'CVO pass (Andrew-direct): causality-ai family = producers DEAD on applied
+  plane (whole lambda family absent from AWS, measured 2026-07-30) -- retirement-pending, chains
+  flagged producers-dead-applied-plane-20260730 in the resolver; teardown routes to the debt
+  retirement engine (VELOCITY WS-E3), never map-side. attribution vertical RETIRED (content under
+  positioning). NEW verticals: etf-reports, ceo-digest, ticketing (+taxonomy rows). All durable in
+  AUTHORITATIVE_lambda_taxonomy.json adjudication_20260730.' 
 
 
 # ---- FULL POPULATION (COO-generated from CVO census 2d9a0a2a1 + NAMED_THREAD_CATALOG d33fe4aab; CVO verifies determinations) ----

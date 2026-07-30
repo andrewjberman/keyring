@@ -15,7 +15,6 @@
     "correlation",
     "positioning",
     "cma",
-    "attribution",
     "portfolio-management",
     "trade-submission",
     "causality",
@@ -29,7 +28,10 @@
     "ops-internal",
     "data-refresh",
     "canonical-schwab",
-    "m365-mcp"
+    "m365-mcp",
+    "etf-reports",
+    "ceo-digest",
+    "ticketing"
   ],
   "resources_by_named_thread": {
     "security-scanner": [
@@ -112,6 +114,9 @@
     "ops-internal": [
       "ec2-auto-shutdown-enforcer",
       "ec2-runtime-monitor",
+      "opal-49f-value-parity",
+      "opal-cot-value-parity",
+      "opal-inf-value-parity",
       "schwab-anonymizer",
       "test-yfinance-simple",
       "yfinance-aapl-test"
@@ -143,7 +148,11 @@
       "find-insure-crawl-web",
       "find-insure-crawl-web-scraping-browser",
       "find-insure-parse-web",
-      "find-insure-score-web"
+      "find-insure-score-web",
+      "find-insure-serving-companies",
+      "find-insure-serving-consolidate",
+      "find-insure-serving-employees",
+      "find-insure-serving-scoring"
     ],
     "advi-inf": [
       "inf-accounts-v2-daily",
@@ -242,9 +251,6 @@
     "factor-tilts": [
       "yang-generate-factor-tilts"
     ],
-    "attribution": [
-      "yang-generate-holdings-attribution"
-    ],
     "positioning": [
       "yang-generate-positioning"
     ],
@@ -256,6 +262,23 @@
     ],
     "m365-mcp": [
       "m365-mcp-gateway"
+    ],
+    "etf-reports": [
+      "bd-49f-etf-ownership-daily",
+      "cot-etf-ownership-daily",
+      "etf-ownership-dashboard",
+      "etfs-canon-fanin",
+      "etfs-netassets-daily",
+      "etfs-reports-orchestrator",
+      "inf-etf-ownership-daily",
+      "wsb-49f-model-aua-daily",
+      "wsd-49f-partner-held-etf-daily"
+    ],
+    "ceo-digest": [
+      "astn-wsjft-orchestrator"
+    ],
+    "ticketing": [
+      "opal-ticket-api"
     ]
   },
   "threads": [
@@ -946,7 +969,9 @@
       "status": "explicit-out",
       "reachability_status": "frontend-orphan",
       "reason": "Live API route but ZERO consumer (absent from causality-endpoints.ts and built page); on deprecation list",
-      "debtscan_flags": [],
+      "debtscan_flags": [
+        "producers-dead-applied-plane-20260730"
+      ],
       "description": "Synchronous API handler POST /causality/query free-form AI Q&A over causality data.",
       "producers": [
         "causality-ai-query-handler (Lambda python3.12 512MB/60s)",
@@ -965,7 +990,9 @@
       "status": "explicit-out",
       "reachability_status": "frontend-orphan",
       "reason": "2 live API routes but ZERO consumer; on deprecation list",
-      "debtscan_flags": [],
+      "debtscan_flags": [
+        "producers-dead-applied-plane-20260730"
+      ],
       "description": "Synchronous API handler GET /causality/movements + /causality/movements/{movement_id}: fetch+enrich top market movements (news + Alpha Vantage price).",
       "producers": [
         "causality-data-enrichment (Lambda python3.12 512MB/60s, env NEWS_SCANNER_BUCKET=opal-data-news-av)",
@@ -985,7 +1012,8 @@
       "reachability_status": "unreviewed",
       "reason": null,
       "debtscan_flags": [
-        "needs-consumer-trace"
+        "needs-consumer-trace",
+        "producers-dead-applied-plane-20260730"
       ],
       "description": "Synchronous API handler POST /causality/generate-analysis runs GPT-4 analysis over 1-3 themes (summary/catalysts/technical/price-impact).",
       "producers": [
@@ -1006,7 +1034,8 @@
       "reachability_status": "unreviewed",
       "reason": null,
       "debtscan_flags": [
-        "needs-consumer-trace"
+        "needs-consumer-trace",
+        "producers-dead-applied-plane-20260730"
       ],
       "description": "Daily 6am-ET pipeline: reads News Scanner summaries from opal-data-news-av, enriches top topics with Alpha Vantage quotes, scores relevance, writes top-3 thematic signals to DDB causality-thematic-signals.",
       "producers": [
@@ -1030,7 +1059,8 @@
       "reachability_status": "unreviewed",
       "reason": null,
       "debtscan_flags": [
-        "needs-consumer-trace"
+        "needs-consumer-trace",
+        "producers-dead-applied-plane-20260730"
       ],
       "description": "Synchronous API handler GET /causality/themes returns trending themes (filter days/sentiment/sector/limit) for the Causality Discovery tab.",
       "producers": [
@@ -1550,7 +1580,8 @@
       "reachability_status": "unreviewed",
       "reason": null,
       "debtscan_flags": [
-        "needs-consumer-trace"
+        "needs-consumer-trace",
+        "producers-dead-applied-plane-20260730"
       ],
       "description": "History-tab handler: POST /causality/save-analysis persists analyses, GET /causality/history lists them, plus delete/update-notes; backed by DDB causality-saved-analyses + causality-generations.",
       "producers": [
@@ -1572,7 +1603,8 @@
       "reachability_status": "unreviewed",
       "reason": null,
       "debtscan_flags": [
-        "needs-consumer-trace"
+        "needs-consumer-trace",
+        "producers-dead-applied-plane-20260730"
       ],
       "description": "Synchronous API handler POST /causality/generate/market-update builds a market-update deck (PPTX/PDF) over 3 themes, returns an S3 download URL.",
       "producers": [
@@ -2819,7 +2851,9 @@
       "status": "explicit-out",
       "reachability_status": "frontend-orphan",
       "reason": "Live API route but ZERO consumer; on deprecation list",
-      "debtscan_flags": [],
+      "debtscan_flags": [
+        "producers-dead-applied-plane-20260730"
+      ],
       "description": "Synchronous API handler POST /causality/generate/trade-idea AI trade-idea generation.",
       "producers": [
         "causality-trade-idea-generator (Lambda python3.12 512MB/60s)",
@@ -2919,6 +2953,54 @@
       "producers": [],
       "served_artifacts": [],
       "frontend_resolution": ""
+    },
+    {
+      "thread_id": "etfs-reports-pipeline",
+      "named_thread": "etf-reports",
+      "family": "UNASSIGNED",
+      "owning_tool": "none",
+      "status": "in-scope",
+      "reachability_status": "unreviewed",
+      "reason": null,
+      "description": "ETF ownership + partner-rebate reporting product: per-firm etf-ownership dailies -> canon fanin -> netassets -> month-end reports orchestrator (SES) + ownership dashboard. ETFS_AVGCAP rebate basis.",
+      "producers": "etfs-canon-fanin, etfs-netassets-daily, etfs-reports-orchestrator, wsb-49f-model-aua-daily, wsd-49f-partner-held-etf-daily, bd-49f-etf-ownership-daily, cot-etf-ownership-daily, inf-etf-ownership-daily, etf-ownership-dashboard",
+      "served_artifacts": null,
+      "frontend_resolution": null,
+      "last_reviewed": "2026-07-30",
+      "debtscan_flags": [],
+      "adjudication": "CVO 2026-07-30: chain row added at vertical adjudication; C3.i structure assignment owed at census regeneration (family=UNASSIGNED, honest)"
+    },
+    {
+      "thread_id": "ceo-daily-wsjft-digest",
+      "named_thread": "ceo-digest",
+      "family": "UNASSIGNED",
+      "owning_tool": "none",
+      "status": "in-scope",
+      "reachability_status": "unreviewed",
+      "reason": null,
+      "description": "CEO Daily WSJ & FT News Digest (ASTN_WSJFT): 3am-ET one-shot, Bright Data pull + LLM cited-bullet summary, SES email delivery to Austin.",
+      "producers": "astn-wsjft-orchestrator",
+      "served_artifacts": null,
+      "frontend_resolution": null,
+      "last_reviewed": "2026-07-30",
+      "debtscan_flags": [],
+      "adjudication": "CVO 2026-07-30: chain row added at vertical adjudication; C3.i structure assignment owed at census regeneration (family=UNASSIGNED, honest)"
+    },
+    {
+      "thread_id": "ticket-center-api",
+      "named_thread": "ticketing",
+      "family": "UNASSIGNED",
+      "owning_tool": "none",
+      "status": "in-scope",
+      "reachability_status": "unreviewed",
+      "reason": null,
+      "description": "TicketCenter product API (OPAL_TICKET): opal-ticket-api behind the portal, ticket intake/track.",
+      "producers": "opal-ticket-api",
+      "served_artifacts": null,
+      "frontend_resolution": null,
+      "last_reviewed": "2026-07-30",
+      "debtscan_flags": [],
+      "adjudication": "CVO 2026-07-30: chain row added at vertical adjudication; C3.i structure assignment owed at census regeneration (family=UNASSIGNED, honest)"
     }
   ]
 }
