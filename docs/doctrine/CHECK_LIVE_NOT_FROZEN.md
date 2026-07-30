@@ -9,6 +9,44 @@ false with authority").
 
 > # **A thing defined against a FROZEN reference drifts silently. The fix is to track LIVE state on a cadence.**
 
+> # **CARDINAL RULE (Andrew-direct, 2026-07-30 ~2135Z, VERBATIM): "we can never ever have dependencies on frozen maps."**
+
+**The escalation, and why it needed its own line.** The doctrine above says a frozen reference DRIFTS.
+The cardinal rule says something stronger and structural: **a frozen artifact may not be a DEPENDENCY.**
+Drift is tolerable in a document nobody computes from; it is not tolerable under a tool that answers
+questions. The rule was named off a measured instance the same day (below), and it converts the
+doctrine from "re-check your references" into "do not build a read path onto something that cannot
+refresh."
+
+**THE INSTANCE THAT EARNED IT (2026-07-30, CTO descent test).** `comp-estate` -- the canonical
+semantics-to-facts descent, and the tool NFRA_VELOCITY is built to stand on -- serves its chain prose
+from `estate-coverage-resolver.json`, a JOIN of two halves with OPPOSITE refresh properties: a
+hand-adjudicated manifest that is ALIVE (committed twice that day) and a census read from a HARDCODED
+DATE-PINNED PATH (`logs/2026-06-15/estate_census/`) that is FROZEN and **has no refresh path at all**
+(recorded 2026-07-24, NFRA_TOOLUNIFY item 5: *"never had a refresh path ... FREEZE, do not 'fix' by
+regenerating"*). Measured consequence: a served artifact narrated as **"LIVE fresh 2026-06-15"** whose
+live truth was 2026-07-30 -- **45 days stale, wearing the word LIVE**.
+
+**THE FAILURE SIGNATURE, which is the part worth carrying:** a live half joined to a frozen half
+presents **CURRENT VOCABULARY OVER STALE FACTS**, and a newly-added semantic term renders as
+`UNASSIGNED` rather than as an error -- so **the decay is silent AND it grows in proportion to how well
+the living half is maintained.** Every legitimate semantic edit widens the gap. Three separate
+tool defects that day traced to this one asymmetry.
+
+**THE REMEDY IS NOT A FRESHER SNAPSHOT.** It is to delete the snapshot for everything derivable and
+run-time compile it, leaving only what genuinely requires human judgment -- which is then small enough
+to date, review and keep honest. Field-level design:
+`Desktop/OPAL_WORLD_MODEL/00_framework/RESOLVER_DEFROST_DESIGN.md` (@ee35d1c) -- 10 census fields split
+5 deterministic / 4 prose / 1 key. Companion mechanism for prose that changes with NO surface change
+(the "Route B / Ontology error"): the Andrew-ruled daily semantic-evolution pipeline, spec owned by
+`1.0.0_SA_CTO`, record `org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_RULING_SEMANTIC_EVOLUTION_PIPELINE_20260730.md`.
+
+**GATE CANDIDATE (named, NOT yet built -- do not read this as enforced):** a commit/registration-time
+lint denying any comp-tool read path whose source resolves a DATE-PINNED literal directory
+(`logs/YYYY-MM-DD/`, `*-20YYMMDD/`) or any artifact on the declared frozen list
+(`estate-coverage-resolver.json`, `stitch_graph.json`, `graph_contracts`). Until it exists, this is
+prose and prose taxes every session -- so it is a build item, not a decoration.
+
 ## The principle
 
 Whenever an artifact is DEFINED-AGAINST a reference that can change — a snapshot, a schema, a coverage
