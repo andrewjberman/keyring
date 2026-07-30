@@ -259,8 +259,29 @@ def _append_log(workspace: Path, tool: str, args: str, exit_code: int,
     # fail-% mining + health analysis then EXCLUDE it, so a synthetic fail is no longer indistinguishable
     # from a real one (was 1/1302 marked -> the raw fail-% over-counted). Fixtures opt in via the env var;
     # a normal run is never tagged. The tag lives in the RESULT cell (grep-excludable by the miner).
-    if os.environ.get("COMP_SYNTHETIC_FIXTURE", "").strip().lower() in ("1", "true", "yes", "on"):
+    synthetic = os.environ.get("COMP_SYNTHETIC_FIXTURE", "").strip().lower() in ("1", "true", "yes", "on")
+    if synthetic:
         result = f"{result} (SYNTHETIC TEST FIXTURE)"
+
+    # E4.2 (NFRA_VELOCITY_ESTATE WS-E4.2, 2026-07-30): the FAIL column's three meanings,
+    # separated as a TYPED FIELD in the machine record rather than as a text suffix a miner
+    # has to grep-exclude. The suffix above is PRESERVED for the existing miners that key on
+    # it -- this is additive, so nothing downstream breaks -- but `fail_kind` is the field a
+    # new consumer should read. Derived from the tool's own declared exit contract, never a
+    # frozen list here (E4.1 condition 1 applies one level down).
+    #
+    # WHY IT MATTERS, in one line: a RISING FAIL count is today indistinguishable from
+    # BETTER NEGATIVE-CONTROLLING, which is a good thing reading as a bad one.
+    #
+    # `fail_kind` is None (key omitted) for any non-FAIL row, so a consumer can never read a
+    # kind off a PASS. Both "I do not know" values (undeclared_rc / kind_undeclared) are LOUD
+    # and are never defaulted into one of the three meanings.
+    fail_kind = None
+    if _OC_OK and _oc is not None:
+        try:
+            fail_kind = _oc.classify_fail_kind(tool, exit_code, synthetic=synthetic)
+        except Exception:
+            fail_kind = None  # never disrupt the caller; absence is honest, a guess is not
 
     # Truncate long arg strings for readability
     command = f"{tool} {args}".strip()
@@ -281,6 +302,14 @@ def _append_log(workspace: Path, tool: str, args: str, exit_code: int,
         rec = {"ts_epoch": time.time(), "serial": serial, "to_id": to_id, "tool": tool,
                "args_head": command[:80], "rc": exit_code, "result": result,
                "session_id": os.environ.get("CLAUDE_CODE_SESSION_ID", "")}
+        # Additive OPTIONAL keys (E4.2). Omitted when not applicable rather than written null,
+        # so a reader cannot mistake "not a fail" for "kind unknown". Keeping these optional is
+        # also what leaves the WS-E6/R8 route-id path open: a later field needs no schema
+        # migration and no telemetry re-baseline.
+        if fail_kind is not None:
+            rec["fail_kind"] = fail_kind
+        if synthetic:
+            rec["synthetic"] = True
         with open(runs_sink, "a", encoding="utf-8") as f:
             f.write(_json.dumps(rec, ensure_ascii=True) + "\n")
     except Exception as e:

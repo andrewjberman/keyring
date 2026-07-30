@@ -191,6 +191,122 @@ def classify_exit(tool: str, exit_code: int) -> str:
     return UNKNOWN
 
 
+# ----------------------------------------------------------------------------------------------------
+# E4.2 -- THE FAIL COLUMN'S THREE MEANINGS, SEPARATED IN THE MACHINE RECORD
+# (NFRA_VELOCITY_ESTATE WS-E4.2, COO dispatch 20260730T053344Z)
+#
+# A single FAIL token conflates three things with different owners and opposite signs:
+#   (a) a DELIBERATE NEGATIVE CONTROL -- a probe engineered to fail, to prove a tool can
+#       detect. More of these is BETTER. Counting them as failures makes improving
+#       discipline look like degrading quality, which is the two-meaning-null that makes
+#       "are we getting better?" unanswerable in either direction.
+#   (b) a TOOL USAGE ERROR -- the caller passed something the tool cannot act on. Says
+#       nothing about the estate; it is a fact about the invocation.
+#   (c) a GENUINE FINDING -- the tool worked and the estate is wrong.
+#
+# DERIVED, NOT FROZEN (inherits E4.1 condition 1): the kind comes from the tool's own
+# declared exit contract via an optional `kind:` on a fail-class exit. There is no
+# hand-maintained tool list here and there must never be one.
+#
+# TWO DISTINCT "I DO NOT KNOW" BUCKETS, both LOUD, neither defaulted into (a)/(b)/(c) --
+# this is E4.1 condition 2's discipline applied one level down:
+#   UNDECLARED_RC   the rc is absent from the contract entirely. We do not know what this
+#                   exit MEANS. Measured 2026-07-30: 19 rows across 6 tools carry rc=120,
+#                   declared by nobody -- 21% of the post-M3 FAIL population. TWO causal
+#                   hypotheses were tested and BOTH REFUTED (harness-rc corruption: the
+#                   rate ROSE after MSTR's 07-28 mount fix, 0.120% -> 0.727%; CPython
+#                   broken-pipe flush: a piped python exits 1, not 120, and
+#                   comp-opalbizsem --list exits 2 both piped and unpiped). The cause is
+#                   UNDETERMINED and is an owned item for the tool owners to declare. It is
+#                   NOT assigned a meaning here, because a plausible-but-wrong bucket is
+#                   worse than an honest unknown.
+#   KIND_UNDECLARED the rc IS declared fail but carries no `kind:`. We know it failed; we
+#                   do not know which of the three it is. Bounded and visible, exactly like
+#                   pending_declaration -- so the tail can never grow silently.
+# ----------------------------------------------------------------------------------------------------
+
+FK_NEGATIVE_CONTROL = "negative_control"
+FK_USAGE_ERROR = "usage_error"
+FK_FINDING = "finding"
+FK_UNDECLARED_RC = "undeclared_rc"
+FK_KIND_UNDECLARED = "kind_undeclared"
+
+_FAIL_KIND_VOCAB = {
+    "negative_control": FK_NEGATIVE_CONTROL,
+    "usage": FK_USAGE_ERROR,
+    "usage_error": FK_USAGE_ERROR,
+    "finding": FK_FINDING,
+}
+
+
+@functools.lru_cache(maxsize=1)
+def _fail_kind_table() -> dict:
+    """{tool: {rc:int -> kind:str}} from the declared `kind:` on each exit_codes entry.
+    A tool with no kinds declared simply has no entries -- it renders KIND_UNDECLARED."""
+    table: dict = {}
+    for tool, c in (_contracts_doc().get("contracts") or {}).items():
+        if not isinstance(c, dict):
+            continue
+        rc_map: dict = {}
+        for rc, spec in (c.get("exit_codes") or {}).items():
+            if not isinstance(spec, dict):
+                continue
+            kind = str(spec.get("kind", "")).strip().lower()
+            if not kind:
+                continue
+            try:
+                rc_map[int(rc)] = _FAIL_KIND_VOCAB.get(kind, FK_KIND_UNDECLARED)
+            except (TypeError, ValueError):
+                continue
+        if rc_map:
+            table[tool] = rc_map
+    return table
+
+
+def classify_fail_kind(tool: str, exit_code: int, synthetic: bool = False) -> Optional[str]:
+    """E4.2's single derivation point. Returns None when the row is NOT a FAIL -- the field
+    is absent rather than falsely populated, so a consumer can never read a kind off a PASS.
+
+    Precedence, and the order is deliberate:
+      synthetic flag set            -> NEGATIVE_CONTROL (a deliberate probe is a probe even
+                                       if its rc also happens to be contracted)
+      result class is not FAIL      -> None
+      rc declared with a `kind:`    -> that kind
+      rc declared fail, no `kind:`  -> KIND_UNDECLARED (loud)
+      rc not declared at all        -> UNDECLARED_RC   (loud)
+    """
+    if synthetic:
+        return FK_NEGATIVE_CONTROL
+    if exit_code == 0:
+        return None
+    if classify_exit(tool, exit_code) != FAIL:
+        return None
+    declared_rcs = _exit_table().get(tool) or {}
+    if exit_code not in declared_rcs:
+        return FK_UNDECLARED_RC
+    return (_fail_kind_table().get(tool) or {}).get(exit_code, FK_KIND_UNDECLARED)
+
+
+def fail_kind_coverage() -> dict:
+    """The migration denominator for E4.2: how many declared fail-exits carry a `kind:`.
+    Printed on reports so the tail is visible and bounded, never silent."""
+    total = kinded = 0
+    missing = []
+    for tool, rc_map in _exit_table().items():
+        for rc, cls in rc_map.items():
+            if cls != FAIL:
+                continue
+            total += 1
+            if (_fail_kind_table().get(tool) or {}).get(rc):
+                kinded += 1
+            else:
+                missing.append("%s:rc%d" % (tool, rc))
+    return {"declared_fail_exits": total, "with_kind": kinded,
+            "without_kind": sorted(missing),
+            "note": ("an exit without a `kind:` renders KIND_UNDECLARED, loudly; it is never "
+                     "defaulted into negative_control / usage_error / finding")}
+
+
 def verdict_exit_map() -> tuple:
     """Back-compat derivation for any consumer that wants the old shapes, DERIVED not frozen:
       (verdict_tools: frozenset,  refuse_exits: frozenset[(tool, rc)])
