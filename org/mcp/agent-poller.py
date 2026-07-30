@@ -43,7 +43,13 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 LIVENESS_FILE = SCRIPT_DIR / "liveness.json"
 ORG_ROOT = SCRIPT_DIR.parent
 
-POLL_INTERVAL = 2  # seconds
+# Heartbeat cadence. Bounded by server.py STALE_THRESHOLD (120s) -- a heartbeat
+# must land well inside it or a live agent grades STALE. 15s leaves an 8x margin
+# (40x against DEAD_THRESHOLD 600s) and cuts liveness.json rewrites ~87% vs the
+# prior 2s, which was 60x oversampled against the 120s threshold it feeds.
+# Andrew-direct 2026-07-30. Broker pruning is UNAFFECTED by this constant:
+# broker.py _clean_stale evicts on _pid_alive(), not on heartbeat age.
+POLL_INTERVAL = 15  # seconds
 BROKER_PORT = int(os.environ.get("OPAL_BROKER_PORT", "7800"))
 BROKER_URL = f"http://127.0.0.1:{BROKER_PORT}"
 
@@ -294,10 +300,12 @@ def main():
                 )
                 sys.exit(0)
 
-            # Heartbeat to liveness.json (every cycle = 2s)
+            # Heartbeat to liveness.json (every cycle = 15s)
             _update_heartbeat(full_serial)
 
-            # Heartbeat to broker (every 5th cycle = 10s, reduce HTTP chatter)
+            # Heartbeat to broker (every 5th cycle = 75s, reduce HTTP chatter).
+            # Cadence-independent for liveness: broker.py _clean_stale evicts on
+            # _pid_alive(), never on heartbeat age -- so this may lag safely.
             broker_cycle += 1
             if broker_cycle >= 5:
                 _broker_heartbeat(full_serial)
