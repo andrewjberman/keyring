@@ -185,6 +185,29 @@ def ladder_context():
         return None, None
 
 
+def _aslist(v, empty):
+    """Defect-2 guard (CTO descent test 2026-07-30): a hand-added chain row can carry a STR
+    where the renderer expects a LIST -- iterating it prints one character per line. Normalize;
+    never iterate a string as rows."""
+    if v is None or v == []:
+        return [empty]
+    if isinstance(v, str):
+        return [v]
+    return v
+
+
+def _census_prose(s):
+    """Defect-1 guard (CTO descent test 2026-07-30): chain prose is CENSUS-VINTAGE, and the
+    phrase 'LIVE fresh <date>' inside it is exactly the wording that stops a reader from
+    re-checking (measured: a 'LIVE fresh 2026-06-15' claim was 45 days stale against a live
+    head-object). Re-label the poison phrase at render time; comp-freshness owns live truth.
+    STALE-direction claims are left as-is -- over-warning drives a re-check, which is safe."""
+    s = _a(s)
+    if s and "LIVE fresh" in s:
+        s = s.replace("LIVE fresh", "SNAPSHOT-CLAIMED fresh (census-vintage, NOT a live read)")
+    return s
+
+
 def chain_ladder_line(t, fam2sys, motif_idx):
     """The dual-key + motif annotation for one chain block, or None when suppressed."""
     if fam2sys is None:
@@ -284,6 +307,8 @@ def cmd_thread(data, name):
         + (f" | {n_debt} with DEBT flags" if n_debt else "")
     )
     print("=" * 78)
+    print("NOTE: freshness adjectives inside chain prose are CENSUS-VINTAGE claims (snapshot")
+    print("      vintage in the header), never live reads -- comp-freshness owns live truth.")
     fam2sys, motif_idx = ladder_context()
     for t in threads:
         body(f"\n[{status_tag(t['status'])} | {t['owning_tool']}] {_a(t['thread_id'])}")
@@ -295,11 +320,11 @@ def cmd_thread(data, name):
         if fl:
             body(f"  DEBT: {', '.join(fl)}  ({'; '.join(_FLAG_MEANING.get(f, '?') for f in fl)})")
         if t.get("description"):
-            body(f"  what: {_a(t['description'])}")
-        for i, p in enumerate(t.get("producers") or ["(none recorded)"]):
-            body(f"  {'producers:' if i == 0 else '          '} {_a(p)}")
-        for i, s in enumerate(t.get("served_artifacts") or ["(no data artifact)"]):
-            body(f"    {'-> served:' if i == 0 else '          '} {_a(s)}")
+            body(f"  what: {_census_prose(t['description'])}")
+        for i, p in enumerate(_aslist(t.get("producers"), "(none recorded)")):
+            body(f"  {'producers:' if i == 0 else '          '} {_census_prose(p)}")
+        for i, s in enumerate(_aslist(t.get("served_artifacts"), "(no data artifact)")):
+            body(f"    {'-> served:' if i == 0 else '          '} {_census_prose(s)}")
         fe = _a(t.get("frontend_resolution") or "(none)")
         body(f"    -> frontend: {fe}")
         # P3.2: surface CVO's authoritative reachability when authored (never assert from grep)
@@ -317,7 +342,10 @@ def cmd_thread(data, name):
     # in this named thread, the single source the golden fixtures also derive from.
     if resources:
         print("\n" + "-" * 78)
-        print(f"C0 facts ({len(resources)}) - every role-typed resource (lambda/EC2/StepFn) in '{name}':")
+        print(f"C0 facts ({len(resources)}) - the CENSUS-TAXONOMY roster for '{name}'. NOT exhaustive:")
+        print("  chain prose above may name facts outside the census (EC2/scripts/checkers -- the")
+        print("  measured mdpf case dropped 3); census regeneration closes the gap. Defect-3 honesty")
+        print("  label, CTO descent test 2026-07-30 -- do NOT use this roster as a census denominator.")
         for r in resources:
             body(f"  {_a(r)}")
     footer("\nrun `comp-estate --tool <name> <tool>` to assert a tool owns it (LOUD OUT-OF-SCOPE if not).")
