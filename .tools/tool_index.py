@@ -11,11 +11,11 @@ A reader MUST compare against the live file and FALL BACK TO PARSING on mismatch
 must be able to know it is stale.
 """
 MASTER_PATH = 'org/modules/graph/TOOL_MASTER.yaml'
-MASTER_SHA256 = 'c73415e847fdd3a30f1dbf5943f131af135005b267478cb0d2a0b9862dfd3486'
+MASTER_SHA256 = '59b9472535b2d03d53d68a39812df83dfb6e5b4e86e50187087d966078cf99a9'
 MANIFEST_PATH = 'org/modules/graph/graph-call-manifest.yaml'
-MANIFEST_SHA256 = '46788a0ef672587da629d4590dbea449505ea7f54eb95767c479610f19b5031a'
+MANIFEST_SHA256 = '21f6d40f6be0ed32d1249276606f93c4df2689a8f2055d9e229e3e9d7872a1ed'
 LEDGER_PATH = 'org/modules/graph/comp-coverage-map.yaml'
-LEDGER_SHA256 = '4e9875348dce23ed74bb9773d52d127fa837f699ad801af2ccd1b4cf767ff59c'
+LEDGER_SHA256 = '931f52bad3c17b7b8c7491e6abe33e97e01ec222744c1e9f5cbf6b44ea7731a0'
 
 TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-fn> [--severity warn|error]',
                         'concern': 'portal ADAPTER field-threading audit vs LIVE S3 envelope (schema-drift / '
@@ -355,6 +355,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                             'resource types not queried'],
                'knows_own_denominator': True,
                'state': 'LIVE'},
+ 'comp-estate': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-fedobs': {'canonical_call': 'comp-fedobs coevolution | comp-fedobs',
                  'control_established': 'POSITIVE',
                  'cost_band': 'SECONDS',
@@ -599,6 +600,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                                      'in-VPC only; ~3-4 min/call'],
                         'knows_own_denominator': False,
                         'state': 'PERSISTED'},
+ 'comp-legacywriter': {'cost_band': 'UNKNOWN', 'excludes': []},
  'comp-manifest-check': {'control_established': 'POSITIVE',
                          'cost_band': 'MINUTES',
                          'denominator_construction': 'TRAVERSED',
@@ -1047,7 +1049,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                             'anything unregistered -- THE PHANTOM CLASS'],
                'knows_own_denominator': True,
                'state': 'PERSISTED'},
- 'comp-estate': {'cost_band': 'UNKNOWN', 'excludes': []}}
+ 'pipescript': {'cost_band': 'UNKNOWN', 'excludes': []}}
 
 MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'rebuild_only_when': ['you changed something the graph does not yet reflect AND you need it now '
@@ -1210,7 +1212,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
              {'anti_pattern': 'using it for NEAREST-BY-PURPOSE similarity (that is comp-similar Phase-2, '
                               'KUZUSPLIT-P1 + table gated) -> describe is exact/lexical find of ONE resource. '
                               'Arbitrary Cypher traversal -> comp-kuzu; blast radius -> comp-blast; a named pipeline '
-                              'thread -> pipescript.',
+                              'thread -> comp-estate.',
               'canonical_call': 'comp-describe <arn-or-name> [--json]   # find + describe ONE resource off the '
                                 'derive-at-scan engine',
               'cost': '~ms: 2 targeted comp-kuzu queries for an exact ARN (node + edges); +1 light all-node sweep '
@@ -1506,39 +1508,45 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                               'Unknown); treating an unowned-tool query as clean instead of the LOUD OUT-OF-SCOPE '
                               'pointer; live-grepping the portal for FE-reachability (scaffolding-fooled -- '
                               "bd-time-machine's provider exists in code; use --fe-reachability's CVO ground-truth)",
-              'canonical_call': 'pipescript <name>   # e.g. pipescript news ; --list ; --resource <substr> ; --tool '
-                                '<name> <tool> ; --debt (debtscan flags inline) ; --fe-reachability '
+              'canonical_call': 'comp-estate <name>   # e.g. comp-estate news ; --list ; --resource <substr> ; '
+                                '--tool <name> <tool> ; --debt (debtscan flags inline) ; --fe-reachability '
                                 '(mounted/orphan/phantom/unreviewed) ; --validate ; --gate-b (standing regression '
                                 'oracle)',
               'cost': '~0.3s (reads prebuilt estate-coverage-resolver.json; no AWS calls)',
               'freshness': 'estate-coverage-resolver.json (gen-estate-resolver.py joins CVO manifest 61e91d334 + '
                            'census 2d9a0a2a1)',
-              'id': 'estate.pipescript.named_thread',
+              'id': 'estate.thread.traversal',
               'layer': 'estate',
               'mode': 'query-cached',
               'notes': 'NFRA_PIPESCRIPT COMPLETE 2026-06-15 (full PRD: a+b+c+P1b+P3, CVO final attestation '
-                       'bce23d613). Named-thread estate traversal: 25 named threads (per-page refined: '
-                       'advi-bd/inf/cot + '
-                       'market-overview/factor-tilts/valuation/correlation/positioning/cma/attribution/macroeconomics/model-portfolios/portfolio-management/trade-submission/news/causality/security-scanner/smartx/mdpf/partners/graph-platform/insurance/portal-infra/ops-internal) '
-                       '/ 134 sub-threads over the 169-lambda census. Routes each thread to its owning_tool '
-                       '(comp-pipescript=medallion=13 / globgrph=AWS-resource / stitch=cross-layer / '
-                       'portal-consumer-tools=frontend / none=ops-local). P1b.2 = read-only drill POINTER (surfaces '
-                       'the canonical sub-resolver call per thread; does NOT live-invoke -- F5). P3.1 = inline '
-                       'debtscan flags (--debt). P3.2 = FE-reachability status (--fe-reachability) surfacing CVO '
-                       'GROUND-TRUTH (mounted-reachable/frontend-orphan/phantom/unreviewed-LOUD) -- NOT a live '
-                       'portal grep (scaffolding-fooled). Unknown name OR unowned-tool query ALWAYS LOUD (exit 2) -- '
-                       'generalized TOOL-02 false-clean guard. Standing regression oracle: comp-estate --gate-b + '
-                       '--fe-reachability. Read-only; ASCII-only stdout. Owner: AE/cloud-ops '
-                       '(estate_infrastructure_cli.py, nee pipescript_cli.py 2026-07-30, = AE '
+                       "bce23d613). Named-thread estate traversal; the COUNTS ARE THE RESOLVER'S, live via --list -- "
+                       '29 named threads / 138 sub-threads / 188-lambda census as of 2026-07-30 (the digits '
+                       '25/134/169 this note once froze drifted within six weeks; do not re-freeze them here). '
+                       'Routes each thread to its owning_tool (comp-pipescript=medallion / globgrph=AWS-resource / '
+                       'stitch=cross-layer / portal-consumer-tools=frontend / none=ops-local). P1b.2 = read-only '
+                       'drill POINTER (surfaces the canonical sub-resolver call per thread; does NOT live-invoke -- '
+                       'F5). P3.1 = inline debtscan flags (--debt). P3.2 = FE-reachability status '
+                       '(--fe-reachability) surfacing CVO GROUND-TRUTH '
+                       '(mounted-reachable/frontend-orphan/phantom/unreviewed-LOUD) -- NOT a live portal grep '
+                       '(scaffolding-fooled). Unknown name OR unowned-tool query ALWAYS LOUD (exit 2) -- generalized '
+                       'TOOL-02 false-clean guard. Standing regression oracle: comp-estate --gate-b + '
+                       '--fe-reachability. MEASURED WALL-CLOCKS 2026-07-30: '
+                       'thread/list/resource/debt/fe/validate/gate-b all 0.1-0.4s; --census-drift ~1.2s; --drift and '
+                       '--self-test ~25s (live key-plane scan) -- the two slow modes, declared so no caller is '
+                       'surprised. Read-only; ASCII-only stdout; SIGPIPE-clean under a closing reader (exercised). '
+                       'Owner: AE/cloud-ops (estate_infrastructure_cli.py, nee pipescript_cli.py 2026-07-30, = AE '
                        'lane, same as extract_iam -- Andrew-direct 2026-06-23, correcting the prior DS-lane label); '
                        'non-AE cross-tool edits route owner-review through AE per the two-rule lane convention.',
               'rebuild_trigger': 're-run org/modules/graph/gen-estate-resolver.py after the manifest/census changes '
                                  '(resolver is a generated join)',
               'status': 'canonical',
               'tool': 'comp-estate',
-              'use_case': 'What am I looking for -- the news scanner? -> comp-estate news -> EVERY resource in that '
-                          'named thread + producers->served->frontend + owning tool + coverage + debt flags, over '
-                          'the whole estate, no silent Unknown.'},
+              'use_case': 'Named-thread estate traversal entry point: comp-estate news -> every resource in that '
+                          'named thread + producers->served->frontend + owning tool + coverage + debt flags. What is '
+                          'IN the <name> pipeline or named business thread, across the whole estate with no silent '
+                          'Unknown. RENAMED from bare pipescript (Andrew-direct 2026-07-29/30): the bare name is '
+                          'PROHIBITED, its executable is an rc=2 tombstone, and it no longer resolves on PATH -- the '
+                          'retained-for-transition clause is DISCHARGED (CVO GATE-0 readiness pass 2026-07-30).'},
              {'anti_pattern': 'blind-grepping for a repo relationship instead of asking comp-which (or heeding the '
                               'PreToolUse comp-tool-hud advisory) -- the exact gap NFRA_TOOLHUD closes',
               'canonical_call': 'comp-which "<your natural-language question>"   # e.g. comp-which "what produces '
@@ -2220,6 +2228,91 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                           'a two-writers-one-key CLOBBER where a stale/deprecated producer overwrites a fresh one? '
                           'The output-key-collision census comp-dups is blind to (it scans code BODIES; this scans '
                           'write TARGETS).'},
+             {'anti_pattern': 'Reading the segments/matrix print as a hand-maintained doc (it is a view -- edit the '
+                              'catalog, never the output); treating equal census counts as no drift (a SET diff -- '
+                              '66 membership changes once cancelled to zero net); running --drift casually expecting '
+                              'view-speed (it is the ~25s key-plane scan).',
+              'canonical_call': 'comp-estate --segments | comp-estate --matrix | comp-estate --layers | comp-estate '
+                                '--definitions [term] | comp-estate --census-drift [--plane tf|aws]',
+              'cost': 'sub-second (views compile from the catalog/resolver at invocation); --census-drift ~1.2s (TF '
+                      'plane) / AWS-plane adds a live list-functions call. The KEY-PLANE modes (--drift, '
+                      "--self-test) are the tool's two slow modes at ~25s -- declared here so nobody is surprised.",
+              'freshness': '--layers/--definitions serve STABLE canon verbatim (version printed; changes only by '
+                           'naming act); --segments/--matrix are VIEW-COMPILED at invocation from '
+                           'NFRA_ONTOLOGY_C2C3_CANONICAL.yaml + the resolver dual keys (serving law: stable above '
+                           'the emergence line, view-compiled below); --census-drift diffs the frozen 2026-06-15 '
+                           'taxonomy against the live plane and SAYS so',
+              'id': 'estate.ontology.views',
+              'layer': 'estate',
+              'mode': 'query',
+              'notes': 'The ontology stack landed 2026-07-30 (Andrew-ratified): ONE SCHEMA C4 -> C3(i|ii) -> C2 -> '
+                       'C1 -> C0; 5 segments; C3 dual-partitioned (14 deterministic structures x 29 semantic '
+                       'verticals, dual key on all 138 chains). NAMING LINEAGE, compressed: bare pipescript '
+                       '(deprecated 2026-07-29, evaded the comp-* census glob -- the rename was structural) -> '
+                       'comp-semantic-estates (~1 day) -> comp-estate (2026-07-30, Andrew-direct; old names DELETED, '
+                       'do not resolve). Engine org/modules/graph/opal_estate_infrastructure.py + delegated legacy '
+                       'thread-model engine estate_infrastructure_cli.py. FAIL-LOUD header contract reference '
+                       'implementation: no header emittable => rc=2 + SOURCE UNRESOLVABLE, never silence. Author '
+                       '3.0.0_SA_CVO (row); tool lineage 1.0.0_SA_CTO~C + CVO.',
+              'rebuild_trigger': 'n/a for views (compiled per call); census regeneration is the standing CVO '
+                                 'worklist that retires the census-drift residue',
+              'status': 'canonical',
+              'tool': 'comp-estate',
+              'use_case': "Orient on the Estate's ontology: which C4 SEGMENT does my question live in (--segments, "
+                          'THE agent entry point); the C3.i x C3.ii cross-partition matrix (--matrix, the standing '
+                          'reconciliation instrument -- a matrix change is an adjudication event); the stable C0..C4 '
+                          'ladder doc (--layers); canonical term lookup (--definitions <term>); the lambda-census '
+                          'set-diff vs the live estate (--census-drift [--plane aws]).'},
+             {'anti_pattern': 'Reading a key-grain collision report as a location-grain collision: a path match '
+                              'across FIRM buckets (opal-data-bd vs opal-data-inf, same key) is NOT a collision -- '
+                              "firm separation is gate + IAM law and 'cleaning it up' is an incident. Treating an "
+                              'existence PROBE (`aws s3 cp s3://... /dev/null` inside an `if`, HeadObject, list) as '
+                              'a writer -- a retire tool that cannot tell a probe from a write will retire live '
+                              "paths. And reading 'N readers' as a risk score without the removal behaviour: a "
+                              'reader inside a bare except returning an empty default is MORE dangerous to retire '
+                              'than one that hard-fails, because the hard-fail TELLS you.',
+              'canonical_call': 'comp-legacywriter [<key-or-bucket>] [--json] [--require-live-substrate]   # no arg '
+                                '= contested locations only; --self-test = the control battery',
+              'cost': '~30-60s (AST walk over ~8.9K producer .py/.sh under data/ + infra/aws/ + org/modules/ + '
+                      'portal/scripts)',
+              'freshness': 'STATIC axis = current repo working tree (source plane). CAPABILITY + OBSERVED axes are '
+                           'NOT run by default and print UNVERIFIABLE-BY-THIS-INSTRUMENT rather than rendering '
+                           'clean.',
+              'id': 'estate.legacywriter.writer_contest',
+              'layer': 'estate',
+              'mode': 'query',
+              'notes': 'DISTINCT from estate.clobber.output_key_collision (comp-clobber) on two axes, both measured '
+                       "live 2026-07-29 rather than argued: (1) LOCATION IDENTITY -- comp-clobber's sink identity is "
+                       "the KEY and its own row declares it 'bucket-blind on bare Key='; this tool keys on the "
+                       "(BUCKET,KEY) PAIR. Worth knowing the declared-vs-rendered gap: comp-clobber's notes say a "
+                       "cross-bucket path match 'reads as a candidate, not a clobber', but its OUTPUT renders it "
+                       "'[S3 CLOBBER x2]' -- of its 11 reported multi-writer sinks, 8 are cross-firm path matches "
+                       '(gold/trigger-pending.json across opal-data-bd/opal-data-inf; platinum/firm/*.json x7 across '
+                       'black_diamond/cot). (2) CALL DIRECTION -- comp-clobber does not model it, so `aws s3 cp '
+                       's3://KEY /dev/null` (a GetObject existence probe inside an `if`) counts as a writer; '
+                       'gold/trigger-pending.json is therefore a DOUBLE false positive, neither hit being a write '
+                       "and the two not being one location. comp-clobber's LIVE etag-interleave oracle remains the "
+                       'authority on OBSERVED contest and this tool does NOT reimplement it -- it defers to it. Also '
+                       "distinct from lineage.dataflow.canonical_source (comp-dataflow = a producer's READ-SOURCE "
+                       'LAYER; this = the WRITE side + removal impact), whose AST path-resolver this tool IMPORTS '
+                       "rather than copies (one resolver in the estate). Carries COO's five pre-registered exercise "
+                       'requirements (165733Z) as binding acceptance. An UNRESOLVED bucket yields UNDETERMINABLE in '
+                       "BOTH directions -- never CONTESTED, never 'not a collision' -- because absence of resolution "
+                       'is not evidence either way. Header contract: source + vintage on line 1 of every invocation, '
+                       'FAIL-LOUD (no header emittable => rc=2 + explicit SOURCE UNRESOLVABLE, never silence). '
+                       "comp-which routing string: 'who writes this artifact / is a legacy writer still writing / "
+                       "what breaks if I delete this / is it safe to retire this producer / who reads this key' -> "
+                       'comp-legacywriter. Engine home = org/modules/graph/comp_legacywriter.py; tool = '
+                       '.tools/comp-legacywriter (thin PATH wrapper); self-test = 10/10 (incl. separate positive '
+                       'controls + C7/C8, two self-inflicted defects found by reading its own first live run).',
+              'rebuild_trigger': 'n/a -- on-demand',
+              'status': 'canonical',
+              'tool': 'comp-legacywriter',
+              'use_case': 'Is it SAFE TO RETIRE this producer, or SAFE TO DECOMMISSION this served artifact? The '
+                          'LEGACY-WRITER contest census plus decommission safety: which legacy writers are still '
+                          "writing this location, which readers still consume it, and each reader's REMOVAL "
+                          'BEHAVIOUR -- does removal hard-fail loudly, or SILENTLY DEFAULT to an empty value? '
+                          'Retirement, teardown and suppression decisions; emits an evidence-bearing kill list.'},
              {'canonical_call': 'comp-state [--project CODE] [--days N] [--all] [--json]   # drift-only by default; '
                                 '--self-test MUST pass 3/3 before trusting a report',
               'cost': '~1-3min (git log corpus + per-record git last-touch; REGISTRY rows use git log -S per code)',
@@ -2988,6 +3081,44 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                        'worklist+human-confirm. Engine: dup_scan.py',
                                'entries': ['estate.dups.duplicate_resources'],
                                'subcommands': ['--class', '--nightly', '--json']},
+                 'comp-estate': {'does': 'FIRST CONTACT for the Estate (naming consolidated 2026-07-30, '
+                                         'Andrew-direct: pipescript -> comp-semantic-estates -> comp-estate; old '
+                                         'names deleted, do not resolve). TWO FACES: (1) named-thread traversal -- '
+                                         'what is IN a named pipeline/thread: every resource, producers -> served '
+                                         'artifacts -> frontend consumers, owning tool, coverage + debt flags, whole '
+                                         'estate, NO silent Unknown; (2) the ONTOLOGY VIEWS -- C4 segments '
+                                         '(--segments, the agent routing entry point), the C3.i x C3.ii '
+                                         'cross-partition matrix (--matrix), the stable layer ladder (--layers), '
+                                         'canonical terms (--definitions), lambda-census set-diff (--census-drift). '
+                                         'KEYS re-derived LIVE from source; NAMES from the resolver snapshot with a '
+                                         'FAIL-LOUD source-timestamp head (unnameable substrate = rc=2 SOURCE '
+                                         'UNRESOLVABLE, never silence) -- reference implementation of the header '
+                                         'contract. --refresh is a BRIDGE to a newer snapshot, never a canonical one '
+                                         '(comp-kuzu is the destination). Engine opal_estate_infrastructure.py + '
+                                         'delegated legacy thread-model engine estate_infrastructure_cli.py (AE '
+                                         'lane). Slow modes declared: --drift/--self-test ~25s key-plane scan; '
+                                         'everything else sub-second',
+                                 'entries': ['estate.thread.traversal', 'estate.ontology.views'],
+                                 'subcommands': ['<name>',
+                                                 '--list',
+                                                 '--resource <substr>',
+                                                 '--tool <name> <tool>',
+                                                 '--debt',
+                                                 '--fe-reachability',
+                                                 '--orphans-only',
+                                                 '--validate',
+                                                 '--gate-b',
+                                                 '--keys',
+                                                 '--drift',
+                                                 '--refresh',
+                                                 '--refresh-only',
+                                                 '--segments',
+                                                 '--layers',
+                                                 '--definitions [term]',
+                                                 '--matrix',
+                                                 '--census-drift',
+                                                 '--plane tf|aws',
+                                                 '--self-test']},
                  'comp-fedobs': {'does': 'NFRA_FEDOBS reflective-observation SURFACE (reader): the 3 measure signals '
                                          '(co-evolution / compiler-coverage / directive-effectiveness) over the C0 '
                                          'CSE log as answerable reflective questions; the standing surface MOTIF '
@@ -3162,6 +3293,24 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                         '<view>  # gap_heat|coverage_gaps|tool_demand|...',
                                                         '--json',
                                                         '--source <s3://...|LOCAL.json>']},
+                 'comp-legacywriter': {'does': 'WRITER-CONTEST + DECOMMISSION-SAFETY lens: who WRITES a served '
+                                               'location, who READS it, and WHAT BREAKS WHEN IT IS GONE. Location '
+                                               'identity is the (BUCKET,KEY) PAIR and call DIRECTION is modelled, so '
+                                               'a cross-FIRM path match is not a collision and an existence PROBE is '
+                                               "not a writer -- the two corrections that made 8 of comp-clobber's 11 "
+                                               'reported multi-writer sinks false on the live estate 2026-07-29. '
+                                               'Every reader carries REMOVAL BEHAVIOUR (hard-fail / silent-default / '
+                                               'unknown) from its error handling; silent-default is the DANGEROUS '
+                                               'class. Emits RETIRECOND-shaped retires: entries with the evidence '
+                                               'bar pre-filled. A JOIN of existing instruments, zero new scanners '
+                                               "(imports comp_dataflow's resolver). Declared blindness printed every "
+                                               'run; UNRESOLVED bucket => UNDETERMINABLE both directions. '
+                                               'Advisory/read-only, no delete verb. Engine: comp_legacywriter.py',
+                                       'entries': ['estate.legacywriter.writer_contest'],
+                                       'subcommands': ['<key-or-bucket>',
+                                                       '--json',
+                                                       '--require-live-substrate',
+                                                       '--self-test']},
                  'comp-ontolint': {'does': 'Lint the NFRA_ONTOLOGY Relation-vs-Role DUAL-AXIS composite exception '
                                            '(routes-to->Router / resolves-through->Registry / projects->Gateway are '
                                            'dual-axis; every other relation is single-axis, a Relation with no Role) '
@@ -3353,12 +3502,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                'subcommands': ['frozen', 's3', 'code', 'config', 'schema', 'freeze-monitor']},
                  'comp-xref': {'does': 'Symbol cross-ref (cached) + graph-state drift-vs-baseline',
                                'entries': ['trace.xref.symbol', 'trace.xref.graph_drift'],
-                               'subcommands': ['<symbol>', '--save']},
-                 'comp-estate': {'does': 'Named-thread estate traversal: `comp-estate <name>` -> every resource + '
-                                        'producers->served->frontend + owning tool + coverage, no silent Unknown '
-                                        '(the human entry point over the whole estate)',
-                                'entries': ['estate.pipescript.named_thread'],
-                                'subcommands': ['<name>', '--list', '--resource', '--tool', '--validate']}}}
+                               'subcommands': ['<symbol>', '--save']}}}
 
 LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via m365 MCP + the graph ms-layer column. The '
                                     'high-leverage build-next.',
@@ -3991,6 +4135,121 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                  'role': 'lineage-scanner',
                  'routable': True,
                  'tool': 'comp-dataflow'},
+                {'concern': 'WRITER CONTEST + DECOMMISSION SAFETY for one served location -- who WRITES it, who '
+                            'READS it, and WHAT BREAKS WHEN IT IS GONE. Emits RETIRECOND-shaped retires: entries '
+                            'with the removal-behaviour evidence bar pre-filled, so a teardown wave starts from a '
+                            'machine-generated evidence-bearing kill list instead of a hunt (Andrew-direct '
+                            "2026-07-29 ~16:25Z: legacy writers clobbering artifacts are 'a recurring footgun that "
+                            "wastes hours and hours of time and system confidence')",
+                 'declared_grain': ['resource', 'object'],
+                 'distinct_from': [{'my_concern': 'location identity is the (BUCKET,KEY) PAIR + call DIRECTION, so a '
+                                                  'cross-firm path match is NOT a collision and an existence PROBE '
+                                                  'is NOT a writer; plus the READER side and removal behaviour',
+                                    'shared_resource': 'estate-structure',
+                                    'their_concern': 'KEY-grain collision candidates + the LIVE version-history '
+                                                     'etag-interleave oracle (which this tool does not reimplement '
+                                                     'and defers to)',
+                                    'tool': 'comp-clobber'},
+                                   {'my_concern': 'the WRITE side of a location + what removal does to each reader '
+                                                  '(retirement safety)',
+                                    'shared_resource': 'estate-structure',
+                                    'their_concern': "a producer's READ-SOURCE LAYER -- does it read a served "
+                                                     'artifact as a value source (layer grammar backwards)',
+                                    'tool': 'comp-dataflow'},
+                                   {'my_concern': 'contested/legacy WRITERS on one live location + decommission '
+                                                  'evidence',
+                                    'shared_resource': 'estate-structure',
+                                    'their_concern': 'propagation-seam abandonment/disposition (edges that go '
+                                                     'nowhere)',
+                                    'tool': 'comp-drift'}],
+                 'not_homed_reason': 'estate-wide writer/reader census over ANY (bucket,key) location -- same shape '
+                                     'as comp-clobber/comp-dataflow, not homed to one pipeline. A JOIN of existing '
+                                     "instruments, ZERO new scanners: it IMPORTS comp_dataflow's AST path-resolver "
+                                     'rather than copying it (one resolver in the estate; a second copy would '
+                                     'drift). WHY IT EXISTS RATHER THAN comp-clobber alone, measured 2026-07-29 on '
+                                     'the live estate: comp-clobber reported 11 multi-writer sinks, of which 8 are '
+                                     'NOT collisions -- gold/trigger-pending.json is a pair of `aws s3 cp s3://... '
+                                     '/dev/null` EXISTENCE PROBES (GetObject, inside an `if`) in TWO DIFFERENT firm '
+                                     'buckets (opal-data-bd, opal-data-inf), and platinum/firm/*.json x7 is '
+                                     "black_diamond vs cot writing their OWN buckets at the same key. comp-clobber's "
+                                     "own row concedes it is 'bucket-blind on bare Key='; this tool keys on "
+                                     '(BUCKET,KEY) and classifies PROBE separately from WRITE. Both corrections are '
+                                     "COO's pre-registered exercise requirements (165733Z #1 probe!=write, #2 "
+                                     'bucket-scoped location identity) and both are covered by controls in the '
+                                     'battery. It also carries COO #3: every reader entry states REMOVAL BEHAVIOUR '
+                                     "(hard-fail / silent-default / unknown) derived from the read site's error "
+                                     'handling -- a reader inside a bare except returning an empty default is MORE '
+                                     'dangerous to retire than one that hard-fails, because the hard-fail tells you. '
+                                     "An UNRESOLVED bucket yields UNDETERMINABLE, never CONTESTED and never 'not a "
+                                     "collision' (absence of resolution is not evidence, in either direction). "
+                                     'CAPABILITY and OBSERVED axes are declared UNVERIFIABLE-BY-THIS-INSTRUMENT when '
+                                     'not run rather than rendered clean. ADVISORY / READ-ONLY -- it RECOMMENDS; the '
+                                     "kill rides the owner's lane, never-widen sign-off and the deploy ledger; no "
+                                     'write path to S3/DDB/repo. Spec '
+                                     'org/tier1_exec/3.0.0_SA_CVO/deliverables/SPEC_COMP_LEGACYWRITER_20260729.md '
+                                     '@3af3e04c53 (STABLE). Author 1.0.0_SA_CTO~C. self-test 10/10 (incl. 4 '
+                                     'positive/negative controls + the two self-inflicted-defect controls C7/C8 '
+                                     'found by reading its own first live run). Engine '
+                                     'org/modules/graph/comp_legacywriter.py',
+                 'role': 'writer-contest-lens',
+                 'routable': True,
+                 'tool': 'comp-legacywriter'},
+                {'concern': 'OPAL BUSINESS-SEMANTIC estate traversal -- what is in the <name> pipeline/thread: every '
+                            'resource in a named business thread + producers -> served artifacts -> frontend '
+                            'consumers + owning tool + coverage/debt flags, whole estate, NO silent Unknown. The '
+                            'RENAMED successor to the bare-named pipescript (Andrew-direct ~1645Z/~1712Z 2026-07-29)',
+                 'declared_grain': ['resource', 'artifact'],
+                 'distinct_from': [{'my_concern': 'BUSINESS-SEMANTIC thread membership across the estate (what '
+                                                  'belongs to this named pipeline)',
+                                    'shared_resource': 'dispatch-dag',
+                                    'their_concern': 'per-SCRIPT pipeline dependencies -- '
+                                                     'io/column-gaps/deployed-parity for one gold script',
+                                    'tool': 'comp-pipescript'},
+                                   {'my_concern': 'human-named business THREADS and their membership, from a '
+                                                  'generated snapshot declared stale-or-fresh on every run',
+                                    'shared_resource': 'estate-structure',
+                                    'their_concern': 'the canonical auto-refreshing graph -- live keys and edges '
+                                                     "(this tool's DESTINATION, not its current substrate)",
+                                    'tool': 'comp-kuzu'},
+                                   {'my_concern': 'thread membership + serving-path naming',
+                                    'shared_resource': 'estate-structure',
+                                    'their_concern': 'who WRITES/READS one location and what breaks when it is gone',
+                                    'tool': 'comp-legacywriter'}],
+                 'not_homed_reason': 'estate-wide named-thread traversal, not homed to one pipeline (it enumerates '
+                                     'ALL of them). RENAME of pipescript per Andrew-direct ~1645Z verbatim -- that '
+                                     'tool should have a refresh function built in and a head with timestamp of its '
+                                     'source very clearly depicted, it also should not be named pipescript it should '
+                                     'be named comp-estate -- sharpened ~1712Z to full deprecation of the bare name, '
+                                     'which is ALSO how the tool evaded the comp-* census glob and the registration '
+                                     'gate for months, so the rename is structural not cosmetic. ADDITIVE during the '
+                                     'wave: .tools/pipescript is UNCHANGED and still works, because base CTO holds '
+                                     'the rename/tombstone to post-wave (seven agents have the bare name in flight '
+                                     'inside a seven-leg apply; command-not-found there is the incident class). '
+                                     'IMPLEMENTS TWO CONTRACTS. (1) SOURCE-TIMESTAMP HEAD, FAIL-LOUD: substrate + '
+                                     'vintage on line 1 of every invocation, and an unreadable substrate prints an '
+                                     'explicit SOURCE UNRESOLVABLE naming what failed, then EXITS 2 -- never '
+                                     'proceeding silently. This is the reference implementation of the '
+                                     "comp-tool-wide header contract (CVO 170946Z), hardened on ~B's finding that "
+                                     "the predecessor's banner sat in a bare except-Exception-pass at "
+                                     '.tools/pipescript:50-51, so a corrupt resolver printed NO header at all -- and '
+                                     'a tool with no header reads as a tool with NO SOURCE, not as a failed read. '
+                                     '(2) --refresh IS A BRIDGE, NOT THE DESTINATION (base CTO 163950Z): it '
+                                     'regenerates the snapshot via gen-estate-resolver.py and every run still states '
+                                     'the snapshot is NOT comp-kuzu canonical -- refresh makes it NEWER, never '
+                                     'CANONICAL. Engine boundary respected: all header/refresh logic lives in the '
+                                     '.tools/ wrapper (lane ANY); engine is '
+                                     'org/modules/graph/opal_estate_infrastructure.py (renamed from '
+                                     'opal_business_estates.py 2026-07-30, Andrew-direct) -- a REVAMP, not a wrapper '
+                                     'over the deprecated legacy CLI (pipescript_cli.py, renamed '
+                                     'estate_infrastructure_cli.py 2026-07-30 and delegated-to for the thread-model '
+                                     "modes). RESIDUE RESOLVED 2026-07-30 (CVO, Andrew-direct): the engine's "
+                                     'bare-name stdout prints were renamed at source (estate_infrastructure_cli '
+                                     'print-string pass, 17 lines) -- no output surface prints the bare name any '
+                                     'more. Author 1.0.0_SA_CTO~C. Header controls 4/4 (missing / corrupt / '
+                                     'no-last_review / positive).',
+                 'role': 'estate-semantic-traversal',
+                 'routable': True,
+                 'tool': 'comp-estate'},
                 {'not_homed_reason': 'D6 manifest-ENFORCEMENT commit-gate; polices the manifest, not a surface query',
                  'role': 'enforcement-gate',
                  'routable': False,
@@ -4170,11 +4429,20 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                  'role': 'meta-measurement',
                  'routable': False,
                  'tool': 'comp-perf'},
-                {'not_homed_reason': 'the HUMAN ENTRY over the whole estate -- a named-thread traversal SUPERSET '
-                                     'that ROUTES to homed sub-resolvers (comp-pipescript/globgrph/stitch/portal); a '
-                                     'router+discovery surface, not a single-surface tool',
+                {'not_homed_reason': 'The bare-name human entry over the whole estate: a named-thread traversal that '
+                                     'routes to homed sub-resolvers; a router+discovery surface, not a '
+                                     'single-surface tool. The bare name is being retired precisely because it '
+                                     'evaded the comp-* census glob and the registration gate for months. RETAINED, '
+                                     'EXECUTABLE UNCHANGED: in-flight callers of the bare name must keep resolving '
+                                     'during the transition -- base CTO holds the tombstone flip to post-wave '
+                                     'because seven agents have this name in queued commands inside a seven-leg '
+                                     'apply, and command-not-found there is the incident class. Retire this row with '
+                                     'the tombstone, not before. ROUTABLE FLIPPED FALSE 2026-07-30 (CVO GATE-0 '
+                                     'pass): the tombstone IS live (rc=2 exercised), the bare name no longer '
+                                     'resolves on PATH, and the retained-transition rationale is DISCHARGED -- '
+                                     'successor row: comp-estate.',
                  'role': 'estate-router',
-                 'routable': True,
+                 'routable': False,
                  'tool': 'pipescript'},
                 {'not_homed_reason': 'COMPLEARN loop status; the sibling use-verb program (comp-learns-run RETIRED '
                                      '2026-07-08, NFRA_TOOLCHECK P2 CTO-ruled)',

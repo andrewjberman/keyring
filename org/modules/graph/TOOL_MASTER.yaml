@@ -9,8 +9,8 @@ population_authority: org/modules/graph/comp-coverage-map.yaml -- tools[] + meta
   AN ATTRIBUTE STORE AND IS NEVER A POPULATION SOURCE (CTO ruling 20260728T212335Z). gen_tool_registry.py
   FAILS LOUD on any population divergence in either direction -- no silent skip.
 counts:
-  tools: 89
-  population_authority_count: 89
+  tools: 91
+  population_authority_count: 91
 tools:
   comp-adapter-audit:
     concern: portal ADAPTER field-threading audit vs LIVE S3 envelope (schema-drift / not-threaded / fallback-order)
@@ -763,6 +763,22 @@ tools:
     bounding:
     - head slice
     - json out
+  comp-estate:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-fedobs:
     concern: null
     canonical_call: comp-fedobs coevolution | comp-fedobs
@@ -1373,6 +1389,22 @@ tools:
     engines: []
     bounding:
     - json out
+  comp-legacywriter:
+    concern: null
+    canonical_call: null
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
   comp-manifest-check:
     concern: null
     canonical_call: null
