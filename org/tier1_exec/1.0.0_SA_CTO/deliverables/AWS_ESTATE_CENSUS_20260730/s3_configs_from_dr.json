@@ -1,0 +1,239 @@
+{
+  "total_buckets": 39,
+  "buckets": [
+    {
+      "name": "ajb-workflow",
+      "created": "2025-12-05T14:55:54+00:00",
+      "versioning": "Disabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-313476888478-globgrph",
+      "created": "2026-06-08T16:44:38+00:00",
+      "versioning": "Disabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-313476888478-lambda-artifacts",
+      "created": "2026-02-24T18:30:59+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-313476888478-lambda-layers",
+      "created": "2026-02-24T17:42:09+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-313476888478-terraform-state",
+      "created": "2026-02-19T17:38:15+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-analytics-dashboard",
+      "created": "2026-01-09T15:11:53+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-ci-staging",
+      "created": "2026-02-19T17:38:06+00:00",
+      "versioning": "Disabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-cloudfront-logs-313476888478",
+      "created": "2026-02-13T21:57:24+00:00",
+      "versioning": "Disabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-cloudtrail-logs-313476888478",
+      "created": "2026-02-13T20:40:03+00:00",
+      "versioning": "Disabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-crawl-catalog",
+      "created": "2026-06-24T15:19:13+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-cur-313476888478",
+      "created": "2026-06-10T17:58:43+00:00",
+      "versioning": "Disabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-aaii-v2",
+      "created": "2025-12-23T23:37:26+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-assets",
+      "created": "2026-07-14T02:37:47+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-astn",
+      "created": "2026-06-24T20:57:31+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-bd",
+      "created": "2026-01-09T00:37:43+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-cot",
+      "created": "2026-06-08T17:43:39+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-demo",
+      "created": "2026-05-22T17:55:02+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-etfs",
+      "created": "2026-05-15T16:44:46+00:00",
+      "versioning": "Disabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-imo",
+      "created": "2026-05-27T16:56:39+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-inf",
+      "created": "2026-04-21T21:00:24+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-mdpf",
+      "created": "2026-05-18T17:16:50+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-news-av",
+      "created": "2026-01-21T23:03:17+00:00",
+      "versioning": "Disabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-news-v2",
+      "created": "2025-12-23T23:37:24+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-pm",
+      "created": "2026-02-12T15:24:23+00:00",
+      "versioning": "Disabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-portal-v2",
+      "created": "2025-12-23T23:37:22+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-portfolio",
+      "created": "2026-01-22T20:42:56+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-schwab",
+      "created": "2025-11-14T18:39:52+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-smartx-v2",
+      "created": "2025-12-23T23:37:15+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-data-trade-submissions",
+      "created": "2026-01-06T20:31:46+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-infrastructure-snapshots",
+      "created": "2026-06-16T20:04:22+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-market-data-v2",
+      "created": "2025-12-23T23:37:28+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-market-update",
+      "created": "2025-12-04T21:08:46+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-mcp-athena-results",
+      "created": "2026-06-24T13:41:24+00:00",
+      "versioning": "Disabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-mcp-audit",
+      "created": "2026-06-24T13:41:24+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-runner-shared",
+      "created": "2026-05-13T20:02:28+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-schwab-d4-access-logs-313476888478",
+      "created": "2026-07-17T16:49:02+00:00",
+      "versioning": "Disabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-served-key-write-trail-logs",
+      "created": "2026-07-08T14:46:57+00:00",
+      "versioning": "Disabled",
+      "encryption": false
+    },
+    {
+      "name": "opal-website-backups",
+      "created": "2026-07-08T17:32:41+00:00",
+      "versioning": "Enabled",
+      "encryption": false
+    },
+    {
+      "name": "opalinvest-portal",
+      "created": "2025-12-29T16:29:04+00:00",
+      "versioning": "Disabled",
+      "encryption": false
+    }
+  ]
+}
