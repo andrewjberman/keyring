@@ -111,7 +111,14 @@ def resolve_pipeline_from_arg(raw_script: str) -> str:
                     resolved = _FIRM_TO_PIPELINE.get(tree["label"])
                     if resolved:
                         return resolved
-    return "bd-gold"
+    # Case 3 SUPERSEDED (Andrew-direct stub ruling 2026-07-30, extending @10d1bb29e3 to
+    # `deployed` after ~C's exercise showed a mirrored bare basename silently answering
+    # for bd with a clean MATCH rc=0 -- the exact wrong-tree class, on the deploy verifier
+    # itself). The former deliberate 'bd-gold' backward-compat fallback is the silent
+    # default the ruling kills: a bare id now returns None and the caller REFUSES with
+    # the disk-scan list. Path-qualified resolution (cases 1-2) is untouched; WS4 owns
+    # the proper resolver.
+    return None
 
 
 # firm label -> the cmd_deployed pipeline-key whose branch enumerates that tree
@@ -1874,9 +1881,12 @@ def cmd_deployed(args):
         # Path auto-detect: a data/<dir>/scripts/... filter routes to that tree's pipeline.
         # Generalizes the former cot-only auto-route to every PIPELINE_MAP tree + mdpf
         # (firm separation: each tree's branch reads ONLY its own bucket). A bare id
-        # (e.g. D_00) matches no dir -> falls through to bd-gold (backward compatible).
+        # now REFUSES with the tree list (Andrew-direct 2026-07-30; the bd fallback was
+        # the wrong-tree clean-MATCH hole ~C exercised on A_01.advisor_assignments.py).
         if not pipeline:
             pipeline = resolve_pipeline_from_arg(_raw_script)
+            if pipeline is None:
+                _refuse_no_pipeline(_raw_script)
     elif not pipeline:
         # No filter, no firm, no explicit --pipeline -> SWEEP ALL TREES (bd+inf+cot+mdpf).
         return _deployed_sweep_all(args)
