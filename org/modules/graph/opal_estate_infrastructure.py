@@ -551,8 +551,9 @@ def cmd_matrix() -> int:
     chainless = sorted(declared - set(vsys))
     if chainless:
         footer(f"  DECLARED-BUT-CHAINLESS (adjudication owed): {', '.join(chainless)}")
-    footer("  DRILL: comp-estate --structure <sys-name> (C3.i -> chains + C2 motifs) | comp-estate")
-    footer("  <vertical> (C3.ii -> chain blocks w/ C1 rows + C0 roster) | comp-estate --layers (the ladder)")
+    footer("  DRILL (one rail per descent): C3->C2 rides D3 -- comp-estate --structure <sys-name> (chains +")
+    footer("  motifs) | C2->C1 rides D2 -- comp-estate <vertical> (chain blocks = C1 hops) | C1->C0 rides")
+    footer("  D1 (grain) -- the C0 roster + served keys. Ladder + rails verbatim: comp-estate --layers")
     return 0
 
 
@@ -594,9 +595,10 @@ def cmd_segments() -> int:
             body(f"    {line}")
     footer("=" * 88)
     footer(f"  denominator: {len(segs)} segments (the catalog is the source; this print is a view)")
-    footer("DRILL DOWN THE LADDER: comp-estate <vertical> (C3.ii -> chain blocks) | comp-estate --structure")
-    footer("  <sys-name> (C3.i -> chains + C2 motifs) | comp-estate --matrix (the C3 grid). Below C3 the")
-    footer("  descent rides the D-rails: a vertical's chain blocks carry C1 rows + the C0 fact roster.")
+    footer("DRILL DOWN THE LADDER: C4->C3 is registry membership (this view). Below C3 one D-rail carries")
+    footer("  each descent: C3->C2 rides D3 (contract; comp-estate --structure <sys-name> = chains + motifs),")
+    footer("  C2->C1 rides D2 (comp-estate <vertical> = chain blocks whose rows ARE the C1 hops),")
+    footer("  C1->C0 rides D1 (grain; the C0 fact roster + served keys). The rails are the fidelity.")
     return 0
 
 
@@ -638,8 +640,9 @@ def cmd_structure(sysname: str) -> int:
     footer("")
     footer(f"  denominator: {len(chains)} chains across {len(byv)} vertical(s); "
            f"catalog family key(s): {', '.join(fams)}")
-    footer("DRILL: comp-estate <vertical> (full chain blocks: C1 producers/served/frontend rows + C0 roster)")
-    footer("       comp-estate --matrix (the C3.i x C3.ii grid) | comp-blast <fn> / comp-kuzu (C1 walks at a D1 grain)")
+    footer("DRILL (rails): C3->C2 rides D3 (the contract binding this structure to its chains; motifs printed")
+    footer("  above) | C2->C1 rides D2 (comp-estate <vertical> = the chain blocks' C1 hop rows; comp-blast /")
+    footer("  comp-kuzu walk them) | C1->C0 rides D1 (grain: the vertical view's served keys + C0 roster)")
     return 0
 
 
