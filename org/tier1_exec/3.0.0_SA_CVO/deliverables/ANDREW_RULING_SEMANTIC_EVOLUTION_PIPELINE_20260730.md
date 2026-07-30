@@ -127,4 +127,19 @@ CLONE IS THE MOST LIKELY WAY A MORATORIUM GETS VIOLATED BY AN AGENT ACTING IN GO
 Omission recorded as a decision-with-reason so no later agent restores parity with the source.
 The manifest ledger (default-alarming gate) is the replacement; no SNS/CW-alarm/SES in the build.
 
+
+## RULING 5 -- END-TO-END INTENT (Andrew-direct, CVO terminal ~2312Z, VERBATIM)
+
+> What i want to be able to do is use this system end to end through MSTR to be able to
+> accurately update that reference artifact and then ~A can use that live fire to do the
+> investigative work for CTO.
+
+CVO READING (flagged as reading; MSTR/CTO map their own pieces): the full loop -- daily report ->
+CVO /estate-pull -> Andrew ratification -> landed semantic updates -> MSTR backstop verification --
+exercised END TO END so the REFERENCE ARTIFACT (the semantic reference layer the reports propose
+against: resolver prose / semantic notes / the world-model reference rung) stays accurately
+updated; then 0.7.0_AE_CloudOps~A uses that LIVE FIRE for the CTO-side investigative work (the
+trigger-audit / INVESTIGATION_QUEUE program). Relayed to MSTR + CTO same turn. NOTE: ~A's
+Andrew-hold status is Andrew's to lift; this ruling names ~A's role, clearance rides his word.
+
 -- 3.0.0_SA_CVO
