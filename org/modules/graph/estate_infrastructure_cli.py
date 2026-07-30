@@ -160,6 +160,40 @@ def footer(line=""):
     print(line)
 
 
+def ladder_context():
+    """(fam2sys, motif_idx) view-compiled from the canonical catalog at invocation, or
+    (None, None) with ONE loud stderr line on an unreadable catalog -- ladder annotations
+    are then SUPPRESSED rather than silently mislabeled (a wrong C3.i/C2 tag is worse than
+    an absent one). fam2sys: legacy family key -> C3.i structure name. motif_idx: chain
+    thread_id -> C2 motif family (first-pass census; absent = UNCLASSIFIED, honest: the
+    census residue + post-census naming-act chains)."""
+    try:
+        import yaml
+        cat = yaml.safe_load(open(os.path.join(
+            ROOT, "org", "modules", "graph", "NFRA_ONTOLOGY_C2C3_CANONICAL.yaml"),
+            encoding="utf-8"))
+        fam2sys = {v["legacy_family_key"]: k
+                   for k, v in cat["c3_deterministic_structures"].items()}
+        motif_idx = {}
+        for fam, ids in (cat["first_pass_census"].get("instances_by_family") or {}).items():
+            for i in ids:
+                motif_idx[i] = fam
+        return fam2sys, motif_idx
+    except Exception as exc:
+        sys.stderr.write(f"comp-estate: canonical catalog unreadable ({exc}) -- "
+                         "C3.i/C2 ladder annotations SUPPRESSED this run, not guessed.\n")
+        return None, None
+
+
+def chain_ladder_line(t, fam2sys, motif_idx):
+    """The dual-key + motif annotation for one chain block, or None when suppressed."""
+    if fam2sys is None:
+        return None
+    struct = fam2sys.get(t.get("family") or "UNASSIGNED", "UNASSIGNED-RESIDUE")
+    motif = motif_idx.get(t["thread_id"], "UNCLASSIFIED (census residue / post-census chain)")
+    return f"  C3.i: {struct}   |   C2 motif: {motif}"
+
+
 def close_pager():
     """End-of-mode hook for body-only modes (no footer): the marker still lands."""
     _marker("end of output")
@@ -250,8 +284,12 @@ def cmd_thread(data, name):
         + (f" | {n_debt} with DEBT flags" if n_debt else "")
     )
     print("=" * 78)
+    fam2sys, motif_idx = ladder_context()
     for t in threads:
         body(f"\n[{status_tag(t['status'])} | {t['owning_tool']}] {_a(t['thread_id'])}")
+        lad = chain_ladder_line(t, fam2sys, motif_idx)
+        if lad:
+            body(lad)
         # P3.1: surface DEBTSCAN flags inline with their meaning, not a silent code
         fl = t.get("debtscan_flags") or []
         if fl:
@@ -283,6 +321,13 @@ def cmd_thread(data, name):
         for r in resources:
             body(f"  {_a(r)}")
     footer("\nrun `comp-estate --tool <name> <tool>` to assert a tool owns it (LOUD OUT-OF-SCOPE if not).")
+    footer("")
+    footer("DRILL DOWN THE LADDER (each descent rides a D-rail):")
+    footer("  C3.i structure   comp-estate --structure <sys-name>   (each chain's C3.i printed above; D3 binds the contract)")
+    footer("  C2 motif         printed per chain above (view-compiled first-pass census; UNCLASSIFIED is honest residue)")
+    footer("  C1 interactions  the producers:/served:/frontend: rows ARE C1 edges; walk deeper: comp-blast <fn> (D2 forward")
+    footer("                   at a D1 grain) | comp-kuzu \"MATCH ...\" (the canonical ~40k-edge graph)")
+    footer("  C0 facts         the C0 roster above; per fact: comp-aws (cloud node) | comp-iam service <fn> (grants)")
 
 
 def cmd_resource(data, needle):

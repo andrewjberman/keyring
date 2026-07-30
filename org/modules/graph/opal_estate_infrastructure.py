@@ -545,6 +545,8 @@ def cmd_matrix() -> int:
     chainless = sorted(declared - set(vsys))
     if chainless:
         footer(f"  DECLARED-BUT-CHAINLESS (adjudication owed): {', '.join(chainless)}")
+    footer("  DRILL: comp-estate --structure <sys-name> (C3.i -> chains + C2 motifs) | comp-estate")
+    footer("  <vertical> (C3.ii -> chain blocks w/ C1 rows + C0 roster) | comp-estate --layers (the ladder)")
     return 0
 
 
@@ -586,6 +588,52 @@ def cmd_segments() -> int:
             body(f"    {line}")
     footer("=" * 88)
     footer(f"  denominator: {len(segs)} segments (the catalog is the source; this print is a view)")
+    footer("DRILL DOWN THE LADDER: comp-estate <vertical> (C3.ii -> chain blocks) | comp-estate --structure")
+    footer("  <sys-name> (C3.i -> chains + C2 motifs) | comp-estate --matrix (the C3 grid). Below C3 the")
+    footer("  descent rides the D-rails: a vertical's chain blocks carry C1 rows + the C0 fact roster.")
+    return 0
+
+
+def cmd_structure(sysname: str) -> int:
+    """C3.i DRILL VIEW: one deterministic structure -> its chains (D2) grouped by C3.ii
+    vertical, each with its C2 motif. Closes the ladder-descent hole the 2026-07-30 drill
+    pass found: --matrix showed the C3 grid but NO mode entered by STRUCTURE, so C3.i was
+    reachable as a row label and nothing else. View-compiled (catalog + resolver + census)."""
+    import collections
+    legacy, data = _legacy()
+    fam2sys, motif_idx = legacy.ladder_context()
+    if fam2sys is None:
+        return 2
+    structures = sorted(set(fam2sys.values()))
+    hits = [s for s in structures if sysname.lower() in s.lower()]
+    if not hits:
+        print(f"{TOOL} --structure: NO C3.i structure matches {sysname!r} -- that is a statement "
+              f"about the catalog ({len(structures)} structures).", file=sys.stderr)
+        print(f"  known: {', '.join(structures)}", file=sys.stderr)
+        return 2
+    if len(hits) > 1:
+        print(f"{TOOL} --structure: AMBIGUOUS {sysname!r} -> {', '.join(hits)} -- narrow it.",
+              file=sys.stderr)
+        return 2
+    struct = hits[0]
+    fams = sorted(k for k, v in fam2sys.items() if v == struct)
+    chains = [t for t in data["threads"]
+              if fam2sys.get(t.get("family") or "UNASSIGNED", "UNASSIGNED-RESIDUE") == struct]
+    print(f"C3.i STRUCTURE: {struct} -- {len(chains)} chains (D2 = C2-motif instances)")
+    print("=" * 78)
+    byv = collections.defaultdict(list)
+    for t in chains:
+        byv[t["named_thread"]].append(t)
+    for v in sorted(byv):
+        body(f"\nC3.ii vertical: {v} ({len(byv[v])} chain(s))")
+        for t in byv[v]:
+            motif = motif_idx.get(t["thread_id"], "UNCLASSIFIED")
+            body(f"  {t['thread_id']:<44} C2 motif: {motif}")
+    footer("")
+    footer(f"  denominator: {len(chains)} chains across {len(byv)} vertical(s); "
+           f"catalog family key(s): {', '.join(fams)}")
+    footer("DRILL: comp-estate <vertical> (full chain blocks: C1 producers/served/frontend rows + C0 roster)")
+    footer("       comp-estate --matrix (the C3.i x C3.ii grid) | comp-blast <fn> / comp-kuzu (C1 walks at a D1 grain)")
     return 0
 
 
@@ -699,6 +747,9 @@ def main(argv=None) -> int:
     ap.add_argument("--matrix", action="store_true",
                     help="the C3 cross-partition matrix: per-system vertical span x per-vertical "
                          "system span (view-compiled; a matrix CHANGE is an adjudication event)")
+    ap.add_argument("--structure", metavar="SYS",
+                    help="C3.i DRILL VIEW: one deterministic structure (substring) -> its chains "
+                         "grouped by C3.ii vertical, each with its C2 motif")
     ap.add_argument("--segments", action="store_true",
                     help="THE C4 ENTRY POINT: the five agent-routing segments, each a registry "
                          "of C3 systems with a high-signal description. Start here.")
@@ -728,6 +779,8 @@ def main(argv=None) -> int:
         return cmd_matrix()
     if a.segments:
         return cmd_segments()
+    if a.structure:
+        return cmd_structure(a.structure)
 
     if a.census_drift:
         return cmd_census_drift(a.plane)
