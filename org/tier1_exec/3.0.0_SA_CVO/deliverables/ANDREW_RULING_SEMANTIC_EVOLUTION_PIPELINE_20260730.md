@@ -67,4 +67,33 @@ render-time or hand-pass corrections of semantic drift. This pipeline is the SYS
 frozen STRUCTURE dependencies die via the defrost design; frozen SEMANTICS get a daily
 activity-driven review loop with sovereign ratification.
 
+
+## RULING 2 -- BUILD FLOW + THE ESTATE REPORT (Andrew-direct, same terminal, ~2145Z, VERBATIM)
+
+> i want this build spec'd out to be in pattern with our existing kimi lambda structure, and the
+> eventbridge and the whole process etc under that spec by 0.7.0_AE_CloudOps~B (who is already
+> online RWA).THen I want them to send that spec to CVO for approval, CVO approves, ~B builds,
+> CVO tells CTO what we're doing, and in parallel you set up your launcher or whatever it is that
+> would have you check on that every day. THe idea would be however your charter works theres a
+> manifest every day that must be checked/switched. We get that recorded summary every day
+> accruing in the repo with the last day, the deterministically compiled resource list of what was
+> having changes (as a function of git commit review), and probably a section of delta through
+> some metric from the day before. This should be called the estate report, and its daily. We know
+> that it is compiled in some bucket every single day because its on a schedule, you use a skill
+> /estate-pull to go pull that report, we adjust it as needed or say no semantics updates, you
+> make the necessary changes, and that adjusted file for that day lives colocated in subfolder in
+> the same s3 bucket. Probably daily Kimi report in one subfolder, appended each day, and in the
+> other subfolder our generated file. DOes that design make sense? Give me your thoughts
+
+PARSED: spec by 0.7.0_AE_CloudOps~B (Kimi-lambda pattern + EventBridge) -> CVO approves -> ~B
+builds -> CVO informs CTO (SUPERSEDES ruling-1's "CTO authors the spec" lane note) -> CVO stands
+up the daily check: a per-day MANIFEST that must be checked/switched; /estate-pull skill pulls
+the day's ESTATE REPORT (name ratified), Andrew+CVO adjust or rule "no semantics updates", CVO
+lands changes; adjusted file colocated in the same bucket (subfolder A = daily Kimi report,
+append-only; subfolder B = the adjudicated file). Report content: AI summary + DETERMINISTIC
+changed-resource list (from git commit review) + a day-over-day delta section.
+OPEN AT ANDREW (flagged in CVO thoughts, same turn): ruling-1 put daily surfacing on MSTR-base
+(landed @d0f1df57c8/LD-0356); ruling-2 puts the operational daily loop on CVO -- the seam needs
+one owner ruling.
+
 -- 3.0.0_SA_CVO
