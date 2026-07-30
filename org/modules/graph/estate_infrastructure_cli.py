@@ -191,13 +191,13 @@ def cmd_list(data):
     for t in threads:
         by_name[t["named_thread"]].append(t)
     print(
-        f"comp-estate - {len(data['named_threads'])} named threads / {len(threads)} sub-threads "
+        f"comp-estate - {len(data['named_threads'])} C3.ii semantic verticals / {len(threads)} chains (D2 = C2-motif instances) "
         f"(estate census {data.get('last_review', '')})"
     )
     print("=" * 78)
     print("Usage: comp-estate <name>   |   comp-estate --resource <substr>   |   comp-estate --validate")
     print()
-    print(f"{'NAME':<20} {'THREADS':>7}  {'IN-SCOPE':>8} {'OUT':>4} {'UNREV':>5}  TOOLS")
+    print(f"{'VERTICAL':<20} {'CHAINS':>7}  {'IN-SCOPE':>8} {'OUT':>4} {'UNREV':>5}  TOOLS")
     print("-" * 78)
     for name in data["named_threads"]:
         ts = by_name[name]
@@ -236,15 +236,15 @@ def cmd_thread(data, name):
     resources = data.get("resources_by_named_thread", {}).get(name, [])
     if not threads and not resources:
         # LOUD unknown name - never a silent empty result
-        sys.stderr.write(f"comp-estate: '{name}' is NOT a known named thread.\n")
-        sys.stderr.write(f"  -> known threads: {', '.join(data['named_threads'])}\n")
+        sys.stderr.write(f"comp-estate: '{name}' is NOT a known C3.ii vertical.\n")
+        sys.stderr.write(f"  -> known verticals: {', '.join(data['named_threads'])}\n")
         sys.stderr.write("  -> run `comp-estate --list` for counts.\n")
         sys.exit(2)
     sc = Counter(t["status"] for t in threads)
     tc = Counter(t["owning_tool"] for t in threads)
     n_debt = sum(1 for t in threads if t.get("debtscan_flags"))
     print(
-        f"comp-estate {name} - {len(threads)} threads "
+        f"comp-estate C3.ii vertical '{name}' - {len(threads)} chains (D2 = C2-motif instances) "
         f"(in-scope {sc.get('in-scope', 0)} / explicit-out {sc.get('explicit-out', 0)} / "
         f"unreviewed {sc.get('unreviewed', 0)})"
         + (f" | {n_debt} with DEBT flags" if n_debt else "")
@@ -269,7 +269,7 @@ def cmd_thread(data, name):
         if _auth:
             body(f"    -> reachable: {_st} [CVO ground-truth]")
     print("\n" + "-" * 78)
-    print("owning tools in this thread (drill in for live detail -- comp-estate stays read-only):")
+    print("owning tools in this vertical (drill in for live detail -- comp-estate stays read-only):")
     for tool, n in tc.most_common():
         print(f"  {n:>3}  {tool:<22} {OWNING_TOOLS.get(tool, '')}")
         drill = _drill_call(tool, threads)
@@ -279,7 +279,7 @@ def cmd_thread(data, name):
     # in this named thread, the single source the golden fixtures also derive from.
     if resources:
         print("\n" + "-" * 78)
-        print(f"resources ({len(resources)}) - every lambda/EC2/StepFn in '{name}':")
+        print(f"C0 facts ({len(resources)}) - every role-typed resource (lambda/EC2/StepFn) in '{name}':")
         for r in resources:
             body(f"  {_a(r)}")
     footer("\nrun `comp-estate --tool <name> <tool>` to assert a tool owns it (LOUD OUT-OF-SCOPE if not).")
@@ -301,9 +301,9 @@ def cmd_resource(data, needle):
         if needle_l in blob:
             hits.append(t)
     if not hits:
-        sys.stderr.write(f"comp-estate: no thread references '{needle}'.\n")
+        sys.stderr.write(f"comp-estate: no chain references '{needle}'.\n")
         sys.exit(2)
-    print(f"comp-estate --resource '{needle}' -> {len(hits)} thread(s):")
+    print(f"comp-estate --resource '{needle}' -> {len(hits)} chain(s) (D2):")
     for t in hits:
         body(f"  {t['named_thread']:<18} / {t['thread_id']:<32} [{t['status']} | {t['owning_tool']}]")
     close_pager()
@@ -324,7 +324,7 @@ def cmd_tool(data, name, tool):
         sys.exit(2)
     threads = [t for t in data["threads"] if t["named_thread"] == name]
     if not threads:
-        sys.stderr.write(f"comp-estate: '{name}' is NOT a known named thread (see --list).\n")
+        sys.stderr.write(f"comp-estate: '{name}' is NOT a known C3.ii vertical (see --list).\n")
         sys.exit(2)
     owned = [t for t in threads if t["owning_tool"] == tool]
     if not owned:
@@ -335,7 +335,7 @@ def cmd_tool(data, name, tool):
             f"(named thread '{name}' is owned by {', '.join(tools)}, not {tool})\n"
         )
         sys.exit(2)
-    print(f"{tool} owns {len(owned)}/{len(threads)} threads in '{name}':")
+    print(f"{tool} owns {len(owned)}/{len(threads)} chains in '{name}':")
     for t in owned:
         body(f"  {t['thread_id']} [{t['status']}]")
     close_pager()
@@ -351,10 +351,10 @@ def cmd_validate(data):
     ok = True
     print("comp-estate --validate (NFRA_PIPESCRIPT acceptance)")
     print("=" * 60)
-    print(f"  total sub-threads:        {len(threads)}")
-    print(f"  named threads:            {len(names)}")
+    print(f"  total chains (D2):        {len(threads)}")
+    print(f"  C3.ii verticals:          {len(names)}")
     print(f"  duplicate thread_ids:     {len(dup)} {dup if dup else ''}")
-    print(f"  threads w/o named bucket: {len(unbucketed)} {unbucketed if unbucketed else ''}")
+    print(f"  chains w/o vertical:      {len(unbucketed)} {unbucketed if unbucketed else ''}")
     if dup or unbucketed:
         ok = False
     sc = Counter(t["status"] for t in threads)
@@ -364,7 +364,7 @@ def cmd_validate(data):
     print("-" * 60)
     print(
         "RESULT:",
-        "PASS - every thread resolves to exactly one named thread, no orphan/dup"
+        "PASS - every chain resolves to exactly one C3.ii vertical, no orphan/dup"
         if ok
         else "FAIL - see above",
     )
@@ -431,7 +431,7 @@ def cmd_fe_reachability(data, name=None, orphans_only=False):
     threads = data["threads"]
     if name:
         if name not in set(data["named_threads"]):
-            sys.stderr.write(f"comp-estate: '{name}' is NOT a known named thread (see --list).\n")
+            sys.stderr.write(f"comp-estate: '{name}' is NOT a known C3.ii vertical (see --list).\n")
             sys.exit(2)
         threads = [t for t in threads if t["named_thread"] == name]
     rows = [(t["named_thread"], t["thread_id"], *_fe_status(t), _fe_advisory(t)) for t in threads]
@@ -440,7 +440,7 @@ def cmd_fe_reachability(data, name=None, orphans_only=False):
         order = order + ["mounted-reachable"]
     summ = Counter(s for _, _, s, _, _ in rows)
     label = "--orphans" if orphans_only else "--fe-reachability"
-    print(f"comp-estate {label} ({name or 'estate'}) - {len(rows)} threads")
+    print(f"comp-estate {label} ({name or 'estate'}) - {len(rows)} chains (D2)")
     print("AUTHORITATIVE = CVO reachability_status field; * = provisional CLI flag; grep = supplementary hint")
     print("=" * 78)
     for s in order:
@@ -484,7 +484,7 @@ def cmd_debt(data):
         for t in data["threads"]
         if t.get("debtscan_flags")
     ]
-    print(f"comp-estate --debt - {len(flagged)} threads carry DEBTSCAN flags")
+    print(f"comp-estate --debt - {len(flagged)} chains (D2) carry DEBTSCAN flags")
     print("=" * 78)
     by_nt = defaultdict(list)
     for nt, tid, fl in flagged:
@@ -574,7 +574,7 @@ def cmd_gate_b(data, fixtures_path=None):
             assign[r].append(nt)
     doubles = {r: nts for r, nts in assign.items() if len(nts) > 1}
     footer("-" * 78)
-    footer(f"GATE-B: {len(fixtures) - gb_fail}/{len(fixtures)} named threads resource-complete (no missing/extra)")
+    footer(f"GATE-B: {len(fixtures) - gb_fail}/{len(fixtures)} C3.ii verticals resource-complete (no missing/extra)")
     footer(
         f"GATE-C: {len(assign)} live resources mapped; "
         f"{len(doubles)} double-claimed"

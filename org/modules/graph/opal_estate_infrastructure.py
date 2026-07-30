@@ -141,7 +141,7 @@ def emit_header(snap: dict) -> None:
     print("  PLANE: repo working tree. A DEPLOYED artifact whose source has diverged is NOT visible")
     print("  here -- this is the bridge; comp-kuzu canonical is the destination.")
     if stale:
-        print(f"  *** NAMING SNAPSHOT IS STALE (>{STALE_AFTER_DAYS}d). Thread NAMES may be wrong.")
+        print(f"  *** NAMING SNAPSHOT IS STALE (>{STALE_AFTER_DAYS}d). Vertical NAMES may be wrong.")
         print("  *** Keys are unaffected -- they are re-derived live, which is the point of this engine.")
 
 
@@ -311,11 +311,11 @@ def threads_of(snap: dict) -> dict:
 def cmd_list(snap: dict) -> int:
     th = threads_of(snap)
     print()
-    print(f"NAMED THREADS -- {len(th)} in the naming snapshot")
+    print(f"C3.ii SEMANTIC VERTICALS -- {len(th)} in the naming snapshot")
     for n in sorted(th):
         body(f"  {n}")
     footer()
-    footer(f"  denominator: {len(th)} thread(s). This is the SNAPSHOT's population, not the estate's.")
+    footer(f"  denominator: {len(th)} vertical(s). This is the SNAPSHOT's population, not the estate's.")
     return 0
 
 
@@ -324,13 +324,13 @@ def cmd_thread(snap: dict, name: str) -> int:
     hits = {k: v for k, v in th.items() if name.lower() in k.lower()}
     print()
     if not hits:
-        print(f"NO THREAD MATCHING {name!r} -- searched {len(th)} thread name(s) in the snapshot.")
+        print(f"NO C3.ii VERTICAL MATCHING {name!r} -- searched {len(th)} vertical name(s) in the snapshot.")
         print("  That is a statement about the SNAPSHOT's population, not about the estate.")
         return 1
     live = live_keys()
     snap_concrete, snap_patterns = _snapshot_keys(snap)
     for tname, tbody in sorted(hits.items()):
-        body(f"THREAD: {tname}")
+        body(f"C3.ii VERTICAL: {tname}")
         blob = json.dumps(tbody)
         tconc, tpat = _snapshot_keys(json.loads(blob))
         tkeys = sorted(tconc)
@@ -572,7 +572,7 @@ def cmd_segments() -> int:
     print(f"{TOOL} | C4 SEGMENTS -- the agent routing layer (source: {os.path.basename(cat)}, "
           f"rule bank v1.4)")
     print("  Route: C4 segment -> C3(i|ii) -> C2 motif (D2 chain) -> C1 -> C0. Verticals are C3.ii,")
-    print("  business overlay; `comp-estate <thread>` enters by vertical.\n")
+    print("  business overlay; `comp-estate <vertical>` enters at C3.ii.\n")
     for name, v in segs.items():
         body("=" * 88)
         body(f"SEGMENT: {name}   ({v.get('display_name', '')})")
@@ -673,7 +673,7 @@ def _legacy():
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog=TOOL, description="Opal business-semantic estate traversal.")
-    ap.add_argument("name", nargs="?", help="named thread (substring)")
+    ap.add_argument("name", nargs="?", help="C3.ii vertical name (substring)")
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--resource", metavar="SUBSTR")
     ap.add_argument("--drift", action="store_true", help="snapshot keys with no live producer")
@@ -681,7 +681,7 @@ def main(argv=None) -> int:
     ap.add_argument("--refresh-only", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     ap.add_argument("--tool", nargs=2, metavar=("NAME", "TOOL"),
-                    help="sub-threads of NAME owned by TOOL (loud out-of-scope)")
+                    help="chains of NAME owned by TOOL (loud out-of-scope)")
     ap.add_argument("--debt", action="store_true", help="debtscan-flag view across all threads")
     ap.add_argument("--fe-reachability", action="store_true", dest="fe_reachability",
                     help="FE-reachability per backend thread (CVO ground-truth)")
