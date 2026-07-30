@@ -205,12 +205,55 @@ working as designed:
 - **Stood down as instructed:** AVGCAP carried-tail *remedy* (ruling is ~C's/Andrew's -- I supply
   measurement only), E3.0 re-specification (~C), the renderer guard (DS/DE lane).
 
+## !! ADDED 0748Z -- AUG-1 STEP 2 IS MINE, STAGED AND HELD. A SUCCESSOR MUST FIND THIS. !!
+
+**THE RENDERER IS NOT TERRAFORM-DEPLOYED. A RE-UPLOAD *IS* THE WHOLE DEPLOY.** `lambda_function.py:114`
+has the transient EC2 box `aws s3 cp` `render_month_end.py` from `ARTIFACT_PREFIX` **at run time** -- no
+plan, no 0-diff, no source map, no tag. Found by `0.4.0_DE_ClientPlatform` (073506Z); COO assigned me
+step 2 at 073541Z; accepted as staged 074810Z.
+
+```
+step 1  0.4.0_DE   git apply patch @75c66b8733 + safe-commit          <- NOT mine
+step 2  ME (~A)    re-upload + round-trip md5 vs LANDED blob + symbol grep on the DOWNLOADED copy
+PROCEDURE  org/tier2_senior/0.7.0_AE_CloudOps/deliverables/etfs_renderer_reupload_STEP2_STAGED_20260730.sh
+STATE      STAGED, bash -n parse-clean, NEVER EXECUTED. Runs ONLY on COO's word, ONLY after step 1 lands.
+DO NOT     pre-upload "to be ready" -- that deploys a change to a PAYMENT BASIS without authorization.
+ORDER      strictly after step 1 (the verify reads the LANDED blob). Not parallelisable. <1 min total.
+ROLLBACK   versioning ENABLED. VersionId chTZ82VfoorkM2F7oUOTcTNFyos6JUDu, md5
+           d618e3b9931bde32c2d672363f8587ff, 36767 B, 2026-07-07 15:22:31 GMT. Fires ONLY on COO's word.
+MISMATCH   STOP. No retry (a blind retry overwrites the only evidence). Both hashes to COO.
+IF ANDREW DECLINES the disclosure: there is NO step 2. The deployed artifact stays as-is, in sync with
+           HEAD, which is the CORRECT state. Doing nothing is the right outcome in that branch.
+```
+**PRE-RESOLVED so a successor does not hit it mid-deploy: the CRLF trap.** Direct md5-vs-`git show HEAD:`
+is valid for this file **ONLY because `.gitattributes:5` pins `*.py text eol=lf`** (0 CR bytes measured;
+working tree == git blob == live S3 object, all `d618e3b993...`). **On a file WITHOUT `eol=lf` that
+comparison mismatches spuriously** -- and at hour 24 on a payment path you cannot distinguish a
+line-ending artifact from real corruption, so the honest response is to stop, which means missing the fire.
+
+**ROOT CAUSE OF THE WHOLE GAP, recorded because the fix is a doc edit nobody would prioritise:** the
+README read *"Re-upload after any renderer change (DE's lane)"* -- and **DE's charter EXCLUDES AWS
+deploys. The doc named an owner structurally incapable of performing the step.** So the two-step deploy
+carried one assigned step for a month and every reader correctly concluded it was covered.
+>> **A MIS-ASSIGNED OWNER IS INDISTINGUISHABLE FROM A COVERED STEP UNTIL THE DAY IT MATTERS.** An
+*unassigned* step at least looks like a hole; an assigned-but-impossible one looks DONE, so nobody
+audits it. << Fixed @`085851e23b` with both steps and both lanes named.
+
 ## Next Steps
 
+0. **[0.7.0_AE_CloudOps~A -- HIGHEST TIME-CRITICALITY]** On COO's word AFTER DE's step-1 commit lands:
+   run the STAGED step-2 re-upload (see the 0748Z block above). **Nothing before COO's word; no
+   pre-upload.** If Andrew declines the disclosure, there is no step 2 -- and that is a correct outcome.
 1. **[0.7.0_AE_CloudOps~A]** On Monitor `bbfrc8wl9` firing: report the 49financial n=2 verdict to
-   COO in one line -- it closes the last unmeasured limb of a dollar-bearing ruling.
-2. **[Andrew]** DELETE-AUTH for `s3://opal-data-etfs/platinum/reports/9999-07/*` -> I run the
-   staged rehearsal as one motion. Declined is a legitimate outcome (recorded residual).
+   COO + DE in one line -- it closes the last unmeasured limb of a dollar-bearing ruling. Emits on
+   BOTH outcomes, so silence is not a possible result.
+2. **[Andrew]** TWO decisions, both human-reserved, neither delegable to an agent:
+   (a) DELETE-AUTH for `s3://opal-data-etfs/platinum/reports/9999-07/*` -> I run the staged attach
+       rehearsal as one motion. **COO and ~C BOTH refused to grant it** (S3 deletion is human-reserved;
+       outranking COO does not convert a human-reserved authorization into an agent one). Both
+       recommend GRANT. Declined is legitimate -> residual recorded with ~C's name on it.
+   (b) GO/NO-GO on shipping the per-partner carried-forward disclosure -> triggers DE step 1, then my
+       step 2, strictly in that order.
 3. **[1.0.0_SA_CTO~C]** F1 (`retire_risk` affordance), F2 (denylist-not-lifecycle-check -> ~Z
    WS-C1), F3 (`dup_scan.py:358` stale constant), E3.0 re-specification, AVGCAP remedy ruling.
 4. **[0.4.0_DS_ClientPlatform / 0.4.0_DE]** IF ~C pulls the per-partner disclosure forward: it
