@@ -239,3 +239,118 @@ first_pass_census:
     scheduled-publish: [FRED-02-macro-fred-parallel-artifact, FRED-03-credit-spread-cache, FRED-08-daily-agenda-generator, MA-02-market-rsi-tiered, MA-04-fear-greed-fetcher, MA-05-volatility-fetcher, TS-5-parquet-batch-export, news-trending-analysis-gpt, trending-image-and-portal-publisher, yang-macro-and-timeseries]
     staged-transform: [bd-txn-consolidator, inf-nna-partition-checker]
     watchdog-observe: [bd-allocation-file-watchdog, ops-anomaly-scanners, ops-ec2-governance-lambdas, ops-infrastructure-monitors, test-seeking-alpha-unauth-simple]
+
+
+# =============================================================================================
+# C4 SEGMENTS -- THE AGENT ROUTING LAYER (Andrew-direct 2026-07-30: "Segments may be a better
+# name than Verticals ... it needs to be immediately obvious to those agents where to look.
+# Each C4 segment is a registry of C3 systems." Names ratified by Andrew this session,
+# incl. renames 3 -> Interactive Products, 5 -> Global Infrastructure.)
+#
+# PURPOSE: when a user queries an agent, the agent STARTS HERE. Each segment carries a dense
+# high-signal description -- the token surface a real query hits. Route: segment -> C3 system
+# -> chain (D2 instance) -> nodes. The 27 named threads remain the BUSINESS OVERLAY (verticals),
+# listed per segment; both entry paths land in the same registries.
+# =============================================================================================
+c4_segments:
+  partner-data:
+    display_name: Partner Firm Data
+    registry: [sys-bd-medallion, sys-inf-medallion, sys-cot-mdpf-assets, sys-smartx-feed]
+    residue_inbound: [canonical-schwab chains]
+    verticals_served: [advi-bd, advi-inf, advi-cot, mdpf, smartx, model-portfolios, canonical-schwab, partners]
+    high_signal: >
+      Everything that ingests, refines, and stores partner firm financial data: the per-firm
+      medallion pipelines (bronze, silver, gold, platinum) for 49 Financial / 49F / Black
+      Diamond / BD, Inflection / Orion, Cottonwood, and the SmartX and Schwab CRS/RPS feeds.
+      Look here for AUM, AUA, holdings, positions, lots, transactions, allocations, fees,
+      realized and unrealized gains, NNA, net new assets, advisor assignments, client
+      dimensions, custody data, account data; the firm buckets opal-data-bd, opal-data-inf,
+      opal-data-cot, opal-data-assets, opal-data-schwab; gold scripts (A_00..D_00, INF_*, cot
+      trees), silver converters, bronze ingest triggers, EC2 runners, SSM download documents,
+      EventBridge pipeline crons, fact_* and dim_* tables, parquet artifacts, and the mdpf /
+      Model Portfolios aggregate feeds. Questions that live here: is the data fresh; did last
+      night's pipeline run; why is an account or AUM number wrong; where does this parquet come
+      from; what writes silver or gold for firm X; is the deployed code current on S3. Firm
+      separation is law in this segment: bd, inf, and cot never mirror.
+  market-intelligence:
+    display_name: Market & Research Intelligence
+    registry: [sys-yang-analytics-engine, sys-market-intelligence-engine, sys-news-intelligence-engine, sys-macro-data-engine, sys-causality-engine]
+    flags: [sys-causality-engine producers DEAD on applied plane 2026-07-30 -- retirement adjudication owed]
+    verticals_served: [cma, correlation, factor-tilts, macroeconomics, market-overview, model-portfolios, positioning, valuation, news, causality, trade-submission, ops-internal]
+    high_signal: >
+      The shared quantitative analytics and research-generation engines that compute what the
+      portal knows about markets -- one engine serves many products by design. Look here for
+      capital market assumptions (CMA), correlation matrices, factor tilts, volatility,
+      valuation models, risk premia, positioning, attribution, the yang pipeline family; news
+      ingestion and scanning, Seeking Alpha, FinBERT sentiment scoring, keyword and trending
+      analysis, fear and greed index, sentiment gauges; FRED and macroeconomic series;
+      generated research artifacts (executive summaries, market updates, thematic signals,
+      causality and trade-idea generation); the opal-news-articles DynamoDB table; and served
+      artifacts under json/sentiment/*, json/valuation/*, json/positioning/*. Questions that
+      live here: where does this chart's number come from; what scores sentiment; what
+      generates the daily market update; which model produced this factor, correlation, or
+      valuation value; why is a sentiment or macro artifact stale.
+  interactive-products:
+    display_name: Interactive Products
+    registry: [sys-portfolio-management-suite, sys-trade-submission-engine]
+    verticals_served: [portfolio-management, trade-submission, market-overview]
+    high_signal: >
+      The interactive product machinery -- where a user DOES something rather than reads
+      something: portfolio management workflows, model portfolio selection, rebalancing views,
+      proposal building, and the trade submission path (trade tickets, order intake, submission
+      tracking, ticket APIs). Distinct from pages that merely render data: this segment owns
+      the chains where user action flows back INTO the estate. Questions that live here: what
+      happens when an advisor submits a trade; where does a ticket go; what backs the
+      portfolio-management page's interactive state; which lambda handles this user action;
+      why did a submission fail.
+  access-delivery:
+    display_name: Access, Identity & Serving
+    registry: [sys-partner-serving-platform]
+    verticals_served: [partners, portal-infra, data-refresh, ops-internal, advi-inf, mdpf]
+    high_signal: >
+      The spine every request crosses between a browser and the data: authentication,
+      authorization, OTP login, the portal authorizer, session and token handling, Secrets
+      Manager auth config; CloudFront distributions, Lambda@Edge origin-request and
+      origin-response routers, firm-scoped origin rewriting (shared-advisor-router); API
+      Gateway partner data APIs (/api/scoped/*, /api/general/*); the portal proxy,
+      cache-control headers, data-refresh endpoints, CORS and error-body shaping. Look here
+      when a page 401s or 403s; a partner sees the wrong firm's path; an artifact serves stale
+      from CDN cache; an endpoint 404s or returns HTML instead of JSON; or the question is who
+      is allowed to see what, through which route. If the data is right in the bucket but
+      wrong in the browser, the answer is in this segment.
+  global-infrastructure:
+    display_name: Global Infrastructure
+    registry: [sys-estate-ops-platform]
+    note: observation chains (watchdog-observe motif) route here even when the observed thing
+      lives in another segment -- the observed belongs to its segment, the observing belongs here.
+    verticals_served: [graph-platform, security-scanner, m365-mcp, insurance, ops-internal, portfolio-management]
+    high_signal: >
+      The estate's self-knowledge and self-maintenance: the dependency graph platform (Kuzu,
+      Nessie, Iceberg, Trino, the comp-tools substrate), case-find, security scanning, secrets
+      sweeps, access-anomaly detection, the m365 gateway (Teams, SharePoint, email
+      integration), agent fabric infrastructure, and the watchdog, parity, liveness, and
+      keepalive chains -- file-presence checks, value-parity validators, partition checkers,
+      EC2 runtime monitors, canaries. Questions that live here: what depends on X; what breaks
+      if I change Y; is the graph current; did a watchdog fire; is a monitor's silence
+      meaningful; where is the telemetry or audit record; anything about comp-tools, agents,
+      or the estate observing itself.
+
+# =============================================================================================
+# TERMINOLOGY LAW -- "ESTATE" (scan ordered by Andrew 2026-07-30; ~208 uses across NFRA PRDs)
+# =============================================================================================
+terminology_law:
+  estate: >
+    RESERVED. "The estate" means the WHOLE live operational surface (AWS + pipelines + portal +
+    records) -- it is the ratified ALL-value of the ONTOLOGY2 scope enum [estate, tree, firm,
+    pipeline, motif, partition-window, single-artifact], and it is additionally reserved by the
+    LOCKED-but-unbuilt estate WHERE-axis design (ESTATE_AXIS_AND_SEAM_GRAIN_DESIGN.md: do not
+    consume as live vocab until built). NEVER a segment, system, or layer name. The historical
+    "C1 estate" tier shorthand was formally corrected (01_substrate.md). "Semantic estates"
+    (plural, qualified -- the comp-semantic-estates tool name, Andrew-chosen) refers to the
+    business-thread traversal domain and is the ONLY sanctioned qualified use; never shorten
+    it to bare "estate(s)".
+  segments_vs_verticals: >
+    C4 = SEGMENTS (Andrew 2026-07-30): the five agent-routing registries of C3 systems above.
+    The 27 named threads are the BUSINESS OVERLAY (verticals) -- retained, listed per segment,
+    many-to-many with C3 by design. An agent routes segment -> system -> chain; a business
+    question may equally enter by vertical name and lands in the same registries.

@@ -9,7 +9,7 @@
 # D0-D7 ruling (@d16e269bf). ASCII-only. Extend only by EXPLICIT PROMOTION with a printed denominator (LAW-2).
 
 meta:
-  version: "1.3"   # 1.2 = NFRA_ONTOLOGY2 P1 DYNAMIC-RAIL fold (ADDITIVE; LAW-2 promotion w/ printed denominators):
+  version: "1.4"   # 1.2 = NFRA_ONTOLOGY2 P1 DYNAMIC-RAIL fold (ADDITIVE; LAW-2 promotion w/ printed denominators):
                    # +dynamic_rails (D1 value/grain, D2 path/flow, D3 contract/obligation) between the ratified rungs;
                    # +completeness axis (PSTMRT P2, alongside variance); +type_tuple (rail,grain,plane,scope) -- the
                    # enforced typing vocab base 0.8.0's registration invariant validates tool declarations against.
@@ -380,7 +380,7 @@ c2c3_canonical_catalog:
     agent answer describing C2/C3 in debt terms without naming the canonical layer first is
     INCOHERENT BY THIS LAW and cites this section for its correction.'
 
-c4_verticals:
+c4_verticals:   # v1.4: LAYER RENAMED C4 SEGMENTS (Andrew 2026-07-30) -- five agent-routing registries of C3 systems; the 27 named threads persist as the BUSINESS OVERLAY. Authoritative layer contract + the five segments + terminology_law ('estate' RESERVED): NFRA_ONTOLOGY_C2C3_CANONICAL.yaml c4_segments. This section's verticals text remains as the overlay definition.
   status: 'RATIFIED 2026-07-30 (Andrew-direct sovereign, CVO terminal; the L1/named-thread layer
     of the estate world model, elevated).'
   definition: 'The legislated semantic business estate: a C4 Vertical is a named business
