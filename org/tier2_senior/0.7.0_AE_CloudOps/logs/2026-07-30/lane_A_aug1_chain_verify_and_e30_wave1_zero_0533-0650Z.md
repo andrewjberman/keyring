@@ -155,11 +155,26 @@ inflection    12/20 (60%)   missing 07-01, 07-13,14,15, 07-20,21,22,23      <- W
 child; on interior coverage it is the reverse.** Both measurements are true -- inflection lands T+0
 *when it produces*, and fails to produce on ~40% of trading days. **Tail-cleanliness does not imply
 interior cleanliness** (DE's phrase). Corrected carried-day ranges, with the error bar I omitted:
+**>> THESE ARE *TAIL* COUNTS, NOT TOTALS. DO NOT QUOTE THEM AGAINST THE CSV. <<** (conflation flagged
+by `0.4.0_DE` 105225Z, and it lands on this file: a reader holding "49F carries 0-1" who then opens
+Saturday's CSV and reads "10 of 31 dates carry the last known value" will think something is broken.)
 ```
-inflection    RANGE 0-2   (0 only IF it produces 07-31; P is ~60%, not "high")
-cottonwood    RANGE 1-4   (1 is best-estimate but needs 3 further landings on an 85% feed)
-49financial   RANGE 0-1   (NARROWED from 0-3 by the n=2 watch, 1049Z -- see below)
+TAIL = days carried at the END of the month (the _month_cap / 07-31 question -- MY axis):
+  inflection    0-2   (0 only IF it produces 07-31; P is ~60%, not "high")
+  cottonwood    1-4   (1 is best-estimate but needs 3 further landings on an 85% feed)
+  49financial   0-1   (NARROWED from 0-3 by the n=2 watch, 1049Z -- see below)
+
+TOTAL = every carried date in the billing window (DE's axis, re-measured 105058Z after my landing):
+  49financial    9-11 of 31  (29-35%)  <- LOW END IS NOW EXACTLY THE FLOOR
+  cottonwood    11-13 of 31  (35-42%)
+  inflection    14-16 of 31  (45-52%)  <- did not move all day
+  FLOOR 9 of 31 = 29% carried EVEN FOR A PARTNER LANDING EVERY TRADING DAY (8 weekend + 1 holiday).
+  ** The floor is the ruled convention working, NOT a defect. 45% must be read against 29%, not 0%. **
 ```
+Tail and total are DIFFERENT QUANTITIES and neither is inferable from the other. DE's disclosure line
+emits both as distinct sentences for exactly this reason -- a tail-only document would say "1 carried"
+while 10 days carry, and **the tail-only version is the one that LOOKS consistent with our cadence
+conversation and is substantively misleading.**
 
 **49F WATCH RESULT (`bbfrc8wl9`, fired 1049Z) -- AND A RETRACTION OF MY OWN SCRIPT'S VERDICT:**
 ```
