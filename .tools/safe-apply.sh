@@ -187,6 +187,48 @@ else
   fi
 fi
 
+# -----------------------------------------------------------------------------
+# TOMBSTONE pre-apply gate -- block an apply that would RESURRECT a deleted resource.
+# Andrew-direct "build the gate", 2026-07-30. Owner 0.7.0_AE_CloudOps.
+#
+# THE HAZARD (measured, 4 instances in one estate, 2026-07-30): a resource deleted OUT-OF-BAND
+# -- by CLI/console rather than by removing its declaration -- leaves the declaration ARMED, and
+# the next apply RECREATES it. Worst observed form: straight after a `terraform destroy`,
+# `plan` read "20 to add" -- every resource gone, every one still declared.
+#
+# WHY THE PLAN ALONE CANNOT DECIDE: "deliberately deleted" and "new work not yet created" are
+# byte-identical in a plan (both are `to add`). The record of INTENT is
+# infra/aws/terraform/tombstones.json; the gate is that register joined to this plan.
+#
+# rc 0 -> clean.  rc 2 -> would resurrect, BLOCK.  rc 3 -> could-not-evaluate, BLOCK (fail-closed).
+# Audited bypass: TOMBSTONE_OVERRIDE="reason" (logged to org/tombstone-gate-audit.log).
+#
+# SCOPE LIMIT, STATED SO SILENCE IS NEVER READ AS A PASS: this renders its own plan, exactly as
+# the tagauthz gate above does, and inherits the same accepted TOCTOU window. If the tree cannot
+# be planned, the gate says so LOUDLY and does not pretend to have checked.
+TOMBSTONE_GATE="$SCRIPT_DIR/tombstone-gate.py"
+TOMBSTONE_REG="$SCRIPT_DIR/../infra/aws/terraform/tombstones.json"
+if [ -f "$TOMBSTONE_GATE" ] && [ -f "$TOMBSTONE_REG" ]; then
+  TS_TMP="${TMPDIR:-/tmp}/safe-apply-tombstone-$$"
+  if "$TERRAFORM" ${CHDIR_TREE:+-chdir="$CHDIR_TREE"} plan -input=false -lock=false -out="$TS_TMP.bin" >/dev/null 2>&1 \
+     && "$TERRAFORM" ${CHDIR_TREE:+-chdir="$CHDIR_TREE"} show -json "$TS_TMP.bin" > "$TS_TMP.json" 2>/dev/null; then
+    python "$TOMBSTONE_GATE" --plan-json "$TS_TMP.json" --register "$TOMBSTONE_REG" >&2
+    TS_RC=$?
+    rm -f "$TS_TMP.bin" "$TS_TMP.json"
+    if [ "$TS_RC" -ne 0 ]; then
+      echo "safe-apply: TOMBSTONE GATE BLOCKED this apply (rc=$TS_RC). Nothing was applied." >&2
+      exit "$TS_RC"
+    fi
+  else
+    rm -f "$TS_TMP.bin" "$TS_TMP.json"
+    echo "safe-apply: WARN -- tombstone gate could NOT plan this tree, so it checked NOTHING." >&2
+    echo "            This is a GAP, not a pass. Verify by hand that no resource in" >&2
+    echo "            infra/aws/terraform/tombstones.json is about to be re-created." >&2
+  fi
+else
+  echo "safe-apply: WARN -- tombstone gate or register missing; resurrection check DID NOT RUN." >&2
+fi
+
 # Checkpoint passed (empty inbox, or routine acked, or audited STOP override).
 #
 # RV-0047 F-001, the OUTCOME half. `exec` REPLACES this process -- nothing after it can ever
