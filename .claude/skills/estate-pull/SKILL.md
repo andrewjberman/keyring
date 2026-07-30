@@ -21,7 +21,7 @@ manifest/YYYY-MM-DD.json                              <- pipeline writes FIRST (
                                                          FAILED (+failure_reason) on caught error;
                                                          hard crash leaves RUNNING + stale
                                                          started_at (loud and true)
-manifest/_EPOCH.json                                  <- CVO writes ONCE at go-live flip (first
+config/_EPOCH.json                                  <- CVO writes ONCE at go-live flip (first
                                                          expected date; makes ABSENCE computable)
 adjudicated/YYYY/MM/DD/estate-report-YYYY-MM-DD.md    <- CVO writes (this skill, Step 4)
 ```
@@ -51,7 +51,7 @@ construction; the report itself is Andrew-asked by name).
 aws s3api list-objects-v2 --bucket opal-estate-report --prefix manifest/ \
   --query "Contents[].Key" --output json
 ```
-Compute the EXPECTED sequence: every date from `manifest/_EPOCH.json`'s first report date
+Compute the EXPECTED sequence: every date from `config/_EPOCH.json`'s first report date
 through today. Diff against the objects present and classify each expected day — print the
 full census with denominators:
 
