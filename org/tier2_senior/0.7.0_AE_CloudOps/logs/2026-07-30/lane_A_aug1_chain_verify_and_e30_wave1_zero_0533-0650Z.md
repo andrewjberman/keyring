@@ -1,0 +1,192 @@
+# ~A lane: Aug-1 ETFS chain verified END-TO-END + E3.0 Wave-1 closed at ZERO (premise refuted) -- 0533-0650Z
+
+**archetype:** VALIDATE
+**secondary_archetypes:** DIAGNOSE, COORDINATE
+**Serial:** `0.7.0_AE_CloudOps~A` (fresh session, PID 2556, Monitor `beeett55q`, session ba9867b2)
+
+## Arc
+
+1. **Startup.** `/watcher` armed (prefix resolved `/cygdrive/c`, NOT `/c`; ZERO orphans for my
+   serial so no kill needed; `TaskOutput(beeett55q)` = `running`, the only probe that observes a
+   consumer). LD-0290 serial file written. XXX.md 1b: A.2 audit-archive rc=0/0 findings
+   (baseline 2026-07-29T185938Z, snapshot not-due); **A.3 96/96 bare-resolve AND the mandatory
+   EXERCISE half** (a forwarder produced its own banner -- the half that MSTR~Z's false 93/93
+   motivated); D hook wired; E context set; F = zero crons (my row: Tier-2/3 + ~lanes).
+   `/cloud-ops` loaded (noting its snapshot is 2026-05-27 and carries RETIRED doctrine -- the
+   `/work` 20m cron per LD-0072, the AUTO-RESPAWN watcher verdict; CLAUDE.md is canonical).
+2. **HELD a stale directive rather than executing it.** Inbox surfaced base-CTO's
+   `20260729T211403Z` *"RUN THE BRIDGE NOW"* as unread-while-idle. ~8h stale, three ~A sessions
+   logged past it. Grounded instead: the three `2026-07-28.json` keys EXIST, written 21:28:2xZ
+   (~14 min after that dispatch) at byte sizes matching his quoted staging figures exactly.
+   **Already discharged; re-running would have manufactured a duplicate production run.**
+3. **Item Zero (Aug-1 clock) -- the record was wrong.** COO/MSTR carried it as "patch READY,
+   post-freeze apply." It was applied+deployed 07-29 03:09:32Z, ledger CLOSED, tagged v1.1.0,
+   freeze overridden Andrew-direct. Verified on the APPLIED plane myself (not the predecessor's
+   self-report). COO's read of `17bcbff520` was correct about that commit, ~26h stale as state.
+4. **Raised a blocker, then WITHDREW it on my own exercise.** Flagged `write_month_csvs` as
+   unguarded upstream of ALL S3 uploads under `set -e` -> a throw costs the PDF too (total, not
+   degraded, non-delivery). Then exercised the real function against real S3 data, local-only:
+   **3 CSVs for 2026-07, no exception; June positive control 3/3.** Trigger refuted -> withdrew.
+   COO had already escalated it to ~C as *the* live blocker and retracted that on my evidence.
+5. **Nearly reported two non-findings; killed both by grounding the mechanism.**
+   (a) July CSVs are ragged 28/29/27-of-31 -- source-confirmed `_month_cap:164-175`: an
+   in-progress month MTD-caps, a complete month returns `m_end` unconditionally. June's uniform
+   30/30/30 is the exercised proof. **Artifact of the day I ran it; vanishes Aug-1.**
+   (b) `aws events list-rules` showed NO month-end rule -> I was one step from reporting a
+   missing production schedule 28h before a fire Andrew asked for BY NAME. It is an
+   `aws_scheduler_schedule` (EventBridge **Scheduler**) which that API structurally cannot see.
+   `comp-trigger` printed its own denominator (143 rules + 11 schedules) and resolved it ENABLED.
+6. **Found and corrected a torn-down control documented as LIVE** (@`ee1c5b5c74`). README listed
+   `etfs-reports-monthly-absence-check` as live component #6; it was deliberately torn down
+   @`f3a78be7d8` as a PAGER under CTO GO 030135Z, and `etfs-reports-alerts` has ZERO live
+   subscriptions. **Not rebuilt** (moratorium + it would reverse a CTO teardown). The mechanism
+   check is what turned a "missing guard" defect report into a doc fix.
+7. **THE HIGHEST-VALUE LEG, and nobody had checked it.** The renderer is NOT Terraform-deployed
+   -- the EC2 `s3 cp`s it at RUN TIME, so a re-upload IS the whole deploy: no plan, no 0-diff,
+   no source map, no tag. Had it gone un-re-uploaded after the 07-07 CSV commit, Aug-1 pulls a
+   renderer with no CSV code **behind a green run and a delivered PDF**. Verified in sync.
+8. **E3.0 Wave-1: ZERO retirements** (@`2da40ba711`). Three findings (F1-F3 below). COO ruled it
+   **GATES EXERCISED / ZERO RETIRED / PREMISE REFUTED** and routed re-specification to ~C.
+9. **Measured the Aug-1 carried-tail population on ~C's challenge.** ~C caught that 07-31 is a
+   FRIDAY and the fire is SATURDAY, hypothesising all three partners carry. **Measured: it is
+   neither framing** -- and the calendar is not the mechanism (below).
+
+## Deployment Sequence + Verification (AE addition)
+
+**NO DEPLOY THIS SESSION.** No Terraform, no safe-apply, no HALTGT, no code deploy. Verification
+only. Actual output:
+
+```
+ORCHESTRATOR (applied plane)
+  aws lambda get-function-configuration --function-name etfs-reports-orchestrator
+    CodeSha256   jfMnlSE2VocFe7kN9uxhx35iU3JLev5flYOJKW9OE+I=
+    LastModified 2026-07-29T03:09:32.000+0000
+  == plan hash in ledger 20260729T0300Z (opened at start, CLOSED 0316Z), tag etfs-reports-v1.1.0
+
+RENDERER ARTIFACT (run-time-fetched -- downloaded AND symbol-checked, not listed)
+  s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports/render_month_end.py
+    36,767 B   uploaded 2026-07-07 11:22:31   (27s after commit 5b9c6d46eb)
+  md5 DEPLOYED d618e3b9931bde32c2d672363f8587ff
+  md5 REPO     d618e3b9931bde32c2d672363f8587ff   IDENTICAL, 710 lines both
+  deployed copy DEFINES write_month_csvs @:564 and CALLS it @:644
+  -> my local exercise was of the EXACT DEPLOYED BYTES, not a proxy.
+  HONEST BOUND: same bytes, different runtime (native py3.12 vs AL2023 python3 under the
+  instance role). Code path exercised; environment-specific failure is NOT.
+
+SCHEDULE (correct instrument -- aws scheduler, NOT aws events)
+  etfs-reports-monthly-run  ENABLED  cron(0 10 1 * ? *)  America/New_York (DST-native)
+  target etfs-reports-orchestrator  input {"mode":"run"}
+  comp-trigger denominator: 143 events-rules + 11 schedules scanned, ONE match
+
+SENDER (Rule 23)  SES_SENDER=noreply@opalinvest.dev   COMPLIANT
+```
+
+## Compiler Tools
+
+| Tool | Why | Result | Note |
+|---|---|---|---|
+| `comp-which` x3 | route absence-guard / legacywriter / contract questions | PASS/PARTIAL | routed to `comp-trigger` (correct); honestly reported NO CURATED RULE on the contract-lifecycle question rather than guessing |
+| `comp-trigger etfs-reports` | is the Aug-1 schedule armed | **PASS** | printed its own denominator; resolved the `aws events` blind spot |
+| `comp-legacywriter --self-test` | gate before trusting the census | **PASS 10/10** | scored on OUTPUT; incl. negative controls proving it can say SOLE / UNDETERMINABLE |
+| `comp-legacywriter --census` x3 | E3.0 population | PASS | first run had 3 axes UNSUPPLIED; re-ran with all four |
+| `comp-heat` / `comp-dups` / `comp-debris` | supply the missing axes | PASS | `comp-dups` surfaced F3 (stale sovereign hold) |
+| `comp-grep` x8 | on-rails search (raw `.tf` grep GATED, correctly) | PASS | one **FAILED RETRIEVAL** correctly reported as such, not as a zero (wrong lambda dirname) |
+| `comp-surface-check` | in safe-commit, both commits | PASS | 6 surfaces / 19 carve tokens, none touched |
+| `comp-pulse` risk-reflex | in safe-commit | CLEAN | denominator printed: 3 files vs 1484 danger nodes |
+| `lib/trading_calendar.py` | frontier, never wall-clock | PASS | `expected_last_trading_day` needs a `now` arg -- read the signature after the TypeError |
+
+**What worked:** `comp-trigger`'s self-printed denominator is what stopped a false outage.
+`comp-legacywriter`'s self-test negative controls made its census trustworthy. `comp-grep`
+distinguishing FAILED RETRIEVAL from a real zero prevented a wrong conclusion.
+**What failed:** the raw `.tf` grep was gated by the rail -- correct behaviour, I re-routed.
+**Gap found:** F1 -- `retire_risk` is an affordance defect on a retirement-authorizing tool.
+
+## Findings
+
+- **F1 (routed ~C, COO pushing hardest).** 29 of 35 E3.0 name-matched survivors **HOLD LIVE
+  OBJECTS** while reading `contest=SOLE`, `deadness_score=5`, `retire_risk=LOW`, no-reader,
+  code-cold -- largest 436,489 B of realized-lot crossref forensics. The tool does not lie (its
+  docstring says the invocation axis is BUCKET-grain); the field is *named* `retire_risk` and
+  *reads* `LOW` on a surface whose existence it never checked. Recommend forcing
+  `UNKNOWN-KEY-EXISTENCE-UNCHECKED` absent a supplied key-grain listing.
+- **F2 (routed ~C, real input to ~Z's WS-C1).** The TRANSIENT stopgap is a 9-entry substring
+  denylist (`comp_legacywriter.py:704`). All 6 candidates cleared it **by not matching a name,
+  not by being examined.** I then refuted my own transient hypothesis at source (`put_object`
+  only, no `delete_object`) -- which sharpens it: the guard could not have told me that.
+- **F3 (routed ~C).** `debtscan/dup_scan.py:358` `_HELD_PREFIXES` still excludes 354 bd/schwab
+  paths, comment *"for when Andrew lifts"* -- **lifted completely 2026-07-14.** Used
+  `--allow-held`; did NOT flip the constant (arch-gated; grantee does not remove its own guard).
+- **F4 (base owns, routed by base to COO).** A deploy path where a re-upload IS the whole deploy
+  has no plan/0-diff/source-map/tag. In sync today; ungated tomorrow.
+
+## Aug-1 carried-tail: MEASURED population
+
+`load_all_daily` reads `s3://opal-data-etfs/daily/{partner}/{YYYY-MM-DD}.json`. Enumerated via
+`s3api list-objects-v2` (ISO-UTC), **never `aws s3 ls`** (LastModified renders LOCAL).
+Denominators: 49financial 60 date-keys, inflection 71, cottonwood 31.
+**POSITIVE CONTROL (built in):** inflection HAS 9 Sat + 8 Sun date-keys, so the scan demonstrably
+CAN see weekend keys -> the zero Sat/Sun for the other two is a REAL zero.
+
+```
+inflection    T+0, SEVEN days/week, lands 14:53-15:07Z on the data-date. 12/12 consistent.
+              -> holds 07-31 at the fire. ZERO carried days. HIGH CONFIDENCE.
+cottonwood    T+2 weekdays / T+4-5 across a weekend, fixed 10:30:30Z. Thu->Sat +2d is 3/3.
+              -> holds 07-30 at the fire. EXACTLY 1 carried day (07-31). HIGH CONFIDENCE.
+49financial   BACKFILLED 07-29 01:22Z (ten date-keys in 11 seconds), then ONE post-backfill
+              daily landing (07-28 @ 07-29 10:45:12Z, T+1). n=1 is not a cadence.
+              -> UNDETERMINED, 0 to 3 carried days. CANNOT BE KNOWN BEFORE SATURDAY.
+```
+**~C's premise is refuted as the MECHANISM:** *"under a T-1 pipeline Friday's data does not exist
+on Friday"* -- inflection lands T+0, so it does. **None of the three is T-1.** The spread is three
+different feed cadences, not the Friday/Saturday calendar. **~C's other half STANDS:** June
+genuinely does not generalize (06-30 was a Tuesday).
+**Remedy consequence:** a STATIC disclosure sentence would be FALSE (cannot say "all carry" --
+inflection does not; cannot say "cottonwood" -- 49F unknown). The honest form is **per-partner,
+computed at run time** from `cap`/`in_month[-1]` which the renderer ALREADY has -- unconditional,
+no new pipeline, nothing notification-shaped. **Not mine to build** (DS/DE lane, payment basis).
+
+## Blockers
+
+**None of mine are self-inflicted.** Two items held on others' word, both authorization gates
+working as designed:
+1. **DELETE-AUTH -- at ANDREW, and it has nowhere else to land.** S3 deletion is human-reserved
+   under Agent Autonomy. COO correctly refused ("I am an agent"); ~C **also** refused and
+   declined to reason around it (outranking COO does not convert a human-reserved authorization
+   into an agent one). Both recommend GRANT. Rehearsal stays STAGED.
+2. **49financial cadence -- bounded unknown, resolvable today.** Watch armed (Monitor
+   `bbfrc8wl9`) for `daily/49financial/2026-07-29.json`; **emits on BOTH outcomes** so silence
+   is not a possible result. Converts n=1 -> n=2 without manufacturing a run.
+
+## Current State
+
+- **Aug-1 ETFS month-end (Andrew-named, HARD, Sat 2026-08-01 10:00 ET = 14:00Z).** Chain VERIFIED
+  end-to-end: schedule ENABLED, orchestrator CodeSha256 applied-plane-verified, renderer artifact
+  md5-identical AND symbol-checked, render file list = 3 CSVs exercised on deployed bytes, sender
+  Rule-23 compliant. **No absence guard by design** (torn down as a pager under CTO GO) -- **I am
+  the detection.** Remaining: real-content attach rehearsal, STAGED at
+  `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/etfs_9999_07_attach_rehearsal_STAGED_20260730.sh`,
+  one motion on Andrew's word; else the residual is recorded with ~C's name on it.
+- **E3.0 Wave-1: CLOSED, 0 retirements.** Report:
+  `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/E30_WAVE1_SAFE_SLICE_20260730.md` @`2da40ba711`.
+  Counts: census-only 56 / derived-from-contracts 0 / COVERAGE DEBT 56 of 56. COO: do NOT reopen
+  it looking for retirements.
+- **Commits:** `ee1c5b5c74` (README parity), `2da40ba711` (E3.0 report + staged rehearsal). Pushed
+  to CLOUD. No Terraform, no tags, no infra mutation.
+- **Base<->~A boundary confirmed symmetrically** (base PID 33636): zero shared files, zero shared
+  S3 keys, no TF either side, no HALTGT contention. Base RAVC-closed my renderer evidence.
+- **Stood down as instructed:** AVGCAP carried-tail *remedy* (ruling is ~C's/Andrew's -- I supply
+  measurement only), E3.0 re-specification (~C), the renderer guard (DS/DE lane).
+
+## Next Steps
+
+1. **[0.7.0_AE_CloudOps~A]** On Monitor `bbfrc8wl9` firing: report the 49financial n=2 verdict to
+   COO in one line -- it closes the last unmeasured limb of a dollar-bearing ruling.
+2. **[Andrew]** DELETE-AUTH for `s3://opal-data-etfs/platinum/reports/9999-07/*` -> I run the
+   staged rehearsal as one motion. Declined is a legitimate outcome (recorded residual).
+3. **[1.0.0_SA_CTO~C]** F1 (`retire_risk` affordance), F2 (denylist-not-lifecycle-check -> ~Z
+   WS-C1), F3 (`dup_scan.py:358` stale constant), E3.0 re-specification, AVGCAP remedy ruling.
+4. **[0.4.0_DS_ClientPlatform / 0.4.0_DE]** IF ~C pulls the per-partner disclosure forward: it
+   must be EXERCISED (a zero-S3-write local harness exists and I will hand it over), and
+   **`_month_cap` must not be touched** -- Andrew-ruled full-calendar-month billing with a CVO
+   verification behind it (+$790,884 on May 49F).
+5. **[2.0.0_SA_COO]** Nothing owed; both dispatched items reported and ruled.
