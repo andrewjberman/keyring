@@ -16,7 +16,13 @@ daily/YYYY/MM/DD/estate-report-YYYY-MM-DD.{md,json}   <- pipeline writes: Kimi/K
                                                          + DETERMINISTIC changed-resource list
                                                          (git-commit-derived, ladder-bucketed)
                                                          + day-over-day SET-delta
-manifest/YYYY-MM-DD.json                              <- pipeline writes: born {"status":"PENDING"}
+manifest/YYYY-MM-DD.json                              <- pipeline writes FIRST (status RUNNING at
+                                                         run start); rewrites PENDING on success,
+                                                         FAILED (+failure_reason) on caught error;
+                                                         hard crash leaves RUNNING + stale
+                                                         started_at (loud and true)
+manifest/_EPOCH.json                                  <- CVO writes ONCE at go-live flip (first
+                                                         expected date; makes ABSENCE computable)
 adjudicated/YYYY/MM/DD/estate-report-YYYY-MM-DD.md    <- CVO writes (this skill, Step 4)
 ```
 
