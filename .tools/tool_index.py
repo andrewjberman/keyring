@@ -13,7 +13,7 @@ must be able to know it is stale.
 MASTER_PATH = 'org/modules/graph/TOOL_MASTER.yaml'
 MASTER_SHA256 = '59b9472535b2d03d53d68a39812df83dfb6e5b4e86e50187087d966078cf99a9'
 MANIFEST_PATH = 'org/modules/graph/graph-call-manifest.yaml'
-MANIFEST_SHA256 = '21cd7f3de802aadc9c5fa1dc3557d43d2ef3d81577b5a4dae250ac23108cf8eb'
+MANIFEST_SHA256 = 'f934bd687edbddfec88242d7805955d0df4e74a3fed646ab45075a58ebb31d0a'
 LEDGER_PATH = 'org/modules/graph/comp-coverage-map.yaml'
 LEDGER_SHA256 = '931f52bad3c17b7b8c7491e6abe33e97e01ec222744c1e9f5cbf6b44ea7731a0'
 
@@ -3097,23 +3097,24 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                        'worklist+human-confirm. Engine: dup_scan.py',
                                'entries': ['estate.dups.duplicate_resources'],
                                'subcommands': ['--class', '--nightly', '--json']},
-                 'comp-estate': {'does': 'FIRST CONTACT for the Estate (naming consolidated 2026-07-30, '
-                                         'Andrew-direct: pipescript -> comp-semantic-estates -> comp-estate; old '
-                                         'names deleted, do not resolve). TWO FACES: (1) named-thread traversal -- '
-                                         'what is IN a named pipeline/thread: every resource, producers -> served '
-                                         'artifacts -> frontend consumers, owning tool, coverage + debt flags, whole '
-                                         'estate, NO silent Unknown; (2) the ONTOLOGY VIEWS -- C4 segments '
-                                         '(--segments, the agent routing entry point), the C3.i x C3.ii '
-                                         'cross-partition matrix (--matrix), the stable layer ladder (--layers), '
-                                         'canonical terms (--definitions), lambda-census set-diff (--census-drift). '
-                                         'KEYS re-derived LIVE from source; NAMES from the resolver snapshot with a '
-                                         'FAIL-LOUD source-timestamp head (unnameable substrate = rc=2 SOURCE '
-                                         'UNRESOLVABLE, never silence) -- reference implementation of the header '
-                                         'contract. --refresh is a BRIDGE to a newer snapshot, never a canonical one '
-                                         '(comp-kuzu is the destination). Engine opal_estate_infrastructure.py + '
-                                         'delegated legacy thread-model engine estate_infrastructure_cli.py (AE '
-                                         'lane). Slow modes declared: --drift/--self-test ~25s key-plane scan; '
-                                         'everything else sub-second',
+                 'comp-estate': {'does': 'THE GLOBAL LOSSLESS FIDELITY DESCENT FROM SEMANTICS TO FACTS '
+                                         '(Andrew-direct purpose ruling, verbatim, 2026-07-30) -- FIRST CONTACT for '
+                                         'the Estate (naming consolidated 2026-07-30, Andrew-direct: pipescript -> '
+                                         'comp-semantic-estates -> comp-estate; old names deleted, do not resolve). '
+                                         'TWO FACES: (1) named-thread traversal -- what is IN a named '
+                                         'pipeline/thread: every resource, producers -> served artifacts -> frontend '
+                                         'consumers, owning tool, coverage + debt flags, whole estate, NO silent '
+                                         'Unknown; (2) the ONTOLOGY VIEWS -- C4 segments (--segments, the agent '
+                                         'routing entry point), the C3.i x C3.ii cross-partition matrix (--matrix), '
+                                         'the stable layer ladder (--layers), canonical terms (--definitions), '
+                                         'lambda-census set-diff (--census-drift). KEYS re-derived LIVE from source; '
+                                         'NAMES from the resolver snapshot with a FAIL-LOUD source-timestamp head '
+                                         '(unnameable substrate = rc=2 SOURCE UNRESOLVABLE, never silence) -- '
+                                         'reference implementation of the header contract. --refresh is a BRIDGE to '
+                                         'a newer snapshot, never a canonical one (comp-kuzu is the destination). '
+                                         'Engine opal_estate_infrastructure.py + delegated legacy thread-model '
+                                         'engine estate_infrastructure_cli.py (AE lane). Slow modes declared: '
+                                         '--drift/--self-test ~25s key-plane scan; everything else sub-second',
                                  'entries': ['estate.thread.traversal', 'estate.ontology.views'],
                                  'subcommands': ['<name>',
                                                  '--list',

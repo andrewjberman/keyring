@@ -1,6 +1,12 @@
 """opal_estate_infrastructure -- the OPAL estate traversal engine (C4: estate-infrastructure).
 
 Tool: `comp-estate` (the first point of contact for agent coherence over the Estate).
+PURPOSE (Andrew-direct 2026-07-30, VERBATIM): "the entire purpose of comp-estate is that its
+the global lossless fidelity descent from semantics to facts." The ladder drill -- C4 segments
+-> C3(i|ii) -> chains (D2) -> C2 motifs -> C1 interactions -> C0 facts, every return naming its
+next rung down and the D-rail the descent rides -- IS that purpose made operational; "lossless"
+is the dual-key maximum-fidelity property (two decompression paths from one join point, the
+property that placed the C3 dual-partition design).
 NAMING HISTORY, superseded rulings quoted for the record: born `opal_business_estates` under
 `comp-semantic-estates` (Andrew-direct 2026-07-29: "we are deprecating base pipescript. there is
 comp-pipescript only for future reference" / "pipescript needs to be categorically renamed as
