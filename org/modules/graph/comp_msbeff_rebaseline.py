@@ -481,6 +481,89 @@ def dual_basis_compare(group_by: str = "month") -> dict:
     }
 
 
+# ======================================================================================
+# E4.3 ELEMENTS 2 + 3 -- THE TREND ENTRY POINT, AND THE PREDICATE FIXED IN THE SCHEMA
+# (COO GO 20260730T073320Z)
+#
+# ELEMENT 2: the precondition is only a control if the trend path CANNOT be reached around
+# it. `assert_window_supported` existed but nothing forced a caller through it, and a guard
+# nothing invokes is not a guard. `trend_claim()` is now the entry point: it takes the window
+# the caller CLAIMS, refuses before computing anything, and returns provenance the caller did
+# not have to remember to attach.
+#
+# ELEMENT 3: a STORED series carries the predicate that produced it, and a reader supplying a
+# different predicate gets a LOUD mismatch rather than a silent recompute. This is not
+# pedantry -- it is the measured C5 lesson: 221/12.14% vs 224/12.30% differ by exactly the 3
+# `FAIL->FIXED` rows, two honest predicates sharing one word. An unstated predicate makes two
+# correct numbers look like a discrepancy; a SILENTLY SWAPPED one makes a wrong number look
+# correct.
+# ======================================================================================
+
+class PredicateMismatch(Exception):
+    """A stored series was read under a predicate other than the one that produced it."""
+
+
+def trend_claim(months_claimed: int, basis: Optional[str] = None,
+                group_by: str = "month") -> dict:
+    """THE trend entry point. Refuses an unsupported window BEFORE computing anything.
+
+    Returns the series plus the provenance every claim must carry -- basis id, predicate,
+    device scope, corpus profile, and the window actually claimed. The caller cannot forget to
+    attach them because they are not optional fields on the return.
+    """
+    prof = assert_window_supported(months_claimed)      # raises TrendWindowUnsupported
+    b = basis or derived_basis_id()
+    s = series(b, group_by)
+    return {
+        "claim": {"months_claimed": months_claimed, "group_by": group_by},
+        "basis": b,
+        "fail_predicate": FAIL_PREDICATE,
+        "device_scope": DEVICE_SCOPE,
+        "corpus_profile": prof,
+        "series": s,
+        "PROVENANCE_NOTE": ("this claim is re-derivable ONLY under the basis and predicate named "
+                            "above; quoting the rate without them is not a measurement"),
+    }
+
+
+def store_series(path, payload: dict) -> str:
+    """Persist a series WITH its predicate and basis welded on (element 3)."""
+    p = Path(path)
+    out = dict(payload)
+    out["fail_predicate"] = payload.get("fail_predicate", FAIL_PREDICATE)
+    out["basis"] = payload.get("basis", derived_basis_id())
+    out["device_scope"] = payload.get("device_scope", DEVICE_SCOPE)
+    p.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
+    return str(p)
+
+
+def load_series(path, expect_predicate: Optional[str] = None,
+                expect_basis: Optional[str] = None) -> dict:
+    """Read a stored series back, REFUSING a predicate or basis swap.
+
+    A stored series with NO predicate is also refused: it cannot be interpreted, and treating
+    it as if it used today's predicate is precisely the silent substitution this guards.
+    """
+    doc = json.loads(Path(path).read_text(encoding="utf-8"))
+    stored_pred = doc.get("fail_predicate")
+    if not stored_pred:
+        raise PredicateMismatch(
+            "REFUSED: the stored series carries NO fail_predicate, so it cannot be interpreted. "
+            "Assuming today's predicate would be a silent substitution -- the C5 class (two "
+            "honest predicates sharing one word moved that population by 3 rows).")
+    if expect_predicate is not None and expect_predicate != stored_pred:
+        raise PredicateMismatch(
+            "REFUSED: predicate mismatch. stored=%r requested=%r. These are DIFFERENT questions; "
+            "re-deriving under the requested predicate is legal, silently reading the stored "
+            "numbers as if they answered it is not." % (stored_pred, expect_predicate))
+    if expect_basis is not None and expect_basis != doc.get("basis"):
+        raise PredicateMismatch(
+            "REFUSED: basis mismatch. stored=%r requested=%r. A rate under one verdict basis is "
+            "not comparable to a rate under another without saying so." % (doc.get("basis"),
+                                                                           expect_basis))
+    return doc
+
+
 def _print_dual_basis(rep, group_by="month"):
     print("=" * 92)
     print("E4.1.3 DUAL-BASIS EXERCISE -- the same trend claim re-derived under BOTH bases")

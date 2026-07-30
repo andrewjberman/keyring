@@ -351,5 +351,64 @@ def test_15_element5_device_scope_is_a_FIELD_on_every_series_not_a_caveat(corpus
         "otherwise the next agent builds one and fabricates coverage")
 
 
+def test_16_element2_the_trend_path_is_NOT_reachable_around_the_precondition(corpus):
+    """MUTANT: expose a trend entry point that skips assert_window_supported -> RED.
+
+    The precondition existed before this element; nothing FORCED a caller through it, and a
+    guard nothing invokes is not a guard. trend_claim() refuses BEFORE computing anything.
+    """
+    corpus(_FIXTURE)
+    with pytest.raises(rb.TrendWindowUnsupported):
+        rb.trend_claim(4)
+
+
+def test_17_element2_a_claim_carries_its_provenance_as_NON_OPTIONAL_fields(corpus):
+    """MUTANT: make basis/predicate/device_scope optional on the return -> RED.
+
+    A caller must not be able to FORGET the provenance; it is on the return, not on their
+    discipline.
+    """
+    corpus(_FIXTURE)
+    c = rb.trend_claim(1)
+    for k in ("claim", "basis", "fail_predicate", "device_scope", "corpus_profile", "series"):
+        assert k in c, "a trend claim shipped without %s" % k
+    assert c["basis"].startswith("derived@v")
+    assert "PROVENANCE_NOTE" in c
+
+
+def test_18_element3_a_stored_series_REFUSES_a_predicate_or_basis_swap(corpus, tmp_path):
+    """MUTANT: recompute silently under the requested predicate, or ignore the mismatch -> RED.
+
+    The measured C5 lesson: 221/12.14% vs 224/12.30% differ by exactly the 3 `FAIL->FIXED`
+    rows. An unstated predicate makes two CORRECT numbers look like a discrepancy; a silently
+    SWAPPED one makes a WRONG number look correct, which is worse.
+    """
+    corpus(_FIXTURE)
+    p = tmp_path / "series.json"
+    rb.store_series(p, rb.trend_claim(1))
+    # positive control FIRST and separately: the matching predicate must be accepted
+    assert rb.load_series(p, expect_predicate=rb.FAIL_PREDICATE)["basis"].startswith("derived@")
+    with pytest.raises(rb.PredicateMismatch):
+        rb.load_series(p, expect_predicate="result token startswith FAIL")
+    with pytest.raises(rb.PredicateMismatch):
+        rb.load_series(p, expect_basis="derived@v1+DIFFERENT")
+
+
+def test_19_element3_a_series_stored_WITHOUT_a_predicate_is_uninterpretable(corpus, tmp_path):
+    """MUTANT: default a predicate-less stored series to today's predicate -> RED.
+
+    That default is the silent substitution the whole element guards: it would read old numbers
+    as if they answered today's question.
+    """
+    corpus(_FIXTURE)
+    p = tmp_path / "series.json"
+    rb.store_series(p, rb.trend_claim(1))
+    doc = json.loads(p.read_text(encoding="utf-8"))
+    doc.pop("fail_predicate")
+    p.write_text(json.dumps(doc), encoding="utf-8")
+    with pytest.raises(rb.PredicateMismatch):
+        rb.load_series(p)
+
+
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__, "-v"]))
