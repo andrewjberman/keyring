@@ -1,0 +1,138 @@
+{
+ "opal-cloudtrail-logs-313476888478": {
+  "prefixes": [
+   {
+    "prefix": "AWSLogs/",
+    "approx_last_write": "2026-07-30T14:29:32+00:00",
+    "newest_leaf": "AWSLogs/313476888478/CloudTrail/us-west-2/2026/07/30/313476888478_CloudTrail_us-west-2_20260730T1425Z_qJFju5wfir1Z1sV2.json.gz"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 1
+ },
+ "opal-cur-313476888478": {
+  "prefixes": [
+   {
+    "prefix": "cur/",
+    "approx_last_write": "2026-07-30T15:55:15+00:00",
+    "newest_leaf": "cur/opal-cur/crawler-cfn.yml"
+   }
+  ],
+  "root_objects": 1,
+  "root_last_write": "2026-07-30T15:31:33+00:00",
+  "root_sample": "aws-programmatic-access-test-object",
+  "top_prefix_count": 1
+ },
+ "opal-mcp-audit": {
+  "prefixes": [
+   {
+    "prefix": "_athena_cvo_verify/",
+    "approx_last_write": "2026-06-29T19:23:26+00:00",
+    "newest_leaf": "_athena_cvo_verify/f1b8599c-4c22-422e-b875-bbb691f19d13.csv"
+   },
+   {
+    "prefix": "audit/",
+    "approx_last_write": "2026-07-30T02:08:31+00:00",
+    "newest_leaf": "audit/dt=2026-07-30/2026-07-30T02:08:30.136735+00:00-370dc2b2.jsonl"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 2
+ },
+ "opal-mcp-athena-results": {
+  "prefixes": [],
+  "root_objects": 55,
+  "root_last_write": "2026-07-25T06:22:57+00:00",
+  "root_sample": "e041326a-0c20-4aac-9793-73f63a11ef2d.csv",
+  "top_prefix_count": 0
+ },
+ "opal-schwab-d4-access-logs-313476888478": {
+  "prefixes": [
+   {
+    "prefix": "s3-access/",
+    "approx_last_write": "2026-07-23T23:19:29+00:00",
+    "newest_leaf": "s3-access/opal-data-schwab/2026-07-23-23-19-28-5C111287CDB766D2"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 1
+ },
+ "opal-served-key-write-trail-logs": {
+  "prefixes": [
+   {
+    "prefix": "AWSLogs/",
+    "approx_last_write": "2026-07-30T15:06:30+00:00",
+    "newest_leaf": "AWSLogs/313476888478/CloudTrail/us-east-1/2026/07/30/313476888478_CloudTrail_us-east-1_20260730T1505Z_T9EEQkXZsLvsYlJH.json.gz"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 1
+ },
+ "opal-313476888478-terraform-state": {
+  "prefixes": [
+   {
+    "prefix": "aaii-v2-bucket-lifecycle/",
+    "approx_last_write": "2026-06-11T21:16:47+00:00",
+    "newest_leaf": "aaii-v2-bucket-lifecycle/tfstate"
+   },
+   {
+    "prefix": "analytics-dashboard/",
+    "approx_last_write": "2026-06-11T16:39:12+00:00",
+    "newest_leaf": "analytics-dashboard/tfstate"
+   },
+   {
+    "prefix": "astn-pipeline/",
+    "approx_last_write": "2026-07-18T03:58:50+00:00",
+    "newest_leaf": "astn-pipeline/tfstate"
+   },
+   {
+    "prefix": "bd-49f-auto-login/",
+    "approx_last_write": "2026-06-25T20:49:17+00:00",
+    "newest_leaf": "bd-49f-auto-login/tfstate"
+   },
+   {
+    "prefix": "bd-bucket-lifecycle/",
+    "approx_last_write": "2026-06-11T21:05:02+00:00",
+    "newest_leaf": "bd-bucket-lifecycle/tfstate"
+   },
+   {
+    "prefix": "bd-pipeline/",
+    "approx_last_write": "2026-07-29T10:49:06+00:00",
+    "newest_leaf": "bd-pipeline/tfstate"
+   },
+   {
+    "prefix": "canonical-schwab-ec2/",
+    "approx_last_write": "2026-07-18T03:11:29+00:00",
+    "newest_leaf": "canonical-schwab-ec2/tfstate"
+   },
+   {
+    "prefix": "canonical-schwab-si2-schedule/",
+    "approx_last_write": "2026-07-18T01:56:29+00:00",
+    "newest_leaf": "canonical-schwab-si2-schedule/tfstate"
+   },
+   {
+    "prefix": "compdiff-cot-value-parity/",
+    "approx_last_write": "2026-07-09T06:56:19+00:00",
+    "newest_leaf": "compdiff-cot-value-parity/tfstate"
+   },
+   {
+    "prefix": "compdiff-inf-value-parity/",
+    "approx_last_write": "2026-07-09T08:14:19+00:00",
+    "newest_leaf": "compdiff-inf-value-parity/tfstate"
+   },
+   {
+    "prefix": "compdiff-served-guard-49f/",
+    "approx_last_write": "2026-07-09T07:42:06+00:00",
+    "newest_leaf": "compdiff-served-guard-49f/tfstate"
+   },
+   {
+    "prefix": "compdiff-served-guard-cot/",
+    "approx_last_write": "2026-07-09T06:03:30+00:00",
+    "newest_leaf": "compdiff-served-guard-cot/tfstate"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 54,
+  "prefixes_truncated": 42
+ }
+}

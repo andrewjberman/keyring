@@ -1,0 +1,173 @@
+{
+ "opal-313476888478-lambda-layers": {
+  "prefixes": [],
+  "root_objects": 7,
+  "root_last_write": "2026-06-09T14:03:18+00:00",
+  "root_sample": "pyiceberg-nessie-deps.zip",
+  "top_prefix_count": 0
+ },
+ "opal-ci-staging": {
+  "prefixes": [
+   {
+    "prefix": "lambdas/",
+    "approx_last_write": "2026-02-20T15:57:21+00:00",
+    "newest_leaf": "lambdas/seeking-alpha-news-scraper.zip"
+   },
+   {
+    "prefix": "moltbot-setup/",
+    "approx_last_write": "2026-02-20T14:48:36+00:00",
+    "newest_leaf": "moltbot-setup/git-credential-aws-secrets-manager"
+   },
+   {
+    "prefix": "news-layer3-curation/",
+    "approx_last_write": "2026-02-20T20:10:14+00:00",
+    "newest_leaf": "news-layer3-curation/deployment.zip"
+   },
+   {
+    "prefix": "news-trending-analysis/",
+    "approx_last_write": "2026-02-20T18:32:26+00:00",
+    "newest_leaf": "news-trending-analysis/deployment.zip"
+   },
+   {
+    "prefix": "seeking-alpha-news-scraper/",
+    "approx_last_write": "2026-02-20T20:31:44+00:00",
+    "newest_leaf": "seeking-alpha-news-scraper/deployment.zip"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 5
+ },
+ "opal-runner-shared": {
+  "prefixes": [
+   {
+    "prefix": "code/",
+    "approx_last_write": "2026-05-13T20:03:24+00:00",
+    "newest_leaf": "code/shared/telemetry-sync.timer"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 1
+ },
+ "opal-infrastructure-snapshots": {
+  "prefixes": [
+   {
+    "prefix": "2026-06-30/",
+    "approx_last_write": "2026-06-30T07:00:50+00:00",
+    "newest_leaf": "2026-06-30/dynamodb-configs.json"
+   },
+   {
+    "prefix": "2026-07-01/",
+    "approx_last_write": "2026-07-01T07:00:51+00:00",
+    "newest_leaf": "2026-07-01/dynamodb-configs.json"
+   },
+   {
+    "prefix": "2026-07-02/",
+    "approx_last_write": "2026-07-02T07:00:51+00:00",
+    "newest_leaf": "2026-07-02/dynamodb-configs.json"
+   },
+   {
+    "prefix": "2026-07-03/",
+    "approx_last_write": "2026-07-03T07:00:51+00:00",
+    "newest_leaf": "2026-07-03/dynamodb-configs.json"
+   },
+   {
+    "prefix": "2026-07-04/",
+    "approx_last_write": "2026-07-04T07:00:51+00:00",
+    "newest_leaf": "2026-07-04/dynamodb-configs.json"
+   },
+   {
+    "prefix": "2026-07-05/",
+    "approx_last_write": "2026-07-05T07:00:52+00:00",
+    "newest_leaf": "2026-07-05/restore.sh"
+   },
+   {
+    "prefix": "2026-07-06/",
+    "approx_last_write": "2026-07-06T07:00:52+00:00",
+    "newest_leaf": "2026-07-06/dynamodb-configs.json"
+   },
+   {
+    "prefix": "2026-07-07/",
+    "approx_last_write": "2026-07-07T07:00:54+00:00",
+    "newest_leaf": "2026-07-07/dynamodb-configs.json"
+   },
+   {
+    "prefix": "2026-07-08/",
+    "approx_last_write": "2026-07-08T07:00:54+00:00",
+    "newest_leaf": "2026-07-08/manifest.json"
+   },
+   {
+    "prefix": "2026-07-09/",
+    "approx_last_write": "2026-07-09T07:00:56+00:00",
+    "newest_leaf": "2026-07-09/manifest.json"
+   },
+   {
+    "prefix": "2026-07-10/",
+    "approx_last_write": "2026-07-10T07:00:55+00:00",
+    "newest_leaf": "2026-07-10/manifest.json"
+   },
+   {
+    "prefix": "2026-07-11/",
+    "approx_last_write": "2026-07-11T07:00:55+00:00",
+    "newest_leaf": "2026-07-11/manifest.json"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 31,
+  "prefixes_truncated": 19
+ },
+ "opal-crawl-catalog": {
+  "prefixes": [
+   {
+    "prefix": "eclipse/",
+    "approx_last_write": "2026-06-29T17:14:03+00:00",
+    "newest_leaf": "eclipse/diagnostics/test1-2026-06-29-serving-verify.json"
+   },
+   {
+    "prefix": "orion/",
+    "approx_last_write": "2026-06-29T16:57:21+00:00",
+    "newest_leaf": "orion/derived/2026-06-29-endpoints.csv"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 2
+ },
+ "opal-website-backups": {
+  "prefixes": [
+   {
+    "prefix": "backups/",
+    "approx_last_write": "2026-07-09T19:37:52+00:00",
+    "newest_leaf": "backups/wp-content/uploads/index.php"
+   },
+   {
+    "prefix": "code/",
+    "approx_last_write": "2026-07-16T20:49:32+00:00",
+    "newest_leaf": "code/website/ses-sendmail.sh"
+   },
+   {
+    "prefix": "migration/",
+    "approx_last_write": "2026-07-08T20:19:20+00:00",
+    "newest_leaf": "migration/README.txt"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 3
+ },
+ "opalinvest-portal": {
+  "prefixes": [
+   {
+    "prefix": "assets/",
+    "approx_last_write": "2026-07-29T18:01:36+00:00",
+    "newest_leaf": "assets/CapitalMarketAssumptions-DCflUN0d.js"
+   },
+   {
+    "prefix": "logos/",
+    "approx_last_write": "2026-07-29T18:01:36+00:00",
+    "newest_leaf": "logos/opal-icon-black.svg"
+   }
+  ],
+  "root_objects": 3,
+  "root_last_write": "2026-07-29T18:01:37+00:00",
+  "root_sample": "index.html",
+  "top_prefix_count": 2
+ }
+}

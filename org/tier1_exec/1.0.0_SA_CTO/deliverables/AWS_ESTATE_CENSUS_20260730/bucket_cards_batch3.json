@@ -1,0 +1,217 @@
+{
+ "opal-data-news-av": {
+  "prefixes": [
+   {
+    "prefix": "lambda-packages/",
+    "approx_last_write": "2026-02-18T17:44:30+00:00",
+    "newest_leaf": "lambda-packages/seeking-alpha-news-scraper.zip"
+   },
+   {
+    "prefix": "seeking-alpha/",
+    "approx_last_write": "2026-07-30T14:00:57+00:00",
+    "newest_leaf": "seeking-alpha/news/manifests/2026-07-30/dedup_report.json"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 2
+ },
+ "opal-data-pm": {
+  "prefixes": [
+   {
+    "prefix": "PFDE/",
+    "approx_last_write": "2026-07-22T15:17:18+00:00",
+    "newest_leaf": "PFDE/processed/20260720.json"
+   },
+   {
+    "prefix": "PFOE/",
+    "approx_last_write": "2026-02-13T06:53:50+00:00",
+    "newest_leaf": "PFOE/optimization/20260204.xlsx"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 2
+ },
+ "opal-data-portfolio": {
+  "prefixes": [
+   {
+    "prefix": "PFDE/",
+    "approx_last_write": "2026-07-21T14:52:28+00:00",
+    "newest_leaf": "PFDE/PFDE_trades_20260721_145227.xlsx"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 1
+ },
+ "opal-market-data-v2": {
+  "prefixes": [
+   {
+    "prefix": "causal_claims/",
+    "approx_last_write": "2025-12-23T23:39:58+00:00",
+    "newest_leaf": "causal_claims/causal_claims_beta.parquet"
+   },
+   {
+    "prefix": "corpus/",
+    "approx_last_write": "2025-12-23T23:40:04+00:00",
+    "newest_leaf": "corpus/bullets/bullets_corpus.json"
+   },
+   {
+    "prefix": "fred/",
+    "approx_last_write": "2025-12-23T23:40:10+00:00",
+    "newest_leaf": "fred/transformed/fred_combined_all.parquet"
+   },
+   {
+    "prefix": "indices/",
+    "approx_last_write": "2025-12-23T23:40:10+00:00",
+    "newest_leaf": "indices/bullets.index"
+   },
+   {
+    "prefix": "lambda/",
+    "approx_last_write": "2025-12-23T23:40:10+00:00",
+    "newest_leaf": "lambda/fred_ingestion_lambda.zip"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 5
+ },
+ "opal-market-update": {
+  "prefixes": [
+   {
+    "prefix": "fred/",
+    "approx_last_write": "2026-07-30T14:00:59+00:00",
+    "newest_leaf": "fred/raw/weekly/WALCL.csv"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 1
+ },
+ "opal-313476888478-lambda-artifacts": {
+  "prefixes": [
+   {
+    "prefix": "bd-pipeline/",
+    "approx_last_write": "2026-07-29T01:42:52+00:00",
+    "newest_leaf": "bd-pipeline/bd-49f-etf-ownership-daily.zip"
+   },
+   {
+    "prefix": "cot-pipeline/",
+    "approx_last_write": "2026-07-23T11:01:47+00:00",
+    "newest_leaf": "cot-pipeline/cot-bd-session-trigger.zip"
+   },
+   {
+    "prefix": "data-refresh/",
+    "approx_last_write": "2026-07-17T14:01:32+00:00",
+    "newest_leaf": "data-refresh/opal-data-refresh-api.zip"
+   },
+   {
+    "prefix": "deck-generation-pipeline/",
+    "approx_last_write": "2026-06-15T17:03:20+00:00",
+    "newest_leaf": "deck-generation-pipeline/output/20260615-170319/Advisor_Economics_and_Mobility.pptx"
+   },
+   {
+    "prefix": "demov1/",
+    "approx_last_write": "2026-06-05T20:14:24+00:00",
+    "newest_leaf": "demov1/demo_transform.py"
+   },
+   {
+    "prefix": "drift-producer/",
+    "approx_last_write": "2026-07-30T17:14:13+00:00",
+    "newest_leaf": "drift-producer/source.zip"
+   },
+   {
+    "prefix": "ec2/",
+    "approx_last_write": "2026-07-08T17:35:31+00:00",
+    "newest_leaf": "ec2/website/bootstrap-stack.sh"
+   },
+   {
+    "prefix": "etfs-canon/",
+    "approx_last_write": "2026-06-25T21:37:21+00:00",
+    "newest_leaf": "etfs-canon/etfs-canon-fanin.zip"
+   },
+   {
+    "prefix": "etfs-netassets/",
+    "approx_last_write": "2026-07-15T23:49:32+00:00",
+    "newest_leaf": "etfs-netassets/etfs-netassets-daily.zip"
+   },
+   {
+    "prefix": "exec-summary/",
+    "approx_last_write": "2026-04-27T13:12:18+00:00",
+    "newest_leaf": "exec-summary/exec-summary-generator.zip"
+   },
+   {
+    "prefix": "fred-pipeline/",
+    "approx_last_write": "2026-06-05T15:45:46+00:00",
+    "newest_leaf": "fred-pipeline/fred-data-ingestion.zip"
+   },
+   {
+    "prefix": "globgrph/",
+    "approx_last_write": "2026-07-15T22:25:18+00:00",
+    "newest_leaf": "globgrph/incremental_updater.zip"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 31,
+  "prefixes_truncated": 19
+ },
+ "opal-313476888478-globgrph": {
+  "prefixes": [
+   {
+    "prefix": "build-source/",
+    "approx_last_write": "2026-07-19T01:15:10+00:00",
+    "newest_leaf": "build-source/derive-runner-source.zip"
+   },
+   {
+    "prefix": "code/",
+    "approx_last_write": "2026-07-17T17:40:16+00:00",
+    "newest_leaf": "code/snap_store.py"
+   },
+   {
+    "prefix": "contract_integrity/",
+    "approx_last_write": "2026-07-30T02:09:30+00:00",
+    "newest_leaf": "contract_integrity/latest.json"
+   },
+   {
+    "prefix": "contracts/",
+    "approx_last_write": "2026-06-16T18:40:34+00:00",
+    "newest_leaf": "contracts/graph_contracts.yaml"
+   },
+   {
+    "prefix": "cse-seed/",
+    "approx_last_write": "2026-07-08T02:40:31+00:00",
+    "newest_leaf": "cse-seed/cse_agent_20260708.jsonl"
+   },
+   {
+    "prefix": "producers/",
+    "approx_last_write": "2026-06-26T20:24:49+00:00",
+    "newest_leaf": "producers/ts-semantic/portal_clusters.json"
+   },
+   {
+    "prefix": "served/",
+    "approx_last_write": "2026-07-30T04:01:00+00:00",
+    "newest_leaf": "served/comp_learns_status.json"
+   },
+   {
+    "prefix": "snapshots/",
+    "approx_last_write": "2026-07-30T02:08:42+00:00",
+    "newest_leaf": "snapshots/latest.txt"
+   },
+   {
+    "prefix": "stitch-source/",
+    "approx_last_write": "2026-07-07T13:46:19+00:00",
+    "newest_leaf": "stitch-source/source.zip"
+   },
+   {
+    "prefix": "stitch/",
+    "approx_last_write": "2026-07-30T17:13:37+00:00",
+    "newest_leaf": "stitch/stitch_marker.json"
+   },
+   {
+    "prefix": "warehouse/",
+    "approx_last_write": "2026-07-30T17:17:41+00:00",
+    "newest_leaf": "warehouse/tool_activity/source=telemetry/tool_activity.parquet"
+   }
+  ],
+  "root_objects": 3,
+  "root_last_write": "2026-06-30T23:35:19+00:00",
+  "root_sample": "critical-surface-baseline.json",
+  "top_prefix_count": 11
+ }
+}
