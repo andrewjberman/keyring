@@ -45,10 +45,48 @@ mean the gate is broken.
 | 1 | ledger opened at deploy-start | **DONE** |
 | 2 | code committed + pushed BEFORE apply (`12920f0a4`) | **DONE** |
 | 3 | `terraform init` + `validate` + `plan` (3 to add / 0 / 0) | **DONE** |
-| 4 | apply via `.tools/safe-apply.sh` (Rule 18 — never bare) | PENDING |
-| 5 | **LIVE-PLANE verify** — not the apply's self-report: `describe-activations` shows the activation, `get-role` + `list-attached-role-policies` show the role and attachment | PENDING |
-| 6 | Emit the one-time admin action for Andrew (activation id + install command; code retrieved via `terraform output -raw`) | PENDING |
-| 7 | ledger CLOSED in-session | PENDING |
+| 4 | apply via `.tools/safe-apply.sh` (Rule 18 — never bare) — **Apply complete: 3 added, 0 changed, 0 destroyed** | **DONE** |
+| 4a | **BLOCKED TWICE EN ROUTE, both fixed at the tool rather than overridden** — see below | **DONE** |
+| 5 | **LIVE-PLANE verify** (not the apply's self-report) | **DONE** |
+| 6 | Emit the one-time admin action for Andrew | **DONE** |
+| 7 | ledger CLOSED in-session | **DONE** |
+
+## Leg 4a — the two blocks, and why neither was overridden
+
+`safe-apply` refused twice. Both refusals were CORRECT and neither was a tag collision.
+
+1. **`safe-apply` could not produce plan JSON** → `safe-apply.sh:31` defaults `TERRAFORM` to
+   `$SCRIPT_DIR/terraform.exe`, which **does not exist on site Z**. Fixed by supplying the
+   sanctioned `SAFE_APPLY_TERRAFORM` env var (line 24) — this makes the gate **evaluate**, and is
+   categorically different from `TAGAUTHZ_OVERRIDE`, which would have **bypassed** it.
+2. **`comp-tagauthz` rc=1 "could not evaluate"** → its `sh()` resolves the executable with
+   `shutil.which('aws')` → `~/bin/aws.CMD` → `.tools/aws.cmd` → a **hardcoded pip path that exists
+   only on the laptop**. Fixed at the tool (`b27e756a1`): resolve rather than assume, laptop path
+   first, loud 127 if nothing is found.
+
+**Neither warranted `TAGAUTHZ_OVERRIDE`.** rc=1 means the gate never ran; overriding it would have
+skipped an authorization check that had produced **no verdict at all** — the override exists for a
+gate that has spoken, not for one that is broken. The blast radius of block 2 exceeds this deploy:
+**no `default_tags` module was appliable on site Z**, presented as a tag-authz failure.
+
+## LIVE-PLANE verification (leg 5)
+
+| Check | Result |
+|---|---|
+| `ssm describe-activations` | `3d32065e-401f-453d-a2b9-34e4208c1864` · `opal-bloomberg-site-z` · role bound · Limit **1** · Count **0** · Expired **False** |
+| `iam get-role` | `opal-bloomberg-tunnel-instance-role` created `2026-07-30T22:28:24Z`, trust `ssm.amazonaws.com` |
+| `iam list-attached-role-policies` | `arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore` |
+
+`aws_iam_policy.bloomberg_tunnel_caller` correctly **absent** — the `count` gate held.
+
+## CLOSED — outcome
+
+**3 resources added, verified on the live plane, nothing stranded.** Gate 4 is closed; gate 2 (the
+one-time admin MSI install) is now unblocked and its inputs exist. `Count: 0` is the correct state —
+the activation has enrolled nothing yet and enrolls exactly one machine when it does.
+
+**Still open BY DESIGN** (unchanged from the pre-apply section): the `ssm:GetParameter*` residual,
+and the caller-side port-forward pin awaiting the `mi-*` id.
 
 ## Post-apply state (deliberately NOT closed by this apply)
 
