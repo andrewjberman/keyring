@@ -95,7 +95,8 @@ c2_motif_families:
     first_pass_recurrence: 5
 
 # ---------------------------------------------------------------------------------------------
-# C3 -- THE FOURTEEN STRUCTURAL SYSTEMS (semantic names constructed 2026-07-30; the resolver
+# C3.i -- THE FOURTEEN STRUCTURAL SYSTEMS (the STRUCTURAL projection of the dual-partitioned
+# C3 grain -- DISCOVERED never declared; semantic names constructed 2026-07-30; the resolver
 # family field was the proto-C3 layer, now canonized. Many-to-many with C4 by design.)
 # ---------------------------------------------------------------------------------------------
 c3_structural_systems:
@@ -183,6 +184,108 @@ c3_structural_systems:
     meaning: 'Cottonwood medallion + the mdpf/assets monolith seam (firm-separated from bd by law).'
     chain_count: 2
     spans_verticals: [advi-cot, mdpf]
+
+
+# =============================================================================================
+# C3.ii -- SEMANTIC VERTICALS (the DUAL PARTITION of the C3 grain; Andrew-ratified 2026-07-30)
+# C3 is EXPLICITLY DUAL-PARTITIONED: C3.i = structural systems (above, DISCOVERED never
+# declared, deterministic union-find w/ a semantic naming pass) and C3.ii = semantic verticals
+# (below, DECLARED never discovered, legislated partition of the SAME C2-instance ground set).
+# BOTH aggregate C2 instances (chains) -- neither aggregates motif FAMILIES. The DUAL KEY lives
+# on every chain: (family -> C3.i, named_thread -> C3.ii) -- two lossless decompression paths
+# from one join point, which is the maximum-fidelity property that placed this design.
+# ONE SCHEMA: C4 -> C3(i|ii) -> C2 -> C1 -> C0.
+# =============================================================================================
+c3_ii_semantic_verticals:
+  invariant: 'DECLARED, never discovered -- membership changes only by naming act + CVO-verified
+    row adjudication. Emergence proposes; legislation admits. The symmetric complement of C3.i.'
+  reconciliation: 'the CROSS-PARTITION MATRIX (comp-estate --matrix, view-compiled) is the
+    standing instrument: per-system vertical span x per-vertical system span. A CHANGE in the
+    matrix is an adjudication event recorded with its reason.'
+  denominator_note: '26 verticals carry chains; the 27th declared name (attribution) is DECLARED-BUT-CHAINLESS -- adjudication owed: retire the name or assign its chains.'
+  verticals:
+    advi-bd:
+      systems: [sys-bd-medallion]
+      chain_count: 19
+    advi-cot:
+      systems: [sys-cot-mdpf-assets]
+      chain_count: 1
+    advi-inf:
+      systems: [sys-inf-medallion, sys-partner-serving-platform]
+      chain_count: 14
+    canonical-schwab:
+      systems: [UNASSIGNED-RESIDUE]
+      chain_count: 1
+    causality:
+      systems: [sys-causality-engine]
+      chain_count: 5
+    cma:
+      systems: [sys-yang-analytics-engine]
+      chain_count: 1
+    correlation:
+      systems: [sys-yang-analytics-engine]
+      chain_count: 1
+    data-refresh:
+      systems: [sys-partner-serving-platform]
+      chain_count: 1
+    factor-tilts:
+      systems: [sys-yang-analytics-engine]
+      chain_count: 1
+    graph-platform:
+      systems: [sys-estate-ops-platform]
+      chain_count: 4
+    insurance:
+      systems: [sys-estate-ops-platform]
+      chain_count: 2
+    m365-mcp:
+      systems: [sys-estate-ops-platform]
+      chain_count: 1
+    macroeconomics:
+      systems: [sys-macro-data-engine, sys-yang-analytics-engine]
+      chain_count: 9
+    market-overview:
+      systems: [sys-causality-engine, sys-market-intelligence-engine, sys-portfolio-management-suite, sys-yang-analytics-engine]
+      chain_count: 11
+    mdpf:
+      systems: [sys-cot-mdpf-assets, sys-partner-serving-platform]
+      chain_count: 2
+    model-portfolios:
+      systems: [sys-market-intelligence-engine, sys-yang-analytics-engine]
+      chain_count: 8
+    news:
+      systems: [UNASSIGNED-RESIDUE, sys-market-intelligence-engine, sys-news-intelligence-engine]
+      chain_count: 13
+    ops-internal:
+      systems: [UNASSIGNED-RESIDUE, sys-estate-ops-platform, sys-news-intelligence-engine, sys-partner-serving-platform]
+      chain_count: 5
+    partners:
+      systems: [sys-partner-serving-platform]
+      chain_count: 2
+    portal-infra:
+      systems: [sys-partner-serving-platform]
+      chain_count: 6
+    portfolio-management:
+      systems: [sys-estate-ops-platform, sys-portfolio-management-suite]
+      chain_count: 9
+    positioning:
+      systems: [sys-yang-analytics-engine]
+      chain_count: 1
+    security-scanner:
+      systems: [sys-estate-ops-platform]
+      chain_count: 2
+    smartx:
+      systems: [sys-smartx-feed]
+      chain_count: 3
+    trade-submission:
+      systems: [UNASSIGNED-RESIDUE, sys-causality-engine, sys-market-intelligence-engine, sys-portfolio-management-suite, sys-trade-submission-engine]
+      chain_count: 12
+    valuation:
+      systems: [sys-yang-analytics-engine]
+      chain_count: 1
+  bound_pairs:  # mutual 1:1 -- the degenerate case where the two projections coincide;
+                # the system is this vertical's DEDICATED machine (either name -> same registry)
+    - { system: sys-bd-medallion, vertical: advi-bd }
+    - { system: sys-smartx-feed, vertical: smartx }
 
 # ---------------------------------------------------------------------------------------------
 # C4 -- VERTICALS: the legislated semantic business estate (the world model L1 layer)
