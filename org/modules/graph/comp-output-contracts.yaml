@@ -254,7 +254,7 @@ contracts:
   comp-surface-check:
     coverage: "the critical-surfaces watch list (critical-surfaces.yaml) touched by the change"
     blind_spots:
-      - "ADVISORY ONLY -- it cannot block; and it is structurally blind to portal/ submodule surfaces (safe-commit cannot see them). Silence is NOT a pass (CLAUDE.md Rule 20)"
+      - "TWO HALVES, DO NOT CONFLATE (CLAUDE.md Rule 20, corrected 2026-07-24 when the LD-0273 blocking fix landed and this text did not follow): PORTAL-SIDE IS ENFORCED -- it returns rc=2 BLOCKED and the portal pre-commit hook REFUSES the commit; bypass is an audited SURFACE_ACK to org/surface-check-ack-audit.log, with portal CI as the non-bypassable backstop. WORKSPACE-SIDE (the safe-commit invocation) is ADVISORY and cannot block a workspace-only commit. A CRITICAL...SEV1 is a STOP, not a note. Structurally blind to portal/ submodule surfaces from the workspace side (safe-commit cannot see them). Silence is NOT a pass. >> THIS ENTRY PREVIOUSLY READ 'ADVISORY ONLY -- it cannot block', i.e. it asserted the exact claim Rule 20 exists to correct WHILE CITING RULE 20 -- carrying the citation's authority for the opposite of what the rule says. Worse here than in prose: this is a MACHINE-READ contract other tooling consumes, so the stale claim travelled as a declaration rather than as documentation. Found by 0.7.0_AE_CloudOps while declaring comp-which; routed by 2.0.0_SA_COO; corrected by 1.0.0_SA_CTO~C 2026-07-30. <<"
     plane: desired
     grain: artifact
     scope: estate
