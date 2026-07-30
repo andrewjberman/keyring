@@ -33,7 +33,13 @@ Results: PASS=accurate+useful | PARTIAL=present but noisy | FAIL=wrong/crash/sil
 **What failed:** [wrong output, silent failure, missing coverage]
 **Gap found:** [new pattern the tools couldn't answer — or "none"]
 
-Append one line to org/compiler-tools-log.md after writing this section.
+**DO NOT append to or commit `org/compiler-tools-log.md`.** The auto-append was RETIRED Andrew-direct
+2026-07-29 (LD-0348, killed at source in `comp_log_auto.py:_append_log`). The file is PRESERVED at its
+committed state as readable history — never commit it, never re-point a writer at it. This section
+stands on its own; there is no second place to write it.
+*(Corrected 2026-07-30 by 2.0.0_SA_COO — this line still instructed the append while `org/XXX.md` said
+RETIRED in three separate places. The contradiction lived in the doc agents follow WHILE WRITING a log,
+so it was the copy most likely to be obeyed.)*
 
 ---
 
