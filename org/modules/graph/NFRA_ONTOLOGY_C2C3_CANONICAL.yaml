@@ -248,8 +248,8 @@ first_pass_census:
 # incl. renames 3 -> Interactive Products, 5 -> Global Infrastructure.)
 #
 # PURPOSE: when a user queries an agent, the agent STARTS HERE. Each segment carries a dense
-# high-signal description -- the token surface a real query hits. Route: segment -> C3 system
-# -> chain (D2 instance) -> nodes. The 27 named threads remain the BUSINESS OVERLAY (verticals),
+# high-signal description -- the token surface a real query hits. Route: C4 segment -> C3 system
+# -> C2 motif (D2 chain) -> C1 -> C0. The 27 named threads remain the BUSINESS OVERLAY (verticals),
 # listed per segment; both entry paths land in the same registries.
 # =============================================================================================
 c4_segments:
