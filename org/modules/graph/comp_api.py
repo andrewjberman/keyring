@@ -5,13 +5,14 @@ tool/scorer (e.g. the TO-D3 canon multi-source reconciler) must COMPOSE several 
 but on Windows it cannot subprocess the bash-launcher comp-* (FileNotFoundError -- the banked
 python-subprocess-bash-launcher limitation). The comp-tools are already bash-launcher -> python
 module (comp-pipescript->pipeline_cli, comp-routes->routes_cli, comp-iam->iam_cli,
-pipescript->pipescript_cli; comp-freshness/comp-which are already pure python). So composition needs
-NO subprocess at all -- import + call those modules IN-PROCESS. This facade exposes that.
+comp-estate->opal_estate_infrastructure; comp-freshness/comp-which are already pure python). So
+composition needs NO subprocess at all -- import + call those modules IN-PROCESS. This facade
+exposes that.
 
 Two tiers:
   1. STRUCTURED accessors (preferred) -- return the model OBJECT directly from each module's
      data-builder (_build_rt / load / _build / _build_dag), bypassing the print/cmd_ layer.
-     Use these when you want data, not text: routes(), pipescript_threads(), iam_analysis(),
+     Use these when you want data, not text: routes(), estate_threads(), iam_analysis(),
      pipeline_dag().
   2. run(tool, argv) -- universal in-process CLI invocation with stdout captured -> returns text.
      The Windows-safe "run any comp-tool from python" path for the cmd_-only surfaces (io/deployed/
@@ -20,9 +21,9 @@ Two tiers:
 Read-only: every wrapped builder is a read-path (graph/source/json reads). ASCII-only.
 
 Usage (python, no subprocess):
-    from comp_api import routes, pipescript_threads, run
+    from comp_api import routes, estate_threads, run
     rt = routes()                          # RouteTable model: rt.behaviors, ...
-    threads = pipescript_threads()         # the named-thread dict
+    threads = estate_threads()             # the named-thread dict
     io_text = run("comp-pipescript", ["io", "INF_D_04"])   # captured text, in-process
 """
 from __future__ import annotations
@@ -41,7 +42,7 @@ if _GRAPH_DIR not in sys.path:
 # comp-tool name (and its CLI alias) -> the python module under org/modules/graph
 _MODULES = {
     "comp-pipescript": "pipeline_cli",
-    "pipescript": "pipescript_cli",
+    "comp-estate": "opal_estate_infrastructure",
     "comp-routes": "routes_cli",
     "comp-iam": "iam_cli",
 }
@@ -54,7 +55,7 @@ def _import(mod_name: str):
 def run(tool: str, argv=None) -> str:
     """Run a comp-tool's CLI IN-PROCESS (no subprocess) and return its captured stdout.
 
-    tool: a key of _MODULES ('comp-pipescript', 'pipescript', 'comp-routes', 'comp-iam').
+    tool: a key of _MODULES ('comp-pipescript', 'comp-estate', 'comp-routes', 'comp-iam').
     argv: list of CLI args WITHOUT the tool name, e.g. ['io', 'INF_D_04'].
     Windows-safe (no bash launcher). SystemExit from argparse is swallowed.
     """
@@ -69,7 +70,8 @@ def run(tool: str, argv=None) -> str:
     sys.argv = [tool] + args
     try:
         with contextlib.redirect_stdout(buf):
-            # Two entry conventions: main(argv) (pipescript_cli) vs main() reading sys.argv (rest).
+            # Two entry conventions: main(argv) (opal_estate_infrastructure /
+            # estate_infrastructure_cli) vs main() reading sys.argv (rest).
             try:
                 if len(inspect.signature(mod.main).parameters) >= 1:
                     mod.main(args)
@@ -95,9 +97,11 @@ def routes_behaviors():
     return list(getattr(routes(), "behaviors", []))
 
 
-def pipescript_threads():
-    """The named-thread estate dict (pipescript_cli.load()) -- producer->served->consumer lineage."""
-    return _import("pipescript_cli").load()
+def estate_threads():
+    """The named-thread estate dict (estate_infrastructure_cli.load()) -- producer->served->consumer
+    lineage. RENAMED from pipescript_threads 2026-07-30 (naming consolidation; zero external
+    consumers existed at rename time -- measured)."""
+    return _import("estate_infrastructure_cli").load()
 
 
 def iam_analysis():

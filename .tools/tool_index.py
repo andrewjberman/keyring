@@ -1527,8 +1527,9 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                        'debtscan flags (--debt). P3.2 = FE-reachability status (--fe-reachability) surfacing CVO '
                        'GROUND-TRUTH (mounted-reachable/frontend-orphan/phantom/unreviewed-LOUD) -- NOT a live '
                        'portal grep (scaffolding-fooled). Unknown name OR unowned-tool query ALWAYS LOUD (exit 2) -- '
-                       'generalized TOOL-02 false-clean guard. Standing regression oracle: pipescript --gate-b + '
-                       '--fe-reachability. Read-only; ASCII-only stdout. Owner: AE/cloud-ops (pipescript_cli.py = AE '
+                       'generalized TOOL-02 false-clean guard. Standing regression oracle: comp-estate --gate-b + '
+                       '--fe-reachability. Read-only; ASCII-only stdout. Owner: AE/cloud-ops '
+                       '(estate_infrastructure_cli.py, nee pipescript_cli.py 2026-07-30, = AE '
                        'lane, same as extract_iam -- Andrew-direct 2026-06-23, correcting the prior DS-lane label); '
                        'non-AE cross-tool edits route owner-review through AE per the two-rule lane convention.',
               'rebuild_trigger': 're-run org/modules/graph/gen-estate-resolver.py after the manifest/census changes '

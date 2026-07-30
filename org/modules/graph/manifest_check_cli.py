@@ -542,14 +542,22 @@ def _norm(files):
 
 
 def _committed_comp_tools(files):
-    """member 2's universe: comp-tool names named by the COMMIT itself (never os.listdir)."""
+    """member 2's universe: comp-tool names named by the COMMIT itself (never os.listdir).
+
+    DELETION-AWARE (2026-07-30, 3.0.0_SA_CVO): a committed path whose .tools/<file> no longer
+    exists in the committing tree is a RETIREMENT, not an unplaced tool. Before this filter,
+    requiring a map home for a deleted tool made the registries' own delete-together orders
+    (delete the tool + its coverage-map row in ONE commit) structurally uncommittable -- the
+    exact shape the comp-semantic-estates/comp-opalbizsem retirement hit. A deletion needs no
+    home; the map_touched branch still catches a map edit that strands a live tool."""
     tools = set()
     for f in _norm(files):
         if "/.tools/" in "/" + f and "/" not in f.split(".tools/", 1)[-1]:
-            base = f.split(".tools/", 1)[-1]
-            base = base.rsplit(".", 1)[0] if "." in base else base
-            if base.startswith("comp-") or base == "pipescript":
-                tools.add(base)
+            fname = f.split(".tools/", 1)[-1]
+            name = fname.rsplit(".", 1)[0] if "." in fname else fname
+            if (name.startswith("comp-") or name == "pipescript") and \
+                    (_WORKSPACE / ".tools" / fname).exists():
+                tools.add(name)
     return tools
 
 
@@ -892,9 +900,17 @@ def _registration_invariant(files) -> int:
         if r.returncode != 0:
             raise RuntimeError(f"git ls-files failed: {r.stderr.strip()[:120]}")
         universe = {Path(p).name for p in r.stdout.split()}
-        for f in norm:
-            if "/.tools/" in "/" + f:
-                universe.add(Path(f).name)
+        committed_names = {Path(f).name for f in norm if "/.tools/" in "/" + f}
+        universe |= committed_names
+        # DELETION-AWARE (2026-07-30, 3.0.0_SA_CVO, same principle as _committed_comp_tools): a
+        # name the COMMIT ITSELF touches whose .tools file is absent from the committing tree is
+        # a staged RETIREMENT riding this commit. git ls-files reads the index/HEAD, which
+        # carries the file until this very commit lands -- so without this subtraction a
+        # delete-together retirement (tool + registry rows in ONE commit) is structurally
+        # uncommittable. Scoped to commit-named paths ONLY: a tracked-but-missing file the
+        # commit does NOT name still blocks (fresh-clone truth preserved for everything else).
+        universe = {t for t in universe
+                    if not (t in committed_names and not (_WORKSPACE / ".tools" / t).exists())}
         universe = sorted(t for t in universe if t.startswith("comp-") and "." not in t)
 
         raw = load_yaml(_MANIFEST)

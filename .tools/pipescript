@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""pipescript -- RETIRED. Use `comp-semantic-estates`.
+"""pipescript -- RETIRED. Use `comp-estate`.
 
 DEPRECATED AND RETIRED 2026-07-29 by Andrew-direct, verbatim: "we are deprecating base pipescript.
 there is comp-pipescript only for future reference" and "pipescript needs to be categorically
@@ -9,8 +9,8 @@ This stub exists instead of a deletion so that an explicit-path caller gets a me
 replacement rather than a mystery. It is loud (rc=2) by design: a retired tool that exits 0 is
 indistinguishable from a working one.
 
-  comp-semantic-estates   -- the estate BUSINESS-SEMANTIC traversal this tool used to do
-                             (engine: org/modules/graph/opal_business_estates.py)
+  comp-estate   -- the estate BUSINESS-SEMANTIC traversal this tool used to do
+                             (engine: org/modules/graph/opal_estate_infrastructure.py)
   comp-pipescript         -- a DIFFERENT tool: per-script pipeline dependencies / io / deployed-parity
 
 Note the bare name never resolved on PATH in a harness shell anyway (no ~/bin forwarder was ever
@@ -20,9 +20,9 @@ explicit `.tools/pipescript` path reached it, which is exactly the caller this s
 import sys
 
 sys.stderr.write(
-    "pipescript: RETIRED -> use `comp-semantic-estates`.\n"
-    "  The estate business-semantic traversal now lives at .tools/comp-semantic-estates\n"
-    "  (engine org/modules/graph/opal_business_estates.py). It re-derives S3 keys LIVE from\n"
+    "pipescript: RETIRED -> use `comp-estate`.\n"
+    "  The estate business-semantic traversal now lives at .tools/comp-estate\n"
+    "  (engine org/modules/graph/opal_estate_infrastructure.py). It re-derives S3 keys LIVE from\n"
     "  source instead of serving them frozen from a snapshot -- the defect that made this tool\n"
     "  report a stale mdpf key as LIVE fresh.\n"
     "  Looking for per-script pipeline dependencies instead? That is `comp-pipescript`.\n"

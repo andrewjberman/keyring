@@ -151,7 +151,7 @@ c3_deterministic_structures:
   sys-causality-engine:
     kind: SHARED-ENGINE
     legacy_family_key: causality-ai
-    meaning: 'Causality/thematic generation engine. NOTE applied-plane census 2026-07-30 found its producer lambdas DEAD on AWS -- flagged for retirement adjudication; the map serves its June shape until then.'
+    meaning: 'Causality/thematic generation engine. ADJUDICATED 2026-07-30 (CVO pass, Andrew-direct): RETIREMENT-PENDING -- producer lambdas DEAD on applied plane; teardown routes to the debt retirement engine (VELOCITY WS-E3, keep-dormant), never map-side; the map serves its June shape until teardown lands.'
     chain_count: 8
     spans_verticals: [causality, market-overview, trade-submission]
   sys-macro-data-engine:
@@ -169,9 +169,12 @@ c3_deterministic_structures:
   UNASSIGNED-RESIDUE:
     kind: RESIDUE
     legacy_family_key: UNASSIGNED
-    meaning: 'Chains with no structural-system assignment yet. Adjudication owed; counted, never dropped.'
-    chain_count: 5
-    spans_verticals: [canonical-schwab, news, ops-internal, trade-submission]
+    meaning: 'Chains with no structural-system assignment yet. Adjudication owed; counted, never
+      dropped. Two encodings bucket here pending census regeneration: family absent/null (the 5
+      pre-adjudication residue chains) and the literal UNASSIGNED (the 3 chains admitted by the
+      2026-07-30 naming acts: etf-reports, ceo-digest, ticketing) -- regen should normalize.'
+    chain_count: 8
+    spans_verticals: [canonical-schwab, ceo-digest, etf-reports, news, ops-internal, ticketing, trade-submission]
   sys-smartx-feed:
     kind: FEED
     legacy_family_key: smartx
@@ -202,7 +205,11 @@ c3_ii_semantic_verticals:
   reconciliation: 'the CROSS-PARTITION MATRIX (comp-estate --matrix, view-compiled) is the
     standing instrument: per-system vertical span x per-vertical system span. A CHANGE in the
     matrix is an adjudication event recorded with its reason.'
-  denominator_note: '26 verticals carry chains; the 27th declared name (attribution) is DECLARED-BUT-CHAINLESS -- adjudication owed: retire the name or assign its chains.'
+  denominator_note: '29 verticals carry chains (adjudication pass 2026-07-30, CVO, Andrew-direct:
+    attribution RETIRED as a declared name -- content lives under positioning; etf-reports,
+    ceo-digest, ticketing ADMITTED by naming act, 1 chain each, family=UNASSIGNED until census
+    regeneration). Durable record: estate-coverage-manifest.yaml adjudications_20260730 +
+    AUTHORITATIVE_lambda_taxonomy.json adjudication_20260730.'
   verticals:
     advi-bd:
       systems: [sys-bd-medallion]
@@ -219,6 +226,9 @@ c3_ii_semantic_verticals:
     causality:
       systems: [sys-causality-engine]
       chain_count: 5
+    ceo-digest:
+      systems: [UNASSIGNED-RESIDUE]
+      chain_count: 1
     cma:
       systems: [sys-yang-analytics-engine]
       chain_count: 1
@@ -227,6 +237,9 @@ c3_ii_semantic_verticals:
       chain_count: 1
     data-refresh:
       systems: [sys-partner-serving-platform]
+      chain_count: 1
+    etf-reports:
+      systems: [UNASSIGNED-RESIDUE]
       chain_count: 1
     factor-tilts:
       systems: [sys-yang-analytics-engine]
@@ -276,6 +289,9 @@ c3_ii_semantic_verticals:
     smartx:
       systems: [sys-smartx-feed]
       chain_count: 3
+    ticketing:
+      systems: [UNASSIGNED-RESIDUE]
+      chain_count: 1
     trade-submission:
       systems: [UNASSIGNED-RESIDUE, sys-causality-engine, sys-market-intelligence-engine, sys-portfolio-management-suite, sys-trade-submission-engine]
       chain_count: 12
@@ -307,6 +323,9 @@ c4_verticals:
 # COUNTED, never dropped.
 # ---------------------------------------------------------------------------------------------
 first_pass_census:
+  # DENOMINATOR NOTE (2026-07-30 adjudication pass): this census predates the pass; the 3 chains
+  # admitted by naming act (etf-reports, ceo-digest, ticketing) are NOT in it and join the
+  # unclassified residue at the next census run (resolver now carries 138 chains).
   denominator: 135
   classified_total: 117
   unclassified_residue_count: 18
@@ -378,7 +397,7 @@ c4_segments:
   market-intelligence:
     display_name: Market & Research Intelligence
     registry: [sys-yang-analytics-engine, sys-market-intelligence-engine, sys-news-intelligence-engine, sys-macro-data-engine, sys-causality-engine]
-    flags: [sys-causality-engine producers DEAD on applied plane 2026-07-30 -- retirement adjudication owed]
+    flags: [sys-causality-engine ADJUDICATED RETIREMENT-PENDING 2026-07-30 -- producers DEAD on applied plane; teardown owed to VELOCITY WS-E3 (keep-dormant), never map-side]
     verticals_served: [cma, correlation, factor-tilts, macroeconomics, market-overview, model-portfolios, positioning, valuation, news, causality, trade-submission, ops-internal, ceo-digest]
     high_signal: >
       The shared quantitative analytics and research-generation engines that compute what the

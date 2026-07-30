@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""comp-estate -- thin PATH wrapper for the OPAL BUSINESS-SEMANTIC estate traversal.
+"""comp-estate -- thin PATH wrapper for the OPAL estate traversal (first contact for the Estate).
 
-Engine: org/modules/graph/opal_business_estates.py
+Engine: org/modules/graph/opal_estate_infrastructure.py (renamed from opal_business_estates.py
+2026-07-30, Andrew-direct, to mirror C4 estate-infrastructure language)
 
   comp-estate <name>          traverse one named business thread
   comp-estate --list          the thread names
@@ -34,7 +35,7 @@ import sys
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _WS = os.path.dirname(_HERE)
-_ENGINE = os.path.join(_WS, "org", "modules", "graph", "opal_business_estates.py")
+_ENGINE = os.path.join(_WS, "org", "modules", "graph", "opal_estate_infrastructure.py")
 
 if not os.path.isfile(_ENGINE):
     sys.stderr.write(
