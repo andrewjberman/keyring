@@ -67,6 +67,28 @@ queue_for() {
     esac
 }
 
+# --- THE DECLARED DEVICE SET (RV-0058 F-004) ------------------------------------------------------
+# WHY THIS EXISTS, and it is a governance need rather than a transport one: /mstr-review's READER
+# GUARD (RV-0057 F-001 item 1) must print WHICH DECLARED DEVICES it did not walk, and refuse a
+# fabric-wide count when it walked fewer than all of them. Until this accessor, the device set was
+# enumerated ONLY inside this transport tool -- three times (queue_for's labels above, the
+# AGENTBUS_DEVICE validation in this_device, and the workspace-path patterns) -- and NOTHING a
+# governance instrument could read. So a reviewer had to HAND-COPY "[laptop, sitez]" into the review.
+#
+# THAT IS THE HAND-COPIED-LIST CLASS org/XXX.md A.3 RECORDS TWICE (its remedy line named three tools
+# and went stale the same day; its counts froze and drifted within one day). A guard whose DENOMINATOR
+# is hand-copied under-reports exactly the gap it exists to surface: add a third device and the guard
+# still prints a complete-looking two-device set, silently. That is the guard's own failure mode one
+# level up, which is why the fix is derivation and not a fourth copy of the list.
+#
+# DERIVED FROM queue_for's OWN CASE LABELS, so queue_for stays the single source of truth and a
+# device added there is picked up here with no second edit. The `*)` fallback is excluded by the
+# [a-z] class -- it is a guard branch, not a device.
+declared_devices() {
+    sed -n '/^queue_for()/,/^}/p' "${BASH_SOURCE[0]}" \
+        | grep -oE '^[[:space:]]*[a-z]+\)' | tr -d ' )'
+}
+
 # --- JQ RESOLUTION (NFRA_TOOLARCH.PATHFIX) --------------------------------------------------------
 # RESOLVE THE TRACKED BINARY, NEVER THE BARE NAME. `command -v jq` FAILS IN EVERY HARNESS SHELL --
 # they are non-interactive, source no profile, and so never put .tools on PATH. That made the
@@ -442,6 +464,26 @@ case "$cmd" in
         exit 2
     fi
     echo "  my inbound queue: $(queue_for "$me")"
+    ;;
+
+  devices)
+    # THE DECLARED DEVICE SET, for /mstr-review's READER GUARD (RV-0058 F-004).
+    # Prints the set AND EXERCISES each member through queue_for -- a device that cannot resolve a
+    # queue is not a declared device, it is a typo. Printing a list without resolving it would be a
+    # config-read standing in for a behavioural check (Rule 22a), which is the same substitution the
+    # guard this feeds was built to stop.
+    echo "declared devices (derived from queue_for's own case labels -- single source of truth):"
+    n=0
+    for d in $(declared_devices); do
+        printf "  %-8s -> %s\n" "$d" "$(queue_for "$d")"
+        n=$((n+1))
+    done
+    echo "DECLARED_COUNT=${n}"
+    echo "this device: $(this_device)"
+    echo
+    echo "READER-GUARD USE: a governance walk names walked/declared/UNWALKED from THIS output."
+    echo "  Do NOT hand-copy the set into a review -- a hand-copied denominator cannot grow, and a"
+    echo "  guard whose denominator cannot grow under-reports the exact gap it exists to surface."
     ;;
 
   peek)
