@@ -1,0 +1,566 @@
+{
+ "opal-data-bd": {
+  "prefixes": [
+   {
+    "prefix": "GOOD_RUN_2026-01-21_1015AM/",
+    "approx_last_write": "2026-01-21T19:44:24+00:00",
+    "newest_leaf": "GOOD_RUN_2026-01-21_1015AM/build_transaction_engine.py"
+   },
+   {
+    "prefix": "_rollback/",
+    "approx_last_write": "2026-06-30T22:36:43+00:00",
+    "newest_leaf": "_rollback/49f-20260630-preflip/_manifest.json"
+   },
+   {
+    "prefix": "ajb_workspace/",
+    "approx_last_write": "2026-02-23T22:07:24+00:00",
+    "newest_leaf": "ajb_workspace/logs/sessions/2026-02-23/systems_architect/bd_pipeline_foundational_health_check_and_fixes.md"
+   },
+   {
+    "prefix": "backfill_v2/",
+    "approx_last_write": "2026-01-16T08:53:30+00:00",
+    "newest_leaf": "backfill_v2/TXN_2020-07-07.xlsx"
+   },
+   {
+    "prefix": "blackdiamond/",
+    "approx_last_write": "2026-07-30T00:00:19+00:00",
+    "newest_leaf": "blackdiamond/49f/session-trigger-mode.json"
+   },
+   {
+    "prefix": "bronze/",
+    "approx_last_write": "2026-07-29T22:20:43+00:00",
+    "newest_leaf": "bronze/fees/Fees_OpalCapital_Daily_2026-07-15_to_2026-07-29.xlsx"
+   },
+   {
+    "prefix": "canonical/",
+    "approx_last_write": "2026-06-25T16:51:44+00:00",
+    "newest_leaf": "canonical/silver/fact_position/date=2026-06-18/data.parquet"
+   },
+   {
+    "prefix": "code/",
+    "approx_last_write": "2026-03-19T15:07:40+00:00",
+    "newest_leaf": "code/run_gold_layer.sh"
+   },
+   {
+    "prefix": "config/",
+    "approx_last_write": "2026-04-07T21:54:55+00:00",
+    "newest_leaf": "config/ticker_lookup.json"
+   },
+   {
+    "prefix": "debug/",
+    "approx_last_write": "2026-02-02T20:38:22+00:00",
+    "newest_leaf": "debug/download-button-error.png"
+   },
+   {
+    "prefix": "diagnostics/",
+    "approx_last_write": "2026-07-30T05:25:29+00:00",
+    "newest_leaf": "diagnostics/gold_silver_recon_2026-07-30.json"
+   },
+   {
+    "prefix": "forwardfill_v2/",
+    "approx_last_write": "2026-06-30T17:10:06+00:00",
+    "newest_leaf": "forwardfill_v2/_perm_probe_1782839405.txt"
+   },
+   {
+    "prefix": "gldrst/",
+    "approx_last_write": "2026-03-26T17:20:10+00:00",
+    "newest_leaf": "gldrst/preflight/20260326-171617.json"
+   },
+   {
+    "prefix": "gold/",
+    "approx_last_write": "2026-07-30T05:25:10+00:00",
+    "newest_leaf": "gold/perf_report.json"
+   },
+   {
+    "prefix": "lambda-deploy/",
+    "approx_last_write": "2026-01-15T10:34:11+00:00",
+    "newest_leaf": "lambda-deploy/bd-gold-layer.zip"
+   },
+   {
+    "prefix": "lambda-layers/",
+    "approx_last_write": "2026-01-15T10:32:16+00:00",
+    "newest_leaf": "lambda-layers/pandas-pyarrow-layer.zip"
+   },
+   {
+    "prefix": "lambda-packages/",
+    "approx_last_write": "2026-02-09T18:41:24+00:00",
+    "newest_leaf": "lambda-packages/bd-price-update-lambda.zip"
+   },
+   {
+    "prefix": "logs/",
+    "approx_last_write": "2026-07-29T22:17:11+00:00",
+    "newest_leaf": "logs/fees-download-2026-07-29.log"
+   },
+   {
+    "prefix": "platinum/",
+    "approx_last_write": "2026-07-30T05:25:06+00:00",
+    "newest_leaf": "platinum/firm/advisor_nna_canonical.json"
+   },
+   {
+    "prefix": "qa-scratch/",
+    "approx_last_write": "2026-04-17T13:21:28+00:00",
+    "newest_leaf": "qa-scratch/gate2_unit_delta_run7.parquet"
+   },
+   {
+    "prefix": "runs/",
+    "approx_last_write": "2026-01-21T20:50:55+00:00",
+    "newest_leaf": "runs/20260121_2050/daily_flows.parquet"
+   },
+   {
+    "prefix": "schwab/",
+    "approx_last_write": "2026-07-24T16:03:18+00:00",
+    "newest_leaf": "schwab/silver/ult/date=20260723/data.parquet"
+   },
+   {
+    "prefix": "scripts/",
+    "approx_last_write": "2026-06-29T15:16:30+00:00",
+    "newest_leaf": "scripts/merge-daily-incremental.py"
+   },
+   {
+    "prefix": "silver/",
+    "approx_last_write": "2026-07-30T14:09:50+00:00",
+    "newest_leaf": "silver/historical_prices.parquet"
+   },
+   {
+    "prefix": "smartx/",
+    "approx_last_write": "2026-07-30T13:17:00+00:00",
+    "newest_leaf": "smartx/raw/models/2026-07-30/c000fe6a-4f29-42e6-ae2e-75ea6162d175.json"
+   },
+   {
+    "prefix": "ssm-output/",
+    "approx_last_write": "2026-04-06T18:08:26+00:00",
+    "newest_leaf": "ssm-output/scoped-overrides/51dd59d8-b468-4d78-a2f2-577496f3fd09/i-01003b035d2988dfb/awsrunShellScript/0.awsrunShellScript/stdout"
+   },
+   {
+    "prefix": "status/",
+    "approx_last_write": "2026-02-13T05:39:26+00:00",
+    "newest_leaf": "status/partition-complete.json"
+   },
+   {
+    "prefix": "temp/",
+    "approx_last_write": "2026-01-28T22:00:00+00:00",
+    "newest_leaf": "temp/TXN_2026-01-27_production_test.xlsx"
+   },
+   {
+    "prefix": "tmp/",
+    "approx_last_write": "2026-03-31T03:42:45+00:00",
+    "newest_leaf": "tmp/diag_injection.py"
+   },
+   {
+    "prefix": "v4_output/",
+    "approx_last_write": "2026-01-20T23:59:19+00:00",
+    "newest_leaf": "v4_output/daily_positions.parquet"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 30
+ },
+ "opal-data-assets": {
+  "prefixes": [
+   {
+    "prefix": "_probe/",
+    "approx_last_write": "2026-07-14T02:44:17+00:00",
+    "newest_leaf": "_probe/trueshares/DIVZ/bronze/netassets/20260714/grammar.probe"
+   },
+   {
+    "prefix": "blackdiamond/",
+    "approx_last_write": "2026-07-30T03:30:40+00:00",
+    "newest_leaf": "blackdiamond/cottonwood/silver/fact_unrealized_s2/date=2026-07-28/data.parquet"
+   },
+   {
+    "prefix": "code/",
+    "approx_last_write": "2026-07-16T00:04:33+00:00",
+    "newest_leaf": "code/consolidation-gold/setup-instance.sh"
+   },
+   {
+    "prefix": "eclipse/",
+    "approx_last_write": "2026-07-30T03:30:31+00:00",
+    "newest_leaf": "eclipse/inflection/silver/fact_portfolios_simple/date=2026-07-29/data.parquet"
+   },
+   {
+    "prefix": "gold/",
+    "approx_last_write": "2026-07-23T21:24:56+00:00",
+    "newest_leaf": "gold/mdpf_revamp/portfolios/aum-timeseries.json"
+   },
+   {
+    "prefix": "json/",
+    "approx_last_write": "2026-07-23T19:30:01+00:00",
+    "newest_leaf": "json/portfolios/account-distribution.json"
+   },
+   {
+    "prefix": "orion/",
+    "approx_last_write": "2026-07-30T14:17:30+00:00",
+    "newest_leaf": "orion/inflection/silver/fact_transactions/date=2026-07-30/data.parquet"
+   },
+   {
+    "prefix": "pathfinder/",
+    "approx_last_write": "2026-07-29T22:00:16+00:00",
+    "newest_leaf": "pathfinder/filepoint/meta/pulls/20260729/etfs_netassets_pull_manifest.json"
+   },
+   {
+    "prefix": "portal/",
+    "approx_last_write": "2026-07-30T15:45:49+00:00",
+    "newest_leaf": "portal/gold/mdpf/inflection/aggregate-aua-timeseries/2026-07-29.json"
+   },
+   {
+    "prefix": "schwab/",
+    "approx_last_write": "2026-07-30T09:46:13+00:00",
+    "newest_leaf": "schwab/08335338/silver/fact_upt/date=2026-07-29/data.parquet"
+   },
+   {
+    "prefix": "smartx/",
+    "approx_last_write": "2026-07-30T13:41:35+00:00",
+    "newest_leaf": "smartx/platform/silver/fact_nonzerosleeve/date=2026-07-30/data.parquet"
+   },
+   {
+    "prefix": "trueshares/",
+    "approx_last_write": "2026-07-29T22:00:19+00:00",
+    "newest_leaf": "trueshares/IDVZ/silver/fact_netassets_page/date=2026-07-29/data.parquet"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 12
+ },
+ "opal-data-inf": {
+  "prefixes": [
+   {
+    "prefix": "/",
+    "approx_last_write": "2026-05-06T13:39:05+00:00",
+    "newest_leaf": "/firm/nmec_nmnc_nna.json"
+   },
+   {
+    "prefix": "_compare/",
+    "approx_last_write": "2026-06-30T22:54:15+00:00",
+    "newest_leaf": "_compare/unified_proof_20260630/cron_baseline_unified_account_dim.csv"
+   },
+   {
+    "prefix": "_pre_rebuild_backup/",
+    "approx_last_write": "2026-06-30T23:51:35+00:00",
+    "newest_leaf": "_pre_rebuild_backup/20260630T234458Z/_SNAPSHOT_COMPLETE.json"
+   },
+   {
+    "prefix": "_rebuild_status/",
+    "approx_last_write": "2026-07-01T05:36:49+00:00",
+    "newest_leaf": "_rebuild_status/20260630T234458Z/_REBUILD_STAGED.json"
+   },
+   {
+    "prefix": "_toolprobe_scratch/",
+    "approx_last_write": "2026-07-24T04:38:09+00:00",
+    "newest_leaf": "_toolprobe_scratch/pk/silver/toolprobe/2001-01-01.parquet"
+   },
+   {
+    "prefix": "backup/",
+    "approx_last_write": "2026-07-13T18:46:50+00:00",
+    "newest_leaf": "backup/served_spine_PRE_TIMELOCK_2026-07-13T184646Z/advisor_nna_canonical.json"
+   },
+   {
+    "prefix": "bronze/",
+    "approx_last_write": "2026-07-30T13:55:14+00:00",
+    "newest_leaf": "bronze/transactions/2026-07-30.jsonl.gz"
+   },
+   {
+    "prefix": "code/",
+    "approx_last_write": "2026-04-27T16:43:32+00:00",
+    "newest_leaf": "code/watchdog-shutdown.sh"
+   },
+   {
+    "prefix": "config/",
+    "approx_last_write": "2026-04-22T12:10:06+00:00",
+    "newest_leaf": "config/ticker_lookup.json"
+   },
+   {
+    "prefix": "diagnostic/",
+    "approx_last_write": "2026-07-30T13:48:16+00:00",
+    "newest_leaf": "diagnostic/watchdog_diag_20260730_134815.txt"
+   },
+   {
+    "prefix": "eclipse/",
+    "approx_last_write": "2026-06-24T21:45:21+00:00",
+    "newest_leaf": "eclipse/browser-profile/state.json"
+   },
+   {
+    "prefix": "gold/",
+    "approx_last_write": "2026-07-30T15:02:13+00:00",
+    "newest_leaf": "gold/perf_report.json"
+   },
+   {
+    "prefix": "orion/",
+    "approx_last_write": "2026-07-30T14:04:13+00:00",
+    "newest_leaf": "orion/rate_limit_state_positions_mv.json"
+   },
+   {
+    "prefix": "otp/",
+    "approx_last_write": "2026-07-30T13:01:00+00:00",
+    "newest_leaf": "otp/state.json"
+   },
+   {
+    "prefix": "platinum/",
+    "approx_last_write": "2026-07-30T15:00:26+00:00",
+    "newest_leaf": "platinum/firm/cash_drag_1y.json"
+   },
+   {
+    "prefix": "qa/",
+    "approx_last_write": "2026-05-06T21:29:23+00:00",
+    "newest_leaf": "qa/gold-artifacts/firm_mix_views.json"
+   },
+   {
+    "prefix": "silver/",
+    "approx_last_write": "2026-05-05T13:58:55+00:00",
+    "newest_leaf": "silver/historical_prices.parquet"
+   },
+   {
+    "prefix": "telemetry/",
+    "approx_last_write": "2026-07-30T15:04:32+00:00",
+    "newest_leaf": "telemetry/inf-gold-layer-runner/status.json"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 18
+ },
+ "opal-data-demo": {
+  "prefixes": [
+   {
+    "prefix": "platinum/",
+    "approx_last_write": "2026-06-05T21:16:36+00:00",
+    "newest_leaf": "platinum/firm/timeseries_chart.json"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 1
+ },
+ "opal-data-portal-v2": {
+  "prefixes": [
+   {
+    "prefix": "assets/",
+    "approx_last_write": "2026-02-06T21:42:37+00:00",
+    "newest_leaf": "assets/index-3CVn-CZV.js"
+   },
+   {
+    "prefix": "benchmarks/",
+    "approx_last_write": "2026-07-28T13:21:30+00:00",
+    "newest_leaf": "benchmarks/LATEST.json"
+   },
+   {
+    "prefix": "cache/",
+    "approx_last_write": "2026-07-26T06:00:06+00:00",
+    "newest_leaf": "cache/fred/BAMLC0A0CM.csv"
+   },
+   {
+    "prefix": "canon/",
+    "approx_last_write": "2026-07-28T13:23:48+00:00",
+    "newest_leaf": "canon/state/control-plane.json"
+   },
+   {
+    "prefix": "config/",
+    "approx_last_write": "2026-04-22T14:29:05+00:00",
+    "newest_leaf": "config/dynamic_stopwords.json"
+   },
+   {
+    "prefix": "data-refresh/",
+    "approx_last_write": "2026-07-28T13:25:27+00:00",
+    "newest_leaf": "data-refresh/varflag/fa8dd6bb-1531-4bc4-a03f-32e1daa2a255/report.json"
+   },
+   {
+    "prefix": "generated-images/",
+    "approx_last_write": "2025-12-23T23:39:59+00:00",
+    "newest_leaf": "generated-images/2025-12-16/bearish-1.png"
+   },
+   {
+    "prefix": "image-references/",
+    "approx_last_write": "2025-12-23T23:40:00+00:00",
+    "newest_leaf": "image-references/bearish-ref-3.png"
+   },
+   {
+    "prefix": "infrastructure/",
+    "approx_last_write": "2026-07-30T15:37:28+00:00",
+    "newest_leaf": "infrastructure/drift_state_comp.json"
+   },
+   {
+    "prefix": "json-tiered/",
+    "approx_last_write": "2026-07-29T21:30:35+00:00",
+    "newest_leaf": "json-tiered/market-overview/rsi-details-commodities.json"
+   },
+   {
+    "prefix": "json/",
+    "approx_last_write": "2026-07-28T13:21:25+00:00",
+    "newest_leaf": "json/yang-pipeline-metadata.json"
+   },
+   {
+    "prefix": "lambda-packages/",
+    "approx_last_write": "2026-01-14T21:10:21+00:00",
+    "newest_leaf": "lambda-packages/opal-portal-volatility-fetcher.zip"
+   },
+   {
+    "prefix": "logos/",
+    "approx_last_write": "2026-02-06T21:42:38+00:00",
+    "newest_leaf": "logos/opal-icon-black.svg"
+   },
+   {
+    "prefix": "macro/",
+    "approx_last_write": "2026-07-28T13:23:33+00:00",
+    "newest_leaf": "macro/macro_data.json"
+   },
+   {
+    "prefix": "metadata/",
+    "approx_last_write": "2025-12-23T23:40:00+00:00",
+    "newest_leaf": "metadata/macro_data_metadata.json"
+   },
+   {
+    "prefix": "metrics/",
+    "approx_last_write": "2025-12-23T23:40:00+00:00",
+    "newest_leaf": "metrics/macro_data.json"
+   },
+   {
+    "prefix": "platinum/",
+    "approx_last_write": "2026-07-30T15:05:08+00:00",
+    "newest_leaf": "platinum/mdpf/aggregate_aua_timeseries.json"
+   },
+   {
+    "prefix": "portfolio-management/",
+    "approx_last_write": "2026-07-21T14:52:28+00:00",
+    "newest_leaf": "portfolio-management/versions/PFDE/v_0f2e43fe_20260721_145227.json"
+   },
+   {
+    "prefix": "positioning/",
+    "approx_last_write": "2025-12-23T23:40:00+00:00",
+    "newest_leaf": "positioning/etf_categories.json"
+   },
+   {
+    "prefix": "raw/",
+    "approx_last_write": "2025-12-26T17:21:23+00:00",
+    "newest_leaf": "raw/peers/peer_performance_202511.xlsx"
+   },
+   {
+    "prefix": "returns/",
+    "approx_last_write": "2025-12-23T23:40:00+00:00",
+    "newest_leaf": "returns/etf_period_returns.json"
+   },
+   {
+    "prefix": "security-checkpoints/",
+    "approx_last_write": "2026-02-17T17:33:05+00:00",
+    "newest_leaf": "security-checkpoints/ebs/ebs-encryption-checkpoint-20260217-123246.tar.gz"
+   },
+   {
+    "prefix": "security-reports/",
+    "approx_last_write": "2026-07-30T12:02:24+00:00",
+    "newest_leaf": "security-reports/2026-07-30_ai_summary.txt"
+   },
+   {
+    "prefix": "security_scanner/",
+    "approx_last_write": "2026-05-22T16:06:43+00:00",
+    "newest_leaf": "security_scanner/uploads/20260521/Screening_DIVZ_IDVZ_20260521.xlsx"
+   },
+   {
+    "prefix": "sentiment/",
+    "approx_last_write": "2026-01-08T21:31:16+00:00",
+    "newest_leaf": "sentiment/keyword-sentiments.json"
+   },
+   {
+    "prefix": "uploads/",
+    "approx_last_write": "2026-06-26T16:17:59+00:00",
+    "newest_leaf": "uploads/Models Performance vs Peers 20260618.xlsx"
+   },
+   {
+    "prefix": "valuation/",
+    "approx_last_write": "2026-01-04T04:46:14+00:00",
+    "newest_leaf": "valuation/valuation_data.json"
+   }
+  ],
+  "root_objects": 5,
+  "root_last_write": "2026-04-15T20:19:37+00:00",
+  "root_sample": "market-metrics.json.gz",
+  "top_prefix_count": 27
+ },
+ "opal-data-imo": {
+  "prefixes": [
+   {
+    "prefix": "_probe/",
+    "approx_last_write": "2026-05-29T18:25:46+00:00",
+    "newest_leaf": "_probe/costgate-verify/last-probe.json"
+   },
+   {
+    "prefix": "archives/",
+    "approx_last_write": "2026-05-27T16:56:41+00:00",
+    "newest_leaf": "archives/.keep"
+   },
+   {
+    "prefix": "code/",
+    "approx_last_write": "2026-05-27T16:56:41+00:00",
+    "newest_leaf": "code/.keep"
+   },
+   {
+    "prefix": "config/",
+    "approx_last_write": "2026-05-28T17:00:15+00:00",
+    "newest_leaf": "config/cost-budgets-v0.1.json"
+   },
+   {
+    "prefix": "corp/",
+    "approx_last_write": "2026-05-27T16:56:41+00:00",
+    "newest_leaf": "corp/.keep"
+   },
+   {
+    "prefix": "qa/",
+    "approx_last_write": "2026-05-28T13:23:15+00:00",
+    "newest_leaf": "qa/stage2-universe-2026-05-27.json"
+   },
+   {
+    "prefix": "serving/",
+    "approx_last_write": "2026-06-01T17:17:55+00:00",
+    "newest_leaf": "serving/contacts-target-2026-05-27.json"
+   },
+   {
+    "prefix": "telemetry/",
+    "approx_last_write": "2026-05-27T16:56:41+00:00",
+    "newest_leaf": "telemetry/.keep"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 8
+ },
+ "opal-data-cot": {
+  "prefixes": [
+   {
+    "prefix": "blackdiamond/",
+    "approx_last_write": "2026-07-30T02:03:43+00:00",
+    "newest_leaf": "blackdiamond/cot/session-trigger-mode.json"
+   },
+   {
+    "prefix": "bronze/",
+    "approx_last_write": "2026-07-30T02:02:34+00:00",
+    "newest_leaf": "bronze/2026-07-30/_BRONZE_COMPLETE.json"
+   },
+   {
+    "prefix": "code/",
+    "approx_last_write": "2026-07-24T02:13:34+00:00",
+    "newest_leaf": "code/silver/cot_silver_merge.py"
+   },
+   {
+    "prefix": "forwardfill_v2/",
+    "approx_last_write": "2026-07-30T02:01:52+00:00",
+    "newest_leaf": "forwardfill_v2/unrealized/UNREALIZED_DAILY_2026-07-28.xlsx"
+   },
+   {
+    "prefix": "gold/",
+    "approx_last_write": "2026-07-30T02:05:39+00:00",
+    "newest_leaf": "gold/firm_mix_views.json"
+   },
+   {
+    "prefix": "logs/",
+    "approx_last_write": "2026-07-30T02:03:42+00:00",
+    "newest_leaf": "logs/cot-exporter/silver-run/cot-silver-run-20260730-020236.log"
+   },
+   {
+    "prefix": "platinum/",
+    "approx_last_write": "2026-07-30T02:05:55+00:00",
+    "newest_leaf": "platinum/firm/client_directory.json"
+   },
+   {
+    "prefix": "silver/",
+    "approx_last_write": "2026-07-30T02:03:37+00:00",
+    "newest_leaf": "silver/cot_incremental_manifest_holdings.json"
+   }
+  ],
+  "root_objects": 0,
+  "top_prefix_count": 8
+ }
+}
