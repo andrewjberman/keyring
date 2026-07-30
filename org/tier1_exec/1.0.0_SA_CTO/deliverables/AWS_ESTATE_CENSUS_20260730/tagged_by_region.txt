@@ -1,0 +1,17 @@
+ap-south-1 tagged=0
+eu-north-1 tagged=0
+eu-west-3 tagged=0
+eu-west-2 tagged=0
+eu-west-1 tagged=0
+ap-northeast-3 tagged=0
+ap-northeast-2 tagged=0
+ap-northeast-1 tagged=0
+ca-central-1 tagged=0
+sa-east-1 tagged=0
+ap-southeast-1 tagged=0
+ap-southeast-2 tagged=0
+eu-central-1 tagged=0
+us-east-1 tagged=1905
+us-east-2 tagged=2
+us-west-1 tagged=0
+us-west-2 tagged=0

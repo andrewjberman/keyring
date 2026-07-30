@@ -1,0 +1,493 @@
+{
+    "Resources": [
+        {
+            "Arn": "arn:aws:ec2:us-east-2:313476888478:subnet/subnet-01dc0996d8ed28347",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "ec2:subnet",
+            "Service": "ec2",
+            "LastReportedAt": "2026-07-26T22:50:29Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:cloudformation:us-east-2:313476888478:stack/fred-ingestion-stack/d31f51d0-d6c2-11f0-a1b2-02372364efb5",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "cloudformation:stack",
+            "Service": "cloudformation",
+            "LastReportedAt": "2026-07-26T01:06:21Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:elasticache:us-east-2:313476888478:user:default",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "elasticache:user",
+            "Service": "elasticache",
+            "LastReportedAt": "2026-07-26T02:35:55Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:lambda:us-east-2:313476888478:function:opal-news-layer3-curation:$LATEST",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "lambda:function/version",
+            "Service": "lambda",
+            "LastReportedAt": "2026-07-28T02:22:03Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:ec2:us-east-2:313476888478:internet-gateway/igw-01aa097147559de5e",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "ec2:internet-gateway",
+            "Service": "ec2",
+            "LastReportedAt": "2026-07-25T18:40:15Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:lambda:us-east-2:313476888478:function:opal-news-layer3-curation",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "lambda:function",
+            "Service": "lambda",
+            "LastReportedAt": "2026-07-09T02:38:53Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:ec2:us-east-2:313476888478:security-group/sg-01ab3f2962942d021",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "ec2:security-group",
+            "Service": "ec2",
+            "LastReportedAt": "2026-07-28T17:32:05Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:memorydb:us-east-2:313476888478:parametergroup/default.memorydb-redis6",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "memorydb:parametergroup",
+            "Service": "memorydb",
+            "LastReportedAt": "2026-07-29T21:47:01Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:apprunner:us-east-2:313476888478:autoscalingconfiguration/DefaultConfiguration/1/00000000000000000000000000000001",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "apprunner:autoscalingconfiguration",
+            "Service": "apprunner",
+            "LastReportedAt": "2026-07-30T08:11:03Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:s3:::opal-market-update",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "s3:bucket",
+            "Service": "s3",
+            "LastReportedAt": "2026-07-25T17:08:41Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/us-east-1.tier-router-edge",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "logs:log-group",
+            "Service": "logs",
+            "LastReportedAt": "2026-07-25T16:04:17Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/us-east-1.shared-advisor-router-response",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "logs:log-group",
+            "Service": "logs",
+            "LastReportedAt": "2026-07-25T16:04:16Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:memorydb:us-east-2:313476888478:parametergroup/default.memorydb-redis7",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "memorydb:parametergroup",
+            "Service": "memorydb",
+            "LastReportedAt": "2026-07-29T21:47:01Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:ec2:us-east-2:313476888478:subnet/subnet-0a78f1dc2b17252a5",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "ec2:subnet",
+            "Service": "ec2",
+            "LastReportedAt": "2026-07-26T22:50:29Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:athena:us-east-2:313476888478:workgroup/primary",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "athena:workgroup",
+            "Service": "athena",
+            "LastReportedAt": "2026-07-26T03:20:41Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:memorydb:us-east-2:313476888478:parametergroup/default.memorydb-valkey7.search",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "memorydb:parametergroup",
+            "Service": "memorydb",
+            "LastReportedAt": "2026-07-29T21:47:01Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:cloudformation:us-east-2:313476888478:stack/news-ingestion-schedule/d855cc10-cadd-11f0-baed-02de8bec9a93",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "cloudformation:stack",
+            "Service": "cloudformation",
+            "LastReportedAt": "2026-07-26T01:06:21Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:memorydb:us-east-2:313476888478:parametergroup/default.memorydb-redis7.search.preview",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "memorydb:parametergroup",
+            "Service": "memorydb",
+            "LastReportedAt": "2026-07-29T21:47:01Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/us-east-1.auth-validator-edge",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "logs:log-group",
+            "Service": "logs",
+            "LastReportedAt": "2026-07-25T16:04:16Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:kms:us-east-2:313476888478:key/663852b8-dd01-4f68-a245-e4cceabdeb82",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "kms:key",
+            "Service": "kms",
+            "LastReportedAt": "2026-07-27T07:01:53Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:memorydb:us-east-2:313476888478:acl/open-access",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "memorydb:acl",
+            "Service": "memorydb",
+            "LastReportedAt": "2026-07-29T12:51:25Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/opal-news-layer3-curation",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "logs:log-group",
+            "Service": "logs",
+            "LastReportedAt": "2026-07-25T16:04:16Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:events:us-east-2:313476888478:event-bus/default",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "events:event-bus",
+            "Service": "events",
+            "LastReportedAt": "2026-07-25T18:06:32Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:memorydb:us-east-2:313476888478:user/default",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "memorydb:user",
+            "Service": "memorydb",
+            "LastReportedAt": "2026-07-30T02:16:18Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:memorydb:us-east-2:313476888478:parametergroup/default.memorydb-redis7.search",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "memorydb:parametergroup",
+            "Service": "memorydb",
+            "LastReportedAt": "2026-07-29T21:47:01Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:cloudwatch:us-east-2:313476888478:alarm:fred-ingestion-duration",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "cloudwatch:alarm",
+            "Service": "cloudwatch",
+            "LastReportedAt": "2026-07-07T06:21:55Z",
+            "Properties": [
+                {
+                    "Name": "tags",
+                    "LastReportedAt": "2026-05-08T20:16:40Z",
+                    "Data": [
+                        {
+                            "Key": "aws:cloudformation:logical-id",
+                            "Value": "LambdaDurationAlarm"
+                        },
+                        {
+                            "Key": "aws:cloudformation:stack-id",
+                            "Value": "arn:aws:cloudformation:us-east-2:313476888478:stack/fred-ingestion-stack/d31f51d0-d6c2-11f0-a1b2-02372364efb5"
+                        },
+                        {
+                            "Key": "aws:cloudformation:stack-name",
+                            "Value": "fred-ingestion-stack"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Arn": "arn:aws:ec2:us-east-2:313476888478:security-group-rule/sgr-02e9f07194aab8686",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "ec2:security-group-rule",
+            "Service": "ec2",
+            "LastReportedAt": "2026-07-27T13:38:53Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/us-east-1.public-data-router",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "logs:log-group",
+            "Service": "logs",
+            "LastReportedAt": "2026-07-25T16:04:16Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:s3:::opal-schwab-d4-access-logs-313476888478",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "s3:bucket",
+            "Service": "s3",
+            "LastReportedAt": "2026-07-25T17:08:41Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:ec2:us-east-2:313476888478:security-group-rule/sgr-09a2968e1c507a9a2",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "ec2:security-group-rule",
+            "Service": "ec2",
+            "LastReportedAt": "2026-07-27T09:08:49Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:resource-explorer-2:us-east-2:313476888478:index/0091ea12-8dda-45b7-8065-0b042ffae084",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "resource-explorer-2:index",
+            "Service": "resource-explorer-2",
+            "LastReportedAt": "2026-07-20T16:37:20Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:athena:us-east-2:313476888478:datacatalog/AwsDataCatalog",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "athena:datacatalog",
+            "Service": "athena",
+            "LastReportedAt": "2026-07-29T06:52:45Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:s3:::opal-data-schwab",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "s3:bucket",
+            "Service": "s3",
+            "LastReportedAt": "2026-07-25T17:08:41Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:cloudwatch:us-east-2:313476888478:alarm:fred-ingestion-errors",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "cloudwatch:alarm",
+            "Service": "cloudwatch",
+            "LastReportedAt": "2026-07-07T06:21:55Z",
+            "Properties": [
+                {
+                    "Name": "tags",
+                    "LastReportedAt": "2026-05-08T21:39:22Z",
+                    "Data": [
+                        {
+                            "Key": "aws:cloudformation:stack-id",
+                            "Value": "arn:aws:cloudformation:us-east-2:313476888478:stack/fred-ingestion-stack/d31f51d0-d6c2-11f0-a1b2-02372364efb5"
+                        },
+                        {
+                            "Key": "aws:cloudformation:stack-name",
+                            "Value": "fred-ingestion-stack"
+                        },
+                        {
+                            "Key": "aws:cloudformation:logical-id",
+                            "Value": "LambdaErrorAlarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Arn": "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/us-east-1.shared-advisor-router",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "logs:log-group",
+            "Service": "logs",
+            "LastReportedAt": "2026-07-25T16:04:16Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:s3:::ajb-workflow",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "s3:bucket",
+            "Service": "s3",
+            "LastReportedAt": "2026-07-25T17:08:41Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:xray:us-east-2:313476888478:sampling-rule/Default",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "xray:sampling-rule",
+            "Service": "xray",
+            "LastReportedAt": "2026-07-26T05:53:22Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:ec2:us-east-2:313476888478:network-acl/acl-06a5e87b977fb91d3",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "ec2:network-acl",
+            "Service": "ec2",
+            "LastReportedAt": "2026-07-29T04:50:55Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:lambda:us-east-2:313476888478:layer:openai-python312:1",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "lambda:layer/version",
+            "Service": "lambda",
+            "LastReportedAt": "2026-07-26T22:36:35Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:ec2:us-east-2:313476888478:vpc/vpc-0bd5fedd7a4013322",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "ec2:vpc",
+            "Service": "ec2",
+            "LastReportedAt": "2026-07-29T18:51:26Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:ses:us-east-2:313476888478:identity/andrew@fideles.capital",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "ses:identity",
+            "Service": "ses",
+            "LastReportedAt": "2026-07-27T08:18:46Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:kms:us-east-2:313476888478:key/172d5a82-96e9-45f4-a2db-cac9a5661ade",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "kms:key",
+            "Service": "kms",
+            "LastReportedAt": "2026-07-27T07:01:53Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:ses:us-east-2:313476888478:identity/andrew@opalinvest.com",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "ses:identity",
+            "Service": "ses",
+            "LastReportedAt": "2026-07-27T08:18:46Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:memorydb:us-east-2:313476888478:parametergroup/default.memorydb-valkey7",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "memorydb:parametergroup",
+            "Service": "memorydb",
+            "LastReportedAt": "2026-07-29T21:47:01Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:resource-explorer-2:us-east-2:313476888478:view/us-east-2/077bdb94-4016-4a7b-a1a3-1aeb2693ddf0",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "resource-explorer-2:view",
+            "Service": "resource-explorer-2",
+            "LastReportedAt": "2026-07-23T05:17:16Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:kms:us-east-2:313476888478:key/24452e57-a04e-41f3-a0cd-963f49512245",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "kms:key",
+            "Service": "kms",
+            "LastReportedAt": "2026-07-27T07:01:53Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/us-east-1.cache-control-injector",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "logs:log-group",
+            "Service": "logs",
+            "LastReportedAt": "2026-07-25T16:04:16Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:ec2:us-east-2:313476888478:route-table/rtb-06d4475043e76764a",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "ec2:route-table",
+            "Service": "ec2",
+            "LastReportedAt": "2026-07-29T11:20:41Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:ec2:us-east-2:313476888478:dhcp-options/dopt-0e360a63f79b6c21b",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "ec2:dhcp-options",
+            "Service": "ec2",
+            "LastReportedAt": "2026-07-27T12:26:17Z",
+            "Properties": []
+        },
+        {
+            "Arn": "arn:aws:ec2:us-east-2:313476888478:subnet/subnet-04990ac4932e579c3",
+            "OwningAccountId": "313476888478",
+            "Region": "us-east-2",
+            "ResourceType": "ec2:subnet",
+            "Service": "ec2",
+            "LastReportedAt": "2026-07-26T22:50:29Z",
+            "Properties": []
+        }
+    ],
+    "ViewArn": "arn:aws:resource-explorer-2:us-east-2:313476888478:view/us-east-2/077bdb94-4016-4a7b-a1a3-1aeb2693ddf0"
+}

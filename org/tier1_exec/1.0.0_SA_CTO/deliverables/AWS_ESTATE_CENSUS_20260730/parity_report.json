@@ -1,0 +1,317 @@
+{
+ "per_type": {
+  "LOG_GROUP": {
+   "graph": 234,
+   "live": 241,
+   "matched": 234,
+   "graph_only": [],
+   "live_only": [
+    "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/opal-news-layer3-curation",
+    "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/us-east-1.auth-validator-edge",
+    "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/us-east-1.cache-control-injector",
+    "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/us-east-1.public-data-router",
+    "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/us-east-1.shared-advisor-router",
+    "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/us-east-1.shared-advisor-router-response",
+    "arn:aws:logs:us-east-2:313476888478:log-group:/aws/lambda/us-east-1.tier-router-edge"
+   ]
+  },
+  "IAM_ROLE": {
+   "graph": 196,
+   "live": 208,
+   "matched": 196,
+   "graph_only": [],
+   "live_only": [
+    "arn:aws:iam::313476888478:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+    "arn:aws:iam::313476888478:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing",
+    "arn:aws:iam::313476888478:role/aws-service-role/logger.cloudfront.amazonaws.com/AWSServiceRoleForCloudFrontLogger",
+    "arn:aws:iam::313476888478:role/aws-service-role/observability.aoss.amazonaws.com/AWSServiceRoleForAmazonOpenSearchServerless",
+    "arn:aws:iam::313476888478:role/aws-service-role/opensearchservice.amazonaws.com/AWSServiceRoleForAmazonOpenSearchService",
+    "arn:aws:iam::313476888478:role/aws-service-role/ops.apigateway.amazonaws.com/AWSServiceRoleForAPIGateway",
+    "arn:aws:iam::313476888478:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS",
+    "arn:aws:iam::313476888478:role/aws-service-role/replicator.lambda.amazonaws.com/AWSServiceRoleForLambdaReplicator",
+    "arn:aws:iam::313476888478:role/aws-service-role/resource-explorer-2.amazonaws.com/AWSServiceRoleForResourceExplorer",
+    "arn:aws:iam::313476888478:role/aws-service-role/sms-voice.amazonaws.com/AWSServiceRoleForSMSVoice",
+    "arn:aws:iam::313476888478:role/aws-service-role/support.amazonaws.com/AWSServiceRoleForSupport",
+    "arn:aws:iam::313476888478:role/aws-service-role/trustedadvisor.amazonaws.com/AWSServiceRoleForTrustedAdvisor"
+   ]
+  },
+  "LAMBDA": {
+   "graph": 192,
+   "live": 193,
+   "matched": 192,
+   "graph_only": [],
+   "live_only": [
+    "arn:aws:lambda:us-east-2:313476888478:function:opal-news-layer3-curation"
+   ]
+  },
+  "EVENT_RULE": {
+   "graph": 143,
+   "live": 143,
+   "matched": 143,
+   "graph_only": [],
+   "live_only": []
+  },
+  "SECRET": {
+   "graph": 81,
+   "live": 81,
+   "matched": 81,
+   "graph_only": [],
+   "live_only": []
+  },
+  "CW_ALARM": {
+   "graph": 51,
+   "live": 53,
+   "matched": 51,
+   "graph_only": [],
+   "live_only": [
+    "arn:aws:cloudwatch:us-east-2:313476888478:alarm:fred-ingestion-duration",
+    "arn:aws:cloudwatch:us-east-2:313476888478:alarm:fred-ingestion-errors"
+   ]
+  },
+  "S3_BUCKET": {
+   "graph": 39,
+   "live": 39,
+   "matched": 39,
+   "graph_only": [],
+   "live_only": []
+  },
+  "DYNAMODB_TABLE": {
+   "graph": 37,
+   "live": 37,
+   "matched": 37,
+   "graph_only": [],
+   "live_only": []
+  },
+  "EC2_INSTANCE": {
+   "graph": 33,
+   "live": 34,
+   "matched": 33,
+   "graph_only": [],
+   "live_only": [
+    "arn:aws:ec2:us-east-1:313476888478:instance/i-0645235b8df17b085"
+   ]
+  },
+  "SECURITY_GROUP": {
+   "graph": 24,
+   "live": 24,
+   "matched": 24,
+   "graph_only": [],
+   "live_only": []
+  },
+  "SSM_DOCUMENT": {
+   "graph": 24,
+   "live": 24,
+   "matched": 24,
+   "graph_only": [],
+   "live_only": []
+  },
+  "INSTANCE_PROFILE": {
+   "graph": 19,
+   "live": 24,
+   "matched": 19,
+   "graph_only": [],
+   "live_only": [
+    "arn:aws:iam::313476888478:instance-profile/cot-gold-layer-profile",
+    "arn:aws:iam::313476888478:instance-profile/demo-transform-runner-ec2-profile",
+    "arn:aws:iam::313476888478:instance-profile/ec2-ssm-profile",
+    "arn:aws:iam::313476888478:instance-profile/finbert-ec2-backfill-profile",
+    "arn:aws:iam::313476888478:instance-profile/opal-portal-ec2-profile"
+   ]
+  },
+  "SNS_TOPIC": {
+   "graph": 15,
+   "live": 15,
+   "matched": 15,
+   "graph_only": [],
+   "live_only": []
+  },
+  "SQS_QUEUE": {
+   "graph": 14,
+   "live": 14,
+   "matched": 14,
+   "graph_only": [],
+   "live_only": []
+  },
+  "SCHEDULE": {
+   "graph": 11,
+   "live": 0,
+   "matched": 0,
+   "graph_only": [
+    "arn:aws:scheduler:us-east-1:313476888478:schedule/default/astn-wsjft-3am-run",
+    "arn:aws:scheduler:us-east-1:313476888478:schedule/default/etfs-reports-monthly-run",
+    "arn:aws:scheduler:us-east-1:313476888478:schedule/default/globgrph-cse-producer-nightly",
+    "arn:aws:scheduler:us-east-1:313476888478:schedule/default/mdpf-accrual-bridge-daily",
+    "arn:aws:scheduler:us-east-1:313476888478:schedule/default/opal-assets-bd49f-dim-convert-daily",
+    "arn:aws:scheduler:us-east-1:313476888478:schedule/default/smartx-assets-daily-pull-daily",
+    "arn:aws:scheduler:us-east-1:313476888478:schedule/default/smartx-jwt-refresher-daily",
+    "arn:aws:scheduler:us-east-1:313476888478:schedule/default/smartx-model-monthly-pull-daily",
+    "arn:aws:scheduler:us-east-1:313476888478:schedule/default/smartx-rest-pull-daily",
+    "arn:aws:scheduler:us-east-1:313476888478:schedule/default/wsb-49f-model-aua-pull-daily",
+    "arn:aws:scheduler:us-east-1:313476888478:schedule/default/wsd-49f-partner-held-etf-pull-daily"
+   ],
+   "live_only": []
+  },
+  "KMS_KEY": {
+   "graph": 10,
+   "live": 13,
+   "matched": 10,
+   "graph_only": [],
+   "live_only": [
+    "arn:aws:kms:us-east-2:313476888478:key/172d5a82-96e9-45f4-a2db-cac9a5661ade",
+    "arn:aws:kms:us-east-2:313476888478:key/24452e57-a04e-41f3-a0cd-963f49512245",
+    "arn:aws:kms:us-east-2:313476888478:key/663852b8-dd01-4f68-a245-e4cceabdeb82"
+   ]
+  },
+  "ECS_TASK_DEFINITION": {
+   "graph": 7,
+   "live": 7,
+   "matched": 7,
+   "graph_only": [],
+   "live_only": []
+  },
+  "API_GW": {
+   "graph": 5,
+   "live": 6,
+   "matched": 5,
+   "graph_only": [],
+   "live_only": [
+    "arn:aws:apigateway:us-east-1::/restapis/f61h681z9g"
+   ]
+  },
+  "CODEBUILD_PROJECT": {
+   "graph": 4,
+   "live": 4,
+   "matched": 4,
+   "graph_only": [],
+   "live_only": []
+  },
+  "VPC_ENDPOINT": {
+   "graph": 3,
+   "live": 3,
+   "matched": 3,
+   "graph_only": [],
+   "live_only": []
+  },
+  "IAM_USER": {
+   "graph": 2,
+   "live": 6,
+   "matched": 2,
+   "graph_only": [],
+   "live_only": [
+    "arn:aws:iam::313476888478:user/Andrew_Berman_Console",
+    "arn:aws:iam::313476888478:user/Opal_Terminal",
+    "arn:aws:iam::313476888478:user/opal-portal-dashboard",
+    "arn:aws:iam::313476888478:user/website/patricia@thewhitelabelcreative.com"
+   ]
+  },
+  "ECS_CLUSTER": {
+   "graph": 1,
+   "live": 1,
+   "matched": 1,
+   "graph_only": [],
+   "live_only": []
+  },
+  "CLOUDFRONT_DISTRIBUTION": {
+   "graph": 1,
+   "live": 1,
+   "matched": 1,
+   "graph_only": [],
+   "live_only": []
+  },
+  "STATE_MACHINE": {
+   "graph": 1,
+   "live": 1,
+   "matched": 1,
+   "graph_only": [],
+   "live_only": []
+  },
+  "LOAD_BALANCER": {
+   "graph": 1,
+   "live": 1,
+   "matched": 1,
+   "graph_only": [],
+   "live_only": []
+  }
+ },
+ "graph_unmapped_types": {
+  "EVENT_SOURCE": 97,
+  "ROUTE53_RECORD": 3,
+  "API_ROUTE": 82,
+  "S3_BUCKET_POLICY": 11,
+  "IAM_POLICY": 446,
+  "LAMBDA_LAYER": 13,
+  "SERVICE_PRINCIPAL": 18
+ },
+ "live_unmapped_types": {
+  "ec2:snapshot": 976,
+  "ec2:image": 312,
+  "memorydb:parametergroup": 12,
+  "ec2:network-interface": 40,
+  "ec2:security-group-rule": 36,
+  "apigateway:apis/integrations": 19,
+  "lambda:function/version": 279,
+  "apigateway:restapis/resources": 38,
+  "apigateway:apis/routes": 39,
+  "iam:policy": 30,
+  "apigateway:restapis/deployments": 14,
+  "ec2:subnet": 9,
+  "apigateway:restapis/resources/methods": 39,
+  "glue:database": 4,
+  "ecr:repository": 9,
+  "ec2:volume": 34,
+  "apigateway:apis/stages": 5,
+  "lambda:layer/version": 16,
+  "glue:table": 6,
+  "ses:identity": 28,
+  "ec2:elastic-ip": 5,
+  "ssm:parameter": 2,
+  "ec2:internet-gateway": 2,
+  "servicediscovery:service": 2,
+  "cloudfront:function": 1,
+  "elasticloadbalancing:listener-rule/app": 4,
+  "cloudfront:origin-access-control": 1,
+  "wafv2:webacl": 2,
+  "athena:workgroup": 3,
+  "ssm:managed-instance": 12,
+  "cloudfront:origin-access-identity": 2,
+  "rds:og": 1,
+  "lambda:event-source-mapping": 5,
+  "route53:hostedzone": 2,
+  "cloudfront:response-headers-policy": 3,
+  "ec2:dhcp-options": 2,
+  "ec2:key-pair": 3,
+  "ec2:vpc": 2,
+  "memorydb:user": 2,
+  "iam:mfa": 4,
+  "dlm:policy": 1,
+  "cloudtrail:trail": 2,
+  "cloudwatch:dashboard": 2,
+  "ec2:network-acl": 2,
+  "s3:storage-lens": 1,
+  "acm:certificate": 1,
+  "route53resolver:firewall-rule-group": 1,
+  "resource-explorer-2:index": 2,
+  "athena:datacatalog": 2,
+  "memorydb:acl": 2,
+  "ec2:route-table": 2,
+  "ce:anomalysubscription": 2,
+  "xray:sampling-rule": 2,
+  "iam:oidc-provider": 1,
+  "ecs:service": 2,
+  "rds:subgrp": 1,
+  "route53resolver:firewall-domain-list": 2,
+  "elasticloadbalancing:listener/app": 2,
+  "resource-explorer-2:view": 2,
+  "ce:anomalymonitor": 1,
+  "route53resolver:firewall-rule-group-association": 1,
+  "elasticloadbalancing:targetgroup": 1,
+  "apprunner:autoscalingconfiguration": 2,
+  "elasticache:user": 2,
+  "cloudfront:cache-policy": 2,
+  "rds:pg": 1,
+  "ec2:vpc-flow-log": 1,
+  "iam:group": 1,
+  "events:event-bus": 2,
+  "cloudformation:stack": 2
+ }
+}

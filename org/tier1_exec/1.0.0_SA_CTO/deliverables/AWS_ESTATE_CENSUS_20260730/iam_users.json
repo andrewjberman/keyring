@@ -1,0 +1,26 @@
+[
+    {
+        "n": "Andrew_Berman",
+        "a": "arn:aws:iam::313476888478:user/Andrew_Berman"
+    },
+    {
+        "n": "Andrew_Berman_Console",
+        "a": "arn:aws:iam::313476888478:user/Andrew_Berman_Console"
+    },
+    {
+        "n": "github-actions-portal",
+        "a": "arn:aws:iam::313476888478:user/github-actions-portal"
+    },
+    {
+        "n": "opal-portal-dashboard",
+        "a": "arn:aws:iam::313476888478:user/opal-portal-dashboard"
+    },
+    {
+        "n": "Opal_Terminal",
+        "a": "arn:aws:iam::313476888478:user/Opal_Terminal"
+    },
+    {
+        "n": "patricia@thewhitelabelcreative.com",
+        "a": "arn:aws:iam::313476888478:user/website/patricia@thewhitelabelcreative.com"
+    }
+]
