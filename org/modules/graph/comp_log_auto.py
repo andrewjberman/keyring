@@ -229,6 +229,52 @@ def _classify_result(tool: str, exit_code: int) -> str:
     return "UNKNOWN"
 
 
+# R8 (NFRA_VELOCITY_ESTATE WS-E6.R8, 2026-07-30) -- the CONSUME side of the route->run join.
+# comp-which hands off `<route_id>|<emit_epoch>|<n_recommended>` to a race-free per-session file
+# (org/mcp/sessions/<sid>.route); the NEXT comp-tool run stamps it here, so route->run becomes
+# joinable. Before this, measured: 0 of 17,687 route events carried a serial and no run row
+# carried a route id -- there was no key on EITHER side, so any conversion rate was fabricated.
+#
+# TTL, NOT SINGLE-USE (COO ruling 20260730T065315Z): a persistent id would let every later
+# unrelated run inherit it and inflate conversion toward 100%; a single-use id under-credits a
+# route that legitimately produced two runs. So the id survives for a generous window and the row
+# records the route's AGE AT STAMP TIME -- a reader re-cuts the conversion window in analysis with
+# no re-baseline. Same discriminator discipline as verdict_basis: keep the residue now, because it
+# is unrecoverable later.
+_ROUTE_TTL_S = 1800
+
+
+def _carried_route(workspace: Path, tool: str) -> Optional[tuple]:
+    """(route_id, age_seconds, n_recommended) for the route handed off to this run, or None.
+
+    A comp-which row NEVER carries a route: a route must not convert itself. That is not
+    bookkeeping -- self-conversion would make the rate rise with comp-which's own usage, which is
+    precisely the quantity the rate is supposed to be measured AGAINST.
+    """
+    if tool == "comp-which":
+        return None
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "")
+    if not sid:
+        return None
+    try:
+        p = workspace / "org" / "mcp" / "sessions" / f"{sid}.route"
+        if not p.exists():
+            return None
+        raw = p.read_text(encoding="utf-8").strip()
+        if not raw:
+            return None
+        parts = raw.split("|")
+        rid = parts[0].strip()
+        emitted = float(parts[1]) if len(parts) > 1 else 0.0
+        n = int(parts[2]) if len(parts) > 2 else 0
+        age = time.time() - emitted
+        if not rid or age < 0 or age > _ROUTE_TTL_S:
+            return None  # expired or clock-inverted -> no claim, rather than a wrong claim
+        return (rid, round(age, 3), n)
+    except Exception:
+        return None
+
+
 def _append_log(workspace: Path, tool: str, args: str, exit_code: int,
                 serial: str, to_id: str) -> None:
     """Append one run record to the JSONL run sink.
@@ -310,6 +356,13 @@ def _append_log(workspace: Path, tool: str, args: str, exit_code: int,
             rec["fail_kind"] = fail_kind
         if synthetic:
             rec["synthetic"] = True
+        # R8: the route this run converted, if any. Absent when no route was handed off -- an
+        # honest absence, never a null or a guess. `route_n` is carried so an ALL-of-N rate stays
+        # derivable without a re-baseline (COO ruled ANY-of-N CONVERTS, 065315Z).
+        carried = _carried_route(workspace, tool)
+        if carried is not None:
+            rec["route_id"], rec["route_age_s"], rec["route_n"] = carried
+            rec["route_ttl_s"] = _ROUTE_TTL_S
         with open(runs_sink, "a", encoding="utf-8") as f:
             f.write(_json.dumps(rec, ensure_ascii=True) + "\n")
     except Exception as e:

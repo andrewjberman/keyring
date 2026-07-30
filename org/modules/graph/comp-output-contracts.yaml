@@ -50,6 +50,19 @@ enforcing_gate: comp-manifest-check (output-contract completeness member)
 # exit_codes[rc]:     shorthand `pass` | `fail` | {class: verdict|refuse|pass|fail, meaning: "..."}
 #                     rc "0" defaults to pass; a listed nonzero classifies that rc; an UNLISTED nonzero on a
 #                     DECLARED tool -> fail (an unexpected exit for a contract we know IS a failure).
+#   optional `kind:`  ONLY on a fail-class exit (E4.2, NFRA_VELOCITY_ESTATE WS-E4.2, 2026-07-30):
+#                     `usage` | `finding` | `negative_control`. It separates the FAIL column's three
+#                     meanings IN THE MACHINE RECORD -- (a) a deliberate negative-control probe, (b) a caller
+#                     usage error, (c) a genuine estate finding -- because one FAIL token conflates three
+#                     things with different owners and OPPOSITE SIGNS: more (a) is BETTER, so a rising FAIL
+#                     count is currently indistinguishable from better negative-controlling.
+#                     A fail-exit with NO `kind:` renders `kind_undeclared` -- LOUD, bounded, and visible in
+#                     `comp_output_contract.fail_kind_coverage()`, exactly like `pending_declaration:` above.
+#                     It is NEVER defaulted into one of the three. DO NOT guess a kind to make the tail
+#                     shorter: a plausible-but-wrong bucket is worse than an honest unknown, because it
+#                     answers the improvement question confidently and wrongly.
+#                     `negative_control` is normally supplied at RUN time by COMP_SYNTHETIC_FIXTURE=1 rather
+#                     than declared here (a probe is a property of the invocation, not of the exit code).
 # ---------------------------------------------------------------------------------------------------
 
 contracts:
@@ -194,6 +207,37 @@ contracts:
       "1": {class: verdict, meaning: "an ERROR-severity check FAILED on the artifact (a real invariant violation)"}
     exit_source: "org/modules/graph/validate_cli.py:13-16 docstring (0 all-pass / 1 ERROR-fail) @2026-07-23"
 
+  # NON-tools_index EMITTER (E6.R8 precondition, 2026-07-30; COO ruling 20260730T065315Z).
+  # comp-which is NOT in tools_index and is deliberately NOT being added -- that changes the
+  # routable roster and is a comp-tool STANDARD change, main-CTO gated under the seam protocol.
+  # It is declared here as an emitter, the same shape as comp-manifest-check and
+  # comp-surface-check below/above (the invariant already reports "2 extra declaration(s) for
+  # non-tools_index emitters", so the precedent is established, not invented here).
+  #
+  # WHY THIS IS A PRECONDITION OF R8 AND NOT A FOLLOW-UP: R8 makes comp-which self-report into
+  # the run sink, and comp-which is the single most-invoked comp surface in the estate
+  # (~19,280 route-family events). Landing that telemetry while it was UNDECLARED would have
+  # made the largest contributor to the sink also the least classifiable -- every one of its
+  # nonzeros rendering UNKNOWN -- visibly degrading the E4.1/E4.2 measurement plane that had
+  # just landed. Declaring it first is what keeps the plane honest.
+  comp-which:
+    coverage: "the curated routing rules + the surface-first coverage ledger, scored against the supplied question"
+    blind_spots:
+      - "routes on QUESTION TEXT, not on estate state -- it cannot know whether the tool it names will actually answer, only that the intent matches"
+      - "a NO-CURATED-MATCH still prints ranked fuzzy guesses; those are NOT a routing decision and the header says so"
+      - "MEASURED 2026-07-30: route events carry no serial, so a route is not attributable to an agent from the rail log alone -- E6.R8's route_id closes this forward only, never retroactively"
+    plane: source
+    grain: artifact
+    scope: estate
+    vintage: "n/a -- computed live from the routing rules + coverage ledger at invocation"
+    exit_codes:
+      # MEASURED, not assumed (2026-07-30): a NO-MATCH question exits 0 and only `--help` exits 1.
+      # org/XXX.md A.3 asserts a no-match question exits 1; that example is WRONG (its POINT --
+      # score comp-which on OUTPUT, never on rc -- is right, and COO holds that lane to correct it).
+      "1": {class: refuse, meaning: "usage/help path -- nothing was routed, so nothing is concluded (NOT a routing failure)"}
+    exit_source: ".tools/comp-which main()/_route_print + measured exercise of --help (rc1) vs a no-match question (rc0) @2026-07-30"
+    rebaseline_note: "comp-which had ZERO rows in comp-tool-runs.jsonl before R8 (the 295x under-report: 42 rows in the md log vs 12,380 July rail routes). Rows begin accruing 2026-07-30; there is NO historical run population to re-baseline, and any pre-R8 comp-which conversion rate is unmeasurable rather than merely imprecise."
+
   comp-manifest-check:
     coverage: "changed files vs the graph-call manifest detection surface + the completeness invariant family"
     blind_spots:
@@ -323,8 +367,8 @@ contracts:
     by_subcommand:
       deployed: {plane: applied, vintage: "live s3 ls of the code/ prefix vs the local script hash (MATCH/STALE/MISSING reported in stdout, exit 0)"}
     exit_codes:
-      "1": {class: fail, meaning: "script name did not resolve / usage error (MATCH/STALE/MISSING status is reported at exit 0, NOT via a nonzero)"}
-      "2": {class: fail, meaning: "usage / argument error"}
+      "1": {class: fail, kind: usage, meaning: "script name did not resolve / usage error (MATCH/STALE/MISSING status is reported at exit 0, NOT via a nonzero)"}
+      "2": {class: fail, kind: usage, meaning: "usage / argument error"}
     exit_source: "org/modules/graph/pipeline_cli.py:250,370,418,423 (rc1 not-found/error), :227,1213 (rc2 usage); status path returns 0 at :1735 @2026-07-23"
     rebaseline_note: "comp-pipescript nonzero rows are genuine bad-script-name/usage errors (FAIL), NOT verdicts -- the STALE/MISSING VERDICT is carried in stdout text at exit 0. Declaring it keeps those rows FAIL rather than flipping them to UNKNOWN."
 

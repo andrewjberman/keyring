@@ -1382,14 +1382,104 @@ def _log_rail(decision: str, intent: str, term, q: str) -> None:
     # token then parsed as a TAG. The rail's own writer must emit rows its readers can parse.
     def _san(v, cap=120):
         return str(v if v not in (None, "") else "-").replace("\n", " ").replace("\r", " ")[:cap]
-    line = '%s  %s  tool=comp-which  intent=%s  term=%s  q="%s"\n' % (
-        ts, _san(decision, 40), _san(intent), _san(term), _san(q))
+    # R8 (NFRA_VELOCITY_ESTATE WS-E6.R8): stamp the route id + the recommended-tool COUNT on
+    # TOOL-VALUED route families only, and hand the id off so the SUBSEQUENT run can carry it.
+    # route_id/n are inserted BEFORE the terminal quoted q= so existing key=value readers and
+    # the positional `awk '{print $2}'` decision parse are both unaffected (additive).
+    rid = _route_id() if decision in _TOOL_VALUED_ROUTE_FAMILIES else ""
+    extra = ""
+    if rid:
+        n = len([c for c in str(intent).split("+") if c.strip()])
+        extra = "route_id=%s  n=%d  " % (rid, n)
+        _handoff_route(rid, n)
+    line = '%s  %s  tool=comp-which  intent=%s  term=%s  %sq="%s"\n' % (
+        ts, _san(decision, 40), _san(intent), _san(term), extra, _san(q))
     try:
         os.makedirs(os.path.dirname(RAIL_LOG), exist_ok=True)
         with open(RAIL_LOG, "a", encoding="utf-8") as f:
             f.write(line)
     except Exception:
         pass
+
+
+# ======================================================================================
+# R8 -- ROUTE->RUN CONVERSION INSTRUMENT (NFRA_VELOCITY_ESTATE WS-E6.R8)
+# ~C-gated pull-forward P4->P1; COO rulings 20260730T065315Z.
+#
+# WHY THIS EXISTS: comp-which is the single most-invoked comp surface in the estate
+# (~19,273 ROUTE-family events) and had ZERO rows in the run telemetry -- the 295x
+# under-report. Worse, the route->run join was not merely unwritten, it was IMPOSSIBLE:
+# measured 2026-07-30, 0 of 17,687 ROUTE-POSTERIOR events carried a serial (positive
+# control: 1,312 RUN-GREP rows in the SAME file do), and no run row carried a route id.
+# There was no key on EITHER side, so ANY conversion rate quoted before this landed would
+# have been FABRICATED, not merely imprecise.
+#
+# FAMILY-AWARENESS IS BINDING, NOT AN OPTIMIZATION (COO 065315Z). `intent=` is POLYMORPHIC
+# across rail families: in ROUTE-POSTERIOR it holds TOOL names ("comp-blast",
+# "comp-iam+comp-denytest+comp-firmsep-sweep"); in plain ROUTE it holds an intent CATEGORY
+# ("manifest" x702, "data freshness"). A uniform parse MIS-JOINS 1,487 rows WHILE LOOKING
+# LIKE A WORKING JOIN -- the rigorous-instrument-on-the-wrong-axis shape that survives
+# review. So only the tool-valued families below get a route_id; the rest are routes but are
+# NOT joinable, and the consumer must PRINT what it excluded rather than fold it in.
+#
+# NOFIT-POSTERIOR IS DELIBERATELY EXCLUDED and it is not an oversight: 108 honest no-matches
+# are NOT abandoned routes. Counting them as such would treat comp-which's honesty as
+# failure and understate conversion.
+# ======================================================================================
+
+# TOOL-VALUED route families -- the ONLY ones whose `intent=` is a tool list, hence the only
+# ones a route->run join may use. NOFIT-POSTERIOR is a no-match, never a route.
+_TOOL_VALUED_ROUTE_FAMILIES = ("ROUTE-POSTERIOR", "ROUTE-POSTERIOR-DISAMBIG")
+
+# Capture TTL (seconds). Deliberately GENEROUS: the run row also records the route's AGE at
+# stamp time, so a reader re-cuts the conversion window in analysis WITHOUT a re-baseline
+# (the verdict_basis discipline -- keep the residue now, it is unrecoverable later). COO
+# 065315Z: print the TTL with any rate; a conversion window that is implicit is not
+# re-derivable by anyone but its author.
+ROUTE_TTL_S = 1800
+
+_ROUTE_ID_CACHE = []
+
+
+def _route_id() -> str:
+    """One id per comp-which invocation, stable across multiple _log_rail calls in that run."""
+    if _ROUTE_ID_CACHE:
+        return _ROUTE_ID_CACHE[0]
+    try:
+        import datetime
+        import hashlib
+        stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        seed = "%s|%d|%s" % (stamp, os.getpid(), " ".join(sys.argv[1:])[:200])
+        rid = "%s-%s" % (stamp, hashlib.sha1(seed.encode("utf-8", "replace")).hexdigest()[:10])
+    except Exception:
+        rid = "unknown-route"
+    _ROUTE_ID_CACHE.append(rid)
+    return rid
+
+
+def _handoff_route(rid: str, n: int) -> None:
+    """Hand the route id to the NEXT comp-tool run via a RACE-FREE per-session file, mirroring
+    comp-to's org/mcp/sessions/<sid>.to_id mechanism. NEVER the shared .agent_context: that file
+    is one repo-global last-writer-wins surface across every concurrent agent, which is exactly
+    how TO_ID got cross-attributed before LD-0070's session-keyed fix.
+
+    No session id (a non-Claude-Code shell) -> no handoff, and the run row simply carries no
+    route_id. That is an honest absence: the alternative is attributing a route to whatever
+    agent happens to run next.
+    """
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "")
+    if not sid:
+        return
+    try:
+        import time  # local: comp-which does not import time at module scope
+        d = os.path.join(WS, "org", "mcp", "sessions")
+        os.makedirs(d, exist_ok=True)
+        with open(os.path.join(d, "%s.route" % sid), "w", encoding="utf-8") as f:
+            # id | emit epoch | N recommended tools. N is recorded so an ALL-of-N rate stays
+            # derivable without a re-baseline; COO ruled ANY-of-N CONVERTS (065315Z).
+            f.write("%s|%.3f|%d\n" % (rid, time.time(), n))
+    except Exception:
+        pass  # telemetry must never break the tool it measures
 
 
 def _run_primitive(kind: str, term: str) -> int:
@@ -2063,5 +2153,35 @@ def _route_print(hits):
     print("  (comp-which routed -- run the call yourself. No tool fit? it would have RUN comp-grep/comp-glob.)")
 
 
+def _self_report(rc: int) -> None:
+    """R8 half 2 -- comp-which SELF-REPORTS into the run telemetry, closing the 295x under-report.
+
+    comp-which was the only major comp tool that never appeared in its own estate's tool
+    telemetry: `.tools/comp-blast` calls comp_log_auto and comp-which did not, so it wrote to the
+    rail log instead and the two were never joined. Measured 2026-07-30: comp-which had 0 of
+    10,305 rows in the run sink while being the most-invoked comp surface in the estate.
+
+    SCOPE, and it is deliberate: a `--route-only` invocation reports NOTHING -- no rail row (the
+    existing guard at the top of _log_rail) and no telemetry row either. That mode is the HUD's
+    PreToolUse preview and is DOCUMENTED side-effect-free; it was silently not, once, and the fix
+    was the flag rather than a downstream strip rule. Adding telemetry to it would re-break the
+    same contract and would also refill the sink with SEARCHES AGENTS RAN rather than QUESTIONS
+    AGENTS ASKED -- the exact population error that inflated a prior defect estimate by 4 points.
+
+    Never raises: a telemetry sink must never break the tool it measures.
+    """
+    if _ROUTE_ONLY:
+        return
+    try:
+        subprocess.run(
+            [sys.executable, os.path.join(WS, "org", "modules", "graph", "comp_log_auto.py"),
+             "comp-which", " ".join(sys.argv[1:])[:200], str(rc)],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=20)
+    except Exception:
+        pass
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    _rc = main()
+    _self_report(_rc)
+    raise SystemExit(_rc)
