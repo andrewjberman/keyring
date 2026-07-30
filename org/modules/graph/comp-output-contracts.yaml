@@ -384,6 +384,22 @@ contracts:
       "1": {class: fail, meaning: "tool/input error -- DB not found, or the Cypher query failed to execute"}
     exit_source: "infra/aws/globgrph/kuzu_cli.py:66 (DB-missing), :90 (query error) -- both genuine errors, not verdicts @2026-07-23"
 
+  comp-estate:
+    coverage: "the Opal world model: C4 segments (stable canon) -> C3 systems -> chains (thread-model plane, resolver snapshot) -> live S3-key derivation (key plane, repo source); plus stable canon serving (--layers ladder doc, --definitions term registry) and the L3 census set-diff (--census-drift, tf/aws planes)"
+    blind_spots:
+      - "DEPLOYED-plane divergence invisible: key plane reads the repo working tree, never live AWS artifacts -- the bridge, comp-kuzu canonical is the destination (printed in every banner)"
+      - "thread-model layer rides the resolver whose underlying lambda census is FROZEN at 2026-06-15 -- run --census-drift for the live set-diff; the tool prints staleness, it cannot repair it"
+      - "reachability verdicts are CVO ground-truth adjudications at review time, not live probes"
+    plane: desired
+    grain: artifact
+    scope: estate
+    vintage: "banner line 1 every invocation: resolver last_review + run timestamp; --segments/--definitions print their stable-canon source + version"
+    exit_codes:
+      "1": {class: verdict, meaning: "honest miss -- e.g. --definitions term not in the registry (denominator printed); NOT a tool error"}
+      "2": {class: refuse, meaning: "fail-loud: source unresolvable (snapshot absent/corrupt/no-vintage), stable canon unreadable, or a tombstoned-name refusal"}
+      "3": {class: refuse, meaning: "--census-drift broken retrieval (taxonomy unloadable or empty live set) -- refuses to diff against nothing"}
+    exit_source: "org/modules/graph/opal_business_estates.py _fail_loud + cmd_definitions + cmd_census_drift -- DECLARED BY EXERCISE 2026-07-30 (every mode run this session: news/list/resource/tool/debt/fe/validate/gate-b/segments/layers/definitions/census-drift/drift/self-test), per the declare-by-exercise law (a guessed contract renders confident wrong verdicts silently forever)"
+
 # ---------------------------------------------------------------------------------------------------
 # pending_declaration: enumerated tools_index tools with NO output contract YET. The completeness gate
 # REQUIRES each to be here (or in contracts:) -- so the undeclared tail is VISIBLE and bounded, never

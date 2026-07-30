@@ -2,7 +2,7 @@
 
 **Commissioned:** Andrew-direct 2026-07-30 (tool-walk #1 deep pass): *"this seems like the Opal World
 Model tool… the number 1 tool agents use for coherence, therefore this is critical to get perfect on
-every detail."* **Tool:** `comp-semantic-estates`. **Author:** `3.0.0_SA_CVO`. **This document is the
+every detail."* **Tool:** `comp-estate`. **Author:** `3.0.0_SA_CVO`. **This document is the
 process of record for the world model's definition, granularity, refresh, and evolution.** The
 tool's registry entry (`comp-tools.yaml`) and the resolver's `generated_from` point here.
 
@@ -28,7 +28,7 @@ live grep — a grep is scaffolding-fooled), `debtscan_flags`.
 ```
   DEFINITION / BUILD PLANE                              QUERY PLANE
   ────────────────────────                              ───────────
-  ESTATE (AWS + TF + repo + portal)                     agent: comp-semantic-estates <name>
+  ESTATE (AWS + TF + repo + portal)                     agent: comp-estate <name>
      │  census passes (pass1_inventory,                        │
      │  pass2_gapfamilies) — enumeration                       ▼
      ▼                                                  resolver JSON (the one read-source)
@@ -64,7 +64,7 @@ live grep — a grep is scaffolding-fooled), `debtscan_flags`.
   invisible to TF — their own debt class) · **42 live functions not in the census at all** (incl.
   whole new business functions: the ETFS reports family, find-insure-serving-*, opal-ticket-api,
   the value-parity QA family, astn-wsjft). ~⅓ of the live estate unmodeled or misrepresented after
-  45 days. **Therefore: `comp-semantic-estates --census-drift` is the standing instrument** — a
+  45 days. **Therefore: `comp-estate --census-drift` is the standing instrument** — a
   SET diff (never a count) against TF (default, DESIRED) and `--census-drift --plane aws`
   (APPLIED). Run it at review time and after any infra wave; a nonzero residue is a worklist, not
   an error.

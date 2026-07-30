@@ -346,7 +346,7 @@ terminology_law:
     LOCKED-but-unbuilt estate WHERE-axis design (ESTATE_AXIS_AND_SEAM_GRAIN_DESIGN.md: do not
     consume as live vocab until built). NEVER a segment, system, or layer name. The historical
     "C1 estate" tier shorthand was formally corrected (01_substrate.md). "Semantic estates"
-    (plural, qualified -- the comp-semantic-estates tool name, Andrew-chosen) refers to the
+    (plural, qualified -- the comp-estate tool name, Andrew-chosen) refers to the
     business-thread traversal domain and is the ONLY sanctioned qualified use; never shorten
     it to bare "estate(s)".
   substrates: >

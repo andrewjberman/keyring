@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+"""comp-estate -- thin PATH wrapper for the OPAL BUSINESS-SEMANTIC estate traversal.
+
+Engine: org/modules/graph/opal_business_estates.py
+
+  comp-estate <name>          traverse one named business thread
+  comp-estate --list          the thread names
+  comp-estate --resource S    find a key across the estate
+  comp-estate --drift         snapshot keys with NO live producer (the zombie report)
+  comp-estate --refresh       regenerate the naming snapshot, then proceed
+  comp-estate --self-test     control battery
+
+REPLACES the bare-named `pipescript`, which is DEPRECATED (Andrew-direct 2026-07-29: "we are
+deprecating base pipescript. there is comp-pipescript only for future reference"). `comp-pipescript`
+is a DIFFERENT tool answering a different question (per-script pipeline dependencies).
+
+THE REVAMP, not a rename: the predecessor answered out of a snapshot whose S3 keys were FROZEN AT
+GENERATION and served as fact -- it named a pre-revamp mdpf key as "LIVE fresh" while the real serve
+had moved, and listed a retired producer as live. This engine uses the snapshot for THREAD NAMES
+ONLY and re-derives every KEY from producer source at call time, then DIFFS the two: a snapshot key
+with no live producer prints STALE-IN-SNAPSHOT instead of being served as a live claim.
+
+  A STALE ESTATE MAP DOES NOT FAIL QUIETLY -- IT ACTIVELY DEFENDS ZOMBIES.
+
+Header contract: substrate + vintage on line 1 of every run; an unnameable substrate prints an
+explicit SOURCE UNRESOLVABLE and exits 2, never silence. --refresh is the BRIDGE (newer snapshot),
+comp-kuzu canonical is the DESTINATION.
+
+Read-only. --refresh writes exactly one file: the snapshot it regenerates.
+"""
+import os
+import runpy
+import sys
+
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_WS = os.path.dirname(_HERE)
+_ENGINE = os.path.join(_WS, "org", "modules", "graph", "opal_business_estates.py")
+
+if not os.path.isfile(_ENGINE):
+    sys.stderr.write(
+        "comp-estate: SOURCE UNRESOLVABLE -- engine missing: %s\n"
+        "  rc=2. A tool that cannot name its source must not report on it.\n" % _ENGINE
+    )
+    sys.exit(2)
+
+sys.argv[0] = "comp-estate"
+_rc = 0
+try:
+    runpy.run_path(_ENGINE, run_name="__main__")
+except SystemExit as e:
+    _rc = e.code if isinstance(e.code, int) else 0
+
+try:
+    sys.argv = ["comp_log_auto.py", "comp-estate", " ".join(sys.argv[1:]), str(_rc)]
+    runpy.run_path(
+        os.path.join(_WS, "org", "modules", "graph", "comp_log_auto.py"), run_name="__main__"
+    )
+except Exception:
+    pass  # auto-log is best-effort telemetry; it must never change the tool's verdict
+
+sys.exit(_rc)
