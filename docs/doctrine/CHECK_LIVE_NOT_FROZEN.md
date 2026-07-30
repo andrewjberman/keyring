@@ -41,6 +41,16 @@ to date, review and keep honest. Field-level design:
 (the "Route B / Ontology error"): the Andrew-ruled daily semantic-evolution pipeline, spec owned by
 `1.0.0_SA_CTO`, record `org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_RULING_SEMANTIC_EVOLUTION_PIPELINE_20260730.md`.
 
+**SCOPE OF THE RULE -- read this before applying it, it is narrower than it sounds.** *Dependence* is
+the operative verb. The rule forbids a frozen artifact being **depended on** -- computed from, resolved
+through, served out of. It does NOT forbid frozen artifacts existing, nor copies, nor archives, nor
+evidence snapshots (this program's own pre-delete archives and session decks are frozen BY DESIGN and
+correctly so). The discriminating question is never *"is it frozen?"* but ***"does anything DERIVE
+STATE from it?"*** A mirror that declares its vintage and is only READ is legal; the same mirror
+becomes illegal the moment a tool resolves through it. (Refinement contributed by `3.0.0_SA_CVO`,
+2026-07-30, adjudicating a fabric-visibility mirror against this rule the hour it landed -- the
+correct test, and it keeps the rule from collapsing into "never write anything down.")
+
 **GATE CANDIDATE (named, NOT yet built -- do not read this as enforced):** a commit/registration-time
 lint denying any comp-tool read path whose source resolves a DATE-PINNED literal directory
 (`logs/YYYY-MM-DD/`, `*-20YYMMDD/`) or any artifact on the declared frozen list
