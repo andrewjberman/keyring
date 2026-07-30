@@ -15,6 +15,25 @@ set -uo pipefail
 # has not been shown it CAN fail. (CLAUDE.md: "a census never observed to say RED has not been shown
 # to be able to." Run it as: NRG_HOOK=/tmp/old-hook.sh bash tests/test_never_rules_gate.sh)
 HOOK="${NRG_HOOK:-$(cd "$(dirname "$0")/.." && pwd)/never-rules-gate.sh}"
+
+# JQ resolution LADDER (Andrew finish-out 2026-07-30, MSTR): the suite built its JSON
+# payloads with `${JQ:-jq}` and NEVER RESOLVED JQ -- in a profile-less harness shell
+# (no PATH jq, the measured norm on this box) the encode failed, the hook received
+# EMPTY stdin, exited 0 by design, and EVERY DENY ARM RENDERED "PASS (want DENY)":
+# 32 PASS / 35 FAIL with the failures tracking the ENVIRONMENT, not the gate. A
+# suite whose encoder can silently die reports the encoder's health, not the
+# subject's. Same ladder as the gate itself (tests/ -> ../../jq.exe = .tools/jq.exe).
+if [ -z "${JQ:-}" ]; then
+    _TD="$(cd "$(dirname "$0")" 2>/dev/null && pwd)" || _TD="."
+    if [ -x "${_TD}/../../jq.exe" ]; then JQ="${_TD}/../../jq.exe"
+    elif command -v jq >/dev/null 2>&1; then JQ="jq"
+    else
+        echo "FATAL: no jq resolvable (tests/../../jq.exe absent, none on PATH) -- the suite" >&2
+        echo "cannot encode payloads and every verdict would be meaningless. Refusing to run." >&2
+        exit 2
+    fi
+fi
+export JQ
 PASS=0; FAIL=0
 
 # *** RV-0048 F-020: THIS SUITE USED TO POISON THE EVIDENCE BASE IT IS AUDITED BY. ***

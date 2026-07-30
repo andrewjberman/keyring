@@ -14,7 +14,19 @@
 
 set -euo pipefail
 
-HOOK_INPUT="$(cat)"
+# BOUNDED stdin read (Andrew-direct 2026-07-30, MSTR low-level audit): a bare
+# $(cat) on a hook stdin that never closes blocks FOREVER -- measured: a 3-process
+# chain of this script (PIDs 850873/93/94) hung from Jul 25 to Jul 30 on the
+# laptop. timeout(1) is a Git Bash default-install utility (Rule 16-safe: not in
+# the MISSING list); 10s is >> any real hook payload delivery. On expiry the
+# partial payload proceeds -- a truncated payload fails the jq parse and the hook
+# exits empty, which the starvation counter records; a hung process records
+# nothing and lives for days.
+if command -v timeout >/dev/null 2>&1; then
+  HOOK_INPUT="$(timeout 10 cat 2>/dev/null || true)"
+else
+  HOOK_INPUT="$(cat)"
+fi
 
 # Resolve jq ROBUSTLY. Claude Code's PostToolUse hook shell does NOT load the user
 # profile, so workspace .tools/ is NOT on PATH. The OLD resolution depended on

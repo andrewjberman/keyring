@@ -200,19 +200,18 @@ if ! echo "${JSONL_LINE}" >> "${JSONL_PATH}"; then
     echo "$(date -u +%FT%TZ) JSONL_WRITE_FAIL ${AGENT} ${TOOL_NAME}" >> "${ROOT}/org/mcp/hook_errors.log"
 fi
 
-# ASYNC: broker hot-path (latency-sensitive; backgrounded). FLAGGED, deliberately
-# NOT cut in the consolidation: this is one python launch per tool call and the
-# single largest remaining per-call spawn; replacing it needs a design decision
-# (long-lived recorder / batching), not a cleanup edit. See the 2026-07-30 audit.
-{ python3 "${ROOT}/.tools/hooks/broker-record-tool-call.py" \
-    --serial "${AGENT}" \
-    --kind "${KIND}" \
-    --tool-name "${TOOL_NAME}" \
-    --ts-unix "${TS_UNIX}" \
-    ${BG_EVENT:+--bg-event "${BG_EVENT}" --bg-task-id "${BG_TASK_ID}"} \
-    ${BG_EXIT_CODE:+--bg-exit-code "${BG_EXIT_CODE}"} \
-    2>/dev/null & } &> /dev/null
-disown 2>/dev/null || true
+# ASYNC broker hot-path: REMOVED (Andrew finish-out 2026-07-30). The consolidation
+# initially carried it forward flagged-not-cut -- then measurement showed it was
+# DEAD MACHINERY TWICE OVER: .tools/hooks/broker-record-tool-call.py exists in NO
+# commit in the repo's entire history (git log --all: zero hits), and broker.py
+# exposes NO matching endpoint (/register /heartbeat /set-summary /list-agents
+# /send-message /poll-messages /unregister only). So every tool call in every
+# session launched python3 into a file-not-found failure, backgrounded with
+# stderr discarded -- a per-call interpreter spawn that could never have worked,
+# invisible precisely because it was silenced. Nothing consumed the path: the
+# stimulus-scan cost signal reads the JSONL files above, which remain the durable
+# record. If a broker hot-path is ever actually wanted, it needs the endpoint
+# FIRST and a long-lived recorder, not a per-call interpreter.
 
 # ============================================================================
 # JOB 2 of 2 -- ACTIVE-COMMITMENT DETECTION (was post-send-commitment.sh)
