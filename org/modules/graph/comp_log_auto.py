@@ -352,6 +352,21 @@ def _append_log(workspace: Path, tool: str, args: str, exit_code: int,
         # so a reader cannot mistake "not a fail" for "kind unknown". Keeping these optional is
         # also what leaves the WS-E6/R8 route-id path open: a later field needs no schema
         # migration and no telemetry re-baseline.
+        # E4.3 ELEMENT 1 (COO GO 20260730T072044Z): stamp the VERDICT BASIS at WRITE time.
+        # Not optional and not conditional -- every row from here on is permanently
+        # self-describing, so no future contract change can ever require re-baselining it. Rows
+        # written BEFORE this landed carry no basis; that is the honest seam, and E4.1.3's
+        # dual-basis machinery is what covers them. `derived_basis_id()` is drawn from
+        # comp_output_contract so the appender and the re-baseline cannot diverge (one function).
+        # Degrades to a LOUD sentinel rather than omitting the field: a row with no basis at all
+        # would be indistinguishable from a pre-E4.3 row, which is the ambiguity this closes.
+        if _OC_OK and _oc is not None:
+            try:
+                rec["verdict_basis"] = _oc.derived_basis_id()
+            except Exception:
+                rec["verdict_basis"] = "UNKNOWN-basis-unavailable"
+        else:
+            rec["verdict_basis"] = "UNKNOWN-basis-unavailable"
         if fail_kind is not None:
             rec["fail_kind"] = fail_kind
         if synthetic:

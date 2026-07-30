@@ -26,6 +26,7 @@ import json
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
+from typing import Optional
 
 _WS = Path(__file__).resolve().parents[3]
 if str(_WS) not in sys.path:
@@ -197,24 +198,73 @@ FAIL_PREDICATE = ("result token == 'FAIL' exactly, after stripping a "
 
 
 def _contract_surface_id() -> str:
-    """Identity of the contract surface a derived verdict came from: declared version +
-    content hash. The hash is load-bearing -- a hand edit that does not bump `version:`
-    still changes the derivation, and a basis id that missed that would be a lie."""
-    import hashlib
-    p = Path(__file__).resolve().parent / "comp-output-contracts.yaml"
-    if not p.exists():
-        return "UNKNOWN-no-contract-surface"
-    raw = p.read_bytes()
-    ver = "?"
-    for line in raw.decode("utf-8", "replace").splitlines():
-        if line.startswith("version:"):
-            ver = line.split(":", 1)[1].strip()
-            break
-    return "v%s+%s" % (ver, hashlib.sha256(raw).hexdigest()[:16])
+    """DELEGATES to comp_output_contract (E4.3 element 1, 2026-07-30).
+
+    This used to be a second implementation. It is now a thin forwarder, on purpose: the appender
+    stamps the basis at write time and this module labels the re-derived series, and if those two
+    ever computed the identity differently the whole discriminator would be worthless. One
+    implementation, N consumers -- the same rule the contract helper's own docstring states, and the
+    defect its supersession history records four generations of.
+    """
+    return oc.contract_surface_id()
 
 
 def derived_basis_id() -> str:
-    return "derived@" + _contract_surface_id()
+    return oc.derived_basis_id()
+
+
+# ======================================================================================
+# E4.3 ELEMENTS 2 + 4 + 5 -- SPAN AS A PRECONDITION, AND THE DEVICE SCOPE AS A FIELD
+# (COO rulings 20260730T072044Z)
+#
+# ELEMENT 4, RULED: "a series must assert its own span against the window it claims, and
+# REFUSE to emit a claim over a window longer than the corpus it has. Refuse loudly; never
+# silently narrow." A trend over 90 days computed from 40 days of retained rows is not a
+# degraded trend -- it is A DIFFERENT NUMBER WEARING THE LABEL. And it is a live risk, not a
+# hypothetical: no rotation logic exists today, but .gitignore:448 anticipates it
+# (`comp-tool-runs.jsonl.*`), so a long window dies SILENTLY if rotation lands mid-window.
+#
+# ELEMENT 5, RULED: PER-DEVICE, with the device scope printed on every series. A rollup is
+# BLOCKED, NOT DEFERRED -- the rc-bearing sink is gitignored and device-local, so there is no
+# durable cross-device record to roll up FROM, and emitting one today would FABRICATE
+# COVERAGE. That is the same class as quoting a conversion rate before R8 existed. A genuine
+# rollup needs a durable cross-device sink, which is a NAMED DEPENDENCY and not E4.3's to
+# invent.
+# ======================================================================================
+
+DEVICE_SCOPE = ("PER-DEVICE -- org/mcp/comp-tool-runs.jsonl is gitignored (.gitignore:447), so this "
+                "series covers THIS DEVICE ONLY and is silently short by every other device's "
+                "traffic. It is NOT 'the estate's comp-tool runs'. A cross-device rollup is BLOCKED "
+                "(no durable cross-device sink exists to roll up from); that sink is a named "
+                "dependency, not a deferred task.")
+
+
+class TrendWindowUnsupported(Exception):
+    """The corpus cannot support the window a claim asks for. A LOUD refusal, never a narrowing.
+
+    Raised rather than returned so a caller cannot accidentally treat a short answer as the
+    answer it asked for. Carries the numbers so the refusal is actionable, not merely a denial.
+    """
+
+
+def assert_window_supported(months_claimed: int, profile: Optional[dict] = None) -> dict:
+    """PRECONDITION for any multi-month trend claim (element 2 + 4).
+
+    Promotes corpus span from a disclosure line to a gate. Returns the profile on success so the
+    caller cannot use it without having passed the check; RAISES TrendWindowUnsupported otherwise.
+    """
+    prof = profile if profile is not None else corpus_profile()
+    have = len(prof.get("months_present") or {})
+    if months_claimed > have:
+        raise TrendWindowUnsupported(
+            "REFUSED: a %d-month trend was requested but the corpus holds %d month(s) "
+            "(rows=%s, span=%s days, %s -> %s). A trend over a window longer than its corpus is "
+            "not a degraded trend, it is a different number wearing the label. Rebuild forward; "
+            "the historical window is NOT recoverable (the pre-2026-07-14 corpus carries no rc "
+            "column and cannot be re-verdicted). %s"
+            % (months_claimed, have, prof.get("rows"), prof.get("span_days"),
+               prof.get("earliest"), prof.get("latest"), DEVICE_SCOPE))
+    return prof
 
 
 def _fail_token(result_raw) -> tuple:
@@ -375,6 +425,7 @@ def series(basis: str, group_by: str = "month") -> dict:
 
     return {
         "basis": basis,
+        "device_scope": DEVICE_SCOPE,   # element 5: a FIELD, not a caveat a reader may drop
         "fail_predicate": FAIL_PREDICATE,
         "excluded_synthetic_rows": excluded_synthetic,
         "by_" + group_by: {g: _rate(c) for g, c in sorted(per.items())},

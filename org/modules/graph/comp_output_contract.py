@@ -307,6 +307,52 @@ def fail_kind_coverage() -> dict:
                      "defaulted into negative_control / usage_error / finding")}
 
 
+# ----------------------------------------------------------------------------------------------------
+# E4.3 ELEMENT 1 -- THE VERDICT BASIS, STAMPED AT WRITE TIME
+# (NFRA_VELOCITY_ESTATE WS-E4.3, COO GO 20260730T072044Z)
+#
+# Lives HERE, not in the re-baseline module, because BOTH consumers must draw the basis identity
+# from ONE implementation: the appender (stamping it on every new row) and comp_msbeff_rebaseline
+# (labelling the re-derived series). Two implementations of a denominator's own identity is the
+# exact defect this file's supersession history records four generations of -- see the yaml header.
+#
+# WHY AT WRITE TIME AND NOT AT RE-BASELINE TIME: a row that records only `result` forces its basis
+# to be INFERRED later, and that inference only works while the contract surface has not moved. It
+# will move -- 50 of 70 registered tools are still undeclared. Every row written without a basis is
+# a row that will need re-baselining, and a re-baselined series cannot separate "the verdict logic
+# changed" from "the estate changed". Stamping at write time makes each row permanently
+# self-describing, so no future contract change can ever require re-baselining it.
+#
+# COST, MEASURED not estimated: 0.104 ms per call (read + sha256 of a ~33KB yaml), ~66 ms/day
+# fabric-wide at 606 rows/day. comp_log_auto runs one process per tool call, so the lru_cache below
+# gives one hash per process rather than per row. This is not a performance question.
+# ----------------------------------------------------------------------------------------------------
+
+@functools.lru_cache(maxsize=1)
+def contract_surface_id() -> str:
+    """Identity of the contract surface a derived verdict came from: declared version + content hash.
+
+    The HASH IS LOAD-BEARING and must never be dropped for brevity: a hand edit that does not bump
+    `version:` still changes every derived verdict, so a version-only id is a lie with a version
+    number on it. (A test fails RED if the hash half goes away.)
+    """
+    import hashlib
+    if not _CONTRACTS.exists():
+        return "UNKNOWN-no-contract-surface"
+    raw = _CONTRACTS.read_bytes()
+    ver = "?"
+    for line in raw.decode("utf-8", "replace").splitlines():
+        if line.startswith("version:"):
+            ver = line.split(":", 1)[1].strip()
+            break
+    return "v%s+%s" % (ver, hashlib.sha256(raw).hexdigest()[:16])
+
+
+def derived_basis_id() -> str:
+    """The basis label for a verdict derived under the CURRENT contract surface."""
+    return "derived@" + contract_surface_id()
+
+
 def verdict_exit_map() -> tuple:
     """Back-compat derivation for any consumer that wants the old shapes, DERIVED not frozen:
       (verdict_tools: frozenset,  refuse_exits: frozenset[(tool, rc)])
