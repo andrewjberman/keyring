@@ -103,6 +103,68 @@ def _a(s):
     return s.translate(_NONASCII).encode("ascii", "replace").decode("ascii")
 
 
+# ---------------------------------------------------------------------------
+# Verdict-preserving --head truncation (Andrew-ratified design 2026-07-30).
+# Modes DECLARE structure -- no heuristics: body(line) = enumerable rows
+# (truncatable); footer(line) = verdict/denominator lines (ALWAYS printed);
+# plain print() = raw headers/banners (never counted, never cut). Under
+# --head N the first N body lines print, the remainder are COUNTED, then a
+# self-declaring marker (stdout + ONE stderr copy -- the stderr copy survives
+# a further unix-head pipe cut), then every footer. Body-only modes call
+# close_pager() so the marker still lands. Without --head: pure pass-through,
+# zero behavior change (byte-identical outputs, regression-checked at build).
+# --json rule (contract): structured output is NEVER truncated mid-object --
+# a future --json mode leaves the pager unarmed and prints one stderr note.
+# Shared by this module's legacy modes AND opal_estate_infrastructure's
+# native modes (one pager, one set of counters per process).
+# ---------------------------------------------------------------------------
+_HEAD = None
+_BODY_TOTAL = 0
+_BODY_SHOWN = 0
+_MARKER_EMITTED = False
+
+
+def set_head(n):
+    """Arm body truncation at n lines (None disarms). Resets counters."""
+    global _HEAD, _BODY_TOTAL, _BODY_SHOWN, _MARKER_EMITTED
+    _HEAD = n
+    _BODY_TOTAL = 0
+    _BODY_SHOWN = 0
+    _MARKER_EMITTED = False
+
+
+def head_armed():
+    return _HEAD is not None
+
+
+def body(line=""):
+    global _BODY_TOTAL, _BODY_SHOWN
+    _BODY_TOTAL += 1
+    if _HEAD is None or _BODY_SHOWN < _HEAD:
+        _BODY_SHOWN += 1
+        print(line)
+
+
+def _marker(tail):
+    global _MARKER_EMITTED
+    if _HEAD is not None and not _MARKER_EMITTED and _BODY_TOTAL > _BODY_SHOWN:
+        line = "[TRUNCATED --head: showing %d of %d body lines; %s]" % (
+            _BODY_SHOWN, _BODY_TOTAL, tail)
+        print(line)
+        sys.stderr.write(line + "\n")
+        _MARKER_EMITTED = True
+
+
+def footer(line=""):
+    _marker("verdict/denominator follow")
+    print(line)
+
+
+def close_pager():
+    """End-of-mode hook for body-only modes (no footer): the marker still lands."""
+    _marker("end of output")
+
+
 def load():
     try:
         with open(RESOLVER, encoding="utf-8") as f:
@@ -141,12 +203,12 @@ def cmd_list(data):
         ts = by_name[name]
         sc = Counter(t["status"] for t in ts)
         tools = ",".join(sorted({t["owning_tool"] for t in ts}))
-        print(
+        body(
             f"{name:<20} {len(ts):>7}  {sc.get('in-scope', 0):>8} {sc.get('explicit-out', 0):>4} "
             f"{sc.get('unreviewed', 0):>5}  {tools}"
         )
-    print("-" * 78)
-    print(f"{'TOTAL':<20} {len(threads):>7}")
+    footer("-" * 78)
+    footer(f"{'TOTAL':<20} {len(threads):>7}")
 
 
 def _drill_call(tool, threads):
@@ -189,23 +251,23 @@ def cmd_thread(data, name):
     )
     print("=" * 78)
     for t in threads:
-        print(f"\n[{status_tag(t['status'])} | {t['owning_tool']}] {_a(t['thread_id'])}")
+        body(f"\n[{status_tag(t['status'])} | {t['owning_tool']}] {_a(t['thread_id'])}")
         # P3.1: surface DEBTSCAN flags inline with their meaning, not a silent code
         fl = t.get("debtscan_flags") or []
         if fl:
-            print(f"  DEBT: {', '.join(fl)}  ({'; '.join(_FLAG_MEANING.get(f, '?') for f in fl)})")
+            body(f"  DEBT: {', '.join(fl)}  ({'; '.join(_FLAG_MEANING.get(f, '?') for f in fl)})")
         if t.get("description"):
-            print(f"  what: {_a(t['description'])}")
+            body(f"  what: {_a(t['description'])}")
         for i, p in enumerate(t.get("producers") or ["(none recorded)"]):
-            print(f"  {'producers:' if i == 0 else '          '} {_a(p)}")
+            body(f"  {'producers:' if i == 0 else '          '} {_a(p)}")
         for i, s in enumerate(t.get("served_artifacts") or ["(no data artifact)"]):
-            print(f"    {'-> served:' if i == 0 else '          '} {_a(s)}")
+            body(f"    {'-> served:' if i == 0 else '          '} {_a(s)}")
         fe = _a(t.get("frontend_resolution") or "(none)")
-        print(f"    -> frontend: {fe}")
+        body(f"    -> frontend: {fe}")
         # P3.2: surface CVO's authoritative reachability when authored (never assert from grep)
         _st, _auth = _fe_status(t)
         if _auth:
-            print(f"    -> reachable: {_st} [CVO ground-truth]")
+            body(f"    -> reachable: {_st} [CVO ground-truth]")
     print("\n" + "-" * 78)
     print("owning tools in this thread (drill in for live detail -- comp-estate stays read-only):")
     for tool, n in tc.most_common():
@@ -219,8 +281,8 @@ def cmd_thread(data, name):
         print("\n" + "-" * 78)
         print(f"resources ({len(resources)}) - every lambda/EC2/StepFn in '{name}':")
         for r in resources:
-            print(f"  {_a(r)}")
-    print("\nrun `comp-estate --tool <name> <tool>` to assert a tool owns it (LOUD OUT-OF-SCOPE if not).")
+            body(f"  {_a(r)}")
+    footer("\nrun `comp-estate --tool <name> <tool>` to assert a tool owns it (LOUD OUT-OF-SCOPE if not).")
 
 
 def cmd_resource(data, needle):
@@ -243,7 +305,8 @@ def cmd_resource(data, needle):
         sys.exit(2)
     print(f"comp-estate --resource '{needle}' -> {len(hits)} thread(s):")
     for t in hits:
-        print(f"  {t['named_thread']:<18} / {t['thread_id']:<32} [{t['status']} | {t['owning_tool']}]")
+        body(f"  {t['named_thread']:<18} / {t['thread_id']:<32} [{t['status']} | {t['owning_tool']}]")
+    close_pager()
 
 
 def cmd_tool(data, name, tool):
@@ -274,7 +337,8 @@ def cmd_tool(data, name, tool):
         sys.exit(2)
     print(f"{tool} owns {len(owned)}/{len(threads)} threads in '{name}':")
     for t in owned:
-        print(f"  {t['thread_id']} [{t['status']}]")
+        body(f"  {t['thread_id']} [{t['status']}]")
+    close_pager()
 
 
 def cmd_validate(data):
@@ -382,26 +446,26 @@ def cmd_fe_reachability(data, name=None, orphans_only=False):
     for s in order:
         for nt, tid, st, auth, adv in rows:
             if st == s:
-                print(f"  [{s:<17}] ({'CVO' if auth else 'cli'}) {nt}/{tid}")
+                body(f"  [{s:<17}] ({'CVO' if auth else 'cli'}) {nt}/{tid}")
                 if not auth and s in ("phantom", "frontend-orphan*", "unreviewed"):
-                    print(f"        grep: {adv}")
-    print("-" * 78)
-    print("SUMMARY: " + " | ".join(f"{k} {summ.get(k, 0)}" for k in order if summ.get(k)))
+                    body(f"        grep: {adv}")
+    footer("-" * 78)
+    footer("SUMMARY: " + " | ".join(f"{k} {summ.get(k, 0)}" for k in order if summ.get(k)))
     unrev = summ.get("unreviewed", 0)
     prov = summ.get("frontend-orphan*", 0)
     if unrev:
-        print(
+        footer(
             f"UNREVIEWED ({unrev}) -- CVO ground-truth not-yet-determined; needs comp-routes/"
             "comp-transform mount-verify. LOUD, never silently reachable."
         )
     if prov:
-        print(f"PROVISIONAL ({prov}) -- no CVO field yet; CVO confirms (0 once fully authored).")
+        footer(f"PROVISIONAL ({prov}) -- no CVO field yet; CVO confirms (0 once fully authored).")
     if summ.get("mounted-reachable"):
-        print(
+        footer(
             "Caveat: 'mounted-reachable' = NAMED-live-consumer (census lambda->S3->named .tsx), NOT strict "
             "mounted-UI-rendered; comp-routes/comp-transform mount-verify is the next rigor level (follow-on)."
         )
-    print(
+    footer(
         "Note: reachability is CVO's authoritative reachability_status field; the portal/src grep "
         "is a demoted supplementary hint (it is fooled by scaffolding -- see the time-machine phantoms)."
     )
@@ -426,15 +490,15 @@ def cmd_debt(data):
     for nt, tid, fl in flagged:
         by_nt[nt].append((tid, fl))
     for nt in sorted(by_nt):
-        print(f"\n{nt}:")
+        body(f"\n{nt}:")
         for tid, fl in by_nt[nt]:
-            print(f"  {tid:<42} {', '.join(fl)}")
+            body(f"  {tid:<42} {', '.join(fl)}")
     seen = sorted({f for _, _, fl in flagged for f in fl})
     if seen:
-        print("\n" + "-" * 78)
+        footer("\n" + "-" * 78)
         for f in seen:
-            print(f"  {f:<22} {_FLAG_MEANING.get(f, '?')}")
-    print(
+            footer(f"  {f:<22} {_FLAG_MEANING.get(f, '?')}")
+    footer(
         "\nNote: these are the resolver's census-static flags; the live DEBTSCAN ledger "
         "(org/modules/graph/debtscan/) is the authoritative live-flag source."
     )
@@ -502,23 +566,23 @@ def cmd_gate_b(data, fixtures_path=None):
             line += f" | MISSING {sorted(missing)}"
         if extra:
             line += f" | EXTRA {sorted(extra)}"
-        print(line)
+        body(line)
 
     assign = defaultdict(list)
     for nt, rs in rbnt.items():
         for r in rs:
             assign[r].append(nt)
     doubles = {r: nts for r, nts in assign.items() if len(nts) > 1}
-    print("-" * 78)
-    print(f"GATE-B: {len(fixtures) - gb_fail}/{len(fixtures)} named threads resource-complete (no missing/extra)")
-    print(
+    footer("-" * 78)
+    footer(f"GATE-B: {len(fixtures) - gb_fail}/{len(fixtures)} named threads resource-complete (no missing/extra)")
+    footer(
         f"GATE-C: {len(assign)} live resources mapped; "
         f"{len(doubles)} double-claimed"
         + (f" {dict(list(doubles.items())[:3])}" if doubles else "")
         + "  (orphan-vs-live-AWS = CVO's authoritative gate-c)"
     )
     clean = gb_fail == 0 and not doubles
-    print("RESULT:", "PASS" if clean else "FAIL")
+    footer("RESULT: " + ("PASS" if clean else "FAIL"))
     sys.exit(0 if clean else 2)
 
 

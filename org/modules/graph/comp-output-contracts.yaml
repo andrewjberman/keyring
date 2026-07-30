@@ -384,8 +384,20 @@ contracts:
       "1": {class: fail, meaning: "tool/input error -- DB not found, or the Cypher query failed to execute"}
     exit_source: "infra/aws/globgrph/kuzu_cli.py:66 (DB-missing), :90 (query error) -- both genuine errors, not verdicts @2026-07-23"
 
+  # ---- TRUNCATION CONVENTION (tool-wide; comp-estate = reference implementation, Andrew-ratified
+  # 2026-07-30) ---- The --head N contract: modes DECLARE structure (body rows vs verdict/denominator
+  # footer -- no heuristics); under --head the first N body lines print, then the self-declaring
+  # marker `[TRUNCATED --head: showing N of M body lines; verdict/denominator follow|end of output]`
+  # (stdout + ONE stderr copy, pipe-survivable), then the footer ALWAYS prints. Rationale: naive
+  # unix-head truncation is verdict-destroying and silent -- every comp-estate mode prints its
+  # verdict LAST, so `| head` removes exactly the lines that prevent a truncated worldview being
+  # mistaken for the whole one. Rules: default bare --head = 50; --json output is NEVER truncated
+  # mid-object (a future --json mode leaves the pager unarmed + one stderr note); unarmed = pure
+  # pass-through (byte-identical, regression-checked over 10 modes at build). Rollout: other
+  # comp-tools adopt AS TOUCHED (no fleet retrofit sweep); pager helpers live in
+  # estate_infrastructure_cli.py (set_head/body/footer/close_pager).
   comp-estate:
-    coverage: "the Opal world model: C4 segments (stable canon) -> C3 systems -> chains (thread-model plane, resolver snapshot) -> live S3-key derivation (key plane, repo source); plus stable canon serving (--layers ladder doc, --definitions term registry) and the L3 census set-diff (--census-drift, tf/aws planes)"
+    coverage: "the Opal world model: C4 segments (stable canon) -> C3 systems -> chains (thread-model plane, resolver snapshot) -> live S3-key derivation (key plane, repo source); plus stable canon serving (--layers ladder doc, --definitions term registry) and the L3 census set-diff (--census-drift, tf/aws planes). --head N = verdict-preserving truncation per the convention block above (marker + footer always; unarmed = byte-identical)"
     blind_spots:
       - "DEPLOYED-plane divergence invisible: key plane reads the repo working tree, never live AWS artifacts -- the bridge, comp-kuzu canonical is the destination (printed in every banner)"
       - "thread-model layer rides the resolver whose underlying lambda census is FROZEN at 2026-06-15 -- run --census-drift for the live set-diff; the tool prints staleness, it cannot repair it"
