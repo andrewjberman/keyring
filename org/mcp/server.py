@@ -60,7 +60,12 @@ from git_bash_resolver import git_bash  # noqa: E402  NEVER bare 'bash' (python-
 CQ_HB_STALE_SEC = 30
 BROKER_PORT = int(os.environ.get("OPAL_BROKER_PORT", "7800"))
 BROKER_URL = f"http://127.0.0.1:{BROKER_PORT}"
-POLL_INTERVAL_S = 2.0  # seconds between broker polls
+# 2.0 -> 10.0 (Andrew cleanup 2026-07-30, MSTR low-level audit): at 2s x 7 sessions this
+# poll was ~97% of broker request volume once agent-poller went to 15s, and the broker had
+# burned 64,228 CPU-s in 5 days (~15% of a core) serving it. Worst-case added message
+# latency is bounded by the 5s inbox watcher anyway; channel push is unaffected.
+# DEPLOYED-NOT-RUNNING: a live session keeps its loaded constant until restart.
+POLL_INTERVAL_S = 10.0  # seconds between broker polls
 
 # tier0_exec holds ONLY the Tier-0 agent (0.0.0_AB_MSTR), so the broker can
 # resolve / register / message it. It is deliberately SEPARATE from org/tier0/

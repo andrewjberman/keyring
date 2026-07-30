@@ -119,16 +119,6 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Bash|PowerShell",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/block-bare-inbox-watch.sh\"",
-            "timeout": 5
-          }
-        ]
-      },
-      {
         "matcher": "Bash|Grep|Glob",
         "hooks": [
           {
@@ -169,13 +159,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/post-tool-telemetry.sh\" || true",
-            "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/post-send-commitment.sh\" || true",
-            "timeout": 10
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/post-tool-hooks.sh\" || true",
+            "timeout": 15
           }
         ]
       }

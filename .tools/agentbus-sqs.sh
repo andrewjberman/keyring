@@ -316,6 +316,26 @@ case "$cmd" in
     # Release on any exit path so a clean stop never leaves a lock that blocks the next session.
     trap 'rm -f "$LOCK" 2>/dev/null || true' EXIT INT TERM
     echo "agentbus-sqs: watching ${dev} inbound (long-poll 20s). Emits one line per message; silent otherwise." >&2
+    # NO-SPAWN CONSUMER (Andrew cleanup 2026-07-30): the aws-CLI loop below launches a FULL
+    # python interpreter per 20s long-poll (~4,320/day/device, ~1-2s CPU each + the heaviest
+    # per-event EDR import scans on the box). One long-lived boto3 daemon holds the same
+    # receive->emit-THEN-delete contract with zero per-poll spawns. exec (not spawn) so the
+    # MSYS pid in the lockfile stays THIS process and `kill -0` liveness keeps resolving;
+    # the python removes the lock on exit (the EXIT trap above does not survive exec, by
+    # design). Guarded fallback (Rule 16 pattern): no python/boto3 -> the original aws-CLI
+    # loop below runs unchanged. Emit format is CONTRACT in both paths -- acks key on it.
+    _PYBIN=""
+    for _p in python python3; do
+        if command -v "$_p" >/dev/null 2>&1 && "$_p" -c "import boto3" >/dev/null 2>&1; then
+            _PYBIN="$_p"; break
+        fi
+    done
+    if [ -n "$_PYBIN" ] && [ -f "${_jq_self_dir}/agentbus-consumer.py" ]; then
+        exec "$_PYBIN" "${_jq_self_dir}/agentbus-consumer.py" \
+            --queue-url "$q" --device "$dev" --region "$REGION" \
+            --lock "$LOCK" --lock-pid "$$"
+    fi
+    echo "agentbus-sqs: python/boto3 unavailable -- falling back to the per-poll aws-CLI loop" >&2
     while true; do
         set +e
         out=$(aws sqs receive-message --region "$REGION" --queue-url "$q" \

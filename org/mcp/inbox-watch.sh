@@ -139,7 +139,24 @@ if [ "$MODE" = "stream" ]; then
     if [ -n "${INBOX_WATCH_NO_PARENT_CHECK:-}" ] || [ "$WATCH_PARENT" -le 1 ]; then
         PARENT_CHECK=0
     fi
-    echo "inbox-watch: STREAM mode for $SERIAL watching $WATCH_DIR (persistent; parent-tied: $([ "$PARENT_CHECK" -eq 1 ] && echo "pid $WATCH_PARENT" || echo "OFF"))" >&2
+    # NO-SPAWN WAIT (Andrew cleanup 2026-07-30, MSTR low-level audit): `sleep` is an
+    # EXTERNAL binary in Git Bash, so the old loop created ONE PROCESS PER 5s PER
+    # WATCHER (~121K/day at 7 watchers), each a Windows CreateProcess + MSYS fork +
+    # an EDR filter-driver inspection. `read -t` against a held-open FIFO waits
+    # IN-PROCESS: zero spawns per cycle (exercised on this box: rc=142 at exactly
+    # the timeout, no child). mkfifo failure falls back to the old sleep --
+    # correctness identical, only the spawn cost differs (Rule 16 guarded pattern).
+    _WAIT_FIFO="$(mktemp -u 2>/dev/null || echo "/tmp/inbox-watch-wait-$$")"
+    _NOSPAWN=0
+    if mkfifo "$_WAIT_FIFO" 2>/dev/null; then
+        exec 9<>"$_WAIT_FIFO"
+        rm -f "$_WAIT_FIFO"
+        _NOSPAWN=1
+    fi
+    _wait5() {
+        if [ "$_NOSPAWN" -eq 1 ]; then read -rt 5 -u 9 _ 2>/dev/null || true; else sleep 5; fi
+    }
+    echo "inbox-watch: STREAM mode for $SERIAL watching $WATCH_DIR (persistent; parent-tied: $([ "$PARENT_CHECK" -eq 1 ] && echo "pid $WATCH_PARENT" || echo "OFF"); wait=$([ "$_NOSPAWN" -eq 1 ] && echo no-spawn || echo sleep))" >&2
     while true; do
         if [ "$PARENT_CHECK" -eq 1 ] && ! kill -0 "$WATCH_PARENT" 2>/dev/null; then
             ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo unknown-ts)"
@@ -158,7 +175,7 @@ if [ "$MODE" = "stream" ]; then
             # agent to read the message from read/ and act.
             echo "[INBOX] $base"
         done
-        sleep 5
+        _wait5
     done
     # unreachable
 fi

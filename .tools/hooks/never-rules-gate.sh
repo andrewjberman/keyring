@@ -91,6 +91,22 @@ deny() {
 }
 
 # =========================================================================================
+# GATE 0 -- bare-path inbox-watch launch (MERGED IN from block-bare-inbox-watch.sh,
+# Andrew cleanup 2026-07-30 / MSTR low-level audit: both hooks matched Bash|PowerShell and
+# each cost one MSYS bash spawn per tool call; the check is one grep, so it rides this gate
+# and settings.json drops the separate entry. The standalone script is left on disk,
+# unchanged, for in-flight sessions still carrying the old hook config -- remove it only
+# after those sessions cycle.) Semantics preserved verbatim from the original: raw-command
+# grep (no heredoc/quote stripping -- a relative launch is the hazard wherever it appears),
+# same deny reason, same derived-not-hardcoded remedy path. One deliberate strengthening:
+# the original passed silently when jq was missing; this file FAILS CLOSED on missing jq
+# for every gate, which is strictly safer and jq.exe is tracked in-repo.
+# =========================================================================================
+if printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(])([a-z0-9_./-]*/)?(bash|sh)[[:space:]]+org/mcp/inbox-watch\.sh'; then
+    deny "BLOCKED: relative-path inbox-watch.sh invocation. Use the canonical PATH wrapper \"inbox-watch <serial>\" or absolute path \"bash ${WS:-<your-clone-root>}/org/mcp/inbox-watch.sh <serial>\". Relative-path launches propagate bare-path \$0 into auto-respawn children, creating PPID=1 zombies that survive session death and short-circuit future tracked launches via the single-watcher guard (Claude Code surfaces guard-exit-0 as misleading exit 143). See org/XXX.md Step 1b / org/mcp/INBOX_WATCH_DESIGN.md."
+fi
+
+# =========================================================================================
 # offending_lines <match-re> <excuse-re>
 #   Prints the lines that MATCH <match-re> and are NOT excused by <excuse-re>.
 #   Empty output => nothing to block.
