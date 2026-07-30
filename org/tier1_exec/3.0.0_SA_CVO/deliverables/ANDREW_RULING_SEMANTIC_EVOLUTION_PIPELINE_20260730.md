@@ -96,4 +96,15 @@ OPEN AT ANDREW (flagged in CVO thoughts, same turn): ruling-1 put daily surfacin
 (landed @d0f1df57c8/LD-0356); ruling-2 puts the operational daily loop on CVO -- the seam needs
 one owner ruling.
 
+
+## RULING 3 -- CLEARANCE + LOOP OWNERSHIP (Andrew-direct, same terminal, ~2158Z, VERBATIM)
+
+> ~B is cleared to start, CVO owns the loop, MSTR is backstop
+
+Resolves both open items: (1) the ~B instruction collision -- cleared, relayed same turn;
+(2) the ruling-1/ruling-2 ownership seam -- CVO owns the OPERATIONAL daily loop (/estate-pull +
+per-day manifest ledger, un-flipped days loud at every CVO load); MSTR-base's LD-0356 rule
+amends to GOVERNANCE BACKSTOP (verify the loop ran; escalate un-flipped days) -- amendment
+routed to MSTR same turn.
+
 -- 3.0.0_SA_CVO
