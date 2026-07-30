@@ -51,7 +51,14 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" 2>/dev/null && pwd)" || SCRIPT_DIR="."
 # root: $CLAUDE_PROJECT_DIR (the SAME var line ~37 already trusts for jq) preferred; fallback derives
 # it from the INSTALLED hook location (.tools/hooks/ -> ../.. = repo root). Closes the spill CLASS.
 ROOT="${CLAUDE_PROJECT_DIR:-$(cd "${SCRIPT_DIR}/../.." 2>/dev/null && pwd)}"
-[ -z "${ROOT}" ] && ROOT="."
+# FAIL-CLOSED ROOT GUARD (CTO fabric-infra routing 2026-07-30; same guard as post-tool-hooks.sh,
+# kept in this legacy canonical for in-flight sessions still wired to it): empty OR wrong-derived
+# ROOT -> write NOTHING + temp breadcrumb. The old `ROOT="."` fallback wrote CWD-relative shadow
+# trees (134 trees / 7,557 stranded rows measured 2026-07-30, incl. 3,400 in the portal submodule).
+if [ -z "${ROOT}" ] || [ ! -d "${ROOT}/org/mcp" ]; then
+    echo "$(date -u +%FT%TZ) TELEMETRY_HOOK_NO_ROOT cwd=$(pwd) root='${ROOT}'" >> "${TEMP:-/tmp}/claude-telemetry-hook-no-root.log" 2>/dev/null || true
+    exit 0
+fi
 JQ=""
 for _cand in "${CLAUDE_PROJECT_DIR:-}/.tools/jq.exe" ".tools/jq.exe" "${SCRIPT_DIR}/../jq.exe"; do
     # -x on a non-existent path is simply false, so an empty $CLAUDE_PROJECT_DIR (-> /.tools/jq.exe) is skipped.
