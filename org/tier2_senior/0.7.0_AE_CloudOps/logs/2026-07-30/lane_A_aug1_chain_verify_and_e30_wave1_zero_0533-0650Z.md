@@ -127,15 +127,43 @@ Denominators: 49financial 60 date-keys, inflection 71, cottonwood 31.
 **POSITIVE CONTROL (built in):** inflection HAS 9 Sat + 8 Sun date-keys, so the scan demonstrably
 CAN see weekend keys -> the zero Sat/Sun for the other two is a REAL zero.
 
+**TAIL CADENCE (landing lag on dates that EXIST):**
 ```
-inflection    T+0, SEVEN days/week, lands 14:53-15:07Z on the data-date. 12/12 consistent.
-              -> holds 07-31 at the fire. ZERO carried days. HIGH CONFIDENCE.
+inflection    T+0, lands 14:53-15:07Z on the data-date. 12/12 of present keys.
 cottonwood    T+2 weekdays / T+4-5 across a weekend, fixed 10:30:30Z. Thu->Sat +2d is 3/3.
-              -> holds 07-30 at the fire. EXACTLY 1 carried day (07-31). HIGH CONFIDENCE.
 49financial   BACKFILLED 07-29 01:22Z (ten date-keys in 11 seconds), then ONE post-backfill
               daily landing (07-28 @ 07-29 10:45:12Z, T+1). n=1 is not a cadence.
-              -> UNDETERMINED, 0 to 3 carried days. CANNOT BE KNOWN BEFORE SATURDAY.
 ```
+
+**>> SELF-CORRECTION, 070251Z -- I DOWNGRADED MY OWN CONFIDENCE BEFORE ANDREW WAS ASKED. <<**
+I first reported *"inflection holds 07-31, ZERO carried, HIGH CONFIDENCE (12/12 same-day)"*.
+**`12/12` is a rate over date-keys that EXIST -- it says nothing about whether a given date WILL
+exist.** I printed a denominator, but it was the denominator of my RETRIEVAL, not of my CLAIM.
+The gaps were in my own printed output (the series jumps 07-10 -> 07-16 and 07-18 -> 07-24) and I
+read the `lag=0d` column straight past them. Surfaced by `0.4.0_DE_ClientPlatform` (070039Z)
+censusing interior coverage; I re-derived it independently rather than accepting their numbers.
+
+INTERIOR COVERAGE, trading-day predicate (`is_trading_day`), 07-01..07-29, **denominator 20
+trading days** of 29 calendar days (9 excluded = weekends + 07-03 July-4-observed):
+```
+49financial   19/20 (95%)   missing 07-29                                    <- BEST
+cottonwood    17/20 (85%)   missing 07-20, 07-28, 07-29
+inflection    12/20 (60%)   missing 07-01, 07-13,14,15, 07-20,21,22,23      <- WORST
+              *** CONTIGUOUS RUNS: 3 days (07-13..15) and 4 days (07-20..23)
+```
+**THE RANKING INVERTS. I handed COO inflection as the clean partner and 49financial as the problem
+child; on interior coverage it is the reverse.** Both measurements are true -- inflection lands T+0
+*when it produces*, and fails to produce on ~40% of trading days. **Tail-cleanliness does not imply
+interior cleanliness** (DE's phrase). Corrected carried-day ranges, with the error bar I omitted:
+```
+inflection    RANGE 0-2   (0 only IF it produces 07-31; P is ~60%, not "high")
+cottonwood    RANGE 1-4   (1 is best-estimate but needs 3 further landings on an 85% feed)
+49financial   RANGE 0-3   (range unchanged, but its 95% interior makes it the STRONGEST)
+```
+**Nobody should carry "inflection is clean" out of my earlier message.** UNCHANGED by this: the
+`_month_cap`/`_carried_daily` mechanism, and the refutation of ~C's T-1 premise (which never needed
+the presence rate). **It STRENGTHENS the remedy: a computed line needs no forecast at all -- it
+prints what actually happened.**
 **~C's premise is refuted as the MECHANISM:** *"under a T-1 pipeline Friday's data does not exist
 on Friday"* -- inflection lands T+0, so it does. **None of the three is T-1.** The spread is three
 different feed cadences, not the Friday/Saturday calendar. **~C's other half STANDS:** June
