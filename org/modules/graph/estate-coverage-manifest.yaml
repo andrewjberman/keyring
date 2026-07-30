@@ -31,7 +31,7 @@ last_full_review: 2026-06-15   # the CVO census 2d9a0a2a1
 threads:
   # + reachability_status {mounted-reachable|frontend-orphan|phantom|unreviewed} (CVO P3.2 ground-truth determination 2026-06-15; grep INPUT + CVO overrides: both Time Machine=phantom per Andrew; NAMED-UNVERIFIED=LOUD unreviewed)
 
-  # ---- pipescript advi-bd (19) ----
+  # ---- comp-semantic-estates advi-bd (19) ----
   - family: bd-allocation-file-watchdog
     named_thread: advi-bd
     owning_tool: none
@@ -188,7 +188,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript advi-cot (1) ----
+  # ---- comp-semantic-estates advi-cot (1) ----
   - family: cot-pipeline
     named_thread: advi-cot
     owning_tool: stitch
@@ -198,7 +198,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript advi-inf (14) ----
+  # ---- comp-semantic-estates advi-inf (14) ----
   - family: PPI-08-shared-advisor-router
     named_thread: advi-inf
     owning_tool: portal-consumer-tools
@@ -315,7 +315,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript causality (5) ----
+  # ---- comp-semantic-estates causality (5) ----
   - family: causality-ai-query
     named_thread: causality
     owning_tool: none
@@ -359,7 +359,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript cma (1) ----
+  # ---- comp-semantic-estates cma (1) ----
   - family: yang-cma
     named_thread: cma
     owning_tool: globgrph
@@ -369,7 +369,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript correlation (1) ----
+  # ---- comp-semantic-estates correlation (1) ----
   - family: yang-correlation
     named_thread: correlation
     owning_tool: globgrph
@@ -379,7 +379,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript data-refresh (1) ----
+  # ---- comp-semantic-estates data-refresh (1) ----
   - family: PPI-10-opal-data-refresh-api
     named_thread: data-refresh
     owning_tool: portal-consumer-tools
@@ -389,7 +389,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript factor-tilts (1) ----
+  # ---- comp-semantic-estates factor-tilts (1) ----
   - family: yang-factor-tilts
     named_thread: factor-tilts
     owning_tool: globgrph
@@ -399,7 +399,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript graph-platform (4) ----
+  # ---- comp-semantic-estates graph-platform (4) ----
   - family: globgrph-derive-runner-fargate
     named_thread: graph-platform
     owning_tool: globgrph
@@ -433,7 +433,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript insurance (2) ----
+  # ---- comp-semantic-estates insurance (2) ----
   - family: dualbiz-casefind-local
     named_thread: insurance
     owning_tool: none
@@ -453,7 +453,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript macroeconomics (9) ----
+  # ---- comp-semantic-estates macroeconomics (9) ----
   - family: FRED-01-yield-curve-daily-ingest
     named_thread: macroeconomics
     owning_tool: portal-consumer-tools
@@ -528,7 +528,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript market-overview (11) ----
+  # ---- comp-semantic-estates market-overview (11) ----
   - family: MA-01-market-overview-tiered
     named_thread: market-overview
     owning_tool: portal-consumer-tools
@@ -618,7 +618,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript mdpf (2) ----
+  # ---- comp-semantic-estates mdpf (2) ----
   - family: PPI-05-opal-portal-data-proxy
     named_thread: mdpf
     owning_tool: portal-consumer-tools
@@ -636,7 +636,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript model-portfolios (8) ----
+  # ---- comp-semantic-estates model-portfolios (8) ----
   - family: MA-08-yang-generate-volatility
     named_thread: model-portfolios
     owning_tool: none
@@ -706,7 +706,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript news (13) ----
+  # ---- comp-semantic-estates news (13) ----
   - family: MA-04-fear-greed-fetcher
     named_thread: news
     owning_tool: portal-consumer-tools
@@ -814,7 +814,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript ops-internal (6) ----
+  # ---- comp-semantic-estates ops-internal (6) ----
   - family: PPI-13-schwab-anonymizer
     named_thread: ops-internal
     owning_tool: none
@@ -877,7 +877,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript partners (2) ----
+  # ---- comp-semantic-estates partners (2) ----
   - family: PPI-02-opal-portal-authorizer
     named_thread: partners
     owning_tool: globgrph
@@ -895,7 +895,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript portal-infra (6) ----
+  # ---- comp-semantic-estates portal-infra (6) ----
   - family: PPI-01-auth-validator-edge
     named_thread: portal-infra
     owning_tool: portal-consumer-tools
@@ -945,7 +945,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript portfolio-management (9) ----
+  # ---- comp-semantic-estates portfolio-management (9) ----
   - family: ops-infrastructure-monitors
     named_thread: portfolio-management
     owning_tool: none
@@ -1020,7 +1020,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript positioning (1) ----
+  # ---- comp-semantic-estates positioning (1) ----
   - family: yang-positioning-attribution-allocation
     named_thread: positioning
     owning_tool: globgrph
@@ -1030,7 +1030,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript security-scanner (2) ----
+  # ---- comp-semantic-estates security-scanner (2) ----
   - family: opal-security-scanner-processor
     named_thread: security-scanner
     owning_tool: portal-consumer-tools
@@ -1049,7 +1049,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript smartx (3) ----
+  # ---- comp-semantic-estates smartx (3) ----
   - family: smartx-ec2-csv-exporter
     named_thread: smartx
     owning_tool: globgrph
@@ -1075,7 +1075,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript trade-submission (12) ----
+  # ---- comp-semantic-estates trade-submission (12) ----
   - family: MA-09-ycharts-market-data-pull
     named_thread: trade-submission
     owning_tool: none
@@ -1175,7 +1175,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript valuation (1) ----
+  # ---- comp-semantic-estates valuation (1) ----
   - family: yang-valuation-risk-premium
     named_thread: valuation
     owning_tool: globgrph

@@ -288,21 +288,21 @@ tools:
     replaces: "Manual before/after comparison of file trees (diff mode); manual grep across graph nodes (symbol mode)"
     note: "Dual-purpose tool. No-arg = graph state diff vs baseline. Positional arg = symbol cross-reference lookup. Disambiguation by argparse positional optionality (nargs='?')."
 
-  pipescript:
-    command: "pipescript <name>   |   pipescript --list | --resource <substr> | --tool <name> <tool> | --debt | --fe-reachability | --validate | --gate-b"
+  comp-semantic-estates:   # RENAMED from pipescript 2026-07-30 (Andrew-direct; bare name prohibited + rc=2 tombstone)
+    command: "comp-semantic-estates <name>   |   comp-semantic-estates --list | --resource <substr> | --tool <name> <tool> | --debt | --fe-reachability | --validate | --gate-b"
     segment_scope: estate-wide
     segment_scope_note: "NFRA_PIPESCRIPT (Andrew-direct, COMPLETE 2026-06-15). The HUMAN ENTRY POINT over the whole estate: 'what am I looking for -- the news scanner? -> pipescript news'. 25 named threads / 134 sub-threads / 169 lambdas (CVO census 2d9a0a2a1). Reads the prebuilt estate-coverage-resolver.json (gen-estate-resolver.py joins the CVO manifest 61e91d334 + census). Read-only, ~0.3s, no AWS calls."
     when: |
-      - "What's in the news / advi / market-overview / model-portfolios / trade-submission / <portal-page> pipeline?" -> pipescript <name>
-      - "What named threads exist?" -> pipescript --list
-      - "Which thread owns resource X (a lambda / S3 key / table)?" -> pipescript --resource <substr>
-      - "What debt (orphan/dormant/stranded/freshness/frontend-orphan) is in thread X?" -> pipescript --debt (or pipescript <name>, flags inline)
+      - "What's in the news / advi / market-overview / model-portfolios / trade-submission / <portal-page> pipeline?" -> comp-semantic-estates <name>
+      - "What named threads exist?" -> comp-semantic-estates --list
+      - "Which thread owns resource X (a lambda / S3 key / table)?" -> comp-semantic-estates --resource <substr>
+      - "What debt (orphan/dormant/stranded/freshness/frontend-orphan) is in thread X?" -> pipescript --debt (or comp-semantic-estates <name>, flags inline)
       - "Does this backend thread reach a MOUNTED rendering component, or is it a frontend-orphan/phantom?" -> pipescript --fe-reachability
-      - Starting any cross-layer investigation: pipescript <name> FIRST to see every resource + its owning tool, THEN drill via the named sub-resolver.
+      - Starting any cross-layer investigation: comp-semantic-estates <name> FIRST to see every resource + its owning tool, THEN drill via the named sub-resolver.
     subcommands:
       "<name>": "Full traversal of a named thread: every sub-thread -> producers (lambdas/EC2/StepFn + triggers) -> served artifacts (S3/DDB) -> frontend consumers (portal components) -> owning_tool + coverage status + debt flags + FE-reachability. NO silent Unknown."
-      list: "pipescript --list -- all 25 named thread names + per-thread IN-SCOPE/OUT/UNREVIEWED counts + owning tools."
-      resource: "pipescript --resource <substr> -- reverse lookup: which named thread(s) + sub-thread own a resource matching the substring."
+      list: "comp-semantic-estates --list -- all 25 named thread names + per-thread IN-SCOPE/OUT/UNREVIEWED counts + owning tools."
+      resource: "comp-semantic-estates --resource <substr> -- reverse lookup: which named thread(s) + sub-thread own a resource matching the substring."
       tool: "pipescript --tool <name> <tool> -- only the sub-threads of <name> owned by <tool>; the drill POINTER surfaces the canonical sub-resolver call (read-only; does NOT live-invoke, F5)."
       debt: "pipescript --debt -- estate debtscan-flag view across all threads (P3.1)."
       fe-reachability: "pipescript --fe-reachability -- FE-reachability status per backend thread (mounted-reachable / frontend-orphan / phantom / unreviewed-LOUD) from CVO GROUND-TRUTH, NOT a live portal grep (scaffolding-fooled: bd-time-machine's provider exists in code) (P3.2)."

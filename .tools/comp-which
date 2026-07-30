@@ -93,7 +93,7 @@ RULES = [
       "what produces", "who produces", "what consumes", "who consumes", "produced by", "consumed by",
       "which script writes", "which script produces", "what generates", "writer of", "mdpf"],
      "S3 artifact / who-reads-writes + gold-script output keys",
-     ["comp-pipescript io <script>", "comp-pipescript io <script> --firm <bd|inf|cot|mdpf>", "pipescript --resource <key>"],
+     ["comp-pipescript io <script>", "comp-pipescript io <script> --firm <bd|inf|cot|mdpf>", "comp-semantic-estates --resource <key>"],
      "what produces/consumes an S3 key + who reads an artifact + what KEY/artifact a gold script writes (io surfaces the _KEY constants incl FUNC-keys)"),
     # comp-dispatch = NFRA_COMPROUTE S1 #1 (~E built d804ff744; CTO-ratified). The gold-dispatch
     # orchestration-DAG grain (which scripts run / order / chain-group-flag / gate) -- ABOVE per-script
@@ -223,7 +223,7 @@ RULES = [
     (["pipescript", "bare pipescript", "plain pipescript", "the pipescript tool",
       "pipescript command", "pipescript name"],
      "the bare-name pipescript executable (DEPRECATED NAME -- still resolves during transition)",
-     ["pipescript <name>", "pipescript --list", "pipescript --resource <substr>"],
+     ["comp-semantic-estates <name>", "comp-semantic-estates --list", "comp-semantic-estates --resource <substr>"],
      "the bare-name executable itself: named-thread estate traversal, still resolving and running "
      "so in-flight callers do not break mid-wave. The NAME is deprecated (Andrew-direct "
      "2026-07-29) because it evaded the comp-* census glob and the registration gate; the tombstone "
@@ -231,12 +231,12 @@ RULES = [
      "asking what is in a named thread, route by intent instead"),
     (["portal", "component", "endpoint", ".tsx", "tsx", "frontend"],
      "portal component / route (generic -- ambiguous, disambiguates by design)",
-     ["comp-transform schema-check <Component>", "comp-routes behaviors", "pipescript <thread>"],
+     ["comp-transform schema-check <Component>", "comp-routes behaviors", "comp-semantic-estates <thread>"],
      "generic portal/component/endpoint mention with no feed/serve-specific vocabulary -- "
      "genuinely ambiguous among data-feed vs serving-route vs named-thread; surfaces all three"),
     (["lambda", "function", "handler", "what does this lambda", "what does the lambda"],
      "lambda",
-     ["comp-iam service <fn>", "comp-aws", "pipescript --resource <fn>"],
+     ["comp-iam service <fn>", "comp-aws", "comp-semantic-estates --resource <fn>"],
      "what a lambda does + its IAM + its named thread"),
     # THE THREE CLAUDE.md-MANDATED CALLS (CTO~Z ruling 223728Z). They were DECLARED in tools_index and
     # still UNROUTABLE: the router ranks TOOLS off THIS curated vocabulary, and never reads tools_index.
@@ -321,7 +321,7 @@ RULES = [
      "functional-overlap/superseded -> comp-similar). All advisory, NONE deletes"),
     (["what resources", "aws resource", "which thread owns", "estate", "cloud graph", "blast radius of"],
      "AWS resources / thread ownership",
-     ["comp-aws", "pipescript <name>", "comp-pipescript deployed"],
+     ["comp-aws", "comp-semantic-estates <name>", "comp-pipescript deployed"],
      "what AWS resources exist + which named thread owns them"),
     (["breaks", "blast", "what depends", "if i change", "impact of changing", "downstream of",
       # real-NL impact vocabulary: "what would a CHANGE TO X AFFECT", "what does changing X
@@ -427,7 +427,7 @@ RULES = [
      "did X propagate intact local->git->cloud->nessie->kuzu->iceberg->trino->served / where is the estate unguarded / is the estate in parity (walks drift-topology.yaml, calls the seam engines, never re-implements)"),
     (["what's in", "whats in", "everything in", "whole pipeline", "the scanner", "named thread", "what is in the"],
      "named-thread traversal",
-     ["pipescript <name>", "pipescript --list"],
+     ["comp-semantic-estates <name>", "comp-semantic-estates --list"],
      "every resource + deps + data-flow in a named pipeline/thread (no silent Unknown)"),
     (["deployed", "stale", "latest code", "s3 etag", "runner has", "is the runner on",
       # NFRA_TOOLCHECK P3 req#2a (2026-07-08): "does the etl-runner have the newest code or is
@@ -443,7 +443,7 @@ RULES = [
     (["gold scripts", "silver scripts", "bronze scripts", "scripts in", "what scripts",
       "list the gold", "list gold", "pipeline scripts", "scripts in the"],
      "list pipeline scripts",
-     ["pipescript --list", "comp-pipescript deployed --firm <bd|inf|cot|mdpf>",
+     ["comp-semantic-estates --list", "comp-pipescript deployed --firm <bd|inf|cot|mdpf>",
       "comp-glob data/<firm>/scripts/gold/"],
      "the scripts in a named pipeline/firm (+ deployed MATCH/STALE state)"),
     # comp-graph = freshness of the GRAPHS THEMSELVES (cloud/trace/kuzu cache vintages), distinct
@@ -1039,7 +1039,7 @@ RULES = [
       "estate traversal", "pipeline contents", "whole pipeline", "the market pipeline",
       "the news pipeline", "browse pipelines", "list pipelines", "pipeline map"],
      "named-thread estate traversal (pipescript)",
-     ["pipescript <name>", "pipescript --list", "pipescript --resource <key>"],
+     ["comp-semantic-estates <name>", "comp-semantic-estates --list", "comp-semantic-estates --resource <key>"],
      "what's in a named pipeline/thread -- every resource + producers->served->frontend + owning tool "
      "+ debt/reachability flags, whole estate, no silent Unknown (pipescript --list for names)"),
 
@@ -1853,7 +1853,7 @@ def main() -> int:
     if gid:
         hits.append((6, "gold-script id " + gid.group(0),
                      ["comp-pipescript io %s" % gid.group(0), "comp-pipescript feeds/consumers %s" % gid.group(0),
-                      "pipescript --resource %s" % gid.group(0)],
+                      "comp-semantic-estates --resource %s" % gid.group(0)],
                      "what a gold script reads/writes + who feeds/consumes it"))
     # "call sites / callers of X" -> comp-blast is the rich semantic answer (strong route,
     # NOT a text grep): force a high score so it routes even though it reads like a search.

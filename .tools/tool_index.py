@@ -1047,7 +1047,7 @@ TOOLS = {'comp-adapter-audit': {'canonical_call': 'comp-adapter-audit <adapter-f
                             'anything unregistered -- THE PHANTOM CLASS'],
                'knows_own_denominator': True,
                'state': 'PERSISTED'},
- 'pipescript': {'cost_band': 'UNKNOWN', 'excludes': []}}
+ 'comp-semantic-estates': {'cost_band': 'UNKNOWN', 'excludes': []}}
 
 MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'rebuild_only_when': ['you changed something the graph does not yet reflect AND you need it now '
@@ -1534,8 +1534,8 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'rebuild_trigger': 're-run org/modules/graph/gen-estate-resolver.py after the manifest/census changes '
                                  '(resolver is a generated join)',
               'status': 'canonical',
-              'tool': 'pipescript',
-              'use_case': 'What am I looking for -- the news scanner? -> pipescript news -> EVERY resource in that '
+              'tool': 'comp-semantic-estates',
+              'use_case': 'What am I looking for -- the news scanner? -> comp-semantic-estates news -> EVERY resource in that '
                           'named thread + producers->served->frontend + owning tool + coverage + debt flags, over '
                           'the whole estate, no silent Unknown.'},
              {'anti_pattern': 'blind-grepping for a repo relationship instead of asking comp-which (or heeding the '
@@ -3353,7 +3353,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                  'comp-xref': {'does': 'Symbol cross-ref (cached) + graph-state drift-vs-baseline',
                                'entries': ['trace.xref.symbol', 'trace.xref.graph_drift'],
                                'subcommands': ['<symbol>', '--save']},
-                 'pipescript': {'does': 'Named-thread estate traversal: `pipescript <name>` -> every resource + '
+                 'comp-semantic-estates': {'does': 'Named-thread estate traversal: `comp-semantic-estates <name>` -> every resource + '
                                         'producers->served->frontend + owning tool + coverage, no silent Unknown '
                                         '(the human entry point over the whole estate)',
                                 'entries': ['estate.pipescript.named_thread'],
