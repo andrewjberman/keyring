@@ -1,0 +1,96 @@
+# /estate-pull — the CVO daily ESTATE REPORT adjudication loop
+
+**Authority:** Andrew-direct rulings 1-4a, 2026-07-30 (verbatim record:
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_RULING_SEMANTIC_EVOLUTION_PIPELINE_20260730.md`).
+Ruling 3: **"CVO owns the loop, MSTR is backstop."** CVO-ONLY — any other serial invoking this
+skill halts at Step 0 (the loop has ONE operational owner; MSTR's LD-0356 backstop rule is the
+governance check, not a second operator).
+
+## What this loop is
+
+The estate-report pipeline (0.7.0_AE_CloudOps~B build) lands a DAILY report at 9a Eastern
+(wall-clock, DST-following) in `s3://opal-estate-report/`:
+
+```
+daily/YYYY/MM/DD/estate-report-YYYY-MM-DD.{md,json}   <- pipeline writes: Kimi/K3 exec summary
+                                                         + DETERMINISTIC changed-resource list
+                                                         (git-commit-derived, ladder-bucketed)
+                                                         + day-over-day SET-delta
+manifest/YYYY-MM-DD.json                              <- pipeline writes: born {"status":"PENDING"}
+adjudicated/YYYY/MM/DD/estate-report-YYYY-MM-DD.md    <- CVO writes (this skill, Step 4)
+```
+
+**The manifest is a gate whose default state is the alarming one** (~B's formulation, design
+canon): a missed day is not something a detector notices — it is the ABSENCE of an affirmative
+flip. No SNS, no alarm, no notification machinery anywhere in this design (moratorium-clean by
+construction; the report itself is Andrew-asked by name).
+
+## Invocation
+
+| Form | Behavior |
+|---|---|
+| `/estate-pull` | Full loop: enumerate PENDING days -> pull -> adjudicate with Andrew -> land -> flip. |
+| `/estate-pull status` | Report-only: PENDING-day census, no changes. This is also the FIRST-ON-LOAD check form. |
+
+## Step 0 — Identity + pipeline-exists gate
+
+- Registered serial must be `3.0.0_SA_CVO` (base). Anyone else: halt, point at this header.
+- `aws s3api head-bucket --bucket opal-estate-report` — **absent bucket = INERT**: the pipeline
+  has not shipped yet; print one line and stop. (Same inertness contract as MSTR's backstop rule.)
+
+## Step 1 — Enumerate the PENDING census (the manifest IS the oracle)
+
+```bash
+aws s3api list-objects-v2 --bucket opal-estate-report --prefix manifest/ \
+  --query "Contents[].Key" --output json
+```
+Read each `manifest/YYYY-MM-DD.json`; collect every day with `status: PENDING`. Print the
+denominator: `N day(s) PENDING: <dates>`. **Any PENDING day OLDER than today is a LOUD finding**
+— the loop missed a day; say so first, adjudicate oldest-first. Zero PENDING + today's manifest
+absent after 9a ET = the PIPELINE missed its schedule — that is a real finding about the
+producer (route to ~B's lane), never silently absorbed.
+
+## Step 2 — Pull
+
+For each PENDING day: fetch `daily/YYYY/MM/DD/estate-report-YYYY-MM-DD.md` (the .json sibling
+carries the machine form). Verify BOTH halves are present: the deterministic changed-resource
+list (must exist — it compiles independently of Kimi) and the AI section (may carry the LOUD
+"AI section absent" marker on a Kimi-side failure; an absent-marker absent-section is a
+producer defect, route it).
+
+## Step 3 — Adjudicate with Andrew
+
+Render the report (deterministic list first, then the AI summary + its semantic-prose-evolution
+suggestions, each citing its exact prose home: catalog entry / registry row / chain description).
+Andrew rules per suggestion: adopt / amend / reject — or rules the day **NO SEMANTIC CHANGES**.
+Semantic edits are NAMING ACTS: the AI proposes, Andrew ratifies, CVO lands. Never auto-apply.
+
+## Step 4 — Land (three writes, all CVO-side)
+
+1. **Repo commit** (ruling 2's "accruing in the repo"): the adjudicated file to
+   `org/estate-reports/YYYY-MM-DD.md` — the day's decision record (what was adopted/rejected/
+   no-changes + commit hashes of any prose edits landed). Commit via safe-commit under the CVO
+   author line, together with any ratified prose edits themselves.
+2. **S3 adjudicated copy**: `aws s3 cp` the same file to
+   `s3://opal-estate-report/adjudicated/YYYY/MM/DD/estate-report-YYYY-MM-DD.md`.
+3. **Manifest flip**: rewrite `manifest/YYYY-MM-DD.json` to
+   `{"status":"ADJUDICATED"|"NO-SEMANTIC-CHANGES","by":"3.0.0_SA_CVO","at":"<ISO8601Z>","repo_commit":"<hash>"}`.
+   The flip is LAST — a crash before it leaves the day honestly PENDING (fail-pending, never
+   fail-adjudicated).
+
+## Step 5 — Report
+
+```
+/estate-pull
+  PENDING before: <N> (<dates>)   MISSED-DAY findings: <n>
+  adjudicated: <dates + verdict each>
+  landed: repo <hash> | s3 adjudicated/ | manifest flipped
+  PENDING after: <should be 0 or named>
+```
+
+## Standing charter duty (the carrier that survives sessions)
+
+`org/tier1_exec/3.0.0_SA_CVO/prompt.md` (LANE: BASE) carries the FIRST-ON-LOAD duty: run
+`/estate-pull status` at every load once the pipeline is live; un-flipped past days are loud
+before other work. MSTR-base's backstop (LD-0356 as amended) independently verifies the flips
+and escalates gaps — watcher-of-the-watcher, one operator.
