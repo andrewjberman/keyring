@@ -16,24 +16,27 @@ s3 = boto3.client("s3", region_name="us-east-1")
 
 
 def descend_last_write(bucket: str, prefix: str):
-    """Follow max-prefix chain to a leaf page; return (max_lastmod, sample_key, depth)."""
-    for depth in range(8):
+    """Best (max_lastmod, sample_key) reachable by descending EVERY CommonPrefix level's
+    max-prefix chain, folding in same-level objects at each step.
+
+    FIXED 2026-07-30: v1 BROKE at a mixed level (objects + subdirs coexisting) and
+    reported the level's own objects, never descending -- opal-data-inf silver/ holds one
+    root parquet from 05-05 next to 12 subdirs writing TODAY, and v1 called the layer
+    cold. Break-on-mixed-level specimen, recorded in RULINGS_LEDGER."""
+    best = (None, None)
+    for depth in range(10):
         r = s3.list_objects_v2(Bucket=bucket, Prefix=prefix, Delimiter="/", MaxKeys=1000)
         cps = [c["Prefix"] for c in r.get("CommonPrefixes", [])]
         objs = r.get("Contents", [])
-        if cps:
-            # objects AND subprefixes can coexist; prefer descending, but remember objs
-            if objs and not cps:
-                break
-            prefix = max(cps)
-            if not objs:
-                continue
-        if objs or not cps:
+        if objs:
+            newest = max(objs, key=lambda o: o["LastModified"])
+            iso = newest["LastModified"].isoformat()
+            if best[0] is None or iso > best[0]:
+                best = (iso, newest["Key"])
+        if not cps:
             break
-    if not objs:
-        return None, None, depth
-    newest = max(objs, key=lambda o: o["LastModified"])
-    return newest["LastModified"].isoformat(), newest["Key"], depth
+        prefix = max(cps)
+    return best[0], best[1], depth
 
 
 out = {}

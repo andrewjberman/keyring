@@ -1,0 +1,16 @@
+{
+  "generated_at": "2025-12-15T11:38:45.149556",
+  "sentiment": {
+    "date": "2025-11-30",
+    "bullish": 32.0,
+    "bearish": 42.7,
+    "neutral": 25.3,
+    "bull_bear_spread": -10.700000000000003
+  },
+  "allocation": {
+    "date": "2025-11-30",
+    "stocks": 71.2,
+    "bonds": 14.0,
+    "cash": 14.8
+  }
+}
