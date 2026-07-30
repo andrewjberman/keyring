@@ -215,7 +215,39 @@ except Exception:
 _STANDARD_CODE_PREFIXES = {"gold", "silver", "bronze"}
 
 
-def _build_dag(pipeline: str = "bd-gold"):
+def _refuse_no_pipeline(script_hint=None):
+    """ANDREW-DIRECT STUB 2026-07-30: the silent bd-gold default answered about a tree the
+    caller never asked for (a clean zero on the WRONG TREE -- WS4 spec pipeline_cli.py:221).
+    Until the WS4 hardening lands, NO tree given = LOUD REFUSAL, never a guess."""
+    import os as _os
+    import sys as _sys
+    lines = ["REFUSED (rc=2): --pipeline/-p is now REQUIRED -- this tool previously defaulted to",
+             "bd-gold and could return a clean zero for a script living in another tree",
+             "(Andrew-direct 2026-07-30; WS4 hardening pending). NO GUESS IS MADE."]
+    if script_hint:
+        base = _os.path.basename(str(script_hint))
+        tree_map = {"data/black_diamond/scripts": ("bd", "bd-{layer}"),
+                    "data/inf/scripts": ("inf", "inf-{layer}"),
+                    "data/cot/scripts": ("cot", "cot-{layer}")}
+        hits = []
+        for root, (firm, fmt) in tree_map.items():
+            for dirp, _dirs, files in _os.walk(root):
+                if base in files:
+                    layer = _os.path.basename(dirp)
+                    hits.append((firm, fmt.format(layer=layer), _os.path.join(dirp, base)))
+        if hits:
+            lines.append("This script exists in %d tree(s) -- re-run with the one you mean:" % len(hits))
+            for firm, choice, path in hits:
+                lines.append("  --pipeline %-12s  (%s)" % (choice, path))
+        else:
+            lines.append("Script %r not found under data/*/scripts/ -- if it is an mdpf/aux script," % base)
+            lines.append("pass --pipeline mdpf or the aux tree explicitly; the no-arg `deployed` sweep")
+            lines.append("covers all trees firm-separated.")
+    print("\n".join(lines), file=_sys.stderr)
+    raise SystemExit(2)
+
+
+def _build_dag(pipeline: str = None):
     """Return the appropriate DAG for the given pipeline scope.
 
     pipeline="bd-gold"     → existing BD-gold DAG (backward-compatible default)
@@ -227,6 +259,8 @@ def _build_dag(pipeline: str = "bd-gold"):
     pipeline="inf-manual-api" → INF manual_api DAG (Orion REST pull scripts; ADHC_COMPIL_V4.008)
     pipeline="all"         → combined multi-pipeline DAG (namespaced IDs)
     """
+    if pipeline is None:
+        _refuse_no_pipeline()
     if pipeline in ("bd-gold", "bd"):
         return build_pipeline_dag(_WORKSPACE)
     if pipeline in ("inf-gold", "inf"):
@@ -3279,7 +3313,7 @@ def main():
     # dag
     p_dag = sub.add_parser('dag', help='Full execution DAG with I/O edges')
     p_dag.add_argument('--json', action='store_true', help='JSON output')
-    p_dag.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
+    p_dag.add_argument('--pipeline', '-p', default=None, choices=_PIPELINE_CHOICES, help=_pipeline_help)
 
     # io
     p_io = sub.add_parser('io', help='Input/output manifest for one script')
@@ -3287,7 +3321,7 @@ def main():
     p_io.add_argument('--json', action='store_true', help='JSON output')
     p_io.add_argument('--no-portal', action='store_true', dest='no_portal',
                       help='Skip routing table lookup for portal consumer resolution')
-    p_io.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
+    p_io.add_argument('--pipeline', '-p', default=None, choices=_PIPELINE_CHOICES, help=_pipeline_help)
     p_io.add_argument('--firm', default=None, choices=('bd', 'inf', 'cot', 'mdpf'),
                       help='NFRA_DEBTSCAN.TOOL-02: route to this tree\'s OWN graph '
                            '(a data/<tree>/scripts/... path auto-detects; never a bd fallback).')
@@ -3295,25 +3329,25 @@ def main():
     # chain
     p_chain = sub.add_parser('chain', help='Show chain membership and order')
     p_chain.add_argument('chain_name', help='Chain name (full, canonical, downstream, foundation, rebuild)')
-    p_chain.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
+    p_chain.add_argument('--pipeline', '-p', default=None, choices=_PIPELINE_CHOICES, help=_pipeline_help)
 
     # feeds
     p_feeds = sub.add_parser('feeds', help='What scripts feed this one (upstream)')
     p_feeds.add_argument('script_id', help='Script ID')
     p_feeds.add_argument('--json', action='store_true', help='JSON output')
-    p_feeds.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
+    p_feeds.add_argument('--pipeline', '-p', default=None, choices=_PIPELINE_CHOICES, help=_pipeline_help)
 
     # consumers
     p_consumers = sub.add_parser('consumers', help='What scripts consume this one (downstream)')
     p_consumers.add_argument('script_id', help='Script ID')
     p_consumers.add_argument('--json', action='store_true', help='JSON output')
-    p_consumers.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
+    p_consumers.add_argument('--pipeline', '-p', default=None, choices=_PIPELINE_CHOICES, help=_pipeline_help)
 
     # overlap
     p_overlap = sub.add_parser('overlap', help='Shared S3 artifacts between two scripts')
     p_overlap.add_argument('script_a', help='First script ID')
     p_overlap.add_argument('script_b', help='Second script ID')
-    p_overlap.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
+    p_overlap.add_argument('--pipeline', '-p', default=None, choices=_PIPELINE_CHOICES, help=_pipeline_help)
 
     # inject
     sub.add_parser('inject', help='Inject pipeline edges into comp-trace graph cache')
@@ -3381,6 +3415,20 @@ def main():
                           help='Cross-reference git log for cascade pattern (e.g. 7d, 14d)')
 
     args = parser.parse_args()
+
+    # ANDREW-DIRECT STUB 2026-07-30: no silent tree default. Scoped to the six subcommands
+    # whose None previously meant a SILENT bd-gold fallback (the wrong-tree clean-zero class).
+    # `deployed` is exempt: its pipeline=None is the legitimate all-trees sweep / autodetect
+    # mode (TOOL-01), not a silent default -- WS4 owns its hardening.
+    if getattr(args, 'command', None) in ('dag', 'io', 'chain', 'feeds', 'consumers', 'overlap') \
+            and getattr(args, 'pipeline', 'x') is None:
+        _hint = None
+        for _attr in ('script_id', 'script', 'name', 'target'):
+            _v = getattr(args, _attr, None)
+            if _v:
+                _hint = _v
+                break
+        _refuse_no_pipeline(_hint)
     if not args.command:
         parser.print_help()
         sys.exit(0)
