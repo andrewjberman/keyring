@@ -9,7 +9,7 @@
 # D0-D7 ruling (@d16e269bf). ASCII-only. Extend only by EXPLICIT PROMOTION with a printed denominator (LAW-2).
 
 meta:
-  version: "1.2"   # 1.2 = NFRA_ONTOLOGY2 P1 DYNAMIC-RAIL fold (ADDITIVE; LAW-2 promotion w/ printed denominators):
+  version: "1.3"   # 1.2 = NFRA_ONTOLOGY2 P1 DYNAMIC-RAIL fold (ADDITIVE; LAW-2 promotion w/ printed denominators):
                    # +dynamic_rails (D1 value/grain, D2 path/flow, D3 contract/obligation) between the ratified rungs;
                    # +completeness axis (PSTMRT P2, alongside variance); +type_tuple (rail,grain,plane,scope) -- the
                    # enforced typing vocab base 0.8.0's registration invariant validates tool declarations against.
@@ -363,3 +363,37 @@ c1_frontend_adapter:
     IN_VPC:          { n: 1,  grounded: "LAMBDA -> SECURITY_GROUP", binds_up: depends-on, verdict: additive, note: "network placement dependency (the lambda's VPC attachment via its SG)." }
   zero_live_direction2: "the 9 ZERO-LIVE ratified tokens {DEPENDS_ON, REQUIRES, IMPORTS, AUTHENTICATES, AUTHORIZES, ALLOWED, GOVERNS, DENIED, REFERENCES} are a SEPARATE fork (not this adapter): per ~D's census, the auth family (ALLOWED/AUTHENTICATES/AUTHORIZES/DENIED/GOVERNS) is likely a PLANE-VISIBILITY gap (CSE/trace plane -- fix = a stated-intent plane annotation, not content), while DEPENDS_ON/REQUIRES/IMPORTS = the code-import dependency plane genuinely ABSENT from the graph (forward). Neither is retired here (retiring ratified vocab -> ratification chain)."
   routed_to_gate: "this determination table is part of the P1 arch-gate package to CTO~Z (per DESIGN FORK 191540Z). No ratified-vocab candidate raised -- all additive."
+
+
+# =============================================================================================
+# v1.3 (2026-07-30, Andrew-direct SOVEREIGN at the CVO terminal) -- THE CANONICAL C2/C3
+# POPULATION BINDING + THE C4 VERTICALS LAYER. Additive; nothing above is renamed or re-scoped.
+# =============================================================================================
+c2c3_canonical_catalog:
+  file: org/modules/graph/NFRA_ONTOLOGY_C2C3_CANONICAL.yaml
+  law: canon-first-debt-subset
+  binding: 'The PRIMARY population of C2 (motifs) and C3 (systems) is the AGNOSTIC canonical
+    catalog in the file above: twelve path-motif families defined in the 14-role/10-relation
+    vocabulary, and fourteen named structural systems. The six defect-detector motifs absorbed
+    from the TSGRAPH library are a DEVIATION SUBSET (departures from canonical form), valid as
+    deviation motifs, NEVER to be presented as the C2/C3 layer itself. Any tool, document, or
+    agent answer describing C2/C3 in debt terms without naming the canonical layer first is
+    INCOHERENT BY THIS LAW and cites this section for its correction.'
+
+c4_verticals:
+  status: 'RATIFIED 2026-07-30 (Andrew-direct sovereign, CVO terminal; the L1/named-thread layer
+    of the estate world model, elevated).'
+  definition: 'The legislated semantic business estate: a C4 Vertical is a named business
+    function whose extension is a set of D2 chains plus computed C3 systems nesting under it.'
+  invariant: 'DECLARED, never discovered (the symmetric complement of C2/C3 emergence, which is
+    DISCOVERED, never declared). Emergence proposes candidate clusters; only a naming act
+    (Andrew/CVO) admits a vertical.'
+  relation_to_c3: 'MANY-TO-MANY by design -- proof case sys-yang-analytics-engine: one C3
+    structural system serving eight C4 verticals. Ownership is single; participation is many.
+    A computed C3 straddling verticals is an adjudication event, recorded with reason.'
+  catalog: 'NAMED_THREAD_CATALOG.md + estate-coverage-manifest.yaml (population);
+    org/modules/graph/ESTATE_WORLD_MODEL_PROCESS.md (process of record);
+    NFRA_ONTOLOGY_C2C3_CANONICAL.yaml c4_verticals (the layer contract).'
+  naming_ladder_rebind: 'c3_naming_ladder rung 1 (capability_cluster) resolves INTO the C4
+    catalog -- computed systems borrow capability names from the legislated layer, never invent
+    them. This closes rung 5 (never_invented) with an authoritative source.'

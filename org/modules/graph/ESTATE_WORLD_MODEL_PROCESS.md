@@ -115,3 +115,14 @@ resolver DEFENDS these as live until the census regenerates), 14 unmanaged-conso
    not to absolve).
 5. The count digits in registry prose (25/134/169) are DERIVED-at-read or absent — a frozen digit
    in prose is the class this document exists to kill.
+
+
+## 6. ONTOLOGY BINDING (v1.3, 2026-07-30 — supersedes the "four-layer ladder" reading of §1)
+
+The world model and the ontology are ONE object: **L1 = C4 Verticals** (legislated, rule-bank
+`c4_verticals`) · **the resolver's `family` field = C3 structural systems** (14, canonized with
+semantic names in `NFRA_ONTOLOGY_C2C3_CANONICAL.yaml`) · **L2 chains = D2 path instances of the 12
+canonical C2 motif families** · **resources/artifacts/frontends = role-typed C0 nodes** (ownership
+single, participation many). C2/C3 are DISCOVERED-never-declared; C4 is DECLARED-never-discovered;
+a computed C3 straddling verticals is an adjudication event. The debt/detector motifs are a
+deviation SUBSET of C2 — see the catalog's coherence law.
